@@ -189,6 +189,17 @@ Then open [http://localhost:8000/web/](http://localhost:8000/web/).
 
 The current map uses only clearly fictional toy records from `web/data/sample_map_data.json`. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during preview.
 
+## GitHub Pages Deployment
+
+1. Go to the repository **Settings**.
+2. Open **Pages**.
+3. Set **Source** to **Deploy from a branch**.
+4. Select the `main` branch and the `/root` folder.
+5. Save the settings.
+6. Open the generated GitHub Pages URL.
+
+The public GitHub Pages site only shows committed files. Locally generated candidate data is not published unless it is explicitly committed.
+
 ## Current Status
 
 **Early prototype.** A minimal static Leaflet.js map demonstrates markers, paper popups, task and year filters, and visible-record summaries using fictional toy data. Real literature collection and ingestion have not yet been implemented.
