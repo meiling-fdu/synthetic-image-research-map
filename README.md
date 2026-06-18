@@ -61,6 +61,20 @@ python3 scripts/search_openalex.py --dry-run
 
 OpenAlex output is raw candidate data and requires manual review before anything is added to `data/manual/`. See [docs/data_collection.md](docs/data_collection.md) for query-file, result-limit, API-key, and raw-output details.
 
+After raw OpenAlex archives are available, preview the candidate extraction step:
+
+```bash
+python3 scripts/extract_openalex_candidates.py --dry-run
+```
+
+Then write the two processed candidate CSVs:
+
+```bash
+python3 scripts/extract_openalex_candidates.py
+```
+
+The processed paper and affiliation CSVs are automatically extracted review material, not manually curated final data. Every row keeps `manual_review=true` until a researcher reviews and deliberately promotes information into `data/manual/`.
+
 ## Local Preview
 
 The prototype loads its JSON data with `fetch`, so preview it through a local HTTP server rather than opening `web/index.html` directly:

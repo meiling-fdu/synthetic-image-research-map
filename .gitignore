@@ -219,3 +219,9 @@ __marimo__/
 
 # macOS
 .DS_Store
+
+# Automatically retrieved OpenAlex raw data
+data/raw/openalex/*.json
+
+# Automatically extracted candidate data
+data/processed/openalex_candidate_*.csv
