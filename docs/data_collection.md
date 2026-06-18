@@ -75,13 +75,23 @@ Processed candidate CSVs are not final curated data. A reviewer must verify rele
 
 `scripts/geocode_candidate_affiliations.py` can add preliminary coordinates to candidate affiliation rows before the map export. It reads `data/processed/openalex_candidate_affiliations.csv`, writes `data/processed/openalex_candidate_affiliations_geocoded.csv`, and stores reusable query results in `data/processed/geocoding_cache.json` by default. Both generated files are ignored by Git.
 
+Before consulting the cache or Nominatim, the script reads `data/manual/institution_corrections.csv`. A correction matches the candidate `institution_name` exactly after lowercasing, removing simple punctuation, and trimming and collapsing whitespace. No fuzzy matching is used, because automatically merging similar institution names could assign papers to the wrong organization or campus.
+
+When a correction matches, its verified latitude and longitude replace automatic coordinates. Corrected institution, city, and country values are applied only when their fields are non-empty, so other source fields remain intact. The row is annotated with the correction source and confidence and remains `manual_review=true` for transparent provenance. Corrected rows never trigger an online geocoding request.
+
+Documentation-only fictional correction example:
+
+```csv
+fictional institute,Fictional Institute of Visual Studies,Example City,Example Country,12.3456,78.9012,https://example.invalid/institution,high,Fictional format example only
+```
+
 Start with a dry run, which makes no network requests and writes no files:
 
 ```bash
 python3 scripts/geocode_candidate_affiliations.py --dry-run
 ```
 
-The dry run reports rows with existing coordinates, rows needing geocoding, and the unique uncached queries that an online run would attempt. Queries use only the institution name, city, and country when available. Rows without enough location information are retained unchanged and flagged for manual review.
+The dry run reports rows that would use manual corrections, rows with existing coordinates, rows needing online geocoding, unique uncached queries, and examples of institutions with no manual match. Queries use only the institution name, city, and country when available. Rows without enough location information are retained unchanged and flagged for manual review.
 
 Online geocoding uses the public OpenStreetMap Nominatim search endpoint. Before running it, read the [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/). Public-service use must remain small, single-threaded, cached, identified with a custom user agent, and limited to at most one request per second. The script defaults to a 1.2-second delay and rejects delays below one second.
 

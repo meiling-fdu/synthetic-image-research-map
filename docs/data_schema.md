@@ -2,7 +2,7 @@
 
 ## Overview
 
-The project uses four related CSV tables to represent papers, authors, institutions, and the affiliations connecting them. The schema is intentionally small and compatible with metadata commonly available from OpenAlex, Semantic Scholar, Crossref, arXiv, and manual research.
+The project uses four core related CSV tables to represent papers, authors, institutions, and the affiliations connecting them, plus auxiliary manual correction tables. The schema is intentionally small and compatible with metadata commonly available from OpenAlex, Semantic Scholar, Crossref, arXiv, and manual research.
 
 Files in `data/manual/` are human-maintained source-of-truth corrections and must not be overwritten by automated processing. Future collection scripts should preserve original API responses in `data/raw/`, write normalized output to `data/processed/`, and apply manual data as explicit overrides.
 
@@ -65,6 +65,30 @@ One row represents one institution or organizational unit used for affiliation a
 | `notes` | Free-text comments about aliases, campuses, location uncertainty, or corrections. |
 
 Geocoding results must be cached locally. Automated geocoding should not replace confirmed manual coordinates or normalization decisions.
+
+## `institution_corrections.csv`
+
+One row represents a manually verified override for an institution name found in automatic candidate affiliations. The table is applied before cached or online geocoding, so a correction can replace an incorrect automatic match. It is a human-maintained source file and must never be overwritten by scripts.
+
+| Column | Definition |
+| --- | --- |
+| `match_key` | Raw or normalized institution name to match against `institution_name`. Matching uses lowercase text with simple punctuation removed and whitespace trimmed and collapsed. |
+| `corrected_institution_name` | Manually verified institution name. Leave empty to preserve the candidate value. |
+| `corrected_city` | Manually verified city. Leave empty to preserve the candidate value. |
+| `corrected_country` | Manually verified country. Leave empty to preserve the candidate value. |
+| `corrected_latitude` | Manually verified decimal latitude required for an active correction row. |
+| `corrected_longitude` | Manually verified decimal longitude required for an active correction row. |
+| `correction_source` | URL or explanatory note documenting the evidence for the correction. |
+| `confidence` | Human-assigned confidence: `high`, `medium`, or `low`. |
+| `notes` | Free text describing ambiguity, campus choice, or other correction context. |
+
+Matching is exact after normalization; there is no fuzzy matching. This avoids merging similarly named institutions without explicit human intent. Duplicate normalized `match_key` values are rejected as ambiguous.
+
+Documentation-only fictional example (do not add this row to the template):
+
+```csv
+fictional institute,Fictional Institute of Visual Studies,Example City,Example Country,12.3456,78.9012,https://example.invalid/institution,high,Fictional format example only
+```
 
 ## `paper_author_affiliations.csv`
 

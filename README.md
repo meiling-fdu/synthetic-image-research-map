@@ -75,6 +75,18 @@ python3 scripts/extract_openalex_candidates.py
 
 The processed paper and affiliation CSVs are automatically extracted review material, not manually curated final data. Every row keeps `manual_review=true` until a researcher reviews and deliberately promotes information into `data/manual/`.
 
+### Manual institution corrections
+
+Institution geocoding overrides belong in `data/manual/institution_corrections.csv`. The geocoder applies exact normalized-name matches from this table before using its cache or Nominatim; it does not use fuzzy matching. Corrected coordinates and optional institution, city, and country values retain their provenance in `notes` and remain marked for manual review.
+
+Documentation-only fictional correction example:
+
+```csv
+fictional institute,Fictional Institute of Visual Studies,Example City,Example Country,12.3456,78.9012,https://example.invalid/institution,high,Fictional format example only
+```
+
+### Candidate affiliation geocoding
+
 Preview the unique affiliation queries without making network requests or writing files:
 
 ```bash

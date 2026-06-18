@@ -11,6 +11,7 @@ import argparse
 import csv
 import json
 import math
+import re
 import sys
 import time
 from datetime import datetime, timezone
@@ -26,6 +27,7 @@ DEFAULT_OUTPUT = Path(
     "data/processed/openalex_candidate_affiliations_geocoded.csv"
 )
 DEFAULT_CACHE = Path("data/processed/geocoding_cache.json")
+DEFAULT_CORRECTIONS = Path("data/manual/institution_corrections.csv")
 DEFAULT_SLEEP_SECONDS = 1.2
 NOMINATIM_SEARCH_URL = "https://nominatim.openstreetmap.org/search"
 MANUAL_DATA_DIR = Path("data/manual")
@@ -37,6 +39,17 @@ REQUIRED_COLUMNS = {
     "latitude",
     "longitude",
     "manual_review",
+    "notes",
+}
+CORRECTION_COLUMNS = {
+    "match_key",
+    "corrected_institution_name",
+    "corrected_city",
+    "corrected_country",
+    "corrected_latitude",
+    "corrected_longitude",
+    "correction_source",
+    "confidence",
     "notes",
 }
 
@@ -89,6 +102,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         type=Path,
         default=DEFAULT_CACHE,
         help=f"Local geocoding cache (default: {DEFAULT_CACHE}).",
+    )
+    parser.add_argument(
+        "--corrections",
+        type=Path,
+        default=DEFAULT_CORRECTIONS,
+        help=f"Manual institution correction table (default: {DEFAULT_CORRECTIONS}).",
     )
     parser.add_argument(
         "--dry-run",
@@ -159,6 +178,13 @@ def row_has_valid_coordinates(row: Dict[str, str]) -> bool:
     )
 
 
+def normalize_institution_name(value: Any) -> str:
+    """Normalize punctuation and whitespace for exact, non-fuzzy matching."""
+    lowered = clean_text(value).casefold()
+    without_punctuation = re.sub(r"[_\W]+", " ", lowered)
+    return " ".join(without_punctuation.split())
+
+
 def build_query(row: Dict[str, str]) -> str:
     """Use only institution and known location fields; never infer from author text."""
     institution = clean_text(row.get("institution_name"))
@@ -194,6 +220,97 @@ def read_rows(path: Path) -> Tuple[List[str], List[Dict[str, str]]]:
             return fieldnames, [dict(row) for row in reader]
     except OSError as error:
         raise GeocodingError(f"Could not read {path}: {error}") from error
+
+
+def read_corrections(path: Path) -> Dict[str, Dict[str, str]]:
+    """Read manual overrides without ever modifying their source file."""
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            missing = sorted(CORRECTION_COLUMNS - set(reader.fieldnames or []))
+            if missing:
+                raise GeocodingError(
+                    f"{path} is missing correction columns: {', '.join(missing)}"
+                )
+
+            corrections = {}
+            for line_number, row in enumerate(reader, start=2):
+                if not any(clean_text(value) for value in row.values()):
+                    continue
+                normalized_key = normalize_institution_name(row.get("match_key"))
+                if not normalized_key:
+                    raise GeocodingError(
+                        f"{path}:{line_number} has no usable match_key."
+                    )
+                if normalized_key in corrections:
+                    raise GeocodingError(
+                        f"{path}:{line_number} duplicates normalized match_key "
+                        f"'{normalized_key}'."
+                    )
+                if not valid_coordinate(
+                    row.get("corrected_latitude"), -90.0, 90.0
+                ) or not valid_coordinate(
+                    row.get("corrected_longitude"), -180.0, 180.0
+                ):
+                    raise GeocodingError(
+                        f"{path}:{line_number} must provide valid corrected latitude "
+                        "and longitude values."
+                    )
+                confidence = clean_text(row.get("confidence")).casefold()
+                if confidence and confidence not in {"high", "medium", "low"}:
+                    raise GeocodingError(
+                        f"{path}:{line_number} confidence must be high, medium, low, "
+                        "or empty."
+                    )
+                corrections[normalized_key] = dict(row)
+            return corrections
+    except OSError as error:
+        raise GeocodingError(f"Could not read corrections {path}: {error}") from error
+
+
+def correction_note(correction: Dict[str, str]) -> str:
+    details = [
+        f"Manual institution correction applied for match_key '{clean_text(correction.get('match_key'))}'."
+    ]
+    source = clean_text(correction.get("correction_source"))
+    confidence = clean_text(correction.get("confidence"))
+    correction_notes = clean_text(correction.get("notes"))
+    if source:
+        details.append(f"Source: {source}.")
+    if confidence:
+        details.append(f"Confidence: {confidence}.")
+    if correction_notes:
+        details.append(f"Correction note: {correction_notes}")
+    details.append("Manual provenance retained; verify before curation.")
+    return " ".join(details)
+
+
+def apply_manual_corrections(
+    rows: Sequence[Dict[str, str]],
+    corrections: Dict[str, Dict[str, str]],
+) -> int:
+    """Apply exact normalized-name overrides before cache or online geocoding."""
+    corrected_rows = 0
+    for row in rows:
+        normalized_name = normalize_institution_name(row.get("institution_name"))
+        correction = corrections.get(normalized_name)
+        if correction is None:
+            continue
+
+        row["latitude"] = clean_text(correction.get("corrected_latitude"))
+        row["longitude"] = clean_text(correction.get("corrected_longitude"))
+        for target, source in (
+            ("institution_name", "corrected_institution_name"),
+            ("city", "corrected_city"),
+            ("country", "corrected_country"),
+        ):
+            corrected_value = clean_text(correction.get(source))
+            if corrected_value:
+                row[target] = corrected_value
+        row["manual_review"] = "true"
+        append_note(row, correction_note(correction))
+        corrected_rows += 1
+    return corrected_rows
 
 
 def empty_cache() -> Dict[str, Any]:
@@ -392,10 +509,11 @@ def cache_entry_is_usable(entry: Any) -> bool:
 def run_dry_run(
     rows: Sequence[Dict[str, str]],
     cache: Dict[str, Any],
+    corrected_rows: int,
     limit: Optional[int],
 ) -> int:
     rows_with_coordinates, queries, rows_without_query = collect_queries(rows)
-    rows_needing_geocoding = len(rows) - rows_with_coordinates
+    rows_with_existing_coordinates = rows_with_coordinates - corrected_rows
     cached_results = cache["results"]
     uncached_queries = [
         query
@@ -403,10 +521,26 @@ def run_dry_run(
         if not cache_entry_is_usable(cached_results.get(cache_key(query)))
     ]
     attempted_queries = uncached_queries[:limit] if limit is not None else uncached_queries
+    rows_needing_online_geocoding = 0
+    unmatched_examples = []
+    seen_examples = set()
+    for row in rows:
+        if row_has_valid_coordinates(row):
+            continue
+        query = build_query(row)
+        if not query or cache_entry_is_usable(cached_results.get(cache_key(query))):
+            continue
+        rows_needing_online_geocoding += 1
+        example = clean_text(row.get("institution_name")) or f"(no institution) {query}"
+        normalized_example = normalize_institution_name(example)
+        if normalized_example not in seen_examples:
+            seen_examples.add(normalized_example)
+            unmatched_examples.append(example)
 
     print("DRY RUN: no network requests were made and no files were written.")
-    print(f"Rows already containing valid coordinates: {rows_with_coordinates}")
-    print(f"Rows needing geocoding: {rows_needing_geocoding}")
+    print(f"Rows that would use manual corrections: {corrected_rows}")
+    print(f"Rows already containing valid coordinates: {rows_with_existing_coordinates}")
+    print(f"Rows needing online geocoding: {rows_needing_online_geocoding}")
     print(f"Rows lacking institution, city, and country: {rows_without_query}")
     print(f"Unique queries represented in the local cache: {len(queries) - len(uncached_queries)}")
     print(f"Unique uncached queries that would be attempted: {len(attempted_queries)}")
@@ -414,6 +548,12 @@ def run_dry_run(
         print(f"  {query}")
     if limit is not None and len(uncached_queries) > limit:
         print(f"{len(uncached_queries) - limit} additional uncached queries excluded by --limit.")
+    print("Examples of institutions without a manual correction:")
+    if unmatched_examples:
+        for example in unmatched_examples[:5]:
+            print(f"  {example}")
+    else:
+        print("  None")
     return 0
 
 
@@ -525,12 +665,14 @@ def run(args: argparse.Namespace) -> int:
     try:
         fieldnames, rows = read_rows(args.input)
         cache = load_cache(args.cache)
+        corrections = read_corrections(args.corrections)
+        corrected_rows = apply_manual_corrections(rows, corrections)
     except GeocodingError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
 
     if args.dry_run:
-        return run_dry_run(rows, cache, args.limit)
+        return run_dry_run(rows, cache, corrected_rows, args.limit)
 
     user_agent = clean_text(args.user_agent)
     if not user_agent:
@@ -578,6 +720,7 @@ def run(args: argparse.Namespace) -> int:
     print(f"Updated local cache: {args.cache}")
     print("Geocoding summary:")
     print(f"  Input rows: {len(rows)}")
+    print(f"  Rows using manual corrections: {corrected_rows}")
     print(f"  Online requests made: {requests_made}")
     print(f"  Rows resolved from cache or this run: {resolved_rows}")
     print(f"  Rows still unresolved: {unresolved_rows}")
