@@ -156,6 +156,8 @@ python3 scripts/export_candidate_map_data.py --affiliations-csv data/processed/o
 
 With the local HTTP server running, open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to explore the candidate map. `web/data/openalex_candidate_map_data.json` is generated locally, ignored by Git, and intended only for exploratory visualization of uncurated candidates.
 
+Candidate OpenAlex map records may include institution resolution method, confidence, review status, and resolution notes. The interface exposes these fields in marker popups, filters, and visible-record summaries. A high-confidence resolution indicates an authoritative identifier match, but the paper and affiliation still remain candidate metadata unless they are manually reviewed and curated.
+
 ## One-command pipeline
 
 Preview the complete workflow without executing subprocesses or writing files:

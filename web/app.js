@@ -39,11 +39,14 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const markerLayer = L.layerGroup().addTo(map);
 const taskFilter = document.querySelector("#task-filter");
 const yearFilter = document.querySelector("#year-filter");
+const resolutionFilter = document.querySelector("#resolution-filter");
+const reviewFilter = document.querySelector("#review-filter");
 const resetButton = document.querySelector("#reset-filters");
 const mapStatus = document.querySelector("#map-status");
 const recordCount = document.querySelector("#record-count");
 const countryCount = document.querySelector("#country-count");
 const institutionCount = document.querySelector("#institution-count");
+const reviewCount = document.querySelector("#review-count");
 const prototypeNote = document.querySelector(".prototype-note");
 const intro = document.querySelector(".intro");
 const footer = document.querySelector("footer");
@@ -65,12 +68,73 @@ function recordTitle(record) {
   return record.title ?? record.paper_title;
 }
 
+function hasResolutionMetadata(record) {
+  return [
+    "resolution_method",
+    "resolution_confidence",
+    "needs_review",
+    "resolution_notes",
+  ].some((field) => Object.hasOwn(record, field));
+}
+
+function resolutionConfidence(record) {
+  const confidence = String(record.resolution_confidence || "").toLowerCase();
+  if (["high", "medium", "low", "unresolved"].includes(confidence)) {
+    return confidence;
+  }
+  if (hasResolutionMetadata(record)) {
+    return "unresolved";
+  }
+  return datasetName === "openalex" ? "unresolved" : "";
+}
+
+function reviewStatus(record) {
+  if (!Object.hasOwn(record, "needs_review")) {
+    return null;
+  }
+  if (typeof record.needs_review === "boolean") {
+    return record.needs_review;
+  }
+  return ["1", "true", "yes", "y"].includes(
+    String(record.needs_review).toLowerCase(),
+  );
+}
+
+function formatResolutionValue(value) {
+  return formatTask(value || "unresolved");
+}
+
 function popupContent(record) {
   const authors = record.authors.map(escapeHtml).join(", ");
   const year = record.year ?? "Unknown";
+  const hasResolution = hasResolutionMetadata(record);
+  const confidence = resolutionConfidence(record);
+  const needsReview = reviewStatus(record);
+  const confidenceBadge = hasResolution
+    ? `<span class="popup-badge confidence-${escapeHtml(confidence)}">${escapeHtml(formatResolutionValue(confidence))} confidence</span>`
+    : "";
+  const reviewBadge = needsReview === true
+    ? '<span class="popup-badge needs-review-badge">Needs review</span>'
+    : "";
+  const methodRow = record.resolution_method
+    ? `<dt>Resolution</dt><dd>${escapeHtml(formatResolutionValue(record.resolution_method))}</dd>`
+    : "";
+  const confidenceRow = hasResolution
+    ? `<dt>Confidence</dt><dd>${escapeHtml(formatResolutionValue(confidence))}</dd>`
+    : "";
+  const reviewRow = needsReview !== null
+    ? `<dt>Needs review</dt><dd>${needsReview ? "Yes" : "No"}</dd>`
+    : "";
+  const resolutionNotesRow = record.resolution_notes
+    ? `<dt>Resolution notes</dt><dd class="popup-resolution-notes">${escapeHtml(record.resolution_notes)}</dd>`
+    : "";
 
   return `
-    <span class="popup-task">${escapeHtml(formatTask(record.task))}</span>
+    <div class="popup-badges">
+      <span class="popup-badge popup-task">${escapeHtml(formatTask(record.task))}</span>
+      ${confidenceBadge}
+      ${reviewBadge}
+    </div>
     <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
     <dl class="popup-details">
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
@@ -78,6 +142,10 @@ function popupContent(record) {
       <dt>Institution</dt><dd>${escapeHtml(record.institution)}</dd>
       <dt>Country</dt><dd>${escapeHtml(record.country)}</dd>
       <dt>Authors</dt><dd>${authors}</dd>
+      ${methodRow}
+      ${confidenceRow}
+      ${reviewRow}
+      ${resolutionNotesRow}
     </dl>
   `;
 }
@@ -90,15 +158,27 @@ function updateSummary(visibleRecords) {
   institutionCount.textContent = new Set(
     visibleRecords.map((record) => record.institution).filter(Boolean),
   ).size;
+  reviewCount.textContent = visibleRecords.filter(
+    (record) => reviewStatus(record) === true,
+  ).length;
 }
 
 function renderRecords() {
   const selectedTask = taskFilter.value;
   const selectedYear = yearFilter.value;
+  const selectedResolution = resolutionFilter.value;
+  const selectedReview = reviewFilter.value;
   const visibleRecords = records.filter((record) => {
     const matchesTask = selectedTask === "all" || record.task === selectedTask;
     const matchesYear = selectedYear === "all" || String(record.year) === selectedYear;
-    return matchesTask && matchesYear;
+    const matchesResolution =
+      selectedResolution === "all" || resolutionConfidence(record) === selectedResolution;
+    const status = reviewStatus(record);
+    const matchesReview =
+      selectedReview === "all" ||
+      (selectedReview === "true" && status === true) ||
+      (selectedReview === "false" && status === false);
+    return matchesTask && matchesYear && matchesResolution && matchesReview;
   });
 
   markerLayer.clearLayers();
@@ -138,6 +218,9 @@ function populateYears() {
 function enableControls() {
   taskFilter.disabled = false;
   yearFilter.disabled = false;
+  const supportsResolution = records.some(hasResolutionMetadata);
+  resolutionFilter.disabled = !supportsResolution;
+  reviewFilter.disabled = !supportsResolution;
   resetButton.disabled = false;
 }
 
@@ -219,9 +302,13 @@ async function loadData() {
 
 taskFilter.addEventListener("change", renderRecords);
 yearFilter.addEventListener("change", renderRecords);
+resolutionFilter.addEventListener("change", renderRecords);
+reviewFilter.addEventListener("change", renderRecords);
 resetButton.addEventListener("click", () => {
   taskFilter.value = "all";
   yearFilter.value = "all";
+  resolutionFilter.value = "all";
+  reviewFilter.value = "all";
   renderRecords();
 });
 

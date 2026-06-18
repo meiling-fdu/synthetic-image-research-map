@@ -50,6 +50,26 @@
                 <option value="all">All years</option>
               </select>
             </label>
+
+            <label for="resolution-filter">
+              Resolution confidence
+              <select id="resolution-filter" disabled>
+                <option value="all">All confidence levels</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+                <option value="unresolved">Unresolved</option>
+              </select>
+            </label>
+
+            <label for="review-filter">
+              Review status
+              <select id="review-filter" disabled>
+                <option value="all">All records</option>
+                <option value="true">Needs review</option>
+                <option value="false">No review flag</option>
+              </select>
+            </label>
           </div>
           <button id="reset-filters" type="button" disabled>Reset filters</button>
         </section>
@@ -68,6 +88,10 @@
             <div>
               <dt>Institutions</dt>
               <dd id="institution-count">0</dd>
+            </div>
+            <div>
+              <dt>Needs review</dt>
+              <dd id="review-count">0</dd>
             </div>
           </dl>
         </section>

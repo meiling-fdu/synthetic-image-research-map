@@ -165,8 +165,8 @@ select:disabled {
 
 .summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 8px;
   margin: 0;
 }
 
@@ -276,17 +276,57 @@ select:disabled {
   font-family: Inter, "Helvetica Neue", Arial, sans-serif;
 }
 
-.popup-task {
+.popup-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 9px;
+}
+
+.popup-badge {
   display: inline-block;
-  margin-bottom: 8px;
+  border: 1px solid transparent;
   border-radius: 999px;
   padding: 3px 8px;
-  background: #e9f0f3;
-  color: var(--accent-dark);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.popup-task {
+  background: #e9f0f3;
+  color: var(--accent-dark);
+}
+
+.confidence-high {
+  border-color: #a9c7b6;
+  background: #e8f2ec;
+  color: #275d42;
+}
+
+.confidence-medium {
+  border-color: #d8bf85;
+  background: #f7f0dc;
+  color: #76571d;
+}
+
+.confidence-low {
+  border-color: #d7a7a0;
+  background: #f7e9e6;
+  color: #873e36;
+}
+
+.confidence-unresolved {
+  border-color: #bdc6cc;
+  background: #eef1f3;
+  color: #53616b;
+}
+
+.needs-review-badge {
+  border-color: #c88e86;
+  background: #fff5f2;
+  color: #8d352c;
 }
 
 .popup-title {
@@ -311,6 +351,11 @@ select:disabled {
 
 .popup-details dd {
   margin: 0;
+}
+
+.popup-resolution-notes {
+  color: #4e5d68;
+  line-height: 1.45;
 }
 
 footer {
