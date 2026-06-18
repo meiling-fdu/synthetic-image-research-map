@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A static prototype for exploring synthetic image detection and attribution research on a world map."
+    >
+    <title>Synthetic Image Research Map</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
+      crossorigin=""
+    >
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Academic landscape prototype</p>
+        <h1>Synthetic Image Research Map</h1>
+        <p class="intro">
+          Explore toy records representing research in synthetic image detection and attribution.
+        </p>
+      </div>
+      <p class="prototype-note">Fictional sample data only</p>
+    </header>
+
+    <main class="page-shell">
+      <aside class="sidebar" aria-label="Map controls and summary">
+        <section class="panel" aria-labelledby="filters-heading">
+          <h2 id="filters-heading">Filters</h2>
+          <div class="filter-grid">
+            <label for="task-filter">
+              Task
+              <select id="task-filter" disabled>
+                <option value="all">All tasks</option>
+                <option value="detection">Detection</option>
+                <option value="attribution">Attribution</option>
+                <option value="both">Both</option>
+              </select>
+            </label>
+
+            <label for="year-filter">
+              Year
+              <select id="year-filter" disabled>
+                <option value="all">All years</option>
+              </select>
+            </label>
+          </div>
+          <button id="reset-filters" type="button" disabled>Reset filters</button>
+        </section>
+
+        <section class="panel" aria-labelledby="summary-heading">
+          <h2 id="summary-heading">Visible research</h2>
+          <dl class="summary-grid" aria-live="polite">
+            <div>
+              <dt>Records</dt>
+              <dd id="record-count">0</dd>
+            </div>
+            <div>
+              <dt>Countries</dt>
+              <dd id="country-count">0</dd>
+            </div>
+            <div>
+              <dt>Institutions</dt>
+              <dd id="institution-count">0</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="panel legend" aria-labelledby="legend-heading">
+          <h2 id="legend-heading">Task key</h2>
+          <ul>
+            <li><span class="legend-dot detection"></span>Detection</li>
+            <li><span class="legend-dot attribution"></span>Attribution</li>
+            <li><span class="legend-dot both"></span>Both</li>
+          </ul>
+        </section>
+      </aside>
+
+      <section class="map-panel" aria-labelledby="map-heading">
+        <div class="map-heading-row">
+          <div>
+            <p class="eyebrow">Global view</p>
+            <h2 id="map-heading">Research locations</h2>
+          </div>
+          <p id="map-status" class="map-status" role="status">Loading sample data...</p>
+        </div>
+        <div id="map" aria-label="World map of fictional research records"></div>
+      </section>
+    </main>
+
+    <footer>
+      Prototype interface. Records shown here are fictional and are not literature data.
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>

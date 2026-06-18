@@ -31,7 +31,10 @@ An interactive academic world map for exploring papers, researchers, and institu
 |   |-- processed/     # Cleaned, normalized, and derived datasets
 |   `-- manual/        # Human-reviewed corrections and overrides
 |-- scripts/           # Python collection and preprocessing scripts
-|-- web/
+|-- web/               # Static Leaflet.js prototype
+|   |-- index.html     # Prototype page and controls
+|   |-- style.css      # Responsive interface styles
+|   |-- app.js         # Map rendering, filters, and summary counts
 |   `-- data/          # Static datasets exported for the website
 |-- docs/              # Methodology, schemas, and project notes
 `-- notebooks/         # Exploratory analysis notebooks
@@ -48,6 +51,18 @@ Empty directories contain `.gitkeep` placeholders until project files are added.
 5. Apply manual overrides during processing and export website-ready static data to `web/data/`.
 6. Load the exported data in the static Leaflet.js website from `web/`.
 
+## Local Preview
+
+The prototype loads its JSON data with `fetch`, so preview it through a local HTTP server rather than opening `web/index.html` directly:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open [http://localhost:8000/web/](http://localhost:8000/web/).
+
+The current map uses only clearly fictional toy records from `web/data/sample_map_data.json`. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during preview.
+
 ## Current Status
 
-**Early prototype.** The repository structure and project conventions are being established. Data collection and the interactive web map have not yet been implemented.
+**Early prototype.** A minimal static Leaflet.js map demonstrates markers, paper popups, task and year filters, and visible-record summaries using fictional toy data. Real literature collection and ingestion have not yet been implemented.
