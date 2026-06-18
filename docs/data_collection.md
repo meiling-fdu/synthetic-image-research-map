@@ -71,6 +71,32 @@ The extractor deduplicates by OpenAlex ID and falls back to a normalized title w
 
 Processed candidate CSVs are not final curated data. A reviewer must verify relevance, labels, author identities, institutions, affiliations, and locations before manually adding any record to `data/manual/`. The extractor never writes to or updates the manual CSV templates.
 
+## Candidate Affiliation Geocoding
+
+`scripts/geocode_candidate_affiliations.py` can add preliminary coordinates to candidate affiliation rows before the map export. It reads `data/processed/openalex_candidate_affiliations.csv`, writes `data/processed/openalex_candidate_affiliations_geocoded.csv`, and stores reusable query results in `data/processed/geocoding_cache.json` by default. Both generated files are ignored by Git.
+
+Start with a dry run, which makes no network requests and writes no files:
+
+```bash
+python3 scripts/geocode_candidate_affiliations.py --dry-run
+```
+
+The dry run reports rows with existing coordinates, rows needing geocoding, and the unique uncached queries that an online run would attempt. Queries use only the institution name, city, and country when available. Rows without enough location information are retained unchanged and flagged for manual review.
+
+Online geocoding uses the public OpenStreetMap Nominatim search endpoint. Before running it, read the [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/). Public-service use must remain small, single-threaded, cached, identified with a custom user agent, and limited to at most one request per second. The script defaults to a 1.2-second delay and rejects delays below one second.
+
+Use a clearly identifying user agent and begin with a small limit:
+
+```bash
+python3 scripts/geocode_candidate_affiliations.py \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)" \
+  --limit 10
+```
+
+Cached successes and “not found” results are reused on later runs. Service and rate-limit errors stop further requests while preserving successfully cached progress. Unresolved rows are never discarded.
+
+Geocoding is approximate: the first Nominatim result may refer to the wrong campus, similarly named institution, or administrative location. Every enriched row remains `manual_review=true`, and coordinates must be confirmed before they become curated data in `data/manual/`.
+
 ## Candidate CSV-to-Map Export
 
 `scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It groups authors at each paper-institution location and preserves separate map records when a paper has multiple institutions.
@@ -87,6 +113,13 @@ Generate the local map dataset:
 
 ```bash
 python3 scripts/export_candidate_map_data.py
+```
+
+After geocoding, point the exporter at the generated affiliation CSV:
+
+```bash
+python3 scripts/export_candidate_map_data.py \
+  --affiliations-csv data/processed/openalex_candidate_affiliations_geocoded.csv
 ```
 
 The input and output paths can be changed with `--papers-csv`, `--affiliations-csv`, and `--output`. Use `--max-records` to limit the number of grouped map records exported during local exploration.
