@@ -159,7 +159,11 @@ The review queue is generated from automatic candidate data and is not curated f
 
 `scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It groups authors at each paper-institution location and preserves separate map records when a paper has multiple institutions.
 
-The exporter includes only affiliation rows that already contain valid latitude and longitude values. It does not geocode missing institutions, call external APIs, or infer locations. Rows with missing or invalid coordinates remain in the processed CSV and are reported in the export summary rather than silently assigned a location.
+The exporter includes only affiliation rows with a complete valid resolved or original latitude/longitude pair. It does not geocode missing institutions, call external APIs, or infer locations. Rows with missing or invalid coordinates remain in the processed CSV and are reported in the export summary rather than silently assigned a location.
+
+When the affiliation CSV contains automatic resolution fields, the exporter prefers complete valid `resolved_latitude` and `resolved_longitude` pairs over the original coordinates. It also prefers non-empty resolved institution names, cities, and countries. If resolved coordinates are absent or invalid, the exporter falls back to a complete valid original coordinate pair; it never combines coordinates from different sources.
+
+Resolution method, confidence, review status, and notes are included in each map record when those columns are available. Records with `needs_review=true` may still be visualized for exploration, but they remain preliminary and should not be presented as verified institution metadata. The export summary separates records using resolved versus original coordinates and reports skipped and reviewable records.
 
 Inspect the join and summary without writing the JSON file:
 
@@ -178,6 +182,12 @@ After geocoding, point the exporter at the generated affiliation CSV:
 ```bash
 python3 scripts/export_candidate_map_data.py \
   --affiliations-csv data/processed/openalex_candidate_affiliations_geocoded.csv
+```
+
+To export the automatically resolved affiliation data:
+
+```bash
+python3 scripts/export_candidate_map_data.py --affiliations-csv data/processed/openalex_candidate_affiliations_resolved.csv --max-records 200
 ```
 
 The input and output paths can be changed with `--papers-csv`, `--affiliations-csv`, and `--output`. Use `--max-records` to limit the number of grouped map records exported during local exploration.

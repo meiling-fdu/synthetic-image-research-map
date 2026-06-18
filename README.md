@@ -148,6 +148,12 @@ python3 scripts/export_candidate_map_data.py \
   --affiliations-csv data/processed/openalex_candidate_affiliations_geocoded.csv
 ```
 
+To prefer authoritative resolved institution metadata and cap the exploratory export:
+
+```bash
+python3 scripts/export_candidate_map_data.py --affiliations-csv data/processed/openalex_candidate_affiliations_resolved.csv --max-records 200
+```
+
 With the local HTTP server running, open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to explore the candidate map. `web/data/openalex_candidate_map_data.json` is generated locally, ignored by Git, and intended only for exploratory visualization of uncurated candidates.
 
 ## Local Preview

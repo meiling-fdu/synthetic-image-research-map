@@ -169,6 +169,51 @@ def record_id(openalex_id: str, institution_key: Tuple[Any, ...]) -> str:
     return f"openalex-candidate-{digest}"
 
 
+def preferred_value(row: Dict[str, str], resolved_column: str, original_column: str) -> str:
+    return clean_text(row.get(resolved_column)) or clean_text(row.get(original_column))
+
+
+def preferred_coordinates(
+    row: Dict[str, str],
+) -> Tuple[Optional[float], Optional[float], str, str]:
+    """Choose a complete valid coordinate pair without mixing resolution sources."""
+    pairs = (
+        (
+            clean_text(row.get("resolved_latitude")),
+            clean_text(row.get("resolved_longitude")),
+            "resolved",
+        ),
+        (
+            clean_text(row.get("latitude")),
+            clean_text(row.get("longitude")),
+            "original",
+        ),
+    )
+    has_complete_pair = False
+    for latitude_text, longitude_text, source in pairs:
+        if not latitude_text or not longitude_text:
+            continue
+        has_complete_pair = True
+        latitude = parse_coordinate(latitude_text, -90.0, 90.0)
+        longitude = parse_coordinate(longitude_text, -180.0, 180.0)
+        if latitude is not None and longitude is not None:
+            return latitude, longitude, source, ""
+    failure = "invalid" if has_complete_pair else "missing"
+    return None, None, "", failure
+
+
+def has_resolution_metadata(row: Dict[str, str]) -> bool:
+    return any(
+        column in row
+        for column in (
+            "resolution_method",
+            "resolution_confidence",
+            "needs_review",
+            "resolution_notes",
+        )
+    )
+
+
 def group_map_records(
     paper_rows: Sequence[Dict[str, str]],
     affiliation_rows: Sequence[Dict[str, str]],
@@ -183,18 +228,30 @@ def group_map_records(
     missing_coordinates = 0
     invalid_coordinates = 0
     unmatched_papers = 0
+    skipped_record_keys = set()
 
     for affiliation in affiliation_rows:
-        latitude_text = clean_text(affiliation.get("latitude"))
-        longitude_text = clean_text(affiliation.get("longitude"))
-        if not latitude_text or not longitude_text:
-            missing_coordinates += 1
-            continue
-
-        latitude = parse_coordinate(latitude_text, -90.0, 90.0)
-        longitude = parse_coordinate(longitude_text, -180.0, 180.0)
+        institution = preferred_value(
+            affiliation, "resolved_institution_name", "institution_name"
+        )
+        city = preferred_value(affiliation, "resolved_city", "city")
+        country = preferred_value(affiliation, "resolved_country", "country")
+        latitude, longitude, coordinate_source, coordinate_failure = (
+            preferred_coordinates(affiliation)
+        )
         if latitude is None or longitude is None:
-            invalid_coordinates += 1
+            if coordinate_failure == "missing":
+                missing_coordinates += 1
+            else:
+                invalid_coordinates += 1
+            skipped_record_keys.add(
+                (
+                    clean_text(affiliation.get("openalex_id")),
+                    institution,
+                    city,
+                    country,
+                )
+            )
             continue
 
         openalex_id = clean_text(affiliation.get("openalex_id"))
@@ -204,9 +261,9 @@ def group_map_records(
             continue
 
         institution_key = (
-            clean_text(affiliation.get("institution_name")),
-            clean_text(affiliation.get("city")),
-            clean_text(affiliation.get("country")),
+            institution,
+            city,
+            country,
             latitude,
             longitude,
         )
@@ -232,8 +289,29 @@ def group_map_records(
                 "manual_review": parse_bool(paper.get("manual_review"))
                 or parse_bool(affiliation.get("manual_review")),
                 "notes": [],
+                "_coordinate_sources": set(),
+                "_has_resolution_metadata": False,
+                "_resolution_notes": [],
             }
             grouped[group_key] = group
+
+        group["_coordinate_sources"].add(coordinate_source)
+        if has_resolution_metadata(affiliation):
+            group["_has_resolution_metadata"] = True
+            if not group.get("resolution_method"):
+                group["resolution_method"] = clean_text(
+                    affiliation.get("resolution_method")
+                )
+            if not group.get("resolution_confidence"):
+                group["resolution_confidence"] = clean_text(
+                    affiliation.get("resolution_confidence")
+                )
+            group["needs_review"] = group.get("needs_review", False) or parse_bool(
+                affiliation.get("needs_review")
+            )
+            group["_resolution_notes"].extend(
+                split_notes(affiliation.get("resolution_notes"))
+            )
 
         author_name = clean_text(affiliation.get("author_name"))
         if author_name and author_name not in group["authors"]:
@@ -248,12 +326,17 @@ def group_map_records(
     for group in grouped.values():
         group["authors"] = unique_strings(group["authors"])
         group["notes"] = " | ".join(unique_strings(group["notes"]))
+        if group["_has_resolution_metadata"]:
+            group["resolution_notes"] = " | ".join(
+                unique_strings(group["_resolution_notes"])
+            )
         records.append(group)
 
     counters = {
         "affiliation_rows_skipped_missing_coordinates": missing_coordinates,
         "affiliation_rows_skipped_invalid_coordinates": invalid_coordinates,
         "affiliation_rows_skipped_unmatched_paper": unmatched_papers,
+        "map_records_skipped_missing_coordinates": len(skipped_record_keys),
     }
     return records, counters
 
@@ -268,12 +351,31 @@ def build_export(
     if max_records is not None:
         records = records[:max_records]
 
+    resolved_coordinate_records = sum(
+        "resolved" in record["_coordinate_sources"] for record in records
+    )
+    original_coordinate_records = sum(
+        "resolved" not in record["_coordinate_sources"]
+        and "original" in record["_coordinate_sources"]
+        for record in records
+    )
+    records_needing_review = sum(
+        record.get("needs_review") is True for record in records
+    )
+    for record in records:
+        record.pop("_coordinate_sources", None)
+        record.pop("_has_resolution_metadata", None)
+        record.pop("_resolution_notes", None)
+
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     summary = {
         "candidate_papers_read": len(paper_rows),
         "affiliation_rows_read": len(affiliation_rows),
         "map_records_available_before_limit": available_records,
         "map_records_exported": len(records),
+        "map_records_using_resolved_coordinates": resolved_coordinate_records,
+        "map_records_using_original_coordinates": original_coordinate_records,
+        "map_records_marked_needs_review": records_needing_review,
         **counters,
     }
     return {
@@ -305,6 +407,22 @@ def print_summary(summary: Dict[str, int]) -> None:
     print(f"  Candidate papers read: {summary['candidate_papers_read']}")
     print(f"  Affiliation rows read: {summary['affiliation_rows_read']}")
     print(f"  Map records exported: {summary['map_records_exported']}")
+    print(
+        "  Map records using resolved coordinates: "
+        f"{summary['map_records_using_resolved_coordinates']}"
+    )
+    print(
+        "  Map records using original coordinates: "
+        f"{summary['map_records_using_original_coordinates']}"
+    )
+    print(
+        "  Map records skipped because coordinates were missing or invalid: "
+        f"{summary['map_records_skipped_missing_coordinates']}"
+    )
+    print(
+        "  Exported records marked needs_review=true: "
+        f"{summary['map_records_marked_needs_review']}"
+    )
     print(
         "  Rows skipped because coordinates were missing: "
         f"{summary['affiliation_rows_skipped_missing_coordinates']}"
