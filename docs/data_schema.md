@@ -1,0 +1,104 @@
+# Data Schema
+
+## Overview
+
+The project uses four related CSV tables to represent papers, authors, institutions, and the affiliations connecting them. The schema is intentionally small and compatible with metadata commonly available from OpenAlex, Semantic Scholar, Crossref, arXiv, and manual research.
+
+Files in `data/manual/` are human-maintained source-of-truth corrections and must not be overwritten by automated processing. Future collection scripts should preserve original API responses in `data/raw/`, write normalized output to `data/processed/`, and apply manual data as explicit overrides.
+
+Use UTF-8 CSV files. Store booleans as `true` or `false`; leave a value empty when it is unknown. Stable project IDs should be used for relationships rather than names, because names can change or collide.
+
+## `papers.csv`
+
+One row represents one paper. This table stores bibliographic metadata, scope labels, and provenance for how the paper entered the dataset.
+
+| Column | Definition |
+| --- | --- |
+| `paper_id` | Stable, project-assigned identifier for the paper; primary key. |
+| `title` | Paper title as reported by the preferred source or confirmed manually. |
+| `year` | Four-digit publication year. Leave empty if unresolved. |
+| `venue` | Journal, conference, workshop, or repository venue. |
+| `doi` | Canonical DOI without a resolver URL when available. |
+| `url` | Preferred public landing-page URL for the paper. |
+| `arxiv_id` | arXiv identifier, including version only when the version matters. |
+| `task` | Primary project task label: `detection`, `attribution`, or `both`. |
+| `subtask` | More specific reviewable label, such as generator attribution, source identification, or provenance verification. Use a documented vocabulary once one is established. |
+| `is_survey` | `true` when the paper is a survey, review, systematic review, or taxonomy rather than a primary research contribution. |
+| `is_deepfake_related` | `true` when the work specifically concerns deepfakes or face manipulation. This flag keeps that related area distinguishable from general synthetic-image research. |
+| `is_image_editing_related` | `true` when the work concerns attribution or detection of image editing or manipulation rather than image generation alone. |
+| `source_query` | Query, search phrase, import batch, or other discovery context that produced the record. |
+| `source_database` | Originating metadata source, such as `openalex`, `semantic_scholar`, `crossref`, `arxiv`, or `manual`. |
+| `manual_review` | `true` when a human must verify the record, classification, deduplication, or metadata; otherwise `false`. |
+| `notes` | Free-text comments for decisions, uncertainty, corrections, or follow-up work. |
+
+## `authors.csv`
+
+One row represents one author identity. The table keeps source identifiers and profile links without assuming that authors sharing a name are the same person.
+
+| Column | Definition |
+| --- | --- |
+| `author_id` | Stable, project-assigned identifier for the author; primary key. |
+| `name` | Author's display name, preserving the best available spelling. |
+| `orcid` | ORCID identifier when confirmed. |
+| `homepage` | Confirmed personal or institutional homepage URL. |
+| `google_scholar` | Google Scholar profile identifier or URL when confirmed. |
+| `semantic_scholar` | Semantic Scholar author identifier or profile URL when available. |
+| `notes` | Free-text comments about identity, name variants, or unresolved ambiguity. |
+
+Do not merge two author records solely because their names match. Identity resolution requires supporting identifiers or manual confirmation.
+
+## `institutions.csv`
+
+One row represents one institution or organizational unit used for affiliation and map placement. Original names remain available while a reviewed normalized form supports display and grouping.
+
+| Column | Definition |
+| --- | --- |
+| `institution_id` | Stable, project-assigned identifier for the institution; primary key. |
+| `name` | Institution name as reported by a source or affiliation string. |
+| `normalized_name` | Manually confirmed canonical display name used for grouping variants. Do not populate by blindly merging similar names. |
+| `city` | City associated with the institution location. |
+| `country` | Country associated with the institution location; use one consistent naming convention. |
+| `latitude` | Decimal latitude for the reviewed map location. |
+| `longitude` | Decimal longitude for the reviewed map location. |
+| `geocoding_source` | Source of the coordinates, such as a named geocoder, source database, institutional page, or `manual`. |
+| `manual_review` | `true` when identity, normalization, location, or coordinates require human verification; otherwise `false`. |
+| `notes` | Free-text comments about aliases, campuses, location uncertainty, or corrections. |
+
+Geocoding results must be cached locally. Automated geocoding should not replace confirmed manual coordinates or normalization decisions.
+
+## `paper_author_affiliations.csv`
+
+One row represents a specific author-institution affiliation on a specific paper. Together, `paper_id`, `author_id`, and `institution_id` identify the relationship; multiple rows are allowed when an author reports multiple affiliations.
+
+| Column | Definition |
+| --- | --- |
+| `paper_id` | Foreign key to `papers.paper_id`. |
+| `author_id` | Foreign key to `authors.author_id`. |
+| `institution_id` | Foreign key to `institutions.institution_id`. Leave empty only when the source affiliation cannot yet be resolved to an institution. |
+| `author_order` | One-based position of the author in the paper's author list. |
+| `is_corresponding` | `true` when the source identifies this author as corresponding, `false` when explicitly not corresponding, or empty when unknown. |
+| `affiliation_text` | Original affiliation text associated with this author and paper, preserved for provenance and later review. |
+| `manual_review` | `true` when the author, institution, or relationship match is uncertain and needs human verification; otherwise `false`. |
+| `notes` | Free-text comments about the relationship, unresolved mappings, or source conflicts. |
+
+### Why This Relationship Table Is Necessary
+
+Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views.
+
+## Paper Labeling
+
+Labels describe scope without collapsing related categories into one field:
+
+- Set `task` to `detection` when the main goal is deciding whether an image is synthetic, `attribution` when the goal is identifying its generator, source, or generation process, and `both` when both are substantive tasks.
+- Use `subtask` for a narrower task description. Keep values concise and reviewable; document a controlled vocabulary before relying on it for filtering.
+- Set `is_survey=true` for survey, review, systematic review, or taxonomy papers. A survey should still receive the `task` value that best describes its topical coverage.
+- Set `is_deepfake_related=true` for deepfake or face-manipulation research. This flag does not replace `task`.
+- Set `is_image_editing_related=true` for work centered on edited or manipulated images. This flag does not replace `task`.
+- A paper may have more than one boolean flag. For example, a survey of deepfake detection can use `task=detection`, `is_survey=true`, and `is_deepfake_related=true`.
+- Audio-only and video-only work is outside the project scope. Multimodal work should be included only when generated-image research is a meaningful component, with the scope explained in `notes`.
+
+## Manual Review and Automatic Labels
+
+Automatic labels are preliminary suggestions, not final classifications. They must remain visible, traceable, and editable so that a reviewer can understand and correct them. Future processing should preserve the rule, model, query, or source that produced an automatic decision rather than silently replacing it.
+
+Set `manual_review=true` whenever a value is uncertain or conflicting, including ambiguous paper scope, author identity, institution normalization, affiliation mapping, deduplication, or geocoding. Describe the question in `notes`. After a human resolves the issue, update the reviewed manual record, set `manual_review=false`, and retain enough provenance or notes to explain the decision. An empty value means unknown; it should not be treated as reviewed or inferred automatically.
