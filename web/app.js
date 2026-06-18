@@ -272,13 +272,37 @@ function updateDatasetLabels() {
   }
 }
 
+function normalizeDatasetPayload(payload) {
+  if (Array.isArray(payload)) {
+    return { metadata: {}, records: payload };
+  }
+  if (payload && typeof payload === "object" && Array.isArray(payload.records)) {
+    const metadata =
+      payload.metadata &&
+      typeof payload.metadata === "object" &&
+      !Array.isArray(payload.metadata)
+        ? payload.metadata
+        : {};
+    return { metadata, records: payload.records };
+  }
+  throw new Error(`${datasetName} data does not contain a records array`);
+}
+
+function displayMetadataWarning(metadata) {
+  const warning =
+    typeof metadata.warning === "string" ? metadata.warning.trim() : "";
+  if (warning) {
+    intro.textContent = `${intro.textContent} ${warning}`;
+  }
+}
+
 async function loadData() {
   try {
     const response = await fetch(datasetConfig.url);
     if (!response.ok) {
       if (datasetName === "preview") {
         showDatasetMessage(
-          "Public preview map data is not available. Generate it with scripts/export_public_preview.py.",
+          "Preview dataset could not be loaded. Check that web/data/public_preview_map_data.json is published.",
           true,
         );
         return;
@@ -300,15 +324,17 @@ async function loadData() {
     }
 
     const data = JSON.parse(responseText);
-    if (!Array.isArray(data.records) || !data.records.every(validateRecord)) {
+    const normalizedData = normalizeDatasetPayload(data);
+    if (!normalizedData.records.every(validateRecord)) {
       throw new Error(`${datasetName} data does not match the expected format`);
     }
-    if (data.records.length === 0) {
+    if (normalizedData.records.length === 0) {
       showDatasetMessage(datasetConfig.emptyMessage);
       return;
     }
 
-    records = data.records;
+    records = normalizedData.records;
+    displayMetadataWarning(normalizedData.metadata);
     populateYears();
     enableControls();
     renderRecords();
@@ -318,7 +344,7 @@ async function loadData() {
       openalex:
         "OpenAlex candidate map data could not be read. Regenerate the local export and try again.",
       preview:
-        "Public preview map data could not be read. Regenerate the public preview export and try again.",
+        "Preview dataset could not be loaded. Regenerate the public preview export and try again.",
       sample: "Sample data could not be loaded. Preview the site through a local server.",
     };
     const message = messages[datasetName];

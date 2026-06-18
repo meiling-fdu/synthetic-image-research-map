@@ -228,7 +228,7 @@ The current map uses only clearly fictional toy records from `web/data/sample_ma
 
 The public GitHub Pages site only shows committed files. Locally generated candidate data is not published unless it is explicitly committed.
 
-After committing `web/data/public_preview_map_data.json`, open the Pages URL with `/web/?dataset=preview` to view the uncurated public preview.
+After committing `web/data/public_preview_map_data.json`, add `?dataset=preview` to the repository's Pages URL or open `/web/?dataset=preview` directly. The root redirect preserves the dataset query parameter.
 
 ## Current Status
 
