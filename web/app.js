@@ -12,9 +12,16 @@ const DATASET_CONFIG = {
     emptyMessage:
       "The OpenAlex candidate dataset contains no records with valid coordinates. Run the local export after adding reviewed coordinates to the processed affiliation data.",
   },
+  preview: {
+    url: "data/public_preview_map_data.json",
+    recordLabel: "uncurated public preview record",
+    emptyMessage: "The public preview dataset contains no eligible map records.",
+  },
 };
 const requestedDataset = new URLSearchParams(window.location.search).get("dataset");
-const datasetName = requestedDataset === "openalex" ? "openalex" : "sample";
+const datasetName = ["openalex", "preview"].includes(requestedDataset)
+  ? requestedDataset
+  : "sample";
 const datasetConfig = DATASET_CONFIG[datasetName];
 const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -170), L.latLng(75, 170));
 const TASK_COLORS = {
@@ -85,7 +92,7 @@ function resolutionConfidence(record) {
   if (hasResolutionMetadata(record)) {
     return "unresolved";
   }
-  return datasetName === "openalex" ? "unresolved" : "";
+  return datasetName === "sample" ? "" : "unresolved";
 }
 
 function reviewStatus(record) {
@@ -247,20 +254,35 @@ function showDatasetMessage(message, isError = false) {
 }
 
 function updateDatasetLabels() {
-  if (datasetName !== "openalex") {
+  if (datasetName === "sample") {
     return;
   }
-  prototypeNote.textContent = "Uncurated OpenAlex candidates";
-  intro.textContent =
-    "Explore locally generated candidate records for synthetic image detection and attribution research.";
-  footer.textContent =
-    "Exploratory candidate view. Records are automatically extracted and require manual review.";
+  if (datasetName === "preview") {
+    prototypeNote.textContent = "Uncurated public preview";
+    intro.textContent =
+      "Explore a filtered public preview of automatically generated OpenAlex candidate metadata.";
+    footer.textContent =
+      "Uncurated public preview. These candidate records are not a manually curated bibliography.";
+  } else {
+    prototypeNote.textContent = "Uncurated OpenAlex candidates";
+    intro.textContent =
+      "Explore locally generated candidate records for synthetic image detection and attribution research.";
+    footer.textContent =
+      "Exploratory candidate view. Records are automatically extracted and require manual review.";
+  }
 }
 
 async function loadData() {
   try {
     const response = await fetch(datasetConfig.url);
     if (!response.ok) {
+      if (datasetName === "preview") {
+        showDatasetMessage(
+          "Public preview map data is not available. Generate it with scripts/export_public_preview.py.",
+          true,
+        );
+        return;
+      }
       if (datasetName === "openalex") {
         showDatasetMessage(
           "OpenAlex candidate map data is not available. Generate it locally with scripts/export_candidate_map_data.py.",
@@ -273,7 +295,7 @@ async function loadData() {
 
     const responseText = await response.text();
     if (!responseText.trim()) {
-      showDatasetMessage(datasetConfig.emptyMessage, datasetName === "openalex");
+      showDatasetMessage(datasetConfig.emptyMessage, datasetName !== "sample");
       return;
     }
 
@@ -292,10 +314,14 @@ async function loadData() {
     renderRecords();
   } catch (error) {
     console.error(error);
-    const message =
-      datasetName === "openalex"
-        ? "OpenAlex candidate map data could not be read. Regenerate the local export and try again."
-        : "Sample data could not be loaded. Preview the site through a local server.";
+    const messages = {
+      openalex:
+        "OpenAlex candidate map data could not be read. Regenerate the local export and try again.",
+      preview:
+        "Public preview map data could not be read. Regenerate the public preview export and try again.",
+      sample: "Sample data could not be loaded. Preview the site through a local server.",
+    };
+    const message = messages[datasetName];
     showDatasetMessage(message, true);
   }
 }

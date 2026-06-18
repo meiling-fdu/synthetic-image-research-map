@@ -237,4 +237,6 @@ data/processed/institution_resolution_report.csv
 data/processed/institution_resolution_cache.json
 
 # Locally generated exploratory candidate map data
+# Local candidate map data stays private; the filtered public preview is trackable.
 web/data/openalex_candidate_map_data.json
+!web/data/public_preview_map_data.json

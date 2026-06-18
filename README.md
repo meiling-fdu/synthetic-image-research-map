@@ -158,6 +158,34 @@ With the local HTTP server running, open [http://localhost:8000/web/?dataset=ope
 
 Candidate OpenAlex map records may include institution resolution method, confidence, review status, and resolution notes. The interface exposes these fields in marker popups, filters, and visible-record summaries. A high-confidence resolution indicates an authoritative identifier match, but the paper and affiliation still remain candidate metadata unless they are manually reviewed and curated.
 
+### Public preview export
+
+The website supports three dataset modes:
+
+- The default **sample dataset** is committed fictional toy data for demonstrating the interface.
+- The **local OpenAlex candidate dataset** is generated at `web/data/openalex_candidate_map_data.json`, opened with `?dataset=openalex`, and ignored by Git.
+- The **public preview dataset** is a filtered candidate subset generated at `web/data/public_preview_map_data.json`, opened with `?dataset=preview`, and intended to be reviewed before it is committed for GitHub Pages.
+
+Preview the default filtering without writing a file:
+
+```bash
+python3 scripts/export_public_preview.py --dry-run
+```
+
+Export up to 200 medium-or-higher-confidence records while excluding records marked as needing review:
+
+```bash
+python3 scripts/export_public_preview.py
+```
+
+For a smaller high-confidence-only preview:
+
+```bash
+python3 scripts/export_public_preview.py --max-records 50 --min-confidence high
+```
+
+The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It excludes raw API responses, caches, low-confidence records, and review-flagged records under the default settings.
+
 ## One-command pipeline
 
 Preview the complete workflow without executing subprocesses or writing files:
@@ -199,6 +227,8 @@ The current map uses only clearly fictional toy records from `web/data/sample_ma
 6. Open the generated GitHub Pages URL.
 
 The public GitHub Pages site only shows committed files. Locally generated candidate data is not published unless it is explicitly committed.
+
+After committing `web/data/public_preview_map_data.json`, open the Pages URL with `/web/?dataset=preview` to view the uncurated public preview.
 
 ## Current Status
 

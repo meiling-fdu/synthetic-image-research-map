@@ -225,3 +225,25 @@ The input and output paths can be changed with `--papers-csv`, `--affiliations-c
 Serve the repository and open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to select the generated dataset. The JSON file is ignored by Git and should not be committed.
 
 This map export is for exploratory visualization only. It is assembled from automatically extracted candidates, retains `manual_review`, and is not a curated or publication-ready research dataset. Nothing in this step writes to `data/manual/`.
+
+## Public Preview Export
+
+`scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. The output is explicitly labeled as an uncurated public preview, not a manually curated bibliography.
+
+By default, the exporter publishes at most 200 records, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It also keeps only the fields needed by the public map, preventing raw or future internal fields from being copied into the published file.
+
+Inspect the filtering summary without writing output:
+
+```bash
+python3 scripts/export_public_preview.py --dry-run
+```
+
+Write the default public preview:
+
+```bash
+python3 scripts/export_public_preview.py
+```
+
+The confidence threshold can be tightened with `--min-confidence high`, and `--max-records` can produce a smaller preview. `--include-needs-review` is an explicit opt-in for exceptional review use; review-flagged records should normally remain local.
+
+Only the filtered public preview JSON should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence records, and records needing review remain local and ignored by Git. Public-preview records are still automatically generated candidates and must not be described as curated final data.
