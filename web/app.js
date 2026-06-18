@@ -1,11 +1,27 @@
 "use strict";
 
-const SAMPLE_DATA_URL = "data/sample_map_data.json";
+const DATASET_CONFIG = {
+  sample: {
+    url: "data/sample_map_data.json",
+    recordLabel: "fictional record",
+    emptyMessage: "The fictional sample dataset contains no map records.",
+  },
+  openalex: {
+    url: "data/openalex_candidate_map_data.json",
+    recordLabel: "uncurated OpenAlex candidate",
+    emptyMessage:
+      "The OpenAlex candidate dataset contains no records with valid coordinates. Run the local export after adding reviewed coordinates to the processed affiliation data.",
+  },
+};
+const requestedDataset = new URLSearchParams(window.location.search).get("dataset");
+const datasetName = requestedDataset === "openalex" ? "openalex" : "sample";
+const datasetConfig = DATASET_CONFIG[datasetName];
 const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -170), L.latLng(75, 170));
 const TASK_COLORS = {
   detection: "#287d8e",
   attribution: "#b66a37",
   both: "#76589b",
+  uncertain: "#68747d",
 };
 
 const map = L.map("map", {
@@ -28,6 +44,9 @@ const mapStatus = document.querySelector("#map-status");
 const recordCount = document.querySelector("#record-count");
 const countryCount = document.querySelector("#country-count");
 const institutionCount = document.querySelector("#institution-count");
+const prototypeNote = document.querySelector(".prototype-note");
+const intro = document.querySelector(".intro");
+const footer = document.querySelector("footer");
 
 let records = [];
 
@@ -38,17 +57,23 @@ function escapeHtml(value) {
 }
 
 function formatTask(task) {
-  return task.charAt(0).toUpperCase() + task.slice(1);
+  const readableTask = String(task || "uncertain").replaceAll("_", " ");
+  return readableTask.charAt(0).toUpperCase() + readableTask.slice(1);
+}
+
+function recordTitle(record) {
+  return record.title ?? record.paper_title;
 }
 
 function popupContent(record) {
   const authors = record.authors.map(escapeHtml).join(", ");
+  const year = record.year ?? "Unknown";
 
   return `
     <span class="popup-task">${escapeHtml(formatTask(record.task))}</span>
-    <h3 class="popup-title">${escapeHtml(record.paper_title)}</h3>
+    <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
     <dl class="popup-details">
-      <dt>Year</dt><dd>${escapeHtml(record.year)}</dd>
+      <dt>Year</dt><dd>${escapeHtml(year)}</dd>
       <dt>Task</dt><dd>${escapeHtml(formatTask(record.task))}</dd>
       <dt>Institution</dt><dd>${escapeHtml(record.institution)}</dd>
       <dt>Country</dt><dd>${escapeHtml(record.country)}</dd>
@@ -59,9 +84,11 @@ function popupContent(record) {
 
 function updateSummary(visibleRecords) {
   recordCount.textContent = visibleRecords.length;
-  countryCount.textContent = new Set(visibleRecords.map((record) => record.country)).size;
+  countryCount.textContent = new Set(
+    visibleRecords.map((record) => record.country).filter(Boolean),
+  ).size;
   institutionCount.textContent = new Set(
-    visibleRecords.map((record) => record.institution),
+    visibleRecords.map((record) => record.institution).filter(Boolean),
   ).size;
 }
 
@@ -81,7 +108,7 @@ function renderRecords() {
       radius: 8,
       color: "#ffffff",
       weight: 2,
-      fillColor: TASK_COLORS[record.task],
+      fillColor: TASK_COLORS[record.task] ?? TASK_COLORS.uncertain,
       fillOpacity: 0.94,
     })
       .bindPopup(popupContent(record), { maxWidth: 320 })
@@ -90,13 +117,16 @@ function renderRecords() {
   });
 
   updateSummary(visibleRecords);
+  const recordLabel = datasetConfig.recordLabel;
   mapStatus.textContent = visibleRecords.length
-    ? `Showing ${visibleRecords.length} fictional record${visibleRecords.length === 1 ? "" : "s"}`
-    : "No fictional records match these filters";
+    ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}`
+    : `No ${recordLabel}s match these filters`;
 }
 
 function populateYears() {
-  const years = [...new Set(records.map((record) => record.year))].sort((a, b) => b - a);
+  const years = [...new Set(records.map((record) => record.year).filter(Number.isInteger))].sort(
+    (a, b) => b - a,
+  );
   years.forEach((year) => {
     const option = document.createElement("option");
     option.value = String(year);
@@ -114,8 +144,8 @@ function enableControls() {
 function validateRecord(record) {
   const validTasks = Object.keys(TASK_COLORS);
   return (
-    typeof record.paper_title === "string" &&
-    Number.isInteger(record.year) &&
+    typeof recordTitle(record) === "string" &&
+    (record.year === null || Number.isInteger(record.year)) &&
     validTasks.includes(record.task) &&
     typeof record.institution === "string" &&
     typeof record.country === "string" &&
@@ -125,16 +155,52 @@ function validateRecord(record) {
   );
 }
 
+function showDatasetMessage(message, isError = false) {
+  records = [];
+  markerLayer.clearLayers();
+  updateSummary(records);
+  mapStatus.textContent = message;
+  mapStatus.classList.toggle("error", isError);
+}
+
+function updateDatasetLabels() {
+  if (datasetName !== "openalex") {
+    return;
+  }
+  prototypeNote.textContent = "Uncurated OpenAlex candidates";
+  intro.textContent =
+    "Explore locally generated candidate records for synthetic image detection and attribution research.";
+  footer.textContent =
+    "Exploratory candidate view. Records are automatically extracted and require manual review.";
+}
+
 async function loadData() {
   try {
-    const response = await fetch(SAMPLE_DATA_URL);
+    const response = await fetch(datasetConfig.url);
     if (!response.ok) {
+      if (datasetName === "openalex") {
+        showDatasetMessage(
+          "OpenAlex candidate map data is not available. Generate it locally with scripts/export_candidate_map_data.py.",
+          true,
+        );
+        return;
+      }
       throw new Error(`Sample data request failed with status ${response.status}`);
     }
 
-    const data = await response.json();
+    const responseText = await response.text();
+    if (!responseText.trim()) {
+      showDatasetMessage(datasetConfig.emptyMessage, datasetName === "openalex");
+      return;
+    }
+
+    const data = JSON.parse(responseText);
     if (!Array.isArray(data.records) || !data.records.every(validateRecord)) {
-      throw new Error("Sample data does not match the expected format");
+      throw new Error(`${datasetName} data does not match the expected format`);
+    }
+    if (data.records.length === 0) {
+      showDatasetMessage(datasetConfig.emptyMessage);
+      return;
     }
 
     records = data.records;
@@ -143,8 +209,11 @@ async function loadData() {
     renderRecords();
   } catch (error) {
     console.error(error);
-    mapStatus.textContent = "Sample data could not be loaded. Preview the site through a local server.";
-    mapStatus.classList.add("error");
+    const message =
+      datasetName === "openalex"
+        ? "OpenAlex candidate map data could not be read. Regenerate the local export and try again."
+        : "Sample data could not be loaded. Preview the site through a local server.";
+    showDatasetMessage(message, true);
   }
 }
 
@@ -156,4 +225,5 @@ resetButton.addEventListener("click", () => {
   renderRecords();
 });
 
+updateDatasetLabels();
 loadData();

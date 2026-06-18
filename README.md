@@ -75,6 +75,20 @@ python3 scripts/extract_openalex_candidates.py
 
 The processed paper and affiliation CSVs are automatically extracted review material, not manually curated final data. Every row keeps `manual_review=true` until a researcher reviews and deliberately promotes information into `data/manual/`.
 
+Preview the candidate CSV-to-map export without writing JSON:
+
+```bash
+python3 scripts/export_candidate_map_data.py --dry-run
+```
+
+Generate the local candidate map dataset:
+
+```bash
+python3 scripts/export_candidate_map_data.py
+```
+
+With the local HTTP server running, open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to explore the candidate map. `web/data/openalex_candidate_map_data.json` is generated locally, ignored by Git, and intended only for exploratory visualization of uncurated candidates.
+
 ## Local Preview
 
 The prototype loads its JSON data with `fetch`, so preview it through a local HTTP server rather than opening `web/index.html` directly:
