@@ -107,6 +107,26 @@ Cached successes and “not found” results are reused on later runs. Service a
 
 Geocoding is approximate: the first Nominatim result may refer to the wrong campus, similarly named institution, or administrative location. Every enriched row remains `manual_review=true`, and coordinates must be confirmed before they become curated data in `data/manual/`.
 
+## Institution Review Queue
+
+`scripts/build_institution_review_queue.py` compares the original candidate affiliations with the geocoded output and generates `data/processed/institution_review_queue.csv`. The queue includes institutions with missing or invalid coordinates, failure notes, unexpected name changes, or suspiciously generic names. Entries are deduplicated by the same normalized institution name plus city and country.
+
+Preview the queue without writing it:
+
+```bash
+python3 scripts/build_institution_review_queue.py --dry-run
+```
+
+Write the generated queue:
+
+```bash
+python3 scripts/build_institution_review_queue.py
+```
+
+`--max-examples` can cap the number of deduplicated review entries written or previewed. Each entry includes one example affiliation, author, and OpenAlex work identifier, a suggested exact normalized `match_key`, controlled review reasons, and a proposed manual action.
+
+The review queue is generated from automatic candidate data and is not curated final institution metadata. Reviewers should investigate each entry and copy only manually verified corrections into `data/manual/institution_corrections.csv`; the queue builder never writes to that manual file. The generated queue itself is ignored by Git.
+
 ## Candidate CSV-to-Map Export
 
 `scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It groups authors at each paper-institution location and preserves separate map records when a paper has multiple institutions.

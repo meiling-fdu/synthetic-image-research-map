@@ -103,6 +103,14 @@ python3 scripts/geocode_candidate_affiliations.py \
 
 The script uses a local cache and waits 1.2 seconds between requests by default. Review the [Nominatim usage policy](https://operations.osmfoundation.org/policies/nominatim/) before online use; the public service requires an identifying user agent, caching, single-threaded requests, and no more than one request per second.
 
+Build a deduplicated institution review queue from the original and geocoded candidate affiliations:
+
+```bash
+python3 scripts/build_institution_review_queue.py
+```
+
+Use `--dry-run` to preview queue counts and examples without writing `data/processed/institution_review_queue.csv`.
+
 Preview the candidate CSV-to-map export without writing JSON:
 
 ```bash
