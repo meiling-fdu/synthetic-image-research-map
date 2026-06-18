@@ -75,6 +75,24 @@ python3 scripts/extract_openalex_candidates.py
 
 The processed paper and affiliation CSVs are automatically extracted review material, not manually curated final data. Every row keeps `manual_review=true` until a researcher reviews and deliberately promotes information into `data/manual/`.
 
+### Automatic institution resolution
+
+Run authoritative institution resolution before generic geocoding. Start with a network-free preview:
+
+```bash
+python3 scripts/resolve_candidate_institutions.py --dry-run
+```
+
+For a small online batch, provide an identifying user agent and request limit:
+
+```bash
+python3 scripts/resolve_candidate_institutions.py \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)" \
+  --limit 10
+```
+
+The resolver uses ROR IDs first, optional OpenAlex institution IDs second, and exact normalized name-and-country matches from its cache only when no identifier is available. High-confidence authoritative coordinates can support exploratory visualization, but the generated files remain candidate metadata rather than curated institution data. Pass `data/processed/openalex_candidate_affiliations_resolved.csv` to later geocoding or export steps.
+
 ### Manual institution corrections
 
 Institution geocoding overrides belong in `data/manual/institution_corrections.csv`. The geocoder applies exact normalized-name matches from this table before using its cache or Nominatim; it does not use fuzzy matching. Corrected coordinates and optional institution, city, and country values retain their provenance in `notes` and remain marked for manual review.

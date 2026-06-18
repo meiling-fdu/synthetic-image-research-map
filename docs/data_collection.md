@@ -71,6 +71,34 @@ The extractor deduplicates by OpenAlex ID and falls back to a normalized title w
 
 Processed candidate CSVs are not final curated data. A reviewer must verify relevance, labels, author identities, institutions, affiliations, and locations before manually adding any record to `data/manual/`. The extractor never writes to or updates the manual CSV templates.
 
+## Automatic institution resolution
+
+`scripts/resolve_candidate_institutions.py` should run before generic geocoding. It resolves candidate institutions from authoritative identifiers without fuzzy matching or generic location search. ROR IDs are tried first using the [ROR single-record API](https://ror.readme.io/docs/api-single), optional OpenAlex institution IDs are tried second using the [OpenAlex institution API](https://docs.openalex.org/api-entities/institutions/get-a-single-institution), and rows without identifiers may use only an exact normalized institution-name and country match already present in the local resolution cache.
+
+Preview available identifiers and planned uncached requests without network access or file writes:
+
+```bash
+python3 scripts/resolve_candidate_institutions.py --dry-run
+```
+
+Run a small online batch with an identifying user agent:
+
+```bash
+python3 scripts/resolve_candidate_institutions.py \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)" \
+  --limit 10
+```
+
+The script writes `data/processed/openalex_candidate_affiliations_resolved.csv`, `data/processed/institution_resolution_report.csv`, and `data/processed/institution_resolution_cache.json`. These generated files are ignored by Git. Blank working coordinate fields are filled from accepted authoritative results so the resolved affiliation CSV can be passed to the generic geocoder or exploratory map exporter, while the added `resolved_*` fields preserve explicit resolution provenance.
+
+Resolution confidence has three levels:
+
+- `high`: resolved through a ROR or OpenAlex institution identifier.
+- `medium`: resolved through one unambiguous exact normalized name and country match in the authoritative cache.
+- `low`: unresolved, missing coordinates, ambiguous, or otherwise weakly resolved.
+
+Generic organization names remain reviewable unless a strong identifier resolves them. Country conflicts and missing coordinates also set `needs_review=true` and are explained in `resolution_notes`. Low-confidence records should enter the institution review queue. High-confidence results may be used for exploratory visualization, but every output remains candidate metadata and must not be treated as curated final data.
+
 ## Candidate Affiliation Geocoding
 
 `scripts/geocode_candidate_affiliations.py` can add preliminary coordinates to candidate affiliation rows before the map export. It reads `data/processed/openalex_candidate_affiliations.csv`, writes `data/processed/openalex_candidate_affiliations_geocoded.csv`, and stores reusable query results in `data/processed/geocoding_cache.json` by default. Both generated files are ignored by Git.

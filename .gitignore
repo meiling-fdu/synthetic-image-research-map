@@ -231,5 +231,10 @@ data/processed/openalex_candidate_affiliations_geocoded.csv
 data/processed/geocoding_cache.json
 data/processed/institution_review_queue.csv
 
+# Automatically resolved candidate institution metadata
+data/processed/openalex_candidate_affiliations_resolved.csv
+data/processed/institution_resolution_report.csv
+data/processed/institution_resolution_cache.json
+
 # Locally generated exploratory candidate map data
 web/data/openalex_candidate_map_data.json
