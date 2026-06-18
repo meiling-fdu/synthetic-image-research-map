@@ -46,6 +46,36 @@ A non-dry run creates timestamped files under `data/raw/openalex/` by default. E
 
 These files preserve automatic retrieval as candidate data. They must pass through a separate review and preprocessing workflow before any paper is promoted into the curated manual tables.
 
+## Full Candidate Pipeline
+
+`scripts/run_pipeline.py` orchestrates the existing scripts as subprocesses without duplicating their logic. The full order is:
+
+1. Search OpenAlex and archive raw candidate responses.
+2. Extract candidate paper and affiliation CSVs.
+3. Resolve institutions from ROR or OpenAlex metadata and exact cache matches.
+4. Optionally geocode only affiliations still lacking coordinates.
+5. Export map-ready JSON from the latest resolved/geocoded affiliation file.
+6. Build the institution review queue from the original and latest affiliation files.
+
+Inspect every command without running it:
+
+```bash
+python3 scripts/run_pipeline.py --dry-run
+```
+
+Run a deliberately small batch:
+
+```bash
+python3 scripts/run_pipeline.py \
+  --max-results 10 \
+  --limit 5 \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+Use `--skip-search` after raw OpenAlex archives already exist locally. This avoids repeating the external search while still rebuilding extraction, resolution, optional geocoding, export, and review outputs. Other skip flags can disable resolution, geocoding, or review-queue generation; when generic geocoding runs after resolution, it reads the resolved affiliation CSV and skips rows whose working coordinates were already populated authoritatively.
+
+The pipeline stops immediately when a subprocess fails and never commits or pushes changes. Its generated raw, processed, cache, map, and review files are ignored local artifacts for exploratory candidate analysis, not curated final data. Nothing in the pipeline writes to `data/manual/`.
+
 ## Raw-to-Processed Candidate Extraction
 
 `scripts/extract_openalex_candidates.py` converts raw OpenAlex archives into two review-oriented CSV files:

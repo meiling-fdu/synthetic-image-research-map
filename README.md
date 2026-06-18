@@ -156,6 +156,25 @@ python3 scripts/export_candidate_map_data.py --affiliations-csv data/processed/o
 
 With the local HTTP server running, open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to explore the candidate map. `web/data/openalex_candidate_map_data.json` is generated locally, ignored by Git, and intended only for exploratory visualization of uncurated candidates.
 
+## One-command pipeline
+
+Preview the complete workflow without executing subprocesses or writing files:
+
+```bash
+python3 scripts/run_pipeline.py --dry-run
+```
+
+Run a small end-to-end candidate batch:
+
+```bash
+python3 scripts/run_pipeline.py \
+  --max-results 10 \
+  --limit 5 \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+The pipeline searches, extracts, resolves institutions, optionally geocodes unresolved rows, exports the local map JSON, and builds the institution review queue. Use `--skip-search` to reuse existing raw OpenAlex responses. All generated outputs are local, ignored candidate data; the pipeline never commits, pushes, or promotes records into `data/manual/`.
+
 ## Local Preview
 
 The prototype loads its JSON data with `fetch`, so preview it through a local HTTP server rather than opening `web/index.html` directly:
