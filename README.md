@@ -51,6 +51,16 @@ Empty directories contain `.gitkeep` placeholders until project files are added.
 5. Apply manual overrides during processing and export website-ready static data to `web/data/`.
 6. Load the exported data in the static Leaflet.js website from `web/`.
 
+## Data collection prototype
+
+The standard-library OpenAlex search script can preview its default candidate-paper queries without making API requests or writing files:
+
+```bash
+python3 scripts/search_openalex.py --dry-run
+```
+
+OpenAlex output is raw candidate data and requires manual review before anything is added to `data/manual/`. See [docs/data_collection.md](docs/data_collection.md) for query-file, result-limit, API-key, and raw-output details.
+
 ## Local Preview
 
 The prototype loads its JSON data with `fetch`, so preview it through a local HTTP server rather than opening `web/index.html` directly:
