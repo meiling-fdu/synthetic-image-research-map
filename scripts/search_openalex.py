@@ -20,19 +20,36 @@ OPENALEX_WORKS_URL = "https://api.openalex.org/works"
 DEFAULT_OUTPUT_DIR = Path("data/raw/openalex")
 DEFAULT_MAX_RESULTS = 100
 OPENALEX_PAGE_SIZE = 200
-DEFAULT_QUERIES = (
+DETECTION_QUERIES = (
     "AI-generated image detection",
     "synthetic image detection",
     "generated image detection",
     "GAN-generated image detection",
     "diffusion-generated image detection",
+    "detecting AI-generated images",
+    "detecting synthetic images",
+    "fake image detection generative AI",
+    "deepfake image detection",
+    "forensic detection of generated images",
+)
+
+SOURCE_ATTRIBUTION_QUERIES = (
     "AI-generated image source attribution",
     "synthetic image source attribution",
     "generated image source attribution",
     "source attribution of AI-generated images",
+    "source attribution of synthetic images",
     "forensic attribution of generated images",
-    "deepfake image detection",
+    "generated image provenance",
+    "source identification of generated images",
+    "source verification of generated images",
+    "which model generated this image",
 )
+
+# Broad model/generator attribution queries are intentionally excluded because
+# they retrieve adjacent fields such as feature, authorship, and camera attribution.
+# The last query keeps model wording only in an explicit generated-image source question.
+DEFAULT_QUERIES = DETECTION_QUERIES + SOURCE_ATTRIBUTION_QUERIES
 
 
 class CollectionError(RuntimeError):
