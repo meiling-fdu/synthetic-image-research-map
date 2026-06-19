@@ -85,6 +85,16 @@ Candidate papers receive a conservative rule-based relevance assessment. `in_sco
 
 The extractor also preserves OpenAlex publication year/date, venue and source type, publisher, publication type, DOI, arXiv identifiers and links, and source URLs. Missing venues remain unknown rather than being inferred, and detected arXiv records are explicitly marked as preprints for review.
 
+### Key paper coverage audit
+
+Maintain a lightweight coverage checklist in `data/manual/key_papers.csv`, then compare it with the full candidate paper CSV and public preview:
+
+```bash
+python3 scripts/audit_key_paper_coverage.py
+```
+
+The report is written to `docs/key_paper_coverage_report.md`. Adding a checklist row does not add or publish a paper; it only reveals whether the current automatic retrieval and preview contain a confirmed or possible match.
+
 ### Automatic institution resolution
 
 Run authoritative institution resolution before generic geocoding. Start with a network-free preview:

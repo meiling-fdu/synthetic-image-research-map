@@ -161,6 +161,20 @@ Out-of-scope records are never deleted: they remain in the two complete candidat
 
 Processed candidate CSVs are not final curated data. A reviewer must verify relevance, labels, author identities, institutions, affiliations, and locations before manually adding any record to `data/manual/`. The extractor never writes to or updates the manual CSV templates.
 
+## Key Paper Coverage Audit
+
+`data/manual/key_papers.csv` is a lightweight, human-maintained checklist of papers whose coverage should be monitored. It complements the OpenAlex query workflow; it is not a second bibliography, an ingestion queue, or a replacement for systematic retrieval. Adding a row does not add that paper to candidate data, manual bibliography tables, the map, or the public preview.
+
+Run the read-only comparison from the repository root:
+
+```bash
+python3 scripts/audit_key_paper_coverage.py
+```
+
+The script compares the checklist with `data/processed/openalex_candidate_papers.csv` and `web/data/public_preview_map_data.json`, then writes `docs/key_paper_coverage_report.md`. Confirmed matching uses OpenAlex URL, DOI, arXiv ID, then normalized title and year. Exact title-only and high-similarity title matches are reported as `possible_match` for manual confirmation and do not count as covered. Per-paper statuses are `in_public_preview`, `in_candidates_only`, `missing`, or `possible_match`.
+
+Use `--key-papers`, `--candidate-papers`, `--public-preview`, and `--output` to audit alternate local files. The audit never modifies its three inputs and never calls external APIs.
+
 ## Automatic institution resolution
 
 `scripts/resolve_candidate_institutions.py` should run before generic geocoding. Its default input is `data/processed/openalex_candidate_affiliations_in_scope.csv`, so unrelated affiliations do not trigger authoritative API requests. It resolves candidate institutions from authoritative identifiers without fuzzy matching or generic location search. ROR IDs are tried first using the [ROR single-record API](https://ror.readme.io/docs/api-single), optional OpenAlex institution IDs are tried second using the [OpenAlex institution API](https://docs.openalex.org/api-entities/institutions/get-a-single-institution), and rows without identifiers may use only an exact normalized institution-name and country match already present in the local resolution cache.

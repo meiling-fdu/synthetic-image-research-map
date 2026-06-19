@@ -76,6 +76,23 @@ Institution-specific authors are derived from the paper-author-institution rows.
 
 Country/region normalization happens only in map-ready and public-preview exports. Raw OpenAlex responses, processed affiliation CSVs, geocoding caches, and manual data are not rewritten.
 
+## `key_papers.csv`
+
+`data/manual/key_papers.csv` is a human-maintained coverage checklist. One row identifies a paper that should be checked against automatic candidate retrieval and public-preview publication; checklist membership does not automatically add or publish the paper.
+
+| Column | Definition |
+| --- | --- |
+| `title` | Expected paper title, preserving the preferred spelling. |
+| `year` | Expected four-digit publication year. |
+| `doi` | DOI, preferably in canonical form without a resolver URL. |
+| `arxiv_id` | arXiv identifier; version suffixes are optional for coverage matching. |
+| `openalex_url` | OpenAlex work URL when known. |
+| `paper_url` | Preferred public paper or landing-page URL for human review. |
+| `expected_task` | Expected scoped task: `detection`, `source_attribution`, or `detection_and_source_attribution`. |
+| `notes` | Free-text coverage context, uncertainty, or follow-up notes. |
+
+The audit checks stable identifiers first and uses normalized title plus year only as a fallback. Title-only fuzzy or normalized matches are flagged as possible rather than silently accepted.
+
 ## `authors.csv`
 
 One row represents one author identity. The table keeps source identifiers and profile links without assuming that authors sharing a name are the same person.
