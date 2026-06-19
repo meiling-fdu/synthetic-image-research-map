@@ -37,6 +37,27 @@ const TASK_COLORS = {
   detection_and_source_attribution: "#76589b",
   uncertain: "#68747d",
 };
+const CHINA_REGION_BY_CODE = {
+  HK: "Hong Kong",
+  MO: "Macau",
+  TW: "Taiwan",
+};
+const CHINA_REGION_CODE_BY_NAME = {
+  "hong kong": "HK",
+  "hong kong sar": "HK",
+  "hong kong sar china": "HK",
+  hk: "HK",
+  macao: "MO",
+  "macao sar": "MO",
+  "macao sar china": "MO",
+  macau: "MO",
+  "macau sar": "MO",
+  "macau sar china": "MO",
+  mo: "MO",
+  taiwan: "TW",
+  "taiwan province of china": "TW",
+  tw: "TW",
+};
 
 const map = L.map("map", {
   minZoom: 2,
@@ -90,6 +111,7 @@ let resultsView = "institutions";
 const INSTITUTION_CSV_COLUMNS = [
   ["title", (record) => recordTitle(record)],
   ["authors", (record) => recordAuthors(record).join("; ")],
+  ["institution_authors", (record) => recordInstitutionAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
   ["venue_name", (record) => record.venue_name || record.venue || ""],
   ["task", (record) => record.task || ""],
@@ -97,6 +119,10 @@ const INSTITUTION_CSV_COLUMNS = [
   ["institution_name", (record) => recordInstitution(record)],
   ["country", (record) => record.country || ""],
   ["country_code", (record) => record.country_code || ""],
+  ["region", (record) => record.region || ""],
+  ["region_code", (record) => record.region_code || ""],
+  ["raw_country", (record) => record.raw_country || ""],
+  ["raw_country_code", (record) => record.raw_country_code || ""],
   ["doi", (record) => normalizedDoi(record.doi)],
   ["arxiv_id", (record) => record.arxiv_id || ""],
   ["arxiv_url", (record) => record.arxiv_url || (
@@ -116,6 +142,8 @@ const PAPER_CSV_COLUMNS = [
   ["institutions", (record) => record.aggregated_institutions.join("; ")],
   ["countries", (record) => record.aggregated_country_names.join("; ")],
   ["country_codes", (record) => record.aggregated_country_codes.join("; ")],
+  ["regions", (record) => record.aggregated_regions.join("; ")],
+  ["region_codes", (record) => record.aggregated_region_codes.join("; ")],
   ["doi", (record) => normalizedDoi(record.doi)],
   ["arxiv_id", (record) => record.arxiv_id || ""],
   ["arxiv_url", (record) => record.arxiv_url || (
@@ -145,6 +173,37 @@ function recordAuthors(record) {
   return authors
     .map((author) => String(author || "").trim())
     .filter(Boolean);
+}
+
+function recordInstitutionAuthors(record) {
+  const authors = Array.isArray(record.institution_authors)
+    ? record.institution_authors
+    : [record.institution_authors];
+  return authors
+    .map((author) => String(author || "").trim())
+    .filter(Boolean);
+}
+
+function normalizedAuthorName(value) {
+  return String(value || "").normalize("NFKC").toLocaleLowerCase().trim();
+}
+
+function highlightedPaperAuthors(record) {
+  const institutionAuthorCounts = new Map();
+  recordInstitutionAuthors(record).forEach((author) => {
+    const key = normalizedAuthorName(author);
+    institutionAuthorCounts.set(key, (institutionAuthorCounts.get(key) || 0) + 1);
+  });
+
+  return recordAuthors(record).map((author) => {
+    const key = normalizedAuthorName(author);
+    const remaining = institutionAuthorCounts.get(key) || 0;
+    if (remaining > 0) {
+      institutionAuthorCounts.set(key, remaining - 1);
+      return `<strong class="institution-author-highlight">${escapeHtml(author)}</strong>`;
+    }
+    return escapeHtml(author);
+  }).join(", ");
 }
 
 function normalizedIdentityValue(value) {
@@ -193,6 +252,64 @@ function recordCountry(record) {
   return String(record.country_code || record.country || "").trim();
 }
 
+function normalizedLocationName(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function normalizeCountryRegionRecord(record) {
+  const country = String(record.country || "").trim();
+  const sourceCountryCode = String(record.country_code || "").trim();
+  const countryCode = sourceCountryCode.toUpperCase();
+  const region = String(record.region || "").trim();
+  const regionCode = String(record.region_code || "").trim().toUpperCase();
+  const rawCountry = Object.hasOwn(record, "raw_country")
+    ? String(record.raw_country || "").trim()
+    : country;
+  const rawCountryCode = Object.hasOwn(record, "raw_country_code")
+    ? String(record.raw_country_code || "").trim()
+    : sourceCountryCode;
+
+  let normalizedRegionCode = [regionCode, countryCode, rawCountryCode.toUpperCase()]
+    .find((code) => Object.hasOwn(CHINA_REGION_BY_CODE, code)) || "";
+  if (!normalizedRegionCode) {
+    normalizedRegionCode = [region, country, rawCountry]
+      .map(normalizedLocationName)
+      .map((name) => CHINA_REGION_CODE_BY_NAME[name] || "")
+      .find(Boolean) || "";
+  }
+
+  if (normalizedRegionCode) {
+    return {
+      ...record,
+      country: "China",
+      country_code: "CN",
+      region: CHINA_REGION_BY_CODE[normalizedRegionCode],
+      region_code: normalizedRegionCode,
+      raw_country: rawCountry,
+      raw_country_code: rawCountryCode,
+    };
+  }
+
+  return {
+    ...record,
+    country: country || countryCode,
+    country_code: countryCode,
+    region,
+    region_code: regionCode,
+    raw_country: rawCountry,
+    raw_country_code: rawCountryCode,
+  };
+}
+
+function recordLocation(record) {
+  return uniqueTextValues([record.city, record.region, record.country]).join(", ");
+}
+
 function recordPaperUrl(record) {
   return (
     record.paper_url ||
@@ -233,6 +350,8 @@ function aggregateUniquePapers(institutionRecords) {
         aggregated_countries: [],
         aggregated_country_names: [],
         aggregated_country_codes: [],
+        aggregated_regions: [],
+        aggregated_region_codes: [],
       };
       papersByIdentity.set(identity, paper);
     }
@@ -252,6 +371,14 @@ function aggregateUniquePapers(institutionRecords) {
     paper.aggregated_country_codes = uniqueTextValues([
       ...paper.aggregated_country_codes,
       record.country_code,
+    ]);
+    paper.aggregated_regions = uniqueTextValues([
+      ...paper.aggregated_regions,
+      record.region,
+    ]);
+    paper.aggregated_region_codes = uniqueTextValues([
+      ...paper.aggregated_region_codes,
+      record.region_code,
     ]);
   });
   return [...papersByIdentity.values()];
@@ -276,6 +403,8 @@ function recordSearchText(record) {
     record.institution,
     record.country,
     record.country_code,
+    record.region,
+    record.region_code,
     record.venue_name,
     record.venue,
     record.task,
@@ -448,12 +577,16 @@ function formatResolutionValue(value) {
 function popupContent(record) {
   const orderedAuthors = recordAuthors(record);
   const authors = orderedAuthors.length
-    ? orderedAuthors.map(escapeHtml).join(", ")
+    ? highlightedPaperAuthors(record)
     : "Unknown";
+  const institutionAuthors = recordInstitutionAuthors(record);
+  const institutionAuthorsRow = institutionAuthors.length
+    ? `<dt>Institution authors</dt><dd>${institutionAuthors.map(escapeHtml).join(", ")}</dd>`
+    : "";
   const year = record.publication_year ?? record.year ?? "Unknown";
   const venue = record.venue_name || record.venue || "unknown";
   const publicationType = record.publication_type || "Unknown";
-  const location = [record.city, record.country].filter(Boolean).join(", ") || "Unknown";
+  const location = recordLocation(record) || "Unknown";
   const subtaskRow = record.subtask
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
     : "";
@@ -513,6 +646,7 @@ function popupContent(record) {
     <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
     <dl class="popup-details">
       <dt>Authors</dt><dd>${authors}</dd>
+      ${institutionAuthorsRow}
       <dt>Institution</dt><dd>${escapeHtml(record.institution)}</dd>
       <dt>Location</dt><dd>${escapeHtml(location)}</dd>
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
@@ -537,8 +671,8 @@ function resultContent(record) {
   const venue = record.venue_name || record.venue || "";
   const isPaperView = resultsView === "papers";
   const institution = recordInstitution(record) || "Unknown institution";
-  const country = recordCountry(record);
-  const affiliation = [institution, country].filter(Boolean).join(" · ");
+  const location = recordLocation(record);
+  const affiliation = [institution, location].filter(Boolean).join(" · ");
   const subtask = record.subtask
     ? `<span class="result-task result-subtask">${escapeHtml(formatTask(record.subtask))}</span>`
     : "";
@@ -564,11 +698,18 @@ function resultContent(record) {
   const authorsRow = isPaperView
     ? `<p class="result-aggregate"><strong>Authors:</strong> ${escapeHtml(recordAuthors(record).join("; ") || "Unknown")}</p>`
     : "";
+  const institutionAuthors = recordInstitutionAuthors(record);
+  const institutionAuthorsRow = !isPaperView && institutionAuthors.length
+    ? `<p class="result-aggregate"><strong>Institution authors:</strong> ${escapeHtml(institutionAuthors.join("; "))}</p>`
+    : "";
   const institutionsRow = isPaperView
     ? `<p class="result-aggregate"><strong>Institutions:</strong> ${escapeHtml(record.aggregated_institutions.join("; ") || "Unknown")}</p>`
     : `<p class="result-affiliation">${escapeHtml(affiliation)}</p>`;
   const countriesRow = isPaperView
-    ? `<p class="result-aggregate"><strong>Countries:</strong> ${escapeHtml(record.aggregated_countries.join(", ") || "Unknown")}</p>`
+    ? `<p class="result-aggregate"><strong>Countries:</strong> ${escapeHtml(record.aggregated_country_names.join(", ") || record.aggregated_country_codes.join(", ") || "Unknown")}</p>`
+    : "";
+  const regionsRow = isPaperView && record.aggregated_regions.length
+    ? `<p class="result-aggregate"><strong>Regions:</strong> ${escapeHtml(record.aggregated_regions.join(", "))}</p>`
     : "";
 
   return `
@@ -579,8 +720,10 @@ function resultContent(record) {
       </div>
       ${venueRow}
       ${authorsRow}
+      ${institutionAuthorsRow}
       ${institutionsRow}
       ${countriesRow}
+      ${regionsRow}
       <div class="result-classification">
         <span class="result-task">${escapeHtml(formatTask(record.task))}</span>
         ${subtask}
@@ -855,6 +998,7 @@ async function readDataset(name) {
   }
 
   const normalizedData = normalizeDatasetPayload(JSON.parse(responseText));
+  normalizedData.records = normalizedData.records.map(normalizeCountryRegionRecord);
   if (!normalizedData.records.every(validateRecord)) {
     throw new Error(`${name} data does not match the expected format`);
   }

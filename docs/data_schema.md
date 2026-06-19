@@ -54,6 +54,28 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 
 These values remain candidate metadata. A missing venue is left empty and flagged for manual review; venue or conference names must never be guessed from a paper title.
 
+### Map-Ready Author Fields
+
+| Field | Definition |
+| --- | --- |
+| `authors` | Full paper-level author list copied from `authors_ordered` and kept in the original OpenAlex authorship order for every institution record. It is never rebuilt or reordered by institution. |
+| `institution_authors` | Authors affiliated with the institution represented by the current map record. Names use the paper-level display form and follow the same original paper order. The field is an empty list when the relationship cannot be determined conservatively. |
+
+Institution-specific authors are derived from the paper-author-institution rows. Matching prefers an exact OpenAlex institution identifier, then an exact ROR identifier, and finally an exact normalized full institution name. Substring and fuzzy name matching are not used. An author with multiple affiliations appears in `institution_authors` for every corresponding institution record, while the full `authors` list stays identical across those records.
+
+### Map-Ready Location Fields
+
+| Field | Definition |
+| --- | --- |
+| `country` | Public country display name. Hong Kong, Macau/Macao, and Taiwan records use `China`. |
+| `country_code` | Public country code. The three normalized regions use `CN`. |
+| `region` | Canonical regional display name: `Hong Kong`, `Macau`, or `Taiwan` when applicable; otherwise empty unless another source region is explicitly retained. |
+| `region_code` | Regional code `HK`, `MO`, or `TW` when applicable. |
+| `raw_country` | Country value received from resolved or source affiliation metadata before public normalization. |
+| `raw_country_code` | Country code received from source affiliation metadata before public normalization. |
+
+Country/region normalization happens only in map-ready and public-preview exports. Raw OpenAlex responses, processed affiliation CSVs, geocoding caches, and manual data are not rewritten.
+
 ## `authors.csv`
 
 One row represents one author identity. The table keeps source identifiers and profile links without assuming that authors sharing a name are the same person.
@@ -153,7 +175,7 @@ One row represents a specific author-institution affiliation on a specific paper
 
 ### Why This Relationship Table Is Necessary
 
-Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views. Map exports create a marker for every affiliated institution with usable coordinates, but every marker reuses the same paper-level `authors_ordered` list. Institution grouping never sorts, groups, or truncates the display author list, and it does not replace or collapse the underlying relationship rows.
+Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views. Map exports create a marker for every affiliated institution with usable coordinates, but every marker reuses the same paper-level `authors_ordered` list and separately derives `institution_authors`. Both fields follow original paper order. Institution grouping never sorts, groups, or truncates the full display author list, and it does not replace or collapse the underlying relationship rows.
 
 ## Paper Labeling
 

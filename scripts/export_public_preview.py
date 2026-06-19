@@ -14,6 +14,11 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+try:
+    from .country_normalization import normalize_country_region
+except ImportError:  # Direct execution from the scripts directory.
+    from country_normalization import normalize_country_region
+
 
 DEFAULT_INPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_OUTPUT = Path("web/data/public_preview_map_data.json")
@@ -55,8 +60,14 @@ PUBLIC_FIELDS = (
     "is_arxiv_preprint",
     "url",
     "authors",
+    "institution_authors",
     "institution",
     "country",
+    "country_code",
+    "region",
+    "region_code",
+    "raw_country",
+    "raw_country_code",
     "city",
     "latitude",
     "longitude",
@@ -265,6 +276,20 @@ def build_preview(
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
         public_record["institution"] = institution_name(record)
+        public_record.update(
+            normalize_country_region(
+                record.get("country"),
+                record.get("country_code"),
+                record.get("region"),
+                record.get("region_code"),
+                record.get("raw_country") if "raw_country" in record else None,
+                (
+                    record.get("raw_country_code")
+                    if "raw_country_code" in record
+                    else None
+                ),
+            )
+        )
         public_record["resolution_confidence"] = confidence
         public_record["needs_review"] = needs_review
         public_record["in_scope"] = in_scope

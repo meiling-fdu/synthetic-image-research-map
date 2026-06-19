@@ -251,11 +251,15 @@ The review queue is generated from automatic candidate data and is not curated f
 
 By default, the exporter reads the in-scope paper CSV and the latest geocoded affiliation CSV, then rechecks paper IDs before grouping. `--include-out-of-scope` is available only for deliberate debugging. This prevents a broader custom affiliation file from silently reintroducing unrelated papers.
 
-Grouping prefers `institution_openalex_id` when available, so distinct institutions are not merged solely because their names or coordinates match. The extractor stores `authors_ordered` once per paper as a JSON list in the original OpenAlex `authorships` array order; `author_position` and the one-based `author_order` remain on every affiliation row. Each marker for that paper reuses the same ordered paper-level author list, regardless of institution. For older paper CSVs without `authors_ordered`, the exporter reconstructs the list once across all of the paper's affiliation rows using `author_order`, never separately per institution.
+Grouping prefers `institution_openalex_id`, then `ror_id`, and only falls back to an exact normalized full institution name. It never uses substring or fuzzy name matching. The extractor stores `authors_ordered` once per paper as a JSON list in the original OpenAlex `authorships` array order; `author_position` and the one-based `author_order` remain on every affiliation row. Each marker for that paper reuses the same ordered paper-level `authors` list, regardless of institution. For older paper CSVs without `authors_ordered`, the exporter reconstructs the list once across all of the paper's affiliation rows using `author_order`, never separately per institution.
+
+Each marker also receives `institution_authors`, derived from the author-institution rows assigned to that exact institution group. Names are mapped back to the canonical paper-level display list and sorted by original `author_order`, so institution grouping cannot reorder them. A multiply affiliated author appears in every matching institution record. If the institution identity or canonical author position cannot be determined conservatively, the field remains an empty list rather than guessing.
 
 The processed affiliation CSV remains the complete relationship-level source: map aggregation never replaces or removes its author-institution rows. Institution and country aggregation affects only those location fields, including in the unique-paper web view; it never changes author order. Affiliations without valid coordinates remain available for review but cannot produce map markers.
 
 The exporter includes only affiliation rows with a complete valid resolved or original latitude/longitude pair. It does not geocode missing institutions, call external APIs, or infer locations. Rows with missing or invalid coordinates remain in the processed CSV and are reported in the export summary rather than silently assigned a location.
+
+Map-ready export normalizes Hong Kong, Macau/Macao, and Taiwan into public `country=China` and `country_code=CN` values while retaining `region`/`region_code` as `Hong Kong/HK`, `Macau/MO`, or `Taiwan/TW`. The pre-normalization resolved/source values are preserved in `raw_country` and `raw_country_code`. The same normalization is applied again by public-preview export for compatibility with older local map JSON. It does not alter raw OpenAlex files, processed affiliations, geocoding caches, or manual corrections.
 
 When the affiliation CSV contains automatic resolution fields, the exporter prefers complete valid `resolved_latitude` and `resolved_longitude` pairs over the original coordinates. It also prefers non-empty resolved institution names, cities, and countries. If resolved coordinates are absent or invalid, the exporter falls back to a complete valid original coordinate pair; it never combines coordinates from different sources.
 
@@ -331,6 +335,8 @@ python3 scripts/validate_public_preview.py --strict
 ```
 
 `scripts/validate_public_preview.py` accepts either a top-level record array or the metadata-plus-records object format. It checks publication-safe task and subtask labels, required paper and institution metadata, coordinate bounds, publication year, link availability, review status, and institution-resolution confidence. Errors always return a non-zero status; `--strict` also fails on warnings. The validator only reads the preview JSON and does not modify generated or manual data.
+
+Validation also enforces the public regional convention: records identified as Hong Kong, Macau/Macao, or Taiwan must use `country=China`, `country_code=CN`, and the matching `region` and `region_code`. The quality report applies the same normalization when counting countries, so these records contribute to China in the Top Countries table even when reporting on an older preview file.
 
 ### Recommended Refresh Workflow
 

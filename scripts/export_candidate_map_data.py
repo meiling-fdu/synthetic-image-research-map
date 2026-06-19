@@ -12,10 +12,16 @@ import csv
 import hashlib
 import json
 import math
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+
+try:
+    from .country_normalization import normalize_country_region
+except ImportError:  # Direct execution from the scripts directory.
+    from country_normalization import normalize_country_region
 
 
 DEFAULT_PAPERS_CSV = Path(
@@ -238,6 +244,73 @@ def fallback_authors_by_paper(
     }
 
 
+def normalize_institution_name(value: Any) -> str:
+    """Normalize a complete display name for exact, non-substring matching."""
+    normalized = re.sub(r"[^\w]+", " ", clean_text(value).casefold())
+    return " ".join(normalized.replace("_", " ").split())
+
+
+def normalize_ror_id(value: Any) -> str:
+    return re.sub(
+        r"^https?://ror\.org/",
+        "",
+        clean_text(value),
+        flags=re.IGNORECASE,
+    ).casefold()
+
+
+def institution_match_key(
+    affiliation: Dict[str, str],
+    institution_name: str,
+) -> Tuple[str, str]:
+    """Return the strongest conservative identity available for grouping."""
+    openalex_id = clean_text(
+        affiliation.get("institution_openalex_id")
+    ).casefold().rstrip("/")
+    if openalex_id:
+        return "openalex", openalex_id
+
+    ror_id = normalize_ror_id(affiliation.get("ror_id"))
+    if ror_id:
+        return "ror", ror_id
+
+    normalized_name = normalize_institution_name(institution_name)
+    if normalized_name:
+        return "name", normalized_name
+    return "unresolved", ""
+
+
+def institution_author_entry(
+    affiliation: Dict[str, str],
+    paper_authors: Sequence[str],
+) -> Optional[Tuple[int, str, str]]:
+    """Return a canonical ordered author entry, or None when it is ambiguous."""
+    author_name = clean_text(affiliation.get("author_name"))
+    if not author_name:
+        return None
+
+    author_order = parse_positive_int(affiliation.get("author_order"))
+    if author_order is not None and author_order <= len(paper_authors):
+        display_name = paper_authors[author_order - 1]
+        identity = clean_text(affiliation.get("author_openalex_id")) or (
+            f"order:{author_order}"
+        )
+        return author_order, display_name, identity
+
+    matching_positions = [
+        index
+        for index, display_name in enumerate(paper_authors, start=1)
+        if display_name.casefold() == author_name.casefold()
+    ]
+    if len(matching_positions) == 1:
+        matched_order = matching_positions[0]
+        identity = clean_text(affiliation.get("author_openalex_id")) or (
+            f"order:{matched_order}"
+        )
+        return matched_order, paper_authors[matched_order - 1], identity
+    return None
+
+
 def parse_coordinate(value: Any, minimum: float, maximum: float) -> Optional[float]:
     cleaned = clean_text(value)
     if not cleaned:
@@ -336,6 +409,31 @@ def group_map_records(
         for openalex_id, paper in papers_by_id.items()
     }
 
+    institution_author_entries: Dict[
+        Tuple[str, Tuple[str, str]],
+        Dict[str, Tuple[int, str]],
+    ] = {}
+    unresolved_institution_authors = set()
+    for affiliation in affiliation_rows:
+        openalex_id = clean_text(affiliation.get("openalex_id"))
+        institution = preferred_value(
+            affiliation, "resolved_institution_name", "institution_name"
+        )
+        identity = institution_match_key(affiliation, institution)
+        author_key = (openalex_id, identity)
+        author_entry = institution_author_entry(
+            affiliation,
+            authors_by_paper.get(openalex_id, []),
+        )
+        if identity[0] == "unresolved" or author_entry is None:
+            unresolved_institution_authors.add(author_key)
+            continue
+        author_order, author_name, author_identity = author_entry
+        institution_author_entries.setdefault(author_key, {}).setdefault(
+            author_identity,
+            (author_order, author_name),
+        )
+
     grouped: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
     missing_coordinates = 0
     invalid_coordinates = 0
@@ -347,12 +445,22 @@ def group_map_records(
             affiliation, "resolved_institution_name", "institution_name"
         )
         city = preferred_value(affiliation, "resolved_city", "city")
-        country = preferred_value(
+        raw_country = preferred_value(
             affiliation, "resolved_country", "country"
-        ) or clean_text(affiliation.get("country_code"))
+        )
+        raw_country_code = clean_text(affiliation.get("country_code"))
+        normalized_location = normalize_country_region(
+            raw_country,
+            raw_country_code,
+        )
+        country = normalized_location["country"]
+        country_code = normalized_location["country_code"]
+        region = normalized_location["region"]
+        region_code = normalized_location["region_code"]
         institution_openalex_id = clean_text(
             affiliation.get("institution_openalex_id")
         )
+        institution_identity = institution_match_key(affiliation, institution)
         latitude, longitude, coordinate_source, coordinate_failure = (
             preferred_coordinates(affiliation)
         )
@@ -367,6 +475,7 @@ def group_map_records(
                     institution,
                     city,
                     country,
+                    region,
                 )
             )
             continue
@@ -378,10 +487,10 @@ def group_map_records(
             continue
 
         institution_key = (
-            institution_openalex_id,
-            institution,
-            city,
-            country,
+            institution_identity,
+            clean_text(city).casefold(),
+            clean_text(country).casefold(),
+            clean_text(region_code).casefold(),
             latitude,
             longitude,
         )
@@ -421,10 +530,16 @@ def group_map_records(
                 "is_arxiv_preprint": parse_bool(paper.get("is_arxiv_preprint")),
                 "url": primary_url,
                 "authors": list(authors_by_paper.get(openalex_id, [])),
-                "institution_openalex_id": institution_key[0],
-                "institution": institution_key[1],
-                "country": institution_key[3],
-                "city": institution_key[2],
+                "institution_authors": [],
+                "institution_openalex_id": institution_openalex_id,
+                "institution": institution,
+                "country": country,
+                "country_code": country_code,
+                "region": region,
+                "region_code": region_code,
+                "raw_country": normalized_location["raw_country"],
+                "raw_country_code": normalized_location["raw_country_code"],
+                "city": city,
                 "latitude": latitude,
                 "longitude": longitude,
                 "source_database": clean_text(paper.get("source_database"))
@@ -435,6 +550,7 @@ def group_map_records(
                 "_coordinate_sources": set(),
                 "_has_resolution_metadata": False,
                 "_resolution_notes": [],
+                "_institution_author_key": (openalex_id, institution_identity),
             }
             grouped[group_key] = group
 
@@ -465,6 +581,14 @@ def group_map_records(
     records = []
     for group in grouped.values():
         group["notes"] = " | ".join(unique_strings(group["notes"]))
+        author_key = group["_institution_author_key"]
+        if author_key not in unresolved_institution_authors:
+            group["institution_authors"] = [
+                author_name
+                for _, author_name in sorted(
+                    institution_author_entries.get(author_key, {}).values()
+                )
+            ]
         if group["_has_resolution_metadata"]:
             group["resolution_notes"] = " | ".join(
                 unique_strings(group["_resolution_notes"])
@@ -505,6 +629,7 @@ def build_export(
         record.pop("_coordinate_sources", None)
         record.pop("_has_resolution_metadata", None)
         record.pop("_resolution_notes", None)
+        record.pop("_institution_author_key", None)
 
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     summary = {

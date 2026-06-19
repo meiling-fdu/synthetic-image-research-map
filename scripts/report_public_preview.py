@@ -16,6 +16,11 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 
+try:
+    from .country_normalization import normalize_country_region
+except ImportError:  # Direct execution from the scripts directory.
+    from country_normalization import normalize_country_region
+
 
 DEFAULT_INPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_OUTPUT = Path("docs/public_preview_report.md")
@@ -141,6 +146,17 @@ def institution_name(record: Dict[str, Any]) -> str:
 
 def institution_identity(record: Dict[str, Any]) -> str:
     return institution_name(record).casefold()
+
+
+def normalized_country(record: Dict[str, Any]) -> str:
+    return normalize_country_region(
+        record.get("country"),
+        record.get("country_code"),
+        record.get("region"),
+        record.get("region_code"),
+        record.get("raw_country") if "raw_country" in record else None,
+        record.get("raw_country_code") if "raw_country_code" in record else None,
+    )["country"]
 
 
 def has_usable_coordinates(record: Dict[str, Any]) -> bool:
@@ -281,9 +297,7 @@ def build_report(
     venues = count_present_values(
         records, lambda record: first_text(record, "venue_name", "venue")
     )
-    countries = count_present_values(
-        records, lambda record: first_text(record, "country")
-    )
+    countries = count_present_values(records, normalized_country)
     institutions = count_present_values(
         records, institution_name
     )
@@ -315,9 +329,9 @@ def build_report(
         if institution_identity(record)
     }
     unique_countries = {
-        clean_text(record.get("country")).casefold()
+        normalized_country(record).casefold()
         for record in records
-        if clean_text(record.get("country"))
+        if normalized_country(record)
     }
 
     lines = [

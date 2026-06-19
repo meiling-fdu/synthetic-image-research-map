@@ -77,7 +77,9 @@ python3 scripts/extract_openalex_candidates.py
 
 The complete `openalex_candidate_papers.csv` and `openalex_candidate_affiliations.csv` files retain every candidate for audit. The additional `*_in_scope.csv` files contain only papers marked `in_scope=true` and their matching affiliations. All remain automatically extracted review material with `manual_review=true`.
 
-Affiliations are represented at paper-author-institution level. Every OpenAlex authorship is preserved, authors with multiple institutions produce multiple relationship rows, and raw-only or missing affiliations remain reviewable rather than being dropped. Map exports include every affiliated institution with usable coordinates and aggregate all associated collaborators for that paper-institution marker; first-author-only mapping is intentionally avoided.
+Affiliations are represented at paper-author-institution level. Every OpenAlex authorship is preserved, authors with multiple institutions produce multiple relationship rows, and raw-only or missing affiliations remain reviewable rather than being dropped. Map records retain the full paper author list in publication order and separately identify the authors affiliated with each mapped institution; first-author-only mapping is intentionally avoided.
+
+Public map records count Hong Kong, Macau/Macao, and Taiwan under China while retaining those names and their `HK`, `MO`, and `TW` codes as regional metadata. Original source country values remain available in raw-country fields; raw, cached, processed, and manual source data are not rewritten by this display normalization.
 
 Candidate papers receive a conservative rule-based relevance assessment. `in_scope=true` requires explicit AI-generated/synthetic image context plus detection or generated-image source-attribution context. Broad model, feature, saliency, explainable-AI, authorship, camera-model, sensor, and generic attribution are excluded, as are synthetic-data applications such as augmentation, medical diagnosis, downstream recognition, and remote sensing. All candidates remain auditable, but only scoped records proceed downstream.
 

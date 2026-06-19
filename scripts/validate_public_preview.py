@@ -16,6 +16,17 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+try:
+    from .country_normalization import (
+        CHINA_REGION_BY_CODE,
+        normalize_country_region,
+    )
+except ImportError:  # Direct execution from the scripts directory.
+    from country_normalization import (
+        CHINA_REGION_BY_CODE,
+        normalize_country_region,
+    )
+
 
 DEFAULT_INPUT = Path("web/data/public_preview_map_data.json")
 ALLOWED_TASKS = {
@@ -256,6 +267,40 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
                 index,
                 title,
                 f"{field} contains a missing-value placeholder",
+            )
+
+    normalized_location = normalize_country_region(
+        record.get("country"),
+        record.get("country_code"),
+        record.get("region"),
+        record.get("region_code"),
+        record.get("raw_country") if "raw_country" in record else None,
+        record.get("raw_country_code") if "raw_country_code" in record else None,
+    )
+    normalized_region_code = normalized_location["region_code"]
+    if normalized_region_code in CHINA_REGION_BY_CODE:
+        expected = {
+            "country": "China",
+            "country_code": "CN",
+            "region": CHINA_REGION_BY_CODE[normalized_region_code],
+            "region_code": normalized_region_code,
+        }
+        actual = {
+            "country": clean_text(record.get("country")),
+            "country_code": clean_text(record.get("country_code")).upper(),
+            "region": clean_text(record.get("region")),
+            "region_code": clean_text(record.get("region_code")).upper(),
+        }
+        if actual != expected:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "regional location must use "
+                f"country=China, country_code=CN, "
+                f"region={expected['region']}, "
+                f"region_code={expected['region_code']}",
             )
 
     for field, minimum, maximum in (
