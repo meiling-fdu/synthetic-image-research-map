@@ -17,13 +17,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 339 |
-| Unique papers | 168 |
-| Unique institutions | 254 |
-| Countries | 42 |
-| arXiv/preprint records | 25 |
-| Records with DOI | 336 |
-| Records with venue | 337 |
+| Map records | 407 |
+| Unique papers | 196 |
+| Unique institutions | 304 |
+| Countries | 48 |
+| arXiv/preprint records | 26 |
+| Records with DOI | 404 |
+| Records with venue | 405 |
 | Records missing venue | 2 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -34,86 +34,87 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 300 |
-| source_attribution | 20 |
+| detection | 365 |
+| source_attribution | 23 |
 | detection_and_source_attribution | 19 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| synthetic_image_detection | 143 |
-| ai_generated_image_detection | 91 |
-| deepfake_image_detection | 66 |
+| synthetic_image_detection | 169 |
+| deepfake_image_detection | 99 |
+| ai_generated_image_detection | 97 |
+| generated_image_source_attribution | 21 |
 | detection_and_source_attribution | 19 |
-| generated_image_source_attribution | 19 |
-| source_identification | 1 |
+| source_identification | 2 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 8 |
-| 2025 | 86 |
-| 2024 | 93 |
-| 2023 | 61 |
-| 2022 | 33 |
-| 2021 | 24 |
-| 2020 | 15 |
-| 2019 | 16 |
-| 2018 | 2 |
+| 2026 | 10 |
+| 2025 | 104 |
+| 2024 | 99 |
+| 2023 | 76 |
+| 2022 | 47 |
+| 2021 | 30 |
+| 2020 | 16 |
+| 2019 | 17 |
+| 2018 | 6 |
 | 2017 | 1 |
+| 2016 | 1 |
 
 ## Top Venues
 
 | Venue | Records |
 | --- | ---: |
-| Lecture notes in computer science | 25 |
+| Lecture notes in computer science | 26 |
 | 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 14 |
-| IEEE Access | 10 |
+| Applied Sciences | 12 |
+| IEEE Access | 11 |
 | Journal of Imaging | 10 |
 | 2025 International Joint Conference on Neural Networks (IJCNN) | 9 |
 | IEEE Transactions on Information Forensics and Security | 9 |
 | Electronics | 7 |
 | Scientific Reports | 7 |
 | 2023 IEEE/CVF International Conference on Computer Vision (ICCV) | 6 |
-| 2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 6 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| CN | 73 |
-| US | 51 |
-| IT | 43 |
-| IN | 30 |
-| GB | 13 |
-| DE | 12 |
+| CN | 83 |
+| US | 57 |
+| IT | 46 |
+| IN | 42 |
+| KR | 17 |
+| China | 16 |
+| GB | 16 |
+| DE | 13 |
+| SA | 12 |
 | FR | 10 |
-| AU | 9 |
-| GR | 9 |
-| KR | 9 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
-| Federico II University Hospital | 9 |
+| Federico II University Hospital | 10 |
 | Beijing Jiaotong University | 6 |
 | Information Technologies Institute | 6 |
-| University of Siena | 5 |
+| University of Siena | 6 |
+| University of Naples Federico II | 5 |
 | University of Catania | 4 |
-| University of Naples Federico II | 4 |
 | University of Science and Technology of China | 4 |
+| Amity University | 3 |
 | Bank of Italy | 3 |
 | Centre for Research and Technology Hellas | 3 |
-| Microsoft Research Asia (China) | 3 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 339 |
+| high | 407 |
 
 ## Potential quality issues
 
@@ -121,8 +122,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 Count: **2**
 
-- Wavelet-Packet Powered Deepfake Image Detection. (2021) - Fraunhofer-Gesellschaft; `openalex-candidate-39c8a3334849f752`
-- Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-4a2a820e836ec7a5`
+- Wavelet-Packet Powered Deepfake Image Detection. (2021) - Fraunhofer-Gesellschaft; `openalex-candidate-6ba9fdeb3689ccf0`
+- Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-a66244e63c273fee`
 
 ### Records missing URL
 
