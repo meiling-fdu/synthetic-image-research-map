@@ -55,13 +55,13 @@ Empty directories contain `.gitkeep` placeholders until project files are added.
 
 ## Data collection prototype
 
-The standard-library OpenAlex search script can preview its default candidate-paper queries without making API requests or writing files:
+The standard-library OpenAlex search script can preview its default candidate-paper queries without making API requests or writing files. The defaults are grouped into detection and source attribution, with explicit generated-image wording in every query:
 
 ```bash
 python3 scripts/search_openalex.py --dry-run
 ```
 
-OpenAlex output is raw candidate data and requires manual review before anything is added to `data/manual/`. See [docs/data_collection.md](docs/data_collection.md) for query-file, result-limit, API-key, and raw-output details.
+Broad model/generator attribution, feature attribution, authorship attribution, camera or sensor attribution, and synthetic-data training or augmentation queries are intentionally excluded. OpenAlex output is raw candidate data and requires manual review before anything is added to `data/manual/`. See [docs/data_collection.md](docs/data_collection.md) for the grouped default query list, query-file options, result limits, API-key handling, and raw-output details. Each manifest entry records the exact query string used.
 
 After raw OpenAlex archives are available, preview the candidate extraction step:
 
@@ -192,7 +192,7 @@ For a smaller high-confidence-only preview:
 python3 scripts/export_public_preview.py --max-records 50 --min-confidence high
 ```
 
-The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It includes only `detection`, `source_attribution`, and `detection_and_source_attribution` records by default; uncertain, out-of-scope, low-confidence, and review-flagged records are excluded.
+The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It includes only `detection`, `source_attribution`, and `detection_and_source_attribution` records by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate records are excluded. Use `--include-missing-location` only for local debugging of otherwise unmappable records.
 
 Generate a Markdown quality summary for the currently published preview:
 

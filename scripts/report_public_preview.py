@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
 from collections import Counter
@@ -25,6 +26,7 @@ KNOWN_TASKS = {
     "source_attribution",
     "detection_and_source_attribution",
 }
+MISSING_INSTITUTION_VALUES = {"", "none", "null", "unknown", "n/a", "na"}
 
 
 class ReportError(RuntimeError):
@@ -132,8 +134,27 @@ def paper_identity(record: Dict[str, Any]) -> Tuple[str, ...]:
     return "record", clean_text(record.get("id")).casefold()
 
 
+def institution_name(record: Dict[str, Any]) -> str:
+    value = first_text(record, "institution", "institution_name")
+    return "" if value.casefold() in MISSING_INSTITUTION_VALUES else value
+
+
 def institution_identity(record: Dict[str, Any]) -> str:
-    return clean_text(record.get("institution")).casefold()
+    return institution_name(record).casefold()
+
+
+def has_usable_coordinates(record: Dict[str, Any]) -> bool:
+    try:
+        latitude = float(record.get("latitude"))
+        longitude = float(record.get("longitude"))
+    except (TypeError, ValueError):
+        return False
+    return (
+        math.isfinite(latitude)
+        and math.isfinite(longitude)
+        and -90 <= latitude <= 90
+        and -180 <= longitude <= 180
+    )
 
 
 def paper_url(record: Dict[str, Any]) -> str:
@@ -228,7 +249,7 @@ def counter_table(
 def record_label(record: Dict[str, Any]) -> str:
     title = first_text(record, "title", "paper_title") or "Untitled record"
     year = first_text(record, "publication_year", "year") or "unknown year"
-    institution = clean_text(record.get("institution")) or "unknown institution"
+    institution = institution_name(record) or "unknown institution"
     identifier = clean_text(record.get("id"))
     suffix = f"; `{markdown_text(identifier)}`" if identifier else ""
     return (
@@ -264,7 +285,7 @@ def build_report(
         records, lambda record: first_text(record, "country")
     )
     institutions = count_present_values(
-        records, lambda record: first_text(record, "institution")
+        records, institution_name
     )
     confidences = count_values(records, resolution_confidence)
 
@@ -272,6 +293,10 @@ def build_report(
         record for record in records if not first_text(record, "venue_name", "venue")
     ]
     missing_url = [record for record in records if not paper_url(record)]
+    missing_institution = [record for record in records if not institution_name(record)]
+    missing_coordinates = [
+        record for record in records if not has_usable_coordinates(record)
+    ]
     unknown_task = [
         record
         for record in records
@@ -333,6 +358,8 @@ def build_report(
             f"| Records with venue | {len(records) - len(missing_venue)} |",
             f"| Records missing venue | {len(missing_venue)} |",
             f"| Records missing paper URL | {len(missing_url)} |",
+            f"| Records missing institution | {len(missing_institution)} |",
+            f"| Records missing coordinates | {len(missing_coordinates)} |",
             f"| Records with `needs_review=true` | {sum(parse_bool(record.get('needs_review')) for record in records)} |",
             "",
             "## Records by Task",
@@ -367,6 +394,8 @@ def build_report(
             "",
             *issue_section("Records missing venue", missing_venue),
             *issue_section("Records missing URL", missing_url),
+            *issue_section("Records missing institution", missing_institution),
+            *issue_section("Records missing coordinates", missing_coordinates),
             *issue_section("Records with unknown task", unknown_task),
             *issue_section(
                 "Records with low or unresolved confidence", weak_confidence

@@ -149,6 +149,10 @@ TASK_RELEVANCE_PATTERNS = (
 )
 EXCLUSION_RELEVANCE_PATTERNS = (
     ("model attribution", r"\bmodel attribution\b"),
+    (
+        "range-image segmentation/classification",
+        r"(?:\brange images?\b.{0,120}\b(?:segment(?:ation|ed|s)?|classif(?:ication|ied|y)|recognition)\b|\b(?:segment(?:ation|ed|s)?|classif(?:ication|ied|y)|recognition)\b.{0,120}\brange images?\b)",
+    ),
     ("object detection", r"\bobject detection\b"),
     ("change detection", r"\bchange detection\b"),
     ("anomaly detection", r"\banomaly detection\b"),
@@ -195,6 +199,21 @@ EXCLUSION_RELEVANCE_PATTERNS = (
         "AI-generated text detection",
         r"\b(?:ai[ -]generated|machine[ -]generated|synthetic) text (?:detection|detector|identification)\b",
     ),
+)
+
+# Generic computer-vision classification language is excluded unless a scoped
+# generated-image term appears close to a detection or source-attribution task.
+# This prevents incidental mentions of synthetic evaluation images from turning
+# segmentation or recognition papers into synthetic-image detection candidates.
+GENERIC_IMAGE_ANALYSIS_PATTERNS = (
+    (
+        "generic image segmentation/classification/recognition",
+        r"(?:\b(?:image|object|visual) (?:segmentation|classification|recognition)\b|\b(?:segmentation|classification|recognition)(?:\s+[a-z0-9-]+){0,5}\s+(?:images?|objects?)\b)",
+    ),
+)
+SCOPED_GENERATED_IMAGE_TASK_PATTERNS = (
+    r"\b(?:ai[ -]generated|synthetic|generated|fake|deep[ -]?fake|gan[ -]generated|diffusion[ -]generated|generative) images?\b.{0,120}\b(?:detect(?:ion|or|ors|ed|ing|s)?|source (?:attribution|identification|verification)|provenance|forensics?|forensic attribution)\b",
+    r"\b(?:detect(?:ion|or|ors|ed|ing|s)?|source (?:attribution|identification|verification)|provenance|forensics?|forensic attribution)\b.{0,120}\b(?:ai[ -]generated|synthetic|generated|fake|deep[ -]?fake|gan[ -]generated|diffusion[ -]generated|generative) images?\b",
 )
 
 MODEL_ATTRIBUTION_EXCEPTION_PATTERNS = (
@@ -312,6 +331,10 @@ def classify_relevance(text: str) -> Tuple[bool, int, str, str]:
     generation_terms = matched_relevance_terms(text, GENERATION_RELEVANCE_PATTERNS)
     task_terms = matched_relevance_terms(text, TASK_RELEVANCE_PATTERNS)
     exclusion_terms = matched_relevance_terms(text, EXCLUSION_RELEVANCE_PATTERNS)
+    if not matches_any(text, SCOPED_GENERATED_IMAGE_TASK_PATTERNS):
+        exclusion_terms.extend(
+            matched_relevance_terms(text, GENERIC_IMAGE_ANALYSIS_PATTERNS)
+        )
     if (
         "model attribution" in exclusion_terms
         and generation_terms

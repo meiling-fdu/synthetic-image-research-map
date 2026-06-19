@@ -4,6 +4,38 @@
 
 `scripts/search_openalex.py` is an early collection tool for discovering possible papers through the OpenAlex Works API. It uses only the Python standard library and searches precise AI-generated/synthetic image detection and source-attribution queries, or custom queries supplied in a text file. Broad generative-model or generic-attribution queries are intentionally omitted.
 
+### Default Query Groups
+
+The default search list is organized into two focused groups. The exact query string used for each request is retained in the raw-data manifest.
+
+**Detection queries**
+
+- `AI-generated image detection`
+- `synthetic image detection`
+- `generated image detection`
+- `GAN-generated image detection`
+- `diffusion-generated image detection`
+- `detecting AI-generated images`
+- `detecting synthetic images`
+- `fake image detection generative AI`
+- `deepfake image detection`
+- `forensic detection of generated images`
+
+**Source attribution queries**
+
+- `AI-generated image source attribution`
+- `synthetic image source attribution`
+- `generated image source attribution`
+- `source attribution of AI-generated images`
+- `source attribution of synthetic images`
+- `forensic attribution of generated images`
+- `generated image provenance`
+- `source identification of generated images`
+- `source verification of generated images`
+- `which model generated this image`
+
+Broad queries such as `model attribution`, `generative model attribution`, generic `generator attribution`, and `attribution methods` are deliberately excluded. They commonly retrieve work on feature or saliency attribution, authorship attribution, camera or sensor attribution, and other adjacent topics. Queries about synthetic-data augmentation, synthetic training data, or object detection with synthetic data are also excluded because generating training inputs is not the research target.
+
 OpenAlex results are raw candidate records, not final curated project data. Broad search terms can retrieve irrelevant, duplicate, out-of-scope, or incorrectly described papers. Retrieval does not establish that a paper belongs in the map and does not confirm its task label, authors, institutions, or affiliations.
 
 Every candidate must be reviewed manually before any corresponding record is added to `data/manual/`. Automated collection writes only to `data/raw/openalex/` by default. It never writes to the manual CSV files.
@@ -121,7 +153,7 @@ A candidate is marked `in_scope=true` only when its title or reconstructed abstr
 
 Scoped task terms cover detection/detectors and generated-image source attribution, source identification, source verification, provenance, and forensic attribution. Generic `attribution`, model attribution, and generator attribution are not standalone inclusion rules. A generator-attribution phrase can contribute only when an explicit generated-image term is present in the same title or abstract.
 
-Strong exclusions cover model, feature, saliency, explainable-AI, authorship, camera-model, and sensor attribution; object/change/anomaly/target detection; medical imaging or diagnosis; remote sensing and hyperspectral work; traffic-sign recognition; person re-identification; disease identification; data augmentation; synthetic training data; educational integrity; and AI-generated text detection. These records remain in the complete audit CSVs with an `exclusion_reason`, but do not enter scoped downstream processing.
+Strong exclusions cover model, feature, saliency, explainable-AI, authorship, camera-model, and sensor attribution; object/change/anomaly/target detection; medical imaging or diagnosis; remote sensing and hyperspectral work; traffic-sign recognition; person re-identification; disease identification; data augmentation; synthetic training data; educational integrity; and AI-generated text detection. Range-image segmentation/classification is also excluded. Generic image segmentation, classification, or recognition is excluded unless an explicit generated-image term occurs close to a detection or generated-image source-attribution task, preventing incidental mentions of synthetic test images from admitting unrelated computer-vision papers. These records remain in the complete audit CSVs with an `exclusion_reason`, but do not enter scoped downstream processing.
 
 The candidate paper CSV retains every record and adds `in_scope`, `relevance_score`, `relevance_reason`, and `exclusion_reason`. Scores are `2` when both required term groups match without an exclusion, `1` when only one required group matches, and `0` when neither group matches or an exclusion applies. Preliminary main labels are limited to `detection`, `source_attribution`, `detection_and_source_attribution`, and `uncertain`; automatic labels remain traceable suggestions rather than curated decisions.
 
@@ -264,7 +296,7 @@ This map export is for exploratory visualization only. It is assembled from auto
 
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. The output is explicitly labeled as an uncurated public preview, not a manually curated bibliography.
 
-By default, the exporter publishes at most 200 records, requires `in_scope=true`, requires a main task of `detection`, `source_attribution`, or `detection_and_source_attribution`, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. `--include-uncertain` can include uncertain task records for debugging; unsupported legacy or generic-attribution labels remain excluded. The exporter keeps only fields needed by the public map and never copies raw responses or caches.
+By default, the exporter publishes at most 200 records, requires `in_scope=true`, requires a main task of `detection`, `source_attribution`, or `detection_and_source_attribution`, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It also requires a non-placeholder institution name and a finite latitude/longitude pair within geographic bounds, because every public record must represent a mapped institution. `--include-uncertain` and `--include-missing-location` can relax task or location checks for local debugging; unsupported legacy or generic-attribution labels remain excluded. The exporter keeps only fields needed by the public map and never copies raw responses or caches.
 
 Inspect the filtering summary without writing output:
 
@@ -278,10 +310,10 @@ Write the default public preview:
 python3 scripts/export_public_preview.py
 ```
 
-The confidence threshold can be tightened with `--min-confidence high`, and `--max-records` can produce a smaller preview. `--include-needs-review` is an explicit opt-in for exceptional review use; review-flagged records should normally remain local.
+The confidence threshold can be tightened with `--min-confidence high`, and `--max-records` can produce a smaller preview. `--include-needs-review` and `--include-missing-location` are explicit debugging opt-ins; review-flagged or unmappable records should normally remain local.
 
 Only the filtered public preview JSON should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence records, and records needing review remain local and ignored by Git. Public-preview records are still automatically generated candidates and must not be described as curated final data.
 
 ### Public Preview Quality Report
 
-Run `python3 scripts/report_public_preview.py` after every public-preview refresh. It regenerates `docs/public_preview_report.md` from the committed preview JSON so coverage counts, missing metadata, confidence levels, and potential quality issues remain synchronized with the dataset shown by the online map.
+Run `python3 scripts/report_public_preview.py` after every public-preview refresh. It regenerates `docs/public_preview_report.md` from the committed preview JSON so coverage counts, missing metadata, confidence levels, and potential quality issues remain synchronized with the dataset shown by the online map. The report explicitly counts and lists records missing institutions or usable coordinates; a default export should report zero for both.

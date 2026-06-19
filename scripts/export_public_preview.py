@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -30,6 +31,7 @@ CONFIDENCE_RANK = {
     "medium": 2,
     "high": 3,
 }
+MISSING_INSTITUTION_VALUES = {"", "none", "null", "unknown", "n/a", "na"}
 PUBLIC_FIELDS = (
     "id",
     "title",
@@ -135,6 +137,14 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Include records labeled uncertain for debugging (excluded by default).",
     )
     parser.add_argument(
+        "--include-missing-location",
+        action="store_true",
+        help=(
+            "Include records without a valid institution or coordinate pair for "
+            "debugging (excluded by default)."
+        ),
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print filtering results without writing the public JSON file.",
@@ -146,6 +156,36 @@ def parse_bool(value: Any) -> bool:
     if isinstance(value, bool):
         return value
     return str(value or "").strip().casefold() in {"1", "true", "yes", "y"}
+
+
+def clean_text(value: Any) -> str:
+    if value is None:
+        return ""
+    return " ".join(str(value).split())
+
+
+def institution_name(record: Dict[str, Any]) -> str:
+    return clean_text(
+        record.get("institution") or record.get("institution_name")
+    )
+
+
+def has_valid_institution(record: Dict[str, Any]) -> bool:
+    return institution_name(record).casefold() not in MISSING_INSTITUTION_VALUES
+
+
+def has_usable_coordinates(record: Dict[str, Any]) -> bool:
+    try:
+        latitude = float(record.get("latitude"))
+        longitude = float(record.get("longitude"))
+    except (TypeError, ValueError):
+        return False
+    return (
+        math.isfinite(latitude)
+        and math.isfinite(longitude)
+        and -90 <= latitude <= 90
+        and -180 <= longitude <= 180
+    )
 
 
 def normalize_confidence(value: Any) -> str:
@@ -174,6 +214,7 @@ def build_preview(
     include_needs_review: bool,
     include_out_of_scope: bool = False,
     include_uncertain: bool = False,
+    include_missing_location: bool = False,
 ) -> Tuple[Dict[str, Any], Dict[str, int]]:
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
@@ -181,6 +222,9 @@ def build_preview(
     excluded_needs_review = 0
     excluded_out_of_scope = 0
     excluded_task = 0
+    missing_institution = 0
+    missing_coordinates = 0
+    excluded_missing_location = 0
 
     for record in records:
         in_scope = parse_bool(record.get("in_scope"))
@@ -193,6 +237,16 @@ def build_preview(
         task_is_debug_uncertain = include_uncertain and task == "uncertain"
         if not task_is_allowed and not task_is_debug_uncertain:
             excluded_task += 1
+            continue
+
+        record_missing_institution = not has_valid_institution(record)
+        record_missing_coordinates = not has_usable_coordinates(record)
+        missing_institution += int(record_missing_institution)
+        missing_coordinates += int(record_missing_coordinates)
+        if (
+            record_missing_institution or record_missing_coordinates
+        ) and not include_missing_location:
+            excluded_missing_location += 1
             continue
 
         confidence = normalize_confidence(record.get("resolution_confidence"))
@@ -210,6 +264,7 @@ def build_preview(
         public_record = {
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
+        public_record["institution"] = institution_name(record)
         public_record["resolution_confidence"] = confidence
         public_record["needs_review"] = needs_review
         public_record["in_scope"] = in_scope
@@ -221,6 +276,9 @@ def build_preview(
         "candidate_records_read": len(records),
         "records_excluded_out_of_scope": excluded_out_of_scope,
         "records_excluded_task": excluded_task,
+        "records_missing_institution": missing_institution,
+        "records_missing_coordinates": missing_coordinates,
+        "records_excluded_missing_location": excluded_missing_location,
         "records_excluded_below_confidence": below_confidence,
         "records_excluded_needs_review": excluded_needs_review,
         "records_eligible_before_limit": eligible_records,
@@ -253,6 +311,18 @@ def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
         f"{summary['records_excluded_task']}"
     )
     print(
+        "  Scoped records missing an institution: "
+        f"{summary['records_missing_institution']}"
+    )
+    print(
+        "  Scoped records missing usable coordinates: "
+        f"{summary['records_missing_coordinates']}"
+    )
+    print(
+        "  Records excluded for missing institution/location: "
+        f"{summary['records_excluded_missing_location']}"
+    )
+    print(
         "  Records excluded below confidence threshold: "
         f"{summary['records_excluded_below_confidence']}"
     )
@@ -280,6 +350,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.include_needs_review,
             args.include_out_of_scope,
             args.include_uncertain,
+            args.include_missing_location,
         )
         if not args.dry_run:
             write_json(args.output, payload)
