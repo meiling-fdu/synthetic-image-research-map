@@ -2,7 +2,7 @@
 
 ## OpenAlex Candidate Search
 
-`scripts/search_openalex.py` is an early collection tool for discovering possible papers through the OpenAlex Works API. It uses only the Python standard library and searches the project's default synthetic image detection and attribution queries, or custom queries supplied in a text file.
+`scripts/search_openalex.py` is an early collection tool for discovering possible papers through the OpenAlex Works API. It uses only the Python standard library and searches precise AI-generated/synthetic image detection and source-attribution queries, or custom queries supplied in a text file. Broad generative-model or generic-attribution queries are intentionally omitted.
 
 OpenAlex results are raw candidate records, not final curated project data. Broad search terms can retrieve irrelevant, duplicate, out-of-scope, or incorrectly described papers. Retrieval does not establish that a paper belongs in the map and does not confirm its task label, authors, institutions, or affiliations.
 
@@ -117,11 +117,13 @@ Raw affiliation strings are retained even when OpenAlex supplies no structured i
 
 ### Rule-Based Relevance Filter
 
-A candidate is marked `in_scope=true` only when its title or reconstructed abstract contains at least one generation-related term and at least one detection/attribution task term, with no exclusion-term match. Generation terms cover AI-generated, synthetic or generated images, generative models, GANs, diffusion models, text-to-image, AIGC, deepfakes, fake images, and synthesized images. Task terms cover detection, attribution, provenance, forensics, identification, and verification.
+A candidate is marked `in_scope=true` only when its title or reconstructed abstract contains both an explicit generated-image term and a scoped task term, with no strong exclusion. Generated-image terms cover AI-generated, synthetic, generated, fake/deepfake, GAN-generated, diffusion-generated, text-to-image, and generative images. Standalone mentions of a GAN, diffusion model, generative model, or synthetic data are not sufficient.
 
-Obvious unrelated contexts are marked out of scope when terms such as object, change, anomaly, disease, or target detection; medical imaging; remote sensing; hyperspectral imaging; authorship, feature, or saliency attribution; or camera-model and sensor attribution are present. Exclusion matches override positive term matches but remain visible for review.
+Scoped task terms cover detection/detectors and generated-image source attribution, source identification, source verification, provenance, and forensic attribution. Generic `attribution`, model attribution, and generator attribution are not standalone inclusion rules. A generator-attribution phrase can contribute only when an explicit generated-image term is present in the same title or abstract.
 
-The candidate paper CSV retains every record and adds `in_scope`, `relevance_score`, `relevance_reason`, and `exclusion_reason`. Scores are `2` when both required term groups match without an exclusion, `1` when only one required group matches, and `0` when neither group matches or an exclusion applies. Score-1 records are explicitly uncertain and require manual review. Preliminary task labels remain independent, traceable suggestions rather than curated decisions.
+Strong exclusions cover model, feature, saliency, explainable-AI, authorship, camera-model, and sensor attribution; object/change/anomaly/target detection; medical imaging or diagnosis; remote sensing and hyperspectral work; traffic-sign recognition; person re-identification; disease identification; data augmentation; synthetic training data; educational integrity; and AI-generated text detection. These records remain in the complete audit CSVs with an `exclusion_reason`, but do not enter scoped downstream processing.
+
+The candidate paper CSV retains every record and adds `in_scope`, `relevance_score`, `relevance_reason`, and `exclusion_reason`. Scores are `2` when both required term groups match without an exclusion, `1` when only one required group matches, and `0` when neither group matches or an exclusion applies. Preliminary main labels are limited to `detection`, `source_attribution`, `detection_and_source_attribution`, and `uncertain`; automatic labels remain traceable suggestions rather than curated decisions.
 
 Out-of-scope records are never deleted: they remain in the two complete candidate CSVs with their scores and reasons. Resolution, geocoding, review-queue generation, map export, and public-preview export use the scoped stream by default. Extraction summaries report total and in-scope paper and affiliation counts.
 
@@ -262,7 +264,7 @@ This map export is for exploratory visualization only. It is assembled from auto
 
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. The output is explicitly labeled as an uncurated public preview, not a manually curated bibliography.
 
-By default, the exporter publishes at most 200 records, requires `in_scope=true` and `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It keeps only fields needed by the public map, including reviewable publication metadata, and does not copy raw OpenAlex responses, cache contents, or future internal fields. `--include-out-of-scope` exists only for debugging.
+By default, the exporter publishes at most 200 records, requires `in_scope=true`, requires a main task of `detection`, `source_attribution`, or `detection_and_source_attribution`, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. `--include-uncertain` can include uncertain task records for debugging; unsupported legacy or generic-attribution labels remain excluded. The exporter keeps only fields needed by the public map and never copies raw responses or caches.
 
 Inspect the filtering summary without writing output:
 

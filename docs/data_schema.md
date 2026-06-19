@@ -21,11 +21,11 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `doi` | Canonical DOI without a resolver URL when available. |
 | `url` | Preferred public landing-page URL for the paper. |
 | `arxiv_id` | arXiv identifier, including version only when the version matters. |
-| `task` | Primary project task label: `detection`, `attribution`, or `both`. |
-| `subtask` | More specific reviewable label, such as generator attribution, source identification, or provenance verification. Use a documented vocabulary once one is established. |
+| `task` | Primary project task label: `detection`, `source_attribution`, `detection_and_source_attribution`, or `uncertain`. |
+| `subtask` | Controlled reviewable label: `synthetic_image_detection`, `ai_generated_image_detection`, `deepfake_image_detection`, `generated_image_source_attribution`, `source_identification`, `source_verification`, `detection_and_source_attribution`, or `unknown`. |
 | `is_survey` | `true` when the paper is a survey, review, systematic review, or taxonomy rather than a primary research contribution. |
 | `is_deepfake_related` | `true` when the work specifically concerns deepfakes or face manipulation. This flag keeps that related area distinguishable from general synthetic-image research. |
-| `is_image_editing_related` | `true` when the work concerns attribution or detection of image editing or manipulation rather than image generation alone. |
+| `is_image_editing_related` | `true` when an audit candidate concerns image editing or manipulation. Image-editing-only work is outside the scoped map dataset. |
 | `source_query` | Query, search phrase, import batch, or other discovery context that produced the record. |
 | `source_database` | Originating metadata source, such as `openalex`, `semantic_scholar`, `crossref`, `arxiv`, or `manual`. |
 | `manual_review` | `true` when a human must verify the record, classification, deduplication, or metadata; otherwise `false`. |
@@ -158,13 +158,21 @@ Affiliation is a property of an author's relationship to a particular paper, not
 
 Labels describe scope without collapsing related categories into one field:
 
-- Set `task` to `detection` when the main goal is deciding whether an image is synthetic, `attribution` when the goal is identifying its generator, source, or generation process, and `both` when both are substantive tasks.
-- Use `subtask` for a narrower task description. Keep values concise and reviewable; document a controlled vocabulary before relying on it for filtering.
+- Set `task=detection` only when the paper primarily detects AI-generated or synthetic images.
+- Set `task=source_attribution` only when the paper attributes an AI-generated or synthetic image to its generation source, identifies that source, verifies it, or studies generated-image provenance/forensic attribution.
+- Set `task=detection_and_source_attribution` when both scoped tasks are substantive, and `task=uncertain` when the automatic rules cannot assign one safely.
+- Use only the documented `subtask` vocabulary from the `papers.csv` table. `model_attribution`, `generator_attribution`, and generic `attribution` are not task or subtask labels.
 - Set `is_survey=true` for survey, review, systematic review, or taxonomy papers. A survey should still receive the `task` value that best describes its topical coverage.
 - Set `is_deepfake_related=true` for deepfake or face-manipulation research. This flag does not replace `task`.
-- Set `is_image_editing_related=true` for work centered on edited or manipulated images. This flag does not replace `task`.
+- Set `is_image_editing_related=true` for audit candidates centered on edited or manipulated images; this flag does not make them in scope.
 - A paper may have more than one boolean flag. For example, a survey of deepfake detection can use `task=detection`, `is_survey=true`, and `is_deepfake_related=true`.
 - Audio-only and video-only work is outside the project scope. Multimodal work should be included only when generated-image research is a meaningful component, with the scope explained in `notes`.
+
+### Scope Boundary
+
+In-scope work must combine explicit AI-generated/synthetic image context with detection or generated-image source-attribution context. Broad model attribution, feature or saliency attribution, explainable-AI attribution, authorship attribution, camera-model attribution, sensor attribution, and generic attribution are intentionally excluded. Papers that merely use GANs, synthetic data, or generated images for data augmentation, training, medical diagnosis, object recognition, traffic-sign recognition, person re-identification, remote sensing, or other downstream tasks are also outside scope.
+
+`generator attribution` may support a preliminary source-attribution classification only when the same title or abstract explicitly identifies AI-generated, synthetic, generated, fake/deepfake, GAN-generated, diffusion-generated, text-to-image, or generative images. It is never sufficient by itself.
 
 ## Manual Review and Automatic Labels
 

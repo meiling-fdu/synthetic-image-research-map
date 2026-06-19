@@ -21,16 +21,17 @@ DEFAULT_OUTPUT_DIR = Path("data/raw/openalex")
 DEFAULT_MAX_RESULTS = 100
 OPENALEX_PAGE_SIZE = 200
 DEFAULT_QUERIES = (
-    "synthetic image detection",
     "AI-generated image detection",
+    "synthetic image detection",
     "generated image detection",
-    "diffusion image detection",
-    "GAN image detection",
-    "synthetic image attribution",
-    "AI-generated image attribution",
-    "generative model attribution",
-    "source attribution generated images",
+    "GAN-generated image detection",
+    "diffusion-generated image detection",
+    "AI-generated image source attribution",
+    "synthetic image source attribution",
     "generated image source attribution",
+    "source attribution of AI-generated images",
+    "forensic attribution of generated images",
+    "deepfake image detection",
 )
 
 

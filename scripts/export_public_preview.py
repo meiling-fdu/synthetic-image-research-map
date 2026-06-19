@@ -18,6 +18,11 @@ DEFAULT_INPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_OUTPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_MAX_RECORDS = 200
 DEFAULT_MIN_CONFIDENCE = "medium"
+ALLOWED_PUBLIC_TASKS = {
+    "detection",
+    "source_attribution",
+    "detection_and_source_attribution",
+}
 
 CONFIDENCE_RANK = {
     "unresolved": 0,
@@ -125,6 +130,11 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Include map records not marked in_scope=true for debugging.",
     )
     parser.add_argument(
+        "--include-uncertain",
+        action="store_true",
+        help="Include records labeled uncertain for debugging (excluded by default).",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print filtering results without writing the public JSON file.",
@@ -163,17 +173,26 @@ def build_preview(
     min_confidence: str,
     include_needs_review: bool,
     include_out_of_scope: bool = False,
+    include_uncertain: bool = False,
 ) -> Tuple[Dict[str, Any], Dict[str, int]]:
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
     below_confidence = 0
     excluded_needs_review = 0
     excluded_out_of_scope = 0
+    excluded_task = 0
 
     for record in records:
         in_scope = parse_bool(record.get("in_scope"))
         if not in_scope and not include_out_of_scope:
             excluded_out_of_scope += 1
+            continue
+
+        task = str(record.get("preliminary_task") or record.get("task") or "").strip()
+        task_is_allowed = task in ALLOWED_PUBLIC_TASKS
+        task_is_debug_uncertain = include_uncertain and task == "uncertain"
+        if not task_is_allowed and not task_is_debug_uncertain:
+            excluded_task += 1
             continue
 
         confidence = normalize_confidence(record.get("resolution_confidence"))
@@ -201,6 +220,7 @@ def build_preview(
     summary = {
         "candidate_records_read": len(records),
         "records_excluded_out_of_scope": excluded_out_of_scope,
+        "records_excluded_task": excluded_task,
         "records_excluded_below_confidence": below_confidence,
         "records_excluded_needs_review": excluded_needs_review,
         "records_eligible_before_limit": eligible_records,
@@ -229,6 +249,10 @@ def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
         f"{summary['records_excluded_out_of_scope']}"
     )
     print(
+        "  Records excluded by task label: "
+        f"{summary['records_excluded_task']}"
+    )
+    print(
         "  Records excluded below confidence threshold: "
         f"{summary['records_excluded_below_confidence']}"
     )
@@ -255,6 +279,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.min_confidence,
             args.include_needs_review,
             args.include_out_of_scope,
+            args.include_uncertain,
         )
         if not args.dry_run:
             write_json(args.output, payload)

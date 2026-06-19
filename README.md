@@ -1,20 +1,20 @@
 # Synthetic Image Research Map
 
-An interactive academic world map for exploring papers, researchers, and institutions working on synthetic image detection and synthetic image attribution. The project is planned as a lightweight static website backed by transparent, reviewable datasets and Python-based preprocessing.
+An interactive academic world map for exploring papers, researchers, and institutions working on AI-generated/synthetic image detection and generated-image source attribution. The project is a lightweight static website backed by transparent, reviewable datasets and Python preprocessing.
 
 **Online demo:** [Synthetic Image Research Map on GitHub Pages](https://meiling-fdu.github.io/synthetic-image-research-map/)
 
 ## Project Goals
 
-- Map the global research landscape for synthetic image detection and attribution.
+- Map the global research landscape for AI-generated/synthetic image detection and source attribution.
 - Connect papers with their authors, institutions, affiliations, and locations without reducing a paper to a single author location.
 - Preserve source metadata and data provenance throughout the collection and processing workflow.
 - Make automatic classifications and uncertain records easy to review and correct manually.
-- Distinguish core synthetic image research from related areas such as deepfake detection, face manipulation, image-editing attribution, and survey papers.
+- Exclude adjacent attribution fields and synthetic-data applications that do not detect or source-attribute generated images.
 
 ## Roadmap
 
-1. Improve literature search coverage for synthetic image detection and attribution.
+1. Improve literature search coverage for synthetic image detection and source attribution.
 2. Add bibliographic sources such as Semantic Scholar and Crossref.
 3. Improve institution resolution and confidence scoring.
 4. Establish a manual validation workflow for relevance, labels, affiliations, and coordinates.
@@ -79,7 +79,7 @@ The complete `openalex_candidate_papers.csv` and `openalex_candidate_affiliation
 
 Affiliations are represented at paper-author-institution level. Every OpenAlex authorship is preserved, authors with multiple institutions produce multiple relationship rows, and raw-only or missing affiliations remain reviewable rather than being dropped. Map exports include every affiliated institution with usable coordinates and aggregate all associated collaborators for that paper-institution marker; first-author-only mapping is intentionally avoided.
 
-Candidate papers receive a conservative rule-based relevance assessment. `in_scope=true` requires both an AI-generated/synthetic-image term and a detection/attribution task term, while explicit unrelated-domain terms override inclusion. All records are retained with scores and matched reasons, but only the scoped files proceed to institution resolution, geocoding, review queues, maps, and public previews by default.
+Candidate papers receive a conservative rule-based relevance assessment. `in_scope=true` requires explicit AI-generated/synthetic image context plus detection or generated-image source-attribution context. Broad model, feature, saliency, explainable-AI, authorship, camera-model, sensor, and generic attribution are excluded, as are synthetic-data applications such as augmentation, medical diagnosis, downstream recognition, and remote sensing. All candidates remain auditable, but only scoped records proceed downstream.
 
 The extractor also preserves OpenAlex publication year/date, venue and source type, publisher, publication type, DOI, arXiv identifiers and links, and source URLs. Missing venues remain unknown rather than being inferred, and detected arXiv records are explicitly marked as preprints for review.
 
@@ -192,7 +192,7 @@ For a smaller high-confidence-only preview:
 python3 scripts/export_public_preview.py --max-records 50 --min-confidence high
 ```
 
-The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It excludes out-of-scope, low-confidence, and review-flagged records by default, while raw responses and caches remain local.
+The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It includes only `detection`, `source_attribution`, and `detection_and_source_attribution` records by default; uncertain, out-of-scope, low-confidence, and review-flagged records are excluded.
 
 Generate a Markdown quality summary for the currently published preview:
 

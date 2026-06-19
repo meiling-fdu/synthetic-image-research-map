@@ -33,8 +33,8 @@ let datasetConfig = DATASET_CONFIG[datasetName];
 const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -170), L.latLng(75, 170));
 const TASK_COLORS = {
   detection: "#287d8e",
-  attribution: "#b66a37",
-  both: "#76589b",
+  source_attribution: "#b66a37",
+  detection_and_source_attribution: "#76589b",
   uncertain: "#68747d",
 };
 
@@ -333,7 +333,7 @@ function updateDatasetLabels() {
   if (datasetName === "sample") {
     prototypeNote.textContent = "Fictional sample data only";
     intro.textContent =
-      "Explore toy records representing research in synthetic image detection and attribution.";
+      "Explore toy records representing research in synthetic image detection and source attribution.";
     footer.textContent =
       "Prototype interface. Records shown here are fictional and are not literature data.";
     mapStatus.textContent = "Loading fictional sample data...";
@@ -347,7 +347,7 @@ function updateDatasetLabels() {
   } else {
     prototypeNote.textContent = "Uncurated OpenAlex candidates";
     intro.textContent =
-      "Explore locally generated candidate records for synthetic image detection and attribution research.";
+      "Explore locally generated candidate records for synthetic image detection and source attribution research.";
     footer.textContent =
       "Exploratory candidate view. Records are automatically extracted and require manual review.";
     mapStatus.textContent = "Loading local OpenAlex candidate data...";
