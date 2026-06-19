@@ -29,6 +29,10 @@ PAPER_COLUMNS = (
     "doi",
     "url",
     "arxiv_id",
+    "in_scope",
+    "relevance_score",
+    "relevance_reason",
+    "exclusion_reason",
     "preliminary_task",
     "preliminary_subtask",
     "is_survey",
@@ -87,6 +91,47 @@ IMAGE_EDITING_PATTERNS = (
     r"\bmanipulated image(?:s)?\b",
     r"\binpaint(?:ing|ed)?\b",
     r"\bediting attribution\b",
+)
+
+GENERATION_RELEVANCE_PATTERNS = (
+    ("ai-generated", r"\bai[ -]generated\b"),
+    ("synthetic image", r"\bsynthetic images?\b"),
+    ("generated image", r"\bgenerated images?\b"),
+    ("generative model", r"\bgenerative models?\b"),
+    ("GAN", r"\bgans?\b"),
+    ("diffusion model", r"\bdiffusion models?\b"),
+    ("text-to-image", r"\btext[ -]to[ -]image\b"),
+    ("AIGC", r"\baigc\b"),
+    ("deepfake", r"\bdeep[ -]?fakes?\b"),
+    ("fake image", r"\bfake images?\b"),
+    ("synthesized image", r"\bsynthesi[sz]ed images?\b"),
+)
+TASK_RELEVANCE_PATTERNS = (
+    ("detection", r"\bdetection\b"),
+    ("detector", r"\bdetectors?\b"),
+    ("detect", r"\bdetect(?:s|ed|ing)?\b"),
+    ("attribution", r"\battribution\b"),
+    ("source attribution", r"\bsource attribution\b"),
+    ("generator attribution", r"\bgenerator attribution\b"),
+    ("provenance", r"\bprovenance\b"),
+    ("forensic", r"\bforensics?\b"),
+    ("identification", r"\bidentification\b"),
+    ("verification", r"\bverification\b"),
+)
+EXCLUSION_RELEVANCE_PATTERNS = (
+    ("object detection", r"\bobject detection\b"),
+    ("change detection", r"\bchange detection\b"),
+    ("anomaly detection", r"\banomaly detection\b"),
+    ("medical image", r"\bmedical imag(?:e|es|ing)\b"),
+    ("remote sensing", r"\bremote sensing\b"),
+    ("hyperspectral", r"\bhyperspectral\b"),
+    ("disease detection", r"\bdisease detection\b"),
+    ("target detection", r"\btarget detection\b"),
+    ("authorship attribution", r"\bauthorship attribution\b"),
+    ("feature attribution", r"\bfeature attribution\b"),
+    ("saliency attribution", r"\bsaliency attribution\b"),
+    ("camera model attribution", r"\bcamera model attribution\b"),
+    ("sensor attribution", r"\bsensor attribution\b"),
 )
 
 CANDIDATE_NOTE = (
@@ -179,6 +224,58 @@ def normalize_title(title: str) -> str:
 
 def matches_any(text: str, patterns: Sequence[str]) -> bool:
     return any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
+
+
+def matched_relevance_terms(
+    text: str,
+    patterns: Sequence[Tuple[str, str]],
+) -> List[str]:
+    return [
+        label
+        for label, pattern in patterns
+        if re.search(pattern, text, flags=re.IGNORECASE)
+    ]
+
+
+def classify_relevance(text: str) -> Tuple[bool, int, str, str]:
+    """Apply a conservative, reviewable scope filter to title and abstract text."""
+    generation_terms = matched_relevance_terms(text, GENERATION_RELEVANCE_PATTERNS)
+    task_terms = matched_relevance_terms(text, TASK_RELEVANCE_PATTERNS)
+    exclusion_terms = matched_relevance_terms(text, EXCLUSION_RELEVANCE_PATTERNS)
+
+    matched_parts = []
+    if generation_terms:
+        matched_parts.append(f"generation terms: {', '.join(generation_terms)}")
+    if task_terms:
+        matched_parts.append(f"task terms: {', '.join(task_terms)}")
+
+    if exclusion_terms:
+        relevance_reason = (
+            "Matched " + "; ".join(matched_parts) + "."
+            if matched_parts
+            else "No required generation/task combination matched."
+        )
+        exclusion_reason = f"Matched exclusion terms: {', '.join(exclusion_terms)}."
+        return False, 0, relevance_reason, exclusion_reason
+
+    if generation_terms and task_terms:
+        return True, 2, f"Matched {'; '.join(matched_parts)}.", ""
+
+    if generation_terms:
+        return (
+            False,
+            1,
+            f"Matched generation terms: {', '.join(generation_terms)}; no task terms matched.",
+            "",
+        )
+    if task_terms:
+        return (
+            False,
+            1,
+            f"Matched task terms: {', '.join(task_terms)}; no generation terms matched.",
+            "",
+        )
+    return False, 0, "No generation-related or task-related terms matched.", ""
 
 
 def reconstruct_abstract(inverted_index: Any) -> str:
@@ -310,6 +407,9 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     abstract = reconstruct_abstract(work.get("abstract_inverted_index"))
     classification_text = f"{title} {abstract}".strip()
     task, subtask = classify_task(classification_text)
+    in_scope, relevance_score, relevance_reason, exclusion_reason = (
+        classify_relevance(classification_text)
+    )
 
     notes = [CANDIDATE_NOTE]
     if not openalex_id:
@@ -325,6 +425,10 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
         "doi": normalize_doi(first_nonempty(work.get("doi"), ids.get("doi"))),
         "url": extract_url(work, openalex_id),
         "arxiv_id": extract_arxiv_id(work),
+        "in_scope": bool_text(in_scope),
+        "relevance_score": str(relevance_score),
+        "relevance_reason": relevance_reason,
+        "exclusion_reason": exclusion_reason,
         "preliminary_task": task,
         "preliminary_subtask": subtask,
         "is_survey": bool_text(matches_any(title, SURVEY_PATTERNS)),
@@ -349,6 +453,22 @@ def merge_paper_rows(existing: Dict[str, str], incoming: Dict[str, str]) -> None
     existing["source_query"] = merge_pipe_values(
         existing["source_query"], incoming["source_query"]
     )
+    existing["relevance_reason"] = merge_pipe_values(
+        existing["relevance_reason"], incoming["relevance_reason"]
+    )
+    existing["exclusion_reason"] = merge_pipe_values(
+        existing["exclusion_reason"], incoming["exclusion_reason"]
+    )
+    if existing["exclusion_reason"]:
+        existing["in_scope"] = "false"
+        existing["relevance_score"] = "0"
+    else:
+        existing["in_scope"] = bool_text(
+            existing["in_scope"] == "true" or incoming["in_scope"] == "true"
+        )
+        existing["relevance_score"] = str(
+            max(int(existing["relevance_score"]), int(incoming["relevance_score"]))
+        )
     for boolean_column in (
         "is_survey",
         "is_deepfake_related",
@@ -570,6 +690,15 @@ def run(args: argparse.Namespace) -> int:
     print(f"Read {file_count} raw OpenAlex JSON files from {args.input_dir}")
     print(f"Candidate papers after deduplication: {len(papers)}")
     print(f"Candidate author-institution rows: {len(affiliations)}")
+    print(f"Candidates marked in scope: {sum(row['in_scope'] == 'true' for row in papers)}")
+    print(
+        "Candidates requiring relevance review: "
+        f"{sum(row['relevance_score'] == '1' for row in papers)}"
+    )
+    print(
+        "Candidates matched by exclusion terms: "
+        f"{sum(bool(row['exclusion_reason']) for row in papers)}"
+    )
 
     if args.dry_run:
         print("DRY RUN: no files were written.")

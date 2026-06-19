@@ -97,7 +97,17 @@ python3 scripts/extract_openalex_candidates.py
 
 Custom locations can be supplied with `--input-dir` and `--output-dir`. The defaults are `data/raw/openalex/` and `data/processed/`.
 
-The extractor deduplicates by OpenAlex ID and falls back to a normalized title when an ID is missing. It reconstructs available abstracts only to apply simple detection, attribution, survey, deepfake, and image-editing keyword rules. These labels are preliminary and can be wrong, especially for broad search results. Uncertain records are retained with `preliminary_task=uncertain`, and every paper and affiliation row is written with `manual_review=true`.
+The extractor deduplicates by OpenAlex ID and falls back to a normalized title when an ID is missing. It reconstructs available abstracts to apply preliminary task labels and a separate rule-based relevance filter. These automatic decisions can be wrong, especially for broad search results, so every paper and affiliation row remains `manual_review=true`.
+
+### Rule-Based Relevance Filter
+
+A candidate is marked `in_scope=true` only when its title or reconstructed abstract contains at least one generation-related term and at least one detection/attribution task term, with no exclusion-term match. Generation terms cover AI-generated, synthetic or generated images, generative models, GANs, diffusion models, text-to-image, AIGC, deepfakes, fake images, and synthesized images. Task terms cover detection, attribution, provenance, forensics, identification, and verification.
+
+Obvious unrelated contexts are marked out of scope when terms such as object, change, anomaly, disease, or target detection; medical imaging; remote sensing; hyperspectral imaging; authorship, feature, or saliency attribution; or camera-model and sensor attribution are present. Exclusion matches override positive term matches but remain visible for review.
+
+The candidate paper CSV retains every record and adds `in_scope`, `relevance_score`, `relevance_reason`, and `exclusion_reason`. Scores are `2` when both required term groups match without an exclusion, `1` when only one required group matches, and `0` when neither group matches or an exclusion applies. Score-1 records are explicitly uncertain and require manual review. Preliminary task labels remain independent, traceable suggestions rather than curated decisions.
+
+The public-preview export should use only `in_scope=true` records by default once that downstream filter is enabled. Until then, the processed relevance fields provide an auditable input for review and later export filtering.
 
 Processed candidate CSVs are not final curated data. A reviewer must verify relevance, labels, author identities, institutions, affiliations, and locations before manually adding any record to `data/manual/`. The extractor never writes to or updates the manual CSV templates.
 
