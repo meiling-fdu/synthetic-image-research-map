@@ -23,8 +23,12 @@ SCRIPTS_DIR = REPOSITORY_ROOT / "scripts"
 RAW_DIR = Path("data/raw/openalex")
 PROCESSED_DIR = Path("data/processed")
 PAPERS_CSV = PROCESSED_DIR / "openalex_candidate_papers.csv"
+IN_SCOPE_PAPERS_CSV = PROCESSED_DIR / "openalex_candidate_papers_in_scope.csv"
 ORIGINAL_AFFILIATIONS_CSV = (
     PROCESSED_DIR / "openalex_candidate_affiliations.csv"
+)
+IN_SCOPE_AFFILIATIONS_CSV = (
+    PROCESSED_DIR / "openalex_candidate_affiliations_in_scope.csv"
 )
 RESOLVED_AFFILIATIONS_CSV = (
     PROCESSED_DIR / "openalex_candidate_affiliations_resolved.csv"
@@ -111,6 +115,14 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Skip institution review queue generation.",
     )
     parser.add_argument(
+        "--include-out-of-scope",
+        action="store_true",
+        help=(
+            "Send all audit candidates through downstream steps for debugging; "
+            "the default pipeline processes only in-scope papers and affiliations."
+        ),
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print pipeline commands without executing subprocesses.",
@@ -153,10 +165,17 @@ def build_steps(args: argparse.Namespace) -> List[PipelineStep]:
         PROCESSED_DIR,
     )
 
+    working_papers = PAPERS_CSV if args.include_out_of_scope else IN_SCOPE_PAPERS_CSV
+    working_affiliations = (
+        ORIGINAL_AFFILIATIONS_CSV
+        if args.include_out_of_scope
+        else IN_SCOPE_AFFILIATIONS_CSV
+    )
+
     resolution_command = script_command(
         "resolve_candidate_institutions.py",
         "--input",
-        ORIGINAL_AFFILIATIONS_CSV,
+        working_affiliations,
         "--output",
         RESOLVED_AFFILIATIONS_CSV,
         "--report",
@@ -164,10 +183,12 @@ def build_steps(args: argparse.Namespace) -> List[PipelineStep]:
         "--cache",
         RESOLUTION_CACHE,
     )
+    if args.include_out_of_scope:
+        resolution_command.append("--include-out-of-scope")
     add_shared_network_arguments(resolution_command, args)
 
     latest_affiliations = (
-        ORIGINAL_AFFILIATIONS_CSV
+        working_affiliations
         if args.skip_resolution
         else RESOLVED_AFFILIATIONS_CSV
     )
@@ -180,6 +201,8 @@ def build_steps(args: argparse.Namespace) -> List[PipelineStep]:
         "--cache",
         GEOCODING_CACHE,
     )
+    if args.include_out_of_scope:
+        geocoding_command.append("--include-out-of-scope")
     add_shared_network_arguments(geocoding_command, args)
     if not args.skip_geocoding:
         latest_affiliations = GEOCODED_AFFILIATIONS_CSV
@@ -187,21 +210,25 @@ def build_steps(args: argparse.Namespace) -> List[PipelineStep]:
     export_command = script_command(
         "export_candidate_map_data.py",
         "--papers-csv",
-        PAPERS_CSV,
+        working_papers,
         "--affiliations-csv",
         latest_affiliations,
         "--output",
         MAP_JSON,
     )
+    if args.include_out_of_scope:
+        export_command.append("--include-out-of-scope")
     review_command = script_command(
         "build_institution_review_queue.py",
         "--original",
-        ORIGINAL_AFFILIATIONS_CSV,
+        working_affiliations,
         "--geocoded",
         latest_affiliations,
         "--output",
         REVIEW_QUEUE,
     )
+    if args.include_out_of_scope:
+        review_command.append("--include-out-of-scope")
 
     return [
         PipelineStep(1, "Search OpenAlex candidates", search_command, not args.skip_search),

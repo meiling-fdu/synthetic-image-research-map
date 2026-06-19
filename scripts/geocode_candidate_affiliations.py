@@ -22,7 +22,9 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 
-DEFAULT_INPUT = Path("data/processed/openalex_candidate_affiliations.csv")
+DEFAULT_INPUT = Path(
+    "data/processed/openalex_candidate_affiliations_resolved.csv"
+)
 DEFAULT_OUTPUT = Path(
     "data/processed/openalex_candidate_affiliations_geocoded.csv"
 )
@@ -115,6 +117,14 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Print planned unique queries without requests or writes.",
     )
     parser.add_argument(
+        "--include-out-of-scope",
+        action="store_true",
+        help=(
+            "Process rows marked in_scope=false when supplied for debugging; "
+            "default pipeline inputs contain only in-scope affiliations."
+        ),
+    )
+    parser.add_argument(
         "--limit",
         type=positive_int,
         help="Maximum number of uncached online queries for this run.",
@@ -159,6 +169,18 @@ def append_note(row: Dict[str, str], message: str) -> None:
         [*(existing.split(" | ") if existing else []), clean_text(message)]
     )
     row["notes"] = " | ".join(notes)
+
+
+def parse_bool(value: Any) -> bool:
+    return clean_text(value).casefold() in {"1", "true", "yes", "y"}
+
+
+def select_scope_rows(
+    rows: Sequence[Dict[str, str]], include_out_of_scope: bool
+) -> List[Dict[str, str]]:
+    if include_out_of_scope or not any("in_scope" in row for row in rows):
+        return list(rows)
+    return [row for row in rows if parse_bool(row.get("in_scope"))]
 
 
 def valid_coordinate(value: Any, minimum: float, maximum: float) -> bool:
@@ -511,6 +533,7 @@ def run_dry_run(
     cache: Dict[str, Any],
     corrected_rows: int,
     limit: Optional[int],
+    input_count: Optional[int] = None,
 ) -> int:
     rows_with_coordinates, queries, rows_without_query = collect_queries(rows)
     rows_with_existing_coordinates = rows_with_coordinates - corrected_rows
@@ -538,6 +561,8 @@ def run_dry_run(
             unmatched_examples.append(example)
 
     print("DRY RUN: no network requests were made and no files were written.")
+    print(f"Input affiliation rows: {input_count if input_count is not None else len(rows)}")
+    print(f"Downstream rows processed: {len(rows)}")
     print(f"Rows that would use manual corrections: {corrected_rows}")
     print(f"Rows already containing valid coordinates: {rows_with_existing_coordinates}")
     print(f"Rows needing online geocoding: {rows_needing_online_geocoding}")
@@ -666,13 +691,20 @@ def run(args: argparse.Namespace) -> int:
         fieldnames, rows = read_rows(args.input)
         cache = load_cache(args.cache)
         corrections = read_corrections(args.corrections)
+    except GeocodingError as error:
+        print(f"Error: {error}", file=sys.stderr)
+        return 1
+
+    input_count = len(rows)
+    rows = select_scope_rows(rows, args.include_out_of_scope)
+    try:
         corrected_rows = apply_manual_corrections(rows, corrections)
     except GeocodingError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
 
     if args.dry_run:
-        return run_dry_run(rows, cache, corrected_rows, args.limit)
+        return run_dry_run(rows, cache, corrected_rows, args.limit, input_count)
 
     user_agent = clean_text(args.user_agent)
     if not user_agent:
@@ -719,7 +751,8 @@ def run(args: argparse.Namespace) -> int:
     print(f"Wrote preliminary geocoded candidates: {args.output}")
     print(f"Updated local cache: {args.cache}")
     print("Geocoding summary:")
-    print(f"  Input rows: {len(rows)}")
+    print(f"  Input affiliation rows: {input_count}")
+    print(f"  Downstream rows processed: {len(rows)}")
     print(f"  Rows using manual corrections: {corrected_rows}")
     print(f"  Online requests made: {requests_made}")
     print(f"  Rows resolved from cache or this run: {resolved_rows}")

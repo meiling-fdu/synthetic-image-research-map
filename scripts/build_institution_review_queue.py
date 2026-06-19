@@ -21,7 +21,9 @@ except ModuleNotFoundError:
     from scripts.geocode_candidate_affiliations import normalize_institution_name
 
 
-DEFAULT_ORIGINAL = Path("data/processed/openalex_candidate_affiliations.csv")
+DEFAULT_ORIGINAL = Path(
+    "data/processed/openalex_candidate_affiliations_in_scope.csv"
+)
 DEFAULT_GEOCODED = Path(
     "data/processed/openalex_candidate_affiliations_geocoded.csv"
 )
@@ -126,6 +128,14 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Build and summarize the queue without writing a CSV.",
     )
     parser.add_argument(
+        "--include-out-of-scope",
+        action="store_true",
+        help=(
+            "Include rows marked in_scope=false when broader input files are "
+            "provided for debugging."
+        ),
+    )
+    parser.add_argument(
         "--max-examples",
         type=positive_int,
         help="Maximum deduplicated review entries to write or preview.",
@@ -148,6 +158,18 @@ def unique_strings(values: Iterable[Any]) -> List[str]:
             seen.add(cleaned)
             result.append(cleaned)
     return result
+
+
+def parse_bool(value: Any) -> bool:
+    return clean_text(value).casefold() in {"1", "true", "yes", "y"}
+
+
+def select_scope_rows(
+    rows: Sequence[Dict[str, str]], include_out_of_scope: bool
+) -> List[Dict[str, str]]:
+    if include_out_of_scope or not any("in_scope" in row for row in rows):
+        return list(rows)
+    return [row for row in rows if parse_bool(row.get("in_scope"))]
 
 
 def read_csv(path: Path) -> List[Dict[str, str]]:
@@ -408,6 +430,7 @@ def write_queue(path: Path, rows: Sequence[Dict[str, str]]) -> None:
 def print_summary(
     original_count: int,
     geocoded_count: int,
+    downstream_count: int,
     queue: Sequence[Dict[str, str]],
     available_count: int,
 ) -> None:
@@ -420,6 +443,7 @@ def print_summary(
     print("Institution review queue summary:")
     print(f"  Original affiliation rows read: {original_count}")
     print(f"  Geocoded affiliation rows read: {geocoded_count}")
+    print(f"  Downstream rows processed: {downstream_count}")
     print(f"  Deduplicated review entries available: {available_count}")
     print(f"  Review entries selected: {len(queue)}")
     for reason in REASON_ORDER:
@@ -434,10 +458,15 @@ def run(args: argparse.Namespace) -> int:
     try:
         original_rows = read_csv(args.original)
         geocoded_rows = read_csv(args.geocoded)
-        queue = build_queue(original_rows, geocoded_rows)
     except QueueError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
+
+    original_count = len(original_rows)
+    geocoded_count = len(geocoded_rows)
+    original_rows = select_scope_rows(original_rows, args.include_out_of_scope)
+    geocoded_rows = select_scope_rows(geocoded_rows, args.include_out_of_scope)
+    queue = build_queue(original_rows, geocoded_rows)
 
     available_count = len(queue)
     if args.max_examples is not None:
@@ -457,7 +486,13 @@ def run(args: argparse.Namespace) -> int:
             return 1
         print(f"Wrote institution review queue: {args.output}")
 
-    print_summary(len(original_rows), len(geocoded_rows), queue, available_count)
+    print_summary(
+        original_count,
+        geocoded_count,
+        len(geocoded_rows),
+        queue,
+        available_count,
+    )
     print("Queue entries are candidate review aids, not curated institution metadata.")
     return 0
 

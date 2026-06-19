@@ -69,17 +69,19 @@ After raw OpenAlex archives are available, preview the candidate extraction step
 python3 scripts/extract_openalex_candidates.py --dry-run
 ```
 
-Then write the two processed candidate CSVs:
+Then write the complete audit CSVs and their scoped downstream counterparts:
 
 ```bash
 python3 scripts/extract_openalex_candidates.py
 ```
 
-The processed paper and affiliation CSVs are automatically extracted review material, not manually curated final data. Every row keeps `manual_review=true` until a researcher reviews and deliberately promotes information into `data/manual/`.
+The complete `openalex_candidate_papers.csv` and `openalex_candidate_affiliations.csv` files retain every candidate for audit. The additional `*_in_scope.csv` files contain only papers marked `in_scope=true` and their matching affiliations. All remain automatically extracted review material with `manual_review=true`.
 
 Affiliations are represented at paper-author-institution level. Every OpenAlex authorship is preserved, authors with multiple institutions produce multiple relationship rows, and raw-only or missing affiliations remain reviewable rather than being dropped. Map exports include every affiliated institution with usable coordinates and aggregate all associated collaborators for that paper-institution marker; first-author-only mapping is intentionally avoided.
 
-Candidate papers also receive a conservative rule-based relevance assessment. `in_scope=true` requires both an AI-generated/synthetic-image term and a detection/attribution task term, while explicit unrelated-domain terms override inclusion. All records are retained with a relevance score and matched reasons; uncertain and excluded candidates are never silently deleted. The public preview will later default to records marked in scope.
+Candidate papers receive a conservative rule-based relevance assessment. `in_scope=true` requires both an AI-generated/synthetic-image term and a detection/attribution task term, while explicit unrelated-domain terms override inclusion. All records are retained with scores and matched reasons, but only the scoped files proceed to institution resolution, geocoding, review queues, maps, and public previews by default.
+
+The extractor also preserves OpenAlex publication year/date, venue and source type, publisher, publication type, DOI, arXiv identifiers and links, and source URLs. Missing venues remain unknown rather than being inferred, and detected arXiv records are explicitly marked as preprints for review.
 
 ### Automatic institution resolution
 
@@ -162,7 +164,7 @@ python3 scripts/export_candidate_map_data.py --affiliations-csv data/processed/o
 
 With the local HTTP server running, open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to explore the candidate map. `web/data/openalex_candidate_map_data.json` is generated locally, ignored by Git, and intended only for exploratory visualization of uncurated candidates.
 
-Candidate OpenAlex map records may include institution resolution method, confidence, review status, and resolution notes. The interface exposes these fields in marker popups, filters, and visible-record summaries. A high-confidence resolution indicates an authoritative identifier match, but the paper and affiliation still remain candidate metadata unless they are manually reviewed and curated.
+Candidate OpenAlex map records may include institution resolution method, confidence, review status, and resolution notes. Popups also display compact publication metadata: year, venue, publication type, DOI, arXiv/preprint status, and available paper links. A high-confidence institution resolution still remains candidate metadata unless the paper and affiliation are manually reviewed and curated.
 
 ### Public preview export
 
@@ -190,7 +192,7 @@ For a smaller high-confidence-only preview:
 python3 scripts/export_public_preview.py --max-records 50 --min-confidence high
 ```
 
-The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It excludes raw API responses, caches, low-confidence records, and review-flagged records under the default settings.
+The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It excludes out-of-scope, low-confidence, and review-flagged records by default, while raw responses and caches remain local.
 
 ## One-command pipeline
 
@@ -209,7 +211,7 @@ python3 scripts/run_pipeline.py \
   --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
 ```
 
-The pipeline searches, extracts, resolves institutions, optionally geocodes unresolved rows, exports the local map JSON, and builds the institution review queue. Use `--skip-search` to reuse existing raw OpenAlex responses. All generated outputs are local, ignored candidate data; the pipeline never commits, pushes, or promotes records into `data/manual/`.
+The pipeline searches and extracts all candidates for audit, then sends only in-scope papers and affiliations through resolution, optional geocoding, map export, and the institution review queue. Use `--skip-search` to reuse existing raw responses. `--include-out-of-scope` enables a deliberate debugging run; normal visualization should use the scoped default. Generated outputs remain local candidate data and are never promoted into `data/manual/` automatically.
 
 ## Local Preview
 

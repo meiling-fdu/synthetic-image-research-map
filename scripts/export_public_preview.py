@@ -28,10 +28,24 @@ CONFIDENCE_RANK = {
 PUBLIC_FIELDS = (
     "id",
     "title",
+    "in_scope",
     "year",
+    "publication_year",
+    "publication_date",
     "task",
     "subtask",
     "venue",
+    "venue_name",
+    "venue_type",
+    "publisher",
+    "publication_type",
+    "doi",
+    "arxiv_id",
+    "arxiv_url",
+    "primary_url",
+    "landing_page_url",
+    "openalex_url",
+    "is_arxiv_preprint",
     "url",
     "authors",
     "institution",
@@ -106,6 +120,11 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Include records marked needs_review=true (excluded by default).",
     )
     parser.add_argument(
+        "--include-out-of-scope",
+        action="store_true",
+        help="Include map records not marked in_scope=true for debugging.",
+    )
+    parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print filtering results without writing the public JSON file.",
@@ -143,13 +162,20 @@ def build_preview(
     max_records: int,
     min_confidence: str,
     include_needs_review: bool,
+    include_out_of_scope: bool = False,
 ) -> Tuple[Dict[str, Any], Dict[str, int]]:
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
     below_confidence = 0
     excluded_needs_review = 0
+    excluded_out_of_scope = 0
 
     for record in records:
+        in_scope = parse_bool(record.get("in_scope"))
+        if not in_scope and not include_out_of_scope:
+            excluded_out_of_scope += 1
+            continue
+
         confidence = normalize_confidence(record.get("resolution_confidence"))
         if CONFIDENCE_RANK[confidence] < minimum_rank:
             below_confidence += 1
@@ -167,12 +193,14 @@ def build_preview(
         }
         public_record["resolution_confidence"] = confidence
         public_record["needs_review"] = needs_review
+        public_record["in_scope"] = in_scope
         selected.append(public_record)
 
     eligible_records = len(selected)
     selected = selected[:max_records]
     summary = {
         "candidate_records_read": len(records),
+        "records_excluded_out_of_scope": excluded_out_of_scope,
         "records_excluded_below_confidence": below_confidence,
         "records_excluded_needs_review": excluded_needs_review,
         "records_eligible_before_limit": eligible_records,
@@ -197,6 +225,10 @@ def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
     print("Public preview export summary:")
     print(f"  Candidate records read: {summary['candidate_records_read']}")
     print(
+        "  Records excluded as out of scope: "
+        f"{summary['records_excluded_out_of_scope']}"
+    )
+    print(
         "  Records excluded below confidence threshold: "
         f"{summary['records_excluded_below_confidence']}"
     )
@@ -209,6 +241,7 @@ def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
         f"{summary['records_eligible_before_limit']}"
     )
     print(f"  Records exported: {summary['records_exported']}")
+    print(f"  Downstream rows processed: {summary['records_exported']}")
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
 
@@ -221,6 +254,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.max_records,
             args.min_confidence,
             args.include_needs_review,
+            args.include_out_of_scope,
         )
         if not args.dry_run:
             write_json(args.output, payload)

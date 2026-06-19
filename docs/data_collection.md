@@ -51,11 +51,11 @@ These files preserve automatic retrieval as candidate data. They must pass throu
 `scripts/run_pipeline.py` orchestrates the existing scripts as subprocesses without duplicating their logic. The full order is:
 
 1. Search OpenAlex and archive raw candidate responses.
-2. Extract candidate paper and affiliation CSVs.
-3. Resolve institutions from ROR or OpenAlex metadata and exact cache matches.
-4. Optionally geocode only affiliations still lacking coordinates.
-5. Export map-ready JSON from the latest resolved/geocoded affiliation file.
-6. Build the institution review queue from the original and latest affiliation files.
+2. Extract complete audit CSVs and separate in-scope paper and affiliation CSVs.
+3. Resolve institutions only for in-scope affiliations by default.
+4. Optionally geocode only unresolved in-scope affiliations.
+5. Export map-ready JSON from the latest in-scope resolved/geocoded file.
+6. Build the institution review queue from in-scope affiliation files.
 
 Inspect every command without running it:
 
@@ -74,14 +74,18 @@ python3 scripts/run_pipeline.py \
 
 Use `--skip-search` after raw OpenAlex archives already exist locally. This avoids repeating the external search while still rebuilding extraction, resolution, optional geocoding, export, and review outputs. Other skip flags can disable resolution, geocoding, or review-queue generation; when generic geocoding runs after resolution, it reads the resolved affiliation CSV and skips rows whose working coordinates were already populated authoritatively.
 
+The default handoff excludes out-of-scope papers before any institution API or geocoding request. `--include-out-of-scope` is an explicit debugging mode that sends the complete audit files through downstream steps. It should not be used for normal visualization exports.
+
 The pipeline stops immediately when a subprocess fails and never commits or pushes changes. Its generated raw, processed, cache, map, and review files are ignored local artifacts for exploratory candidate analysis, not curated final data. Nothing in the pipeline writes to `data/manual/`.
 
 ## Raw-to-Processed Candidate Extraction
 
-`scripts/extract_openalex_candidates.py` converts raw OpenAlex archives into two review-oriented CSV files:
+`scripts/extract_openalex_candidates.py` converts raw OpenAlex archives into four review-oriented CSV files:
 
-- `data/processed/openalex_candidate_papers.csv` contains deduplicated paper metadata and preliminary rule-based labels.
-- `data/processed/openalex_candidate_affiliations.csv` contains separate author-institution rows, preserving multiple authors and multiple institutions per paper.
+- `data/processed/openalex_candidate_papers.csv` retains every deduplicated paper for audit.
+- `data/processed/openalex_candidate_affiliations.csv` retains every author-institution row for audit.
+- `data/processed/openalex_candidate_papers_in_scope.csv` contains only papers marked `in_scope=true`.
+- `data/processed/openalex_candidate_affiliations_in_scope.csv` contains only affiliations whose `openalex_id` belongs to an in-scope paper.
 
 Preview extraction from the repository root without writing files:
 
@@ -99,6 +103,12 @@ Custom locations can be supplied with `--input-dir` and `--output-dir`. The defa
 
 The extractor deduplicates by OpenAlex ID and falls back to a normalized title when an ID is missing. It reconstructs available abstracts to apply preliminary task labels and a separate rule-based relevance filter. These automatic decisions can be wrong, especially for broad search results, so every paper and affiliation row remains `manual_review=true`.
 
+### Publication Metadata Extraction
+
+The candidate paper CSV preserves OpenAlex `publication_year` and `publication_date`, work type, DOI, source type, publisher/host organization, and several source URLs. `venue_name` prefers `primary_location.source.display_name`, then other explicit OpenAlex source or location fields. Missing venues stay empty, add a review note, and are never inferred from the paper title. The legacy `year`, `venue`, and `url` fields remain compatible aliases.
+
+arXiv status is detected from OpenAlex arXiv identifiers, `10.48550/arXiv.*` DOI values, arXiv landing/PDF URLs, or an explicit arXiv source. When an identifier is available, the extractor stores both `arxiv_id` and a canonical `arxiv_url`, and sets `is_arxiv_preprint=true`. These signals are automatic source metadata and remain subject to review.
+
 ### Paper-Author-Institution Extraction
 
 OpenAlex authorships are preserved in source order. The extractor writes one candidate affiliation row for every author-institution pair, including stable OpenAlex author and institution IDs, the one-based author order, source position, location metadata, ROR ID, and institution-specific raw affiliation text when available. Multiple authors at one institution remain separate rows, and authors with multiple institutions receive one row per institution.
@@ -113,13 +123,13 @@ Obvious unrelated contexts are marked out of scope when terms such as object, ch
 
 The candidate paper CSV retains every record and adds `in_scope`, `relevance_score`, `relevance_reason`, and `exclusion_reason`. Scores are `2` when both required term groups match without an exclusion, `1` when only one required group matches, and `0` when neither group matches or an exclusion applies. Score-1 records are explicitly uncertain and require manual review. Preliminary task labels remain independent, traceable suggestions rather than curated decisions.
 
-The public-preview export should use only `in_scope=true` records by default once that downstream filter is enabled. Until then, the processed relevance fields provide an auditable input for review and later export filtering.
+Out-of-scope records are never deleted: they remain in the two complete candidate CSVs with their scores and reasons. Resolution, geocoding, review-queue generation, map export, and public-preview export use the scoped stream by default. Extraction summaries report total and in-scope paper and affiliation counts.
 
 Processed candidate CSVs are not final curated data. A reviewer must verify relevance, labels, author identities, institutions, affiliations, and locations before manually adding any record to `data/manual/`. The extractor never writes to or updates the manual CSV templates.
 
 ## Automatic institution resolution
 
-`scripts/resolve_candidate_institutions.py` should run before generic geocoding. It resolves candidate institutions from authoritative identifiers without fuzzy matching or generic location search. ROR IDs are tried first using the [ROR single-record API](https://ror.readme.io/docs/api-single), optional OpenAlex institution IDs are tried second using the [OpenAlex institution API](https://docs.openalex.org/api-entities/institutions/get-a-single-institution), and rows without identifiers may use only an exact normalized institution-name and country match already present in the local resolution cache.
+`scripts/resolve_candidate_institutions.py` should run before generic geocoding. Its default input is `data/processed/openalex_candidate_affiliations_in_scope.csv`, so unrelated affiliations do not trigger authoritative API requests. It resolves candidate institutions from authoritative identifiers without fuzzy matching or generic location search. ROR IDs are tried first using the [ROR single-record API](https://ror.readme.io/docs/api-single), optional OpenAlex institution IDs are tried second using the [OpenAlex institution API](https://docs.openalex.org/api-entities/institutions/get-a-single-institution), and rows without identifiers may use only an exact normalized institution-name and country match already present in the local resolution cache.
 
 Preview available identifiers and planned uncached requests without network access or file writes:
 
@@ -147,7 +157,7 @@ Generic organization names remain reviewable unless a strong identifier resolves
 
 ## Candidate Affiliation Geocoding
 
-`scripts/geocode_candidate_affiliations.py` can add preliminary coordinates to candidate affiliation rows before the map export. It reads `data/processed/openalex_candidate_affiliations.csv`, writes `data/processed/openalex_candidate_affiliations_geocoded.csv`, and stores reusable query results in `data/processed/geocoding_cache.json` by default. Both generated files are ignored by Git.
+`scripts/geocode_candidate_affiliations.py` can add preliminary coordinates before map export. It reads the automatically resolved, in-scope `data/processed/openalex_candidate_affiliations_resolved.csv` by default, writes `data/processed/openalex_candidate_affiliations_geocoded.csv`, and stores reusable query results in `data/processed/geocoding_cache.json`. Out-of-scope rows do not produce Nominatim queries unless debugging is explicitly enabled.
 
 Before consulting the cache or Nominatim, the script reads `data/manual/institution_corrections.csv`. A correction matches the candidate `institution_name` exactly after lowercasing, removing simple punctuation, and trimming and collapsing whitespace. No fuzzy matching is used, because automatically merging similar institution names could assign papers to the wrong organization or campus.
 
@@ -183,7 +193,7 @@ Geocoding is approximate: the first Nominatim result may refer to the wrong camp
 
 ## Institution Review Queue
 
-`scripts/build_institution_review_queue.py` compares the original candidate affiliations with the geocoded output and generates `data/processed/institution_review_queue.csv`. The queue includes institutions with missing or invalid coordinates, failure notes, unexpected name changes, or suspiciously generic names. Entries are deduplicated by the same normalized institution name plus city and country.
+`scripts/build_institution_review_queue.py` compares the original in-scope affiliations with the geocoded in-scope output and generates `data/processed/institution_review_queue.csv`. The queue includes institutions with missing or invalid coordinates, failure notes, unexpected name changes, or suspiciously generic names. Entries are deduplicated by the same normalized institution name plus city and country.
 
 Preview the queue without writing it:
 
@@ -204,6 +214,8 @@ The review queue is generated from automatic candidate data and is not curated f
 ## Candidate CSV-to-Map Export
 
 `scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It groups authors at each paper-institution location and preserves separate map records when a paper has multiple institutions.
+
+By default, the exporter reads the in-scope paper CSV and the latest geocoded affiliation CSV, then rechecks paper IDs before grouping. `--include-out-of-scope` is available only for deliberate debugging. This prevents a broader custom affiliation file from silently reintroducing unrelated papers.
 
 Grouping prefers `institution_openalex_id` when available, so distinct institutions are not merged solely because their names or coordinates match. Within a paper-institution marker, author names are ordered by `author_order` and aggregated for display. The processed CSV remains the complete relationship-level source: map aggregation never replaces or removes its author-institution rows. Affiliations without valid coordinates remain available for review but cannot produce map markers.
 
@@ -240,6 +252,8 @@ python3 scripts/export_candidate_map_data.py --affiliations-csv data/processed/o
 
 The input and output paths can be changed with `--papers-csv`, `--affiliations-csv`, and `--output`. Use `--max-records` to limit the number of grouped map records exported during local exploration.
 
+Map records carry the extracted publication year/date, venue name/type, publisher, publication type, DOI, arXiv metadata, and source URLs when available. Legacy candidate CSVs without the expanded columns still export through the existing `year`, `venue`, and `url` fallbacks. Institution-level grouping is unchanged.
+
 Serve the repository and open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to select the generated dataset. The JSON file is ignored by Git and should not be committed.
 
 This map export is for exploratory visualization only. It is assembled from automatically extracted candidates, retains `manual_review`, and is not a curated or publication-ready research dataset. Nothing in this step writes to `data/manual/`.
@@ -248,7 +262,7 @@ This map export is for exploratory visualization only. It is assembled from auto
 
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. The output is explicitly labeled as an uncurated public preview, not a manually curated bibliography.
 
-By default, the exporter publishes at most 200 records, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It also keeps only the fields needed by the public map, preventing raw or future internal fields from being copied into the published file.
+By default, the exporter publishes at most 200 records, requires `in_scope=true` and `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It keeps only fields needed by the public map, including reviewable publication metadata, and does not copy raw OpenAlex responses, cache contents, or future internal fields. `--include-out-of-scope` exists only for debugging.
 
 Inspect the filtering summary without writing output:
 

@@ -18,9 +18,11 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 
-DEFAULT_PAPERS_CSV = Path("data/processed/openalex_candidate_papers.csv")
+DEFAULT_PAPERS_CSV = Path(
+    "data/processed/openalex_candidate_papers_in_scope.csv"
+)
 DEFAULT_AFFILIATIONS_CSV = Path(
-    "data/processed/openalex_candidate_affiliations.csv"
+    "data/processed/openalex_candidate_affiliations_geocoded.csv"
 )
 DEFAULT_OUTPUT = Path("web/data/openalex_candidate_map_data.json")
 
@@ -95,6 +97,14 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         action="store_true",
         help="Read, join, and summarize CSVs without writing JSON.",
     )
+    parser.add_argument(
+        "--include-out-of-scope",
+        action="store_true",
+        help=(
+            "Include papers marked in_scope=false for debugging. By default, "
+            "paper IDs and affiliation rows are restricted to in-scope papers."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -122,6 +132,48 @@ def split_notes(value: Any) -> List[str]:
 
 def parse_bool(value: Any) -> bool:
     return clean_text(value).casefold() in {"1", "true", "yes", "y"}
+
+
+def paper_is_in_scope(row: Dict[str, str]) -> bool:
+    # Older explicitly scoped CSVs may predate the column; current extraction always adds it.
+    return parse_bool(row.get("in_scope")) if "in_scope" in row else True
+
+
+def select_scope_rows(
+    paper_rows: Sequence[Dict[str, str]],
+    affiliation_rows: Sequence[Dict[str, str]],
+    include_out_of_scope: bool,
+) -> Tuple[List[Dict[str, str]], List[Dict[str, str]], Dict[str, int]]:
+    in_scope_papers = [paper for paper in paper_rows if paper_is_in_scope(paper)]
+    selected_papers = list(paper_rows) if include_out_of_scope else in_scope_papers
+    selected_ids = {
+        clean_text(paper.get("openalex_id"))
+        for paper in selected_papers
+        if clean_text(paper.get("openalex_id"))
+    }
+    in_scope_ids = {
+        clean_text(paper.get("openalex_id"))
+        for paper in in_scope_papers
+        if clean_text(paper.get("openalex_id"))
+    }
+    in_scope_affiliation_count = sum(
+        clean_text(row.get("openalex_id")) in in_scope_ids
+        for row in affiliation_rows
+    )
+    selected_affiliations = [
+        row
+        for row in affiliation_rows
+        if clean_text(row.get("openalex_id")) in selected_ids
+    ]
+    counts = {
+        "total_candidate_papers": len(paper_rows),
+        "in_scope_papers": len(in_scope_papers),
+        "out_of_scope_papers": len(paper_rows) - len(in_scope_papers),
+        "total_affiliation_rows": len(affiliation_rows),
+        "in_scope_affiliation_rows": in_scope_affiliation_count,
+        "downstream_rows_processed": len(selected_affiliations),
+    }
+    return selected_papers, selected_affiliations, counts
 
 
 def parse_year(value: Any) -> Optional[int]:
@@ -287,14 +339,38 @@ def group_map_records(
         group_key = (openalex_id, *institution_key)
         group = grouped.get(group_key)
         if group is None:
+            publication_year = parse_year(
+                clean_text(paper.get("publication_year")) or paper.get("year")
+            )
+            venue_name = clean_text(paper.get("venue_name")) or clean_text(
+                paper.get("venue")
+            )
+            primary_url = clean_text(paper.get("primary_url")) or clean_text(
+                paper.get("url")
+            )
             group = {
                 "id": record_id(openalex_id, institution_key),
                 "title": clean_text(paper.get("title")),
-                "year": parse_year(paper.get("year")),
+                "in_scope": paper_is_in_scope(paper),
+                # Keep legacy aliases so existing sample/front-end behavior remains valid.
+                "year": publication_year,
+                "publication_year": publication_year,
+                "publication_date": clean_text(paper.get("publication_date")),
                 "task": clean_text(paper.get("preliminary_task")) or "uncertain",
                 "subtask": clean_text(paper.get("preliminary_subtask")),
-                "venue": clean_text(paper.get("venue")),
-                "url": clean_text(paper.get("url")),
+                "venue": venue_name,
+                "venue_name": venue_name,
+                "venue_type": clean_text(paper.get("venue_type")),
+                "publisher": clean_text(paper.get("publisher")),
+                "publication_type": clean_text(paper.get("publication_type")),
+                "doi": clean_text(paper.get("doi")),
+                "arxiv_id": clean_text(paper.get("arxiv_id")),
+                "arxiv_url": clean_text(paper.get("arxiv_url")),
+                "primary_url": primary_url,
+                "landing_page_url": clean_text(paper.get("landing_page_url")),
+                "openalex_url": clean_text(paper.get("openalex_url")) or openalex_id,
+                "is_arxiv_preprint": parse_bool(paper.get("is_arxiv_preprint")),
+                "url": primary_url,
                 "authors": [],
                 "institution_openalex_id": institution_key[0],
                 "institution": institution_key[1],
@@ -435,6 +511,12 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
 
 def print_summary(summary: Dict[str, int]) -> None:
     print("Export summary:")
+    print(f"  Total candidate papers: {summary['total_candidate_papers']}")
+    print(f"  In-scope papers: {summary['in_scope_papers']}")
+    print(f"  Out-of-scope papers: {summary['out_of_scope_papers']}")
+    print(f"  Total affiliation rows: {summary['total_affiliation_rows']}")
+    print(f"  In-scope affiliation rows: {summary['in_scope_affiliation_rows']}")
+    print(f"  Downstream rows processed: {summary['downstream_rows_processed']}")
     print(f"  Candidate papers read: {summary['candidate_papers_read']}")
     print(f"  Affiliation rows read: {summary['affiliation_rows_read']}")
     print(f"  Map records exported: {summary['map_records_exported']}")
@@ -472,11 +554,17 @@ def print_summary(summary: Dict[str, int]) -> None:
 
 def run(args: argparse.Namespace) -> int:
     try:
-        paper_rows = read_csv(args.papers_csv, PAPER_REQUIRED_COLUMNS)
-        affiliation_rows = read_csv(
+        all_paper_rows = read_csv(args.papers_csv, PAPER_REQUIRED_COLUMNS)
+        all_affiliation_rows = read_csv(
             args.affiliations_csv, AFFILIATION_REQUIRED_COLUMNS
         )
+        paper_rows, affiliation_rows, scope_counts = select_scope_rows(
+            all_paper_rows,
+            all_affiliation_rows,
+            args.include_out_of_scope,
+        )
         payload = build_export(paper_rows, affiliation_rows, args.max_records)
+        payload["summary"].update(scope_counts)
     except ExportError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1

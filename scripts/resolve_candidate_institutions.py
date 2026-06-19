@@ -30,7 +30,9 @@ except ModuleNotFoundError:
     from scripts.geocode_candidate_affiliations import normalize_institution_name
 
 
-DEFAULT_INPUT = Path("data/processed/openalex_candidate_affiliations.csv")
+DEFAULT_INPUT = Path(
+    "data/processed/openalex_candidate_affiliations_in_scope.csv"
+)
 DEFAULT_OUTPUT = Path(
     "data/processed/openalex_candidate_affiliations_resolved.csv"
 )
@@ -155,6 +157,14 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Summarize identifiers and planned requests without network or writes.",
     )
     parser.add_argument(
+        "--include-out-of-scope",
+        action="store_true",
+        help=(
+            "Process rows marked in_scope=false when a broader input CSV is supplied; "
+            "the default scoped input excludes them."
+        ),
+    )
+    parser.add_argument(
         "--limit",
         type=positive_int,
         help="Maximum number of uncached authoritative API requests.",
@@ -192,6 +202,18 @@ def unique_strings(values: Iterable[Any]) -> List[str]:
 
 def bool_text(value: bool) -> str:
     return "true" if value else "false"
+
+
+def parse_bool(value: Any) -> bool:
+    return clean_text(value).casefold() in {"1", "true", "yes", "y"}
+
+
+def select_scope_rows(
+    rows: Sequence[Dict[str, str]], include_out_of_scope: bool
+) -> List[Dict[str, str]]:
+    if include_out_of_scope or not any("in_scope" in row for row in rows):
+        return list(rows)
+    return [row for row in rows if parse_bool(row.get("in_scope"))]
 
 
 def utc_timestamp() -> str:
@@ -738,6 +760,7 @@ def dry_run(
     rows: Sequence[Dict[str, str]],
     cache: Dict[str, Any],
     limit: Optional[int],
+    input_count: Optional[int] = None,
 ) -> int:
     rows_with_ror = sum(bool(normalize_ror_id(row.get("ror_id"))) for row in rows)
     rows_with_openalex = sum(bool(openalex_institution_id(row)) for row in rows)
@@ -754,6 +777,8 @@ def dry_run(
     )
 
     print("DRY RUN: no network requests were made and no files were written.")
+    print(f"Input affiliation rows: {input_count if input_count is not None else len(rows)}")
+    print(f"Downstream rows processed: {len(rows)}")
     print(f"Candidate affiliation rows: {len(rows)}")
     print(f"Rows with ROR IDs: {rows_with_ror}")
     print(f"Rows with OpenAlex institution IDs: {rows_with_openalex}")
@@ -809,6 +834,7 @@ def print_summary(
     rows: Sequence[Dict[str, str]],
     report: Sequence[Dict[str, str]],
     requests_made: int,
+    input_count: Optional[int] = None,
 ) -> None:
     confidence_counts = defaultdict(int)
     review_count = 0
@@ -816,6 +842,8 @@ def print_summary(
         confidence_counts[row["resolution_confidence"]] += 1
         review_count += row["needs_review"] == "true"
     print("Institution resolution summary:")
+    print(f"  Input affiliation rows: {input_count if input_count is not None else len(rows)}")
+    print(f"  Downstream rows processed: {len(rows)}")
     print(f"  Affiliation rows: {len(rows)}")
     print(f"  API requests made: {requests_made}")
     print(f"  High confidence rows: {confidence_counts['high']}")
@@ -839,8 +867,11 @@ def run(args: argparse.Namespace) -> int:
         print(f"Error: {error}", file=sys.stderr)
         return 1
 
+    input_count = len(source_rows)
+    source_rows = select_scope_rows(source_rows, args.include_out_of_scope)
+
     if args.dry_run:
-        return dry_run(source_rows, cache, args.limit)
+        return dry_run(source_rows, cache, args.limit, input_count)
 
     planned_tasks = planned_identifier_tasks(source_rows, cache)
     user_agent = clean_text(args.user_agent)
@@ -883,7 +914,7 @@ def run(args: argparse.Namespace) -> int:
     print(f"Wrote resolved candidate affiliations: {args.output}")
     print(f"Wrote institution resolution report: {args.report}")
     print(f"Updated institution resolution cache: {args.cache}")
-    print_summary(resolved_rows, report, requests_made)
+    print_summary(resolved_rows, report, requests_made, input_count)
     print("All resolution outputs remain candidate metadata and are not curated data.")
     return 1 if stopped else 0
 

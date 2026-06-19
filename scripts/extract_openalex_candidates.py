@@ -20,15 +20,28 @@ DEFAULT_INPUT_DIR = Path("data/raw/openalex")
 DEFAULT_OUTPUT_DIR = Path("data/processed")
 PAPERS_FILENAME = "openalex_candidate_papers.csv"
 AFFILIATIONS_FILENAME = "openalex_candidate_affiliations.csv"
+IN_SCOPE_PAPERS_FILENAME = "openalex_candidate_papers_in_scope.csv"
+IN_SCOPE_AFFILIATIONS_FILENAME = "openalex_candidate_affiliations_in_scope.csv"
 
 PAPER_COLUMNS = (
     "openalex_id",
     "title",
     "year",
+    "publication_year",
+    "publication_date",
     "venue",
+    "venue_name",
+    "venue_type",
+    "publisher",
+    "publication_type",
     "doi",
     "url",
+    "primary_url",
+    "landing_page_url",
+    "openalex_url",
     "arxiv_id",
+    "arxiv_url",
+    "is_arxiv_preprint",
     "in_scope",
     "relevance_score",
     "relevance_reason",
@@ -46,6 +59,7 @@ PAPER_COLUMNS = (
 
 AFFILIATION_COLUMNS = (
     "openalex_id",
+    "in_scope",
     "author_openalex_id",
     "author_name",
     "author_position",
@@ -332,64 +346,123 @@ def normalize_ror(value: Any) -> str:
 
 
 def normalize_arxiv_id(value: Any) -> str:
-    arxiv_id = clean_text(value)
-    arxiv_id = re.sub(
-        r"^https?://arxiv\.org/(?:abs|pdf)/", "", arxiv_id, flags=re.IGNORECASE
+    candidate = clean_text(value)
+    if not candidate:
+        return ""
+
+    doi_match = re.match(
+        r"^(?:https?://(?:dx\.)?doi\.org/)?10\.48550/arxiv\.(.+)$",
+        candidate,
+        flags=re.IGNORECASE,
     )
-    return arxiv_id.removesuffix(".pdf")
+    if doi_match:
+        candidate = doi_match.group(1)
+
+    url_match = re.search(
+        r"https?://(?:www\.)?arxiv\.org/(?:abs|pdf)/([^?#]+)",
+        candidate,
+        flags=re.IGNORECASE,
+    )
+    if url_match:
+        candidate = url_match.group(1)
+
+    candidate = re.sub(r"^arxiv:\s*", "", candidate, flags=re.IGNORECASE)
+    candidate = candidate.split("?", 1)[0].split("#", 1)[0]
+    candidate = re.sub(r"\.pdf$", "", candidate, flags=re.IGNORECASE)
+    return candidate.strip(" /")
 
 
-def extract_arxiv_id(work: Dict[str, Any]) -> str:
-    ids = work.get("ids") if isinstance(work.get("ids"), dict) else {}
-    direct_id = normalize_arxiv_id(ids.get("arxiv"))
-    if direct_id:
-        return direct_id
-
-    locations = work.get("locations") if isinstance(work.get("locations"), list) else []
-    for location in locations:
-        if not isinstance(location, dict):
-            continue
-        source = location.get("source") if isinstance(location.get("source"), dict) else {}
-        if clean_text(source.get("display_name")).casefold() != "arxiv":
-            continue
-        candidate = normalize_arxiv_id(
-            first_nonempty(location.get("landing_page_url"), location.get("pdf_url"))
+def work_locations(work: Dict[str, Any]) -> List[Dict[str, Any]]:
+    """Return the primary location first, followed by other OpenAlex locations."""
+    locations: List[Dict[str, Any]] = []
+    primary_location = work.get("primary_location")
+    if isinstance(primary_location, dict):
+        locations.append(primary_location)
+    source_locations = work.get("locations")
+    if isinstance(source_locations, list):
+        locations.extend(
+            location for location in source_locations if isinstance(location, dict)
         )
-        if candidate:
-            return candidate
-    return ""
+    return locations
 
 
-def extract_venue(work: Dict[str, Any]) -> str:
-    primary_location = (
-        work.get("primary_location")
-        if isinstance(work.get("primary_location"), dict)
-        else {}
+def location_source(location: Dict[str, Any]) -> Dict[str, Any]:
+    source = location.get("source")
+    return source if isinstance(source, dict) else {}
+
+
+def extract_landing_page_url(work: Dict[str, Any]) -> str:
+    return first_nonempty(
+        work.get("landing_page_url"),
+        *(location.get("landing_page_url") for location in work_locations(work)),
     )
-    source = (
-        primary_location.get("source")
-        if isinstance(primary_location.get("source"), dict)
-        else {}
-    )
+
+
+def extract_venue_metadata(work: Dict[str, Any]) -> Tuple[str, str, str]:
+    locations = work_locations(work)
+    primary = locations[0] if locations else {}
+    primary_source = location_source(primary)
     host_venue = work.get("host_venue") if isinstance(work.get("host_venue"), dict) else {}
-    return first_nonempty(
-        source.get("display_name"),
-        primary_location.get("raw_source_name"),
+
+    venue_name = first_nonempty(
+        primary_source.get("display_name"),
+        primary.get("raw_source_name"),
         host_venue.get("display_name"),
+        *(location_source(location).get("display_name") for location in locations),
+        *(location.get("raw_source_name") for location in locations),
     )
+    venue_type = first_nonempty(
+        primary_source.get("type"),
+        primary.get("source_type"),
+        host_venue.get("type"),
+        *(location_source(location).get("type") for location in locations),
+    )
+    publisher = first_nonempty(
+        primary_source.get("publisher"),
+        primary_source.get("host_organization_name"),
+        primary.get("publisher"),
+        work.get("publisher"),
+        *(location_source(location).get("publisher") for location in locations),
+        *(
+            location_source(location).get("host_organization_name")
+            for location in locations
+        ),
+    )
+    return venue_name, venue_type, publisher
 
 
-def extract_url(work: Dict[str, Any], openalex_id: str) -> str:
-    primary_location = (
-        work.get("primary_location")
-        if isinstance(work.get("primary_location"), dict)
-        else {}
+def extract_arxiv_metadata(work: Dict[str, Any], doi: str) -> Tuple[str, str, bool]:
+    ids = work.get("ids") if isinstance(work.get("ids"), dict) else {}
+    locations = work_locations(work)
+    url_candidates = [
+        work.get("primary_url"),
+        work.get("landing_page_url"),
+        *(location.get("landing_page_url") for location in locations),
+        *(location.get("pdf_url") for location in locations),
+    ]
+    id_candidates = [ids.get("arxiv")]
+    if doi.casefold().startswith("10.48550/arxiv."):
+        id_candidates.append(doi)
+    id_candidates.extend(
+        value
+        for value in url_candidates
+        if re.search(r"arxiv\.org/(?:abs|pdf)/", clean_text(value), re.IGNORECASE)
     )
-    return first_nonempty(
-        primary_location.get("landing_page_url"),
-        work.get("doi"),
-        openalex_id,
+
+    arxiv_id = first_nonempty(
+        *(normalize_arxiv_id(candidate) for candidate in id_candidates)
     )
+    source_is_arxiv = any(
+        clean_text(location_source(location).get("display_name")).casefold() == "arxiv"
+        for location in locations
+    )
+    has_arxiv_url = any(
+        re.search(r"arxiv\.org/(?:abs|pdf)/", clean_text(value), re.IGNORECASE)
+        for value in url_candidates
+    )
+    is_arxiv_preprint = bool(arxiv_id or source_is_arxiv or has_arxiv_url)
+    arxiv_url = f"https://arxiv.org/abs/{arxiv_id}" if arxiv_id else ""
+    return arxiv_id, arxiv_url, is_arxiv_preprint
 
 
 def paper_dedup_key(work: Dict[str, Any], source_marker: str) -> str:
@@ -414,21 +487,49 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     in_scope, relevance_score, relevance_reason, exclusion_reason = (
         classify_relevance(classification_text)
     )
+    publication_year = clean_text(work.get("publication_year"))
+    publication_date = clean_text(work.get("publication_date"))
+    venue_name, venue_type, publisher = extract_venue_metadata(work)
+    publication_type = first_nonempty(work.get("type"), work.get("type_crossref"))
+    doi = normalize_doi(first_nonempty(work.get("doi"), ids.get("doi")))
+    landing_page_url = extract_landing_page_url(work)
+    openalex_url = openalex_id
+    arxiv_id, arxiv_url, is_arxiv_preprint = extract_arxiv_metadata(work, doi)
+    primary_url = first_nonempty(
+        work.get("primary_url"),
+        landing_page_url,
+        arxiv_url,
+        f"https://doi.org/{doi}" if doi else "",
+        openalex_url,
+    )
 
     notes = [CANDIDATE_NOTE]
     if not openalex_id:
         notes.append("OpenAlex ID missing; deduplicated by normalized title when possible.")
     if not title:
         notes.append("Title missing in source record.")
+    if not venue_name:
+        notes.append("Venue missing in source record; manual verification required.")
 
     return {
         "openalex_id": openalex_id,
         "title": title,
-        "year": clean_text(work.get("publication_year")),
-        "venue": extract_venue(work),
-        "doi": normalize_doi(first_nonempty(work.get("doi"), ids.get("doi"))),
-        "url": extract_url(work, openalex_id),
-        "arxiv_id": extract_arxiv_id(work),
+        "year": publication_year,
+        "publication_year": publication_year,
+        "publication_date": publication_date,
+        "venue": venue_name,
+        "venue_name": venue_name,
+        "venue_type": venue_type,
+        "publisher": publisher,
+        "publication_type": publication_type,
+        "doi": doi,
+        "url": primary_url,
+        "primary_url": primary_url,
+        "landing_page_url": landing_page_url,
+        "openalex_url": openalex_url,
+        "arxiv_id": arxiv_id,
+        "arxiv_url": arxiv_url,
+        "is_arxiv_preprint": bool_text(is_arxiv_preprint),
         "in_scope": bool_text(in_scope),
         "relevance_score": str(relevance_score),
         "relevance_reason": relevance_reason,
@@ -547,6 +648,7 @@ def make_affiliation_row(
 
     return {
         "openalex_id": openalex_id,
+        "in_scope": "false",
         "author_openalex_id": clean_text(author.get("id")),
         "author_name": first_nonempty(
             author.get("display_name"), authorship.get("raw_author_name")
@@ -693,7 +795,18 @@ def extract_candidates(
                     else:
                         merge_affiliation_rows(existing_affiliation, row)
 
-    return list(papers_by_key.values()), list(affiliations_by_key.values()), len(json_files)
+    papers = list(papers_by_key.values())
+    affiliations = list(affiliations_by_key.values())
+    in_scope_ids = {
+        paper["openalex_id"]
+        for paper in papers
+        if paper["openalex_id"] and paper["in_scope"] == "true"
+    }
+    for affiliation in affiliations:
+        affiliation["in_scope"] = bool_text(
+            affiliation["openalex_id"] in in_scope_ids
+        )
+    return papers, affiliations, len(json_files)
 
 
 def write_csv(path: Path, columns: Sequence[str], rows: Sequence[Dict[str, str]]) -> None:
@@ -717,11 +830,23 @@ def run(args: argparse.Namespace) -> int:
 
     papers_path = args.output_dir / PAPERS_FILENAME
     affiliations_path = args.output_dir / AFFILIATIONS_FILENAME
+    in_scope_papers_path = args.output_dir / IN_SCOPE_PAPERS_FILENAME
+    in_scope_affiliations_path = args.output_dir / IN_SCOPE_AFFILIATIONS_FILENAME
+    in_scope_papers = [paper for paper in papers if paper["in_scope"] == "true"]
+    in_scope_ids = {paper["openalex_id"] for paper in in_scope_papers}
+    in_scope_affiliations = [
+        affiliation
+        for affiliation in affiliations
+        if affiliation["openalex_id"] in in_scope_ids
+    ]
 
     print(f"Read {file_count} raw OpenAlex JSON files from {args.input_dir}")
-    print(f"Candidate papers after deduplication: {len(papers)}")
-    print(f"Candidate author-institution rows: {len(affiliations)}")
-    print(f"Candidates marked in scope: {sum(row['in_scope'] == 'true' for row in papers)}")
+    print(f"Total candidate papers: {len(papers)}")
+    print(f"In-scope papers: {len(in_scope_papers)}")
+    print(f"Out-of-scope papers: {len(papers) - len(in_scope_papers)}")
+    print(f"Total affiliation rows: {len(affiliations)}")
+    print(f"In-scope affiliation rows: {len(in_scope_affiliations)}")
+    print(f"Downstream rows processed by default: {len(in_scope_affiliations)}")
     print(
         "Candidates requiring relevance review: "
         f"{sum(row['relevance_score'] == '1' for row in papers)}"
@@ -735,12 +860,20 @@ def run(args: argparse.Namespace) -> int:
         print("DRY RUN: no files were written.")
         print(f"Would write: {papers_path}")
         print(f"Would write: {affiliations_path}")
+        print(f"Would write: {in_scope_papers_path}")
+        print(f"Would write: {in_scope_affiliations_path}")
         return 0
 
     try:
         args.output_dir.mkdir(parents=True, exist_ok=True)
         write_csv(papers_path, PAPER_COLUMNS, papers)
         write_csv(affiliations_path, AFFILIATION_COLUMNS, affiliations)
+        write_csv(in_scope_papers_path, PAPER_COLUMNS, in_scope_papers)
+        write_csv(
+            in_scope_affiliations_path,
+            AFFILIATION_COLUMNS,
+            in_scope_affiliations,
+        )
     except OSError as error:
         print(f"Error: could not create output directory {args.output_dir}: {error}", file=sys.stderr)
         return 1
@@ -750,6 +883,8 @@ def run(args: argparse.Namespace) -> int:
 
     print(f"Wrote candidate papers: {papers_path}")
     print(f"Wrote candidate affiliations: {affiliations_path}")
+    print(f"Wrote in-scope candidate papers: {in_scope_papers_path}")
+    print(f"Wrote in-scope candidate affiliations: {in_scope_affiliations_path}")
     print("All rows are preliminary candidates with manual_review=true.")
     return 0
 
