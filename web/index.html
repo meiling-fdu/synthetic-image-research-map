@@ -209,6 +209,19 @@
               </button>
             </div>
           </div>
+          <div class="results-view-toggle" role="group" aria-label="Results view">
+            <span>View:</span>
+            <button
+              type="button"
+              data-results-view="institutions"
+              aria-pressed="true"
+            >Institution records</button>
+            <button
+              type="button"
+              data-results-view="papers"
+              aria-pressed="false"
+            >Unique papers</button>
+          </div>
           <ol id="results-list" class="results-list"></ol>
           <p id="results-empty" class="results-empty" hidden>
             No records match the current filters.
@@ -226,6 +239,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260619-csv-export"></script>
+    <script src="app.js?v=20260619-results-view"></script>
   </body>
 </html>
