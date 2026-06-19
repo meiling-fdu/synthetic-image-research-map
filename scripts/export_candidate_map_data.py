@@ -198,6 +198,46 @@ def parse_positive_int(value: Any) -> Optional[int]:
     return parsed if parsed > 0 else None
 
 
+def parse_ordered_authors(value: Any) -> List[str]:
+    """Parse the JSON-encoded paper-level author list from the candidate CSV."""
+    raw_value = str(value or "").strip()
+    if not raw_value:
+        return []
+    try:
+        authors = json.loads(raw_value)
+    except (json.JSONDecodeError, TypeError):
+        return []
+    if not isinstance(authors, list):
+        return []
+    return [name for name in (clean_text(author) for author in authors) if name]
+
+
+def fallback_authors_by_paper(
+    affiliation_rows: Sequence[Dict[str, str]],
+) -> Dict[str, List[str]]:
+    """Reconstruct one ordered list per paper for pre-authors_ordered CSVs."""
+    authors: Dict[str, Dict[str, Tuple[int, int, str]]] = {}
+    for row_index, affiliation in enumerate(affiliation_rows):
+        openalex_id = clean_text(affiliation.get("openalex_id"))
+        author_name = clean_text(affiliation.get("author_name"))
+        if not openalex_id or not author_name:
+            continue
+        author_order = parse_positive_int(affiliation.get("author_order"))
+        author_id = clean_text(affiliation.get("author_openalex_id"))
+        identity = author_id or f"{author_order or ''}:{author_name.casefold()}"
+        paper_authors = authors.setdefault(openalex_id, {})
+        if identity not in paper_authors:
+            paper_authors[identity] = (
+                author_order if author_order is not None else 10**9,
+                row_index,
+                author_name,
+            )
+    return {
+        openalex_id: [item[2] for item in sorted(paper_authors.values())]
+        for openalex_id, paper_authors in authors.items()
+    }
+
+
 def parse_coordinate(value: Any, minimum: float, maximum: float) -> Optional[float]:
     cleaned = clean_text(value)
     if not cleaned:
@@ -287,13 +327,22 @@ def group_map_records(
         if openalex_id and openalex_id not in papers_by_id:
             papers_by_id[openalex_id] = paper
 
+    legacy_authors = fallback_authors_by_paper(affiliation_rows)
+    authors_by_paper = {
+        openalex_id: (
+            parse_ordered_authors(paper.get("authors_ordered"))
+            or legacy_authors.get(openalex_id, [])
+        )
+        for openalex_id, paper in papers_by_id.items()
+    }
+
     grouped: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
     missing_coordinates = 0
     invalid_coordinates = 0
     unmatched_papers = 0
     skipped_record_keys = set()
 
-    for affiliation_index, affiliation in enumerate(affiliation_rows):
+    for affiliation in affiliation_rows:
         institution = preferred_value(
             affiliation, "resolved_institution_name", "institution_name"
         )
@@ -371,7 +420,7 @@ def group_map_records(
                 "openalex_url": clean_text(paper.get("openalex_url")) or openalex_id,
                 "is_arxiv_preprint": parse_bool(paper.get("is_arxiv_preprint")),
                 "url": primary_url,
-                "authors": [],
+                "authors": list(authors_by_paper.get(openalex_id, [])),
                 "institution_openalex_id": institution_key[0],
                 "institution": institution_key[1],
                 "country": institution_key[3],
@@ -386,7 +435,6 @@ def group_map_records(
                 "_coordinate_sources": set(),
                 "_has_resolution_metadata": False,
                 "_resolution_notes": [],
-                "_authors": {},
             }
             grouped[group_key] = group
 
@@ -408,18 +456,6 @@ def group_map_records(
                 split_notes(affiliation.get("resolution_notes"))
             )
 
-        author_name = clean_text(affiliation.get("author_name"))
-        author_openalex_id = clean_text(affiliation.get("author_openalex_id"))
-        author_order = parse_positive_int(affiliation.get("author_order"))
-        author_identity = author_openalex_id or (
-            f"{author_order or ''}:{author_name.casefold()}"
-        )
-        if author_name and author_identity not in group["_authors"]:
-            group["_authors"][author_identity] = (
-                author_order if author_order is not None else 10**9,
-                affiliation_index,
-                author_name,
-            )
         group["manual_review"] = group["manual_review"] or parse_bool(
             affiliation.get("manual_review")
         )
@@ -428,10 +464,6 @@ def group_map_records(
 
     records = []
     for group in grouped.values():
-        group["authors"] = [
-            author[2]
-            for author in sorted(group.pop("_authors").values())
-        ]
         group["notes"] = " | ".join(unique_strings(group["notes"]))
         if group["_has_resolution_metadata"]:
             group["resolution_notes"] = " | ".join(

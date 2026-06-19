@@ -26,6 +26,7 @@ IN_SCOPE_AFFILIATIONS_FILENAME = "openalex_candidate_affiliations_in_scope.csv"
 PAPER_COLUMNS = (
     "openalex_id",
     "title",
+    "authors_ordered",
     "year",
     "publication_year",
     "publication_date",
@@ -602,6 +603,29 @@ def paper_dedup_key(work: Dict[str, Any], source_marker: str) -> str:
     return f"missing:{source_marker}"
 
 
+def ordered_author_names(work: Dict[str, Any]) -> List[str]:
+    """Return author names in the order supplied by OpenAlex for the work."""
+    authorships = work.get("authorships")
+    if not isinstance(authorships, list):
+        return []
+
+    ordered_names = []
+    for authorship in authorships:
+        if not isinstance(authorship, dict):
+            continue
+        author = (
+            authorship.get("author")
+            if isinstance(authorship.get("author"), dict)
+            else {}
+        )
+        name = first_nonempty(
+            author.get("display_name"), authorship.get("raw_author_name")
+        )
+        if name:
+            ordered_names.append(name)
+    return ordered_names
+
+
 def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     ids = work.get("ids") if isinstance(work.get("ids"), dict) else {}
     openalex_id = first_nonempty(work.get("id"), ids.get("openalex"))
@@ -639,6 +663,11 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     return {
         "openalex_id": openalex_id,
         "title": title,
+        # Store a structured paper-level list so institution grouping cannot
+        # reorder or truncate the display authors later in the pipeline.
+        "authors_ordered": json.dumps(
+            ordered_author_names(work), ensure_ascii=False
+        ),
         "year": publication_year,
         "publication_year": publication_year,
         "publication_date": publication_date,
@@ -674,6 +703,12 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
 
 
 def merge_paper_rows(existing: Dict[str, str], incoming: Dict[str, str]) -> None:
+    if (
+        existing["authors_ordered"] == "[]"
+        and incoming["authors_ordered"] != "[]"
+    ):
+        existing["authors_ordered"] = incoming["authors_ordered"]
+
     existing_task, default_subtask = merge_task(
         existing["preliminary_task"], incoming["preliminary_task"]
     )

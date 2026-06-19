@@ -143,7 +143,7 @@ arXiv status is detected from OpenAlex arXiv identifiers, `10.48550/arXiv.*` DOI
 
 ### Paper-Author-Institution Extraction
 
-OpenAlex authorships are preserved in source order. The extractor writes one candidate affiliation row for every author-institution pair, including stable OpenAlex author and institution IDs, the one-based author order, source position, location metadata, ROR ID, and institution-specific raw affiliation text when available. Multiple authors at one institution remain separate rows, and authors with multiple institutions receive one row per institution.
+OpenAlex authorships are preserved in source order. The extractor writes that paper-level sequence to `authors_ordered` as a JSON list, using each author display name with the raw author name as fallback. It also writes one candidate affiliation row for every author-institution pair, including stable OpenAlex author and institution IDs, the one-based authorship-array order, source position, location metadata, ROR ID, and institution-specific raw affiliation text when available. Multiple authors at one institution remain separate rows, and authors with multiple institutions receive one row per institution.
 
 Raw affiliation strings are retained even when OpenAlex supplies no structured institution. If an authorship has neither structured nor raw affiliation information, the author is still retained with empty institution fields, `manual_review=true`, and an explanatory note. This prevents first-author or first-institution shortcuts and preserves collaborators whose affiliations need later resolution.
 
@@ -247,11 +247,13 @@ The review queue is generated from automatic candidate data and is not curated f
 
 ## Candidate CSV-to-Map Export
 
-`scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It groups authors at each paper-institution location and preserves separate map records when a paper has multiple institutions.
+`scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It preserves separate map records when a paper has multiple institutions.
 
 By default, the exporter reads the in-scope paper CSV and the latest geocoded affiliation CSV, then rechecks paper IDs before grouping. `--include-out-of-scope` is available only for deliberate debugging. This prevents a broader custom affiliation file from silently reintroducing unrelated papers.
 
-Grouping prefers `institution_openalex_id` when available, so distinct institutions are not merged solely because their names or coordinates match. Within a paper-institution marker, author names are ordered by `author_order` and aggregated for display. The processed CSV remains the complete relationship-level source: map aggregation never replaces or removes its author-institution rows. Affiliations without valid coordinates remain available for review but cannot produce map markers.
+Grouping prefers `institution_openalex_id` when available, so distinct institutions are not merged solely because their names or coordinates match. The extractor stores `authors_ordered` once per paper as a JSON list in the original OpenAlex `authorships` array order; `author_position` and the one-based `author_order` remain on every affiliation row. Each marker for that paper reuses the same ordered paper-level author list, regardless of institution. For older paper CSVs without `authors_ordered`, the exporter reconstructs the list once across all of the paper's affiliation rows using `author_order`, never separately per institution.
+
+The processed affiliation CSV remains the complete relationship-level source: map aggregation never replaces or removes its author-institution rows. Institution and country aggregation affects only those location fields, including in the unique-paper web view; it never changes author order. Affiliations without valid coordinates remain available for review but cannot produce map markers.
 
 The exporter includes only affiliation rows with a complete valid resolved or original latitude/longitude pair. It does not geocode missing institutions, call external APIs, or infer locations. Rows with missing or invalid coordinates remain in the processed CSV and are reported in the export summary rather than silently assigned a location.
 

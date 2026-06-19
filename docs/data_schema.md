@@ -37,6 +37,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 
 | Column | Definition |
 | --- | --- |
+| `authors_ordered` | JSON-encoded list of paper-level author display names in the original OpenAlex `authorships` order. This is the display-author source for every institution-level map record. |
 | `publication_year` | OpenAlex `publication_year`; no year is inferred from a title or URL. |
 | `publication_date` | Source publication date when OpenAlex provides one. |
 | `venue_name` | Source or repository display name, preferring `primary_location.source.display_name`; empty when unavailable. |
@@ -152,7 +153,7 @@ One row represents a specific author-institution affiliation on a specific paper
 
 ### Why This Relationship Table Is Necessary
 
-Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views. Map exports create a marker for every affiliated institution with usable coordinates and aggregate only the display names associated with that paper-institution pair; they do not replace or collapse the underlying relationship rows.
+Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views. Map exports create a marker for every affiliated institution with usable coordinates, but every marker reuses the same paper-level `authors_ordered` list. Institution grouping never sorts, groups, or truncates the display author list, and it does not replace or collapse the underlying relationship rows.
 
 ## Paper Labeling
 

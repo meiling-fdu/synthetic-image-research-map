@@ -77,18 +77,19 @@ const resultsCount = document.querySelector("#results-count");
 const resultsList = document.querySelector("#results-list");
 const resultsEmpty = document.querySelector("#results-empty");
 const exportCsvButton = document.querySelector("#export-csv");
+const resultsViewButtons = document.querySelectorAll("[data-results-view]");
 const prototypeNote = document.querySelector(".prototype-note");
 const intro = document.querySelector(".intro");
 const footer = document.querySelector("footer");
 
 let records = [];
 let currentFilteredRecords = [];
+let currentDisplayedResults = [];
+let resultsView = "institutions";
 
-const CSV_COLUMNS = [
+const INSTITUTION_CSV_COLUMNS = [
   ["title", (record) => recordTitle(record)],
-  ["authors", (record) => (
-    Array.isArray(record.authors) ? record.authors.join("; ") : record.authors
-  )],
+  ["authors", (record) => recordAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
   ["venue_name", (record) => record.venue_name || record.venue || ""],
   ["task", (record) => record.task || ""],
@@ -101,14 +102,26 @@ const CSV_COLUMNS = [
   ["arxiv_url", (record) => record.arxiv_url || (
     record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
   )],
-  ["paper_url", (record) => (
-    record.paper_url ||
-    record.primary_url ||
-    record.landing_page_url ||
-    record.url ||
-    record.openalex_url ||
-    ""
+  ["paper_url", (record) => recordPaperUrl(record)],
+  ["openalex_url", (record) => record.openalex_url || ""],
+];
+
+const PAPER_CSV_COLUMNS = [
+  ["title", (record) => recordTitle(record)],
+  ["authors", (record) => recordAuthors(record).join("; ")],
+  ["publication_year", (record) => publicationYear(record) ?? ""],
+  ["venue_name", (record) => record.venue_name || record.venue || ""],
+  ["task", (record) => record.task || ""],
+  ["subtask", (record) => record.subtask || ""],
+  ["institution_name", (record) => record.aggregated_institutions.join("; ")],
+  ["country", (record) => record.aggregated_country_names.join("; ")],
+  ["country_code", (record) => record.aggregated_country_codes.join("; ")],
+  ["doi", (record) => normalizedDoi(record.doi)],
+  ["arxiv_id", (record) => record.arxiv_id || ""],
+  ["arxiv_url", (record) => record.arxiv_url || (
+    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
   )],
+  ["paper_url", (record) => recordPaperUrl(record)],
   ["openalex_url", (record) => record.openalex_url || ""],
 ];
 
@@ -125,6 +138,13 @@ function formatTask(task) {
 
 function recordTitle(record) {
   return record.title ?? record.paper_title;
+}
+
+function recordAuthors(record) {
+  const authors = Array.isArray(record.authors) ? record.authors : [record.authors];
+  return authors
+    .map((author) => String(author || "").trim())
+    .filter(Boolean);
 }
 
 function normalizedIdentityValue(value) {
@@ -155,9 +175,7 @@ function paperIdentity(record) {
     return `arxiv:${arxivId}`;
   }
 
-  const paperUrl = normalizedIdentityValue(
-    record.paper_url || record.primary_url || record.landing_page_url || record.url,
-  );
+  const paperUrl = normalizedIdentityValue(recordPaperUrl(record));
   if (paperUrl) {
     return `url:${paperUrl}`;
   }
@@ -175,6 +193,70 @@ function recordCountry(record) {
   return String(record.country_code || record.country || "").trim();
 }
 
+function recordPaperUrl(record) {
+  return (
+    record.paper_url ||
+    record.primary_url ||
+    record.landing_page_url ||
+    record.url ||
+    record.openalex_url ||
+    ""
+  );
+}
+
+function uniqueTextValues(values) {
+  const seen = new Set();
+  const unique = [];
+  values.forEach((value) => {
+    const text = String(value || "").trim();
+    const key = text.toLocaleLowerCase();
+    if (text && !seen.has(key)) {
+      seen.add(key);
+      unique.push(text);
+    }
+  });
+  return unique;
+}
+
+function aggregateUniquePapers(institutionRecords) {
+  const papersByIdentity = new Map();
+  institutionRecords.forEach((record) => {
+    const identity = paperIdentity(record);
+    let paper = papersByIdentity.get(identity);
+    if (!paper) {
+      paper = {
+        ...record,
+        // All institution records carry the same paper-level source order.
+        // Keep the first list; institution aggregation must not alter it.
+        authors: recordAuthors(record),
+        aggregated_institutions: [],
+        aggregated_countries: [],
+        aggregated_country_names: [],
+        aggregated_country_codes: [],
+      };
+      papersByIdentity.set(identity, paper);
+    }
+
+    paper.aggregated_institutions = uniqueTextValues([
+      ...paper.aggregated_institutions,
+      recordInstitution(record),
+    ]);
+    paper.aggregated_countries = uniqueTextValues([
+      ...paper.aggregated_countries,
+      recordCountry(record),
+    ]);
+    paper.aggregated_country_names = uniqueTextValues([
+      ...paper.aggregated_country_names,
+      record.country,
+    ]);
+    paper.aggregated_country_codes = uniqueTextValues([
+      ...paper.aggregated_country_codes,
+      record.country_code,
+    ]);
+  });
+  return [...papersByIdentity.values()];
+}
+
 function publicationYear(record) {
   const value = record.publication_year ?? record.year;
   const year = Number(value);
@@ -186,9 +268,7 @@ function normalizedSearchText(value) {
 }
 
 function recordSearchText(record) {
-  const authors = Array.isArray(record.authors)
-    ? record.authors
-    : [record.authors];
+  const authors = recordAuthors(record);
   return normalizedSearchText([
     recordTitle(record),
     ...authors,
@@ -327,9 +407,9 @@ function escapeCsvValue(value) {
     : text;
 }
 
-function buildCsv(exportRecords) {
-  const header = CSV_COLUMNS.map(([name]) => escapeCsvValue(name)).join(",");
-  const rows = exportRecords.map((record) => CSV_COLUMNS
+function buildCsv(exportRecords, columns) {
+  const header = columns.map(([name]) => escapeCsvValue(name)).join(",");
+  const rows = exportRecords.map((record) => columns
     .map(([, valueForRecord]) => escapeCsvValue(valueForRecord(record)))
     .join(","));
   return [header, ...rows].join("\r\n");
@@ -337,15 +417,19 @@ function buildCsv(exportRecords) {
 
 function exportFilename() {
   const date = new Date().toISOString().slice(0, 10);
-  return `synthetic-image-research-map-${datasetName}-${date}.csv`;
+  const viewLabel = resultsView === "papers" ? "unique-papers" : "institution-records";
+  return `synthetic-image-research-map-${datasetName}-${viewLabel}-${date}.csv`;
 }
 
 function downloadFilteredCsv() {
-  if (!currentFilteredRecords.length) {
+  if (!currentDisplayedResults.length) {
     return;
   }
 
-  const csv = buildCsv(currentFilteredRecords);
+  const columns = resultsView === "papers"
+    ? PAPER_CSV_COLUMNS
+    : INSTITUTION_CSV_COLUMNS;
+  const csv = buildCsv(currentDisplayedResults, columns);
   const blob = new Blob(["\ufeff", csv], { type: "text/csv;charset=utf-8" });
   const objectUrl = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -362,8 +446,9 @@ function formatResolutionValue(value) {
 }
 
 function popupContent(record) {
-  const authors = record.authors.length
-    ? record.authors.map(escapeHtml).join(", ")
+  const orderedAuthors = recordAuthors(record);
+  const authors = orderedAuthors.length
+    ? orderedAuthors.map(escapeHtml).join(", ")
     : "Unknown";
   const year = record.publication_year ?? record.year ?? "Unknown";
   const venue = record.venue_name || record.venue || "unknown";
@@ -450,6 +535,7 @@ function resultContent(record) {
   const title = recordTitle(record);
   const year = publicationYear(record) ?? "Unknown";
   const venue = record.venue_name || record.venue || "";
+  const isPaperView = resultsView === "papers";
   const institution = recordInstitution(record) || "Unknown institution";
   const country = recordCountry(record);
   const affiliation = [institution, country].filter(Boolean).join(" · ");
@@ -468,19 +554,22 @@ function resultContent(record) {
     record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
   );
   const arxivLink = arxivUrl ? externalLink(arxivUrl, "arXiv") : "";
-  const paperUrl =
-    record.paper_url ||
-    record.primary_url ||
-    record.landing_page_url ||
-    record.url ||
-    record.openalex_url ||
-    "";
+  const paperUrl = recordPaperUrl(record);
   const paperLabel = paperUrl && paperUrl === record.openalex_url
     ? "OpenAlex"
     : "Paper";
   const paperLink = paperUrl ? externalLink(paperUrl, paperLabel) : "";
   const links = [doiLink, arxivLink, paperLink].filter(Boolean).join("");
   const linksRow = links ? `<div class="result-links">${links}</div>` : "";
+  const authorsRow = isPaperView
+    ? `<p class="result-aggregate"><strong>Authors:</strong> ${escapeHtml(recordAuthors(record).join("; ") || "Unknown")}</p>`
+    : "";
+  const institutionsRow = isPaperView
+    ? `<p class="result-aggregate"><strong>Institutions:</strong> ${escapeHtml(record.aggregated_institutions.join("; ") || "Unknown")}</p>`
+    : `<p class="result-affiliation">${escapeHtml(affiliation)}</p>`;
+  const countriesRow = isPaperView
+    ? `<p class="result-aggregate"><strong>Countries:</strong> ${escapeHtml(record.aggregated_countries.join(", ") || "Unknown")}</p>`
+    : "";
 
   return `
     <article>
@@ -489,7 +578,9 @@ function resultContent(record) {
         <span class="result-year">${escapeHtml(year)}</span>
       </div>
       ${venueRow}
-      <p class="result-affiliation">${escapeHtml(affiliation)}</p>
+      ${authorsRow}
+      ${institutionsRow}
+      ${countriesRow}
       <div class="result-classification">
         <span class="result-task">${escapeHtml(formatTask(record.task))}</span>
         ${subtask}
@@ -500,8 +591,14 @@ function resultContent(record) {
 }
 
 function renderResults(visibleRecords) {
-  const count = visibleRecords.length;
-  resultsCount.textContent = `Showing ${count} record${count === 1 ? "" : "s"}`;
+  const displayedResults = resultsView === "papers"
+    ? aggregateUniquePapers(visibleRecords)
+    : visibleRecords;
+  currentDisplayedResults = displayedResults;
+  const count = displayedResults.length;
+  resultsCount.textContent = resultsView === "papers"
+    ? `Showing ${count} unique paper${count === 1 ? "" : "s"}`
+    : `Showing ${count} record${count === 1 ? "" : "s"}`;
   exportCsvButton.disabled = count === 0;
   resultsList.replaceChildren();
   resultsEmpty.hidden = count !== 0;
@@ -512,13 +609,27 @@ function renderResults(visibleRecords) {
   }
 
   const fragment = document.createDocumentFragment();
-  visibleRecords.forEach((record) => {
+  displayedResults.forEach((record) => {
     const item = document.createElement("li");
     item.className = "result-item";
     item.innerHTML = resultContent(record);
     fragment.append(item);
   });
   resultsList.append(fragment);
+}
+
+function selectResultsView(view) {
+  if (!["institutions", "papers"].includes(view)) {
+    return;
+  }
+  resultsView = view;
+  resultsViewButtons.forEach((button) => {
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.resultsView === resultsView),
+    );
+  });
+  renderResults(currentFilteredRecords);
 }
 
 function updateSummary(visibleRecords) {
@@ -636,6 +747,7 @@ function validateRecord(record) {
 function showDatasetMessage(message, isError = false) {
   records = [];
   currentFilteredRecords = [];
+  currentDisplayedResults = [];
   markerLayer.clearLayers();
   updateSummary(records);
   updateDatasetStatistics(records);
@@ -818,6 +930,9 @@ maxYearFilter.addEventListener("input", renderRecords);
 resolutionFilter.addEventListener("change", renderRecords);
 reviewFilter.addEventListener("change", renderRecords);
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
+resultsViewButtons.forEach((button) => {
+  button.addEventListener("click", () => selectResultsView(button.dataset.resultsView));
+});
 resetButton.addEventListener("click", () => {
   keywordFilter.value = "";
   taskFilter.value = "all";
