@@ -172,6 +172,54 @@ h2 {
   margin-bottom: 0;
 }
 
+.project-links {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 18px;
+  padding: 13px 18px;
+}
+
+.project-links h2,
+.project-links p {
+  margin-bottom: 0;
+}
+
+.project-links h2 {
+  padding-top: 3px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.project-links-content {
+  display: grid;
+  gap: 7px;
+}
+
+.project-link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 14px;
+}
+
+.project-link-list a,
+.project-links p a {
+  color: var(--accent);
+  font-weight: 700;
+  text-underline-offset: 2px;
+}
+
+.project-link-list a {
+  font-size: 0.74rem;
+}
+
+.project-links p {
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
 .dataset-overview {
   grid-column: 1 / -1;
   display: grid;
@@ -1019,6 +1067,15 @@ footer {
   .methodology-grid {
     grid-template-columns: 1fr;
     gap: 14px;
+  }
+
+  .project-links {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .project-links h2 {
+    padding-top: 0;
   }
 
   .sidebar {
