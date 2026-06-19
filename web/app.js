@@ -76,11 +76,41 @@ const datasetStatisticsNote = document.querySelector("#dataset-statistics-note")
 const resultsCount = document.querySelector("#results-count");
 const resultsList = document.querySelector("#results-list");
 const resultsEmpty = document.querySelector("#results-empty");
+const exportCsvButton = document.querySelector("#export-csv");
 const prototypeNote = document.querySelector(".prototype-note");
 const intro = document.querySelector(".intro");
 const footer = document.querySelector("footer");
 
 let records = [];
+let currentFilteredRecords = [];
+
+const CSV_COLUMNS = [
+  ["title", (record) => recordTitle(record)],
+  ["authors", (record) => (
+    Array.isArray(record.authors) ? record.authors.join("; ") : record.authors
+  )],
+  ["publication_year", (record) => publicationYear(record) ?? ""],
+  ["venue_name", (record) => record.venue_name || record.venue || ""],
+  ["task", (record) => record.task || ""],
+  ["subtask", (record) => record.subtask || ""],
+  ["institution_name", (record) => recordInstitution(record)],
+  ["country", (record) => record.country || ""],
+  ["country_code", (record) => record.country_code || ""],
+  ["doi", (record) => normalizedDoi(record.doi)],
+  ["arxiv_id", (record) => record.arxiv_id || ""],
+  ["arxiv_url", (record) => record.arxiv_url || (
+    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
+  )],
+  ["paper_url", (record) => (
+    record.paper_url ||
+    record.primary_url ||
+    record.landing_page_url ||
+    record.url ||
+    record.openalex_url ||
+    ""
+  )],
+  ["openalex_url", (record) => record.openalex_url || ""],
+];
 
 function escapeHtml(value) {
   const element = document.createElement("span");
@@ -290,6 +320,43 @@ function normalizedDoi(value) {
     .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "");
 }
 
+function escapeCsvValue(value) {
+  const text = String(value ?? "");
+  return /[",\r\n]/.test(text)
+    ? `"${text.replaceAll('"', '""')}"`
+    : text;
+}
+
+function buildCsv(exportRecords) {
+  const header = CSV_COLUMNS.map(([name]) => escapeCsvValue(name)).join(",");
+  const rows = exportRecords.map((record) => CSV_COLUMNS
+    .map(([, valueForRecord]) => escapeCsvValue(valueForRecord(record)))
+    .join(","));
+  return [header, ...rows].join("\r\n");
+}
+
+function exportFilename() {
+  const date = new Date().toISOString().slice(0, 10);
+  return `synthetic-image-research-map-${datasetName}-${date}.csv`;
+}
+
+function downloadFilteredCsv() {
+  if (!currentFilteredRecords.length) {
+    return;
+  }
+
+  const csv = buildCsv(currentFilteredRecords);
+  const blob = new Blob(["\ufeff", csv], { type: "text/csv;charset=utf-8" });
+  const objectUrl = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = objectUrl;
+  link.download = exportFilename();
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+}
+
 function formatResolutionValue(value) {
   return formatTask(value || "unresolved");
 }
@@ -435,6 +502,7 @@ function resultContent(record) {
 function renderResults(visibleRecords) {
   const count = visibleRecords.length;
   resultsCount.textContent = `Showing ${count} record${count === 1 ? "" : "s"}`;
+  exportCsvButton.disabled = count === 0;
   resultsList.replaceChildren();
   resultsEmpty.hidden = count !== 0;
   resultsList.hidden = count === 0;
@@ -497,6 +565,8 @@ function renderRecords() {
       matchesReview
     );
   });
+
+  currentFilteredRecords = visibleRecords;
 
   markerLayer.clearLayers();
 
@@ -565,6 +635,7 @@ function validateRecord(record) {
 
 function showDatasetMessage(message, isError = false) {
   records = [];
+  currentFilteredRecords = [];
   markerLayer.clearLayers();
   updateSummary(records);
   updateDatasetStatistics(records);
@@ -746,6 +817,7 @@ minYearFilter.addEventListener("input", renderRecords);
 maxYearFilter.addEventListener("input", renderRecords);
 resolutionFilter.addEventListener("change", renderRecords);
 reviewFilter.addEventListener("change", renderRecords);
+exportCsvButton.addEventListener("click", downloadFilteredCsv);
 resetButton.addEventListener("click", () => {
   keywordFilter.value = "";
   taskFilter.value = "all";
