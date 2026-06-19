@@ -32,7 +32,7 @@
     <main class="page-shell">
       <section class="panel dataset-overview" aria-labelledby="dataset-overview-heading">
         <div class="dataset-overview-heading">
-          <h2 id="dataset-overview-heading">Dataset overview</h2>
+          <h2 id="dataset-overview-heading">Filtered overview</h2>
           <p id="dataset-statistics-note">
             Automatically generated OpenAlex candidate metadata; not manually curated.
           </p>
@@ -77,6 +77,17 @@
         <section class="panel" aria-labelledby="filters-heading">
           <h2 id="filters-heading">Filters</h2>
           <div class="filter-grid">
+            <label for="keyword-filter">
+              Keyword
+              <input
+                id="keyword-filter"
+                type="search"
+                placeholder="Title, author, institution..."
+                autocomplete="off"
+                disabled
+              >
+            </label>
+
             <label for="task-filter">
               Task
               <select id="task-filter" disabled>
@@ -87,12 +98,17 @@
               </select>
             </label>
 
-            <label for="year-filter">
-              Year
-              <select id="year-filter" disabled>
-                <option value="all">All years</option>
-              </select>
-            </label>
+            <fieldset class="year-range">
+              <legend>Publication year</legend>
+              <label for="min-year-filter">
+                From
+                <input id="min-year-filter" type="number" step="1" disabled>
+              </label>
+              <label for="max-year-filter">
+                To
+                <input id="max-year-filter" type="number" step="1" disabled>
+              </label>
+            </fieldset>
 
             <label for="resolution-filter">
               Resolution confidence
@@ -192,6 +208,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260619-dataset-statistics"></script>
+    <script src="app.js?v=20260619-search-year-range"></script>
   </body>
 </html>

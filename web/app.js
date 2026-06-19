@@ -51,8 +51,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 const markerLayer = L.layerGroup().addTo(map);
+const keywordFilter = document.querySelector("#keyword-filter");
 const taskFilter = document.querySelector("#task-filter");
-const yearFilter = document.querySelector("#year-filter");
+const minYearFilter = document.querySelector("#min-year-filter");
+const maxYearFilter = document.querySelector("#max-year-filter");
 const resolutionFilter = document.querySelector("#resolution-filter");
 const reviewFilter = document.querySelector("#review-filter");
 const resetButton = document.querySelector("#reset-filters");
@@ -140,6 +142,42 @@ function recordCountry(record) {
   return String(record.country_code || record.country || "").trim();
 }
 
+function publicationYear(record) {
+  const value = record.publication_year ?? record.year;
+  const year = Number(value);
+  return Number.isInteger(year) ? year : null;
+}
+
+function normalizedSearchText(value) {
+  return String(value || "").normalize("NFKC").toLocaleLowerCase();
+}
+
+function recordSearchText(record) {
+  const authors = Array.isArray(record.authors)
+    ? record.authors
+    : [record.authors];
+  return normalizedSearchText([
+    recordTitle(record),
+    ...authors,
+    record.institution_name,
+    record.institution,
+    record.country,
+    record.country_code,
+    record.venue_name,
+    record.venue,
+    record.task,
+    record.subtask,
+  ].filter(Boolean).join(" "));
+}
+
+function yearFilterValue(input) {
+  if (!input.value.trim()) {
+    return null;
+  }
+  const value = Number(input.value);
+  return Number.isInteger(value) ? value : null;
+}
+
 function normalizedSetSize(values) {
   return new Set(
     values
@@ -181,7 +219,7 @@ function updateDatasetStatistics(datasetRecords) {
     (record) => record.task === "detection_and_source_attribution",
   ).length;
 
-  const supportsPreprintMetadata = datasetRecords.some(hasPreprintMetadata);
+  const supportsPreprintMetadata = records.some(hasPreprintMetadata);
   datasetPreprintStat.hidden = !supportsPreprintMetadata;
   datasetPreprintCount.textContent = supportsPreprintMetadata
     ? datasetRecords.filter(isArxivPreprint).length
@@ -350,13 +388,22 @@ function updateSummary(visibleRecords) {
 }
 
 function renderRecords() {
+  const keywordTerms = normalizedSearchText(keywordFilter.value)
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
   const selectedTask = taskFilter.value;
-  const selectedYear = yearFilter.value;
+  const minimumYear = yearFilterValue(minYearFilter);
+  const maximumYear = yearFilterValue(maxYearFilter);
   const selectedResolution = resolutionFilter.value;
   const selectedReview = reviewFilter.value;
   const visibleRecords = records.filter((record) => {
+    const searchableText = recordSearchText(record);
+    const matchesKeyword = keywordTerms.every((term) => searchableText.includes(term));
     const matchesTask = selectedTask === "all" || record.task === selectedTask;
-    const matchesYear = selectedYear === "all" || String(record.year) === selectedYear;
+    const year = publicationYear(record);
+    const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
+    const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
     const matchesResolution =
       selectedResolution === "all" || resolutionConfidence(record) === selectedResolution;
     const status = reviewStatus(record);
@@ -364,7 +411,14 @@ function renderRecords() {
       selectedReview === "all" ||
       (selectedReview === "true" && status === true) ||
       (selectedReview === "false" && status === false);
-    return matchesTask && matchesYear && matchesResolution && matchesReview;
+    return (
+      matchesKeyword &&
+      matchesTask &&
+      matchesMinimumYear &&
+      matchesMaximumYear &&
+      matchesResolution &&
+      matchesReview
+    );
   });
 
   markerLayer.clearLayers();
@@ -383,28 +437,34 @@ function renderRecords() {
   });
 
   updateSummary(visibleRecords);
+  updateDatasetStatistics(visibleRecords);
   mapStatus.classList.toggle("error", false);
   const recordLabel = datasetConfig.recordLabel;
   mapStatus.textContent = visibleRecords.length
     ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}`
-    : `No ${recordLabel}s match these filters`;
+    : "No records match the current filters.";
 }
 
-function populateYears() {
-  const years = [...new Set(records.map((record) => record.year).filter(Number.isInteger))].sort(
-    (a, b) => b - a,
-  );
-  years.forEach((year) => {
-    const option = document.createElement("option");
-    option.value = String(year);
-    option.textContent = year;
-    yearFilter.append(option);
+function configureYearRange() {
+  const years = records.map(publicationYear).filter((year) => year !== null);
+  if (!years.length) {
+    return;
+  }
+  const earliestYear = Math.min(...years);
+  const latestYear = Math.max(...years);
+  [minYearFilter, maxYearFilter].forEach((input) => {
+    input.min = String(earliestYear);
+    input.max = String(latestYear);
   });
+  minYearFilter.placeholder = String(earliestYear);
+  maxYearFilter.placeholder = String(latestYear);
 }
 
 function enableControls() {
+  keywordFilter.disabled = false;
   taskFilter.disabled = false;
-  yearFilter.disabled = false;
+  minYearFilter.disabled = false;
+  maxYearFilter.disabled = false;
   const supportsResolution = records.some(hasResolutionMetadata);
   resolutionFilter.disabled = !supportsResolution;
   reviewFilter.disabled = !supportsResolution;
@@ -542,8 +602,7 @@ async function readDataset(name) {
 function displayDataset(normalizedData) {
   records = normalizedData.records;
   displayMetadataWarning(normalizedData.metadata);
-  updateDatasetStatistics(records);
-  populateYears();
+  configureYearRange();
   enableControls();
   renderRecords();
 }
@@ -602,13 +661,17 @@ async function loadData() {
   }
 }
 
+keywordFilter.addEventListener("input", renderRecords);
 taskFilter.addEventListener("change", renderRecords);
-yearFilter.addEventListener("change", renderRecords);
+minYearFilter.addEventListener("input", renderRecords);
+maxYearFilter.addEventListener("input", renderRecords);
 resolutionFilter.addEventListener("change", renderRecords);
 reviewFilter.addEventListener("change", renderRecords);
 resetButton.addEventListener("click", () => {
+  keywordFilter.value = "";
   taskFilter.value = "all";
-  yearFilter.value = "all";
+  minYearFilter.value = "";
+  maxYearFilter.value = "";
   resolutionFilter.value = "all";
   reviewFilter.value = "all";
   renderRecords();

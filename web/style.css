@@ -176,6 +176,30 @@ h2 {
   gap: 14px;
 }
 
+.year-range {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.year-range legend {
+  grid-column: 1 / -1;
+  margin-bottom: 6px;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.year-range label {
+  min-width: 0;
+  font-size: 0.72rem;
+}
+
 label {
   display: grid;
   gap: 6px;
@@ -185,6 +209,7 @@ label {
 }
 
 select,
+input,
 button {
   width: 100%;
   border: 1px solid #bdc9cf;
@@ -196,6 +221,15 @@ button {
 
 select {
   padding: 9px 10px;
+}
+
+input {
+  min-width: 0;
+  padding: 9px 10px;
+}
+
+input::placeholder {
+  color: #82909a;
 }
 
 button {
@@ -214,7 +248,8 @@ button:focus-visible {
 }
 
 button:disabled,
-select:disabled {
+select:disabled,
+input:disabled {
   cursor: not-allowed;
   opacity: 0.55;
 }
