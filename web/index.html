@@ -30,6 +30,56 @@
     </header>
 
     <main class="page-shell">
+      <details class="panel methodology-panel">
+        <summary>
+          <span>About, methodology, and scope</span>
+          <span class="methodology-hint">How records are selected, mapped, and explored</span>
+        </summary>
+        <div class="methodology-grid">
+          <section>
+            <h2>Project scope</h2>
+            <p>
+              The map covers detection of AI-generated, synthetic, GAN-generated,
+              diffusion-generated, fake, and deepfake images, plus source attribution,
+              identification, and verification for generated images.
+            </p>
+            <p>
+              It excludes broad model, feature, authorship, camera-model, and sensor
+              attribution, as well as work that only uses synthetic data for downstream tasks.
+            </p>
+          </section>
+          <section>
+            <h2>Data and records</h2>
+            <p>
+              Public preview records are generated automatically from OpenAlex candidate
+              metadata. This is not a manually curated bibliography, and publications or
+              metadata may be missing or incorrect.
+            </p>
+            <p>
+              The map is institution-record based, so one paper may appear at several
+              institutions. Unique papers view deduplicates records for bibliography-style browsing.
+            </p>
+          </section>
+          <section>
+            <h2>Explore and export</h2>
+            <p>
+              Keyword search, year range, task filters, the results-view toggle, and CSV
+              export operate on the currently loaded dataset. Map markers and summary
+              statistics remain institution based.
+            </p>
+          </section>
+          <section>
+            <h2>Quality control</h2>
+            <p>
+              Records are filtered by scope, task label, institution availability,
+              coordinates, and resolution confidence. By default, the public preview
+              excludes uncertain, out-of-scope, low-confidence, review-flagged,
+              missing-institution, and missing-coordinate records.
+            </p>
+          </section>
+        </div>
+      </details>
+
       <section class="panel dataset-overview" aria-labelledby="dataset-overview-heading">
         <div class="dataset-overview-heading">
           <h2 id="dataset-overview-heading">Filtered overview</h2>

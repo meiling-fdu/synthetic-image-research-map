@@ -97,6 +97,81 @@ h2 {
   gap: 18px;
 }
 
+.methodology-panel {
+  grid-column: 1 / -1;
+  overflow: hidden;
+  padding: 0;
+}
+
+.methodology-panel summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 18px;
+  color: var(--accent-dark);
+  cursor: pointer;
+  font-size: 0.86rem;
+  font-weight: 700;
+  list-style: none;
+}
+
+.methodology-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.methodology-panel summary::after {
+  content: "+";
+  flex: none;
+  color: var(--accent);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.methodology-panel[open] summary::after {
+  content: "-";
+}
+
+.methodology-panel summary:hover,
+.methodology-panel summary:focus-visible {
+  background: #f6fafb;
+}
+
+.methodology-hint {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+.methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  padding: 16px 18px 18px;
+}
+
+.methodology-grid section {
+  min-width: 0;
+}
+
+.methodology-grid h2 {
+  margin-bottom: 7px;
+  font-size: 0.78rem;
+}
+
+.methodology-grid p {
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.methodology-grid p:last-child {
+  margin-bottom: 0;
+}
+
 .dataset-overview {
   grid-column: 1 / -1;
   display: grid;
@@ -899,6 +974,10 @@ footer {
     grid-template-columns: 1fr;
   }
 
+  .methodology-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .dataset-statistics {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     row-gap: 14px;
@@ -931,6 +1010,15 @@ footer {
 
   .site-header {
     padding-top: 24px;
+  }
+
+  .methodology-hint {
+    display: none;
+  }
+
+  .methodology-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
   }
 
   .sidebar {
