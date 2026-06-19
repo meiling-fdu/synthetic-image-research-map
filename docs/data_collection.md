@@ -319,3 +319,15 @@ Only the filtered public preview JSON should be considered for publication. Raw 
 ### Public Preview Quality Report
 
 Run `python3 scripts/report_public_preview.py` after every public-preview refresh. It regenerates `docs/public_preview_report.md` from the committed preview JSON so coverage counts, missing metadata, confidence levels, and potential quality issues remain synchronized with the dataset shown by the online map. The report explicitly counts and lists records missing institutions or usable coordinates; a default export should report zero for both.
+
+### Public Preview Validation
+
+Validation is the final recommended step after exporting the public preview and regenerating its quality report:
+
+```bash
+python3 scripts/export_public_preview.py
+python3 scripts/report_public_preview.py
+python3 scripts/validate_public_preview.py --strict
+```
+
+`scripts/validate_public_preview.py` accepts either a top-level record array or the metadata-plus-records object format. It checks publication-safe task and subtask labels, required paper and institution metadata, coordinate bounds, publication year, link availability, review status, and institution-resolution confidence. Errors always return a non-zero status; `--strict` also fails on warnings. The validator only reads the preview JSON and does not modify generated or manual data.

@@ -202,6 +202,13 @@ python3 scripts/report_public_preview.py
 
 The report is written to `docs/public_preview_report.md` and summarizes coverage, publication metadata, institution resolution confidence, and records requiring further inspection.
 
+Validate the refreshed preview before committing it. Strict mode also treats
+warnings as publication blockers:
+
+```bash
+python3 scripts/validate_public_preview.py --strict
+```
+
 ## One-command pipeline
 
 Preview the complete workflow without executing subprocesses or writing files:
