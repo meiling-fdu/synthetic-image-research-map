@@ -31,6 +31,28 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `manual_review` | `true` when a human must verify the record, classification, deduplication, or metadata; otherwise `false`. |
 | `notes` | Free-text comments for decisions, uncertainty, corrections, or follow-up work. |
 
+### Processed OpenAlex Publication Metadata
+
+`data/processed/openalex_candidate_papers.csv` retains the core fields above and adds source-level publication metadata for review and map display. The legacy `year`, `venue`, and `url` columns remain aliases for `publication_year`, `venue_name`, and `primary_url` so older local exports remain compatible.
+
+| Column | Definition |
+| --- | --- |
+| `publication_year` | OpenAlex `publication_year`; no year is inferred from a title or URL. |
+| `publication_date` | Source publication date when OpenAlex provides one. |
+| `venue_name` | Source or repository display name, preferring `primary_location.source.display_name`; empty when unavailable. |
+| `venue_type` | OpenAlex source type, such as journal, conference, or repository, when available. |
+| `publisher` | Publisher or source host-organization name reported by OpenAlex. |
+| `publication_type` | OpenAlex work `type`, falling back to `type_crossref` when needed. |
+| `doi` | Canonical DOI without a resolver URL when available. |
+| `arxiv_id` | arXiv identifier detected from source identifiers, a `10.48550/arXiv.*` DOI, or an arXiv location URL. |
+| `arxiv_url` | Canonical `https://arxiv.org/abs/...` URL when an arXiv identifier can be extracted. |
+| `primary_url` | Preferred source landing URL, with DOI and OpenAlex URLs used only as later fallbacks. |
+| `landing_page_url` | Landing page from the primary or best available OpenAlex location. |
+| `openalex_url` | OpenAlex work URL/identifier retained for source provenance. |
+| `is_arxiv_preprint` | `true` when an arXiv identifier, arXiv URL, or explicit arXiv source is detected. |
+
+These values remain candidate metadata. A missing venue is left empty and flagged for manual review; venue or conference names must never be guessed from a paper title.
+
 ## `authors.csv`
 
 One row represents one author identity. The table keeps source identifiers and profile links without assuming that authors sharing a name are the same person.

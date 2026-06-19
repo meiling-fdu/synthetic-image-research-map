@@ -114,13 +114,74 @@ function reviewStatus(record) {
   );
 }
 
+function booleanValue(value) {
+  if (typeof value === "boolean") {
+    return value;
+  }
+  return ["1", "true", "yes", "y"].includes(String(value || "").toLowerCase());
+}
+
+function safeHttpUrl(value) {
+  try {
+    const url = new URL(String(value || ""), window.location.href);
+    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function externalLink(url, label) {
+  const safeUrl = safeHttpUrl(url);
+  return safeUrl
+    ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`
+    : "";
+}
+
+function normalizedDoi(value) {
+  return String(value || "")
+    .trim()
+    .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "");
+}
+
 function formatResolutionValue(value) {
   return formatTask(value || "unresolved");
 }
 
 function popupContent(record) {
-  const authors = record.authors.map(escapeHtml).join(", ");
-  const year = record.year ?? "Unknown";
+  const authors = record.authors.length
+    ? record.authors.map(escapeHtml).join(", ")
+    : "Unknown";
+  const year = record.publication_year ?? record.year ?? "Unknown";
+  const venue = record.venue_name || record.venue || "unknown";
+  const publicationType = record.publication_type || "Unknown";
+  const location = [record.city, record.country].filter(Boolean).join(", ") || "Unknown";
+  const subtaskRow = record.subtask
+    ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
+    : "";
+  const doi = normalizedDoi(record.doi);
+  const doiRow = doi
+    ? `<dt>DOI</dt><dd>${externalLink(`https://doi.org/${doi}`, doi)}</dd>`
+    : "";
+  const arxivUrl = record.arxiv_url || (
+    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
+  );
+  const arxivRow = arxivUrl
+    ? `<dt>arXiv</dt><dd>${externalLink(arxivUrl, record.arxiv_id || "View preprint")}</dd>`
+    : "";
+  const paperUrl =
+    record.primary_url ||
+    record.landing_page_url ||
+    record.url ||
+    record.openalex_url ||
+    "";
+  const paperUrlRow = paperUrl
+    ? `<dt>Paper</dt><dd>${externalLink(paperUrl, "Open record")}</dd>`
+    : "";
+  const isArxivPreprint =
+    booleanValue(record.is_arxiv_preprint) || Boolean(record.arxiv_id || arxivUrl);
+  const preprintBadge = isArxivPreprint
+    ? '<span class="popup-badge confidence-unresolved">arXiv / preprint</span>'
+    : "";
   const hasResolution = hasResolutionMetadata(record);
   const confidence = resolutionConfidence(record);
   const needsReview = reviewStatus(record);
@@ -146,16 +207,23 @@ function popupContent(record) {
   return `
     <div class="popup-badges">
       <span class="popup-badge popup-task">${escapeHtml(formatTask(record.task))}</span>
+      ${preprintBadge}
       ${confidenceBadge}
       ${reviewBadge}
     </div>
     <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
     <dl class="popup-details">
-      <dt>Year</dt><dd>${escapeHtml(year)}</dd>
-      <dt>Task</dt><dd>${escapeHtml(formatTask(record.task))}</dd>
-      <dt>Institution</dt><dd>${escapeHtml(record.institution)}</dd>
-      <dt>Country</dt><dd>${escapeHtml(record.country)}</dd>
       <dt>Authors</dt><dd>${authors}</dd>
+      <dt>Institution</dt><dd>${escapeHtml(record.institution)}</dd>
+      <dt>Location</dt><dd>${escapeHtml(location)}</dd>
+      <dt>Year</dt><dd>${escapeHtml(year)}</dd>
+      <dt>Venue</dt><dd>${escapeHtml(venue)}</dd>
+      <dt>Publication type</dt><dd>${escapeHtml(formatTask(publicationType))}</dd>
+      ${doiRow}
+      ${arxivRow}
+      ${paperUrlRow}
+      <dt>Task</dt><dd>${escapeHtml(formatTask(record.task))}</dd>
+      ${subtaskRow}
       ${methodRow}
       ${confidenceRow}
       ${reviewRow}
