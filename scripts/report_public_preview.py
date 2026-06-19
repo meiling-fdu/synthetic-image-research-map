@@ -20,7 +20,11 @@ DEFAULT_INPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_OUTPUT = Path("docs/public_preview_report.md")
 MANUAL_DATA_DIR = Path("data/manual")
 TOP_LIMIT = 10
-KNOWN_TASKS = {"detection", "attribution", "both"}
+KNOWN_TASKS = {
+    "detection",
+    "source_attribution",
+    "detection_and_source_attribution",
+}
 
 
 class ReportError(RuntimeError):

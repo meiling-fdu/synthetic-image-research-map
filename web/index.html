@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="A static prototype for exploring synthetic image detection and attribution research on a world map."
+      content="A static prototype for exploring AI-generated image detection and source attribution research on a world map."
     >
     <title>Synthetic Image Research Map</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -39,8 +39,8 @@
               <select id="task-filter" disabled>
                 <option value="all">All tasks</option>
                 <option value="detection">Detection</option>
-                <option value="attribution">Attribution</option>
-                <option value="both">Both</option>
+                <option value="source_attribution">Source attribution</option>
+                <option value="detection_and_source_attribution">Detection and source attribution</option>
               </select>
             </label>
 
@@ -100,8 +100,8 @@
           <h2 id="legend-heading">Task key</h2>
           <ul>
             <li><span class="legend-dot detection"></span>Detection</li>
-            <li><span class="legend-dot attribution"></span>Attribution</li>
-            <li><span class="legend-dot both"></span>Both</li>
+            <li><span class="legend-dot source-attribution"></span>Source attribution</li>
+            <li><span class="legend-dot combined-task"></span>Detection and source attribution</li>
           </ul>
         </section>
       </aside>
@@ -149,6 +149,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260619-preview-default"></script>
+    <script src="app.js?v=20260619-source-scope"></script>
   </body>
 </html>
