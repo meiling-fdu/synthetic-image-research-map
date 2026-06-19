@@ -160,11 +160,11 @@ Candidate OpenAlex map records may include institution resolution method, confid
 
 ### Public preview export
 
-The website supports three dataset modes:
+The website supports three dataset modes. Opening `/web/` without a dataset parameter tries the public preview first and clearly falls back to the fictional sample if the preview file is unavailable:
 
-- The default **sample dataset** is committed fictional toy data for demonstrating the interface.
-- The **local OpenAlex candidate dataset** is generated at `web/data/openalex_candidate_map_data.json`, opened with `?dataset=openalex`, and ignored by Git.
-- The **public preview dataset** is a filtered candidate subset generated at `web/data/public_preview_map_data.json`, opened with `?dataset=preview`, and intended to be reviewed before it is committed for GitHub Pages.
+- The **public preview dataset** is the public default, generated at `web/data/public_preview_map_data.json`, and can be opened explicitly with `?dataset=preview`.
+- The **fictional sample dataset** is committed toy data for demonstrating the interface and can be opened with `?dataset=sample`.
+- The **local OpenAlex candidate dataset** is generated at `web/data/openalex_candidate_map_data.json`, opened with `?dataset=openalex`, and ignored by Git. This mode is intended only for local generated data.
 
 Preview the default filtering without writing a file:
 
@@ -213,9 +213,9 @@ The prototype loads its JSON data with `fetch`, so preview it through a local HT
 python3 -m http.server 8000
 ```
 
-Then open [http://localhost:8000/web/](http://localhost:8000/web/).
+Then open [http://localhost:8000/web/](http://localhost:8000/web/) for the preview-first default, or [http://localhost:8000/web/?dataset=sample](http://localhost:8000/web/?dataset=sample) for the fictional sample.
 
-The current map uses only clearly fictional toy records from `web/data/sample_map_data.json`. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during preview.
+The public preview remains automatically generated candidate metadata, not a manually curated bibliography. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during preview.
 
 ## GitHub Pages Deployment
 
@@ -226,9 +226,9 @@ The current map uses only clearly fictional toy records from `web/data/sample_ma
 5. Save the settings.
 6. Open the generated GitHub Pages URL.
 
-The public GitHub Pages site only shows committed files. Locally generated candidate data is not published unless it is explicitly committed.
+The GitHub Pages URL redirects to `/web/?dataset=preview`, so visitors see the committed public preview by default. The public site only shows committed files; locally generated candidate data is not published unless it is explicitly committed.
 
-After committing `web/data/public_preview_map_data.json`, add `?dataset=preview` to the repository's Pages URL or open `/web/?dataset=preview` directly. The root redirect preserves the dataset query parameter.
+Open `/web/?dataset=sample` to view the fictional sample manually. The `?dataset=openalex` mode is reserved for local generated data and normally will not be available on GitHub Pages.
 
 ## Current Status
 

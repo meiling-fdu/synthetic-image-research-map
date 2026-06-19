@@ -19,10 +19,11 @@ const DATASET_CONFIG = {
   },
 };
 const requestedDataset = new URLSearchParams(window.location.search).get("dataset");
-const datasetName = ["openalex", "preview"].includes(requestedDataset)
+const shouldFallBackToSample = requestedDataset === null;
+let datasetName = ["sample", "openalex", "preview"].includes(requestedDataset)
   ? requestedDataset
-  : "sample";
-const datasetConfig = DATASET_CONFIG[datasetName];
+  : "preview";
+let datasetConfig = DATASET_CONFIG[datasetName];
 const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -170), L.latLng(75, 170));
 const TASK_COLORS = {
   detection: "#287d8e",
@@ -204,6 +205,7 @@ function renderRecords() {
   });
 
   updateSummary(visibleRecords);
+  mapStatus.classList.toggle("error", false);
   const recordLabel = datasetConfig.recordLabel;
   mapStatus.textContent = visibleRecords.length
     ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}`
@@ -255,21 +257,58 @@ function showDatasetMessage(message, isError = false) {
 
 function updateDatasetLabels() {
   if (datasetName === "sample") {
-    return;
-  }
-  if (datasetName === "preview") {
+    prototypeNote.textContent = "Fictional sample data only";
+    intro.textContent =
+      "Explore toy records representing research in synthetic image detection and attribution.";
+    footer.textContent =
+      "Prototype interface. Records shown here are fictional and are not literature data.";
+    mapStatus.textContent = "Loading fictional sample data...";
+  } else if (datasetName === "preview") {
     prototypeNote.textContent = "Uncurated public preview";
     intro.textContent =
       "Explore a filtered public preview of automatically generated OpenAlex candidate metadata.";
     footer.textContent =
       "Uncurated public preview. These candidate records are not a manually curated bibliography.";
+    mapStatus.textContent = "Loading public preview data...";
   } else {
     prototypeNote.textContent = "Uncurated OpenAlex candidates";
     intro.textContent =
       "Explore locally generated candidate records for synthetic image detection and attribution research.";
     footer.textContent =
       "Exploratory candidate view. Records are automatically extracted and require manual review.";
+    mapStatus.textContent = "Loading local OpenAlex candidate data...";
   }
+  renderDatasetSwitcher();
+}
+
+function renderDatasetSwitcher() {
+  let switcher = document.querySelector(".dataset-switcher");
+  if (!switcher) {
+    switcher = document.createElement("nav");
+    switcher.className = "dataset-switcher";
+    switcher.setAttribute("aria-label", "Dataset selection");
+    intro.insertAdjacentElement("afterend", switcher);
+  }
+
+  const choices = [
+    ["preview", "Public preview"],
+    ["sample", "Fictional sample"],
+  ];
+  const content = document.createElement("small");
+  content.append("Dataset: ");
+  choices.forEach(([name, label], index) => {
+    if (index > 0) {
+      content.append(" · ");
+    }
+    const link = document.createElement("a");
+    link.href = `?dataset=${name}`;
+    link.textContent = label;
+    if (datasetName === name) {
+      link.setAttribute("aria-current", "page");
+    }
+    content.append(link);
+  });
+  switcher.replaceChildren(content);
 }
 
 function normalizeDatasetPayload(payload) {
@@ -296,59 +335,84 @@ function displayMetadataWarning(metadata) {
   }
 }
 
+async function readDataset(name) {
+  const config = DATASET_CONFIG[name];
+  const response = await fetch(config.url);
+  if (!response.ok) {
+    throw new Error(`${name} data request failed with status ${response.status}`);
+  }
+
+  const responseText = await response.text();
+  if (!responseText.trim()) {
+    return { metadata: {}, records: [] };
+  }
+
+  const normalizedData = normalizeDatasetPayload(JSON.parse(responseText));
+  if (!normalizedData.records.every(validateRecord)) {
+    throw new Error(`${name} data does not match the expected format`);
+  }
+  return normalizedData;
+}
+
+function displayDataset(normalizedData) {
+  records = normalizedData.records;
+  displayMetadataWarning(normalizedData.metadata);
+  populateYears();
+  enableControls();
+  renderRecords();
+}
+
+function selectDataset(name) {
+  datasetName = name;
+  datasetConfig = DATASET_CONFIG[name];
+  updateDatasetLabels();
+}
+
+async function loadSampleFallback() {
+  selectDataset("sample");
+  try {
+    const sampleData = await readDataset("sample");
+    if (sampleData.records.length === 0) {
+      throw new Error("sample data contains no records");
+    }
+    displayDataset(sampleData);
+    mapStatus.textContent =
+      "Public preview dataset could not be loaded. Showing the fictional sample dataset instead.";
+  } catch (error) {
+    console.error(error);
+    showDatasetMessage(
+      "Neither the public preview nor the fictional sample dataset could be loaded.",
+      true,
+    );
+  }
+}
+
 async function loadData() {
   try {
-    const response = await fetch(datasetConfig.url);
-    if (!response.ok) {
-      if (datasetName === "preview") {
-        showDatasetMessage(
-          "Preview dataset could not be loaded. Check that web/data/public_preview_map_data.json is published.",
-          true,
-        );
+    const normalizedData = await readDataset(datasetName);
+    if (normalizedData.records.length === 0) {
+      if (datasetName === "preview" && shouldFallBackToSample) {
+        await loadSampleFallback();
         return;
       }
-      if (datasetName === "openalex") {
-        showDatasetMessage(
-          "OpenAlex candidate map data is not available. Generate it locally with scripts/export_candidate_map_data.py.",
-          true,
-        );
-        return;
-      }
-      throw new Error(`Sample data request failed with status ${response.status}`);
-    }
-
-    const responseText = await response.text();
-    if (!responseText.trim()) {
       showDatasetMessage(datasetConfig.emptyMessage, datasetName !== "sample");
       return;
     }
-
-    const data = JSON.parse(responseText);
-    const normalizedData = normalizeDatasetPayload(data);
-    if (!normalizedData.records.every(validateRecord)) {
-      throw new Error(`${datasetName} data does not match the expected format`);
-    }
-    if (normalizedData.records.length === 0) {
-      showDatasetMessage(datasetConfig.emptyMessage);
-      return;
-    }
-
-    records = normalizedData.records;
-    displayMetadataWarning(normalizedData.metadata);
-    populateYears();
-    enableControls();
-    renderRecords();
+    displayDataset(normalizedData);
   } catch (error) {
     console.error(error);
+    if (datasetName === "preview" && shouldFallBackToSample) {
+      await loadSampleFallback();
+      return;
+    }
     const messages = {
       openalex:
-        "OpenAlex candidate map data could not be read. Regenerate the local export and try again.",
+        "OpenAlex candidate map data could not be loaded. Generate it locally with scripts/export_candidate_map_data.py.",
       preview:
-        "Preview dataset could not be loaded. Regenerate the public preview export and try again.",
-      sample: "Sample data could not be loaded. Preview the site through a local server.",
+        "Preview dataset could not be loaded. Check that web/data/public_preview_map_data.json is published.",
+      sample: "Fictional sample data could not be loaded. Preview the site through a local server.",
     };
-    const message = messages[datasetName];
-    showDatasetMessage(message, true);
+    showDatasetMessage(messages[datasetName], true);
   }
 }
 

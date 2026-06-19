@@ -3,10 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="0; url=web/">
     <title>Synthetic Image Research Map</title>
+    <script>
+      const destination = new URL("web/?dataset=preview", window.location.href);
+      destination.hash = window.location.hash;
+      window.location.replace(destination.href);
+    </script>
   </head>
   <body>
-    <p>Redirecting to the <a href="web/">Synthetic Image Research Map</a>...</p>
+    <p>
+      Redirecting to the
+      <a href="web/?dataset=preview">Synthetic Image Research Map</a>...
+    </p>
   </body>
 </html>
