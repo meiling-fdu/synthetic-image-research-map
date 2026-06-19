@@ -331,3 +331,32 @@ python3 scripts/validate_public_preview.py --strict
 ```
 
 `scripts/validate_public_preview.py` accepts either a top-level record array or the metadata-plus-records object format. It checks publication-safe task and subtask labels, required paper and institution metadata, coordinate bounds, publication year, link availability, review status, and institution-resolution confidence. Errors always return a non-zero status; `--strict` also fails on warnings. The validator only reads the preview JSON and does not modify generated or manual data.
+
+### Recommended Refresh Workflow
+
+`scripts/refresh_public_preview.py` is the recommended pre-commit workflow. It calls the existing scoped pipeline, public-preview exporter, quality-report generator, and validator in that order. Each step is a subprocess, and the refresh stops immediately if any command fails. It does not duplicate pipeline logic, modify manual data, commit, or push.
+
+Run a full refresh including a new OpenAlex search:
+
+```bash
+python3 scripts/refresh_public_preview.py \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+Reuse existing raw OpenAlex responses:
+
+```bash
+python3 scripts/refresh_public_preview.py \
+  --skip-search \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+Treat validation warnings as failures:
+
+```bash
+python3 scripts/refresh_public_preview.py \
+  --strict \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+The safe defaults are 100 results per search query, an 800-request resolution/geocoding limit, at most 500 public records, and medium-or-higher institution confidence. Replace the example User-Agent contact information with an appropriate project contact. Validation must pass before `web/data/public_preview_map_data.json` and `docs/public_preview_report.md` are committed.

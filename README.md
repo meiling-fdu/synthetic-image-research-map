@@ -209,6 +209,21 @@ warnings as publication blockers:
 python3 scripts/validate_public_preview.py --strict
 ```
 
+### Refresh public preview
+
+Run the scoped pipeline, rebuild the public preview and quality report, and
+validate the result with one command:
+
+```bash
+python3 scripts/refresh_public_preview.py \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+Add `--skip-search` to reuse existing raw OpenAlex responses or `--strict` to
+treat validation warnings as failures. Inspect the refreshed JSON and report,
+and ensure validation passes before committing them; the script never commits
+or pushes files.
+
 ## One-command pipeline
 
 Preview the complete workflow without executing subprocesses or writing files:
