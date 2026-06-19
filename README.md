@@ -2,6 +2,8 @@
 
 An interactive academic world map for exploring papers, researchers, and institutions working on synthetic image detection and synthetic image attribution. The project is planned as a lightweight static website backed by transparent, reviewable datasets and Python-based preprocessing.
 
+**Online demo:** [Synthetic Image Research Map on GitHub Pages](https://meiling-fdu.github.io/synthetic-image-research-map/)
+
 ## Project Goals
 
 - Map the global research landscape for synthetic image detection and attribution.
@@ -10,15 +12,15 @@ An interactive academic world map for exploring papers, researchers, and institu
 - Make automatic classifications and uncertain records easy to review and correct manually.
 - Distinguish core synthetic image research from related areas such as deepfake detection, face manipulation, image-editing attribution, and survey papers.
 
-## Planned Features
+## Roadmap
 
-- An interactive Leaflet.js world map of research institutions and affiliations.
-- Browsing and filtering by paper, researcher, institution, country, task, and publication year.
-- Separate labels for detection, attribution, deepfake or face manipulation, image-editing attribution, and survey or review work.
-- Paper detail views with source metadata, authors, and all known affiliations.
-- Reviewable task classifications and explicit flags for uncertain records.
-- Locally cached geocoding with support for manually reviewed corrections.
-- Static, portable web assets that do not require a backend server.
+1. Improve literature search coverage for synthetic image detection and attribution.
+2. Add bibliographic sources such as Semantic Scholar and Crossref.
+3. Improve institution resolution and confidence scoring.
+4. Establish a manual validation workflow for relevance, labels, affiliations, and coordinates.
+5. Add a year-based timeline visualization.
+6. Add country- and institution-level statistics.
+7. Add citation and data-export support.
 
 ## Repository Structure
 
