@@ -23,10 +23,10 @@
         <p class="eyebrow">Academic landscape prototype</p>
         <h1>Synthetic Image Research Map</h1>
         <p class="intro">
-          Explore toy records representing research in synthetic image detection and attribution.
+          Explore a filtered public preview of automatically generated OpenAlex candidate metadata.
         </p>
       </div>
-      <p class="prototype-note">Fictional sample data only</p>
+      <p class="prototype-note">Uncurated public preview</p>
     </header>
 
     <main class="page-shell">
@@ -106,20 +106,42 @@
         </section>
       </aside>
 
-      <section class="map-panel" aria-labelledby="map-heading">
-        <div class="map-heading-row">
-          <div>
-            <p class="eyebrow">Global view</p>
-            <h2 id="map-heading">Research locations</h2>
+      <div class="map-column">
+        <section class="map-panel" aria-labelledby="map-heading">
+          <div class="map-heading-row">
+            <div>
+              <p class="eyebrow">Global view</p>
+              <h2 id="map-heading">Research locations</h2>
+            </div>
+            <p id="map-status" class="map-status" role="status">
+              Loading public preview data...
+            </p>
           </div>
-          <p id="map-status" class="map-status" role="status">Loading sample data...</p>
-        </div>
-        <div id="map" aria-label="World map of fictional research records"></div>
-      </section>
+          <div id="map" aria-label="World map of synthetic image research records"></div>
+        </section>
+
+        <section class="panel data-notice" aria-labelledby="data-notice-heading">
+          <div>
+            <h2 id="data-notice-heading">Data notice</h2>
+            <p>
+              The public preview is automatically generated from OpenAlex candidate
+              metadata, not a manually curated bibliography. Paper relevance, task
+              labels, institution names, and coordinates may contain errors. The map
+              is intended for exploratory visualization.
+            </p>
+          </div>
+          <a
+            class="repository-link"
+            href="https://github.com/meiling-fdu/synthetic-image-research-map"
+            target="_blank"
+            rel="noopener noreferrer"
+          >View repository</a>
+        </section>
+      </div>
     </main>
 
     <footer>
-      Prototype interface. Records shown here are fictional and are not literature data.
+      Uncurated public preview. These candidate records are not a manually curated bibliography.
     </footer>
 
     <script
@@ -127,6 +149,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js"></script>
+    <script src="app.js?v=20260619-preview-default"></script>
   </body>
 </html>

@@ -230,6 +230,10 @@ The GitHub Pages URL redirects to `/web/?dataset=preview`, so visitors see the c
 
 Open `/web/?dataset=sample` to view the fictional sample manually. The `?dataset=openalex` mode is reserved for local generated data and normally will not be available on GitHub Pages.
 
+## Current Limitations
+
+The online preview is an automatically generated candidate view based on OpenAlex metadata, not a manually curated bibliography. Paper relevance, task labels, institution names, and coordinates may contain errors, so the map should be used for exploratory visualization rather than authoritative bibliographic analysis. Future versions will add more manual validation and broader bibliographic sources.
+
 ## Current Status
 
-**Early prototype.** A minimal static Leaflet.js map demonstrates markers, paper popups, task and year filters, and visible-record summaries using fictional toy data. Real literature collection and ingestion have not yet been implemented.
+**Early prototype.** A minimal static Leaflet.js map demonstrates markers, paper popups, filters, and visible-record summaries using an uncurated public candidate preview and a separate fictional sample dataset.
