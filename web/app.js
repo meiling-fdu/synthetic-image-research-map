@@ -18,11 +18,17 @@ const DATASET_CONFIG = {
     emptyMessage: "The public preview dataset contains no eligible map records.",
   },
 };
+
+function resolveDatasetName(requestedName) {
+  if (requestedName === "sample" || requestedName === "openalex") {
+    return requestedName;
+  }
+  return "preview";
+}
+
 const requestedDataset = new URLSearchParams(window.location.search).get("dataset");
-const shouldFallBackToSample = requestedDataset === null;
-let datasetName = ["sample", "openalex", "preview"].includes(requestedDataset)
-  ? requestedDataset
-  : "preview";
+const shouldFallbackToSample = requestedDataset === null;
+let datasetName = resolveDatasetName(requestedDataset);
 let datasetConfig = DATASET_CONFIG[datasetName];
 const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -170), L.latLng(75, 170));
 const TASK_COLORS = {
@@ -337,7 +343,7 @@ function displayMetadataWarning(metadata) {
 
 async function readDataset(name) {
   const config = DATASET_CONFIG[name];
-  const response = await fetch(config.url);
+  const response = await fetch(config.url, { cache: "no-cache" });
   if (!response.ok) {
     throw new Error(`${name} data request failed with status ${response.status}`);
   }
@@ -391,7 +397,7 @@ async function loadData() {
   try {
     const normalizedData = await readDataset(datasetName);
     if (normalizedData.records.length === 0) {
-      if (datasetName === "preview" && shouldFallBackToSample) {
+      if (datasetName === "preview" && shouldFallbackToSample) {
         await loadSampleFallback();
         return;
       }
@@ -401,7 +407,7 @@ async function loadData() {
     displayDataset(normalizedData);
   } catch (error) {
     console.error(error);
-    if (datasetName === "preview" && shouldFallBackToSample) {
+    if (datasetName === "preview" && shouldFallbackToSample) {
       await loadSampleFallback();
       return;
     }
