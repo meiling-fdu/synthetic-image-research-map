@@ -30,6 +30,49 @@
     </header>
 
     <main class="page-shell">
+      <section class="panel dataset-overview" aria-labelledby="dataset-overview-heading">
+        <div class="dataset-overview-heading">
+          <h2 id="dataset-overview-heading">Dataset overview</h2>
+          <p id="dataset-statistics-note">
+            Automatically generated OpenAlex candidate metadata; not manually curated.
+          </p>
+        </div>
+        <dl class="dataset-statistics" aria-live="polite">
+          <div>
+            <dt>Map records</dt>
+            <dd id="dataset-record-count">0</dd>
+          </div>
+          <div>
+            <dt>Unique papers</dt>
+            <dd id="dataset-paper-count">0</dd>
+          </div>
+          <div>
+            <dt>Unique institutions</dt>
+            <dd id="dataset-institution-count">0</dd>
+          </div>
+          <div>
+            <dt>Countries</dt>
+            <dd id="dataset-country-count">0</dd>
+          </div>
+          <div>
+            <dt>Detection records</dt>
+            <dd id="dataset-detection-count">0</dd>
+          </div>
+          <div>
+            <dt>Source attribution records</dt>
+            <dd id="dataset-attribution-count">0</dd>
+          </div>
+          <div>
+            <dt>Detection + source attribution</dt>
+            <dd id="dataset-combined-count">0</dd>
+          </div>
+          <div id="dataset-preprint-stat">
+            <dt>arXiv/preprint records</dt>
+            <dd id="dataset-preprint-count">0</dd>
+          </div>
+        </dl>
+      </section>
+
       <aside class="sidebar" aria-label="Map controls and summary">
         <section class="panel" aria-labelledby="filters-heading">
           <h2 id="filters-heading">Filters</h2>
@@ -149,6 +192,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260619-source-scope"></script>
+    <script src="app.js?v=20260619-dataset-statistics"></script>
   </body>
 </html>

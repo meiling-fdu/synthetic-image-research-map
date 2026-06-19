@@ -61,6 +61,16 @@ const recordCount = document.querySelector("#record-count");
 const countryCount = document.querySelector("#country-count");
 const institutionCount = document.querySelector("#institution-count");
 const reviewCount = document.querySelector("#review-count");
+const datasetRecordCount = document.querySelector("#dataset-record-count");
+const datasetPaperCount = document.querySelector("#dataset-paper-count");
+const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
+const datasetCountryCount = document.querySelector("#dataset-country-count");
+const datasetDetectionCount = document.querySelector("#dataset-detection-count");
+const datasetAttributionCount = document.querySelector("#dataset-attribution-count");
+const datasetCombinedCount = document.querySelector("#dataset-combined-count");
+const datasetPreprintCount = document.querySelector("#dataset-preprint-count");
+const datasetPreprintStat = document.querySelector("#dataset-preprint-stat");
+const datasetStatisticsNote = document.querySelector("#dataset-statistics-note");
 const prototypeNote = document.querySelector(".prototype-note");
 const intro = document.querySelector(".intro");
 const footer = document.querySelector("footer");
@@ -80,6 +90,102 @@ function formatTask(task) {
 
 function recordTitle(record) {
   return record.title ?? record.paper_title;
+}
+
+function normalizedIdentityValue(value) {
+  return String(value || "").trim().toLowerCase().replace(/\/$/, "");
+}
+
+function normalizedTitle(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
+}
+
+function paperIdentity(record) {
+  const openalexUrl = normalizedIdentityValue(record.openalex_url);
+  if (openalexUrl) {
+    return `openalex:${openalexUrl}`;
+  }
+
+  const doi = normalizedDoi(record.doi).toLowerCase();
+  if (doi) {
+    return `doi:${doi}`;
+  }
+
+  const arxivId = normalizedIdentityValue(record.arxiv_id).replace(/^arxiv:/, "");
+  if (arxivId) {
+    return `arxiv:${arxivId}`;
+  }
+
+  const paperUrl = normalizedIdentityValue(
+    record.paper_url || record.primary_url || record.landing_page_url || record.url,
+  );
+  if (paperUrl) {
+    return `url:${paperUrl}`;
+  }
+
+  const title = normalizedTitle(recordTitle(record));
+  const year = record.publication_year ?? record.year ?? "";
+  return `title-year:${title}:${year}`;
+}
+
+function recordInstitution(record) {
+  return String(record.institution_name || record.institution || "").trim();
+}
+
+function recordCountry(record) {
+  return String(record.country_code || record.country || "").trim();
+}
+
+function normalizedSetSize(values) {
+  return new Set(
+    values
+      .map((value) => String(value || "").trim().toLowerCase())
+      .filter(Boolean),
+  ).size;
+}
+
+function hasPreprintMetadata(record) {
+  return ["is_arxiv_preprint", "arxiv_id", "arxiv_url"].some((field) =>
+    Object.hasOwn(record, field),
+  );
+}
+
+function isArxivPreprint(record) {
+  return (
+    booleanValue(record.is_arxiv_preprint) ||
+    Boolean(String(record.arxiv_id || "").trim()) ||
+    Boolean(String(record.arxiv_url || "").trim())
+  );
+}
+
+function updateDatasetStatistics(datasetRecords) {
+  datasetRecordCount.textContent = datasetRecords.length;
+  datasetPaperCount.textContent = new Set(datasetRecords.map(paperIdentity)).size;
+  datasetInstitutionCount.textContent = normalizedSetSize(
+    datasetRecords.map(recordInstitution),
+  );
+  datasetCountryCount.textContent = normalizedSetSize(
+    datasetRecords.map(recordCountry),
+  );
+  datasetDetectionCount.textContent = datasetRecords.filter(
+    (record) => record.task === "detection",
+  ).length;
+  datasetAttributionCount.textContent = datasetRecords.filter(
+    (record) => record.task === "source_attribution",
+  ).length;
+  datasetCombinedCount.textContent = datasetRecords.filter(
+    (record) => record.task === "detection_and_source_attribution",
+  ).length;
+
+  const supportsPreprintMetadata = datasetRecords.some(hasPreprintMetadata);
+  datasetPreprintStat.hidden = !supportsPreprintMetadata;
+  datasetPreprintCount.textContent = supportsPreprintMetadata
+    ? datasetRecords.filter(isArxivPreprint).length
+    : 0;
 }
 
 function hasResolutionMetadata(record) {
@@ -234,12 +340,10 @@ function popupContent(record) {
 
 function updateSummary(visibleRecords) {
   recordCount.textContent = visibleRecords.length;
-  countryCount.textContent = new Set(
-    visibleRecords.map((record) => record.country).filter(Boolean),
-  ).size;
-  institutionCount.textContent = new Set(
-    visibleRecords.map((record) => record.institution).filter(Boolean),
-  ).size;
+  countryCount.textContent = normalizedSetSize(visibleRecords.map(recordCountry));
+  institutionCount.textContent = normalizedSetSize(
+    visibleRecords.map(recordInstitution),
+  );
   reviewCount.textContent = visibleRecords.filter(
     (record) => reviewStatus(record) === true,
   ).length;
@@ -325,6 +429,7 @@ function showDatasetMessage(message, isError = false) {
   records = [];
   markerLayer.clearLayers();
   updateSummary(records);
+  updateDatasetStatistics(records);
   mapStatus.textContent = message;
   mapStatus.classList.toggle("error", isError);
 }
@@ -337,6 +442,8 @@ function updateDatasetLabels() {
     footer.textContent =
       "Prototype interface. Records shown here are fictional and are not literature data.";
     mapStatus.textContent = "Loading fictional sample data...";
+    datasetStatisticsNote.textContent =
+      "Fictional sample records for interface testing; not literature data.";
   } else if (datasetName === "preview") {
     prototypeNote.textContent = "Uncurated public preview";
     intro.textContent =
@@ -344,6 +451,8 @@ function updateDatasetLabels() {
     footer.textContent =
       "Uncurated public preview. These candidate records are not a manually curated bibliography.";
     mapStatus.textContent = "Loading public preview data...";
+    datasetStatisticsNote.textContent =
+      "Automatically generated OpenAlex candidate metadata; not manually curated.";
   } else {
     prototypeNote.textContent = "Uncurated OpenAlex candidates";
     intro.textContent =
@@ -351,6 +460,8 @@ function updateDatasetLabels() {
     footer.textContent =
       "Exploratory candidate view. Records are automatically extracted and require manual review.";
     mapStatus.textContent = "Loading local OpenAlex candidate data...";
+    datasetStatisticsNote.textContent =
+      "Locally generated OpenAlex candidate metadata; not manually curated.";
   }
   renderDatasetSwitcher();
 }
@@ -431,6 +542,7 @@ async function readDataset(name) {
 function displayDataset(normalizedData) {
   records = normalizedData.records;
   displayMetadataWarning(normalizedData.metadata);
+  updateDatasetStatistics(records);
   populateYears();
   enableControls();
   renderRecords();
