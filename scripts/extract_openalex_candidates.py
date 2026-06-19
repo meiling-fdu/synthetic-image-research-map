@@ -46,11 +46,15 @@ PAPER_COLUMNS = (
 
 AFFILIATION_COLUMNS = (
     "openalex_id",
+    "author_openalex_id",
     "author_name",
     "author_position",
+    "author_order",
+    "institution_openalex_id",
     "institution_name",
     "city",
     "country",
+    "country_code",
     "ror_id",
     "latitude",
     "longitude",
@@ -516,6 +520,7 @@ def make_affiliation_row(
     openalex_id: str,
     authorship: Dict[str, Any],
     institution: Optional[Dict[str, Any]],
+    author_order: int,
 ) -> Dict[str, str]:
     author = authorship.get("author") if isinstance(authorship.get("author"), dict) else {}
     institution = institution or {}
@@ -528,18 +533,35 @@ def make_affiliation_row(
         source_strings = authorship.get("raw_affiliation_strings")
         raw_strings = unique_strings(source_strings if isinstance(source_strings, list) else [])
 
+    notes = [AFFILIATION_NOTE]
+    if not institution and raw_strings:
+        notes.append(
+            "Structured institution missing; preserved raw affiliation text for manual resolution."
+        )
+    elif not institution:
+        notes.append("No affiliation information provided by OpenAlex for this authorship.")
+    if not clean_text(author.get("id")):
+        notes.append("OpenAlex author ID missing.")
+    if not first_nonempty(author.get("display_name"), authorship.get("raw_author_name")):
+        notes.append("Author name missing.")
+
     return {
         "openalex_id": openalex_id,
+        "author_openalex_id": clean_text(author.get("id")),
         "author_name": first_nonempty(
             author.get("display_name"), authorship.get("raw_author_name")
         ),
         "author_position": clean_text(authorship.get("author_position")),
+        "author_order": str(author_order),
+        "institution_openalex_id": clean_text(institution.get("id")),
         "institution_name": clean_text(institution.get("display_name")),
         "city": first_nonempty(geo.get("city"), institution.get("city")),
         "country": first_nonempty(
             geo.get("country"),
-            geo.get("country_code"),
             institution.get("country"),
+        ),
+        "country_code": first_nonempty(
+            geo.get("country_code"),
             institution.get("country_code"),
             authorship_countries,
         ),
@@ -548,7 +570,7 @@ def make_affiliation_row(
         "longitude": first_nonempty(geo.get("longitude"), institution.get("longitude")),
         "raw_affiliation_text": join_unique(raw_strings),
         "manual_review": "true",
-        "notes": AFFILIATION_NOTE,
+        "notes": " ".join(notes),
     }
 
 
@@ -559,10 +581,16 @@ def affiliation_key(
     institution: Optional[Dict[str, Any]],
 ) -> Tuple[str, int, str, str]:
     institution = institution or {}
-    institution_identity = first_nonempty(
-        institution.get("id"), row["ror_id"], row["institution_name"]
+    author_identity = first_nonempty(
+        row["author_openalex_id"], row["author_name"]
     )
-    return paper_key, authorship_index, row["author_name"], institution_identity
+    institution_identity = first_nonempty(
+        row["institution_openalex_id"],
+        institution.get("id"),
+        row["ror_id"],
+        row["institution_name"],
+    )
+    return paper_key, authorship_index, author_identity, institution_identity
 
 
 def merge_affiliation_rows(existing: Dict[str, str], incoming: Dict[str, str]) -> None:
@@ -651,7 +679,10 @@ def extract_candidates(
 
                 for institution in institution_rows:
                     row = make_affiliation_row(
-                        paper_row["openalex_id"], authorship, institution
+                        paper_row["openalex_id"],
+                        authorship,
+                        institution,
+                        authorship_index + 1,
                     )
                     key = affiliation_key(
                         paper_key, authorship_index, row, institution

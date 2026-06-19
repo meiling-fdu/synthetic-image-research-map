@@ -90,6 +90,29 @@ Documentation-only fictional example (do not add this row to the template):
 fictional institute,Fictional Institute of Visual Studies,Example City,Example Country,12.3456,78.9012,https://example.invalid/institution,high,Fictional format example only
 ```
 
+## `openalex_candidate_affiliations.csv`
+
+This processed candidate table uses one row per paper-author-institution relationship reported by OpenAlex. Multiple authors at one institution remain separate rows, and one author with multiple institutions produces multiple rows. An author with only raw affiliation text, or no affiliation information, still receives one row with empty structured institution fields and `manual_review=true`.
+
+| Column | Definition |
+| --- | --- |
+| `openalex_id` | OpenAlex work identifier. |
+| `author_openalex_id` | OpenAlex author identifier when available. |
+| `author_name` | Source author display name. |
+| `author_position` | OpenAlex positional label, such as `first`, `middle`, or `last`. |
+| `author_order` | One-based order of the authorship in the source work. |
+| `institution_openalex_id` | OpenAlex institution identifier when structured metadata is available. |
+| `institution_name` | Source institution display name. |
+| `city` | Institution city when available. |
+| `country` | Institution country name when available. |
+| `country_code` | Source country code, kept separately from the country name. |
+| `ror_id` | ROR identifier without the resolver URL. |
+| `latitude` | Source institution latitude when available. |
+| `longitude` | Source institution longitude when available. |
+| `raw_affiliation_text` | Original affiliation text associated with this author and institution when available. |
+| `manual_review` | Always `true` for automatic candidate rows until the relationship is verified. |
+| `notes` | Missing-identity, raw-only, or missing-affiliation review context. |
+
 ## `paper_author_affiliations.csv`
 
 One row represents a specific author-institution affiliation on a specific paper. Together, `paper_id`, `author_id`, and `institution_id` identify the relationship; multiple rows are allowed when an author reports multiple affiliations.
@@ -107,7 +130,7 @@ One row represents a specific author-institution affiliation on a specific paper
 
 ### Why This Relationship Table Is Necessary
 
-Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views.
+Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views. Map exports create a marker for every affiliated institution with usable coordinates and aggregate only the display names associated with that paper-institution pair; they do not replace or collapse the underlying relationship rows.
 
 ## Paper Labeling
 

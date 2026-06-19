@@ -77,6 +77,8 @@ python3 scripts/extract_openalex_candidates.py
 
 The processed paper and affiliation CSVs are automatically extracted review material, not manually curated final data. Every row keeps `manual_review=true` until a researcher reviews and deliberately promotes information into `data/manual/`.
 
+Affiliations are represented at paper-author-institution level. Every OpenAlex authorship is preserved, authors with multiple institutions produce multiple relationship rows, and raw-only or missing affiliations remain reviewable rather than being dropped. Map exports include every affiliated institution with usable coordinates and aggregate all associated collaborators for that paper-institution marker; first-author-only mapping is intentionally avoided.
+
 Candidate papers also receive a conservative rule-based relevance assessment. `in_scope=true` requires both an AI-generated/synthetic-image term and a detection/attribution task term, while explicit unrelated-domain terms override inclusion. All records are retained with a relevance score and matched reasons; uncertain and excluded candidates are never silently deleted. The public preview will later default to records marked in scope.
 
 ### Automatic institution resolution

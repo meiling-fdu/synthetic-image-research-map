@@ -99,6 +99,12 @@ Custom locations can be supplied with `--input-dir` and `--output-dir`. The defa
 
 The extractor deduplicates by OpenAlex ID and falls back to a normalized title when an ID is missing. It reconstructs available abstracts to apply preliminary task labels and a separate rule-based relevance filter. These automatic decisions can be wrong, especially for broad search results, so every paper and affiliation row remains `manual_review=true`.
 
+### Paper-Author-Institution Extraction
+
+OpenAlex authorships are preserved in source order. The extractor writes one candidate affiliation row for every author-institution pair, including stable OpenAlex author and institution IDs, the one-based author order, source position, location metadata, ROR ID, and institution-specific raw affiliation text when available. Multiple authors at one institution remain separate rows, and authors with multiple institutions receive one row per institution.
+
+Raw affiliation strings are retained even when OpenAlex supplies no structured institution. If an authorship has neither structured nor raw affiliation information, the author is still retained with empty institution fields, `manual_review=true`, and an explanatory note. This prevents first-author or first-institution shortcuts and preserves collaborators whose affiliations need later resolution.
+
 ### Rule-Based Relevance Filter
 
 A candidate is marked `in_scope=true` only when its title or reconstructed abstract contains at least one generation-related term and at least one detection/attribution task term, with no exclusion-term match. Generation terms cover AI-generated, synthetic or generated images, generative models, GANs, diffusion models, text-to-image, AIGC, deepfakes, fake images, and synthesized images. Task terms cover detection, attribution, provenance, forensics, identification, and verification.
@@ -198,6 +204,8 @@ The review queue is generated from automatic candidate data and is not curated f
 ## Candidate CSV-to-Map Export
 
 `scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It groups authors at each paper-institution location and preserves separate map records when a paper has multiple institutions.
+
+Grouping prefers `institution_openalex_id` when available, so distinct institutions are not merged solely because their names or coordinates match. Within a paper-institution marker, author names are ordered by `author_order` and aggregated for display. The processed CSV remains the complete relationship-level source: map aggregation never replaces or removes its author-institution rows. Affiliations without valid coordinates remain available for review but cannot produce map markers.
 
 The exporter includes only affiliation rows with a complete valid resolved or original latitude/longitude pair. It does not geocode missing institutions, call external APIs, or infer locations. Rows with missing or invalid coordinates remain in the processed CSV and are reported in the export summary rather than silently assigned a location.
 

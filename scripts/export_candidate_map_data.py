@@ -135,6 +135,17 @@ def parse_year(value: Any) -> Optional[int]:
     return year if 0 < year < 10000 else None
 
 
+def parse_positive_int(value: Any) -> Optional[int]:
+    cleaned = clean_text(value)
+    if not cleaned:
+        return None
+    try:
+        parsed = int(cleaned)
+    except ValueError:
+        return None
+    return parsed if parsed > 0 else None
+
+
 def parse_coordinate(value: Any, minimum: float, maximum: float) -> Optional[float]:
     cleaned = clean_text(value)
     if not cleaned:
@@ -230,12 +241,17 @@ def group_map_records(
     unmatched_papers = 0
     skipped_record_keys = set()
 
-    for affiliation in affiliation_rows:
+    for affiliation_index, affiliation in enumerate(affiliation_rows):
         institution = preferred_value(
             affiliation, "resolved_institution_name", "institution_name"
         )
         city = preferred_value(affiliation, "resolved_city", "city")
-        country = preferred_value(affiliation, "resolved_country", "country")
+        country = preferred_value(
+            affiliation, "resolved_country", "country"
+        ) or clean_text(affiliation.get("country_code"))
+        institution_openalex_id = clean_text(
+            affiliation.get("institution_openalex_id")
+        )
         latitude, longitude, coordinate_source, coordinate_failure = (
             preferred_coordinates(affiliation)
         )
@@ -261,6 +277,7 @@ def group_map_records(
             continue
 
         institution_key = (
+            institution_openalex_id,
             institution,
             city,
             country,
@@ -279,9 +296,10 @@ def group_map_records(
                 "venue": clean_text(paper.get("venue")),
                 "url": clean_text(paper.get("url")),
                 "authors": [],
-                "institution": institution_key[0],
-                "country": institution_key[2],
-                "city": institution_key[1],
+                "institution_openalex_id": institution_key[0],
+                "institution": institution_key[1],
+                "country": institution_key[3],
+                "city": institution_key[2],
                 "latitude": latitude,
                 "longitude": longitude,
                 "source_database": clean_text(paper.get("source_database"))
@@ -292,6 +310,7 @@ def group_map_records(
                 "_coordinate_sources": set(),
                 "_has_resolution_metadata": False,
                 "_resolution_notes": [],
+                "_authors": {},
             }
             grouped[group_key] = group
 
@@ -314,8 +333,17 @@ def group_map_records(
             )
 
         author_name = clean_text(affiliation.get("author_name"))
-        if author_name and author_name not in group["authors"]:
-            group["authors"].append(author_name)
+        author_openalex_id = clean_text(affiliation.get("author_openalex_id"))
+        author_order = parse_positive_int(affiliation.get("author_order"))
+        author_identity = author_openalex_id or (
+            f"{author_order or ''}:{author_name.casefold()}"
+        )
+        if author_name and author_identity not in group["_authors"]:
+            group["_authors"][author_identity] = (
+                author_order if author_order is not None else 10**9,
+                affiliation_index,
+                author_name,
+            )
         group["manual_review"] = group["manual_review"] or parse_bool(
             affiliation.get("manual_review")
         )
@@ -324,7 +352,10 @@ def group_map_records(
 
     records = []
     for group in grouped.values():
-        group["authors"] = unique_strings(group["authors"])
+        group["authors"] = [
+            author[2]
+            for author in sorted(group.pop("_authors").values())
+        ]
         group["notes"] = " | ".join(unique_strings(group["notes"]))
         if group["_has_resolution_metadata"]:
             group["resolution_notes"] = " | ".join(
