@@ -73,6 +73,9 @@ const datasetCombinedCount = document.querySelector("#dataset-combined-count");
 const datasetPreprintCount = document.querySelector("#dataset-preprint-count");
 const datasetPreprintStat = document.querySelector("#dataset-preprint-stat");
 const datasetStatisticsNote = document.querySelector("#dataset-statistics-note");
+const resultsCount = document.querySelector("#results-count");
+const resultsList = document.querySelector("#results-list");
+const resultsEmpty = document.querySelector("#results-empty");
 const prototypeNote = document.querySelector(".prototype-note");
 const intro = document.querySelector(".intro");
 const footer = document.querySelector("footer");
@@ -376,6 +379,80 @@ function popupContent(record) {
   `;
 }
 
+function resultContent(record) {
+  const title = recordTitle(record);
+  const year = publicationYear(record) ?? "Unknown";
+  const venue = record.venue_name || record.venue || "";
+  const institution = recordInstitution(record) || "Unknown institution";
+  const country = recordCountry(record);
+  const affiliation = [institution, country].filter(Boolean).join(" · ");
+  const subtask = record.subtask
+    ? `<span class="result-task result-subtask">${escapeHtml(formatTask(record.subtask))}</span>`
+    : "";
+  const venueRow = venue
+    ? `<p class="result-venue">${escapeHtml(venue)}</p>`
+    : "";
+
+  const doi = normalizedDoi(record.doi);
+  const doiLink = doi
+    ? externalLink(`https://doi.org/${doi}`, "DOI")
+    : "";
+  const arxivUrl = record.arxiv_url || (
+    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
+  );
+  const arxivLink = arxivUrl ? externalLink(arxivUrl, "arXiv") : "";
+  const paperUrl =
+    record.paper_url ||
+    record.primary_url ||
+    record.landing_page_url ||
+    record.url ||
+    record.openalex_url ||
+    "";
+  const paperLabel = paperUrl && paperUrl === record.openalex_url
+    ? "OpenAlex"
+    : "Paper";
+  const paperLink = paperUrl ? externalLink(paperUrl, paperLabel) : "";
+  const links = [doiLink, arxivLink, paperLink].filter(Boolean).join("");
+  const linksRow = links ? `<div class="result-links">${links}</div>` : "";
+
+  return `
+    <article>
+      <div class="result-title-row">
+        <h3 class="result-title">${escapeHtml(title)}</h3>
+        <span class="result-year">${escapeHtml(year)}</span>
+      </div>
+      ${venueRow}
+      <p class="result-affiliation">${escapeHtml(affiliation)}</p>
+      <div class="result-classification">
+        <span class="result-task">${escapeHtml(formatTask(record.task))}</span>
+        ${subtask}
+      </div>
+      ${linksRow}
+    </article>
+  `;
+}
+
+function renderResults(visibleRecords) {
+  const count = visibleRecords.length;
+  resultsCount.textContent = `Showing ${count} record${count === 1 ? "" : "s"}`;
+  resultsList.replaceChildren();
+  resultsEmpty.hidden = count !== 0;
+  resultsList.hidden = count === 0;
+
+  if (!count) {
+    return;
+  }
+
+  const fragment = document.createDocumentFragment();
+  visibleRecords.forEach((record) => {
+    const item = document.createElement("li");
+    item.className = "result-item";
+    item.innerHTML = resultContent(record);
+    fragment.append(item);
+  });
+  resultsList.append(fragment);
+}
+
 function updateSummary(visibleRecords) {
   recordCount.textContent = visibleRecords.length;
   countryCount.textContent = normalizedSetSize(visibleRecords.map(recordCountry));
@@ -438,6 +515,7 @@ function renderRecords() {
 
   updateSummary(visibleRecords);
   updateDatasetStatistics(visibleRecords);
+  renderResults(visibleRecords);
   mapStatus.classList.toggle("error", false);
   const recordLabel = datasetConfig.recordLabel;
   mapStatus.textContent = visibleRecords.length
@@ -490,6 +568,7 @@ function showDatasetMessage(message, isError = false) {
   markerLayer.clearLayers();
   updateSummary(records);
   updateDatasetStatistics(records);
+  renderResults(records);
   mapStatus.textContent = message;
   mapStatus.classList.toggle("error", isError);
 }

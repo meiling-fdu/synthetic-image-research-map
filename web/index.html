@@ -196,6 +196,19 @@
             rel="noopener noreferrer"
           >View repository</a>
         </section>
+
+        <section class="panel results-panel" aria-labelledby="results-heading">
+          <div class="results-heading-row">
+            <h2 id="results-heading">Filtered records</h2>
+            <p id="results-count" role="status" aria-live="polite">
+              Showing 0 records
+            </p>
+          </div>
+          <ol id="results-list" class="results-list"></ol>
+          <p id="results-empty" class="results-empty" hidden>
+            No records match the current filters.
+          </p>
+        </section>
       </div>
     </main>
 
@@ -208,6 +221,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260619-search-year-range"></script>
+    <script src="app.js?v=20260619-filtered-results"></script>
   </body>
 </html>
