@@ -194,6 +194,14 @@ python3 scripts/export_public_preview.py --max-records 50 --min-confidence high
 
 The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It excludes out-of-scope, low-confidence, and review-flagged records by default, while raw responses and caches remain local.
 
+Generate a Markdown quality summary for the currently published preview:
+
+```bash
+python3 scripts/report_public_preview.py
+```
+
+The report is written to `docs/public_preview_report.md` and summarizes coverage, publication metadata, institution resolution confidence, and records requiring further inspection.
+
 ## One-command pipeline
 
 Preview the complete workflow without executing subprocesses or writing files:

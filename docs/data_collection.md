@@ -279,3 +279,7 @@ python3 scripts/export_public_preview.py
 The confidence threshold can be tightened with `--min-confidence high`, and `--max-records` can produce a smaller preview. `--include-needs-review` is an explicit opt-in for exceptional review use; review-flagged records should normally remain local.
 
 Only the filtered public preview JSON should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence records, and records needing review remain local and ignored by Git. Public-preview records are still automatically generated candidates and must not be described as curated final data.
+
+### Public Preview Quality Report
+
+Run `python3 scripts/report_public_preview.py` after every public-preview refresh. It regenerates `docs/public_preview_report.md` from the committed preview JSON so coverage counts, missing metadata, confidence levels, and potential quality issues remain synchronized with the dataset shown by the online map.
