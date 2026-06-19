@@ -17,87 +17,90 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 264 |
-| Unique papers | 131 |
-| Unique institutions | 204 |
-| Countries | 37 |
-| arXiv/preprint records | 20 |
-| Records with DOI | 261 |
-| Records with venue | 262 |
+| Map records | 339 |
+| Unique papers | 168 |
+| Unique institutions | 254 |
+| Countries | 42 |
+| arXiv/preprint records | 25 |
+| Records with DOI | 336 |
+| Records with venue | 337 |
 | Records missing venue | 2 |
 | Records missing paper URL | 0 |
+| Records missing institution | 0 |
+| Records missing coordinates | 0 |
 | Records with `needs_review=true` | 0 |
 
 ## Records by Task
 
 | Task | Records |
 | --- | ---: |
-| detection | 233 |
+| detection | 300 |
+| source_attribution | 20 |
 | detection_and_source_attribution | 19 |
-| source_attribution | 12 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| synthetic_image_detection | 112 |
-| ai_generated_image_detection | 62 |
-| deepfake_image_detection | 59 |
+| synthetic_image_detection | 143 |
+| ai_generated_image_detection | 91 |
+| deepfake_image_detection | 66 |
 | detection_and_source_attribution | 19 |
-| generated_image_source_attribution | 11 |
+| generated_image_source_attribution | 19 |
 | source_identification | 1 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 2 |
-| 2025 | 74 |
-| 2024 | 69 |
-| 2023 | 46 |
-| 2022 | 27 |
-| 2021 | 20 |
-| 2020 | 13 |
-| 2019 | 12 |
-| 2018 | 1 |
+| 2026 | 8 |
+| 2025 | 86 |
+| 2024 | 93 |
+| 2023 | 61 |
+| 2022 | 33 |
+| 2021 | 24 |
+| 2020 | 15 |
+| 2019 | 16 |
+| 2018 | 2 |
+| 2017 | 1 |
 
 ## Top Venues
 
 | Venue | Records |
 | --- | ---: |
-| Lecture notes in computer science | 20 |
-| 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 12 |
+| Lecture notes in computer science | 25 |
+| 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 14 |
 | IEEE Access | 10 |
+| Journal of Imaging | 10 |
 | 2025 International Joint Conference on Neural Networks (IJCNN) | 9 |
+| IEEE Transactions on Information Forensics and Security | 9 |
 | Electronics | 7 |
-| IEEE Transactions on Information Forensics and Security | 7 |
-| Journal of Imaging | 7 |
+| Scientific Reports | 7 |
 | 2023 IEEE/CVF International Conference on Computer Vision (ICCV) | 6 |
 | 2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 6 |
-| Wiley Interdisciplinary Reviews Data Mining and Knowledge Discovery | 6 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| CN | 57 |
-| IT | 41 |
-| US | 28 |
-| IN | 25 |
-| GB | 12 |
-| DE | 10 |
+| CN | 73 |
+| US | 51 |
+| IT | 43 |
+| IN | 30 |
+| GB | 13 |
+| DE | 12 |
+| FR | 10 |
+| AU | 9 |
 | GR | 9 |
-| FR | 8 |
-| KR | 8 |
-| TR | 7 |
+| KR | 9 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
-| Federico II University Hospital | 8 |
+| Federico II University Hospital | 9 |
+| Beijing Jiaotong University | 6 |
 | Information Technologies Institute | 6 |
-| Beijing Jiaotong University | 5 |
 | University of Siena | 5 |
 | University of Catania | 4 |
 | University of Naples Federico II | 4 |
@@ -110,7 +113,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 264 |
+| high | 339 |
 
 ## Potential quality issues
 
@@ -122,6 +125,18 @@ Count: **2**
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-4a2a820e836ec7a5`
 
 ### Records missing URL
+
+Count: **0**
+
+None.
+
+### Records missing institution
+
+Count: **0**
+
+None.
+
+### Records missing coordinates
 
 Count: **0**
 
