@@ -82,16 +82,45 @@ Country/region normalization happens only in map-ready and public-preview export
 
 | Column | Definition |
 | --- | --- |
-| `title` | Expected paper title, preserving the preferred spelling. |
-| `year` | Expected four-digit publication year. |
+| `title` | Clean paper title extracted from a source document or entered manually, without trailing venue/year annotations. |
+| `year` | Four-digit publication year taken from the entry or its nearby year heading when available. |
+| `authors` | Author line in the order written in the source document. The importer does not reorder authors. |
 | `doi` | DOI, preferably in canonical form without a resolver URL. |
 | `arxiv_id` | arXiv identifier; version suffixes are optional for coverage matching. |
 | `openalex_url` | OpenAlex work URL when known. |
 | `paper_url` | Preferred public paper or landing-page URL for human review. |
 | `expected_task` | Expected scoped task: `detection`, `source_attribution`, or `detection_and_source_attribution`. |
-| `notes` | Free-text coverage context, uncertainty, or follow-up notes. |
+| `source_doc` | Filename of the Word document from which the entry was imported. Multiple filenames may be retained for duplicate entries. |
+| `section` | Nearest document section, such as `Identification`, `Verification`, `Benchmark`, `Dataset`, `Survey`, or `Anti-forensics`. |
+| `notes` | Free-text coverage context, uncertainty, follow-up notes, and extracted source hints such as `source_suffix=QPAIN, 2026` or `source_alias=(ZED)`. |
 
-The audit checks stable identifiers first and uses normalized title plus year only as a fallback. Title-only fuzzy or normalized matches are flagged as possible rather than silently accepted.
+The DOCX importer reads local files from `data/manual/source_docs/`, removes trailing venue/year suffixes from paper titles, records removed suffixes in `notes`, and deduplicates imported entries by cleaned normalized title plus year. Auxiliary benchmark, dataset, survey, and anti-forensics/evasion entries remain in the checklist with explicit notes. DOI, arXiv, OpenAlex, and paper URL fields stay empty unless the source document explicitly supplies them.
+
+The coverage audit checks stable identifiers first and uses normalized title plus year only as a fallback. The checklist is manually curated: OpenAlex linkage or pipeline coverage does not determine whether one of its papers is valid. Importing or manually adding a checklist row never publishes it to the map.
+
+## `key_papers_enriched.csv`
+
+`data/manual/key_papers_enriched.csv` is a separate OpenAlex-linkage output. It preserves every checklist field, including the original title and author text, then adds the following columns immediately after `notes`:
+
+| Column | Definition |
+| --- | --- |
+| `openalex_link_status` | `linked_to_openalex`, `possible_openalex_match`, `not_found_in_openalex`, or `skipped`. These values describe metadata linkage, not paper validity. |
+| `openalex_link_reason` | Title/year evidence, ranking explanation, or skip reason for the linkage status. |
+| `search_strategy_used` | OpenAlex strategy that returned the reported candidate: `search`, `search.title`, `search.title_and_abstract`, `title.search`, or `title_and_abstract.search`. |
+| `candidate_source_query` | Sanitized query value used by the candidate's source strategy, including the field prefix for filter searches. |
+| `title_similarity` | Normalized-title similarity for the reported OpenAlex candidate. |
+| `candidate_title` | Best candidate title returned by OpenAlex. |
+| `candidate_year` | Best candidate publication year returned by OpenAlex. |
+| `candidate_openalex_url` | Best candidate OpenAlex work URL. |
+| `candidate_doi` | Best candidate DOI when OpenAlex provides one. |
+| `candidate_paper_url` | Best candidate landing page or PDF URL when available. |
+| `enriched_openalex_url` | Automatically accepted OpenAlex URL; populated only for `linked_to_openalex`. |
+| `enriched_doi` | Automatically accepted DOI; populated only for `linked_to_openalex`. |
+| `enriched_paper_url` | Automatically accepted paper URL; populated only for `linked_to_openalex`. |
+
+Possible candidates remain review suggestions and do not populate `enriched_*` identifiers. The coverage audit can use accepted `enriched_openalex_url` and `enriched_doi` values when this enriched CSV is supplied as its checklist input.
+
+Coverage audit statuses are `covered_in_public_preview`, `covered_in_candidates_only`, `possible_pipeline_match`, and `not_covered_by_pipeline`. The last status means only that current automatic retrieval and visualization did not cover the checklist paper; it is not a rejection of the manually curated entry.
 
 ## `authors.csv`
 

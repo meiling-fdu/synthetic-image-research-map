@@ -163,7 +163,65 @@ Processed candidate CSVs are not final curated data. A reviewer must verify rele
 
 ## Key Paper Coverage Audit
 
-`data/manual/key_papers.csv` is a lightweight, human-maintained checklist of papers whose coverage should be monitored. It complements the OpenAlex query workflow; it is not a second bibliography, an ingestion queue, or a replacement for systematic retrieval. Adding a row does not add that paper to candidate data, manual bibliography tables, the map, or the public preview.
+`data/manual/key_papers.csv` is a lightweight, manually curated checklist of papers whose coverage should be monitored. It complements the OpenAlex query workflow; it is not an ingestion queue or a replacement for systematic retrieval. Checklist membership is independent of OpenAlex linkage and does not add that paper to candidate data, the map, or the public preview.
+
+### Importing the checklist from Word documents
+
+Place source `.docx` files under `data/manual/source_docs/`, then run:
+
+```bash
+python3 scripts/import_key_papers_from_docx.py
+```
+
+The standard-library importer reads Word ZIP/XML content without calling an API. Word list items and lines beginning with `·` are treated as paper entries; nearby year headings and immediately following author lines are retained when available. Detection documents default to `detection`, while Identification and Verification sections in attribution documents use `source_attribution`; titles that explicitly combine detection and attribution use `detection_and_source_attribution`. Benchmark, dataset, survey, and anti-forensics/evasion entries are retained with auxiliary notes.
+
+The importer regenerates `data/manual/key_papers.csv` from the source documents by default, deduplicates by cleaned normalized title plus year, and records the source filename and section. Use `--preserve-existing` only when you intentionally want to merge existing checklist rows back into the generated output.
+
+Title parsing removes trailing venue/year suffixes such as `QPAIN, 2026`, `CVPR, 2025`, `ICCV Workshop, 2023`, or `arXiv 20250404` while keeping meaningful punctuation inside the title, including colons and question marks. Removed suffixes are retained in `notes` as `source_suffix=...`; trailing aliases after a venue/year suffix, such as `(ZED)`, are retained as `source_alias=...`. Identifiers and URLs remain empty unless explicitly present in a source document. This is a manual coverage-checklist update only: it does not change candidate data, the public preview, or map publication status.
+
+### Enriching checklist identifiers with OpenAlex
+
+Imported checklist entries often contain only a title, year, and author line. To search OpenAlex by title and write a separate enriched checklist, run:
+
+```bash
+python3 scripts/enrich_key_papers_openalex.py \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)" \
+  --only-missing
+```
+
+By default, the script searches only rows missing a DOI or OpenAlex URL, requests 25 results per strategy, sorts by OpenAlex relevance score, waits at least 0.5 seconds between every request, and writes `data/manual/key_papers_enriched.csv` plus `docs/key_paper_enrichment_report.md`. Use `--limit` for a small review batch, `--per-page` to change the result count, and `--sleep-seconds` for a longer delay. The original `data/manual/key_papers.csv` is never overwritten.
+
+Lookup begins with the simple Works `search` parameter. If it yields no strong link, the script tries the OpenAlex-Web-like `search.title` and `search.title_and_abstract` query parameters, then the API filter forms `title.search` and `title_and_abstract.search`. Every strategy uses `sort=relevance_score:desc`, and retries stop as soon as a `linked_to_openalex` candidate is found. All parameter values pass through `urllib.parse.urlencode`, and wildcard/punctuation sanitization applies to every strategy. If no strategy produces a strong link, candidates from all attempts are deduplicated and ranked together. An HTTP 400 from one strategy is recorded as `strategy_failed` in `openalex_link_reason` and does not prevent the next strategy from running. `search_strategy_used` and `candidate_source_query` preserve how the reported candidate was retrieved.
+
+The input may be either the original checklist or a previously enriched CSV. Retry only records that were not found in the previous run with:
+
+```bash
+python3 scripts/enrich_key_papers_openalex.py \
+  --input data/manual/key_papers_enriched.csv \
+  --output data/manual/key_papers_enriched.csv \
+  --only-status not_found_in_openalex \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+In-place updates to the enriched CSV are atomic. Field values for rows with other statuses are preserved, and existing `linked_to_openalex` rows are not queried again unless `--force` is supplied. The script refuses any output path that would overwrite `data/manual/key_papers.csv`.
+
+For a single-paper diagnostic retry, combine status and case-insensitive title filters:
+
+```bash
+python3 scripts/enrich_key_papers_openalex.py \
+  --input data/manual/key_papers_enriched.csv \
+  --output data/manual/key_papers_enriched.csv \
+  --only-status not_found_in_openalex \
+  --title-contains "Forensic Invariant Learning" \
+  --debug \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+Console output and `docs/key_paper_enrichment_report.md` report rows read, rows selected, status-filter skips, preserved linked rows, rows actually searched, and total HTTP requests. A separate title-filter skip count reconciles diagnostics that use `--title-contains`. Debug mode prints each strategy URL and HTTP status plus up to five candidate titles, years, and normalized-title similarities.
+
+The script sanitizes a separate OpenAlex search query while preserving the checklist title and author text exactly. A candidate is `linked_to_openalex` when normalized-title similarity is at least 0.96 and its year differs by at most one when a checklist year is available. Multiple strong candidates are ranked by title similarity, year distance, DOI availability, paper-link availability, citation count, then API order; ambiguity is recorded in `openalex_link_reason`. Weaker candidates are `possible_openalex_match` and expose `candidate_*` fields without filling `enriched_*` identifiers. Other statuses are `not_found_in_openalex` and `skipped`.
+
+OpenAlex enrichment links a manual checklist paper to external metadata; it does not validate the paper, change its curated status, or publish it. Accepted identifiers are written only to the separate `enriched_*` columns in `key_papers_enriched.csv`.
 
 Run the read-only comparison from the repository root:
 
@@ -171,7 +229,16 @@ Run the read-only comparison from the repository root:
 python3 scripts/audit_key_paper_coverage.py
 ```
 
-The script compares the checklist with `data/processed/openalex_candidate_papers.csv` and `web/data/public_preview_map_data.json`, then writes `docs/key_paper_coverage_report.md`. Confirmed matching uses OpenAlex URL, DOI, arXiv ID, then normalized title and year. Exact title-only and high-similarity title matches are reported as `possible_match` for manual confirmation and do not count as covered. Per-paper statuses are `in_public_preview`, `in_candidates_only`, `missing`, or `possible_match`.
+To use accepted OpenAlex identifiers from enrichment, pass the separate enriched checklist:
+
+```bash
+python3 scripts/audit_key_paper_coverage.py \
+  --key-papers data/manual/key_papers_enriched.csv
+```
+
+The script compares the checklist with `data/processed/openalex_candidate_papers.csv` and `web/data/public_preview_map_data.json`, then writes `docs/key_paper_coverage_report.md`. Confirmed matching uses accepted OpenAlex URL, DOI, arXiv ID, then normalized title and year. Exact title-only and high-similarity suggestions that need confirmation use `possible_pipeline_match`. The other statuses are `covered_in_public_preview`, `covered_in_candidates_only`, and `not_covered_by_pipeline`.
+
+`not_covered_by_pipeline` means only that the current automatic candidate/public-preview workflow did not cover the manually curated checklist paper. It does not mean the paper is invalid or out of scope. The audit never publishes a checklist entry.
 
 Use `--key-papers`, `--candidate-papers`, `--public-preview`, and `--output` to audit alternate local files. The audit never modifies its three inputs and never calls external APIs.
 

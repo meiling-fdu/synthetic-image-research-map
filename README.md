@@ -87,13 +87,56 @@ The extractor also preserves OpenAlex publication year/date, venue and source ty
 
 ### Key paper coverage audit
 
-Maintain a lightweight coverage checklist in `data/manual/key_papers.csv`, then compare it with the full candidate paper CSV and public preview:
+Import the lightweight coverage checklist from local Word documents in `data/manual/source_docs/`:
+
+```bash
+python3 scripts/import_key_papers_from_docx.py
+```
+
+The importer updates only `data/manual/key_papers.csv`; checklist membership does not publish a paper. Then compare the checklist with the full candidate paper CSV and public preview:
+
+Enrich missing DOI, OpenAlex, and paper links with conservative title matching:
+
+```bash
+python3 scripts/enrich_key_papers_openalex.py \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)" \
+  --only-missing
+```
+
+This writes `data/manual/key_papers_enriched.csv` and `docs/key_paper_enrichment_report.md` without overwriting the manually curated checklist. The script requests 25 relevance-sorted results by default and tries general search, Web-like title/title-and-abstract parameters, then title/title-and-abstract filters. It stops at the first strong link; `--per-page` changes the result count. Statuses describe OpenAlex linkage: strong title/year candidates are `linked_to_openalex`, while `possible_openalex_match` candidates remain unfilled for review. Linkage does not validate or publish a paper.
+
+Retry only records not found during an earlier enrichment run:
+
+```bash
+python3 scripts/enrich_key_papers_openalex.py \
+  --input data/manual/key_papers_enriched.csv \
+  --output data/manual/key_papers_enriched.csv \
+  --only-status not_found_in_openalex \
+  --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
+```
+
+Existing linked rows are preserved unless `--force` is used. Updating the enriched CSV in place is supported; overwriting `data/manual/key_papers.csv` is refused.
+
+Diagnose one unresolved title with `--title-contains` and full per-strategy output:
+
+```bash
+python3 scripts/enrich_key_papers_openalex.py \
+  --input data/manual/key_papers_enriched.csv \
+  --output data/manual/key_papers_enriched.csv \
+  --only-status not_found_in_openalex \
+  --title-contains "Forensic Invariant Learning" \
+  --debug
+```
+
+The console and enrichment report show selection, preservation, and actual-search counts so an unchanged status total can be diagnosed directly.
+
+Then run the coverage comparison:
 
 ```bash
 python3 scripts/audit_key_paper_coverage.py
 ```
 
-The report is written to `docs/key_paper_coverage_report.md`. Adding a checklist row does not add or publish a paper; it only reveals whether the current automatic retrieval and preview contain a confirmed or possible match.
+Pass `--key-papers data/manual/key_papers_enriched.csv` to use accepted enriched identifiers. The report uses `covered_in_public_preview`, `covered_in_candidates_only`, `possible_pipeline_match`, and `not_covered_by_pipeline`; the last status means only that the automatic pipeline did not cover the manual paper. Adding a checklist row never adds or publishes it.
 
 ### Automatic institution resolution
 
