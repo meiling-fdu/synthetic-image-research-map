@@ -166,6 +166,13 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Identifying User-Agent sent to OpenAlex.",
     )
     parser.add_argument(
+        "--api-key",
+        help=(
+            "OpenAlex API key. Overrides OPENALEX_API_KEY when both are set. "
+            "The key is never written to output files or debug logs."
+        ),
+    )
+    parser.add_argument(
         "--sleep-seconds",
         type=nonnegative_float,
         default=DEFAULT_SLEEP_SECONDS,
@@ -367,6 +374,19 @@ def redact_request_url(url: str) -> str:
     return urlunsplit((parts.scheme, parts.netloc, parts.path, query, parts.fragment))
 
 
+def redact_secret_text(text: str, api_key: str) -> str:
+    """Remove API keys from diagnostics before they can reach logs or reports."""
+    redacted = re.sub(
+        r"([?&]api_key=)[^&\s]+",
+        r"\1REDACTED",
+        text,
+        flags=re.IGNORECASE,
+    )
+    if api_key:
+        redacted = redacted.replace(api_key, "REDACTED")
+    return redacted
+
+
 def http_error_body(error: HTTPError) -> str:
     try:
         body = error.read()
@@ -408,7 +428,7 @@ def request_candidates(
                 http_status = response.getcode()
             payload = json.load(response)
     except HTTPError as error:
-        body = http_error_body(error)
+        body = redact_secret_text(http_error_body(error), api_key)
         if error.code in (401, 403):
             body = f"{body}\n  hint: Check OPENALEX_API_KEY if it is set."
         elif error.code == 429:
@@ -972,6 +992,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     if not clean_text(args.user_agent):
         print("Error: --user-agent must be non-empty.")
         return 2
+    api_key = clean_text(args.api_key) or os.environ.get("OPENALEX_API_KEY", "").strip()
 
     try:
         fieldnames, rows = read_input(input_path)
@@ -988,7 +1009,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             sleep_seconds=args.sleep_seconds,
             limit=args.limit,
             only_missing=args.only_missing,
-            api_key=os.environ.get("OPENALEX_API_KEY", "").strip(),
+            api_key=api_key,
             debug=args.debug,
             per_page=args.per_page,
             only_status=args.only_status,

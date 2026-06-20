@@ -62,22 +62,89 @@ ATTRIBUTION_RE = re.compile(
     re.IGNORECASE,
 )
 
-# These markers occur in trailing venue/year annotations in the source documents.
-# The list is deliberately conservative so words in a genuine title are not cut.
-VENUE_MARKERS = (
-    "AAAI|ACM(?: MM)?|BMVC|CCS|CVPR(?: Workshops?)?|ECCV(?: Workshops?)?|ICCV|"
-    "ICLR|ICML|ICPR|ICASSP|ICIP|IJCNN|IJCAI|MIPR|NeurIPS|NDSS|WACV(?: Workshops?)?|"
-    "WIFS|TIFS|TIP|TMM|TPAMI|TCSVT|TOMM|PRL|SPL|KBS|arXiv|IEEE|Electronics|"
-    "Multimedia Systems|Neurocomputing|Research Square|Science China|Sensors|"
-    "Electronic Imaging|Computer Vision Winter Workshop|Forensic Science International"
+# These markers occur at the start of trailing venue/year annotations in the
+# source documents. Keep the list conservative: generic paper-topic words such
+# as detection, attribution, synthetic, image, generated, source, and model must
+# never become split points.
+VENUE_START_PATTERNS = (
+    r"AAAI",
+    r"ACM\s+MM",
+    r"BMVC",
+    r"CCS",
+    r"CVPR(?:\s+Workshops?)?",
+    r"ECCV(?:\s+Workshops?)?",
+    r"ICCV(?:\s+Workshops?)?",
+    r"ICLR",
+    r"ICML",
+    r"ICPR",
+    r"ICASSP",
+    r"ICIP",
+    r"IJCNN",
+    r"IJCAI",
+    r"MAD\s+Workshop",
+    r"MIPR",
+    r"NeurIPS",
+    r"NDSS",
+    r"WACV(?:\s+Workshops?)?",
+    r"WIFS",
+    r"TIFS",
+    r"TIP",
+    r"TMM",
+    r"TCSVT",
+    r"TCDS",
+    r"TPAMI",
+    r"TOMM",
+    r"PRL",
+    r"SPL",
+    r"KBS",
+    r"IEEE(?:\s+(?:Access|TPAMI|TIFS|TMM|TCSVT|TCDS|TIP|SPL))?",
+    r"Electronics",
+    r"arXiv",
+    r"Workshop(?:s)?",
+    r"Multimedia\s+Systems",
+    r"Neurocomputing",
+    r"Research\s+Square",
+    r"Science\s+China",
+    r"Sensors",
+    r"Electronic\s+Imaging",
+    r"Computer\s+Vision\s+Winter\s+Workshop",
+    r"Forensic\s+Science\s+International",
+    r"QPAIN",
 )
-TRAILING_VENUE_RE = re.compile(
-    rf"\s+(?:{VENUE_MARKERS})\b[^.!?]*?(?:\b(?:19|20)\d{{2}}(?:\d{{4}})?\b)?[.,]?$",
+VENUE_START_RE = re.compile(
+    rf"^(?:{'|'.join(VENUE_START_PATTERNS)})(?:\b|$)", re.IGNORECASE
+)
+VENUE_ONLY_RE = re.compile(
+    rf"^(?:{'|'.join(VENUE_START_PATTERNS)})(?:[\s,./&:-].*)?$",
     re.IGNORECASE,
 )
-KNOWN_VENUE_RE = re.compile(rf"^(?:{VENUE_MARKERS})$", re.IGNORECASE)
+TRAILING_VENUE_RE = re.compile(
+    rf"\s+(?:{'|'.join(VENUE_START_PATTERNS)})(?:\b|$)[^.!?]*?(?:\b(?:19|20)\d{{2}}(?:\d{{4}})?\b)?[.,]?$",
+    re.IGNORECASE,
+)
 TRAILING_YEAR_SUFFIX_RE = re.compile(
     r"(?P<year>(?:19|20)\d{2})(?:\d{4})?\s*\.?$"
+)
+
+# Regression examples for the conservative suffix parser. These titles used to
+# be truncated because generic title words before a workshop token were treated
+# as part of the venue suffix.
+TITLE_PARSE_REGRESSIONS = (
+    (
+        "Are CLIP features all you need for Universal Synthetic Image Origin Attribution? ECCV Workshop, 2024",
+        "Are CLIP features all you need for Universal Synthetic Image Origin Attribution?",
+        "ECCV Workshop, 2024",
+    ),
+    (
+        "Improving Synthetically Generated Image Detection in Cross-Concept Settings MAD Workshop, 2023",
+        "Improving Synthetically Generated Image Detection in Cross-Concept Settings",
+        "MAD Workshop, 2023",
+    ),
+    (
+        "Reverse engineering of generative models: Inferring model hyperparameters from generated images.IEEE TPAMI 2023",
+        "Reverse engineering of generative models: Inferring model hyperparameters from generated images",
+        "IEEE TPAMI 2023",
+    ),
 )
 
 SECTION_ALIASES = {
@@ -93,8 +160,27 @@ SECTION_ALIASES = {
     "anti-forensic": "Anti-forensics",
     "evasion": "Anti-forensics",
     "文献汇总": "Literature summary",
+    "待补充": "To supplement",
     "《待补充》": "To supplement",
 }
+
+SECTION_PARSE_REGRESSIONS = (
+    ("Dataset", "Dataset"),
+    ("Benchmark", "Benchmark"),
+    ("Identification", "Identification"),
+    ("Verification", "Verification"),
+    ("数据集", "Dataset"),
+    ("反取证", "Anti-forensics"),
+    ("文献汇总", "Literature summary"),
+    ("待补充", "To supplement"),
+    ("Dataset:", ""),
+    ("Dataset: GenImage / OSMA", ""),
+    ("数据集：", ""),
+    ("数据集：GenImage / OSMA", ""),
+    ("代码：", ""),
+    ("Code: https://example.org", ""),
+    ("核心思想：", ""),
+)
 
 NON_AUTHOR_PREFIXES = (
     "核心思想",
@@ -186,15 +272,14 @@ def is_venue_like(value: str) -> bool:
     venue = value.strip(" ,.;")
     if not venue:
         return False
-    if KNOWN_VENUE_RE.fullmatch(venue):
-        return True
-    lowered = venue.casefold()
-    if lowered == "arxiv" or "workshop" in lowered:
-        return True
-    compact = re.sub(r"[^A-Za-z0-9]", "", venue)
-    if compact and compact.isupper() and any(char.isalpha() for char in compact):
-        return len(venue) <= 40
-    return False
+    return bool(VENUE_START_RE.match(venue) and VENUE_ONLY_RE.fullmatch(venue))
+
+
+def trim_sentence_period(title: str, separator: str) -> str:
+    title = title.rstrip()
+    if separator == ".":
+        return title.rstrip(" .,")
+    return title.rstrip(" ,")
 
 
 def split_title_and_venue(prefix: str) -> Optional[tuple[str, str]]:
@@ -202,13 +287,15 @@ def split_title_and_venue(prefix: str) -> Optional[tuple[str, str]]:
     if not prefix:
         return None
 
-    if ". " in prefix:
-        title, venue = prefix.rsplit(". ", 1)
+    for match in reversed(list(re.finditer(r"[.?!]\s*", prefix))):
+        separator = match.group(0).strip() or prefix[match.start()]
+        venue = prefix[match.end() :].strip(" ,.;")
         if is_venue_like(venue):
-            return title.rstrip(" .,"), venue.strip(" ,.")
+            title = trim_sentence_period(prefix[: match.end()].rstrip(), separator[0])
+            return title, venue
 
     tokens = prefix.split()
-    max_venue_tokens = min(6, len(tokens) - 3)
+    max_venue_tokens = min(6, len(tokens) - 1)
     for token_count in range(max_venue_tokens, 0, -1):
         venue = " ".join(tokens[-token_count:])
         title = " ".join(tokens[:-token_count])
@@ -262,6 +349,16 @@ def parse_title_line(raw_title: str) -> ParsedTitle:
                 venue_hint=venue.strip(" ,."),
             )
 
+    split = split_title_and_venue(working)
+    if split:
+        title, venue = split
+        source_suffix = working[len(title):].lstrip(" .,")
+        return ParsedTitle(
+            title=title.rstrip(" .,"),
+            source_suffix=source_suffix,
+            venue_hint=venue,
+        )
+
     stripped = TRAILING_VENUE_RE.sub("", working).strip()
     if stripped != working:
         source_suffix = working[len(stripped):].lstrip(" .,;")
@@ -272,6 +369,30 @@ def parse_title_line(raw_title: str) -> ParsedTitle:
 
 def clean_title(raw_title: str) -> str:
     return parse_title_line(raw_title).title
+
+
+def check_title_parser_regressions() -> None:
+    for raw_title, expected_title, expected_suffix in TITLE_PARSE_REGRESSIONS:
+        parsed = parse_title_line(raw_title)
+        if (
+            parsed.title != expected_title
+            or parsed.source_suffix != expected_suffix
+        ):
+            raise ValueError(
+                "Title suffix parser regression: "
+                f"{raw_title!r} parsed as title={parsed.title!r}, "
+                f"source_suffix={parsed.source_suffix!r}"
+            )
+
+
+def check_section_parser_regressions() -> None:
+    for raw_text, expected_section in SECTION_PARSE_REGRESSIONS:
+        section = section_from_text(raw_text)
+        if section != expected_section:
+            raise ValueError(
+                "Section parser regression: "
+                f"{raw_text!r} parsed as section={section!r}"
+            )
 
 
 def extract_identifiers(text: str, links: list[str]) -> dict[str, str]:
@@ -315,7 +436,13 @@ def explicit_year(text: str) -> str:
 
 
 def section_from_text(text: str) -> str:
-    normalized = unicodedata.normalize("NFKC", text).strip().casefold().rstrip(":：")
+    normalized = unicodedata.normalize("NFKC", text)
+    normalized = re.sub(r"^[\s·•▪◦*-]+", "", normalized).strip()
+    # Only standalone headings change the active section. Lines with colons are
+    # paper metadata/comments such as "Dataset: GenImage", not global headings.
+    if ":" in normalized or "：" in normalized:
+        return ""
+    normalized = normalized.casefold()
     return SECTION_ALIASES.get(normalized, "")
 
 
@@ -343,15 +470,17 @@ def expected_task(title: str, mode: str, section: str) -> str:
 
 
 def auxiliary_notes(title: str, section: str) -> str:
-    haystack = f"{section} {title}".casefold()
     tags: list[str] = []
-    if any(term in haystack for term in ("benchmark",)):
+    title_text = title.casefold()
+    if section == "Benchmark" or "benchmark" in title_text:
         tags.append("benchmark")
-    if any(term in haystack for term in ("dataset", "数据集")):
+    if section == "Dataset":
         tags.append("dataset")
-    if any(term in haystack for term in ("survey", "review", "综述")):
+    if section == "Survey" or any(term in title_text for term in ("survey", "review", "综述")):
         tags.append("survey")
-    if any(term in haystack for term in ("anti-forensic", "anti forensic", "evasion", "反取证")):
+    if section == "Anti-forensics" or any(
+        term in title_text for term in ("anti-forensic", "anti forensic", "evasion", "反取证")
+    ):
         tags.append("anti-forensics")
     return "; ".join(["auxiliary", *tags]) if tags else ""
 
@@ -534,6 +663,12 @@ def print_counter(label: str, counts: Counter[str]) -> None:
 
 def main() -> int:
     args = parse_args()
+    try:
+        check_title_parser_regressions()
+        check_section_parser_regressions()
+    except ValueError as exc:
+        print(f"Error: {exc}")
+        return 1
     input_dir = args.input_dir.resolve()
     output = args.output.resolve()
     source_docs = sorted(input_dir.glob("*.docx"))

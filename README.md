@@ -98,12 +98,13 @@ The importer updates only `data/manual/key_papers.csv`; checklist membership doe
 Enrich missing DOI, OpenAlex, and paper links with conservative title matching:
 
 ```bash
+export OPENALEX_API_KEY="your-local-openalex-key"
 python3 scripts/enrich_key_papers_openalex.py \
   --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)" \
   --only-missing
 ```
 
-This writes `data/manual/key_papers_enriched.csv` and `docs/key_paper_enrichment_report.md` without overwriting the manually curated checklist. The script requests 25 relevance-sorted results by default and tries general search, Web-like title/title-and-abstract parameters, then title/title-and-abstract filters. It stops at the first strong link; `--per-page` changes the result count. Statuses describe OpenAlex linkage: strong title/year candidates are `linked_to_openalex`, while `possible_openalex_match` candidates remain unfilled for review. Linkage does not validate or publish a paper.
+This writes `data/manual/key_papers_enriched.csv` and `docs/key_paper_enrichment_report.md` without overwriting the manually curated checklist. The script reads `OPENALEX_API_KEY` from the environment, or `--api-key` if supplied; never commit or share the key. Request URLs printed by debug/error output redact the key. The script requests 25 relevance-sorted results by default and tries general search, Web-like title/title-and-abstract parameters, then title/title-and-abstract filters. It stops at the first strong link; `--per-page` changes the result count. Statuses describe OpenAlex linkage: strong title/year candidates are `linked_to_openalex`, while `possible_openalex_match` candidates remain unfilled for review. Linkage does not validate or publish a paper.
 
 Retry only records not found during an earlier enrichment run:
 

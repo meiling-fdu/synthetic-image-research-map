@@ -184,12 +184,13 @@ Title parsing removes trailing venue/year suffixes such as `QPAIN, 2026`, `CVPR,
 Imported checklist entries often contain only a title, year, and author line. To search OpenAlex by title and write a separate enriched checklist, run:
 
 ```bash
+export OPENALEX_API_KEY="your-local-openalex-key"
 python3 scripts/enrich_key_papers_openalex.py \
   --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)" \
   --only-missing
 ```
 
-By default, the script searches only rows missing a DOI or OpenAlex URL, requests 25 results per strategy, sorts by OpenAlex relevance score, waits at least 0.5 seconds between every request, and writes `data/manual/key_papers_enriched.csv` plus `docs/key_paper_enrichment_report.md`. Use `--limit` for a small review batch, `--per-page` to change the result count, and `--sleep-seconds` for a longer delay. The original `data/manual/key_papers.csv` is never overwritten.
+By default, the script searches only rows missing a DOI or OpenAlex URL, requests 25 results per strategy, sorts by OpenAlex relevance score, waits at least 0.5 seconds between every request, and writes `data/manual/key_papers_enriched.csv` plus `docs/key_paper_enrichment_report.md`. It reads a local OpenAlex key from `OPENALEX_API_KEY`; `--api-key` can be used for one run and takes priority over the environment variable. Never commit or share the key. Debug and error request URLs redact `api_key`, and the key is not written to CSV or report output. Use `--limit` for a small review batch, `--per-page` to change the result count, and `--sleep-seconds` for a longer delay. The original `data/manual/key_papers.csv` is never overwritten.
 
 Lookup begins with the simple Works `search` parameter. If it yields no strong link, the script tries the OpenAlex-Web-like `search.title` and `search.title_and_abstract` query parameters, then the API filter forms `title.search` and `title_and_abstract.search`. Every strategy uses `sort=relevance_score:desc`, and retries stop as soon as a `linked_to_openalex` candidate is found. All parameter values pass through `urllib.parse.urlencode`, and wildcard/punctuation sanitization applies to every strategy. If no strategy produces a strong link, candidates from all attempts are deduplicated and ranked together. An HTTP 400 from one strategy is recorded as `strategy_failed` in `openalex_link_reason` and does not prevent the next strategy from running. `search_strategy_used` and `candidate_source_query` preserve how the reported candidate was retrieved.
 
