@@ -41,7 +41,6 @@ PAPER_REQUIRED_COLUMNS = {
     "url",
     "preliminary_task",
     "preliminary_subtask",
-    "material_type",
     "source_database",
     "manual_review",
     "notes",
@@ -128,6 +127,19 @@ def clean_text(value: Any) -> str:
     if value is None:
         return ""
     return " ".join(str(value).split())
+
+
+def normalize_entry_type(record: Dict[str, Any]) -> str:
+    """Return the current entry type, translating legacy material labels."""
+    value = clean_text(record.get("entry_type")).casefold()
+    if value in {"method", "dataset", "benchmark", "survey", "analysis"}:
+        return value
+    legacy = clean_text(record.get("material_type")).casefold()
+    return {
+        "dataset": "dataset",
+        "benchmark": "benchmark",
+        "survey": "survey",
+    }.get(legacy, "method")
 
 
 def normalize_identifier_url(value: Any) -> str:
@@ -624,8 +636,7 @@ def group_map_records(
                 "publication_date": clean_text(paper.get("publication_date")),
                 "task": clean_text(paper.get("preliminary_task")) or "uncertain",
                 "subtask": clean_text(paper.get("preliminary_subtask")),
-                "material_type": clean_text(paper.get("material_type"))
-                or "uncertain",
+                "entry_type": normalize_entry_type(paper),
                 "venue": venue_name,
                 "venue_name": venue_name,
                 "venue_type": clean_text(paper.get("venue_type")),

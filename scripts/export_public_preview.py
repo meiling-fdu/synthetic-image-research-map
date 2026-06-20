@@ -49,7 +49,7 @@ PUBLIC_FIELDS = (
     "publication_date",
     "task",
     "subtask",
-    "material_type",
+    "entry_type",
     "venue",
     "venue_name",
     "venue_type",
@@ -186,6 +186,19 @@ def clean_text(value: Any) -> str:
     if value is None:
         return ""
     return " ".join(str(value).split())
+
+
+def normalize_entry_type(record: Dict[str, Any]) -> str:
+    """Return the current entry type, translating legacy material labels."""
+    value = clean_text(record.get("entry_type")).casefold()
+    if value in {"method", "dataset", "benchmark", "survey", "analysis"}:
+        return value
+    legacy = clean_text(record.get("material_type")).casefold()
+    return {
+        "dataset": "dataset",
+        "benchmark": "benchmark",
+        "survey": "survey",
+    }.get(legacy, "method")
 
 
 def normalize_identifier_url(value: Any) -> str:
@@ -416,9 +429,7 @@ def build_preview(
         public_record = {
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
-        public_record["material_type"] = (
-            clean_text(record.get("material_type")) or "uncertain"
-        )
+        public_record["entry_type"] = normalize_entry_type(record)
         public_record["institution"] = institution_name(record)
         public_record.update(
             normalize_country_region(

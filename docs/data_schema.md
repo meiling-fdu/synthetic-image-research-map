@@ -23,7 +23,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `arxiv_id` | arXiv identifier, including version only when the version matters. |
 | `task` | Primary project task label: `detection`, `source_attribution`, `detection_and_source_attribution`, or `uncertain`. |
 | `subtask` | Controlled reviewable label: `synthetic_image_detection`, `ai_generated_image_detection`, `deepfake_image_detection`, `generated_image_source_attribution`, `source_identification`, `source_verification`, `detection_and_source_attribution`, or `unknown`. |
-| `material_type` | Automatic, reviewable material label: `research_paper`, `dataset`, `benchmark`, `survey`, `challenge`, `anti_forensics`, `auxiliary`, or `uncertain`. It is independent of `task` and `subtask`. |
+| `entry_type` | Automatic, reviewable project-specific map-entry category: `method`, `dataset`, `benchmark`, `survey`, or `analysis`. It describes the entry's primary contribution, defaults to `method`, and is independent of `task`, `subtask`, and the formal OpenAlex `publication_type`. |
 | `is_survey` | `true` when the paper is a survey, review, systematic review, or taxonomy rather than a primary research contribution. |
 | `is_deepfake_related` | `true` when the work specifically concerns deepfakes or face manipulation. This flag keeps that related area distinguishable from general synthetic-image research. |
 | `is_image_editing_related` | `true` when an audit candidate concerns image editing or manipulation. Image-editing-only work is outside the scoped map dataset. |
@@ -55,6 +55,8 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `is_arxiv_preprint` | `true` when an arXiv identifier, arXiv URL, or explicit arXiv source is detected. |
 
 Published metadata and arXiv-version metadata are kept separate: a paper may have a formal DOI and venue while also exposing `arxiv_id`, `arxiv_url`, and `has_arxiv_version=true`. The publication year remains the OpenAlex publication year, not an inferred arXiv submission year. These values remain candidate metadata. A missing venue is left empty and flagged for manual review; venue or conference names must never be guessed from a paper title.
+
+`entry_type` is deliberately narrow. Anti-forensics, evasion, adversarial attacks, and robustness describe research topics; challenges, competitions, shared tasks, and challenge tracks describe evaluation or publication contexts. They are not entry types and normally remain `method` unless the title strongly identifies a dataset, benchmark, survey, or analysis contribution. Future secondary fields such as `topic_tags` or `contribution_tags` may represent those details, but they are not part of `entry_type` now.
 
 ## `paper_arxiv_links.csv`
 

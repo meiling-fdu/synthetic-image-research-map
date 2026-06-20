@@ -37,15 +37,12 @@ const TASK_COLORS = {
   detection_and_source_attribution: "#76589b",
   uncertain: "#68747d",
 };
-const MATERIAL_TYPE_LABELS = {
-  research_paper: "Research paper",
+const ENTRY_TYPE_LABELS = {
+  method: "Method",
   dataset: "Dataset",
   benchmark: "Benchmark",
   survey: "Survey",
-  challenge: "Challenge",
-  anti_forensics: "Anti-forensics / evasion",
-  auxiliary: "Auxiliary",
-  uncertain: "Uncertain",
+  analysis: "Analysis study",
 };
 const CHINA_REGION_BY_CODE = {
   HK: "Hong Kong",
@@ -85,7 +82,7 @@ const markerLayer = L.layerGroup().addTo(map);
 const connectionLayer = L.layerGroup().addTo(map);
 const keywordFilter = document.querySelector("#keyword-filter");
 const taskFilter = document.querySelector("#task-filter");
-const materialTypeFilter = document.querySelector("#material-type-filter");
+const entryTypeFilter = document.querySelector("#entry-type-filter");
 const sortControl = document.querySelector("#sort-control");
 const venueFilter = document.querySelector("#venue-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
@@ -161,7 +158,7 @@ const INSTITUTION_CSV_COLUMNS = [
   ["institution_authors", (record) => recordInstitutionAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
   ["venue_name", (record) => getRecordVenue(record)],
-  ["material_type", (record) => getMaterialType(record)],
+  ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
   ["institution_name", (record) => recordInstitution(record)],
@@ -183,7 +180,7 @@ const PAPER_CSV_COLUMNS = [
   ["authors", (record) => recordAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
   ["venue_name", (record) => getRecordVenue(record)],
-  ["material_type", (record) => getMaterialType(record)],
+  ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
   ["institutions", (record) => record.aggregated_institutions.join("; ")],
@@ -209,16 +206,19 @@ function formatTask(task) {
   return readableTask.charAt(0).toUpperCase() + readableTask.slice(1);
 }
 
-function getMaterialType(record) {
-  const value = String(record.material_type || "").trim().toLowerCase();
-  if (!value) {
-    return "research_paper";
+function getEntryType(record) {
+  const value = String(record.entry_type || "").trim().toLowerCase();
+  if (Object.hasOwn(ENTRY_TYPE_LABELS, value)) {
+    return value;
   }
-  return Object.hasOwn(MATERIAL_TYPE_LABELS, value) ? value : "uncertain";
+  const legacyValue = String(record.material_type || "").trim().toLowerCase();
+  return ["dataset", "benchmark", "survey"].includes(legacyValue)
+    ? legacyValue
+    : "method";
 }
 
-function getMaterialTypeLabel(value) {
-  return MATERIAL_TYPE_LABELS[value] || MATERIAL_TYPE_LABELS.uncertain;
+function getEntryTypeLabel(value) {
+  return ENTRY_TYPE_LABELS[value] || ENTRY_TYPE_LABELS.method;
 }
 
 function recordTitle(record) {
@@ -569,7 +569,7 @@ function recordSearchText(record) {
     record.venue,
     record.task,
     record.subtask,
-    getMaterialTypeLabel(getMaterialType(record)),
+    getEntryTypeLabel(getEntryType(record)),
   ].filter(Boolean).join(" "));
 }
 
@@ -858,8 +858,8 @@ function popupContent(record) {
   const year = record.publication_year ?? record.year ?? "Unknown";
   const venue = getRecordVenue(record) || "unknown";
   const publicationType = record.publication_type || "Unknown";
-  const materialType = getMaterialType(record);
-  const materialTypeLabel = getMaterialTypeLabel(materialType);
+  const entryType = getEntryType(record);
+  const entryTypeLabel = getEntryTypeLabel(entryType);
   const location = recordLocation(record) || "Unknown";
   const subtaskRow = record.subtask
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
@@ -912,7 +912,7 @@ function popupContent(record) {
   return `
     <div class="popup-badges">
       <span class="popup-badge popup-task">${escapeHtml(formatTask(record.task))}</span>
-      <span class="popup-badge material-type-badge">${escapeHtml(materialTypeLabel)}</span>
+      <span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
       ${versionBadge}
       ${confidenceBadge}
       ${reviewBadge}
@@ -926,7 +926,7 @@ function popupContent(record) {
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
       <dt>Venue</dt><dd>${escapeHtml(venue)}</dd>
       <dt>Publication type</dt><dd>${escapeHtml(formatTask(publicationType))}</dd>
-      <dt>Material type</dt><dd>${escapeHtml(materialTypeLabel)}</dd>
+      <dt>Entry type</dt><dd>${escapeHtml(entryTypeLabel)}</dd>
       ${doiRow}
       ${arxivRow}
       ${paperUrlRow}
@@ -945,7 +945,7 @@ function resultContent(record) {
   const year = publicationYear(record) ?? "Unknown";
   const venue = getRecordVenue(record);
   const isPaperView = resultsView === "papers";
-  const materialTypeLabel = getMaterialTypeLabel(getMaterialType(record));
+  const entryTypeLabel = getEntryTypeLabel(getEntryType(record));
   const institution = recordInstitution(record) || "Unknown institution";
   const location = recordLocation(record);
   const affiliation = [institution, location].filter(Boolean).join(" · ");
@@ -1000,7 +1000,7 @@ function resultContent(record) {
       ${regionsRow}
       <div class="result-classification">
         <span class="result-task">${escapeHtml(formatTask(record.task))}</span>
-        <span class="result-task material-type-badge">${escapeHtml(materialTypeLabel)}</span>
+        <span class="result-task entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
         ${subtask}
       </div>
       ${linksRow}
@@ -1128,7 +1128,7 @@ function renderRecords() {
     .split(/\s+/)
     .filter(Boolean);
   const selectedTask = taskFilter.value;
-  const selectedMaterialType = materialTypeFilter.value;
+  const selectedEntryType = entryTypeFilter.value;
   const selectedVenue = venueFilter.value;
   const selectedVersion = preprintFilter.value;
   const minimumYear = yearFilterValue(minYearFilter);
@@ -1139,8 +1139,8 @@ function renderRecords() {
     const searchableText = recordSearchText(record);
     const matchesKeyword = keywordTerms.every((term) => searchableText.includes(term));
     const matchesTask = selectedTask === "all" || record.task === selectedTask;
-    const matchesMaterialType =
-      selectedMaterialType === "all" || getMaterialType(record) === selectedMaterialType;
+    const matchesEntryType =
+      selectedEntryType === "all" || getEntryType(record) === selectedEntryType;
     const matchesVenue =
       selectedVenue === "all" || venueFilterValue(record) === selectedVenue;
     const matchesVersion =
@@ -1162,7 +1162,7 @@ function renderRecords() {
     return (
       matchesKeyword &&
       matchesTask &&
-      matchesMaterialType &&
+      matchesEntryType &&
       matchesVenue &&
       matchesVersion &&
       matchesMinimumYear &&
@@ -1249,7 +1249,7 @@ function configureVenueFilter() {
 function enableControls() {
   keywordFilter.disabled = false;
   taskFilter.disabled = false;
-  materialTypeFilter.disabled = false;
+  entryTypeFilter.disabled = false;
   sortControl.disabled = false;
   venueFilter.disabled = false;
   preprintFilter.disabled = false;
@@ -1461,7 +1461,7 @@ async function loadData() {
 
 keywordFilter.addEventListener("input", renderRecords);
 taskFilter.addEventListener("change", renderRecords);
-materialTypeFilter.addEventListener("change", renderRecords);
+entryTypeFilter.addEventListener("change", renderRecords);
 sortControl.addEventListener("change", renderRecords);
 venueFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
@@ -1476,7 +1476,7 @@ resultsViewButtons.forEach((button) => {
 resetButton.addEventListener("click", () => {
   keywordFilter.value = "";
   taskFilter.value = "all";
-  materialTypeFilter.value = "all";
+  entryTypeFilter.value = "all";
   sortControl.value = "year-desc";
   venueFilter.value = "all";
   preprintFilter.value = "all";
