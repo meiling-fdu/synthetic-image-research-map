@@ -355,6 +355,10 @@ Grouping prefers `institution_openalex_id`, then `ror_id`, and only falls back t
 
 Each marker also receives `institution_authors`, derived from the author-institution rows assigned to that exact institution group. Names are mapped back to the canonical paper-level display list and sorted by original `author_order`, so institution grouping cannot reorder them. A multiply affiliated author appears in every matching institution record. If the institution identity or canonical author position cannot be determined conservatively, the field remains an empty list rather than guessing.
 
+OpenAlex authorship-to-institution links can be incomplete even when the paper-level author list is correct. Human-reviewed corrections belong in `data/manual/institution_author_overrides.csv`, never in raw or processed OpenAlex files. During map export, a correction matches by normalized title, by year when the manual row provides one, and by normalized institution name. A match replaces only the institution record's `institution_authors` list, preserving the semicolon-delimited author order from the manual CSV; it never changes the paper-level `authors` list.
+
+The candidate map exporter reports how many institution-author overrides were loaded and applied and lists unmatched rows for review. This correction layer is offline and read-only: export does not call an external API or write back to the manual override file.
+
 The processed affiliation CSV remains the complete relationship-level source: map aggregation never replaces or removes its author-institution rows. Institution and country aggregation affects only those location fields, including in the unique-paper web view; it never changes author order. Affiliations without valid coordinates remain available for review but cannot produce map markers.
 
 The exporter includes only affiliation rows with a complete valid resolved or original latitude/longitude pair. It does not geocode missing institutions, call external APIs, or infer locations. Rows with missing or invalid coordinates remain in the processed CSV and are reported in the export summary rather than silently assigned a location.

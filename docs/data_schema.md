@@ -91,6 +91,20 @@ Published metadata and arXiv-version metadata are kept separate: a paper may hav
 
 Institution-specific authors are derived from the paper-author-institution rows. Matching prefers an exact OpenAlex institution identifier, then an exact ROR identifier, and finally an exact normalized full institution name. Substring and fuzzy name matching are not used. An author with multiple affiliations appears in `institution_authors` for every corresponding institution record, while the full `authors` list stays identical across those records.
 
+## `institution_author_overrides.csv`
+
+`data/manual/institution_author_overrides.csv` records human-verified corrections to institution-specific author attribution when source authorship-to-institution links are incomplete. The map exporter applies this manual layer while generating institution records; it does not alter raw OpenAlex data, processed CSVs, or the paper-level `authors` field.
+
+| Column | Definition |
+| --- | --- |
+| `title` | Paper title used for exact normalized-title matching. Required. |
+| `year` | Publication year to match when provided. May be empty. |
+| `institution` | Institution display name used for exact normalized-name matching. Required. |
+| `authors` | Semicolon-separated institution author names. The exporter preserves this order and replaces the generated `institution_authors` list. |
+| `notes` | Human-readable correction rationale or provenance. |
+
+Title and institution normalization lowercases text, replaces punctuation with spaces, and collapses whitespace. Matching is exact after normalization; no substring or fuzzy matching is used. Export summaries report loaded, applied, and unmatched overrides so stale or misspelled corrections remain reviewable. Scripts must treat this file as read-only manual input.
+
 ### Map-Ready Location Fields
 
 | Field | Definition |
