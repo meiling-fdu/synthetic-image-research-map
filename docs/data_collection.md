@@ -192,6 +192,8 @@ python3 scripts/enrich_key_papers_openalex.py \
 
 By default, the script searches only rows missing a DOI or OpenAlex URL, requests 25 results per strategy, sorts by OpenAlex relevance score, waits at least 0.5 seconds between every request, and writes `data/manual/key_papers_enriched.csv` plus `docs/key_paper_enrichment_report.md`. It reads a local OpenAlex key from `OPENALEX_API_KEY`; `--api-key` can be used for one run and takes priority over the environment variable. Never commit or share the key. Debug and error request URLs redact `api_key`, and the key is not written to CSV or report output. Use `--limit` for a small review batch, `--per-page` to change the result count, and `--sleep-seconds` for a longer delay. The original `data/manual/key_papers.csv` is never overwritten.
 
+If the output CSV already exists, enrichment resumes from it by default before any OpenAlex request is made. Existing output rows with `linked_to_openalex`, `possible_openalex_match`, or `not_found_in_openalex` are matched by normalized title plus year and reused without spending API budget. Use `--no-resume-from-output` to ignore the output cache, or `--force` to re-query selected rows. If OpenAlex stops the run with a fatal error such as HTTP 429, the script writes all processed, reused, and unprocessed rows to the output CSV, writes a partial report, and exits non-zero so the same command can be resumed later.
+
 Lookup begins with the simple Works `search` parameter. If it yields no strong link, the script tries the OpenAlex-Web-like `search.title` and `search.title_and_abstract` query parameters, then the API filter forms `title.search` and `title_and_abstract.search`. Every strategy uses `sort=relevance_score:desc`, and retries stop as soon as a `linked_to_openalex` candidate is found. All parameter values pass through `urllib.parse.urlencode`, and wildcard/punctuation sanitization applies to every strategy. If no strategy produces a strong link, candidates from all attempts are deduplicated and ranked together. An HTTP 400 from one strategy is recorded as `strategy_failed` in `openalex_link_reason` and does not prevent the next strategy from running. `search_strategy_used` and `candidate_source_query` preserve how the reported candidate was retrieved.
 
 The input may be either the original checklist or a previously enriched CSV. Retry only records that were not found in the previous run with:
@@ -201,10 +203,11 @@ python3 scripts/enrich_key_papers_openalex.py \
   --input data/manual/key_papers_enriched.csv \
   --output data/manual/key_papers_enriched.csv \
   --only-status not_found_in_openalex \
+  --force \
   --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
 ```
 
-In-place updates to the enriched CSV are atomic. Field values for rows with other statuses are preserved, and existing `linked_to_openalex` rows are not queried again unless `--force` is supplied. The script refuses any output path that would overwrite `data/manual/key_papers.csv`.
+In-place updates to the enriched CSV are atomic. Field values for rows with completed statuses are preserved, and existing `linked_to_openalex`, `possible_openalex_match`, and `not_found_in_openalex` rows are not queried again unless `--force` is supplied. The script refuses any output path that would overwrite `data/manual/key_papers.csv`.
 
 For a single-paper diagnostic retry, combine status and case-insensitive title filters:
 
@@ -213,12 +216,13 @@ python3 scripts/enrich_key_papers_openalex.py \
   --input data/manual/key_papers_enriched.csv \
   --output data/manual/key_papers_enriched.csv \
   --only-status not_found_in_openalex \
+  --force \
   --title-contains "Forensic Invariant Learning" \
   --debug \
   --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
 ```
 
-Console output and `docs/key_paper_enrichment_report.md` report rows read, rows selected, status-filter skips, preserved linked rows, rows actually searched, and total HTTP requests. A separate title-filter skip count reconciles diagnostics that use `--title-contains`. Debug mode prints each strategy URL and HTTP status plus up to five candidate titles, years, and normalized-title similarities.
+Console output and `docs/key_paper_enrichment_report.md` report rows read, rows reused from existing output, rows selected, status-filter skips, rows queried from OpenAlex, newly linked/possible/not-found rows, and total HTTP requests. A separate title-filter skip count reconciles diagnostics that use `--title-contains`. Debug mode prints each strategy URL and HTTP status plus up to five candidate titles, years, and normalized-title similarities.
 
 The script sanitizes a separate OpenAlex search query while preserving the checklist title and author text exactly. A candidate is `linked_to_openalex` when normalized-title similarity is at least 0.96 and its year differs by at most one when a checklist year is available. Multiple strong candidates are ranked by title similarity, year distance, DOI availability, paper-link availability, citation count, then API order; ambiguity is recorded in `openalex_link_reason`. Weaker candidates are `possible_openalex_match` and expose `candidate_*` fields without filling `enriched_*` identifiers. Other statuses are `not_found_in_openalex` and `skipped`.
 

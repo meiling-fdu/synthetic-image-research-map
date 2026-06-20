@@ -44,6 +44,11 @@ OPENALEX_LINK_STATUSES = (
     "not_found_in_openalex",
     "skipped",
 )
+RESUMABLE_LINK_STATUSES = (
+    "linked_to_openalex",
+    "possible_openalex_match",
+    "not_found_in_openalex",
+)
 SEARCH_STRATEGIES = (
     "search",
     "search.title",
@@ -92,6 +97,22 @@ class OpenAlexRequestError(EnrichmentError):
         )
 
 
+class PartialEnrichmentError(EnrichmentError):
+    """A fatal request error after some rows were already processed."""
+
+    def __init__(
+        self,
+        message: str,
+        output_rows: List[Dict[str, str]],
+        results: List["EnrichmentResult"],
+        accounting: "RetryAccounting",
+    ) -> None:
+        self.output_rows = output_rows
+        self.results = results
+        self.accounting = accounting
+        super().__init__(message)
+
+
 @dataclass(frozen=True)
 class OpenAlexCandidate:
     title: str
@@ -122,11 +143,15 @@ class EnrichmentResult:
 class RetryAccounting:
     rows_read: int = 0
     rows_selected: int = 0
+    rows_reused_from_output: int = 0
     title_mismatch_skips: int = 0
     status_mismatch_skips: int = 0
     preserved_linked: int = 0
     rows_searched: int = 0
     requests_made: int = 0
+    newly_linked: int = 0
+    newly_possible: int = 0
+    newly_not_found: int = 0
 
 
 def nonnegative_float(value: str) -> float:
@@ -215,6 +240,22 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         "--force",
         action="store_true",
         help="Re-query selected rows even when they are already linked or identified.",
+    )
+    parser.add_argument(
+        "--resume-from-output",
+        dest="resume_from_output",
+        action="store_true",
+        default=True,
+        help=(
+            "Reuse completed OpenAlex link statuses from an existing output CSV "
+            "matched by normalized title + year (default)."
+        ),
+    )
+    parser.add_argument(
+        "--no-resume-from-output",
+        dest="resume_from_output",
+        action="store_false",
+        help="Do not reuse rows from an existing output CSV.",
     )
     parser.add_argument(
         "--debug",
@@ -723,6 +764,48 @@ def read_input(path: Path) -> Tuple[List[str], List[Dict[str, str]]]:
     return output_fields, rows
 
 
+def initialize_output_row(row: Dict[str, str]) -> Dict[str, str]:
+    output = dict(row)
+    for field in LEGACY_RESULT_FIELDS:
+        output.pop(field, None)
+    for field in OPENALEX_LINK_FIELDS:
+        output.setdefault(field, "")
+    return output
+
+
+def resume_key(row: Dict[str, str]) -> Tuple[str, str]:
+    return normalize_title(row.get("title", "")), clean_text(row.get("year", ""))
+
+
+def read_resume_index(path: Path) -> Dict[Tuple[str, str], Dict[str, str]]:
+    if not path.exists():
+        return {}
+    _, rows = read_input(path)
+    index: Dict[Tuple[str, str], Dict[str, str]] = {}
+    for row in rows:
+        normalized_title, year = resume_key(row)
+        status = clean_text(row.get("openalex_link_status"))
+        if not normalized_title or status not in RESUMABLE_LINK_STATUSES:
+            continue
+        key = (normalized_title, year)
+        index.setdefault(key, initialize_output_row(row))
+    return index
+
+
+def merge_resume_fields(
+    current_row: Dict[str, str],
+    resume_row: Dict[str, str],
+) -> Dict[str, str]:
+    """Reuse OpenAlex enrichment fields while keeping current checklist metadata."""
+    merged = initialize_output_row(current_row)
+    for field in OPENALEX_LINK_FIELDS:
+        merged[field] = resume_row.get(field, "")
+    for field in SOURCE_IDENTIFIER_FIELDS:
+        if not clean_text(merged.get(field)) and clean_text(resume_row.get(field)):
+            merged[field] = resume_row.get(field, "")
+    return merged
+
+
 def write_csv(path: Path, fieldnames: Sequence[str], rows: Sequence[Dict[str, str]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(
@@ -783,6 +866,7 @@ def write_report(
     output_path: Path,
     results: Sequence[EnrichmentResult],
     accounting: RetryAccounting,
+    partial_error: str = "",
 ) -> None:
     counts = Counter(result.status for result in results)
     generated = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -795,21 +879,40 @@ def write_report(
         "",
         "This report links manually curated checklist papers to possible OpenAlex metadata for coverage auditing. OpenAlex link status does not determine whether a checklist paper is valid, and linked papers are not automatically published to the map.",
         "",
+    ]
+    if partial_error:
+        lines.extend(
+            [
+                "## Partial Run",
+                "",
+                "This run stopped before all selected rows could be queried. The output CSV contains processed, reused, and unprocessed rows and can be used as a resume file in a later run.",
+                "",
+                f"Stop reason: {markdown_text(partial_error)}",
+                "",
+            ]
+        )
+    lines.extend(
+        [
         "## Summary",
         "",
         f"- Rows read: {accounting.rows_read}",
         f"- Rows selected for processing: {accounting.rows_selected}",
+        f"- Rows reused from existing output: {accounting.rows_reused_from_output}",
         f"- Rows skipped because title did not match `--title-contains`: {accounting.title_mismatch_skips}",
         f"- Rows skipped because status did not match `--only-status`: {accounting.status_mismatch_skips}",
-        f"- Rows preserved because already `linked_to_openalex`: {accounting.preserved_linked}",
-        f"- Rows actually searched: {accounting.rows_searched}",
+        f"- Rows preserved from current input status: {accounting.preserved_linked}",
+        f"- Rows queried from OpenAlex: {accounting.rows_searched}",
         f"- OpenAlex requests made: {accounting.requests_made}",
+        f"- Rows newly linked to OpenAlex: {accounting.newly_linked}",
+        f"- Rows newly marked possible OpenAlex match: {accounting.newly_possible}",
+        f"- Rows newly marked not found in OpenAlex: {accounting.newly_not_found}",
         f"- Linked to OpenAlex: {counts['linked_to_openalex']}",
         f"- Possible OpenAlex matches requiring review: {counts['possible_openalex_match']}",
         f"- Not found in OpenAlex: {counts['not_found_in_openalex']}",
         f"- Skipped: {counts['skipped']}",
         "",
-    ]
+        ]
+    )
     for status, heading in (
         ("linked_to_openalex", "Linked to OpenAlex"),
         ("possible_openalex_match", "Possible OpenAlex Matches"),
@@ -875,6 +978,7 @@ def enrich_rows(
     only_status: Optional[str],
     title_contains: Optional[str],
     force: bool,
+    resume_index: Dict[Tuple[str, str], Dict[str, str]],
 ) -> Tuple[List[Dict[str, str]], List[EnrichmentResult], RetryAccounting]:
     output_rows: List[Dict[str, str]] = []
     results: List[EnrichmentResult] = []
@@ -883,34 +987,43 @@ def enrich_rows(
     title_filter = clean_text(title_contains).casefold()
 
     for row_number, original in enumerate(rows, start=2):
-        row = dict(original)
-        for field in LEGACY_RESULT_FIELDS:
-            row.pop(field, None)
-        for field in OPENALEX_LINK_FIELDS:
-            row.setdefault(field, "")
+        row = initialize_output_row(original)
         title = row.get("title", "")
         year_text = row.get("year", "")
         existing_status = clean_text(row.get("openalex_link_status"))
         existing_reason = clean_text(row.get("openalex_link_reason"))
+        cached_row = resume_index.get(resume_key(row)) if not force else None
+        cached_status = clean_text(cached_row.get("openalex_link_status")) if cached_row else ""
+        if cached_row is not None and cached_status in RESUMABLE_LINK_STATUSES:
+            row = merge_resume_fields(row, cached_row)
+            existing_status = clean_text(row.get("openalex_link_status"))
+            existing_reason = clean_text(row.get("openalex_link_reason"))
+        effective_status = existing_status or cached_status
         candidate = candidate_from_existing_row(row)
         recomputed = False
 
         if title_filter and title_filter not in clean_text(title).casefold():
             accounting.title_mismatch_skips += 1
-            status = existing_status or "skipped"
+            status = effective_status or "skipped"
             reason = existing_reason or (
                 f"Title did not contain --title-contains value {title_contains!r}."
             )
-        elif only_status is not None and existing_status != only_status:
+        elif only_status is not None and effective_status != only_status:
             accounting.status_mismatch_skips += 1
-            status = existing_status or "skipped"
+            status = effective_status or "skipped"
             reason = existing_reason or f"Not selected by --only-status {only_status}."
         else:
             accounting.rows_selected += 1
-            if existing_status == "linked_to_openalex" and not force:
+            if cached_row is not None and cached_status in RESUMABLE_LINK_STATUSES:
+                accounting.rows_reused_from_output += 1
+                status = cached_status
+                reason = existing_reason or (
+                    "Reused from existing output CSV by normalized title + year."
+                )
+            elif existing_status in RESUMABLE_LINK_STATUSES and not force:
                 accounting.preserved_linked += 1
                 status = existing_status
-                reason = existing_reason or "Existing OpenAlex link preserved."
+                reason = existing_reason or "Existing OpenAlex link status preserved."
             elif (
                 not force
                 and only_missing
@@ -926,28 +1039,75 @@ def enrich_rows(
                 status = existing_status or "skipped"
                 reason = existing_reason or f"Search limit of {limit} reached."
             else:
+                row_before_query = dict(row)
                 for field in OPENALEX_LINK_FIELDS:
                     row[field] = ""
                 candidate = None
-                (
-                    status,
-                    reason,
-                    candidate,
-                    previous_request_at,
-                    requests_made,
-                ) = search_openalex_with_fallbacks(
-                    title=clean_text(title),
-                    key_year=parse_year(year_text),
-                    user_agent=user_agent,
-                    api_key=api_key,
-                    per_page=per_page,
-                    sleep_seconds=sleep_seconds,
-                    previous_request_at=previous_request_at,
-                    debug=debug,
-                )
+                try:
+                    (
+                        status,
+                        reason,
+                        candidate,
+                        previous_request_at,
+                        requests_made,
+                    ) = search_openalex_with_fallbacks(
+                        title=clean_text(title),
+                        key_year=parse_year(year_text),
+                        user_agent=user_agent,
+                        api_key=api_key,
+                        per_page=per_page,
+                        sleep_seconds=sleep_seconds,
+                        previous_request_at=previous_request_at,
+                        debug=debug,
+                    )
+                except EnrichmentError as error:
+                    output_rows.append(row_before_query)
+                    results.append(
+                        EnrichmentResult(
+                            row_number=row_number,
+                            input_title=title,
+                            input_year=year_text,
+                            status=existing_status or "skipped",
+                            reason=(
+                                existing_reason
+                                or f"Not processed because enrichment stopped: {error}"
+                            ),
+                            candidate=candidate_from_existing_row(row_before_query),
+                        )
+                    )
+                    for remaining_number, remaining in enumerate(
+                        rows[row_number - 1 :], start=row_number + 1
+                    ):
+                        remaining_row = initialize_output_row(remaining)
+                        remaining_status = clean_text(
+                            remaining_row.get("openalex_link_status")
+                        ) or "skipped"
+                        remaining_reason = clean_text(
+                            remaining_row.get("openalex_link_reason")
+                        ) or "Not processed because enrichment stopped before this row."
+                        output_rows.append(remaining_row)
+                        results.append(
+                            EnrichmentResult(
+                                row_number=remaining_number,
+                                input_title=remaining_row.get("title", ""),
+                                input_year=remaining_row.get("year", ""),
+                                status=remaining_status,
+                                reason=remaining_reason,
+                                candidate=candidate_from_existing_row(remaining_row),
+                            )
+                        )
+                    raise PartialEnrichmentError(
+                        str(error), output_rows, results, accounting
+                    ) from error
                 if requests_made:
                     accounting.rows_searched += 1
                 accounting.requests_made += requests_made
+                if status == "linked_to_openalex":
+                    accounting.newly_linked += 1
+                elif status == "possible_openalex_match":
+                    accounting.newly_possible += 1
+                elif status == "not_found_in_openalex":
+                    accounting.newly_not_found += 1
                 recomputed = True
         if recomputed and candidate is not None:
             row["search_strategy_used"] = candidate.search_strategy
@@ -996,12 +1156,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     try:
         fieldnames, rows = read_input(input_path)
-        if args.only_status and not any(
-            "openalex_link_status" in row for row in rows
+        resume_index = (
+            read_resume_index(output_path)
+            if args.resume_from_output and not args.force
+            else {}
+        )
+        if args.only_status and not (
+            any("openalex_link_status" in row for row in rows) or resume_index
         ):
             raise EnrichmentError(
-                "--only-status requires an enriched input containing "
-                "openalex_link_status."
+                "--only-status requires an enriched input or resume output "
+                "containing openalex_link_status."
             )
         enriched_rows, results, accounting = enrich_rows(
             rows=rows,
@@ -1015,9 +1180,45 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             only_status=args.only_status,
             title_contains=args.title_contains,
             force=args.force,
+            resume_index=resume_index,
         )
         write_csv(output_path, fieldnames, enriched_rows)
         write_report(report_path, input_path, output_path, results, accounting)
+    except PartialEnrichmentError as error:
+        try:
+            write_csv(output_path, fieldnames, error.output_rows)
+            write_report(
+                report_path,
+                input_path,
+                output_path,
+                error.results,
+                error.accounting,
+                partial_error=str(error),
+            )
+        except OSError as write_error:
+            print(f"Error writing partial enrichment output: {write_error}")
+            return 1
+        counts = Counter(result.status for result in error.results)
+        print("Key paper OpenAlex enrichment stopped before completion")
+        print(f"  Reason: {error}")
+        print(f"  Rows read: {error.accounting.rows_read}")
+        print(f"  Rows reused from existing output: {error.accounting.rows_reused_from_output}")
+        print(f"  Rows queried from OpenAlex: {error.accounting.rows_searched}")
+        print(f"  Rows newly linked: {error.accounting.newly_linked}")
+        print(f"  Rows newly possible: {error.accounting.newly_possible}")
+        print(f"  Rows newly not found: {error.accounting.newly_not_found}")
+        print("  OpenAlex link status in partial output:")
+        for status in (
+            "linked_to_openalex",
+            "possible_openalex_match",
+            "not_found_in_openalex",
+            "skipped",
+        ):
+            print(f"    {status}: {counts[status]}")
+        print(f"  Partial output: {output_path}")
+        print(f"  Partial report: {report_path}")
+        print("  Re-run the command later to resume from the partial output.")
+        return 1
     except EnrichmentError as error:
         print(f"Error: {error}")
         return 1
@@ -1029,6 +1230,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     print("Key paper OpenAlex enrichment complete")
     print(f"  Rows read: {accounting.rows_read}")
     print(f"  Rows selected for processing: {accounting.rows_selected}")
+    print(f"  Rows reused from existing output: {accounting.rows_reused_from_output}")
     print(
         "  Rows skipped because title did not match --title-contains: "
         f"{accounting.title_mismatch_skips}"
@@ -1038,11 +1240,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         f"{accounting.status_mismatch_skips}"
     )
     print(
-        "  Rows preserved because already linked_to_openalex: "
+        "  Rows preserved from current input status: "
         f"{accounting.preserved_linked}"
     )
-    print(f"  Rows actually searched: {accounting.rows_searched}")
+    print(f"  Rows queried from OpenAlex: {accounting.rows_searched}")
     print(f"  OpenAlex requests made: {accounting.requests_made}")
+    print(f"  Rows newly linked: {accounting.newly_linked}")
+    print(f"  Rows newly possible: {accounting.newly_possible}")
+    print(f"  Rows newly not found: {accounting.newly_not_found}")
     print("  OpenAlex link status:")
     for status in (
         "linked_to_openalex",

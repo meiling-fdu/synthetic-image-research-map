@@ -106,6 +106,8 @@ python3 scripts/enrich_key_papers_openalex.py \
 
 This writes `data/manual/key_papers_enriched.csv` and `docs/key_paper_enrichment_report.md` without overwriting the manually curated checklist. The script reads `OPENALEX_API_KEY` from the environment, or `--api-key` if supplied; never commit or share the key. Request URLs printed by debug/error output redact the key. The script requests 25 relevance-sorted results by default and tries general search, Web-like title/title-and-abstract parameters, then title/title-and-abstract filters. It stops at the first strong link; `--per-page` changes the result count. Statuses describe OpenAlex linkage: strong title/year candidates are `linked_to_openalex`, while `possible_openalex_match` candidates remain unfilled for review. Linkage does not validate or publish a paper.
 
+If `data/manual/key_papers_enriched.csv` already exists, enrichment resumes from it by default. Rows with `linked_to_openalex`, `possible_openalex_match`, or `not_found_in_openalex` are reused by normalized title plus year without spending OpenAlex budget. Use `--force` to re-query selected rows, or `--no-resume-from-output` to ignore the existing output cache. If OpenAlex returns a fatal error such as HTTP 429, the script writes a partial CSV/report that can be resumed later.
+
 Retry only records not found during an earlier enrichment run:
 
 ```bash
@@ -113,10 +115,11 @@ python3 scripts/enrich_key_papers_openalex.py \
   --input data/manual/key_papers_enriched.csv \
   --output data/manual/key_papers_enriched.csv \
   --only-status not_found_in_openalex \
+  --force \
   --user-agent "SyntheticImageResearchMap/0.1 (contact: you@example.org)"
 ```
 
-Existing linked rows are preserved unless `--force` is used. Updating the enriched CSV in place is supported; overwriting `data/manual/key_papers.csv` is refused.
+Existing completed rows are preserved unless `--force` is used. Updating the enriched CSV in place is supported; overwriting `data/manual/key_papers.csv` is refused.
 
 Diagnose one unresolved title with `--title-contains` and full per-strategy output:
 
@@ -125,6 +128,7 @@ python3 scripts/enrich_key_papers_openalex.py \
   --input data/manual/key_papers_enriched.csv \
   --output data/manual/key_papers_enriched.csv \
   --only-status not_found_in_openalex \
+  --force \
   --title-contains "Forensic Invariant Learning" \
   --debug
 ```
