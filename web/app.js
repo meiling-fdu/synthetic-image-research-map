@@ -30,7 +30,7 @@ const requestedDataset = new URLSearchParams(window.location.search).get("datase
 const shouldFallbackToSample = requestedDataset === null;
 let datasetName = resolveDatasetName(requestedDataset);
 let datasetConfig = DATASET_CONFIG[datasetName];
-const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -170), L.latLng(75, 170));
+const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -180), L.latLng(85, 180));
 const TASK_COLORS = {
   detection: "#287d8e",
   source_attribution: "#b66a37",
@@ -67,10 +67,10 @@ const CHINA_REGION_CODE_BY_NAME = {
 };
 
 const map = L.map("map", {
-  minZoom: 2,
+  minZoom: 1,
   maxBounds: WORLD_BOUNDS.pad(0.35),
   worldCopyJump: true,
-}).fitBounds(WORLD_BOUNDS);
+}).fitBounds(WORLD_BOUNDS, { padding: [12, 12], animate: false });
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 18,
@@ -79,7 +79,8 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 const markerLayer = L.layerGroup().addTo(map);
-const connectionLayer = L.layerGroup().addTo(map);
+const hoverConnectionLayer = L.layerGroup().addTo(map);
+const selectedConnectionLayer = L.layerGroup().addTo(map);
 const keywordFilter = document.querySelector("#keyword-filter");
 const taskFilter = document.querySelector("#task-filter");
 const entryTypeFilter = document.querySelector("#entry-type-filter");
@@ -111,6 +112,9 @@ const resultsList = document.querySelector("#results-list");
 const resultsEmpty = document.querySelector("#results-empty");
 const exportCsvButton = document.querySelector("#export-csv");
 const resultsViewButtons = document.querySelectorAll("[data-results-view]");
+const paperDetails = document.querySelector("#paper-details");
+const paperDetailsContent = document.querySelector("#paper-details-content");
+const closePaperDetailsButton = document.querySelector("#close-paper-details");
 const prototypeNote = document.querySelector(".prototype-note");
 const intro = document.querySelector(".intro");
 const footer = document.querySelector("footer");
@@ -120,7 +124,15 @@ let currentFilteredRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
-let activePaperIdentity = "";
+let hoveredPaperIdentity = "";
+let hoveredPaperRecord = null;
+let hoveredMarker = null;
+let pinnedPaperIdentity = "";
+let pinnedPaperRecord = null;
+
+const supportsMarkerHover = window.matchMedia?.(
+  "(hover: hover) and (pointer: fine)",
+).matches ?? false;
 
 const BASE_MARKER_STYLE = {
   radius: 8,
@@ -130,11 +142,11 @@ const BASE_MARKER_STYLE = {
   opacity: 1,
 };
 const DIMMED_MARKER_STYLE = {
-  radius: 6,
+  radius: 7,
   color: "#d2dbe0",
   weight: 1,
-  fillOpacity: 0.22,
-  opacity: 0.35,
+  fillOpacity: 0.52,
+  opacity: 0.6,
 };
 const HIGHLIGHT_MARKER_STYLE = {
   radius: 10,
@@ -147,10 +159,22 @@ const CONNECTION_LINE_STYLE = {
   color: "#172332",
   weight: 2.5,
   opacity: 0.62,
+  interactive: false,
   dashArray: "6 5",
   lineCap: "round",
   className: "paper-connection-line",
 };
+let mapResizeTimer = null;
+
+function scheduleMapResize(fitWorld = false) {
+  window.clearTimeout(mapResizeTimer);
+  mapResizeTimer = window.setTimeout(() => {
+    map.invalidateSize({ animate: false, pan: false });
+    if (fitWorld) {
+      map.fitBounds(WORLD_BOUNDS, { padding: [12, 12], animate: false });
+    }
+  }, 0);
+}
 
 const INSTITUTION_CSV_COLUMNS = [
   ["title", (record) => recordTitle(record)],
@@ -846,7 +870,7 @@ function formatResolutionValue(value) {
   return formatTask(value || "unresolved");
 }
 
-function popupContent(record) {
+function paperDetailsHtml(record, relatedEntries) {
   const orderedAuthors = recordAuthors(record);
   const authors = orderedAuthors.length
     ? highlightedPaperAuthors(record)
@@ -873,14 +897,14 @@ function popupContent(record) {
   const arxivRow = arxivUrl
     ? `<dt>arXiv</dt><dd>${externalLink(arxivUrl, arxivId || "View arXiv version")}</dd>`
     : "";
-  const paperUrl =
-    record.primary_url ||
-    record.landing_page_url ||
-    record.url ||
-    record.openalex_url ||
-    "";
-  const paperUrlRow = paperUrl
-    ? `<dt>Paper</dt><dd>${externalLink(paperUrl, "Open record")}</dd>`
+  const paperUrl = recordPaperUrl(record);
+  const safePaperUrl = safeHttpUrl(paperUrl);
+  const openalexUrl = safeHttpUrl(record.openalex_url);
+  const paperUrlRow = safePaperUrl && safePaperUrl !== openalexUrl
+    ? `<dt>Paper</dt><dd>${externalLink(paperUrl, "Open paper")}</dd>`
+    : "";
+  const openalexRow = openalexUrl
+    ? `<dt>OpenAlex</dt><dd>${externalLink(openalexUrl, "Open record")}</dd>`
     : "";
   const versionBadge = isPreprintOnlyRecord(record)
     ? '<span class="popup-badge confidence-unresolved">Preprint-only</span>'
@@ -908,6 +932,14 @@ function popupContent(record) {
   const resolutionNotesRow = record.resolution_notes
     ? `<dt>Resolution notes</dt><dd class="popup-resolution-notes">${escapeHtml(record.resolution_notes)}</dd>`
     : "";
+  const visibleInstitutions = uniqueTextValues(relatedEntries.map(({ record: item }) => {
+    const institution = recordInstitution(item) || "Unknown institution";
+    const itemLocation = recordLocation(item);
+    return [institution, itemLocation].filter(Boolean).join(" · ");
+  }));
+  const visibleInstitutionsRow = visibleInstitutions.length
+    ? `<dt>Visible institutions</dt><dd><ul class="paper-details-institutions">${visibleInstitutions.map((institution) => `<li>${escapeHtml(institution)}</li>`).join("")}</ul></dd>`
+    : "";
 
   return `
     <div class="popup-badges">
@@ -921,8 +953,9 @@ function popupContent(record) {
     <dl class="popup-details">
       <dt>Authors</dt><dd>${authors}</dd>
       ${institutionAuthorsRow}
-      <dt>Institution</dt><dd>${escapeHtml(record.institution)}</dd>
+      <dt>Current institution</dt><dd>${escapeHtml(recordInstitution(record) || "Unknown")}</dd>
       <dt>Location</dt><dd>${escapeHtml(location)}</dd>
+      ${visibleInstitutionsRow}
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
       <dt>Venue</dt><dd>${escapeHtml(venue)}</dd>
       <dt>Publication type</dt><dd>${escapeHtml(formatTask(publicationType))}</dd>
@@ -930,6 +963,7 @@ function popupContent(record) {
       ${doiRow}
       ${arxivRow}
       ${paperUrlRow}
+      ${openalexRow}
       <dt>Task</dt><dd>${escapeHtml(formatTask(record.task))}</dd>
       ${subtaskRow}
       ${methodRow}
@@ -1041,6 +1075,7 @@ function selectResultsView(view) {
     return;
   }
   resultsView = view;
+  clearPaperInteraction();
   resultsViewButtons.forEach((button) => {
     button.setAttribute(
       "aria-pressed",
@@ -1063,25 +1098,53 @@ function updateSummary(visibleRecords) {
 
 function baseMapStatusText(visibleRecords) {
   const recordLabel = datasetConfig.recordLabel;
+  const interactionHint = supportsMarkerHover
+    ? " Hover over a marker to preview paper details; click to pin them."
+    : " Tap a marker to pin paper details.";
   return visibleRecords.length
-    ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}. Click a marker to highlight institutions for the same paper.`
+    ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}.${interactionHint}`
     : "No records match the current filters.";
 }
 
-function clearPaperHighlight(updateStatus = true) {
-  activePaperIdentity = "";
-  connectionLayer.clearLayers();
+function resetPaperDetails() {
+  paperDetails.classList.remove("has-content");
+  paperDetailsContent.innerHTML =
+    '<p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>';
+  closePaperDetailsButton.disabled = true;
+}
+
+function showPaperDetails(record, relatedEntries) {
+  paperDetailsContent.innerHTML = paperDetailsHtml(record, relatedEntries);
+  paperDetails.classList.add("has-content");
+  closePaperDetailsButton.disabled = false;
+  paperDetails.scrollTop = 0;
+}
+
+function restoreBaseMarkerStyles() {
   visibleMarkerEntries.forEach(({ marker, record }) => {
     marker.setStyle(markerStyle(record));
   });
+}
+
+function clearPaperInteraction(updateStatus = true) {
+  hoveredPaperIdentity = "";
+  hoveredPaperRecord = null;
+  hoveredMarker = null;
+  pinnedPaperIdentity = "";
+  pinnedPaperRecord = null;
+  hoverConnectionLayer.clearLayers();
+  selectedConnectionLayer.clearLayers();
+  restoreBaseMarkerStyles();
+  resetPaperDetails();
+  scheduleMapResize();
   if (updateStatus) {
     mapStatus.classList.toggle("paper-highlight-active", false);
     mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
   }
 }
 
-function drawConnectionLines(relatedEntries) {
-  connectionLayer.clearLayers();
+function drawConnectionLines(relatedEntries, targetLayer) {
+  targetLayer.clearLayers();
   const locations = uniqueMarkerLocations(relatedEntries);
   if (locations.length < 2) {
     return 0;
@@ -1089,21 +1152,21 @@ function drawConnectionLines(relatedEntries) {
 
   const hub = locations[0];
   locations.slice(1).forEach((location) => {
-    L.polyline([hub, location], CONNECTION_LINE_STYLE).addTo(connectionLayer);
+    L.polyline([hub, location], CONNECTION_LINE_STYLE).addTo(targetLayer);
   });
   return locations.length - 1;
 }
 
-function activatePaperHighlight(identity) {
-  activePaperIdentity = identity;
+function showPaperInteraction(record, identity, mode) {
   const relatedEntries = visibleMarkerEntries.filter(
     (entry) => entry.identity === identity,
   );
   if (!relatedEntries.length) {
-    clearPaperHighlight();
     return;
   }
 
+  hoverConnectionLayer.clearLayers();
+  selectedConnectionLayer.clearLayers();
   visibleMarkerEntries.forEach(({ marker, record, identity: markerIdentity }) => {
     marker.setStyle(markerStyle(
       record,
@@ -1111,18 +1174,68 @@ function activatePaperHighlight(identity) {
     ));
   });
 
-  const lineCount = drawConnectionLines(relatedEntries);
+  const isHover = mode === "hover";
+  const targetLayer = isHover ? hoverConnectionLayer : selectedConnectionLayer;
+  const lineCount = drawConnectionLines(relatedEntries, targetLayer);
   relatedEntries.forEach(({ marker }) => marker.bringToFront());
-  const paperTitle = recordTitle(relatedEntries[0].record) || "Selected paper";
+  showPaperDetails(record, relatedEntries);
+  const paperTitle = recordTitle(record) || "Selected paper";
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", true);
-  mapStatus.textContent = lineCount
-    ? `Highlighted ${relatedEntries.length} visible institution records for “${paperTitle}”.`
-    : `Highlighted the only visible institution record for “${paperTitle}”.`;
+  const action = mode === "pinned" ? "Pinned" : "Previewing";
+  const visibleCount = relatedEntries.length;
+  const connectionText = lineCount ? " Connections shown." : "";
+  mapStatus.textContent =
+    `${action} ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"} for “${paperTitle}”.${connectionText}`;
+}
+
+function restorePaperInteraction() {
+  if (hoveredPaperIdentity && hoveredPaperRecord) {
+    showPaperInteraction(hoveredPaperRecord, hoveredPaperIdentity, "hover");
+    return;
+  }
+  if (pinnedPaperIdentity && pinnedPaperRecord) {
+    showPaperInteraction(pinnedPaperRecord, pinnedPaperIdentity, "pinned");
+    return;
+  }
+
+  hoverConnectionLayer.clearLayers();
+  selectedConnectionLayer.clearLayers();
+  restoreBaseMarkerStyles();
+  resetPaperDetails();
+  mapStatus.classList.toggle("paper-highlight-active", false);
+  mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
+}
+
+function activateHoverPreview(record, identity, marker) {
+  hoveredPaperIdentity = identity;
+  hoveredPaperRecord = record;
+  hoveredMarker = marker;
+  restorePaperInteraction();
+}
+
+function clearHoverPreview(marker) {
+  if (hoveredMarker !== marker) {
+    return;
+  }
+  hoveredPaperIdentity = "";
+  hoveredPaperRecord = null;
+  hoveredMarker = null;
+  restorePaperInteraction();
+}
+
+function pinPaper(record, identity) {
+  hoveredPaperIdentity = "";
+  hoveredPaperRecord = null;
+  hoveredMarker = null;
+  pinnedPaperIdentity = identity;
+  pinnedPaperRecord = record;
+  restorePaperInteraction();
+  scheduleMapResize();
 }
 
 function renderRecords() {
-  clearPaperHighlight(false);
+  clearPaperInteraction(false);
   const keywordTerms = normalizedSearchText(keywordFilter.value)
     .trim()
     .split(/\s+/)
@@ -1175,7 +1288,8 @@ function renderRecords() {
   currentFilteredRecords = visibleRecords;
 
   markerLayer.clearLayers();
-  connectionLayer.clearLayers();
+  hoverConnectionLayer.clearLayers();
+  selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
 
   visibleRecords.forEach((record) => {
@@ -1184,10 +1298,13 @@ function renderRecords() {
       [record.latitude, record.longitude],
       markerStyle(record),
     )
-      .bindPopup(popupContent(record), { maxWidth: 320 })
-      .bindTooltip(record.institution, { direction: "top", offset: [0, -7] })
-      .on("click", () => activatePaperHighlight(identity))
+      .on("click", () => pinPaper(record, identity))
       .addTo(markerLayer);
+    if (supportsMarkerHover) {
+      marker
+        .on("mouseover", () => activateHoverPreview(record, identity, marker))
+        .on("mouseout", () => clearHoverPreview(marker));
+    }
     visibleMarkerEntries.push({ record, marker, identity });
   });
 
@@ -1197,6 +1314,7 @@ function renderRecords() {
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", false);
   mapStatus.textContent = baseMapStatusText(visibleRecords);
+  scheduleMapResize();
 }
 
 function configureYearRange() {
@@ -1276,13 +1394,15 @@ function validateRecord(record) {
 }
 
 function showDatasetMessage(message, isError = false) {
+  clearPaperInteraction(false);
   records = [];
   currentFilteredRecords = [];
   currentDisplayedResults = [];
   markerLayer.clearLayers();
-  connectionLayer.clearLayers();
+  hoverConnectionLayer.clearLayers();
+  selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
-  activePaperIdentity = "";
+  hoveredPaperIdentity = "";
   updateSummary(records);
   updateDatasetStatistics(records);
   renderResults(records);
@@ -1403,6 +1523,7 @@ function displayDataset(normalizedData) {
   configureVenueFilter();
   enableControls();
   renderRecords();
+  scheduleMapResize(true);
 }
 
 function selectDataset(name) {
@@ -1469,7 +1590,9 @@ minYearFilter.addEventListener("input", renderRecords);
 maxYearFilter.addEventListener("input", renderRecords);
 resolutionFilter.addEventListener("change", renderRecords);
 reviewFilter.addEventListener("change", renderRecords);
+window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
+closePaperDetailsButton.addEventListener("click", () => clearPaperInteraction());
 resultsViewButtons.forEach((button) => {
   button.addEventListener("click", () => selectResultsView(button.dataset.resultsView));
 });
@@ -1485,6 +1608,7 @@ resetButton.addEventListener("click", () => {
   resolutionFilter.value = "all";
   reviewFilter.value = "all";
   renderRecords();
+  scheduleMapResize(true);
 });
 
 updateDatasetLabels();

@@ -299,7 +299,28 @@
               Loading public preview data...
             </p>
           </div>
-          <div id="map" aria-label="World map of synthetic image research records"></div>
+          <div class="map-workspace">
+            <div id="map" aria-label="World map of synthetic image research records"></div>
+            <aside
+              id="paper-details"
+              class="paper-details"
+              aria-labelledby="paper-details-heading"
+            >
+              <div class="paper-details-heading">
+                <h3 id="paper-details-heading">Paper details</h3>
+                <button
+                  id="close-paper-details"
+                  class="paper-details-close"
+                  type="button"
+                  aria-label="Close paper details"
+                  disabled
+                >Close</button>
+              </div>
+              <div id="paper-details-content" class="paper-details-content" aria-live="polite">
+                <p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>
+              </div>
+            </aside>
+          </div>
         </section>
 
         <section class="panel data-notice" aria-labelledby="data-notice-heading">
@@ -362,6 +383,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260620-entry-type"></script>
+    <script src="app.js?v=20260620-hover-details"></script>
   </body>
 </html>

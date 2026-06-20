@@ -663,6 +663,13 @@ input:disabled {
   padding: 20px;
 }
 
+.map-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 340px);
+  gap: 14px;
+  align-items: stretch;
+}
+
 .map-heading-row {
   display: flex;
   align-items: flex-end;
@@ -695,11 +702,73 @@ input:disabled {
 
 #map {
   z-index: 0;
+  width: 100%;
+  min-width: 0;
   height: min(68vh, 720px);
   min-height: 520px;
   border: 1px solid var(--line);
   border-radius: 5px;
   background: #dfe9ec;
+}
+
+.paper-details {
+  height: min(68vh, 720px);
+  min-height: 520px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0 16px 16px;
+  background: #fbfcfc;
+  scrollbar-gutter: stable;
+}
+
+.paper-details-heading {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 -16px 14px;
+  border-bottom: 1px solid var(--line);
+  padding: 12px 16px;
+  background: rgb(251 252 252 / 96%);
+  backdrop-filter: blur(4px);
+}
+
+.paper-details-heading h3 {
+  margin: 0;
+  font-size: 0.86rem;
+}
+
+.paper-details-close {
+  width: auto;
+  margin: 0;
+  padding: 5px 9px;
+  font-size: 0.72rem;
+}
+
+.paper-details-placeholder {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.paper-details-institutions {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 17px;
+}
+
+.paper-details-content .popup-details {
+  grid-template-columns: minmax(92px, auto) minmax(0, 1fr);
+}
+
+.paper-details-content .popup-details dd,
+.paper-details-content .popup-details a {
+  overflow-wrap: anywhere;
 }
 
 .leaflet-popup-content-wrapper {
@@ -1026,6 +1095,18 @@ footer {
   pointer-events: none;
 }
 
+@media (max-width: 1280px) {
+  .map-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-details {
+    height: auto;
+    min-height: 220px;
+    max-height: min(48vh, 460px);
+  }
+}
+
 @media (max-width: 820px) {
   .site-header {
     align-items: flex-start;
@@ -1061,6 +1142,16 @@ footer {
 
   #map {
     min-height: 480px;
+  }
+
+  .map-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-details {
+    height: auto;
+    min-height: 180px;
+    max-height: min(52vh, 460px);
   }
 }
 
