@@ -14,6 +14,7 @@ import json
 import re
 import sys
 import unicodedata
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
@@ -196,9 +197,14 @@ def paper_record(source: str, source_index: int, row: Dict[str, Any]) -> PaperRe
         title=title,
         year=normalize_year(first_text(row, "publication_year", "year")),
         openalex_id=normalize_openalex(
-            first_text(row, "openalex_url", "openalex_id")
+            first_text(
+                row,
+                "enriched_openalex_url",
+                "openalex_url",
+                "openalex_id",
+            )
         ),
-        doi=normalize_doi(row.get("doi")),
+        doi=normalize_doi(first_text(row, "enriched_doi", "doi")),
         arxiv_id=normalize_arxiv(row.get("arxiv_id")),
         normalized_title=normalize_title(title),
     )
@@ -339,13 +345,13 @@ def audit_coverage(
                 (candidate_index, preview_index),
             )
         if preview is not None:
-            status = "in_public_preview"
+            status = "covered_in_public_preview"
         elif candidate is not None:
-            status = "in_candidates_only"
+            status = "covered_in_candidates_only"
         elif possible:
-            status = "possible_match"
+            status = "possible_pipeline_match"
         else:
-            status = "missing"
+            status = "not_covered_by_pipeline"
         results.append(AuditResult(key_paper, candidate, preview, possible, status))
     return results
 
@@ -388,21 +394,34 @@ def build_report(
     preview_path: Path,
     results: Sequence[AuditResult],
 ) -> str:
-    matched_candidates = [result for result in results if result.candidate_match]
-    matched_preview = [result for result in results if result.preview_match]
-    missing_candidates = [result for result in results if not result.candidate_match]
+    covered_preview = [
+        result
+        for result in results
+        if result.status == "covered_in_public_preview"
+    ]
     candidates_only = [
         result
         for result in results
-        if result.candidate_match and not result.preview_match
+        if result.status == "covered_in_candidates_only"
     ]
-    possible = [result for result in results if result.possible_matches]
+    possible = [
+        result
+        for result in results
+        if result.status == "possible_pipeline_match"
+    ]
+    not_covered = [
+        result
+        for result in results
+        if result.status == "not_covered_by_pipeline"
+    ]
 
     lines = [
         "# Key Paper Coverage Report",
         "",
-        "This audit compares a manual coverage checklist with automatic candidate "
-        "and public-preview data. Checklist membership does not publish a paper.",
+        "This audit compares a manually curated coverage checklist with automatic "
+        "candidate and public-preview data. Coverage status describes only the "
+        "current pipeline: `not_covered_by_pipeline` does not mean that a checklist "
+        "paper is invalid. Checklist membership does not publish a paper.",
         "",
         "## Inputs",
         "",
@@ -415,11 +434,10 @@ def build_report(
         "| Metric | Count |",
         "| --- | ---: |",
         f"| Total key papers | {len(results)} |",
-        f"| Matched in candidate papers | {len(matched_candidates)} |",
-        f"| Matched in public preview | {len(matched_preview)} |",
-        f"| Missing from candidates | {len(missing_candidates)} |",
-        f"| Present in candidates but missing from public preview | {len(candidates_only)} |",
-        f"| Possible title-only matches | {len(possible)} |",
+        f"| `covered_in_public_preview` | {len(covered_preview)} |",
+        f"| `covered_in_candidates_only` | {len(candidates_only)} |",
+        f"| `possible_pipeline_match` | {len(possible)} |",
+        f"| `not_covered_by_pipeline` | {len(not_covered)} |",
         "",
         "## Per-Paper Status",
         "",
@@ -444,15 +462,18 @@ def build_report(
     lines.extend(
         [
             "",
-            "## Missing From Candidates",
+            "## Not Covered by Candidate Retrieval",
             "",
-            *result_list(missing_candidates),
+            *result_list(not_covered),
             "",
-            "## Present in Candidates but Missing From Public Preview",
+            "These checklist papers remain manually curated entries; this section "
+            "only indicates that the current automatic pipeline did not retrieve them.",
+            "",
+            "## Covered in Candidates Only",
             "",
             *result_list(candidates_only),
             "",
-            "## Possible Title-Only Matches",
+            "## Possible Pipeline Matches",
             "",
         ]
     )
@@ -481,8 +502,8 @@ def build_report(
     lines.extend(
         [
             "",
-            "Possible matches require manual confirmation and are not counted as "
-            "covered by either dataset.",
+            "Possible pipeline matches require manual confirmation and are not "
+            "counted as covered by either dataset.",
             "",
         ]
     )
@@ -512,26 +533,15 @@ def write_report(path: Path, report: str) -> None:
 def print_summary(results: Sequence[AuditResult], output: Path) -> None:
     print("Key paper coverage audit:")
     print(f"  Total key papers: {len(results)}")
-    print(
-        "  Matched in candidate papers: "
-        f"{sum(result.candidate_match is not None for result in results)}"
-    )
-    print(
-        "  Matched in public preview: "
-        f"{sum(result.preview_match is not None for result in results)}"
-    )
-    print(
-        "  Missing from candidates: "
-        f"{sum(result.candidate_match is None for result in results)}"
-    )
-    print(
-        "  Candidates missing from public preview: "
-        f"{sum(result.candidate_match is not None and result.preview_match is None for result in results)}"
-    )
-    print(
-        "  Possible title-only matches: "
-        f"{sum(bool(result.possible_matches) for result in results)}"
-    )
+    counts = Counter(result.status for result in results)
+    print("  Pipeline coverage status:")
+    for status in (
+        "covered_in_public_preview",
+        "covered_in_candidates_only",
+        "possible_pipeline_match",
+        "not_covered_by_pipeline",
+    ):
+        print(f"    {status}: {counts[status]}")
     print(f"  Report: {output}")
 
 

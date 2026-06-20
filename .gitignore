@@ -240,3 +240,11 @@ data/processed/institution_resolution_cache.json
 # Local candidate map data stays private; the filtered public preview is trackable.
 web/data/openalex_candidate_map_data.json
 !web/data/public_preview_map_data.json
+# Local manual source documents and temporary OpenAlex enrichment outputs
+data/manual/source_docs/
+data/manual/key_papers_enriched_retry.csv
+data/manual/key_papers_enriched_single_test.csv
+docs/key_paper_enrichment_retry_report.md
+docs/key_paper_enrichment_single_test_report.md
+docs/not_found_in_openalex_review.md
+docs/openalex_single_debug.log
