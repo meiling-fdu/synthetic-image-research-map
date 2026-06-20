@@ -85,6 +85,14 @@ Candidate papers receive a conservative rule-based relevance assessment. `in_sco
 
 The extractor also preserves OpenAlex publication year/date, venue and source type, publisher, publication type, DOI, arXiv identifiers and links, and source URLs. Missing venues remain unknown rather than being inferred, and detected arXiv records are explicitly marked as preprints for review. Manually confirmed alternate versions, such as an arXiv version of a published OpenAlex record, can be recorded in `data/manual/paper_version_overrides.csv`; exporters attach those arXiv links without changing published DOI, venue, year, or paper URL metadata.
 
+Search for additional arXiv versions and write a separate manual-review table:
+
+```bash
+python3 scripts/enrich_papers_arxiv.py --limit 50
+```
+
+The script reuses existing valid arXiv identifiers before querying arXiv, resumes from `data/manual/paper_arxiv_links.csv`, and never changes candidate data. A `not_found_in_arxiv` result means only that this step did not record or find a version, not that none exists.
+
 ### Key paper coverage audit
 
 Import the lightweight coverage checklist from local Word documents in `data/manual/source_docs/`:

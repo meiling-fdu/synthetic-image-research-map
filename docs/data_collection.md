@@ -141,6 +141,16 @@ The candidate paper CSV preserves OpenAlex `publication_year` and `publication_d
 
 arXiv status is detected from OpenAlex arXiv identifiers, `10.48550/arXiv.*` DOI values, arXiv landing/PDF URLs, or an explicit arXiv source. When an identifier is available, the extractor stores both `arxiv_id` and a canonical `arxiv_url`, and sets `is_arxiv_preprint=true`. These signals are automatic source metadata and remain subject to review.
 
+### Offline arXiv-version enrichment
+
+Run `python3 scripts/enrich_papers_arxiv.py` to create the separate manual-review table `data/manual/paper_arxiv_links.csv`. The script does not call OpenAlex. It first reuses valid arXiv identifiers already present in candidate metadata or `key_papers_enriched.csv`; only papers without a known identifier are searched through the arXiv Atom API by normalized title.
+
+Matches are conservative: near-identical titles can be linked directly, while less exact title matches require supporting author overlap. Plausible unsupported matches remain `possible_arxiv_match`. The formal publication year, DOI, and venue are preserved; `arxiv_year` is diagnostic and may be earlier than, equal to, or later than the publication year. Every row remains `manual_review=true`.
+
+The output CSV is also a resume cache. Completed rows are reused by DOI, OpenAlex URL, or normalized title plus publication year unless `--force` is supplied. The script writes incremental atomic snapshots and saves partial results when interrupted or when arXiv returns an error. Use `--max-new-queries N` to cap new arXiv requests in a run; reused completed rows do not count toward that cap. With `--stop-on-rate-limit`, an arXiv HTTP 429 or equivalent throttling response saves the partial batch and exits successfully so the same command can resume later. Other useful review options include `--limit`, `--sleep-seconds`, and `--title-contains`.
+
+“Without known arXiv version” means only that no version is currently recorded or found by this enrichment step; it is not proof that no arXiv version exists.
+
 ### Paper-Author-Institution Extraction
 
 OpenAlex authorships are preserved in source order. The extractor writes that paper-level sequence to `authors_ordered` as a JSON list, using each author display name with the raw author name as fallback. It also writes one candidate affiliation row for every author-institution pair, including stable OpenAlex author and institution IDs, the one-based authorship-array order, source position, location metadata, ROR ID, and institution-specific raw affiliation text when available. Multiple authors at one institution remain separate rows, and authors with multiple institutions receive one row per institution.

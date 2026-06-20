@@ -55,6 +55,30 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 
 Published metadata and arXiv-version metadata are kept separate: a paper may have a formal DOI and venue while also exposing `arxiv_id`, `arxiv_url`, and `has_arxiv_version=true`. The publication year remains the OpenAlex publication year, not an inferred arXiv submission year. These values remain candidate metadata. A missing venue is left empty and flagged for manual review; venue or conference names must never be guessed from a paper title.
 
+## `paper_arxiv_links.csv`
+
+`data/manual/paper_arxiv_links.csv` is a separate manual-review table produced by `scripts/enrich_papers_arxiv.py`. It records known or conservatively suggested arXiv versions without rewriting candidate metadata or proving that an unlinked paper has no arXiv version.
+
+| Column | Definition |
+| --- | --- |
+| `title` | Candidate paper title used for review and title matching. |
+| `year` | Formal publication year; never replaced with the arXiv submission year. |
+| `doi` | Formal publication DOI when available. |
+| `openalex_url` | OpenAlex provenance URL for the candidate paper. |
+| `venue` | Formal publication venue when available. |
+| `authors` | Published author list used as optional match evidence. |
+| `arxiv_id` | Reused or conservatively matched valid arXiv identifier. |
+| `arxiv_url` | Canonical arXiv abstract URL. |
+| `arxiv_year` | Year encoded in the arXiv identifier, retained only as diagnostic metadata. |
+| `match_status` | `linked_to_arxiv`, `possible_arxiv_match`, or `not_found_in_arxiv`. |
+| `title_similarity` | Normalized-title similarity between the paper and the best arXiv candidate. |
+| `author_overlap` | Jaccard overlap of normalized author surname/initial keys when both sources provide authors. |
+| `match_reason` | Human-readable evidence or uncertainty for the status. |
+| `source` | Identifier origin: candidate metadata, key-paper enrichment, arXiv API, or not queried. |
+| `manual_review` | Always `true`; all links and suggestions remain reviewable. |
+
+`not_found_in_arxiv` means only that no arXiv version is currently recorded or was found by this enrichment step. It is not proof that no arXiv version exists.
+
 ### Map-Ready Author Fields
 
 | Field | Definition |
