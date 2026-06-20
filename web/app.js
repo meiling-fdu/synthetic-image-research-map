@@ -72,6 +72,7 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 const markerLayer = L.layerGroup().addTo(map);
+const connectionLayer = L.layerGroup().addTo(map);
 const keywordFilter = document.querySelector("#keyword-filter");
 const taskFilter = document.querySelector("#task-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
@@ -107,6 +108,38 @@ let records = [];
 let currentFilteredRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
+let visibleMarkerEntries = [];
+let activePaperIdentity = "";
+
+const BASE_MARKER_STYLE = {
+  radius: 8,
+  color: "#ffffff",
+  weight: 2,
+  fillOpacity: 0.94,
+  opacity: 1,
+};
+const DIMMED_MARKER_STYLE = {
+  radius: 6,
+  color: "#d2dbe0",
+  weight: 1,
+  fillOpacity: 0.22,
+  opacity: 0.35,
+};
+const HIGHLIGHT_MARKER_STYLE = {
+  radius: 10,
+  color: "#172332",
+  weight: 3,
+  fillOpacity: 1,
+  opacity: 1,
+};
+const CONNECTION_LINE_STYLE = {
+  color: "#172332",
+  weight: 2.5,
+  opacity: 0.62,
+  dashArray: "6 5",
+  lineCap: "round",
+  className: "paper-connection-line",
+};
 
 const INSTITUTION_CSV_COLUMNS = [
   ["title", (record) => recordTitle(record)],
@@ -250,6 +283,43 @@ function recordInstitution(record) {
 
 function recordCountry(record) {
   return String(record.country_code || record.country || "").trim();
+}
+
+function recordLatLng(record) {
+  return L.latLng(Number(record.latitude), Number(record.longitude));
+}
+
+function coordinateKey(latLng) {
+  return `${latLng.lat.toFixed(6)},${latLng.lng.toFixed(6)}`;
+}
+
+function uniqueMarkerLocations(entries) {
+  const seen = new Set();
+  const locations = [];
+  entries.forEach((entry) => {
+    const latLng = recordLatLng(entry.record);
+    if (!Number.isFinite(latLng.lat) || !Number.isFinite(latLng.lng)) {
+      return;
+    }
+    const key = coordinateKey(latLng);
+    if (seen.has(key)) {
+      return;
+    }
+    seen.add(key);
+    locations.push(latLng);
+  });
+  return locations;
+}
+
+function markerStyle(record, state = "base") {
+  const fillColor = TASK_COLORS[record.task] ?? TASK_COLORS.uncertain;
+  if (state === "highlight") {
+    return { ...HIGHLIGHT_MARKER_STYLE, fillColor };
+  }
+  if (state === "dimmed") {
+    return { ...DIMMED_MARKER_STYLE, fillColor };
+  }
+  return { ...BASE_MARKER_STYLE, fillColor };
 }
 
 function normalizedLocationName(value) {
@@ -786,7 +856,68 @@ function updateSummary(visibleRecords) {
   ).length;
 }
 
+function baseMapStatusText(visibleRecords) {
+  const recordLabel = datasetConfig.recordLabel;
+  return visibleRecords.length
+    ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}. Click a marker to highlight institutions for the same paper.`
+    : "No records match the current filters.";
+}
+
+function clearPaperHighlight(updateStatus = true) {
+  activePaperIdentity = "";
+  connectionLayer.clearLayers();
+  visibleMarkerEntries.forEach(({ marker, record }) => {
+    marker.setStyle(markerStyle(record));
+  });
+  if (updateStatus) {
+    mapStatus.classList.toggle("paper-highlight-active", false);
+    mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
+  }
+}
+
+function drawConnectionLines(relatedEntries) {
+  connectionLayer.clearLayers();
+  const locations = uniqueMarkerLocations(relatedEntries);
+  if (locations.length < 2) {
+    return 0;
+  }
+
+  const hub = locations[0];
+  locations.slice(1).forEach((location) => {
+    L.polyline([hub, location], CONNECTION_LINE_STYLE).addTo(connectionLayer);
+  });
+  return locations.length - 1;
+}
+
+function activatePaperHighlight(identity) {
+  activePaperIdentity = identity;
+  const relatedEntries = visibleMarkerEntries.filter(
+    (entry) => entry.identity === identity,
+  );
+  if (!relatedEntries.length) {
+    clearPaperHighlight();
+    return;
+  }
+
+  visibleMarkerEntries.forEach(({ marker, record, identity: markerIdentity }) => {
+    marker.setStyle(markerStyle(
+      record,
+      markerIdentity === identity ? "highlight" : "dimmed",
+    ));
+  });
+
+  const lineCount = drawConnectionLines(relatedEntries);
+  relatedEntries.forEach(({ marker }) => marker.bringToFront());
+  const paperTitle = recordTitle(relatedEntries[0].record) || "Selected paper";
+  mapStatus.classList.toggle("error", false);
+  mapStatus.classList.toggle("paper-highlight-active", true);
+  mapStatus.textContent = lineCount
+    ? `Highlighted ${relatedEntries.length} visible institution records for “${paperTitle}”.`
+    : `Highlighted the only visible institution record for “${paperTitle}”.`;
+}
+
 function renderRecords() {
+  clearPaperHighlight(false);
   const keywordTerms = normalizedSearchText(keywordFilter.value)
     .trim()
     .split(/\s+/)
@@ -823,28 +954,28 @@ function renderRecords() {
   currentFilteredRecords = visibleRecords;
 
   markerLayer.clearLayers();
+  connectionLayer.clearLayers();
+  visibleMarkerEntries = [];
 
   visibleRecords.forEach((record) => {
-    L.circleMarker([record.latitude, record.longitude], {
-      radius: 8,
-      color: "#ffffff",
-      weight: 2,
-      fillColor: TASK_COLORS[record.task] ?? TASK_COLORS.uncertain,
-      fillOpacity: 0.94,
-    })
+    const identity = paperIdentity(record);
+    const marker = L.circleMarker(
+      [record.latitude, record.longitude],
+      markerStyle(record),
+    )
       .bindPopup(popupContent(record), { maxWidth: 320 })
       .bindTooltip(record.institution, { direction: "top", offset: [0, -7] })
+      .on("click", () => activatePaperHighlight(identity))
       .addTo(markerLayer);
+    visibleMarkerEntries.push({ record, marker, identity });
   });
 
   updateSummary(visibleRecords);
   updateDatasetStatistics(visibleRecords);
   renderResults(visibleRecords);
   mapStatus.classList.toggle("error", false);
-  const recordLabel = datasetConfig.recordLabel;
-  mapStatus.textContent = visibleRecords.length
-    ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}`
-    : "No records match the current filters.";
+  mapStatus.classList.toggle("paper-highlight-active", false);
+  mapStatus.textContent = baseMapStatusText(visibleRecords);
 }
 
 function configureYearRange() {
