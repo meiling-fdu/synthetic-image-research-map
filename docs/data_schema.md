@@ -60,7 +60,7 @@ Published metadata and arXiv-version metadata are kept separate: a paper may hav
 
 ## `paper_arxiv_links.csv`
 
-`data/manual/paper_arxiv_links.csv` is a separate manual-review table produced by `scripts/enrich_papers_arxiv.py`. It records known or conservatively suggested arXiv versions without rewriting candidate metadata or proving that an unlinked paper has no arXiv version.
+`data/manual/paper_arxiv_links.csv` is a separate, partial and resumable manual-review table produced by `scripts/enrich_papers_arxiv.py`. It records known or conservatively suggested arXiv versions without rewriting candidate metadata or proving that an unlinked paper has no arXiv version. The file may contain only the portion of the candidate collection processed so far.
 
 | Column | Definition |
 | --- | --- |
@@ -73,14 +73,16 @@ Published metadata and arXiv-version metadata are kept separate: a paper may hav
 | `arxiv_id` | Reused or conservatively matched valid arXiv identifier. |
 | `arxiv_url` | Canonical arXiv abstract URL. |
 | `arxiv_year` | Year encoded in the arXiv identifier, retained only as diagnostic metadata. |
-| `match_status` | `linked_to_arxiv`, `possible_arxiv_match`, or `not_found_in_arxiv`. |
+| `match_status` | `linked_to_arxiv`, `possible_arxiv_match`, `not_searched`, or `not_found_in_arxiv`. |
 | `title_similarity` | Normalized-title similarity between the paper and the best arXiv candidate. |
 | `author_overlap` | Jaccard overlap of normalized author surname/initial keys when both sources provide authors. |
 | `match_reason` | Human-readable evidence or uncertainty for the status. |
 | `source` | Identifier origin: candidate metadata, key-paper enrichment, arXiv API, or not queried. |
 | `manual_review` | Always `true`; all links and suggestions remain reviewable. |
 
-`not_found_in_arxiv` means only that no arXiv version is currently recorded or was found by this enrichment step. It is not proof that no arXiv version exists.
+`not_searched` means that partial enrichment has not queried the row yet. `not_found_in_arxiv` means only that the current query returned no result. Neither status is proof that no arXiv version exists. In exports, "without known arXiv version" therefore means only that the project does not currently hold an arXiv ID or URL for the paper.
+
+Candidate-map and public-preview exports apply only `linked_to_arxiv` rows that contain an arXiv ID or URL. They match by OpenAlex URL when the enrichment row provides one, otherwise by DOI, otherwise by normalized title plus publication year. The resulting `arxiv_id`, `arxiv_url`, and `arxiv_year` fields describe a known arXiv version and do not replace formal publication year, DOI, venue, OpenAlex URL, or `publication_type`. `has_arxiv_version` means an ID or URL is known regardless of formal publication. "Preprint-only" instead describes a record whose publication itself is a preprint without a known formal venue; it is never inferred merely from the existence of an arXiv version.
 
 ### Map-Ready Author Fields
 

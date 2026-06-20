@@ -25,6 +25,7 @@ except ImportError:  # Direct execution from the scripts directory.
 DEFAULT_INPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_OUTPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
+DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_MAX_RECORDS = 200
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
@@ -58,6 +59,7 @@ PUBLIC_FIELDS = (
     "doi",
     "arxiv_id",
     "arxiv_url",
+    "arxiv_year",
     "has_arxiv_version",
     "primary_url",
     "landing_page_url",
@@ -97,6 +99,16 @@ PAPER_VERSION_OVERRIDE_COLUMNS = {
     "arxiv_id",
     "arxiv_url",
     "notes",
+}
+PAPER_ARXIV_LINK_COLUMNS = {
+    "title",
+    "year",
+    "doi",
+    "openalex_url",
+    "arxiv_id",
+    "arxiv_url",
+    "arxiv_year",
+    "match_status",
 }
 
 
@@ -216,6 +228,17 @@ def normalize_title(value: Any) -> str:
     return " ".join(normalized.replace("_", " ").split())
 
 
+def parse_year(value: Any) -> Optional[int]:
+    cleaned = clean_text(value)
+    if not cleaned:
+        return None
+    try:
+        year = int(cleaned)
+    except ValueError:
+        return None
+    return year if 0 < year < 10000 else None
+
+
 def institution_name(record: Dict[str, Any]) -> str:
     return clean_text(
         record.get("institution") or record.get("institution_name")
@@ -255,6 +278,24 @@ def read_paper_version_overrides(
             reader = csv.DictReader(handle)
             fieldnames = set(reader.fieldnames or [])
             missing = sorted(PAPER_VERSION_OVERRIDE_COLUMNS - fieldnames)
+            if missing:
+                raise PreviewExportError(
+                    f"{path} is missing required columns: {', '.join(missing)}"
+                )
+            return [dict(row) for row in reader]
+    except OSError as error:
+        raise PreviewExportError(f"Could not read {path}: {error}") from error
+
+
+def read_paper_arxiv_links(
+    path: Path = DEFAULT_PAPER_ARXIV_LINKS,
+) -> List[Dict[str, str]]:
+    if not path.exists():
+        return []
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            missing = sorted(PAPER_ARXIV_LINK_COLUMNS - set(reader.fieldnames or []))
             if missing:
                 raise PreviewExportError(
                     f"{path} is missing required columns: {', '.join(missing)}"
@@ -352,6 +393,128 @@ def apply_paper_version_overrides(
     return applied
 
 
+def arxiv_link_key(row: Dict[str, Any]) -> Optional[Tuple[str, Any]]:
+    openalex_key = normalize_identifier_url(row.get("openalex_url"))
+    if openalex_key:
+        return "openalex", openalex_key
+    doi_key = normalize_doi(row.get("doi"))
+    if doi_key:
+        return "doi", doi_key
+    title_key = normalize_title(row.get("title"))
+    year = parse_year(row.get("year"))
+    if title_key and year is not None:
+        return "title_year", (title_key, year)
+    return None
+
+
+def record_arxiv_keys(record: Dict[str, Any]) -> List[Tuple[str, Any]]:
+    keys: List[Tuple[str, Any]] = []
+    openalex_key = normalize_identifier_url(record.get("openalex_url"))
+    if openalex_key:
+        keys.append(("openalex", openalex_key))
+    doi_key = normalize_doi(record.get("doi"))
+    if doi_key:
+        keys.append(("doi", doi_key))
+    title_key = normalize_title(record.get("title"))
+    year = parse_year(record.get("publication_year") or record.get("year"))
+    if title_key and year is not None:
+        keys.append(("title_year", (title_key, year)))
+    return keys
+
+
+def normalize_arxiv_id(value: Any) -> str:
+    normalized = clean_text(value)
+    normalized = re.sub(
+        r"^https?://(?:www\.)?arxiv\.org/(?:abs|pdf)/",
+        "",
+        normalized,
+        flags=re.IGNORECASE,
+    )
+    return re.sub(r"\.pdf$", "", normalized, flags=re.IGNORECASE).casefold()
+
+
+def arxiv_values_equivalent(left: Any, right: Any) -> bool:
+    left_id = normalize_arxiv_id(left)
+    right_id = normalize_arxiv_id(right)
+    if not left_id or not right_id:
+        return False
+    return re.sub(r"v\d+$", "", left_id) == re.sub(r"v\d+$", "", right_id)
+
+
+def merge_arxiv_value(record: Dict[str, Any], field: str, value: str) -> None:
+    existing = clean_text(record.get(field))
+    if not value:
+        return
+    if not existing:
+        record[field] = value
+    elif arxiv_values_equivalent(existing, value):
+        if field == "arxiv_id" and "v" not in existing.casefold() and re.search(
+            r"v\d+$", value, flags=re.IGNORECASE
+        ):
+            record[field] = value
+
+
+def arxiv_enrichment_is_compatible(
+    record: Dict[str, Any], arxiv_id: str, arxiv_url: str
+) -> bool:
+    existing = clean_text(record.get("arxiv_id")) or clean_text(
+        record.get("arxiv_url")
+    )
+    incoming = arxiv_id or arxiv_url
+    return not existing or arxiv_values_equivalent(existing, incoming)
+
+
+def apply_paper_arxiv_links(
+    records: Sequence[Dict[str, Any]],
+    rows: Sequence[Dict[str, str]],
+) -> Dict[str, int]:
+    linked_rows = [
+        row
+        for row in rows
+        if clean_text(row.get("match_status")).casefold() == "linked_to_arxiv"
+    ]
+    by_key: Dict[Tuple[str, Any], List[Tuple[int, Dict[str, str]]]] = {}
+    for index, row in enumerate(linked_rows):
+        key = arxiv_link_key(row)
+        has_arxiv_value = clean_text(row.get("arxiv_id")) or clean_text(
+            row.get("arxiv_url")
+        )
+        if key is not None and has_arxiv_value:
+            by_key.setdefault(key, []).append((index, row))
+    matched_indexes = set()
+    applied_indexes = set()
+    for record in records:
+        matches = next(
+            (by_key[key] for key in record_arxiv_keys(record) if key in by_key),
+            [],
+        )
+        if not matches:
+            continue
+        for row_index, row in matches:
+            matched_indexes.add(row_index)
+            arxiv_id = clean_text(row.get("arxiv_id"))
+            arxiv_url = clean_text(row.get("arxiv_url"))
+            if arxiv_id and not arxiv_url:
+                arxiv_url = f"https://arxiv.org/abs/{arxiv_id}"
+            if not arxiv_enrichment_is_compatible(record, arxiv_id, arxiv_url):
+                continue
+            applied_indexes.add(row_index)
+            merge_arxiv_value(record, "arxiv_id", arxiv_id)
+            merge_arxiv_value(record, "arxiv_url", arxiv_url)
+            if not clean_text(record.get("arxiv_year")):
+                record["arxiv_year"] = parse_year(row.get("arxiv_year"))
+            record["has_arxiv_version"] = bool(
+                clean_text(record.get("arxiv_id"))
+                or clean_text(record.get("arxiv_url"))
+            )
+    return {
+        "arxiv_enrichment_rows_loaded": len(rows),
+        "linked_to_arxiv_rows_available": len(linked_rows),
+        "arxiv_links_applied": len(applied_indexes),
+        "unmatched_linked_to_arxiv_rows": len(linked_rows) - len(matched_indexes),
+    }
+
+
 def read_candidate_records(path: Path) -> List[Dict[str, Any]]:
     try:
         with path.open("r", encoding="utf-8") as handle:
@@ -375,12 +538,14 @@ def build_preview(
     include_out_of_scope: bool = False,
     include_uncertain: bool = False,
     include_missing_location: bool = False,
+    paper_arxiv_links: Sequence[Dict[str, str]] = (),
 ) -> Tuple[Dict[str, Any], Dict[str, int]]:
     records = [dict(record) for record in records]
     paper_version_overrides_applied = apply_paper_version_overrides(
         records,
         paper_version_overrides,
     )
+    arxiv_enrichment_summary = apply_paper_arxiv_links(records, paper_arxiv_links)
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
     below_confidence = 0
@@ -464,6 +629,7 @@ def build_preview(
         "records_eligible_before_limit": eligible_records,
         "records_exported": len(selected),
         "paper_version_overrides_applied": paper_version_overrides_applied,
+        **arxiv_enrichment_summary,
     }
     return {"metadata": dict(PUBLIC_METADATA), "records": selected}, summary
 
@@ -520,6 +686,16 @@ def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
         "  Paper-version overrides applied: "
         f"{summary['paper_version_overrides_applied']}"
     )
+    print(f"  arXiv enrichment rows loaded: {summary['arxiv_enrichment_rows_loaded']}")
+    print(
+        "  linked_to_arxiv rows available: "
+        f"{summary['linked_to_arxiv_rows_available']}"
+    )
+    print(f"  arXiv links applied: {summary['arxiv_links_applied']}")
+    print(
+        "  Unmatched linked_to_arxiv rows: "
+        f"{summary['unmatched_linked_to_arxiv_rows']}"
+    )
     print(f"  Downstream rows processed: {summary['records_exported']}")
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
@@ -529,6 +705,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     try:
         records = read_candidate_records(args.input)
         paper_version_overrides = read_paper_version_overrides()
+        paper_arxiv_links = read_paper_arxiv_links()
         payload, summary = build_preview(
             records,
             args.max_records,
@@ -538,6 +715,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.include_out_of_scope,
             args.include_uncertain,
             args.include_missing_location,
+            paper_arxiv_links,
         )
         if not args.dry_run:
             write_json(args.output, payload)
