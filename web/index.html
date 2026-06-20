@@ -150,7 +150,7 @@
             <dd id="dataset-combined-count">0</dd>
           </div>
           <div id="dataset-preprint-stat">
-            <dt>arXiv/preprint records</dt>
+            <dt>Preprint-only records</dt>
             <dd id="dataset-preprint-count">0</dd>
           </div>
         </dl>
@@ -178,6 +178,32 @@
                 <option value="detection">Detection</option>
                 <option value="source_attribution">Source attribution</option>
                 <option value="detection_and_source_attribution">Detection and source attribution</option>
+              </select>
+            </label>
+
+            <label for="sort-control">
+              Sort
+              <select id="sort-control" disabled>
+                <option value="year-desc">Year: newest first</option>
+                <option value="year-asc">Year: oldest first</option>
+                <option value="venue-asc">Venue/source: A-Z</option>
+                <option value="title-asc">Title: A-Z</option>
+              </select>
+            </label>
+
+            <label for="venue-filter">
+              Venue/source
+              <select id="venue-filter" disabled>
+                <option value="all">All venues/sources</option>
+              </select>
+            </label>
+
+            <label for="preprint-filter">
+              Preprint status
+              <select id="preprint-filter" disabled>
+                <option value="all">All</option>
+                <option value="preprints">Preprint-only records</option>
+                <option value="non-preprints">Published/venue records</option>
               </select>
             </label>
 

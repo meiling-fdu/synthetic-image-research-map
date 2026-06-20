@@ -42,6 +42,7 @@ PAPER_COLUMNS = (
     "openalex_url",
     "arxiv_id",
     "arxiv_url",
+    "has_arxiv_version",
     "is_arxiv_preprint",
     "in_scope",
     "relevance_score",
@@ -471,6 +472,13 @@ def normalize_ror(value: Any) -> str:
     return re.sub(r"^https?://ror\.org/", "", ror, flags=re.IGNORECASE)
 
 
+MODERN_ARXIV_ID_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$", re.IGNORECASE)
+LEGACY_ARXIV_ID_RE = re.compile(
+    r"^[a-z-]+(?:\.[A-Z]{2})?/\d{7}(?:v\d+)?$",
+    re.IGNORECASE,
+)
+
+
 def normalize_arxiv_id(value: Any) -> str:
     candidate = clean_text(value)
     if not candidate:
@@ -483,9 +491,15 @@ def normalize_arxiv_id(value: Any) -> str:
     )
     if doi_match:
         candidate = doi_match.group(1)
+    elif re.match(
+        r"^(?:https?://(?:dx\.)?doi\.org/)?10\.",
+        candidate,
+        flags=re.IGNORECASE,
+    ):
+        return ""
 
     url_match = re.search(
-        r"https?://(?:www\.)?arxiv\.org/(?:abs|pdf)/([^?#]+)",
+        r"https?://(?:www\.)?arxiv\.org/(?:abs|pdf)/([^?#\s]+)",
         candidate,
         flags=re.IGNORECASE,
     )
@@ -495,15 +509,21 @@ def normalize_arxiv_id(value: Any) -> str:
     candidate = re.sub(r"^arxiv:\s*", "", candidate, flags=re.IGNORECASE)
     candidate = candidate.split("?", 1)[0].split("#", 1)[0]
     candidate = re.sub(r"\.pdf$", "", candidate, flags=re.IGNORECASE)
-    return candidate.strip(" /")
+    candidate = candidate.strip(" /")
+    if MODERN_ARXIV_ID_RE.fullmatch(candidate) or LEGACY_ARXIV_ID_RE.fullmatch(candidate):
+        return candidate
+    return ""
 
 
 def work_locations(work: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Return the primary location first, followed by other OpenAlex locations."""
+    """Return primary/best locations first, followed by other OpenAlex locations."""
     locations: List[Dict[str, Any]] = []
     primary_location = work.get("primary_location")
     if isinstance(primary_location, dict):
         locations.append(primary_location)
+    best_oa_location = work.get("best_oa_location")
+    if isinstance(best_oa_location, dict):
+        locations.append(best_oa_location)
     source_locations = work.get("locations")
     if isinstance(source_locations, list):
         locations.extend(
@@ -557,16 +577,35 @@ def extract_venue_metadata(work: Dict[str, Any]) -> Tuple[str, str, str]:
     return venue_name, venue_type, publisher
 
 
-def extract_arxiv_metadata(work: Dict[str, Any], doi: str) -> Tuple[str, str, bool]:
+def arxiv_source_values(location: Dict[str, Any]) -> List[Any]:
+    source = location_source(location)
+    ids = source.get("ids") if isinstance(source.get("ids"), dict) else {}
+    return [
+        source.get("display_name"),
+        source.get("id"),
+        source.get("homepage_url"),
+        source.get("works_api_url"),
+        source.get("host_organization"),
+        source.get("host_organization_lineage"),
+        ids.get("openalex"),
+        ids.get("wikidata"),
+        ids.get("issn_l"),
+    ]
+
+
+def extract_arxiv_metadata(work: Dict[str, Any], doi: str) -> Tuple[str, str, bool, bool]:
     ids = work.get("ids") if isinstance(work.get("ids"), dict) else {}
     locations = work_locations(work)
     url_candidates = [
         work.get("primary_url"),
         work.get("landing_page_url"),
+        ids.get("openalex"),
+        ids.get("doi"),
         *(location.get("landing_page_url") for location in locations),
         *(location.get("pdf_url") for location in locations),
+        *(value for location in locations for value in arxiv_source_values(location)),
     ]
-    id_candidates = [ids.get("arxiv")]
+    id_candidates = [ids.get("arxiv"), ids.get("doi"), doi]
     if doi.casefold().startswith("10.48550/arxiv."):
         id_candidates.append(doi)
     id_candidates.extend(
@@ -579,16 +618,18 @@ def extract_arxiv_metadata(work: Dict[str, Any], doi: str) -> Tuple[str, str, bo
         *(normalize_arxiv_id(candidate) for candidate in id_candidates)
     )
     source_is_arxiv = any(
-        clean_text(location_source(location).get("display_name")).casefold() == "arxiv"
+        "arxiv" in clean_text(value).casefold()
         for location in locations
+        for value in arxiv_source_values(location)
     )
     has_arxiv_url = any(
         re.search(r"arxiv\.org/(?:abs|pdf)/", clean_text(value), re.IGNORECASE)
         for value in url_candidates
     )
+    has_arxiv_version = bool(arxiv_id)
     is_arxiv_preprint = bool(arxiv_id or source_is_arxiv or has_arxiv_url)
     arxiv_url = f"https://arxiv.org/abs/{arxiv_id}" if arxiv_id else ""
-    return arxiv_id, arxiv_url, is_arxiv_preprint
+    return arxiv_id, arxiv_url, has_arxiv_version, is_arxiv_preprint
 
 
 def paper_dedup_key(work: Dict[str, Any], source_marker: str) -> str:
@@ -643,7 +684,9 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     doi = normalize_doi(first_nonempty(work.get("doi"), ids.get("doi")))
     landing_page_url = extract_landing_page_url(work)
     openalex_url = openalex_id
-    arxiv_id, arxiv_url, is_arxiv_preprint = extract_arxiv_metadata(work, doi)
+    arxiv_id, arxiv_url, has_arxiv_version, is_arxiv_preprint = (
+        extract_arxiv_metadata(work, doi)
+    )
     primary_url = first_nonempty(
         work.get("primary_url"),
         landing_page_url,
@@ -683,6 +726,7 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
         "openalex_url": openalex_url,
         "arxiv_id": arxiv_id,
         "arxiv_url": arxiv_url,
+        "has_arxiv_version": bool_text(has_arxiv_version),
         "is_arxiv_preprint": bool_text(is_arxiv_preprint),
         "in_scope": bool_text(in_scope),
         "relevance_score": str(relevance_score),
@@ -743,6 +787,8 @@ def merge_paper_rows(existing: Dict[str, str], incoming: Dict[str, str]) -> None
         "is_survey",
         "is_deepfake_related",
         "is_image_editing_related",
+        "has_arxiv_version",
+        "is_arxiv_preprint",
     ):
         existing[boolean_column] = bool_text(
             existing[boolean_column] == "true" or incoming[boolean_column] == "true"

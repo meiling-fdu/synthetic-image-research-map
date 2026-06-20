@@ -75,6 +75,9 @@ const markerLayer = L.layerGroup().addTo(map);
 const connectionLayer = L.layerGroup().addTo(map);
 const keywordFilter = document.querySelector("#keyword-filter");
 const taskFilter = document.querySelector("#task-filter");
+const sortControl = document.querySelector("#sort-control");
+const venueFilter = document.querySelector("#venue-filter");
+const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
 const resolutionFilter = document.querySelector("#resolution-filter");
@@ -146,7 +149,7 @@ const INSTITUTION_CSV_COLUMNS = [
   ["authors", (record) => recordAuthors(record).join("; ")],
   ["institution_authors", (record) => recordInstitutionAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
-  ["venue_name", (record) => record.venue_name || record.venue || ""],
+  ["venue_name", (record) => getRecordVenue(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
   ["institution_name", (record) => recordInstitution(record)],
@@ -169,7 +172,7 @@ const PAPER_CSV_COLUMNS = [
   ["title", (record) => recordTitle(record)],
   ["authors", (record) => recordAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
-  ["venue_name", (record) => record.venue_name || record.venue || ""],
+  ["venue_name", (record) => getRecordVenue(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
   ["institutions", (record) => record.aggregated_institutions.join("; ")],
@@ -391,6 +394,74 @@ function recordPaperUrl(record) {
   );
 }
 
+function getRecordVenue(record) {
+  return String(
+    record.venue_name ||
+    record.venue ||
+    record.source_name ||
+    record.source ||
+    record.host_venue ||
+    record.host_venue_name ||
+    record.primary_location?.source?.display_name ||
+    "",
+  ).trim();
+}
+
+function venueFilterValue(record) {
+  const venue = getRecordVenue(record);
+  return venue ? venue.toLocaleLowerCase() : "__unknown__";
+}
+
+function venueDisplayLabel(record) {
+  return getRecordVenue(record) || "Unknown venue/source";
+}
+
+function getRecordYear(record) {
+  const value = record.publication_year ?? record.year;
+  const year = Number(value);
+  return Number.isInteger(year) ? year : null;
+}
+
+function compareTextValues(first, second) {
+  return String(first || "").localeCompare(String(second || ""), undefined, {
+    sensitivity: "base",
+    numeric: true,
+  });
+}
+
+function compareRecordsForSort(first, second, sortMode) {
+  const firstYear = getRecordYear(first);
+  const secondYear = getRecordYear(second);
+  if (sortMode === "year-asc" || sortMode === "year-desc") {
+    const direction = sortMode === "year-asc" ? 1 : -1;
+    if (firstYear !== null && secondYear !== null && firstYear !== secondYear) {
+      return (firstYear - secondYear) * direction;
+    }
+    if (firstYear !== null && secondYear === null) {
+      return -1;
+    }
+    if (firstYear === null && secondYear !== null) {
+      return 1;
+    }
+    return compareTextValues(recordTitle(first), recordTitle(second));
+  }
+
+  if (sortMode === "venue-asc") {
+    const firstVenue = getRecordVenue(first);
+    const secondVenue = getRecordVenue(second);
+    if (firstVenue && !secondVenue) {
+      return -1;
+    }
+    if (!firstVenue && secondVenue) {
+      return 1;
+    }
+    const venueOrder = compareTextValues(firstVenue, secondVenue);
+    return venueOrder || compareTextValues(recordTitle(first), recordTitle(second));
+  }
+
+  return compareTextValues(recordTitle(first), recordTitle(second));
+}
+
 function uniqueTextValues(values) {
   const seen = new Set();
   const unique = [];
@@ -455,9 +526,7 @@ function aggregateUniquePapers(institutionRecords) {
 }
 
 function publicationYear(record) {
-  const value = record.publication_year ?? record.year;
-  const year = Number(value);
-  return Number.isInteger(year) ? year : null;
+  return getRecordYear(record);
 }
 
 function normalizedSearchText(value) {
@@ -499,17 +568,65 @@ function normalizedSetSize(values) {
 }
 
 function hasPreprintMetadata(record) {
-  return ["is_arxiv_preprint", "arxiv_id", "arxiv_url"].some((field) =>
-    Object.hasOwn(record, field),
-  );
+  return hasPreprintSignal(record) || [
+    "publication_type",
+    "source_type",
+    "venue_type",
+  ].some((field) => Object.hasOwn(record, field));
 }
 
 function isArxivPreprint(record) {
+  return hasPreprintSignal(record);
+}
+
+function hasPreprintSignal(record) {
+  const text = [
+    record.publication_type,
+    record.source_type,
+    record.venue_type,
+    getRecordVenue(record),
+    record.arxiv_id,
+    record.arxiv_url,
+  ].join(" ").toLocaleLowerCase();
   return (
+    booleanValue(record.has_arxiv_version) ||
     booleanValue(record.is_arxiv_preprint) ||
     Boolean(String(record.arxiv_id || "").trim()) ||
-    Boolean(String(record.arxiv_url || "").trim())
+    Boolean(String(record.arxiv_url || "").trim()) ||
+    /\b(?:arxiv|preprint|pre-print)\b/.test(text)
   );
+}
+
+function hasPublishedVenue(record) {
+  const venue = getRecordVenue(record);
+  const normalizedVenue = venue
+    .normalize("NFKC")
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+  if (!normalizedVenue) {
+    return false;
+  }
+  const missingVenueValues = new Set([
+    "unknown",
+    "unknown venue",
+    "unknown source",
+    "unknown venue source",
+    "arxiv",
+    "preprint",
+    "pre print",
+    "openalex",
+    "none",
+    "null",
+    "nan",
+    "n a",
+    "na",
+  ]);
+  return !missingVenueValues.has(normalizedVenue);
+}
+
+function isPreprintOnlyRecord(record) {
+  return hasPreprintSignal(record) && !hasPublishedVenue(record);
 }
 
 function updateDatasetStatistics(datasetRecords) {
@@ -534,7 +651,7 @@ function updateDatasetStatistics(datasetRecords) {
   const supportsPreprintMetadata = records.some(hasPreprintMetadata);
   datasetPreprintStat.hidden = !supportsPreprintMetadata;
   datasetPreprintCount.textContent = supportsPreprintMetadata
-    ? datasetRecords.filter(isArxivPreprint).length
+    ? datasetRecords.filter(isPreprintOnlyRecord).length
     : 0;
 }
 
@@ -654,7 +771,7 @@ function popupContent(record) {
     ? `<dt>Institution authors</dt><dd>${institutionAuthors.map(escapeHtml).join(", ")}</dd>`
     : "";
   const year = record.publication_year ?? record.year ?? "Unknown";
-  const venue = record.venue_name || record.venue || "unknown";
+  const venue = getRecordVenue(record) || "unknown";
   const publicationType = record.publication_type || "Unknown";
   const location = recordLocation(record) || "Unknown";
   const subtaskRow = record.subtask
@@ -680,7 +797,7 @@ function popupContent(record) {
     ? `<dt>Paper</dt><dd>${externalLink(paperUrl, "Open record")}</dd>`
     : "";
   const isArxivPreprint =
-    booleanValue(record.is_arxiv_preprint) || Boolean(record.arxiv_id || arxivUrl);
+    hasPreprintSignal(record) || Boolean(record.arxiv_id || arxivUrl);
   const preprintBadge = isArxivPreprint
     ? '<span class="popup-badge confidence-unresolved">arXiv / preprint</span>'
     : "";
@@ -738,7 +855,7 @@ function popupContent(record) {
 function resultContent(record) {
   const title = recordTitle(record);
   const year = publicationYear(record) ?? "Unknown";
-  const venue = record.venue_name || record.venue || "";
+  const venue = getRecordVenue(record);
   const isPaperView = resultsView === "papers";
   const institution = recordInstitution(record) || "Unknown institution";
   const location = recordLocation(record);
@@ -923,6 +1040,8 @@ function renderRecords() {
     .split(/\s+/)
     .filter(Boolean);
   const selectedTask = taskFilter.value;
+  const selectedVenue = venueFilter.value;
+  const selectedPreprint = preprintFilter.value;
   const minimumYear = yearFilterValue(minYearFilter);
   const maximumYear = yearFilterValue(maxYearFilter);
   const selectedResolution = resolutionFilter.value;
@@ -931,6 +1050,13 @@ function renderRecords() {
     const searchableText = recordSearchText(record);
     const matchesKeyword = keywordTerms.every((term) => searchableText.includes(term));
     const matchesTask = selectedTask === "all" || record.task === selectedTask;
+    const matchesVenue =
+      selectedVenue === "all" || venueFilterValue(record) === selectedVenue;
+    const isPreprintOnly = isPreprintOnlyRecord(record);
+    const matchesPreprint =
+      selectedPreprint === "all" ||
+      (selectedPreprint === "preprints" && isPreprintOnly) ||
+      (selectedPreprint === "non-preprints" && !isPreprintOnly);
     const year = publicationYear(record);
     const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
     const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
@@ -944,12 +1070,14 @@ function renderRecords() {
     return (
       matchesKeyword &&
       matchesTask &&
+      matchesVenue &&
+      matchesPreprint &&
       matchesMinimumYear &&
       matchesMaximumYear &&
       matchesResolution &&
       matchesReview
     );
-  });
+  }).sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
 
   currentFilteredRecords = visibleRecords;
 
@@ -993,9 +1121,44 @@ function configureYearRange() {
   maxYearFilter.placeholder = String(latestYear);
 }
 
+function configureVenueFilter() {
+  const venuesByValue = new Map();
+  let hasUnknownVenue = false;
+  records.forEach((record) => {
+    const value = venueFilterValue(record);
+    if (value === "__unknown__") {
+      hasUnknownVenue = true;
+      return;
+    }
+    if (!venuesByValue.has(value)) {
+      venuesByValue.set(value, venueDisplayLabel(record));
+    }
+  });
+
+  const options = [["all", "All venues/sources"]];
+  [...venuesByValue.entries()]
+    .sort((first, second) => compareTextValues(first[1], second[1]))
+    .forEach(([value, label]) => options.push([value, label]));
+  if (hasUnknownVenue) {
+    options.push(["__unknown__", "Unknown venue/source"]);
+  }
+
+  venueFilter.replaceChildren();
+  options.forEach(([value, label]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    venueFilter.append(option);
+  });
+  venueFilter.value = "all";
+}
+
 function enableControls() {
   keywordFilter.disabled = false;
   taskFilter.disabled = false;
+  sortControl.disabled = false;
+  venueFilter.disabled = false;
+  preprintFilter.disabled = false;
   minYearFilter.disabled = false;
   maxYearFilter.disabled = false;
   const supportsResolution = records.some(hasResolutionMetadata);
@@ -1023,6 +1186,9 @@ function showDatasetMessage(message, isError = false) {
   currentFilteredRecords = [];
   currentDisplayedResults = [];
   markerLayer.clearLayers();
+  connectionLayer.clearLayers();
+  visibleMarkerEntries = [];
+  activePaperIdentity = "";
   updateSummary(records);
   updateDatasetStatistics(records);
   renderResults(records);
@@ -1140,6 +1306,7 @@ function displayDataset(normalizedData) {
   records = normalizedData.records;
   displayMetadataWarning(normalizedData.metadata);
   configureYearRange();
+  configureVenueFilter();
   enableControls();
   renderRecords();
 }
@@ -1200,6 +1367,9 @@ async function loadData() {
 
 keywordFilter.addEventListener("input", renderRecords);
 taskFilter.addEventListener("change", renderRecords);
+sortControl.addEventListener("change", renderRecords);
+venueFilter.addEventListener("change", renderRecords);
+preprintFilter.addEventListener("change", renderRecords);
 minYearFilter.addEventListener("input", renderRecords);
 maxYearFilter.addEventListener("input", renderRecords);
 resolutionFilter.addEventListener("change", renderRecords);
@@ -1211,6 +1381,9 @@ resultsViewButtons.forEach((button) => {
 resetButton.addEventListener("click", () => {
   keywordFilter.value = "";
   taskFilter.value = "all";
+  sortControl.value = "year-desc";
+  venueFilter.value = "all";
+  preprintFilter.value = "all";
   minYearFilter.value = "";
   maxYearFilter.value = "";
   resolutionFilter.value = "all";
