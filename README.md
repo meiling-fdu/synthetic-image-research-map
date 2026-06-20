@@ -83,7 +83,7 @@ Public map records count Hong Kong, Macau/Macao, and Taiwan under China while re
 
 Candidate papers receive a conservative rule-based relevance assessment. `in_scope=true` requires explicit AI-generated/synthetic image context plus detection or generated-image source-attribution context. Broad model, feature, saliency, explainable-AI, authorship, camera-model, sensor, and generic attribution are excluded, as are synthetic-data applications such as augmentation, medical diagnosis, downstream recognition, and remote sensing. All candidates remain auditable, but only scoped records proceed downstream.
 
-The extractor also preserves OpenAlex publication year/date, venue and source type, publisher, publication type, DOI, arXiv identifiers and links, and source URLs. Missing venues remain unknown rather than being inferred, and detected arXiv records are explicitly marked as preprints for review.
+The extractor also preserves OpenAlex publication year/date, venue and source type, publisher, publication type, DOI, arXiv identifiers and links, and source URLs. Missing venues remain unknown rather than being inferred, and detected arXiv records are explicitly marked as preprints for review. Manually confirmed alternate versions, such as an arXiv version of a published OpenAlex record, can be recorded in `data/manual/paper_version_overrides.csv`; exporters attach those arXiv links without changing published DOI, venue, year, or paper URL metadata.
 
 ### Key paper coverage audit
 

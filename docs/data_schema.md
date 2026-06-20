@@ -47,12 +47,13 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `doi` | Canonical DOI without a resolver URL when available. |
 | `arxiv_id` | arXiv identifier detected from source identifiers, a `10.48550/arXiv.*` DOI, or an arXiv location URL. |
 | `arxiv_url` | Canonical `https://arxiv.org/abs/...` URL when an arXiv identifier can be extracted. |
+| `has_arxiv_version` | `true` when a distinct arXiv identifier is detected, even if the paper also has a formal DOI and published venue. |
 | `primary_url` | Preferred source landing URL, with DOI and OpenAlex URLs used only as later fallbacks. |
 | `landing_page_url` | Landing page from the primary or best available OpenAlex location. |
 | `openalex_url` | OpenAlex work URL/identifier retained for source provenance. |
 | `is_arxiv_preprint` | `true` when an arXiv identifier, arXiv URL, or explicit arXiv source is detected. |
 
-These values remain candidate metadata. A missing venue is left empty and flagged for manual review; venue or conference names must never be guessed from a paper title.
+Published metadata and arXiv-version metadata are kept separate: a paper may have a formal DOI and venue while also exposing `arxiv_id`, `arxiv_url`, and `has_arxiv_version=true`. The publication year remains the OpenAlex publication year, not an inferred arXiv submission year. These values remain candidate metadata. A missing venue is left empty and flagged for manual review; venue or conference names must never be guessed from a paper title.
 
 ### Map-Ready Author Fields
 
@@ -180,6 +181,21 @@ Documentation-only fictional example (do not add this row to the template):
 ```csv
 fictional institute,Fictional Institute of Visual Studies,Example City,Example Country,12.3456,78.9012,https://example.invalid/institution,high,Fictional format example only
 ```
+
+## `paper_version_overrides.csv`
+
+`data/manual/paper_version_overrides.csv` records manually confirmed alternate paper versions, such as an arXiv version of a formally published paper when OpenAlex represents the two versions as separate Works. Export scripts read this table as an override layer; they do not overwrite processed candidate CSVs.
+
+| Column | Definition |
+| --- | --- |
+| `published_openalex_url` | OpenAlex URL for the published record to annotate. This is the strongest match key. |
+| `published_doi` | DOI for the published record, without changing or replacing the published DOI in exports. |
+| `title` | Published paper title used as a conservative fallback match key. |
+| `arxiv_id` | Manually confirmed arXiv identifier for an alternate version. |
+| `arxiv_url` | Manually confirmed arXiv abstract URL. |
+| `notes` | Provenance or explanation for the override. |
+
+When an override matches by OpenAlex URL, DOI, or normalized title, map and public-preview exports attach `arxiv_id`, `arxiv_url`, and `has_arxiv_version=true`. The published venue, publication year, DOI, and primary paper URL are preserved. An arXiv override does not by itself make a published venue record a preprint-only record.
 
 ## `openalex_candidate_affiliations.csv`
 

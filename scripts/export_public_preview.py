@@ -8,8 +8,10 @@ an existing map export, calls no APIs, and never writes to data/manual/.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import math
+import re
 import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -22,6 +24,7 @@ except ImportError:  # Direct execution from the scripts directory.
 
 DEFAULT_INPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_OUTPUT = Path("web/data/public_preview_map_data.json")
+DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_MAX_RECORDS = 200
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
@@ -54,6 +57,7 @@ PUBLIC_FIELDS = (
     "doi",
     "arxiv_id",
     "arxiv_url",
+    "has_arxiv_version",
     "primary_url",
     "landing_page_url",
     "openalex_url",
@@ -84,6 +88,14 @@ PUBLIC_METADATA = {
         "Automatically generated candidate metadata; not a manually curated "
         "bibliography."
     ),
+}
+PAPER_VERSION_OVERRIDE_COLUMNS = {
+    "published_openalex_url",
+    "published_doi",
+    "title",
+    "arxiv_id",
+    "arxiv_url",
+    "notes",
 }
 
 
@@ -175,6 +187,21 @@ def clean_text(value: Any) -> str:
     return " ".join(str(value).split())
 
 
+def normalize_identifier_url(value: Any) -> str:
+    return clean_text(value).casefold().rstrip("/")
+
+
+def normalize_doi(value: Any) -> str:
+    doi = clean_text(value)
+    doi = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi, flags=re.IGNORECASE)
+    return doi.casefold()
+
+
+def normalize_title(value: Any) -> str:
+    normalized = re.sub(r"[^\w]+", " ", clean_text(value).casefold())
+    return " ".join(normalized.replace("_", " ").split())
+
+
 def institution_name(record: Dict[str, Any]) -> str:
     return clean_text(
         record.get("institution") or record.get("institution_name")
@@ -204,6 +231,113 @@ def normalize_confidence(value: Any) -> str:
     return confidence if confidence in CONFIDENCE_RANK else "unresolved"
 
 
+def read_paper_version_overrides(
+    path: Path = DEFAULT_PAPER_VERSION_OVERRIDES,
+) -> List[Dict[str, str]]:
+    if not path.exists():
+        return []
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            fieldnames = set(reader.fieldnames or [])
+            missing = sorted(PAPER_VERSION_OVERRIDE_COLUMNS - fieldnames)
+            if missing:
+                raise PreviewExportError(
+                    f"{path} is missing required columns: {', '.join(missing)}"
+                )
+            return [dict(row) for row in reader]
+    except OSError as error:
+        raise PreviewExportError(f"Could not read {path}: {error}") from error
+
+
+def build_override_indexes(
+    overrides: Sequence[Dict[str, str]],
+) -> Tuple[Dict[str, Dict[str, str]], Dict[str, Dict[str, str]], Dict[str, Dict[str, str]]]:
+    by_openalex_url: Dict[str, Dict[str, str]] = {}
+    by_doi: Dict[str, Dict[str, str]] = {}
+    by_title: Dict[str, Dict[str, str]] = {}
+    for override in overrides:
+        openalex_key = normalize_identifier_url(override.get("published_openalex_url"))
+        doi_key = normalize_doi(override.get("published_doi"))
+        title_key = normalize_title(override.get("title"))
+        if openalex_key and openalex_key not in by_openalex_url:
+            by_openalex_url[openalex_key] = override
+        if doi_key and doi_key not in by_doi:
+            by_doi[doi_key] = override
+        if title_key and title_key not in by_title:
+            by_title[title_key] = override
+    return by_openalex_url, by_doi, by_title
+
+
+def paper_version_override_for_record(
+    record: Dict[str, Any],
+    override_indexes: Tuple[
+        Dict[str, Dict[str, str]],
+        Dict[str, Dict[str, str]],
+        Dict[str, Dict[str, str]],
+    ],
+) -> Optional[Dict[str, str]]:
+    by_openalex_url, by_doi, by_title = override_indexes
+    openalex_key = normalize_identifier_url(record.get("openalex_url"))
+    if openalex_key and openalex_key in by_openalex_url:
+        return by_openalex_url[openalex_key]
+    doi_key = normalize_doi(record.get("doi"))
+    if doi_key and doi_key in by_doi:
+        return by_doi[doi_key]
+    title_key = normalize_title(record.get("title"))
+    if title_key and title_key in by_title:
+        return by_title[title_key]
+    return None
+
+
+def append_record_note(record: Dict[str, Any], note: Any) -> None:
+    cleaned_note = clean_text(note)
+    if not cleaned_note:
+        return
+    existing = [
+        clean_text(part)
+        for part in clean_text(record.get("notes")).split("|")
+        if clean_text(part)
+    ]
+    existing.append(cleaned_note)
+    unique = []
+    seen = set()
+    for part in existing:
+        if part not in seen:
+            seen.add(part)
+            unique.append(part)
+    record["notes"] = " | ".join(unique)
+
+
+def apply_paper_version_overrides(
+    records: Sequence[Dict[str, Any]],
+    overrides: Sequence[Dict[str, str]],
+) -> int:
+    """Attach manually confirmed arXiv-version metadata before public filtering."""
+    if not overrides:
+        return 0
+    override_indexes = build_override_indexes(overrides)
+    applied = 0
+    for record in records:
+        override = paper_version_override_for_record(record, override_indexes)
+        if not override:
+            continue
+        arxiv_id = clean_text(override.get("arxiv_id"))
+        arxiv_url = clean_text(override.get("arxiv_url"))
+        if arxiv_id and not arxiv_url:
+            arxiv_url = f"https://arxiv.org/abs/{arxiv_id}"
+        if arxiv_id:
+            record["arxiv_id"] = arxiv_id
+            record["has_arxiv_version"] = True
+        if arxiv_url:
+            record["arxiv_url"] = arxiv_url
+            record["has_arxiv_version"] = True
+        append_record_note(record, "manual arXiv version override applied")
+        append_record_note(record, override.get("notes"))
+        applied += 1
+    return applied
+
+
 def read_candidate_records(path: Path) -> List[Dict[str, Any]]:
     try:
         with path.open("r", encoding="utf-8") as handle:
@@ -223,10 +357,16 @@ def build_preview(
     max_records: int,
     min_confidence: str,
     include_needs_review: bool,
+    paper_version_overrides: Sequence[Dict[str, str]],
     include_out_of_scope: bool = False,
     include_uncertain: bool = False,
     include_missing_location: bool = False,
 ) -> Tuple[Dict[str, Any], Dict[str, int]]:
+    records = [dict(record) for record in records]
+    paper_version_overrides_applied = apply_paper_version_overrides(
+        records,
+        paper_version_overrides,
+    )
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
     below_confidence = 0
@@ -308,6 +448,7 @@ def build_preview(
         "records_excluded_needs_review": excluded_needs_review,
         "records_eligible_before_limit": eligible_records,
         "records_exported": len(selected),
+        "paper_version_overrides_applied": paper_version_overrides_applied,
     }
     return {"metadata": dict(PUBLIC_METADATA), "records": selected}, summary
 
@@ -360,6 +501,10 @@ def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
         f"{summary['records_eligible_before_limit']}"
     )
     print(f"  Records exported: {summary['records_exported']}")
+    print(
+        "  Paper-version overrides applied: "
+        f"{summary['paper_version_overrides_applied']}"
+    )
     print(f"  Downstream rows processed: {summary['records_exported']}")
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
@@ -368,11 +513,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
         records = read_candidate_records(args.input)
+        paper_version_overrides = read_paper_version_overrides()
         payload, summary = build_preview(
             records,
             args.max_records,
             args.min_confidence,
             args.include_needs_review,
+            paper_version_overrides,
             args.include_out_of_scope,
             args.include_uncertain,
             args.include_missing_location,

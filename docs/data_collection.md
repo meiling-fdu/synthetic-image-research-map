@@ -349,6 +349,8 @@ Map-ready export normalizes Hong Kong, Macau/Macao, and Taiwan into public `coun
 
 When the affiliation CSV contains automatic resolution fields, the exporter prefers complete valid `resolved_latitude` and `resolved_longitude` pairs over the original coordinates. It also prefers non-empty resolved institution names, cities, and countries. If resolved coordinates are absent or invalid, the exporter falls back to a complete valid original coordinate pair; it never combines coordinates from different sources.
 
+Before writing map records, the exporter reads `data/manual/paper_version_overrides.csv` when it exists. This manual table attaches confirmed alternate-version metadata, such as an arXiv version of a published paper that OpenAlex stores as a separate Work. Overrides match by published OpenAlex URL first, then DOI, then normalized title. They add `arxiv_id`, `arxiv_url`, and `has_arxiv_version=true`, append an override note, and preserve the published DOI, venue, publication year, and primary paper URL.
+
 Resolution method, confidence, review status, and notes are included in each map record when those columns are available. Records with `needs_review=true` may still be visualized for exploration, but they remain preliminary and should not be presented as verified institution metadata. The export summary separates records using resolved versus original coordinates and reports skipped and reviewable records.
 
 Inspect the join and summary without writing the JSON file:
@@ -389,6 +391,8 @@ This map export is for exploratory visualization only. It is assembled from auto
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. The output is explicitly labeled as an uncurated public preview, not a manually curated bibliography.
 
 By default, the exporter publishes at most 200 records, requires `in_scope=true`, requires a main task of `detection`, `source_attribution`, or `detection_and_source_attribution`, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It also requires a non-placeholder institution name and a finite latitude/longitude pair within geographic bounds, because every public record must represent a mapped institution. `--include-uncertain` and `--include-missing-location` can relax task or location checks for local debugging; unsupported legacy or generic-attribution labels remain excluded. The exporter keeps only fields needed by the public map and never copies raw responses or caches.
+
+The public-preview exporter also reads `data/manual/paper_version_overrides.csv` before filtering and field limiting. This keeps manually confirmed arXiv-version links available in the public preview even when the local map-ready JSON was produced before the override existed. An override does not change the record's published venue/year/DOI metadata and does not by itself make a venue record preprint-only.
 
 Inspect the filtering summary without writing output:
 

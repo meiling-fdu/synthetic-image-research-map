@@ -31,6 +31,7 @@ DEFAULT_AFFILIATIONS_CSV = Path(
     "data/processed/openalex_candidate_affiliations_geocoded.csv"
 )
 DEFAULT_OUTPUT = Path("web/data/openalex_candidate_map_data.json")
+DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 
 PAPER_REQUIRED_COLUMNS = {
     "openalex_id",
@@ -53,6 +54,14 @@ AFFILIATION_REQUIRED_COLUMNS = {
     "latitude",
     "longitude",
     "manual_review",
+    "notes",
+}
+PAPER_VERSION_OVERRIDE_COLUMNS = {
+    "published_openalex_url",
+    "published_doi",
+    "title",
+    "arxiv_id",
+    "arxiv_url",
     "notes",
 }
 
@@ -118,6 +127,21 @@ def clean_text(value: Any) -> str:
     if value is None:
         return ""
     return " ".join(str(value).split())
+
+
+def normalize_identifier_url(value: Any) -> str:
+    return clean_text(value).casefold().rstrip("/")
+
+
+def normalize_doi(value: Any) -> str:
+    doi = clean_text(value)
+    doi = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi, flags=re.IGNORECASE)
+    return doi.casefold()
+
+
+def normalize_title(value: Any) -> str:
+    normalized = re.sub(r"[^\w]+", " ", clean_text(value).casefold())
+    return " ".join(normalized.replace("_", " ").split())
 
 
 def unique_strings(values: Iterable[Any]) -> List[str]:
@@ -339,6 +363,89 @@ def read_csv(path: Path, required_columns: set) -> List[Dict[str, str]]:
         raise ExportError(f"Could not read {path}: {error}") from error
 
 
+def read_paper_version_overrides(
+    path: Path = DEFAULT_PAPER_VERSION_OVERRIDES,
+) -> List[Dict[str, str]]:
+    if not path.exists():
+        return []
+    return read_csv(path, PAPER_VERSION_OVERRIDE_COLUMNS)
+
+
+def build_override_indexes(
+    overrides: Sequence[Dict[str, str]],
+) -> Tuple[Dict[str, Dict[str, str]], Dict[str, Dict[str, str]], Dict[str, Dict[str, str]]]:
+    by_openalex_url: Dict[str, Dict[str, str]] = {}
+    by_doi: Dict[str, Dict[str, str]] = {}
+    by_title: Dict[str, Dict[str, str]] = {}
+    for override in overrides:
+        openalex_key = normalize_identifier_url(override.get("published_openalex_url"))
+        doi_key = normalize_doi(override.get("published_doi"))
+        title_key = normalize_title(override.get("title"))
+        if openalex_key and openalex_key not in by_openalex_url:
+            by_openalex_url[openalex_key] = override
+        if doi_key and doi_key not in by_doi:
+            by_doi[doi_key] = override
+        if title_key and title_key not in by_title:
+            by_title[title_key] = override
+    return by_openalex_url, by_doi, by_title
+
+
+def paper_version_override_for_record(
+    record: Dict[str, Any],
+    override_indexes: Tuple[
+        Dict[str, Dict[str, str]],
+        Dict[str, Dict[str, str]],
+        Dict[str, Dict[str, str]],
+    ],
+) -> Optional[Dict[str, str]]:
+    by_openalex_url, by_doi, by_title = override_indexes
+    openalex_key = normalize_identifier_url(record.get("openalex_url"))
+    if openalex_key and openalex_key in by_openalex_url:
+        return by_openalex_url[openalex_key]
+    doi_key = normalize_doi(record.get("doi"))
+    if doi_key and doi_key in by_doi:
+        return by_doi[doi_key]
+    title_key = normalize_title(record.get("title"))
+    if title_key and title_key in by_title:
+        return by_title[title_key]
+    return None
+
+
+def append_record_note(record: Dict[str, Any], note: str) -> None:
+    existing_notes = split_notes(record.get("notes"))
+    existing_notes.extend(split_notes(note))
+    record["notes"] = " | ".join(unique_strings(existing_notes))
+
+
+def apply_paper_version_overrides(
+    records: Sequence[Dict[str, Any]],
+    overrides: Sequence[Dict[str, str]],
+) -> int:
+    """Attach manually confirmed alternate-version metadata to map records."""
+    if not overrides:
+        return 0
+    override_indexes = build_override_indexes(overrides)
+    applied = 0
+    for record in records:
+        override = paper_version_override_for_record(record, override_indexes)
+        if not override:
+            continue
+        arxiv_id = clean_text(override.get("arxiv_id"))
+        arxiv_url = clean_text(override.get("arxiv_url"))
+        if arxiv_id and not arxiv_url:
+            arxiv_url = f"https://arxiv.org/abs/{arxiv_id}"
+        if arxiv_id:
+            record["arxiv_id"] = arxiv_id
+            record["has_arxiv_version"] = True
+        if arxiv_url:
+            record["arxiv_url"] = arxiv_url
+            record["has_arxiv_version"] = True
+        append_record_note(record, "manual arXiv version override applied")
+        append_record_note(record, override.get("notes", ""))
+        applied += 1
+    return applied
+
+
 def record_id(openalex_id: str, institution_key: Tuple[Any, ...]) -> str:
     identity = "|".join([openalex_id, *(str(value) for value in institution_key)])
     digest = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:16]
@@ -524,6 +631,7 @@ def group_map_records(
                 "doi": clean_text(paper.get("doi")),
                 "arxiv_id": clean_text(paper.get("arxiv_id")),
                 "arxiv_url": clean_text(paper.get("arxiv_url")),
+                "has_arxiv_version": parse_bool(paper.get("has_arxiv_version")),
                 "primary_url": primary_url,
                 "landing_page_url": clean_text(paper.get("landing_page_url")),
                 "openalex_url": clean_text(paper.get("openalex_url")) or openalex_id,
@@ -608,8 +716,13 @@ def build_export(
     paper_rows: Sequence[Dict[str, str]],
     affiliation_rows: Sequence[Dict[str, str]],
     max_records: Optional[int],
+    paper_version_overrides: Sequence[Dict[str, str]],
 ) -> Dict[str, Any]:
     records, counters = group_map_records(paper_rows, affiliation_rows)
+    paper_version_overrides_applied = apply_paper_version_overrides(
+        records,
+        paper_version_overrides,
+    )
     available_records = len(records)
     if max_records is not None:
         records = records[:max_records]
@@ -640,6 +753,7 @@ def build_export(
         "map_records_using_resolved_coordinates": resolved_coordinate_records,
         "map_records_using_original_coordinates": original_coordinate_records,
         "map_records_marked_needs_review": records_needing_review,
+        "paper_version_overrides_applied": paper_version_overrides_applied,
         **counters,
     }
     return {
@@ -694,6 +808,10 @@ def print_summary(summary: Dict[str, int]) -> None:
         f"{summary['map_records_marked_needs_review']}"
     )
     print(
+        "  Paper-version overrides applied: "
+        f"{summary['paper_version_overrides_applied']}"
+    )
+    print(
         "  Rows skipped because coordinates were missing: "
         f"{summary['affiliation_rows_skipped_missing_coordinates']}"
     )
@@ -720,7 +838,13 @@ def run(args: argparse.Namespace) -> int:
             all_affiliation_rows,
             args.include_out_of_scope,
         )
-        payload = build_export(paper_rows, affiliation_rows, args.max_records)
+        paper_version_overrides = read_paper_version_overrides()
+        payload = build_export(
+            paper_rows,
+            affiliation_rows,
+            args.max_records,
+            paper_version_overrides,
+        )
         payload["summary"].update(scope_counts)
     except ExportError as error:
         print(f"Error: {error}", file=sys.stderr)
