@@ -12,11 +12,11 @@ This audit compares a manually curated coverage checklist with automatic candida
 
 | Metric | Count |
 | --- | ---: |
-| Total key papers | 301 |
-| `covered_in_public_preview` | 63 |
-| `covered_in_candidates_only` | 20 |
-| `possible_pipeline_match` | 9 |
-| `not_covered_by_pipeline` | 209 |
+| Total key papers | 299 |
+| `covered_in_public_preview` | 58 |
+| `covered_in_candidates_only` | 21 |
+| `possible_pipeline_match` | 13 |
+| `not_covered_by_pipeline` | 207 |
 
 ## Per-Paper Status
 
@@ -40,13 +40,13 @@ This audit compares a manually curated coverage checklist with automatic candida
 | 16 | Open Set Classification of GAN-based Image Manipulations via a ViT-based Hybrid Architecture | 2023 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=CVPR Workshops 2023 |
 | 17 | Open Set Synthetic Image Source Attribution | 2023 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=BMVC 2023 |
 | 18 | ManiFPT: Defining and Analyzing Fingerprints of Generative Models | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2024 |
-| 19 | Tiny Autoencoders are Effective Few-Shot Generative Model Detectors | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=WIFS, 2024 |
-| 20 | Are CLIP features all you need for Universal | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=Synthetic Image Origin Attribution? ECCV Workshop, 2024 |
-| 21 | BOSC: A Backdoor-based Framework for Open Set Synthetic Image Attribution | 2025 | source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; dataset; source_suffix=TIFS, 2025 |
-| 22 | Model Synthesis for Zero-Shot Model Attribution | 2025 | source_attribution | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=TMM, 2025 |
-| 23 | Detecting Origin Attribution for Text-to-Image Diffusion Models | 2025 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=WACV, 2025 |
-| 24 | Few-Shot Class-Incremental Model Attribution Using Learnable Representation From CLIP-ViT Features | 2025 | source_attribution | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20250311; source_suffix=arXiv, 2025 |
-| 25 | LoRAX: LoRA eXpandable Networks for Continual Synthetic Image Attribution | 2025 | source_attribution | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20250410; source_suffix=arXiv, 2025 |
+| 19 | Tiny Autoencoders are Effective Few-Shot Generative Model Detectors | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=WIFS, 2024 |
+| 20 | Are CLIP features all you need for Universal Synthetic Image Origin Attribution? | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=ECCV Workshop, 2024 |
+| 21 | BOSC: A Backdoor-based Framework for Open Set Synthetic Image Attribution | 2025 | source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=TIFS, 2025 |
+| 22 | Model Synthesis for Zero-Shot Model Attribution | 2025 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=TMM, 2025 |
+| 23 | Detecting Origin Attribution for Text-to-Image Diffusion Models | 2025 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2025 |
+| 24 | Few-Shot Class-Incremental Model Attribution Using Learnable Representation From CLIP-ViT Features | 2025 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250311; source_suffix=arXiv, 2025 |
+| 25 | LoRAX: LoRA eXpandable Networks for Continual Synthetic Image Attribution | 2025 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250410; source_suffix=arXiv, 2025 |
 | 26 | Detection, Attribution and Localization of GAN Generated Images | 2021 | detection_and_source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=arXiv 2021 |
 | 27 | FIDAVL: Fake Image Detection and Attribution using Vision-Language Model | 2024 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=ICPR, 2024 |
 | 28 | Whodunit: Detection and Attribution of Synthetic Images by Leveraging Model-specific Fingerprints | 2025 | detection_and_source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
@@ -58,271 +58,269 @@ This audit compares a manually curated coverage checklist with automatic candida
 | 34 | Reverse engineering of generative models: Inferring model hyperparameters from generated images | 2023 | source_attribution | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=IEEE TPAMI 2023 |
 | 35 | How to Trace Latent Generative Model Generated Images without Artificial Watermark? | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2024 |
 | 36 | Single-Model Attribution of Generative Models Through Final-Layer Inversion | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2024 |
-| 37 | Attributing and Detecting Fake Images Generated by Known GANs | 2020 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=SPW, 2020 |
+| 37 | Attributing and Detecting Fake Images Generated by Known GANs. SPW, 2020 | 2020 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No |  |
 | 38 | Which Model Generated This Image? A Model-Agnostic Approach for Origin Attribution | 2024 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=ECCV, 2024 |
 | 39 | A siamese-based verification system for open-set architecture attribution of synthetic images | 2024 | source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=PRL, 2024 |
 | 40 | FreqCross: A Multi-Modal Frequency-Spatial Fusion Network for Robust Detection of Stable Diffusion 3.5 Generated Images. 20250708 | 2025 | source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=arXiv |
 | 41 | WILD: a new in-the-Wild Image Linkage Dataset for synthetic image attribution | 2025 | source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; dataset; source_suffix=IJCNN workshop, 2025 |
 | 42 | Deepfake attribution: On the source identification of artificially generated images. Wires, 2021 | 2021 | source_attribution | `covered_in_public_preview` | Yes (`doi`) | Yes (`doi`) |  |
-| 43 | Reverse engineering of generative models: Inferring model hyperparameters from generated images.IEEE | 2023 | source_attribution | `possible_pipeline_match` | No | No | source_suffix=TPAMI 2023 |
-| 44 | Detection of GAN-generated Fake Images over Social Networks | 2018 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=MIPR, 2018 |
-| 45 | Incremental learning for the detection and classification of GAN-generated images | 2019 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WIFS 2019 |
-| 46 | Detecting and Simulating Artifacts in GAN Fake Images | 2019 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WIFS 2019 |
-| 47 | Detecting GAN generated Fake Images using Co-occurrence Matrices | 2019 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=Electronic Imaging, 2019 |
-| 48 | CNN-generated images are surprisingly easy to spot...for now | 2020 | detection | `not_covered_by_pipeline` | No | No |  |
-| 49 | Watch your Up-Convolution: CNN Based Generative Deep Neural Networks are Failing to Reproduce Spectral Distributions | 2020 | detection | `not_covered_by_pipeline` | No | No |  |
-| 50 | Fourier Spectrum Discrepancies in Deep Network Generated Images | 2020 | detection | `not_covered_by_pipeline` | No | No |  |
-| 51 | T-GD: Transferable GAN-generated Images Detection Framework | 2020 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICML 2020 |
-| 52 | On the use of Benford’s law to detect GAN-generated images | 2020 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 53 | GAN-Generated Image Detection With Self-Attention Mechanism Against GAN Generator Defect | 2020 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 54 | Beyond the Spectrum: Detecting Deepfakes via Re-Synthesis | 2021 | detection | `not_covered_by_pipeline` | No | No | source_suffix=IJCAI, 2021 |
-| 55 | Detection of GAN-Generated Images by Estimating Artifact Similarity | 2021 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
-| 56 | Detecting Generated Images by Real Images | 2022 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV, 2022 |
-| 57 | FingerprintNet: Synthesized Fingerprints for Generated Image Detection | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV, 2022 |
-| 58 | Discovering Transferable Forensic Features for CNN-Generated Images Detection | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV 2022 |
-| 59 | BiHPF: bilateral high pass filters for robust deepfake detection | 2022 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2022 |
-| 60 | Fusing Global and Local Features for Generalized AI-Synthesized Image Detection | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICIP 2022 |
-| 61 | GLFF: Global and Local Feature Fusion for AI-synthesized Image Detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 62 | Learning on Gradients: Generalized Artifacts Representation for GAN-Generated Images Detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 63 | Towards Universal Fake Image Detectors that Generalize Across Generative Models | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
-| 64 | DIRE for Diffusion-Generated Image Detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICCV, 2023 |
-| 65 | Detecting Images Generated by Deep Diffusion Models Using Their Local Intrinsic Dimensionality | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
-| 66 | Improving Synthetically Generated Image | 2023 | detection | `covered_in_public_preview` | Yes (`doi`) | Yes (`doi`) | source_suffix=Detection in Cross-Concept Settings MAD Workshop, 2023 |
-| 67 | Exposing fake images generated by text-to-image diffusion models | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
-| 68 | Synthbuster: Towards Detection of Diffusion Model Generated Images | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 69 | AI-Generated Image Detection using a Cross-Attention Enhanced Dual-Stream Network | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=APSIPA ASC, 2023 |
-| 70 | Generalizable Synthetic Image Detection via Language-guided Contrastive Learning | 2023 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
-| 71 | AntifakePrompt: Prompt-Tuned Vision-Language Models are Fake Image Detectors | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
-| 72 | Diffusion Noise Feature: Accurate and Fast Generated Image Detection | 2023 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 2023 |
-| 73 | GenDet: Towards Good Generalizations for AI-Generated Image Detection | 2023 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=arXiv 2023 |
-| 74 | Detecting Generated Images by Real Images Only | 2023 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 2023 |
-| 75 | LaRE^2: Latent Reconstruction Error Based Method for Diffusion-Generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
-| 76 | DistilDIRE: A Small, Fast, Cheap and Lightweight Diffusion Synthesized Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 77 | Rethinking the Up-Sampling Operations in CNN-based Generative Network for Generalizable Deepfake Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 78 | Shadows Don't Lie and Lines Can't Bend! Generative Models don't know Projective Geometry...for now | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 79 | Forgery-aware Adaptive Transformer for Generalizable Synthetic Image Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 80 | FakeInversion: Learning to Detect Images from Unseen Text-to-Image Models by Inverting Stable Diffusion | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 81 | AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 82 | Raising the Bar of AI-generated Image Detection with CLIP | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 83 | MaskSim: Detection of synthetic images by masked spectrum similarity analysis | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 84 | Faster Than Lies: Real-time Deepfake Detection using Binary Neural Networks | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 85 | Frequency-Aware Deepfake Detection: Improving Generalizability through Frequency Space Domain Learning | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2024; source_alias=(FreqNet) |
-| 86 | DRCT: Diffusion Reconstruction Contrastive Training towards Universal Detection of Diffusion Generated Images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML 2024 |
-| 87 | Exposing the Fake: Effective Diffusion-Generated Images Detection (SeDID) | 2024 | detection | `possible_pipeline_match` | No | No |  |
-| 88 | Zero-Shot Detection of AI-Generated Images | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV, 2024; source_alias=(ZED) |
-| 89 | Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV, 2024; source_alias=(RINE) |
-| 90 | Contrasting Deepfakes Diffusion via Contrastive Learning and Global-Local Similarities | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV 2024; auxiliary; dataset |
-| 91 | Evolution of Detection Performance throughout the Online Lifespan of Synthetic Images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV Workshops, 2024 |
-| 92 | Your diffusion model is an implicit synthetic image detector | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV, 2024 |
-| 93 | ZeroFake: Zero-Shot Detection of Fake Images Generated and Edited by Text-to-Image Generation Models | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CCS 2024 |
-| 94 | Breaking Semantic Artifacts for Generalized AI-generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=NeurIPS, 2024 |
-| 95 | Detecting Image Attribution for Text-to-Image Diffusion Models in RGB and Beyond | 2024 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No |  |
-| 96 | SemGIR: Semantic-Guided Image Regeneration Based Method for AI-generated Image Detection and Attribution | 2024 | detection_and_source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ACM Multimedia, 2024 |
-| 97 | Deep Image Fingerprint: Towards Low Budget Synthetic Image Detection and Model Lineage Analysis | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WACV, 2024 |
-| 98 | D4: Detection of Adversarial Diffusion Deepfakes Using Disjoint Ensembles | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2024 |
-| 99 | Exploring the Adversarial Robustness of CLIP for AI-generated Image Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WIFS, 2024 |
-| 100 | CLIPping the Deception: Adapting Vision-Language Models for Universal Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 101 | Frequency Masking for Universal Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 102 | X-Transfer: A Transfer Learning-Based Framework for Robust GAN-Generated Fake Image Detection | 2024 | detection | `possible_pipeline_match` | No | No | source_suffix=IJCNN, 2024 |
-| 103 | On the Exploitation of DCT-Traces in the Generative-AI Domain | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 104 | AI-Generated Image Detection with Wasserstein Distance Compression and Dynamic Aggregation | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 105 | FAMSeC: A Few-shot-sample-based General AI-generated Image Detection Method | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=SPL, 2024 |
-| 106 | Detecting Computer-Generated Images by Using Only Real Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 107 | Artifact Feature Purification for Cross-domain Detection of AI-generated Images | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 108 | Harnessing the Power of Large Vision Language Models for Synthetic Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 109 | Parents and Children: Distinguishing Multimodal Deepfakes from Natural Images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TOMM. 2024; auxiliary; dataset |
-| 110 | Mastering Deepfake Detection: A Cutting-edge Approach to Distinguish GAN and Diffusion-model Images | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=TOMM. 2024 |
-| 111 | Unsupervised Generative Fake Image Detector | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TCSVT, 2024 |
-| 112 | CSC-Net: Cross-Color Spatial Co-Occurrence Matrix Network for Detecting Synthesized Fake Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 113 | CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
-| 114 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=IEEE Access, 2024 |
-| 115 | MMGANGuard: A Robust Approach for Detecting Fake Images Generated by GANs Using Multi-Model Techniques | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=IEEE Access, 2024 |
-| 116 | Enhancing Interpretability in AI-Generated Image Detection with Genetic Programming | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 117 | MDTL-NET: Computer-generated image detection based on multi-scale deep texture learning | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 118 | Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 119 | Whodunit: Detection and Attribution of Synthetic Images by Leveraging Model-specific Fingerprints | 2024 | detection_and_source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 120 | Enhancing the Generalization of Synthetic Image Detection Models through the Exploration of Features in Deep Detection Models | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 121 | Fake-GPT: Detecting Fake Image via Large Language Model | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=PRCV, 2024 |
-| 122 | A guided-based approach for deepfake detection: RGB-depth integration via features fusion | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 123 | Addressing Diffusion Model Based Counter-Forensic Image Manipulation for Synthetic Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 124 | Detecting Artificial Intelligence-Generated images via deep trace representations and interactive feature fusion Image Fusion, 2024 | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 125 | Detecting AI Generated Images through Texture and Frequency Analysis of Patches | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=AIVRV, 2024 |
-| 126 | IPD-Net: Detecting AI-Generated Images via Inter-Patch Dependencies | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=IJACSA, 2024 |
-| 127 | A Single Simple Patch is All You Need for AI-generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
-| 128 | PatchCraft: Exploring Texture Patch for Efficient AI-generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
-| 129 | Data-Independent Operator: A Training-Free Artifact Representation Extractor for Generalizable Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 130 | Deepfake Detection without Deepfakes: Generalization via Synthetic Frequency Patterns Injection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 131 | Development of a Dual-Input Neural Model for Detecting AI-Generated Imagery | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 132 | Mixture of Low-rank Experts for Transferable AI-Generated Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 133 | Detecting AI-Generated Images via CLIP | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
-| 134 | Text Modality Oriented Image Feature Extraction for Detecting Diffusion-based DeepFake | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20240528 |
-| 135 | RIGID: A Training-free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=arXiv, 20240530 |
-| 136 | Real-Time Deepfake Detection in the Real-World | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20240613; auxiliary; dataset |
-| 137 | Improving Interpretability and Robustness for the Detection of AI-Generated Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 138 | Robust CLIP-Based Detector for Exposing Diffusion Model-Generated Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
-| 139 | On the Effectiveness of Dataset Alignment for Fake Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20241015 |
-| 140 | Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20241113 |
-| 141 | Understanding and Improving Training-Free AI-Generated Image Detections with Vision Foundation Models | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20241128 |
-| 142 | HFI: A unified framework for training-free detection and implicit watermarking of latent diffusion model generated images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20241230 |
-| 143 | A Sanity Check for AI-generated Image Detection | 2025 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=ICLR, 2025 |
-| 144 | Manifold Induced Biases for Zero-shot and Few-shot Detection of Generated Images | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICLR, 2025 |
-| 145 | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=KDD, 2025 |
-| 146 | C2P-CLIP: Injecting Category Common Prompt in CLIP to Enhance Generalization in Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2025 |
-| 147 | Transfer Learning of Real Image Features with Soft Contrastive Loss for Fake Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2025 |
-| 148 | D^3 Scaling Up Deepfake Detection by Learning from Discrepancy | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
-| 149 | Any-Resolution AI-Generated Image Detection by Spectral Learning | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
-| 150 | FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
-| 151 | A Bias-Free Training Paradigm for More General AI-generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
-| 152 | SIDA: Social Media Image Deepfake Detection, Localization and Explanation with Large Multimodal Model | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025; auxiliary; dataset |
-| 153 | OpenSDI: Spotting Diffusion-Generated Images in the Open World | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025; auxiliary; dataset |
-| 154 | Towards Universal AI-Generated Image Detection by Variational Information Bottleneck Network | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
-| 155 | Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
-| 156 | Beyond Generation: A Diffusion-based Low-level Feature Extractor for Detecting AI-generated Images | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
-| 157 | CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AI CVPR, 2025 |
-| 158 | Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=CVPR, 2025 |
-| 159 | Where’s the liability in the Generative Era? Recovery-based Black-Box Detection of AI-Generated Content | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
-| 160 | Spot the Fake: Large Multimodal Model-Based Synthetic Image Detection with Artifact Explanation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=NeurIPS, 2025 |
-| 161 | FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=NeurIPS, 2025 |
-| 162 | AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
-| 163 | D3QE: Learning Discrete Distribution Discrepancy-aware Quantization Error for Autoregressive-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025; auxiliary; dataset |
-| 164 | Diffusion Epistemic Uncertainty with Asymmetric Learning for Diffusion-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
-| 165 | LOTA: Bit-Planes Guided AI-Generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICCV, 2025 |
-| 166 | LEGION: Learning to Ground and Explain for Synthetic Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
-| 167 | Semantic Discrepancy-aware Detector for Image Forgery Identification | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
-| 168 | ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
-| 169 | Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV-W, 2025 |
-| 170 | CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV-W, 2025 |
-| 171 | SAGNet: Decoupling Semantic-Agnostic Artifacts From Limited Training Data for Robust Generalization in Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TIFS, 2025 |
-| 172 | Are High-Quality AI-Generated Images More Difficult for Models to Detect? | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
-| 173 | Few-Shot Learner Generalizes Across AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
-| 174 | PiD: Generalized AI-Generated Images Detection with Pixelwise Decomposition Residuals | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
-| 175 | Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
-| 176 | Stay-Positive: A Case for Ignoring Real Image Features in Fake Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
-| 177 | ExDA: Towards Universal Detection and Plug-and-Play Attribution of AI-Generated Ex-Regulatory Images | 2025 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=ACM MM, 2025 |
-| 178 | Self-supervised Bidirectional Synchronization Estimation for Multimodal Deepfake Detection with Short-term Dependency | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICMR, 2025 |
-| 179 | LAID: Lightweight AI-Generated Image Detection in Spatial and Spectral Domains | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=PST, 2025 |
-| 180 | Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICASSP, 2025 |
-| 181 | FairAdapter: Detecting AI-generated Images with Improved Fairness | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICASSP, 2025 |
-| 182 | Reducing the Content Bias for AI-generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WACV, 2025; auxiliary; dataset |
-| 183 | Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECAI, 2025 |
-| 184 | GCS-Net: A universal AI-generated visual content detection method based on CLIP | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=KBS, 2025 |
-| 185 | Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; dataset; source_suffix=WDC, 2025 |
-| 186 | Art or Artifact? Segmenting AI-Generated Images for Deeper Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WDC, 2025 |
-| 187 | REVEAL: A Retrieval-Augmented Generation Approach for Contextual Identification of Synthetic Visual Content | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=DFF, 2025 |
-| 188 | Bi-LORA: A Vision-Language Approach for Synthetic Image Detection | 2025 | detection | `possible_pipeline_match` | No | No |  |
-| 189 | High‑resolution network‑based multi‑feature fusion for generalized forgery detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Multimedia Systems, 2025 |
-| 190 | Optimized frequency collaborative strategy drives AI image detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=IEEE Internet of Things Journal, 2025 |
-| 191 | FLODA: Harnessing Vision-Language Models for Deepfake Assessment | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCE, 2025 |
-| 192 | Simple Detection of AI-Generated Images based on Noise Correlation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AMLDS, 2025 |
-| 193 | A Deepfake Image Detection Method Based on a Multi-Graph Attention Network | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=Electronics, 2025 |
-| 194 | HFMF: Hierarchical Fusion Meets Multi-Stream Models for Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250110 |
-| 195 | TextureCrop: Enhancing Synthetic Image Detection through Texture-based Cropping | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250116 |
-| 196 | LDR-Net: A Novel Framework for AI-generated Image Detection via Localized Discrepancy Representation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250123 |
-| 197 | Generalizable Deepfake Detection via Effective Local-Global Feature Extraction | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250125 |
-| 198 | PDA: Generalizable Detection of AI-Generated Images via Post-hoc Distribution Alignment | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250215 |
-| 199 | HRR: Hierarchical Retrospection Refinement for Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250225 |
-| 200 | Generalizable AI-Generated Image Detection Based on Fractal Self-Similarity in the Spectrum | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250311 |
-| 201 | Provenance Detection for AI-Generated Images: Combining Perceptual Hashing, Homomorphic Encryption, and AI Detection Models | 2025 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250314 |
-| 202 | FakeScope: Large Multimodal Expert Model for Transparent AI-Generated Image Forensics | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250331 |
-| 203 | Robust AI-Synthesized Image Detection via Multi-feature Frequency-aware Learning | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250402 |
-| 204 | Can GPT tell us why these images are synthesized? Empowering Multimodal Large Language Models for Forensics | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250416 |
-| 205 | MLEP: Multi-granularity Local Entropy Patterns for Universal AI-generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250418 |
-| 206 | Towards Explainable Fake Image Detection with Multi-Modal Large Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250419 |
-| 207 | DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images | 2025 | detection | `possible_pipeline_match` | No | No | source_suffix=arXiv, 20250428 |
-| 208 | Composite Data Augmentations for Synthetic Image Detection against Real-World Perturbations | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250613 |
-| 209 | Task-aligned prompting improves zero-shot detection of AI-generated images by Vision-Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250616 |
-| 210 | Pay Less Attention to Deceptive Artifacts: Robust Detection of Compressed Deepfakes on Online Social Networks | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250625 |
-| 211 | LATTE: Latent Trajectory Embedding for Diffusion-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250703 |
-| 212 | Explainable Synthetic Image Detection through Diffusion Timestep Ensembling | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250728 |
-| 213 | Redefining Generalization in Visual Domains: A Two-Axis Framework for Fake Image Detection with FusionDetect | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251007 |
-| 214 | From Evidence to Verdict: An Agent-Based Forensic Framework for AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251031 |
-| 215 | Generalized Design Choices for Deepfake Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251126 |
-| 216 | Code-in-the-Loop Forensics: Agentic Tool Use for Image Forgery Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251218 |
-| 217 | Beyond Semantic Features: Pixel-level Mapping for Generalized AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251219 |
-| 218 | AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251219 |
-| 219 | LADLE-MM: Limited Annotation based Detector with Learned Ensembles for Multimodal Misinformation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251223 |
-| 220 | Fixed-Threshold Evaluation of a Hybrid CNN–ViT for AI-Generated Image Detection Across Photos and Art | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251225 |
-| 221 | A closer look at fourier spectrum discrepancies for cnn-generated images detection | 2021 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=CVPR, 2021 |
-| 222 | Think Twice Before Detecting GAN-generated Fake Images from their Spectral Domain Imprints | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; anti-forensics; source_suffix=CVPR 2022 |
-| 223 | Stealthdiffusion: Towards evading diffusion forensic detection through diffusion model | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics |
-| 224 | An Adversarial Approach for Anti-Detection of AI Generated Images through Sample Generation | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=IEEE, 2025 |
-| 225 | Sanitizing Diffusion-Generated Images via Fingerprint Removal and Adversarial Perturbation for Forensic Evasion | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=IEEE Access, 2025 |
-| 226 | Take Fake as Real: Realistic-like Robust Black-box Adversarial Attack to Evade AIGC Detection | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=arXiv, 20241226 |
-| 227 | Fooling the Watchers: Breaking AIGC Detectors via Semantic Prompt Attacks | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=arXiv, 20250529 |
-| 228 | Are GAN generated images easy to detect? A critical analysis of the state-of-the-art | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
-| 229 | Online Detection of AI-Generated Images | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; benchmark |
-| 230 | Intriguing properties of synthetic images: from generative adversarial networks to diffusion models | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; benchmark |
-| 231 | On The Detection of Synthetic Images Generated by Diffusion Models | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; benchmark |
-| 232 | Organic or Diffused: Can We Distinguish Human Art from AI-generated Images? | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
-| 233 | AI-generated Image Detection: Passive or Watermark? | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | auxiliary; benchmark; source_suffix=arXiv, 20241120 |
-| 234 | SIDBench: A Python Framework for Reliably Assessing Synthetic Image Detection Methods | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; benchmark; source_suffix=MAD Workshops, 2024 |
-| 235 | Towards the Detection of Diffusion Model Deepfakes cite: 100+ Ruhr University Bochum | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
-| 236 | Rich and Poor Texture Contrast: A Simple yet Effective Approach for AI-generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
-| 237 | Bridging the Gap Between Ideal and Real-world Evaluation: Benchmarking AI-Generated Image Detection in Challenging Scenarios | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=ICCV, 2025 |
-| 238 | No Detector to Rule Them All | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=ACM MM, 2025 |
-| 239 | DFBench: Benchmarking Deepfake Image Detection Capability of Large Multimodal Models | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; benchmark; source_suffix=ACM MM, 2025 |
-| 240 | ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=NeurIPS. 2025 |
-| 241 | UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=arXiv 20251027 |
-| 242 | DBINDS - Can Initial Noise from Diffusion Model Inversion Help Reveal AI-Generated Videos? | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=arXiv, 20251112 |
-| 243 | Artifact: A large-scale dataset with artificial and factual images for generalizable and robust synthetic image detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; dataset; source_suffix=ICIP, 2023 |
-| 244 | Synthbuster: Towards Detection of Diffusion Model Generated Images | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; dataset |
-| 245 | Benchmarking Deepart Detection | 2023 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset; source_suffix=arXiv 2023 |
-| 246 | DeepArt: A Benchmark to Advance Fidelity Research in AI-Generated Content | 2023 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset; source_suffix=arXiv, 20231224 |
-| 247 | Genimage: A million-scale benchmark for detecting ai-generated image | 2023 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | auxiliary; benchmark; dataset; source_suffix=NeurIPS, 2023 |
-| 248 | Seeing is not always believing: benchmarking human and model perception of AI-generated images | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset; source_suffix=NeurIPS, 2024 |
-| 249 | TWIGMA: A dataset of AI-Generated Images with Metadata From Twitter | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=NeurIPS, 2024 |
-| 250 | Evolution of Detection Performance throughout the Online Lifespan of Synthetic Images | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset |
-| 251 | ImagiNet: A Multi-Content Dataset for Generalizable Synthetic Image Detection via Contrastive Learning | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv 20240729 |
-| 252 | AntifakePrompt: Prompt-Tuned Vision-Language Models are Fake Image Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset |
-| 253 | FakeBench: Probing Explainable fake image detection via large multimodal models. arXiv, 20240908. 港城 | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset |
-| 254 | Human vs. AI: A Novel Benchmark and a Comparative Study on the Detection of Generated Images and the Impact of Prompts. GenAIDetect, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset |
-| 255 | WildFake: A Large-scale Challenging Dataset for AI-Generated Images Detection | 2025 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | auxiliary; dataset; source_suffix=AAAI 2025 |
-| 256 | Fake or JPEG? Revealing Common Biases in | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=Generated Image Detection Datasets ECCV Workshops, 2024 |
-| 257 | Aligned Datasets Improve Detection of Latent Diffusion-Generated Images | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=ICLR, 2025 |
-| 258 | Community Forensics: Using Thousands of Generators to Train Fake Image Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=CVPR, 2025 |
-| 259 | CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=CVPR, 2025 |
-| 260 | AI-GenBench: A New Ongoing Benchmark for AI-Generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; benchmark; dataset; source_suffix=arXiv, 20250429 |
-| 261 | Enhancing Synthetic Generated-Images Detection through Post-Hoc Calibration | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=WACV Workshop, 2025 |
-| 262 | FragFake: A Dataset for Fine-Grained Detection of Edited Images with Vision Language Models. 20250x0x | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset |
-| 263 | RAID: A Dataset for Testing the Adversarial Robustness of AI-Generated Image Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20250605 |
-| 264 | Mirage: Unveiling Hidden Artifacts in Synthetic Images with Large Vision-Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20251004 |
-| 265 | RealHD: A High-Quality Dataset for Robust Detection of State-of-the-Art AI-Generated Images | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=ACM MM, 2025 |
-| 266 | Is Artificial Intelligence Generated Image Detection a Solved Problem? | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=NeurIPS, 2025 |
-| 267 | Synthetic Image Verification in the Era of Generative Artificial Intelligence: What Works and What Isn’t There yet. IEEE Security & Privacy, 2024. 意 | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; survey |
-| 268 | Detecting Multimedia Generated by Large AI Models: A Survey. arXiv 20240207. 美/意 | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; survey |
-| 269 | A Survey of Defenses against AI-generated Visual Media- Detection, Disruption, and Authentication | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; survey; source_suffix=arXiv 20240715 西交/武大 |
-| 270 | AI-generated image detection algorithm based on classical-quantum hybrid neural network | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Science China, 2026 |
-| 271 | Light2Lie: Detecting Deepfake Images Using Physical Reflectance Law | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=NDSS, 2026 |
-| 272 | "That’s another doom I haven’t thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CHI, 2026 |
-| 273 | All Patches Matter, More Patches Better: Enhance AI-Generated Image Detection via Panoptic Patch Learning | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICLR, 2026 |
-| 274 | FakeReasoning: Towards Generalizable Forgery Detection and Reasoning | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TIP, 2026 |
-| 275 | SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2026 |
-| 276 | Self-Supervised AI-Generated Image Detection: A Camera Metadata Perspective | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TPAMI, 2026 |
-| 277 | Penny-Wise and Pound-Foolish in AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TPAMI, 2026 |
-| 278 | DCNet: Learning Similarity and Spatial Complementary Features for Generalized AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TCSVT, 2026 |
-| 279 | Semantic Distribution and Authenticity Discrepancy Alignment for AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TMM, 2026 |
-| 280 | Adversarial Diffusion Model: Generating High-Quality and Undetectable Images From Scratch | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TIFS, 2026 |
-| 281 | GReX-Bench: Benchmarking Generalization, Robustness, and Explainability in AI-Generated Image Detection | 2026 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; benchmark; source_suffix=Research Square, 2026 |
-| 282 | Transferable Dual-Domain Feature Importance Attack against AI-Generated Image Detector | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=SPL, 2026 |
-| 283 | General and Domain-Specific Zero-shot Detection of Generated Images via Conditional Likelihood | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2026 |
-| 284 | Training-free Detection of Text-to-video Generations via Over-coherence | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2026 |
-| 285 | The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV workshop, 2026 |
-| 286 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV workshops, 2026 |
-| 287 | CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20260302 |
-| 288 | Prompt-Engineered Detection of AI-Generated Images. New Trends in Intelligent Software Methodologies, Tools and Techniques, 2026 | 2026 | detection | `not_covered_by_pipeline` | No | No |  |
-| 289 | Localizing Perceptual Artifacts in Synthetic Images for Image Quality Assessment via Deep-Learning-Based Anomaly Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Electronics, 2026 |
-| 290 | Transformer Based on Multi-Domain Feature Fusion for AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Electronics, 2026 |
-| 291 | What is Real Anymore? A Solution to Detect Hyper Realistic AI-Generated Imagery | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CCWC, 2026 |
-| 292 | FANB-Net: Frequency-Awared Attention and Noise-Injected Boosting for AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=MMM 2026 |
-| 293 | Privacy-preserving and zero-shot detection strategies for multimodal AI-generated content | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Neurocomputing, 2026 |
-| 294 | Harnessing attention for cropping and fusion in CLIP-based AIGC detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Neurocomputing, 2026 |
-| 295 | E2GenF: Universal AIGC image detection based on edge enhanced generalizable features | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=PRL, 2026 |
-| 296 | Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Computer Vision Winter Workshop, 2026 |
-| 297 | IoT-Oriented Security for Small Sensor Systems Using DnCNN Denoising and Multimodal Feature Fusion for Image Forgery Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Sensors, 2026 |
-| 298 | Interpol review of detection of AI-generated image and video deepfakes, 2022-2025 | 2026 | detection | `not_covered_by_pipeline` | No | No | auxiliary; survey; source_suffix=Forensic Science International: Synergy, 2026 |
-| 299 | Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford’s Law and Topological Analysis with Machine Learning Ensembles | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=QPAIN, 2026 |
-| 300 | Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20260311 |
-| 301 | Adaptive Forensic Feature Refinement via Intrinsic Importance Perception | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20260422 |
+| 43 | Detection of GAN-generated Fake Images over Social Networks | 2018 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=MIPR, 2018 |
+| 44 | Incremental learning for the detection and classification of GAN-generated images | 2019 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WIFS 2019 |
+| 45 | Detecting and Simulating Artifacts in GAN Fake Images | 2019 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WIFS 2019 |
+| 46 | Detecting GAN generated Fake Images using Co-occurrence Matrices | 2019 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=Electronic Imaging, 2019 |
+| 47 | CNN-generated images are surprisingly easy to spot...for now | 2020 | detection | `not_covered_by_pipeline` | No | No |  |
+| 48 | Watch your Up-Convolution: CNN Based Generative Deep Neural Networks are Failing to Reproduce Spectral Distributions | 2020 | detection | `not_covered_by_pipeline` | No | No |  |
+| 49 | Fourier Spectrum Discrepancies in Deep Network Generated Images | 2020 | detection | `not_covered_by_pipeline` | No | No |  |
+| 50 | T-GD: Transferable GAN-generated Images Detection Framework | 2020 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICML 2020 |
+| 51 | On the use of Benford’s law to detect GAN-generated images | 2020 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 52 | GAN-Generated Image Detection With Self-Attention Mechanism Against GAN Generator Defect | 2020 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 53 | Beyond the Spectrum: Detecting Deepfakes via Re-Synthesis | 2021 | detection | `not_covered_by_pipeline` | No | No | source_suffix=IJCAI, 2021 |
+| 54 | Detection of GAN-Generated Images by Estimating Artifact Similarity | 2021 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
+| 55 | Detecting Generated Images by Real Images | 2022 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV, 2022 |
+| 56 | FingerprintNet: Synthesized Fingerprints for Generated Image Detection | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV, 2022 |
+| 57 | Discovering Transferable Forensic Features for CNN-Generated Images Detection | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV 2022 |
+| 58 | BiHPF: bilateral high pass filters for robust deepfake detection | 2022 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2022 |
+| 59 | Fusing Global and Local Features for Generalized AI-Synthesized Image Detection | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICIP 2022 |
+| 60 | GLFF: Global and Local Feature Fusion for AI-synthesized Image Detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 61 | Learning on Gradients: Generalized Artifacts Representation for GAN-Generated Images Detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 62 | Towards Universal Fake Image Detectors that Generalize Across Generative Models | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
+| 63 | DIRE for Diffusion-Generated Image Detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICCV, 2023 |
+| 64 | Detecting Images Generated by Deep Diffusion Models Using Their Local Intrinsic Dimensionality | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
+| 65 | Improving Synthetically Generated Image Detection in Cross-Concept Settings | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=MAD Workshop, 2023 |
+| 66 | Exposing fake images generated by text-to-image diffusion models | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
+| 67 | Synthbuster: Towards Detection of Diffusion Model Generated Images | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 68 | AI-Generated Image Detection using a Cross-Attention Enhanced Dual-Stream Network. APSIPA ASC, 2023 | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
+| 69 | Generalizable Synthetic Image Detection via Language-guided Contrastive Learning | 2023 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
+| 70 | AntifakePrompt: Prompt-Tuned Vision-Language Models are Fake Image Detectors | 2023 | detection | `not_covered_by_pipeline` | No | No |  |
+| 71 | Diffusion Noise Feature: Accurate and Fast Generated Image Detection | 2023 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 2023 |
+| 72 | GenDet: Towards Good Generalizations for AI-Generated Image Detection | 2023 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=arXiv 2023 |
+| 73 | Detecting Generated Images by Real Images Only | 2023 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 2023 |
+| 74 | LaRE^2: Latent Reconstruction Error Based Method for Diffusion-Generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
+| 75 | DistilDIRE: A Small, Fast, Cheap and Lightweight Diffusion Synthesized Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 76 | Rethinking the Up-Sampling Operations in CNN-based Generative Network for Generalizable Deepfake Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 77 | Shadows Don't Lie and Lines Can't Bend! Generative Models don't know Projective Geometry...for now | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 78 | Forgery-aware Adaptive Transformer for Generalizable Synthetic Image Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 79 | FakeInversion: Learning to Detect Images from Unseen Text-to-Image Models by Inverting Stable Diffusion | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 80 | AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 81 | Raising the Bar of AI-generated Image Detection with CLIP | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 82 | MaskSim: Detection of synthetic images by masked spectrum similarity analysis | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 83 | Faster Than Lies: Real-time Deepfake Detection using Binary Neural Networks | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 84 | Frequency-Aware Deepfake Detection: Improving Generalizability through Frequency Space Domain Learning | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2024; source_alias=(FreqNet) |
+| 85 | DRCT: Diffusion Reconstruction Contrastive Training towards Universal Detection of Diffusion Generated Images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML 2024 |
+| 86 | Exposing the Fake: Effective Diffusion-Generated Images Detection (SeDID) | 2024 | detection | `possible_pipeline_match` | No | No |  |
+| 87 | Zero-Shot Detection of AI-Generated Images | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV, 2024; source_alias=(ZED) |
+| 88 | Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ECCV, 2024; source_alias=(RINE) |
+| 89 | Contrasting Deepfakes Diffusion via Contrastive Learning and Global-Local Similarities | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV 2024; auxiliary; dataset |
+| 90 | Evolution of Detection Performance throughout the Online Lifespan of Synthetic Images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV Workshops, 2024 |
+| 91 | Your diffusion model is an implicit synthetic image detector | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ECCV, 2024 |
+| 92 | ZeroFake: Zero-Shot Detection of Fake Images Generated and Edited by Text-to-Image Generation Models | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CCS 2024 |
+| 93 | Breaking Semantic Artifacts for Generalized AI-generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=NeurIPS, 2024 |
+| 94 | Detecting Image Attribution for Text-to-Image Diffusion Models in RGB and Beyond | 2024 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No |  |
+| 95 | SemGIR: Semantic-Guided Image Regeneration Based Method for AI-generated Image Detection and Attribution. ACM Multimedia, 2024 | 2024 | detection_and_source_attribution | `covered_in_public_preview` | Yes (`doi`) | Yes (`doi`) |  |
+| 96 | Deep Image Fingerprint: Towards Low Budget Synthetic Image Detection and Model Lineage Analysis | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WACV, 2024 |
+| 97 | D4: Detection of Adversarial Diffusion Deepfakes Using Disjoint Ensembles | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2024 |
+| 98 | Exploring the Adversarial Robustness of CLIP for AI-generated Image Detection | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WIFS, 2024 |
+| 99 | CLIPping the Deception: Adapting Vision-Language Models for Universal Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 100 | Frequency Masking for Universal Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 101 | X-Transfer: A Transfer Learning-Based Framework for Robust GAN-Generated Fake Image Detection | 2024 | detection | `possible_pipeline_match` | No | No | source_suffix=IJCNN, 2024 |
+| 102 | On the Exploitation of DCT-Traces in the Generative-AI Domain | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 103 | AI-Generated Image Detection with Wasserstein Distance Compression and Dynamic Aggregation | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 104 | FAMSeC: A Few-shot-sample-based General AI-generated Image Detection Method | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=SPL, 2024 |
+| 105 | Detecting Computer-Generated Images by Using Only Real Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 106 | Artifact Feature Purification for Cross-domain Detection of AI-generated Images | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 107 | Harnessing the Power of Large Vision Language Models for Synthetic Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 108 | Parents and Children: Distinguishing Multimodal Deepfakes from Natural Images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TOMM. 2024; auxiliary; dataset |
+| 109 | Mastering Deepfake Detection: A Cutting-edge Approach to Distinguish GAN and Diffusion-model Images | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=TOMM. 2024 |
+| 110 | Unsupervised Generative Fake Image Detector | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TCSVT, 2024 |
+| 111 | CSC-Net: Cross-Color Spatial Co-Occurrence Matrix Network for Detecting Synthesized Fake Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 112 | CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
+| 113 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=IEEE Access, 2024 |
+| 114 | MMGANGuard: A Robust Approach for Detecting Fake Images Generated by GANs Using Multi-Model Techniques | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=IEEE Access, 2024 |
+| 115 | Enhancing Interpretability in AI-Generated Image Detection with Genetic Programming | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 116 | MDTL-NET: Computer-generated image detection based on multi-scale deep texture learning | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 117 | Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 118 | Whodunit: Detection and Attribution of Synthetic Images by Leveraging Model-specific Fingerprints | 2024 | detection_and_source_attribution | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 119 | Enhancing the Generalization of Synthetic Image Detection Models through the Exploration of Features in Deep Detection Models | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 120 | Fake-GPT: Detecting Fake Image via Large Language Model. PRCV, 2024 | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 121 | A guided-based approach for deepfake detection: RGB-depth integration via features fusion | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 122 | Addressing Diffusion Model Based Counter-Forensic Image Manipulation for Synthetic Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 123 | Detecting Artificial Intelligence-Generated images via deep trace representations and interactive feature fusion Image Fusion, 2024 | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 124 | Detecting AI Generated Images through Texture and Frequency Analysis of Patches AIVRV, 2024 | 2024 | detection | `possible_pipeline_match` | No | No |  |
+| 125 | IPD-Net: Detecting AI-Generated Images via Inter-Patch Dependencies IJACSA, 2024 | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 126 | A Single Simple Patch is All You Need for AI-generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
+| 127 | PatchCraft: Exploring Texture Patch for Efficient AI-generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No |  |
+| 128 | Data-Independent Operator: A Training-Free Artifact Representation Extractor for Generalizable Deepfake Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 129 | Deepfake Detection without Deepfakes: Generalization via Synthetic Frequency Patterns Injection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 130 | Development of a Dual-Input Neural Model for Detecting AI-Generated Imagery | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 131 | Mixture of Low-rank Experts for Transferable AI-Generated Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 132 | Detecting AI-Generated Images via CLIP | 2024 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) |  |
+| 133 | Text Modality Oriented Image Feature Extraction for Detecting Diffusion-based DeepFake | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20240528 |
+| 134 | RIGID: A Training-free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=arXiv, 20240530 |
+| 135 | Real-Time Deepfake Detection in the Real-World | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20240613; auxiliary; dataset |
+| 136 | Improving Interpretability and Robustness for the Detection of AI-Generated Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 137 | Robust CLIP-Based Detector for Exposing Diffusion Model-Generated Images | 2024 | detection | `not_covered_by_pipeline` | No | No |  |
+| 138 | On the Effectiveness of Dataset Alignment for Fake Image Detection | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20241015 |
+| 139 | Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20241113 |
+| 140 | Understanding and Improving Training-Free AI-Generated Image Detections with Vision Foundation Models | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20241128 |
+| 141 | HFI: A unified framework for training-free detection and implicit watermarking of latent diffusion model generated images | 2024 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20241230 |
+| 142 | A Sanity Check for AI-generated Image Detection | 2025 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | source_suffix=ICLR, 2025 |
+| 143 | Manifold Induced Biases for Zero-shot and Few-shot Detection of Generated Images | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICLR, 2025 |
+| 144 | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective. KDD, 2025 | 2025 | detection | `possible_pipeline_match` | No | No |  |
+| 145 | C2P-CLIP: Injecting Category Common Prompt in CLIP to Enhance Generalization in Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2025 |
+| 146 | Transfer Learning of Real Image Features with Soft Contrastive Loss for Fake Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2025 |
+| 147 | D^3 Scaling Up Deepfake Detection by Learning from Discrepancy | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
+| 148 | Any-Resolution AI-Generated Image Detection by Spectral Learning | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
+| 149 | FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
+| 150 | A Bias-Free Training Paradigm for More General AI-generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
+| 151 | SIDA: Social Media Image Deepfake Detection, Localization and Explanation with Large Multimodal Model | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025; auxiliary; dataset |
+| 152 | OpenSDI: Spotting Diffusion-Generated Images in the Open World | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025; auxiliary; dataset |
+| 153 | Towards Universal AI-Generated Image Detection by Variational Information Bottleneck Network | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
+| 154 | Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
+| 155 | Beyond Generation: A Diffusion-based Low-level Feature Extractor for Detecting AI-generated Images | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=CVPR, 2025 |
+| 156 | CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025; auxiliary; dataset |
+| 157 | Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=CVPR, 2025 |
+| 158 | Where’s the liability in the Generative Era? Recovery-based Black-Box Detection of AI-Generated Content | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=CVPR, 2025 |
+| 159 | Spot the Fake: Large Multimodal Model-Based Synthetic Image Detection with Artifact Explanation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=NeurIPS, 2025 |
+| 160 | FerretNet: Efficient Synthetic Image Detection via Local Pixel Dependencies | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=NeurIPS, 2025 |
+| 161 | AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
+| 162 | D3QE: Learning Discrete Distribution Discrepancy-aware Quantization Error for Autoregressive-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025; auxiliary; dataset |
+| 163 | Diffusion Epistemic Uncertainty with Asymmetric Learning for Diffusion-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
+| 164 | LOTA: Bit-Planes Guided AI-Generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICCV, 2025 |
+| 165 | LEGION: Learning to Ground and Explain for Synthetic Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
+| 166 | Semantic Discrepancy-aware Detector for Image Forgery Identification | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
+| 167 | ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV, 2025 |
+| 168 | Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV-W, 2025 |
+| 169 | CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICCV-W, 2025 |
+| 170 | SAGNet: Decoupling Semantic-Agnostic Artifacts From Limited Training Data for Robust Generalization in Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TIFS, 2025 |
+| 171 | Are High-Quality AI-Generated Images More Difficult for Models to Detect? | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
+| 172 | Few-Shot Learner Generalizes Across AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
+| 173 | PiD: Generalized AI-Generated Images Detection with Pixelwise Decomposition Residuals | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
+| 174 | Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
+| 175 | Stay-Positive: A Case for Ignoring Real Image Features in Fake Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICML, 2025 |
+| 176 | ExDA: Towards Universal Detection and Plug-and-Play Attribution of AI-Generated Ex-Regulatory Images | 2025 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=ACM MM, 2025 |
+| 177 | Self-supervised Bidirectional Synchronization Estimation for Multimodal Deepfake Detection with Short-term Dependency. ICMR, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No |  |
+| 178 | LAID: Lightweight AI-Generated Image Detection in Spatial and Spectral Domains. PST, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No |  |
+| 179 | Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICASSP, 2025 |
+| 180 | FairAdapter: Detecting AI-generated Images with Improved Fairness | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=ICASSP, 2025 |
+| 181 | Reducing the Content Bias for AI-generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=WACV, 2025; auxiliary; dataset |
+| 182 | Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection. ECAI, 2025 | 2025 | detection | `possible_pipeline_match` | No | No |  |
+| 183 | GCS-Net: A universal AI-generated visual content detection method based on CLIP | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=KBS, 2025 |
+| 184 | Combating Dataset Misalignment for Robust AI-Generated Image Detection in the Real World. WDC, 2025 | 2025 | detection | `covered_in_public_preview` | Yes (`doi`) | Yes (`doi`) |  |
+| 185 | Art or Artifact? Segmenting AI-Generated Images for Deeper Detection. WDC, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No |  |
+| 186 | REVEAL: A Retrieval-Augmented Generation Approach for Contextual Identification of Synthetic Visual Content. DFF, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No |  |
+| 187 | Bi-LORA: A Vision-Language Approach for Synthetic Image Detection | 2025 | detection | `possible_pipeline_match` | No | No |  |
+| 188 | High‑resolution network‑based multi‑feature fusion for generalized forgery detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Multimedia Systems, 2025 |
+| 189 | Optimized frequency collaborative strategy drives AI image detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=IEEE Internet of Things Journal, 2025 |
+| 190 | FLODA: Harnessing Vision-Language Models for Deepfake Assessment. ICCE, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No |  |
+| 191 | Simple Detection of AI-Generated Images based on Noise Correlation. AMLDS, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No |  |
+| 192 | A Deepfake Image Detection Method Based on a Multi-Graph Attention Network | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | source_suffix=Electronics, 2025 |
+| 193 | HFMF: Hierarchical Fusion Meets Multi-Stream Models for Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250110 |
+| 194 | TextureCrop: Enhancing Synthetic Image Detection through Texture-based Cropping | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250116 |
+| 195 | LDR-Net: A Novel Framework for AI-generated Image Detection via Localized Discrepancy Representation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250123 |
+| 196 | Generalizable Deepfake Detection via Effective Local-Global Feature Extraction | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250125 |
+| 197 | PDA: Generalizable Detection of AI-Generated Images via Post-hoc Distribution Alignment | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250215 |
+| 198 | HRR: Hierarchical Retrospection Refinement for Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250225 |
+| 199 | Generalizable AI-Generated Image Detection Based on Fractal Self-Similarity in the Spectrum | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250311 |
+| 200 | Provenance Detection for AI-Generated Images: Combining Perceptual Hashing, Homomorphic Encryption, and AI Detection Models | 2025 | detection_and_source_attribution | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250314 |
+| 201 | FakeScope: Large Multimodal Expert Model for Transparent AI-Generated Image Forensics | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250331 |
+| 202 | Robust AI-Synthesized Image Detection via Multi-feature Frequency-aware Learning | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250402 |
+| 203 | Can GPT tell us why these images are synthesized? Empowering Multimodal Large Language Models for Forensics | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250416 |
+| 204 | MLEP: Multi-granularity Local Entropy Patterns for Universal AI-generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250418 |
+| 205 | Towards Explainable Fake Image Detection with Multi-Modal Large Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv 20250419 |
+| 206 | DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images | 2025 | detection | `possible_pipeline_match` | No | No | source_suffix=arXiv, 20250428 |
+| 207 | Composite Data Augmentations for Synthetic Image Detection against Real-World Perturbations | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250613 |
+| 208 | Task-aligned prompting improves zero-shot detection of AI-generated images by Vision-Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250616 |
+| 209 | Pay Less Attention to Deceptive Artifacts: Robust Detection of Compressed Deepfakes on Online Social Networks | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250625 |
+| 210 | LATTE: Latent Trajectory Embedding for Diffusion-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250703 |
+| 211 | Explainable Synthetic Image Detection through Diffusion Timestep Ensembling | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20250728 |
+| 212 | Redefining Generalization in Visual Domains: A Two-Axis Framework for Fake Image Detection with FusionDetect | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251007 |
+| 213 | From Evidence to Verdict: An Agent-Based Forensic Framework for AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251031 |
+| 214 | Generalized Design Choices for Deepfake Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251126 |
+| 215 | Code-in-the-Loop Forensics: Agentic Tool Use for Image Forgery Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251218 |
+| 216 | Beyond Semantic Features: Pixel-level Mapping for Generalized AI-Generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251219 |
+| 217 | AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251219 |
+| 218 | LADLE-MM: Limited Annotation based Detector with Learned Ensembles for Multimodal Misinformation | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251223 |
+| 219 | Fixed-Threshold Evaluation of a Hybrid CNN–ViT for AI-Generated Image Detection Across Photos and Art | 2025 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20251225 |
+| 220 | A closer look at fourier spectrum discrepancies for cnn-generated images detection | 2021 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=CVPR, 2021 |
+| 221 | Think Twice Before Detecting GAN-generated Fake Images from their Spectral Domain Imprints | 2022 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; anti-forensics; source_suffix=CVPR 2022 |
+| 222 | Stealthdiffusion: Towards evading diffusion forensic detection through diffusion model | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics |
+| 223 | An Adversarial Approach for Anti-Detection of AI Generated Images through Sample Generation | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=IEEE, 2025 |
+| 224 | Sanitizing Diffusion-Generated Images via Fingerprint Removal and Adversarial Perturbation for Forensic Evasion | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=IEEE Access, 2025 |
+| 225 | Take Fake as Real: Realistic-like Robust Black-box Adversarial Attack to Evade AIGC Detection | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=arXiv, 20241226 |
+| 226 | Fooling the Watchers: Breaking AIGC Detectors via Semantic Prompt Attacks | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; anti-forensics; source_suffix=arXiv, 20250529 |
+| 227 | Are GAN generated images easy to detect? A critical analysis of the state-of-the-art | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
+| 228 | Online Detection of AI-Generated Images | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; benchmark |
+| 229 | Intriguing properties of synthetic images: from generative adversarial networks to diffusion models | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; benchmark |
+| 230 | On The Detection of Synthetic Images Generated by Diffusion Models | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; benchmark |
+| 231 | Organic or Diffused: Can We Distinguish Human Art from AI-generated Images? | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
+| 232 | AI-generated Image Detection: Passive or Watermark? | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | auxiliary; benchmark; source_suffix=arXiv, 20241120 |
+| 233 | SIDBench: A Python Framework for Reliably Assessing Synthetic Image Detection Methods. MAD | 2024 | detection | `possible_pipeline_match` | No | No | auxiliary; benchmark; source_suffix=Workshops, 2024 |
+| 234 | Towards the Detection of Diffusion Model Deepfakes cite: 100+ Ruhr University Bochum | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
+| 235 | Rich and Poor Texture Contrast: A Simple yet Effective Approach for AI-generated Image Detection | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark |
+| 236 | Bridging the Gap Between Ideal and Real-world Evaluation: Benchmarking AI-Generated Image Detection in Challenging Scenarios | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=ICCV, 2025 |
+| 237 | No Detector to Rule Them All | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=ACM MM, 2025 |
+| 238 | DFBench: Benchmarking Deepfake Image Detection Capability of Large Multimodal Models | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; benchmark; source_suffix=ACM MM, 2025 |
+| 239 | ForensicHub: A Unified Benchmark & Codebase for All-Domain Fake Image Detection and Localization | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=NeurIPS. 2025 |
+| 240 | UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=arXiv 20251027 |
+| 241 | DBINDS - Can Initial Noise from Diffusion Model Inversion Help Reveal AI-Generated Videos? | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; source_suffix=arXiv, 20251112 |
+| 242 | Artifact: A large-scale dataset with artificial and factual images for generalizable and robust synthetic image detection | 2023 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; dataset; source_suffix=ICIP, 2023 |
+| 243 | Synthbuster: Towards Detection of Diffusion Model Generated Images | 2025 | detection | `possible_pipeline_match` | No | No | auxiliary; dataset |
+| 244 | Benchmarking Deepart Detection | 2023 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset; source_suffix=arXiv 2023 |
+| 245 | DeepArt: A Benchmark to Advance Fidelity Research in AI-Generated Content | 2023 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset; source_suffix=arXiv, 20231224 |
+| 246 | Genimage: A million-scale benchmark for detecting ai-generated image | 2023 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | auxiliary; benchmark; dataset; source_suffix=NeurIPS, 2023 |
+| 247 | Seeing is not always believing: benchmarking human and model perception of AI-generated images | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset; source_suffix=NeurIPS, 2024 |
+| 248 | TWIGMA: A dataset of AI-Generated Images with Metadata From Twitter | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=NeurIPS, 2024 |
+| 249 | Evolution of Detection Performance throughout the Online Lifespan of Synthetic Images | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset |
+| 250 | ImagiNet: A Multi-Content Dataset for Generalizable Synthetic Image Detection via Contrastive Learning | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv 20240729 |
+| 251 | AntifakePrompt: Prompt-Tuned Vision-Language Models are Fake Image Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset |
+| 252 | FakeBench: Probing Explainable fake image detection via large multimodal models | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20240908. 港城 |
+| 253 | Human vs. AI: A Novel Benchmark and a Comparative Study on the Detection of Generated Images and the Impact of Prompts. GenAIDetect, 2025 | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; benchmark; dataset |
+| 254 | WildFake: A Large-scale Challenging Dataset for AI-Generated Images Detection | 2025 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | auxiliary; dataset; source_suffix=AAAI 2025 |
+| 255 | Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets | 2024 | detection | `possible_pipeline_match` | No | No | auxiliary; dataset; source_suffix=ECCV Workshops, 2024 |
+| 256 | Aligned Datasets Improve Detection of Latent Diffusion-Generated Images | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=ICLR, 2025 |
+| 257 | Community Forensics: Using Thousands of Generators to Train Fake Image Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=CVPR, 2025 |
+| 258 | AI-GenBench: A New Ongoing Benchmark for AI-Generated Image Detection | 2025 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; benchmark; dataset; source_suffix=arXiv, 20250429 |
+| 259 | Enhancing Synthetic Generated-Images Detection through Post-Hoc Calibration | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=WACV Workshop, 2025 |
+| 260 | FragFake: A Dataset for Fine-Grained Detection of Edited Images with Vision Language Models. 20250x0x | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset |
+| 261 | RAID: A Dataset for Testing the Adversarial Robustness of AI-Generated Image Detectors | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20250605 |
+| 262 | Mirage: Unveiling Hidden Artifacts in Synthetic Images with Large Vision-Language Models | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=arXiv, 20251004 |
+| 263 | RealHD: A High-Quality Dataset for Robust Detection of State-of-the-Art AI-Generated Images | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=ACM MM, 2025 |
+| 264 | Is Artificial Intelligence Generated Image Detection a Solved Problem? | 2025 | detection | `not_covered_by_pipeline` | No | No | auxiliary; dataset; source_suffix=NeurIPS, 2025 |
+| 265 | Synthetic Image Verification in the Era of Generative Artificial Intelligence: What Works and What Isn’t There yet | 2024 | detection | `covered_in_public_preview` | Yes (`title+year`) | Yes (`title+year`) | auxiliary; survey; source_suffix=IEEE Security & Privacy, 2024. 意 |
+| 266 | Detecting Multimedia Generated by Large AI Models: A Survey | 2024 | detection | `covered_in_candidates_only` | Yes (`openalex_url`) | No | auxiliary; survey; source_suffix=arXiv 20240207. 美/意 |
+| 267 | A Survey of Defenses against AI-generated Visual Media- Detection, Disruption, and Authentication | 2024 | detection | `not_covered_by_pipeline` | No | No | auxiliary; survey; source_suffix=arXiv 20240715 西交/武大 |
+| 268 | AI-generated image detection algorithm based on classical-quantum hybrid neural network | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Science China, 2026 |
+| 269 | Light2Lie: Detecting Deepfake Images Using Physical Reflectance Law | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=NDSS, 2026 |
+| 270 | "That’s another doom I haven’t thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation. CHI, 2026 | 2026 | detection | `not_covered_by_pipeline` | No | No |  |
+| 271 | All Patches Matter, More Patches Better: Enhance AI-Generated Image Detection via Panoptic Patch Learning | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=ICLR, 2026 |
+| 272 | FakeReasoning: Towards Generalizable Forgery Detection and Reasoning | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TIP, 2026 |
+| 273 | SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=AAAI, 2026 |
+| 274 | Self-Supervised AI-Generated Image Detection: A Camera Metadata Perspective | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TPAMI, 2026 |
+| 275 | Penny-Wise and Pound-Foolish in AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TPAMI, 2026 |
+| 276 | DCNet: Learning Similarity and Spatial Complementary Features for Generalized AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TCSVT, 2026 |
+| 277 | Semantic Distribution and Authenticity Discrepancy Alignment for AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TMM, 2026 |
+| 278 | Adversarial Diffusion Model: Generating High-Quality and Undetectable Images From Scratch | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=TIFS, 2026 |
+| 279 | GReX-Bench: Benchmarking Generalization, Robustness, and Explainability in AI-Generated Image Detection | 2026 | detection | `covered_in_public_preview` | Yes (`openalex_url`) | Yes (`openalex_url`) | auxiliary; benchmark; source_suffix=Research Square, 2026 |
+| 280 | Transferable Dual-Domain Feature Importance Attack against AI-Generated Image Detector | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=SPL, 2026 |
+| 281 | General and Domain-Specific Zero-shot Detection of Generated Images via Conditional Likelihood | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2026 |
+| 282 | Training-free Detection of Text-to-video Generations via Over-coherence | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV, 2026 |
+| 283 | The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV workshop, 2026 |
+| 284 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=WACV workshops, 2026 |
+| 285 | CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20260302 |
+| 286 | Prompt-Engineered Detection of AI-Generated Images. New Trends in Intelligent Software Methodologies, Tools and Techniques, 2026 | 2026 | detection | `not_covered_by_pipeline` | No | No |  |
+| 287 | Localizing Perceptual Artifacts in Synthetic Images for Image Quality Assessment via Deep-Learning-Based Anomaly Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Electronics, 2026 |
+| 288 | Transformer Based on Multi-Domain Feature Fusion for AI-Generated Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Electronics, 2026 |
+| 289 | What is Real Anymore? A Solution to Detect Hyper Realistic AI-Generated Imagery. CCWC, 2026 | 2026 | detection | `not_covered_by_pipeline` | No | No |  |
+| 290 | FANB-Net: Frequency-Awared Attention and Noise-Injected Boosting for AI-Generated Image Detection. MMM 2026 | 2026 | detection | `not_covered_by_pipeline` | No | No |  |
+| 291 | Privacy-preserving and zero-shot detection strategies for multimodal AI-generated content | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Neurocomputing, 2026 |
+| 292 | Harnessing attention for cropping and fusion in CLIP-based AIGC detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Neurocomputing, 2026 |
+| 293 | E2GenF: Universal AIGC image detection based on edge enhanced generalizable features | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=PRL, 2026 |
+| 294 | Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Computer Vision Winter Workshop, 2026 |
+| 295 | IoT-Oriented Security for Small Sensor Systems Using DnCNN Denoising and Multimodal Feature Fusion for Image Forgery Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=Sensors, 2026 |
+| 296 | Interpol review of detection of AI-generated image and video deepfakes, 2022-2025 | 2026 | detection | `not_covered_by_pipeline` | No | No | auxiliary; survey; source_suffix=Forensic Science International: Synergy, 2026 |
+| 297 | Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford’s Law and Topological Analysis with Machine Learning Ensembles | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=QPAIN, 2026 |
+| 298 | Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20260311 |
+| 299 | Adaptive Forensic Feature Refinement via Intrinsic Importance Perception | 2026 | detection | `not_covered_by_pipeline` | No | No | source_suffix=arXiv, 20260422 |
 
 ## Not Covered by Candidate Retrieval
 
@@ -336,7 +334,7 @@ This audit compares a manually curated coverage checklist with automatic candida
 - Open Set Synthetic Image Source Attribution (2023)
 - ManiFPT: Defining and Analyzing Fingerprints of Generative Models (2024)
 - Tiny Autoencoders are Effective Few-Shot Generative Model Detectors (2024)
-- Are CLIP features all you need for Universal (2024)
+- Are CLIP features all you need for Universal Synthetic Image Origin Attribution? (2024)
 - Model Synthesis for Zero-Shot Model Attribution (2025)
 - Detecting Origin Attribution for Text-to-Image Diffusion Models (2025)
 - Few-Shot Class-Incremental Model Attribution Using Learnable Representation From CLIP-ViT Features (2025)
@@ -346,7 +344,7 @@ This audit compares a manually curated coverage checklist with automatic candida
 - Autonomous and Self-Adapting System for Synthetic Media Detection and Attribution (2025)
 - How to Trace Latent Generative Model Generated Images without Artificial Watermark? (2024)
 - Single-Model Attribution of Generative Models Through Final-Layer Inversion (2024)
-- Attributing and Detecting Fake Images Generated by Known GANs (2020)
+- Attributing and Detecting Fake Images Generated by Known GANs. SPW, 2020 (2020)
 - Which Model Generated This Image? A Model-Agnostic Approach for Origin Attribution (2024)
 - FreqCross: A Multi-Modal Frequency-Spatial Fusion Network for Robust Detection of Stable Diffusion 3.5 Generated Images. 20250708 (2025)
 - Detecting and Simulating Artifacts in GAN Fake Images (2019)
@@ -359,6 +357,7 @@ This audit compares a manually curated coverage checklist with automatic candida
 - Towards Universal Fake Image Detectors that Generalize Across Generative Models (2023)
 - Detecting Images Generated by Deep Diffusion Models Using Their Local Intrinsic Dimensionality (2023)
 - Exposing fake images generated by text-to-image diffusion models (2023)
+- AI-Generated Image Detection using a Cross-Attention Enhanced Dual-Stream Network. APSIPA ASC, 2023 (2023)
 - AntifakePrompt: Prompt-Tuned Vision-Language Models are Fake Image Detectors (2023)
 - Diffusion Noise Feature: Accurate and Fast Generated Image Detection (2023)
 - Detecting Generated Images by Real Images Only (2023)
@@ -388,10 +387,11 @@ This audit compares a manually curated coverage checklist with automatic candida
 - MDTL-NET: Computer-generated image detection based on multi-scale deep texture learning (2024)
 - Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics (2024)
 - Enhancing the Generalization of Synthetic Image Detection Models through the Exploration of Features in Deep Detection Models (2024)
-- Fake-GPT: Detecting Fake Image via Large Language Model (2024)
+- Fake-GPT: Detecting Fake Image via Large Language Model. PRCV, 2024 (2024)
 - A guided-based approach for deepfake detection: RGB-depth integration via features fusion (2024)
 - Addressing Diffusion Model Based Counter-Forensic Image Manipulation for Synthetic Image Detection (2024)
 - Detecting Artificial Intelligence-Generated images via deep trace representations and interactive feature fusion Image Fusion, 2024 (2024)
+- IPD-Net: Detecting AI-Generated Images via Inter-Patch Dependencies IJACSA, 2024 (2024)
 - Data-Independent Operator: A Training-Free Artifact Representation Extractor for Generalizable Deepfake Detection (2024)
 - Deepfake Detection without Deepfakes: Generalization via Synthetic Frequency Patterns Injection (2024)
 - Development of a Dual-Input Neural Model for Detecting AI-Generated Imagery (2024)
@@ -411,7 +411,7 @@ This audit compares a manually curated coverage checklist with automatic candida
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025)
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025)
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025)
-- CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by (2025)
+- CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025)
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025)
 - Where’s the liability in the Generative Era? Recovery-based Black-Box Detection of AI-Generated Content (2025)
 - Spot the Fake: Large Multimodal Model-Based Synthetic Image Detection with Artifact Explanation (2025)
@@ -431,16 +431,16 @@ This audit compares a manually curated coverage checklist with automatic candida
 - Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection (2025)
 - Stay-Positive: A Case for Ignoring Real Image Features in Fake Image Detection (2025)
 - ExDA: Towards Universal Detection and Plug-and-Play Attribution of AI-Generated Ex-Regulatory Images (2025)
-- Self-supervised Bidirectional Synchronization Estimation for Multimodal Deepfake Detection with Short-term Dependency (2025)
-- LAID: Lightweight AI-Generated Image Detection in Spatial and Spectral Domains (2025)
+- Self-supervised Bidirectional Synchronization Estimation for Multimodal Deepfake Detection with Short-term Dependency. ICMR, 2025 (2025)
+- LAID: Lightweight AI-Generated Image Detection in Spatial and Spectral Domains. PST, 2025 (2025)
 - Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025)
 - GCS-Net: A universal AI-generated visual content detection method based on CLIP (2025)
-- Art or Artifact? Segmenting AI-Generated Images for Deeper Detection (2025)
-- REVEAL: A Retrieval-Augmented Generation Approach for Contextual Identification of Synthetic Visual Content (2025)
+- Art or Artifact? Segmenting AI-Generated Images for Deeper Detection. WDC, 2025 (2025)
+- REVEAL: A Retrieval-Augmented Generation Approach for Contextual Identification of Synthetic Visual Content. DFF, 2025 (2025)
 - High‑resolution network‑based multi‑feature fusion for generalized forgery detection (2025)
 - Optimized frequency collaborative strategy drives AI image detection (2025)
-- FLODA: Harnessing Vision-Language Models for Deepfake Assessment (2025)
-- Simple Detection of AI-Generated Images based on Noise Correlation (2025)
+- FLODA: Harnessing Vision-Language Models for Deepfake Assessment. ICCE, 2025 (2025)
+- Simple Detection of AI-Generated Images based on Noise Correlation. AMLDS, 2025 (2025)
 - HFMF: Hierarchical Fusion Meets Multi-Stream Models for Deepfake Detection (2025)
 - TextureCrop: Enhancing Synthetic Image Detection through Texture-based Cropping (2025)
 - LDR-Net: A Novel Framework for AI-generated Image Detection via Localized Discrepancy Representation (2025)
@@ -489,24 +489,20 @@ This audit compares a manually curated coverage checklist with automatic candida
 - Evolution of Detection Performance throughout the Online Lifespan of Synthetic Images (2025)
 - ImagiNet: A Multi-Content Dataset for Generalizable Synthetic Image Detection via Contrastive Learning (2024)
 - AntifakePrompt: Prompt-Tuned Vision-Language Models are Fake Image Detectors (2025)
-- FakeBench: Probing Explainable fake image detection via large multimodal models. arXiv, 20240908. 港城 (2024)
+- FakeBench: Probing Explainable fake image detection via large multimodal models (2024)
 - Human vs. AI: A Novel Benchmark and a Comparative Study on the Detection of Generated Images and the Impact of Prompts. GenAIDetect, 2025 (2025)
-- Fake or JPEG? Revealing Common Biases in (2024)
 - Aligned Datasets Improve Detection of Latent Diffusion-Generated Images (2025)
 - Community Forensics: Using Thousands of Generators to Train Fake Image Detectors (2025)
-- CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025)
 - Enhancing Synthetic Generated-Images Detection through Post-Hoc Calibration (2025)
 - FragFake: A Dataset for Fine-Grained Detection of Edited Images with Vision Language Models. 20250x0x (2025)
 - RAID: A Dataset for Testing the Adversarial Robustness of AI-Generated Image Detectors (2025)
 - Mirage: Unveiling Hidden Artifacts in Synthetic Images with Large Vision-Language Models (2025)
 - RealHD: A High-Quality Dataset for Robust Detection of State-of-the-Art AI-Generated Images (2025)
 - Is Artificial Intelligence Generated Image Detection a Solved Problem? (2025)
-- Synthetic Image Verification in the Era of Generative Artificial Intelligence: What Works and What Isn’t There yet. IEEE Security & Privacy, 2024. 意 (2024)
-- Detecting Multimedia Generated by Large AI Models: A Survey. arXiv 20240207. 美/意 (2024)
 - A Survey of Defenses against AI-generated Visual Media- Detection, Disruption, and Authentication (2024)
 - AI-generated image detection algorithm based on classical-quantum hybrid neural network (2026)
 - Light2Lie: Detecting Deepfake Images Using Physical Reflectance Law (2026)
-- "That’s another doom I haven’t thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026)
+- "That’s another doom I haven’t thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation. CHI, 2026 (2026)
 - All Patches Matter, More Patches Better: Enhance AI-Generated Image Detection via Panoptic Patch Learning (2026)
 - FakeReasoning: Towards Generalizable Forgery Detection and Reasoning (2026)
 - SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection (2026)
@@ -524,8 +520,8 @@ This audit compares a manually curated coverage checklist with automatic candida
 - Prompt-Engineered Detection of AI-Generated Images. New Trends in Intelligent Software Methodologies, Tools and Techniques, 2026 (2026)
 - Localizing Perceptual Artifacts in Synthetic Images for Image Quality Assessment via Deep-Learning-Based Anomaly Detection (2026)
 - Transformer Based on Multi-Domain Feature Fusion for AI-Generated Image Detection (2026)
-- What is Real Anymore? A Solution to Detect Hyper Realistic AI-Generated Imagery (2026)
-- FANB-Net: Frequency-Awared Attention and Noise-Injected Boosting for AI-Generated Image Detection (2026)
+- What is Real Anymore? A Solution to Detect Hyper Realistic AI-Generated Imagery. CCWC, 2026 (2026)
+- FANB-Net: Frequency-Awared Attention and Noise-Injected Boosting for AI-Generated Image Detection. MMM 2026 (2026)
 - Privacy-preserving and zero-shot detection strategies for multimodal AI-generated content (2026)
 - Harnessing attention for cropping and fusion in CLIP-based AIGC detection (2026)
 - E2GenF: Universal AIGC image detection based on edge enhanced generalizable features (2026)
@@ -560,16 +556,22 @@ These checklist papers remain manually curated entries; this section only indica
 - AI-generated Image Detection: Passive or Watermark? (2024)
 - Genimage: A million-scale benchmark for detecting ai-generated image (2023)
 - WildFake: A Large-scale Challenging Dataset for AI-Generated Images Detection (2025)
+- Detecting Multimedia Generated by Large AI Models: A Survey (2024)
 
 ## Possible Pipeline Matches
 
 | Key paper | Source | Possible record | Year | Basis | Similarity |
 | --- | --- | --- | ---: | --- | ---: |
-| Reverse engineering of generative models: Inferring model hyperparameters from generated images.IEEE | candidates | Reverse Engineering of Generative Models: Inferring Model Hyperparameters From Generated Images | 2023 | fuzzy title | 0.974 |
 | Exposing the Fake: Effective Diffusion-Generated Images Detection (SeDID) | candidates | Exposing the Fake: Effective Diffusion-Generated Images Detection | 2023 | fuzzy title | 0.955 |
 | X-Transfer: A Transfer Learning-Based Framework for Robust GAN-Generated Fake Image Detection | candidates | X-Transfer: A Transfer Learning-Based Framework for GAN-Generated Fake Image Detection | 2024 | fuzzy title | 0.960 |
 | X-Transfer: A Transfer Learning-Based Framework for Robust GAN-Generated Fake Image Detection | candidates | X-Transfer: A Transfer Learning-Based Framework for GAN-Generated Fake Image Detection | 2023 | fuzzy title | 0.960 |
 | X-Transfer: A Transfer Learning-Based Framework for Robust GAN-Generated Fake Image Detection | public_preview | X-Transfer: A Transfer Learning-Based Framework for GAN-Generated Fake Image Detection | 2024 | fuzzy title | 0.960 |
+| Detecting AI Generated Images through Texture and Frequency Analysis of Patches AIVRV, 2024 | candidates | Detecting AI Generated Images Through Texture and Frequency Analysis of Patches | 2024 | fuzzy title | 0.935 |
+| Detecting AI Generated Images through Texture and Frequency Analysis of Patches AIVRV, 2024 | public_preview | Detecting AI Generated Images Through Texture and Frequency Analysis of Patches | 2024 | fuzzy title | 0.935 |
+| Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective. KDD, 2025 | candidates | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective | 2025 | fuzzy title | 0.954 |
+| Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective. KDD, 2025 | public_preview | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective | 2025 | fuzzy title | 0.954 |
+| Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection. ECAI, 2025 | candidates | Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection | 2025 | fuzzy title | 0.947 |
+| Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection. ECAI, 2025 | public_preview | Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection | 2025 | fuzzy title | 0.947 |
 | Bi-LORA: A Vision-Language Approach for Synthetic Image Detection | candidates | Bi‐ <scp>LORA</scp> : A Vision‐Language Approach for Synthetic Image Detection | 2025 | fuzzy title | 0.941 |
 | Bi-LORA: A Vision-Language Approach for Synthetic Image Detection | public_preview | Bi‐ <scp>LORA</scp> : A Vision‐Language Approach for Synthetic Image Detection | 2025 | fuzzy title | 0.941 |
 | DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images | candidates | DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images | 2026 | normalized title | 1.000 |
@@ -581,7 +583,11 @@ These checklist papers remain manually curated entries; this section only indica
 | On The Detection of Synthetic Images Generated by Diffusion Models | candidates | On The Detection of Synthetic Images Generated by Diffusion Models | 2023 | normalized title | 1.000 |
 | On The Detection of Synthetic Images Generated by Diffusion Models | candidates | On the detection of synthetic images generated by diffusion models | 2022 | normalized title | 1.000 |
 | On The Detection of Synthetic Images Generated by Diffusion Models | public_preview | On The Detection of Synthetic Images Generated by Diffusion Models | 2023 | normalized title | 1.000 |
+| SIDBench: A Python Framework for Reliably Assessing Synthetic Image Detection Methods. MAD | candidates | SIDBench: A Python framework for reliably assessing synthetic image detection methods | 2024 | fuzzy title | 0.977 |
+| SIDBench: A Python Framework for Reliably Assessing Synthetic Image Detection Methods. MAD | public_preview | SIDBench: A Python framework for reliably assessing synthetic image detection methods | 2024 | fuzzy title | 0.977 |
 | Synthbuster: Towards Detection of Diffusion Model Generated Images | candidates | Synthbuster: Towards Detection of Diffusion Model Generated Images | 2023 | normalized title | 1.000 |
 | Synthbuster: Towards Detection of Diffusion Model Generated Images | public_preview | Synthbuster: Towards Detection of Diffusion Model Generated Images | 2023 | normalized title | 1.000 |
+| Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets | candidates | Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets | 2025 | normalized title | 1.000 |
+| Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets | public_preview | Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets | 2025 | normalized title | 1.000 |
 
 Possible pipeline matches require manual confirmation and are not counted as covered by either dataset.
