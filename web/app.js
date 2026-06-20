@@ -160,10 +160,8 @@ const INSTITUTION_CSV_COLUMNS = [
   ["raw_country", (record) => record.raw_country || ""],
   ["raw_country_code", (record) => record.raw_country_code || ""],
   ["doi", (record) => normalizedDoi(record.doi)],
-  ["arxiv_id", (record) => record.arxiv_id || ""],
-  ["arxiv_url", (record) => record.arxiv_url || (
-    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
-  )],
+  ["arxiv_id", (record) => recordArxivId(record)],
+  ["arxiv_url", (record) => recordArxivUrl(record)],
   ["paper_url", (record) => recordPaperUrl(record)],
   ["openalex_url", (record) => record.openalex_url || ""],
 ];
@@ -181,10 +179,8 @@ const PAPER_CSV_COLUMNS = [
   ["regions", (record) => record.aggregated_regions.join("; ")],
   ["region_codes", (record) => record.aggregated_region_codes.join("; ")],
   ["doi", (record) => normalizedDoi(record.doi)],
-  ["arxiv_id", (record) => record.arxiv_id || ""],
-  ["arxiv_url", (record) => record.arxiv_url || (
-    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
-  )],
+  ["arxiv_id", (record) => recordArxivId(record)],
+  ["arxiv_url", (record) => recordArxivUrl(record)],
   ["paper_url", (record) => recordPaperUrl(record)],
   ["openalex_url", (record) => record.openalex_url || ""],
 ];
@@ -568,15 +564,76 @@ function normalizedSetSize(values) {
 }
 
 function hasPreprintMetadata(record) {
-  return hasPreprintSignal(record) || [
+  return hasArxivVersion(record) || hasPreprintSignal(record) || [
     "publication_type",
     "source_type",
     "venue_type",
   ].some((field) => Object.hasOwn(record, field));
 }
 
-function isArxivPreprint(record) {
-  return hasPreprintSignal(record);
+function extractArxivId(value) {
+  let text = String(value || "").trim();
+  if (!text) {
+    return "";
+  }
+  try {
+    text = decodeURIComponent(text);
+  } catch {
+    // Keep the original text when it is not valid percent-encoding.
+  }
+
+  const arxivDoi = text.match(
+    /(?:https?:\/\/(?:dx\.)?doi\.org\/)?10\.48550\/arxiv\.([a-z-]+(?:\.[a-z]{2})?\/\d{7}(?:v\d+)?|\d{4}\.\d{4,5}(?:v\d+)?)/i,
+  );
+  if (arxivDoi) {
+    return arxivDoi[1];
+  }
+
+  const arxivUrl = text.match(
+    /arxiv\.org\/(?:abs|pdf)\/([a-z-]+(?:\.[a-z]{2})?\/\d{7}(?:v\d+)?|\d{4}\.\d{4,5}(?:v\d+)?)(?:\.pdf)?(?:[?#]|$)/i,
+  );
+  if (arxivUrl) {
+    return arxivUrl[1];
+  }
+
+  const directId = text
+    .replace(/^arxiv:\s*/i, "")
+    .replace(/\.pdf$/i, "")
+    .trim();
+  return (
+    /^(?:[a-z-]+(?:\.[a-z]{2})?\/\d{7}|\d{4}\.\d{4,5})(?:v\d+)?$/i.test(directId)
+      ? directId
+      : ""
+  );
+}
+
+function recordArxivId(record) {
+  const candidates = [
+    record.arxiv_id,
+    record.arxiv_url,
+    record.doi,
+    record.doi_url,
+    record.paper_url,
+    record.primary_url,
+    record.landing_page_url,
+    record.url,
+  ];
+  for (const candidate of candidates) {
+    const arxivId = extractArxivId(candidate);
+    if (arxivId) {
+      return arxivId;
+    }
+  }
+  return "";
+}
+
+function recordArxivUrl(record) {
+  const arxivId = recordArxivId(record);
+  return arxivId ? `https://arxiv.org/abs/${arxivId}` : "";
+}
+
+function hasArxivVersion(record) {
+  return Boolean(recordArxivId(record));
 }
 
 function hasPreprintSignal(record) {
@@ -585,14 +642,10 @@ function hasPreprintSignal(record) {
     record.source_type,
     record.venue_type,
     getRecordVenue(record),
-    record.arxiv_id,
-    record.arxiv_url,
   ].join(" ").toLocaleLowerCase();
   return (
     booleanValue(record.has_arxiv_version) ||
     booleanValue(record.is_arxiv_preprint) ||
-    Boolean(String(record.arxiv_id || "").trim()) ||
-    Boolean(String(record.arxiv_url || "").trim()) ||
     /\b(?:arxiv|preprint|pre-print)\b/.test(text)
   );
 }
@@ -622,11 +675,17 @@ function hasPublishedVenue(record) {
     "n a",
     "na",
   ]);
-  return !missingVenueValues.has(normalizedVenue);
+  return (
+    !missingVenueValues.has(normalizedVenue) &&
+    !/\b(?:arxiv|preprint|pre print)\b/.test(normalizedVenue)
+  );
 }
 
 function isPreprintOnlyRecord(record) {
-  return hasPreprintSignal(record) && !hasPublishedVenue(record);
+  return (
+    (hasArxivVersion(record) || hasPreprintSignal(record)) &&
+    !hasPublishedVenue(record)
+  );
 }
 
 function updateDatasetStatistics(datasetRecords) {
@@ -781,11 +840,10 @@ function popupContent(record) {
   const doiRow = doi
     ? `<dt>DOI</dt><dd>${externalLink(`https://doi.org/${doi}`, doi)}</dd>`
     : "";
-  const arxivUrl = record.arxiv_url || (
-    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
-  );
+  const arxivId = recordArxivId(record);
+  const arxivUrl = recordArxivUrl(record);
   const arxivRow = arxivUrl
-    ? `<dt>arXiv</dt><dd>${externalLink(arxivUrl, record.arxiv_id || "View preprint")}</dd>`
+    ? `<dt>arXiv</dt><dd>${externalLink(arxivUrl, arxivId || "View arXiv version")}</dd>`
     : "";
   const paperUrl =
     record.primary_url ||
@@ -796,11 +854,11 @@ function popupContent(record) {
   const paperUrlRow = paperUrl
     ? `<dt>Paper</dt><dd>${externalLink(paperUrl, "Open record")}</dd>`
     : "";
-  const isArxivPreprint =
-    hasPreprintSignal(record) || Boolean(record.arxiv_id || arxivUrl);
-  const preprintBadge = isArxivPreprint
-    ? '<span class="popup-badge confidence-unresolved">arXiv / preprint</span>'
-    : "";
+  const versionBadge = isPreprintOnlyRecord(record)
+    ? '<span class="popup-badge confidence-unresolved">Preprint-only</span>'
+    : hasArxivVersion(record)
+      ? '<span class="popup-badge confidence-unresolved">arXiv version</span>'
+      : "";
   const hasResolution = hasResolutionMetadata(record);
   const confidence = resolutionConfidence(record);
   const needsReview = reviewStatus(record);
@@ -826,7 +884,7 @@ function popupContent(record) {
   return `
     <div class="popup-badges">
       <span class="popup-badge popup-task">${escapeHtml(formatTask(record.task))}</span>
-      ${preprintBadge}
+      ${versionBadge}
       ${confidenceBadge}
       ${reviewBadge}
     </div>
@@ -871,9 +929,7 @@ function resultContent(record) {
   const doiLink = doi
     ? externalLink(`https://doi.org/${doi}`, "DOI")
     : "";
-  const arxivUrl = record.arxiv_url || (
-    record.arxiv_id ? `https://arxiv.org/abs/${record.arxiv_id}` : ""
-  );
+  const arxivUrl = recordArxivUrl(record);
   const arxivLink = arxivUrl ? externalLink(arxivUrl, "arXiv") : "";
   const paperUrl = recordPaperUrl(record);
   const paperLabel = paperUrl && paperUrl === record.openalex_url
@@ -1041,7 +1097,7 @@ function renderRecords() {
     .filter(Boolean);
   const selectedTask = taskFilter.value;
   const selectedVenue = venueFilter.value;
-  const selectedPreprint = preprintFilter.value;
+  const selectedVersion = preprintFilter.value;
   const minimumYear = yearFilterValue(minYearFilter);
   const maximumYear = yearFilterValue(maxYearFilter);
   const selectedResolution = resolutionFilter.value;
@@ -1052,11 +1108,12 @@ function renderRecords() {
     const matchesTask = selectedTask === "all" || record.task === selectedTask;
     const matchesVenue =
       selectedVenue === "all" || venueFilterValue(record) === selectedVenue;
-    const isPreprintOnly = isPreprintOnlyRecord(record);
-    const matchesPreprint =
-      selectedPreprint === "all" ||
-      (selectedPreprint === "preprints" && isPreprintOnly) ||
-      (selectedPreprint === "non-preprints" && !isPreprintOnly);
+    const matchesVersion =
+      selectedVersion === "all" ||
+      (selectedVersion === "preprint-only" && isPreprintOnlyRecord(record)) ||
+      (selectedVersion === "published" && hasPublishedVenue(record)) ||
+      (selectedVersion === "has-arxiv" && hasArxivVersion(record)) ||
+      (selectedVersion === "no-arxiv" && !hasArxivVersion(record));
     const year = publicationYear(record);
     const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
     const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
@@ -1071,7 +1128,7 @@ function renderRecords() {
       matchesKeyword &&
       matchesTask &&
       matchesVenue &&
-      matchesPreprint &&
+      matchesVersion &&
       matchesMinimumYear &&
       matchesMaximumYear &&
       matchesResolution &&
