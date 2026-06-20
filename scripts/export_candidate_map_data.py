@@ -41,6 +41,7 @@ PAPER_REQUIRED_COLUMNS = {
     "url",
     "preliminary_task",
     "preliminary_subtask",
+    "material_type",
     "source_database",
     "manual_review",
     "notes",
@@ -623,6 +624,8 @@ def group_map_records(
                 "publication_date": clean_text(paper.get("publication_date")),
                 "task": clean_text(paper.get("preliminary_task")) or "uncertain",
                 "subtask": clean_text(paper.get("preliminary_subtask")),
+                "material_type": clean_text(paper.get("material_type"))
+                or "uncertain",
                 "venue": venue_name,
                 "venue_name": venue_name,
                 "venue_type": clean_text(paper.get("venue_type")),

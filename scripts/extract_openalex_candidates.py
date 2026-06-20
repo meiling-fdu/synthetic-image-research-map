@@ -50,6 +50,7 @@ PAPER_COLUMNS = (
     "exclusion_reason",
     "preliminary_task",
     "preliminary_subtask",
+    "material_type",
     "is_survey",
     "is_deepfake_related",
     "is_image_editing_related",
@@ -97,10 +98,59 @@ CONDITIONAL_GENERATOR_ATTRIBUTION_PATTERNS = (
 SURVEY_PATTERNS = (
     r"\bsurvey\b",
     r"\breview\b",
+    r"\bsystematic review\b",
+    r"\bcomprehensive review\b",
     r"\boverview\b",
     r"\btaxonomy\b",
-    r"\bbenchmark\b",
+    r"\btutorial\b",
 )
+CHALLENGE_PATTERNS = (
+    r"\bchallenge\b",
+    r"\bcompetition\b",
+    r"\bshared task\b",
+    r"\bchallenge track\b",
+    r"\bchallenge dataset\b",
+)
+ANTI_FORENSICS_PATTERNS = (
+    r"\banti[ -]?forensics?\b",
+    r"\bantiforensic(?:s)?\b",
+    r"\bevasion\b",
+    r"\bbypass(?:ing|ed|es)?\b",
+    r"\badversarial attacks?\b",
+    r"\bcounter[ -]?forensics?\b",
+    r"\banti[ -]?detection\b",
+)
+BENCHMARK_PATTERNS = (
+    r"\bbenchmark(?:ing|s|ed)?\b",
+    r"\bbenchmark suite\b",
+    r"\bevaluation benchmark\b",
+    r"\bchallenge benchmark\b",
+)
+DATASET_PATTERNS = (
+    r"\bdatasets?\b",
+    r"\bdata sets?\b",
+    r"\bcorpus\b",
+    r"\bdatabases?\b",
+    r"\bbenchmark dataset\b",
+    r"\b(?:introduce|present|release|propose)(?:s|d|ing)?\b.{0,80}\bcollection\b",
+)
+AUXILIARY_PATTERNS = (
+    r"\bauxiliary\b",
+    r"\bopen[ -]?source (?:tool|toolkit|toolbox|library|platform|resource)\b",
+    r"\bsoftware (?:tool|toolkit|toolbox|library|platform|resource)\b",
+    r"\bresource (?:hub|repository|portal)\b",
+)
+
+MATERIAL_TYPES = {
+    "research_paper",
+    "dataset",
+    "benchmark",
+    "survey",
+    "challenge",
+    "anti_forensics",
+    "auxiliary",
+    "uncertain",
+}
 DEEPFAKE_PATTERNS = (
     r"\bdeep[ -]?fake(?:s)?\b",
     r"\bface manipulation\b",
@@ -395,6 +445,45 @@ def reconstruct_abstract(inverted_index: Any) -> str:
     return " ".join(word for _, word in positioned_words)
 
 
+def classify_material_type(text: str, notes: str = "") -> str:
+    """Classify a candidate's material type using deterministic text rules."""
+    if matches_any(notes, (r"\bauxiliary\b",)):
+        return "auxiliary"
+    if matches_any(text, SURVEY_PATTERNS):
+        return "survey"
+    if matches_any(text, CHALLENGE_PATTERNS):
+        return "challenge"
+    if matches_any(text, ANTI_FORENSICS_PATTERNS):
+        return "anti_forensics"
+    if matches_any(text, BENCHMARK_PATTERNS):
+        return "benchmark"
+    if matches_any(text, DATASET_PATTERNS):
+        return "dataset"
+    if matches_any(text, AUXILIARY_PATTERNS):
+        return "auxiliary"
+    return "research_paper"
+
+
+def merge_material_type(left: str, right: str) -> str:
+    """Merge duplicate classifications without hiding incompatible signals."""
+    values = {left, right} & MATERIAL_TYPES
+    values.discard("")
+    if not values:
+        return "uncertain"
+    if len(values) == 1:
+        return next(iter(values))
+    values.discard("research_paper")
+    if len(values) == 1:
+        return next(iter(values))
+    if "survey" in values:
+        return "survey"
+    if "challenge" in values and values <= {"challenge", "benchmark", "dataset"}:
+        return "challenge"
+    if "benchmark" in values and values <= {"benchmark", "dataset"}:
+        return "benchmark"
+    return "uncertain"
+
+
 def classify_task(text: str) -> Tuple[str, str]:
     has_detection = matches_any(text, DETECTION_PATTERNS)
     has_generated_image_context = bool(
@@ -674,6 +763,9 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     abstract = reconstruct_abstract(work.get("abstract_inverted_index"))
     classification_text = f"{title} {abstract}".strip()
     task, subtask = classify_task(classification_text)
+    material_type = classify_material_type(
+        classification_text, clean_text(work.get("notes"))
+    )
     in_scope, relevance_score, relevance_reason, exclusion_reason = (
         classify_relevance(classification_text)
     )
@@ -734,7 +826,8 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
         "exclusion_reason": exclusion_reason,
         "preliminary_task": task,
         "preliminary_subtask": subtask,
-        "is_survey": bool_text(matches_any(title, SURVEY_PATTERNS)),
+        "material_type": material_type,
+        "is_survey": bool_text(material_type == "survey"),
         "is_deepfake_related": bool_text(matches_any(classification_text, DEEPFAKE_PATTERNS)),
         "is_image_editing_related": bool_text(
             matches_any(classification_text, IMAGE_EDITING_PATTERNS)
@@ -763,6 +856,10 @@ def merge_paper_rows(existing: Dict[str, str], incoming: Dict[str, str]) -> None
         incoming["preliminary_subtask"],
         default_subtask,
     )
+    existing["material_type"] = merge_material_type(
+        existing["material_type"], incoming["material_type"]
+    )
+    existing["is_survey"] = bool_text(existing["material_type"] == "survey")
 
     existing["source_query"] = merge_pipe_values(
         existing["source_query"], incoming["source_query"]
@@ -784,7 +881,6 @@ def merge_paper_rows(existing: Dict[str, str], incoming: Dict[str, str]) -> None
             max(int(existing["relevance_score"]), int(incoming["relevance_score"]))
         )
     for boolean_column in (
-        "is_survey",
         "is_deepfake_related",
         "is_image_editing_related",
         "has_arxiv_version",

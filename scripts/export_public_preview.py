@@ -49,6 +49,7 @@ PUBLIC_FIELDS = (
     "publication_date",
     "task",
     "subtask",
+    "material_type",
     "venue",
     "venue_name",
     "venue_type",
@@ -415,6 +416,9 @@ def build_preview(
         public_record = {
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
+        public_record["material_type"] = (
+            clean_text(record.get("material_type")) or "uncertain"
+        )
         public_record["institution"] = institution_name(record)
         public_record.update(
             normalize_country_region(

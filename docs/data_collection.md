@@ -119,6 +119,10 @@ The pipeline stops immediately when a subprocess fails and never commits or push
 - `data/processed/openalex_candidate_papers_in_scope.csv` contains only papers marked `in_scope=true`.
 - `data/processed/openalex_candidate_affiliations_in_scope.csv` contains only affiliations whose `openalex_id` belongs to an in-scope paper.
 
+Each paper receives an automatic, reviewable `material_type` from deterministic title-and-abstract rules. The allowed values are `research_paper`, `dataset`, `benchmark`, `survey`, `challenge`, `anti_forensics`, `auxiliary`, and `uncertain`. An explicit auxiliary source note is authoritative. Otherwise, strong survey/review terms take precedence; explicit challenges or competitions take precedence over benchmarks; anti-forensics/evasion terms take precedence over ordinary research; benchmarks take precedence over datasets; dataset/corpus/database terms identify dataset records; and narrow tool/resource phrases identify auxiliary records. A normal method or application paper defaults to `research_paper`. When duplicate source records produce incompatible special-purpose labels that the precedence rules cannot resolve, the merged result is `uncertain` rather than silently choosing one.
+
+Material type does not replace or alter `preliminary_task` and `preliminary_subtask`, and no candidate is excluded merely for being a dataset, benchmark, survey, challenge, anti-forensics/evasion paper, or auxiliary record. The full and in-scope candidate paper CSVs both include the field. The map exporter carries it into every institution-level record, and public-preview export preserves it without changing the existing preview filters.
+
 Preview extraction from the repository root without writing files:
 
 ```bash
@@ -390,7 +394,7 @@ python3 scripts/export_candidate_map_data.py --affiliations-csv data/processed/o
 
 The input and output paths can be changed with `--papers-csv`, `--affiliations-csv`, and `--output`. Use `--max-records` to limit the number of grouped map records exported during local exploration.
 
-Map records carry the extracted publication year/date, venue name/type, publisher, publication type, DOI, arXiv metadata, and source URLs when available. Legacy candidate CSVs without the expanded columns still export through the existing `year`, `venue`, and `url` fallbacks. Institution-level grouping is unchanged.
+Map records carry the extracted material type, publication year/date, venue name/type, publisher, publication type, DOI, arXiv metadata, and source URLs when available. Institution-level grouping is unchanged.
 
 Serve the repository and open [http://localhost:8000/web/?dataset=openalex](http://localhost:8000/web/?dataset=openalex) to select the generated dataset. The JSON file is ignored by Git and should not be committed.
 
