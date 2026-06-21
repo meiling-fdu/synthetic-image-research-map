@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data" / "processed" / "openalex_candidate_papers.csv"
 DEFAULT_OUTPUT = ROOT / "data" / "manual" / "paper_arxiv_links.csv"
 DEFAULT_KEY_PAPERS = ROOT / "data" / "manual" / "key_papers_enriched.csv"
+DEFAULT_PUBLIC_PREVIEW = ROOT / "web" / "data" / "public_preview_map_data.json"
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
 USER_AGENT = (
     "synthetic-image-research-map/0.1 "
@@ -57,6 +58,17 @@ COMPLETED_STATUSES = {
     "possible_arxiv_match",
     "not_found_in_arxiv",
 }
+ENRICHMENT_COLUMNS = (
+    "arxiv_id",
+    "arxiv_url",
+    "arxiv_year",
+    "match_status",
+    "title_similarity",
+    "author_overlap",
+    "match_reason",
+    "source",
+    "manual_review",
+)
 ATOM = "{http://www.w3.org/2005/Atom}"
 MODERN_ARXIV_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$", re.IGNORECASE)
 LEGACY_ARXIV_RE = re.compile(
@@ -86,6 +98,21 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--title-contains",
         help="Process only titles containing this text, case-insensitively.",
+    )
+    parser.add_argument(
+        "--query-scope",
+        choices=("all", "public-preview"),
+        default="all",
+        help="Limit new arXiv queries to all papers or visible public-preview papers.",
+    )
+    parser.add_argument(
+        "--public-preview-json",
+        type=Path,
+        default=DEFAULT_PUBLIC_PREVIEW,
+        help=(
+            "Public preview JSON used by public-preview scope "
+            f"(default: {DEFAULT_PUBLIC_PREVIEW})."
+        ),
     )
     return parser.parse_args(argv)
 
@@ -204,8 +231,22 @@ def author_overlap(left: Iterable[str], right: Iterable[str]) -> Optional[float]
 def row_key(row: Dict[str, str]) -> Tuple[str, str, str]:
     doi = normalize_doi(row.get("doi"))
     openalex = normalize_openalex(row.get("openalex_url") or row.get("openalex_id"))
-    title_year = f"{normalize_title(row.get('title'))}|{clean(row.get('year') or row.get('publication_year'))}"
+    title = normalize_title(row.get("title"))
+    year = clean(row.get("year") or row.get("publication_year"))
+    title_year = f"{title}|{year}" if title and year else ""
     return doi, openalex, title_year
+
+
+def stable_row_key(row: Dict[str, str]) -> Optional[Tuple[str, str]]:
+    """Return the strongest available paper key in the documented priority."""
+    doi, openalex, title_year = row_key(row)
+    if openalex:
+        return "openalex", openalex
+    if doi:
+        return "doi", doi
+    if title_year:
+        return "title_year", title_year
+    return None
 
 
 def index_row(
@@ -213,7 +254,11 @@ def index_row(
 ) -> None:
     """Index a row by each stable key instead of requiring every field to match."""
     doi, openalex, title_year = row_key(row)
-    for kind, value in (("doi", doi), ("openalex", openalex), ("title_year", title_year)):
+    for kind, value in (
+        ("openalex", openalex),
+        ("doi", doi),
+        ("title_year", title_year),
+    ):
         if value:
             index[(kind, value)] = row
 
@@ -222,7 +267,11 @@ def find_indexed(
     index: Dict[Tuple[str, str], Dict[str, str]], row: Dict[str, str]
 ) -> Optional[Dict[str, str]]:
     doi, openalex, title_year = row_key(row)
-    for kind, value in (("doi", doi), ("openalex", openalex), ("title_year", title_year)):
+    for kind, value in (
+        ("openalex", openalex),
+        ("doi", doi),
+        ("title_year", title_year),
+    ):
         if value and (kind, value) in index:
             return index[(kind, value)]
     return None
@@ -235,16 +284,35 @@ def read_csv(path: Path) -> List[Dict[str, str]]:
         return list(csv.DictReader(handle))
 
 
-def atomic_write(path: Path, rows: Iterable[Dict[str, str]]) -> None:
+def atomic_write(
+    path: Path,
+    rows: Iterable[Dict[str, str]],
+    expected_count: int,
+) -> None:
+    output_rows = list(rows)
+    if len(output_rows) != expected_count:
+        raise RuntimeError(
+            "Refusing to overwrite arXiv cache: "
+            f"expected {expected_count} rows, got {len(output_rows)}."
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile(
-        "w", encoding="utf-8", newline="", dir=path.parent, delete=False
-    ) as handle:
-        writer = csv.DictWriter(handle, fieldnames=OUTPUT_COLUMNS, extrasaction="ignore")
-        writer.writeheader()
-        writer.writerows(rows)
-        temporary = Path(handle.name)
-    temporary.replace(path)
+    temporary: Optional[Path] = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            "w", encoding="utf-8", newline="", dir=path.parent, delete=False
+        ) as handle:
+            writer = csv.DictWriter(
+                handle,
+                fieldnames=OUTPUT_COLUMNS,
+                extrasaction="ignore",
+            )
+            writer.writeheader()
+            writer.writerows(output_rows)
+            temporary = Path(handle.name)
+        temporary.replace(path)
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
 
 
 def build_known_arxiv_index(path: Path) -> Dict[Tuple[str, str], Dict[str, str]]:
@@ -397,58 +465,140 @@ def set_match(
     })
 
 
-def append_remaining_completed_rows(
-    outputs: List[Dict[str, str]],
-    rows: Iterable[Dict[str, str]],
-    resume: Dict[Tuple[str, str], Dict[str, str]],
-    counts: Counter,
+def merge_cached_enrichment(
+    output: Dict[str, str],
+    previous: Optional[Dict[str, str]],
 ) -> None:
-    """Keep later completed cache entries when a network stop ends the loop early."""
-    output_index: Dict[Tuple[str, str], Dict[str, str]] = {}
-    for output in outputs:
-        index_row(output_index, output)
-    for row in rows:
-        output = base_output_row(row)
-        if find_indexed(output_index, output):
-            continue
-        previous = find_indexed(resume, output)
-        if previous and previous.get("match_status") in COMPLETED_STATUSES:
-            cached = {column: previous.get(column, "") for column in OUTPUT_COLUMNS}
-            outputs.append(cached)
-            index_row(output_index, cached)
-            counts["reused"] += 1
+    """Overlay cached enrichment fields without replacing current source metadata."""
+    if previous:
+        for column in ENRICHMENT_COLUMNS:
+            output[column] = clean(previous.get(column))
+    if not output.get("match_status"):
+        set_match(
+            output,
+            "",
+            "not_searched",
+            "",
+            None,
+            "Not searched yet.",
+            "not_queried",
+        )
+
+
+def load_public_preview_keys(path: Path) -> Tuple[set, int]:
+    """Load unique stable paper keys from a non-empty public preview."""
+    try:
+        with path.open(encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except FileNotFoundError as error:
+        raise RuntimeError(f"Public preview JSON does not exist: {path}") from error
+    except (OSError, json.JSONDecodeError) as error:
+        raise RuntimeError(
+            f"Could not read public preview JSON {path}: {error}"
+        ) from error
+
+    records = payload.get("records") if isinstance(payload, dict) else None
+    if not isinstance(records, list) or not records:
+        raise RuntimeError(
+            f"Public preview JSON must contain a non-empty records list: {path}"
+        )
+    keys = {
+        key
+        for record in records
+        if isinstance(record, dict)
+        if (key := stable_row_key(record)) is not None
+    }
+    if not keys:
+        raise RuntimeError(
+            f"Public preview JSON contains no identifiable paper records: {path}"
+        )
+    return keys, len(keys)
+
+
+def is_in_query_scope(
+    row: Dict[str, str],
+    query_scope: str,
+    public_preview_keys: set,
+) -> bool:
+    if query_scope == "all":
+        return True
+    key = stable_row_key(row)
+    return key is not None and key in public_preview_keys
+
+
+def is_not_searched(row: Dict[str, str]) -> bool:
+    return clean(row.get("match_status")).casefold() == "not_searched"
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
-    rows = read_csv(args.input)
+    try:
+        rows = read_csv(args.input)
+        existing_rows = read_csv(args.output) if args.output.exists() else []
+        if args.query_scope == "public-preview":
+            public_preview_keys, public_preview_paper_count = (
+                load_public_preview_keys(args.public_preview_json)
+            )
+        else:
+            public_preview_keys = set()
+            public_preview_paper_count = 0
+    except (FileNotFoundError, OSError, RuntimeError) as error:
+        print(f"Error: {error}", file=sys.stderr)
+        return 1
+
     resume: Dict[Tuple[str, str], Dict[str, str]] = {}
-    if args.output.exists():
-        for resume_row in read_csv(args.output):
-            index_row(resume, resume_row)
-    known = build_known_arxiv_index(DEFAULT_KEY_PAPERS)
+    for resume_row in existing_rows:
+        index_row(resume, resume_row)
+
     outputs: List[Dict[str, str]] = []
-    counts = Counter(rows_read=len(rows))
+    for row in rows:
+        output = base_output_row(row)
+        merge_cached_enrichment(output, find_indexed(resume, output))
+        outputs.append(output)
+
+    known = build_known_arxiv_index(DEFAULT_KEY_PAPERS)
+    counts = Counter(
+        rows_read=len(rows),
+        existing_rows_loaded=len(existing_rows),
+    )
     title_filter = (args.title_contains or "").casefold()
+    counts["scoped_not_searched_eligible"] = sum(
+        is_not_searched(output)
+        and is_in_query_scope(output, args.query_scope, public_preview_keys)
+        and (not title_filter or title_filter in output["title"].casefold())
+        and bool(output["title"])
+        and not extract_arxiv_id(
+            row.get("arxiv_id"),
+            row.get("arxiv_url"),
+            row.get("doi"),
+            row.get("primary_url"),
+            row.get("landing_page_url"),
+            row.get("url"),
+        )
+        and lookup_known(known, output) is None
+        for row, output in zip(rows, outputs)
+    )
     queried_limit = 0
     interrupted = False
     batch_limit_reached = False
     rate_limit_stopped = False
 
     try:
-        for row in rows:
-            output = base_output_row(row)
-            previous = find_indexed(resume, output)
-            if previous and previous.get("match_status") in COMPLETED_STATUSES and not args.force:
-                outputs.append({column: previous.get(column, "") for column in OUTPUT_COLUMNS})
+        for row, output in zip(rows, outputs):
+            status = clean(output.get("match_status")).casefold()
+            if status in COMPLETED_STATUSES and not args.force:
                 counts["reused"] += 1
                 continue
+
+            # Public-preview scope is resumable by definition: only rows that
+            # are still not_searched may receive new enrichment in this mode.
+            if args.query_scope == "public-preview" and not is_not_searched(output):
+                if status in COMPLETED_STATUSES:
+                    counts["reused"] += 1
+                continue
+            if not is_in_query_scope(output, args.query_scope, public_preview_keys):
+                continue
             if title_filter and title_filter not in output["title"].casefold():
-                if previous:
-                    outputs.append({column: previous.get(column, "") for column in OUTPUT_COLUMNS})
-                else:
-                    set_match(output, "", "not_searched", "", None, "Not selected by --title-contains.", "not_queried")
-                    outputs.append(output)
                 continue
 
             existing_id = extract_arxiv_id(
@@ -457,25 +607,23 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             )
             known_match = lookup_known(known, output)
             if existing_id or known_match:
-                arxiv_id, source = (existing_id, "candidate_metadata") if existing_id else known_match
+                arxiv_id, source = (
+                    (existing_id, "candidate_metadata")
+                    if existing_id
+                    else known_match
+                )
                 set_match(
                     output, arxiv_id, "linked_to_arxiv", 1.0, None,
                     "Reused an existing valid arXiv identifier; publication year was preserved.",
                     source,
                 )
-                outputs.append(output)
-                counts["linked_to_arxiv"] += 1
                 continue
 
             if args.limit is not None and queried_limit >= args.limit:
-                set_match(output, "", "not_searched", "", None, "Not searched because --limit was reached.", "not_queried")
-                outputs.append(output)
-                continue
+                batch_limit_reached = True
+                break
 
             if not output["title"]:
-                set_match(output, "", "not_found_in_arxiv", "", None, "Missing title; arXiv was not queried.", "not_queried")
-                outputs.append(output)
-                counts["not_found_in_arxiv"] += 1
                 continue
 
             if (
@@ -483,13 +631,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 and counts["queried"] >= args.max_new_queries
             ):
                 batch_limit_reached = True
-                set_match(
-                    output, "", "not_searched", "", None,
-                    "Not searched because --max-new-queries was reached.",
-                    "not_queried",
-                )
-                outputs.append(output)
-                continue
+                break
 
             # Count attempted requests so failures cannot bypass the per-run budget.
             counts["queried"] += 1
@@ -499,12 +641,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             except (HTTPError, URLError, TimeoutError, ET.ParseError) as error:
                 if args.stop_on_rate_limit and is_rate_limit_error(error):
                     rate_limit_stopped = True
-                    set_match(
-                        output, "", "not_searched", "", None,
-                        "Not searched because arXiv rate-limited this run.",
-                        "not_queried",
-                    )
-                    outputs.append(output)
                     print(
                         f"arXiv rate limit encountered: {error}; "
                         "writing partial results and stopping.",
@@ -515,10 +651,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             status, reason, arxiv_id, similarity, overlap = classify_match(
                 output["title"], parse_authors(output["authors"]), candidates
             )
-            set_match(output, arxiv_id, status, similarity, overlap, reason, "arxiv_api")
-            outputs.append(output)
-            counts[status] += 1
-            atomic_write(args.output, outputs)
+            set_match(
+                output,
+                arxiv_id,
+                status,
+                similarity,
+                overlap,
+                reason,
+                "arxiv_api",
+            )
+            atomic_write(args.output, outputs, len(rows))
             if args.sleep_seconds:
                 time.sleep(args.sleep_seconds)
     except KeyboardInterrupt:
@@ -528,22 +670,40 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         interrupted = True
         print(f"arXiv request failed: {error}; writing partial results.", file=sys.stderr)
 
-    if rate_limit_stopped and not args.force:
-        append_remaining_completed_rows(outputs, rows, resume, counts)
     if (
         args.max_new_queries is not None
         and counts["queried"] > 0
         and counts["queried"] >= args.max_new_queries
     ):
         batch_limit_reached = True
-    atomic_write(args.output, outputs)
+    try:
+        atomic_write(args.output, outputs, len(rows))
+    except (OSError, RuntimeError) as error:
+        print(f"Error: {error}", file=sys.stderr)
+        return 1
+
     final_counts = Counter(row.get("match_status", "") for row in outputs)
     print(f"Rows read: {counts['rows_read']}")
+    print(f"Existing rows loaded: {counts['existing_rows_loaded']}")
     print(f"Reused: {counts['reused']}")
+    print(f"Query scope: {args.query_scope}")
+    if args.query_scope == "public-preview":
+        print(f"Public preview unique papers: {public_preview_paper_count}")
+    print(
+        "Scoped not_searched eligible for query: "
+        f"{counts['scoped_not_searched_eligible']}"
+    )
     print(f"Queried: {counts['queried']}")
-    if args.max_new_queries is not None:
-        print(f"Max new queries: {args.max_new_queries}")
-    for status in ("linked_to_arxiv", "possible_arxiv_match", "not_found_in_arxiv"):
+    print(
+        "Max new queries: "
+        f"{args.max_new_queries if args.max_new_queries is not None else 'unlimited'}"
+    )
+    for status in (
+        "linked_to_arxiv",
+        "possible_arxiv_match",
+        "not_found_in_arxiv",
+        "not_searched",
+    ):
         print(f"{status}: {final_counts[status]}")
     print(f"Output: {args.output}")
     if batch_limit_reached:
