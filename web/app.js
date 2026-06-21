@@ -144,28 +144,28 @@ const BASE_MARKER_STYLE = {
 const DIMMED_MARKER_STYLE = {
   radius: 7.5,
   color: "#d7e0e4",
-  weight: 1.5,
-  fillOpacity: 0.72,
-  opacity: 0.82,
+  weight: 1.25,
+  fillOpacity: 0.55,
+  opacity: 0.68,
 };
 const RELATED_MARKER_STYLE = {
-  radius: 9,
-  color: "#f7fafb",
+  radius: 9.5,
+  color: "#263744",
   weight: 2.5,
-  fillOpacity: 0.88,
+  fillOpacity: 1,
   opacity: 1,
 };
 const CURRENT_MARKER_STYLE = {
-  radius: 11,
-  color: "#172332",
-  weight: 4,
+  radius: 11.5,
+  color: "#c83f35",
+  weight: 3.5,
   fillOpacity: 1,
   opacity: 1,
 };
 const CONNECTION_LINE_STYLE = {
-  color: "#172332",
-  weight: 2.5,
-  opacity: 0.62,
+  color: "#455d6c",
+  weight: 2,
+  opacity: 0.5,
   interactive: false,
   dashArray: "6 5",
   lineCap: "round",
@@ -1161,18 +1161,22 @@ function clearPaperInteraction(updateStatus = true) {
   }
 }
 
-function drawConnectionLines(relatedEntries, targetLayer) {
+function drawConnectionLines(relatedEntries, currentRecord, targetLayer) {
   targetLayer.clearLayers();
   const locations = uniqueMarkerLocations(relatedEntries);
   if (locations.length < 2) {
     return 0;
   }
 
-  const hub = locations[0];
-  locations.slice(1).forEach((location) => {
+  const hub = recordLatLng(currentRecord);
+  const hubKey = coordinateKey(hub);
+  const connectedLocations = locations.filter(
+    (location) => coordinateKey(location) !== hubKey,
+  );
+  connectedLocations.forEach((location) => {
     L.polyline([hub, location], CONNECTION_LINE_STYLE).addTo(targetLayer);
   });
-  return locations.length - 1;
+  return connectedLocations.length;
 }
 
 function showPaperInteraction(record, identity, mode) {
@@ -1199,7 +1203,7 @@ function showPaperInteraction(record, identity, mode) {
 
   const isHover = mode === "hover";
   const targetLayer = isHover ? hoverConnectionLayer : selectedConnectionLayer;
-  const lineCount = drawConnectionLines(relatedEntries, targetLayer);
+  const lineCount = drawConnectionLines(relatedEntries, record, targetLayer);
   relatedEntries.forEach(({ marker }) => marker.bringToFront());
   currentMarker?.bringToFront();
   showPaperDetails(record, relatedEntries);
