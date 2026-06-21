@@ -18,8 +18,22 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 try:
     from .country_normalization import normalize_country_region
+    from .export_candidate_map_data import (
+        ExportError,
+        apply_institution_author_overrides,
+        apply_institution_record_overrides,
+        load_institution_author_overrides,
+        load_institution_record_overrides,
+    )
 except ImportError:  # Direct execution from the scripts directory.
     from country_normalization import normalize_country_region
+    from export_candidate_map_data import (
+        ExportError,
+        apply_institution_author_overrides,
+        apply_institution_record_overrides,
+        load_institution_author_overrides,
+        load_institution_record_overrides,
+    )
 
 
 DEFAULT_INPUT = Path("web/data/openalex_candidate_map_data.json")
@@ -647,8 +661,20 @@ def build_preview(
     include_missing_location: bool = False,
     paper_arxiv_links: Sequence[Dict[str, str]] = (),
     publication_overrides: Sequence[Dict[str, Any]] = (),
+    institution_record_overrides: Sequence[Dict[str, Any]] = (),
+    institution_author_overrides: Sequence[Dict[str, Any]] = (),
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     records = [dict(record) for record in records]
+    institution_record_override_summary = apply_institution_record_overrides(
+        records,
+        institution_record_overrides,
+    )
+    institution_author_overrides_applied, unmatched_author_overrides = (
+        apply_institution_author_overrides(
+            records,
+            institution_author_overrides,
+        )
+    )
     paper_version_overrides_applied = apply_paper_version_overrides(
         records,
         paper_version_overrides,
@@ -743,6 +769,17 @@ def build_preview(
         "paper_version_overrides_applied": paper_version_overrides_applied,
         **arxiv_enrichment_summary,
         **publication_override_summary,
+        **institution_record_override_summary,
+        "institution_author_overrides_loaded": len(institution_author_overrides),
+        "institution_author_overrides_applied": institution_author_overrides_applied,
+        "institution_author_overrides_unmatched": [
+            {
+                "title": override["title"],
+                "year": override["year"],
+                "institution": override["institution"],
+            }
+            for override in unmatched_author_overrides
+        ],
     }
     return {"metadata": dict(PUBLIC_METADATA), "records": selected}, summary
 
@@ -826,6 +863,44 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
             "  Unmatched publication override: "
             f"{override['title']} ({override['match_year'] or 'any year'})"
         )
+    print(
+        "  Institution record overrides loaded: "
+        f"{summary['institution_record_overrides_loaded']}"
+    )
+    print(
+        "  Papers marked for institution record replacement: "
+        f"{summary['institution_record_override_papers_marked']}"
+    )
+    print(
+        "  Papers replaced by institution record overrides: "
+        f"{summary['institution_record_override_papers_replaced']}"
+    )
+    print(
+        "  Automatic institution records removed by replacement: "
+        f"{summary['institution_record_automatic_records_removed']}"
+    )
+    print(
+        "  Replacement institution records created: "
+        f"{summary['institution_record_replacements_created']}"
+    )
+    print(
+        "  Unmatched institution record overrides: "
+        f"{len(summary['institution_record_overrides_unmatched'])}"
+    )
+    for override in summary["institution_record_overrides_unmatched"]:
+        print(
+            "  Unmatched institution record override: "
+            f"{override['title']} ({override['year']}) / "
+            f"{override['institution']}"
+        )
+    print(
+        "  Institution-author overrides loaded: "
+        f"{summary['institution_author_overrides_loaded']}"
+    )
+    print(
+        "  Institution-author overrides applied: "
+        f"{summary['institution_author_overrides_applied']}"
+    )
     print(f"  Downstream rows processed: {summary['records_exported']}")
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
@@ -837,6 +912,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_version_overrides = read_paper_version_overrides()
         paper_arxiv_links = read_paper_arxiv_links()
         publication_overrides = read_publication_overrides()
+        institution_record_overrides = load_institution_record_overrides()
+        institution_author_overrides = load_institution_author_overrides()
         payload, summary = build_preview(
             records,
             args.max_records,
@@ -848,11 +925,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.include_missing_location,
             paper_arxiv_links,
             publication_overrides,
+            institution_record_overrides,
+            institution_author_overrides,
         )
         if not args.dry_run:
             write_json(args.output, payload)
         print_summary(summary, args.output, args.dry_run)
-    except PreviewExportError as error:
+    except (PreviewExportError, ExportError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
     return 0

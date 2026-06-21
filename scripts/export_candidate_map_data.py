@@ -8,6 +8,7 @@ script performs no geocoding, calls no APIs, and never writes to data/manual/.
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import hashlib
 import json
@@ -36,6 +37,9 @@ DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_INSTITUTION_AUTHOR_OVERRIDES = Path(
     "data/manual/institution_author_overrides.csv"
+)
+DEFAULT_INSTITUTION_RECORD_OVERRIDES = Path(
+    "data/manual/institution_record_overrides.csv"
 )
 
 PAPER_REQUIRED_COLUMNS = {
@@ -94,6 +98,20 @@ INSTITUTION_AUTHOR_OVERRIDE_COLUMNS = {
     "year",
     "institution",
     "authors",
+    "notes",
+}
+INSTITUTION_RECORD_OVERRIDE_COLUMNS = {
+    "title",
+    "year",
+    "mode",
+    "institution",
+    "city",
+    "region",
+    "country",
+    "country_code",
+    "latitude",
+    "longitude",
+    "institution_authors",
     "notes",
 }
 
@@ -487,6 +505,55 @@ def load_institution_author_overrides(
                 "institution": institution,
                 "authors": authors,
                 "notes": clean_text(row.get("notes")),
+            }
+        )
+    return overrides
+
+
+def load_institution_record_overrides(
+    path: Path = DEFAULT_INSTITUTION_RECORD_OVERRIDES,
+) -> List[Dict[str, Any]]:
+    """Load validated paper-level institution replacement rows."""
+    if not path.exists():
+        return []
+
+    rows = read_csv(path, INSTITUTION_RECORD_OVERRIDE_COLUMNS)
+    overrides = []
+    for row_number, row in enumerate(rows, start=2):
+        title = clean_text(row.get("title"))
+        year = parse_year(row.get("year"))
+        mode = clean_text(row.get("mode")).casefold()
+        institution = clean_text(row.get("institution"))
+        latitude = parse_coordinate(row.get("latitude"), -90.0, 90.0)
+        longitude = parse_coordinate(row.get("longitude"), -180.0, 180.0)
+        if not title or year is None or not institution:
+            raise ExportError(
+                f"{path} row {row_number} requires title, year, and institution"
+            )
+        if mode != "replace":
+            raise ExportError(
+                f"{path} row {row_number} has unsupported mode: {mode or '(empty)'}"
+            )
+        if latitude is None or longitude is None:
+            raise ExportError(
+                f"{path} row {row_number} requires valid latitude and longitude"
+            )
+        overrides.append(
+            {
+                **row,
+                "title": title,
+                "year": year,
+                "mode": mode,
+                "doi": clean_text(row.get("doi")),
+                "openalex_url": clean_text(row.get("openalex_url")),
+                "institution": institution,
+                "latitude": latitude,
+                "longitude": longitude,
+                "institution_authors": [
+                    clean_text(author)
+                    for author in str(row.get("institution_authors") or "").split(";")
+                    if clean_text(author)
+                ],
             }
         )
     return overrides
@@ -998,6 +1065,7 @@ def group_map_records(
                 "_has_resolution_metadata": False,
                 "_resolution_notes": [],
                 "_institution_author_key": (openalex_id, institution_identity),
+                "_institution_record_source": "automatic",
             }
             grouped[group_key] = group
 
@@ -1051,6 +1119,209 @@ def group_map_records(
     return records, counters
 
 
+def apply_institution_record_overrides(
+    records: List[Dict[str, Any]],
+    overrides: Sequence[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Replace every generated institution marker for matched papers."""
+    grouped_overrides: Dict[Tuple[str, int], List[Tuple[int, Dict[str, Any]]]] = {}
+    for index, override in enumerate(overrides):
+        key = (normalize_title(override.get("title")), override["year"])
+        grouped_overrides.setdefault(key, []).append((index, override))
+
+    applied_indexes = set()
+    papers_replaced = 0
+    automatic_records_removed = 0
+    replacement_records_created = 0
+    for (title_key, year), replacement_rows in grouped_overrides.items():
+        override_doi_keys = {
+            normalize_doi(override.get("doi"))
+            for _, override in replacement_rows
+            if normalize_doi(override.get("doi"))
+        }
+        override_openalex_keys = {
+            normalize_identifier_url(override.get("openalex_url"))
+            for _, override in replacement_rows
+            if normalize_identifier_url(override.get("openalex_url"))
+        }
+        seed_indexes = [
+            index
+            for index, record in enumerate(records)
+            if (
+                normalize_title(record.get("title")) == title_key
+                and parse_year(
+                    record.get("publication_year") or record.get("year")
+                )
+                == year
+            )
+            or normalize_doi(record.get("doi")) in override_doi_keys
+            or normalize_identifier_url(record.get("openalex_url"))
+            in override_openalex_keys
+        ]
+        if not seed_indexes:
+            continue
+
+        target_doi_keys = override_doi_keys | {
+            normalize_doi(records[index].get("doi"))
+            for index in seed_indexes
+            if normalize_doi(records[index].get("doi"))
+        }
+        target_openalex_keys = override_openalex_keys | {
+            normalize_identifier_url(records[index].get("openalex_url"))
+            for index in seed_indexes
+            if normalize_identifier_url(records[index].get("openalex_url"))
+        }
+        matching_indexes = [
+            index
+            for index, record in enumerate(records)
+            if (
+                normalize_title(record.get("title")) == title_key
+                and parse_year(
+                    record.get("publication_year") or record.get("year")
+                )
+                == year
+            )
+            or normalize_doi(record.get("doi")) in target_doi_keys
+            or normalize_identifier_url(record.get("openalex_url"))
+            in target_openalex_keys
+        ]
+
+        matched_records = [records[index] for index in matching_indexes]
+        template = matched_records[0]
+        automatic_records_removed += sum(
+            clean_text(record.get("resolution_method"))
+            != "manual_institution_record_override"
+            for record in matched_records
+        )
+        replacement_records = []
+        for override_index, override in replacement_rows:
+            replacement = copy.deepcopy(template)
+            normalized_location = normalize_country_region(
+                override.get("country"),
+                override.get("country_code"),
+                override.get("region"),
+            )
+            institution = override["institution"]
+            city = clean_text(override.get("city"))
+            latitude = override["latitude"]
+            longitude = override["longitude"]
+            location = ", ".join(
+                unique_strings(
+                    [
+                        city,
+                        normalized_location["region"],
+                        normalized_location["country"],
+                    ]
+                )
+            )
+            institution_identity = (
+                "name",
+                normalize_institution_name(institution),
+            )
+            institution_key = (
+                institution_identity,
+                city.casefold(),
+                normalized_location["country"].casefold(),
+                normalized_location["region_code"].casefold(),
+                latitude,
+                longitude,
+            )
+            paper_identity = clean_text(replacement.get("openalex_url")) or clean_text(
+                replacement.get("id")
+            )
+            replacement.update(
+                {
+                    "id": record_id(paper_identity, institution_key),
+                    "institution_openalex_id": "",
+                    "institution": institution,
+                    "institution_authors": list(override["institution_authors"]),
+                    "city": city,
+                    "country": normalized_location["country"],
+                    "country_code": normalized_location["country_code"],
+                    "region": normalized_location["region"],
+                    "region_code": normalized_location["region_code"],
+                    "raw_country": normalized_location["raw_country"],
+                    "raw_country_code": normalized_location["raw_country_code"],
+                    "latitude": latitude,
+                    "longitude": longitude,
+                    "location": location,
+                    "resolution_method": "manual_institution_record_override",
+                    "_coordinate_sources": {"manual"},
+                    "_institution_record_source": "manual_override",
+                    "_institution_author_key": (
+                        paper_identity,
+                        institution_identity,
+                    ),
+                }
+            )
+            append_record_note(
+                replacement,
+                "manual institution-record replacement applied",
+            )
+            append_record_note(replacement, override.get("notes", ""))
+            replacement_records.append(replacement)
+            applied_indexes.add(override_index)
+
+        matching_index_set = set(matching_indexes)
+        insertion_index = sum(
+            index not in matching_index_set
+            for index in range(matching_indexes[0])
+        )
+        remaining_records = [
+            record
+            for index, record in enumerate(records)
+            if index not in matching_index_set
+        ]
+        records[:] = (
+            remaining_records[:insertion_index]
+            + replacement_records
+            + remaining_records[insertion_index:]
+        )
+        automatic_survivors = [
+            record
+            for record in records
+            if record.get("_institution_record_source") == "automatic"
+            and (
+                (
+                    normalize_title(record.get("title")) == title_key
+                    and parse_year(
+                        record.get("publication_year") or record.get("year")
+                    )
+                    == year
+                )
+                or normalize_doi(record.get("doi")) in target_doi_keys
+                or normalize_identifier_url(record.get("openalex_url"))
+                in target_openalex_keys
+            )
+        ]
+        if automatic_survivors:
+            raise ExportError(
+                "Institution record replacement sanity check failed for "
+                f"{replacement_rows[0][1]['title']} ({year}): "
+                f"{len(automatic_survivors)} automatic records remain"
+            )
+        papers_replaced += 1
+        replacement_records_created += len(replacement_records)
+
+    unmatched = [
+        {
+            "title": override["title"],
+            "year": override["year"],
+            "institution": override["institution"],
+        }
+        for index, override in enumerate(overrides)
+        if index not in applied_indexes
+    ]
+    return {
+        "institution_record_overrides_loaded": len(overrides),
+        "institution_record_override_papers_marked": len(grouped_overrides),
+        "institution_record_override_papers_replaced": papers_replaced,
+        "institution_record_automatic_records_removed": automatic_records_removed,
+        "institution_record_replacements_created": replacement_records_created,
+        "institution_record_overrides_unmatched": unmatched,
+    }
+
+
 def build_export(
     paper_rows: Sequence[Dict[str, str]],
     affiliation_rows: Sequence[Dict[str, str]],
@@ -1059,8 +1330,13 @@ def build_export(
     institution_author_overrides: Sequence[Dict[str, Any]] = (),
     paper_arxiv_links: Sequence[Dict[str, str]] = (),
     publication_overrides: Sequence[Dict[str, Any]] = (),
+    institution_record_overrides: Sequence[Dict[str, Any]] = (),
 ) -> Dict[str, Any]:
     records, counters = group_map_records(paper_rows, affiliation_rows)
+    institution_record_override_summary = apply_institution_record_overrides(
+        records,
+        institution_record_overrides,
+    )
     institution_author_overrides_applied, unmatched_author_overrides = (
         apply_institution_author_overrides(
             records,
@@ -1096,6 +1372,7 @@ def build_export(
         record.pop("_has_resolution_metadata", None)
         record.pop("_resolution_notes", None)
         record.pop("_institution_author_key", None)
+        record.pop("_institution_record_source", None)
 
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
     summary = {
@@ -1119,6 +1396,7 @@ def build_export(
         ],
         **arxiv_enrichment_summary,
         **publication_override_summary,
+        **institution_record_override_summary,
         **counters,
     }
     return {
@@ -1218,6 +1496,36 @@ def print_summary(summary: Dict[str, Any]) -> None:
             f"{override['institution']}"
         )
     print(
+        "  Institution record overrides loaded: "
+        f"{summary['institution_record_overrides_loaded']}"
+    )
+    print(
+        "  Papers marked for institution record replacement: "
+        f"{summary['institution_record_override_papers_marked']}"
+    )
+    print(
+        "  Papers replaced by institution record overrides: "
+        f"{summary['institution_record_override_papers_replaced']}"
+    )
+    print(
+        "  Automatic institution records removed by replacement: "
+        f"{summary['institution_record_automatic_records_removed']}"
+    )
+    print(
+        "  Replacement institution records created: "
+        f"{summary['institution_record_replacements_created']}"
+    )
+    print(
+        "  Unmatched institution record overrides: "
+        f"{len(summary['institution_record_overrides_unmatched'])}"
+    )
+    for override in summary["institution_record_overrides_unmatched"]:
+        print(
+            "  Unmatched institution record override: "
+            f"{override['title']} ({override['year']}) / "
+            f"{override['institution']}"
+        )
+    print(
         "  Rows skipped because coordinates were missing: "
         f"{summary['affiliation_rows_skipped_missing_coordinates']}"
     )
@@ -1248,6 +1556,7 @@ def run(args: argparse.Namespace) -> int:
         paper_arxiv_links = read_paper_arxiv_links()
         publication_overrides = read_publication_overrides()
         institution_author_overrides = load_institution_author_overrides()
+        institution_record_overrides = load_institution_record_overrides()
         payload = build_export(
             paper_rows,
             affiliation_rows,
@@ -1256,6 +1565,7 @@ def run(args: argparse.Namespace) -> int:
             institution_author_overrides,
             paper_arxiv_links,
             publication_overrides,
+            institution_record_overrides,
         )
         payload["summary"].update(scope_counts)
     except ExportError as error:
