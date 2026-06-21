@@ -762,6 +762,25 @@ input:disabled {
   padding-left: 17px;
 }
 
+.paper-details-institutions .is-current {
+  border-radius: 4px;
+  padding: 2px 5px;
+  background: #e6eef1;
+  color: var(--accent-dark);
+  font-weight: 800;
+}
+
+.paper-details-content .current-institution-label,
+.paper-details-content .current-institution-value {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.paper-details-content .current-institution-value {
+  border-left: 3px solid var(--accent);
+  padding-left: 7px;
+}
+
 .paper-details-content .popup-details {
   grid-template-columns: minmax(92px, auto) minmax(0, 1fr);
 }

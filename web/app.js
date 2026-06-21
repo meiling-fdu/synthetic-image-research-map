@@ -142,16 +142,23 @@ const BASE_MARKER_STYLE = {
   opacity: 1,
 };
 const DIMMED_MARKER_STYLE = {
-  radius: 7,
-  color: "#d2dbe0",
-  weight: 1,
-  fillOpacity: 0.52,
-  opacity: 0.6,
+  radius: 7.5,
+  color: "#d7e0e4",
+  weight: 1.5,
+  fillOpacity: 0.72,
+  opacity: 0.82,
 };
-const HIGHLIGHT_MARKER_STYLE = {
-  radius: 10,
+const RELATED_MARKER_STYLE = {
+  radius: 9,
+  color: "#f7fafb",
+  weight: 2.5,
+  fillOpacity: 0.88,
+  opacity: 1,
+};
+const CURRENT_MARKER_STYLE = {
+  radius: 11,
   color: "#172332",
-  weight: 3,
+  weight: 4,
   fillOpacity: 1,
   opacity: 1,
 };
@@ -361,8 +368,11 @@ function uniqueMarkerLocations(entries) {
 
 function markerStyle(record, state = "base") {
   const fillColor = TASK_COLORS[record.task] ?? TASK_COLORS.uncertain;
-  if (state === "highlight") {
-    return { ...HIGHLIGHT_MARKER_STYLE, fillColor };
+  if (state === "current") {
+    return { ...CURRENT_MARKER_STYLE, fillColor };
+  }
+  if (state === "related") {
+    return { ...RELATED_MARKER_STYLE, fillColor };
   }
   if (state === "dimmed") {
     return { ...DIMMED_MARKER_STYLE, fillColor };
@@ -932,13 +942,21 @@ function paperDetailsHtml(record, relatedEntries) {
   const resolutionNotesRow = record.resolution_notes
     ? `<dt>Resolution notes</dt><dd class="popup-resolution-notes">${escapeHtml(record.resolution_notes)}</dd>`
     : "";
-  const visibleInstitutions = uniqueTextValues(relatedEntries.map(({ record: item }) => {
+  const visibleInstitutionsByLabel = new Map();
+  relatedEntries.forEach(({ record: item }) => {
     const institution = recordInstitution(item) || "Unknown institution";
     const itemLocation = recordLocation(item);
-    return [institution, itemLocation].filter(Boolean).join(" · ");
-  }));
+    const label = [institution, itemLocation].filter(Boolean).join(" · ");
+    const labelKey = label.toLocaleLowerCase();
+    const existing = visibleInstitutionsByLabel.get(labelKey);
+    visibleInstitutionsByLabel.set(labelKey, {
+      label,
+      isCurrent: item === record || existing?.isCurrent === true,
+    });
+  });
+  const visibleInstitutions = [...visibleInstitutionsByLabel.values()];
   const visibleInstitutionsRow = visibleInstitutions.length
-    ? `<dt>Visible institutions</dt><dd><ul class="paper-details-institutions">${visibleInstitutions.map((institution) => `<li>${escapeHtml(institution)}</li>`).join("")}</ul></dd>`
+    ? `<dt>Visible institutions</dt><dd><ul class="paper-details-institutions">${visibleInstitutions.map(({ label, isCurrent }) => `<li${isCurrent ? ' class="is-current"' : ""}>${escapeHtml(label)}</li>`).join("")}</ul></dd>`
     : "";
 
   return `
@@ -953,7 +971,7 @@ function paperDetailsHtml(record, relatedEntries) {
     <dl class="popup-details">
       <dt>Authors</dt><dd>${authors}</dd>
       ${institutionAuthorsRow}
-      <dt>Current institution</dt><dd>${escapeHtml(recordInstitution(record) || "Unknown")}</dd>
+      <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value">${escapeHtml(recordInstitution(record) || "Unknown")}</dd>
       <dt>Location</dt><dd>${escapeHtml(location)}</dd>
       ${visibleInstitutionsRow}
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
@@ -1167,10 +1185,15 @@ function showPaperInteraction(record, identity, mode) {
 
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
-  visibleMarkerEntries.forEach(({ marker, record, identity: markerIdentity }) => {
+  let currentMarker = null;
+  visibleMarkerEntries.forEach(({ marker, record: markerRecord, identity: markerIdentity }) => {
+    const isCurrent = markerRecord === record;
+    if (isCurrent) {
+      currentMarker = marker;
+    }
     marker.setStyle(markerStyle(
-      record,
-      markerIdentity === identity ? "highlight" : "dimmed",
+      markerRecord,
+      isCurrent ? "current" : markerIdentity === identity ? "related" : "dimmed",
     ));
   });
 
@@ -1178,6 +1201,7 @@ function showPaperInteraction(record, identity, mode) {
   const targetLayer = isHover ? hoverConnectionLayer : selectedConnectionLayer;
   const lineCount = drawConnectionLines(relatedEntries, targetLayer);
   relatedEntries.forEach(({ marker }) => marker.bringToFront());
+  currentMarker?.bringToFront();
   showPaperDetails(record, relatedEntries);
   const paperTitle = recordTitle(record) || "Selected paper";
   mapStatus.classList.toggle("error", false);
