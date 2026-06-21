@@ -107,6 +107,29 @@ Institution-specific authors are derived from the paper-author-institution rows.
 
 Title and institution normalization lowercases text, replaces punctuation with spaces, and collapses whitespace. Matching is exact after normalization; no substring or fuzzy matching is used. Export summaries report loaded, applied, and unmatched overrides so stale or misspelled corrections remain reviewable. Scripts must treat this file as read-only manual input.
 
+## `institution_record_overrides.csv`
+
+`data/manual/institution_record_overrides.csv` replaces all generated institution markers for a matched paper when its paper-level affiliations or geocoded institutions are wrong. This is an auditable manual export layer: it does not modify raw OpenAlex responses, processed affiliation rows, caches, or other manual tables.
+
+| Column | Definition |
+| --- | --- |
+| `title` | Paper title used for exact normalized-title matching. Required. |
+| `year` | Pre-override publication year used with the title to identify the paper. Required. |
+| `mode` | Replacement behavior. Currently supported value: `replace`. |
+| `institution` | Correct institution display name for the replacement marker. Required. |
+| `city` | Correct city, when known. |
+| `region` | Correct region or administrative area, when needed. |
+| `country` | Correct country display name. |
+| `country_code` | Correct country code. |
+| `latitude` | Verified replacement latitude. Required. |
+| `longitude` | Verified replacement longitude. Required. |
+| `institution_authors` | Semicolon-separated authors affiliated with this institution. |
+| `notes` | Human-readable provenance and reason for replacement. |
+
+Implementations also accept optional `doi` and `openalex_url` columns as stronger paper identity evidence when a manual table includes them; they are not required by the base schema above.
+
+Rows with the same normalized title and year form one paper replacement. Matching begins with normalized title plus year or an optional DOI/OpenAlex URL, then expands to every generated record sharing the matched DOI or OpenAlex URL. In `replace` mode, both map and public-preview exporters remove the complete matched record set before creating one record per manual row. The replacement records retain paper-level title, authors, DOI, venue, publication type, paper and OpenAlex URLs, arXiv metadata, task labels, entry type, confidence, and review fields. Only institution identity, institution authors, location, coordinates, marker ID, and institution-resolution method are replaced. Export summaries report papers marked, automatic records removed, replacement records created, and unmatched manual rows.
+
 ### Map-Ready Location Fields
 
 | Field | Definition |
