@@ -266,14 +266,18 @@ function recordAuthors(record) {
 function recordInstitutionAuthors(record) {
   const authors = Array.isArray(record.institution_authors)
     ? record.institution_authors
-    : [record.institution_authors];
+    : String(record.institution_authors || "").split(/[;,]/);
   return authors
     .map((author) => String(author || "").trim())
     .filter(Boolean);
 }
 
 function normalizedAuthorName(value) {
-  return String(value || "").normalize("NFKC").toLocaleLowerCase().trim();
+  return String(value || "")
+    .normalize("NFKC")
+    .toLocaleLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim();
 }
 
 function highlightedPaperAuthors(record) {
@@ -291,6 +295,69 @@ function highlightedPaperAuthors(record) {
       return `<strong class="institution-author-highlight">${escapeHtml(author)}</strong>`;
     }
     return escapeHtml(author);
+  }).join(", ");
+}
+
+function affiliationIdentity(record) {
+  return [recordInstitution(record), recordLocation(record)]
+    .map((value) => String(value || "").normalize("NFKC").toLocaleLowerCase().trim())
+    .join("|");
+}
+
+function visiblePaperAffiliations(currentRecord, relatedEntries) {
+  const currentIdentity = affiliationIdentity(currentRecord);
+  const affiliationsByIdentity = new Map();
+  relatedEntries.forEach(({ record }) => {
+    const identity = affiliationIdentity(record);
+    let affiliation = affiliationsByIdentity.get(identity);
+    if (!affiliation) {
+      affiliation = {
+        institution: recordInstitution(record) || "Unknown institution",
+        location: recordLocation(record),
+        authors: [],
+        authorKeys: new Set(),
+        isCurrent: identity === currentIdentity,
+      };
+      affiliationsByIdentity.set(identity, affiliation);
+    } else if (identity === currentIdentity) {
+      affiliation.isCurrent = true;
+    }
+    recordInstitutionAuthors(record).forEach((author) => {
+      const authorKey = normalizedAuthorName(author);
+      if (authorKey && !affiliation.authorKeys.has(authorKey)) {
+        affiliation.authorKeys.add(authorKey);
+        affiliation.authors.push(author);
+      }
+    });
+  });
+  return [...affiliationsByIdentity.values()].map((affiliation, index) => ({
+    ...affiliation,
+    number: index + 1,
+  }));
+}
+
+function paperAuthorsWithAffiliations(record, affiliations) {
+  const affiliationNumbersByAuthor = new Map();
+  affiliations.forEach((affiliation) => {
+    affiliation.authors.forEach((author) => {
+      const authorKey = normalizedAuthorName(author);
+      if (!authorKey) {
+        return;
+      }
+      const numbers = affiliationNumbersByAuthor.get(authorKey) || [];
+      if (!numbers.includes(affiliation.number)) {
+        numbers.push(affiliation.number);
+      }
+      affiliationNumbersByAuthor.set(authorKey, numbers);
+    });
+  });
+
+  return recordAuthors(record).map((author) => {
+    const numbers = affiliationNumbersByAuthor.get(normalizedAuthorName(author)) || [];
+    const superscript = numbers.length
+      ? `<sup class="author-affiliation-numbers" aria-label="Affiliations ${numbers.join(", ")}">${numbers.join(",")}</sup>`
+      : "";
+    return `${escapeHtml(author)}${superscript}`;
   }).join(", ");
 }
 
@@ -882,12 +949,19 @@ function formatResolutionValue(value) {
 
 function paperDetailsHtml(record, relatedEntries) {
   const orderedAuthors = recordAuthors(record);
+  const affiliations = visiblePaperAffiliations(record, relatedEntries);
   const authors = orderedAuthors.length
-    ? highlightedPaperAuthors(record)
+    ? affiliations.length
+      ? paperAuthorsWithAffiliations(record, affiliations)
+      : highlightedPaperAuthors(record)
     : "Unknown";
   const institutionAuthors = recordInstitutionAuthors(record);
-  const institutionAuthorsRow = institutionAuthors.length
+  const institutionAuthorsRow = !affiliations.length && institutionAuthors.length
     ? `<dt>Institution authors</dt><dd>${institutionAuthors.map(escapeHtml).join(", ")}</dd>`
+    : "";
+  const currentAffiliation = affiliations.find((affiliation) => affiliation.isCurrent);
+  const currentAffiliationNumber = currentAffiliation
+    ? `<sup class="current-affiliation-number" aria-label="Affiliation ${currentAffiliation.number}">${currentAffiliation.number}</sup>`
     : "";
   const year = record.publication_year ?? record.year ?? "Unknown";
   const venue = getRecordVenue(record) || "unknown";
@@ -942,21 +1016,8 @@ function paperDetailsHtml(record, relatedEntries) {
   const resolutionNotesRow = record.resolution_notes
     ? `<dt>Resolution notes</dt><dd class="popup-resolution-notes">${escapeHtml(record.resolution_notes)}</dd>`
     : "";
-  const visibleInstitutionsByLabel = new Map();
-  relatedEntries.forEach(({ record: item }) => {
-    const institution = recordInstitution(item) || "Unknown institution";
-    const itemLocation = recordLocation(item);
-    const label = [institution, itemLocation].filter(Boolean).join(" · ");
-    const labelKey = label.toLocaleLowerCase();
-    const existing = visibleInstitutionsByLabel.get(labelKey);
-    visibleInstitutionsByLabel.set(labelKey, {
-      label,
-      isCurrent: item === record || existing?.isCurrent === true,
-    });
-  });
-  const visibleInstitutions = [...visibleInstitutionsByLabel.values()];
-  const visibleInstitutionsRow = visibleInstitutions.length
-    ? `<dt>Visible institutions</dt><dd><ul class="paper-details-institutions">${visibleInstitutions.map(({ label, isCurrent }) => `<li${isCurrent ? ' class="is-current"' : ""}>${escapeHtml(label)}</li>`).join("")}</ul></dd>`
+  const affiliationsRow = affiliations.length
+    ? `<dt>Affiliations</dt><dd><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${escapeHtml(affiliation.institution)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></dd>`
     : "";
 
   return `
@@ -971,9 +1032,9 @@ function paperDetailsHtml(record, relatedEntries) {
     <dl class="popup-details">
       <dt>Authors</dt><dd>${authors}</dd>
       ${institutionAuthorsRow}
-      <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value">${escapeHtml(recordInstitution(record) || "Unknown")}</dd>
+      <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value">${currentAffiliationNumber}${escapeHtml(recordInstitution(record) || "Unknown")}</dd>
       <dt>Location</dt><dd>${escapeHtml(location)}</dd>
-      ${visibleInstitutionsRow}
+      ${affiliationsRow}
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
       <dt>Venue</dt><dd>${escapeHtml(venue)}</dd>
       <dt>Publication type</dt><dd>${escapeHtml(formatTask(publicationType))}</dd>
