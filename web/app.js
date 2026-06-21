@@ -305,7 +305,7 @@ function affiliationIdentity(record) {
 }
 
 function visiblePaperAffiliations(currentRecord, relatedEntries) {
-  const currentIdentity = affiliationIdentity(currentRecord);
+  const currentIdentity = currentRecord ? affiliationIdentity(currentRecord) : "";
   const affiliationsByIdentity = new Map();
   relatedEntries.forEach(({ record }) => {
     const identity = affiliationIdentity(record);
@@ -316,7 +316,7 @@ function visiblePaperAffiliations(currentRecord, relatedEntries) {
         location: recordLocation(record),
         authors: [],
         authorKeys: new Set(),
-        isCurrent: identity === currentIdentity,
+        isCurrent: Boolean(currentIdentity) && identity === currentIdentity,
       };
       affiliationsByIdentity.set(identity, affiliation);
     } else if (identity === currentIdentity) {
@@ -336,7 +336,11 @@ function visiblePaperAffiliations(currentRecord, relatedEntries) {
   }));
 }
 
-function paperAuthorsWithAffiliations(record, affiliations) {
+function paperAuthorsWithAffiliations(
+  record,
+  affiliations,
+  currentAffiliationNumber = null,
+) {
   const affiliationNumbersByAuthor = new Map();
   affiliations.forEach((affiliation) => {
     affiliation.authors.forEach((author) => {
@@ -357,8 +361,24 @@ function paperAuthorsWithAffiliations(record, affiliations) {
     const superscript = numbers.length
       ? `<sup class="author-affiliation-numbers" aria-label="Affiliations ${numbers.join(", ")}">${numbers.join(",")}</sup>`
       : "";
-    return `${escapeHtml(author)}${superscript}`;
+    const authorHtml = `${escapeHtml(author)}${superscript}`;
+    return currentAffiliationNumber !== null
+      && numbers.includes(currentAffiliationNumber)
+      ? `<strong class="current-institution-author">${authorHtml}</strong>`
+      : authorHtml;
   }).join(", ");
+}
+
+function compactAffiliationsHtml(affiliations, limit = 3) {
+  const visibleAffiliations = affiliations.slice(0, limit);
+  const items = visibleAffiliations.map((affiliation) => (
+    `<span class="result-affiliation-item${affiliation.isCurrent ? " is-current" : ""}"><sup>${affiliation.number}</sup>${escapeHtml(affiliation.institution)}</span>`
+  ));
+  const remaining = affiliations.length - visibleAffiliations.length;
+  if (remaining > 0) {
+    items.push(`<span class="result-affiliation-more">+${remaining} more</span>`);
+  }
+  return items.join("; ");
 }
 
 function normalizedIdentityValue(value) {
@@ -950,16 +970,20 @@ function formatResolutionValue(value) {
 function paperDetailsHtml(record, relatedEntries) {
   const orderedAuthors = recordAuthors(record);
   const affiliations = visiblePaperAffiliations(record, relatedEntries);
+  const currentAffiliation = affiliations.find((affiliation) => affiliation.isCurrent);
   const authors = orderedAuthors.length
     ? affiliations.length
-      ? paperAuthorsWithAffiliations(record, affiliations)
+      ? paperAuthorsWithAffiliations(
+          record,
+          affiliations,
+          currentAffiliation?.number ?? null,
+        )
       : highlightedPaperAuthors(record)
     : "Unknown";
   const institutionAuthors = recordInstitutionAuthors(record);
   const institutionAuthorsRow = !affiliations.length && institutionAuthors.length
     ? `<dt>Institution authors</dt><dd>${institutionAuthors.map(escapeHtml).join(", ")}</dd>`
     : "";
-  const currentAffiliation = affiliations.find((affiliation) => affiliation.isCurrent);
   const currentAffiliationNumber = currentAffiliation
     ? `<sup class="current-affiliation-number" aria-label="Affiliation ${currentAffiliation.number}">${currentAffiliation.number}</sup>`
     : "";
@@ -973,22 +997,27 @@ function paperDetailsHtml(record, relatedEntries) {
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
     : "";
   const doi = normalizedDoi(record.doi);
-  const doiRow = doi
-    ? `<dt>DOI</dt><dd>${externalLink(`https://doi.org/${doi}`, doi)}</dd>`
-    : "";
   const arxivId = recordArxivId(record);
   const arxivUrl = recordArxivUrl(record);
-  const arxivRow = arxivUrl
-    ? `<dt>arXiv</dt><dd>${externalLink(arxivUrl, arxivId || "View arXiv version")}</dd>`
-    : "";
   const paperUrl = recordPaperUrl(record);
   const safePaperUrl = safeHttpUrl(paperUrl);
+  const doiUrl = doi ? safeHttpUrl(`https://doi.org/${doi}`) : "";
+  const safeArxivUrl = safeHttpUrl(arxivUrl);
   const openalexUrl = safeHttpUrl(record.openalex_url);
-  const paperUrlRow = safePaperUrl && safePaperUrl !== openalexUrl
-    ? `<dt>Paper</dt><dd>${externalLink(paperUrl, "Open paper")}</dd>`
-    : "";
-  const openalexRow = openalexUrl
-    ? `<dt>OpenAlex</dt><dd>${externalLink(openalexUrl, "Open record")}</dd>`
+  const paperLinkIsDistinct = safePaperUrl
+    && ![doiUrl, safeArxivUrl, openalexUrl].includes(safePaperUrl);
+  const detailLinks = [
+    paperLinkIsDistinct
+      ? externalLink(safePaperUrl, "Paper")
+      : "",
+    doiUrl ? externalLink(doiUrl, "DOI") : "",
+    safeArxivUrl
+      ? externalLink(safeArxivUrl, arxivId ? `arXiv ${arxivId}` : "arXiv")
+      : "",
+    openalexUrl ? externalLink(openalexUrl, "OpenAlex") : "",
+  ].filter(Boolean);
+  const linksBlock = detailLinks.length
+    ? `<nav class="paper-details-links" aria-label="Paper links">${detailLinks.join("")}</nav>`
     : "";
   const versionBadge = isPreprintOnlyRecord(record)
     ? '<span class="popup-badge confidence-unresolved">Preprint-only</span>'
@@ -1001,14 +1030,8 @@ function paperDetailsHtml(record, relatedEntries) {
   const confidenceBadge = hasResolution
     ? `<span class="popup-badge confidence-${escapeHtml(confidence)}">${escapeHtml(formatResolutionValue(confidence))} confidence</span>`
     : "";
-  const reviewBadge = needsReview === true
-    ? '<span class="popup-badge needs-review-badge">Needs review</span>'
-    : "";
   const methodRow = record.resolution_method
     ? `<dt>Resolution</dt><dd>${escapeHtml(formatResolutionValue(record.resolution_method))}</dd>`
-    : "";
-  const confidenceRow = hasResolution
-    ? `<dt>Confidence</dt><dd>${escapeHtml(formatResolutionValue(confidence))}</dd>`
     : "";
   const reviewRow = needsReview !== null
     ? `<dt>Needs review</dt><dd>${needsReview ? "Yes" : "No"}</dd>`
@@ -1016,8 +1039,8 @@ function paperDetailsHtml(record, relatedEntries) {
   const resolutionNotesRow = record.resolution_notes
     ? `<dt>Resolution notes</dt><dd class="popup-resolution-notes">${escapeHtml(record.resolution_notes)}</dd>`
     : "";
-  const affiliationsRow = affiliations.length
-    ? `<dt>Affiliations</dt><dd><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${escapeHtml(affiliation.institution)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></dd>`
+  const affiliationsBlock = affiliations.length
+    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${escapeHtml(affiliation.institution)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
     : "";
 
   return `
@@ -1026,42 +1049,41 @@ function paperDetailsHtml(record, relatedEntries) {
       <span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
       ${versionBadge}
       ${confidenceBadge}
-      ${reviewBadge}
     </div>
     <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
-    <dl class="popup-details">
+    <dl class="popup-details paper-details-summary">
       <dt>Authors</dt><dd>${authors}</dd>
-      ${institutionAuthorsRow}
       <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value">${currentAffiliationNumber}${escapeHtml(recordInstitution(record) || "Unknown")}</dd>
-      <dt>Location</dt><dd>${escapeHtml(location)}</dd>
-      ${affiliationsRow}
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
       <dt>Venue</dt><dd>${escapeHtml(venue)}</dd>
-      <dt>Publication type</dt><dd>${escapeHtml(formatTask(publicationType))}</dd>
-      <dt>Entry type</dt><dd>${escapeHtml(entryTypeLabel)}</dd>
-      ${doiRow}
-      ${arxivRow}
-      ${paperUrlRow}
-      ${openalexRow}
-      <dt>Task</dt><dd>${escapeHtml(formatTask(record.task))}</dd>
-      ${subtaskRow}
-      ${methodRow}
-      ${confidenceRow}
-      ${reviewRow}
-      ${resolutionNotesRow}
     </dl>
+    ${linksBlock}
+    ${affiliationsBlock}
+    <details class="paper-details-more">
+      <summary>More details</summary>
+      <dl class="popup-details">
+        <dt>Location</dt><dd>${escapeHtml(location)}</dd>
+        <dt>Publication type</dt><dd>${escapeHtml(formatTask(publicationType))}</dd>
+        ${institutionAuthorsRow}
+        ${subtaskRow}
+        ${methodRow}
+        ${reviewRow}
+        ${resolutionNotesRow}
+      </dl>
+    </details>
   `;
 }
 
-function resultContent(record) {
+function resultContent(record, relatedEntries = [{ record }]) {
   const title = recordTitle(record);
   const year = publicationYear(record) ?? "Unknown";
   const venue = getRecordVenue(record);
   const isPaperView = resultsView === "papers";
   const entryTypeLabel = getEntryTypeLabel(getEntryType(record));
-  const institution = recordInstitution(record) || "Unknown institution";
-  const location = recordLocation(record);
-  const affiliation = [institution, location].filter(Boolean).join(" · ");
+  const affiliations = visiblePaperAffiliations(
+    isPaperView ? null : record,
+    relatedEntries,
+  );
   const subtask = record.subtask
     ? `<span class="result-task result-subtask">${escapeHtml(formatTask(record.subtask))}</span>`
     : "";
@@ -1082,16 +1104,17 @@ function resultContent(record) {
   const paperLink = paperUrl ? externalLink(paperUrl, paperLabel) : "";
   const links = [doiLink, arxivLink, paperLink].filter(Boolean).join("");
   const linksRow = links ? `<div class="result-links">${links}</div>` : "";
-  const authorsRow = isPaperView
-    ? `<p class="result-aggregate"><strong>Authors:</strong> ${escapeHtml(recordAuthors(record).join("; ") || "Unknown")}</p>`
+  const authors = recordAuthors(record);
+  const authorsHtml = authors.length
+    ? affiliations.length
+      ? paperAuthorsWithAffiliations(record, affiliations)
+      : authors.map(escapeHtml).join(", ")
+    : "Unknown";
+  const authorsRow = `<p class="result-author-affiliations"><strong>Authors:</strong> ${authorsHtml}</p>`;
+  const affiliationsHtml = compactAffiliationsHtml(affiliations);
+  const affiliationsRow = affiliationsHtml
+    ? `<p class="result-compact-affiliations"><strong>Affiliations:</strong> ${affiliationsHtml}</p>`
     : "";
-  const institutionAuthors = recordInstitutionAuthors(record);
-  const institutionAuthorsRow = !isPaperView && institutionAuthors.length
-    ? `<p class="result-aggregate"><strong>Institution authors:</strong> ${escapeHtml(institutionAuthors.join("; "))}</p>`
-    : "";
-  const institutionsRow = isPaperView
-    ? `<p class="result-aggregate"><strong>Institutions:</strong> ${escapeHtml(record.aggregated_institutions.join("; ") || "Unknown")}</p>`
-    : `<p class="result-affiliation">${escapeHtml(affiliation)}</p>`;
   const countriesRow = isPaperView
     ? `<p class="result-aggregate"><strong>Countries:</strong> ${escapeHtml(record.aggregated_country_names.join(", ") || record.aggregated_country_codes.join(", ") || "Unknown")}</p>`
     : "";
@@ -1107,8 +1130,7 @@ function resultContent(record) {
       </div>
       ${venueRow}
       ${authorsRow}
-      ${institutionAuthorsRow}
-      ${institutionsRow}
+      ${affiliationsRow}
       ${countriesRow}
       ${regionsRow}
       <div class="result-classification">
@@ -1122,6 +1144,13 @@ function resultContent(record) {
 }
 
 function renderResults(visibleRecords) {
+  const relatedEntriesByIdentity = new Map();
+  visibleRecords.forEach((record) => {
+    const identity = paperIdentity(record);
+    const relatedEntries = relatedEntriesByIdentity.get(identity) || [];
+    relatedEntries.push({ record });
+    relatedEntriesByIdentity.set(identity, relatedEntries);
+  });
   const displayedResults = resultsView === "papers"
     ? aggregateUniquePapers(visibleRecords)
     : visibleRecords;
@@ -1143,7 +1172,8 @@ function renderResults(visibleRecords) {
   displayedResults.forEach((record) => {
     const item = document.createElement("li");
     item.className = "result-item";
-    item.innerHTML = resultContent(record);
+    const relatedEntries = relatedEntriesByIdentity.get(paperIdentity(record)) || [];
+    item.innerHTML = resultContent(record, relatedEntries);
     fragment.append(item);
   });
   resultsList.append(fragment);
