@@ -33,6 +33,7 @@ DEFAULT_AFFILIATIONS_CSV = Path(
 DEFAULT_OUTPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
+DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_INSTITUTION_AUTHOR_OVERRIDES = Path(
     "data/manual/institution_author_overrides.csv"
 )
@@ -77,6 +78,16 @@ PAPER_ARXIV_LINK_COLUMNS = {
     "arxiv_url",
     "arxiv_year",
     "match_status",
+}
+PUBLICATION_OVERRIDE_COLUMNS = {
+    "title",
+    "match_year",
+    "formal_year",
+    "formal_venue",
+    "formal_doi",
+    "formal_paper_url",
+    "publication_type",
+    "notes",
 }
 INSTITUTION_AUTHOR_OVERRIDE_COLUMNS = {
     "title",
@@ -414,6 +425,36 @@ def read_paper_arxiv_links(
     return read_csv(path, PAPER_ARXIV_LINK_COLUMNS)
 
 
+def read_publication_overrides(
+    path: Path = DEFAULT_PUBLICATION_OVERRIDES,
+) -> List[Dict[str, Any]]:
+    """Load and validate auditable formal-publication corrections."""
+    if not path.exists():
+        return []
+    rows = read_csv(path, PUBLICATION_OVERRIDE_COLUMNS)
+    overrides = []
+    for row_number, row in enumerate(rows, start=2):
+        title = clean_text(row.get("title"))
+        match_year_text = clean_text(row.get("match_year"))
+        formal_year = parse_year(row.get("formal_year"))
+        match_year = parse_year(match_year_text)
+        if not title or formal_year is None:
+            raise ExportError(
+                f"{path} row {row_number} requires title and a valid formal_year"
+            )
+        if match_year_text and match_year is None:
+            raise ExportError(f"{path} row {row_number} has an invalid match_year")
+        overrides.append(
+            {
+                **row,
+                "title": title,
+                "match_year": match_year,
+                "formal_year": formal_year,
+            }
+        )
+    return overrides
+
+
 def load_institution_author_overrides(
     path: Path = DEFAULT_INSTITUTION_AUTHOR_OVERRIDES,
 ) -> List[Dict[str, Any]]:
@@ -524,6 +565,57 @@ def apply_paper_version_overrides(
         append_record_note(record, override.get("notes", ""))
         applied += 1
     return applied
+
+
+def apply_publication_overrides(
+    records: Sequence[Dict[str, Any]],
+    overrides: Sequence[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Replace display publication metadata without changing source records."""
+    applied_indexes = set()
+    for record in records:
+        record_title = normalize_title(record.get("title"))
+        record_year = parse_year(
+            record.get("publication_year") or record.get("year")
+        )
+        for index, override in enumerate(overrides):
+            if normalize_title(override.get("title")) != record_title:
+                continue
+            match_year = override.get("match_year")
+            if match_year is not None and match_year != record_year:
+                continue
+            formal_year = override["formal_year"]
+            formal_venue = clean_text(override.get("formal_venue"))
+            formal_doi = clean_text(override.get("formal_doi"))
+            formal_paper_url = clean_text(override.get("formal_paper_url"))
+            publication_type = clean_text(override.get("publication_type"))
+            record["year"] = formal_year
+            record["publication_year"] = formal_year
+            record["venue"] = formal_venue
+            record["venue_name"] = formal_venue
+            record["doi"] = formal_doi
+            record["paper_url"] = formal_paper_url
+            record["primary_url"] = formal_paper_url
+            record["landing_page_url"] = formal_paper_url
+            record["url"] = formal_paper_url
+            record["publication_type"] = publication_type
+            append_record_note(record, "manual publication metadata override applied")
+            append_record_note(record, override.get("notes", ""))
+            applied_indexes.add(index)
+            break
+    unmatched = [
+        {
+            "title": override["title"],
+            "match_year": override.get("match_year"),
+        }
+        for index, override in enumerate(overrides)
+        if index not in applied_indexes
+    ]
+    return {
+        "publication_overrides_loaded": len(overrides),
+        "publication_overrides_applied": len(applied_indexes),
+        "publication_overrides_unmatched": unmatched,
+    }
 
 
 def arxiv_link_key(row: Dict[str, Any]) -> Optional[Tuple[str, Any]]:
@@ -966,6 +1058,7 @@ def build_export(
     paper_version_overrides: Sequence[Dict[str, str]],
     institution_author_overrides: Sequence[Dict[str, Any]] = (),
     paper_arxiv_links: Sequence[Dict[str, str]] = (),
+    publication_overrides: Sequence[Dict[str, Any]] = (),
 ) -> Dict[str, Any]:
     records, counters = group_map_records(paper_rows, affiliation_rows)
     institution_author_overrides_applied, unmatched_author_overrides = (
@@ -979,6 +1072,10 @@ def build_export(
         paper_version_overrides,
     )
     arxiv_enrichment_summary = apply_paper_arxiv_links(records, paper_arxiv_links)
+    publication_override_summary = apply_publication_overrides(
+        records,
+        publication_overrides,
+    )
     available_records = len(records)
     if max_records is not None:
         records = records[:max_records]
@@ -1021,6 +1118,7 @@ def build_export(
             for override in unmatched_author_overrides
         ],
         **arxiv_enrichment_summary,
+        **publication_override_summary,
         **counters,
     }
     return {
@@ -1089,6 +1187,23 @@ def print_summary(summary: Dict[str, Any]) -> None:
         f"{summary['unmatched_linked_to_arxiv_rows']}"
     )
     print(
+        "  Publication overrides loaded: "
+        f"{summary['publication_overrides_loaded']}"
+    )
+    print(
+        "  Publication overrides applied: "
+        f"{summary['publication_overrides_applied']}"
+    )
+    print(
+        "  Unmatched publication overrides: "
+        f"{len(summary['publication_overrides_unmatched'])}"
+    )
+    for override in summary["publication_overrides_unmatched"]:
+        print(
+            "  Unmatched publication override: "
+            f"{override['title']} ({override['match_year'] or 'any year'})"
+        )
+    print(
         "  Institution-author overrides loaded: "
         f"{summary['institution_author_overrides_loaded']}"
     )
@@ -1131,6 +1246,7 @@ def run(args: argparse.Namespace) -> int:
         )
         paper_version_overrides = read_paper_version_overrides()
         paper_arxiv_links = read_paper_arxiv_links()
+        publication_overrides = read_publication_overrides()
         institution_author_overrides = load_institution_author_overrides()
         payload = build_export(
             paper_rows,
@@ -1139,6 +1255,7 @@ def run(args: argparse.Namespace) -> int:
             paper_version_overrides,
             institution_author_overrides,
             paper_arxiv_links,
+            publication_overrides,
         )
         payload["summary"].update(scope_counts)
     except ExportError as error:

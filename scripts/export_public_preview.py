@@ -26,6 +26,7 @@ DEFAULT_INPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_OUTPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
+DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_MAX_RECORDS = 200
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
@@ -61,6 +62,7 @@ PUBLIC_FIELDS = (
     "arxiv_url",
     "arxiv_year",
     "has_arxiv_version",
+    "paper_url",
     "primary_url",
     "landing_page_url",
     "openalex_url",
@@ -109,6 +111,16 @@ PAPER_ARXIV_LINK_COLUMNS = {
     "arxiv_url",
     "arxiv_year",
     "match_status",
+}
+PUBLICATION_OVERRIDE_COLUMNS = {
+    "title",
+    "match_year",
+    "formal_year",
+    "formal_venue",
+    "formal_doi",
+    "formal_paper_url",
+    "publication_type",
+    "notes",
 }
 
 
@@ -305,6 +317,50 @@ def read_paper_arxiv_links(
         raise PreviewExportError(f"Could not read {path}: {error}") from error
 
 
+def read_publication_overrides(
+    path: Path = DEFAULT_PUBLICATION_OVERRIDES,
+) -> List[Dict[str, Any]]:
+    if not path.exists():
+        return []
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            missing = sorted(
+                PUBLICATION_OVERRIDE_COLUMNS - set(reader.fieldnames or [])
+            )
+            if missing:
+                raise PreviewExportError(
+                    f"{path} is missing required columns: {', '.join(missing)}"
+                )
+            rows = [dict(row) for row in reader]
+    except OSError as error:
+        raise PreviewExportError(f"Could not read {path}: {error}") from error
+
+    overrides = []
+    for row_number, row in enumerate(rows, start=2):
+        title = clean_text(row.get("title"))
+        match_year_text = clean_text(row.get("match_year"))
+        formal_year = parse_year(row.get("formal_year"))
+        match_year = parse_year(match_year_text)
+        if not title or formal_year is None:
+            raise PreviewExportError(
+                f"{path} row {row_number} requires title and a valid formal_year"
+            )
+        if match_year_text and match_year is None:
+            raise PreviewExportError(
+                f"{path} row {row_number} has an invalid match_year"
+            )
+        overrides.append(
+            {
+                **row,
+                "title": title,
+                "match_year": match_year,
+                "formal_year": formal_year,
+            }
+        )
+    return overrides
+
+
 def build_override_indexes(
     overrides: Sequence[Dict[str, str]],
 ) -> Tuple[Dict[str, Dict[str, str]], Dict[str, Dict[str, str]], Dict[str, Dict[str, str]]]:
@@ -391,6 +447,57 @@ def apply_paper_version_overrides(
         append_record_note(record, override.get("notes"))
         applied += 1
     return applied
+
+
+def apply_publication_overrides(
+    records: Sequence[Dict[str, Any]],
+    overrides: Sequence[Dict[str, Any]],
+) -> Dict[str, Any]:
+    """Correct formal publication display fields before public filtering."""
+    applied_indexes = set()
+    for record in records:
+        record_title = normalize_title(record.get("title"))
+        record_year = parse_year(
+            record.get("publication_year") or record.get("year")
+        )
+        for index, override in enumerate(overrides):
+            if normalize_title(override.get("title")) != record_title:
+                continue
+            match_year = override.get("match_year")
+            if match_year is not None and match_year != record_year:
+                continue
+            formal_year = override["formal_year"]
+            formal_venue = clean_text(override.get("formal_venue"))
+            formal_doi = clean_text(override.get("formal_doi"))
+            formal_paper_url = clean_text(override.get("formal_paper_url"))
+            publication_type = clean_text(override.get("publication_type"))
+            record["year"] = formal_year
+            record["publication_year"] = formal_year
+            record["venue"] = formal_venue
+            record["venue_name"] = formal_venue
+            record["doi"] = formal_doi
+            record["paper_url"] = formal_paper_url
+            record["primary_url"] = formal_paper_url
+            record["landing_page_url"] = formal_paper_url
+            record["url"] = formal_paper_url
+            record["publication_type"] = publication_type
+            append_record_note(record, "manual publication metadata override applied")
+            append_record_note(record, override.get("notes"))
+            applied_indexes.add(index)
+            break
+    unmatched = [
+        {
+            "title": override["title"],
+            "match_year": override.get("match_year"),
+        }
+        for index, override in enumerate(overrides)
+        if index not in applied_indexes
+    ]
+    return {
+        "publication_overrides_loaded": len(overrides),
+        "publication_overrides_applied": len(applied_indexes),
+        "publication_overrides_unmatched": unmatched,
+    }
 
 
 def arxiv_link_key(row: Dict[str, Any]) -> Optional[Tuple[str, Any]]:
@@ -539,13 +646,18 @@ def build_preview(
     include_uncertain: bool = False,
     include_missing_location: bool = False,
     paper_arxiv_links: Sequence[Dict[str, str]] = (),
-) -> Tuple[Dict[str, Any], Dict[str, int]]:
+    publication_overrides: Sequence[Dict[str, Any]] = (),
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     records = [dict(record) for record in records]
     paper_version_overrides_applied = apply_paper_version_overrides(
         records,
         paper_version_overrides,
     )
     arxiv_enrichment_summary = apply_paper_arxiv_links(records, paper_arxiv_links)
+    publication_override_summary = apply_publication_overrides(
+        records,
+        publication_overrides,
+    )
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
     below_confidence = 0
@@ -630,6 +742,7 @@ def build_preview(
         "records_exported": len(selected),
         "paper_version_overrides_applied": paper_version_overrides_applied,
         **arxiv_enrichment_summary,
+        **publication_override_summary,
     }
     return {"metadata": dict(PUBLIC_METADATA), "records": selected}, summary
 
@@ -646,7 +759,7 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
         raise PreviewExportError(f"Could not write {path}: {error}") from error
 
 
-def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
+def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print("Public preview export summary:")
     print(f"  Candidate records read: {summary['candidate_records_read']}")
     print(
@@ -696,6 +809,23 @@ def print_summary(summary: Dict[str, int], output: Path, dry_run: bool) -> None:
         "  Unmatched linked_to_arxiv rows: "
         f"{summary['unmatched_linked_to_arxiv_rows']}"
     )
+    print(
+        "  Publication overrides loaded: "
+        f"{summary['publication_overrides_loaded']}"
+    )
+    print(
+        "  Publication overrides applied: "
+        f"{summary['publication_overrides_applied']}"
+    )
+    print(
+        "  Unmatched publication overrides: "
+        f"{len(summary['publication_overrides_unmatched'])}"
+    )
+    for override in summary["publication_overrides_unmatched"]:
+        print(
+            "  Unmatched publication override: "
+            f"{override['title']} ({override['match_year'] or 'any year'})"
+        )
     print(f"  Downstream rows processed: {summary['records_exported']}")
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
@@ -706,6 +836,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         records = read_candidate_records(args.input)
         paper_version_overrides = read_paper_version_overrides()
         paper_arxiv_links = read_paper_arxiv_links()
+        publication_overrides = read_publication_overrides()
         payload, summary = build_preview(
             records,
             args.max_records,
@@ -716,6 +847,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.include_uncertain,
             args.include_missing_location,
             paper_arxiv_links,
+            publication_overrides,
         )
         if not args.dry_run:
             write_json(args.output, payload)

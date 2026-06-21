@@ -240,6 +240,23 @@ fictional institute,Fictional Institute of Visual Studies,Example City,Example C
 
 When an override matches by OpenAlex URL, DOI, or normalized title, map and public-preview exports attach `arxiv_id`, `arxiv_url`, and `has_arxiv_version=true`. The published venue, publication year, DOI, and primary paper URL are preserved. An arXiv override does not by itself make a published venue record a preprint-only record.
 
+## `publication_overrides.csv`
+
+`data/manual/publication_overrides.csv` is an auditable correction layer for papers whose candidate metadata describes an arXiv or preprint record even though a formal publication is known. Exporters read this file without changing raw OpenAlex responses, processed candidate CSVs, or arXiv enrichment data.
+
+| Column | Definition |
+| --- | --- |
+| `title` | Paper title used for exact normalized-title matching. Required. |
+| `match_year` | Optional pre-override candidate year. When present, the title match is accepted only when the record currently has this year. |
+| `formal_year` | Correct formal publication year written to `year` and `publication_year`. Required. |
+| `formal_venue` | Correct formal venue written to `venue` and `venue_name`. |
+| `formal_doi` | Correct formal publication DOI. |
+| `formal_paper_url` | Preferred formal publication landing page, written to the map/public URL aliases including `paper_url` and `primary_url`. |
+| `publication_type` | Correct formal publication type, such as `Article`. |
+| `notes` | Human-readable provenance and reason for the correction. |
+
+Matching uses normalized title and, when supplied, `match_year` against the record before the override. A match replaces only formal display/publication metadata. It preserves the OpenAlex URL and all `arxiv_id`, `arxiv_url`, `arxiv_year`, and `has_arxiv_version` values. A formal venue means the record is no longer preprint-only even though its arXiv version remains known.
+
 ## `openalex_candidate_affiliations.csv`
 
 This processed candidate table uses one row per paper-author-institution relationship reported by OpenAlex. Multiple authors at one institution remain separate rows, and one author with multiple institutions produces multiple rows. An author with only raw affiliation text, or no affiliation information, still receives one row with empty structured institution fields and `manual_review=true`.
