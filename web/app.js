@@ -1072,6 +1072,22 @@ function paperDetailsHtml(record, relatedEntries) {
   const resolutionNotesRow = record.resolution_notes
     ? `<dt>Resolution notes</dt><dd class="popup-resolution-notes">${escapeHtml(record.resolution_notes)}</dd>`
     : "";
+  const abstract = String(record.abstract || "").trim();
+  const abstractSource = String(record.abstract_source || "").trim();
+  const abstractBlock = `
+    <section class="paper-text-section paper-abstract-section">
+      <h4>Abstract</h4>
+      <p class="paper-abstract${abstract ? "" : " is-unavailable"}">${escapeHtml(abstract || "No abstract available.")}</p>
+      ${abstract && abstractSource ? `<p class="paper-text-source">Source: ${escapeHtml(abstractSource)}</p>` : ""}
+    </section>
+  `;
+  const aiSummary = String(record.ai_summary || "").trim();
+  const aiSummaryBlock = `
+    <section class="paper-text-section paper-ai-summary-section">
+      <h4>AI-generated summary</h4>
+      <p class="paper-ai-summary${aiSummary ? "" : " is-unavailable"}">${escapeHtml(aiSummary || "AI summary is not generated yet.")}</p>
+    </section>
+  `;
   const affiliationsBlock = affiliations.length
     ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${escapeHtml(affiliation.institution)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
     : "";
@@ -1092,6 +1108,8 @@ function paperDetailsHtml(record, relatedEntries) {
     </dl>
     ${linksBlock}
     ${affiliationsBlock}
+    ${abstractBlock}
+    ${aiSummaryBlock}
     <details class="paper-details-more">
       <summary>More details</summary>
       <dl class="popup-details">

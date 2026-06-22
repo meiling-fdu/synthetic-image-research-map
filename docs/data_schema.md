@@ -102,6 +102,23 @@ Published metadata and arXiv-version metadata are kept separate: a paper may hav
 
 Candidate-map and public-preview exports apply only `linked_to_arxiv` rows that contain an arXiv ID or URL. They match by OpenAlex URL when the enrichment row provides one, otherwise by DOI, otherwise by normalized title plus publication year. The resulting `arxiv_id`, `arxiv_url`, and `arxiv_year` fields describe a known arXiv version and do not replace formal publication year, DOI, venue, OpenAlex URL, or `publication_type`. `has_arxiv_version` means an ID or URL is known regardless of formal publication. "Preprint-only" instead describes a record whose publication itself is a preprint without a known formal venue; it is never inferred merely from the existence of an arXiv version.
 
+## `paper_abstracts.csv`
+
+`data/manual/paper_abstracts.csv` is an optional manual/cache layer for original paper abstracts. It is never populated by an AI summary and automated exports treat it as read-only. Rows match in priority order by DOI, arXiv ID, OpenAlex URL, then normalized title plus publication year. Manual rows take precedence over abstract text already present in processed candidate metadata and locally cached raw OpenAlex abstracts.
+
+| Column | Definition |
+| --- | --- |
+| `title` | Paper title used only for the final title/year matching fallback. |
+| `year` | Publication year required when title matching is used. |
+| `doi` | DOI, with or without a resolver URL. Strongest match key. |
+| `arxiv_id` | arXiv identifier or arXiv URL. Version suffixes are ignored for matching. |
+| `openalex_url` | OpenAlex work URL. |
+| `abstract` | Original abstract text copied from the identified metadata or official paper source. Never generated to fill a gap. |
+| `abstract_source` | Provenance such as OpenAlex, Crossref, arXiv, publisher, or a named manual source. |
+| `notes` | Review and provenance notes. |
+
+Map records expose `abstract` and `abstract_source`. When no original abstract is available, `abstract` remains empty and the frontend displays it as unavailable. `ai_summary` is a separate optional generated-content field. It must be clearly labeled as AI-generated, must retain its own provenance in any future schema extension, and must never be substituted for or represented as the original abstract.
+
 ### Map-Ready Author Fields
 
 | Field | Definition |

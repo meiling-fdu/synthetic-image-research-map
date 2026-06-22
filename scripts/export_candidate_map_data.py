@@ -35,6 +35,8 @@ DEFAULT_OUTPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
+DEFAULT_PAPER_ABSTRACTS = Path("data/manual/paper_abstracts.csv")
+DEFAULT_RAW_OPENALEX_DIR = Path("data/raw/openalex")
 DEFAULT_INSTITUTION_AUTHOR_OVERRIDES = Path(
     "data/manual/institution_author_overrides.csv"
 )
@@ -91,6 +93,16 @@ PUBLICATION_OVERRIDE_COLUMNS = {
     "formal_doi",
     "formal_paper_url",
     "publication_type",
+    "notes",
+}
+PAPER_ABSTRACT_COLUMNS = {
+    "title",
+    "year",
+    "doi",
+    "arxiv_id",
+    "openalex_url",
+    "abstract",
+    "abstract_source",
     "notes",
 }
 INSTITUTION_AUTHOR_OVERRIDE_COLUMNS = {
@@ -444,6 +456,90 @@ def read_paper_arxiv_links(
     return read_csv(path, PAPER_ARXIV_LINK_COLUMNS)
 
 
+def read_paper_abstracts(
+    path: Path = DEFAULT_PAPER_ABSTRACTS,
+) -> List[Dict[str, str]]:
+    """Load the optional manual/cache abstract table."""
+    if not path.exists():
+        return []
+    rows = read_csv(path, PAPER_ABSTRACT_COLUMNS)
+    for row_number, row in enumerate(rows, start=2):
+        if not clean_text(row.get("abstract")):
+            continue
+        has_identity = any(
+            clean_text(row.get(field))
+            for field in ("doi", "arxiv_id", "openalex_url", "title")
+        )
+        if not has_identity:
+            raise ExportError(
+                f"{path} row {row_number} has an abstract but no paper identity"
+            )
+        if clean_text(row.get("title")) and parse_year(row.get("year")) is None:
+            raise ExportError(
+                f"{path} row {row_number} requires a valid year with title matching"
+            )
+    return rows
+
+
+def reconstruct_abstract(inverted_index: Any) -> str:
+    """Reconstruct OpenAlex abstract text from its local inverted index."""
+    if not isinstance(inverted_index, dict):
+        return ""
+    positioned_words: Dict[int, str] = {}
+    for word, positions in inverted_index.items():
+        if not isinstance(positions, list):
+            continue
+        for position in positions:
+            if isinstance(position, int) and position >= 0:
+                positioned_words.setdefault(position, clean_text(word))
+    return clean_text(
+        " ".join(positioned_words[position] for position in sorted(positioned_words))
+    )
+
+
+def read_local_openalex_abstracts(
+    directory: Path = DEFAULT_RAW_OPENALEX_DIR,
+) -> List[Dict[str, str]]:
+    """Read and deduplicate abstracts already present in raw OpenAlex archives."""
+    if not directory.exists():
+        return []
+    abstracts_by_openalex: Dict[str, Dict[str, str]] = {}
+    for path in sorted(directory.glob("*.json")):
+        try:
+            with path.open("r", encoding="utf-8") as handle:
+                archive = json.load(handle)
+        except (OSError, json.JSONDecodeError) as error:
+            raise ExportError(f"Could not read local OpenAlex archive {path}: {error}") from error
+        if not isinstance(archive, dict):
+            continue
+        for page in archive.get("pages", []):
+            if not isinstance(page, dict):
+                continue
+            response = page.get("response") if isinstance(page.get("response"), dict) else page
+            for work in response.get("results", []):
+                if not isinstance(work, dict):
+                    continue
+                abstract = reconstruct_abstract(work.get("abstract_inverted_index"))
+                openalex_url = clean_text(work.get("id"))
+                if not abstract or not openalex_url:
+                    continue
+                ids = work.get("ids") if isinstance(work.get("ids"), dict) else {}
+                abstracts_by_openalex.setdefault(
+                    normalize_identifier_url(openalex_url),
+                    {
+                        "title": clean_text(work.get("title") or work.get("display_name")),
+                        "year": clean_text(work.get("publication_year")),
+                        "doi": clean_text(work.get("doi") or ids.get("doi")),
+                        "arxiv_id": clean_text(ids.get("arxiv")),
+                        "openalex_url": openalex_url,
+                        "abstract": abstract,
+                        "abstract_source": "OpenAlex local raw cache",
+                        "notes": f"Reconstructed from {path.name}",
+                    },
+                )
+    return list(abstracts_by_openalex.values())
+
+
 def read_publication_overrides(
     path: Path = DEFAULT_PUBLICATION_OVERRIDES,
 ) -> List[Dict[str, Any]]:
@@ -730,6 +826,94 @@ def normalize_arxiv_id(value: Any) -> str:
         flags=re.IGNORECASE,
     )
     return re.sub(r"\.pdf$", "", normalized, flags=re.IGNORECASE).casefold()
+
+
+def abstract_arxiv_key(value: Any) -> str:
+    normalized = normalize_arxiv_id(value)
+    normalized = re.sub(r"^arxiv:\s*", "", normalized, flags=re.IGNORECASE)
+    return re.sub(r"v\d+$", "", normalized, flags=re.IGNORECASE)
+
+
+def abstract_row_keys(row: Dict[str, Any]) -> List[Tuple[str, Any]]:
+    """Return abstract identity keys in required matching priority order."""
+    keys: List[Tuple[str, Any]] = []
+    doi = normalize_doi(row.get("doi"))
+    if doi:
+        keys.append(("doi", doi))
+    arxiv_id = abstract_arxiv_key(row.get("arxiv_id") or row.get("arxiv_url"))
+    if arxiv_id:
+        keys.append(("arxiv", arxiv_id))
+    openalex_url = normalize_identifier_url(row.get("openalex_url"))
+    if openalex_url:
+        keys.append(("openalex", openalex_url))
+    title = normalize_title(row.get("title"))
+    year = parse_year(row.get("publication_year") or row.get("year"))
+    if title and year is not None:
+        keys.append(("title_year", (title, year)))
+    return keys
+
+
+def abstract_index(
+    rows: Sequence[Dict[str, Any]],
+) -> Dict[Tuple[str, Any], Dict[str, Any]]:
+    index: Dict[Tuple[str, Any], Dict[str, Any]] = {}
+    for row in rows:
+        if not clean_text(row.get("abstract")):
+            continue
+        for key in abstract_row_keys(row):
+            index.setdefault(key, row)
+    return index
+
+
+def apply_paper_abstracts(
+    records: Sequence[Dict[str, Any]],
+    manual_rows: Sequence[Dict[str, Any]] = (),
+    local_rows: Sequence[Dict[str, Any]] = (),
+) -> Dict[str, int]:
+    """Attach original abstracts, preferring manual rows over local fallbacks."""
+    manual_index = abstract_index(manual_rows)
+    local_index = abstract_index(local_rows)
+    manual_applied = 0
+    local_applied = 0
+    for record in records:
+        manual_match = next(
+            (manual_index[key] for key in abstract_row_keys(record) if key in manual_index),
+            None,
+        )
+        local_match = next(
+            (local_index[key] for key in abstract_row_keys(record) if key in local_index),
+            None,
+        )
+        if manual_match is not None:
+            record["abstract"] = clean_text(manual_match.get("abstract"))
+            record["abstract_source"] = clean_text(
+                manual_match.get("abstract_source")
+            ) or "Manual paper abstract cache"
+            manual_applied += 1
+        elif clean_text(record.get("abstract")):
+            record["abstract"] = clean_text(record.get("abstract"))
+            record["abstract_source"] = clean_text(
+                record.get("abstract_source")
+            ) or clean_text(record.get("source_database"))
+        elif local_match is not None:
+            record["abstract"] = clean_text(local_match.get("abstract"))
+            record["abstract_source"] = clean_text(
+                local_match.get("abstract_source")
+            ) or "Local metadata cache"
+            local_applied += 1
+        else:
+            record["abstract"] = ""
+            record["abstract_source"] = ""
+        record.setdefault("ai_summary", "")
+    return {
+        "paper_abstract_rows_loaded": len(manual_rows),
+        "local_abstract_rows_loaded": len(local_rows),
+        "manual_abstract_records_applied": manual_applied,
+        "local_abstract_records_applied": local_applied,
+        "records_with_abstract": sum(
+            bool(clean_text(record.get("abstract"))) for record in records
+        ),
+    }
 
 
 def arxiv_values_equivalent(left: Any, right: Any) -> bool:
@@ -1039,6 +1223,13 @@ def group_map_records(
                 "venue_type": clean_text(paper.get("venue_type")),
                 "publisher": clean_text(paper.get("publisher")),
                 "publication_type": clean_text(paper.get("publication_type")),
+                "abstract": clean_text(
+                    paper.get("abstract")
+                    or paper.get("abstract_text")
+                    or paper.get("reconstructed_abstract")
+                ),
+                "abstract_source": clean_text(paper.get("abstract_source")),
+                "ai_summary": clean_text(paper.get("ai_summary")),
                 "doi": clean_text(paper.get("doi")),
                 "arxiv_id": clean_text(paper.get("arxiv_id")),
                 "arxiv_url": clean_text(paper.get("arxiv_url")),
@@ -1396,6 +1587,8 @@ def build_export(
     paper_arxiv_links: Sequence[Dict[str, str]] = (),
     publication_overrides: Sequence[Dict[str, Any]] = (),
     institution_record_overrides: Sequence[Dict[str, Any]] = (),
+    paper_abstracts: Sequence[Dict[str, Any]] = (),
+    local_abstracts: Sequence[Dict[str, Any]] = (),
 ) -> Dict[str, Any]:
     records, counters = group_map_records(paper_rows, affiliation_rows)
     institution_record_override_summary = apply_institution_record_overrides(
@@ -1416,6 +1609,11 @@ def build_export(
     publication_override_summary = apply_publication_overrides(
         records,
         publication_overrides,
+    )
+    abstract_summary = apply_paper_abstracts(
+        records,
+        paper_abstracts,
+        local_abstracts,
     )
     available_records = len(records)
     if max_records is not None:
@@ -1461,6 +1659,7 @@ def build_export(
         ],
         **arxiv_enrichment_summary,
         **publication_override_summary,
+        **abstract_summary,
         **institution_record_override_summary,
         **counters,
     }
@@ -1547,6 +1746,18 @@ def print_summary(summary: Dict[str, Any]) -> None:
             f"{override['title']} ({override['match_year'] or 'any year'})"
         )
     print(
+        "  Manual abstract rows loaded: "
+        f"{summary['paper_abstract_rows_loaded']}"
+    )
+    print(
+        "  Local cached abstract rows loaded: "
+        f"{summary['local_abstract_rows_loaded']}"
+    )
+    print(
+        "  Exported records with non-empty abstract: "
+        f"{summary['records_with_abstract']}"
+    )
+    print(
         "  Institution-author overrides loaded: "
         f"{summary['institution_author_overrides_loaded']}"
     )
@@ -1628,6 +1839,8 @@ def run(args: argparse.Namespace) -> int:
         paper_version_overrides = read_paper_version_overrides()
         paper_arxiv_links = read_paper_arxiv_links()
         publication_overrides = read_publication_overrides()
+        paper_abstracts = read_paper_abstracts()
+        local_abstracts = read_local_openalex_abstracts()
         institution_author_overrides = load_institution_author_overrides()
         institution_record_overrides = load_institution_record_overrides()
         payload = build_export(
@@ -1639,6 +1852,8 @@ def run(args: argparse.Namespace) -> int:
             paper_arxiv_links,
             publication_overrides,
             institution_record_overrides,
+            paper_abstracts,
+            local_abstracts,
         )
         payload["summary"].update(scope_counts)
     except ExportError as error:

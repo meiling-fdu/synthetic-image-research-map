@@ -20,19 +20,23 @@ try:
     from .country_normalization import normalize_country_region
     from .export_candidate_map_data import (
         ExportError,
+        apply_paper_abstracts,
         apply_institution_author_overrides,
         apply_institution_record_overrides,
         load_institution_author_overrides,
         load_institution_record_overrides,
+        read_paper_abstracts,
     )
 except ImportError:  # Direct execution from the scripts directory.
     from country_normalization import normalize_country_region
     from export_candidate_map_data import (
         ExportError,
+        apply_paper_abstracts,
         apply_institution_author_overrides,
         apply_institution_record_overrides,
         load_institution_author_overrides,
         load_institution_record_overrides,
+        read_paper_abstracts,
     )
 
 
@@ -71,6 +75,9 @@ PUBLIC_FIELDS = (
     "venue_type",
     "publisher",
     "publication_type",
+    "abstract",
+    "abstract_source",
+    "ai_summary",
     "doi",
     "arxiv_id",
     "arxiv_url",
@@ -663,6 +670,7 @@ def build_preview(
     publication_overrides: Sequence[Dict[str, Any]] = (),
     institution_record_overrides: Sequence[Dict[str, Any]] = (),
     institution_author_overrides: Sequence[Dict[str, Any]] = (),
+    paper_abstracts: Sequence[Dict[str, Any]] = (),
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     records = [dict(record) for record in records]
     institution_record_override_summary = apply_institution_record_overrides(
@@ -684,6 +692,7 @@ def build_preview(
         records,
         publication_overrides,
     )
+    abstract_summary = apply_paper_abstracts(records, paper_abstracts)
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
     below_confidence = 0
@@ -766,9 +775,13 @@ def build_preview(
         "records_excluded_needs_review": excluded_needs_review,
         "records_eligible_before_limit": eligible_records,
         "records_exported": len(selected),
+        "exported_records_with_abstract": sum(
+            bool(clean_text(record.get("abstract"))) for record in selected
+        ),
         "paper_version_overrides_applied": paper_version_overrides_applied,
         **arxiv_enrichment_summary,
         **publication_override_summary,
+        **abstract_summary,
         **institution_record_override_summary,
         "institution_author_overrides_loaded": len(institution_author_overrides),
         "institution_author_overrides_applied": institution_author_overrides_applied,
@@ -864,6 +877,18 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
             f"{override['title']} ({override['match_year'] or 'any year'})"
         )
     print(
+        "  Manual abstract rows loaded: "
+        f"{summary['paper_abstract_rows_loaded']}"
+    )
+    print(
+        "  Exported records with non-empty abstract before preview filtering: "
+        f"{summary['records_with_abstract']}"
+    )
+    print(
+        "  Public preview records with non-empty abstract: "
+        f"{summary['exported_records_with_abstract']}"
+    )
+    print(
         "  Institution record overrides loaded: "
         f"{summary['institution_record_overrides_loaded']}"
     )
@@ -920,6 +945,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_version_overrides = read_paper_version_overrides()
         paper_arxiv_links = read_paper_arxiv_links()
         publication_overrides = read_publication_overrides()
+        paper_abstracts = read_paper_abstracts()
         institution_record_overrides = load_institution_record_overrides()
         institution_author_overrides = load_institution_author_overrides()
         payload, summary = build_preview(
@@ -935,6 +961,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             publication_overrides,
             institution_record_overrides,
             institution_author_overrides,
+            paper_abstracts,
         )
         if not args.dry_run:
             write_json(args.output, payload)
