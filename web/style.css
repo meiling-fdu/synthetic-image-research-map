@@ -93,7 +93,7 @@ h2 {
 
 .page-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
+  grid-template-columns: 270px minmax(0, 1fr);
   gap: 18px;
 }
 
@@ -221,7 +221,6 @@ h2 {
 }
 
 .dataset-overview {
-  grid-column: 1 / -1;
   display: grid;
   gap: 13px;
   padding: 15px 18px;
@@ -405,10 +404,18 @@ input:disabled {
 
 .legend ul {
   display: grid;
-  gap: 9px;
+  gap: 7px;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.legend {
+  padding: 15px 18px;
+}
+
+.legend h2 {
+  margin-bottom: 10px;
 }
 
 .legend li {
@@ -416,7 +423,8 @@ input:disabled {
   align-items: center;
   gap: 9px;
   color: var(--muted);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
+  line-height: 1.25;
 }
 
 .legend-dot {
