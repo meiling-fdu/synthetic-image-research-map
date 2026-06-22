@@ -127,26 +127,30 @@ Title and institution normalization lowercases text, replaces punctuation with s
 
 ## `institution_record_overrides.csv`
 
-`data/manual/institution_record_overrides.csv` replaces all generated institution markers for a matched paper when its paper-level affiliations or geocoded institutions are wrong. This is an auditable manual export layer: it does not modify raw OpenAlex responses, processed affiliation rows, caches, or other manual tables.
+`data/manual/institution_record_overrides.csv` corrects generated institution markers for a matched paper when its paper-level affiliations or geocoded institutions are wrong. This is an auditable manual export layer: it does not modify raw OpenAlex responses, processed affiliation rows, caches, or other manual tables. OpenAlex-resolved institutions are fallback metadata, not final ground truth; confirmed paper or publisher evidence belongs in this explicit correction layer.
 
 | Column | Definition |
 | --- | --- |
 | `title` | Paper title used for exact normalized-title matching. Required. |
 | `year` | Pre-override publication year used with the title to identify the paper. Required. |
-| `mode` | Replacement behavior. Currently supported value: `replace`. |
-| `institution` | Correct institution display name for the replacement marker. Required. |
+| `mode` | `replace` removes all matched paper records and creates exactly the grouped override rows; `add` retains existing records and adds this institution when absent; `remove` deletes exact normalized matches for this institution. |
+| `institution` | Canonical institution name only. Required. Do not include a department, school, laboratory, street address, city, or raw affiliation string. |
 | `city` | Correct city, when known. |
 | `region` | Correct region or administrative area, when needed. |
 | `country` | Correct country display name. |
 | `country_code` | Correct country code. |
-| `latitude` | Verified replacement latitude. Required. |
-| `longitude` | Verified replacement longitude. Required. |
+| `latitude` | Verified institution latitude. May be blank only when no reliable local coordinate source exists. |
+| `longitude` | Verified institution longitude. Must be supplied together with latitude or left blank with it. |
 | `institution_authors` | Semicolon-separated authors affiliated with this institution. |
+| `address` | Optional official street or campus address, kept separate from the canonical institution name. |
+| `evidence` | Optional raw affiliation, paper, publisher, or local metadata evidence supporting the correction. |
 | `notes` | Human-readable provenance and reason for replacement. |
 
 Implementations also accept optional `doi` and `openalex_url` columns as stronger paper identity evidence when a manual table includes them; they are not required by the base schema above.
 
-Rows with the same normalized title and year form one paper replacement. Matching begins with normalized title plus year or an optional DOI/OpenAlex URL, then expands to every generated record sharing the matched DOI or OpenAlex URL. In `replace` mode, both map and public-preview exporters remove the complete matched record set before creating one record per manual row. The replacement records retain paper-level title, authors, DOI, venue, publication type, paper and OpenAlex URLs, arXiv metadata, task labels, entry type, confidence, and review fields. Only institution identity, institution authors, location, coordinates, marker ID, and institution-resolution method are replaced. Export summaries report papers marked, automatic records removed, replacement records created, and unmatched manual rows.
+Rows with the same normalized title and year form one paper replacement. Matching begins with normalized title plus year or an optional DOI/OpenAlex URL, then expands to every generated record sharing the matched DOI or OpenAlex URL. Modes run deterministically as `replace`, then `remove`, then `add`. In `replace` mode, both map and public-preview exporters remove the complete matched record set before creating one record per manual row. `remove` uses exact normalized institution-name matching within the matched paper. `add` is idempotent: it does not duplicate an institution already present for that paper. Replacement and addition records retain paper-level title, authors, DOI, venue, publication type, paper and OpenAlex URLs, arXiv metadata, task labels, entry type, confidence, and review fields. Only institution identity, institution authors, location, coordinates, marker ID, and institution-resolution method are changed.
+
+Coordinate-pending `replace` or `add` rows remain part of candidate export data with null coordinates and are counted explicitly. The normal public-preview location filter excludes them until verified coordinates are supplied; `--include-missing-location` remains available for deliberate review exports. Departments and complete official affiliations belong in `evidence`, street addresses in `address`, and city/region/country in their dedicated fields. They must never be folded into `institution`.
 
 ## `institution_record_review_queue.csv`
 

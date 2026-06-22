@@ -868,12 +868,16 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
         f"{summary['institution_record_overrides_loaded']}"
     )
     print(
-        "  Papers marked for institution record replacement: "
-        f"{summary['institution_record_override_papers_marked']}"
+        "  Replace-mode papers: "
+        f"{summary['institution_record_override_replace_mode_papers']}"
     )
     print(
-        "  Papers replaced by institution record overrides: "
-        f"{summary['institution_record_override_papers_replaced']}"
+        "  Add-mode records: "
+        f"{summary['institution_record_override_add_mode_records']}"
+    )
+    print(
+        "  Remove-mode records: "
+        f"{summary['institution_record_override_remove_mode_records']}"
     )
     print(
         "  Automatic institution records removed by replacement: "
@@ -882,6 +886,10 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print(
         "  Replacement institution records created: "
         f"{summary['institution_record_replacements_created']}"
+    )
+    print(
+        "  Coordinate-missing override records: "
+        f"{summary['institution_record_override_coordinate_missing_records']}"
     )
     print(
         "  Unmatched institution record overrides: "
