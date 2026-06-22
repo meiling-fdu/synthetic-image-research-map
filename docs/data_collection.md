@@ -179,7 +179,7 @@ Processed candidate CSVs are not final curated data. A reviewer must verify rele
 
 ## Key Paper Coverage Audit
 
-`data/manual/key_papers.csv` is a lightweight, manually curated checklist of papers whose coverage should be monitored. It complements the OpenAlex query workflow; it is not an ingestion queue or a replacement for systematic retrieval. Checklist membership is independent of OpenAlex linkage and does not add that paper to candidate data, the map, or the public preview.
+`data/manual/key_papers.csv` is a manually curated, in-scope checklist of papers whose coverage should be monitored. Checklist membership is the project's scope decision for this audit. OpenAlex is only a metadata source: absence from its candidate pool does not make a key paper out of scope. The checklist does not itself add a paper to candidate data, the map, or the public preview.
 
 ### Importing the checklist from Word documents
 
@@ -244,24 +244,15 @@ The script sanitizes a separate OpenAlex search query while preserving the check
 
 OpenAlex enrichment links a manual checklist paper to external metadata; it does not validate the paper, change its curated status, or publish it. Accepted identifiers are written only to the separate `enriched_*` columns in `key_papers_enriched.csv`.
 
-Run the read-only comparison from the repository root:
+Run the local comparison from the repository root:
 
 ```bash
 python3 scripts/audit_key_paper_coverage.py
 ```
 
-To use accepted OpenAlex identifiers from enrichment, pass the separate enriched checklist:
+The script compares the checklist with `data/processed/openalex_candidate_papers.csv`, `web/data/openalex_candidate_map_data.json`, and `web/data/public_preview_map_data.json`, then writes `data/manual/key_paper_coverage_report.csv`. It uses normalized titles for current coverage matching and reports only `covered_in_public_preview`, `in_candidate_map_but_not_public_preview`, `in_openalex_candidate_pool_but_not_exported`, `missing_from_openalex_candidate_pool`, or `possible_title_match_failure`.
 
-```bash
-python3 scripts/audit_key_paper_coverage.py \
-  --key-papers data/manual/key_papers_enriched.csv
-```
-
-The script compares the checklist with `data/processed/openalex_candidate_papers.csv` and `web/data/public_preview_map_data.json`, then writes `docs/key_paper_coverage_report.md`. Confirmed matching uses accepted OpenAlex URL, DOI, arXiv ID, then normalized title and year. Exact title-only and high-similarity suggestions that need confirmation use `possible_pipeline_match`. The other statuses are `covered_in_public_preview`, `covered_in_candidates_only`, and `not_covered_by_pipeline`.
-
-`not_covered_by_pipeline` means only that the current automatic candidate/public-preview workflow did not cover the manually curated checklist paper. It does not mean the paper is invalid or out of scope. The audit never publishes a checklist entry.
-
-Use `--key-papers`, `--candidate-papers`, `--public-preview`, and `--output` to audit alternate local files. The audit never modifies its three inputs and never calls external APIs.
+These statuses measure coverage and pipeline location, not scope. A missing key paper is a coverage gap that should be reviewed for import or metadata enrichment. A key paper present in the OpenAlex candidate pool but absent from exports should be diagnosed for affiliation, coordinate, or export-rule issues. OpenAlex candidate membership is not coverage ground truth, and the audit never publishes, excludes, or changes the scope of a checklist entry. Recommended actions are deliberately limited to coverage, title-review, import/enrichment, and export diagnostics.
 
 ## Automatic institution resolution
 

@@ -208,7 +208,7 @@ Country/region normalization happens only in map-ready and public-preview export
 
 ## `key_papers.csv`
 
-`data/manual/key_papers.csv` is a human-maintained coverage checklist. One row identifies a paper that should be checked against automatic candidate retrieval and public-preview publication; checklist membership does not automatically add or publish the paper.
+`data/manual/key_papers.csv` is a human-maintained, in-scope coverage checklist. One row identifies a paper that should be checked against automatic candidate retrieval and public-preview publication; checklist membership does not automatically add or publish the paper. OpenAlex candidate data is a metadata source rather than coverage ground truth, so an absent key paper is an import/enrichment gap, not an out-of-scope decision.
 
 | Column | Definition |
 | --- | --- |
@@ -226,7 +226,7 @@ Country/region normalization happens only in map-ready and public-preview export
 
 The DOCX importer reads local files from `data/manual/source_docs/`, removes trailing venue/year suffixes from paper titles, records removed suffixes in `notes`, and deduplicates imported entries by cleaned normalized title plus year. Auxiliary benchmark, dataset, survey, and anti-forensics/evasion entries remain in the checklist with explicit notes. DOI, arXiv, OpenAlex, and paper URL fields stay empty unless the source document explicitly supplies them.
 
-The coverage audit checks stable identifiers first and uses normalized title plus year only as a fallback. The checklist is manually curated: OpenAlex linkage or pipeline coverage does not determine whether one of its papers is valid. Importing or manually adding a checklist row never publishes it to the map.
+The coverage audit reports where each key paper is present in the OpenAlex candidate pool, candidate map, and public preview. Its statuses describe coverage/export gaps only and never use `out_of_scope`. Missing papers require import or metadata-enrichment review; non-exported papers require affiliation, coordinate, public-preview-filter, or export-rule diagnosis. The checklist is manually curated, so OpenAlex linkage or pipeline coverage does not determine scope or validity. Importing or manually adding a checklist row never publishes it to the map.
 
 ## `key_papers_enriched.csv`
 

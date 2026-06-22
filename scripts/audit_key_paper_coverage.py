@@ -10,6 +10,21 @@ CANDIDATE_JSON = Path("web/data/openalex_candidate_map_data.json")
 PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
 OUT_PATH = Path("data/manual/key_paper_coverage_report.csv")
 
+ALLOWED_STATUSES = {
+    "covered_in_public_preview",
+    "in_candidate_map_but_not_public_preview",
+    "in_openalex_candidate_pool_but_not_exported",
+    "missing_from_openalex_candidate_pool",
+    "possible_title_match_failure",
+}
+ALLOWED_ACTIONS = {
+    "no_action",
+    "check_public_preview_filter",
+    "check_affiliations_coordinates_or_export_rules",
+    "manual_title_match_review",
+    "manual_or_openalex_title_import_review",
+}
+
 def norm_title(s: str) -> str:
     s = (s or "").lower()
     s = s.replace("‐", "-").replace("–", "-").replace("—", "-")
@@ -95,10 +110,10 @@ for r in key_rows:
         recommended_action = "no_action"
     elif in_candidate:
         missing_stage = "in_candidate_map_but_not_public_preview"
-        recommended_action = "check_public_preview_filter_or_needs_review"
+        recommended_action = "check_public_preview_filter"
     elif in_oa:
         missing_stage = "in_openalex_candidate_pool_but_not_exported"
-        recommended_action = "check_affiliations_coordinates_scope_filters"
+        recommended_action = "check_affiliations_coordinates_or_export_rules"
     elif possible_title_match:
         missing_stage = "possible_title_match_failure"
         recommended_action = "manual_title_match_review"
@@ -124,6 +139,18 @@ for r in key_rows:
         "notes": notes,
     })
 
+invalid_statuses = sorted(
+    {row["missing_stage"] for row in report} - ALLOWED_STATUSES
+)
+invalid_actions = sorted(
+    {row["recommended_action"] for row in report} - ALLOWED_ACTIONS
+)
+if invalid_statuses or invalid_actions:
+    raise RuntimeError(
+        "Unsupported key-paper audit semantics: "
+        f"statuses={invalid_statuses}, actions={invalid_actions}"
+    )
+
 OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 fields = [
     "title",
@@ -144,7 +171,7 @@ fields = [
 ]
 
 with OUT_PATH.open("w", newline="", encoding="utf-8") as f:
-    writer = csv.DictWriter(f, fieldnames=fields)
+    writer = csv.DictWriter(f, fieldnames=fields, lineterminator="\n")
     writer.writeheader()
     writer.writerows(report)
 

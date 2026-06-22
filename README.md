@@ -101,7 +101,7 @@ Import the lightweight coverage checklist from local Word documents in `data/man
 python3 scripts/import_key_papers_from_docx.py
 ```
 
-The importer updates only `data/manual/key_papers.csv`; checklist membership does not publish a paper. Then compare the checklist with the full candidate paper CSV and public preview:
+The importer updates only `data/manual/key_papers.csv`; checklist membership does not publish a paper. This file is the manually curated in-scope coverage checklist: missing entries in downstream data are coverage gaps, not scope-filter candidates. OpenAlex is a metadata source rather than coverage ground truth. Then compare the checklist with the full candidate paper CSV and public preview:
 
 Enrich missing DOI, OpenAlex, and paper links with conservative title matching:
 
@@ -149,7 +149,7 @@ Then run the coverage comparison:
 python3 scripts/audit_key_paper_coverage.py
 ```
 
-Pass `--key-papers data/manual/key_papers_enriched.csv` to use accepted enriched identifiers. The report uses `covered_in_public_preview`, `covered_in_candidates_only`, `possible_pipeline_match`, and `not_covered_by_pipeline`; the last status means only that the automatic pipeline did not cover the manual paper. Adding a checklist row never adds or publishes it.
+The report writes `data/manual/key_paper_coverage_report.csv` and uses `covered_in_public_preview`, `in_candidate_map_but_not_public_preview`, `in_openalex_candidate_pool_but_not_exported`, `missing_from_openalex_candidate_pool`, and `possible_title_match_failure`. Missing papers should be reviewed for import or enrichment. Papers present in OpenAlex but absent from exports should be diagnosed for affiliation, coordinate, or export-rule issues. The audit measures coverage gaps and never makes scope decisions or publishes a checklist row.
 
 ### Automatic institution resolution
 
