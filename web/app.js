@@ -30,7 +30,8 @@ const requestedDataset = new URLSearchParams(window.location.search).get("datase
 const shouldFallbackToSample = requestedDataset === null;
 let datasetName = resolveDatasetName(requestedDataset);
 let datasetConfig = DATASET_CONFIG[datasetName];
-const WORLD_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
+const TILE_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
+const DISPLAY_BOUNDS = L.latLngBounds([[-50, -170], [72, 180]]);
 const TASK_COLORS = {
   detection: "#287d8e",
   source_attribution: "#b66a37",
@@ -68,17 +69,17 @@ const CHINA_REGION_CODE_BY_NAME = {
 
 const map = L.map("map", {
   minZoom: 1,
-  maxBounds: WORLD_BOUNDS,
+  maxBounds: TILE_BOUNDS,
   maxBoundsViscosity: 1,
   zoomDelta: 0.25,
   zoomSnap: 0.25,
   wheelPxPerZoomLevel: 180,
-}).fitBounds(WORLD_BOUNDS, { padding: [10, 10], animate: false });
+}).fitBounds(DISPLAY_BOUNDS, { padding: [8, 8], animate: false });
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 18,
   noWrap: true,
-  bounds: WORLD_BOUNDS,
+  bounds: TILE_BOUNDS,
   attribution:
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 }).addTo(map);
@@ -176,7 +177,7 @@ function scheduleMapResize(fitWorld = false) {
   mapResizeTimer = window.setTimeout(() => {
     map.invalidateSize({ animate: false, pan: false });
     if (fitWorld) {
-      map.fitBounds(WORLD_BOUNDS, { padding: [10, 10], animate: false });
+      map.fitBounds(DISPLAY_BOUNDS, { padding: [8, 8], animate: false });
     }
   }, 0);
 }

@@ -15,24 +15,23 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260622-dashboard-layout">
+    <link rel="stylesheet" href="style.css?v=20260622-horizontal-legend">
   </head>
   <body>
     <header class="site-header">
       <h1>Synthetic Image Research Map</h1>
     </header>
 
+    <nav class="task-legend" aria-label="Task key">
+      <ul>
+        <li><span class="legend-dot detection"></span>Detection</li>
+        <li><span class="legend-dot source-attribution"></span>Source attribution</li>
+        <li><span class="legend-dot combined-task"></span>Detection and source attribution</li>
+      </ul>
+    </nav>
+
     <main class="page-shell">
       <aside class="sidebar" aria-label="Map controls and summary">
-        <section class="panel legend" aria-labelledby="legend-heading">
-          <h2 id="legend-heading">Task key</h2>
-          <ul>
-            <li><span class="legend-dot detection"></span>Detection</li>
-            <li><span class="legend-dot source-attribution"></span>Source attribution</li>
-            <li><span class="legend-dot combined-task"></span>Detection and source attribution</li>
-          </ul>
-        </section>
-
         <section class="panel" aria-labelledby="filters-heading">
           <h2 id="filters-heading">Filters</h2>
           <div class="filter-grid">
@@ -340,6 +339,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260622-dashboard-layout"></script>
+    <script src="app.js?v=20260622-horizontal-legend"></script>
   </body>
 </html>
