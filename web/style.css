@@ -38,7 +38,30 @@ footer {
 }
 
 .site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 24px;
   padding: 24px 0 6px;
+}
+
+.header-repository-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid #b8c9d1;
+  border-radius: 5px;
+  padding: 6px 10px;
+  color: var(--accent-dark);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.header-repository-link:hover,
+.header-repository-link:focus-visible {
+  border-color: var(--accent);
+  background: #f0f7f9;
 }
 
 h1,
@@ -174,7 +197,7 @@ h2 {
 
 .project-links-content {
   display: grid;
-  gap: 7px;
+  gap: 8px;
 }
 
 .project-link-list {
@@ -209,6 +232,16 @@ h2 {
   color: var(--muted);
   font-size: 0.72rem;
   line-height: 1.45;
+}
+
+.project-links .dataset-status-badge {
+  justify-self: start;
+  border: 1px solid #c4d2d8;
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: var(--accent-dark);
+  font-size: 0.68rem;
+  font-weight: 700;
 }
 
 .dataset-overview {
@@ -420,33 +453,6 @@ input:disabled {
   align-content: start;
 }
 
-.data-notice {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 18px;
-  padding: 16px 18px;
-}
-
-.data-notice h2 {
-  margin-bottom: 6px;
-}
-
-.data-notice p {
-  max-width: 920px;
-  margin-bottom: 0;
-  color: var(--muted);
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
-#dataset-status-note {
-  margin-bottom: 4px;
-  color: var(--accent-dark);
-  font-weight: 700;
-}
-
 .results-panel {
   min-width: 0;
   padding: 17px 18px 18px;
@@ -618,24 +624,6 @@ input:disabled {
   text-align: center;
 }
 
-.repository-link {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid #b8c9d1;
-  border-radius: 5px;
-  padding: 6px 9px;
-  color: var(--accent-dark);
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.repository-link:hover,
-.repository-link:focus-visible {
-  border-color: var(--accent);
-  background: #f0f7f9;
-}
-
 .map-panel {
   min-width: 0;
   padding: 20px;
@@ -682,16 +670,16 @@ input:disabled {
   z-index: 0;
   width: 100%;
   min-width: 0;
-  height: clamp(380px, 36vw, 500px);
-  min-height: 380px;
+  height: clamp(320px, 28vw, 420px);
+  min-height: 320px;
   border: 1px solid var(--line);
   border-radius: 5px;
-  background: #dfe9ec;
+  background: #aad3df;
 }
 
 .paper-details {
-  height: clamp(380px, 36vw, 500px);
-  min-height: 380px;
+  height: clamp(320px, 28vw, 420px);
+  min-height: 320px;
   overflow-y: auto;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -1053,6 +1041,11 @@ footer {
   font-size: 0.75rem;
 }
 
+footer a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
 /* Core Leaflet layout fallback for previews where the CDN stylesheet is unavailable. */
 .leaflet-pane,
 .leaflet-tile,
@@ -1178,8 +1171,7 @@ footer {
   left: 0;
 }
 
-.leaflet-control-zoom,
-.leaflet-control-attribution {
+.leaflet-control-zoom {
   margin: 10px;
 }
 
@@ -1213,17 +1205,6 @@ footer {
 .leaflet-control-zoom a:last-child {
   border-bottom: 0;
   border-radius: 0 0 4px 4px;
-}
-
-.leaflet-control-attribution {
-  padding: 2px 6px;
-  background: rgb(255 255 255 / 80%);
-  color: #333;
-  font-size: 11px;
-}
-
-.leaflet-control-attribution a {
-  color: #17698a;
 }
 
 .leaflet-popup {
@@ -1316,7 +1297,8 @@ footer {
   }
 
   #map {
-    min-height: 380px;
+    height: clamp(320px, 48vw, 380px);
+    min-height: 320px;
   }
 
   .map-workspace {
@@ -1392,11 +1374,6 @@ footer {
     gap: 0;
   }
 
-  .data-notice {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
   .results-heading-row {
     align-items: flex-start;
     flex-direction: column;
@@ -1413,12 +1390,8 @@ footer {
     max-height: 70vh;
   }
 
-  .repository-link {
-    justify-self: start;
-  }
-
   #map {
-    height: 58vh;
-    min-height: 360px;
+    height: clamp(320px, 62vw, 360px);
+    min-height: 320px;
   }
 }

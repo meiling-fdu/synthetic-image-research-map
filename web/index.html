@@ -15,11 +15,17 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260622-horizontal-legend">
+    <link rel="stylesheet" href="style.css?v=20260622-map-viewport">
   </head>
   <body>
     <header class="site-header">
       <h1>Synthetic Image Research Map</h1>
+      <a
+        class="header-repository-link"
+        href="https://github.com/meiling-fdu/synthetic-image-research-map"
+        target="_blank"
+        rel="noopener noreferrer"
+      >GitHub repository</a>
     </header>
 
     <nav class="task-legend" aria-label="Task key">
@@ -118,7 +124,7 @@
           <div class="dataset-overview-heading">
             <h2 id="dataset-overview-heading">Filtered overview</h2>
             <p id="dataset-statistics-note">
-              Automatically generated OpenAlex candidate metadata; not manually curated.
+              Institution-level records matching the current filters.
             </p>
           </div>
           <dl class="dataset-statistics" aria-live="polite">
@@ -244,20 +250,14 @@
           <section>
             <h2>Data and records</h2>
             <p>
-              Public preview records are generated automatically from OpenAlex candidate
-              metadata. This is not a manually curated bibliography, and publications or
-              metadata may be missing or incorrect.
-            </p>
-            <p>
               The map is institution-record based, so one paper may appear at several
               institutions. Unique papers view deduplicates records for bibliography-style browsing.
             </p>
             <p>
-              The public preview is not a complete bibliography. The
-              <code>data/manual/key_papers.csv</code> file is a manual coverage
-              checklist for auditing only: adding a paper there does not publish
-              it to the map, and <code>not_covered_by_pipeline</code> only means
-              the current automatic pipeline did not cover that paper.
+              <code>data/manual/key_papers.csv</code> is a coverage checklist for
+              auditing only. Adding a paper there does not publish it to the map;
+              <code>not_covered_by_pipeline</code> means the automatic pipeline did
+              not cover that paper.
             </p>
           </section>
           <section>
@@ -281,23 +281,26 @@
       </details>
 
       <section class="panel project-links" aria-labelledby="project-links-heading">
-        <h2 id="project-links-heading">Data transparency</h2>
+        <h2 id="project-links-heading">Data and credits</h2>
         <div class="project-links-content">
           <nav class="project-link-list" aria-label="Project resources">
-            <a
-              href="https://github.com/meiling-fdu/synthetic-image-research-map"
-              target="_blank"
-              rel="noopener noreferrer"
-            >GitHub repository</a>
             <a href="data/public_preview_map_data.json">Public preview JSON</a>
             <a href="data/sample_map_data.json">Sample dataset JSON</a>
             <a href="../docs/public_preview_report.md">Quality report</a>
             <a href="../docs/data_collection.md">Data methodology</a>
           </nav>
           <nav class="dataset-switcher" aria-label="Dataset selection"></nav>
+          <p id="dataset-status-note" class="dataset-status-badge">
+            Uncurated public preview
+          </p>
+          <p id="dataset-notice-copy">
+            This public preview is generated from OpenAlex candidate metadata and is
+            intended for exploratory visualization, not as a manually curated bibliography.
+            Paper relevance, task labels, institution names, and coordinates may contain errors.
+          </p>
           <p>
-            Export the currently filtered records with the <strong>Export CSV</strong>
-            button. Report metadata errors or missing papers through
+            Use <strong>Export CSV</strong> to download the currently filtered records.
+            Report metadata errors or missing papers through
             <a
               href="https://github.com/meiling-fdu/synthetic-image-research-map/issues"
               target="_blank"
@@ -306,32 +309,20 @@
           </p>
         </div>
       </section>
-
-      <section class="panel data-notice" aria-labelledby="data-notice-heading">
-        <div>
-          <h2 id="data-notice-heading">Data notice</h2>
-          <p id="dataset-status-note">
-            Uncurated public preview. Automatically generated OpenAlex candidate
-            metadata; not a manually curated bibliography.
-          </p>
-          <p>
-            The public preview is automatically generated from OpenAlex candidate
-            metadata, not a manually curated bibliography. Paper relevance, task
-            labels, institution names, and coordinates may contain errors. The map
-            is intended for exploratory visualization.
-          </p>
-        </div>
-        <a
-          class="repository-link"
-          href="https://github.com/meiling-fdu/synthetic-image-research-map"
-          target="_blank"
-          rel="noopener noreferrer"
-        >View repository</a>
-      </section>
     </main>
 
     <footer>
-      Uncurated public preview. These candidate records are not a manually curated bibliography.
+      Metadata source:
+      <a href="https://openalex.org/" target="_blank" rel="noopener noreferrer">OpenAlex</a>
+      · Map:
+      <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a>
+      /
+      <a
+        href="https://www.openstreetmap.org/copyright"
+        target="_blank"
+        rel="noopener noreferrer"
+      >© OpenStreetMap contributors</a>
+      · Development assistance: Codex
     </footer>
 
     <script
@@ -339,6 +330,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260622-horizontal-legend"></script>
+    <script src="app.js?v=20260622-map-viewport"></script>
   </body>
 </html>

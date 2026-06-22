@@ -32,6 +32,9 @@ let datasetName = resolveDatasetName(requestedDataset);
 let datasetConfig = DATASET_CONFIG[datasetName];
 const TILE_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
 const DISPLAY_BOUNDS = L.latLngBounds([[-50, -170], [72, 180]]);
+const BASE_MIN_ZOOM = 1;
+const WORLD_TILE_SIZE = 256;
+const NO_WRAP_HORIZONTAL_BUFFER = 40;
 const TASK_COLORS = {
   detection: "#287d8e",
   source_attribution: "#b66a37",
@@ -67,10 +70,19 @@ const CHINA_REGION_CODE_BY_NAME = {
   tw: "TW",
 };
 
-const map = L.map("map", {
-  minZoom: 1,
+function noWrapMinZoomForWidth(width) {
+  return Math.max(
+    BASE_MIN_ZOOM,
+    Math.log2((Math.max(width, 1) + NO_WRAP_HORIZONTAL_BUFFER) / WORLD_TILE_SIZE),
+  );
+}
+
+const mapElement = document.querySelector("#map");
+const map = L.map(mapElement, {
+  minZoom: noWrapMinZoomForWidth(mapElement.clientWidth),
   maxBounds: TILE_BOUNDS,
   maxBoundsViscosity: 1,
+  attributionControl: false,
   zoomDelta: 0.25,
   zoomSnap: 0.25,
   wheelPxPerZoomLevel: 180,
@@ -116,7 +128,7 @@ const paperDetails = document.querySelector("#paper-details");
 const paperDetailsContent = document.querySelector("#paper-details-content");
 const closePaperDetailsButton = document.querySelector("#close-paper-details");
 const datasetStatusNote = document.querySelector("#dataset-status-note");
-const footer = document.querySelector("footer");
+const datasetNoticeCopy = document.querySelector("#dataset-notice-copy");
 
 let records = [];
 let currentFilteredRecords = [];
@@ -172,12 +184,22 @@ const CONNECTION_LINE_STYLE = {
 };
 let mapResizeTimer = null;
 
+function updateNoWrapMinZoom() {
+  const minZoom = noWrapMinZoomForWidth(map.getSize().x);
+  map.setMinZoom(minZoom);
+  return minZoom;
+}
+
 function scheduleMapResize(fitWorld = false) {
   window.clearTimeout(mapResizeTimer);
   mapResizeTimer = window.setTimeout(() => {
     map.invalidateSize({ animate: false, pan: false });
+    const minZoom = updateNoWrapMinZoom();
     if (fitWorld) {
       map.fitBounds(DISPLAY_BOUNDS, { padding: [8, 8], animate: false });
+    }
+    if (map.getZoom() < minZoom) {
+      map.setZoom(minZoom, { animate: false });
     }
   }, 0);
 }
@@ -1544,28 +1566,28 @@ function showDatasetMessage(message, isError = false) {
 function updateDatasetLabels() {
   if (datasetName === "sample") {
     datasetStatusNote.textContent =
-      "Fictional sample data only. These toy records are for interface testing and are not literature data.";
-    footer.textContent =
-      "Prototype interface. Records shown here are fictional and are not literature data.";
+      "Fictional sample";
+    datasetNoticeCopy.textContent =
+      "These fictional records are provided only for interface testing and are not literature data.";
     mapStatus.textContent = "Loading fictional sample data...";
     datasetStatisticsNote.textContent =
-      "Fictional sample records for interface testing; not literature data.";
+      "Institution-level records matching the current filters.";
   } else if (datasetName === "preview") {
     datasetStatusNote.textContent =
-      "Uncurated public preview.";
-    footer.textContent =
-      "Uncurated public preview. These candidate records are not a manually curated bibliography.";
+      "Uncurated public preview";
+    datasetNoticeCopy.textContent =
+      "This public preview is generated from OpenAlex candidate metadata and is intended for exploratory visualization, not as a manually curated bibliography. Paper relevance, task labels, institution names, and coordinates may contain errors.";
     mapStatus.textContent = "Loading public preview data...";
     datasetStatisticsNote.textContent =
-      "Automatically generated OpenAlex candidate metadata; not manually curated.";
+      "Institution-level records matching the current filters.";
   } else {
     datasetStatusNote.textContent =
-      "Uncurated OpenAlex candidates. Locally generated candidate metadata; not manually curated.";
-    footer.textContent =
-      "Exploratory candidate view. Records are automatically extracted and require manual review.";
+      "Uncurated candidate data";
+    datasetNoticeCopy.textContent =
+      "This local view contains automatically extracted OpenAlex candidate metadata for exploratory review. Paper relevance, task labels, institution names, and coordinates may contain errors.";
     mapStatus.textContent = "Loading local OpenAlex candidate data...";
     datasetStatisticsNote.textContent =
-      "Locally generated OpenAlex candidate metadata; not manually curated.";
+      "Institution-level records matching the current filters.";
   }
   renderDatasetSwitcher();
 }
@@ -1616,8 +1638,11 @@ function normalizeDatasetPayload(payload) {
 function displayMetadataWarning(metadata) {
   const warning =
     typeof metadata.warning === "string" ? metadata.warning.trim() : "";
-  if (warning) {
-    datasetStatusNote.textContent = `${datasetStatusNote.textContent} ${warning}`;
+  const repeatsDatasetNotice =
+    /automatically generated candidate metadata/i.test(warning) ||
+    /not a manually curated bibliography/i.test(warning);
+  if (warning && !repeatsDatasetNotice) {
+    datasetNoticeCopy.textContent = `${datasetNoticeCopy.textContent} ${warning}`;
   }
 }
 
