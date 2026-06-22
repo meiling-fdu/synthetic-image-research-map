@@ -758,12 +758,6 @@ function recordArxivId(record) {
   const candidates = [
     record.arxiv_id,
     record.arxiv_url,
-    record.doi,
-    record.doi_url,
-    record.paper_url,
-    record.primary_url,
-    record.landing_page_url,
-    record.url,
   ];
   for (const candidate of candidates) {
     const arxivId = extractArxivId(candidate);
@@ -901,9 +895,15 @@ function booleanValue(value) {
 }
 
 function safeHttpUrl(value) {
+  const text = String(value || "").trim();
+  if (!text) {
+    return "";
+  }
   try {
-    const url = new URL(String(value || ""), window.location.href);
-    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+    const url = new URL(text);
+    return ["http:", "https:"].includes(url.protocol) && url.hostname
+      ? url.href
+      : "";
   } catch {
     return "";
   }
@@ -917,9 +917,61 @@ function externalLink(url, label) {
 }
 
 function normalizedDoi(value) {
-  return String(value || "")
+  const doi = String(value || "")
     .trim()
-    .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "");
+    .replace(/^doi:\s*/i, "")
+    .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "")
+    .trim();
+  return /^10\.\d{4,9}\/\S+$/i.test(doi) ? doi : "";
+}
+
+function recordDoi(record) {
+  for (const candidate of [record.doi, record.doi_url]) {
+    const doi = normalizedDoi(candidate);
+    if (doi) {
+      return doi;
+    }
+  }
+  return "";
+}
+
+function recordLandingPageUrl(record) {
+  for (const candidate of [
+    record.paper_url,
+    record.primary_url,
+    record.landing_page_url,
+    record.url,
+  ]) {
+    const url = safeHttpUrl(candidate);
+    if (url) {
+      return url;
+    }
+  }
+  return "";
+}
+
+function paperExternalLinks(record, includeArxivId = false) {
+  const doi = recordDoi(record);
+  const doiUrl = doi ? safeHttpUrl(`https://doi.org/${doi}`) : "";
+  const arxivId = recordArxivId(record);
+  const arxivUrl = recordArxivUrl(record);
+  const safeArxivUrl = safeHttpUrl(arxivUrl);
+  const openalexUrl = safeHttpUrl(record.openalex_url);
+  const paperUrl = recordLandingPageUrl(record);
+  const paperLinkIsDistinct = paperUrl
+    && ![doiUrl, safeArxivUrl, openalexUrl].includes(paperUrl);
+
+  return [
+    paperLinkIsDistinct ? externalLink(paperUrl, "Paper") : "",
+    doiUrl ? externalLink(doiUrl, "DOI") : "",
+    safeArxivUrl
+      ? externalLink(
+          safeArxivUrl,
+          includeArxivId && arxivId ? `arXiv ${arxivId}` : "arXiv",
+        )
+      : "",
+    openalexUrl ? externalLink(openalexUrl, "OpenAlex") : "",
+  ].filter(Boolean);
 }
 
 function escapeCsvValue(value) {
@@ -996,26 +1048,7 @@ function paperDetailsHtml(record, relatedEntries) {
   const subtaskRow = record.subtask
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
     : "";
-  const doi = normalizedDoi(record.doi);
-  const arxivId = recordArxivId(record);
-  const arxivUrl = recordArxivUrl(record);
-  const paperUrl = recordPaperUrl(record);
-  const safePaperUrl = safeHttpUrl(paperUrl);
-  const doiUrl = doi ? safeHttpUrl(`https://doi.org/${doi}`) : "";
-  const safeArxivUrl = safeHttpUrl(arxivUrl);
-  const openalexUrl = safeHttpUrl(record.openalex_url);
-  const paperLinkIsDistinct = safePaperUrl
-    && ![doiUrl, safeArxivUrl, openalexUrl].includes(safePaperUrl);
-  const detailLinks = [
-    paperLinkIsDistinct
-      ? externalLink(safePaperUrl, "Paper")
-      : "",
-    doiUrl ? externalLink(doiUrl, "DOI") : "",
-    safeArxivUrl
-      ? externalLink(safeArxivUrl, arxivId ? `arXiv ${arxivId}` : "arXiv")
-      : "",
-    openalexUrl ? externalLink(openalexUrl, "OpenAlex") : "",
-  ].filter(Boolean);
+  const detailLinks = paperExternalLinks(record, true);
   const linksBlock = detailLinks.length
     ? `<nav class="paper-details-links" aria-label="Paper links">${detailLinks.join("")}</nav>`
     : "";
@@ -1091,18 +1124,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
     ? `<p class="result-venue">${escapeHtml(venue)}</p>`
     : "";
 
-  const doi = normalizedDoi(record.doi);
-  const doiLink = doi
-    ? externalLink(`https://doi.org/${doi}`, "DOI")
-    : "";
-  const arxivUrl = recordArxivUrl(record);
-  const arxivLink = arxivUrl ? externalLink(arxivUrl, "arXiv") : "";
-  const paperUrl = recordPaperUrl(record);
-  const paperLabel = paperUrl && paperUrl === record.openalex_url
-    ? "OpenAlex"
-    : "Paper";
-  const paperLink = paperUrl ? externalLink(paperUrl, paperLabel) : "";
-  const links = [doiLink, arxivLink, paperLink].filter(Boolean).join("");
+  const links = paperExternalLinks(record).join("");
   const linksRow = links ? `<div class="result-links">${links}</div>` : "";
   const authors = recordAuthors(record);
   const authorsHtml = authors.length

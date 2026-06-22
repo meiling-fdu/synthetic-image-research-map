@@ -8,6 +8,24 @@ Files in `data/manual/` are human-maintained source-of-truth corrections and mus
 
 Use UTF-8 CSV files. Store booleans as `true` or `false`; leave a value empty when it is unknown. Stable project IDs should be used for relationships rather than names, because names can change or collide.
 
+## `correction_backlog.csv`
+
+`data/manual/correction_backlog.csv` is the auditable queue for known and suspected metadata corrections, regression cases, and scope decisions. It preserves local or cited evidence without applying changes to exports. A backlog row must be promoted deliberately into the appropriate manual override table only after its evidence, full paper coverage, and any required map location have been verified.
+
+| Column | Definition |
+| --- | --- |
+| `item_id` | Stable backlog identifier. |
+| `category` | Work group such as `confirmed_institution_correction`, `suspected_institution_correction`, or `scope_review`. |
+| `title` | Paper title associated with the issue. |
+| `year` | Publication year used to disambiguate the paper. |
+| `problem_type` | Concise machine-readable issue type. |
+| `current_problem` | Description of the currently observed error or uncertainty. |
+| `expected_correction` | Expected outcome or specific question to resolve. |
+| `evidence` | Local, publisher, paper, or other evidence already available for review. |
+| `priority` | Review priority: `high`, `medium`, or `low`. |
+| `status` | Workflow state such as `pending_override`, `needs_review`, `needs_full_paper_check`, or `implemented_regression_check`. |
+| `notes` | Guardrails and additional review context. |
+
 ## `papers.csv`
 
 One row represents one paper. This table stores bibliographic metadata, scope labels, and provenance for how the paper entered the dataset.
