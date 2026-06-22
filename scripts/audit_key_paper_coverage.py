@@ -1,574 +1,159 @@
-#!/usr/bin/env python3
-"""Audit manual key-paper coverage in candidate and public-preview data.
-
-The key-paper CSV is a human-maintained checklist. This script is read-only
-with respect to manual, candidate, and preview data and calls no external APIs.
-"""
-
-from __future__ import annotations
-
-import argparse
 import csv
-import difflib
 import json
 import re
-import sys
-import unicodedata
-from collections import Counter
-from dataclasses import dataclass
+from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
+KEY_PATH = Path("data/manual/key_papers.csv")
+OA_PATH = Path("data/processed/openalex_candidate_papers.csv")
+CANDIDATE_JSON = Path("web/data/openalex_candidate_map_data.json")
+PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
+OUT_PATH = Path("data/manual/key_paper_coverage_report.csv")
 
-DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
-DEFAULT_CANDIDATE_PAPERS = Path(
-    "data/processed/openalex_candidate_papers.csv"
-)
-DEFAULT_PUBLIC_PREVIEW = Path("web/data/public_preview_map_data.json")
-DEFAULT_OUTPUT = Path("docs/key_paper_coverage_report.md")
-MANUAL_DATA_DIR = Path("data/manual")
-KEY_PAPER_COLUMNS = (
+def norm_title(s: str) -> str:
+    s = (s or "").lower()
+    s = s.replace("‐", "-").replace("–", "-").replace("—", "-")
+    s = s.replace("real-world", "real world")
+    s = re.sub(r"[^a-z0-9]+", " ", s)
+    return " ".join(s.split())
+
+def load_csv(path):
+    if not path.exists():
+        return []
+    with path.open(newline="", encoding="utf-8") as f:
+        return list(csv.DictReader(f))
+
+def load_json_records(path):
+    if not path.exists():
+        return []
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(data, list):
+        return data
+    return data.get("records", [])
+
+def best_match(target_norm, title_map):
+    best_title = ""
+    best_score = 0.0
+    for nt, title in title_map.items():
+        score = SequenceMatcher(None, target_norm, nt).ratio()
+        if score > best_score:
+            best_score = score
+            best_title = title
+    return best_title, best_score
+
+def make_title_map(rows):
+    out = {}
+    for r in rows:
+        title = r.get("title", "")
+        nt = norm_title(title)
+        if nt and nt not in out:
+            out[nt] = title
+    return out
+
+def yesno(x):
+    return "yes" if x else "no"
+
+key_rows = load_csv(KEY_PATH)
+oa_rows = load_csv(OA_PATH)
+candidate_records = load_json_records(CANDIDATE_JSON)
+preview_records = load_json_records(PREVIEW_JSON)
+
+oa_map = make_title_map(oa_rows)
+candidate_map = make_title_map(candidate_records)
+preview_map = make_title_map(preview_records)
+
+oa_titles = set(oa_map)
+candidate_titles = set(candidate_map)
+preview_titles = set(preview_map)
+
+report = []
+
+for r in key_rows:
+    title = r.get("title", "")
+    year = r.get("year", "")
+    expected_task = r.get("expected_task", "")
+    source_doc = r.get("source_doc", "")
+    section = r.get("section", "")
+    notes = r.get("notes", "")
+
+    nt = norm_title(title)
+
+    in_oa = nt in oa_titles
+    in_candidate = nt in candidate_titles
+    in_preview = nt in preview_titles
+
+    best_oa_title, best_oa_score = best_match(nt, oa_map)
+    best_preview_title, best_preview_score = best_match(nt, preview_map)
+
+    possible_title_match = (
+        not in_preview
+        and (best_preview_score >= 0.90 or best_oa_score >= 0.90)
+    )
+
+    if in_preview:
+        missing_stage = "covered_in_public_preview"
+        recommended_action = "no_action"
+    elif in_candidate:
+        missing_stage = "in_candidate_map_but_not_public_preview"
+        recommended_action = "check_public_preview_filter_or_needs_review"
+    elif in_oa:
+        missing_stage = "in_openalex_candidate_pool_but_not_exported"
+        recommended_action = "check_affiliations_coordinates_scope_filters"
+    elif possible_title_match:
+        missing_stage = "possible_title_match_failure"
+        recommended_action = "manual_title_match_review"
+    else:
+        missing_stage = "missing_from_openalex_candidate_pool"
+        recommended_action = "manual_or_openalex_title_import_review"
+
+    report.append({
+        "title": title,
+        "year": year,
+        "expected_task": expected_task,
+        "source_doc": source_doc,
+        "section": section,
+        "in_openalex_candidate_papers": yesno(in_oa),
+        "in_candidate_map": yesno(in_candidate),
+        "in_public_preview": yesno(in_preview),
+        "missing_stage": missing_stage,
+        "recommended_action": recommended_action,
+        "best_openalex_title_match": best_oa_title,
+        "best_openalex_title_score": f"{best_oa_score:.3f}",
+        "best_public_preview_title_match": best_preview_title,
+        "best_public_preview_title_score": f"{best_preview_score:.3f}",
+        "notes": notes,
+    })
+
+OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+fields = [
     "title",
     "year",
-    "doi",
-    "arxiv_id",
-    "openalex_url",
-    "paper_url",
     "expected_task",
+    "source_doc",
+    "section",
+    "in_openalex_candidate_papers",
+    "in_candidate_map",
+    "in_public_preview",
+    "missing_stage",
+    "recommended_action",
+    "best_openalex_title_match",
+    "best_openalex_title_score",
+    "best_public_preview_title_match",
+    "best_public_preview_title_score",
     "notes",
-)
-FUZZY_TITLE_THRESHOLD = 0.92
-MAX_POSSIBLE_MATCHES = 3
-
-
-class AuditError(RuntimeError):
-    """An expected input or output error shown without a traceback."""
-
-
-@dataclass(frozen=True)
-class PaperRecord:
-    source: str
-    source_index: int
-    row: Dict[str, Any]
-    title: str
-    year: str
-    openalex_id: str
-    doi: str
-    arxiv_id: str
-    normalized_title: str
-
-
-@dataclass(frozen=True)
-class ConfirmedMatch:
-    record: PaperRecord
-    method: str
-
-
-@dataclass(frozen=True)
-class PossibleMatch:
-    record: PaperRecord
-    method: str
-    similarity: float
-
-
-@dataclass
-class AuditResult:
-    key_paper: PaperRecord
-    candidate_match: Optional[ConfirmedMatch]
-    preview_match: Optional[ConfirmedMatch]
-    possible_matches: List[PossibleMatch]
-    status: str
-
-
-class PaperIndex:
-    def __init__(self, records: Sequence[PaperRecord]) -> None:
-        self.records = list(records)
-        self.by_openalex = index_records(records, "openalex_id")
-        self.by_doi = index_records(records, "doi")
-        self.by_arxiv = index_records(records, "arxiv_id")
-        self.by_title_year: Dict[Tuple[str, str], List[PaperRecord]] = {}
-        self.by_title: Dict[str, List[PaperRecord]] = {}
-        for record in records:
-            if record.normalized_title:
-                self.by_title.setdefault(record.normalized_title, []).append(record)
-                if record.year:
-                    self.by_title_year.setdefault(
-                        (record.normalized_title, record.year), []
-                    ).append(record)
-
-
-def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description=(
-            "Audit manual key-paper coverage in full OpenAlex candidates and "
-            "the public preview."
-        )
-    )
-    parser.add_argument(
-        "--key-papers",
-        type=Path,
-        default=DEFAULT_KEY_PAPERS,
-        help=f"Manual key-paper checklist (default: {DEFAULT_KEY_PAPERS}).",
-    )
-    parser.add_argument(
-        "--candidate-papers",
-        type=Path,
-        default=DEFAULT_CANDIDATE_PAPERS,
-        help=f"Full candidate paper CSV (default: {DEFAULT_CANDIDATE_PAPERS}).",
-    )
-    parser.add_argument(
-        "--public-preview",
-        type=Path,
-        default=DEFAULT_PUBLIC_PREVIEW,
-        help=f"Public preview JSON (default: {DEFAULT_PUBLIC_PREVIEW}).",
-    )
-    parser.add_argument(
-        "--output",
-        type=Path,
-        default=DEFAULT_OUTPUT,
-        help=f"Markdown report path (default: {DEFAULT_OUTPUT}).",
-    )
-    return parser.parse_args(argv)
-
-
-def clean_text(value: Any) -> str:
-    if value is None:
-        return ""
-    return " ".join(str(value).split())
-
-
-def normalize_openalex(value: Any) -> str:
-    text = clean_text(value).casefold().rstrip("/")
-    match = re.search(r"(?:^|/)(w\d+)$", text, flags=re.IGNORECASE)
-    return match.group(1).casefold() if match else text
-
-
-def normalize_doi(value: Any) -> str:
-    text = clean_text(value)
-    text = re.sub(r"^doi:\s*", "", text, flags=re.IGNORECASE)
-    return re.sub(
-        r"^https?://(?:dx\.)?doi\.org/",
-        "",
-        text,
-        flags=re.IGNORECASE,
-    ).casefold()
-
-
-def normalize_arxiv(value: Any) -> str:
-    text = clean_text(value)
-    url_match = re.search(
-        r"arxiv\.org/(?:abs|pdf)/([^?#]+)",
-        text,
-        flags=re.IGNORECASE,
-    )
-    if url_match:
-        text = url_match.group(1)
-    text = re.sub(r"^arxiv:\s*", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"\.pdf$", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"v\d+$", "", text, flags=re.IGNORECASE)
-    return text.strip(" /").casefold()
-
-
-def normalize_title(value: Any) -> str:
-    text = unicodedata.normalize("NFKC", clean_text(value)).casefold()
-    text = re.sub(r"[^\w]+", " ", text, flags=re.UNICODE).replace("_", " ")
-    return " ".join(text.split())
-
-
-def normalize_year(value: Any) -> str:
-    text = clean_text(value)
-    return text if re.fullmatch(r"\d{4}", text) else ""
-
-
-def first_text(row: Dict[str, Any], *fields: str) -> str:
-    for field in fields:
-        value = clean_text(row.get(field))
-        if value:
-            return value
-    return ""
-
-
-def paper_record(source: str, source_index: int, row: Dict[str, Any]) -> PaperRecord:
-    title = first_text(row, "title", "paper_title")
-    return PaperRecord(
-        source=source,
-        source_index=source_index,
-        row=row,
-        title=title,
-        year=normalize_year(first_text(row, "publication_year", "year")),
-        openalex_id=normalize_openalex(
-            first_text(
-                row,
-                "enriched_openalex_url",
-                "openalex_url",
-                "openalex_id",
-            )
-        ),
-        doi=normalize_doi(first_text(row, "enriched_doi", "doi")),
-        arxiv_id=normalize_arxiv(row.get("arxiv_id")),
-        normalized_title=normalize_title(title),
-    )
-
-
-def index_records(
-    records: Sequence[PaperRecord],
-    field: str,
-) -> Dict[str, List[PaperRecord]]:
-    index: Dict[str, List[PaperRecord]] = {}
-    for record in records:
-        value = getattr(record, field)
-        if value:
-            index.setdefault(value, []).append(record)
-    return index
-
-
-def read_csv_rows(
-    path: Path,
-    required_columns: Iterable[str],
-) -> List[Dict[str, str]]:
-    try:
-        with path.open("r", encoding="utf-8-sig", newline="") as handle:
-            reader = csv.DictReader(handle)
-            columns = set(reader.fieldnames or [])
-            missing = sorted(set(required_columns) - columns)
-            if missing:
-                raise AuditError(
-                    f"{path} is missing required columns: {', '.join(missing)}"
-                )
-            return [dict(row) for row in reader]
-    except OSError as error:
-        raise AuditError(f"Could not read {path}: {error}") from error
-
-
-def read_key_papers(path: Path) -> List[PaperRecord]:
-    rows = read_csv_rows(path, KEY_PAPER_COLUMNS)
-    populated = [row for row in rows if any(clean_text(value) for value in row.values())]
-    return [paper_record("key_papers", index, row) for index, row in enumerate(populated)]
-
-
-def read_candidate_papers(path: Path) -> List[PaperRecord]:
-    rows = read_csv_rows(path, ("title",))
-    return [paper_record("candidates", index, row) for index, row in enumerate(rows)]
-
-
-def read_preview(path: Path) -> List[PaperRecord]:
-    try:
-        with path.open("r", encoding="utf-8") as handle:
-            payload = json.load(handle)
-    except OSError as error:
-        raise AuditError(f"Could not read {path}: {error}") from error
-    except (json.JSONDecodeError, UnicodeDecodeError) as error:
-        raise AuditError(f"Invalid JSON in {path}: {error}") from error
-
-    if isinstance(payload, list):
-        rows = payload
-    elif isinstance(payload, dict) and isinstance(payload.get("records"), list):
-        rows = payload["records"]
-    else:
-        raise AuditError(
-            f"{path} must contain a record array or an object with a records array."
-        )
-    if not all(isinstance(row, dict) for row in rows):
-        raise AuditError(f"{path} contains a preview record that is not an object.")
-    return [paper_record("public_preview", index, row) for index, row in enumerate(rows)]
-
-
-def confirmed_match(key_paper: PaperRecord, index: PaperIndex) -> Optional[ConfirmedMatch]:
-    checks = (
-        ("openalex_url", key_paper.openalex_id, index.by_openalex),
-        ("doi", key_paper.doi, index.by_doi),
-        ("arxiv_id", key_paper.arxiv_id, index.by_arxiv),
-    )
-    for method, value, lookup in checks:
-        if value and lookup.get(value):
-            return ConfirmedMatch(lookup[value][0], method)
-    title_year = (key_paper.normalized_title, key_paper.year)
-    if all(title_year) and index.by_title_year.get(title_year):
-        return ConfirmedMatch(index.by_title_year[title_year][0], "title+year")
-    return None
-
-
-def possible_title_matches(
-    key_paper: PaperRecord,
-    indexes: Sequence[PaperIndex],
-) -> List[PossibleMatch]:
-    if not key_paper.normalized_title:
-        return []
-
-    matches: List[PossibleMatch] = []
-    seen = set()
-    for index in indexes:
-        exact_title_records = index.by_title.get(key_paper.normalized_title, [])
-        for record in exact_title_records:
-            identity = (record.source, record.openalex_id, record.doi, record.arxiv_id)
-            if identity not in seen:
-                seen.add(identity)
-                matches.append(PossibleMatch(record, "normalized title", 1.0))
-
-        for record in index.records:
-            if not record.normalized_title or record in exact_title_records:
-                continue
-            similarity = difflib.SequenceMatcher(
-                None,
-                key_paper.normalized_title,
-                record.normalized_title,
-            ).ratio()
-            if similarity < FUZZY_TITLE_THRESHOLD:
-                continue
-            identity = (record.source, record.openalex_id, record.doi, record.arxiv_id)
-            if identity in seen:
-                continue
-            seen.add(identity)
-            matches.append(PossibleMatch(record, "fuzzy title", similarity))
-
-    return sorted(
-        matches,
-        key=lambda match: (-match.similarity, match.record.source, match.record.title),
-    )[:MAX_POSSIBLE_MATCHES]
-
-
-def audit_coverage(
-    key_papers: Sequence[PaperRecord],
-    candidate_records: Sequence[PaperRecord],
-    preview_records: Sequence[PaperRecord],
-) -> List[AuditResult]:
-    candidate_index = PaperIndex(candidate_records)
-    preview_index = PaperIndex(preview_records)
-    results = []
-    for key_paper in key_papers:
-        candidate = confirmed_match(key_paper, candidate_index)
-        preview = confirmed_match(key_paper, preview_index)
-        possible = []
-        if candidate is None and preview is None:
-            possible = possible_title_matches(
-                key_paper,
-                (candidate_index, preview_index),
-            )
-        if preview is not None:
-            status = "covered_in_public_preview"
-        elif candidate is not None:
-            status = "covered_in_candidates_only"
-        elif possible:
-            status = "possible_pipeline_match"
-        else:
-            status = "not_covered_by_pipeline"
-        results.append(AuditResult(key_paper, candidate, preview, possible, status))
-    return results
-
-
-def markdown_text(value: Any) -> str:
-    return clean_text(value).replace("|", "\\|").replace("\n", " ")
-
-
-def key_label(key_paper: PaperRecord) -> str:
-    if key_paper.title:
-        return key_paper.title
-    return first_text(
-        key_paper.row,
-        "doi",
-        "arxiv_id",
-        "openalex_url",
-        "paper_url",
-    ) or "Untitled key-paper entry"
-
-
-def match_description(match: Optional[ConfirmedMatch]) -> str:
-    if match is None:
-        return "No"
-    return f"Yes (`{match.method}`)"
-
-
-def result_list(results: Sequence[AuditResult]) -> List[str]:
-    if not results:
-        return ["None."]
-    return [
-        f"- {markdown_text(key_label(result.key_paper))}"
-        + (f" ({result.key_paper.year})" if result.key_paper.year else "")
-        for result in results
-    ]
-
-
-def build_report(
-    key_path: Path,
-    candidate_path: Path,
-    preview_path: Path,
-    results: Sequence[AuditResult],
-) -> str:
-    covered_preview = [
-        result
-        for result in results
-        if result.status == "covered_in_public_preview"
-    ]
-    candidates_only = [
-        result
-        for result in results
-        if result.status == "covered_in_candidates_only"
-    ]
-    possible = [
-        result
-        for result in results
-        if result.status == "possible_pipeline_match"
-    ]
-    not_covered = [
-        result
-        for result in results
-        if result.status == "not_covered_by_pipeline"
-    ]
-
-    lines = [
-        "# Key Paper Coverage Report",
-        "",
-        "This audit compares a manually curated coverage checklist with automatic "
-        "candidate and public-preview data. Coverage status describes only the "
-        "current pipeline: `not_covered_by_pipeline` does not mean that a checklist "
-        "paper is invalid. Checklist membership does not publish a paper.",
-        "",
-        "## Inputs",
-        "",
-        f"- Key papers: `{key_path.as_posix()}`",
-        f"- Candidate papers: `{candidate_path.as_posix()}`",
-        f"- Public preview: `{preview_path.as_posix()}`",
-        "",
-        "## Summary",
-        "",
-        "| Metric | Count |",
-        "| --- | ---: |",
-        f"| Total key papers | {len(results)} |",
-        f"| `covered_in_public_preview` | {len(covered_preview)} |",
-        f"| `covered_in_candidates_only` | {len(candidates_only)} |",
-        f"| `possible_pipeline_match` | {len(possible)} |",
-        f"| `not_covered_by_pipeline` | {len(not_covered)} |",
-        "",
-        "## Per-Paper Status",
-        "",
-        "| # | Key paper | Year | Expected task | Status | Candidate | Public preview | Notes |",
-        "| ---: | --- | ---: | --- | --- | --- | --- | --- |",
-    ]
-    if results:
-        for index, result in enumerate(results, start=1):
-            key = result.key_paper
-            lines.append(
-                f"| {index} | {markdown_text(key_label(key))} | "
-                f"{markdown_text(key.year)} | "
-                f"{markdown_text(key.row.get('expected_task'))} | "
-                f"`{result.status}` | "
-                f"{match_description(result.candidate_match)} | "
-                f"{match_description(result.preview_match)} | "
-                f"{markdown_text(key.row.get('notes'))} |"
-            )
-    else:
-        lines.append("| - | No key papers listed | | | | | | |")
-
-    lines.extend(
-        [
-            "",
-            "## Not Covered by Candidate Retrieval",
-            "",
-            *result_list(not_covered),
-            "",
-            "These checklist papers remain manually curated entries; this section "
-            "only indicates that the current automatic pipeline did not retrieve them.",
-            "",
-            "## Covered in Candidates Only",
-            "",
-            *result_list(candidates_only),
-            "",
-            "## Possible Pipeline Matches",
-            "",
-        ]
-    )
-    possible_rows = [
-        (result, match)
-        for result in possible
-        for match in result.possible_matches
-    ]
-    if possible_rows:
-        lines.extend(
-            [
-                "| Key paper | Source | Possible record | Year | Basis | Similarity |",
-                "| --- | --- | --- | ---: | --- | ---: |",
-            ]
-        )
-        for result, match in possible_rows:
-            lines.append(
-                f"| {markdown_text(key_label(result.key_paper))} | "
-                f"{markdown_text(match.record.source)} | "
-                f"{markdown_text(match.record.title)} | "
-                f"{markdown_text(match.record.year)} | "
-                f"{markdown_text(match.method)} | {match.similarity:.3f} |"
-            )
-    else:
-        lines.append("None.")
-    lines.extend(
-        [
-            "",
-            "Possible pipeline matches require manual confirmation and are not "
-            "counted as covered by either dataset.",
-            "",
-        ]
-    )
-    return "\n".join(lines)
-
-
-def path_is_in_manual_data(path: Path) -> bool:
-    try:
-        path.resolve().relative_to(MANUAL_DATA_DIR.resolve())
-        return True
-    except ValueError:
-        return False
-
-
-def write_report(path: Path, report: str) -> None:
-    if path_is_in_manual_data(path):
-        raise AuditError("Refusing to write an audit report into data/manual/.")
-    temporary_path = path.with_suffix(path.suffix + ".tmp")
-    try:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        temporary_path.write_text(report, encoding="utf-8")
-        temporary_path.replace(path)
-    except OSError as error:
-        raise AuditError(f"Could not write {path}: {error}") from error
-
-
-def print_summary(results: Sequence[AuditResult], output: Path) -> None:
-    print("Key paper coverage audit:")
-    print(f"  Total key papers: {len(results)}")
-    counts = Counter(result.status for result in results)
-    print("  Pipeline coverage status:")
-    for status in (
-        "covered_in_public_preview",
-        "covered_in_candidates_only",
-        "possible_pipeline_match",
-        "not_covered_by_pipeline",
-    ):
-        print(f"    {status}: {counts[status]}")
-    print(f"  Report: {output}")
-
-
-def run(args: argparse.Namespace) -> int:
-    try:
-        key_papers = read_key_papers(args.key_papers)
-        candidates = read_candidate_papers(args.candidate_papers)
-        preview = read_preview(args.public_preview)
-        results = audit_coverage(key_papers, candidates, preview)
-        report = build_report(
-            args.key_papers,
-            args.candidate_papers,
-            args.public_preview,
-            results,
-        )
-        write_report(args.output, report)
-    except AuditError as error:
-        print(f"Error: {error}", file=sys.stderr)
-        return 1
-
-    print_summary(results, args.output)
-    return 0
-
-
-def main(argv: Optional[Sequence[str]] = None) -> int:
-    return run(parse_args(argv))
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+]
+
+with OUT_PATH.open("w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(f, fieldnames=fields)
+    writer.writeheader()
+    writer.writerows(report)
+
+from collections import Counter
+print("Wrote:", OUT_PATH)
+print("key papers:", len(report))
+print("by missing_stage:")
+for k, v in Counter(r["missing_stage"] for r in report).most_common():
+    print(f"  {k}: {v}")
+print("by recommended_action:")
+for k, v in Counter(r["recommended_action"] for r in report).most_common():
+    print(f"  {k}: {v}")
