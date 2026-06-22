@@ -37,11 +37,7 @@ footer {
 }
 
 .site-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 32px;
-  padding: 36px 0 24px;
+  padding: 24px 0 14px;
 }
 
 h1,
@@ -51,9 +47,9 @@ p {
 }
 
 h1 {
-  margin-bottom: 8px;
+  margin-bottom: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1.05;
@@ -65,12 +61,6 @@ h2 {
   letter-spacing: 0.01em;
 }
 
-.intro {
-  max-width: 720px;
-  margin-bottom: 0;
-  color: var(--muted);
-}
-
 .eyebrow {
   margin-bottom: 7px;
   color: var(--accent);
@@ -78,17 +68,6 @@ h2 {
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-}
-
-.prototype-note {
-  flex: none;
-  margin-bottom: 2px;
-  border: 1px solid #b8c9d1;
-  border-radius: 999px;
-  padding: 7px 12px;
-  color: var(--accent-dark);
-  font-size: 0.78rem;
-  font-weight: 700;
 }
 
 .page-shell {
@@ -212,6 +191,17 @@ h2 {
 
 .project-link-list a {
   font-size: 0.74rem;
+}
+
+.dataset-switcher small {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.dataset-switcher a {
+  color: var(--accent);
+  font-weight: 700;
+  text-underline-offset: 2px;
 }
 
 .project-links p {
@@ -450,6 +440,12 @@ input:disabled {
   color: var(--muted);
   font-size: 0.78rem;
   line-height: 1.5;
+}
+
+#dataset-status-note {
+  margin-bottom: 4px;
+  color: var(--accent-dark);
+  font-weight: 700;
 }
 
 .results-panel {

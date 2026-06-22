@@ -19,14 +19,7 @@
   </head>
   <body>
     <header class="site-header">
-      <div>
-        <p class="eyebrow">Academic landscape prototype</p>
-        <h1>Synthetic Image Research Map</h1>
-        <p class="intro">
-          Explore a filtered public preview of automatically generated OpenAlex candidate metadata.
-        </p>
-      </div>
-      <p class="prototype-note">Uncurated public preview</p>
+      <h1>Synthetic Image Research Map</h1>
     </header>
 
     <main class="page-shell">
@@ -302,6 +295,7 @@
             <a href="../docs/public_preview_report.md">Quality report</a>
             <a href="../docs/data_collection.md">Data methodology</a>
           </nav>
+          <nav class="dataset-switcher" aria-label="Dataset selection"></nav>
           <p>
             Export the currently filtered records with the <strong>Export CSV</strong>
             button. Report metadata errors or missing papers through
@@ -317,6 +311,10 @@
       <section class="panel data-notice" aria-labelledby="data-notice-heading">
         <div>
           <h2 id="data-notice-heading">Data notice</h2>
+          <p id="dataset-status-note">
+            Uncurated public preview. Automatically generated OpenAlex candidate
+            metadata; not a manually curated bibliography.
+          </p>
           <p>
             The public preview is automatically generated from OpenAlex candidate
             metadata, not a manually curated bibliography. Paper relevance, task

@@ -114,8 +114,7 @@ const resultsViewButtons = document.querySelectorAll("[data-results-view]");
 const paperDetails = document.querySelector("#paper-details");
 const paperDetailsContent = document.querySelector("#paper-details-content");
 const closePaperDetailsButton = document.querySelector("#close-paper-details");
-const prototypeNote = document.querySelector(".prototype-note");
-const intro = document.querySelector(".intro");
+const datasetStatusNote = document.querySelector("#dataset-status-note");
 const footer = document.querySelector("footer");
 
 let records = [];
@@ -1543,27 +1542,24 @@ function showDatasetMessage(message, isError = false) {
 
 function updateDatasetLabels() {
   if (datasetName === "sample") {
-    prototypeNote.textContent = "Fictional sample data only";
-    intro.textContent =
-      "Explore toy records representing research in synthetic image detection and source attribution.";
+    datasetStatusNote.textContent =
+      "Fictional sample data only. These toy records are for interface testing and are not literature data.";
     footer.textContent =
       "Prototype interface. Records shown here are fictional and are not literature data.";
     mapStatus.textContent = "Loading fictional sample data...";
     datasetStatisticsNote.textContent =
       "Fictional sample records for interface testing; not literature data.";
   } else if (datasetName === "preview") {
-    prototypeNote.textContent = "Uncurated public preview";
-    intro.textContent =
-      "Explore a filtered public preview of automatically generated OpenAlex candidate metadata.";
+    datasetStatusNote.textContent =
+      "Uncurated public preview.";
     footer.textContent =
       "Uncurated public preview. These candidate records are not a manually curated bibliography.";
     mapStatus.textContent = "Loading public preview data...";
     datasetStatisticsNote.textContent =
       "Automatically generated OpenAlex candidate metadata; not manually curated.";
   } else {
-    prototypeNote.textContent = "Uncurated OpenAlex candidates";
-    intro.textContent =
-      "Explore locally generated candidate records for synthetic image detection and source attribution research.";
+    datasetStatusNote.textContent =
+      "Uncurated OpenAlex candidates. Locally generated candidate metadata; not manually curated.";
     footer.textContent =
       "Exploratory candidate view. Records are automatically extracted and require manual review.";
     mapStatus.textContent = "Loading local OpenAlex candidate data...";
@@ -1576,10 +1572,7 @@ function updateDatasetLabels() {
 function renderDatasetSwitcher() {
   let switcher = document.querySelector(".dataset-switcher");
   if (!switcher) {
-    switcher = document.createElement("nav");
-    switcher.className = "dataset-switcher";
-    switcher.setAttribute("aria-label", "Dataset selection");
-    intro.insertAdjacentElement("afterend", switcher);
+    return;
   }
 
   const choices = [
@@ -1623,7 +1616,7 @@ function displayMetadataWarning(metadata) {
   const warning =
     typeof metadata.warning === "string" ? metadata.warning.trim() : "";
   if (warning) {
-    intro.textContent = `${intro.textContent} ${warning}`;
+    datasetStatusNote.textContent = `${datasetStatusNote.textContent} ${warning}`;
   }
 }
 

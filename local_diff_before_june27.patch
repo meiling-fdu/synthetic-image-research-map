@@ -1,0 +1,229 @@
+diff --git a/README.md b/README.md
+index 424be1f..96492cf 100644
+--- a/README.md
++++ b/README.md
+@@ -101,7 +101,7 @@ Import the lightweight coverage checklist from local Word documents in `data/man
+ python3 scripts/import_key_papers_from_docx.py
+ ```
+ 
+-The importer updates only `data/manual/key_papers.csv`; checklist membership does not publish a paper. Then compare the checklist with the full candidate paper CSV and public preview:
++The importer updates only `data/manual/key_papers.csv`; checklist membership does not publish a paper. This file is the manually curated in-scope coverage checklist: missing entries in downstream data are coverage gaps, not scope-filter candidates. OpenAlex is a metadata source rather than coverage ground truth. Then compare the checklist with the full candidate paper CSV and public preview:
+ 
+ Enrich missing DOI, OpenAlex, and paper links with conservative title matching:
+ 
+@@ -149,7 +149,7 @@ Then run the coverage comparison:
+ python3 scripts/audit_key_paper_coverage.py
+ ```
+ 
+-Pass `--key-papers data/manual/key_papers_enriched.csv` to use accepted enriched identifiers. The report uses `covered_in_public_preview`, `covered_in_candidates_only`, `possible_pipeline_match`, and `not_covered_by_pipeline`; the last status means only that the automatic pipeline did not cover the manual paper. Adding a checklist row never adds or publishes it.
++The report writes `data/manual/key_paper_coverage_report.csv` and uses `covered_in_public_preview`, `in_candidate_map_but_not_public_preview`, `in_openalex_candidate_pool_but_not_exported`, `missing_from_openalex_candidate_pool`, and `possible_title_match_failure`. Missing papers should be reviewed for import or enrichment. Papers present in OpenAlex but absent from exports should be diagnosed for affiliation, coordinate, or export-rule issues. The audit measures coverage gaps and never makes scope decisions or publishes a checklist row.
+ 
+ ### Automatic institution resolution
+ 
+diff --git a/docs/data_collection.md b/docs/data_collection.md
+index fb53c36..7cf81b6 100644
+--- a/docs/data_collection.md
++++ b/docs/data_collection.md
+@@ -179,7 +179,7 @@ Processed candidate CSVs are not final curated data. A reviewer must verify rele
+ 
+ ## Key Paper Coverage Audit
+ 
+-`data/manual/key_papers.csv` is a lightweight, manually curated checklist of papers whose coverage should be monitored. It complements the OpenAlex query workflow; it is not an ingestion queue or a replacement for systematic retrieval. Checklist membership is independent of OpenAlex linkage and does not add that paper to candidate data, the map, or the public preview.
++`data/manual/key_papers.csv` is a manually curated, in-scope checklist of papers whose coverage should be monitored. Checklist membership is the project's scope decision for this audit. OpenAlex is only a metadata source: absence from its candidate pool does not make a key paper out of scope. The checklist does not itself add a paper to candidate data, the map, or the public preview.
+ 
+ ### Importing the checklist from Word documents
+ 
+@@ -244,24 +244,15 @@ The script sanitizes a separate OpenAlex search query while preserving the check
+ 
+ OpenAlex enrichment links a manual checklist paper to external metadata; it does not validate the paper, change its curated status, or publish it. Accepted identifiers are written only to the separate `enriched_*` columns in `key_papers_enriched.csv`.
+ 
+-Run the read-only comparison from the repository root:
++Run the local comparison from the repository root:
+ 
+ ```bash
+ python3 scripts/audit_key_paper_coverage.py
+ ```
+ 
+-To use accepted OpenAlex identifiers from enrichment, pass the separate enriched checklist:
++The script compares the checklist with `data/processed/openalex_candidate_papers.csv`, `web/data/openalex_candidate_map_data.json`, and `web/data/public_preview_map_data.json`, then writes `data/manual/key_paper_coverage_report.csv`. It uses normalized titles for current coverage matching and reports only `covered_in_public_preview`, `in_candidate_map_but_not_public_preview`, `in_openalex_candidate_pool_but_not_exported`, `missing_from_openalex_candidate_pool`, or `possible_title_match_failure`.
+ 
+-```bash
+-python3 scripts/audit_key_paper_coverage.py \
+-  --key-papers data/manual/key_papers_enriched.csv
+-```
+-
+-The script compares the checklist with `data/processed/openalex_candidate_papers.csv` and `web/data/public_preview_map_data.json`, then writes `docs/key_paper_coverage_report.md`. Confirmed matching uses accepted OpenAlex URL, DOI, arXiv ID, then normalized title and year. Exact title-only and high-similarity suggestions that need confirmation use `possible_pipeline_match`. The other statuses are `covered_in_public_preview`, `covered_in_candidates_only`, and `not_covered_by_pipeline`.
+-
+-`not_covered_by_pipeline` means only that the current automatic candidate/public-preview workflow did not cover the manually curated checklist paper. It does not mean the paper is invalid or out of scope. The audit never publishes a checklist entry.
+-
+-Use `--key-papers`, `--candidate-papers`, `--public-preview`, and `--output` to audit alternate local files. The audit never modifies its three inputs and never calls external APIs.
++These statuses measure coverage and pipeline location, not scope. A missing key paper is a coverage gap that should be reviewed for import or metadata enrichment. A key paper present in the OpenAlex candidate pool but absent from exports should be diagnosed for affiliation, coordinate, or export-rule issues. OpenAlex candidate membership is not coverage ground truth, and the audit never publishes, excludes, or changes the scope of a checklist entry. Recommended actions are deliberately limited to coverage, title-review, import/enrichment, and export diagnostics.
+ 
+ ## Automatic institution resolution
+ 
+diff --git a/docs/data_schema.md b/docs/data_schema.md
+index 22461ba..2a8f90d 100644
+--- a/docs/data_schema.md
++++ b/docs/data_schema.md
+@@ -208,7 +208,7 @@ Country/region normalization happens only in map-ready and public-preview export
+ 
+ ## `key_papers.csv`
+ 
+-`data/manual/key_papers.csv` is a human-maintained coverage checklist. One row identifies a paper that should be checked against automatic candidate retrieval and public-preview publication; checklist membership does not automatically add or publish the paper.
++`data/manual/key_papers.csv` is a human-maintained, in-scope coverage checklist. One row identifies a paper that should be checked against automatic candidate retrieval and public-preview publication; checklist membership does not automatically add or publish the paper. OpenAlex candidate data is a metadata source rather than coverage ground truth, so an absent key paper is an import/enrichment gap, not an out-of-scope decision.
+ 
+ | Column | Definition |
+ | --- | --- |
+@@ -226,7 +226,7 @@ Country/region normalization happens only in map-ready and public-preview export
+ 
+ The DOCX importer reads local files from `data/manual/source_docs/`, removes trailing venue/year suffixes from paper titles, records removed suffixes in `notes`, and deduplicates imported entries by cleaned normalized title plus year. Auxiliary benchmark, dataset, survey, and anti-forensics/evasion entries remain in the checklist with explicit notes. DOI, arXiv, OpenAlex, and paper URL fields stay empty unless the source document explicitly supplies them.
+ 
+-The coverage audit checks stable identifiers first and uses normalized title plus year only as a fallback. The checklist is manually curated: OpenAlex linkage or pipeline coverage does not determine whether one of its papers is valid. Importing or manually adding a checklist row never publishes it to the map.
++The coverage audit reports where each key paper is present in the OpenAlex candidate pool, candidate map, and public preview. Its statuses describe coverage/export gaps only and never use `out_of_scope`. Missing papers require import or metadata-enrichment review; non-exported papers require affiliation, coordinate, public-preview-filter, or export-rule diagnosis. The checklist is manually curated, so OpenAlex linkage or pipeline coverage does not determine scope or validity. Importing or manually adding a checklist row never publishes it to the map.
+ 
+ ## `key_papers_enriched.csv`
+ 
+diff --git a/scripts/audit_key_paper_coverage.py b/scripts/audit_key_paper_coverage.py
+index b64c070..34caeb2 100644
+--- a/scripts/audit_key_paper_coverage.py
++++ b/scripts/audit_key_paper_coverage.py
+@@ -10,6 +10,21 @@ CANDIDATE_JSON = Path("web/data/openalex_candidate_map_data.json")
+ PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
+ OUT_PATH = Path("data/manual/key_paper_coverage_report.csv")
+ 
++ALLOWED_STATUSES = {
++    "covered_in_public_preview",
++    "in_candidate_map_but_not_public_preview",
++    "in_openalex_candidate_pool_but_not_exported",
++    "missing_from_openalex_candidate_pool",
++    "possible_title_match_failure",
++}
++ALLOWED_ACTIONS = {
++    "no_action",
++    "check_public_preview_filter",
++    "check_affiliations_coordinates_or_export_rules",
++    "manual_title_match_review",
++    "manual_or_openalex_title_import_review",
++}
++
+ def norm_title(s: str) -> str:
+     s = (s or "").lower()
+     s = s.replace("‐", "-").replace("–", "-").replace("—", "-")
+@@ -95,10 +110,10 @@ for r in key_rows:
+         recommended_action = "no_action"
+     elif in_candidate:
+         missing_stage = "in_candidate_map_but_not_public_preview"
+-        recommended_action = "check_public_preview_filter_or_needs_review"
++        recommended_action = "check_public_preview_filter"
+     elif in_oa:
+         missing_stage = "in_openalex_candidate_pool_but_not_exported"
+-        recommended_action = "check_affiliations_coordinates_scope_filters"
++        recommended_action = "check_affiliations_coordinates_or_export_rules"
+     elif possible_title_match:
+         missing_stage = "possible_title_match_failure"
+         recommended_action = "manual_title_match_review"
+@@ -124,6 +139,18 @@ for r in key_rows:
+         "notes": notes,
+     })
+ 
++invalid_statuses = sorted(
++    {row["missing_stage"] for row in report} - ALLOWED_STATUSES
++)
++invalid_actions = sorted(
++    {row["recommended_action"] for row in report} - ALLOWED_ACTIONS
++)
++if invalid_statuses or invalid_actions:
++    raise RuntimeError(
++        "Unsupported key-paper audit semantics: "
++        f"statuses={invalid_statuses}, actions={invalid_actions}"
++    )
++
+ OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+ fields = [
+     "title",
+@@ -144,7 +171,7 @@ fields = [
+ ]
+ 
+ with OUT_PATH.open("w", newline="", encoding="utf-8") as f:
+-    writer = csv.DictWriter(f, fieldnames=fields)
++    writer = csv.DictWriter(f, fieldnames=fields, lineterminator="\n")
+     writer.writeheader()
+     writer.writerows(report)
+ 
+diff --git a/web/app.js b/web/app.js
+index 63319be..733657c 100644
+--- a/web/app.js
++++ b/web/app.js
+@@ -30,7 +30,7 @@ const requestedDataset = new URLSearchParams(window.location.search).get("datase
+ const shouldFallbackToSample = requestedDataset === null;
+ let datasetName = resolveDatasetName(requestedDataset);
+ let datasetConfig = DATASET_CONFIG[datasetName];
+-const WORLD_BOUNDS = L.latLngBounds(L.latLng(-60, -180), L.latLng(85, 180));
++const WORLD_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
+ const TASK_COLORS = {
+   detection: "#287d8e",
+   source_attribution: "#b66a37",
+@@ -68,12 +68,17 @@ const CHINA_REGION_CODE_BY_NAME = {
+ 
+ const map = L.map("map", {
+   minZoom: 1,
+-  maxBounds: WORLD_BOUNDS.pad(0.35),
+-  worldCopyJump: true,
+-}).fitBounds(WORLD_BOUNDS, { padding: [12, 12], animate: false });
++  maxBounds: WORLD_BOUNDS,
++  maxBoundsViscosity: 1,
++  zoomDelta: 0.25,
++  zoomSnap: 0.25,
++  wheelPxPerZoomLevel: 180,
++}).fitBounds(WORLD_BOUNDS, { padding: [10, 10], animate: false });
+ 
+ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+   maxZoom: 18,
++  noWrap: true,
++  bounds: WORLD_BOUNDS,
+   attribution:
+     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+ }).addTo(map);
+@@ -178,7 +183,7 @@ function scheduleMapResize(fitWorld = false) {
+   mapResizeTimer = window.setTimeout(() => {
+     map.invalidateSize({ animate: false, pan: false });
+     if (fitWorld) {
+-      map.fitBounds(WORLD_BOUNDS, { padding: [12, 12], animate: false });
++      map.fitBounds(WORLD_BOUNDS, { padding: [10, 10], animate: false });
+     }
+   }, 0);
+ }
+diff --git a/web/index.html b/web/index.html
+index ea43c88..b189053 100644
+--- a/web/index.html
++++ b/web/index.html
+@@ -15,7 +15,7 @@
+       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
+       crossorigin=""
+     >
+-    <link rel="stylesheet" href="style.css">
++    <link rel="stylesheet" href="style.css?v=20260622-map-layout">
+   </head>
+   <body>
+     <header class="site-header">
+@@ -383,6 +383,6 @@
+       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+       crossorigin=""
+     ></script>
+-    <script src="app.js?v=20260620-hover-details"></script>
++    <script src="app.js?v=20260622-map-layout"></script>
+   </body>
+ </html>
+diff --git a/web/style.css b/web/style.css
+index 808477b..ac43833 100644
+--- a/web/style.css
++++ b/web/style.css
+@@ -93,7 +93,7 @@ h2 {
+ 
+ .page-shell {
+   display: grid;
+-  grid-template-columns: 280px minmax(0, 1fr);
++  grid-template-columns: 270px minmax(0, 1fr);
+   gap: 18px;
+ }
+ 
