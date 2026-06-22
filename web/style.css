@@ -376,32 +376,6 @@ input:disabled {
   opacity: 0.55;
 }
 
-.summary-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px 8px;
-  margin: 0;
-}
-
-.summary-grid div {
-  min-width: 0;
-  border-left: 2px solid #b8cad2;
-  padding-left: 9px;
-}
-
-.summary-grid dt {
-  color: var(--muted);
-  font-size: 0.68rem;
-  line-height: 1.2;
-}
-
-.summary-grid dd {
-  margin: 3px 0 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.55rem;
-  line-height: 1;
-}
-
 .legend ul {
   display: grid;
   gap: 7px;
@@ -458,6 +432,7 @@ input:disabled {
 }
 
 .data-notice {
+  grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;

@@ -94,14 +94,8 @@ const venueFilter = document.querySelector("#venue-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
-const resolutionFilter = document.querySelector("#resolution-filter");
-const reviewFilter = document.querySelector("#review-filter");
 const resetButton = document.querySelector("#reset-filters");
 const mapStatus = document.querySelector("#map-status");
-const recordCount = document.querySelector("#record-count");
-const countryCount = document.querySelector("#country-count");
-const institutionCount = document.querySelector("#institution-count");
-const reviewCount = document.querySelector("#review-count");
 const datasetRecordCount = document.querySelector("#dataset-record-count");
 const datasetPaperCount = document.querySelector("#dataset-paper-count");
 const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
@@ -1239,17 +1233,6 @@ function selectResultsView(view) {
   renderResults(currentFilteredRecords);
 }
 
-function updateSummary(visibleRecords) {
-  recordCount.textContent = visibleRecords.length;
-  countryCount.textContent = normalizedSetSize(visibleRecords.map(recordCountry));
-  institutionCount.textContent = normalizedSetSize(
-    visibleRecords.map(recordInstitution),
-  );
-  reviewCount.textContent = visibleRecords.filter(
-    (record) => reviewStatus(record) === true,
-  ).length;
-}
-
 function baseMapStatusText(visibleRecords) {
   const recordLabel = datasetConfig.recordLabel;
   const interactionHint = supportsMarkerHover
@@ -1410,8 +1393,6 @@ function renderRecords() {
   const selectedVersion = preprintFilter.value;
   const minimumYear = yearFilterValue(minYearFilter);
   const maximumYear = yearFilterValue(maxYearFilter);
-  const selectedResolution = resolutionFilter.value;
-  const selectedReview = reviewFilter.value;
   const visibleRecords = records.filter((record) => {
     const searchableText = recordSearchText(record);
     const matchesKeyword = keywordTerms.every((term) => searchableText.includes(term));
@@ -1429,13 +1410,6 @@ function renderRecords() {
     const year = publicationYear(record);
     const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
     const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
-    const matchesResolution =
-      selectedResolution === "all" || resolutionConfidence(record) === selectedResolution;
-    const status = reviewStatus(record);
-    const matchesReview =
-      selectedReview === "all" ||
-      (selectedReview === "true" && status === true) ||
-      (selectedReview === "false" && status === false);
     return (
       matchesKeyword &&
       matchesTask &&
@@ -1443,9 +1417,7 @@ function renderRecords() {
       matchesVenue &&
       matchesVersion &&
       matchesMinimumYear &&
-      matchesMaximumYear &&
-      matchesResolution &&
-      matchesReview
+      matchesMaximumYear
     );
   }).sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
 
@@ -1472,7 +1444,6 @@ function renderRecords() {
     visibleMarkerEntries.push({ record, marker, identity });
   });
 
-  updateSummary(visibleRecords);
   updateDatasetStatistics(visibleRecords);
   renderResults(visibleRecords);
   mapStatus.classList.toggle("error", false);
@@ -1537,9 +1508,6 @@ function enableControls() {
   preprintFilter.disabled = false;
   minYearFilter.disabled = false;
   maxYearFilter.disabled = false;
-  const supportsResolution = records.some(hasResolutionMetadata);
-  resolutionFilter.disabled = !supportsResolution;
-  reviewFilter.disabled = !supportsResolution;
   resetButton.disabled = false;
 }
 
@@ -1567,7 +1535,6 @@ function showDatasetMessage(message, isError = false) {
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
   hoveredPaperIdentity = "";
-  updateSummary(records);
   updateDatasetStatistics(records);
   renderResults(records);
   mapStatus.textContent = message;
@@ -1752,8 +1719,6 @@ venueFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
 minYearFilter.addEventListener("input", renderRecords);
 maxYearFilter.addEventListener("input", renderRecords);
-resolutionFilter.addEventListener("change", renderRecords);
-reviewFilter.addEventListener("change", renderRecords);
 window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => clearPaperInteraction());
@@ -1769,8 +1734,6 @@ resetButton.addEventListener("click", () => {
   preprintFilter.value = "all";
   minYearFilter.value = "";
   maxYearFilter.value = "";
-  resolutionFilter.value = "all";
-  reviewFilter.value = "all";
   renderRecords();
   scheduleMapResize(true);
 });

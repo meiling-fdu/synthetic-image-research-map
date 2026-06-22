@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260622-legend-layout">
+    <link rel="stylesheet" href="style.css?v=20260622-dashboard-layout">
   </head>
   <body>
     <header class="site-header">
@@ -30,89 +30,6 @@
     </header>
 
     <main class="page-shell">
-      <details class="panel methodology-panel">
-        <summary>
-          <span>About, methodology, and scope</span>
-          <span class="methodology-hint">How records are selected, mapped, and explored</span>
-        </summary>
-        <div class="methodology-grid">
-          <section>
-            <h2>Project scope</h2>
-            <p>
-              The map covers detection of AI-generated, synthetic, GAN-generated,
-              diffusion-generated, fake, and deepfake images, plus source attribution,
-              identification, and verification for generated images.
-            </p>
-            <p>
-              It excludes broad model, feature, authorship, camera-model, and sensor
-              attribution, as well as work that only uses synthetic data for downstream tasks.
-            </p>
-          </section>
-          <section>
-            <h2>Data and records</h2>
-            <p>
-              Public preview records are generated automatically from OpenAlex candidate
-              metadata. This is not a manually curated bibliography, and publications or
-              metadata may be missing or incorrect.
-            </p>
-            <p>
-              The map is institution-record based, so one paper may appear at several
-              institutions. Unique papers view deduplicates records for bibliography-style browsing.
-            </p>
-            <p>
-              The public preview is not a complete bibliography. The
-              <code>data/manual/key_papers.csv</code> file is a manual coverage
-              checklist for auditing only: adding a paper there does not publish
-              it to the map, and <code>not_covered_by_pipeline</code> only means
-              the current automatic pipeline did not cover that paper.
-            </p>
-          </section>
-          <section>
-            <h2>Explore and export</h2>
-            <p>
-              Keyword search, year range, task filters, the results-view toggle, and CSV
-              export operate on the currently loaded dataset. Map markers and summary
-              statistics remain institution based.
-            </p>
-          </section>
-          <section>
-            <h2>Quality control</h2>
-            <p>
-              Records are filtered by scope, task label, institution availability,
-              coordinates, and resolution confidence. By default, the public preview
-              excludes uncertain, out-of-scope, low-confidence, review-flagged,
-              missing-institution, and missing-coordinate records.
-            </p>
-          </section>
-        </div>
-      </details>
-
-      <section class="panel project-links" aria-labelledby="project-links-heading">
-        <h2 id="project-links-heading">Data transparency</h2>
-        <div class="project-links-content">
-          <nav class="project-link-list" aria-label="Project resources">
-            <a
-              href="https://github.com/meiling-fdu/synthetic-image-research-map"
-              target="_blank"
-              rel="noopener noreferrer"
-            >GitHub repository</a>
-            <a href="data/public_preview_map_data.json">Public preview JSON</a>
-            <a href="data/sample_map_data.json">Sample dataset JSON</a>
-            <a href="../docs/public_preview_report.md">Quality report</a>
-            <a href="../docs/data_collection.md">Data methodology</a>
-          </nav>
-          <p>
-            Export the currently filtered records with the <strong>Export CSV</strong>
-            button. Report metadata errors or missing papers through
-            <a
-              href="https://github.com/meiling-fdu/synthetic-image-research-map/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-            >GitHub Issues</a>.
-          </p>
-        </div>
-      </section>
-
       <aside class="sidebar" aria-label="Map controls and summary">
         <section class="panel legend" aria-labelledby="legend-heading">
           <h2 id="legend-heading">Task key</h2>
@@ -199,49 +116,8 @@
               </label>
             </fieldset>
 
-            <label for="resolution-filter">
-              Resolution confidence
-              <select id="resolution-filter" disabled>
-                <option value="all">All confidence levels</option>
-                <option value="high">High</option>
-                <option value="medium">Medium</option>
-                <option value="low">Low</option>
-                <option value="unresolved">Unresolved</option>
-              </select>
-            </label>
-
-            <label for="review-filter">
-              Review status
-              <select id="review-filter" disabled>
-                <option value="all">All records</option>
-                <option value="true">Needs review</option>
-                <option value="false">No review flag</option>
-              </select>
-            </label>
           </div>
           <button id="reset-filters" type="button" disabled>Reset filters</button>
-        </section>
-
-        <section class="panel" aria-labelledby="summary-heading">
-          <h2 id="summary-heading">Visible research</h2>
-          <dl class="summary-grid" aria-live="polite">
-            <div>
-              <dt>Records</dt>
-              <dd id="record-count">0</dd>
-            </div>
-            <div>
-              <dt>Countries</dt>
-              <dd id="country-count">0</dd>
-            </div>
-            <div>
-              <dt>Institutions</dt>
-              <dd id="institution-count">0</dd>
-            </div>
-            <div>
-              <dt>Needs review</dt>
-              <dd id="review-count">0</dd>
-            </div>
-          </dl>
         </section>
       </aside>
 
@@ -323,24 +199,6 @@
           </div>
         </section>
 
-        <section class="panel data-notice" aria-labelledby="data-notice-heading">
-          <div>
-            <h2 id="data-notice-heading">Data notice</h2>
-            <p>
-              The public preview is automatically generated from OpenAlex candidate
-              metadata, not a manually curated bibliography. Paper relevance, task
-              labels, institution names, and coordinates may contain errors. The map
-              is intended for exploratory visualization.
-            </p>
-          </div>
-          <a
-            class="repository-link"
-            href="https://github.com/meiling-fdu/synthetic-image-research-map"
-            target="_blank"
-            rel="noopener noreferrer"
-          >View repository</a>
-        </section>
-
         <section class="panel results-panel" aria-labelledby="results-heading">
           <div class="results-heading-row">
             <h2 id="results-heading">Filtered records</h2>
@@ -372,6 +230,107 @@
           </p>
         </section>
       </div>
+
+      <details class="panel methodology-panel">
+        <summary>
+          <span>About, methodology, and scope</span>
+          <span class="methodology-hint">How records are selected, mapped, and explored</span>
+        </summary>
+        <div class="methodology-grid">
+          <section>
+            <h2>Project scope</h2>
+            <p>
+              The map covers detection of AI-generated, synthetic, GAN-generated,
+              diffusion-generated, fake, and deepfake images, plus source attribution,
+              identification, and verification for generated images.
+            </p>
+            <p>
+              It excludes broad model, feature, authorship, camera-model, and sensor
+              attribution, as well as work that only uses synthetic data for downstream tasks.
+            </p>
+          </section>
+          <section>
+            <h2>Data and records</h2>
+            <p>
+              Public preview records are generated automatically from OpenAlex candidate
+              metadata. This is not a manually curated bibliography, and publications or
+              metadata may be missing or incorrect.
+            </p>
+            <p>
+              The map is institution-record based, so one paper may appear at several
+              institutions. Unique papers view deduplicates records for bibliography-style browsing.
+            </p>
+            <p>
+              The public preview is not a complete bibliography. The
+              <code>data/manual/key_papers.csv</code> file is a manual coverage
+              checklist for auditing only: adding a paper there does not publish
+              it to the map, and <code>not_covered_by_pipeline</code> only means
+              the current automatic pipeline did not cover that paper.
+            </p>
+          </section>
+          <section>
+            <h2>Explore and export</h2>
+            <p>
+              Keyword search, year range, task filters, the results-view toggle, and CSV
+              export operate on the currently loaded dataset. Map markers and summary
+              statistics remain institution based.
+            </p>
+          </section>
+          <section>
+            <h2>Quality control</h2>
+            <p>
+              Records are filtered by scope, task label, institution availability,
+              coordinates, and resolution confidence. By default, the public preview
+              excludes uncertain, out-of-scope, low-confidence, review-flagged,
+              missing-institution, and missing-coordinate records.
+            </p>
+          </section>
+        </div>
+      </details>
+
+      <section class="panel project-links" aria-labelledby="project-links-heading">
+        <h2 id="project-links-heading">Data transparency</h2>
+        <div class="project-links-content">
+          <nav class="project-link-list" aria-label="Project resources">
+            <a
+              href="https://github.com/meiling-fdu/synthetic-image-research-map"
+              target="_blank"
+              rel="noopener noreferrer"
+            >GitHub repository</a>
+            <a href="data/public_preview_map_data.json">Public preview JSON</a>
+            <a href="data/sample_map_data.json">Sample dataset JSON</a>
+            <a href="../docs/public_preview_report.md">Quality report</a>
+            <a href="../docs/data_collection.md">Data methodology</a>
+          </nav>
+          <p>
+            Export the currently filtered records with the <strong>Export CSV</strong>
+            button. Report metadata errors or missing papers through
+            <a
+              href="https://github.com/meiling-fdu/synthetic-image-research-map/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+            >GitHub Issues</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="panel data-notice" aria-labelledby="data-notice-heading">
+        <div>
+          <h2 id="data-notice-heading">Data notice</h2>
+          <p>
+            The public preview is automatically generated from OpenAlex candidate
+            metadata, not a manually curated bibliography. Paper relevance, task
+            labels, institution names, and coordinates may contain errors. The map
+            is intended for exploratory visualization.
+          </p>
+        </div>
+        <a
+          class="repository-link"
+          href="https://github.com/meiling-fdu/synthetic-image-research-map"
+          target="_blank"
+          rel="noopener noreferrer"
+        >View repository</a>
+      </section>
     </main>
 
     <footer>
@@ -383,6 +342,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260622-legend-layout"></script>
+    <script src="app.js?v=20260622-dashboard-layout"></script>
   </body>
 </html>
