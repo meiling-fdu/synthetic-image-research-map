@@ -338,6 +338,46 @@ python3 scripts/build_institution_review_queue.py
 
 The review queue is generated from automatic candidate data and is not curated final institution metadata. Reviewers should investigate each entry and copy only manually verified corrections into `data/manual/institution_corrections.csv`; the queue builder never writes to that manual file. The generated queue itself is ignored by Git.
 
+## Manual OpenAlex Imports
+
+Manually reviewed `*_import_ready.csv` files in `data/manual/` can be imported
+reproducibly with `scripts/import_manual_openalex_papers.py` and
+`scripts/import_manual_openalex_affiliations.py`. Only rows with
+`import_status=ready` are eligible. Rows labeled
+`generated_video_detection` are excluded from both workflows.
+
+Dry runs validate the manual inputs and processed CSV schemas, report local
+duplicates, and make no network requests or file changes:
+
+```bash
+python3 scripts/import_manual_openalex_papers.py --dry-run
+python3 scripts/import_manual_openalex_affiliations.py --dry-run
+```
+
+Run the imports, then rebuild and validate the preview:
+
+```bash
+python3 scripts/import_manual_openalex_papers.py
+python3 scripts/import_manual_openalex_affiliations.py
+python3 scripts/export_candidate_map_data.py
+python3 scripts/export_public_preview.py
+python3 scripts/validate_public_preview.py
+python3 scripts/audit_key_paper_coverage.py
+```
+
+Use repeatable or comma-separated `--input` values to select different manual
+CSVs, and `--limit N` for a bounded online run. The importers preserve the
+existing processed CSV headers exactly, skip duplicate OpenAlex IDs and
+normalized titles or affiliation keys, skip retracted works, and replace each
+processed CSV atomically after a successful batch. A failed OpenAlex request is
+reported for that work or institution without aborting unrelated rows.
+
+Institution metadata and coordinates returned by OpenAlex remain automatic
+fallback data. Coordinate-bearing institution responses receive medium
+resolution confidence; institutions without a complete coordinate pair remain
+marked `needs_review=true`. The scripts never write back to the manual input
+files.
+
 ## Candidate CSV-to-Map Export
 
 `scripts/export_candidate_map_data.py` joins the processed paper and affiliation CSVs by `openalex_id` and generates `web/data/openalex_candidate_map_data.json` for local map exploration. It preserves separate map records when a paper has multiple institutions.
