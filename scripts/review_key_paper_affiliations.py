@@ -70,25 +70,32 @@ WORK_NOTE_FIELDS = [
     "manual_notes",
 ]
 
-DEPARTMENT_OR_ADDRESS_PATTERNS = [
+CANONICAL_INSTITUTION_ALLOWLIST = {
+    "Huawei Noah's Ark Lab",
+    "Institute of Computing Technology, Chinese Academy of Sciences",
+    "Macao Polytechnic University",
+    "Oak Ridge National Laboratory",
+    "Renmin University of China",
+    "Tencent YouTu Lab",
+    "The Chinese University of Hong Kong",
+    "University of Electronic Science and Technology of China",
+    "University of Macau",
+    "University of Science and Technology of China",
+}
+
+RAW_AFFILIATION_INSTITUTION_PATTERNS = [
     re.compile(pattern, re.IGNORECASE)
     for pattern in [
-        r"\bdepartment\b",
+        r"\bdepartment of\b",
         r"\bschool of\b",
         r"\bfaculty of\b",
-        r"\blaborator(?:y|ies)\b",
-        r"\blab\b",
-        r"\bcenter for\b",
-        r"\bcentre for\b",
-        r"\binstitute of\b",
-        r"\bcollege of\b",
-        r"\broad\b",
-        r"\bstreet\b",
-        r"\bavenue\b",
-        r"\bprovince\b",
-        r"\bcity\b",
-        r"\b\d{4,}\b",
-        r",",
+        r"\bstate key laborator(?:y|ies)\b",
+        r"\bmoe key lab\b",
+        r"\bkey lab(?:orator(?:y|ies))?\b",
+        r"\b(?:road|street|avenue|building|campus|room)\b",
+        r"\bpostal\s+code\b",
+        r"\b\d{5,}\b",
+        r";",
     ]
 ]
 
@@ -106,6 +113,25 @@ def normalize_title(value: Any) -> str:
     title = title.replace("‐", "-").replace("–", "-").replace("—", "-")
     title = title.replace("real-world", "real world")
     return " ".join(re.sub(r"[^a-z0-9]+", " ", title).split())
+
+
+def normalize_institution_name(value: Any) -> str:
+    return clean_text(value).casefold()
+
+
+def institution_looks_like_raw_affiliation(value: Any) -> bool:
+    institution = clean_text(value)
+    if not institution:
+        return False
+    allowlisted = {
+        normalize_institution_name(name) for name in CANONICAL_INSTITUTION_ALLOWLIST
+    }
+    if normalize_institution_name(institution) in allowlisted:
+        return False
+    return any(
+        pattern.search(institution)
+        for pattern in RAW_AFFILIATION_INSTITUTION_PATTERNS
+    )
 
 
 def read_csv(
@@ -331,11 +357,7 @@ def validation_summary(rows: Sequence[Dict[str, str]]) -> Dict[str, Any]:
     institution_pattern_rows = [
         row
         for row in rows
-        if clean_text(row.get("institution"))
-        and any(
-            pattern.search(clean_text(row.get("institution")))
-            for pattern in DEPARTMENT_OR_ADDRESS_PATTERNS
-        )
+        if institution_looks_like_raw_affiliation(row.get("institution"))
     ]
     coordinates_without_location = [
         row
