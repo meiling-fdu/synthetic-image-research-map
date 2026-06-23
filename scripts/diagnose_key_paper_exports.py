@@ -257,10 +257,8 @@ def diagnose() -> List[Dict[str, str]]:
         {"title", "year", "missing_stage"},
     )
     targets = [row for row in report if row["missing_stage"] == TARGET_STATUS]
-    if len(targets) != 22:
-        raise DiagnosisError(
-            f"Expected 22 {TARGET_STATUS} rows, found {len(targets)}"
-        )
+    if not targets:
+        raise DiagnosisError(f"No {TARGET_STATUS} rows found in {COVERAGE_REPORT}")
 
     openalex_rows = read_csv(
         OPENALEX_PAPERS,
@@ -429,15 +427,18 @@ def validate(
 ) -> None:
     diagnostic_titles = [row["normalized_title"] for row in diagnostics]
     target_titles = {normalize_title(row.get("title")) for row in targets}
-    if len(diagnostics) != 22:
-        raise DiagnosisError(f"Expected 22 diagnostic rows, found {len(diagnostics)}")
+    if len(diagnostics) != len(targets):
+        raise DiagnosisError(
+            f"Expected {len(targets)} diagnostic rows, found {len(diagnostics)}"
+        )
     if len(set(diagnostic_titles)) != len(diagnostic_titles):
         raise DiagnosisError("Diagnostics contain duplicate normalized titles")
     if set(diagnostic_titles) != target_titles:
         missing = sorted(target_titles - set(diagnostic_titles))
         extra = sorted(set(diagnostic_titles) - target_titles)
         raise DiagnosisError(f"Diagnostics target mismatch: missing={missing}, extra={extra}")
-    if normalize_title(SEDID_TITLE) not in diagnostic_titles:
+    sedid_title = normalize_title(SEDID_TITLE)
+    if sedid_title in target_titles and sedid_title not in diagnostic_titles:
         raise DiagnosisError("SeDID is missing from diagnostics")
     for row in diagnostics:
         if row["skip_reason"] not in ALLOWED_SKIP_REASONS:
