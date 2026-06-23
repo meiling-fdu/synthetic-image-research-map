@@ -15,6 +15,7 @@ import json
 import math
 import re
 import sys
+from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
@@ -31,11 +32,19 @@ DEFAULT_PAPERS_CSV = Path(
 DEFAULT_AFFILIATIONS_CSV = Path(
     "data/processed/openalex_candidate_affiliations_geocoded.csv"
 )
+DEFAULT_OPENALEX_AFFILIATIONS_CSV = Path(
+    "data/processed/openalex_candidate_affiliations.csv"
+)
 DEFAULT_OUTPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_PAPER_ABSTRACTS = Path("data/manual/paper_abstracts.csv")
+DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
+DEFAULT_ALL_CANDIDATE_PAPERS = Path("data/processed/openalex_candidate_papers.csv")
+DEFAULT_KEY_PAPER_AFFILIATION_ENRICHMENT = Path(
+    "data/manual/key_paper_affiliation_enrichment.csv"
+)
 DEFAULT_RAW_OPENALEX_DIR = Path("data/raw/openalex")
 DEFAULT_INSTITUTION_AUTHOR_OVERRIDES = Path(
     "data/manual/institution_author_overrides.csv"
@@ -103,6 +112,33 @@ PAPER_ABSTRACT_COLUMNS = {
     "openalex_url",
     "abstract",
     "abstract_source",
+    "notes",
+}
+KEY_PAPER_COLUMNS = {
+    "title",
+    "year",
+    "doi",
+    "openalex_url",
+}
+KEY_PAPER_AFFILIATION_ENRICHMENT_COLUMNS = {
+    "title",
+    "year",
+    "normalized_title",
+    "openalex_url",
+    "doi",
+    "author",
+    "author_position",
+    "raw_affiliation",
+    "institution",
+    "city",
+    "region",
+    "country",
+    "country_code",
+    "latitude",
+    "longitude",
+    "institution_source",
+    "confidence",
+    "needs_manual_review",
     "notes",
 }
 INSTITUTION_AUTHOR_OVERRIDE_COLUMNS = {
@@ -245,6 +281,77 @@ def paper_is_in_scope(row: Dict[str, str]) -> bool:
     return parse_bool(row.get("in_scope")) if "in_scope" in row else True
 
 
+def openalex_work_key(value: Any) -> str:
+    return normalize_identifier_url(value)
+
+
+def paper_identity_keys(row: Dict[str, Any]) -> List[Tuple[str, Any]]:
+    """Return stable paper identity keys, then conservative title/year fallback."""
+    keys: List[Tuple[str, Any]] = []
+    openalex = openalex_work_key(row.get("openalex_url") or row.get("openalex_id"))
+    if openalex:
+        keys.append(("openalex", openalex))
+    doi = normalize_doi(row.get("doi"))
+    if doi:
+        keys.append(("doi", doi))
+    title = normalize_title(row.get("title"))
+    year = parse_year(row.get("publication_year") or row.get("year"))
+    if title and year is not None:
+        keys.append(("title_year", (title, year)))
+    return keys
+
+
+def index_papers_by_identity(
+    rows: Sequence[Dict[str, str]],
+    include_title_only: bool = False,
+) -> Dict[Tuple[str, Any], Dict[str, str]]:
+    index: Dict[Tuple[str, Any], Dict[str, str]] = {}
+    for row in rows:
+        for key in paper_identity_keys(row):
+            index.setdefault(key, row)
+        if include_title_only:
+            title = normalize_title(row.get("title"))
+            if title:
+                index.setdefault(("title", title), row)
+    return index
+
+
+def key_paper_has_stable_identity(row: Dict[str, Any]) -> bool:
+    return bool(
+        openalex_work_key(row.get("openalex_url") or row.get("openalex_id"))
+        or normalize_doi(row.get("doi"))
+        or clean_text(row.get("arxiv_id"))
+        or clean_text(row.get("paper_url"))
+    )
+
+
+def candidate_has_stable_identity(row: Dict[str, Any]) -> bool:
+    return bool(
+        openalex_work_key(row.get("openalex_url") or row.get("openalex_id"))
+        or normalize_doi(row.get("doi"))
+        or clean_text(row.get("arxiv_id"))
+        or clean_text(row.get("paper_url"))
+        or clean_text(row.get("url"))
+        or clean_text(row.get("primary_url"))
+        or clean_text(row.get("landing_page_url"))
+    )
+
+
+def match_row_by_identity(
+    row: Dict[str, Any],
+    index: Dict[Tuple[str, Any], Dict[str, str]],
+    allow_title_only: bool = False,
+) -> Tuple[Optional[Dict[str, str]], str]:
+    for key in paper_identity_keys(row):
+        if key in index:
+            return index[key], key[0]
+    if allow_title_only:
+        title = normalize_title(row.get("title"))
+        if title and ("title", title) in index:
+            return index[("title", title)], "title"
+    return None, ""
+
+
 def select_scope_rows(
     paper_rows: Sequence[Dict[str, str]],
     affiliation_rows: Sequence[Dict[str, str]],
@@ -280,6 +387,151 @@ def select_scope_rows(
         "downstream_rows_processed": len(selected_affiliations),
     }
     return selected_papers, selected_affiliations, counts
+
+
+def build_key_paper_export_inputs(
+    selected_papers: Sequence[Dict[str, str]],
+    selected_affiliations: Sequence[Dict[str, str]],
+    all_candidate_papers: Sequence[Dict[str, str]],
+    all_affiliation_rows: Sequence[Dict[str, str]],
+    raw_affiliation_rows: Sequence[Dict[str, str]],
+    key_papers: Sequence[Dict[str, str]],
+    key_affiliation_rows: Sequence[Dict[str, str]],
+) -> Tuple[List[Dict[str, str]], List[Dict[str, str]], Dict[str, Any]]:
+    """Add matched key papers to the local export attempt without fabricating data."""
+    if not key_papers or not all_candidate_papers:
+        return list(selected_papers), list(selected_affiliations), {
+            "key_papers_loaded": len(key_papers),
+            "key_papers_matched_in_openalex_candidate_pool": 0,
+            "key_papers_included_in_export_attempt": 0,
+            "key_paper_unique_candidate_works_matched": 0,
+            "key_paper_unique_candidate_works_included_in_export_attempt": 0,
+            "key_paper_affiliation_enrichment_rows_loaded": len(key_affiliation_rows),
+            "key_paper_affiliation_enrichment_rows_usable": 0,
+            "key_paper_enrichment_affiliation_rows_added": 0,
+            "key_papers_skipped_title_match_only_no_stable_id": 0,
+        }
+
+    candidate_index = index_papers_by_identity(
+        all_candidate_papers,
+        include_title_only=True,
+    )
+    selected_by_id = {
+        openalex_work_key(paper.get("openalex_id") or paper.get("openalex_url")): dict(paper)
+        for paper in selected_papers
+        if openalex_work_key(paper.get("openalex_id") or paper.get("openalex_url"))
+    }
+    selected_affiliations_by_identity = {
+        (
+            openalex_work_key(row.get("openalex_id")),
+            clean_text(row.get("author_name")).casefold(),
+            clean_text(row.get("author_order")) or clean_text(row.get("author_position")),
+            normalize_institution_name(
+                preferred_value(row, "resolved_institution_name", "institution_name")
+            ),
+            clean_text(row.get("latitude")),
+            clean_text(row.get("longitude")),
+            clean_text(row.get("resolved_latitude")),
+            clean_text(row.get("resolved_longitude")),
+        )
+        for row in selected_affiliations
+    }
+    output_affiliations = list(selected_affiliations)
+    matched_candidate_ids = set()
+    included_candidate_ids = set()
+    title_only_without_stable_id = set()
+    matched_key_paper_rows = 0
+    included_key_paper_rows = 0
+
+    for key_paper in key_papers:
+        candidate, match_type = match_row_by_identity(
+            key_paper,
+            candidate_index,
+            allow_title_only=True,
+        )
+        if candidate is None:
+            continue
+        candidate_id = openalex_work_key(candidate.get("openalex_id") or candidate.get("openalex_url"))
+        if not candidate_id:
+            continue
+        matched_candidate_ids.add(candidate_id)
+        matched_key_paper_rows += 1
+        if match_type in {"title", "title_year"} and not (
+            key_paper_has_stable_identity(key_paper)
+            or candidate_has_stable_identity(candidate)
+        ):
+            title_only_without_stable_id.add(candidate_id)
+            continue
+        paper = dict(candidate)
+        paper["in_scope"] = "true"
+        paper["manual_review"] = "true" if parse_bool(paper.get("manual_review")) else paper.get("manual_review", "")
+        paper["notes"] = " | ".join(
+            unique_strings(
+                [
+                    clean_text(paper.get("notes")),
+                    "key-paper checklist export attempt",
+                ]
+            )
+        )
+        selected_by_id[candidate_id] = paper
+        included_candidate_ids.add(candidate_id)
+        included_key_paper_rows += 1
+
+    key_source_affiliation_rows = [*all_affiliation_rows, *raw_affiliation_rows]
+    for row in key_source_affiliation_rows:
+        openalex_id = openalex_work_key(row.get("openalex_id"))
+        if openalex_id not in included_candidate_ids:
+            continue
+        identity = (
+            openalex_id,
+            clean_text(row.get("author_name")).casefold(),
+            clean_text(row.get("author_order")) or clean_text(row.get("author_position")),
+            normalize_institution_name(
+                preferred_value(row, "resolved_institution_name", "institution_name")
+            ),
+            clean_text(row.get("latitude")),
+            clean_text(row.get("longitude")),
+            clean_text(row.get("resolved_latitude")),
+            clean_text(row.get("resolved_longitude")),
+        )
+        if identity in selected_affiliations_by_identity:
+            continue
+        enriched_row = dict(row)
+        enriched_row["in_scope"] = "true"
+        output_affiliations.append(enriched_row)
+        selected_affiliations_by_identity.add(identity)
+
+    candidate_by_identity = index_papers_by_identity(all_candidate_papers)
+    usable_key_affiliation_rows = [
+        row for row in key_affiliation_rows if enrichment_has_affiliation(row)
+    ]
+    added_enrichment_rows = 0
+    for row in usable_key_affiliation_rows:
+        candidate, _match_type = match_row_by_identity(row, candidate_by_identity)
+        if candidate is None:
+            continue
+        candidate_id = openalex_work_key(candidate.get("openalex_id") or candidate.get("openalex_url"))
+        if candidate_id not in included_candidate_ids:
+            continue
+        converted = enrichment_to_affiliation_row(row, candidate)
+        output_affiliations.append(converted)
+        added_enrichment_rows += 1
+
+    return list(selected_by_id.values()), output_affiliations, {
+        "key_papers_loaded": len(key_papers),
+        "key_papers_matched_in_openalex_candidate_pool": matched_key_paper_rows,
+        "key_papers_included_in_export_attempt": included_key_paper_rows,
+        "key_paper_unique_candidate_works_matched": len(matched_candidate_ids),
+        "key_paper_unique_candidate_works_included_in_export_attempt": len(
+            included_candidate_ids
+        ),
+        "key_paper_affiliation_enrichment_rows_loaded": len(key_affiliation_rows),
+        "key_paper_affiliation_enrichment_rows_usable": len(usable_key_affiliation_rows),
+        "key_paper_enrichment_affiliation_rows_added": added_enrichment_rows,
+        "key_papers_skipped_title_match_only_no_stable_id": len(
+            title_only_without_stable_id
+        ),
+    }
 
 
 def parse_year(value: Any) -> Optional[int]:
@@ -479,6 +731,87 @@ def read_paper_abstracts(
                 f"{path} row {row_number} requires a valid year with title matching"
             )
     return rows
+
+
+def read_key_papers(path: Path = DEFAULT_KEY_PAPERS) -> List[Dict[str, str]]:
+    """Load the manually curated in-scope key-paper checklist if present."""
+    if not path.exists():
+        return []
+    return read_csv(path, KEY_PAPER_COLUMNS)
+
+
+def read_all_candidate_papers(
+    path: Path = DEFAULT_ALL_CANDIDATE_PAPERS,
+) -> List[Dict[str, str]]:
+    """Load the full OpenAlex candidate pool used as key-paper metadata source."""
+    if not path.exists():
+        return []
+    return read_csv(path, PAPER_REQUIRED_COLUMNS)
+
+
+def read_key_paper_affiliation_enrichment(
+    path: Path = DEFAULT_KEY_PAPER_AFFILIATION_ENRICHMENT,
+) -> List[Dict[str, str]]:
+    """Load local human-reviewed key-paper affiliation rows if present."""
+    if not path.exists():
+        return []
+    return read_csv(path, KEY_PAPER_AFFILIATION_ENRICHMENT_COLUMNS)
+
+
+def enrichment_has_affiliation(row: Dict[str, str]) -> bool:
+    return bool(
+        clean_text(row.get("institution"))
+        and clean_text(row.get("raw_affiliation"))
+    )
+
+
+def enrichment_to_affiliation_row(
+    row: Dict[str, str],
+    candidate: Dict[str, str],
+) -> Dict[str, str]:
+    """Adapt a manual key-paper row to the geocoded affiliation row shape."""
+    latitude = clean_text(row.get("latitude"))
+    longitude = clean_text(row.get("longitude"))
+    return {
+        "openalex_id": clean_text(
+            candidate.get("openalex_id")
+            or candidate.get("openalex_url")
+            or row.get("openalex_url")
+        ),
+        "in_scope": "true",
+        "author_openalex_id": "",
+        "author_name": clean_text(row.get("author")),
+        "author_position": clean_text(row.get("author_position")),
+        "author_order": clean_text(row.get("author_position")),
+        "institution_openalex_id": "",
+        "institution_name": clean_text(row.get("institution")),
+        "city": clean_text(row.get("city")),
+        "country": clean_text(row.get("country")),
+        "country_code": clean_text(row.get("country_code")),
+        "ror_id": "",
+        "latitude": latitude,
+        "longitude": longitude,
+        "raw_affiliation_text": clean_text(row.get("raw_affiliation")),
+        "manual_review": clean_text(row.get("needs_manual_review")),
+        "notes": " | ".join(
+            unique_strings(
+                [
+                    "key-paper affiliation enrichment",
+                    clean_text(row.get("institution_source")),
+                    clean_text(row.get("notes")),
+                ]
+            )
+        ),
+        "resolved_institution_name": clean_text(row.get("institution")),
+        "resolved_city": clean_text(row.get("city")),
+        "resolved_country": clean_text(row.get("country")),
+        "resolved_latitude": latitude,
+        "resolved_longitude": longitude,
+        "resolution_method": "manual_key_paper_affiliation_enrichment",
+        "resolution_confidence": clean_text(row.get("confidence")),
+        "resolution_notes": clean_text(row.get("notes")),
+        "needs_review": clean_text(row.get("needs_manual_review")),
+    }
 
 
 def reconstruct_abstract(inverted_index: Any) -> str:
@@ -1091,6 +1424,97 @@ def has_resolution_metadata(row: Dict[str, str]) -> bool:
     )
 
 
+def summarize_key_paper_outcomes(
+    key_papers: Sequence[Dict[str, str]],
+    all_candidate_papers: Sequence[Dict[str, str]],
+    attempted_paper_rows: Sequence[Dict[str, str]],
+    attempted_affiliation_rows: Sequence[Dict[str, str]],
+    exported_records: Sequence[Dict[str, Any]],
+) -> Dict[str, int]:
+    candidate_index = index_papers_by_identity(
+        all_candidate_papers,
+        include_title_only=True,
+    )
+    attempted_ids = {
+        openalex_work_key(paper.get("openalex_id") or paper.get("openalex_url"))
+        for paper in attempted_paper_rows
+        if openalex_work_key(paper.get("openalex_id") or paper.get("openalex_url"))
+    }
+    exported_ids = {
+        openalex_work_key(record.get("openalex_url"))
+        for record in exported_records
+        if openalex_work_key(record.get("openalex_url"))
+    }
+    affiliations_by_work: Dict[str, List[Dict[str, str]]] = defaultdict(list)
+    for row in attempted_affiliation_rows:
+        openalex_id = openalex_work_key(row.get("openalex_id"))
+        if openalex_id:
+            affiliations_by_work[openalex_id].append(row)
+
+    skipped_missing_affiliations = 0
+    skipped_missing_coordinates = 0
+    skipped_title_only = 0
+    skipped_blocked = 0
+    skipped_unknown = 0
+    exported = 0
+
+    for key_paper in key_papers:
+        candidate, match_type = match_row_by_identity(
+            key_paper,
+            candidate_index,
+            allow_title_only=True,
+        )
+        if candidate is None:
+            continue
+        candidate_id = openalex_work_key(candidate.get("openalex_id") or candidate.get("openalex_url"))
+        if not candidate_id:
+            continue
+        stable_identity = key_paper_has_stable_identity(
+            key_paper
+        ) or candidate_has_stable_identity(candidate)
+        if match_type in {"title", "title_year"} and not stable_identity:
+            skipped_title_only += 1
+            continue
+        if candidate_id not in attempted_ids:
+            skipped_blocked += 1
+            continue
+        if candidate_id in exported_ids:
+            exported += 1
+            continue
+        affiliations = affiliations_by_work.get(candidate_id, [])
+        institution_rows = [
+            row
+            for row in affiliations
+            if preferred_value(row, "resolved_institution_name", "institution_name")
+            or clean_text(row.get("raw_affiliation_text"))
+        ]
+        valid_coordinates = [
+            row
+            for row in affiliations
+            if preferred_coordinates(row)[0] is not None
+            and preferred_coordinates(row)[1] is not None
+        ]
+        if not institution_rows:
+            skipped_missing_affiliations += 1
+        elif not valid_coordinates:
+            skipped_missing_coordinates += 1
+        elif not stable_identity:
+            skipped_title_only += 1
+        elif candidate_id not in exported_ids:
+            skipped_blocked += 1
+        else:
+            skipped_unknown += 1
+
+    return {
+        "key_papers_exported_to_candidate_map": exported,
+        "key_papers_skipped_missing_affiliations": skipped_missing_affiliations,
+        "key_papers_skipped_missing_coordinates": skipped_missing_coordinates,
+        "key_papers_skipped_blocked_by_export_rule": skipped_blocked,
+        "key_papers_skipped_unknown_reason": skipped_unknown,
+        "key_papers_skipped_title_match_only_no_stable_id": skipped_title_only,
+    }
+
+
 def group_map_records(
     paper_rows: Sequence[Dict[str, str]],
     affiliation_rows: Sequence[Dict[str, str]],
@@ -1697,6 +2121,59 @@ def print_summary(summary: Dict[str, Any]) -> None:
     print(f"  Downstream rows processed: {summary['downstream_rows_processed']}")
     print(f"  Candidate papers read: {summary['candidate_papers_read']}")
     print(f"  Affiliation rows read: {summary['affiliation_rows_read']}")
+    print(f"  Key papers loaded: {summary['key_papers_loaded']}")
+    print(
+        "  Key papers matched in OpenAlex candidate pool: "
+        f"{summary['key_papers_matched_in_openalex_candidate_pool']}"
+    )
+    print(
+        "  Unique OpenAlex candidate works matched by key papers: "
+        f"{summary['key_paper_unique_candidate_works_matched']}"
+    )
+    print(
+        "  Key papers included in export attempt: "
+        f"{summary['key_papers_included_in_export_attempt']}"
+    )
+    print(
+        "  Unique OpenAlex candidate works included in export attempt: "
+        f"{summary['key_paper_unique_candidate_works_included_in_export_attempt']}"
+    )
+    print(
+        "  Key papers exported to candidate map: "
+        f"{summary['key_papers_exported_to_candidate_map']}"
+    )
+    print(
+        "  Key papers skipped due to missing affiliations: "
+        f"{summary['key_papers_skipped_missing_affiliations']}"
+    )
+    print(
+        "  Key papers skipped due to missing coordinates: "
+        f"{summary['key_papers_skipped_missing_coordinates']}"
+    )
+    print(
+        "  Key papers skipped because only title match/no stable ID: "
+        f"{summary['key_papers_skipped_title_match_only_no_stable_id']}"
+    )
+    print(
+        "  Key papers skipped because blocked by export rule: "
+        f"{summary['key_papers_skipped_blocked_by_export_rule']}"
+    )
+    print(
+        "  Key papers skipped for unknown reason: "
+        f"{summary['key_papers_skipped_unknown_reason']}"
+    )
+    print(
+        "  Key-paper affiliation enrichment rows loaded: "
+        f"{summary['key_paper_affiliation_enrichment_rows_loaded']}"
+    )
+    print(
+        "  Key-paper affiliation enrichment rows usable: "
+        f"{summary['key_paper_affiliation_enrichment_rows_usable']}"
+    )
+    print(
+        "  Key-paper enrichment affiliation rows added to export attempt: "
+        f"{summary['key_paper_enrichment_affiliation_rows_added']}"
+    )
     print(f"  Map records exported: {summary['map_records_exported']}")
     print(
         "  Map records using resolved coordinates: "
@@ -1831,10 +2308,28 @@ def run(args: argparse.Namespace) -> int:
         all_affiliation_rows = read_csv(
             args.affiliations_csv, AFFILIATION_REQUIRED_COLUMNS
         )
+        raw_affiliation_rows = read_csv(
+            DEFAULT_OPENALEX_AFFILIATIONS_CSV,
+            AFFILIATION_REQUIRED_COLUMNS,
+        )
         paper_rows, affiliation_rows, scope_counts = select_scope_rows(
             all_paper_rows,
             all_affiliation_rows,
             args.include_out_of_scope,
+        )
+        key_papers = read_key_papers()
+        all_candidate_papers = read_all_candidate_papers()
+        key_affiliation_rows = read_key_paper_affiliation_enrichment()
+        paper_rows, affiliation_rows, key_attempt_summary = (
+            build_key_paper_export_inputs(
+                paper_rows,
+                affiliation_rows,
+                all_candidate_papers,
+                all_affiliation_rows,
+                raw_affiliation_rows,
+                key_papers,
+                key_affiliation_rows,
+            )
         )
         paper_version_overrides = read_paper_version_overrides()
         paper_arxiv_links = read_paper_arxiv_links()
@@ -1856,6 +2351,16 @@ def run(args: argparse.Namespace) -> int:
             local_abstracts,
         )
         payload["summary"].update(scope_counts)
+        payload["summary"].update(key_attempt_summary)
+        payload["summary"].update(
+            summarize_key_paper_outcomes(
+                key_papers,
+                all_candidate_papers,
+                paper_rows,
+                affiliation_rows,
+                payload["records"],
+            )
+        )
     except ExportError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1

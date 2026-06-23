@@ -45,6 +45,7 @@ DEFAULT_OUTPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
+DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
 DEFAULT_MAX_RECORDS = 200
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
@@ -142,6 +143,10 @@ PUBLICATION_OVERRIDE_COLUMNS = {
     "formal_paper_url",
     "publication_type",
     "notes",
+}
+KEY_PAPER_COLUMNS = {
+    "title",
+    "year",
 }
 
 
@@ -380,6 +385,22 @@ def read_publication_overrides(
             }
         )
     return overrides
+
+
+def read_key_papers(path: Path = DEFAULT_KEY_PAPERS) -> List[Dict[str, str]]:
+    if not path.exists():
+        return []
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            missing = sorted(KEY_PAPER_COLUMNS - set(reader.fieldnames or []))
+            if missing:
+                raise PreviewExportError(
+                    f"{path} is missing required columns: {', '.join(missing)}"
+                )
+            return [dict(row) for row in reader]
+    except OSError as error:
+        raise PreviewExportError(f"Could not read {path}: {error}") from error
 
 
 def build_override_indexes(
@@ -671,6 +692,7 @@ def build_preview(
     institution_record_overrides: Sequence[Dict[str, Any]] = (),
     institution_author_overrides: Sequence[Dict[str, Any]] = (),
     paper_abstracts: Sequence[Dict[str, Any]] = (),
+    key_papers: Sequence[Dict[str, str]] = (),
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     records = [dict(record) for record in records]
     institution_record_override_summary = apply_institution_record_overrides(
@@ -763,6 +785,23 @@ def build_preview(
         selected.append(public_record)
 
     eligible_records = len(selected)
+    key_paper_titles = {normalize_title(row.get("title")) for row in key_papers}
+    key_paper_titles.discard("")
+    if key_paper_titles:
+        selected = [
+            record
+            for _index, record in sorted(
+                enumerate(selected),
+                key=lambda item: (
+                    normalize_title(item[1].get("title")) not in key_paper_titles,
+                    item[0],
+                ),
+            )
+        ]
+    eligible_key_paper_records = sum(
+        normalize_title(record.get("title")) in key_paper_titles
+        for record in selected
+    )
     selected = selected[:max_records]
     summary = {
         "candidate_records_read": len(records),
@@ -774,6 +813,11 @@ def build_preview(
         "records_excluded_below_confidence": below_confidence,
         "records_excluded_needs_review": excluded_needs_review,
         "records_eligible_before_limit": eligible_records,
+        "eligible_key_paper_records_before_limit": eligible_key_paper_records,
+        "key_paper_records_exported": sum(
+            normalize_title(record.get("title")) in key_paper_titles
+            for record in selected
+        ),
         "records_exported": len(selected),
         "exported_records_with_abstract": sum(
             bool(clean_text(record.get("abstract"))) for record in selected
@@ -844,7 +888,15 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
         "  Records eligible before maximum: "
         f"{summary['records_eligible_before_limit']}"
     )
+    print(
+        "  Eligible key-paper records before maximum: "
+        f"{summary['eligible_key_paper_records_before_limit']}"
+    )
     print(f"  Records exported: {summary['records_exported']}")
+    print(
+        "  Key-paper records exported: "
+        f"{summary['key_paper_records_exported']}"
+    )
     print(
         "  Paper-version overrides applied: "
         f"{summary['paper_version_overrides_applied']}"
@@ -946,6 +998,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_arxiv_links = read_paper_arxiv_links()
         publication_overrides = read_publication_overrides()
         paper_abstracts = read_paper_abstracts()
+        key_papers = read_key_papers()
         institution_record_overrides = load_institution_record_overrides()
         institution_author_overrides = load_institution_author_overrides()
         payload, summary = build_preview(
@@ -962,6 +1015,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             institution_record_overrides,
             institution_author_overrides,
             paper_abstracts,
+            key_papers,
         )
         if not args.dry_run:
             write_json(args.output, payload)

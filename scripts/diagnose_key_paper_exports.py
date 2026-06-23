@@ -25,6 +25,9 @@ AFFILIATIONS = Path("data/processed/openalex_candidate_affiliations.csv")
 GEOCODED_AFFILIATIONS = Path(
     "data/processed/openalex_candidate_affiliations_geocoded.csv"
 )
+KEY_PAPER_AFFILIATION_ENRICHMENT = Path(
+    "data/manual/key_paper_affiliation_enrichment.csv"
+)
 CANDIDATE_MAP = Path("web/data/openalex_candidate_map_data.json")
 PUBLIC_PREVIEW = Path("web/data/public_preview_map_data.json")
 OUTPUT = Path("data/manual/key_paper_export_diagnostics.csv")
@@ -69,6 +72,17 @@ ALLOWED_ACTIONS = {
     "confirm_stable_identifier",
     "manual_review",
 }
+KEY_PAPER_AFFILIATION_ENRICHMENT_COLUMNS = {
+    "title",
+    "year",
+    "normalized_title",
+    "openalex_url",
+    "doi",
+    "raw_affiliation",
+    "institution",
+    "latitude",
+    "longitude",
+}
 
 
 class DiagnosisError(RuntimeError):
@@ -86,8 +100,14 @@ def normalize_title(value: Any) -> str:
     return " ".join(re.sub(r"[^a-z0-9]+", " ", title).split())
 
 
-def read_csv(path: Path, required_columns: Iterable[str]) -> List[Dict[str, str]]:
+def read_csv(
+    path: Path,
+    required_columns: Iterable[str],
+    optional: bool = False,
+) -> List[Dict[str, str]]:
     if not path.exists():
+        if optional:
+            return []
         raise DiagnosisError(f"Required local input does not exist: {path}")
     try:
         with path.open("r", encoding="utf-8-sig", newline="") as handle:
@@ -126,6 +146,66 @@ def title_index(rows: Sequence[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]
         if key:
             index[key].append(row)
     return index
+
+
+def normalize_identifier_url(value: Any) -> str:
+    return clean_text(value).casefold().rstrip("/")
+
+
+def normalize_doi(value: Any) -> str:
+    doi = clean_text(value)
+    doi = re.sub(r"^https?://(?:dx\.)?doi\.org/", "", doi, flags=re.IGNORECASE)
+    return doi.casefold()
+
+
+def parse_year(value: Any) -> str:
+    text = clean_text(value)
+    return text if re.fullmatch(r"\d{1,4}", text) else ""
+
+
+def paper_identity_keys(row: Dict[str, Any]) -> List[Tuple[str, Any]]:
+    keys: List[Tuple[str, Any]] = []
+    openalex = normalize_identifier_url(row.get("openalex_url") or row.get("openalex_id"))
+    if openalex:
+        keys.append(("openalex", openalex))
+    doi = normalize_doi(row.get("doi"))
+    if doi:
+        keys.append(("doi", doi))
+    title = normalize_title(row.get("title"))
+    year = parse_year(row.get("publication_year") or row.get("year"))
+    if title and year:
+        keys.append(("title_year", (title, year)))
+    return keys
+
+
+def key_affiliation_index(
+    rows: Sequence[Dict[str, str]],
+) -> Dict[Tuple[str, Any], List[Dict[str, str]]]:
+    index: Dict[Tuple[str, Any], List[Dict[str, str]]] = defaultdict(list)
+    for row in rows:
+        for key in paper_identity_keys(row):
+            index[key].append(row)
+    return index
+
+
+def matching_key_affiliations(
+    candidate: Dict[str, Any],
+    index: Dict[Tuple[str, Any], List[Dict[str, str]]],
+) -> List[Dict[str, str]]:
+    seen = set()
+    matches: List[Dict[str, str]] = []
+    for key in paper_identity_keys(candidate):
+        for row in index.get(key, []):
+            identity = tuple(row.get(column, "") for column in sorted(row))
+            if identity in seen:
+                continue
+            seen.add(identity)
+            matches.append(row)
+    return matches
+
+
+def enrichment_has_affiliation(row: Dict[str, str]) -> bool:
+    return bool(clean_text(row.get("institution")) and clean_text(row.get("raw_affiliation")))
 
 
 def valid_coordinate_pair(row: Dict[str, Any]) -> bool:
@@ -198,6 +278,11 @@ def diagnose() -> List[Dict[str, str]]:
         GEOCODED_AFFILIATIONS,
         {"openalex_id", "institution_name", "latitude", "longitude"},
     )
+    key_affiliation_rows = read_csv(
+        KEY_PAPER_AFFILIATION_ENRICHMENT,
+        KEY_PAPER_AFFILIATION_ENRICHMENT_COLUMNS,
+        optional=True,
+    )
     candidate_records = read_json_records(CANDIDATE_MAP)
     preview_records = read_json_records(PUBLIC_PREVIEW)
 
@@ -211,6 +296,7 @@ def diagnose() -> List[Dict[str, str]]:
         affiliations_by_work[clean_text(row.get("openalex_id"))].append(row)
     for row in geocoded_rows:
         geocoded_by_work[clean_text(row.get("openalex_id"))].append(row)
+    key_affiliations_by_identity = key_affiliation_index(key_affiliation_rows)
 
     diagnostics: List[Dict[str, str]] = []
     for target in targets:
@@ -227,20 +313,29 @@ def diagnose() -> List[Dict[str, str]]:
         preview_matches = preview_by_title.get(normalized, [])
         affiliations = affiliations_by_work.get(openalex_id, [])
         geocoded = geocoded_by_work.get(openalex_id, [])
-        institution_rows = [
+        key_affiliations = matching_key_affiliations(
+            candidate,
+            key_affiliations_by_identity,
+        )
+        enriched_institution_rows = [
+            row for row in key_affiliations if enrichment_has_affiliation(row)
+        ]
+        enriched_valid_coordinates = [
+            row for row in key_affiliations if valid_coordinate_pair(row)
+        ]
+        openalex_institution_rows = [
             row
             for row in affiliations
             if clean_text(row.get("institution_name"))
             or clean_text(row.get("raw_affiliation_text"))
         ]
-        valid_coordinates = [row for row in geocoded if valid_coordinate_pair(row)]
+        institution_rows = openalex_institution_rows + enriched_institution_rows
+        valid_coordinates = [
+            row for row in geocoded if valid_coordinate_pair(row)
+        ] + enriched_valid_coordinates
         stable_status = stable_identifier_status(candidate)
 
-        if not in_scope:
-            skip_reason = "not_in_in_scope_candidate_file"
-            action = "check_export_rule"
-            export_status = "stops_before_in_scope_export_input"
-        elif not affiliations or not institution_rows:
+        if not institution_rows:
             skip_reason = "missing_affiliation_records"
             action = "add_or_verify_affiliation_records"
             export_status = "cannot_build_institution_map_record"
@@ -255,14 +350,20 @@ def diagnose() -> List[Dict[str, str]]:
         elif not map_matches:
             skip_reason = "blocked_by_current_export_rule"
             action = "check_export_rule"
-            export_status = "eligible_local_records_not_in_candidate_map"
+            export_status = (
+                "eligible_key_paper_attempt_not_in_candidate_map"
+                if not in_scope
+                else "eligible_local_records_not_in_candidate_map"
+            )
         else:
             skip_reason = "unknown_export_skip_reason"
             action = "manual_review"
             export_status = "requires_manual_pipeline_trace"
 
         affiliation_status = (
-            "institution_records_available"
+            "institution_records_available_from_key_paper_enrichment"
+            if enriched_institution_rows and not openalex_institution_rows
+            else "institution_records_available"
             if institution_rows
             else "author_rows_without_institution_or_raw_affiliation"
             if affiliations
@@ -285,7 +386,9 @@ def diagnose() -> List[Dict[str, str]]:
         notes = (
             f"OpenAlex matches={len(openalex_matches)}; "
             f"affiliation rows={len(affiliations)}; "
-            f"institution-bearing rows={len(institution_rows)}; "
+            f"openalex institution-bearing rows={len(openalex_institution_rows)}; "
+            f"key-paper enrichment rows={len(key_affiliations)}; "
+            f"key-paper enrichment institution-bearing rows={len(enriched_institution_rows)}; "
             f"geocoded rows={len(geocoded)}; "
             f"valid-coordinate rows={len(valid_coordinates)}. "
             "Diagnostic only; key-paper checklist membership remains in scope."
