@@ -94,14 +94,20 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Fudan University"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -144,20 +150,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Information Technologies Institute"
-      ],
-      "aggregated_country_names": [
-        "GR"
-      ],
-      "aggregated_country_codes": [
-        "GR"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -248,14 +248,22 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing Institute of Graphic Communication",
+        "Beijing Jiaotong University",
+        "Fujian University of Technology"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -401,14 +409,21 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Comilla University",
+        "Jahangirnagar University"
+      ],
+      "aggregated_country_names": [
+        "BD"
+      ],
+      "aggregated_country_codes": [
+        "BD"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -505,14 +520,21 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Netherlands Forensic Institute",
+        "University of Amsterdam"
+      ],
+      "aggregated_country_names": [
+        "NL"
+      ],
+      "aggregated_country_codes": [
+        "NL"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -553,14 +575,26 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Gachon University",
+        "Government Sadiq College Women University",
+        "Nanfang Hospital"
+      ],
+      "aggregated_country_names": [
+        "CN",
+        "KR",
+        "PK"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "KR",
+        "PK"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -654,9 +688,9 @@
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
+      "coverage_status": "paper_only_review",
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
@@ -748,20 +782,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Information Technologies Institute"
-      ],
-      "aggregated_country_names": [
-        "GR"
-      ],
-      "aggregated_country_codes": [
-        "GR"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -803,14 +831,24 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Harbin Institute of Technology",
+        "University of Southampton",
+        "Xi'an Jiaotong University"
+      ],
+      "aggregated_country_names": [
+        "CN",
+        "GB"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "GB"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -852,14 +890,23 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 4,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Chinese Academy of Sciences",
+        "Hangzhou Dianzi University",
+        "Institute of Computing Technology",
+        "Xi'an Jiaotong University"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -905,14 +952,20 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Sun Yat-sen University"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -960,9 +1013,9 @@
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
+      "coverage_status": "paper_only_review",
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
@@ -1012,9 +1065,9 @@
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
+      "coverage_status": "paper_only_review",
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
@@ -1487,20 +1540,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Mumbai"
-      ],
-      "aggregated_country_names": [
-        "IN"
-      ],
-      "aggregated_country_codes": [
-        "IN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -1541,26 +1588,16 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "National Taiwan University of Science and Technology"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
-      "aggregated_regions": [
-        "Taiwan"
-      ],
-      "aggregated_region_codes": [
-        "TW"
-      ]
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
     },
     {
       "title": "Any-Resolution AI-Generated Image Detection by Spectral Learning",
@@ -1838,14 +1875,22 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing Jiaotong University",
+        "Chinese University of Hong Kong, Shenzhen",
+        "Yanshan University"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -1887,14 +1932,24 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Purdue University West Lafayette",
+        "Rutgers Sexual and Reproductive Health and Rights",
+        "Sony Corporation (United States)"
+      ],
+      "aggregated_country_names": [
+        "NL",
+        "US"
+      ],
+      "aggregated_country_codes": [
+        "NL",
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -2591,14 +2646,21 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Dongguan University of Technology",
+        "Shenzhen University"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -2637,20 +2699,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Fakir Mohan University"
-      ],
-      "aggregated_country_names": [
-        "IN"
-      ],
-      "aggregated_country_codes": [
-        "IN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -2898,14 +2954,20 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing University of Posts and Telecommunications"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -3004,16 +3066,39 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 9,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Alibaba Group (China)",
+        "Institute for Advanced Study",
+        "Megvii (China)",
+        "ShangHai JiAi Genetics & IVF Institute",
+        "Shanghai Artificial Intelligence Laboratory",
+        "University of Hong Kong",
+        "Vi Technology (United States)",
+        "Zhejiang Lab",
+        "Zhejiang University"
+      ],
+      "aggregated_country_names": [
+        "CN",
+        "China",
+        "DE",
+        "US"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "DE",
+        "US"
+      ],
+      "aggregated_regions": [
+        "Hong Kong"
+      ],
+      "aggregated_region_codes": [
+        "HK"
+      ]
     },
     {
       "title": "Harnessing attention for cropping and fusion in CLIP-based AIGC detection",
@@ -3052,14 +3137,20 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "China People's Public Security University"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -3410,20 +3501,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Technology Sydney"
-      ],
-      "aggregated_country_names": [
-        "AU"
-      ],
-      "aggregated_country_codes": [
-        "AU"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -3714,14 +3799,24 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Harbin Institute of Technology",
+        "University of Southampton",
+        "Xi'an Jiaotong University"
+      ],
+      "aggregated_country_names": [
+        "CN",
+        "GB"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "GB"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -3765,22 +3860,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 3,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Beihang University",
-        "Beijing Jiaotong University",
-        "Zhejiang Sci-Tech University"
-      ],
-      "aggregated_country_names": [
-        "CN"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -3878,14 +3965,21 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Chinese Academy of Sciences",
+        "Institute of Information Engineering"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -3932,14 +4026,21 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Peking University",
+        "Tencent (China)"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4206,20 +4307,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Global University"
-      ],
-      "aggregated_country_names": [
-        "LB"
-      ],
-      "aggregated_country_codes": [
-        "LB"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4261,25 +4356,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 4,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Intelligent Health (United Kingdom)",
-        "Shandong University",
-        "University of Jinan",
-        "Weihai Science and Technology Bureau"
-      ],
-      "aggregated_country_names": [
-        "CN",
-        "GB"
-      ],
-      "aggregated_country_codes": [
-        "CN",
-        "GB"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4317,20 +4401,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Anhui Business College"
-      ],
-      "aggregated_country_names": [
-        "CN"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4445,25 +4523,15 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Ant Group",
-        "Shanghai Jiao Tong University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
-      "aggregated_regions": [
-        "Shanghai",
-        "Zhejiang"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
       "aggregated_region_codes": []
     },
     {
@@ -4550,20 +4618,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Lamar University"
-      ],
-      "aggregated_country_names": [
-        "US"
-      ],
-      "aggregated_country_codes": [
-        "US"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4702,20 +4764,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Shanghai Jiao Tong University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4809,20 +4865,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Shanghai Jiao Tong University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4911,21 +4961,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Duke University",
-        "Oak Ridge National Laboratory"
-      ],
-      "aggregated_country_names": [
-        "United States"
-      ],
-      "aggregated_country_codes": [
-        "US"
-      ],
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -4963,20 +5006,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "SRM Institute of Science and Technology"
-      ],
-      "aggregated_country_names": [
-        "IN"
-      ],
-      "aggregated_country_codes": [
-        "IN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -5238,20 +5275,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Xi'an Jiaotong University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -6074,23 +6105,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Applied Health Sciences",
-        "University of Maribor"
-      ],
-      "aggregated_country_names": [
-        "HR",
-        "SI"
-      ],
-      "aggregated_country_codes": [
-        "HR",
-        "SI"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -6227,23 +6249,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Edinburgh Napier University",
-        "Prince Mohammad bin Fahd University"
-      ],
-      "aggregated_country_names": [
-        "GB",
-        "SA"
-      ],
-      "aggregated_country_codes": [
-        "GB",
-        "SA"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -6746,20 +6759,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Indian Institute of Technology Patna"
-      ],
-      "aggregated_country_names": [
-        "IN"
-      ],
-      "aggregated_country_codes": [
-        "IN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -6996,20 +7003,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Tencent (China)"
-      ],
-      "aggregated_country_names": [
-        "CN"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -7417,26 +7418,16 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "The Chinese University of Hong Kong"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
-      "aggregated_regions": [
-        "Hong Kong"
-      ],
-      "aggregated_region_codes": [
-        "HK"
-      ]
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
     },
     {
       "title": "SemGIR: Semantic-Guided Image Regeneration Based Method for AI-generated Image Detection and Attribution",
@@ -7852,20 +7843,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Amity University"
-      ],
-      "aggregated_country_names": [
-        "IN"
-      ],
-      "aggregated_country_codes": [
-        "IN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -7961,21 +7946,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Ant Group",
-        "Shanghai Jiao Tong University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -8287,21 +8265,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Ahsanullah University of Science and Technology",
-        "Southeast University"
-      ],
-      "aggregated_country_names": [
-        "BD"
-      ],
-      "aggregated_country_codes": [
-        "BD"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -10057,20 +10028,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Fudan University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -11315,23 +11280,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Aligarh Muslim University",
-        "Sichuan University"
-      ],
-      "aggregated_country_names": [
-        "CN",
-        "IN"
-      ],
-      "aggregated_country_codes": [
-        "CN",
-        "IN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -12637,20 +12593,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Federico II University Hospital"
-      ],
-      "aggregated_country_names": [
-        "IT"
-      ],
-      "aggregated_country_codes": [
-        "IT"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -12690,20 +12640,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Siena"
-      ],
-      "aggregated_country_names": [
-        "IT"
-      ],
-      "aggregated_country_codes": [
-        "IT"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -13037,21 +12981,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Microsoft Research Asia (China)",
-        "Peking University"
-      ],
-      "aggregated_country_names": [
-        "CN"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -13145,20 +13082,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Oxford"
-      ],
-      "aggregated_country_names": [
-        "GB"
-      ],
-      "aggregated_country_codes": [
-        "GB"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -13309,20 +13240,14 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Hangzhou Dianzi University"
-      ],
-      "aggregated_country_names": [
-        "CN"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
