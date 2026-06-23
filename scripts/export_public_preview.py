@@ -72,7 +72,7 @@ DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv"
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
-DEFAULT_MAX_RECORDS = 200
+DEFAULT_MAX_RECORDS = 400
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -222,10 +222,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=f"Paper-level public preview JSON (default: {DEFAULT_PAPER_OUTPUT}).",
     )
     parser.add_argument(
+        "--max-map-records",
         "--max-records",
+        dest="max_records",
         type=positive_int,
         default=DEFAULT_MAX_RECORDS,
-        help=f"Maximum records to publish (default: {DEFAULT_MAX_RECORDS}).",
+        help=(
+            "Maximum map records to publish "
+            f"(default: {DEFAULT_MAX_RECORDS}; --max-records is an alias)."
+        ),
     )
     parser.add_argument(
         "--min-confidence",
@@ -1019,6 +1024,65 @@ def read_candidate_records(path: Path) -> List[Dict[str, Any]]:
     return payload["records"]
 
 
+def has_resolved_coordinate_metadata(record: Dict[str, Any]) -> bool:
+    """Return whether coordinates came through a resolution/manual layer."""
+    method = clean_text(record.get("resolution_method")).casefold()
+    return bool(method and method != "openalex_institution_geo")
+
+
+def select_public_map_records(
+    eligible_records: Sequence[Dict[str, Any]],
+    max_records: int,
+    key_paper_titles: set[str],
+) -> Tuple[List[Dict[str, Any]], int]:
+    """Maximize paper coverage first, then retain additional institutions."""
+    indexed_records = list(enumerate(eligible_records))
+    records_by_paper: Dict[Tuple[str, Any], List[Tuple[int, Dict[str, Any]]]] = (
+        defaultdict(list)
+    )
+    for index, record in indexed_records:
+        records_by_paper[identity_key(record)].append((index, record))
+
+    def quality_key(item: Tuple[int, Dict[str, Any]]) -> Tuple[Any, ...]:
+        index, record = item
+        confidence = normalize_confidence(record.get("resolution_confidence"))
+        return (
+            -CONFIDENCE_RANK[confidence],
+            not has_resolved_coordinate_metadata(record),
+            parse_bool(record.get("needs_review")),
+            index,
+        )
+
+    representatives = [
+        min(paper_records, key=quality_key)
+        for paper_records in records_by_paper.values()
+    ]
+    representatives.sort(
+        key=lambda item: (
+            normalize_title(item[1].get("title")) not in key_paper_titles,
+            *quality_key(item),
+        )
+    )
+    selected_items = representatives[:max_records]
+    selected_indexes = {index for index, _record in selected_items}
+
+    if len(selected_items) < max_records:
+        remaining = [
+            item for item in indexed_records if item[0] not in selected_indexes
+        ]
+        # Preserve the previous stable key-paper-first ordering for additional
+        # institution records after unique-paper coverage is maximized.
+        remaining.sort(
+            key=lambda item: (
+                normalize_title(item[1].get("title")) not in key_paper_titles,
+                item[0],
+            )
+        )
+        selected_items.extend(remaining[: max_records - len(selected_items)])
+
+    return [record for _index, record in selected_items], len(representatives)
+
+
 def build_preview(
     records: Sequence[Dict[str, Any]],
     max_records: int,
@@ -1134,22 +1198,15 @@ def build_preview(
     eligible_records = len(selected)
     key_paper_titles = {normalize_title(row.get("title")) for row in key_papers}
     key_paper_titles.discard("")
-    if key_paper_titles:
-        selected = [
-            record
-            for _index, record in sorted(
-                enumerate(selected),
-                key=lambda item: (
-                    normalize_title(item[1].get("title")) not in key_paper_titles,
-                    item[0],
-                ),
-            )
-        ]
     eligible_key_paper_records = sum(
         normalize_title(record.get("title")) in key_paper_titles
         for record in selected
     )
-    selected = selected[:max_records]
+    selected, eligible_unique_papers = select_public_map_records(
+        selected,
+        max_records,
+        key_paper_titles,
+    )
     summary = {
         "candidate_records_read": len(records),
         "records_excluded_out_of_scope": excluded_out_of_scope,
@@ -1160,12 +1217,14 @@ def build_preview(
         "records_excluded_below_confidence": below_confidence,
         "records_excluded_needs_review": excluded_needs_review,
         "records_eligible_before_limit": eligible_records,
+        "unique_papers_eligible_before_limit": eligible_unique_papers,
         "eligible_key_paper_records_before_limit": eligible_key_paper_records,
         "key_paper_records_exported": sum(
             normalize_title(record.get("title")) in key_paper_titles
             for record in selected
         ),
         "records_exported": len(selected),
+        "unique_papers_exported": len({identity_key(record) for record in selected}),
         "exported_records_with_abstract": sum(
             bool(clean_text(record.get("abstract"))) for record in selected
         ),
@@ -1236,10 +1295,15 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
         f"{summary['records_eligible_before_limit']}"
     )
     print(
+        "  Unique papers eligible before maximum: "
+        f"{summary['unique_papers_eligible_before_limit']}"
+    )
+    print(
         "  Eligible key-paper records before maximum: "
         f"{summary['eligible_key_paper_records_before_limit']}"
     )
     print(f"  Records exported: {summary['records_exported']}")
+    print(f"  Unique papers exported: {summary['unique_papers_exported']}")
     print(
         "  Key-paper records exported: "
         f"{summary['key_paper_records_exported']}"
