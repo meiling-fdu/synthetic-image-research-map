@@ -30,6 +30,7 @@ try:
         load_institution_author_overrides,
         load_institution_record_overrides,
         match_row_by_identity,
+        normalize_export_task_labels,
         parse_ordered_authors,
         paper_identity_keys,
         read_all_candidate_papers,
@@ -50,6 +51,7 @@ except ImportError:  # Direct execution from the scripts directory.
         load_institution_author_overrides,
         load_institution_record_overrides,
         match_row_by_identity,
+        normalize_export_task_labels,
         parse_ordered_authors,
         paper_identity_keys,
         read_all_candidate_papers,
@@ -478,14 +480,20 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
     year = parse_year(row.get("publication_year") or row.get("year"))
     arxiv_id = clean_text(row.get("arxiv_id"))
     arxiv_url = clean_text(row.get("arxiv_url"))
+    task_labels = normalize_export_task_labels(row)
+    if task_labels is None:
+        raise PreviewExportError(
+            "generated_video_detection records are not eligible for public preview"
+        )
+    task, subtask = task_labels
     return {
         "title": clean_text(row.get("title")),
         "in_scope": True,
         "year": year,
         "publication_year": year,
         "publication_date": clean_text(row.get("publication_date")),
-        "task": clean_text(row.get("preliminary_task") or row.get("task")),
-        "subtask": clean_text(row.get("preliminary_subtask") or row.get("subtask")),
+        "task": task,
+        "subtask": subtask,
         "entry_type": normalize_entry_type(row),
         "venue": clean_text(row.get("venue")),
         "venue_name": clean_text(row.get("venue_name") or row.get("venue")),
@@ -604,7 +612,7 @@ def build_paper_preview(
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     selected_by_key: Dict[Tuple[str, Any], Dict[str, str]] = {}
     for row in candidate_rows:
-        if paper_is_retracted(row):
+        if paper_is_retracted(row) or normalize_export_task_labels(row) is None:
             continue
         record = paper_record_from_candidate(row)
         selected_by_key.setdefault(identity_key(record), row)
@@ -620,7 +628,11 @@ def build_paper_preview(
             all_candidate_index,
             allow_title_only=True,
         )
-        if candidate is None or paper_is_retracted(candidate):
+        if (
+            candidate is None
+            or paper_is_retracted(candidate)
+            or normalize_export_task_labels(candidate) is None
+        ):
             continue
         key_papers_matched += 1
         record = paper_record_from_candidate(candidate)
@@ -1060,7 +1072,11 @@ def build_preview(
             excluded_out_of_scope += 1
             continue
 
-        task = str(record.get("preliminary_task") or record.get("task") or "").strip()
+        task_labels = normalize_export_task_labels(record)
+        if task_labels is None:
+            excluded_task += 1
+            continue
+        task, subtask = task_labels
         task_is_allowed = task in ALLOWED_PUBLIC_TASKS
         task_is_debug_uncertain = include_uncertain and task == "uncertain"
         if not task_is_allowed and not task_is_debug_uncertain:
@@ -1092,6 +1108,8 @@ def build_preview(
         public_record = {
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
+        public_record["task"] = task
+        public_record["subtask"] = subtask
         public_record["entry_type"] = normalize_entry_type(record)
         public_record["institution"] = institution_name(record)
         public_record.update(
