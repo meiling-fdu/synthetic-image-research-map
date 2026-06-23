@@ -133,8 +133,12 @@
               <dd id="dataset-record-count">0</dd>
             </div>
             <div>
-              <dt>Unique papers</dt>
+              <dt>Paper coverage</dt>
               <dd id="dataset-paper-count">0</dd>
+            </div>
+            <div>
+              <dt>Papers without map location</dt>
+              <dd id="dataset-paper-without-location-count">0</dd>
             </div>
             <div>
               <dt>Unique institutions</dt>
@@ -285,6 +289,7 @@
         <div class="project-links-content">
           <nav class="project-link-list" aria-label="Project resources">
             <a href="data/public_preview_map_data.json">Public preview JSON</a>
+            <a href="data/public_preview_papers.json">Public preview papers JSON</a>
             <a href="data/sample_map_data.json">Sample dataset JSON</a>
             <a href="../docs/public_preview_report.md">Quality report</a>
             <a href="../docs/data_collection.md">Data methodology</a>
@@ -294,9 +299,9 @@
             Uncurated public preview
           </p>
           <p id="dataset-notice-copy">
-            This public preview is generated from OpenAlex candidate metadata and is
-            intended for exploratory visualization, not as a manually curated bibliography.
-            Paper relevance, task labels, institution names, and coordinates may contain errors.
+            This public preview is generated from OpenAlex candidate metadata and local
+            manual review caches. Paper-level coverage can include records without map
+            markers; map markers require valid institution coordinates.
           </p>
           <p>
             Use <strong>Export CSV</strong> to download the currently filtered records.
@@ -330,6 +335,6 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="app.js?v=20260622-map-viewport"></script>
+    <script src="app.js?v=20260623-paper-coverage"></script>
   </body>
 </html>

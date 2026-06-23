@@ -250,7 +250,7 @@ Run the local comparison from the repository root:
 python3 scripts/audit_key_paper_coverage.py
 ```
 
-The script compares the checklist with `data/processed/openalex_candidate_papers.csv`, `web/data/openalex_candidate_map_data.json`, and `web/data/public_preview_map_data.json`, then writes `data/manual/key_paper_coverage_report.csv`. It uses normalized titles for current coverage matching and reports only `covered_in_public_preview`, `in_candidate_map_but_not_public_preview`, `in_openalex_candidate_pool_but_not_exported`, `missing_from_openalex_candidate_pool`, or `possible_title_match_failure`.
+The script compares the checklist with `data/processed/openalex_candidate_papers.csv`, `web/data/openalex_candidate_map_data.json`, `web/data/public_preview_map_data.json`, and the paper-level `web/data/public_preview_papers.json`, then writes `data/manual/key_paper_coverage_report.csv`. It uses normalized titles for current coverage matching and distinguishes `covered_as_map_marker`, `covered_in_public_preview_paper_list`, `missing_affiliation`, `missing_coordinates`, `missing_from_candidate_pool`, and `possible_title_match_failure`.
 
 These statuses measure coverage and pipeline location, not scope. A missing key paper is a coverage gap that should be reviewed for import or metadata enrichment. A key paper present in the OpenAlex candidate pool but absent from exports should be diagnosed for affiliation, coordinate, or export-rule issues. OpenAlex candidate membership is not coverage ground truth, and the audit never publishes, excludes, or changes the scope of a checklist entry. Recommended actions are deliberately limited to coverage, title-review, import/enrichment, and export diagnostics.
 
@@ -429,7 +429,7 @@ This map export is for exploratory visualization only. It is assembled from auto
 
 ## Public Preview Export
 
-`scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. The output is explicitly labeled as an uncurated public preview, not a manually curated bibliography.
+`scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. It also writes `web/data/public_preview_papers.json`, a paper-level public preview list that includes in-scope candidate/key papers even when affiliation or coordinate data is incomplete. The map JSON remains strict: only records with usable institution coordinates can become markers. The paper JSON carries transparent coverage fields such as `has_map_location`, `map_record_count`, `missing_affiliation`, `missing_coordinates`, `needs_review`, and `coverage_status` so incomplete papers can be searched and reviewed without fabricating locations. Both outputs are explicitly labeled as uncurated public preview data, not a manually curated bibliography.
 
 By default, the exporter publishes at most 200 records, requires `in_scope=true`, requires a main task of `detection`, `source_attribution`, or `detection_and_source_attribution`, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It also requires a non-placeholder institution name and a finite latitude/longitude pair within geographic bounds, because every public record must represent a mapped institution. `--include-uncertain` and `--include-missing-location` can relax task or location checks for local debugging; unsupported legacy or generic-attribution labels remain excluded. The exporter keeps only fields needed by the public map and never copies raw responses or caches.
 
@@ -449,7 +449,7 @@ python3 scripts/export_public_preview.py
 
 The confidence threshold can be tightened with `--min-confidence high`, and `--max-records` can produce a smaller preview. `--include-needs-review` and `--include-missing-location` are explicit debugging opt-ins; review-flagged or unmappable records should normally remain local.
 
-Only the filtered public preview JSON should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence records, and records needing review remain local and ignored by Git. Public-preview records are still automatically generated candidates and must not be described as curated final data.
+Only the filtered public preview JSON files should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence marker records, and records needing review remain local and ignored by Git. Paper-level preview records may still need affiliation or coordinate review; they are included to make coverage gaps visible, not to claim complete institution metadata. Public-preview records are still automatically generated candidates and must not be described as curated final data.
 
 ### Public Preview Quality Report
 
@@ -465,7 +465,7 @@ python3 scripts/report_public_preview.py
 python3 scripts/validate_public_preview.py --strict
 ```
 
-`scripts/validate_public_preview.py` accepts either a top-level record array or the metadata-plus-records object format. It checks publication-safe task and subtask labels, required paper and institution metadata, coordinate bounds, publication year, link availability, review status, and institution-resolution confidence. Errors always return a non-zero status; `--strict` also fails on warnings. The validator only reads the preview JSON and does not modify generated or manual data.
+`scripts/validate_public_preview.py` accepts either a top-level record array or the metadata-plus-records object format. It checks the strict map preview for publication-safe task and subtask labels, required paper and institution metadata, coordinate bounds, publication year, link availability, review status, and institution-resolution confidence. It also validates the paper-level preview for paper metadata, coverage flags, and consistency between `has_map_location` and `map_record_count` without requiring institution coordinates. Errors always return a non-zero status; `--strict` also fails on warnings. The validator only reads the preview JSON files and does not modify generated or manual data.
 
 Validation also enforces the public regional convention: records identified as Hong Kong, Macau/Macao, or Taiwan must use `country=China`, `country_code=CN`, and the matching `region` and `region_code`. The quality report applies the same normalization when counting countries, so these records contribute to China in the Top Countries table even when reporting on an older preview file.
 

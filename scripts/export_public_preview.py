@@ -13,6 +13,7 @@ import json
 import math
 import re
 import sys
+from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
@@ -23,8 +24,17 @@ try:
         apply_paper_abstracts,
         apply_institution_author_overrides,
         apply_institution_record_overrides,
+        apply_paper_arxiv_links,
+        apply_publication_overrides,
+        index_papers_by_identity,
         load_institution_author_overrides,
         load_institution_record_overrides,
+        match_row_by_identity,
+        parse_ordered_authors,
+        paper_identity_keys,
+        read_all_candidate_papers,
+        read_key_paper_affiliation_enrichment,
+        read_local_openalex_abstracts,
         read_paper_abstracts,
     )
 except ImportError:  # Direct execution from the scripts directory.
@@ -34,14 +44,28 @@ except ImportError:  # Direct execution from the scripts directory.
         apply_paper_abstracts,
         apply_institution_author_overrides,
         apply_institution_record_overrides,
+        apply_paper_arxiv_links,
+        apply_publication_overrides,
+        index_papers_by_identity,
         load_institution_author_overrides,
         load_institution_record_overrides,
+        match_row_by_identity,
+        parse_ordered_authors,
+        paper_identity_keys,
+        read_all_candidate_papers,
+        read_key_paper_affiliation_enrichment,
+        read_local_openalex_abstracts,
         read_paper_abstracts,
     )
 
 
 DEFAULT_INPUT = Path("web/data/openalex_candidate_map_data.json")
 DEFAULT_OUTPUT = Path("web/data/public_preview_map_data.json")
+DEFAULT_PAPER_OUTPUT = Path("web/data/public_preview_papers.json")
+DEFAULT_CANDIDATE_PAPERS = Path("data/processed/openalex_candidate_papers_in_scope.csv")
+DEFAULT_ALL_CANDIDATE_PAPERS = Path("data/processed/openalex_candidate_papers.csv")
+DEFAULT_AFFILIATIONS = Path("data/processed/openalex_candidate_affiliations.csv")
+DEFAULT_EXPORT_DIAGNOSTICS = Path("data/manual/key_paper_export_diagnostics.csv")
 DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv")
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
@@ -116,6 +140,15 @@ PUBLIC_METADATA = {
         "bibliography."
     ),
 }
+PAPER_PUBLIC_METADATA = {
+    "dataset_type": "uncurated_public_preview_papers",
+    "generated_from": "OpenAlex candidate metadata and local manual review caches",
+    "warning": (
+        "Automatically generated paper-level candidate metadata. Papers without "
+        "usable institution coordinates are included for coverage/search but do "
+        "not produce map markers."
+    ),
+}
 PAPER_VERSION_OVERRIDE_COLUMNS = {
     "published_openalex_url",
     "published_doi",
@@ -179,6 +212,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         type=Path,
         default=DEFAULT_OUTPUT,
         help=f"Public preview JSON (default: {DEFAULT_OUTPUT}).",
+    )
+    parser.add_argument(
+        "--paper-output",
+        type=Path,
+        default=DEFAULT_PAPER_OUTPUT,
+        help=f"Paper-level public preview JSON (default: {DEFAULT_PAPER_OUTPUT}).",
     )
     parser.add_argument(
         "--max-records",
@@ -401,6 +440,296 @@ def read_key_papers(path: Path = DEFAULT_KEY_PAPERS) -> List[Dict[str, str]]:
             return [dict(row) for row in reader]
     except OSError as error:
         raise PreviewExportError(f"Could not read {path}: {error}") from error
+
+
+def read_csv_rows(path: Path) -> List[Dict[str, str]]:
+    if not path.exists():
+        return []
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            return [dict(row) for row in csv.DictReader(handle)]
+    except OSError as error:
+        raise PreviewExportError(f"Could not read {path}: {error}") from error
+
+
+def paper_is_retracted(row: Dict[str, Any]) -> bool:
+    publication_type = clean_text(row.get("publication_type")).casefold()
+    title = clean_text(row.get("title")).casefold()
+    exclusion_reason = clean_text(row.get("exclusion_reason")).casefold()
+    notes = clean_text(row.get("notes")).casefold()
+    return (
+        publication_type == "retraction"
+        or title.startswith("retracted:")
+        or "retracted" in exclusion_reason
+        or "retraction" in exclusion_reason
+        or "retracted" in notes
+    )
+
+
+def paper_url(row: Dict[str, Any]) -> str:
+    for field in ("paper_url", "primary_url", "landing_page_url", "url", "openalex_url"):
+        value = clean_text(row.get(field))
+        if value:
+            return value
+    return ""
+
+
+def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
+    year = parse_year(row.get("publication_year") or row.get("year"))
+    arxiv_id = clean_text(row.get("arxiv_id"))
+    arxiv_url = clean_text(row.get("arxiv_url"))
+    return {
+        "title": clean_text(row.get("title")),
+        "in_scope": True,
+        "year": year,
+        "publication_year": year,
+        "publication_date": clean_text(row.get("publication_date")),
+        "task": clean_text(row.get("preliminary_task") or row.get("task")),
+        "subtask": clean_text(row.get("preliminary_subtask") or row.get("subtask")),
+        "entry_type": normalize_entry_type(row),
+        "venue": clean_text(row.get("venue")),
+        "venue_name": clean_text(row.get("venue_name") or row.get("venue")),
+        "venue_type": clean_text(row.get("venue_type")),
+        "publisher": clean_text(row.get("publisher")),
+        "publication_type": clean_text(row.get("publication_type")),
+        "abstract": clean_text(row.get("abstract")),
+        "abstract_source": clean_text(row.get("abstract_source")),
+        "ai_summary": clean_text(row.get("ai_summary")),
+        "doi": clean_text(row.get("doi")),
+        "arxiv_id": arxiv_id,
+        "arxiv_url": arxiv_url,
+        "arxiv_year": parse_year(row.get("arxiv_year")),
+        "has_arxiv_version": bool(arxiv_id or arxiv_url or parse_bool(row.get("has_arxiv_version"))),
+        "paper_url": paper_url(row),
+        "primary_url": clean_text(row.get("primary_url")),
+        "landing_page_url": clean_text(row.get("landing_page_url")),
+        "openalex_url": clean_text(row.get("openalex_url") or row.get("openalex_id")),
+        "is_arxiv_preprint": parse_bool(row.get("is_arxiv_preprint")),
+        "url": clean_text(row.get("url")),
+        "authors": parse_ordered_authors(row.get("authors_ordered")),
+        "source_database": clean_text(row.get("source_database")),
+        "needs_review": parse_bool(row.get("manual_review")),
+        "notes": clean_text(row.get("notes")),
+    }
+
+
+def identity_key(record: Dict[str, Any]) -> Tuple[str, Any]:
+    keys = paper_identity_keys(record)
+    if keys:
+        return keys[0]
+    return ("title_year", (normalize_title(record.get("title")), parse_year(record.get("year"))))
+
+
+def build_identity_lookup(records: Sequence[Dict[str, Any]]) -> Dict[Tuple[str, Any], List[Dict[str, Any]]]:
+    lookup: Dict[Tuple[str, Any], List[Dict[str, Any]]] = defaultdict(list)
+    for record in records:
+        lookup[identity_key(record)].append(record)
+    return lookup
+
+
+def matching_records(
+    row: Dict[str, Any],
+    lookup: Dict[Tuple[str, Any], List[Dict[str, Any]]],
+) -> List[Dict[str, Any]]:
+    seen = set()
+    matches: List[Dict[str, Any]] = []
+    for record in lookup.get(identity_key(row), []):
+        marker = id(record)
+        if marker not in seen:
+            seen.add(marker)
+            matches.append(record)
+    return matches
+
+
+def affiliation_status_by_openalex(
+    affiliation_rows: Sequence[Dict[str, str]],
+    key_affiliation_rows: Sequence[Dict[str, str]],
+    all_candidate_papers: Sequence[Dict[str, str]],
+) -> Dict[str, Dict[str, bool]]:
+    status: Dict[str, Dict[str, bool]] = defaultdict(
+        lambda: {"has_affiliation": False, "has_coordinates": False}
+    )
+    for row in affiliation_rows:
+        openalex_id = normalize_identifier_url(row.get("openalex_id"))
+        if not openalex_id:
+            continue
+        has_affiliation = bool(
+            clean_text(row.get("institution_name"))
+            or clean_text(row.get("raw_affiliation_text"))
+        )
+        has_coordinates = has_usable_coordinates(row)
+        status[openalex_id]["has_affiliation"] |= has_affiliation
+        status[openalex_id]["has_coordinates"] |= has_coordinates
+
+    candidate_index = index_papers_by_identity(all_candidate_papers)
+    for row in key_affiliation_rows:
+        candidate, _match_type = match_row_by_identity(row, candidate_index)
+        if candidate is None:
+            continue
+        openalex_id = normalize_identifier_url(
+            candidate.get("openalex_id") or candidate.get("openalex_url")
+        )
+        if not openalex_id:
+            continue
+        has_affiliation = bool(clean_text(row.get("institution")) or clean_text(row.get("raw_affiliation")))
+        has_coordinates = has_usable_coordinates(row)
+        status[openalex_id]["has_affiliation"] |= has_affiliation
+        status[openalex_id]["has_coordinates"] |= has_coordinates
+    return status
+
+
+def diagnostic_status_by_title(
+    diagnostic_rows: Sequence[Dict[str, str]],
+) -> Dict[Tuple[str, Optional[int]], Dict[str, str]]:
+    diagnostics: Dict[Tuple[str, Optional[int]], Dict[str, str]] = {}
+    for row in diagnostic_rows:
+        title = normalize_title(row.get("title"))
+        if title:
+            diagnostics[(title, parse_year(row.get("year")))] = row
+    return diagnostics
+
+
+def build_paper_preview(
+    map_records: Sequence[Dict[str, Any]],
+    candidate_rows: Sequence[Dict[str, str]],
+    all_candidate_rows: Sequence[Dict[str, str]],
+    key_papers: Sequence[Dict[str, str]],
+    paper_arxiv_links: Sequence[Dict[str, str]],
+    publication_overrides: Sequence[Dict[str, Any]],
+    paper_abstracts: Sequence[Dict[str, Any]],
+    local_abstracts: Sequence[Dict[str, Any]],
+    affiliation_rows: Sequence[Dict[str, str]],
+    key_affiliation_rows: Sequence[Dict[str, str]],
+    diagnostic_rows: Sequence[Dict[str, str]],
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    selected_by_key: Dict[Tuple[str, Any], Dict[str, str]] = {}
+    for row in candidate_rows:
+        if paper_is_retracted(row):
+            continue
+        record = paper_record_from_candidate(row)
+        selected_by_key.setdefault(identity_key(record), row)
+
+    all_candidate_index = index_papers_by_identity(
+        all_candidate_rows,
+        include_title_only=True,
+    )
+    key_papers_matched = 0
+    for key_paper in key_papers:
+        candidate, _match_type = match_row_by_identity(
+            key_paper,
+            all_candidate_index,
+            allow_title_only=True,
+        )
+        if candidate is None or paper_is_retracted(candidate):
+            continue
+        key_papers_matched += 1
+        record = paper_record_from_candidate(candidate)
+        selected_by_key.setdefault(identity_key(record), candidate)
+
+    paper_records = [paper_record_from_candidate(row) for row in selected_by_key.values()]
+    map_lookup = build_identity_lookup(map_records)
+    affiliation_status = affiliation_status_by_openalex(
+        affiliation_rows,
+        key_affiliation_rows,
+        all_candidate_rows,
+    )
+    diagnostics = diagnostic_status_by_title(diagnostic_rows)
+
+    for record in paper_records:
+        marker_matches = matching_records(record, map_lookup)
+        map_record_count = len(marker_matches)
+        openalex_key = normalize_identifier_url(record.get("openalex_url"))
+        local_status = affiliation_status.get(openalex_key, {})
+        diagnostic = diagnostics.get(
+            (normalize_title(record.get("title")), parse_year(record.get("year")))
+        ) or {}
+        skip_reason = clean_text(diagnostic.get("skip_reason")).casefold()
+
+        has_map_location = map_record_count > 0
+        has_affiliation = bool(local_status.get("has_affiliation")) or has_map_location
+        has_coordinates = bool(local_status.get("has_coordinates")) or has_map_location
+        missing_affiliation = not has_map_location and (
+            not has_affiliation or skip_reason == "missing_affiliation_records"
+        )
+        missing_coordinates = not has_map_location and not missing_affiliation and (
+            not has_coordinates or skip_reason == "missing_valid_coordinates"
+        )
+
+        if has_map_location:
+            coverage_status = "map_ready"
+        elif missing_affiliation:
+            coverage_status = "missing_affiliation"
+        elif missing_coordinates:
+            coverage_status = "missing_coordinates"
+        else:
+            coverage_status = "paper_only_review"
+
+        record["has_map_location"] = has_map_location
+        record["map_record_count"] = map_record_count
+        record["missing_affiliation"] = missing_affiliation
+        record["missing_coordinates"] = missing_coordinates
+        record["needs_review"] = bool(
+            record.get("needs_review") or missing_affiliation or missing_coordinates
+        )
+        record["coverage_status"] = coverage_status
+
+        if marker_matches:
+            first_marker = marker_matches[0]
+            record["aggregated_institutions"] = sorted(
+                {institution_name(marker) for marker in marker_matches if institution_name(marker)}
+            )
+            record["aggregated_country_names"] = sorted(
+                {clean_text(marker.get("country")) for marker in marker_matches if clean_text(marker.get("country"))}
+            )
+            record["aggregated_country_codes"] = sorted(
+                {clean_text(marker.get("country_code")) for marker in marker_matches if clean_text(marker.get("country_code"))}
+            )
+            record["aggregated_regions"] = sorted(
+                {clean_text(marker.get("region")) for marker in marker_matches if clean_text(marker.get("region"))}
+            )
+            record["aggregated_region_codes"] = sorted(
+                {clean_text(marker.get("region_code")) for marker in marker_matches if clean_text(marker.get("region_code"))}
+            )
+            for field in ("abstract", "abstract_source", "ai_summary"):
+                if not clean_text(record.get(field)) and clean_text(first_marker.get(field)):
+                    record[field] = clean_text(first_marker.get(field))
+        else:
+            record["aggregated_institutions"] = []
+            record["aggregated_country_names"] = []
+            record["aggregated_country_codes"] = []
+            record["aggregated_regions"] = []
+            record["aggregated_region_codes"] = []
+
+    arxiv_summary = apply_paper_arxiv_links(paper_records, paper_arxiv_links)
+    publication_summary = apply_publication_overrides(paper_records, publication_overrides)
+    abstract_summary = apply_paper_abstracts(
+        paper_records,
+        paper_abstracts,
+        local_abstracts,
+    )
+    paper_records.sort(
+        key=lambda record: (
+            -(parse_year(record.get("publication_year") or record.get("year")) or 0),
+            normalize_title(record.get("title")),
+        )
+    )
+    summary = {
+        "paper_preview_records_exported": len(paper_records),
+        "paper_preview_records_with_map_location": sum(
+            bool(record.get("has_map_location")) for record in paper_records
+        ),
+        "paper_preview_records_missing_affiliation": sum(
+            bool(record.get("missing_affiliation")) for record in paper_records
+        ),
+        "paper_preview_records_missing_coordinates": sum(
+            bool(record.get("missing_coordinates")) for record in paper_records
+        ),
+        "paper_preview_key_papers_matched": key_papers_matched,
+        **arxiv_summary,
+        **publication_summary,
+        **abstract_summary,
+    }
+    return {"metadata": dict(PAPER_PUBLIC_METADATA), "records": paper_records}, summary
 
 
 def build_override_indexes(
@@ -990,6 +1319,39 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
 
+def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
+    print("Paper-level public preview export summary:")
+    print(
+        "  Paper preview records exported: "
+        f"{summary['paper_preview_records_exported']}"
+    )
+    print(
+        "  Paper preview records with map locations: "
+        f"{summary['paper_preview_records_with_map_location']}"
+    )
+    print(
+        "  Paper preview records missing affiliations: "
+        f"{summary['paper_preview_records_missing_affiliation']}"
+    )
+    print(
+        "  Paper preview records missing coordinates: "
+        f"{summary['paper_preview_records_missing_coordinates']}"
+    )
+    print(
+        "  Key papers matched into paper preview: "
+        f"{summary['paper_preview_key_papers_matched']}"
+    )
+    print(
+        "  Paper preview records with non-empty abstract: "
+        f"{summary['records_with_abstract']}"
+    )
+    print(
+        "  Local abstract rows loaded: "
+        f"{summary['local_abstract_rows_loaded']}"
+    )
+    print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
@@ -998,6 +1360,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_arxiv_links = read_paper_arxiv_links()
         publication_overrides = read_publication_overrides()
         paper_abstracts = read_paper_abstracts()
+        local_abstracts = read_local_openalex_abstracts()
         key_papers = read_key_papers()
         institution_record_overrides = load_institution_record_overrides()
         institution_author_overrides = load_institution_author_overrides()
@@ -1017,9 +1380,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             paper_abstracts,
             key_papers,
         )
+        paper_payload, paper_summary = build_paper_preview(
+            payload["records"],
+            read_csv_rows(DEFAULT_CANDIDATE_PAPERS),
+            read_all_candidate_papers(DEFAULT_ALL_CANDIDATE_PAPERS),
+            key_papers,
+            paper_arxiv_links,
+            publication_overrides,
+            paper_abstracts,
+            local_abstracts,
+            read_csv_rows(DEFAULT_AFFILIATIONS),
+            read_key_paper_affiliation_enrichment(),
+            read_csv_rows(DEFAULT_EXPORT_DIAGNOSTICS),
+        )
         if not args.dry_run:
             write_json(args.output, payload)
+            write_json(args.paper_output, paper_payload)
         print_summary(summary, args.output, args.dry_run)
+        print_paper_summary(paper_summary, args.paper_output, args.dry_run)
     except (PreviewExportError, ExportError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1

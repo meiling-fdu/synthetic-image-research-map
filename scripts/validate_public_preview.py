@@ -29,6 +29,7 @@ except ImportError:  # Direct execution from the scripts directory.
 
 
 DEFAULT_INPUT = Path("web/data/public_preview_map_data.json")
+DEFAULT_PAPER_INPUT = Path("web/data/public_preview_papers.json")
 ALLOWED_TASKS = {
     "detection",
     "source_attribution",
@@ -75,6 +76,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         type=Path,
         default=DEFAULT_INPUT,
         help=f"Public preview JSON (default: {DEFAULT_INPUT}).",
+    )
+    parser.add_argument(
+        "--paper-input",
+        type=Path,
+        default=DEFAULT_PAPER_INPUT,
+        help=f"Paper-level public preview JSON (default: {DEFAULT_PAPER_INPUT}).",
     )
     parser.add_argument(
         "--strict",
@@ -389,7 +396,120 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
             )
 
 
-def print_summary(path: Path, records: Sequence[Any], issues: Sequence[Issue]) -> None:
+def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
+    if not isinstance(record, dict):
+        add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
+        return
+
+    title = record_title(record)
+    raw_title = clean_text(record.get("title"))
+    if not raw_title or is_missing_value(raw_title):
+        add_issue(issues, "ERROR", index, title, "title is missing or empty")
+
+    task = clean_text(record.get("task"))
+    allowed_paper_tasks = {*ALLOWED_TASKS, "uncertain"}
+    if task.casefold() in FORBIDDEN_LABELS - {"uncertain"}:
+        add_issue(issues, "ERROR", index, title, f"forbidden task label: {task}")
+    elif task not in allowed_paper_tasks:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            f"task must be one of {', '.join(sorted(allowed_paper_tasks))}",
+        )
+
+    year_value = record.get("publication_year")
+    if is_missing_value(year_value):
+        year_value = record.get("year")
+    if is_missing_value(year_value) or parse_integer(year_value) is None:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "publication_year/year is missing or not parseable as an integer",
+        )
+
+    has_paper_link = any(
+        not is_missing_value(record.get(field)) for field in PAPER_LINK_FIELDS
+    )
+    if not has_paper_link:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            f"no paper link identifier in {', '.join(PAPER_LINK_FIELDS)}",
+        )
+
+    for field in (
+        "has_map_location",
+        "missing_affiliation",
+        "missing_coordinates",
+        "needs_review",
+    ):
+        if parse_boolean(record.get(field)) is None:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"{field} is missing or not a recognized boolean value",
+            )
+
+    map_record_count = parse_integer(record.get("map_record_count"))
+    if map_record_count is None or map_record_count < 0:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "map_record_count is missing or not a non-negative integer",
+        )
+    else:
+        has_map_location = parse_boolean(record.get("has_map_location"))
+        if has_map_location is True and map_record_count < 1:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "has_map_location=true requires map_record_count >= 1",
+            )
+        if has_map_location is False and map_record_count != 0:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "has_map_location=false requires map_record_count=0",
+            )
+
+    coverage_status = normalized_text(record.get("coverage_status"))
+    allowed_statuses = {
+        "map_ready",
+        "missing_affiliation",
+        "missing_coordinates",
+        "paper_only_review",
+    }
+    if coverage_status not in allowed_statuses:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            f"coverage_status must be one of {', '.join(sorted(allowed_statuses))}",
+        )
+
+
+def print_summary(
+    path: Path,
+    records: Sequence[Any],
+    issues: Sequence[Issue],
+    *,
+    paper_level: bool = False,
+) -> None:
     object_records = [record for record in records if isinstance(record, dict)]
     unique_papers = {paper_identity(record) for record in object_records}
     unique_institutions = {
@@ -403,7 +523,24 @@ def print_summary(path: Path, records: Sequence[Any], issues: Sequence[Issue]) -
     print(f"Public preview validation: {path}")
     print(f"Total records: {len(records)}")
     print(f"Unique papers: {len(unique_papers)}")
-    print(f"Unique institutions: {len(unique_institutions)}")
+    if paper_level:
+        with_locations = sum(
+            parse_boolean(record.get("has_map_location")) is True
+            for record in object_records
+        )
+        missing_affiliations = sum(
+            parse_boolean(record.get("missing_affiliation")) is True
+            for record in object_records
+        )
+        missing_coordinates = sum(
+            parse_boolean(record.get("missing_coordinates")) is True
+            for record in object_records
+        )
+        print(f"Papers with map locations: {with_locations}")
+        print(f"Papers missing affiliations: {missing_affiliations}")
+        print(f"Papers missing coordinates: {missing_coordinates}")
+    else:
+        print(f"Unique institutions: {len(unique_institutions)}")
     print(f"Errors: {errors}")
     print(f"Warnings: {warnings}")
 
@@ -420,6 +557,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
         _metadata, records = read_dataset(args.input)
+        _paper_metadata, paper_records = read_dataset(args.paper_input)
     except ValidationInputError as error:
         print(f"Error: {error}", file=sys.stderr)
         return 2
@@ -427,11 +565,22 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     issues: List[Issue] = []
     for index, record in enumerate(records):
         validate_record(index, record, issues)
+    paper_issues: List[Issue] = []
+    for index, record in enumerate(paper_records):
+        validate_paper_record(index, record, paper_issues)
 
     print_summary(args.input, records, issues)
+    print()
+    print_summary(args.paper_input, paper_records, paper_issues, paper_level=True)
     errors = sum(issue.level == "ERROR" for issue in issues)
     warnings = sum(issue.level == "WARNING" for issue in issues)
-    failed = errors > 0 or (args.strict and warnings > 0)
+    paper_errors = sum(issue.level == "ERROR" for issue in paper_issues)
+    paper_warnings = sum(issue.level == "WARNING" for issue in paper_issues)
+    failed = (
+        errors > 0
+        or paper_errors > 0
+        or (args.strict and (warnings > 0 or paper_warnings > 0))
+    )
     if failed:
         reason = "errors or warnings" if args.strict else "errors"
         print(f"\nValidation failed: publication data contains {reason}.")

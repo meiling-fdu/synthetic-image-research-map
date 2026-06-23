@@ -238,7 +238,7 @@ Candidate OpenAlex map records may include institution resolution method, confid
 
 The website supports three dataset modes. Opening `/web/` without a dataset parameter tries the public preview first and clearly falls back to the fictional sample if the preview file is unavailable:
 
-- The **public preview dataset** is the public default, generated at `web/data/public_preview_map_data.json`, and can be opened explicitly with `?dataset=preview`.
+- The **public preview dataset** is the public default, generated as strict map markers at `web/data/public_preview_map_data.json` plus a broader searchable paper list at `web/data/public_preview_papers.json`, and can be opened explicitly with `?dataset=preview`.
 - The **fictional sample dataset** is committed toy data for demonstrating the interface and can be opened with `?dataset=sample`.
 - The **local OpenAlex candidate dataset** is generated at `web/data/openalex_candidate_map_data.json`, opened with `?dataset=openalex`, and ignored by Git. This mode is intended only for local generated data.
 
@@ -260,7 +260,7 @@ For a smaller high-confidence-only preview:
 python3 scripts/export_public_preview.py --max-records 50 --min-confidence high
 ```
 
-The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. It includes only `detection`, `source_attribution`, and `detection_and_source_attribution` records by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate records are excluded. Use `--include-missing-location` only for local debugging of otherwise unmappable records.
+The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. The map marker export includes only `detection`, `source_attribution`, and `detection_and_source_attribution` records with usable institution coordinates by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate marker records are excluded. The paper-level preview list can include in-scope/key/candidate papers that still need affiliation or coordinate review, and marks them with coverage flags rather than inventing locations. Use `--include-missing-location` only for local debugging of otherwise unmappable marker records.
 
 Generate a Markdown quality summary for the currently published preview:
 

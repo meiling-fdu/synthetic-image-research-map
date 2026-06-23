@@ -14,6 +14,7 @@ const DATASET_CONFIG = {
   },
   preview: {
     url: "data/public_preview_map_data.json",
+    paperUrl: "data/public_preview_papers.json",
     recordLabel: "uncurated public preview record",
     emptyMessage: "The public preview dataset contains no eligible map records.",
   },
@@ -111,6 +112,7 @@ const resetButton = document.querySelector("#reset-filters");
 const mapStatus = document.querySelector("#map-status");
 const datasetRecordCount = document.querySelector("#dataset-record-count");
 const datasetPaperCount = document.querySelector("#dataset-paper-count");
+const datasetPaperWithoutLocationCount = document.querySelector("#dataset-paper-without-location-count");
 const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
 const datasetCountryCount = document.querySelector("#dataset-country-count");
 const datasetDetectionCount = document.querySelector("#dataset-detection-count");
@@ -131,7 +133,9 @@ const datasetStatusNote = document.querySelector("#dataset-status-note");
 const datasetNoticeCopy = document.querySelector("#dataset-notice-copy");
 
 let records = [];
+let paperRecords = [];
 let currentFilteredRecords = [];
+let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
@@ -235,11 +239,14 @@ const PAPER_CSV_COLUMNS = [
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
-  ["institutions", (record) => record.aggregated_institutions.join("; ")],
-  ["countries", (record) => record.aggregated_country_names.join("; ")],
-  ["country_codes", (record) => record.aggregated_country_codes.join("; ")],
-  ["regions", (record) => record.aggregated_regions.join("; ")],
-  ["region_codes", (record) => record.aggregated_region_codes.join("; ")],
+  ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
+  ["countries", (record) => (record.aggregated_country_names || []).join("; ")],
+  ["country_codes", (record) => (record.aggregated_country_codes || []).join("; ")],
+  ["regions", (record) => (record.aggregated_regions || []).join("; ")],
+  ["region_codes", (record) => (record.aggregated_region_codes || []).join("; ")],
+  ["has_map_location", (record) => String(Boolean(record.has_map_location))],
+  ["map_record_count", (record) => record.map_record_count ?? ""],
+  ["coverage_status", (record) => record.coverage_status || ""],
   ["doi", (record) => normalizedDoi(record.doi)],
   ["arxiv_id", (record) => recordArxivId(record)],
   ["arxiv_url", (record) => recordArxivUrl(record)],
@@ -688,6 +695,30 @@ function aggregateUniquePapers(institutionRecords) {
   return [...papersByIdentity.values()];
 }
 
+function paperListRecordsForDisplay(sourceRecords) {
+  if (paperRecords.length || sourceRecords.length) {
+    return sourceRecords.map((record) => ({
+      aggregated_institutions: [],
+      aggregated_country_names: [],
+      aggregated_country_codes: [],
+      aggregated_regions: [],
+      aggregated_region_codes: [],
+      map_record_count: 0,
+      has_map_location: false,
+      missing_affiliation: false,
+      missing_coordinates: false,
+      coverage_status: "paper_only_review",
+      ...record,
+    }));
+  }
+  return aggregateUniquePapers(currentFilteredRecords).map((record) => ({
+    ...record,
+    map_record_count: 1,
+    has_map_location: true,
+    coverage_status: "map_ready",
+  }));
+}
+
 function publicationYear(record) {
   return getRecordYear(record);
 }
@@ -709,6 +740,7 @@ function recordSearchText(record) {
     record.region_code,
     record.venue_name,
     record.venue,
+    record.coverage_status,
     record.task,
     record.subtask,
     getEntryTypeLabel(getEntryType(record)),
@@ -721,6 +753,37 @@ function yearFilterValue(input) {
   }
   const value = Number(input.value);
   return Number.isInteger(value) ? value : null;
+}
+
+function recordMatchesActiveFilters(record, keywordTerms) {
+  const searchableText = recordSearchText(record);
+  const matchesKeyword = keywordTerms.every((term) => searchableText.includes(term));
+  const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
+  const matchesEntryType =
+    entryTypeFilter.value === "all" || getEntryType(record) === entryTypeFilter.value;
+  const matchesVenue =
+    venueFilter.value === "all" || venueFilterValue(record) === venueFilter.value;
+  const selectedVersion = preprintFilter.value;
+  const matchesVersion =
+    selectedVersion === "all" ||
+    (selectedVersion === "preprint-only" && isPreprintOnlyRecord(record)) ||
+    (selectedVersion === "published" && hasPublishedVenue(record)) ||
+    (selectedVersion === "has-arxiv" && hasArxivVersion(record)) ||
+    (selectedVersion === "no-arxiv" && !hasArxivVersion(record));
+  const year = publicationYear(record);
+  const minimumYear = yearFilterValue(minYearFilter);
+  const maximumYear = yearFilterValue(maxYearFilter);
+  const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
+  const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
+  return (
+    matchesKeyword &&
+    matchesTask &&
+    matchesEntryType &&
+    matchesVenue &&
+    matchesVersion &&
+    matchesMinimumYear &&
+    matchesMaximumYear
+  );
 }
 
 function normalizedSetSize(values) {
@@ -850,29 +913,35 @@ function isPreprintOnlyRecord(record) {
   );
 }
 
-function updateDatasetStatistics(datasetRecords) {
+function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
+  const paperCoverageRecords = paperListRecordsForDisplay(datasetPaperRecords);
   datasetRecordCount.textContent = datasetRecords.length;
-  datasetPaperCount.textContent = new Set(datasetRecords.map(paperIdentity)).size;
+  datasetPaperCount.textContent = paperCoverageRecords.length;
+  if (datasetPaperWithoutLocationCount) {
+    datasetPaperWithoutLocationCount.textContent = paperCoverageRecords.filter(
+      (record) => !record.has_map_location,
+    ).length;
+  }
   datasetInstitutionCount.textContent = normalizedSetSize(
     datasetRecords.map(recordInstitution),
   );
   datasetCountryCount.textContent = normalizedSetSize(
     datasetRecords.map(recordCountry),
   );
-  datasetDetectionCount.textContent = datasetRecords.filter(
+  datasetDetectionCount.textContent = paperCoverageRecords.filter(
     (record) => record.task === "detection",
   ).length;
-  datasetAttributionCount.textContent = datasetRecords.filter(
+  datasetAttributionCount.textContent = paperCoverageRecords.filter(
     (record) => record.task === "source_attribution",
   ).length;
-  datasetCombinedCount.textContent = datasetRecords.filter(
+  datasetCombinedCount.textContent = paperCoverageRecords.filter(
     (record) => record.task === "detection_and_source_attribution",
   ).length;
 
-  const supportsPreprintMetadata = records.some(hasPreprintMetadata);
+  const supportsPreprintMetadata = [...records, ...paperRecords].some(hasPreprintMetadata);
   datasetPreprintStat.hidden = !supportsPreprintMetadata;
   datasetPreprintCount.textContent = supportsPreprintMetadata
-    ? datasetRecords.filter(isPreprintOnlyRecord).length
+    ? paperCoverageRecords.filter(isPreprintOnlyRecord).length
     : 0;
 }
 
@@ -1176,11 +1245,14 @@ function resultContent(record, relatedEntries = [{ record }]) {
   const affiliationsRow = affiliationsHtml
     ? `<p class="result-compact-affiliations"><strong>Affiliations:</strong> ${affiliationsHtml}</p>`
     : "";
+  const aggregatedCountryNames = record.aggregated_country_names || [];
+  const aggregatedCountryCodes = record.aggregated_country_codes || [];
+  const aggregatedRegions = record.aggregated_regions || [];
   const countriesRow = isPaperView
-    ? `<p class="result-aggregate"><strong>Countries:</strong> ${escapeHtml(record.aggregated_country_names.join(", ") || record.aggregated_country_codes.join(", ") || "Unknown")}</p>`
+    ? `<p class="result-aggregate"><strong>Map coverage:</strong> ${escapeHtml(record.has_map_location ? `${record.map_record_count || 0} marker${record.map_record_count === 1 ? "" : "s"}` : "No map location yet")}</p><p class="result-aggregate"><strong>Countries:</strong> ${escapeHtml(aggregatedCountryNames.join(", ") || aggregatedCountryCodes.join(", ") || "Unknown")}</p>`
     : "";
-  const regionsRow = isPaperView && record.aggregated_regions.length
-    ? `<p class="result-aggregate"><strong>Regions:</strong> ${escapeHtml(record.aggregated_regions.join(", "))}</p>`
+  const regionsRow = isPaperView && aggregatedRegions.length
+    ? `<p class="result-aggregate"><strong>Regions:</strong> ${escapeHtml(aggregatedRegions.join(", "))}</p>`
     : "";
 
   return `
@@ -1204,7 +1276,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
   `;
 }
 
-function renderResults(visibleRecords) {
+function renderResults(visibleRecords, visiblePaperRecords = []) {
   const relatedEntriesByIdentity = new Map();
   visibleRecords.forEach((record) => {
     const identity = paperIdentity(record);
@@ -1213,7 +1285,7 @@ function renderResults(visibleRecords) {
     relatedEntriesByIdentity.set(identity, relatedEntries);
   });
   const displayedResults = resultsView === "papers"
-    ? aggregateUniquePapers(visibleRecords)
+    ? paperListRecordsForDisplay(visiblePaperRecords)
     : visibleRecords;
   currentDisplayedResults = displayedResults;
   const count = displayedResults.length;
@@ -1252,7 +1324,7 @@ function selectResultsView(view) {
       String(button.dataset.resultsView === resultsView),
     );
   });
-  renderResults(currentFilteredRecords);
+  renderResults(currentFilteredRecords, currentFilteredPaperRecords);
 }
 
 function baseMapStatusText(visibleRecords) {
@@ -1409,41 +1481,15 @@ function renderRecords() {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  const selectedTask = taskFilter.value;
-  const selectedEntryType = entryTypeFilter.value;
-  const selectedVenue = venueFilter.value;
-  const selectedVersion = preprintFilter.value;
-  const minimumYear = yearFilterValue(minYearFilter);
-  const maximumYear = yearFilterValue(maxYearFilter);
-  const visibleRecords = records.filter((record) => {
-    const searchableText = recordSearchText(record);
-    const matchesKeyword = keywordTerms.every((term) => searchableText.includes(term));
-    const matchesTask = selectedTask === "all" || record.task === selectedTask;
-    const matchesEntryType =
-      selectedEntryType === "all" || getEntryType(record) === selectedEntryType;
-    const matchesVenue =
-      selectedVenue === "all" || venueFilterValue(record) === selectedVenue;
-    const matchesVersion =
-      selectedVersion === "all" ||
-      (selectedVersion === "preprint-only" && isPreprintOnlyRecord(record)) ||
-      (selectedVersion === "published" && hasPublishedVenue(record)) ||
-      (selectedVersion === "has-arxiv" && hasArxivVersion(record)) ||
-      (selectedVersion === "no-arxiv" && !hasArxivVersion(record));
-    const year = publicationYear(record);
-    const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
-    const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
-    return (
-      matchesKeyword &&
-      matchesTask &&
-      matchesEntryType &&
-      matchesVenue &&
-      matchesVersion &&
-      matchesMinimumYear &&
-      matchesMaximumYear
-    );
-  }).sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
+  const visibleRecords = records
+    .filter((record) => recordMatchesActiveFilters(record, keywordTerms))
+    .sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
+  const visiblePaperRecords = paperRecords
+    .filter((record) => recordMatchesActiveFilters(record, keywordTerms))
+    .sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
 
   currentFilteredRecords = visibleRecords;
+  currentFilteredPaperRecords = visiblePaperRecords;
 
   markerLayer.clearLayers();
   hoverConnectionLayer.clearLayers();
@@ -1466,8 +1512,8 @@ function renderRecords() {
     visibleMarkerEntries.push({ record, marker, identity });
   });
 
-  updateDatasetStatistics(visibleRecords);
-  renderResults(visibleRecords);
+  updateDatasetStatistics(visibleRecords, visiblePaperRecords);
+  renderResults(visibleRecords, visiblePaperRecords);
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", false);
   mapStatus.textContent = baseMapStatusText(visibleRecords);
@@ -1475,7 +1521,8 @@ function renderRecords() {
 }
 
 function configureYearRange() {
-  const years = records.map(publicationYear).filter((year) => year !== null);
+  const filterSourceRecords = paperRecords.length ? paperRecords : records;
+  const years = filterSourceRecords.map(publicationYear).filter((year) => year !== null);
   if (!years.length) {
     return;
   }
@@ -1492,7 +1539,8 @@ function configureYearRange() {
 function configureVenueFilter() {
   const venuesByValue = new Map();
   let hasUnknownVenue = false;
-  records.forEach((record) => {
+  const filterSourceRecords = paperRecords.length ? paperRecords : records;
+  filterSourceRecords.forEach((record) => {
     const value = venueFilterValue(record);
     if (value === "__unknown__") {
       hasUnknownVenue = true;
@@ -1547,18 +1595,37 @@ function validateRecord(record) {
   );
 }
 
+function validatePaperRecord(record) {
+  const validTasks = Object.keys(TASK_COLORS);
+  const mapRecordCount = Number(record.map_record_count);
+  return (
+    typeof recordTitle(record) === "string" &&
+    (record.year === null || Number.isInteger(record.year)) &&
+    validTasks.includes(record.task) &&
+    Array.isArray(record.authors) &&
+    typeof record.coverage_status === "string" &&
+    typeof record.has_map_location === "boolean" &&
+    typeof record.missing_affiliation === "boolean" &&
+    typeof record.missing_coordinates === "boolean" &&
+    Number.isInteger(mapRecordCount) &&
+    mapRecordCount >= 0
+  );
+}
+
 function showDatasetMessage(message, isError = false) {
   clearPaperInteraction(false);
   records = [];
+  paperRecords = [];
   currentFilteredRecords = [];
+  currentFilteredPaperRecords = [];
   currentDisplayedResults = [];
   markerLayer.clearLayers();
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
   hoveredPaperIdentity = "";
-  updateDatasetStatistics(records);
-  renderResults(records);
+  updateDatasetStatistics(records, paperRecords);
+  renderResults(records, paperRecords);
   mapStatus.textContent = message;
   mapStatus.classList.toggle("error", isError);
 }
@@ -1576,10 +1643,10 @@ function updateDatasetLabels() {
     datasetStatusNote.textContent =
       "Uncurated public preview";
     datasetNoticeCopy.textContent =
-      "This public preview is generated from OpenAlex candidate metadata and is intended for exploratory visualization, not as a manually curated bibliography. Paper relevance, task labels, institution names, and coordinates may contain errors.";
+      "This public preview is generated from OpenAlex candidate metadata and local manual review caches. It includes paper-level coverage even when institution/location data is incomplete; only papers with valid reviewed coordinates appear as map markers.";
     mapStatus.textContent = "Loading public preview data...";
     datasetStatisticsNote.textContent =
-      "Institution-level records matching the current filters.";
+      "Paper coverage includes records without map markers; map records require institution coordinates.";
   } else {
     datasetStatusNote.textContent =
       "Uncurated candidate data";
@@ -1663,12 +1730,39 @@ async function readDataset(name) {
   if (!normalizedData.records.every(validateRecord)) {
     throw new Error(`${name} data does not match the expected format`);
   }
+  if (config.paperUrl) {
+    const paperResponse = await fetch(config.paperUrl, { cache: "no-cache" });
+    if (!paperResponse.ok) {
+      throw new Error(`${name} paper data request failed with status ${paperResponse.status}`);
+    }
+    const paperText = await paperResponse.text();
+    const normalizedPaperData = paperText.trim()
+      ? normalizeDatasetPayload(JSON.parse(paperText))
+      : { metadata: {}, records: [] };
+    normalizedPaperData.records = normalizedPaperData.records.map((record) => ({
+      aggregated_institutions: [],
+      aggregated_country_names: [],
+      aggregated_country_codes: [],
+      aggregated_regions: [],
+      aggregated_region_codes: [],
+      ...record,
+    }));
+    if (!normalizedPaperData.records.every(validatePaperRecord)) {
+      throw new Error(`${name} paper data does not match the expected format`);
+    }
+    normalizedData.paperMetadata = normalizedPaperData.metadata;
+    normalizedData.paperRecords = normalizedPaperData.records;
+  }
   return normalizedData;
 }
 
 function displayDataset(normalizedData) {
   records = normalizedData.records;
+  paperRecords = normalizedData.paperRecords || [];
   displayMetadataWarning(normalizedData.metadata);
+  if (normalizedData.paperMetadata) {
+    displayMetadataWarning(normalizedData.paperMetadata);
+  }
   configureYearRange();
   configureVenueFilter();
   enableControls();
