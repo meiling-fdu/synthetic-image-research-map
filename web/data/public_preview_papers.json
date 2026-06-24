@@ -418,21 +418,18 @@
       "needs_review": true,
       "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 1,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Fudan University",
-        "Ministry of Education"
+        "Fudan University"
       ],
       "aggregated_country_names": [
-        "CN",
-        "ME"
+        "CN"
       ],
       "aggregated_country_codes": [
-        "CN",
-        "ME"
+        "CN"
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
@@ -596,6 +593,60 @@
       ],
       "aggregated_country_codes": [
         "CN"
+      ],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
+    },
+    {
+      "title": "Interpol review of detection of AI-generated image and video deepfakes, 2022-2025",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "2026-06-14",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "survey",
+      "venue": "Forensic Science International Synergy",
+      "venue_name": "Forensic Science International Synergy",
+      "venue_type": "journal",
+      "publisher": "Elsevier BV",
+      "publication_type": "article",
+      "abstract": "",
+      "abstract_source": "",
+      "ai_summary": "",
+      "doi": "10.1016/j.fsisyn.2026.100704",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1016/j.fsisyn.2026.100704",
+      "primary_url": "https://doi.org/10.1016/j.fsisyn.2026.100704",
+      "landing_page_url": "https://doi.org/10.1016/j.fsisyn.2026.100704",
+      "openalex_url": "https://openalex.org/W7164742316",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1016/j.fsisyn.2026.100704",
+      "authors": [
+        "Stijn van Lierop",
+        "Ivona Najdenkoska",
+        "Marcel Worring",
+        "Zeno Geradts"
+      ],
+      "source_database": "OpenAlex",
+      "needs_review": true,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Netherlands Forensic Institute"
+      ],
+      "aggregated_country_names": [
+        "Netherlands"
+      ],
+      "aggregated_country_codes": [
+        "NL"
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
@@ -1159,6 +1210,61 @@
       ],
       "aggregated_country_names": [
         "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
+    },
+    {
+      "title": "Transferable Dual-Domain Feature Importance Attack Against AI-Generated Image Detector",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "2026-01-01",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "IEEE Signal Processing Letters",
+      "venue_name": "IEEE Signal Processing Letters",
+      "venue_type": "journal",
+      "publisher": "Institute of Electrical and Electronics Engineers",
+      "publication_type": "article",
+      "abstract": "",
+      "abstract_source": "",
+      "ai_summary": "",
+      "doi": "10.1109/lsp.2026.3658434",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/lsp.2026.3658434",
+      "primary_url": "https://doi.org/10.1109/lsp.2026.3658434",
+      "landing_page_url": "https://doi.org/10.1109/lsp.2026.3658434",
+      "openalex_url": "https://openalex.org/W7125951995",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/lsp.2026.3658434",
+      "authors": [
+        "Weiheng Zhu",
+        "Gang Cao",
+        "Jing Liu",
+        "Lifang Yu",
+        "Shaowei Weng"
+      ],
+      "source_database": "OpenAlex",
+      "needs_review": true,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Communication University of China"
+      ],
+      "aggregated_country_names": [
+        "China"
       ],
       "aggregated_country_codes": [
         "CN"
@@ -1877,6 +1983,53 @@
       "aggregated_region_codes": []
     },
     {
+      "title": "Autonomous and Self-Adapting System for Synthetic Media Detection and Attribution",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "2025-04-04",
+      "task": "detection_and_source_attribution",
+      "subtask": "detection_and_source_attribution",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "venue_type": "repository",
+      "publisher": "Cornell University",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "ai_summary": "",
+      "doi": "10.48550/arxiv.2504.03615",
+      "arxiv_id": "2504.03615",
+      "arxiv_url": "https://arxiv.org/abs/2504.03615",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2504.03615",
+      "primary_url": "http://arxiv.org/abs/2504.03615",
+      "landing_page_url": "http://arxiv.org/abs/2504.03615",
+      "openalex_url": "https://openalex.org/W4415980694",
+      "is_arxiv_preprint": true,
+      "url": "http://arxiv.org/abs/2504.03615",
+      "authors": [
+        "Aref Azizpour",
+        "Tai D. Nguyen",
+        "Matthew C. Stamm"
+      ],
+      "source_database": "OpenAlex",
+      "needs_review": true,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
+    },
+    {
       "title": "Beyond Generation: A Diffusion-based Low-level Feature Extractor for Detecting AI-generated Images",
       "in_scope": true,
       "year": 2025,
@@ -2452,13 +2605,12 @@
       "needs_review": true,
       "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 1,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Aristotle University of Thessaloniki",
-        "Centre for Research and Technology Hellas"
+        "Aristotle University of Thessaloniki"
       ],
       "aggregated_country_names": [
         "GR"
@@ -2999,6 +3151,59 @@
       ],
       "aggregated_country_names": [
         "US"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
+    },
+    {
+      "title": "Detecting Origin Attribution for Text-to-Image Diffusion Models",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "2025-02-26",
+      "task": "detection_and_source_attribution",
+      "subtask": "detection_and_source_attribution",
+      "entry_type": "method",
+      "venue": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
+      "venue_name": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "article",
+      "abstract": "",
+      "abstract_source": "",
+      "ai_summary": "",
+      "doi": "10.1109/wacv61041.2025.00850",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/wacv61041.2025.00850",
+      "primary_url": "https://doi.org/10.1109/wacv61041.2025.00850",
+      "landing_page_url": "https://doi.org/10.1109/wacv61041.2025.00850",
+      "openalex_url": "https://openalex.org/W4409262697",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/wacv61041.2025.00850",
+      "authors": [
+        "Katherine Xu",
+        "Lingzhi Zhang",
+        "Jianbo Shi"
+      ],
+      "source_database": "OpenAlex",
+      "needs_review": true,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "California University of Pennsylvania"
+      ],
+      "aggregated_country_names": [
+        "United States"
       ],
       "aggregated_country_codes": [
         "US"
@@ -4514,6 +4719,56 @@
       "aggregated_region_codes": []
     },
     {
+      "title": "Manifold Induced Biases for Zero-shot and Few-shot Detection of Generated Images",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "2025-04-21",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "venue_type": "repository",
+      "publisher": "Cornell University",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "ai_summary": "",
+      "doi": "10.48550/arxiv.2504.15470",
+      "arxiv_id": "2504.15470",
+      "arxiv_url": "https://arxiv.org/abs/2504.15470",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2504.15470",
+      "primary_url": "http://arxiv.org/abs/2504.15470",
+      "landing_page_url": "http://arxiv.org/abs/2504.15470",
+      "openalex_url": "https://openalex.org/W4414631013",
+      "is_arxiv_preprint": true,
+      "url": "http://arxiv.org/abs/2504.15470",
+      "authors": [
+        "Jonathan Brokman",
+        "Amit Giloni",
+        "Omer Hofman",
+        "Roman Vainshtein",
+        "Hisashi Kojima",
+        "Guy Gilboa"
+      ],
+      "source_database": "OpenAlex",
+      "needs_review": true,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
+    },
+    {
       "title": "MiraGe: Multimodal Discriminative Representation Learning for Generalizable AI-Generated Image Detection",
       "in_scope": true,
       "year": 2025,
@@ -5732,6 +5987,60 @@
         "CN",
         "US"
       ],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
+    },
+    {
+      "title": "Spot the Fake: Large Multimodal Model-Based Synthetic Image Detection with Artifact Explanation",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "2025-03-19",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "venue_type": "repository",
+      "publisher": "Cornell University",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "ai_summary": "",
+      "doi": "10.48550/arxiv.2503.14905",
+      "arxiv_id": "2503.14905",
+      "arxiv_url": "https://arxiv.org/abs/2503.14905",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2503.14905",
+      "primary_url": "http://arxiv.org/abs/2503.14905",
+      "landing_page_url": "http://arxiv.org/abs/2503.14905",
+      "openalex_url": "https://openalex.org/W4414902235",
+      "is_arxiv_preprint": true,
+      "url": "http://arxiv.org/abs/2503.14905",
+      "authors": [
+        "Wen, Siwei",
+        "Junyan Ye",
+        "Feng, Peilin",
+        "Kang, Hengrui",
+        "Zichen Wen",
+        "Yize Chen",
+        "Jiang Wu",
+        "Wenjun Wu",
+        "Conghui He",
+        "Weijia Li"
+      ],
+      "source_database": "OpenAlex",
+      "needs_review": true,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -11395,6 +11704,54 @@
       "aggregated_region_codes": []
     },
     {
+      "title": "AntifakePrompt: Prompt-Tuned Vision-Language Models are Fake Image Detectors",
+      "in_scope": true,
+      "year": 2023,
+      "publication_year": 2023,
+      "publication_date": "2023-10-26",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "venue_type": "repository",
+      "publisher": "Cornell University",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "ai_summary": "",
+      "doi": "10.48550/arxiv.2310.17419",
+      "arxiv_id": "2310.17419",
+      "arxiv_url": "https://arxiv.org/abs/2310.17419",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2310.17419",
+      "primary_url": "http://arxiv.org/abs/2310.17419",
+      "landing_page_url": "http://arxiv.org/abs/2310.17419",
+      "openalex_url": "https://openalex.org/W4387994353",
+      "is_arxiv_preprint": true,
+      "url": "http://arxiv.org/abs/2310.17419",
+      "authors": [
+        "You-Ming Chang",
+        "Chen Yeh",
+        "Wei-Chen Chiu",
+        "Ning Yu"
+      ],
+      "source_database": "OpenAlex",
+      "needs_review": true,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": []
+    },
+    {
       "title": "Artifact: A Large-Scale Dataset With Artificial And Factual Images For Generalizable And Robust Synthetic Image Detection",
       "in_scope": true,
       "year": 2023,
@@ -13481,13 +13838,12 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 1,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
-        "Institute of Computing Technology"
+        "Chinese Academy of Sciences"
       ],
       "aggregated_country_names": [
         "China"
