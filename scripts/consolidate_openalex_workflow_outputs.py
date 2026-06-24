@@ -131,7 +131,12 @@ def title_year_key(row: Dict[str, str]) -> Tuple[str, str]:
 
 
 def batch_name(path: Path, suffix: str) -> str:
-    stem = path.name.removeprefix("key_papers_missing_").removesuffix(suffix)
+    stem = path.name
+    for prefix in ("key_papers_missing_", "key_papers_query_failed_retry_"):
+        if stem.startswith(prefix):
+            stem = stem.removeprefix(prefix)
+            break
+    stem = stem.removesuffix(suffix)
     return stem
 
 
@@ -156,16 +161,22 @@ def existing_review_fields(path: Path) -> Dict[Tuple[str, str], Dict[str, str]]:
 
 def consolidate_problems(output_path: Path) -> List[Dict[str, str]]:
     saved_reviews = existing_review_fields(output_path)
-    selected: Dict[Tuple[str, str], Dict[str, str]] = {}
-    for path in sorted(MANUAL_DIR.glob("key_papers_missing_*_openalex_matches.csv")):
+    latest: Dict[Tuple[str, str], Dict[str, str]] = {}
+    match_paths = sorted(
+        (
+            *MANUAL_DIR.glob("key_papers_missing_*_openalex_matches.csv"),
+            *MANUAL_DIR.glob(
+                "key_papers_query_failed_retry_*_openalex_matches.csv"
+            ),
+        )
+    )
+    for path in match_paths:
         _header, rows = read_csv(path)
         batch = batch_name(path, "_openalex_matches.csv")
         for source in rows:
             status = clean(
                 source.get("match_status") or source.get("is_accepted_match")
             ).casefold()
-            if status not in PROBLEM_STATUSES:
-                continue
             row = {column: clean(source.get(column)) for column in PROBLEM_COLUMNS}
             row["batch"] = batch
             row["match_status"] = status
@@ -174,11 +185,13 @@ def consolidate_problems(output_path: Path) -> List[Dict[str, str]]:
             )
             row.update(saved_reviews.get(title_year_key(source), {}))
             key = title_year_key(source)
-            current = selected.get(key)
-            if current is None or PROBLEM_PREFERENCE[status] > PROBLEM_PREFERENCE[
-                current["match_status"]
-            ]:
-                selected[key] = row
+            latest[key] = row
+
+    selected = {
+        key: row
+        for key, row in latest.items()
+        if row["match_status"] in PROBLEM_STATUSES
+    }
 
     return sorted(
         selected.values(),
@@ -198,7 +211,13 @@ def ready_key(row: Dict[str, str]) -> Tuple[str, str]:
 
 def consolidate_ready() -> List[Dict[str, str]]:
     selected: Dict[Tuple[str, str], Dict[str, str]] = {}
-    for path in sorted(MANUAL_DIR.glob("key_papers_missing_*_import_ready.csv")):
+    ready_paths = sorted(
+        (
+            *MANUAL_DIR.glob("key_papers_missing_*_import_ready.csv"),
+            *MANUAL_DIR.glob("key_papers_query_failed_retry_*_import_ready.csv"),
+        )
+    )
+    for path in ready_paths:
         _header, rows = read_csv(path)
         batch = batch_name(path, "_import_ready.csv")
         for source in rows:
