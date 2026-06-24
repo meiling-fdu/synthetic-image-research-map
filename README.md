@@ -248,19 +248,19 @@ Preview the default filtering without writing a file:
 python3 scripts/export_public_preview.py --dry-run
 ```
 
-Export up to 200 medium-or-higher-confidence records while excluding records marked as needing review:
+Export all eligible medium-or-higher-confidence map records while excluding records marked as needing review:
 
 ```bash
 python3 scripts/export_public_preview.py
 ```
 
-For a smaller high-confidence-only preview:
+For a capped high-confidence-only preview:
 
 ```bash
-python3 scripts/export_public_preview.py --max-records 50 --min-confidence high
+python3 scripts/export_public_preview.py --max-map-records 50 --min-confidence high
 ```
 
-The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. The map marker export includes only `detection`, `source_attribution`, and `detection_and_source_attribution` records with usable institution coordinates by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate marker records are excluded. The paper-level preview list can include in-scope/key/candidate papers that still need affiliation or coordinate review, and marks them with coverage flags rather than inventing locations. Use `--include-missing-location` only for local debugging of otherwise unmappable marker records.
+The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. The map marker export includes all eligible `detection`, `source_attribution`, and `detection_and_source_attribution` records with usable institution coordinates by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate marker records are excluded. Use `--max-map-records` (or the legacy `--max-records` alias) for limited test or performance-fallback exports. The paper-level preview list can include in-scope/key/candidate papers that still need affiliation or coordinate review, and marks them with coverage flags rather than inventing locations. Use `--include-missing-location` only for local debugging of otherwise unmappable marker records.
 
 Generate a Markdown quality summary for the currently published preview:
 

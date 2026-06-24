@@ -72,7 +72,6 @@ DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv"
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
-DEFAULT_MAX_RECORDS = 400
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -226,10 +225,10 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         "--max-records",
         dest="max_records",
         type=positive_int,
-        default=DEFAULT_MAX_RECORDS,
+        default=None,
         help=(
-            "Maximum map records to publish "
-            f"(default: {DEFAULT_MAX_RECORDS}; --max-records is an alias)."
+            "Maximum map records to publish (default: no maximum; "
+            "--max-records is an alias)."
         ),
     )
     parser.add_argument(
@@ -1032,11 +1031,14 @@ def has_resolved_coordinate_metadata(record: Dict[str, Any]) -> bool:
 
 def select_public_map_records(
     eligible_records: Sequence[Dict[str, Any]],
-    max_records: int,
+    max_records: Optional[int],
     key_paper_titles: set[str],
 ) -> Tuple[List[Dict[str, Any]], int]:
     """Maximize paper coverage first, then retain additional institutions."""
     indexed_records = list(enumerate(eligible_records))
+    effective_max_records = (
+        len(indexed_records) if max_records is None else max_records
+    )
     records_by_paper: Dict[Tuple[str, Any], List[Tuple[int, Dict[str, Any]]]] = (
         defaultdict(list)
     )
@@ -1063,10 +1065,10 @@ def select_public_map_records(
             *quality_key(item),
         )
     )
-    selected_items = representatives[:max_records]
+    selected_items = representatives[:effective_max_records]
     selected_indexes = {index for index, _record in selected_items}
 
-    if len(selected_items) < max_records:
+    if len(selected_items) < effective_max_records:
         remaining = [
             item for item in indexed_records if item[0] not in selected_indexes
         ]
@@ -1078,14 +1080,16 @@ def select_public_map_records(
                 item[0],
             )
         )
-        selected_items.extend(remaining[: max_records - len(selected_items)])
+        selected_items.extend(
+            remaining[: effective_max_records - len(selected_items)]
+        )
 
     return [record for _index, record in selected_items], len(representatives)
 
 
 def build_preview(
     records: Sequence[Dict[str, Any]],
-    max_records: int,
+    max_records: Optional[int],
     min_confidence: str,
     include_needs_review: bool,
     paper_version_overrides: Sequence[Dict[str, str]],
@@ -1219,6 +1223,8 @@ def build_preview(
         "records_eligible_before_limit": eligible_records,
         "unique_papers_eligible_before_limit": eligible_unique_papers,
         "eligible_key_paper_records_before_limit": eligible_key_paper_records,
+        "maximum_cap_applied": max_records is not None,
+        "maximum_map_records": max_records,
         "key_paper_records_exported": sum(
             normalize_title(record.get("title")) in key_paper_titles
             for record in selected
@@ -1301,6 +1307,11 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print(
         "  Eligible key-paper records before maximum: "
         f"{summary['eligible_key_paper_records_before_limit']}"
+    )
+    maximum = summary["maximum_map_records"]
+    print(
+        "  Maximum cap applied: "
+        f"{'yes (' + str(maximum) + ')' if maximum is not None else 'no'}"
     )
     print(f"  Records exported: {summary['records_exported']}")
     print(f"  Unique papers exported: {summary['unique_papers_exported']}")
