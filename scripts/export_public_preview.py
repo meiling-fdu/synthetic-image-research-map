@@ -29,6 +29,10 @@ try:
         load_location_review_queue,
         save_location_review_queue,
     )
+    from .curated_locations import (
+        DEFAULT_INSTITUTION_LOCATIONS_PATH,
+        load_confirmed_locations,
+    )
     from .country_normalization import normalize_country_region
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -67,6 +71,10 @@ except ImportError:  # Direct execution from the scripts directory.
         load_curated_papers,
         load_location_review_queue,
         save_location_review_queue,
+    )
+    from curated_locations import (
+        DEFAULT_INSTITUTION_LOCATIONS_PATH,
+        load_confirmed_locations,
     )
     from country_normalization import normalize_country_region
     from paper_exclusions import (
@@ -336,6 +344,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Curated institution location-review CSV "
             f"(default: {DEFAULT_LOCATION_REVIEW_PATH})."
+        ),
+    )
+    parser.add_argument(
+        "--institution-locations",
+        type=Path,
+        default=DEFAULT_INSTITUTION_LOCATIONS_PATH,
+        help=(
+            "Confirmed curated institution-location CSV "
+            f"(default: {DEFAULT_INSTITUTION_LOCATIONS_PATH})."
         ),
     )
     return parser.parse_args(argv)
@@ -1626,6 +1643,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         location_review_rows = load_location_review_queue(
             args.location_review
         )
+        confirmed_location_rows = load_confirmed_locations(
+            args.institution_locations
+        )
         (
             integrated_papers,
             integrated_maps,
@@ -1639,6 +1659,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             exclusion_rows,
             records,
             location_review_rows,
+            confirmed_location_rows,
         )
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
