@@ -60,6 +60,8 @@ The local admin browser provides paper search, filters, metadata inspection, and
 
 Maintainers can also use the local browser's **Delete / Scope Review** workflow to record durable exclusions for out-of-scope papers. Decisions are stored in `data/curated/paper_exclusions.csv`; the public-preview exporter applies active exclusions without modifying OpenAlex-derived processed CSV files. The deployed public site remains read-only.
 
+The public-preview exporter merges eligible curated papers into the searchable paper list and turns active curated mappings into markers only when an exact institution match has one known valid location. Missing or ambiguous locations remain marker-free and enter the curated location-review queue; header-only curated files leave preview output unchanged.
+
 ## Data collection prototype
 
 The standard-library OpenAlex search script can preview its default candidate-paper queries without making API requests or writing files. The defaults are grouped into detection and source attribution, with explicit generated-image wording in every query:
@@ -267,7 +269,7 @@ For a capped high-confidence-only preview:
 python3 scripts/export_public_preview.py --max-map-records 50 --min-confidence high
 ```
 
-The public preview contains automatically generated OpenAlex candidate metadata, not a curated final bibliography. The map marker export includes all eligible `detection`, `source_attribution`, and `detection_and_source_attribution` records with usable institution coordinates by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate marker records are excluded. Use `--max-map-records` (or the legacy `--max-records` alias) for limited test or performance-fallback exports. The paper-level preview list can include in-scope/key/candidate papers that still need affiliation or coordinate review, and marks them with coverage flags rather than inventing locations. Use `--include-missing-location` only for local debugging of otherwise unmappable marker records.
+The public preview contains provenance-labeled OpenAlex candidate metadata plus any eligible maintainer-confirmed curated records; it is not a uniformly curated final bibliography. The map marker export includes all eligible `detection`, `source_attribution`, and `detection_and_source_attribution` records with usable institution coordinates by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate marker records are excluded. Use `--max-map-records` (or the legacy `--max-records` alias) for limited test or performance-fallback exports. The paper-level preview list can include in-scope/key/candidate/curated papers that still need affiliation or coordinate review, and marks them with coverage flags rather than inventing locations. Use `--include-missing-location` only for local debugging of otherwise unmappable automatic marker records.
 
 Generate a Markdown quality summary for the currently published preview:
 
@@ -328,7 +330,7 @@ python3 -m http.server 8000
 
 Then open [http://localhost:8000/web/](http://localhost:8000/web/) for the preview-first default, or [http://localhost:8000/web/?dataset=sample](http://localhost:8000/web/?dataset=sample) for the fictional sample.
 
-The public preview remains automatically generated candidate metadata, not a manually curated bibliography. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during preview.
+The public preview remains primarily automatically generated candidate metadata, with provenance-labeled curated records included when available; it is not a uniformly manually curated bibliography. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during preview.
 
 ## GitHub Pages Deployment
 

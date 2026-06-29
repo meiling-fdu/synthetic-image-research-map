@@ -132,6 +132,7 @@ ALLOWED_LOCATION_STATUSES = {
     "known",
     "ambiguous",
     "needs_location_review",
+    "needs_coordinate_review",
 }
 
 ALLOWED_EXCLUSION_REASONS = {

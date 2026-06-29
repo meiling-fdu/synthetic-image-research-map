@@ -18,6 +18,17 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 try:
+    from .curated_export import (
+        DEFAULT_CURATED_MAPPINGS_PATH,
+        DEFAULT_CURATED_PAPERS_PATH,
+        DEFAULT_LOCATION_REVIEW_PATH,
+        CuratedExportError,
+        integrate_curated_records,
+        load_curated_mappings,
+        load_curated_papers,
+        load_location_review_queue,
+        save_location_review_queue,
+    )
     from .country_normalization import normalize_country_region
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -46,6 +57,17 @@ try:
         read_paper_abstracts,
     )
 except ImportError:  # Direct execution from the scripts directory.
+    from curated_export import (
+        DEFAULT_CURATED_MAPPINGS_PATH,
+        DEFAULT_CURATED_PAPERS_PATH,
+        DEFAULT_LOCATION_REVIEW_PATH,
+        CuratedExportError,
+        integrate_curated_records,
+        load_curated_mappings,
+        load_curated_papers,
+        load_location_review_queue,
+        save_location_review_queue,
+    )
     from country_normalization import normalize_country_region
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -290,6 +312,30 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Durable paper exclusion CSV "
             f"(default: {DEFAULT_PAPER_EXCLUSIONS})."
+        ),
+    )
+    parser.add_argument(
+        "--curated-papers",
+        type=Path,
+        default=DEFAULT_CURATED_PAPERS_PATH,
+        help=f"Curated paper CSV (default: {DEFAULT_CURATED_PAPERS_PATH}).",
+    )
+    parser.add_argument(
+        "--curated-mappings",
+        type=Path,
+        default=DEFAULT_CURATED_MAPPINGS_PATH,
+        help=(
+            "Curated author–institution mapping CSV "
+            f"(default: {DEFAULT_CURATED_MAPPINGS_PATH})."
+        ),
+    )
+    parser.add_argument(
+        "--location-review",
+        type=Path,
+        default=DEFAULT_LOCATION_REVIEW_PATH,
+        help=(
+            "Curated institution location-review CSV "
+            f"(default: {DEFAULT_LOCATION_REVIEW_PATH})."
         ),
     )
     return parser.parse_args(argv)
@@ -1461,6 +1507,22 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
         f"{summary['institution_author_overrides_applied']}"
     )
     print(f"  Downstream rows processed: {summary['records_exported']}")
+    print(
+        "  Curated mappings loaded: "
+        f"{summary.get('curated_mappings_loaded', 0)}"
+    )
+    print(
+        "  Curated coordinate-bearing markers created: "
+        f"{summary.get('curated_markers_created', 0)}"
+    )
+    print(
+        "  Existing markers replaced by curated mappings: "
+        f"{summary.get('curated_markers_replaced', 0)}"
+    )
+    print(
+        "  Curated mappings missing/ambiguous coordinates: "
+        f"{summary.get('curated_mappings_missing_coordinates', 0) + summary.get('curated_mappings_ambiguous_coordinates', 0)}"
+    )
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
 
@@ -1497,6 +1559,20 @@ def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) ->
     print(
         "  Local abstract rows loaded: "
         f"{summary['local_abstract_rows_loaded']}"
+    )
+    print(
+        "  Curated papers added / merged: "
+        f"{summary.get('curated_papers_added', 0)} / "
+        f"{summary.get('curated_papers_merged', 0)}"
+    )
+    print(
+        "  Curated mappings matched to preview papers: "
+        f"{summary.get('curated_mappings_matched_papers', 0)}"
+    )
+    print(
+        "  Location-review rows created / updated: "
+        f"{summary.get('location_review_rows_created', 0)} / "
+        f"{summary.get('location_review_rows_updated', 0)}"
     )
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
@@ -1545,12 +1621,130 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             read_csv_rows(DEFAULT_EXPORT_DIAGNOSTICS),
             exclusion_rows,
         )
+        curated_papers = load_curated_papers(args.curated_papers)
+        curated_mappings = load_curated_mappings(args.curated_mappings)
+        location_review_rows = load_location_review_queue(
+            args.location_review
+        )
+        (
+            integrated_papers,
+            integrated_maps,
+            integrated_location_reviews,
+            curated_summary,
+        ) = integrate_curated_records(
+            paper_payload["records"],
+            payload["records"],
+            curated_papers,
+            curated_mappings,
+            exclusion_rows,
+            records,
+            location_review_rows,
+        )
+        payload["records"] = integrated_maps
+        paper_payload["records"] = integrated_papers
+
+        if (
+            curated_summary.get("curated_markers_created", 0)
+            or curated_summary.get("curated_markers_replaced", 0)
+        ):
+            payload["metadata"] = {
+                **payload["metadata"],
+                "dataset_type": "mixed_candidate_and_curated_public_preview",
+                "generated_from": (
+                    "OpenAlex candidate metadata and maintainer-confirmed "
+                    "curated mappings"
+                ),
+                "warning": (
+                    "Contains automatically generated candidate records plus "
+                    "explicitly identified maintainer-confirmed curated markers."
+                ),
+            }
+        if (
+            curated_summary.get("curated_papers_eligible", 0)
+            or curated_summary.get("curated_mappings_matched_papers", 0)
+        ):
+            paper_payload["metadata"] = {
+                **paper_payload["metadata"],
+                "dataset_type": "mixed_candidate_and_curated_preview_papers",
+                "generated_from": (
+                    "OpenAlex candidate metadata, local review caches, and "
+                    "maintainer-confirmed curated records"
+                ),
+                "warning": (
+                    "Record provenance fields distinguish automatically "
+                    "generated candidates from maintainer-confirmed curation."
+                ),
+            }
+
+        summary.update(curated_summary)
+        summary["records_exported"] = len(integrated_maps)
+        summary["unique_papers_exported"] = len(
+            {identity_key(record) for record in integrated_maps}
+        )
+        key_paper_titles = {
+            normalize_title(row.get("title")) for row in key_papers
+        }
+        key_paper_titles.discard("")
+        summary["key_paper_records_exported"] = sum(
+            normalize_title(record.get("title")) in key_paper_titles
+            for record in integrated_maps
+        )
+        if args.max_records is None:
+            summary["records_eligible_before_limit"] = len(integrated_maps)
+            summary["unique_papers_eligible_before_limit"] = summary[
+                "unique_papers_exported"
+            ]
+            summary["eligible_key_paper_records_before_limit"] = summary[
+                "key_paper_records_exported"
+            ]
+        else:
+            summary["records_eligible_before_limit"] += (
+                curated_summary.get("curated_markers_created", 0)
+                - curated_summary.get("curated_markers_replaced", 0)
+            )
+        summary["exported_records_with_abstract"] = sum(
+            bool(clean_text(record.get("abstract")))
+            for record in integrated_maps
+        )
+        paper_summary.update(curated_summary)
+        paper_summary["paper_preview_records_exported"] = len(
+            integrated_papers
+        )
+        paper_summary["paper_preview_records_with_map_location"] = sum(
+            bool(record.get("has_map_location"))
+            for record in integrated_papers
+        )
+        paper_summary["paper_preview_records_missing_affiliation"] = sum(
+            bool(record.get("missing_affiliation"))
+            for record in integrated_papers
+        )
+        paper_summary["paper_preview_records_missing_coordinates"] = sum(
+            bool(record.get("missing_coordinates"))
+            for record in integrated_papers
+        )
+        paper_summary["records_with_abstract"] = sum(
+            bool(clean_text(record.get("abstract")))
+            for record in integrated_papers
+        )
+        paper_summary["paper_preview_papers_excluded_curated"] += (
+            curated_summary.get("curated_papers_skipped_exclusion", 0)
+        )
         if not args.dry_run:
             write_json(args.output, payload)
             write_json(args.paper_output, paper_payload)
+            if integrated_location_reviews != location_review_rows:
+                save_location_review_queue(
+                    integrated_location_reviews,
+                    args.location_review,
+                )
         print_summary(summary, args.output, args.dry_run)
         print_paper_summary(paper_summary, args.paper_output, args.dry_run)
-    except (PreviewExportError, ExportError, PaperExclusionError) as error:
+    except (
+        PreviewExportError,
+        ExportError,
+        PaperExclusionError,
+        CuratedExportError,
+    ) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
     return 0

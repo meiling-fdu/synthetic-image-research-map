@@ -1,0 +1,1027 @@
+#!/usr/bin/env python3
+"""Integrate maintainer-confirmed papers and mappings into public previews."""
+
+from __future__ import annotations
+
+import csv
+import hashlib
+import json
+import math
+import re
+import unicodedata
+from dataclasses import dataclass
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Sequence, Tuple
+
+try:
+    from .curated_schema import (
+        AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+        CURATED_DATA_DIR,
+        INSTITUTION_LOCATION_REVIEW_COLUMNS,
+        PAPERS_COLUMNS,
+    )
+    from .export_candidate_map_data import normalize_export_task_labels
+    from .paper_exclusions import (
+        DEFAULT_EXCLUSIONS_PATH,
+        PAPER_EXCLUSION_COLUMNS,
+        active_exclusions,
+        all_identity_keys,
+        clean,
+        record_is_excluded,
+        build_active_exclusion_index,
+    )
+except ImportError:
+    from curated_schema import (
+        AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+        CURATED_DATA_DIR,
+        INSTITUTION_LOCATION_REVIEW_COLUMNS,
+        PAPERS_COLUMNS,
+    )
+    from export_candidate_map_data import normalize_export_task_labels
+    from paper_exclusions import (
+        DEFAULT_EXCLUSIONS_PATH,
+        PAPER_EXCLUSION_COLUMNS,
+        active_exclusions,
+        all_identity_keys,
+        clean,
+        record_is_excluded,
+        build_active_exclusion_index,
+    )
+
+
+DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
+DEFAULT_CURATED_MAPPINGS_PATH = (
+    CURATED_DATA_DIR / "author_institution_mappings.csv"
+)
+DEFAULT_LOCATION_REVIEW_PATH = (
+    CURATED_DATA_DIR / "institution_location_review.csv"
+)
+DEFAULT_CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
+ACTIVE_MAPPING_STATUS = "active"
+VISIBLE_MAPPING_STATUSES = {"active", "needs_review"}
+PUBLIC_PAPER_TASKS = {
+    "detection",
+    "source_attribution",
+    "detection_and_source_attribution",
+    "uncertain",
+}
+PUBLIC_MAP_TASKS = PUBLIC_PAPER_TASKS - {"uncertain"}
+CONFIRMED_CURATION_STATUSES = {
+    "manually_confirmed",
+    "corrected_by_admin",
+}
+CURATED_OVERRIDE_FIELDS = (
+    "paper_id",
+    "title",
+    "year",
+    "publication_year",
+    "authors",
+    "venue",
+    "venue_name",
+    "doi",
+    "arxiv_id",
+    "arxiv_url",
+    "paper_url",
+    "primary_url",
+    "openalex_url",
+    "publication_type",
+    "abstract",
+    "task",
+    "subtask",
+    "source_database",
+    "metadata_source",
+    "curation_status",
+    "review_status",
+    "review_note",
+)
+
+
+class CuratedExportError(RuntimeError):
+    """An expected curated export input or write error."""
+
+
+@dataclass(frozen=True)
+class CoordinateMatch:
+    status: str
+    record: Dict[str, Any] | None
+
+
+def _timestamp() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace(
+        "+00:00", "Z"
+    )
+
+
+def _read_csv(path: Path, columns: Sequence[str]) -> List[Dict[str, str]]:
+    try:
+        with path.open("r", encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            if tuple(reader.fieldnames or ()) != tuple(columns):
+                raise CuratedExportError(
+                    f"{path} does not have the exact curated CSV header"
+                )
+            return [dict(row) for row in reader]
+    except OSError as error:
+        raise CuratedExportError(f"could not read {path}: {error}") from error
+    except (UnicodeError, csv.Error) as error:
+        raise CuratedExportError(f"invalid CSV in {path}: {error}") from error
+
+
+def load_curated_papers(
+    path: Path = DEFAULT_CURATED_PAPERS_PATH,
+) -> List[Dict[str, str]]:
+    return _read_csv(path, PAPERS_COLUMNS)
+
+
+def load_curated_mappings(
+    path: Path = DEFAULT_CURATED_MAPPINGS_PATH,
+) -> List[Dict[str, str]]:
+    return _read_csv(path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+
+
+def load_active_exclusions(
+    path: Path = DEFAULT_CURATED_EXCLUSIONS_PATH,
+) -> List[Dict[str, str]]:
+    return list(active_exclusions(_read_csv(path, PAPER_EXCLUSION_COLUMNS)))
+
+
+def load_location_review_queue(
+    path: Path = DEFAULT_LOCATION_REVIEW_PATH,
+) -> List[Dict[str, str]]:
+    return _read_csv(path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
+
+
+def save_location_review_queue(
+    rows: Sequence[Mapping[str, Any]],
+    path: Path = DEFAULT_LOCATION_REVIEW_PATH,
+) -> None:
+    temporary_path = path.with_suffix(path.suffix + ".tmp")
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with temporary_path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(
+                handle,
+                fieldnames=INSTITUTION_LOCATION_REVIEW_COLUMNS,
+                lineterminator="\n",
+                extrasaction="ignore",
+            )
+            writer.writeheader()
+            writer.writerows(rows)
+        temporary_path.replace(path)
+    except OSError as error:
+        raise CuratedExportError(f"could not write {path}: {error}") from error
+
+
+def normalize_paper_identity_keys(record: Mapping[str, Any]) -> List[str]:
+    keys = list(all_identity_keys(record))
+    paper_id = clean(
+        record.get("paper_id")
+        or record.get("related_paper_id")
+        or record.get("display_id")
+    ).casefold()
+    if paper_id:
+        keys.append(f"paper_id:{paper_id}")
+    return keys
+
+
+def normalize_institution(value: Any) -> str:
+    text = unicodedata.normalize("NFKC", clean(value)).casefold()
+    return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+
+
+def normalize_task_subtask(
+    record: Mapping[str, Any],
+) -> Tuple[str, str] | None:
+    labels = normalize_export_task_labels(dict(record))
+    if labels is None:
+        return None
+    task, subtask = labels
+    if task not in PUBLIC_PAPER_TASKS:
+        return None
+    return task, subtask
+
+
+def _parse_year(value: Any) -> int | None:
+    try:
+        year = int(clean(value))
+    except ValueError:
+        return None
+    return year if 0 < year < 10000 else None
+
+
+def _parse_people(value: Any) -> List[str]:
+    if isinstance(value, list):
+        return [clean(item) for item in value if clean(item)]
+    text = clean(value)
+    if not text:
+        return []
+    if text.startswith("["):
+        try:
+            parsed = json.loads(text)
+        except json.JSONDecodeError:
+            parsed = None
+        if isinstance(parsed, list):
+            return [clean(item) for item in parsed if clean(item)]
+    separator = ";" if ";" in text else "|" if "|" in text else None
+    if separator:
+        return [clean(item) for item in text.split(separator) if clean(item)]
+    return [text]
+
+
+def _valid_coordinates(record: Mapping[str, Any]) -> bool:
+    latitude = record.get("latitude")
+    longitude = record.get("longitude")
+    if latitude in (None, ""):
+        latitude = record.get("lat")
+    if longitude in (None, ""):
+        longitude = record.get("lon")
+    try:
+        latitude_value = float(latitude)
+        longitude_value = float(longitude)
+    except (TypeError, ValueError):
+        return False
+    return (
+        math.isfinite(latitude_value)
+        and math.isfinite(longitude_value)
+        and -90 <= latitude_value <= 90
+        and -180 <= longitude_value <= 180
+    )
+
+
+def _coordinate_signature(record: Mapping[str, Any]) -> Tuple[Any, ...]:
+    latitude = record.get("latitude")
+    longitude = record.get("longitude")
+    if latitude in (None, ""):
+        latitude = record.get("lat")
+    if longitude in (None, ""):
+        longitude = record.get("lon")
+    return (
+        round(float(latitude), 7),
+        round(float(longitude), 7),
+        clean(record.get("city")).casefold(),
+        clean(record.get("country_code")).upper(),
+        clean(record.get("region_code")).upper(),
+    )
+
+
+def _candidate_location_is_safe(record: Mapping[str, Any]) -> bool:
+    confidence = clean(record.get("resolution_confidence")).casefold()
+    needs_review = clean(record.get("needs_review")).casefold()
+    return (
+        _valid_coordinates(record)
+        and confidence in {"medium", "high"}
+        and needs_review not in {"1", "true", "yes", "y"}
+    )
+
+
+def _location_groups(
+    records: Iterable[Mapping[str, Any]],
+    *,
+    require_safe_candidate: bool,
+) -> Dict[str, List[Dict[str, Any]]]:
+    grouped: Dict[str, List[Dict[str, Any]]] = {}
+    for record in records:
+        institution = normalize_institution(record.get("institution"))
+        if not institution or not _valid_coordinates(record):
+            continue
+        if require_safe_candidate and not _candidate_location_is_safe(record):
+            continue
+        grouped.setdefault(institution, []).append(dict(record))
+    return grouped
+
+
+def _unique_location(
+    records: Sequence[Mapping[str, Any]],
+) -> CoordinateMatch:
+    by_signature: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
+    for record in records:
+        by_signature.setdefault(_coordinate_signature(record), dict(record))
+    if len(by_signature) == 1:
+        return CoordinateMatch("known", next(iter(by_signature.values())))
+    return CoordinateMatch("ambiguous", None)
+
+
+def match_institutions_to_known_coordinates(
+    public_map_records: Sequence[Mapping[str, Any]],
+    candidate_map_records: Sequence[Mapping[str, Any]] = (),
+) -> Dict[str, CoordinateMatch]:
+    public_groups = _location_groups(
+        public_map_records, require_safe_candidate=False
+    )
+    candidate_groups = _location_groups(
+        candidate_map_records, require_safe_candidate=True
+    )
+    matches: Dict[str, CoordinateMatch] = {}
+    for institution in set(public_groups) | set(candidate_groups):
+        if institution in public_groups:
+            matches[institution] = _unique_location(public_groups[institution])
+        else:
+            matches[institution] = _unique_location(candidate_groups[institution])
+    return matches
+
+
+def _paper_index(
+    records: Sequence[MutableMapping[str, Any]],
+) -> Dict[str, List[MutableMapping[str, Any]]]:
+    index: Dict[str, List[MutableMapping[str, Any]]] = {}
+    for record in records:
+        for key in normalize_paper_identity_keys(record):
+            index.setdefault(key, []).append(record)
+    return index
+
+
+def _matching_papers(
+    record: Mapping[str, Any],
+    index: Mapping[str, Sequence[MutableMapping[str, Any]]],
+) -> List[MutableMapping[str, Any]]:
+    seen = set()
+    for key in normalize_paper_identity_keys(record):
+        matches = index.get(key, ())
+        if not matches:
+            continue
+        result = []
+        for match in matches:
+            marker = id(match)
+            if marker not in seen:
+                seen.add(marker)
+                result.append(match)
+        return result
+    return []
+
+
+def _curated_paper_record(
+    row: Mapping[str, Any], task: str, subtask: str
+) -> Dict[str, Any]:
+    year = _parse_year(row.get("year"))
+    arxiv_id = clean(row.get("arxiv_id"))
+    paper_url = clean(row.get("paper_url"))
+    openalex_url = clean(row.get("openalex_url"))
+    doi = clean(row.get("doi"))
+    if not paper_url:
+        if doi:
+            paper_url = (
+                doi
+                if doi.casefold().startswith(("http://", "https://"))
+                else f"https://doi.org/{doi}"
+            )
+        elif arxiv_id:
+            paper_url = f"https://arxiv.org/abs/{arxiv_id}"
+        else:
+            paper_url = openalex_url
+    review_status = clean(row.get("review_status"))
+    note = clean(row.get("review_note"))
+    publication_type = clean(row.get("publication_type"))
+    normalized_type = publication_type.casefold()
+    entry_type = (
+        "survey"
+        if normalized_type in {"survey", "review", "systematic review"}
+        else "dataset"
+        if normalized_type == "dataset"
+        else "benchmark"
+        if normalized_type == "benchmark"
+        else "method"
+    )
+    return {
+        "paper_id": clean(row.get("paper_id")),
+        "title": clean(row.get("title")),
+        "in_scope": True,
+        "year": year,
+        "publication_year": year,
+        "publication_date": "",
+        "task": task,
+        "subtask": subtask,
+        "entry_type": entry_type,
+        "venue": clean(row.get("venue")),
+        "venue_name": clean(row.get("venue")),
+        "venue_type": "",
+        "publisher": "",
+        "publication_type": publication_type,
+        "abstract": clean(row.get("abstract")),
+        "abstract_source": clean(row.get("metadata_source")),
+        "ai_summary": "",
+        "doi": doi,
+        "arxiv_id": arxiv_id,
+        "arxiv_url": f"https://arxiv.org/abs/{arxiv_id}" if arxiv_id else "",
+        "arxiv_year": None,
+        "has_arxiv_version": bool(arxiv_id),
+        "paper_url": paper_url,
+        "primary_url": paper_url,
+        "landing_page_url": "",
+        "openalex_url": openalex_url,
+        "is_arxiv_preprint": bool(arxiv_id and not doi),
+        "url": paper_url,
+        "authors": _parse_people(row.get("authors")),
+        "source_database": clean(row.get("source_database")) or "curated",
+        "metadata_source": clean(row.get("metadata_source")),
+        "curation_status": clean(row.get("curation_status")),
+        "review_status": review_status,
+        "review_note": note,
+        "needs_review": review_status != "reviewed",
+        "notes": note,
+        "has_map_location": False,
+        "map_record_count": 0,
+        "missing_affiliation": True,
+        "missing_coordinates": False,
+        "coverage_status": "missing_affiliation",
+        "aggregated_institutions": [],
+        "aggregated_country_names": [],
+        "aggregated_country_codes": [],
+        "aggregated_regions": [],
+        "aggregated_region_codes": [],
+    }
+
+
+def build_curated_paper_preview_records(
+    curated_papers: Sequence[Mapping[str, Any]],
+    exclusion_rows: Sequence[Mapping[str, Any]] = (),
+) -> Tuple[List[Dict[str, Any]], Dict[str, int]]:
+    exclusion_index = build_active_exclusion_index(exclusion_rows)
+    records = []
+    skipped_scope = 0
+    skipped_task = 0
+    skipped_exclusion = 0
+    for row in curated_papers:
+        if clean(row.get("scope_status")).casefold() == "out_of_scope":
+            skipped_scope += 1
+            continue
+        labels = normalize_task_subtask(row)
+        if labels is None:
+            skipped_task += 1
+            continue
+        record = _curated_paper_record(row, *labels)
+        if record_is_excluded(record, exclusion_index):
+            skipped_exclusion += 1
+            continue
+        records.append(record)
+    return records, {
+        "curated_papers_loaded": len(curated_papers),
+        "curated_papers_eligible": len(records),
+        "curated_papers_skipped_scope": skipped_scope,
+        "curated_papers_skipped_task": skipped_task,
+        "curated_papers_skipped_exclusion": skipped_exclusion,
+    }
+
+
+def _merge_curated_paper(
+    existing: MutableMapping[str, Any],
+    curated: Mapping[str, Any],
+) -> None:
+    confirmed = clean(curated.get("curation_status")) in (
+        CONFIRMED_CURATION_STATUSES
+    )
+    for field in CURATED_OVERRIDE_FIELDS:
+        value = curated.get(field)
+        if value in (None, "", []):
+            continue
+        if confirmed or existing.get(field) in (None, "", []):
+            existing[field] = value
+    curated_note = clean(curated.get("notes"))
+    existing_note = clean(existing.get("notes"))
+    if curated_note and curated_note not in existing_note.split(" | "):
+        existing["notes"] = (
+            f"{existing_note} | {curated_note}"
+            if existing_note
+            else curated_note
+        )
+
+
+def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
+    return {
+        "mapping_id": clean(mapping.get("mapping_id")),
+        "institution": clean(mapping.get("institution")),
+        "institution_authors": _parse_people(
+            mapping.get("institution_authors")
+        ),
+        "raw_affiliation": clean(mapping.get("raw_affiliation")),
+        "evidence_source": clean(mapping.get("evidence_source")),
+        "evidence_url": clean(mapping.get("evidence_url")),
+        "affiliation_note": clean(mapping.get("affiliation_note")),
+        "mapping_status": clean(mapping.get("mapping_status")),
+        "review_note": clean(mapping.get("review_note")),
+    }
+
+
+def _marker_id(
+    paper: Mapping[str, Any], mapping: Mapping[str, Any]
+) -> str:
+    mapping_id = clean(mapping.get("mapping_id"))
+    identity = mapping_id or "|".join(
+        normalize_paper_identity_keys(paper)
+        + [
+            normalize_institution(mapping.get("institution")),
+            normalize_institution(mapping.get("institution_authors")),
+        ]
+    )
+    digest = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20]
+    return f"curated-map:{digest}"
+
+
+def _mapping_note(mapping: Mapping[str, Any]) -> str:
+    values = []
+    for label, field in (
+        ("Raw affiliation", "raw_affiliation"),
+        ("Evidence source", "evidence_source"),
+        ("Evidence URL", "evidence_url"),
+        ("Affiliation note", "affiliation_note"),
+        ("Review note", "review_note"),
+    ):
+        value = clean(mapping.get(field))
+        if value:
+            values.append(f"{label}: {value}")
+    return " | ".join(values)
+
+
+def _curated_marker(
+    paper: Mapping[str, Any],
+    mapping: Mapping[str, Any],
+    location: Mapping[str, Any],
+) -> Dict[str, Any]:
+    latitude = location.get("latitude")
+    longitude = location.get("longitude")
+    if latitude in (None, ""):
+        latitude = location.get("lat")
+    if longitude in (None, ""):
+        longitude = location.get("lon")
+    paper_url = clean(
+        paper.get("paper_url")
+        or paper.get("primary_url")
+        or paper.get("openalex_url")
+    )
+    return {
+        "id": _marker_id(paper, mapping),
+        "paper_id": clean(paper.get("paper_id")),
+        "title": clean(paper.get("title")),
+        "in_scope": True,
+        "year": _parse_year(
+            paper.get("publication_year") or paper.get("year")
+        ),
+        "publication_year": _parse_year(
+            paper.get("publication_year") or paper.get("year")
+        ),
+        "publication_date": clean(paper.get("publication_date")),
+        "task": clean(paper.get("task")),
+        "subtask": clean(paper.get("subtask")),
+        "entry_type": clean(paper.get("entry_type")) or "method",
+        "venue": clean(paper.get("venue") or paper.get("venue_name")),
+        "venue_name": clean(paper.get("venue_name") or paper.get("venue")),
+        "publication_type": clean(paper.get("publication_type")),
+        "abstract": clean(paper.get("abstract")),
+        "abstract_source": clean(paper.get("abstract_source")),
+        "doi": clean(paper.get("doi")),
+        "arxiv_id": clean(paper.get("arxiv_id")),
+        "arxiv_url": clean(paper.get("arxiv_url")),
+        "has_arxiv_version": bool(
+            clean(paper.get("arxiv_id")) or clean(paper.get("arxiv_url"))
+        ),
+        "paper_url": paper_url,
+        "primary_url": paper_url,
+        "openalex_url": clean(paper.get("openalex_url")),
+        "url": paper_url,
+        "authors": _parse_people(paper.get("authors")),
+        "institution": clean(mapping.get("institution")),
+        "institution_authors": _parse_people(
+            mapping.get("institution_authors")
+        ),
+        "country": clean(location.get("country")),
+        "country_code": clean(location.get("country_code")),
+        "region": clean(location.get("region")),
+        "region_code": clean(location.get("region_code")),
+        "raw_country": clean(location.get("raw_country")),
+        "raw_country_code": clean(location.get("raw_country_code")),
+        "city": clean(location.get("city")),
+        "latitude": float(latitude),
+        "longitude": float(longitude),
+        "lat": float(latitude),
+        "lon": float(longitude),
+        "source_database": "curated",
+        "metadata_source": clean(paper.get("metadata_source")),
+        "curation_status": clean(paper.get("curation_status")),
+        "mapping_id": clean(mapping.get("mapping_id")),
+        "raw_affiliation": clean(mapping.get("raw_affiliation")),
+        "evidence_source": clean(mapping.get("evidence_source")),
+        "evidence_url": clean(mapping.get("evidence_url")),
+        "resolution_method": "curated_mapping_existing_location",
+        "resolution_confidence": "high",
+        "needs_review": False,
+        "notes": _mapping_note(mapping),
+    }
+
+
+def _mapping_matches_paper(
+    mapping: Mapping[str, Any], paper: Mapping[str, Any]
+) -> bool:
+    return bool(
+        set(normalize_paper_identity_keys(mapping))
+        & set(normalize_paper_identity_keys(paper))
+    )
+
+
+def _queue_key(record: Mapping[str, Any]) -> Tuple[str, str]:
+    paper_id = clean(
+        record.get("paper_id")
+        or record.get("related_paper_id")
+        or record.get("display_id")
+    ).casefold()
+    identity = (
+        f"paper_id:{paper_id}"
+        if paper_id
+        else next(iter(normalize_paper_identity_keys(record)), "")
+    )
+    return identity, normalize_institution(record.get("institution"))
+
+
+def _merged_people(left: Any, right: Any) -> str:
+    people = []
+    seen = set()
+    for value in _parse_people(left) + _parse_people(right):
+        key = value.casefold()
+        if key not in seen:
+            seen.add(key)
+            people.append(value)
+    return "; ".join(people)
+
+
+def _upsert_location_review(
+    rows: List[Dict[str, str]],
+    mapping: Mapping[str, Any],
+    *,
+    coordinate_status: str,
+) -> str:
+    now = _timestamp()
+    location_status = (
+        "needs_coordinate_review"
+        if coordinate_status == "ambiguous"
+        else "missing"
+    )
+    key = _queue_key(mapping)
+    values = {
+        "institution": clean(mapping.get("institution")),
+        "related_paper_id": clean(mapping.get("paper_id")),
+        "title": clean(mapping.get("title")),
+        "year": clean(mapping.get("year")),
+        "doi": clean(mapping.get("doi")),
+        "openalex_url": clean(mapping.get("openalex_url")),
+        "institution_authors": clean(mapping.get("institution_authors")),
+        "raw_affiliation": clean(mapping.get("raw_affiliation")),
+        "evidence_source": clean(mapping.get("evidence_source")),
+        "evidence_url": clean(mapping.get("evidence_url")),
+        "suggested_city": "",
+        "suggested_country": "",
+        "location_status": location_status,
+        "coordinate_status": coordinate_status,
+        "review_note": clean(mapping.get("review_note")),
+        "updated_at": now,
+    }
+    for row in rows:
+        if _queue_key(row) != key:
+            continue
+        row["institution_authors"] = _merged_people(
+            row.get("institution_authors"), values["institution_authors"]
+        )
+        for field, value in values.items():
+            if field in {"institution_authors", "review_note"}:
+                continue
+            if value:
+                row[field] = value
+        if not clean(row.get("review_note")):
+            row["review_note"] = values["review_note"]
+        row["created_at"] = clean(row.get("created_at")) or now
+        row["updated_at"] = now
+        return "updated"
+    rows.append({**values, "created_at": now})
+    return "created"
+
+
+def _mark_location_known(
+    rows: List[Dict[str, str]], mapping: Mapping[str, Any]
+) -> bool:
+    key = _queue_key(mapping)
+    for row in rows:
+        if _queue_key(row) == key:
+            row["location_status"] = "known"
+            row["coordinate_status"] = "known"
+            row["updated_at"] = _timestamp()
+            return True
+    return False
+
+
+def build_curated_map_records(
+    paper_records: Sequence[MutableMapping[str, Any]],
+    mappings: Sequence[Mapping[str, Any]],
+    public_map_records: Sequence[Mapping[str, Any]],
+    candidate_map_records: Sequence[Mapping[str, Any]] = (),
+    exclusion_rows: Sequence[Mapping[str, Any]] = (),
+    location_review_rows: List[Dict[str, str]] | None = None,
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+    paper_index = _paper_index(paper_records)
+    exclusion_index = build_active_exclusion_index(exclusion_rows)
+    locations = match_institutions_to_known_coordinates(
+        public_map_records, candidate_map_records
+    )
+    review_rows = location_review_rows if location_review_rows is not None else []
+    markers = []
+    missing = 0
+    ambiguous = 0
+    queue_created = 0
+    queue_updated = 0
+    queue_known = 0
+    skipped_status = 0
+    skipped_paper = 0
+    skipped_task = 0
+    resolved_mapping_ids = set()
+    matched_paper_mappings = 0
+
+    for mapping in mappings:
+        if clean(mapping.get("mapping_status")) != ACTIVE_MAPPING_STATUS:
+            skipped_status += 1
+            continue
+        papers = _matching_papers(mapping, paper_index)
+        if not papers:
+            skipped_paper += 1
+            continue
+        paper = papers[0]
+        if record_is_excluded(paper, exclusion_index):
+            skipped_paper += 1
+            continue
+        matched_paper_mappings += 1
+        institution_key = normalize_institution(mapping.get("institution"))
+        match = locations.get(institution_key, CoordinateMatch("missing", None))
+        if match.status != "known" or match.record is None:
+            coordinate_status = (
+                "ambiguous" if match.status == "ambiguous" else "missing"
+            )
+            result = _upsert_location_review(
+                review_rows, mapping, coordinate_status=coordinate_status
+            )
+            queue_created += int(result == "created")
+            queue_updated += int(result == "updated")
+            missing += int(coordinate_status == "missing")
+            ambiguous += int(coordinate_status == "ambiguous")
+            continue
+        queue_known += int(_mark_location_known(review_rows, mapping))
+        resolved_mapping_ids.add(clean(mapping.get("mapping_id")))
+        if clean(paper.get("task")) not in PUBLIC_MAP_TASKS:
+            skipped_task += 1
+            continue
+        markers.append(_curated_marker(paper, mapping, match.record))
+
+    return markers, {
+        "curated_mappings_loaded": len(mappings),
+        "curated_markers_created": len(markers),
+        "curated_mappings_missing_coordinates": missing,
+        "curated_mappings_ambiguous_coordinates": ambiguous,
+        "curated_mappings_skipped_status": skipped_status,
+        "curated_mappings_skipped_paper": skipped_paper,
+        "curated_mappings_skipped_task": skipped_task,
+        "curated_mappings_matched_papers": matched_paper_mappings,
+        "location_review_rows_created": queue_created,
+        "location_review_rows_updated": queue_updated,
+        "location_review_rows_marked_known": queue_known,
+        "resolved_mapping_ids": resolved_mapping_ids,
+    }
+
+
+def _remove_overridden_markers(
+    map_records: List[Dict[str, Any]],
+    paper: Mapping[str, Any],
+    institution: Any,
+) -> int:
+    paper_keys = set(normalize_paper_identity_keys(paper))
+    institution_key = normalize_institution(institution)
+    kept = []
+    removed = 0
+    for marker in map_records:
+        if (
+            paper_keys & set(normalize_paper_identity_keys(marker))
+            and normalize_institution(marker.get("institution")) == institution_key
+        ):
+            removed += 1
+        else:
+            kept.append(marker)
+    map_records[:] = kept
+    return removed
+
+
+def _recalculate_paper_details(
+    paper: MutableMapping[str, Any],
+    map_records: Sequence[Mapping[str, Any]],
+    mappings: Sequence[Mapping[str, Any]],
+    resolved_mapping_ids: set[str],
+) -> None:
+    markers = [
+        marker
+        for marker in map_records
+        if _mapping_matches_paper(marker, paper)
+    ]
+    visible_mappings = [
+        mapping
+        for mapping in mappings
+        if clean(mapping.get("mapping_status")) in VISIBLE_MAPPING_STATUSES
+        and _mapping_matches_paper(mapping, paper)
+    ]
+    has_map_location = bool(markers)
+    missing_affiliation = not has_map_location and not visible_mappings
+    active_mappings = [
+        mapping
+        for mapping in visible_mappings
+        if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+    ]
+    missing_coordinates = (
+        not has_map_location
+        and any(
+            clean(mapping.get("mapping_id")) not in resolved_mapping_ids
+            for mapping in active_mappings
+        )
+    )
+    if has_map_location:
+        coverage_status = "map_ready"
+    elif missing_affiliation:
+        coverage_status = "missing_affiliation"
+    elif missing_coordinates:
+        coverage_status = "missing_coordinates"
+    else:
+        coverage_status = "paper_only_review"
+
+    unresolved_active = any(
+        clean(mapping.get("mapping_id")) not in resolved_mapping_ids
+        for mapping in active_mappings
+    )
+    needs_review_mapping = any(
+        clean(mapping.get("mapping_status")) == "needs_review"
+        for mapping in visible_mappings
+    )
+    paper["has_map_location"] = has_map_location
+    paper["map_record_count"] = len(markers)
+    paper["missing_affiliation"] = missing_affiliation
+    paper["missing_coordinates"] = missing_coordinates
+    paper["coverage_status"] = coverage_status
+    paper["needs_review"] = bool(
+        missing_affiliation
+        or missing_coordinates
+        or unresolved_active
+        or needs_review_mapping
+        or clean(paper.get("task")) == "uncertain"
+        or (
+            clean(paper.get("review_status"))
+            and clean(paper.get("review_status")) != "reviewed"
+        )
+    )
+    paper["curated_mappings"] = [
+        _mapping_public_fields(mapping) for mapping in visible_mappings
+    ]
+    paper["aggregated_institutions"] = sorted(
+        {
+            clean(record.get("institution"))
+            for record in [*markers, *visible_mappings]
+            if clean(record.get("institution"))
+        },
+        key=str.casefold,
+    )
+    paper["aggregated_country_names"] = sorted(
+        {
+            clean(marker.get("country"))
+            for marker in markers
+            if clean(marker.get("country"))
+        },
+        key=str.casefold,
+    )
+    paper["aggregated_country_codes"] = sorted(
+        {
+            clean(marker.get("country_code"))
+            for marker in markers
+            if clean(marker.get("country_code"))
+        }
+    )
+    paper["aggregated_regions"] = sorted(
+        {
+            clean(marker.get("region"))
+            for marker in markers
+            if clean(marker.get("region"))
+        },
+        key=str.casefold,
+    )
+    paper["aggregated_region_codes"] = sorted(
+        {
+            clean(marker.get("region_code"))
+            for marker in markers
+            if clean(marker.get("region_code"))
+        }
+    )
+
+
+def integrate_curated_records(
+    paper_records: Sequence[Mapping[str, Any]],
+    map_records: Sequence[Mapping[str, Any]],
+    curated_papers: Sequence[Mapping[str, Any]],
+    mappings: Sequence[Mapping[str, Any]],
+    exclusion_rows: Sequence[Mapping[str, Any]] = (),
+    candidate_map_records: Sequence[Mapping[str, Any]] = (),
+    location_review_rows: Sequence[Mapping[str, Any]] = (),
+) -> Tuple[
+    List[Dict[str, Any]],
+    List[Dict[str, Any]],
+    List[Dict[str, str]],
+    Dict[str, Any],
+]:
+    if not curated_papers and not mappings:
+        return (
+            [dict(record) for record in paper_records],
+            [dict(record) for record in map_records],
+            [dict(row) for row in location_review_rows],
+            {
+                "curated_papers_loaded": 0,
+                "curated_papers_eligible": 0,
+                "curated_papers_added": 0,
+                "curated_papers_merged": 0,
+                "curated_mappings_loaded": 0,
+                "curated_markers_created": 0,
+                "curated_markers_replaced": 0,
+                "curated_mappings_matched_papers": 0,
+                "curated_mappings_missing_coordinates": 0,
+                "curated_mappings_ambiguous_coordinates": 0,
+                "location_review_rows_created": 0,
+                "location_review_rows_updated": 0,
+                "location_review_rows_marked_known": 0,
+            },
+        )
+
+    papers = [dict(record) for record in paper_records]
+    maps = [dict(record) for record in map_records]
+    reviews = [dict(row) for row in location_review_rows]
+    curated_records, paper_summary = build_curated_paper_preview_records(
+        curated_papers, exclusion_rows
+    )
+    paper_index = _paper_index(papers)
+    added = 0
+    merged = 0
+    affected_papers = []
+    for curated in curated_records:
+        matches = _matching_papers(curated, paper_index)
+        if matches:
+            target = matches[0]
+            _merge_curated_paper(target, curated)
+            merged += 1
+        else:
+            target = curated
+            papers.append(target)
+            for key in normalize_paper_identity_keys(target):
+                paper_index.setdefault(key, []).append(target)
+            added += 1
+        affected_papers.append(target)
+
+    marker_records, mapping_summary = build_curated_map_records(
+        papers,
+        mappings,
+        maps,
+        candidate_map_records,
+        exclusion_rows,
+        reviews,
+    )
+    replaced_markers = 0
+    for marker in marker_records:
+        matching = _matching_papers(marker, paper_index)
+        if not matching:
+            continue
+        paper = matching[0]
+        replaced_markers += _remove_overridden_markers(
+            maps, paper, marker.get("institution")
+        )
+        maps.append(marker)
+        affected_papers.append(paper)
+
+    for mapping in mappings:
+        if clean(mapping.get("mapping_status")) not in VISIBLE_MAPPING_STATUSES:
+            continue
+        matching = _matching_papers(mapping, paper_index)
+        if matching:
+            affected_papers.append(matching[0])
+
+    seen = set()
+    for paper in affected_papers:
+        marker = id(paper)
+        if marker in seen:
+            continue
+        seen.add(marker)
+        _recalculate_paper_details(
+            paper,
+            maps,
+            mappings,
+            mapping_summary["resolved_mapping_ids"],
+        )
+
+    papers.sort(
+        key=lambda record: (
+            -(_parse_year(record.get("publication_year") or record.get("year")) or 0),
+            clean(record.get("title")).casefold(),
+        )
+    )
+    mapping_summary = dict(mapping_summary)
+    mapping_summary.pop("resolved_mapping_ids", None)
+    return papers, maps, reviews, {
+        **paper_summary,
+        **mapping_summary,
+        "curated_papers_added": added,
+        "curated_papers_merged": merged,
+        "curated_markers_replaced": replaced_markers,
+    }

@@ -52,7 +52,7 @@ FORBIDDEN_LABELS = {
     "uncertain",
 }
 MISSING_VALUE_STRINGS = {"", "none", "nan", "null"}
-PAPER_LINK_FIELDS = ("paper_url", "openalex_url", "doi", "arxiv_url")
+PAPER_LINK_FIELDS = ("paper_url", "openalex_url", "doi", "arxiv_url", "paper_id")
 
 
 class ValidationInputError(RuntimeError):

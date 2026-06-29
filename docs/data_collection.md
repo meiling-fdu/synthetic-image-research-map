@@ -482,7 +482,7 @@ python3 scripts/validate_curated_database.py
 python3 scripts/report_curated_database.py
 ```
 
-Header-only curated files are valid and do not affect the current public-preview exporter. Integration of curated records into public export is a separate workflow step.
+Header-only curated files are valid and leave public-preview output byte-for-byte unchanged. When curated rows exist, the public-preview exporter merges them through the integration described below.
 
 ### Local admin browser
 
@@ -504,7 +504,7 @@ If no candidate is correct—or OpenAlex is unavailable—choose **Add manually 
 
 Before saving, the server compares DOI, OpenAlex URL, and normalized title plus year against the current public-preview papers, curated papers, and paper-exclusion history. A match is shown as a duplicate warning and creation is blocked; Step 4 does not merge or override records.
 
-Paper addition stores paper metadata only; author–institution mappings are edited separately after selecting the saved paper, and institution coordinates remain a separate review workflow. A successful paper save does not edit `data/processed/` or generated public-preview JSON, and curated-paper export integration remains deferred. Run the curated validator after any curation session:
+Paper addition stores paper metadata only; author–institution mappings are edited separately after selecting the saved paper, and institution coordinates remain a separate review workflow. A successful paper save does not edit `data/processed/` or generated public-preview JSON; the normal exporter reads curated records later. Run the curated validator after any curation session:
 
 ```bash
 python3 scripts/validate_curated_database.py
@@ -518,7 +518,19 @@ Mappings are paper-level curation objects; map markers are derived outputs. The 
 
 An active mapping whose canonical institution has no exact institution match with valid coordinates in the existing public map data is added to `data/curated/institution_location_review.csv` with `location_status=missing` and `coordinate_status=missing`. The queue preserves the paper, author, affiliation, and evidence context without inventing coordinates or treating the institution name as an address. Institutions already represented by valid public marker coordinates are not queued.
 
-Duplicate active mappings are blocked when the paper identity, institution, and institution-author correspondence match. **Replace all mappings** requires explicit confirmation, marks prior active rows as `excluded`, appends the replacement review note for auditability, and creates the replacement row rather than deleting history. These local actions do not edit `data/processed/` or public-preview JSON; export integration remains a later workflow step.
+Duplicate active mappings are blocked when the paper identity, institution, and institution-author correspondence match. **Replace all mappings** requires explicit confirmation, marks prior active rows as `excluded`, appends the replacement review note for auditability, and creates the replacement row rather than deleting history. These local actions do not edit `data/processed/` or public-preview JSON directly.
+
+### Curated public-preview integration
+
+`python3 scripts/export_public_preview.py` now reads curated papers, active author–institution mappings, durable exclusions, and the institution location-review queue after building the existing automatic preview. Curated papers are merged by DOI, OpenAlex URL, then normalized title plus year. A matching `manually_confirmed` or `corrected_by_admin` row may override selected bibliographic and classification fields; otherwise curated values fill missing metadata. A non-duplicate, in-scope curated paper is appended to the paper-level preview.
+
+Paper-level publication does not require coordinates. A curated paper with no mappings receives `missing_affiliation`; a paper with mappings but no coordinate-bearing institution receives `missing_coordinates`. Its mapping evidence remains attached to the paper record, while no marker is fabricated.
+
+Active curated mappings produce markers only after an exact normalized institution-name match resolves to one unique valid location. The exporter prefers the current public map's validated locations, then considers medium/high-confidence, non-review candidate-map locations. Ambiguous exact-name matches are deliberately unresolved. A generated curated marker carries the confirmed institution-author correspondence and evidence provenance, uses `resolution_method=curated_mapping_existing_location`, and replaces only an automatic marker for the same paper and institution.
+
+Active mappings without a unique valid location are added or updated in `data/curated/institution_location_review.csv`. Missing matches use `location_status=missing` and `coordinate_status=missing`; ambiguous matches use `needs_coordinate_review` and `ambiguous`. Existing review notes and creation timestamps are preserved, and repeated mappings for the same paper and institution do not create duplicate queue items. When a previously queued institution gains an exact known location, its queue status is updated to `known`.
+
+Active paper exclusions remain authoritative for both paper and marker outputs. Header-only curated files are a strict no-op, so the existing candidate preview and its hashes remain unchanged until maintainers add curated records.
 
 ### Visual paper deletion / scope exclusion
 
@@ -557,7 +569,7 @@ The admin browser refreshes its local list immediately but deliberately does not
 
 ## Public Preview Export
 
-`scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. It also writes `web/data/public_preview_papers.json`, a paper-level public preview list that includes in-scope candidate/key papers even when affiliation or coordinate data is incomplete. The map JSON remains strict: only records with usable institution coordinates can become markers. The paper JSON carries transparent coverage fields such as `has_map_location`, `map_record_count`, `missing_affiliation`, `missing_coordinates`, `needs_review`, and `coverage_status` so incomplete papers can be searched and reviewed without fabricating locations. Both outputs are explicitly labeled as uncurated public preview data, not a manually curated bibliography.
+`scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages, then merges eligible maintainer-confirmed curated records. It also writes `web/data/public_preview_papers.json`, a paper-level public preview list that includes in-scope candidate/key/curated papers even when affiliation or coordinate data is incomplete. The map JSON remains strict: only records with usable institution coordinates can become markers. The paper JSON carries transparent coverage fields such as `has_map_location`, `map_record_count`, `missing_affiliation`, `missing_coordinates`, `needs_review`, and `coverage_status` so incomplete papers can be searched and reviewed without fabricating locations. Provenance fields distinguish automatic candidate metadata from curated records.
 
 By default, the exporter publishes all eligible records, requires `in_scope=true`, requires a main task of `detection`, `source_attribution`, or `detection_and_source_attribution`, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It also requires a non-placeholder institution name and a finite latitude/longitude pair within geographic bounds, because every public record must represent a mapped institution. `--include-uncertain` and `--include-missing-location` can relax task or location checks for local debugging; unsupported legacy or generic-attribution labels remain excluded. The exporter keeps only fields needed by the public map and never copies raw responses or caches.
 
@@ -577,7 +589,7 @@ python3 scripts/export_public_preview.py
 
 The confidence threshold can be tightened with `--min-confidence high`, and `--max-map-records` can produce a limited test or performance-fallback preview. The legacy `--max-records` name remains an alias. Without either maximum option, all eligible map records are exported. `--include-needs-review` and `--include-missing-location` are explicit debugging opt-ins; review-flagged or unmappable records should normally remain local.
 
-Only the filtered public preview JSON files should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence marker records, and records needing review remain local and ignored by Git. Paper-level preview records may still need affiliation or coordinate review; they are included to make coverage gaps visible, not to claim complete institution metadata. Public-preview records are still automatically generated candidates and must not be described as curated final data.
+Only the filtered public preview JSON files should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence marker records, and records needing review remain local and ignored by Git. Paper-level preview records may still need affiliation or coordinate review; they are included to make coverage gaps visible, not to claim complete institution metadata. The preview is a provenance-labeled mixture of automatic candidates and any maintainer-confirmed curated rows, not a uniformly curated final bibliography.
 
 ### Public Preview Quality Report
 
