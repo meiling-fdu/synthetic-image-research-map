@@ -504,11 +504,21 @@ If no candidate is correct—or OpenAlex is unavailable—choose **Add manually 
 
 Before saving, the server compares DOI, OpenAlex URL, and normalized title plus year against the current public-preview papers, curated papers, and paper-exclusion history. A match is shown as a duplicate warning and creation is blocked; Step 4 does not merge or override records.
 
-This step stores paper metadata only. Author–institution mappings and institution coordinates are handled in later curation steps. A successful save does not edit `data/processed/` or generated public-preview JSON, and curated-paper export integration remains deferred. Run the curated validator after any curation session:
+Paper addition stores paper metadata only; author–institution mappings are edited separately after selecting the saved paper, and institution coordinates remain a separate review workflow. A successful paper save does not edit `data/processed/` or generated public-preview JSON, and curated-paper export integration remains deferred. Run the curated validator after any curation session:
 
 ```bash
 python3 scripts/validate_curated_database.py
 ```
+
+### Paper-level author–institution mapping editor
+
+Select a paper in the local admin browser and use **Author–Institution Mappings** to add, edit, exclude, or replace its curated affiliation records. Each row records the canonical institution, the authors associated with that institution, raw affiliation or supporting evidence, mapping status, and a required review note. The records are saved to `data/curated/author_institution_mappings.csv`.
+
+Mappings are paper-level curation objects; map markers are derived outputs. The editor therefore does not request latitude or longitude. Current exported/public marker records appear in a separate evidence table for comparison and are never edited by this workflow.
+
+An active mapping whose canonical institution has no exact institution match with valid coordinates in the existing public map data is added to `data/curated/institution_location_review.csv` with `location_status=missing` and `coordinate_status=missing`. The queue preserves the paper, author, affiliation, and evidence context without inventing coordinates or treating the institution name as an address. Institutions already represented by valid public marker coordinates are not queued.
+
+Duplicate active mappings are blocked when the paper identity, institution, and institution-author correspondence match. **Replace all mappings** requires explicit confirmation, marks prior active rows as `excluded`, appends the replacement review note for auditability, and creates the replacement row rather than deleting history. These local actions do not edit `data/processed/` or public-preview JSON; export integration remains a later workflow step.
 
 ### Visual paper deletion / scope exclusion
 

@@ -6,6 +6,7 @@ const state = {
   filtered: [],
   selectedId: "",
   selectedPaper: null,
+  selectedMappings: [],
 };
 
 const elements = {};
@@ -76,6 +77,34 @@ document.addEventListener("DOMContentLoaded", () => {
     "marker-count",
     "marker-table-body",
     "empty-markers",
+    "mapping-add-button",
+    "mapping-replace-button",
+    "mapping-paper-context",
+    "mapping-table-body",
+    "empty-mappings",
+    "mapping-panel-error",
+    "mapping-dialog",
+    "mapping-form",
+    "mapping-mode",
+    "mapping-id",
+    "mapping-dialog-title",
+    "mapping-dialog-paper",
+    "mapping-exclude-warning",
+    "mapping-replace-warning",
+    "mapping-fields",
+    "mapping-institution",
+    "mapping-authors",
+    "mapping-raw-affiliation",
+    "mapping-evidence-source",
+    "mapping-evidence-url",
+    "mapping-affiliation-note",
+    "mapping-status",
+    "mapping-review-note",
+    "mapping-replace-confirmation",
+    "mapping-confirm-replace",
+    "mapping-form-error",
+    "mapping-cancel",
+    "mapping-submit",
     "count-total",
     "count-mapped",
     "count-affiliation",
@@ -140,6 +169,14 @@ document.addEventListener("DOMContentLoaded", () => {
   elements["add-manually-button"].addEventListener("click", () => startPaperDraft({}, "manual"));
   elements["paper-draft-cancel"].addEventListener("click", cancelPaperDraft);
   elements["paper-draft-form"].addEventListener("submit", createPaper);
+  elements["mapping-add-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openMappingDialog("create");
+  });
+  elements["mapping-replace-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openMappingDialog("replace");
+  });
+  elements["mapping-cancel"].addEventListener("click", closeMappingDialog);
+  elements["mapping-form"].addEventListener("submit", submitMapping);
 
   if (state.token) loadApplication();
   else requestToken();
@@ -584,13 +621,21 @@ async function selectPaper(id) {
   elements["detail-placeholder"].hidden = true;
   elements["detail-content"].hidden = false;
   elements["detail-title"].textContent = "Loading…";
+  elements["mapping-panel-error"].hidden = true;
   try {
-    const payload = await apiFetch(`/api/paper?id=${encodeURIComponent(id)}`);
-    state.selectedPaper = payload.paper;
-    renderPaperDetail(payload.paper);
+    const [paperPayload, mappingsPayload] = await Promise.all([
+      apiFetch(`/api/paper?id=${encodeURIComponent(id)}`),
+      apiFetch(`/api/paper/mappings?id=${encodeURIComponent(id)}`),
+    ]);
+    state.selectedPaper = paperPayload.paper;
+    state.selectedMappings = mappingsPayload.curated_mappings || [];
+    renderPaperDetail(paperPayload.paper);
+    renderMappings(mappingsPayload);
   } catch (error) {
     elements["detail-title"].textContent = "Could not load paper";
     elements["detail-notes"].textContent = error.message;
+    elements["mapping-panel-error"].hidden = false;
+    elements["mapping-panel-error"].textContent = error.message;
   }
 }
 
@@ -642,6 +687,208 @@ function renderPaperDetail(paper) {
   elements["detail-exclude-button"].hidden = Boolean(paper.has_active_exclusion);
   elements["detail-restore-button"].hidden = !paper.has_active_exclusion;
   renderMarkers(paper.marker_records || []);
+}
+
+function renderMappings(payload) {
+  const paper = payload.paper || state.selectedPaper || {};
+  const mappings = payload.curated_mappings || [];
+  state.selectedMappings = mappings;
+  elements["mapping-paper-context"].textContent = [
+    text(paper.title),
+    paper.year || paper.publication_year,
+    listText(paper.authors),
+    paper.doi ? `DOI ${paper.doi}` : "",
+    paper.openalex_url,
+  ].filter(Boolean).join(" · ");
+
+  const body = elements["mapping-table-body"];
+  body.replaceChildren();
+  mappings.forEach((mapping) => {
+    const row = document.createElement("tr");
+    const evidence = [
+      mapping.raw_affiliation,
+      mapping.evidence_source,
+      mapping.evidence_url,
+      mapping.affiliation_note,
+    ].filter(Boolean).join(" · ");
+    [
+      mapping.institution,
+      mapping.institution_authors,
+      evidence,
+      humanize(mapping.mapping_status),
+      humanize(mapping.location_status),
+      mapping.review_note,
+    ].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+
+    const actions = document.createElement("td");
+    actions.className = "mapping-actions";
+    if (mapping.mapping_status !== "excluded") {
+      const edit = document.createElement("button");
+      edit.type = "button";
+      edit.className = "secondary-button compact-action";
+      edit.textContent = "Edit";
+      edit.addEventListener("click", () => openMappingDialog("update", mapping));
+      const exclude = document.createElement("button");
+      exclude.type = "button";
+      exclude.className = "danger-button compact-action";
+      exclude.textContent = "Exclude";
+      exclude.addEventListener("click", () => openMappingDialog("exclude", mapping));
+      actions.append(edit, exclude);
+    } else {
+      actions.textContent = "Audit row";
+    }
+    row.append(actions);
+    body.append(row);
+  });
+  elements["empty-mappings"].hidden = mappings.length !== 0;
+  body.parentElement.hidden = mappings.length === 0;
+  elements["mapping-panel-error"].hidden = true;
+}
+
+function openMappingDialog(mode, mapping = {}) {
+  elements["mapping-form"].reset();
+  elements["mapping-mode"].value = mode;
+  elements["mapping-id"].value = text(mapping.mapping_id);
+  elements["mapping-dialog-paper"].textContent =
+    `${text(state.selectedPaper?.title) || "Untitled paper"} (${text(
+      state.selectedPaper?.year || state.selectedPaper?.publication_year
+    ) || "year unknown"})`;
+  elements["mapping-institution"].value = text(mapping.institution);
+  elements["mapping-authors"].value = text(mapping.institution_authors);
+  elements["mapping-raw-affiliation"].value = text(mapping.raw_affiliation);
+  elements["mapping-evidence-source"].value = text(mapping.evidence_source);
+  elements["mapping-evidence-url"].value = text(mapping.evidence_url);
+  elements["mapping-affiliation-note"].value = text(mapping.affiliation_note);
+  elements["mapping-status"].value =
+    mapping.mapping_status === "needs_review" ? "needs_review" : "active";
+  elements["mapping-review-note"].value =
+    mode === "update" ? text(mapping.review_note) : "";
+  elements["mapping-form-error"].hidden = true;
+
+  const excluding = mode === "exclude";
+  const replacing = mode === "replace";
+  elements["mapping-fields"].hidden = excluding;
+  elements["mapping-institution"].required = !excluding;
+  elements["mapping-authors"].required = !excluding;
+  elements["mapping-exclude-warning"].hidden = !excluding;
+  elements["mapping-replace-warning"].hidden = !replacing;
+  elements["mapping-replace-confirmation"].hidden = !replacing;
+  elements["mapping-confirm-replace"].required = replacing;
+
+  const titles = {
+    create: "Add author–institution mapping",
+    update: "Edit author–institution mapping",
+    exclude: "Exclude author–institution mapping",
+    replace: "Replace all author–institution mappings",
+  };
+  const submitLabels = {
+    create: "Save mapping",
+    update: "Update mapping",
+    exclude: "Exclude mapping",
+    replace: "Replace all mappings",
+  };
+  elements["mapping-dialog-title"].textContent = titles[mode];
+  elements["mapping-submit"].textContent = submitLabels[mode];
+  elements["mapping-submit"].className =
+    mode === "exclude" ? "danger-button" : "primary-button";
+  elements["mapping-dialog"].showModal();
+  (excluding
+    ? elements["mapping-review-note"]
+    : elements["mapping-institution"]
+  ).focus();
+}
+
+function closeMappingDialog() {
+  elements["mapping-dialog"].close();
+}
+
+function mappingDraft() {
+  return {
+    institution: elements["mapping-institution"].value.trim(),
+    institution_authors: elements["mapping-authors"].value.trim(),
+    raw_affiliation: elements["mapping-raw-affiliation"].value.trim(),
+    evidence_source: elements["mapping-evidence-source"].value.trim(),
+    evidence_url: elements["mapping-evidence-url"].value.trim(),
+    affiliation_note: elements["mapping-affiliation-note"].value.trim(),
+    mapping_status: elements["mapping-status"].value,
+    review_note: elements["mapping-review-note"].value.trim(),
+  };
+}
+
+async function submitMapping(event) {
+  event.preventDefault();
+  const mode = elements["mapping-mode"].value;
+  const draft = mappingDraft();
+  elements["mapping-form-error"].hidden = true;
+  if (mode !== "exclude" && !(
+    draft.raw_affiliation || draft.evidence_source || draft.evidence_url
+  )) {
+    elements["mapping-form-error"].hidden = false;
+    elements["mapping-form-error"].textContent =
+      "Enter a raw affiliation, evidence source, or evidence URL.";
+    return;
+  }
+  if (mode === "replace" && !elements["mapping-confirm-replace"].checked) {
+    elements["mapping-form-error"].hidden = false;
+    elements["mapping-form-error"].textContent =
+      "Confirm that all active mappings should be replaced.";
+    return;
+  }
+
+  const paths = {
+    create: "/api/paper/mapping/create",
+    update: "/api/paper/mapping/update",
+    exclude: "/api/paper/mapping/exclude",
+    replace: "/api/paper/mappings/replace-all",
+  };
+  let body = {
+    id: state.selectedId,
+    mapping_id: elements["mapping-id"].value,
+    ...draft,
+  };
+  if (mode === "replace") {
+    body = {
+      id: state.selectedId,
+      confirm_replace_all: true,
+      review_note: draft.review_note,
+      mappings: [draft],
+    };
+  }
+  elements["mapping-submit"].disabled = true;
+  try {
+    const result = await apiFetch(paths[mode], {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    closeMappingDialog();
+    showNotice(result.message);
+    await loadSelectedMappings();
+  } catch (error) {
+    elements["mapping-form-error"].hidden = false;
+    elements["mapping-form-error"].textContent =
+      error.status === 409
+        ? `${error.message}. Edit the existing mapping instead.`
+        : error.message;
+  } finally {
+    elements["mapping-submit"].disabled = false;
+  }
+}
+
+async function loadSelectedMappings() {
+  if (!state.selectedId) return;
+  try {
+    const payload = await apiFetch(
+      `/api/paper/mappings?id=${encodeURIComponent(state.selectedId)}`
+    );
+    renderMappings(payload);
+  } catch (error) {
+    elements["mapping-panel-error"].hidden = false;
+    elements["mapping-panel-error"].textContent = error.message;
+  }
 }
 
 function openScopeDialog(paper, mode) {

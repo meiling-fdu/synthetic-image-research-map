@@ -16,6 +16,8 @@ try:
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
         ALLOWED_EXCLUSION_REASONS,
+        ALLOWED_LOCATION_STATUSES,
+        ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
@@ -26,6 +28,8 @@ except ImportError:  # Support direct execution from the repository root.
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
         ALLOWED_EXCLUSION_REASONS,
+        ALLOWED_LOCATION_STATUSES,
+        ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
@@ -264,12 +268,27 @@ def validate_references(
     for filename, field in reference_files:
         for row_number, row in enumerate(datasets.get(filename, []), start=2):
             paper_id = clean(row.get(field))
-            if paper_id and paper_id not in paper_ids:
+            alternative_identity = (
+                clean(row.get("doi"))
+                or clean(row.get("openalex_url"))
+                or (clean(row.get("title")) and clean(row.get("year")))
+            )
+            if paper_id in paper_ids or alternative_identity:
+                continue
+            reference_description = (
+                f"{field} does not exist in papers.csv: {paper_id!r}"
+                if paper_id
+                else f"{field} is blank"
+            )
+            if not alternative_identity:
                 add_issue(
                     issues,
                     "ERROR",
                     filename,
-                    f"{field} does not exist in papers.csv: {paper_id!r}",
+                    (
+                        f"{reference_description}, and no DOI, OpenAlex URL, "
+                        "or title + year is provided"
+                    ),
                     row_number,
                 )
 
@@ -331,34 +350,104 @@ def validate_boolean_fields(
 
 def validate_mapping_evidence(
     mappings: Sequence[Mapping[str, str]],
-    papers: Sequence[Mapping[str, str]],
     issues: List[Issue],
 ) -> None:
-    paper_status = {
-        clean(row.get("paper_id")): clean(row.get("curation_status"))
-        for row in papers
-        if clean(row.get("paper_id"))
-    }
-    manual_mapping_statuses = {"manually_added", "manual", "added_by_admin"}
+    active_statuses = {"active", "needs_review"}
+    active_rows: List[Tuple[int, Mapping[str, str]]] = []
     for row_number, row in enumerate(mappings, start=2):
-        paper_id = clean(row.get("paper_id"))
         mapping_status = clean(row.get("mapping_status")).casefold()
-        is_manual = (
-            mapping_status in manual_mapping_statuses
-            or paper_status.get(paper_id) == "manually_added"
-        )
-        if (
-            is_manual
-            and not clean(row.get("evidence_source"))
-            and not clean(row.get("evidence_url"))
+        if mapping_status not in active_statuses:
+            continue
+        active_rows.append((row_number, row))
+        for field in ("institution", "institution_authors", "review_note"):
+            if not clean(row.get(field)):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "author_institution_mappings.csv",
+                    f"{field} is required for an active mapping",
+                    row_number,
+                )
+        if not any(
+            clean(row.get(field))
+            for field in ("raw_affiliation", "evidence_source", "evidence_url")
         ):
             add_issue(
                 issues,
-                "WARNING",
+                "ERROR",
                 "author_institution_mappings.csv",
-                "manually added mapping has no evidence_source or evidence_url",
+                (
+                    "active mapping requires raw_affiliation, evidence_source, "
+                    "or evidence_url"
+                ),
                 row_number,
             )
+
+    for position, (left_number, left) in enumerate(active_rows):
+        left_keys = {
+            value
+            for value in (
+                f"paper_id:{clean(left.get('paper_id')).casefold()}"
+                if clean(left.get("paper_id"))
+                else "",
+                f"doi:{normalize_doi(left.get('doi'))}"
+                if normalize_doi(left.get("doi"))
+                else "",
+                f"openalex:{normalize_openalex_url(left.get('openalex_url'))}"
+                if normalize_openalex_url(left.get("openalex_url"))
+                else "",
+                (
+                    f"title_year:{normalize_title(left.get('title'))}|"
+                    f"{clean(left.get('year'))}"
+                )
+                if normalize_title(left.get("title")) and clean(left.get("year"))
+                else "",
+            )
+            if value
+        }
+        left_institution = normalize_title(left.get("institution"))
+        left_authors = normalize_title(left.get("institution_authors"))
+        for right_number, right in active_rows[position + 1 :]:
+            right_keys = {
+                value
+                for value in (
+                    f"paper_id:{clean(right.get('paper_id')).casefold()}"
+                    if clean(right.get("paper_id"))
+                    else "",
+                    f"doi:{normalize_doi(right.get('doi'))}"
+                    if normalize_doi(right.get("doi"))
+                    else "",
+                    (
+                        f"openalex:{normalize_openalex_url(right.get('openalex_url'))}"
+                    )
+                    if normalize_openalex_url(right.get("openalex_url"))
+                    else "",
+                    (
+                        f"title_year:{normalize_title(right.get('title'))}|"
+                        f"{clean(right.get('year'))}"
+                    )
+                    if normalize_title(right.get("title"))
+                    and clean(right.get("year"))
+                    else "",
+                )
+                if value
+            }
+            if (
+                left_keys & right_keys
+                and left_institution == normalize_title(right.get("institution"))
+                and left_authors == normalize_title(
+                    right.get("institution_authors")
+                )
+            ):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "author_institution_mappings.csv",
+                    (
+                        "duplicate active paper/institution/authors mapping "
+                        f"across rows {left_number} and {right_number}"
+                    ),
+                )
 
 
 def print_summary(
@@ -423,13 +512,27 @@ def main() -> int:
     validate_allowed_value(
         locations,
         "institution_location_review.csv",
+        "location_status",
+        ALLOWED_LOCATION_STATUSES,
+        issues,
+    )
+    validate_allowed_value(
+        mappings,
+        "author_institution_mappings.csv",
+        "mapping_status",
+        ALLOWED_MAPPING_STATUSES,
+        issues,
+    )
+    validate_allowed_value(
+        locations,
+        "institution_location_review.csv",
         "coordinate_status",
         ALLOWED_COORDINATE_STATUSES,
         issues,
     )
     validate_boolean_fields(exclusions, "paper_exclusions.csv", issues)
     validate_references(datasets, issues)
-    validate_mapping_evidence(mappings, papers, issues)
+    validate_mapping_evidence(mappings, issues)
     duplicates = validate_paper_duplicates(papers, issues)
     print_summary(row_counts, issues, duplicates)
     return 1 if any(issue.level == "ERROR" for issue in issues) else 0

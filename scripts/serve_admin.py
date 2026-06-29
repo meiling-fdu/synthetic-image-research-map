@@ -28,6 +28,21 @@ try:
         DuplicatePaperError,
         create_curated_paper,
     )
+    from .curated_mappings import (
+        DEFAULT_LOCATION_REVIEW_PATH,
+        DEFAULT_MAPPINGS_PATH,
+        CuratedMappingError,
+        DuplicateMappingError,
+        create_mapping,
+        exclude_mapping,
+        load_location_reviews,
+        load_mappings,
+        location_reviews_for_paper,
+        mapping_location_state,
+        mappings_for_paper,
+        replace_all_mappings,
+        update_mapping,
+    )
     from .openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -47,6 +62,21 @@ except ImportError:
         DuplicatePaperError,
         create_curated_paper,
     )
+    from curated_mappings import (
+        DEFAULT_LOCATION_REVIEW_PATH,
+        DEFAULT_MAPPINGS_PATH,
+        CuratedMappingError,
+        DuplicateMappingError,
+        create_mapping,
+        exclude_mapping,
+        load_location_reviews,
+        load_mappings,
+        location_reviews_for_paper,
+        mapping_location_state,
+        mappings_for_paper,
+        replace_all_mappings,
+        update_mapping,
+    )
     from openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -65,6 +95,8 @@ PUBLIC_PAPERS_PATH = WEB_DIR / "data" / "public_preview_papers.json"
 PUBLIC_MAP_PATH = WEB_DIR / "data" / "public_preview_map_data.json"
 CURATED_PAPERS_PATH = DEFAULT_CURATED_PAPERS_PATH
 CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
+CURATED_MAPPINGS_PATH = DEFAULT_MAPPINGS_PATH
+LOCATION_REVIEW_PATH = DEFAULT_LOCATION_REVIEW_PATH
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
@@ -72,6 +104,7 @@ TRUE_VALUES = {"1", "true", "yes", "y"}
 MAX_REQUEST_BYTES = 64 * 1024
 EXCLUSION_WRITE_LOCK = threading.Lock()
 CURATED_PAPER_WRITE_LOCK = threading.Lock()
+CURATED_MAPPING_WRITE_LOCK = threading.Lock()
 
 STATIC_ROUTES = {
     "/admin/": (WEB_DIR / "admin.html", "text/html; charset=utf-8"),
@@ -443,6 +476,10 @@ def load_admin_data(
             "paper_exclusion",
             "paper_restore",
             "paper_create",
+            "mapping_create",
+            "mapping_update",
+            "mapping_exclude",
+            "mapping_replace_all",
         ],
         "counts": {
             "total_papers": len(papers),
@@ -536,6 +573,24 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             f"(default: {CURATED_PAPERS_PATH})."
         ),
     )
+    parser.add_argument(
+        "--curated-mappings",
+        type=Path,
+        default=CURATED_MAPPINGS_PATH,
+        help=(
+            "Curated author–institution mapping CSV "
+            f"(default: {CURATED_MAPPINGS_PATH})."
+        ),
+    )
+    parser.add_argument(
+        "--location-review",
+        type=Path,
+        default=LOCATION_REVIEW_PATH,
+        help=(
+            "Institution location-review CSV "
+            f"(default: {LOCATION_REVIEW_PATH})."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -543,6 +598,8 @@ def make_handler(
     token: str,
     exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
     curated_papers_path: Path = CURATED_PAPERS_PATH,
+    mappings_path: Path = CURATED_MAPPINGS_PATH,
+    location_review_path: Path = LOCATION_REVIEW_PATH,
 ) -> type[BaseHTTPRequestHandler]:
     class AdminRequestHandler(BaseHTTPRequestHandler):
         server_version = "SyntheticImageResearchMapAdmin/0.1"
@@ -667,6 +724,49 @@ def make_handler(
                     return
                 self.send_json(HTTPStatus.OK, {"paper": paper})
                 return
+            if request.path == "/api/paper/mappings":
+                paper_id = next(iter(query.get("id", [])), "")
+                if not paper_id:
+                    self.send_json(
+                        HTTPStatus.BAD_REQUEST,
+                        {"error": "id query parameter is required"},
+                    )
+                    return
+                paper = data["papers_by_id"].get(paper_id)
+                if paper is None:
+                    self.send_json(
+                        HTTPStatus.NOT_FOUND, {"error": "paper not found"}
+                    )
+                    return
+                try:
+                    map_records = read_json_records(PUBLIC_MAP_PATH)
+                    mapping_rows = mappings_for_paper(
+                        paper, load_mappings(mappings_path)
+                    )
+                    location_rows = location_reviews_for_paper(
+                        paper, load_location_reviews(location_review_path)
+                    )
+                except CuratedMappingError as error:
+                    self.send_json(
+                        HTTPStatus.INTERNAL_SERVER_ERROR, {"error": str(error)}
+                    )
+                    return
+                for mapping in mapping_rows:
+                    mapping["location_status"] = mapping_location_state(
+                        mapping,
+                        map_records=map_records,
+                        location_rows=location_rows,
+                    )
+                self.send_json(
+                    HTTPStatus.OK,
+                    {
+                        "paper": paper_summary(paper),
+                        "public_marker_records": paper.get("marker_records", []),
+                        "curated_mappings": mapping_rows,
+                        "location_reviews": location_rows,
+                    },
+                )
+                return
             self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
 
         def do_POST(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler API
@@ -686,6 +786,10 @@ def make_handler(
                 "/api/paper/restore",
                 "/api/openalex/search-paper",
                 "/api/paper/create",
+                "/api/paper/mapping/create",
+                "/api/paper/mapping/update",
+                "/api/paper/mapping/exclude",
+                "/api/paper/mappings/replace-all",
             }:
                 self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
                 return
@@ -766,6 +870,78 @@ def make_handler(
                         HTTPStatus.NOT_FOUND, {"error": "paper not found"}
                     )
                     return
+                if request.path.startswith("/api/paper/mapping"):
+                    map_records = read_json_records(PUBLIC_MAP_PATH)
+                    try:
+                        with CURATED_MAPPING_WRITE_LOCK:
+                            if request.path == "/api/paper/mapping/create":
+                                result = create_mapping(
+                                    paper,
+                                    payload,
+                                    map_records=map_records,
+                                    mappings_path=mappings_path,
+                                    location_review_path=location_review_path,
+                                )
+                                response_status = HTTPStatus.CREATED
+                                message = "Curated author–institution mapping saved."
+                            elif request.path == "/api/paper/mapping/update":
+                                result = update_mapping(
+                                    paper,
+                                    clean(payload.get("mapping_id")),
+                                    payload,
+                                    map_records=map_records,
+                                    mappings_path=mappings_path,
+                                    location_review_path=location_review_path,
+                                )
+                                response_status = HTTPStatus.OK
+                                message = "Curated author–institution mapping updated."
+                            elif request.path == "/api/paper/mapping/exclude":
+                                result = {
+                                    "mapping": exclude_mapping(
+                                        paper,
+                                        clean(payload.get("mapping_id")),
+                                        clean(payload.get("review_note")),
+                                        mappings_path=mappings_path,
+                                    )
+                                }
+                                response_status = HTTPStatus.OK
+                                message = "Curated mapping excluded; audit history preserved."
+                            else:
+                                drafts = payload.get("mappings")
+                                if not isinstance(drafts, list):
+                                    raise CuratedMappingError(
+                                        "mappings must be a JSON array"
+                                    )
+                                result = replace_all_mappings(
+                                    paper,
+                                    drafts,
+                                    clean(payload.get("review_note")),
+                                    confirm_replace_all=(
+                                        payload.get("confirm_replace_all") is True
+                                    ),
+                                    map_records=map_records,
+                                    mappings_path=mappings_path,
+                                    location_review_path=location_review_path,
+                                )
+                                response_status = HTTPStatus.OK
+                                message = (
+                                    "All active curated mappings were replaced; "
+                                    "prior rows remain as excluded audit records."
+                                )
+                    except DuplicateMappingError as error:
+                        self.send_json(
+                            HTTPStatus.CONFLICT,
+                            {
+                                "error": str(error),
+                                "duplicate_mapping": error.mapping,
+                            },
+                        )
+                        return
+                    self.send_json(
+                        response_status,
+                        {**result, "message": message},
+                    )
+                    return
                 if request.path == "/api/paper/delete-or-exclude":
                     reason = clean(payload.get("reason"))
                     review_note = clean(payload.get("review_note"))
@@ -823,6 +999,7 @@ def make_handler(
             except (
                 AdminDataError,
                 CuratedPaperError,
+                CuratedMappingError,
                 PaperExclusionError,
             ) as error:
                 self.send_json(
@@ -856,6 +1033,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         token,
         args.paper_exclusions,
         args.curated_papers,
+        args.curated_mappings,
+        args.location_review,
     )
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)

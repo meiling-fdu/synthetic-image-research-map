@@ -121,6 +121,19 @@ ALLOWED_REVIEW_STATUSES = {
     "needs_check",
 }
 
+ALLOWED_MAPPING_STATUSES = {
+    "active",
+    "excluded",
+    "needs_review",
+}
+
+ALLOWED_LOCATION_STATUSES = {
+    "missing",
+    "known",
+    "ambiguous",
+    "needs_location_review",
+}
+
 ALLOWED_EXCLUSION_REASONS = {
     "out_of_scope",
     "downstream_synthetic_data_only",

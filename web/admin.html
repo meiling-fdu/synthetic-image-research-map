@@ -150,7 +150,7 @@
           <div class="form-actions full-width">
             <button class="primary-button" id="paper-create-submit" type="submit">Save to curated database</button>
           </div>
-          <p class="workflow-note full-width">Author–institution mappings and coordinates are handled in later curation steps. Saving here does not update public preview JSON.</p>
+          <p class="workflow-note full-width">After saving, select the paper to curate author–institution mappings. Coordinates remain a separate review step, and saving here does not update public preview JSON.</p>
         </form>
       </section>
 
@@ -215,9 +215,43 @@
               <button class="danger-button" id="detail-exclude-button" type="button">Delete / Exclude from site</button>
               <button class="restore-button" id="detail-restore-button" type="button" hidden>Restore</button>
             </section>
+            <section class="mappings-section">
+              <div class="mapping-heading">
+                <div>
+                  <h3>Author–Institution Mappings</h3>
+                  <p>Curated mappings are paper-level affiliation records. Map markers are derived later only when coordinates are available.</p>
+                </div>
+                <div class="form-actions">
+                  <button class="primary-button" id="mapping-add-button" type="button">Add mapping</button>
+                  <button class="secondary-button" id="mapping-replace-button" type="button">Replace all mappings</button>
+                </div>
+              </div>
+              <p class="mapping-paper-context" id="mapping-paper-context"></p>
+              <div class="table-wrap">
+                <table class="mapping-table">
+                  <thead>
+                    <tr>
+                      <th>Institution</th>
+                      <th>Institution authors</th>
+                      <th>Evidence</th>
+                      <th>Status</th>
+                      <th>Location</th>
+                      <th>Review note</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="mapping-table-body"></tbody>
+                </table>
+              </div>
+              <p class="empty-markers" id="empty-mappings" hidden>No curated mappings are associated with this paper.</p>
+              <p class="form-error" id="mapping-panel-error" role="alert" hidden></p>
+            </section>
             <section class="markers-section">
               <div class="section-heading">
-                <h3>Institution markers</h3>
+                <div>
+                  <h3>Current exported/public evidence</h3>
+                  <p>These marker records are derived output and are shown separately from curated mappings.</p>
+                </div>
                 <span id="marker-count"></span>
               </div>
               <div class="table-wrap">
@@ -235,7 +269,7 @@
                   <tbody id="marker-table-body"></tbody>
                 </table>
               </div>
-              <p class="empty-markers" id="empty-markers" hidden>No map marker records are associated with this paper.</p>
+              <p class="empty-markers" id="empty-markers" hidden>No current exported/public marker records are associated with this paper.</p>
             </section>
           </div>
         </article>
@@ -273,6 +307,56 @@
         <div class="dialog-actions">
           <button class="secondary-button" id="scope-cancel" type="button">Cancel</button>
           <button class="danger-button" id="scope-submit" type="submit">Confirm exclusion</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="mapping-dialog">
+      <form id="mapping-form">
+        <input id="mapping-mode" type="hidden">
+        <input id="mapping-id" type="hidden">
+        <p class="eyebrow">Paper-level affiliation curation</p>
+        <h2 id="mapping-dialog-title">Add author–institution mapping</h2>
+        <p class="dialog-paper-title" id="mapping-dialog-paper"></p>
+        <p class="dialog-warning" id="mapping-exclude-warning" hidden>Excluding preserves this mapping as an audit row and removes it from the active curated set.</p>
+        <p class="dialog-warning" id="mapping-replace-warning" hidden>Every active curated mapping for this paper will be marked excluded. The mapping below becomes the first replacement row.</p>
+        <div class="mapping-fields" id="mapping-fields">
+          <label>Institution
+            <input id="mapping-institution" type="text" required>
+          </label>
+          <label>Institution authors
+            <input id="mapping-authors" type="text" placeholder="Separate authors with semicolons" required>
+          </label>
+          <label class="full-width">Raw affiliation
+            <textarea id="mapping-raw-affiliation" rows="3"></textarea>
+          </label>
+          <label>Evidence source
+            <input id="mapping-evidence-source" type="text" placeholder="Publisher PDF, author page, OpenAlex…">
+          </label>
+          <label>Evidence URL
+            <input id="mapping-evidence-url" type="url" placeholder="https://…">
+          </label>
+          <label class="full-width">Affiliation note
+            <textarea id="mapping-affiliation-note" rows="2"></textarea>
+          </label>
+          <label>Mapping status
+            <select id="mapping-status">
+              <option value="active">active</option>
+              <option value="needs_review">needs_review</option>
+            </select>
+          </label>
+        </div>
+        <label>Review note
+          <textarea id="mapping-review-note" rows="3" required></textarea>
+        </label>
+        <label class="replace-confirmation" id="mapping-replace-confirmation" hidden>
+          <input id="mapping-confirm-replace" type="checkbox">
+          <span>I understand that all current active mappings will be replaced.</span>
+        </label>
+        <p class="form-error" id="mapping-form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="mapping-cancel" type="button">Cancel</button>
+          <button class="primary-button" id="mapping-submit" type="submit">Save mapping</button>
         </div>
       </form>
     </dialog>

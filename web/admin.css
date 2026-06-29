@@ -609,12 +609,14 @@ a {
 
 .notes-section,
 .scope-review-section,
+.mappings-section,
 .markers-section {
   margin-top: 1.8rem;
 }
 
 .notes-section h3,
 .scope-review-section h3,
+.mappings-section h3,
 .markers-section h3 {
   margin-bottom: 0.55rem;
   font-family: Georgia, "Times New Roman", serif;
@@ -624,9 +626,50 @@ a {
 
 .notes-section p,
 .scope-review-section p,
+.mappings-section p,
+.markers-section p,
 .empty-markers {
   color: var(--muted);
   line-height: 1.55;
+}
+
+.mapping-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mapping-heading h3,
+.mapping-heading p,
+.markers-section .section-heading h3,
+.markers-section .section-heading p {
+  margin-bottom: 0;
+}
+
+.mapping-heading p,
+.markers-section .section-heading p {
+  max-width: 48rem;
+  font-size: 0.82rem;
+}
+
+.mapping-paper-context {
+  margin: 0.8rem 0;
+  padding: 0.7rem 0.8rem;
+  border-left: 3px solid var(--green);
+  background: var(--green-soft);
+  font-size: 0.78rem;
+  overflow-wrap: anywhere;
+}
+
+.mapping-table {
+  min-width: 68rem;
+}
+
+.mapping-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .scope-review-section {
@@ -693,25 +736,45 @@ dialog::backdrop {
   backdrop-filter: blur(2px);
 }
 
-#scope-form {
+#scope-form,
+#mapping-form {
   display: grid;
   gap: 0.9rem;
   padding: 1.4rem;
 }
 
-#scope-form h2 {
+#scope-form h2,
+#mapping-form h2 {
   margin-bottom: 0;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.8rem;
   font-weight: 500;
 }
 
-#scope-form label {
+#scope-form label,
+#mapping-form label {
   display: grid;
   gap: 0.35rem;
   color: var(--muted);
   font-size: 0.78rem;
   font-weight: 750;
+}
+
+.mapping-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.replace-confirmation {
+  grid-template-columns: auto 1fr !important;
+  align-items: start;
+  color: var(--red) !important;
+}
+
+.replace-confirmation input {
+  width: auto;
+  margin-top: 0.15rem;
 }
 
 .dialog-paper-title {
@@ -839,6 +902,14 @@ tbody tr:last-child td {
 
   .scope-review-section {
     display: grid;
+  }
+
+  .mapping-heading {
+    display: grid;
+  }
+
+  .mapping-fields {
+    grid-template-columns: 1fr;
   }
 
   .metadata-grid {
