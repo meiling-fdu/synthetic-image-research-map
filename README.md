@@ -56,6 +56,8 @@ Empty directories contain `.gitkeep` placeholders until project files are added.
 
 Maintainers can use the local `data/curated/` database layer for confirmed paper records, author–institution mappings, durable exclusions, and location-review queues. OpenAlex remains a candidate metadata source, while public preview JSON remains generated output. The deployed public site is read-only; maintainer editing is local only.
 
+The read-only local admin browser provides paper search, filters, metadata inspection, and associated institution-marker details. Start it with `python3 scripts/serve_admin.py`, then open the tokenized localhost URL printed in the terminal. It does not add admin behavior to GitHub Pages.
+
 ## Data collection prototype
 
 The standard-library OpenAlex search script can preview its default candidate-paper queries without making API requests or writing files. The defaults are grouped into detection and source attribution, with explicit generated-image wording in every query:

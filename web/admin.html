@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Local Paper Curator · Synthetic Image Research Map</title>
+    <link rel="stylesheet" href="/admin.css">
+    <script src="/admin.js" defer></script>
+  </head>
+  <body>
+    <header class="masthead">
+      <div>
+        <p class="eyebrow">Maintainer-only · localhost</p>
+        <h1>Paper curation browser</h1>
+        <p class="lede">Inspect public-preview and curated paper records. Step 2 is read-only.</p>
+      </div>
+      <div class="status-pill" id="connection-status" data-state="loading">Connecting…</div>
+    </header>
+
+    <main>
+      <section class="token-panel" id="token-panel" hidden>
+        <form id="token-form">
+          <label for="token-input">Admin token</label>
+          <div class="token-row">
+            <input id="token-input" name="token" type="password" autocomplete="off" required>
+            <button type="submit">Open browser</button>
+          </div>
+          <p>Copy the token printed by <code>python3 scripts/serve_admin.py</code>.</p>
+        </form>
+      </section>
+
+      <section class="summary-grid" id="summary-grid" aria-label="Database summary">
+        <article><strong id="count-total">—</strong><span>Total papers</span></article>
+        <article><strong id="count-mapped">—</strong><span>With map locations</span></article>
+        <article><strong id="count-affiliation">—</strong><span>Missing affiliations</span></article>
+        <article><strong id="count-coordinates">—</strong><span>Missing coordinates</span></article>
+        <article><strong id="count-curated">—</strong><span>Curated papers</span></article>
+      </section>
+
+      <section class="workspace" id="workspace" hidden>
+        <aside class="browser-panel">
+          <div class="browser-toolbar">
+            <label class="search-field">
+              <span>Search papers</span>
+              <input id="search-input" type="search" placeholder="Title, author, institution, DOI, OpenAlex…" autocomplete="off">
+            </label>
+            <div class="filters">
+              <label>Year<select id="filter-year"><option value="">All years</option></select></label>
+              <label>Task<select id="filter-task"><option value="">All tasks</option></select></label>
+              <label>Subtask<select id="filter-subtask"><option value="">All subtasks</option></select></label>
+              <label>Coverage<select id="filter-coverage"><option value="">All coverage</option></select></label>
+              <label>Map location
+                <select id="filter-map">
+                  <option value="">Any</option>
+                  <option value="true">Has map location</option>
+                  <option value="false">No map location</option>
+                </select>
+              </label>
+              <label>Source<select id="filter-source"><option value="">All sources</option></select></label>
+            </div>
+            <p class="result-count" id="result-count" aria-live="polite"></p>
+          </div>
+          <ol class="paper-list" id="paper-list"></ol>
+          <div class="empty-state" id="empty-results" hidden>No papers match these filters.</div>
+        </aside>
+
+        <article class="detail-panel" id="detail-panel">
+          <div class="detail-placeholder" id="detail-placeholder">
+            <span>↖</span>
+            <p>Select a paper to inspect its metadata and institution markers.</p>
+          </div>
+          <div id="detail-content" hidden>
+            <div class="detail-heading">
+              <div>
+                <p class="eyebrow" id="detail-source"></p>
+                <h2 id="detail-title"></h2>
+              </div>
+              <div class="badge-row" id="detail-badges"></div>
+            </div>
+            <dl class="metadata-grid" id="metadata-grid"></dl>
+            <section class="notes-section">
+              <h3>Notes</h3>
+              <p id="detail-notes"></p>
+            </section>
+            <section class="markers-section">
+              <div class="section-heading">
+                <h3>Institution markers</h3>
+                <span id="marker-count"></span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Institution</th>
+                      <th>Institution authors</th>
+                      <th>Location</th>
+                      <th>Coordinates</th>
+                      <th>Resolution</th>
+                      <th>Review</th>
+                    </tr>
+                  </thead>
+                  <tbody id="marker-table-body"></tbody>
+                </table>
+              </div>
+              <p class="empty-markers" id="empty-markers" hidden>No map marker records are associated with this paper.</p>
+            </section>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

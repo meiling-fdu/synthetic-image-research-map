@@ -484,6 +484,18 @@ python3 scripts/report_curated_database.py
 
 Header-only curated files are valid and do not affect the current public-preview exporter. Integration of curated records into public export is a separate workflow step.
 
+### Local admin browser
+
+Maintainers can inspect the current public-preview papers, their map-marker institution records, and any additional curated papers in a local read-only browser:
+
+```bash
+python3 scripts/serve_admin.py
+```
+
+The server binds to `127.0.0.1:8765` by default and prints a newly generated admin token. Open `http://localhost:8765/admin/?token=<TOKEN>`, replacing `<TOKEN>` with that terminal value. The page stores the token for the current browser tab, removes it from the address bar, and sends it to API requests in the `X-Admin-Token` header. Direct API clients may use that header or the `token` query parameter.
+
+Step 2 supports browsing, searching, filtering, and paper/marker inspection only. It has no write, edit, or delete endpoint. The server refuses non-loopback binding unless `--unsafe-bind-all` is explicitly supplied. The public GitHub Pages site remains a separate read-only static site and does not use these admin APIs.
+
 ## Public Preview Export
 
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. It also writes `web/data/public_preview_papers.json`, a paper-level public preview list that includes in-scope candidate/key papers even when affiliation or coordinate data is incomplete. The map JSON remains strict: only records with usable institution coordinates can become markers. The paper JSON carries transparent coverage fields such as `has_map_location`, `map_record_count`, `missing_affiliation`, `missing_coordinates`, `needs_review`, and `coverage_status` so incomplete papers can be searched and reviewed without fabricating locations. Both outputs are explicitly labeled as uncurated public preview data, not a manually curated bibliography.
