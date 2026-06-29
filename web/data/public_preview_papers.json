@@ -105,19 +105,43 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Universidad Complutense de Madrid"
+      ],
+      "aggregated_country_names": [
+        "Spain"
+      ],
+      "aggregated_country_codes": [
+        "ES"
+      ],
+      "aggregated_regions": [
+        "Community of Madrid"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:23fa580d08b3cc08c4ab",
+          "institution": "Universidad Complutense de Madrid",
+          "institution_authors": [
+            "Staycy Guevara",
+            "Ana Lucila Sandoval Orozco",
+            "Luis Javier García Villalba"
+          ],
+          "raw_affiliation": "Group of Analysis, Security and Systems (GASS), Department of Software Engineering and Artificial Intelligence (DISIA), Faculty of Computer Science and Engineering, Office 431,Universidad Complutense de Madrid (UCM), Calle Profesor José García Santesmases, 9, Ciudad Universitaria, 28040 Madrid, Spain",
+          "evidence_source": "PDF",
+          "evidence_url": "https://www.mdpi.com/2673-4591/123/1/32",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ]
     },
     {
       "title": "Adaptive Forensic Feature Refinement via Intrinsic Importance Perception",
@@ -1428,19 +1452,64 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "A*STAR",
+        "Xidian University"
+      ],
+      "aggregated_country_names": [
+        "CN",
+        "Singapore"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "SG"
+      ],
+      "aggregated_regions": [
+        "Singapore"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:eba5383cba0b393f06de",
+          "institution": "A*STAR",
+          "institution_authors": [
+            "Muli Yang",
+            "Gabriel James Goenawan",
+            "Huaiyuan Qin",
+            "Fen Fang",
+            "Ying Sun",
+            "Joo-Hwee Lim",
+            "Hongyuan Zhu"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/38146",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:33734b91f46a48599ed7",
+          "institution": "Xidian University",
+          "institution_authors": [
+            "Chenghao Xu",
+            "Yanhua Yang"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/38146",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ]
     },
     {
       "title": "Zooming In on Fakes: A Novel Dataset for Localized AI-Generated Image Detection with Forgery Amplification Approach",
@@ -1534,15 +1603,33 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Fudan University"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:634be31d6873f43f0e86",
+          "institution": "Fudan University",
+          "institution_authors": [
+            "Meiling Li",
+            "Zhenxing Qian",
+            "Xinpeng Zhang"
+          ],
+          "raw_affiliation": "College of Computer Science and Artificial Intelligence, Fudan University Shanghai",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ai.fudan.edu.cn/",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ]
     },
     {
       "title": "$\\bf{D^3}$QE: Learning Discrete Distribution Discrepancy-aware Quantization Error for Autoregressive-Generated Image Detection",
@@ -1922,19 +2009,59 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Chinese Academy of Sciences",
+        "University at Buffalo, State University of New York"
+      ],
+      "aggregated_country_names": [
+        "CN",
+        "US"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:701e78fa5e24e30b0aca",
+          "institution": "University at Buffalo, State University of New York",
+          "institution_authors": [
+            "Yu Cai",
+            "Siwei Lyu"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11374598",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:7ca5a7c70f6c50177dab",
+          "institution": "Chinese Academy of Sciences",
+          "institution_authors": [
+            "Jiahe Tian",
+            "Xiaomeng Fu",
+            "Jiao Dai",
+            "Jizhong Han"
+          ],
+          "raw_affiliation": "Institute of Information Engineering, Chinese Academy of Sciences, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11374598",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ]
     },
     {
       "title": "AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection",
@@ -2352,17 +2479,67 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "City, University of London",
+        "Queen Mary University of London",
+        "University of Florence"
+      ],
+      "aggregated_country_names": [
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:2aeb918d86fd8f55bcba",
+          "institution": "University of Florence",
+          "institution_authors": [
+            "Dario Cioni",
+            "Lorenzo Seidenari"
+          ],
+          "raw_affiliation": "University of Florence",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-92648-8_22",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:a5cf4389134b2a358b83",
+          "institution": "City, University of London",
+          "institution_authors": [
+            "Christos Tzelepis"
+          ],
+          "raw_affiliation": "City, University of London",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-92648-8_22",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section. Kept the institution name as shown in the publication-time affiliation; the institution later merged into City St George’s, University of London."
+        },
+        {
+          "mapping_id": "mapping:434afb8aaa4ee64e222b",
+          "institution": "Queen Mary University of London",
+          "institution_authors": [
+            "Dario Cioni",
+            "Ioannis Patras"
+          ],
+          "raw_affiliation": "Queen Mary, University of London",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-92648-8_22",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ]
     },
     {
       "title": "Art or Artifact? Segmenting AI-Generated Images for Deeper Detection",
@@ -4492,19 +4669,87 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 4,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Hanyang University",
+        "University of Toronto",
+        "Yonsei University, International Campus",
+        "Yonsei University, Sinchon Campus"
+      ],
+      "aggregated_country_names": [
+        "Canada",
+        "South Korea"
+      ],
+      "aggregated_country_codes": [
+        "CA",
+        "KR"
+      ],
+      "aggregated_regions": [
+        "Incheon",
+        "Ontario",
+        "Seoul"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:2bd5d375d6e0769c233c",
+          "institution": "Yonsei University, International Campus",
+          "institution_authors": [
+            "Seunghyeon Park"
+          ],
+          "raw_affiliation": "School of Integrated Technology, Yonsei University, Incheon, Republic of Korea",
+          "evidence_source": "",
+          "evidence_url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=10929816",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:23045e7ff749c6ee30b5",
+          "institution": "Hanyang University",
+          "institution_authors": [
+            "Youngho Bae"
+          ],
+          "raw_affiliation": "Department of Data Science, Hanyang University, Seoul, Republic of Korea",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10929816",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:824da221d6a0922bfb18",
+          "institution": "Yonsei University, Sinchon Campus",
+          "institution_authors": [
+            "Gunhui Han"
+          ],
+          "raw_affiliation": "Department of Mechanical Engineering, Yonsei University, Seoul, Republic of Korea",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10929816",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:b6eb27a2e93b7c15058d",
+          "institution": "University of Toronto",
+          "institution_authors": [
+            "Alexander W. Olson"
+          ],
+          "raw_affiliation": "Centre for Analytics and Artificial Intelligence Engineering, University of Toronto, Toronto, Canada",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10929816",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Fooling the Watchers: Breaking AIGC Detectors via Semantic Prompt Attacks",
@@ -4820,19 +5065,39 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of California, Berkeley"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:b67ea7c34b2dfa2718aa",
+          "institution": "University of California, Berkeley",
+          "institution_authors": [
+            "Guang Yang"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2507.02995",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ]
     },
     {
       "title": "From Evidence to Verdict: An Agent-Based Forensic Framework for AI-Generated Image Detection",
@@ -4914,19 +5179,77 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Hangzhou High-Tech Zone (Binjiang) Institute of Blockchain and Data Security",
+        "University at Buffalo, State University of New York",
+        "Zhejiang University"
+      ],
+      "aggregated_country_names": [
+        "China",
+        "CN",
+        "US"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "US"
+      ],
+      "aggregated_regions": [
+        "Zhejiang"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:1bbec24fe0713dd3659e",
+          "institution": "Zhejiang University",
+          "institution_authors": [
+            "Qijie Xu",
+            "Can Wang",
+            "Jiawei Chen"
+          ],
+          "raw_affiliation": "State Key Laboratory of Blockchain and Data Security, Zhejiang University, Hangzhou, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2502.19716",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:f0e2f2168269097e8170",
+          "institution": "Hangzhou High-Tech Zone (Binjiang) Institute of Blockchain and Data Security",
+          "institution_authors": [
+            "Qijie Xu",
+            "Can Wang",
+            "Jiawei Chen"
+          ],
+          "raw_affiliation": "Hangzhou High-Tech Zone (Binjiang) Institute of Blockchain and Data Security, Hangzhou, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2502.19716",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:6605eb8d4eabbe32a5ad",
+          "institution": "University at Buffalo, State University of New York",
+          "institution_authors": [
+            "Siwei Lyu",
+            "Defang Chen"
+          ],
+          "raw_affiliation": "Institute for Artificial Intelligence and Data Science, University at Buffalo, State University of New York, Buffalo, USA",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2502.19716",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "GCS-Net: A universal AI-generated visual content detection method based on CLIP",
@@ -5434,19 +5757,42 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Queen's University"
+      ],
+      "aggregated_country_names": [
+        "Canada"
+      ],
+      "aggregated_country_codes": [
+        "CA"
+      ],
+      "aggregated_regions": [
+        "Ontario"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:fc921e5a7fca36d1ca33",
+          "institution": "Queen's University",
+          "institution_authors": [
+            "Nicholas Chivaran",
+            "Jianbing Ni"
+          ],
+          "raw_affiliation": "Department of Electrical and Computer Engineering, Queen's University, Kingston, ON, Canada",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/11268874",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "LATTE: Latent Trajectory Embedding for Diffusion-Generated Image Detection",
@@ -6610,15 +6956,61 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Khalifa University",
+        "Polytechnic University of Hauts-de-France",
+        "Sorbonne University"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:787aed63dafd65a04cd1",
+          "institution": "Polytechnic University of Hauts-de-France",
+          "institution_authors": [
+            "Mamadou Keita",
+            "Hessen B. Eutamene",
+            "Abdelmalik Taleb-Ahmed"
+          ],
+          "raw_affiliation": "Laboratory of IEMN, Polytechnic University of Hauts-de-France, Valenciennes, France",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/pdf/10.1145/3746265.3759667",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:7b72705012900093b23d",
+          "institution": "Khalifa University",
+          "institution_authors": [
+            "Wassim Hamidouche"
+          ],
+          "raw_affiliation": "Khalifa University, Abu Dhabi, UAE",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/pdf/10.1145/3746265.3759667",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:6b77085855b2caf2c2ef",
+          "institution": "Sorbonne University",
+          "institution_authors": [
+            "Abdenour Hadid"
+          ],
+          "raw_affiliation": "Sorbonne Center for Artificial Intelligence, Sorbonne University, Abu Dhabi, UAE",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/pdf/10.1145/3746265.3759667",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning",
@@ -7067,15 +7459,61 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Center for Data-Driven Science and AI, Tohoku University, Sendai, Japan",
+        "University of Technology of Troyes",
+        "Université de Lille"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:9cbd1ac85b1fc238705e",
+          "institution": "University of Technology of Troyes",
+          "institution_authors": [
+            "Antoine Mallet",
+            "Arthur Méreur",
+            "Rémi Cogranne"
+          ],
+          "raw_affiliation": "Computer Science and Digital Society Lab, University of Technology of Troyes, Troyes, France; University of Technology of Troyes, Troyes, France",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/11159445",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:53d1106780c2d1a3230f",
+          "institution": "Center for Data-Driven Science and AI, Tohoku University, Sendai, Japan",
+          "institution_authors": [
+            "Minoru Kuribayashi"
+          ],
+          "raw_affiliation": "Center for Data-Driven Science and AI, Tohoku University, Sendai, Japan",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/11159445",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:73f5f4bc08a766777b35",
+          "institution": "Université de Lille",
+          "institution_authors": [
+            "Patrick Bas"
+          ],
+          "raw_affiliation": "UMR 9189 CRIStAL, Univ. Lille, CNRS, Centrale Lille, Lille, France",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/11159445",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "SMNDNet for Multiple Types of Deepfake Image Detection",
@@ -7271,19 +7709,40 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Wisconsin-Madison"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:d89310ea5f0e690b29ba",
+          "institution": "University of Wisconsin-Madison",
+          "institution_authors": [
+            "Anirudh Sundara Rajan",
+            "Yong Jae Lee"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2502.07778",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping",
@@ -7598,17 +8057,66 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "NEC Laboratories America",
+        "University of California, Berkeley",
+        "University of Wisconsin–Madison"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:3e0d5122cf1c497d01b4",
+          "institution": "University of Wisconsin–Madison",
+          "institution_authors": [
+            "Haoyue Bai"
+          ],
+          "raw_affiliation": "University of Wisconsin–Madison",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2505.01008",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:7d635bd99b2b49102ac1",
+          "institution": "University of California, Berkeley",
+          "institution_authors": [
+            "Yiyou Sun"
+          ],
+          "raw_affiliation": "University of California, Berkeley",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2505.01008",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:e6112ebcb46f36e2ef20",
+          "institution": "NEC Laboratories America",
+          "institution_authors": [
+            "Wei Cheng",
+            "Haifeng Chen"
+          ],
+          "raw_affiliation": "NEC Laboratories America",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2505.01008",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "WILD: a new in-the-Wild Image Linkage Dataset for synthetic image attribution",
@@ -7783,15 +8291,32 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "École Polytechnique"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:1e4c026170af23ededc8",
+          "institution": "École Polytechnique",
+          "institution_authors": [
+            "Xi Wang",
+            "Vicky Kalogeiton"
+          ],
+          "raw_affiliation": "LIX, CNRS, École Polytechnique, IP Paris, Paris, France",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-92648-8_25",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "A Bias-Free Training Paradigm for More General AI-generated Image Detection",
@@ -8412,19 +8937,41 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Ruhr University Bochum"
+      ],
+      "aggregated_country_names": [
+        "Germany"
+      ],
+      "aggregated_country_codes": [
+        "DE"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:cfd9b2e40fb2d934d815",
+          "institution": "Ruhr University Bochum",
+          "institution_authors": [
+            "Jonas Ricker",
+            "Denis Lukovnikov",
+            "Asja Fischer"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10656214",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "AI Generated Image Detection Using Neural Networks",
@@ -8903,15 +9450,32 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "University of Bergen"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:b9b40660d6c086cd9466",
+          "institution": "University of Bergen",
+          "institution_authors": [
+            "Sohail Ahmed Khan",
+            "Duc-Tien Dang-Nguyen"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/10.1145/3652583.3658035",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "CNN-LSTM Model for Deepfake Image Detection",
@@ -9056,17 +9620,69 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Leonardo S.p.A.",
+        "University of Modena and Reggio Emilia",
+        "University of Pisa"
+      ],
+      "aggregated_country_names": [
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:7e65c1091ced1db089d8",
+          "institution": "University of Modena and Reggio Emilia",
+          "institution_authors": [
+            "Federico Cocchi",
+            "Marcella Cornia",
+            "Lorenzo Baraldi",
+            "Rita Cucchiara"
+          ],
+          "raw_affiliation": "University of Modena and Reggio Emilia, Modena, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-73036-8_12",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:3f1bfe2e63699893ef3f",
+          "institution": "University of Pisa",
+          "institution_authors": [
+            "Lorenzo Baraldi",
+            "Federico Cocchi"
+          ],
+          "raw_affiliation": "University of Pisa, Pisa, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-73036-8_12",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:9f4c95817963018924fe",
+          "institution": "Leonardo S.p.A.",
+          "institution_authors": [
+            "Alessandro Nicolosi"
+          ],
+          "raw_affiliation": "Leonardo S.p.A., Rome, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-73036-8_12",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "D$^3$: Scaling Up Deepfake Detection by Learning from Discrepancy",
@@ -9154,19 +9770,57 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Michigan",
+        "University of Wisconsin–Madison"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:7aba3b011bb8da4e6188",
+          "institution": "University of Wisconsin–Madison",
+          "institution_authors": [
+            "Ashish Hooda",
+            "Kassem Fawaz",
+            "Somesh Jha"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10483793",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:731023df404517f7f540",
+          "institution": "University of Michigan",
+          "institution_authors": [
+            "Neal Mangaokar",
+            "Ryan Feng",
+            "Atul Prakash"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10483793",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Data-Independent Operator: A Training-Free Artifact Representation Extractor for Generalizable Deepfake Detection",
@@ -10168,19 +10822,58 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+        "University of Naples Federico II"
+      ],
+      "aggregated_country_names": [
+        "DE",
+        "IT"
+      ],
+      "aggregated_country_codes": [
+        "DE",
+        "IT"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:39e1c5f4447a54c62df0",
+          "institution": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+          "institution_authors": [
+            "Lea Uhlenbrock",
+            "Denise Moussa",
+            "Christian Riess"
+          ],
+          "raw_affiliation": "Friedrich-Alexander University Erlangen-Nürnberg, Erlangen, Germany",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/10.1145/3658664.3659652",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:45e9778ff31af0a2c84c",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Davide Cozzolino",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "Università degli Studi di Napoli Federico II, Naples, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/10.1145/3658664.3659652",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Diffusion Models as a Representation Learner for Deepfake Image Detection",
@@ -10274,17 +10967,86 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Miraflow",
+        "Purdue University",
+        "TrueMedia.org",
+        "Yonsei University, Sinchon Campus"
+      ],
+      "aggregated_country_names": [
+        "South Korea"
+      ],
+      "aggregated_country_codes": [
+        "KR"
+      ],
+      "aggregated_regions": [
+        "Seoul"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:855eb69331e5d5ba100b",
+          "institution": "Yonsei University, Sinchon Campus",
+          "institution_authors": [
+            "Yewon Lim",
+            "Changyeon Lee"
+          ],
+          "raw_affiliation": "Department of Computer Science and Engineering, Yonsei University, Seoul, Republic of Korea",
+          "evidence_source": "",
+          "evidence_url": "https://arxiv.org/pdf/2406.00856",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section. Department of Computer Science and Engineering is located at Yonsei University's Seoul/Sinchon campus."
+        },
+        {
+          "mapping_id": "mapping:124455beaf0fbdac0e07",
+          "institution": "Purdue University",
+          "institution_authors": [
+            "Yewon Lim",
+            "Changyeon Lee"
+          ],
+          "raw_affiliation": "Computer and Information Technology, Purdue University, West Lafayette, IN, United States",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2406.00856",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:f88d9b9e08a4c4013c79",
+          "institution": "Miraflow",
+          "institution_authors": [
+            "Yewon Lim",
+            "Changyeon Lee",
+            "Aerin Kim"
+          ],
+          "raw_affiliation": "Miraflow, Kirkland, WA, United States",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2406.00856",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:03a2b8e6e1145307f9d0",
+          "institution": "TrueMedia.org",
+          "institution_authors": [
+            "Aerin Kim",
+            "Oren Etzioni"
+          ],
+          "raw_affiliation": "TrueMedia.org, Seattle, WA, United States",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2406.00856",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Enhancing AI-Generated Image Detection with a Novel Approach and Comparative Analysis",
@@ -10758,15 +11520,47 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Google Research",
+        "Massachusetts Institute of Technology"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:c904ac3984d8d031b10f",
+          "institution": "Massachusetts Institute of Technology",
+          "institution_authors": [
+            "George Cazenavette"
+          ],
+          "raw_affiliation": "Massachusetts Institute of Technology",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10655308/",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:8747af9bd85d317390cb",
+          "institution": "Google Research",
+          "institution_authors": [
+            "Avneesh Sud",
+            "Thomas Leung",
+            "Ben Usman"
+          ],
+          "raw_affiliation": "Google Research",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10655308/",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "FAMSeC: A Few-Shot-Sample-Based General AI-Generated Image Detection Method",
@@ -10864,19 +11658,43 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Sapienza University of Rome"
+      ],
+      "aggregated_country_names": [
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:60d97730a9ea38878965",
+          "institution": "Sapienza University of Rome",
+          "institution_authors": [
+            "Romeo Lanzino",
+            "Federico Fontana",
+            "Anxhelo Diko",
+            "Marco Raoul Marini",
+            "Luigi Cinque"
+          ],
+          "raw_affiliation": "Department of Computer Science, Sapienza University of Rome, Via Salaria 113, 00198 Rome, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10678555",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "paper_id": "curated:ce200a9a7aa3dee36fc7",
@@ -10919,15 +11737,61 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Polytechnic University of Hauts-de-France",
+        "Sorbonne University",
+        "Université de Rennes"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:fb2466ad12541d376579",
+          "institution": "Polytechnic University of Hauts-de-France",
+          "institution_authors": [
+            "Mamadou Keita",
+            "Hessen Bougueffa Eutamene",
+            "Abdelmalik Taleb-Ahmed"
+          ],
+          "raw_affiliation": "Laboratory of IEMN, Univ. Polytechnique Hauts-de-France, Valenciennes, France",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-78305-0_11",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:1235057b0615e536ee23",
+          "institution": "Université de Rennes",
+          "institution_authors": [
+            "Wassim Hamidouche"
+          ],
+          "raw_affiliation": "Univ. Rennes, INSA Rennes, CNRS, IETR - UMR 6164, Rennes, France",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-78305-0_11",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:170d0c521bf80696d9ea",
+          "institution": "Sorbonne University",
+          "institution_authors": [
+            "Abdenour Hadid"
+          ],
+          "raw_affiliation": "Sorbonne Center for Artificial Intelligence, Sorbonne University Abu Dhabi, Abu Dhabi, UAE",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-78305-0_11",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Forgery-aware Adaptive Transformer for Generalizable Synthetic Image Detection",
@@ -11027,15 +11891,32 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Singapore University of Technology and Design"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:9462d205eb6c763daa0d",
+          "institution": "Singapore University of Technology and Design",
+          "institution_authors": [
+            "Chandler Timm Doloriel",
+            "Ngai-Man Cheung"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10446290",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "paper_id": "curated:f7cba2387b8a4131cc7b",
@@ -11076,17 +11957,70 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "A*STAR",
+        "Beijing Jiaotong University",
+        "Yanshan University"
+      ],
+      "aggregated_country_names": [
+        "Singapore"
+      ],
+      "aggregated_country_codes": [
+        "SG"
+      ],
+      "aggregated_regions": [
+        "Singapore"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:cf1ea12e612ea7e06557",
+          "institution": "Beijing Jiaotong University",
+          "institution_authors": [
+            "Chuangchuang Tan",
+            "Yao Zhao",
+            "Shikui Wei",
+            "Yunchao Wei"
+          ],
+          "raw_affiliation": "Institute of Information Science, Beijing Jiaotong University, China; Beijing Key Laboratory of Advanced Information Science and Network Technology",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/28310",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:7c35ed6e5a365d36b059",
+          "institution": "Yanshan University",
+          "institution_authors": [
+            "Guanghua Gu"
+          ],
+          "raw_affiliation": "School of Information Science and Engineering, Yanshan University, China; Hebei Key Laboratory of Information Transmission and Signal Processing",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/28310",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:77d2e9c4a9e138d170ca",
+          "institution": "A*STAR",
+          "institution_authors": [
+            "Ping Liu"
+          ],
+          "raw_affiliation": "Center for Frontier AI Research, Institute of High Performance Computing (IHPC), A*STAR, Singapore",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/28310",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "From Provenance to Aberrations: Image Creator and Screen Reader User Perspectives on Alt Text for AI-Generated Images",
@@ -11553,17 +12487,68 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Rutgers University",
+        "Sony AI",
+        "University of Massachusetts Amherst"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:f9b6e4056969839d6594",
+          "institution": "Rutgers University",
+          "institution_authors": [
+            "Zhenting Wang",
+            "Dimitris N. Metaxas"
+          ],
+          "raw_affiliation": "Rutgers University",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2405.13360",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section. The paper notes that part of Zhenting Wang's work was done during an internship at Sony AI, but the listed affiliation marker maps him to Rutgers University."
+        },
+        {
+          "mapping_id": "mapping:fe9cf3377aafb37400d2",
+          "institution": "Sony AI",
+          "institution_authors": [
+            "Vikash Sehwag",
+            "Chen Chen",
+            "Lingjuan Lyu"
+          ],
+          "raw_affiliation": "Sony Ai",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2405.13360",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:4cd809dd4913fd558a6e",
+          "institution": "University of Massachusetts Amherst",
+          "institution_authors": [
+            "Shiqing Ma"
+          ],
+          "raw_affiliation": "University of Massachusetts at Amherst",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2405.13360",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "IPD-Net: Detecting AI-Generated Images via Inter-Patch Dependencies",
@@ -11921,15 +12906,61 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Clemson University",
+        "University of Southern California",
+        "USC Information Sciences Institute"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:3518bfe7c1e8199080fa",
+          "institution": "University of Southern California",
+          "institution_authors": [
+            "Hae Jin Song",
+            "Mahyar Khayatkhoei"
+          ],
+          "raw_affiliation": "University of Southern California",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10656447",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:3872e222c499f932d4f3",
+          "institution": "USC Information Sciences Institute",
+          "institution_authors": [
+            "Hae Jin Song",
+            "Mahyar Khayatkhoei"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10656447",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:4487e16e4ddda3c83318",
+          "institution": "Clemson University",
+          "institution_authors": [
+            "Wael AbdAlmageed"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10656447",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "paper_id": "curated:f523af1f7fe7b16fda75",
@@ -11970,17 +13001,69 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "City University of Hong Kong",
+        "Instituto de Matemática Pura e Aplicada",
+        "Université Paris-Saclay"
+      ],
+      "aggregated_country_names": [
+        "FR"
+      ],
+      "aggregated_country_codes": [
+        "FR"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:5501406fa8ddf10f530f",
+          "institution": "Université Paris-Saclay",
+          "institution_authors": [
+            "Yanhao Li",
+            "Quentin Bammey",
+            "Tina Nikoukhah",
+            "Miguel Colom",
+            "Rafael Grompone von Gioi"
+          ],
+          "raw_affiliation": "Université Paris-Saclay, ENS Paris-Saclay, CNRS, Centre Borelli, Gif-sur-Yvette, 91190 France",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10678228",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:b8edffece3c03a00d394",
+          "institution": "Instituto de Matemática Pura e Aplicada",
+          "institution_authors": [
+            "Marina Gardella"
+          ],
+          "raw_affiliation": "Instituto de Matemática Pura e Aplicada, Rio de Janeiro, Brazil (IMPA)",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10678228",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:b443adf5518c1b6477f8",
+          "institution": "City University of Hong Kong",
+          "institution_authors": [
+            "Jean-Michel Morel"
+          ],
+          "raw_affiliation": "City University of Hong Kong, Department of Mathematics, Kowloon, Hong Kong",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10678228",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Mastering Deepfake Detection: A Cutting-edge Approach to Distinguish GAN and Diffusion-model Images",
@@ -12260,19 +13343,41 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Catania"
+      ],
+      "aggregated_country_names": [
+        "IT"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:1e6c5f6603baf2853073",
+          "institution": "University of Catania",
+          "institution_authors": [
+            "Orazio Pontorno",
+            "Luca Guarnera",
+            "Sebastiano Battiato"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10648013",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "paper_id": "curated:0b2081f70faaf81278dc",
@@ -12315,15 +13420,36 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "University of Chicago"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:9d901bfed4e78dedd3b5",
+          "institution": "University of Chicago",
+          "institution_authors": [
+            "Anna Yoo Jeong Ha",
+            "Josephine Passananti",
+            "Ronik Bhaskar",
+            "Shawn Shan",
+            "Haitao Zheng",
+            "Ben Y. Zhao"
+          ],
+          "raw_affiliation": "University of Chicago, Chicago, IL, USA",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/10.1145/3658644.3670306",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "paper_id": "curated:1f9d168cc6c4c445a231",
@@ -12366,15 +13492,67 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Peking University Shenzhen Graduate School",
+        "Tencent Youtu Lab",
+        "The Chinese University of Hong Kong, Shenzhen"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:5ce275d62264311d7971",
+          "institution": "Peking University Shenzhen Graduate School",
+          "institution_authors": [
+            "Zhiyuan Yan",
+            "Peng Jin",
+            "Chengchun Liu",
+            "Li Yuan"
+          ],
+          "raw_affiliation": "Peking University Shenzhen Graduate School",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2411.15633",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:534a2e8014547d4a8eab",
+          "institution": "Tencent Youtu Lab",
+          "institution_authors": [
+            "Zhiyuan Yan",
+            "Jiangming Wang",
+            "Ke-Yue Zhang",
+            "Shen Chen",
+            "Taiping Yao",
+            "Shouhong Ding"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2411.15633",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:876eaa74ea0010133ba2",
+          "institution": "The Chinese University of Hong Kong, Shenzhen",
+          "institution_authors": [
+            "Baoyuan Wu"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2411.15633",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Parents and Children: Distinguishing Multimodal Deepfakes from Natural Images",
@@ -12822,15 +14000,49 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Toyota Technological Institute at Chicago",
+        "University of Illinois Urbana-Champaign"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:f0371b34ab032286200d",
+          "institution": "University of Illinois Urbana-Champaign",
+          "institution_authors": [
+            "Ayush Sarkar",
+            "Hanlin Mai",
+            "Amitabh Mahapatra",
+            "Svetlana Lazebnik",
+            "D.A. Forsyth"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10658385",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:4ca6afd7962e90523eeb",
+          "institution": "Toyota Technological Institute at Chicago",
+          "institution_authors": [
+            "Anand Bhattad"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10658385",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "SIDBench: A Python framework for reliably assessing synthetic image detection methods",
@@ -12977,19 +14189,44 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Xiamen University"
+      ],
+      "aggregated_country_names": [
+        "CN"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:e2b3eab72b06c52ba664",
+          "institution": "Xiamen University",
+          "institution_authors": [
+            "Ziyin Zhou",
+            "Ke Sun",
+            "Zhongxi Chen",
+            "Huafeng Kuang",
+            "Xiaoshuai Sun",
+            "Rongrong Ji"
+          ],
+          "raw_affiliation": "Key Laboratory of Multimedia Trusted Perception and Efficient Computing, Ministry of Education of China, Xiamen University, Xiamen, Fujian, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/10.1145/3664647.3681535",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Synthetic Image Verification in the Era of Generative Artificial Intelligence: What Works and What Isn’t There yet",
@@ -13249,19 +14486,44 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Florence"
+      ],
+      "aggregated_country_names": [
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:1785c762c93d9d0d8598",
+          "institution": "University of Florence",
+          "institution_authors": [
+            "Luca Bindini",
+            "Giulia Bertazzini",
+            "Daniele Baracchi",
+            "Dasara Shullani",
+            "Paolo Frasconi",
+            "Alessandro Piva"
+          ],
+          "raw_affiliation": "Department of Information Engineering, University of Florence, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10810686",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Towards Generated Image Provenance Analysis via Conceptual-Similar-Guided-SLIP Retrieval",
@@ -13363,17 +14625,53 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "CISPA Helmholtz Center for Information Security",
+        "Ruhr University Bochum"
+      ],
+      "aggregated_country_names": [
+        "Germany"
+      ],
+      "aggregated_country_codes": [
+        "DE"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:872b8417a3815dc7111e",
+          "institution": "Ruhr University Bochum",
+          "institution_authors": [
+            "Jonas Ricker",
+            "Simon Damm",
+            "Asja Fischer"
+          ],
+          "raw_affiliation": "Ruhr University Bochum, Bochum, Germany",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2210.14571",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:0320caba75283fa47434",
+          "institution": "CISPA Helmholtz Center for Information Security",
+          "institution_authors": [
+            "Thorsten Holz"
+          ],
+          "raw_affiliation": "CISPA Helmholtz Center for Information Security, Saarbrücken, Germany",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2210.14571",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Transfer Learning of Real Image Features with Soft Contrastive Loss for Fake Image Detection",
@@ -13624,19 +14922,58 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Nanyang Technological University",
+        "University of Oxford"
+      ],
+      "aggregated_country_names": [
+        "GB",
+        "SG"
+      ],
+      "aggregated_country_codes": [
+        "GB",
+        "SG"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:eecdfc979510cb3f7092",
+          "institution": "University of Oxford",
+          "institution_authors": [
+            "Fengyuan Liu",
+            "Haochen Luo",
+            "Philip Torr",
+            "Jindong Gu"
+          ],
+          "raw_affiliation": "University of Oxford, Oxford OX1 3PJ, United Kingdom",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-73033-7_16",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:0a5edd2bde1fa041ee93",
+          "institution": "Nanyang Technological University",
+          "institution_authors": [
+            "Yiming Li"
+          ],
+          "raw_affiliation": "Nanyang Technological University, Singapore 639798, Singapore",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-73033-7_16",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Whodunit: Detection and Attribution of Synthetic Images by Leveraging Model-specific Fingerprints",
@@ -13916,15 +15253,35 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "CISPA Helmholtz Center for Information Security"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:a979f73eb18e26e7418f",
+          "institution": "CISPA Helmholtz Center for Information Security",
+          "institution_authors": [
+            "Zeyang Sha",
+            "Yicong Tan",
+            "Mingjie Li",
+            "Michael Backes",
+            "Yang Zhang"
+          ],
+          "raw_affiliation": "CISPA Helmholtz Center for Information Security, Saarbrücken, Germany",
+          "evidence_source": "PDF",
+          "evidence_url": "https://dl.acm.org/doi/10.1145/3658644.3690297",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "A GAN-based Approach to Detect AI-Generated Images",
@@ -14799,14 +16156,45 @@
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Informatics Institute for Postgraduate Studies",
+        "University of Baghdad"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:caba06a4ef922b9a886c",
+          "institution": "Informatics Institute for Postgraduate Studies",
+          "institution_authors": [
+            "Mohammed Thajeel Abdullah"
+          ],
+          "raw_affiliation": "Informatics Institute for Postgraduate Studies, Iraqi Commission for Computer and Informatics, Baghdad, Iraq",
+          "evidence_source": "PDF",
+          "evidence_url": "https://inass.org/wp-content/uploads/2022/12/2023063007-2.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:9637b1898b6276ccd446",
+          "institution": "University of Baghdad",
+          "institution_authors": [
+            "Nada Hussein M. Ali"
+          ],
+          "raw_affiliation": "Department of Computer Science, University of Baghdad, Baghdad, Iraq",
+          "evidence_source": "PDF",
+          "evidence_url": "https://inass.org/wp-content/uploads/2022/12/2023063007-2.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Deepfake detection using deep learning methods: A systematic and comprehensive review",
@@ -16761,17 +18149,53 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Ruhr University Bochum",
+        "University of Hamburg"
+      ],
+      "aggregated_country_names": [
+        "Germany"
+      ],
+      "aggregated_country_codes": [
+        "DE"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:b589a7ca8f399c04d9e6",
+          "institution": "Ruhr University Bochum",
+          "institution_authors": [
+            "Mike Laszkiewicz",
+            "Jonas Ricker",
+            "Asja Fischer"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2306.06210",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:0d6f2949bff07b1260b7",
+          "institution": "University of Hamburg",
+          "institution_authors": [
+            "Johannes Lederer"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2306.06210",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Synthbuster: Towards Detection of Diffusion Model Generated Images",
@@ -17823,15 +19247,48 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "RIKEN Center for Advanced Intelligence Project",
+        "Univresity of Tskuba"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:a9f195d58dcbf2344d9f",
+          "institution": "Univresity of Tskuba",
+          "institution_authors": [
+            "Syou Hirofumi",
+            "Kazuto Fukuchi",
+            "Yohei Akimoto",
+            "Jun Sakuma"
+          ],
+          "raw_affiliation": "Department of Computer Science / Faculty of Engineering, Information and Systems, University of Tsukuba, Tsukuba, Japan",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/9892704",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:7681dae0d71c2935587c",
+          "institution": "RIKEN Center for Advanced Intelligence Project",
+          "institution_authors": [
+            "Jun Sakuma"
+          ],
+          "raw_affiliation": "Faculty of Engineering, Information and Systems, University of Tsukuba / RIKEN AIP, Tsukuba, Japan",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/9892704",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section. Jun Sakuma is also affiliated with RIKEN AIP."
+        }
+      ]
     },
     {
       "title": "Discovering Transferable Forensic Features for CNN-Generated Images Detection",
@@ -18556,70 +20013,6 @@
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "[Retracted] Comparative Analysis of Deepfake Image Detection Method Using Convolutional Neural Network",
-      "in_scope": true,
-      "year": 2021,
-      "publication_year": 2021,
-      "publication_date": "2021-01-01",
-      "task": "detection",
-      "subtask": "deepfake_image_detection",
-      "entry_type": "method",
-      "venue": "Computational Intelligence and Neuroscience",
-      "venue_name": "Computational Intelligence and Neuroscience",
-      "venue_type": "journal",
-      "publisher": "Hindawi Publishing Corporation",
-      "publication_type": "article",
-      "abstract": "Generation Z is a data‐driven generation. Everyone has the entirety of humanity’s knowledge in their hands. The technological possibilities are endless. However, we use and misuse this blessing to face swap using deepfake. Deepfake is an emerging subdomain of artificial intelligence technology in which one person’s face is overlaid over another person’s face, which is very prominent across social media. Machine learning is the main element of deepfakes, and it has allowed deepfake images and videos to be generated considerably faster and at a lower cost. Despite the negative connotations associated with the phrase “deepfakes,” the technology is being more widely employed commercially and individually. Although it is relatively new, the latest technological advances make it more and more challenging to detect deepfakes and synthesized images from real ones. An increasing sense of unease has developed around the emergence of deepfake technologies. Our main objective is to detect deepfake images from real ones accurately. In this research, we implemented several methods to detect deepfake images and make a comparative analysis. Our model was trained by datasets from Kaggle, which had 70,000 images from the Flickr dataset and 70,000 images produced by styleGAN. For this comparative study of the use of convolutional neural networks (CNN) to identify genuine and deepfake pictures, we trained eight different CNN models. Three of these models were trained using the DenseNet architecture (DenseNet121, DenseNet169, and DenseNet201); two were trained using the VGGNet architecture (VGG16, VGG19); one was with the ResNet50 architecture, one with the VGGFace, and one with a bespoke CNN architecture. We have also implemented a custom model that incorporates methods like dropout and padding that aid in determining whether or not the other models reflect their objectives. The results were categorized by five evaluation metrics: accuracy, precision, recall, F 1‐score, and area under the ROC (receiver operating characteristic) curve. Amongst all the models, VGGFace performed the best, with 99% accuracy. Besides, we obtained 97% from the ResNet50, 96% from the DenseNet201, 95% from the DenseNet169, 94% from the VGG19, 92% from the VGG16, 97% from the DenseNet121 model, and 90% from the custom model.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.1155/2021/3111676",
-      "arxiv_id": "",
-      "arxiv_url": "",
-      "arxiv_year": null,
-      "has_arxiv_version": false,
-      "paper_url": "https://doi.org/10.1155/2021/3111676",
-      "primary_url": "https://doi.org/10.1155/2021/3111676",
-      "landing_page_url": "https://doi.org/10.1155/2021/3111676",
-      "openalex_url": "https://openalex.org/W4200434941",
-      "is_arxiv_preprint": false,
-      "url": "https://doi.org/10.1155/2021/3111676",
-      "authors": [
-        "Hasin Shahed Shad",
-        "Md Mashfiq Rizvee",
-        "Nishat Tasnim Roza",
-        "S. M. Ahsanul Hoq",
-        "Mohammad Monirujjaman Khan",
-        "Arjun Singh",
-        "Atef Zaguia",
-        "Sami Bourouis"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 3,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Manipal University Jaipur",
-        "North South University",
-        "Taif University"
-      ],
-      "aggregated_country_names": [
-        "BD",
-        "IN",
-        "SA"
-      ],
-      "aggregated_country_codes": [
-        "BD",
-        "IN",
-        "SA"
-      ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -19594,15 +20987,33 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Arizona State University"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:0fe9617de122773e1c25",
+          "institution": "Arizona State University",
+          "institution_authors": [
+            "Yuzhen Ding",
+            "Nupur Thakur",
+            "Baoxin Li"
+          ],
+          "raw_affiliation": "Ira A. Fulton Schools of Engineering, Arizona State University, 699 S Mill Ave, Tempe, AZ 85281",
+          "evidence_source": "PDF",
+          "evidence_url": "https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/0197.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "Image Tampering Localization Using a Dense Fully Convolutional Network",
@@ -19714,49 +21125,6 @@
       "aggregated_country_codes": [
         "CN"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "On the Truth Claims of Deepfakes: Indexing Images and Semantic Forensics",
-      "in_scope": true,
-      "year": 2021,
-      "publication_year": 2021,
-      "publication_date": "2021-04-25",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "The Journal of Media Art Study and Theory",
-      "venue_name": "The Journal of Media Art Study and Theory",
-      "venue_type": "journal",
-      "publisher": "",
-      "publication_type": "article",
-      "abstract": "When news media shared a video of outgoing president Donald Trump acknowledging the victory of president-elect Joe Biden, some social media users conspired that it was a deepfake, a synthetic image made with machine learning (ML) algorithms, despite evidence to the contrary.Employing this example in the following, I focus on how images generate veracity through the interrelated actions of human and machine learning (ML) algorithms.I argue that ML presents an opportunity to revisit the semiotic infrastructures of images as an approach towards asking how photorealistic images produce truth claims in ways that exceed the purely visual.Drawing from photographic theories of the image index and diagrammatic understandings of ML, I argue that meaning, described here as what images do in the world, is a product of negotiation between multiple technological processes and social registers, spanning data sets, engineering decisions, and human biases.Focusing on Generative Adversarial Networks (GANs), I analyze sociopolitical and scientific discourses around deepfakes to understand the ways in which ML affords hegemonic ways of seeing.I conclude that ML operationalizes the evidentiary power of images, generating new thresholds of visibility to manage uncertainty.My aim is to critically challenge post-truth paranoias by analyzing how ML algorithms come to have ethicopolitical agency in visual culture, with implications for how images are made to matter in post-truth media ecologies.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.59547/26911566.3.1.04",
-      "arxiv_id": "",
-      "arxiv_url": "",
-      "arxiv_year": null,
-      "has_arxiv_version": false,
-      "paper_url": "http://dx.doi.org/10.59547/26911566.3.1.04",
-      "primary_url": "http://dx.doi.org/10.59547/26911566.3.1.04",
-      "landing_page_url": "http://dx.doi.org/10.59547/26911566.3.1.04",
-      "openalex_url": "https://openalex.org/W4377085653",
-      "is_arxiv_preprint": false,
-      "url": "http://dx.doi.org/10.59547/26911566.3.1.04",
-      "authors": [],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -20076,15 +21444,32 @@
       "notes": "",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "University of Texas at Dallas"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:5958624e4e80750d8bef",
+          "institution": "University of Texas at Dallas",
+          "institution_authors": [
+            "Matthew Joslin",
+            "Shuang Hao"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/9283853",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "CNN Detection of GAN-Generated Face Images based on Cross-Band Co-occurrences Analysis",
