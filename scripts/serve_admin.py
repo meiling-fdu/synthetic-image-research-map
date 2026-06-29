@@ -7,6 +7,7 @@ import argparse
 import csv
 import hashlib
 import hmac
+import ipaddress
 import json
 import re
 import secrets
@@ -14,6 +15,7 @@ import sys
 import threading
 import unicodedata
 from collections import defaultdict
+from datetime import datetime, timezone
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -21,6 +23,11 @@ from typing import Any, DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tu
 from urllib.parse import parse_qs, urlsplit
 
 try:
+    from .admin_workflows import (
+        AdminWorkflowError,
+        git_status_result,
+        run_workflow,
+    )
     from .curated_schema import ALLOWED_EXCLUSION_REASONS
     from .curated_papers import (
         DEFAULT_CURATED_PAPERS_PATH,
@@ -55,6 +62,11 @@ try:
         upsert_active_exclusion,
     )
 except ImportError:
+    from admin_workflows import (
+        AdminWorkflowError,
+        git_status_result,
+        run_workflow,
+    )
     from curated_schema import ALLOWED_EXCLUSION_REASONS
     from curated_papers import (
         DEFAULT_CURATED_PAPERS_PATH,
@@ -105,6 +117,13 @@ MAX_REQUEST_BYTES = 64 * 1024
 EXCLUSION_WRITE_LOCK = threading.Lock()
 CURATED_PAPER_WRITE_LOCK = threading.Lock()
 CURATED_MAPPING_WRITE_LOCK = threading.Lock()
+
+WORKFLOW_ENDPOINTS = {
+    "/api/run-curated-validation": "curated_validation",
+    "/api/export-preview": "export_preview",
+    "/api/run-public-validation": "public_validation",
+    "/api/run-full-refresh": "full_refresh",
+}
 
 STATIC_ROUTES = {
     "/admin/": (WEB_DIR / "admin.html", "text/html; charset=utf-8"),
@@ -480,6 +499,8 @@ def load_admin_data(
             "mapping_update",
             "mapping_exclude",
             "mapping_replace_all",
+            "local_validation",
+            "local_preview_export",
         ],
         "counts": {
             "total_papers": len(papers),
@@ -601,6 +622,16 @@ def make_handler(
     mappings_path: Path = CURATED_MAPPINGS_PATH,
     location_review_path: Path = LOCATION_REVIEW_PATH,
 ) -> type[BaseHTTPRequestHandler]:
+    workflow_lock = threading.Lock()
+    workflow_status_lock = threading.Lock()
+    latest_workflow_status: Dict[str, Any] = {
+        "state": "idle",
+        "workflow": None,
+        "started_at": None,
+        "completed_at": None,
+        "result": None,
+    }
+
     class AdminRequestHandler(BaseHTTPRequestHandler):
         server_version = "SyntheticImageResearchMapAdmin/0.1"
 
@@ -634,6 +665,124 @@ def make_handler(
             if not supplied:
                 supplied = next(iter(query.get("token", [])), "")
             return bool(supplied) and hmac.compare_digest(supplied, token)
+
+        def is_header_authorized(self) -> bool:
+            supplied = self.headers.get("X-Admin-Token", "")
+            return bool(supplied) and hmac.compare_digest(supplied, token)
+
+        def is_loopback_client(self) -> bool:
+            try:
+                return ipaddress.ip_address(
+                    self.client_address[0]
+                ).is_loopback
+            except ValueError:
+                return False
+
+        def send_method_not_allowed(self, allowed: str) -> None:
+            payload = json.dumps(
+                {"error": f"method not allowed; use {allowed}"},
+                separators=(",", ":"),
+            ).encode("utf-8")
+            self.send_response(HTTPStatus.METHOD_NOT_ALLOWED)
+            self.send_header("Allow", allowed)
+            self.send_common_headers(
+                "application/json; charset=utf-8", len(payload)
+            )
+            self.end_headers()
+            self.wfile.write(payload)
+
+        def workflow_status_snapshot(self) -> Dict[str, Any]:
+            with workflow_status_lock:
+                return dict(latest_workflow_status)
+
+        def run_admin_workflow(self, workflow_name: str) -> None:
+            if not self.is_loopback_client():
+                self.send_json(
+                    HTTPStatus.FORBIDDEN,
+                    {"error": "command workflows are restricted to loopback clients"},
+                )
+                return
+            if not workflow_lock.acquire(blocking=False):
+                self.send_json(
+                    HTTPStatus.CONFLICT,
+                    {
+                        "error": "another admin workflow is already running",
+                        "status": self.workflow_status_snapshot(),
+                    },
+                )
+                return
+            started_at = datetime.now(timezone.utc).isoformat()
+            with workflow_status_lock:
+                latest_workflow_status.update(
+                    {
+                        "state": "running",
+                        "workflow": workflow_name,
+                        "started_at": started_at,
+                        "completed_at": None,
+                        "result": None,
+                    }
+                )
+            try:
+                result = run_workflow(workflow_name)
+                completed_at = datetime.now(timezone.utc).isoformat()
+                with workflow_status_lock:
+                    latest_workflow_status.update(
+                        {
+                            "state": (
+                                "succeeded" if result["success"] else "failed"
+                            ),
+                            "completed_at": completed_at,
+                            "result": result,
+                        }
+                    )
+                self.send_json(HTTPStatus.OK, result)
+            except AdminWorkflowError as error:
+                completed_at = datetime.now(timezone.utc).isoformat()
+                failure = {
+                    "success": False,
+                    "command": [],
+                    "exit_code": 2,
+                    "stdout_tail": "",
+                    "stderr_tail": str(error),
+                    "duration_seconds": 0,
+                    "changed_files": [],
+                }
+                with workflow_status_lock:
+                    latest_workflow_status.update(
+                        {
+                            "state": "failed",
+                            "completed_at": completed_at,
+                            "result": failure,
+                        }
+                    )
+                self.send_json(HTTPStatus.BAD_REQUEST, failure)
+            except Exception as error:  # Keep workflow state recoverable.
+                completed_at = datetime.now(timezone.utc).isoformat()
+                failure = {
+                    "success": False,
+                    "command": [],
+                    "exit_code": 1,
+                    "stdout_tail": "",
+                    "stderr_tail": (
+                        "Unexpected local workflow failure: "
+                        f"{type(error).__name__}: {error}"
+                    ),
+                    "duration_seconds": 0,
+                    "changed_files": [],
+                }
+                with workflow_status_lock:
+                    latest_workflow_status.update(
+                        {
+                            "state": "failed",
+                            "completed_at": completed_at,
+                            "result": failure,
+                        }
+                    )
+                self.send_json(
+                    HTTPStatus.INTERNAL_SERVER_ERROR, failure
+                )
+            finally:
+                workflow_lock.release()
 
         def serve_static(self, path: Path, content_type: str) -> None:
             try:
@@ -685,6 +834,35 @@ def make_handler(
                     HTTPStatus.UNAUTHORIZED,
                     {"error": "missing or invalid admin token"},
                 )
+                return
+            if request.path in WORKFLOW_ENDPOINTS:
+                self.send_method_not_allowed("POST")
+                return
+            if request.path == "/api/latest-validation-status":
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                self.send_json(
+                    HTTPStatus.OK, self.workflow_status_snapshot()
+                )
+                return
+            if request.path == "/api/git-status":
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {"error": "git status is restricted to loopback clients"},
+                    )
+                    return
+                self.send_json(HTTPStatus.OK, git_status_result())
                 return
             try:
                 papers, data = load_admin_data(
@@ -781,6 +959,21 @@ def make_handler(
                     {"error": "missing or invalid admin token"},
                 )
                 return
+            if request.path in {
+                "/api/latest-validation-status",
+                "/api/git-status",
+            }:
+                self.send_method_not_allowed("GET")
+                return
+            if request.path in WORKFLOW_ENDPOINTS:
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                self.run_admin_workflow(WORKFLOW_ENDPOINTS[request.path])
+                return
             if request.path not in {
                 "/api/paper/delete-or-exclude",
                 "/api/paper/restore",
@@ -850,8 +1043,8 @@ def make_handler(
                         {
                             "paper": row,
                             "message": (
-                                "Saved to curated database. Public preview export "
-                                "integration will be enabled in a later step."
+                                "Saved to curated database. Run Export preview or "
+                                "Full refresh to update local public-preview JSON."
                             ),
                         },
                     )

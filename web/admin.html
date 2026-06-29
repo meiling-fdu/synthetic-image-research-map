@@ -44,6 +44,30 @@
         <article><strong id="count-exclusions">—</strong><span>Active exclusions</span></article>
       </section>
 
+      <section class="workflow-panel" id="workflow-panel">
+        <div class="workflow-heading">
+          <div>
+            <p class="eyebrow">Local export and validation</p>
+            <h2>Refresh local preview</h2>
+            <p>Run the fixed local maintenance commands, inspect their output, and reload the paper browser without restarting the server.</p>
+          </div>
+          <div class="workflow-state" id="workflow-state" data-state="idle" role="status" aria-live="polite">No workflow run yet</div>
+        </div>
+        <div class="workflow-actions">
+          <button class="secondary-button workflow-command" id="run-curated-validation" type="button">Run curated validation</button>
+          <button class="secondary-button workflow-command" id="run-export-preview" type="button">Run export preview</button>
+          <button class="secondary-button workflow-command" id="run-public-validation" type="button">Run public-preview validation</button>
+          <button class="primary-button workflow-command" id="run-full-refresh" type="button">Run full refresh pipeline</button>
+          <button class="secondary-button" id="reload-preview-data" type="button">Reload preview data</button>
+          <button class="secondary-button" id="show-git-status" type="button">Show git status</button>
+        </div>
+        <p class="workflow-guidance" id="workflow-guidance">Local preview updates do not publish the site. Commit and push manually to update GitHub Pages.</p>
+        <details class="workflow-log-panel" id="workflow-log-panel">
+          <summary>Command log</summary>
+          <pre id="workflow-log">No command output yet.</pre>
+        </details>
+      </section>
+
       <section class="add-paper-panel" id="add-paper-panel" hidden>
         <div class="section-heading">
           <div>

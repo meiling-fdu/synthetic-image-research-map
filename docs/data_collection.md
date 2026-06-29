@@ -532,6 +532,27 @@ Active mappings without a unique valid location are added or updated in `data/cu
 
 Active paper exclusions remain authoritative for both paper and marker outputs. Header-only curated files are a strict no-op, so the existing candidate preview and its hashes remain unchanged until maintainers add curated records.
 
+### Local real-time export and validation
+
+The local admin browser includes a **Refresh local preview** panel with separate controls for curated validation, public-preview export, public-preview validation, reloading browser data, and the complete refresh pipeline. Each command is a fixed server-side argv list; the browser cannot supply a shell command or command arguments. Requests require the admin token and command execution is additionally restricted to loopback clients.
+
+**Run full refresh pipeline** executes these local scripts in order and stops at the first failure:
+
+```text
+python3 scripts/validate_curated_database.py
+python3 scripts/validate_paper_exclusions.py
+python3 scripts/export_public_preview.py
+python3 scripts/validate_public_preview.py
+python3 scripts/audit_key_paper_coverage.py
+python3 scripts/diagnose_paper_marker_blockers.py
+```
+
+The server captures bounded stdout/stderr tails, exit status, duration, and any Git-status paths changed by the workflow. Only one maintenance workflow may run at a time, and each subprocess has a timeout. A failed validation is shown in the collapsible command log; later full-refresh steps are not run, and the UI does not describe the preview as validated.
+
+Export and full refresh update the local generated files under `web/data/` through `scripts/export_public_preview.py`, then reload the paper list and selected-paper details from the refreshed JSON. **Reload preview data** only rereads the current local JSON and does not run an export. The optional Git-status view runs only `git status --short`.
+
+These actions never stage, commit, push, or publish anything. After a successful export the UI explicitly reports: **Local preview updated. Commit and push manually to update GitHub Pages.** The deployed GitHub Pages site changes only after the maintainer reviews the diff and manually commits and pushes it.
+
 ### Visual paper deletion / scope exclusion
 
 The local admin browser can record a durable decision to remove an out-of-scope paper from future public preview and map exports. Start the localhost server with `python3 scripts/serve_admin.py`, open the tokenized URL printed in the terminal, find the paper, and choose **Delete / Exclude from site**. The confirmation dialog requires both a reason and review note.

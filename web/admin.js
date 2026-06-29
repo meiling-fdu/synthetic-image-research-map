@@ -10,6 +10,12 @@ const state = {
 };
 
 const elements = {};
+const workflowCommandIds = [
+  "run-curated-validation",
+  "run-export-preview",
+  "run-public-validation",
+  "run-full-refresh",
+];
 
 document.addEventListener("DOMContentLoaded", () => {
   [
@@ -112,6 +118,17 @@ document.addEventListener("DOMContentLoaded", () => {
     "count-curated",
     "count-exclusions",
     "action-notice",
+    "workflow-panel",
+    "workflow-state",
+    "workflow-guidance",
+    "workflow-log-panel",
+    "workflow-log",
+    "run-curated-validation",
+    "run-export-preview",
+    "run-public-validation",
+    "run-full-refresh",
+    "reload-preview-data",
+    "show-git-status",
     "scope-dialog",
     "scope-form",
     "scope-paper-id",
@@ -177,6 +194,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   elements["mapping-cancel"].addEventListener("click", closeMappingDialog);
   elements["mapping-form"].addEventListener("submit", submitMapping);
+  [
+    ["run-curated-validation", "/api/run-curated-validation", "Curated validation"],
+    ["run-export-preview", "/api/export-preview", "Preview export"],
+    ["run-public-validation", "/api/run-public-validation", "Public-preview validation"],
+    ["run-full-refresh", "/api/run-full-refresh", "Full refresh"],
+  ].forEach(([id, path, label]) => {
+    elements[id].addEventListener("click", () => runAdminWorkflow(path, label));
+  });
+  elements["reload-preview-data"].addEventListener("click", reloadPreviewData);
+  elements["show-git-status"].addEventListener("click", showGitStatus);
 
   if (state.token) loadApplication();
   else requestToken();
@@ -204,9 +231,10 @@ async function loadApplication(preserveSelection = false) {
   setConnection("loading", "Loading…");
   elements["token-panel"].hidden = true;
   try {
-    const [status, papersPayload] = await Promise.all([
+    const [status, papersPayload, workflowStatus] = await Promise.all([
       apiFetch("/api/status"),
       apiFetch("/api/papers"),
+      apiFetch("/api/latest-validation-status"),
     ]);
     state.papers = papersPayload.records.slice().sort((left, right) =>
       text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
@@ -216,6 +244,7 @@ async function loadApplication(preserveSelection = false) {
     applyFilters();
     elements.workspace.hidden = false;
     setConnection("ok", "Local curation · connected");
+    renderLatestWorkflowStatus(workflowStatus);
     if (preserveSelection && state.selectedId) {
       const stillPresent = state.papers.some((paper) => paper.display_id === state.selectedId);
       if (stillPresent) await selectPaper(state.selectedId);
@@ -249,6 +278,122 @@ function showNotice(message, variant = "success") {
   elements["action-notice"].hidden = false;
   elements["action-notice"].dataset.variant = variant;
   elements["action-notice"].textContent = message;
+}
+
+function setWorkflowRunning(running, label = "") {
+  workflowCommandIds.forEach((id) => {
+    elements[id].disabled = running;
+  });
+  elements["reload-preview-data"].disabled = running;
+  elements["show-git-status"].disabled = running;
+  if (running) {
+    elements["workflow-state"].dataset.state = "running";
+    elements["workflow-state"].textContent = `${label} running…`;
+  }
+}
+
+function renderLatestWorkflowStatus(status) {
+  if (!status || status.state === "idle") {
+    elements["workflow-state"].dataset.state = "idle";
+    elements["workflow-state"].textContent = "No workflow run yet";
+    return;
+  }
+  if (status.state === "running") {
+    setWorkflowRunning(true, humanize(status.workflow));
+    return;
+  }
+  setWorkflowRunning(false);
+  elements["workflow-state"].dataset.state =
+    status.state === "succeeded" ? "success" : "error";
+  elements["workflow-state"].textContent = [
+    humanize(status.workflow),
+    status.state,
+    status.result?.duration_seconds !== undefined
+      ? `${status.result.duration_seconds}s`
+      : "",
+  ].filter(Boolean).join(" · ");
+  if (status.result) renderWorkflowLog(status.result);
+}
+
+function renderWorkflowLog(result, heading = "") {
+  const command = Array.isArray(result.command)
+    ? result.command.join("\n")
+    : text(result.command);
+  const changedFiles = (result.changed_files || []).length
+    ? result.changed_files.join("\n")
+    : "None detected";
+  elements["workflow-log"].textContent = [
+    heading,
+    `Success: ${result.success ? "yes" : "no"}`,
+    `Exit code: ${result.exit_code}`,
+    `Duration: ${result.duration_seconds}s`,
+    "Command(s):",
+    command || "—",
+    "Changed files:",
+    changedFiles,
+    "Standard output:",
+    result.stdout_tail || "—",
+    "Standard error:",
+    result.stderr_tail || "—",
+  ].filter((part) => part !== "").join("\n");
+}
+
+async function runAdminWorkflow(path, label) {
+  setWorkflowRunning(true, label);
+  elements["workflow-log"].textContent = `${label} is running…`;
+  try {
+    const result = await apiFetch(path, { method: "POST" });
+    renderWorkflowLog(result, label);
+    elements["workflow-log-panel"].open = true;
+    elements["workflow-state"].dataset.state =
+      result.success ? "success" : "error";
+    elements["workflow-state"].textContent =
+      `${label} ${result.success ? "succeeded" : "failed"} · ${result.duration_seconds}s`;
+    if (!result.success) {
+      showNotice(`${label} failed. Review the command log; preview data was not treated as validated.`, "error");
+      return;
+    }
+    if (path === "/api/export-preview" || path === "/api/run-full-refresh") {
+      await loadApplication(true);
+      showNotice(
+        "Local preview updated. Commit and push manually to update GitHub Pages."
+      );
+    } else {
+      showNotice(`${label} completed successfully.`);
+    }
+  } catch (error) {
+    elements["workflow-state"].dataset.state = "error";
+    elements["workflow-state"].textContent = `${label} failed`;
+    elements["workflow-log"].textContent =
+      error.payload?.stderr_tail || error.message;
+    elements["workflow-log-panel"].open = true;
+    showNotice(`${label} failed: ${error.message}`, "error");
+  } finally {
+    setWorkflowRunning(false);
+  }
+}
+
+async function reloadPreviewData() {
+  elements["reload-preview-data"].disabled = true;
+  try {
+    await loadApplication(true);
+    showNotice("Preview data reloaded from local public-preview JSON.");
+  } finally {
+    elements["reload-preview-data"].disabled = false;
+  }
+}
+
+async function showGitStatus() {
+  elements["show-git-status"].disabled = true;
+  try {
+    const result = await apiFetch("/api/git-status");
+    renderWorkflowLog(result, "git status --short");
+    elements["workflow-log-panel"].open = true;
+  } catch (error) {
+    showNotice(`Could not read git status: ${error.message}`, "error");
+  } finally {
+    elements["show-git-status"].disabled = false;
+  }
 }
 
 function openAddPaperPanel() {
