@@ -282,7 +282,10 @@ def _location_groups(
 ) -> Dict[str, List[Dict[str, Any]]]:
     grouped: Dict[str, List[Dict[str, Any]]] = {}
     for record in records:
-        institution = normalize_institution(record.get("institution"))
+        institution = normalize_institution(
+            record.get("normalized_institution")
+            or record.get("institution")
+        )
         if not institution or not _valid_coordinates(record):
             continue
         if require_safe_candidate and not _candidate_location_is_safe(record):
@@ -305,7 +308,11 @@ def _unique_location(
 def match_institutions_to_known_coordinates(
     public_map_records: Sequence[Mapping[str, Any]],
     candidate_map_records: Sequence[Mapping[str, Any]] = (),
+    confirmed_location_records: Sequence[Mapping[str, Any]] = (),
 ) -> Dict[str, CoordinateMatch]:
+    confirmed_groups = _location_groups(
+        confirmed_location_records, require_safe_candidate=False
+    )
     public_groups = _location_groups(
         public_map_records, require_safe_candidate=False
     )
@@ -313,8 +320,14 @@ def match_institutions_to_known_coordinates(
         candidate_map_records, require_safe_candidate=True
     )
     matches: Dict[str, CoordinateMatch] = {}
-    for institution in set(public_groups) | set(candidate_groups):
-        if institution in public_groups:
+    for institution in (
+        set(confirmed_groups) | set(public_groups) | set(candidate_groups)
+    ):
+        if institution in confirmed_groups:
+            matches[institution] = _unique_location(
+                confirmed_groups[institution]
+            )
+        elif institution in public_groups:
             matches[institution] = _unique_location(public_groups[institution])
         else:
             matches[institution] = _unique_location(candidate_groups[institution])
@@ -601,7 +614,15 @@ def _curated_marker(
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
         "evidence_source": clean(mapping.get("evidence_source")),
         "evidence_url": clean(mapping.get("evidence_url")),
-        "resolution_method": "curated_mapping_existing_location",
+        "coordinate_source": clean(location.get("coordinate_source")),
+        "coordinate_source_url": clean(
+            location.get("coordinate_source_url")
+        ),
+        "resolution_method": (
+            "curated_confirmed_location"
+            if clean(location.get("location_id"))
+            else "curated_mapping_existing_location"
+        ),
         "resolution_confidence": "high",
         "needs_review": False,
         "notes": _mapping_note(mapping),
@@ -713,11 +734,14 @@ def build_curated_map_records(
     candidate_map_records: Sequence[Mapping[str, Any]] = (),
     exclusion_rows: Sequence[Mapping[str, Any]] = (),
     location_review_rows: List[Dict[str, str]] | None = None,
+    confirmed_location_records: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     paper_index = _paper_index(paper_records)
     exclusion_index = build_active_exclusion_index(exclusion_rows)
     locations = match_institutions_to_known_coordinates(
-        public_map_records, candidate_map_records
+        public_map_records,
+        candidate_map_records,
+        confirmed_location_records,
     )
     review_rows = location_review_rows if location_review_rows is not None else []
     markers = []
@@ -918,6 +942,7 @@ def integrate_curated_records(
     exclusion_rows: Sequence[Mapping[str, Any]] = (),
     candidate_map_records: Sequence[Mapping[str, Any]] = (),
     location_review_rows: Sequence[Mapping[str, Any]] = (),
+    confirmed_location_records: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[
     List[Dict[str, Any]],
     List[Dict[str, Any]],
@@ -977,6 +1002,7 @@ def integrate_curated_records(
         candidate_map_records,
         exclusion_rows,
         reviews,
+        confirmed_location_records,
     )
     replaced_markers = 0
     for marker in marker_records:

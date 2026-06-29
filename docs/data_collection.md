@@ -526,11 +526,27 @@ Duplicate active mappings are blocked when the paper identity, institution, and 
 
 Paper-level publication does not require coordinates. A curated paper with no mappings receives `missing_affiliation`; a paper with mappings but no coordinate-bearing institution receives `missing_coordinates`. Its mapping evidence remains attached to the paper record, while no marker is fabricated.
 
-Active curated mappings produce markers only after an exact normalized institution-name match resolves to one unique valid location. The exporter prefers the current public map's validated locations, then considers medium/high-confidence, non-review candidate-map locations. Ambiguous exact-name matches are deliberately unresolved. A generated curated marker carries the confirmed institution-author correspondence and evidence provenance, uses `resolution_method=curated_mapping_existing_location`, and replaces only an automatic marker for the same paper and institution.
+Active curated mappings produce markers only after an exact normalized institution-name match resolves to one unique valid location. The exporter first uses maintainer-confirmed records in `data/curated/institution_locations.csv`, then the current public map's validated locations, then medium/high-confidence, non-review candidate-map locations. Ambiguous exact-name matches are deliberately unresolved. A marker using a confirmed curated location carries `resolution_method=curated_confirmed_location`; other exact known matches use `curated_mapping_existing_location`. Each marker preserves the confirmed institution-author correspondence and evidence provenance and replaces only an automatic marker for the same paper and institution.
 
 Active mappings without a unique valid location are added or updated in `data/curated/institution_location_review.csv`. Missing matches use `location_status=missing` and `coordinate_status=missing`; ambiguous matches use `needs_coordinate_review` and `ambiguous`. Existing review notes and creation timestamps are preserved, and repeated mappings for the same paper and institution do not create duplicate queue items. When a previously queued institution gains an exact known location, its queue status is updated to `known`.
 
 Active paper exclusions remain authoritative for both paper and marker outputs. Header-only curated files are a strict no-op, so the existing candidate preview and its hashes remain unchanged until maintainers add curated records.
+
+### Institution Location Review
+
+Open the tokenized local admin browser and choose **Institution Location Review** to inspect rows from `data/curated/institution_location_review.csv`. Each queue row keeps the related paper, institution authors, raw affiliation, mapping evidence, suggested location, current statuses, and review note visible. Coordinate review is intentionally separate from confirming the paper-level author–institution relationship.
+
+Select a queue row and enter the confirmed institution, optional city/region/country labels, uppercase two-letter country code, latitude, longitude, coordinate source or source URL, and a required coordinate review note. Latitude must be between -90 and 90 and longitude between -180 and 180. The server never geocodes, guesses, or invents a coordinate: the maintainer must copy it from a reliable source and document that evidence.
+
+Confirmation atomically creates or updates the matching normalized institution in `data/curated/institution_locations.csv`, marks the queue row `location_status=known` and `coordinate_status=known`, and preserves the queue's paper and evidence context. Duplicate confirmed rows for the same normalized institution are rejected. **Mark ambiguous** instead records `location_status=ambiguous` and `coordinate_status=needs_coordinate_review`; **Mark unresolved** records both statuses as missing. Both status decisions require a review note and create no coordinates.
+
+After confirmation the browser reports **Location saved. Run full refresh pipeline to update markers.** The next export gives a unique confirmed location priority over existing public and safe candidate locations. An active curated mapping can then produce a marker; multiple confirmed candidates remain ambiguous and marker-free. The save endpoints write only curated CSV files, and the full refresh is still required to update generated `web/data/` JSON. GitHub Pages changes only after a separate manual commit and push.
+
+Summarize the queue and confirmed location table with:
+
+```bash
+python3 scripts/report_location_review.py
+```
 
 ### Local real-time export and validation
 

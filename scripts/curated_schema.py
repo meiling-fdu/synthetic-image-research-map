@@ -93,11 +93,31 @@ INSTITUTION_LOCATION_REVIEW_COLUMNS = (
     "updated_at",
 )
 
+INSTITUTION_LOCATION_COLUMNS = (
+    "location_id",
+    "institution",
+    "normalized_institution",
+    "city",
+    "region",
+    "country",
+    "country_code",
+    "lat",
+    "lon",
+    "coordinate_source",
+    "coordinate_source_url",
+    "coordinate_status",
+    "review_note",
+    "created_at",
+    "updated_at",
+    "created_by",
+)
+
 EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "papers.csv": PAPERS_COLUMNS,
     "author_institution_mappings.csv": AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     "paper_exclusions.csv": PAPER_EXCLUSION_COLUMNS,
     "institution_location_review.csv": INSTITUTION_LOCATION_REVIEW_COLUMNS,
+    "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
 }
 
 ALLOWED_TASKS = {

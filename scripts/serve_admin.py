@@ -50,6 +50,13 @@ try:
         replace_all_mappings,
         update_mapping,
     )
+    from .curated_locations import (
+        DEFAULT_INSTITUTION_LOCATIONS_PATH,
+        CuratedLocationError,
+        create_or_update_confirmed_location,
+        location_review_payload,
+        mark_queue_row,
+    )
     from .openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -89,6 +96,13 @@ except ImportError:
         replace_all_mappings,
         update_mapping,
     )
+    from curated_locations import (
+        DEFAULT_INSTITUTION_LOCATIONS_PATH,
+        CuratedLocationError,
+        create_or_update_confirmed_location,
+        location_review_payload,
+        mark_queue_row,
+    )
     from openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -109,6 +123,7 @@ CURATED_PAPERS_PATH = DEFAULT_CURATED_PAPERS_PATH
 CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 CURATED_MAPPINGS_PATH = DEFAULT_MAPPINGS_PATH
 LOCATION_REVIEW_PATH = DEFAULT_LOCATION_REVIEW_PATH
+INSTITUTION_LOCATIONS_PATH = DEFAULT_INSTITUTION_LOCATIONS_PATH
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
@@ -117,6 +132,7 @@ MAX_REQUEST_BYTES = 64 * 1024
 EXCLUSION_WRITE_LOCK = threading.Lock()
 CURATED_PAPER_WRITE_LOCK = threading.Lock()
 CURATED_MAPPING_WRITE_LOCK = threading.Lock()
+CURATED_LOCATION_WRITE_LOCK = threading.Lock()
 
 WORKFLOW_ENDPOINTS = {
     "/api/run-curated-validation": "curated_validation",
@@ -612,6 +628,15 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             f"(default: {LOCATION_REVIEW_PATH})."
         ),
     )
+    parser.add_argument(
+        "--institution-locations",
+        type=Path,
+        default=INSTITUTION_LOCATIONS_PATH,
+        help=(
+            "Confirmed institution-location CSV "
+            f"(default: {INSTITUTION_LOCATIONS_PATH})."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -621,6 +646,7 @@ def make_handler(
     curated_papers_path: Path = CURATED_PAPERS_PATH,
     mappings_path: Path = CURATED_MAPPINGS_PATH,
     location_review_path: Path = LOCATION_REVIEW_PATH,
+    institution_locations_path: Path = INSTITUTION_LOCATIONS_PATH,
 ) -> type[BaseHTTPRequestHandler]:
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
@@ -864,6 +890,35 @@ def make_handler(
                     return
                 self.send_json(HTTPStatus.OK, git_status_result())
                 return
+            if request.path == "/api/location-review":
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {
+                            "error": (
+                                "location review is restricted to loopback clients"
+                            )
+                        },
+                    )
+                    return
+                try:
+                    payload = location_review_payload(
+                        review_path=location_review_path,
+                        locations_path=institution_locations_path,
+                    )
+                except CuratedLocationError as error:
+                    self.send_json(
+                        HTTPStatus.INTERNAL_SERVER_ERROR, {"error": str(error)}
+                    )
+                    return
+                self.send_json(HTTPStatus.OK, payload)
+                return
             try:
                 papers, data = load_admin_data(
                     exclusions_path,
@@ -962,6 +1017,7 @@ def make_handler(
             if request.path in {
                 "/api/latest-validation-status",
                 "/api/git-status",
+                "/api/location-review",
             }:
                 self.send_method_not_allowed("GET")
                 return
@@ -973,6 +1029,70 @@ def make_handler(
                     )
                     return
                 self.run_admin_workflow(WORKFLOW_ENDPOINTS[request.path])
+                return
+            location_actions = {
+                "/api/location-review/confirm": "confirm",
+                "/api/location-review/mark-ambiguous": "ambiguous",
+                "/api/location-review/mark-unresolved": "unresolved",
+            }
+            if request.path in location_actions:
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {
+                            "error": (
+                                "location review is restricted to loopback clients"
+                            )
+                        },
+                    )
+                    return
+                try:
+                    payload = self.read_json_body()
+                    with CURATED_LOCATION_WRITE_LOCK:
+                        if location_actions[request.path] == "confirm":
+                            result = create_or_update_confirmed_location(
+                                payload.get("queue_id"),
+                                payload,
+                                locations_path=institution_locations_path,
+                                review_path=location_review_path,
+                            )
+                            message = (
+                                "Location saved. Run full refresh pipeline "
+                                "to update markers."
+                            )
+                        else:
+                            result = {
+                                "queue_row": mark_queue_row(
+                                    payload.get("queue_id"),
+                                    location_actions[request.path],
+                                    payload.get("coordinate_review_note")
+                                    or payload.get("review_note"),
+                                    review_path=location_review_path,
+                                )
+                            }
+                            message = (
+                                "Location review status saved. "
+                                "No coordinates were created."
+                            )
+                except (AdminDataError, CuratedLocationError) as error:
+                    self.send_json(
+                        HTTPStatus.BAD_REQUEST, {"error": str(error)}
+                    )
+                    return
+                self.send_json(
+                    (
+                        HTTPStatus.CREATED
+                        if result.get("action") == "created"
+                        else HTTPStatus.OK
+                    ),
+                    {**result, "message": message},
+                )
                 return
             if request.path not in {
                 "/api/paper/delete-or-exclude",
@@ -1228,6 +1348,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         args.curated_papers,
         args.curated_mappings,
         args.location_review,
+        args.institution_locations,
     )
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)

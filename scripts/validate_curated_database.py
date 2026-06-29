@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import math
 import re
 import sys
 import unicodedata
@@ -39,6 +40,7 @@ except ImportError:  # Support direct execution from the repository root.
 
 BOOLEAN_LIKE_VALUES = {"true", "false", "1", "0", "yes", "no", "y", "n"}
 YEAR_PATTERN = re.compile(r"[+-]?\d+")
+COUNTRY_CODE_PATTERN = re.compile(r"[A-Z]{2}")
 
 
 @dataclass(frozen=True)
@@ -77,6 +79,11 @@ def normalize_doi(value: object) -> str:
 
 def normalize_openalex_url(value: object) -> str:
     return clean(value).casefold().rstrip("/")
+
+
+def normalize_institution(value: object) -> str:
+    text = unicodedata.normalize("NFKC", clean(value)).casefold()
+    return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
 
 
 def add_issue(
@@ -450,6 +457,118 @@ def validate_mapping_evidence(
                 )
 
 
+def validate_confirmed_locations(
+    rows: Sequence[Mapping[str, str]],
+    issues: List[Issue],
+) -> None:
+    normalized_positions: DefaultDict[str, List[int]] = defaultdict(list)
+    location_id_positions: DefaultDict[str, List[int]] = defaultdict(list)
+    required = (
+        "location_id",
+        "institution",
+        "normalized_institution",
+        "country_code",
+        "lat",
+        "lon",
+        "coordinate_status",
+        "review_note",
+        "created_at",
+        "updated_at",
+        "created_by",
+    )
+    for row_number, row in enumerate(rows, start=2):
+        for field in required:
+            if not clean(row.get(field)):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "institution_locations.csv",
+                    f"{field} is required",
+                    row_number,
+                )
+        if not (
+            clean(row.get("coordinate_source"))
+            or clean(row.get("coordinate_source_url"))
+        ):
+            add_issue(
+                issues,
+                "ERROR",
+                "institution_locations.csv",
+                "coordinate_source or coordinate_source_url is required",
+                row_number,
+            )
+        country_code = clean(row.get("country_code"))
+        if country_code and not COUNTRY_CODE_PATTERN.fullmatch(country_code):
+            add_issue(
+                issues,
+                "ERROR",
+                "institution_locations.csv",
+                "country_code must be two uppercase letters",
+                row_number,
+            )
+        try:
+            latitude = float(clean(row.get("lat")))
+            longitude = float(clean(row.get("lon")))
+        except ValueError:
+            latitude = longitude = math.nan
+            add_issue(
+                issues,
+                "ERROR",
+                "institution_locations.csv",
+                "lat and lon must be numeric",
+                row_number,
+            )
+        if not math.isnan(latitude) and (
+            not math.isfinite(latitude) or not -90 <= latitude <= 90
+        ):
+            add_issue(
+                issues,
+                "ERROR",
+                "institution_locations.csv",
+                "lat must be between -90 and 90",
+                row_number,
+            )
+        if not math.isnan(longitude) and (
+            not math.isfinite(longitude) or not -180 <= longitude <= 180
+        ):
+            add_issue(
+                issues,
+                "ERROR",
+                "institution_locations.csv",
+                "lon must be between -180 and 180",
+                row_number,
+            )
+        normalized = normalize_institution(row.get("normalized_institution"))
+        stored_normalized = clean(row.get("normalized_institution"))
+        if stored_normalized and stored_normalized != normalized:
+            add_issue(
+                issues,
+                "ERROR",
+                "institution_locations.csv",
+                "normalized_institution is not in normalized form",
+                row_number,
+            )
+        if normalized:
+            normalized_positions[normalized].append(row_number)
+        location_id = clean(row.get("location_id")).casefold()
+        if location_id:
+            location_id_positions[location_id].append(row_number)
+
+    for label, positions in (
+        ("normalized institution", normalized_positions),
+        ("location_id", location_id_positions),
+    ):
+        for value, row_numbers in positions.items():
+            if len(row_numbers) > 1:
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "institution_locations.csv",
+                    f"duplicate {label} across rows "
+                    f"{', '.join(map(str, row_numbers))}: {value!r}",
+                )
+
+
 def print_summary(
     row_counts: Mapping[str, int],
     issues: Sequence[Issue],
@@ -490,6 +609,7 @@ def main() -> int:
     mappings = datasets.get("author_institution_mappings.csv", [])
     exclusions = datasets.get("paper_exclusions.csv", [])
     locations = datasets.get("institution_location_review.csv", [])
+    confirmed_locations = datasets.get("institution_locations.csv", [])
 
     validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
     validate_allowed_value(
@@ -517,6 +637,13 @@ def main() -> int:
         issues,
     )
     validate_allowed_value(
+        confirmed_locations,
+        "institution_locations.csv",
+        "coordinate_status",
+        {"known"},
+        issues,
+    )
+    validate_allowed_value(
         mappings,
         "author_institution_mappings.csv",
         "mapping_status",
@@ -533,6 +660,7 @@ def main() -> int:
     validate_boolean_fields(exclusions, "paper_exclusions.csv", issues)
     validate_references(datasets, issues)
     validate_mapping_evidence(mappings, issues)
+    validate_confirmed_locations(confirmed_locations, issues)
     duplicates = validate_paper_duplicates(papers, issues)
     print_summary(row_counts, issues, duplicates)
     return 1 if any(issue.level == "ERROR" for issue in issues) else 0

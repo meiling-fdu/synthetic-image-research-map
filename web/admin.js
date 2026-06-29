@@ -7,6 +7,9 @@ const state = {
   selectedId: "",
   selectedPaper: null,
   selectedMappings: [],
+  locationReviews: [],
+  locationSummary: {},
+  selectedLocationReviewId: "",
 };
 
 const elements = {};
@@ -129,6 +132,31 @@ document.addEventListener("DOMContentLoaded", () => {
     "run-full-refresh",
     "reload-preview-data",
     "show-git-status",
+    "location-review-toggle",
+    "location-review-panel",
+    "location-review-close",
+    "location-summary",
+    "location-search",
+    "location-review-list",
+    "empty-location-reviews",
+    "location-editor-placeholder",
+    "location-form",
+    "location-queue-id",
+    "location-context",
+    "confirmed-institution",
+    "confirmed-city",
+    "confirmed-region",
+    "confirmed-country",
+    "confirmed-country-code",
+    "confirmed-lat",
+    "confirmed-lon",
+    "coordinate-source",
+    "coordinate-source-url",
+    "coordinate-review-note",
+    "location-form-error",
+    "location-confirm",
+    "location-mark-ambiguous",
+    "location-mark-unresolved",
     "scope-dialog",
     "scope-form",
     "scope-paper-id",
@@ -204,6 +232,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   elements["reload-preview-data"].addEventListener("click", reloadPreviewData);
   elements["show-git-status"].addEventListener("click", showGitStatus);
+  elements["location-review-toggle"].addEventListener("click", openLocationReview);
+  elements["location-review-close"].addEventListener("click", closeLocationReview);
+  elements["location-search"].addEventListener("input", renderLocationReviewList);
+  elements["location-form"].addEventListener("submit", confirmLocation);
+  elements["location-mark-ambiguous"].addEventListener("click", () => {
+    markLocationReview("ambiguous");
+  });
+  elements["location-mark-unresolved"].addEventListener("click", () => {
+    markLocationReview("unresolved");
+  });
 
   if (state.token) loadApplication();
   else requestToken();
@@ -231,10 +269,11 @@ async function loadApplication(preserveSelection = false) {
   setConnection("loading", "Loading…");
   elements["token-panel"].hidden = true;
   try {
-    const [status, papersPayload, workflowStatus] = await Promise.all([
+    const [status, papersPayload, workflowStatus, locationPayload] = await Promise.all([
       apiFetch("/api/status"),
       apiFetch("/api/papers"),
       apiFetch("/api/latest-validation-status"),
+      apiFetch("/api/location-review"),
     ]);
     state.papers = papersPayload.records.slice().sort((left, right) =>
       text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
@@ -245,6 +284,7 @@ async function loadApplication(preserveSelection = false) {
     elements.workspace.hidden = false;
     setConnection("ok", "Local curation · connected");
     renderLatestWorkflowStatus(workflowStatus);
+    applyLocationPayload(locationPayload);
     if (preserveSelection && state.selectedId) {
       const stillPresent = state.papers.some((paper) => paper.display_id === state.selectedId);
       if (stillPresent) await selectPaper(state.selectedId);
@@ -258,6 +298,241 @@ async function loadApplication(preserveSelection = false) {
     }
     requestToken(`Could not load admin data: ${error.message}`);
     setConnection("error", "Connection error");
+  }
+}
+
+function applyLocationPayload(payload) {
+  state.locationReviews = payload.records || [];
+  state.locationSummary = payload.summary || {};
+  renderLocationSummary();
+  renderLocationReviewList();
+  if (state.selectedLocationReviewId) {
+    const selected = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    if (selected) selectLocationReview(selected.queue_id);
+    else clearLocationEditor();
+  }
+}
+
+async function loadLocationReviews() {
+  const payload = await apiFetch("/api/location-review");
+  applyLocationPayload(payload);
+}
+
+function openLocationReview() {
+  elements["location-review-panel"].hidden = false;
+  elements["location-review-panel"].scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+  });
+}
+
+function closeLocationReview() {
+  elements["location-review-panel"].hidden = true;
+}
+
+function renderLocationSummary() {
+  const summary = state.locationSummary;
+  const items = [
+    ["Queue", summary.total_queue_rows],
+    ["Known", summary.known],
+    ["Missing", summary.missing],
+    ["Ambiguous", summary.ambiguous],
+    ["Needs coordinate review", summary.needs_coordinate_review],
+    ["Confirmed locations", summary.confirmed_locations_count],
+  ];
+  elements["location-summary"].replaceChildren();
+  items.forEach(([label, value]) => {
+    const item = document.createElement("span");
+    const strong = document.createElement("strong");
+    strong.textContent = formatNumber(value);
+    item.append(strong, ` ${label}`);
+    elements["location-summary"].append(item);
+  });
+}
+
+function renderLocationReviewList() {
+  const query = normalize(elements["location-search"].value);
+  const records = state.locationReviews.filter((row) => {
+    if (!query) return true;
+    return normalize([
+      row.institution,
+      row.title,
+      row.year,
+      row.institution_authors,
+      row.raw_affiliation,
+      row.location_status,
+      row.coordinate_status,
+      row.suggested_city,
+      row.suggested_country,
+    ].join(" ")).includes(query);
+  });
+  const list = elements["location-review-list"];
+  list.replaceChildren();
+  records.forEach((row) => {
+    const item = document.createElement("li");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.selected =
+      row.queue_id === state.selectedLocationReviewId ? "true" : "false";
+    const institution = document.createElement("strong");
+    institution.textContent = text(row.institution) || "Unnamed institution";
+    const paper = document.createElement("span");
+    paper.textContent = [row.title, row.year].filter(Boolean).join(" · ") || "Paper unknown";
+    const status = document.createElement("small");
+    status.textContent = [
+      humanize(row.location_status),
+      humanize(row.coordinate_status),
+    ].filter(Boolean).join(" · ") || "Unreviewed";
+    button.append(institution, paper, status);
+    button.addEventListener("click", () => selectLocationReview(row.queue_id));
+    item.append(button);
+    list.append(item);
+  });
+  elements["empty-location-reviews"].hidden = records.length !== 0;
+}
+
+function selectLocationReview(queueId) {
+  const row = state.locationReviews.find((entry) => entry.queue_id === queueId);
+  if (!row) return;
+  state.selectedLocationReviewId = queueId;
+  renderLocationReviewList();
+  elements["location-editor-placeholder"].hidden = true;
+  elements["location-form"].hidden = false;
+  elements["location-form"].reset();
+  elements["location-queue-id"].value = queueId;
+  const confirmed = row.confirmed_location || {};
+  elements["confirmed-institution"].value =
+    text(confirmed.institution || row.institution);
+  elements["confirmed-city"].value =
+    text(confirmed.city || row.suggested_city);
+  elements["confirmed-region"].value = text(confirmed.region);
+  elements["confirmed-country"].value =
+    text(confirmed.country || row.suggested_country);
+  elements["confirmed-country-code"].value =
+    text(confirmed.country_code).toUpperCase();
+  elements["confirmed-lat"].value = text(confirmed.lat);
+  elements["confirmed-lon"].value = text(confirmed.lon);
+  elements["coordinate-source"].value = text(confirmed.coordinate_source);
+  elements["coordinate-source-url"].value =
+    text(confirmed.coordinate_source_url);
+  elements["coordinate-review-note"].value = text(confirmed.review_note);
+  elements["location-form-error"].hidden = true;
+  renderLocationContext(row);
+}
+
+function renderLocationContext(row) {
+  const fields = [
+    ["Paper", [row.title, row.year].filter(Boolean).join(" · ")],
+    ["Institution authors", row.institution_authors],
+    ["Raw affiliation", row.raw_affiliation],
+    ["Evidence source", row.evidence_source],
+    ["Evidence URL", row.evidence_url],
+    ["Suggested location", [row.suggested_city, row.suggested_country].filter(Boolean).join(", ")],
+    ["Location status", humanize(row.location_status)],
+    ["Coordinate status", humanize(row.coordinate_status)],
+    ["Review note", row.review_note],
+  ];
+  elements["location-context"].replaceChildren();
+  fields.forEach(([label, value]) => {
+    const wrapper = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = `${label}: `;
+    wrapper.append(strong);
+    if (label === "Evidence URL" && safeUrl(value)) {
+      wrapper.append(linkValue(value, value));
+    } else {
+      wrapper.append(text(value) || "—");
+    }
+    elements["location-context"].append(wrapper);
+  });
+}
+
+function clearLocationEditor() {
+  state.selectedLocationReviewId = "";
+  elements["location-editor-placeholder"].hidden = false;
+  elements["location-form"].hidden = true;
+  renderLocationReviewList();
+}
+
+function locationDraft() {
+  return {
+    queue_id: elements["location-queue-id"].value,
+    confirmed_institution: elements["confirmed-institution"].value.trim(),
+    confirmed_city: elements["confirmed-city"].value.trim(),
+    confirmed_region: elements["confirmed-region"].value.trim(),
+    confirmed_country: elements["confirmed-country"].value.trim(),
+    confirmed_country_code:
+      elements["confirmed-country-code"].value.trim().toUpperCase(),
+    confirmed_lat: elements["confirmed-lat"].value.trim(),
+    confirmed_lon: elements["confirmed-lon"].value.trim(),
+    coordinate_source: elements["coordinate-source"].value.trim(),
+    coordinate_source_url: elements["coordinate-source-url"].value.trim(),
+    coordinate_review_note:
+      elements["coordinate-review-note"].value.trim(),
+  };
+}
+
+async function confirmLocation(event) {
+  event.preventDefault();
+  const draft = locationDraft();
+  elements["location-form-error"].hidden = true;
+  if (!(draft.coordinate_source || draft.coordinate_source_url)) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent =
+      "Enter a coordinate source or coordinate source URL.";
+    return;
+  }
+  elements["location-confirm"].disabled = true;
+  try {
+    const result = await apiFetch("/api/location-review/confirm", {
+      method: "POST",
+      body: JSON.stringify(draft),
+    });
+    showNotice(result.message);
+    await loadLocationReviews();
+  } catch (error) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = error.message;
+  } finally {
+    elements["location-confirm"].disabled = false;
+  }
+}
+
+async function markLocationReview(status) {
+  const note = elements["coordinate-review-note"].value.trim();
+  elements["location-form-error"].hidden = true;
+  if (!note) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent =
+      "Enter a coordinate review note before changing the status.";
+    return;
+  }
+  const button = elements[
+    status === "ambiguous"
+      ? "location-mark-ambiguous"
+      : "location-mark-unresolved"
+  ];
+  button.disabled = true;
+  try {
+    const result = await apiFetch(
+      `/api/location-review/mark-${status}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          queue_id: elements["location-queue-id"].value,
+          coordinate_review_note: note,
+        }),
+      }
+    );
+    showNotice(result.message);
+    await loadLocationReviews();
+  } catch (error) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = error.message;
+  } finally {
+    button.disabled = false;
   }
 }
 

@@ -16,6 +16,7 @@
         <p class="lede">Inspect records and make durable paper-scope exclusion decisions locally.</p>
       </div>
       <div class="masthead-actions">
+        <button class="secondary-button" id="location-review-toggle" type="button">Institution Location Review</button>
         <button class="primary-button" id="add-paper-toggle" type="button">Add Paper</button>
         <div class="status-pill" id="connection-status" data-state="loading">Connecting…</div>
       </div>
@@ -176,6 +177,77 @@
           </div>
           <p class="workflow-note full-width">After saving, select the paper to curate author–institution mappings. Coordinates remain a separate review step, and saving here does not update public preview JSON.</p>
         </form>
+      </section>
+
+      <section class="location-review-panel" id="location-review-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Confirmed coordinates · local only</p>
+            <h2>Institution Location Review</h2>
+            <p>Review queued institutions and record coordinates only after checking a reliable source. Coordinates are never inferred or invented here.</p>
+          </div>
+          <button class="secondary-button" id="location-review-close" type="button">Close</button>
+        </div>
+        <div class="location-summary" id="location-summary" aria-live="polite"></div>
+        <div class="location-review-workspace">
+          <aside class="location-queue">
+            <label class="search-field">
+              <span>Search queue</span>
+              <input id="location-search" type="search" placeholder="Institution, paper, author, status…">
+            </label>
+            <ol id="location-review-list"></ol>
+            <p class="empty-markers" id="empty-location-reviews" hidden>No location-review rows match.</p>
+          </aside>
+          <article class="location-editor">
+            <div id="location-editor-placeholder">
+              <h3>Select a queued institution</h3>
+              <p>Its paper context, affiliation evidence, suggestions, and current review state will appear here.</p>
+            </div>
+            <form id="location-form" hidden>
+              <input id="location-queue-id" type="hidden">
+              <div class="location-context" id="location-context"></div>
+              <div class="location-form-grid">
+                <label class="full-width">Confirmed institution
+                  <input id="confirmed-institution" type="text" required>
+                </label>
+                <label>Confirmed city
+                  <input id="confirmed-city" type="text">
+                </label>
+                <label>Confirmed region
+                  <input id="confirmed-region" type="text">
+                </label>
+                <label>Confirmed country
+                  <input id="confirmed-country" type="text">
+                </label>
+                <label>Country code
+                  <input id="confirmed-country-code" type="text" maxlength="2" pattern="[A-Z]{2}" placeholder="US" required>
+                </label>
+                <label>Latitude
+                  <input id="confirmed-lat" type="number" min="-90" max="90" step="any" required>
+                </label>
+                <label>Longitude
+                  <input id="confirmed-lon" type="number" min="-180" max="180" step="any" required>
+                </label>
+                <label>Coordinate source
+                  <input id="coordinate-source" type="text" placeholder="Official institution page, Wikidata…">
+                </label>
+                <label>Coordinate source URL
+                  <input id="coordinate-source-url" type="url" placeholder="https://…">
+                </label>
+                <label class="full-width">Coordinate review note
+                  <textarea id="coordinate-review-note" rows="3" required placeholder="Explain how these coordinates were confirmed."></textarea>
+                </label>
+              </div>
+              <p class="workflow-note">Provide a coordinate source or source URL, plus a non-blank review note. Saving does not run the exporter.</p>
+              <p class="form-error" id="location-form-error" role="alert" hidden></p>
+              <div class="location-form-actions">
+                <button class="primary-button" id="location-confirm" type="submit">Confirm coordinates</button>
+                <button class="secondary-button" id="location-mark-ambiguous" type="button">Mark ambiguous</button>
+                <button class="secondary-button" id="location-mark-unresolved" type="button">Mark unresolved</button>
+              </div>
+            </form>
+          </article>
+        </div>
       </section>
 
       <section class="workspace" id="workspace" hidden>
