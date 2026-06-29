@@ -4,6 +4,12 @@ import re
 from difflib import SequenceMatcher
 from pathlib import Path
 
+from paper_exclusions import (
+    active_exclusions,
+    matching_exclusion_rows,
+    read_exclusion_rows,
+)
+
 KEY_PATH = Path("data/manual/key_papers.csv")
 OA_PATH = Path("data/processed/openalex_candidate_papers.csv")
 CANDIDATE_JSON = Path("web/data/openalex_candidate_map_data.json")
@@ -90,7 +96,18 @@ def make_title_map(rows):
 def yesno(x):
     return "yes" if x else "no"
 
-key_rows = load_csv(KEY_PATH)
+all_key_rows = load_csv(KEY_PATH)
+active_exclusion_rows = active_exclusions(read_exclusion_rows())
+excluded_key_rows = [
+    row
+    for row in all_key_rows
+    if matching_exclusion_rows(row, active_exclusion_rows)
+]
+key_rows = [
+    row
+    for row in all_key_rows
+    if not matching_exclusion_rows(row, active_exclusion_rows)
+]
 oa_rows = load_csv(OA_PATH)
 candidate_records = load_json_records(CANDIDATE_JSON)
 preview_records = load_json_records(PREVIEW_JSON)
@@ -249,6 +266,7 @@ with OUT_PATH.open("w", newline="", encoding="utf-8") as f:
 from collections import Counter
 print("Wrote:", OUT_PATH)
 print("key papers:", len(report))
+print("excluded key papers omitted:", len(excluded_key_rows))
 print("by missing_stage:")
 for k, v in Counter(r["missing_stage"] for r in report).most_common():
     print(f"  {k}: {v}")

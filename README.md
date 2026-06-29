@@ -58,6 +58,8 @@ Maintainers can use the local `data/curated/` database layer for confirmed paper
 
 The read-only local admin browser provides paper search, filters, metadata inspection, and associated institution-marker details. Start it with `python3 scripts/serve_admin.py`, then open the tokenized localhost URL printed in the terminal. It does not add admin behavior to GitHub Pages.
 
+Maintainers can also use the local browser's **Delete / Scope Review** workflow to record durable exclusions for out-of-scope papers. Decisions are stored in `data/curated/paper_exclusions.csv`; the public-preview exporter applies active exclusions without modifying OpenAlex-derived processed CSV files. The deployed public site remains read-only.
+
 ## Data collection prototype
 
 The standard-library OpenAlex search script can preview its default candidate-paper queries without making API requests or writing files. The defaults are grouped into detection and source attribution, with explicit generated-image wording in every query:

@@ -19,6 +19,13 @@ from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 try:
     from .country_normalization import normalize_country_region
+    from .paper_exclusions import (
+        DEFAULT_EXCLUSIONS_PATH,
+        PaperExclusionError,
+        build_active_exclusion_index,
+        read_exclusion_rows,
+        record_is_excluded,
+    )
     from .export_candidate_map_data import (
         ExportError,
         apply_paper_abstracts,
@@ -40,6 +47,13 @@ try:
     )
 except ImportError:  # Direct execution from the scripts directory.
     from country_normalization import normalize_country_region
+    from paper_exclusions import (
+        DEFAULT_EXCLUSIONS_PATH,
+        PaperExclusionError,
+        build_active_exclusion_index,
+        read_exclusion_rows,
+        record_is_excluded,
+    )
     from export_candidate_map_data import (
         ExportError,
         apply_paper_abstracts,
@@ -72,6 +86,7 @@ DEFAULT_PAPER_VERSION_OVERRIDES = Path("data/manual/paper_version_overrides.csv"
 DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
+DEFAULT_PAPER_EXCLUSIONS = DEFAULT_EXCLUSIONS_PATH
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -267,6 +282,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         "--dry-run",
         action="store_true",
         help="Print filtering results without writing the public JSON file.",
+    )
+    parser.add_argument(
+        "--paper-exclusions",
+        type=Path,
+        default=DEFAULT_PAPER_EXCLUSIONS,
+        help=(
+            "Durable paper exclusion CSV "
+            f"(default: {DEFAULT_PAPER_EXCLUSIONS})."
+        ),
     )
     return parser.parse_args(argv)
 
@@ -613,12 +637,18 @@ def build_paper_preview(
     affiliation_rows: Sequence[Dict[str, str]],
     key_affiliation_rows: Sequence[Dict[str, str]],
     diagnostic_rows: Sequence[Dict[str, str]],
+    exclusion_rows: Sequence[Dict[str, str]] = (),
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    exclusion_index = build_active_exclusion_index(exclusion_rows)
+    excluded_paper_keys = set()
     selected_by_key: Dict[Tuple[str, Any], Dict[str, str]] = {}
     for row in candidate_rows:
         if paper_is_retracted(row) or normalize_export_task_labels(row) is None:
             continue
         record = paper_record_from_candidate(row)
+        if record_is_excluded(record, exclusion_index):
+            excluded_paper_keys.add(identity_key(record))
+            continue
         selected_by_key.setdefault(identity_key(record), row)
 
     all_candidate_index = index_papers_by_identity(
@@ -638,8 +668,11 @@ def build_paper_preview(
             or normalize_export_task_labels(candidate) is None
         ):
             continue
-        key_papers_matched += 1
         record = paper_record_from_candidate(candidate)
+        if record_is_excluded(record, exclusion_index):
+            excluded_paper_keys.add(identity_key(record))
+            continue
+        key_papers_matched += 1
         selected_by_key.setdefault(identity_key(record), candidate)
 
     paper_records = [paper_record_from_candidate(row) for row in selected_by_key.values()]
@@ -741,6 +774,7 @@ def build_paper_preview(
             bool(record.get("missing_coordinates")) for record in paper_records
         ),
         "paper_preview_key_papers_matched": key_papers_matched,
+        "paper_preview_papers_excluded_curated": len(excluded_paper_keys),
         **arxiv_summary,
         **publication_summary,
         **abstract_summary,
@@ -1102,6 +1136,7 @@ def build_preview(
     institution_author_overrides: Sequence[Dict[str, Any]] = (),
     paper_abstracts: Sequence[Dict[str, Any]] = (),
     key_papers: Sequence[Dict[str, str]] = (),
+    exclusion_rows: Sequence[Dict[str, str]] = (),
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     records = [dict(record) for record in records]
     institution_record_override_summary = apply_institution_record_overrides(
@@ -1133,8 +1168,15 @@ def build_preview(
     missing_institution = 0
     missing_coordinates = 0
     excluded_missing_location = 0
+    excluded_curated_records = 0
+    excluded_curated_paper_keys = set()
+    exclusion_index = build_active_exclusion_index(exclusion_rows)
 
     for record in records:
+        if record_is_excluded(record, exclusion_index):
+            excluded_curated_records += 1
+            excluded_curated_paper_keys.add(identity_key(record))
+            continue
         in_scope = parse_bool(record.get("in_scope"))
         if not in_scope and not include_out_of_scope:
             excluded_out_of_scope += 1
@@ -1220,6 +1262,8 @@ def build_preview(
         "records_excluded_missing_location": excluded_missing_location,
         "records_excluded_below_confidence": below_confidence,
         "records_excluded_needs_review": excluded_needs_review,
+        "records_excluded_curated": excluded_curated_records,
+        "papers_excluded_curated": len(excluded_curated_paper_keys),
         "records_eligible_before_limit": eligible_records,
         "unique_papers_eligible_before_limit": eligible_unique_papers,
         "eligible_key_paper_records_before_limit": eligible_key_paper_records,
@@ -1295,6 +1339,14 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print(
         "  Records excluded because they need review: "
         f"{summary['records_excluded_needs_review']}"
+    )
+    print(
+        "  Records excluded by curated paper exclusions: "
+        f"{summary['records_excluded_curated']}"
+    )
+    print(
+        "  Unique papers excluded by curated paper exclusions: "
+        f"{summary['papers_excluded_curated']}"
     )
     print(
         "  Records eligible before maximum: "
@@ -1435,6 +1487,10 @@ def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) ->
         f"{summary['paper_preview_key_papers_matched']}"
     )
     print(
+        "  Papers excluded by curated paper exclusions: "
+        f"{summary['paper_preview_papers_excluded_curated']}"
+    )
+    print(
         "  Paper preview records with non-empty abstract: "
         f"{summary['records_with_abstract']}"
     )
@@ -1457,6 +1513,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         key_papers = read_key_papers()
         institution_record_overrides = load_institution_record_overrides()
         institution_author_overrides = load_institution_author_overrides()
+        exclusion_rows = read_exclusion_rows(args.paper_exclusions)
         payload, summary = build_preview(
             records,
             args.max_records,
@@ -1472,6 +1529,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             institution_author_overrides,
             paper_abstracts,
             key_papers,
+            exclusion_rows,
         )
         paper_payload, paper_summary = build_paper_preview(
             payload["records"],
@@ -1485,13 +1543,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             read_csv_rows(DEFAULT_AFFILIATIONS),
             read_key_paper_affiliation_enrichment(),
             read_csv_rows(DEFAULT_EXPORT_DIAGNOSTICS),
+            exclusion_rows,
         )
         if not args.dry_run:
             write_json(args.output, payload)
             write_json(args.paper_output, paper_payload)
         print_summary(summary, args.output, args.dry_run)
         print_paper_summary(paper_summary, args.paper_output, args.dry_run)
-    except (PreviewExportError, ExportError) as error:
+    except (PreviewExportError, ExportError, PaperExclusionError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
     return 0

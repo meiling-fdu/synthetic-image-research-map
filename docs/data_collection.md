@@ -496,6 +496,41 @@ The server binds to `127.0.0.1:8765` by default and prints a newly generated adm
 
 Step 2 supports browsing, searching, filtering, and paper/marker inspection only. It has no write, edit, or delete endpoint. The server refuses non-loopback binding unless `--unsafe-bind-all` is explicitly supplied. The public GitHub Pages site remains a separate read-only static site and does not use these admin APIs.
 
+### Visual paper deletion / scope exclusion
+
+The local admin browser can record a durable decision to remove an out-of-scope paper from future public preview and map exports. Start the localhost server with `python3 scripts/serve_admin.py`, open the tokenized URL printed in the terminal, find the paper, and choose **Delete / Exclude from site**. The confirmation dialog requires both a reason and review note.
+
+Deletion in this workflow means adding an active audit row to `data/curated/paper_exclusions.csv`. It does not delete or modify OpenAlex-derived files under `data/processed/`, and the browser does not directly edit generated public-preview JSON. Duplicate active decisions are not appended: an existing matching exclusion is retained and its review note may be updated. Restoring a paper marks the audit row inactive and records `restored_at` plus a restore note rather than deleting history.
+
+Allowed reason values are:
+
+- `out_of_scope`
+- `downstream_synthetic_data_only`
+- `medical_or_agriculture_or_industrial_only`
+- `remote_sensing_only`
+- `deepfake_only_not_core`
+- `policy_or_perception_only`
+- `duplicate`
+- `retracted`
+- `wrong_metadata`
+- `other`
+
+The exporter reads active exclusions and matches DOI first, OpenAlex URL second, and normalized title plus year otherwise. It removes matches from both public-preview JSON files. Excluded checklist papers are also omitted from the normal key-paper coverage audit; the marker-blocker report reads the already-filtered paper preview and therefore excludes them naturally.
+
+After making or restoring a decision, refresh generated outputs and checks from the repository root:
+
+```bash
+python3 scripts/validate_curated_database.py
+python3 scripts/validate_paper_exclusions.py
+python3 scripts/report_excluded_papers.py
+python3 scripts/export_public_preview.py
+python3 scripts/validate_public_preview.py
+python3 scripts/audit_key_paper_coverage.py
+python3 scripts/diagnose_paper_marker_blockers.py
+```
+
+The admin browser refreshes its local list immediately but deliberately does not run the exporter. GitHub Pages remains read-only and has no access to the local write API.
+
 ## Public Preview Export
 
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. It also writes `web/data/public_preview_papers.json`, a paper-level public preview list that includes in-scope candidate/key papers even when affiliation or coordinate data is incomplete. The map JSON remains strict: only records with usable institution coordinates can become markers. The paper JSON carries transparent coverage fields such as `has_map_location`, `map_record_count`, `missing_affiliation`, `missing_coordinates`, `needs_review`, and `coverage_status` so incomplete papers can be searched and reviewed without fabricating locations. Both outputs are explicitly labeled as uncurated public preview data, not a manually curated bibliography.

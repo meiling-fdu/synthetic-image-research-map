@@ -5,6 +5,7 @@ const state = {
   papers: [],
   filtered: [],
   selectedId: "",
+  selectedPaper: null,
 };
 
 const elements = {};
@@ -15,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "token-panel",
     "token-form",
     "token-input",
-    "summary-grid",
     "workspace",
     "search-input",
     "filter-year",
@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "filter-coverage",
     "filter-map",
     "filter-source",
+    "filter-exclusion",
     "result-count",
     "paper-list",
     "empty-results",
@@ -34,6 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "detail-badges",
     "metadata-grid",
     "detail-notes",
+    "detail-exclude-button",
+    "detail-restore-button",
     "marker-count",
     "marker-table-body",
     "empty-markers",
@@ -42,6 +45,23 @@ document.addEventListener("DOMContentLoaded", () => {
     "count-affiliation",
     "count-coordinates",
     "count-curated",
+    "count-exclusions",
+    "action-notice",
+    "scope-dialog",
+    "scope-form",
+    "scope-paper-id",
+    "scope-mode",
+    "scope-dialog-title",
+    "scope-paper-title",
+    "scope-exclusion-warning",
+    "scope-restore-warning",
+    "scope-reason-label",
+    "scope-reason",
+    "scope-note",
+    "scope-note-label",
+    "scope-form-error",
+    "scope-cancel",
+    "scope-submit",
   ].forEach((id) => {
     elements[id] = document.getElementById(id);
   });
@@ -67,18 +87,28 @@ document.addEventListener("DOMContentLoaded", () => {
     "filter-coverage",
     "filter-map",
     "filter-source",
+    "filter-exclusion",
   ].forEach((id) => elements[id].addEventListener("change", applyFilters));
 
-  if (state.token) {
-    loadApplication();
-  } else {
-    requestToken();
-  }
+  elements["detail-exclude-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openScopeDialog(state.selectedPaper, "exclude");
+  });
+  elements["detail-restore-button"].addEventListener("click", () => {
+    if (state.selectedPaper) openScopeDialog(state.selectedPaper, "restore");
+  });
+  elements["scope-cancel"].addEventListener("click", closeScopeDialog);
+  elements["scope-form"].addEventListener("submit", submitScopeDecision);
+
+  if (state.token) loadApplication();
+  else requestToken();
 });
 
-async function apiFetch(path) {
+async function apiFetch(path, options = {}) {
+  const headers = { "X-Admin-Token": state.token, ...(options.headers || {}) };
+  if (options.body) headers["Content-Type"] = "application/json";
   const response = await fetch(path, {
-    headers: { "X-Admin-Token": state.token },
+    ...options,
+    headers,
     cache: "no-store",
   });
   const payload = await response.json().catch(() => ({ error: "Invalid server response" }));
@@ -90,7 +120,7 @@ async function apiFetch(path) {
   return payload;
 }
 
-async function loadApplication() {
+async function loadApplication(preserveSelection = false) {
   setConnection("loading", "Loading…");
   elements["token-panel"].hidden = true;
   try {
@@ -105,7 +135,11 @@ async function loadApplication() {
     populateFilters();
     applyFilters();
     elements.workspace.hidden = false;
-    setConnection("ok", "Read-only · connected");
+    setConnection("ok", "Local curation · connected");
+    if (preserveSelection && state.selectedId) {
+      const stillPresent = state.papers.some((paper) => paper.display_id === state.selectedId);
+      if (stillPresent) await selectPaper(state.selectedId);
+    }
   } catch (error) {
     if (error.status === 401) {
       sessionStorage.removeItem("adminToken");
@@ -131,12 +165,19 @@ function setConnection(status, label) {
   elements["connection-status"].textContent = label;
 }
 
+function showNotice(message, variant = "success") {
+  elements["action-notice"].hidden = false;
+  elements["action-notice"].dataset.variant = variant;
+  elements["action-notice"].textContent = message;
+}
+
 function renderSummary(counts) {
   elements["count-total"].textContent = formatNumber(counts.total_papers);
   elements["count-mapped"].textContent = formatNumber(counts.papers_with_map_locations);
   elements["count-affiliation"].textContent = formatNumber(counts.papers_missing_affiliations);
   elements["count-coordinates"].textContent = formatNumber(counts.papers_missing_coordinates);
   elements["count-curated"].textContent = formatNumber(counts.curated_papers);
+  elements["count-exclusions"].textContent = formatNumber(counts.active_exclusions);
 }
 
 function populateFilters() {
@@ -148,9 +189,7 @@ function populateFilters() {
 }
 
 function uniqueValues(field, numericDescending = false) {
-  const values = new Set(
-    state.papers.map((paper) => text(paper[field])).filter(Boolean)
-  );
+  const values = new Set(state.papers.map((paper) => text(paper[field])).filter(Boolean));
   return [...values].sort((left, right) =>
     numericDescending
       ? Number(right) - Number(left)
@@ -160,15 +199,23 @@ function uniqueValues(field, numericDescending = false) {
 
 function setOptions(id, values) {
   const select = elements[id];
-  while (select.options.length > 1) {
-    select.remove(1);
-  }
+  const selected = select.value;
+  while (select.options.length > 1) select.remove(1);
   values.forEach((value) => {
     const option = document.createElement("option");
     option.value = value;
     option.textContent = humanize(value);
     select.append(option);
   });
+  if ([...select.options].some((option) => option.value === selected)) {
+    select.value = selected;
+  }
+}
+
+function exclusionStatus(paper) {
+  if (paper.has_active_exclusion) return "active";
+  if (paper.is_in_curated_exclusions) return "restored";
+  return "none";
 }
 
 function applyFilters() {
@@ -181,23 +228,17 @@ function applyFilters() {
     source_database: elements["filter-source"].value,
   };
   const mapFilter = elements["filter-map"].value;
+  const exclusionFilter = elements["filter-exclusion"].value;
 
   state.filtered = state.papers.filter((paper) => {
-    const searchable = normalize([
-      paper.title,
-      ...(Array.isArray(paper.authors) ? paper.authors : [paper.authors]),
-      ...(paper.institutions || []),
-      paper.doi,
-      paper.openalex_url,
-    ].filter(Boolean).join(" "));
-    if (query && !searchable.includes(query)) return false;
+    if (query && !normalize(paper.title).includes(query)) return false;
     if (Object.entries(filters).some(([field, expected]) =>
       expected && text(paper[field]) !== expected
     )) return false;
     if (mapFilter && String(Boolean(paper.has_map_location)) !== mapFilter) return false;
+    if (exclusionFilter && exclusionStatus(paper) !== exclusionFilter) return false;
     return true;
   });
-
   renderPaperList();
 }
 
@@ -208,30 +249,70 @@ function renderPaperList() {
 
   state.filtered.forEach((paper) => {
     const item = document.createElement("li");
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "paper-card";
-    button.dataset.paperId = paper.display_id;
-    if (paper.display_id === state.selectedId) button.setAttribute("aria-current", "true");
+    const card = document.createElement("article");
+    card.className = "paper-card";
+    card.dataset.paperId = paper.display_id;
+    if (paper.display_id === state.selectedId) card.dataset.selected = "true";
+
+    const selectButton = document.createElement("button");
+    selectButton.type = "button";
+    selectButton.className = "paper-select";
+    selectButton.setAttribute("aria-label", `Inspect ${text(paper.title) || "untitled paper"}`);
+    selectButton.addEventListener("click", () => selectPaper(paper.display_id));
 
     const title = document.createElement("strong");
     title.textContent = text(paper.title) || "Untitled paper";
-    const byline = document.createElement("span");
-    const authors = Array.isArray(paper.authors) ? paper.authors.join(", ") : text(paper.authors);
-    byline.textContent = authors || "Authors unavailable";
-    const meta = document.createElement("span");
-    meta.className = "paper-meta";
-    meta.textContent = [paper.year || paper.publication_year, humanize(paper.task)]
-      .filter(Boolean).join(" · ");
+    const authors = document.createElement("span");
+    authors.textContent = listText(paper.authors) || "Authors unavailable";
+    const venue = document.createElement("span");
+    venue.textContent = text(paper.venue || paper.venue_name) || "Venue unavailable";
+    const identifiers = document.createElement("span");
+    identifiers.className = "paper-identifiers";
+    identifiers.textContent = [
+      paper.doi ? `DOI ${paper.doi}` : "",
+      paper.openalex_url ? `OpenAlex ${paper.openalex_url}` : "",
+    ].filter(Boolean).join(" · ") || "No DOI or OpenAlex URL";
+    const classification = document.createElement("span");
+    classification.className = "paper-meta";
+    classification.textContent = [
+      paper.year || paper.publication_year,
+      humanize(paper.task),
+      humanize(paper.subtask),
+      text(paper.source_database),
+      text(paper.metadata_source),
+    ].filter(Boolean).join(" · ");
+    const coverage = document.createElement("span");
+    coverage.textContent = [
+      humanize(paper.coverage_status),
+      paper.has_map_location ? "has map location" : "no map location",
+      `${formatNumber(paper.map_record_count)} map record${paper.map_record_count === 1 ? "" : "s"}`,
+      `exclusion: ${exclusionStatus(paper)}`,
+    ].join(" · ");
+    selectButton.append(title, authors, venue, identifiers, classification, coverage);
+
+    const footer = document.createElement("div");
+    footer.className = "paper-card-footer";
     const badges = document.createElement("span");
     badges.className = "card-badges";
     if (paper.has_map_location) badges.append(makeBadge("Mapped", "map"));
     if (paper.is_in_curated_papers) badges.append(makeBadge("Curated", "curated"));
-    if (paper.is_in_curated_exclusions) badges.append(makeBadge("Excluded", "excluded"));
+    if (paper.has_active_exclusion) badges.append(makeBadge("Actively excluded", "excluded"));
+    else if (paper.is_in_curated_exclusions) badges.append(makeBadge("Restored", "restored"));
 
-    button.append(title, byline, meta, badges);
-    button.addEventListener("click", () => selectPaper(paper.display_id));
-    item.append(button);
+    const action = document.createElement("button");
+    action.type = "button";
+    if (paper.has_active_exclusion) {
+      action.className = "restore-button compact-action";
+      action.textContent = "Restore";
+      action.addEventListener("click", () => openScopeDialog(paper, "restore"));
+    } else {
+      action.className = "danger-button compact-action";
+      action.textContent = "Delete / Exclude from site";
+      action.addEventListener("click", () => openScopeDialog(paper, "exclude"));
+    }
+    footer.append(badges, action);
+    card.append(selectButton, footer);
+    item.append(card);
     fragment.append(item);
   });
   list.append(fragment);
@@ -248,6 +329,7 @@ async function selectPaper(id) {
   elements["detail-title"].textContent = "Loading…";
   try {
     const payload = await apiFetch(`/api/paper?id=${encodeURIComponent(id)}`);
+    state.selectedPaper = payload.paper;
     renderPaperDetail(payload.paper);
   } catch (error) {
     elements["detail-title"].textContent = "Could not load paper";
@@ -256,20 +338,24 @@ async function selectPaper(id) {
 }
 
 function renderPaperDetail(paper) {
-  elements["detail-source"].textContent =
-    paper.record_source === "curated_only" ? "Curated-only record" : "Public preview record";
+  const sourceLabels = {
+    curated_only: "Curated-only record",
+    exclusion_only: "Exclusion audit record",
+    public_preview: "Public preview record",
+  };
+  elements["detail-source"].textContent = sourceLabels[paper.record_source] || "Admin record";
   elements["detail-title"].textContent = text(paper.title) || "Untitled paper";
   elements["detail-badges"].replaceChildren();
   if (paper.has_map_location) elements["detail-badges"].append(makeBadge("Mapped", "map"));
   if (paper.is_in_curated_papers) elements["detail-badges"].append(makeBadge("Curated", "curated"));
-  if (paper.is_in_curated_exclusions) elements["detail-badges"].append(makeBadge("Exclusion record", "excluded"));
+  if (paper.has_active_exclusion) elements["detail-badges"].append(makeBadge("Actively excluded", "excluded"));
+  else if (paper.is_in_curated_exclusions) elements["detail-badges"].append(makeBadge("Restored exclusion", "restored"));
 
-  const venue = paper.venue || paper.venue_name;
   const metadata = [
     ["Display ID", paper.display_id],
     ["Year", paper.year || paper.publication_year],
     ["Authors", listText(paper.authors)],
-    ["Venue", venue],
+    ["Venue", paper.venue || paper.venue_name],
     ["DOI", linkValue(paper.doi, doiUrl(paper.doi))],
     ["OpenAlex", linkValue(paper.openalex_url, paper.openalex_url)],
     ["Paper URL", linkValue(paper.paper_url, paper.paper_url)],
@@ -280,6 +366,8 @@ function renderPaperDetail(paper) {
     ["Map record count", paper.map_record_count],
     ["Source database", paper.source_database],
     ["Metadata source", paper.metadata_source],
+    ["Exclusion status", exclusionStatus(paper)],
+    ["Exclusion reasons", listText(paper.exclusion_reasons)],
     ["Normalized title + year", paper.normalized_title_year_key],
   ];
   const grid = elements["metadata-grid"];
@@ -294,11 +382,80 @@ function renderPaperDetail(paper) {
   });
 
   elements["detail-notes"].textContent = text(paper.notes || paper.review_note) || "No notes.";
+  elements["detail-exclude-button"].hidden = Boolean(paper.has_active_exclusion);
+  elements["detail-restore-button"].hidden = !paper.has_active_exclusion;
   renderMarkers(paper.marker_records || []);
 }
 
+function openScopeDialog(paper, mode) {
+  state.selectedPaper = paper;
+  elements["scope-form"].reset();
+  elements["scope-paper-id"].value = paper.display_id;
+  elements["scope-mode"].value = mode;
+  elements["scope-paper-title"].textContent = text(paper.title) || "Untitled paper";
+  elements["scope-form-error"].hidden = true;
+  const restoring = mode === "restore";
+  elements["scope-dialog-title"].textContent = restoring
+    ? "Restore paper to future exports?"
+    : "Exclude paper from site?";
+  elements["scope-exclusion-warning"].hidden = restoring;
+  elements["scope-restore-warning"].hidden = !restoring;
+  elements["scope-reason-label"].hidden = restoring;
+  elements["scope-reason"].required = !restoring;
+  elements["scope-note-label"].textContent = restoring ? "Restore note" : "Review note";
+  elements["scope-submit"].textContent = restoring ? "Confirm restore" : "Confirm exclusion";
+  elements["scope-submit"].className = restoring ? "restore-button" : "danger-button";
+  elements["scope-dialog"].showModal();
+}
+
+function closeScopeDialog() {
+  elements["scope-dialog"].close();
+}
+
+async function submitScopeDecision(event) {
+  event.preventDefault();
+  const mode = elements["scope-mode"].value;
+  const note = elements["scope-note"].value.trim();
+  const reason = elements["scope-reason"].value;
+  if (!note || (mode === "exclude" && !reason)) {
+    elements["scope-form-error"].hidden = false;
+    elements["scope-form-error"].textContent =
+      mode === "exclude"
+        ? "Choose a deletion reason and enter a review note."
+        : "Enter a restore note.";
+    return;
+  }
+  elements["scope-submit"].disabled = true;
+  elements["scope-form-error"].hidden = true;
+  try {
+    const path = mode === "restore"
+      ? "/api/paper/restore"
+      : "/api/paper/delete-or-exclude";
+    const body = mode === "restore"
+      ? { id: elements["scope-paper-id"].value, restore_note: note }
+      : {
+          id: elements["scope-paper-id"].value,
+          reason,
+          review_note: note,
+        };
+    const result = await apiFetch(path, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+    closeScopeDialog();
+    showNotice(result.message);
+    await loadApplication(true);
+  } catch (error) {
+    elements["scope-form-error"].hidden = false;
+    elements["scope-form-error"].textContent = error.message;
+  } finally {
+    elements["scope-submit"].disabled = false;
+  }
+}
+
 function renderMarkers(markers) {
-  elements["marker-count"].textContent = `${formatNumber(markers.length)} record${markers.length === 1 ? "" : "s"}`;
+  elements["marker-count"].textContent =
+    `${formatNumber(markers.length)} record${markers.length === 1 ? "" : "s"}`;
   const body = elements["marker-table-body"];
   body.replaceChildren();
   markers.forEach((marker) => {

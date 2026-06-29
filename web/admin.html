@@ -13,12 +13,14 @@
       <div>
         <p class="eyebrow">Maintainer-only · localhost</p>
         <h1>Paper curation browser</h1>
-        <p class="lede">Inspect public-preview and curated paper records. Step 2 is read-only.</p>
+        <p class="lede">Inspect records and make durable paper-scope exclusion decisions locally.</p>
       </div>
       <div class="status-pill" id="connection-status" data-state="loading">Connecting…</div>
     </header>
 
     <main>
+      <div class="notice" id="action-notice" role="status" hidden></div>
+
       <section class="token-panel" id="token-panel" hidden>
         <form id="token-form">
           <label for="token-input">Admin token</label>
@@ -36,6 +38,7 @@
         <article><strong id="count-affiliation">—</strong><span>Missing affiliations</span></article>
         <article><strong id="count-coordinates">—</strong><span>Missing coordinates</span></article>
         <article><strong id="count-curated">—</strong><span>Curated papers</span></article>
+        <article><strong id="count-exclusions">—</strong><span>Active exclusions</span></article>
       </section>
 
       <section class="workspace" id="workspace" hidden>
@@ -58,6 +61,14 @@
                 </select>
               </label>
               <label>Source<select id="filter-source"><option value="">All sources</option></select></label>
+              <label>Exclusion status
+                <select id="filter-exclusion">
+                  <option value="">Any</option>
+                  <option value="active">Actively excluded</option>
+                  <option value="restored">Restored/inactive</option>
+                  <option value="none">No exclusion record</option>
+                </select>
+              </label>
             </div>
             <p class="result-count" id="result-count" aria-live="polite"></p>
           </div>
@@ -82,6 +93,14 @@
             <section class="notes-section">
               <h3>Notes</h3>
               <p id="detail-notes"></p>
+            </section>
+            <section class="scope-review-section">
+              <div>
+                <h3>Delete / Scope Review</h3>
+                <p>Record a durable exclusion without changing OpenAlex-derived processed CSV files.</p>
+              </div>
+              <button class="danger-button" id="detail-exclude-button" type="button">Delete / Exclude from site</button>
+              <button class="restore-button" id="detail-restore-button" type="button" hidden>Restore</button>
             </section>
             <section class="markers-section">
               <div class="section-heading">
@@ -109,5 +128,40 @@
         </article>
       </section>
     </main>
+
+    <dialog id="scope-dialog">
+      <form id="scope-form">
+        <input id="scope-paper-id" type="hidden">
+        <input id="scope-mode" type="hidden">
+        <p class="eyebrow" id="scope-dialog-eyebrow">Delete / Scope Review</p>
+        <h2 id="scope-dialog-title">Exclude paper from site?</h2>
+        <p class="dialog-paper-title" id="scope-paper-title"></p>
+        <p class="dialog-warning" id="scope-exclusion-warning">This excludes the paper from public preview and map exports. It does not directly edit OpenAlex-derived processed CSV files. A durable exclusion record prevents the paper from reappearing in future exports.</p>
+        <p class="dialog-warning" id="scope-restore-warning" hidden>Restoring preserves the exclusion audit record but marks it inactive. Run the public preview exporter afterward to return an otherwise eligible paper to the site.</p>
+        <label id="scope-reason-label" for="scope-reason">Deletion reason
+          <select id="scope-reason" required>
+            <option value="">Select a reason…</option>
+            <option value="out_of_scope">out_of_scope</option>
+            <option value="downstream_synthetic_data_only">downstream_synthetic_data_only</option>
+            <option value="medical_or_agriculture_or_industrial_only">medical_or_agriculture_or_industrial_only</option>
+            <option value="remote_sensing_only">remote_sensing_only</option>
+            <option value="deepfake_only_not_core">deepfake_only_not_core</option>
+            <option value="policy_or_perception_only">policy_or_perception_only</option>
+            <option value="duplicate">duplicate</option>
+            <option value="retracted">retracted</option>
+            <option value="wrong_metadata">wrong_metadata</option>
+            <option value="other">other</option>
+          </select>
+        </label>
+        <label for="scope-note"><span id="scope-note-label">Review note</span>
+          <textarea id="scope-note" rows="4" required></textarea>
+        </label>
+        <p class="form-error" id="scope-form-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="scope-cancel" type="button">Cancel</button>
+          <button class="danger-button" id="scope-submit" type="submit">Confirm exclusion</button>
+        </div>
+      </form>
+    </dialog>
   </body>
 </html>

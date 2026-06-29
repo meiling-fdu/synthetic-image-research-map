@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Serve the read-only maintainer paper browser on a local interface."""
+"""Serve the local maintainer paper browser and durable exclusion workflow."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ import json
 import re
 import secrets
 import sys
+import threading
 import unicodedata
 from collections import defaultdict
 from http import HTTPStatus
@@ -19,19 +20,35 @@ from pathlib import Path
 from typing import Any, DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tuple
 from urllib.parse import parse_qs, urlsplit
 
+try:
+    from .curated_schema import ALLOWED_EXCLUSION_REASONS
+    from .paper_exclusions import (
+        DEFAULT_EXCLUSIONS_PATH,
+        PaperExclusionError,
+        restore_active_exclusions,
+        upsert_active_exclusion,
+    )
+except ImportError:
+    from curated_schema import ALLOWED_EXCLUSION_REASONS
+    from paper_exclusions import (
+        DEFAULT_EXCLUSIONS_PATH,
+        PaperExclusionError,
+        restore_active_exclusions,
+        upsert_active_exclusion,
+    )
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = REPOSITORY_ROOT / "web"
 PUBLIC_PAPERS_PATH = WEB_DIR / "data" / "public_preview_papers.json"
 PUBLIC_MAP_PATH = WEB_DIR / "data" / "public_preview_map_data.json"
 CURATED_PAPERS_PATH = REPOSITORY_ROOT / "data" / "curated" / "papers.csv"
-CURATED_EXCLUSIONS_PATH = (
-    REPOSITORY_ROOT / "data" / "curated" / "paper_exclusions.csv"
-)
+CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
 TRUE_VALUES = {"1", "true", "yes", "y"}
+MAX_REQUEST_BYTES = 64 * 1024
+EXCLUSION_WRITE_LOCK = threading.Lock()
 
 STATIC_ROUTES = {
     "/admin/": (WEB_DIR / "admin.html", "text/html; charset=utf-8"),
@@ -184,6 +201,21 @@ def curated_paper_record(row: Mapping[str, str]) -> Dict[str, Any]:
     return record
 
 
+def exclusion_only_paper_record(row: Mapping[str, str]) -> Dict[str, Any]:
+    record: Dict[str, Any] = dict(row)
+    record["year"] = parse_year(row.get("year"))
+    record["publication_year"] = record["year"]
+    record["authors"] = []
+    record["coverage_status"] = "excluded"
+    record["has_map_location"] = False
+    record["map_record_count"] = 0
+    record["missing_affiliation"] = False
+    record["missing_coordinates"] = False
+    record["notes"] = clean(row.get("review_note"))
+    record["record_source"] = "exclusion_only"
+    return record
+
+
 def marker_for_api(record: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "id": clean(record.get("id")),
@@ -271,11 +303,13 @@ def merge_curated_fields(
             public_record[field] = curated_record[field]
 
 
-def load_admin_data() -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
+def load_admin_data(
+    exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
+) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     public_papers = read_json_records(PUBLIC_PAPERS_PATH)
     map_records = read_json_records(PUBLIC_MAP_PATH)
     curated_rows = read_csv_rows(CURATED_PAPERS_PATH)
-    exclusion_rows = read_csv_rows(CURATED_EXCLUSIONS_PATH)
+    exclusion_rows = read_csv_rows(exclusions_path)
 
     papers: List[Dict[str, Any]] = []
     paper_identity_index: Dict[str, Dict[str, Any]] = {}
@@ -309,6 +343,24 @@ def load_admin_data() -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
             match["is_in_curated_papers"] = True
             match["curated_record"] = dict(curated_row)
             merge_curated_fields(match, curated_record)
+
+    # Keep durable exclusions visible after they disappear from public exports,
+    # so maintainers can inspect or restore them later.
+    for exclusion_row in exclusion_rows:
+        exclusion_record = exclusion_only_paper_record(exclusion_row)
+        match = next(
+            (
+                paper_identity_index[key]
+                for key in identity_keys(exclusion_record)
+                if key in paper_identity_index
+            ),
+            None,
+        )
+        if match is not None:
+            continue
+        papers.append(exclusion_record)
+        for key in identity_keys(exclusion_record):
+            paper_identity_index.setdefault(key, exclusion_record)
 
     marker_index = index_by_identity(map_records)
     exclusion_index = index_by_identity(exclusion_rows)
@@ -361,8 +413,9 @@ def load_admin_data() -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
         raise AdminDataError("paper display IDs are not unique")
 
     status = {
-        "read_only": True,
+        "read_only": False,
         "public_site_read_only": True,
+        "write_capabilities": ["paper_exclusion", "paper_restore"],
         "counts": {
             "total_papers": len(papers),
             "public_preview_papers": len(public_papers),
@@ -419,7 +472,7 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Serve the read-only local maintainer paper browser."
+        description="Serve the local maintainer paper curation browser."
     )
     parser.add_argument(
         "--host",
@@ -437,10 +490,22 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Permit binding to a non-loopback interface such as 0.0.0.0.",
     )
+    parser.add_argument(
+        "--paper-exclusions",
+        type=Path,
+        default=CURATED_EXCLUSIONS_PATH,
+        help=(
+            "Curated paper exclusion CSV "
+            f"(default: {CURATED_EXCLUSIONS_PATH})."
+        ),
+    )
     return parser.parse_args(argv)
 
 
-def make_handler(token: str) -> type[BaseHTTPRequestHandler]:
+def make_handler(
+    token: str,
+    exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
+) -> type[BaseHTTPRequestHandler]:
     class AdminRequestHandler(BaseHTTPRequestHandler):
         server_version = "SyntheticImageResearchMapAdmin/0.1"
 
@@ -486,6 +551,24 @@ def make_handler(token: str) -> type[BaseHTTPRequestHandler]:
                 return
             self.send_bytes(HTTPStatus.OK, payload, content_type)
 
+        def read_json_body(self) -> Dict[str, Any]:
+            length_text = self.headers.get("Content-Length", "")
+            try:
+                length = int(length_text)
+            except ValueError as error:
+                raise AdminDataError("valid Content-Length is required") from error
+            if length < 1 or length > MAX_REQUEST_BYTES:
+                raise AdminDataError(
+                    f"request body must be between 1 and {MAX_REQUEST_BYTES} bytes"
+                )
+            try:
+                payload = json.loads(self.rfile.read(length).decode("utf-8"))
+            except (UnicodeError, json.JSONDecodeError) as error:
+                raise AdminDataError("request body must be valid JSON") from error
+            if not isinstance(payload, dict):
+                raise AdminDataError("request body must be a JSON object")
+            return payload
+
         def do_GET(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler API
             request = urlsplit(self.path)
             query = parse_qs(request.query)
@@ -509,7 +592,7 @@ def make_handler(token: str) -> type[BaseHTTPRequestHandler]:
                 )
                 return
             try:
-                papers, data = load_admin_data()
+                papers, data = load_admin_data(exclusions_path)
             except AdminDataError as error:
                 self.send_json(
                     HTTPStatus.INTERNAL_SERVER_ERROR, {"error": str(error)}
@@ -545,6 +628,96 @@ def make_handler(token: str) -> type[BaseHTTPRequestHandler]:
                 return
             self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
 
+        def do_POST(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler API
+            request = urlsplit(self.path)
+            query = parse_qs(request.query)
+            if not request.path.startswith("/api/"):
+                self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
+                return
+            if not self.is_authorized(query):
+                self.send_json(
+                    HTTPStatus.UNAUTHORIZED,
+                    {"error": "missing or invalid admin token"},
+                )
+                return
+            if request.path not in {
+                "/api/paper/delete-or-exclude",
+                "/api/paper/restore",
+            }:
+                self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
+                return
+            try:
+                payload = self.read_json_body()
+                _papers, data = load_admin_data(exclusions_path)
+                paper_id = clean(payload.get("id"))
+                if not paper_id:
+                    raise AdminDataError("paper id is required")
+                paper = data["papers_by_id"].get(paper_id)
+                if paper is None:
+                    self.send_json(
+                        HTTPStatus.NOT_FOUND, {"error": "paper not found"}
+                    )
+                    return
+                if request.path == "/api/paper/delete-or-exclude":
+                    reason = clean(payload.get("reason"))
+                    review_note = clean(payload.get("review_note"))
+                    if not reason:
+                        raise AdminDataError("exclusion reason is required")
+                    if reason not in ALLOWED_EXCLUSION_REASONS:
+                        raise AdminDataError(
+                            f"unsupported exclusion reason: {reason!r}"
+                        )
+                    if not review_note:
+                        raise AdminDataError("review note is required")
+                    with EXCLUSION_WRITE_LOCK:
+                        result = upsert_active_exclusion(
+                            paper,
+                            reason,
+                            review_note,
+                            exclusions_path,
+                        )
+                    response_status = (
+                        HTTPStatus.CREATED
+                        if result["status"] == "created"
+                        else HTTPStatus.OK
+                    )
+                    self.send_json(
+                        response_status,
+                        {
+                            **result,
+                            "message": (
+                                "Paper exclusion saved. Run "
+                                "export_public_preview.py to update public preview JSON."
+                            ),
+                        },
+                    )
+                    return
+
+                restore_note = clean(payload.get("restore_note"))
+                if not restore_note:
+                    raise AdminDataError("restore note is required")
+                with EXCLUSION_WRITE_LOCK:
+                    result = restore_active_exclusions(
+                        paper,
+                        restore_note,
+                        exclusions_path,
+                    )
+                self.send_json(
+                    HTTPStatus.OK,
+                    {
+                        **result,
+                        "message": (
+                            "Paper exclusion restored. Run "
+                            "export_public_preview.py to update public preview JSON."
+                        ),
+                    },
+                )
+            except (AdminDataError, PaperExclusionError) as error:
+                self.send_json(
+                    HTTPStatus.BAD_REQUEST,
+                    {"error": str(error)},
+                )
+
         def log_message(self, format_string: str, *args: Any) -> None:
             sys.stderr.write(
                 f"{self.address_string()} - {format_string % args}\n"
@@ -567,7 +740,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
 
     token = secrets.token_urlsafe(32)
-    handler = make_handler(token)
+    handler = make_handler(token, args.paper_exclusions)
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)
     except OSError as error:
@@ -576,7 +749,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     server.daemon_threads = True
 
     display_host = "localhost" if args.host == DEFAULT_HOST else args.host
-    print("Read-only local admin server")
+    print("Local admin server")
     print(f"Admin token: {token}")
     print(f"Open: http://{display_host}:{args.port}/admin/?token={token}")
     print("API authentication: X-Admin-Token header or token query parameter")
