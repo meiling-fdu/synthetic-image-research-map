@@ -22,6 +22,17 @@ from urllib.parse import parse_qs, urlsplit
 
 try:
     from .curated_schema import ALLOWED_EXCLUSION_REASONS
+    from .curated_papers import (
+        DEFAULT_CURATED_PAPERS_PATH,
+        CuratedPaperError,
+        DuplicatePaperError,
+        create_curated_paper,
+    )
+    from .openalex_paper_search import (
+        OpenAlexFetchError,
+        OpenAlexSearchInputError,
+        search_openalex_papers,
+    )
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
@@ -30,6 +41,17 @@ try:
     )
 except ImportError:
     from curated_schema import ALLOWED_EXCLUSION_REASONS
+    from curated_papers import (
+        DEFAULT_CURATED_PAPERS_PATH,
+        CuratedPaperError,
+        DuplicatePaperError,
+        create_curated_paper,
+    )
+    from openalex_paper_search import (
+        OpenAlexFetchError,
+        OpenAlexSearchInputError,
+        search_openalex_papers,
+    )
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
@@ -41,7 +63,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = REPOSITORY_ROOT / "web"
 PUBLIC_PAPERS_PATH = WEB_DIR / "data" / "public_preview_papers.json"
 PUBLIC_MAP_PATH = WEB_DIR / "data" / "public_preview_map_data.json"
-CURATED_PAPERS_PATH = REPOSITORY_ROOT / "data" / "curated" / "papers.csv"
+CURATED_PAPERS_PATH = DEFAULT_CURATED_PAPERS_PATH
 CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
@@ -49,6 +71,7 @@ LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
 TRUE_VALUES = {"1", "true", "yes", "y"}
 MAX_REQUEST_BYTES = 64 * 1024
 EXCLUSION_WRITE_LOCK = threading.Lock()
+CURATED_PAPER_WRITE_LOCK = threading.Lock()
 
 STATIC_ROUTES = {
     "/admin/": (WEB_DIR / "admin.html", "text/html; charset=utf-8"),
@@ -305,10 +328,11 @@ def merge_curated_fields(
 
 def load_admin_data(
     exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
+    curated_papers_path: Path = CURATED_PAPERS_PATH,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     public_papers = read_json_records(PUBLIC_PAPERS_PATH)
     map_records = read_json_records(PUBLIC_MAP_PATH)
-    curated_rows = read_csv_rows(CURATED_PAPERS_PATH)
+    curated_rows = read_csv_rows(curated_papers_path)
     exclusion_rows = read_csv_rows(exclusions_path)
 
     papers: List[Dict[str, Any]] = []
@@ -415,7 +439,11 @@ def load_admin_data(
     status = {
         "read_only": False,
         "public_site_read_only": True,
-        "write_capabilities": ["paper_exclusion", "paper_restore"],
+        "write_capabilities": [
+            "paper_exclusion",
+            "paper_restore",
+            "paper_create",
+        ],
         "counts": {
             "total_papers": len(papers),
             "public_preview_papers": len(public_papers),
@@ -499,12 +527,22 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             f"(default: {CURATED_EXCLUSIONS_PATH})."
         ),
     )
+    parser.add_argument(
+        "--curated-papers",
+        type=Path,
+        default=CURATED_PAPERS_PATH,
+        help=(
+            "Curated paper CSV "
+            f"(default: {CURATED_PAPERS_PATH})."
+        ),
+    )
     return parser.parse_args(argv)
 
 
 def make_handler(
     token: str,
     exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
+    curated_papers_path: Path = CURATED_PAPERS_PATH,
 ) -> type[BaseHTTPRequestHandler]:
     class AdminRequestHandler(BaseHTTPRequestHandler):
         server_version = "SyntheticImageResearchMapAdmin/0.1"
@@ -592,7 +630,10 @@ def make_handler(
                 )
                 return
             try:
-                papers, data = load_admin_data(exclusions_path)
+                papers, data = load_admin_data(
+                    exclusions_path,
+                    curated_papers_path,
+                )
             except AdminDataError as error:
                 self.send_json(
                     HTTPStatus.INTERNAL_SERVER_ERROR, {"error": str(error)}
@@ -643,12 +684,79 @@ def make_handler(
             if request.path not in {
                 "/api/paper/delete-or-exclude",
                 "/api/paper/restore",
+                "/api/openalex/search-paper",
+                "/api/paper/create",
             }:
                 self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
                 return
             try:
                 payload = self.read_json_body()
-                _papers, data = load_admin_data(exclusions_path)
+                if request.path == "/api/openalex/search-paper":
+                    try:
+                        results = search_openalex_papers(payload)
+                    except OpenAlexSearchInputError as error:
+                        self.send_json(
+                            HTTPStatus.BAD_REQUEST,
+                            {
+                                "error": str(error),
+                                "manual_fallback_available": True,
+                            },
+                        )
+                        return
+                    except OpenAlexFetchError as error:
+                        self.send_json(
+                            HTTPStatus.BAD_GATEWAY,
+                            {
+                                "error": (
+                                    f"OpenAlex search failed: {error}. "
+                                    "You can still add the paper manually."
+                                ),
+                                "manual_fallback_available": True,
+                            },
+                        )
+                        return
+                    self.send_json(HTTPStatus.OK, results)
+                    return
+
+                if request.path == "/api/paper/create":
+                    preview_records = read_json_records(PUBLIC_PAPERS_PATH)
+                    exclusion_records = read_csv_rows(exclusions_path)
+                    try:
+                        with CURATED_PAPER_WRITE_LOCK:
+                            row = create_curated_paper(
+                                payload,
+                                preview_records=preview_records,
+                                exclusion_records=exclusion_records,
+                                path=curated_papers_path,
+                            )
+                    except DuplicatePaperError as error:
+                        self.send_json(
+                            HTTPStatus.CONFLICT,
+                            {
+                                "error": (
+                                    "Paper already exists in the public preview, "
+                                    "curated database, or exclusion history."
+                                ),
+                                "duplicate_matches": error.matches,
+                            },
+                        )
+                        return
+                    self.send_json(
+                        HTTPStatus.CREATED,
+                        {
+                            "paper": row,
+                            "message": (
+                                "Saved to curated database. Public preview export "
+                                "integration will be enabled in a later step."
+                            ),
+                        },
+                    )
+                    return
+
+                _papers, data = load_admin_data(
+                    exclusions_path,
+                    curated_papers_path,
+                )
                 paper_id = clean(payload.get("id"))
                 if not paper_id:
                     raise AdminDataError("paper id is required")
@@ -712,7 +820,11 @@ def make_handler(
                         ),
                     },
                 )
-            except (AdminDataError, PaperExclusionError) as error:
+            except (
+                AdminDataError,
+                CuratedPaperError,
+                PaperExclusionError,
+            ) as error:
                 self.send_json(
                     HTTPStatus.BAD_REQUEST,
                     {"error": str(error)},
@@ -740,7 +852,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 2
 
     token = secrets.token_urlsafe(32)
-    handler = make_handler(token, args.paper_exclusions)
+    handler = make_handler(
+        token,
+        args.paper_exclusions,
+        args.curated_papers,
+    )
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)
     except OSError as error:

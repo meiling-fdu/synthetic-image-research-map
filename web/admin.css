@@ -109,6 +109,12 @@ h1 {
   background: var(--red-soft);
 }
 
+.masthead-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
 main {
   padding: 1.4rem clamp(1rem, 3vw, 3rem) 3rem;
 }
@@ -170,6 +176,11 @@ input {
   padding: 0.72rem 0.8rem;
 }
 
+textarea {
+  padding: 0.72rem 0.8rem;
+  resize: vertical;
+}
+
 select {
   padding: 0.55rem 1.9rem 0.55rem 0.65rem;
 }
@@ -228,6 +239,142 @@ button:focus-visible {
 .summary-grid span {
   color: var(--muted);
   font-size: 0.78rem;
+}
+
+.primary-button {
+  flex: none;
+  padding: 0.62rem 0.8rem;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  color: #fff;
+  background: var(--green);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.add-paper-panel {
+  margin-bottom: 1rem;
+  padding: clamp(1rem, 3vw, 1.6rem);
+  border: 1px solid #b9d2c7;
+  border-radius: 14px;
+  background: var(--panel);
+  box-shadow: 0 20px 60px rgb(32 46 40 / 7%);
+}
+
+.add-paper-panel > .section-heading {
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.add-paper-panel h2,
+.add-paper-panel h3,
+.openalex-result-card h4 {
+  margin-bottom: 0.35rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+}
+
+.add-paper-panel h2 {
+  font-size: 2rem;
+}
+
+.add-paper-panel p {
+  color: var(--muted);
+}
+
+.openalex-search-form,
+.paper-draft-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.openalex-search-form label,
+.paper-draft-form label {
+  display: grid;
+  gap: 0.3rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-actions,
+.candidate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.search-results {
+  margin-top: 1.4rem;
+}
+
+.openalex-result-card {
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fbfaf6;
+}
+
+.openalex-result-card p {
+  margin-bottom: 0.45rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.candidate-meta {
+  color: var(--green) !important;
+  font-weight: 750;
+}
+
+.candidate-identifiers {
+  color: var(--blue) !important;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.candidate-abstract {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.paper-draft-form {
+  margin-top: 1.5rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.duplicate-warning {
+  padding: 0.85rem;
+  border: 1px solid #d4a66d;
+  border-radius: 9px;
+  color: #714919;
+  background: var(--amber-soft);
+  font-size: 0.82rem;
+}
+
+.duplicate-warning p {
+  margin: 0.25rem 0;
+  color: inherit;
+}
+
+.duplicate-warning ul {
+  margin-bottom: 0;
+  padding-left: 1.2rem;
+}
+
+.workflow-note {
+  margin-bottom: 0;
+  font-size: 0.8rem;
 }
 
 .workspace {
@@ -664,6 +811,10 @@ tbody tr:last-child td {
     display: block;
   }
 
+  .masthead-actions {
+    margin-top: 1rem;
+  }
+
   .status-pill {
     display: inline-block;
     margin-top: 1rem;
@@ -674,6 +825,11 @@ tbody tr:last-child td {
   }
 
   .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .openalex-search-form,
+  .paper-draft-form {
     grid-template-columns: 1fr;
   }
 

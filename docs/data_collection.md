@@ -494,7 +494,21 @@ python3 scripts/serve_admin.py
 
 The server binds to `127.0.0.1:8765` by default and prints a newly generated admin token. Open `http://localhost:8765/admin/?token=<TOKEN>`, replacing `<TOKEN>` with that terminal value. The page stores the token for the current browser tab, removes it from the address bar, and sends it to API requests in the `X-Admin-Token` header. Direct API clients may use that header or the `token` query parameter.
 
-Step 2 supports browsing, searching, filtering, and paper/marker inspection only. It has no write, edit, or delete endpoint. The server refuses non-loopback binding unless `--unsafe-bind-all` is explicitly supplied. The public GitHub Pages site remains a separate read-only static site and does not use these admin APIs.
+The server refuses non-loopback binding unless `--unsafe-bind-all` is explicitly supplied. The public GitHub Pages site remains a separate read-only static site and does not use these admin APIs.
+
+### OpenAlex-first paper addition
+
+The local admin browser's **Add Paper** workflow searches OpenAlex by title, DOI, arXiv ID, or paper URL. Review the returned candidates, choose **Use this OpenAlex record**, correct or complete the prefilled metadata, assign the task and optional subtask, and save the confirmed record to `data/curated/papers.csv`. OpenAlex supplies candidate metadata; the saved curated row represents the maintainer's confirmation and uses `source_database=openalex`, `metadata_source=openalex`, and `curation_status=manually_confirmed`.
+
+If no candidate is correct—or OpenAlex is unavailable—choose **Add manually instead**. The same form opens without metadata and saves the record with manual provenance and `curation_status=manually_added`. OpenAlex failures do not write any files and do not disable this manual fallback.
+
+Before saving, the server compares DOI, OpenAlex URL, and normalized title plus year against the current public-preview papers, curated papers, and paper-exclusion history. A match is shown as a duplicate warning and creation is blocked; Step 4 does not merge or override records.
+
+This step stores paper metadata only. Author–institution mappings and institution coordinates are handled in later curation steps. A successful save does not edit `data/processed/` or generated public-preview JSON, and curated-paper export integration remains deferred. Run the curated validator after any curation session:
+
+```bash
+python3 scripts/validate_curated_database.py
+```
 
 ### Visual paper deletion / scope exclusion
 

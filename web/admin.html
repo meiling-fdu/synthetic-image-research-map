@@ -15,7 +15,10 @@
         <h1>Paper curation browser</h1>
         <p class="lede">Inspect records and make durable paper-scope exclusion decisions locally.</p>
       </div>
-      <div class="status-pill" id="connection-status" data-state="loading">Connecting…</div>
+      <div class="masthead-actions">
+        <button class="primary-button" id="add-paper-toggle" type="button">Add Paper</button>
+        <div class="status-pill" id="connection-status" data-state="loading">Connecting…</div>
+      </div>
     </header>
 
     <main>
@@ -39,6 +42,116 @@
         <article><strong id="count-coordinates">—</strong><span>Missing coordinates</span></article>
         <article><strong id="count-curated">—</strong><span>Curated papers</span></article>
         <article><strong id="count-exclusions">—</strong><span>Active exclusions</span></article>
+      </section>
+
+      <section class="add-paper-panel" id="add-paper-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">OpenAlex-first workflow</p>
+            <h2>Add Paper</h2>
+            <p>Search OpenAlex for candidate metadata, confirm a record, or continue with manual entry.</p>
+          </div>
+          <button class="secondary-button" id="add-paper-close" type="button">Close</button>
+        </div>
+
+        <form class="openalex-search-form" id="openalex-search-form">
+          <label>Title
+            <input id="openalex-title" name="title" type="text">
+          </label>
+          <label>DOI
+            <input id="openalex-doi" name="doi" type="text" placeholder="10.xxxx/…">
+          </label>
+          <label>arXiv ID
+            <input id="openalex-arxiv-id" name="arxiv_id" type="text" placeholder="2401.01234">
+          </label>
+          <label>Paper URL
+            <input id="openalex-paper-url" name="paper_url" type="url" placeholder="https://…">
+          </label>
+          <div class="form-actions full-width">
+            <button class="primary-button" id="openalex-search-submit" type="submit">Search OpenAlex</button>
+            <button class="secondary-button" id="add-manually-button" type="button">Add manually instead</button>
+          </div>
+          <p class="form-error full-width" id="openalex-search-error" role="alert" hidden></p>
+        </form>
+
+        <div class="search-results" id="openalex-results" hidden>
+          <div class="section-heading">
+            <h3>OpenAlex candidates</h3>
+            <span id="openalex-result-count"></span>
+          </div>
+          <div id="openalex-result-list"></div>
+        </div>
+
+        <form class="paper-draft-form" id="paper-draft-form" hidden>
+          <div class="section-heading full-width">
+            <div>
+              <p class="eyebrow" id="paper-draft-origin">Curated paper draft</p>
+              <h3>Review paper metadata</h3>
+            </div>
+            <button class="secondary-button" id="paper-draft-cancel" type="button">Cancel draft</button>
+          </div>
+          <input id="paper-source-database" name="source_database" type="hidden">
+          <label>Title
+            <input id="paper-title" name="title" type="text" required>
+          </label>
+          <label>Year
+            <input id="paper-year" name="year" type="number" min="1000" max="9999" required>
+          </label>
+          <label class="full-width">Authors
+            <textarea id="paper-authors" name="authors" rows="2" placeholder="Separate authors with semicolons"></textarea>
+          </label>
+          <label>Venue
+            <input id="paper-venue" name="venue" type="text">
+          </label>
+          <label>DOI
+            <input id="paper-doi" name="doi" type="text">
+          </label>
+          <label>arXiv ID
+            <input id="paper-arxiv-id" name="arxiv_id" type="text">
+          </label>
+          <label>OpenAlex URL
+            <input id="paper-openalex-url" name="openalex_url" type="url" readonly>
+          </label>
+          <label>Paper URL
+            <input id="paper-url" name="paper_url" type="url">
+          </label>
+          <label>Publication type
+            <input id="paper-publication-type" name="publication_type" type="text">
+          </label>
+          <label>Task
+            <select id="paper-task" name="task" required>
+              <option value="">Select task…</option>
+              <option value="detection">detection</option>
+              <option value="detection_and_source_attribution">detection_and_source_attribution</option>
+              <option value="source_attribution">source_attribution</option>
+              <option value="uncertain">uncertain</option>
+            </select>
+          </label>
+          <label>Subtask
+            <input id="paper-subtask" name="subtask" type="text">
+          </label>
+          <label>Scope status
+            <input id="paper-scope-status" name="scope_status" type="text" value="in_scope">
+          </label>
+          <label>Review status
+            <select id="paper-review-status" name="review_status">
+              <option value="pending">pending</option>
+              <option value="reviewed">reviewed</option>
+            </select>
+          </label>
+          <label class="full-width">Abstract
+            <textarea id="paper-abstract" name="abstract" rows="6"></textarea>
+          </label>
+          <label class="full-width">Review note
+            <textarea id="paper-review-note" name="review_note" rows="3"></textarea>
+          </label>
+          <div class="duplicate-warning full-width" id="paper-duplicate-warning" hidden></div>
+          <p class="form-error full-width" id="paper-create-error" role="alert" hidden></p>
+          <div class="form-actions full-width">
+            <button class="primary-button" id="paper-create-submit" type="submit">Save to curated database</button>
+          </div>
+          <p class="workflow-note full-width">Author–institution mappings and coordinates are handled in later curation steps. Saving here does not update public preview JSON.</p>
+        </form>
       </section>
 
       <section class="workspace" id="workspace" hidden>

@@ -13,6 +13,42 @@ const elements = {};
 document.addEventListener("DOMContentLoaded", () => {
   [
     "connection-status",
+    "add-paper-toggle",
+    "add-paper-panel",
+    "add-paper-close",
+    "openalex-search-form",
+    "openalex-title",
+    "openalex-doi",
+    "openalex-arxiv-id",
+    "openalex-paper-url",
+    "openalex-search-submit",
+    "openalex-search-error",
+    "openalex-results",
+    "openalex-result-count",
+    "openalex-result-list",
+    "add-manually-button",
+    "paper-draft-form",
+    "paper-draft-origin",
+    "paper-draft-cancel",
+    "paper-source-database",
+    "paper-title",
+    "paper-year",
+    "paper-authors",
+    "paper-venue",
+    "paper-doi",
+    "paper-arxiv-id",
+    "paper-openalex-url",
+    "paper-url",
+    "paper-publication-type",
+    "paper-task",
+    "paper-subtask",
+    "paper-scope-status",
+    "paper-review-status",
+    "paper-abstract",
+    "paper-review-note",
+    "paper-duplicate-warning",
+    "paper-create-error",
+    "paper-create-submit",
     "token-panel",
     "token-form",
     "token-input",
@@ -98,6 +134,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   elements["scope-cancel"].addEventListener("click", closeScopeDialog);
   elements["scope-form"].addEventListener("submit", submitScopeDecision);
+  elements["add-paper-toggle"].addEventListener("click", openAddPaperPanel);
+  elements["add-paper-close"].addEventListener("click", closeAddPaperPanel);
+  elements["openalex-search-form"].addEventListener("submit", searchOpenAlex);
+  elements["add-manually-button"].addEventListener("click", () => startPaperDraft({}, "manual"));
+  elements["paper-draft-cancel"].addEventListener("click", cancelPaperDraft);
+  elements["paper-draft-form"].addEventListener("submit", createPaper);
 
   if (state.token) loadApplication();
   else requestToken();
@@ -115,6 +157,7 @@ async function apiFetch(path, options = {}) {
   if (!response.ok) {
     const error = new Error(payload.error || `Request failed (${response.status})`);
     error.status = response.status;
+    error.payload = payload;
     throw error;
   }
   return payload;
@@ -169,6 +212,220 @@ function showNotice(message, variant = "success") {
   elements["action-notice"].hidden = false;
   elements["action-notice"].dataset.variant = variant;
   elements["action-notice"].textContent = message;
+}
+
+function openAddPaperPanel() {
+  elements["add-paper-panel"].hidden = false;
+  elements["openalex-title"].focus();
+  elements["add-paper-panel"].scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function closeAddPaperPanel() {
+  elements["add-paper-panel"].hidden = true;
+  cancelPaperDraft();
+}
+
+async function searchOpenAlex(event) {
+  event.preventDefault();
+  const query = {
+    title: elements["openalex-title"].value.trim(),
+    doi: elements["openalex-doi"].value.trim(),
+    arxiv_id: elements["openalex-arxiv-id"].value.trim(),
+    paper_url: elements["openalex-paper-url"].value.trim(),
+  };
+  elements["openalex-search-error"].hidden = true;
+  elements["openalex-results"].hidden = true;
+  if (!Object.values(query).some(Boolean)) {
+    elements["openalex-search-error"].hidden = false;
+    elements["openalex-search-error"].textContent =
+      "Enter at least one title, DOI, arXiv ID, or paper URL.";
+    return;
+  }
+  elements["openalex-search-submit"].disabled = true;
+  elements["openalex-search-submit"].textContent = "Searching…";
+  try {
+    const payload = await apiFetch("/api/openalex/search-paper", {
+      method: "POST",
+      body: JSON.stringify(query),
+    });
+    renderOpenAlexResults(payload.results || []);
+    if (!payload.results?.length) {
+      elements["openalex-search-error"].hidden = false;
+      elements["openalex-search-error"].textContent =
+        "OpenAlex returned no candidates. You can add the paper manually instead.";
+    }
+  } catch (error) {
+    elements["openalex-search-error"].hidden = false;
+    elements["openalex-search-error"].textContent =
+      `${error.message} Manual entry remains available.`;
+  } finally {
+    elements["openalex-search-submit"].disabled = false;
+    elements["openalex-search-submit"].textContent = "Search OpenAlex";
+  }
+}
+
+function renderOpenAlexResults(results) {
+  const list = elements["openalex-result-list"];
+  list.replaceChildren();
+  results.forEach((candidate) => {
+    const card = document.createElement("article");
+    card.className = "openalex-result-card";
+
+    const heading = document.createElement("h4");
+    heading.textContent = text(candidate.title) || "Untitled OpenAlex record";
+    const meta = document.createElement("p");
+    meta.className = "candidate-meta";
+    meta.textContent = [
+      candidate.year,
+      candidate.venue,
+      humanize(candidate.publication_type),
+      candidate.similarity_score === null || candidate.similarity_score === undefined
+        ? ""
+        : `title similarity ${Number(candidate.similarity_score).toFixed(3)}`,
+    ].filter(Boolean).join(" · ");
+    const authors = document.createElement("p");
+    authors.textContent = listText(candidate.authors) || "Authors unavailable";
+    const identifiers = document.createElement("p");
+    identifiers.className = "candidate-identifiers";
+    identifiers.textContent = [
+      candidate.doi ? `DOI: ${candidate.doi}` : "",
+      candidate.openalex_url ? `OpenAlex: ${candidate.openalex_url}` : "",
+      candidate.primary_url ? `Primary URL: ${candidate.primary_url}` : "",
+    ].filter(Boolean).join("\n");
+    const abstract = document.createElement("p");
+    abstract.className = "candidate-abstract";
+    abstract.textContent = text(candidate.abstract) || "Abstract unavailable.";
+
+    const actions = document.createElement("div");
+    actions.className = "candidate-actions";
+    const useButton = document.createElement("button");
+    useButton.type = "button";
+    useButton.className = "primary-button";
+    useButton.textContent = "Use this OpenAlex record";
+    useButton.addEventListener("click", () => startPaperDraft(candidate, "openalex"));
+    const rejectButton = document.createElement("button");
+    rejectButton.type = "button";
+    rejectButton.className = "secondary-button";
+    rejectButton.textContent = "Not correct";
+    rejectButton.addEventListener("click", () => {
+      card.remove();
+      updateOpenAlexResultCount();
+    });
+    actions.append(useButton, rejectButton);
+    card.append(heading, meta, authors, identifiers, abstract, actions);
+    list.append(card);
+  });
+  elements["openalex-results"].hidden = results.length === 0;
+  updateOpenAlexResultCount();
+}
+
+function updateOpenAlexResultCount() {
+  const count = elements["openalex-result-list"].children.length;
+  elements["openalex-result-count"].textContent =
+    `${formatNumber(count)} candidate${count === 1 ? "" : "s"}`;
+  if (count === 0) elements["openalex-results"].hidden = true;
+}
+
+function startPaperDraft(candidate, source) {
+  elements["paper-draft-form"].reset();
+  elements["paper-source-database"].value = source;
+  elements["paper-draft-origin"].textContent =
+    source === "openalex" ? "Confirmed OpenAlex draft" : "Manual paper draft";
+  elements["paper-title"].value = text(candidate.title);
+  elements["paper-year"].value = text(candidate.year);
+  elements["paper-authors"].value = listText(candidate.authors);
+  elements["paper-venue"].value = text(candidate.venue);
+  elements["paper-doi"].value = text(candidate.doi);
+  elements["paper-arxiv-id"].value = text(candidate.arxiv_id);
+  elements["paper-openalex-url"].value = text(candidate.openalex_url);
+  elements["paper-url"].value = text(candidate.paper_url || candidate.primary_url);
+  elements["paper-publication-type"].value = text(candidate.publication_type);
+  elements["paper-abstract"].value = text(candidate.abstract);
+  elements["paper-scope-status"].value = "in_scope";
+  elements["paper-review-status"].value =
+    source === "openalex" ? "reviewed" : "pending";
+  elements["paper-duplicate-warning"].hidden = true;
+  elements["paper-create-error"].hidden = true;
+  elements["paper-draft-form"].hidden = false;
+  elements["paper-title"].focus();
+  elements["paper-draft-form"].scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function cancelPaperDraft() {
+  elements["paper-draft-form"].reset();
+  elements["paper-draft-form"].hidden = true;
+  elements["paper-duplicate-warning"].hidden = true;
+  elements["paper-create-error"].hidden = true;
+}
+
+function paperDraftPayload() {
+  return {
+    source_database: elements["paper-source-database"].value,
+    title: elements["paper-title"].value.trim(),
+    year: elements["paper-year"].value.trim(),
+    authors: elements["paper-authors"].value.trim(),
+    venue: elements["paper-venue"].value.trim(),
+    doi: elements["paper-doi"].value.trim(),
+    arxiv_id: elements["paper-arxiv-id"].value.trim(),
+    openalex_url: elements["paper-openalex-url"].value.trim(),
+    paper_url: elements["paper-url"].value.trim(),
+    publication_type: elements["paper-publication-type"].value.trim(),
+    abstract: elements["paper-abstract"].value.trim(),
+    task: elements["paper-task"].value,
+    subtask: elements["paper-subtask"].value.trim(),
+    scope_status: elements["paper-scope-status"].value.trim(),
+    review_status: elements["paper-review-status"].value,
+    review_note: elements["paper-review-note"].value.trim(),
+  };
+}
+
+async function createPaper(event) {
+  event.preventDefault();
+  elements["paper-create-error"].hidden = true;
+  elements["paper-duplicate-warning"].hidden = true;
+  elements["paper-create-submit"].disabled = true;
+  try {
+    const result = await apiFetch("/api/paper/create", {
+      method: "POST",
+      body: JSON.stringify(paperDraftPayload()),
+    });
+    showNotice(result.message);
+    cancelPaperDraft();
+    await loadApplication();
+  } catch (error) {
+    if (error.status === 409 && error.payload?.duplicate_matches) {
+      renderDuplicateWarning(error.payload.duplicate_matches);
+    } else {
+      elements["paper-create-error"].hidden = false;
+      elements["paper-create-error"].textContent = error.message;
+    }
+  } finally {
+    elements["paper-create-submit"].disabled = false;
+  }
+}
+
+function renderDuplicateWarning(matches) {
+  const warning = elements["paper-duplicate-warning"];
+  warning.replaceChildren();
+  const heading = document.createElement("strong");
+  heading.textContent = "Duplicate paper blocked";
+  const intro = document.createElement("p");
+  intro.textContent =
+    "Edit or cancel this draft. Step 4 does not merge with existing records.";
+  const list = document.createElement("ul");
+  matches.forEach((match) => {
+    const item = document.createElement("li");
+    item.textContent = [
+      match.source,
+      match.title || "Untitled",
+      match.year,
+      match.doi,
+      match.openalex_url,
+    ].filter(Boolean).join(" · ");
+    list.append(item);
+  });
+  warning.append(heading, intro, list);
+  warning.hidden = false;
 }
 
 function renderSummary(counts) {
