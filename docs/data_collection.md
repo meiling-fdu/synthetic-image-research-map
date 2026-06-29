@@ -467,6 +467,23 @@ Serve the repository and open [http://localhost:8000/web/?dataset=openalex](http
 
 This map export is for exploratory visualization only. It is assembled from automatically extracted candidates, retains `manual_review`, and is not a curated or publication-ready research dataset. Nothing in this step writes to `data/manual/`.
 
+## Curated database layer
+
+OpenAlex is a candidate metadata source, not the final source of truth. Maintainer-confirmed paper records and decisions live in the CSV files under `data/curated/`; raw OpenAlex responses, processed candidate datasets, and manual correction files remain separate. The public preview JSON files under `web/data/` are generated output and must be changed through export scripts rather than edited directly.
+
+Paper-level editing is the main local curation workflow. Author–institution mappings are core curation objects and are confirmed manually, preserving all supported affiliations rather than assigning a paper to its first author's location. Coordinates are not edited during paper-level curation. Institutions with missing or uncertain locations are recorded in `data/curated/institution_location_review.csv` for the separate location-review workflow.
+
+Removing a paper from maintained outputs is a durable exclusion decision in `data/curated/paper_exclusions.csv`; it does not delete or alter the processed OpenAlex source files. The curated layer is intended for local maintainer tools. The GitHub Pages site remains a read-only static site.
+
+Validate and summarize the curated layer from the repository root:
+
+```bash
+python3 scripts/validate_curated_database.py
+python3 scripts/report_curated_database.py
+```
+
+Header-only curated files are valid and do not affect the current public-preview exporter. Integration of curated records into public export is a separate workflow step.
+
 ## Public Preview Export
 
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages. It also writes `web/data/public_preview_papers.json`, a paper-level public preview list that includes in-scope candidate/key papers even when affiliation or coordinate data is incomplete. The map JSON remains strict: only records with usable institution coordinates can become markers. The paper JSON carries transparent coverage fields such as `has_map_location`, `map_record_count`, `missing_affiliation`, `missing_coordinates`, `needs_review`, and `coverage_status` so incomplete papers can be searched and reviewed without fabricating locations. Both outputs are explicitly labeled as uncurated public preview data, not a manually curated bibliography.

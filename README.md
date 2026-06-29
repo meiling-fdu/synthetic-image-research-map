@@ -31,7 +31,8 @@ An interactive academic world map for exploring papers, researchers, and institu
 |-- data/
 |   |-- raw/           # Unmodified source and API data
 |   |-- processed/     # Cleaned, normalized, and derived datasets
-|   `-- manual/        # Human-reviewed corrections and overrides
+|   |-- manual/        # Human-reviewed corrections and overrides
+|   `-- curated/       # Maintainer-confirmed paper and mapping database
 |-- scripts/           # Python collection and preprocessing scripts
 |-- web/               # Static Leaflet.js prototype
 |   |-- index.html     # Prototype page and controls
@@ -52,6 +53,8 @@ Empty directories contain `.gitkeep` placeholders until project files are added.
 4. Maintain confirmed corrections and overrides separately in `data/manual/`; automated scripts must not overwrite these files.
 5. Apply manual overrides during processing and export website-ready static data to `web/data/`.
 6. Load the exported data in the static Leaflet.js website from `web/`.
+
+Maintainers can use the local `data/curated/` database layer for confirmed paper records, author–institution mappings, durable exclusions, and location-review queues. OpenAlex remains a candidate metadata source, while public preview JSON remains generated output. The deployed public site is read-only; maintainer editing is local only.
 
 ## Data collection prototype
 
