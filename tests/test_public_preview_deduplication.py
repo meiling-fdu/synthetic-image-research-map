@@ -1,0 +1,73 @@
+import unittest
+
+from scripts.export_public_preview import exclude_preprint_versions
+from scripts.validate_public_preview import validate_preprint_version_duplicates
+
+
+class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def setUp(self):
+        self.preprint = {
+            "title": "A Siamese-based Verification System",
+            "year": 2023,
+            "venue": "arXiv (Cornell University)",
+            "publication_type": "preprint",
+            "doi": "10.48550/arxiv.2307.09822",
+            "is_arxiv_preprint": True,
+        }
+        self.formal = {
+            "title": "a siamese based verification system",
+            "year": 2024,
+            "venue": "Pattern Recognition Letters",
+            "publication_type": "article",
+            "doi": "10.1016/j.patrec.2024.03.002",
+            "is_arxiv_preprint": False,
+            "authors": ["Lydia Abady"],
+            "institution": "University of Siena",
+            "country": "Italy",
+            "latitude": 43.31822,
+            "longitude": 11.33064,
+        }
+
+    def test_formal_version_wins_across_title_punctuation_and_case(self):
+        records, excluded = exclude_preprint_versions(
+            [self.preprint, self.formal]
+        )
+
+        self.assertEqual(excluded, 1)
+        self.assertEqual(records, [self.formal])
+        self.assertEqual(records[0]["doi"], self.formal["doi"])
+        self.assertEqual(records[0]["authors"], self.formal["authors"])
+        self.assertEqual(records[0]["institution"], self.formal["institution"])
+        self.assertEqual(records[0]["latitude"], self.formal["latitude"])
+
+    def test_formal_doi_and_venue_override_stale_preprint_flag(self):
+        formal = {**self.formal, "is_arxiv_preprint": True}
+
+        records, excluded = exclude_preprint_versions(
+            [self.preprint, formal]
+        )
+
+        self.assertEqual(excluded, 1)
+        self.assertEqual(records, [formal])
+
+    def test_preprint_without_formal_version_is_retained(self):
+        records, excluded = exclude_preprint_versions([self.preprint])
+
+        self.assertEqual(excluded, 0)
+        self.assertEqual(records, [self.preprint])
+
+    def test_validator_rejects_unfiltered_preprint_formal_pair(self):
+        issues = []
+
+        validate_preprint_version_duplicates(
+            [self.preprint, self.formal],
+            issues,
+        )
+
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0].level, "ERROR")
+        self.assertIn("duplicates a formal publication", issues[0].message)
+
+
+if __name__ == "__main__":
+    unittest.main()
