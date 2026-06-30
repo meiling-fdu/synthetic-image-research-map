@@ -254,8 +254,15 @@
           <section>
             <h2>Data and records</h2>
             <p>
+              The public preview combines automatically collected candidate metadata
+              with eligible maintainer-confirmed records. It is a research-discovery
+              aid, not a complete or uniformly curated bibliography.
+            </p>
+            <p>
               The map is institution-record based, so one paper may appear at several
-              institutions. Unique papers view deduplicates records for bibliography-style browsing.
+              institutions. Affiliations are preserved per author and are not inferred
+              from the first author. Unique papers view deduplicates records for
+              bibliography-style browsing.
             </p>
             <p>
               <code>data/manual/key_papers.csv</code> is a coverage checklist for
@@ -275,17 +282,18 @@
           <section>
             <h2>Quality control</h2>
             <p>
-              Records are filtered by scope, task label, institution availability,
-              coordinates, and resolution confidence. By default, the public preview
-              excludes uncertain, out-of-scope, low-confidence, review-flagged,
-              missing-institution, and missing-coordinate records.
+              Paper coverage and map coverage are different: a paper can be searchable
+              while its affiliation or location still needs review. Map markers require
+              a supported institution relationship and usable coordinates; uncertain,
+              out-of-scope, low-confidence, and review-flagged marker records are
+              excluded.
             </p>
           </section>
         </div>
       </details>
 
       <section class="panel project-links" aria-labelledby="project-links-heading">
-        <h2 id="project-links-heading">Data and credits</h2>
+        <h2 id="project-links-heading">Data notice and credits</h2>
         <div class="project-links-content">
           <nav class="project-link-list" aria-label="Project resources">
             <a href="data/public_preview_map_data.json">Public preview JSON</a>
@@ -298,10 +306,15 @@
           <p id="dataset-status-note" class="dataset-status-badge">
             Uncurated public preview
           </p>
+          <p>
+            Coverage is evolving. Metadata, scope labels, affiliations, and coordinates
+            may be incomplete or incorrect; follow the linked source records and quality
+            report before relying on an entry.
+          </p>
           <p id="dataset-notice-copy">
-            This public preview is generated from OpenAlex candidate metadata and local
-            manual review caches. Paper-level coverage can include records without map
-            markers; map markers require valid institution coordinates.
+            This public preview combines OpenAlex candidate metadata with eligible
+            maintainer-confirmed records. Searchable papers may lack map markers; markers
+            require supported affiliations and usable institution coordinates.
           </p>
           <p>
             Use <strong>Export CSV</strong> to download the currently filtered records.

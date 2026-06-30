@@ -492,6 +492,8 @@ Maintainers can inspect the current public-preview papers, their map-marker inst
 python3 scripts/serve_admin.py
 ```
 
+For the concise start-to-finish maintainer procedure, including paper addition, scope exclusion, author–institution mapping, institution location review, and the full refresh pipeline, see [Local Admin Workflow](admin_workflow.md).
+
 The server binds to `127.0.0.1:8765` by default and prints a newly generated admin token. Open `http://localhost:8765/admin/?token=<TOKEN>`, replacing `<TOKEN>` with that terminal value. The page stores the token for the current browser tab, removes it from the address bar, and sends it to API requests in the `X-Admin-Token` header. Direct API clients may use that header or the `token` query parameter.
 
 The server refuses non-loopback binding unless `--unsafe-bind-all` is explicitly supplied. The public GitHub Pages site remains a separate read-only static site and does not use these admin APIs.
