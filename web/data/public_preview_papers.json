@@ -1668,7 +1668,7 @@
         "Xidian University"
       ],
       "aggregated_country_names": [
-        "CN",
+        "China",
         "Singapore"
       ],
       "aggregated_country_codes": [
@@ -1803,18 +1803,22 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Fudan University"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -1876,7 +1880,7 @@
         "Tsinghua University"
       ],
       "aggregated_country_names": [
-        "CN"
+        "China"
       ],
       "aggregated_country_codes": [
         "CN"
@@ -2253,8 +2257,8 @@
         "University at Buffalo, State University of New York"
       ],
       "aggregated_country_names": [
-        "CN",
-        "US"
+        "China",
+        "United States"
       ],
       "aggregated_country_codes": [
         "CN",
@@ -2396,58 +2400,6 @@
       "aggregated_country_codes": [
         "IT"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "AI-GenBench: A New Ongoing Benchmark for AI-Generated Image Detection",
-      "in_scope": true,
-      "year": 2025,
-      "publication_year": 2025,
-      "publication_date": "2025-04-29",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "benchmark",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "The rapid advancement of generative AI has revolutionized image creation, enabling high-quality synthesis from text prompts while raising critical challenges for media authenticity. We present Ai-GenBench, a novel benchmark designed to address the urgent need for robust detection of AI-generated images in real-world scenarios. Unlike existing solutions that evaluate models on static datasets, Ai-GenBench introduces a temporal evaluation framework where detection methods are incrementally trained on synthetic images, historically ordered by their generative models, to test their ability to generalize to new generative models, such as the transition from GANs to diffusion models. Our benchmark focuses on high-quality, diverse visual content and overcomes key limitations of current approaches, including arbitrary dataset splits, unfair comparisons, and excessive computational demands. Ai-GenBench provides a comprehensive dataset, a standardized evaluation protocol, and accessible tools for both researchers and non-experts (e.g., journalists, fact-checkers), ensuring reproducibility while maintaining practical training requirements. By establishing clear evaluation rules and controlled augmentation strategies, Ai-GenBench enables meaningful comparison of detection methods and scalable solutions. Code and data are publicly available to ensure reproducibility and to support the development of robust forensic detectors to keep pace with the rise of new synthetic generators.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2504.20865",
-      "arxiv_id": "2504.20865",
-      "arxiv_url": "https://arxiv.org/abs/2504.20865",
-      "arxiv_year": 2025,
-      "has_arxiv_version": true,
-      "paper_url": "https://doi.org/10.48550/arxiv.2504.20865",
-      "primary_url": "https://doi.org/10.48550/arxiv.2504.20865",
-      "landing_page_url": "https://doi.org/10.48550/arxiv.2504.20865",
-      "openalex_url": "https://openalex.org/W4417172205",
-      "is_arxiv_preprint": true,
-      "url": "https://doi.org/10.48550/arxiv.2504.20865",
-      "authors": [
-        "Lorenzo Pellegrini",
-        "Davide Cozzolino",
-        "Serafino Pandolfini",
-        "Davide Maltoni",
-        "Matteo Ferrara",
-        "Luisa Verdoliva",
-        "Marco Prati",
-        "Marco Ramilli"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -2763,7 +2715,7 @@
       "needs_review": true,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -2773,9 +2725,11 @@
         "University of Florence"
       ],
       "aggregated_country_names": [
-        "Italy"
+        "Italy",
+        "United Kingdom"
       ],
       "aggregated_country_codes": [
+        "GB",
         "IT"
       ],
       "aggregated_regions": [],
@@ -5527,8 +5481,7 @@
       ],
       "aggregated_country_names": [
         "China",
-        "CN",
-        "US"
+        "United States"
       ],
       "aggregated_country_codes": [
         "CN",
@@ -7490,20 +7443,26 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 3,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Khalifa University",
         "Polytechnic University of Hauts-de-France",
         "Sorbonne University"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "aggregated_country_names": [
+        "France",
+        "United Arab Emirates"
+      ],
+      "aggregated_country_codes": [
+        "AE",
+        "FR"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -7696,19 +7655,44 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "curated_mappings": []
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Tamkang University"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Taiwan"
+      ],
+      "aggregated_region_codes": [
+        "TW"
+      ],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:fcb5a24564e3c8d5aaae",
+          "institution": "Tamkang University",
+          "institution_authors": [
+            "Meng-Luen Wu",
+            "Cheng-Pin Cheng"
+          ],
+          "raw_affiliation": "Department of Computer Science and Information Engineering, Tamkang University, New Taipei City 251301, Taiwan",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11122535",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section. The affiliation is Tamkang University, New Taipei City, Taiwan, China."
+        }
+      ]
     },
     {
       "title": "Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis",
@@ -8857,56 +8841,6 @@
       ]
     },
     {
-      "title": "A Bias-Free Training Paradigm for More General AI-generated Image Detection",
-      "in_scope": true,
-      "year": 2024,
-      "publication_year": 2024,
-      "publication_date": "2024-12-23",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "Successful forensic detectors can produce excellent results in supervised learning benchmarks but struggle to transfer to real-world applications. We believe this limitation is largely due to inadequate training data quality. While most research focuses on developing new algorithms, less attention is given to training data selection, despite evidence that performance can be strongly impacted by spurious correlations such as content, format, or resolution. A well-designed forensic detector should detect generator specific artifacts rather than reflect data biases. To this end, we propose B-Free, a bias-free training paradigm, where fake images are generated from real ones using the conditioning procedure of stable diffusion models. This ensures semantic alignment between real and fake images, allowing any differences to stem solely from the subtle artifacts introduced by AI generation. Through content-based augmentation, we show significant improvements in both generalization and robustness over state-of-the-art detectors and more calibrated results across 27 different generative models, including recent releases, like FLUX and Stable Diffusion 3.5. Our findings emphasize the importance of a careful dataset design, highlighting the need for further research on this topic. Code and data are publicly available at https://grip-unina.github.io/B-Free/.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2412.17671",
-      "arxiv_id": "2412.17671",
-      "arxiv_url": "https://arxiv.org/abs/2412.17671",
-      "arxiv_year": 2024,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2412.17671",
-      "primary_url": "http://arxiv.org/abs/2412.17671",
-      "landing_page_url": "http://arxiv.org/abs/2412.17671",
-      "openalex_url": "https://openalex.org/W4405768297",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2412.17671",
-      "authors": [
-        "Fabrizio Guillaro",
-        "Giada Zingarini",
-        "Ben Usman",
-        "Avneesh Sud",
-        "Davide Cozzolino",
-        "Luisa Verdoliva"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "A COMPARATIVE REVIEW OF AI-GENERATED IMAGE DETECTION ACROSS SOCIAL MEDIA PLATFORMS",
       "in_scope": true,
       "year": 2024,
@@ -9736,57 +9670,6 @@
       "aggregated_region_codes": []
     },
     {
-      "title": "An Analysis of Recent Advances in Deepfake Image Detection in an Evolving Threat Landscape",
-      "in_scope": true,
-      "year": 2024,
-      "publication_year": 2024,
-      "publication_date": "2024-04-24",
-      "task": "detection",
-      "subtask": "deepfake_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "Deepfake or synthetic images produced using deep generative models pose serious risks to online platforms. This has triggered several research efforts to accurately detect deepfake images, achieving excellent performance on publicly available deepfake datasets. In this work, we study 8 state-of-the-art detectors and argue that they are far from being ready for deployment due to two recent developments. First, the emergence of lightweight methods to customize large generative models, can enable an attacker to create many customized generators (to create deepfakes), thereby substantially increasing the threat surface. We show that existing defenses fail to generalize well to such \\emph{user-customized generative models} that are publicly available today. We discuss new machine learning approaches based on content-agnostic features, and ensemble modeling to improve generalization performance against user-customized models. Second, the emergence of \\textit{vision foundation models} -- machine learning models trained on broad data that can be easily adapted to several downstream tasks -- can be misused by attackers to craft adversarial deepfakes that can evade existing defenses. We propose a simple adversarial attack that leverages existing foundation models to craft adversarial samples \\textit{without adding any adversarial noise}, through careful semantic manipulation of the image content. We highlight the vulnerabilities of several defenses against our attack, and explore directions leveraging advanced foundation models and adversarial training to defend against this new threat.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2404.16212",
-      "arxiv_id": "2404.16212",
-      "arxiv_url": "https://arxiv.org/abs/2404.16212",
-      "arxiv_year": 2024,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2404.16212",
-      "primary_url": "http://arxiv.org/abs/2404.16212",
-      "landing_page_url": "http://arxiv.org/abs/2404.16212",
-      "openalex_url": "https://openalex.org/W4395686688",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2404.16212",
-      "authors": [
-        "Sifat Muhammad Abdullah",
-        "Aravind Cheruvu",
-        "Shravya Kanchi",
-        "Taejoong Chung",
-        "Peng Gao",
-        "Murtuza Jadliwala",
-        "Bimal Viswanath"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "Artifact feature purification for cross-domain detection of AI-generated images",
       "in_scope": true,
       "year": 2024,
@@ -9984,18 +9867,22 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "University of Bergen"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "aggregated_country_names": [
+        "Norway"
+      ],
+      "aggregated_country_codes": [
+        "NO"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -10894,53 +10781,6 @@
       "aggregated_region_codes": []
     },
     {
-      "title": "Detecting AI-Generated Images via CLIP",
-      "in_scope": true,
-      "year": 2024,
-      "publication_year": 2024,
-      "publication_date": "2024-04-12",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "As AI-generated image (AIGI) methods become more powerful and accessible, it has become a critical task to determine if an image is real or AI-generated. Because AIGI lack the signatures of photographs and have their own unique patterns, new models are needed to determine if an image is AI-generated. In this paper, we investigate the ability of the Contrastive Language-Image Pre-training (CLIP) architecture, pre-trained on massive internet-scale data sets, to perform this differentiation. We fine-tune CLIP on real images and AIGI from several generative models, enabling CLIP to determine if an image is AI-generated and, if so, determine what generation method was used to create it. We show that the fine-tuned CLIP architecture is able to differentiate AIGI as well or better than models whose architecture is specifically designed to detect AIGI. Our method will significantly increase access to AIGI-detecting tools and reduce the negative effects of AIGI on society, as our CLIP fine-tuning procedures require no architecture changes from publicly available model repositories and consume significantly less GPU resources than other AIGI detection models.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2404.08788",
-      "arxiv_id": "2404.08788",
-      "arxiv_url": "https://arxiv.org/abs/2404.08788",
-      "arxiv_year": 2024,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2404.08788",
-      "primary_url": "http://arxiv.org/abs/2404.08788",
-      "landing_page_url": "http://arxiv.org/abs/2404.08788",
-      "openalex_url": "https://openalex.org/W4394867366",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2404.08788",
-      "authors": [
-        "Alexander Moskowitz",
-        "Tyler Gaona",
-        "Jessica Peterson"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "Detecting AI-generated images with CNN and Interpretation using Explainable AI",
       "in_scope": true,
       "year": 2024,
@@ -11372,8 +11212,8 @@
         "University of Naples Federico II"
       ],
       "aggregated_country_names": [
-        "DE",
-        "IT"
+        "Germany",
+        "Italy"
       ],
       "aggregated_country_codes": [
         "DE",
@@ -11918,55 +11758,6 @@
       "aggregated_region_codes": []
     },
     {
-      "title": "Exploring the Adversarial Robustness of CLIP for AI-generated Image Detection",
-      "in_scope": true,
-      "year": 2024,
-      "publication_year": 2024,
-      "publication_date": "2024-07-28",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "analysis",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "In recent years, many forensic detectors have been proposed to detect AI-generated images and prevent their use for malicious purposes. Convolutional neural networks (CNNs) have long been the dominant architecture in this field and have been the subject of intense study. However, recently proposed Transformer-based detectors have been shown to match or even outperform CNN-based detectors, especially in terms of generalization. In this paper, we study the adversarial robustness of AI-generated image detectors, focusing on Contrastive Language-Image Pretraining (CLIP)-based methods that rely on Visual Transformer (ViT) backbones and comparing their performance with CNN-based methods. We study the robustness to different adversarial attacks under a variety of conditions and analyze both numerical results and frequency-domain patterns. CLIP-based detectors are found to be vulnerable to white-box attacks just like CNN-based detectors. However, attacks do not easily transfer between CNN-based and CLIP-based methods. This is also confirmed by the different distribution of the adversarial noise patterns in the frequency domain. Overall, this analysis provides new insights into the properties of forensic detectors that can help to develop more effective strategies.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2407.19553",
-      "arxiv_id": "2407.19553",
-      "arxiv_url": "https://arxiv.org/abs/2407.19553",
-      "arxiv_year": 2024,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2407.19553",
-      "primary_url": "http://arxiv.org/abs/2407.19553",
-      "landing_page_url": "http://arxiv.org/abs/2407.19553",
-      "openalex_url": "https://openalex.org/W4401201872",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2407.19553",
-      "authors": [
-        "Vincenzo De Rosa",
-        "Fabrizio Guillaro",
-        "Giovanni Poggi",
-        "Davide Cozzolino",
-        "Luisa Verdoliva"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "FakeBench: Probing Explainable Fake Image Detection via Large Multimodal Models",
       "in_scope": true,
       "year": 2024,
@@ -12054,19 +11845,23 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 2,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Google Research",
         "Massachusetts Institute of Technology"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -12273,18 +12068,22 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 2,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Polytechnic University of Hauts-de-France",
         "Sorbonne University",
         "Université de Rennes"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "aggregated_country_names": [
+        "France"
+      ],
+      "aggregated_country_codes": [
+        "FR"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -12425,18 +12224,22 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Singapore University of Technology and Design"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
+      "aggregated_country_names": [
+        "Singapore"
+      ],
+      "aggregated_country_codes": [
+        "SG"
+      ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -12493,10 +12296,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -12506,9 +12309,11 @@
         "Yanshan University"
       ],
       "aggregated_country_names": [
+        "China",
         "Singapore"
       ],
       "aggregated_country_codes": [
+        "CN",
         "SG"
       ],
       "aggregated_regions": [
@@ -13591,7 +13396,7 @@
       "needs_review": true,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -13601,13 +13406,19 @@
         "Université Paris-Saclay"
       ],
       "aggregated_country_names": [
-        "FR"
+        "China",
+        "France"
       ],
       "aggregated_country_codes": [
+        "CN",
         "FR"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
+      "aggregated_regions": [
+        "Hong Kong"
+      ],
+      "aggregated_region_codes": [
+        "HK"
+      ],
       "curated_mappings": [
         {
           "mapping_id": "mapping:5501406fa8ddf10f530f",
@@ -13943,7 +13754,7 @@
         "University of Catania"
       ],
       "aggregated_country_names": [
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "IT"
@@ -14789,7 +14600,7 @@
         "Xiamen University"
       ],
       "aggregated_country_names": [
-        "CN"
+        "China"
       ],
       "aggregated_country_codes": [
         "CN"
@@ -15523,8 +15334,8 @@
         "University of Oxford"
       ],
       "aggregated_country_names": [
-        "GB",
-        "SG"
+        "Singapore",
+        "United Kingdom"
       ],
       "aggregated_country_codes": [
         "GB",
@@ -15927,54 +15738,6 @@
       "aggregated_region_codes": []
     },
     {
-      "title": "A Siamese-based Verification System for Open-set Architecture Attribution of Synthetic Images",
-      "in_scope": true,
-      "year": 2023,
-      "publication_year": 2023,
-      "publication_date": "2023-07-19",
-      "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "Despite the wide variety of methods developed for synthetic image attribution, most of them can only attribute images generated by models or architectures included in the training set and do not work with unknown architectures, hindering their applicability in real-world scenarios. In this paper, we propose a verification framework that relies on a Siamese Network to address the problem of open-set attribution of synthetic images to the architecture that generated them. We consider two different settings. In the first setting, the system determines whether two images have been produced by the same generative architecture or not. In the second setting, the system verifies a claim about the architecture used to generate a synthetic image, utilizing one or multiple reference images generated by the claimed architecture. The main strength of the proposed system is its ability to operate in both closed and open-set scenarios so that the input images, either the query and reference images, can belong to the architectures considered during training or not. Experimental evaluations encompassing various generative architectures such as GANs, diffusion models, and transformers, focusing on synthetic face image generation, confirm the excellent performance of our method in both closed and open-set settings, as well as its strong generalization capabilities.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2307.09822",
-      "arxiv_id": "2307.09822",
-      "arxiv_url": "https://arxiv.org/abs/2307.09822",
-      "arxiv_year": 2023,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2307.09822",
-      "primary_url": "http://arxiv.org/abs/2307.09822",
-      "landing_page_url": "http://arxiv.org/abs/2307.09822",
-      "openalex_url": "https://openalex.org/W4384919490",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2307.09822",
-      "authors": [
-        "Lydia Abady",
-        "Jun Wang",
-        "Benedetta Tondi",
-        "Mauro Barni"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "A Survey of Detection and Mitigation for Fake Images on Social Media Platforms",
       "in_scope": true,
       "year": 2023,
@@ -16147,55 +15910,6 @@
       "aggregated_country_codes": [
         "CN"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "AI-Generated Image Detection using a Cross-Attention Enhanced Dual-Stream Network",
-      "in_scope": true,
-      "year": 2023,
-      "publication_year": 2023,
-      "publication_date": "2023-06-12",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "With the rapid evolution of AI Generated Content (AIGC), forged images produced through this technology are inherently more deceptive and require less human intervention compared to traditional Computer-generated Graphics (CG). However, owing to the disparities between CG and AIGC, conventional CG detection methods tend to be inadequate in identifying AIGC-produced images. To address this issue, our research concentrates on the text-to-image generation process in AIGC. Initially, we first assemble two text-to-image databases utilizing two distinct AI systems, DALLE2 and DreamStudio. Aiming to holistically capture the inherent anomalies produced by AIGC, we develope a robust dual-stream network comprised of a residual stream and a content stream. The former employs the Spatial Rich Model (SRM) to meticulously extract various texture information from images, while the latter seeks to capture additional forged traces in low frequency, thereby extracting complementary information that the residual stream may overlook. To enhance the information exchange between these two streams, we incorporate a cross multi-head attention mechanism. Numerous comparative experiments are performed on both databases, and the results show that our detection method consistently outperforms traditional CG detection techniques across a range of image resolutions. Moreover, our method exhibits superior performance through a series of robustness tests and cross-database experiments. When applied to widely recognized traditional CG benchmarks such as SPL2018 and DsTok, our approach significantly exceeds the capabilities of other existing methods in the field of CG detection.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2306.07005",
-      "arxiv_id": "2306.07005",
-      "arxiv_url": "https://arxiv.org/abs/2306.07005",
-      "arxiv_year": 2023,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2306.07005",
-      "primary_url": "http://arxiv.org/abs/2306.07005",
-      "landing_page_url": "http://arxiv.org/abs/2306.07005",
-      "openalex_url": "https://openalex.org/W4380558675",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2306.07005",
-      "authors": [
-        "Ziyi Xi",
-        "Wenmin Huang",
-        "Kangkang Wei",
-        "Weiqi Luo",
-        "Peijia Zheng"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -17229,57 +16943,6 @@
       "aggregated_region_codes": []
     },
     {
-      "title": "DIRE for Diffusion-Generated Image Detection",
-      "in_scope": true,
-      "year": 2023,
-      "publication_year": 2023,
-      "publication_date": "2023-03-16",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "Diffusion models have shown remarkable success in visual synthesis, but have also raised concerns about potential abuse for malicious purposes. In this paper, we seek to build a detector for telling apart real images from diffusion-generated images. We find that existing detectors struggle to detect images generated by diffusion models, even if we include generated images from a specific diffusion model in their training data. To address this issue, we propose a novel image representation called DIffusion Reconstruction Error (DIRE), which measures the error between an input image and its reconstruction counterpart by a pre-trained diffusion model. We observe that diffusion-generated images can be approximately reconstructed by a diffusion model while real images cannot. It provides a hint that DIRE can serve as a bridge to distinguish generated and real images. DIRE provides an effective way to detect images generated by most diffusion models, and it is general for detecting generated images from unseen diffusion models and robust to various perturbations. Furthermore, we establish a comprehensive diffusion-generated benchmark including images generated by eight diffusion models to evaluate the performance of diffusion-generated image detectors. Extensive experiments on our collected benchmark demonstrate that DIRE exhibits superiority over previous generated-image detectors. The code and dataset are available at https://github.com/ZhendongWang6/DIRE.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2303.09295",
-      "arxiv_id": "2303.09295",
-      "arxiv_url": "https://arxiv.org/abs/2303.09295",
-      "arxiv_year": 2023,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2303.09295",
-      "primary_url": "http://arxiv.org/abs/2303.09295",
-      "landing_page_url": "http://arxiv.org/abs/2303.09295",
-      "openalex_url": "https://openalex.org/W4327810824",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2303.09295",
-      "authors": [
-        "Zhendong Wang",
-        "Jianmin Bao",
-        "Wengang Zhou",
-        "Weilun Wang",
-        "Hezhen Hu",
-        "Hong Chen",
-        "Houqiang Li"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "Does an emotional connection to art really require a human artist? Emotion and intentionality responses to AI- versus human-created art and impact on aesthetic experience",
       "in_scope": true,
       "year": 2023,
@@ -17785,60 +17448,6 @@
       "in_scope": true,
       "year": 2023,
       "publication_year": 2023,
-      "publication_date": "2023-06-14",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "benchmark",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "The extraordinary ability of generative models to generate photographic images has intensified concerns about the spread of disinformation, thereby leading to the demand for detectors capable of distinguishing between AI-generated fake images and real images. However, the lack of large datasets containing images from the most advanced image generators poses an obstacle to the development of such detectors. In this paper, we introduce the GenImage dataset, which has the following advantages: 1) Plenty of Images, including over one million pairs of AI-generated fake images and collected real images. 2) Rich Image Content, encompassing a broad range of image classes. 3) State-of-the-art Generators, synthesizing images with advanced diffusion models and GANs. The aforementioned advantages allow the detectors trained on GenImage to undergo a thorough evaluation and demonstrate strong applicability to diverse images. We conduct a comprehensive analysis of the dataset and propose two tasks for evaluating the detection method in resembling real-world scenarios. The cross-generator image classification task measures the performance of a detector trained on one generator when tested on the others. The degraded image classification task assesses the capability of the detectors in handling degraded images such as low-resolution, blurred, and compressed images. With the GenImage dataset, researchers can effectively expedite the development and evaluation of superior AI-generated image detectors in comparison to prevailing methodologies.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2306.08571",
-      "arxiv_id": "2306.08571",
-      "arxiv_url": "https://arxiv.org/abs/2306.08571",
-      "arxiv_year": 2023,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2306.08571",
-      "primary_url": "http://arxiv.org/abs/2306.08571",
-      "landing_page_url": "http://arxiv.org/abs/2306.08571",
-      "openalex_url": "https://openalex.org/W4380993529",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2306.08571",
-      "authors": [
-        "Mingjian Zhu",
-        "Hanting Chen",
-        "Qiangyu Yan",
-        "Xudong Huang",
-        "Guanyu Lin",
-        "Wei Li",
-        "Zhijun Tu",
-        "Hailin Hu",
-        "Jie Hu",
-        "Yunhe Wang"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "GenImage: A Million-Scale Benchmark for Detecting AI-Generated Image",
-      "in_scope": true,
-      "year": 2023,
-      "publication_year": 2023,
       "publication_date": "2023-01-01",
       "task": "detection",
       "subtask": "ai_generated_image_detection",
@@ -17879,9 +17488,9 @@
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
@@ -18498,55 +18107,6 @@
       "aggregated_region_codes": []
     },
     {
-      "title": "Raising the Bar of AI-generated Image Detection with CLIP",
-      "in_scope": true,
-      "year": 2023,
-      "publication_year": 2023,
-      "publication_date": "2023-11-30",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "The aim of this work is to explore the potential of pre-trained vision-language models (VLMs) for universal detection of AI-generated images. We develop a lightweight detection strategy based on CLIP features and study its performance in a wide variety of challenging scenarios. We find that, contrary to previous beliefs, it is neither necessary nor convenient to use a large domain-specific dataset for training. On the contrary, by using only a handful of example images from a single generative model, a CLIP-based detector exhibits surprising generalization ability and high robustness across different architectures, including recent commercial tools such as Dalle-3, Midjourney v5, and Firefly. We match the state-of-the-art (SoTA) on in-distribution data and significantly improve upon it in terms of generalization to out-of-distribution data (+6% AUC) and robustness to impaired/laundered data (+13%). Our project is available at https://grip-unina.github.io/ClipBased-SyntheticImageDetection/",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2312.00195",
-      "arxiv_id": "2312.00195",
-      "arxiv_url": "https://arxiv.org/abs/2312.00195",
-      "arxiv_year": 2023,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2312.00195",
-      "primary_url": "http://arxiv.org/abs/2312.00195",
-      "landing_page_url": "http://arxiv.org/abs/2312.00195",
-      "openalex_url": "https://openalex.org/W4389325598",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2312.00195",
-      "authors": [
-        "Davide Cozzolino",
-        "Giovanni Poggi",
-        "Riccardo Corvi",
-        "Matthias Nießner",
-        "Luisa Verdoliva"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model",
       "in_scope": true,
       "year": 2023,
@@ -18736,10 +18296,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -19171,58 +18731,6 @@
       "aggregated_country_codes": [
         "US"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "X-Transfer: A Transfer Learning-Based Framework for GAN-Generated Fake Image Detection",
-      "in_scope": true,
-      "year": 2023,
-      "publication_year": 2023,
-      "publication_date": "2023-10-07",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "Generative adversarial networks (GANs) have remarkably advanced in diverse domains, especially image generation and editing. However, the misuse of GANs for generating deceptive images, such as face replacement, raises significant security concerns, which have gained widespread attention. Therefore, it is urgent to develop effective detection methods to distinguish between real and fake images. Current research centers around the application of transfer learning. Nevertheless, it encounters challenges such as knowledge forgetting from the original dataset and inadequate performance when dealing with imbalanced data during training. To alleviate this issue, this paper introduces a novel GAN-generated image detection algorithm called X-Transfer, which enhances transfer learning by utilizing two neural networks that employ interleaved parallel gradient transmission. In addition, we combine AUC loss and cross-entropy loss to improve the model's performance. We carry out comprehensive experiments on multiple facial image datasets. The results show that our model outperforms the general transferring approach, and the best metric achieves 99.04%, which is increased by approximately 10%. Furthermore, we demonstrate excellent performance on non-face datasets, validating its generality and broader application prospects.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2310.04639",
-      "arxiv_id": "2310.04639",
-      "arxiv_url": "https://arxiv.org/abs/2310.04639",
-      "arxiv_year": 2023,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2310.04639",
-      "primary_url": "http://arxiv.org/abs/2310.04639",
-      "landing_page_url": "http://arxiv.org/abs/2310.04639",
-      "openalex_url": "https://openalex.org/W4387559259",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2310.04639",
-      "authors": [
-        "Lei Zhang",
-        "Hao Chen",
-        "Shu Hu",
-        "Bin Zhu",
-        "Lin, Ching Sheng",
-        "Xi Wu",
-        "Jinrong Hu",
-        "Xin Wang"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -19938,54 +19446,6 @@
       "aggregated_region_codes": []
     },
     {
-      "title": "Discovering Transferable Forensic Features for CNN-generated Images Detection",
-      "in_scope": true,
-      "year": 2022,
-      "publication_year": 2022,
-      "publication_date": "2022-08-24",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "Visual counterfeits are increasingly causing an existential conundrum in mainstream media with rapid evolution in neural image synthesis methods. Though detection of such counterfeits has been a taxing problem in the image forensics community, a recent class of forensic detectors -- universal detectors -- are able to surprisingly spot counterfeit images regardless of generator architectures, loss functions, training datasets, and resolutions. This intriguing property suggests the possible existence of transferable forensic features (T-FF) in universal detectors. In this work, we conduct the first analytical study to discover and understand T-FF in universal detectors. Our contributions are 2-fold: 1) We propose a novel forensic feature relevance statistic (FF-RS) to quantify and discover T-FF in universal detectors and, 2) Our qualitative and quantitative investigations uncover an unexpected finding: color is a critical T-FF in universal detectors. Code and models are available at https://keshik6.github.io/transferable-forensic-features/",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2208.11342",
-      "arxiv_id": "2208.11342",
-      "arxiv_url": "https://arxiv.org/abs/2208.11342",
-      "arxiv_year": 2022,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2208.11342",
-      "primary_url": "http://arxiv.org/abs/2208.11342",
-      "landing_page_url": "http://arxiv.org/abs/2208.11342",
-      "openalex_url": "https://openalex.org/W4293169908",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2208.11342",
-      "authors": [
-        "Keshigeyan Chandrasegaran",
-        "Ngoc-Trung Tran",
-        "Alexander Binder",
-        "Ngai‐Man Cheung"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
       "title": "EasyDeep: An IoT Friendly Robust Detection Method for GAN Generated Deepfake Images in Social Media",
       "in_scope": true,
       "year": 2022,
@@ -20324,56 +19784,6 @@
       "aggregated_country_codes": [
         "CN"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "On the detection of synthetic images generated by diffusion models",
-      "in_scope": true,
-      "year": 2022,
-      "publication_year": 2022,
-      "publication_date": "2022-11-01",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "Over the past decade, there has been tremendous progress in creating synthetic media, mainly thanks to the development of powerful methods based on generative adversarial networks (GAN). Very recently, methods based on diffusion models (DM) have been gaining the spotlight. In addition to providing an impressive level of photorealism, they enable the creation of text-based visual content, opening up new and exciting opportunities in many different application fields, from arts to video games. On the other hand, this property is an additional asset in the hands of malicious users, who can generate and distribute fake media perfectly adapted to their attacks, posing new challenges to the media forensic community. With this work, we seek to understand how difficult it is to distinguish synthetic images generated by diffusion models from pristine ones and whether current state-of-the-art detectors are suitable for the task. To this end, first we expose the forensics traces left by diffusion models, then study how current detectors, developed for GAN-generated images, perform on these new synthetic images, especially in challenging social-networks scenarios involving image compression and resizing. Datasets and code are available at github.com/grip-unina/DMimageDetection.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2211.00680",
-      "arxiv_id": "2211.00680",
-      "arxiv_url": "https://arxiv.org/abs/2211.00680",
-      "arxiv_year": 2022,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2211.00680",
-      "primary_url": "http://arxiv.org/abs/2211.00680",
-      "landing_page_url": "http://arxiv.org/abs/2211.00680",
-      "openalex_url": "https://openalex.org/W4308165186",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2211.00680",
-      "authors": [
-        "Riccardo Corvi",
-        "Davide Cozzolino",
-        "Giada Zingarini",
-        "Giovanni Poggi",
-        "Koki Nagano",
-        "Luisa Verdoliva"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -21468,62 +20878,6 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Mayachitra (United States)",
-        "University of California, Santa Barbara"
-      ],
-      "aggregated_country_names": [
-        "US"
-      ],
-      "aggregated_country_codes": [
-        "US"
-      ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "Detection, Attribution and Localization of GAN Generated Images",
-      "in_scope": true,
-      "year": 2021,
-      "publication_year": 2021,
-      "publication_date": "2020-07-20",
-      "task": "detection_and_source_attribution",
-      "subtask": "detection_and_source_attribution",
-      "entry_type": "method",
-      "venue": "Electronic Imaging / IS&T Int’l. Symp. on Electronic Imaging: Media Watermarking, Security, and Forensics",
-      "venue_name": "Electronic Imaging / IS&T Int’l. Symp. on Electronic Imaging: Media Watermarking, Security, and Forensics",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "Article",
-      "abstract": "Recent advances in Generative Adversarial Networks (GANs) have led to the creation of realistic-looking digital images that pose a major challenge to their detection by humans or computers.GANs are used in a wide range of tasks, from modifying small attributes of an image (StarGAN [14]), transferring attributes between image pairs (CycleGAN [91]), as well as generating entirely new images (ProGAN [36], StyleGAN [37], SPADE/GauGAN [64]).In this paper, we propose a novel approach to detect, attribute and localize GAN generated images that combines image features with deep learning methods.For every image, co-occurrence matrices are computed on neighborhood pixels of RGB channels in different directions (horizontal, vertical and diagonal).A deep learning network is then trained on these features to detect, attribute and localize these GAN generated/manipulated images.A large scale evaluation of our approach on 5 GAN datasets comprising over 2.76 million images (ProGAN, StarGAN, CycleGAN, StyleGAN and SPADE/GauGAN) shows promising results in detecting GAN generated images.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.2352/ISSN.2470-1173.2021.4.MWSF-276",
-      "arxiv_id": "2007.10466",
-      "arxiv_url": "https://arxiv.org/abs/2007.10466",
-      "arxiv_year": 2020,
-      "has_arxiv_version": true,
-      "paper_url": "https://library.imaging.org/ei/articles/33/4/art00007",
-      "primary_url": "https://library.imaging.org/ei/articles/33/4/art00007",
-      "landing_page_url": "https://library.imaging.org/ei/articles/33/4/art00007",
-      "openalex_url": "https://openalex.org/W3043994911",
-      "is_arxiv_preprint": true,
-      "url": "https://library.imaging.org/ei/articles/33/4/art00007",
-      "authors": [
-        "Michael Goebel",
-        "Lakshmanan Nataraj",
-        "Tejaswi Nanjundaswamy",
-        "Tajuddin Manhar Mohammed",
-        "Shivkumar Chandrasekaran",
-        "B.S. Manjunath"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | manual publication metadata override applied | Manual correction: arXiv version exists, but the paper was formally published in Electronic Imaging 2021.",
-      "has_map_location": true,
-      "map_record_count": 1,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
         "University of California, Santa Barbara"
       ],
       "aggregated_country_names": [

@@ -21,11 +21,13 @@ try:
     from .curated_export import (
         DEFAULT_CURATED_MAPPINGS_PATH,
         DEFAULT_CURATED_PAPERS_PATH,
+        DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
+        load_institution_resolution_cache,
         load_location_review_queue,
         save_location_review_queue,
     )
@@ -64,11 +66,13 @@ except ImportError:  # Direct execution from the scripts directory.
     from curated_export import (
         DEFAULT_CURATED_MAPPINGS_PATH,
         DEFAULT_CURATED_PAPERS_PATH,
+        DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
+        load_institution_resolution_cache,
         load_location_review_queue,
         save_location_review_queue,
     )
@@ -355,6 +359,16 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
             f"(default: {DEFAULT_INSTITUTION_LOCATIONS_PATH})."
         ),
     )
+    parser.add_argument(
+        "--institution-resolution-cache",
+        type=Path,
+        default=DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH,
+        help=(
+            "Processed institution-resolution cache used only when no "
+            "confirmed curated location exists "
+            f"(default: {DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH})."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -396,6 +410,62 @@ def normalize_doi(value: Any) -> str:
 def normalize_title(value: Any) -> str:
     normalized = re.sub(r"[^\w]+", " ", clean_text(value).casefold())
     return " ".join(normalized.replace("_", " ").split())
+
+
+def has_formal_publication_evidence(record: Dict[str, Any]) -> bool:
+    """Return whether DOI or venue identifies a non-preprint publication."""
+    venue = clean_text(
+        record.get("venue") or record.get("venue_name")
+    ).casefold()
+    doi = normalize_doi(record.get("doi"))
+    return bool(
+        (doi and not doi.startswith("10.48550/arxiv."))
+        or (
+            venue
+            and not re.search(r"\b(?:arxiv|pre[\s-]?print)\b", venue)
+        )
+    )
+
+
+def is_preprint_only_record(record: Dict[str, Any]) -> bool:
+    """Return whether a record represents only an arXiv/preprint publication."""
+    venue = clean_text(
+        record.get("venue") or record.get("venue_name")
+    ).casefold()
+    publication_type = clean_text(record.get("publication_type")).casefold()
+    doi = normalize_doi(record.get("doi"))
+    return not has_formal_publication_evidence(record) and bool(
+        parse_bool(record.get("is_arxiv_preprint"))
+        or publication_type in {"preprint", "posted-content"}
+        or re.search(r"\b(?:arxiv|pre[\s-]?print)\b", venue)
+        or doi.startswith("10.48550/arxiv.")
+    )
+
+
+def is_formal_publication(record: Dict[str, Any]) -> bool:
+    """Return whether a record has evidence of a non-preprint publication."""
+    return has_formal_publication_evidence(record)
+
+
+def exclude_preprint_versions(
+    records: Sequence[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], int]:
+    """Drop preprint-only rows when a formal record has the same normalized title."""
+    formal_titles = {
+        normalize_title(record.get("title"))
+        for record in records
+        if is_formal_publication(record)
+    }
+    formal_titles.discard("")
+    filtered = [
+        record
+        for record in records
+        if not (
+            normalize_title(record.get("title")) in formal_titles
+            and is_preprint_only_record(record)
+        )
+    ]
+    return filtered, len(records) - len(filtered)
 
 
 def parse_year(value: Any) -> Optional[int]:
@@ -704,6 +774,10 @@ def build_paper_preview(
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     exclusion_index = build_active_exclusion_index(exclusion_rows)
     excluded_paper_keys = set()
+    candidate_rows, preprint_versions_excluded = exclude_preprint_versions(
+        candidate_rows
+    )
+    all_candidate_rows, _ = exclude_preprint_versions(all_candidate_rows)
     selected_by_key: Dict[Tuple[str, Any], Dict[str, str]] = {}
     for row in candidate_rows:
         if paper_is_retracted(row) or normalize_export_task_labels(row) is None:
@@ -838,6 +912,7 @@ def build_paper_preview(
         ),
         "paper_preview_key_papers_matched": key_papers_matched,
         "paper_preview_papers_excluded_curated": len(excluded_paper_keys),
+        "paper_preview_preprint_versions_excluded": preprint_versions_excluded,
         **arxiv_summary,
         **publication_summary,
         **abstract_summary,
@@ -1202,6 +1277,7 @@ def build_preview(
     exclusion_rows: Sequence[Dict[str, str]] = (),
 ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
     records = [dict(record) for record in records]
+    candidate_records_read = len(records)
     institution_record_override_summary = apply_institution_record_overrides(
         records,
         institution_record_overrides,
@@ -1222,6 +1298,7 @@ def build_preview(
         publication_overrides,
     )
     abstract_summary = apply_paper_abstracts(records, paper_abstracts)
+    records, preprint_versions_excluded = exclude_preprint_versions(records)
     minimum_rank = CONFIDENCE_RANK[min_confidence]
     selected = []
     below_confidence = 0
@@ -1317,7 +1394,8 @@ def build_preview(
         key_paper_titles,
     )
     summary = {
-        "candidate_records_read": len(records),
+        "candidate_records_read": candidate_records_read,
+        "preprint_version_records_excluded": preprint_versions_excluded,
         "records_excluded_out_of_scope": excluded_out_of_scope,
         "records_excluded_task": excluded_task,
         "records_missing_institution": missing_institution,
@@ -1375,6 +1453,10 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
 def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print("Public preview export summary:")
     print(f"  Candidate records read: {summary['candidate_records_read']}")
+    print(
+        "  Preprint-version map records excluded in favor of formal publications: "
+        f"{summary['preprint_version_records_excluded']}"
+    )
     print(
         "  Records excluded as out of scope: "
         f"{summary['records_excluded_out_of_scope']}"
@@ -1550,6 +1632,10 @@ def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) ->
         f"{summary['paper_preview_records_exported']}"
     )
     print(
+        "  Preprint-only paper versions excluded in favor of formal publications: "
+        f"{summary['paper_preview_preprint_versions_excluded']}"
+    )
+    print(
         "  Paper preview records with map locations: "
         f"{summary['paper_preview_records_with_map_location']}"
     )
@@ -1646,6 +1732,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         confirmed_location_rows = load_confirmed_locations(
             args.institution_locations
         )
+        processed_cache_rows = load_institution_resolution_cache(
+            args.institution_resolution_cache
+        )
         (
             integrated_papers,
             integrated_maps,
@@ -1660,9 +1749,22 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             records,
             location_review_rows,
             confirmed_location_rows,
+            processed_cache_rows,
+        )
+        integrated_papers, curated_preprint_papers_excluded = (
+            exclude_preprint_versions(integrated_papers)
+        )
+        integrated_maps, curated_preprint_map_records_excluded = (
+            exclude_preprint_versions(integrated_maps)
         )
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
+        summary["preprint_version_records_excluded"] += (
+            curated_preprint_map_records_excluded
+        )
+        paper_summary["paper_preview_preprint_versions_excluded"] += (
+            curated_preprint_papers_excluded
+        )
 
         if (
             curated_summary.get("curated_markers_created", 0)

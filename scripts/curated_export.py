@@ -21,6 +21,7 @@ try:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
     )
+    from .country_normalization import normalize_country_region
     from .export_candidate_map_data import normalize_export_task_labels
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -38,6 +39,7 @@ except ImportError:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
     )
+    from country_normalization import normalize_country_region
     from export_candidate_map_data import normalize_export_task_labels
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -56,6 +58,9 @@ DEFAULT_CURATED_MAPPINGS_PATH = (
 )
 DEFAULT_LOCATION_REVIEW_PATH = (
     CURATED_DATA_DIR / "institution_location_review.csv"
+)
+DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH = Path(
+    "data/processed/institution_resolution_cache.json"
 )
 DEFAULT_CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 ACTIVE_MAPPING_STATUS = "active"
@@ -152,6 +157,30 @@ def load_location_review_queue(
     return _read_csv(path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
 
 
+def load_institution_resolution_cache(
+    path: Path = DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH,
+) -> List[Dict[str, Any]]:
+    if not path.exists():
+        return []
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except OSError as error:
+        raise CuratedExportError(f"could not read {path}: {error}") from error
+    except (UnicodeError, json.JSONDecodeError) as error:
+        raise CuratedExportError(f"invalid JSON in {path}: {error}") from error
+    records = payload.get("records") if isinstance(payload, dict) else None
+    if not isinstance(records, dict):
+        raise CuratedExportError(
+            f"{path} does not have the expected resolution-cache format"
+        )
+    return [
+        dict(record)
+        for record in records.values()
+        if isinstance(record, dict)
+    ]
+
+
 def save_location_review_queue(
     rows: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_LOCATION_REVIEW_PATH,
@@ -193,29 +222,26 @@ def normalize_institution(value: Any) -> str:
 def normalize_regional_location(
     record: Mapping[str, Any],
 ) -> Dict[str, Any]:
-    """Return a copy with canonical public fields for Taiwan locations."""
+    """Return a copy with canonical public country/region fields."""
     normalized = dict(record)
-    country = clean(record.get("country")).casefold()
-    country_code = clean(record.get("country_code")).upper()
-    region = clean(record.get("region")).casefold()
-    taiwan_names = {"taiwan", "taiwan, china"}
-    if (
-        country in taiwan_names
-        or region == "taiwan, china"
-        or (
-            country == "china"
-            and country_code == "CN"
-            and region == "taiwan"
+    normalized.update(
+        normalize_country_region(
+            record.get("country"),
+            record.get("country_code"),
+            record.get("region"),
+            record.get("region_code"),
+            (
+                record.get("raw_country")
+                if "raw_country" in record
+                else None
+            ),
+            (
+                record.get("raw_country_code")
+                if "raw_country_code" in record
+                else None
+            ),
         )
-    ):
-        normalized.update(
-            {
-                "country": "China",
-                "country_code": "CN",
-                "region": "Taiwan",
-                "region_code": "TW",
-            }
-        )
+    )
     return normalized
 
 
@@ -334,13 +360,74 @@ def _unique_location(
     return CoordinateMatch("ambiguous", None)
 
 
+def _processed_cache_location_groups(
+    records: Iterable[Mapping[str, Any]],
+) -> Dict[str, List[Dict[str, Any]]]:
+    grouped: Dict[str, List[Dict[str, Any]]] = {}
+    for record in records:
+        if (
+            clean(record.get("status")).casefold() != "resolved"
+            or clean(record.get("record_status")).casefold()
+            not in {"", "active"}
+            or clean(record.get("provider")).casefold()
+            not in {"ror", "openalex"}
+        ):
+            continue
+        location = {
+            "institution": clean(record.get("resolved_institution_name")),
+            "city": clean(record.get("resolved_city")),
+            "country": next(
+                (
+                    clean(value)
+                    for value in record.get("country_variants", [])
+                    if len(clean(value)) != 2
+                ),
+                clean(record.get("resolved_country")),
+            ),
+            "country_code": next(
+                (
+                    clean(value).upper()
+                    for value in record.get("country_variants", [])
+                    if len(clean(value)) == 2
+                ),
+                clean(record.get("resolved_country")).upper(),
+            ),
+            "latitude": record.get("resolved_latitude"),
+            "longitude": record.get("resolved_longitude"),
+            "coordinate_source": (
+                "data/processed/institution_resolution_cache.json"
+            ),
+            "coordinate_source_url": clean(record.get("source_url")),
+            "_location_resolution_source": "processed_cache_fallback",
+        }
+        if not _valid_coordinates(location):
+            continue
+        names = [
+            record.get("resolved_institution_name"),
+            *(
+                record.get("match_names")
+                if isinstance(record.get("match_names"), list)
+                else []
+            ),
+        ]
+        for name in names:
+            institution = normalize_institution(name)
+            if institution:
+                grouped.setdefault(institution, []).append(location)
+    return grouped
+
+
 def match_institutions_to_known_coordinates(
     public_map_records: Sequence[Mapping[str, Any]],
     candidate_map_records: Sequence[Mapping[str, Any]] = (),
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
+    processed_cache_records: Sequence[Mapping[str, Any]] = (),
 ) -> Dict[str, CoordinateMatch]:
     confirmed_groups = _location_groups(
         confirmed_location_records, require_safe_candidate=False
+    )
+    processed_cache_groups = _processed_cache_location_groups(
+        processed_cache_records
     )
     public_groups = _location_groups(
         public_map_records, require_safe_candidate=False
@@ -350,11 +437,18 @@ def match_institutions_to_known_coordinates(
     )
     matches: Dict[str, CoordinateMatch] = {}
     for institution in (
-        set(confirmed_groups) | set(public_groups) | set(candidate_groups)
+        set(confirmed_groups)
+        | set(processed_cache_groups)
+        | set(public_groups)
+        | set(candidate_groups)
     ):
         if institution in confirmed_groups:
             matches[institution] = _unique_location(
                 confirmed_groups[institution]
+            )
+        elif institution in processed_cache_groups:
+            matches[institution] = _unique_location(
+                processed_cache_groups[institution]
             )
         elif institution in public_groups:
             matches[institution] = _unique_location(public_groups[institution])
@@ -590,6 +684,17 @@ def _curated_marker(
         or paper.get("primary_url")
         or paper.get("openalex_url")
     )
+    cache_fallback = (
+        clean(location.get("_location_resolution_source"))
+        == "processed_cache_fallback"
+    )
+    notes = _mapping_note(mapping)
+    if cache_fallback:
+        fallback_note = (
+            "Coordinates applied from processed "
+            "institution_resolution_cache fallback"
+        )
+        notes = f"{notes} | {fallback_note}" if notes else fallback_note
     return normalize_regional_location({
         "id": _marker_id(paper, mapping),
         "paper_id": clean(paper.get("paper_id")),
@@ -650,11 +755,13 @@ def _curated_marker(
         "resolution_method": (
             "curated_confirmed_location"
             if clean(location.get("location_id"))
+            else "processed_institution_resolution_cache_fallback"
+            if cache_fallback
             else "curated_mapping_existing_location"
         ),
         "resolution_confidence": "high",
         "needs_review": False,
-        "notes": _mapping_note(mapping),
+        "notes": notes,
     })
 
 
@@ -764,6 +871,7 @@ def build_curated_map_records(
     exclusion_rows: Sequence[Mapping[str, Any]] = (),
     location_review_rows: List[Dict[str, str]] | None = None,
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
+    processed_cache_records: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     paper_index = _paper_index(paper_records)
     exclusion_index = build_active_exclusion_index(exclusion_rows)
@@ -771,6 +879,7 @@ def build_curated_map_records(
         public_map_records,
         candidate_map_records,
         confirmed_location_records,
+        processed_cache_records,
     )
     review_rows = location_review_rows if location_review_rows is not None else []
     markers = []
@@ -972,6 +1081,7 @@ def integrate_curated_records(
     candidate_map_records: Sequence[Mapping[str, Any]] = (),
     location_review_rows: Sequence[Mapping[str, Any]] = (),
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
+    processed_cache_records: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[
     List[Dict[str, Any]],
     List[Dict[str, Any]],
@@ -1032,6 +1142,7 @@ def integrate_curated_records(
         exclusion_rows,
         reviews,
         confirmed_location_records,
+        processed_cache_records,
     )
     replaced_markers = 0
     for marker in marker_records:

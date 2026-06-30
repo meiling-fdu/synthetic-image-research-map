@@ -60,7 +60,7 @@ The local admin browser provides paper search, filters, metadata inspection, ass
 
 Maintainers can also use the local browser's **Delete / Scope Review** workflow to record durable exclusions for out-of-scope papers. Decisions are stored in `data/curated/paper_exclusions.csv`; the public-preview exporter applies active exclusions without modifying OpenAlex-derived processed CSV files. The deployed public site remains read-only.
 
-The public-preview exporter merges eligible curated papers into the searchable paper list and turns active curated mappings into markers only when an exact institution match has one unique valid location. Confirmed records in `data/curated/institution_locations.csv` have location priority; missing or ambiguous locations remain marker-free and enter the curated location-review queue. Header-only curated files leave preview output unchanged.
+The public-preview exporter merges eligible curated papers into the searchable paper list and turns active curated mappings into markers only when an exact institution match has one unique valid location. Confirmed records in `data/curated/institution_locations.csv` have location priority; when none exists, trusted active entries in `data/processed/institution_resolution_cache.json` may supply a clearly noted fallback without modifying the curated CSV. Missing or ambiguous locations remain marker-free and enter the curated location-review queue. Header-only curated files leave preview output unchanged.
 
 ## Data collection prototype
 
@@ -100,7 +100,7 @@ Search for additional arXiv versions and write a separate manual-review table:
 python3 scripts/enrich_papers_arxiv.py --limit 50
 ```
 
-The script reuses existing valid arXiv identifiers before querying arXiv, resumes from `data/manual/paper_arxiv_links.csv`, and never changes candidate data. A `not_found_in_arxiv` result means only that this step did not record or find a version, not that none exists.
+The script reuses existing valid arXiv identifiers and strong local formal/preprint pairs before querying arXiv, resumes from `data/manual/paper_arxiv_links.csv`, and writes match evidence and review-only candidates to `data/manual/arxiv_link_enrichment_report.csv`. It never changes candidate data. A `not_found_in_arxiv` result means only that this step did not record or find a version, not that none exists.
 
 ### Key paper coverage audit
 

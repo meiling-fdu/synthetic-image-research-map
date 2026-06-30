@@ -147,7 +147,7 @@ arXiv status is detected from OpenAlex arXiv identifiers, `10.48550/arXiv.*` DOI
 
 ### Offline arXiv-version enrichment
 
-Run `python3 scripts/enrich_papers_arxiv.py` to create the separate manual-review table `data/manual/paper_arxiv_links.csv`. The script does not call OpenAlex. It first reuses valid arXiv identifiers already present in candidate metadata or `key_papers_enriched.csv`; only papers without a known identifier are searched through the arXiv Atom API by normalized title.
+Run `python3 scripts/enrich_papers_arxiv.py` to create the separate manual-review table `data/manual/paper_arxiv_links.csv` and its audit report `data/manual/arxiv_link_enrichment_report.csv`. The script does not call OpenAlex. It first reuses valid arXiv identifiers already present in candidate metadata or `key_papers_enriched.csv`, then matches formal and preprint rows already present in the local candidate database. A local match is filled only when the normalized titles are equal, author overlap is at least `0.80`, and the best arXiv ID is unique. Lower-overlap and ambiguous candidates are report-only. Only papers without a known identifier are searched through the arXiv Atom API; exact DOI matches or normalized-title matches with high author overlap may be linked automatically, while title-only matches require review.
 
 This CSV is a partial, resumable enrichment table: `not_searched` rows have not yet been queried, while `not_found_in_arxiv` records only that the current query returned no result. Neither status proves absence. "Without known arXiv version" means only that no arXiv ID or URL is currently known in project data.
 
@@ -526,7 +526,7 @@ Duplicate active mappings are blocked when the paper identity, institution, and 
 
 Paper-level publication does not require coordinates. A curated paper with no mappings receives `missing_affiliation`; a paper with mappings but no coordinate-bearing institution receives `missing_coordinates`. Its mapping evidence remains attached to the paper record, while no marker is fabricated.
 
-Active curated mappings produce markers only after an exact normalized institution-name match resolves to one unique valid location. The exporter first uses maintainer-confirmed records in `data/curated/institution_locations.csv`, then the current public map's validated locations, then medium/high-confidence, non-review candidate-map locations. Ambiguous exact-name matches are deliberately unresolved. A marker using a confirmed curated location carries `resolution_method=curated_confirmed_location`; other exact known matches use `curated_mapping_existing_location`. Each marker preserves the confirmed institution-author correspondence and evidence provenance and replaces only an automatic marker for the same paper and institution.
+Active curated mappings produce markers only after an exact normalized institution-name match resolves to one unique valid location. The shared resolver first uses maintainer-confirmed records in `data/curated/institution_locations.csv`, then trusted active authoritative entries in `data/processed/institution_resolution_cache.json`, then the current public map's validated locations, and finally medium/high-confidence, non-review candidate-map locations. Ambiguous exact-name matches are deliberately unresolved. A marker using a confirmed curated location carries `resolution_method=curated_confirmed_location`; a processed-cache fallback carries `resolution_method=processed_institution_resolution_cache_fallback` plus an explicit marker note, and is not promoted into the curated CSV. Other exact known matches use `curated_mapping_existing_location`. Each marker preserves the confirmed institution-author correspondence and evidence provenance and replaces only an automatic marker for the same paper and institution.
 
 Active mappings without a unique valid location are added or updated in `data/curated/institution_location_review.csv`. Missing matches use `location_status=missing` and `coordinate_status=missing`; ambiguous matches use `needs_coordinate_review` and `ambiguous`. Existing review notes and creation timestamps are preserved, and repeated mappings for the same paper and institution do not create duplicate queue items. When a previously queued institution gains an exact known location, its queue status is updated to `known`.
 
@@ -607,6 +607,15 @@ The admin browser refreshes its local list immediately but deliberately does not
 ## Public Preview Export
 
 `scripts/export_public_preview.py` filters the local map-ready candidate JSON into `web/data/public_preview_map_data.json` for optional publication through GitHub Pages, then merges eligible maintainer-confirmed curated records. It also writes `web/data/public_preview_papers.json`, a paper-level public preview list that includes in-scope candidate/key/curated papers even when affiliation or coordinate data is incomplete. The map JSON remains strict: only records with usable institution coordinates can become markers. The paper JSON carries transparent coverage fields such as `has_map_location`, `map_record_count`, `missing_affiliation`, `missing_coordinates`, `needs_review`, and `coverage_status` so incomplete papers can be searched and reviewed without fabricating locations. Provenance fields distinguish automatic candidate metadata from curated records.
+
+During export, titles are normalized case-insensitively with punctuation and
+hyphen differences collapsed. When records with the same normalized title
+include both an arXiv/preprint-only version and a record with a non-arXiv DOI
+or non-preprint venue, the formal publication is retained and the preprint-only
+record is omitted from both the paper list and map output. The formal record's
+DOI, authorship, affiliations, countries, and marker data are not replaced by
+the preprint metadata. Standalone preprints remain eligible when no formal
+publication record is present.
 
 By default, the exporter publishes all eligible records, requires `in_scope=true`, requires a main task of `detection`, `source_attribution`, or `detection_and_source_attribution`, requires `resolution_confidence` of `medium` or `high`, and excludes every record marked `needs_review=true`. It also requires a non-placeholder institution name and a finite latitude/longitude pair within geographic bounds, because every public record must represent a mapped institution. `--include-uncertain` and `--include-missing-location` can relax task or location checks for local debugging; unsupported legacy or generic-attribution labels remain excluded. The exporter keeps only fields needed by the public map and never copies raw responses or caches.
 
