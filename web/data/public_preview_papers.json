@@ -24208,59 +24208,6 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
-    },
-    {
-      "title": "Microscopy cell counting and detection with fully convolutional regression networks",
-      "in_scope": true,
-      "year": 2016,
-      "publication_year": 2016,
-      "publication_date": "2016-05-02",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "Computer Methods in Biomechanics and Biomedical Engineering Imaging & Visualization",
-      "venue_name": "Computer Methods in Biomechanics and Biomedical Engineering Imaging & Visualization",
-      "venue_type": "journal",
-      "publisher": "Taylor & Francis",
-      "publication_type": "article",
-      "abstract": "This paper concerns automated cell counting and detection in microscopy images. The approach we take is to use convolutional neural networks (CNNs) to regress a cell spatial density map across the image. This is applicable to situations where traditional single-cell segmentation-based methods do not work well due to cell clumping or overlaps. We make the following contributions: (i) we develop and compare architectures for two fully convolutional regression networks (FCRNs) for this task; (ii) since the networks are fully convolutional, they can predict a density map for an input image of arbitrary size, and we exploit this to improve efficiency by end-to-end training on image patches; (iii) we show that FCRNs trained entirely on synthetic data are able to give excellent predictions on microscopy images from real biological experiments without fine-tuning, and that the performance can be further improved by fine-tuning on these real images. Finally, (iv) by inverting feature representations, we show to what extent the information from an input image has been encoded by feature responses in different layers. We set a new state-of-the-art performance for cell counting on standard synthetic image benchmarks and show that the FCRNs trained entirely with synthetic data can generalise well to real microscopy images both for cell counting and detections for the case of overlapping cells.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.1080/21681163.2016.1149104",
-      "arxiv_id": "",
-      "arxiv_url": "",
-      "arxiv_year": null,
-      "has_arxiv_version": false,
-      "paper_url": "https://doi.org/10.1080/21681163.2016.1149104",
-      "primary_url": "https://doi.org/10.1080/21681163.2016.1149104",
-      "landing_page_url": "https://doi.org/10.1080/21681163.2016.1149104",
-      "openalex_url": "https://openalex.org/W2347064614",
-      "is_arxiv_preprint": false,
-      "url": "https://doi.org/10.1080/21681163.2016.1149104",
-      "authors": [
-        "Weidi Xie",
-        "J. Alison Noble",
-        "Andrew Zisserman"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Oxford"
-      ],
-      "aggregated_country_names": [
-        "GB"
-      ],
-      "aggregated_country_codes": [
-        "GB"
-      ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
     }
   ]
 }
