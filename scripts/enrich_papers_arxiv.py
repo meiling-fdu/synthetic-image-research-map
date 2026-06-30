@@ -29,6 +29,7 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "data" / "processed" / "openalex_candidate_papers.csv"
 DEFAULT_OUTPUT = ROOT / "data" / "manual" / "paper_arxiv_links.csv"
+DEFAULT_REPORT = ROOT / "data" / "manual" / "arxiv_link_enrichment_report.csv"
 DEFAULT_KEY_PAPERS = ROOT / "data" / "manual" / "key_papers_enriched.csv"
 DEFAULT_PUBLIC_PREVIEW = ROOT / "web" / "data" / "public_preview_map_data.json"
 ARXIV_API_URL = "https://export.arxiv.org/api/query"
@@ -53,6 +54,17 @@ OUTPUT_COLUMNS = (
     "source",
     "manual_review",
 )
+REPORT_COLUMNS = (
+    "paper_id",
+    "title",
+    "existing_doi",
+    "matched_arxiv_id",
+    "arxiv_url",
+    "match_basis",
+    "confidence",
+    "action",
+    "note",
+)
 COMPLETED_STATUSES = {
     "linked_to_arxiv",
     "possible_arxiv_match",
@@ -70,6 +82,7 @@ ENRICHMENT_COLUMNS = (
     "manual_review",
 )
 ATOM = "{http://www.w3.org/2005/Atom}"
+ARXIV = "{http://arxiv.org/schemas/atom}"
 MODERN_ARXIV_RE = re.compile(r"^\d{4}\.\d{4,5}(?:v\d+)?$", re.IGNORECASE)
 LEGACY_ARXIV_RE = re.compile(
     r"^[a-z-]+(?:\.[a-z-]+)?/\d{7}(?:v\d+)?$", re.IGNORECASE
@@ -82,6 +95,7 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--limit", type=positive_int)
     parser.add_argument(
         "--max-new-queries",
@@ -228,6 +242,22 @@ def author_overlap(left: Iterable[str], right: Iterable[str]) -> Optional[float]
     return len(left_keys & right_keys) / len(left_keys | right_keys)
 
 
+def titles_match_exactly(left: object, right: object) -> bool:
+    return clean(left).casefold() == clean(right).casefold()
+
+
+def is_formal_publication(row: Dict[str, str]) -> bool:
+    doi = normalize_doi(row.get("doi"))
+    venue = clean(row.get("venue_name") or row.get("venue")).casefold()
+    return bool(
+        (doi and not doi.startswith("10.48550/arxiv."))
+        or (
+            venue
+            and not re.search(r"\b(?:arxiv|pre[\s-]?print)\b", venue)
+        )
+    )
+
+
 def row_key(row: Dict[str, str]) -> Tuple[str, str, str]:
     doi = normalize_doi(row.get("doi"))
     openalex = normalize_openalex(row.get("openalex_url") or row.get("openalex_id"))
@@ -305,9 +335,32 @@ def atomic_write(
                 handle,
                 fieldnames=OUTPUT_COLUMNS,
                 extrasaction="ignore",
+                lineterminator="\n",
             )
             writer.writeheader()
             writer.writerows(output_rows)
+            temporary = Path(handle.name)
+        temporary.replace(path)
+    finally:
+        if temporary is not None and temporary.exists():
+            temporary.unlink()
+
+
+def atomic_write_report(path: Path, rows: Iterable[Dict[str, str]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary: Optional[Path] = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            "w", encoding="utf-8", newline="", dir=path.parent, delete=False
+        ) as handle:
+            writer = csv.DictWriter(
+                handle,
+                fieldnames=REPORT_COLUMNS,
+                extrasaction="ignore",
+                lineterminator="\n",
+            )
+            writer.writeheader()
+            writer.writerows(rows)
             temporary = Path(handle.name)
         temporary.replace(path)
     finally:
@@ -372,6 +425,7 @@ def query_arxiv(title: str) -> List[Dict[str, object]]:
                 if clean(author.findtext(f"{ATOM}name"))
             ],
             "arxiv_id": arxiv_id,
+            "doi": normalize_doi(entry.findtext(f"{ARXIV}doi")),
         })
     return candidates
 
@@ -395,24 +449,49 @@ def score_candidate(
 
 
 def classify_match(
-    title: str, authors: List[str], candidates: List[Dict[str, object]]
+    title: str,
+    authors: List[str],
+    candidates: List[Dict[str, object]],
+    doi: str = "",
 ) -> Tuple[str, str, str, float, Optional[float]]:
     ranked = []
     for candidate in candidates:
         similarity, overlap = score_candidate(title, authors, candidate)
-        ranked.append((similarity, overlap if overlap is not None else -1.0, candidate, overlap))
+        doi_match = bool(
+            normalize_doi(doi)
+            and normalize_doi(candidate.get("doi")) == normalize_doi(doi)
+        )
+        ranked.append(
+            (
+                doi_match,
+                similarity,
+                overlap if overlap is not None else -1.0,
+                candidate,
+                overlap,
+            )
+        )
     if not ranked:
         return "not_found_in_arxiv", "No arXiv results were returned.", "", 0.0, None
-    similarity, _, best, overlap = max(ranked, key=lambda item: (item[0], item[1]))
+    doi_match, similarity, _, best, overlap = max(
+        ranked, key=lambda item: (item[0], item[1], item[2])
+    )
     arxiv_id = str(best["arxiv_id"])
     year_note = arxiv_year(arxiv_id) or "unknown"
-    if similarity >= 0.97 or (similarity >= 0.90 and overlap is not None and overlap >= 0.30):
+    normalized_titles_equal = normalize_title(title) == normalize_title(best["title"])
+    if doi_match:
         status = "linked_to_arxiv"
-        reason = f"Strong title match; arXiv year {year_note} is diagnostic only."
+        reason = f"Exact DOI match; arXiv year {year_note} is diagnostic only."
+    elif normalized_titles_equal and overlap is not None and overlap >= 0.80:
+        status = "linked_to_arxiv"
+        reason = (
+            "Normalized title match with high author overlap; "
+            f"arXiv year {year_note} is diagnostic only."
+        )
     elif similarity >= 0.78:
         status = "possible_arxiv_match"
         reason = (
-            "Plausible title match without sufficient author support; "
+            "Plausible title match without exact DOI plus sufficient title/author "
+            "support; "
             f"arXiv year {year_note} is diagnostic only."
         )
     else:
@@ -424,6 +503,185 @@ def classify_match(
             overlap,
         )
     return status, reason, arxiv_id, similarity, overlap
+
+
+def paper_id(row: Dict[str, str]) -> str:
+    openalex = clean(row.get("openalex_url") or row.get("openalex_id"))
+    return openalex.rstrip("/").rsplit("/", 1)[-1] if openalex else ""
+
+
+def local_preprint_enrichment(
+    rows: Sequence[Dict[str, str]],
+    outputs: Sequence[Dict[str, str]],
+) -> Tuple[List[Dict[str, str]], Counter]:
+    """Link formal rows to strong same-paper preprint rows already in the database."""
+    preprints_by_title: Dict[str, List[Tuple[Dict[str, str], str]]] = {}
+    for row in rows:
+        arxiv_id = extract_arxiv_id(
+            row.get("arxiv_id"),
+            row.get("arxiv_url"),
+            row.get("doi"),
+            row.get("primary_url"),
+            row.get("landing_page_url"),
+            row.get("url"),
+        )
+        title_key = normalize_title(row.get("title"))
+        if arxiv_id and title_key:
+            preprints_by_title.setdefault(title_key, []).append((row, arxiv_id))
+
+    report_rows: List[Dict[str, str]] = []
+    counts = Counter()
+    for row, output in zip(rows, outputs):
+        title_key = normalize_title(row.get("title"))
+        direct_arxiv_id = extract_arxiv_id(
+            row.get("arxiv_id"),
+            row.get("arxiv_url"),
+            row.get("doi"),
+            row.get("primary_url"),
+            row.get("landing_page_url"),
+            row.get("url"),
+        )
+        if not is_formal_publication(row) or direct_arxiv_id or not title_key:
+            continue
+        candidates = preprints_by_title.get(title_key, [])
+        if not candidates:
+            continue
+
+        formal_authors = parse_authors(
+            row.get("authors_ordered") or row.get("authors")
+        )
+        scored = []
+        for candidate, arxiv_id in candidates:
+            overlap = author_overlap(
+                formal_authors,
+                parse_authors(
+                    candidate.get("authors_ordered") or candidate.get("authors")
+                ),
+            )
+            scored.append(
+                (
+                    overlap if overlap is not None else -1.0,
+                    candidate,
+                    arxiv_id,
+                    overlap,
+                )
+            )
+        scored.sort(key=lambda item: item[0], reverse=True)
+        _, best_candidate, best_arxiv_id, overlap = scored[0]
+        top_ids = {
+            re.sub(r"v\d+$", "", candidate_id, flags=re.IGNORECASE).casefold()
+            for score, _candidate, candidate_id, _overlap in scored
+            if score == scored[0][0]
+        }
+        basis = (
+            "exact_title_author"
+            if titles_match_exactly(row.get("title"), best_candidate.get("title"))
+            else "normalized_title_author"
+        )
+        strong = overlap is not None and overlap >= 0.80 and len(top_ids) == 1
+        current_id = extract_arxiv_id(
+            output.get("arxiv_id"), output.get("arxiv_url")
+        )
+        if strong and not current_id:
+            set_match(
+                output,
+                best_arxiv_id,
+                "linked_to_arxiv",
+                1.0,
+                overlap,
+                "Matched a local preprint record by normalized title and high "
+                "author overlap; formal publication metadata was preserved.",
+                "local_candidate_pair",
+            )
+            action = "filled"
+            confidence = "high"
+            note = (
+                f"Author overlap {overlap:.3f}; unique local arXiv candidate."
+            )
+        elif strong and arxiv_values_equivalent(current_id, best_arxiv_id):
+            confidence = "high"
+            if clean(output.get("source")).casefold() == "local_candidate_pair":
+                action = "filled"
+                note = (
+                    f"Filled by local enrichment; author overlap {overlap:.3f} "
+                    "confirms the unique preprint pair."
+                )
+            else:
+                action = "skipped"
+                note = (
+                    f"Already linked; author overlap {overlap:.3f} confirms the "
+                    "local preprint pair."
+                )
+        else:
+            action = "needs_review"
+            confidence = "medium" if overlap is not None and overlap >= 0.50 else "low"
+            note = (
+                f"Author overlap {overlap:.3f}; automatic threshold is 0.800."
+                if overlap is not None
+                else "Author evidence is unavailable."
+            )
+            if len(top_ids) != 1:
+                note += " Multiple equally ranked arXiv IDs require review."
+        counts[action] += 1
+        report_rows.append(
+            {
+                "paper_id": paper_id(row),
+                "title": clean(row.get("title")),
+                "existing_doi": normalize_doi(row.get("doi")),
+                "matched_arxiv_id": best_arxiv_id,
+                "arxiv_url": f"https://arxiv.org/abs/{best_arxiv_id}",
+                "match_basis": basis,
+                "confidence": confidence,
+                "action": action,
+                "note": note,
+            }
+        )
+    return report_rows, counts
+
+
+def append_cached_review_candidates(
+    outputs: Sequence[Dict[str, str]],
+    report_rows: List[Dict[str, str]],
+) -> None:
+    """Keep unresolved API suggestions visible in the consolidated report."""
+    reported = {
+        (row.get("paper_id", ""), row.get("matched_arxiv_id", ""))
+        for row in report_rows
+    }
+    for output in outputs:
+        if clean(output.get("match_status")).casefold() != "possible_arxiv_match":
+            continue
+        arxiv_id = extract_arxiv_id(
+            output.get("arxiv_id"), output.get("arxiv_url")
+        )
+        key = (paper_id(output), arxiv_id)
+        if not arxiv_id or key in reported:
+            continue
+        try:
+            overlap = float(clean(output.get("author_overlap")))
+        except ValueError:
+            overlap = 0.0
+        report_rows.append(
+            {
+                "paper_id": key[0],
+                "title": clean(output.get("title")),
+                "existing_doi": normalize_doi(output.get("doi")),
+                "matched_arxiv_id": arxiv_id,
+                "arxiv_url": f"https://arxiv.org/abs/{arxiv_id}",
+                "match_basis": "normalized_title_author",
+                "confidence": "medium" if overlap >= 0.80 else "low",
+                "action": "needs_review",
+                "note": clean(output.get("match_reason"))
+                or "Cached arXiv API candidate requires manual confirmation.",
+            }
+        )
+        reported.add(key)
+
+
+def arxiv_values_equivalent(left: object, right: object) -> bool:
+    left_id = re.sub(r"v\d+$", "", extract_arxiv_id(left), flags=re.IGNORECASE)
+    right_id = re.sub(r"v\d+$", "", extract_arxiv_id(right), flags=re.IGNORECASE)
+    return bool(left_id and right_id and left_id.casefold() == right_id.casefold())
 
 
 def base_output_row(row: Dict[str, str]) -> Dict[str, str]:
@@ -556,6 +814,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         merge_cached_enrichment(output, find_indexed(resume, output))
         outputs.append(output)
 
+    report_rows, local_counts = local_preprint_enrichment(rows, outputs)
+    append_cached_review_candidates(outputs, report_rows)
     known = build_known_arxiv_index(DEFAULT_KEY_PAPERS)
     counts = Counter(
         rows_read=len(rows),
@@ -649,7 +909,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     break
                 raise
             status, reason, arxiv_id, similarity, overlap = classify_match(
-                output["title"], parse_authors(output["authors"]), candidates
+                output["title"],
+                parse_authors(output["authors"]),
+                candidates,
+                output["doi"],
             )
             set_match(
                 output,
@@ -660,7 +923,47 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 reason,
                 "arxiv_api",
             )
+            if arxiv_id:
+                matched_candidate = next(
+                    (
+                        candidate
+                        for candidate in candidates
+                        if str(candidate.get("arxiv_id")) == arxiv_id
+                    ),
+                    {},
+                )
+                doi_match = bool(
+                    normalize_doi(output["doi"])
+                    and normalize_doi(matched_candidate.get("doi"))
+                    == normalize_doi(output["doi"])
+                )
+                if doi_match:
+                    match_basis = "doi"
+                elif titles_match_exactly(
+                    output["title"], matched_candidate.get("title")
+                ):
+                    match_basis = "exact_title_author"
+                else:
+                    match_basis = "normalized_title_author"
+                report_rows.append(
+                    {
+                        "paper_id": paper_id(output),
+                        "title": output["title"],
+                        "existing_doi": output["doi"],
+                        "matched_arxiv_id": arxiv_id,
+                        "arxiv_url": f"https://arxiv.org/abs/{arxiv_id}",
+                        "match_basis": match_basis,
+                        "confidence": "high" if status == "linked_to_arxiv" else "medium",
+                        "action": (
+                            "filled"
+                            if status == "linked_to_arxiv"
+                            else "needs_review"
+                        ),
+                        "note": reason,
+                    }
+                )
             atomic_write(args.output, outputs, len(rows))
+            atomic_write_report(args.report, report_rows)
             if args.sleep_seconds:
                 time.sleep(args.sleep_seconds)
     except KeyboardInterrupt:
@@ -678,6 +981,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         batch_limit_reached = True
     try:
         atomic_write(args.output, outputs, len(rows))
+        atomic_write_report(args.report, report_rows)
     except (OSError, RuntimeError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1
@@ -694,6 +998,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         f"{counts['scoped_not_searched_eligible']}"
     )
     print(f"Queried: {counts['queried']}")
+    print(f"Local preprint links filled: {local_counts['filled']}")
+    report_counts = Counter(row.get("action", "") for row in report_rows)
+    print(f"Candidates needing review: {report_counts['needs_review']}")
+    print(f"Local preprint links already present: {local_counts['skipped']}")
     print(
         "Max new queries: "
         f"{args.max_new_queries if args.max_new_queries is not None else 'unlimited'}"
@@ -706,6 +1014,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     ):
         print(f"{status}: {final_counts[status]}")
     print(f"Output: {args.output}")
+    print(f"Report: {args.report}")
     if batch_limit_reached:
         print("Batch limit reached; partial results were saved.")
     if rate_limit_stopped:

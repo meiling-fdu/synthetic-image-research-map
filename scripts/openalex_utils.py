@@ -6,6 +6,7 @@ from __future__ import annotations
 import json
 import re
 import time
+import unicodedata
 from difflib import SequenceMatcher
 from typing import Any, Dict, Optional
 from urllib.error import HTTPError, URLError
@@ -96,10 +97,29 @@ def abstract_from_inverted_index(inverted_index: Any) -> str:
 
 
 def normalize_title(value: Any) -> str:
-    normalized = re.sub(r"[^\w]+", " ", str(value or "").casefold())
-    return " ".join(normalized.replace("_", " ").split())
+    """Normalize harmless typography differences before comparing titles."""
+    normalized = unicodedata.normalize("NFKC", str(value or "")).casefold()
+    normalized = normalized.translate(
+        str.maketrans(
+            {
+                "\u2010": "-",
+                "\u2011": "-",
+                "\u2012": "-",
+                "\u2013": "-",
+                "\u2014": "-",
+                "\u2212": "-",
+                "\u2018": "'",
+                "\u2019": "'",
+                "\u201c": '"',
+                "\u201d": '"',
+            }
+        )
+    )
+    # Treat hyphenated compounds (notably "real-world") like spaced words.
+    normalized = re.sub(r"[-_]+", " ", normalized)
+    normalized = re.sub(r"[^\w]+", " ", normalized, flags=re.UNICODE)
+    return " ".join(normalized.split()).rstrip(" .,:;!?")
 
 
 def title_similarity(left: Any, right: Any) -> float:
     return SequenceMatcher(None, normalize_title(left), normalize_title(right)).ratio()
-
