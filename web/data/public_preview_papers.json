@@ -1522,7 +1522,7 @@
       "publication_year": 2026,
       "publication_date": "",
       "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
+      "subtask": "source_identification",
       "entry_type": "method",
       "venue": "Zenodo (CERN European Organization for Nuclear Research)",
       "venue_name": "Zenodo (CERN European Organization for Nuclear Research)",
@@ -2546,10 +2546,10 @@
       "url": "https://openalex.org/W7117078863",
       "authors": [],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -2560,13 +2560,17 @@
       ],
       "aggregated_country_names": [
         "Canada",
-        "Norway"
+        "Norway",
+        "United Arab Emirates"
       ],
       "aggregated_country_codes": [
+        "AE",
         "CA",
         "NO"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Abu Dhabi"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -9933,7 +9937,9 @@
       "aggregated_country_codes": [
         "CN"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Shaanxi"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -17101,7 +17107,9 @@
         "CN",
         "GB"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Shaanxi"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
