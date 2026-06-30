@@ -174,6 +174,39 @@ def normalized_doi(value: Any) -> str:
     ).casefold()
 
 
+def normalized_title(value: Any) -> str:
+    normalized = re.sub(r"[^\w]+", " ", normalized_text(value))
+    return " ".join(normalized.replace("_", " ").split())
+
+
+def has_formal_publication_evidence(record: Dict[str, Any]) -> bool:
+    venue = normalized_text(record.get("venue") or record.get("venue_name"))
+    doi = normalized_doi(record.get("doi"))
+    return bool(
+        (doi and not doi.startswith("10.48550/arxiv."))
+        or (
+            venue
+            and not re.search(r"\b(?:arxiv|pre[\s-]?print)\b", venue)
+        )
+    )
+
+
+def is_preprint_only_record(record: Dict[str, Any]) -> bool:
+    venue = normalized_text(record.get("venue") or record.get("venue_name"))
+    publication_type = normalized_text(record.get("publication_type"))
+    doi = normalized_doi(record.get("doi"))
+    return not has_formal_publication_evidence(record) and bool(
+        parse_boolean(record.get("is_arxiv_preprint")) is True
+        or publication_type in {"preprint", "posted-content"}
+        or re.search(r"\b(?:arxiv|pre[\s-]?print)\b", venue)
+        or doi.startswith("10.48550/arxiv.")
+    )
+
+
+def is_formal_publication(record: Dict[str, Any]) -> bool:
+    return has_formal_publication_evidence(record)
+
+
 def paper_identity(record: Dict[str, Any]) -> Tuple[str, ...]:
     openalex_url = normalized_text(record.get("openalex_url")).rstrip("/")
     if openalex_url and not is_missing_value(openalex_url):
@@ -192,6 +225,34 @@ def paper_identity(record: Dict[str, Any]) -> Tuple[str, ...]:
     ).strip()
     year = clean_text(record.get("publication_year") or record.get("year"))
     return "title_year", title, year
+
+
+def validate_preprint_version_duplicates(
+    records: Sequence[Any],
+    issues: List[Issue],
+) -> None:
+    """Reject preprint/formal pairs that would render as duplicate papers."""
+    by_title: Dict[str, List[Tuple[int, Dict[str, Any]]]] = {}
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            continue
+        title_key = normalized_title(record.get("title"))
+        if title_key:
+            by_title.setdefault(title_key, []).append((index, record))
+
+    for title_records in by_title.values():
+        if not any(is_formal_publication(record) for _, record in title_records):
+            continue
+        for index, record in title_records:
+            if is_preprint_only_record(record):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    index,
+                    record_title(record),
+                    "preprint version duplicates a formal publication with the "
+                    "same normalized title",
+                )
 
 
 def add_issue(
@@ -565,9 +626,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     issues: List[Issue] = []
     for index, record in enumerate(records):
         validate_record(index, record, issues)
+    validate_preprint_version_duplicates(records, issues)
     paper_issues: List[Issue] = []
     for index, record in enumerate(paper_records):
         validate_paper_record(index, record, paper_issues)
+    validate_preprint_version_duplicates(paper_records, paper_issues)
 
     print_summary(args.input, records, issues)
     print()

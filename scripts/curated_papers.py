@@ -114,14 +114,14 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         )
 
     source_database = clean(draft.get("source_database")).casefold()
-    if source_database not in {"openalex", "manual"}:
-        raise CuratedPaperError("source_database must be openalex or manual")
-    metadata_source = (
-        "openalex" if source_database == "openalex" else "manual"
-    )
+    if source_database not in {"openalex", "arxiv", "manual"}:
+        raise CuratedPaperError(
+            "source_database must be openalex, arxiv, or manual"
+        )
+    metadata_source = source_database
     curation_status = (
         "manually_confirmed"
-        if source_database == "openalex"
+        if source_database in {"openalex", "arxiv"}
         else "manually_added"
     )
     if curation_status not in ALLOWED_CURATION_STATUSES:

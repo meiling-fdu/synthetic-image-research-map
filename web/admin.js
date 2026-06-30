@@ -36,6 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "openalex-results",
     "openalex-result-count",
     "openalex-result-list",
+    "openalex-search-debug",
+    "openalex-weak-matches",
+    "openalex-weak-match-summary",
+    "openalex-weak-result-list",
     "add-manually-button",
     "paper-draft-form",
     "paper-draft-origin",
@@ -705,7 +709,7 @@ async function searchOpenAlex(event) {
       method: "POST",
       body: JSON.stringify(query),
     });
-    renderOpenAlexResults(payload.results || []);
+    renderOpenAlexResults(payload.results || [], payload.debug || {});
     if (!payload.results?.length) {
       elements["openalex-search-error"].hidden = false;
       elements["openalex-search-error"].textContent =
@@ -721,9 +725,24 @@ async function searchOpenAlex(event) {
   }
 }
 
-function renderOpenAlexResults(results) {
+function renderOpenAlexResults(results, debug = {}) {
   const list = elements["openalex-result-list"];
   list.replaceChildren();
+  const weakList = elements["openalex-weak-result-list"];
+  weakList.replaceChildren();
+  const variants = (debug.query_variants || []).map((variant) => variant.name).join(", ");
+  elements["openalex-search-debug"].textContent = [
+    variants ? `Queries: ${variants}` : "",
+    Number.isFinite(debug.raw_candidates_fetched)
+      ? `raw candidates: ${formatNumber(debug.raw_candidates_fetched)}`
+      : "",
+    Number.isFinite(debug.best_normalized_title_similarity)
+      ? `best title similarity: ${Number(debug.best_normalized_title_similarity).toFixed(3)}`
+      : "",
+    `exact DOI lookup: ${debug.doi_exact_lookup_attempted ? "yes" : "no"}`,
+    `exact arXiv lookup: ${debug.arxiv_exact_lookup_attempted ? "yes" : "no"}`,
+    debug.arxiv_fallback_used ? "arXiv fallback used" : "",
+  ].filter(Boolean).join(" · ");
   results.forEach((candidate) => {
     const card = document.createElement("article");
     card.className = "openalex-result-card";
@@ -749,6 +768,12 @@ function renderOpenAlexResults(results) {
       candidate.openalex_url ? `OpenAlex: ${candidate.openalex_url}` : "",
       candidate.primary_url ? `Primary URL: ${candidate.primary_url}` : "",
     ].filter(Boolean).join("\n");
+    if (candidate.match_warning) {
+      const warning = document.createElement("span");
+      warning.className = "weak-match-warning";
+      warning.textContent = candidate.match_warning;
+      identifiers.append(document.createElement("br"), warning);
+    }
     const abstract = document.createElement("p");
     abstract.className = "candidate-abstract";
     abstract.textContent = text(candidate.abstract) || "Abstract unavailable.";
@@ -758,8 +783,10 @@ function renderOpenAlexResults(results) {
     const useButton = document.createElement("button");
     useButton.type = "button";
     useButton.className = "primary-button";
-    useButton.textContent = "Use this OpenAlex record";
-    useButton.addEventListener("click", () => startPaperDraft(candidate, "openalex"));
+    const source = candidate.candidate_source === "arxiv" ? "arxiv" : "openalex";
+    useButton.textContent =
+      source === "arxiv" ? "Use this arXiv record" : "Use this OpenAlex record";
+    useButton.addEventListener("click", () => startPaperDraft(candidate, source));
     const rejectButton = document.createElement("button");
     rejectButton.type = "button";
     rejectButton.className = "secondary-button";
@@ -770,16 +797,23 @@ function renderOpenAlexResults(results) {
     });
     actions.append(useButton, rejectButton);
     card.append(heading, meta, authors, identifiers, abstract, actions);
-    list.append(card);
+    (candidate.match_strength === "weak" ? weakList : list).append(card);
   });
+  const weakCount = weakList.children.length;
+  elements["openalex-weak-matches"].hidden = weakCount === 0;
+  elements["openalex-weak-match-summary"].textContent =
+    `Weak matches (${formatNumber(weakCount)})`;
   elements["openalex-results"].hidden = results.length === 0;
   updateOpenAlexResultCount();
 }
 
 function updateOpenAlexResultCount() {
-  const count = elements["openalex-result-list"].children.length;
+  const strongCount = elements["openalex-result-list"].children.length;
+  const weakCount = elements["openalex-weak-result-list"].children.length;
+  const count = strongCount + weakCount;
   elements["openalex-result-count"].textContent =
-    `${formatNumber(count)} candidate${count === 1 ? "" : "s"}`;
+    `${formatNumber(strongCount)} strong · ${formatNumber(weakCount)} weak`;
+  elements["openalex-weak-matches"].hidden = weakCount === 0;
   if (count === 0) elements["openalex-results"].hidden = true;
 }
 
@@ -787,7 +821,11 @@ function startPaperDraft(candidate, source) {
   elements["paper-draft-form"].reset();
   elements["paper-source-database"].value = source;
   elements["paper-draft-origin"].textContent =
-    source === "openalex" ? "Confirmed OpenAlex draft" : "Manual paper draft";
+    source === "openalex"
+      ? "Confirmed OpenAlex draft"
+      : source === "arxiv"
+        ? "Confirmed arXiv fallback draft"
+        : "Manual paper draft";
   elements["paper-title"].value = text(candidate.title);
   elements["paper-year"].value = text(candidate.year);
   elements["paper-authors"].value = listText(candidate.authors);

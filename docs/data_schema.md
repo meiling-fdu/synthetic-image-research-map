@@ -102,6 +102,30 @@ Published metadata and arXiv-version metadata are kept separate: a paper may hav
 
 Candidate-map and public-preview exports apply only `linked_to_arxiv` rows that contain an arXiv ID or URL. They match by OpenAlex URL when the enrichment row provides one, otherwise by DOI, otherwise by normalized title plus publication year. The resulting `arxiv_id`, `arxiv_url`, and `arxiv_year` fields describe a known arXiv version and do not replace formal publication year, DOI, venue, OpenAlex URL, or `publication_type`. `has_arxiv_version` means an ID or URL is known regardless of formal publication. "Preprint-only" instead describes a record whose publication itself is a preprint without a known formal venue; it is never inferred merely from the existence of an arXiv version.
 
+## `arxiv_link_enrichment_report.csv`
+
+`data/manual/arxiv_link_enrichment_report.csv` is the reviewable audit output
+from `scripts/enrich_papers_arxiv.py`. Before making network queries, the script
+compares formally published rows without direct arXiv metadata against local
+rows that contain valid arXiv identifiers. Automatic linking requires an exact
+normalized title, author-key Jaccard overlap of at least `0.80`, and one unique
+best arXiv identifier. Exact DOI matches returned by arXiv are also sufficient.
+Title-only, low-author-overlap, or ambiguous candidates use
+`action=needs_review` and do not populate an empty link.
+Previously cached `possible_arxiv_match` API suggestions are also carried into
+this report so unresolved candidates remain visible across resumable runs.
+
+| Column | Definition |
+| --- | --- |
+| `paper_id` | OpenAlex work ID of the formal publication when available. |
+| `title` | Formal publication title. |
+| `existing_doi` | DOI retained on the formal publication. |
+| `matched_arxiv_id` / `arxiv_url` | Candidate arXiv version. |
+| `match_basis` | `doi`, `exact_title_author`, or `normalized_title_author`. |
+| `confidence` | `high`, `medium`, or `low`. |
+| `action` | `filled`, `needs_review`, or `skipped` when the confirmed link already existed. |
+| `note` | Evidence summary, including author overlap or ambiguity. |
+
 ## `paper_abstracts.csv`
 
 `data/manual/paper_abstracts.csv` is an optional manual/cache layer for original paper abstracts. It is never populated by an AI summary and automated exports treat it as read-only. Rows match in priority order by DOI, arXiv ID, OpenAlex URL, then normalized title plus publication year. Manual rows take precedence over abstract text already present in processed candidate metadata and locally cached raw OpenAlex abstracts.

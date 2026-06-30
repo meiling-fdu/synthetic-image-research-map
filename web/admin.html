@@ -104,7 +104,13 @@
             <h3>OpenAlex candidates</h3>
             <span id="openalex-result-count"></span>
           </div>
+          <p class="openalex-search-debug" id="openalex-search-debug"></p>
           <div id="openalex-result-list"></div>
+          <details class="weak-match-panel" id="openalex-weak-matches" hidden>
+            <summary id="openalex-weak-match-summary">Weak matches</summary>
+            <p>These candidates have low title similarity. Verify identifiers and metadata before using one.</p>
+            <div id="openalex-weak-result-list"></div>
+          </details>
         </div>
 
         <form class="paper-draft-form" id="paper-draft-form" hidden>
