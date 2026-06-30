@@ -14,6 +14,8 @@ try:
     from .curated_schema import (
         ALLOWED_CURATION_STATUSES,
         ALLOWED_REVIEW_STATUSES,
+        ALLOWED_SCOPE_STATUSES,
+        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         PAPERS_COLUMNS,
@@ -27,6 +29,8 @@ except ImportError:
     from curated_schema import (
         ALLOWED_CURATION_STATUSES,
         ALLOWED_REVIEW_STATUSES,
+        ALLOWED_SCOPE_STATUSES,
+        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         PAPERS_COLUMNS,
@@ -104,6 +108,8 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
+    subtask = clean(draft.get("subtask"))
+    scope_status = clean(draft.get("scope_status")) or "in_scope"
     if not title:
         raise CuratedPaperError("title is required")
     if not YEAR_RE.fullmatch(year):
@@ -111,6 +117,16 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     if task not in ALLOWED_TASKS:
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
+        )
+    if subtask and subtask not in ALLOWED_SUBTASKS:
+        raise CuratedPaperError(
+            "subtask must be blank or one of "
+            + ", ".join(sorted(ALLOWED_SUBTASKS))
+        )
+    if scope_status not in ALLOWED_SCOPE_STATUSES:
+        raise CuratedPaperError(
+            "scope_status must be one of "
+            + ", ".join(sorted(ALLOWED_SCOPE_STATUSES))
         )
 
     source_database = clean(draft.get("source_database")).casefold()
@@ -145,8 +161,8 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "publication_type": clean(draft.get("publication_type")),
         "abstract": clean(draft.get("abstract")),
         "task": task,
-        "subtask": clean(draft.get("subtask")),
-        "scope_status": clean(draft.get("scope_status")) or "in_scope",
+        "subtask": subtask,
+        "scope_status": scope_status,
         "source_database": source_database,
         "metadata_source": metadata_source,
         "curation_status": curation_status,
@@ -228,4 +244,146 @@ def create_curated_paper(
     }
     curated_rows.append(row)
     write_curated_papers(curated_rows, path)
+    return row
+
+
+def update_curated_paper(
+    current_paper: Mapping[str, Any],
+    draft: Mapping[str, Any],
+    *,
+    preview_records: Sequence[Mapping[str, Any]],
+    path: Path = DEFAULT_CURATED_PAPERS_PATH,
+) -> Dict[str, str]:
+    """Create or update a curated metadata override for one effective paper."""
+    title = clean(draft.get("title"))
+    year = clean(draft.get("year"))
+    task = clean(draft.get("task"))
+    subtask = clean(draft.get("subtask"))
+    scope_status = clean(draft.get("scope_status")) or "in_scope"
+    curation_status = (
+        clean(draft.get("curation_status")) or "corrected_by_admin"
+    )
+    review_status = clean(draft.get("review_status")) or "reviewed"
+    if not title:
+        raise CuratedPaperError("title is required")
+    if not YEAR_RE.fullmatch(year):
+        raise CuratedPaperError("year must be a four-digit integer")
+    if task not in ALLOWED_TASKS:
+        raise CuratedPaperError(
+            "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
+        )
+    if subtask and subtask not in ALLOWED_SUBTASKS:
+        raise CuratedPaperError(
+            "subtask must be blank or one of "
+            + ", ".join(sorted(ALLOWED_SUBTASKS))
+        )
+    if scope_status not in ALLOWED_SCOPE_STATUSES:
+        raise CuratedPaperError(
+            "scope_status must be one of "
+            + ", ".join(sorted(ALLOWED_SCOPE_STATUSES))
+        )
+    if curation_status not in ALLOWED_CURATION_STATUSES:
+        raise CuratedPaperError(
+            "curation_status must be one of "
+            + ", ".join(sorted(ALLOWED_CURATION_STATUSES))
+        )
+    if review_status not in ALLOWED_REVIEW_STATUSES:
+        raise CuratedPaperError(
+            "review_status must be one of "
+            + ", ".join(sorted(ALLOWED_REVIEW_STATUSES))
+        )
+
+    existing_rows = read_curated_papers(path)
+    current_keys = set(all_identity_keys(current_paper))
+    existing = next(
+        (
+            row
+            for row in existing_rows
+            if clean(current_paper.get("paper_id"))
+            and clean(row.get("paper_id")) == clean(current_paper.get("paper_id"))
+        ),
+        None,
+    )
+    if existing is None:
+        existing = next(
+            (
+                row
+                for row in existing_rows
+                if current_keys & set(all_identity_keys(row))
+            ),
+            None,
+        )
+
+    source_database = clean(
+        draft.get("source_database")
+        or (existing or {}).get("source_database")
+        or current_paper.get("source_database")
+        or "manual"
+    ).casefold()
+    if source_database not in {"openalex", "arxiv", "manual"}:
+        source_database = "manual"
+    normalized = {
+        "title": title,
+        "year": year,
+        "authors": _authors_text(draft.get("authors")),
+        "venue": clean(draft.get("venue")),
+        "doi": clean(draft.get("doi")),
+        "arxiv_id": clean(draft.get("arxiv_id")),
+        "openalex_url": clean(draft.get("openalex_url")),
+        "paper_url": clean(draft.get("paper_url")),
+        "publication_type": clean(draft.get("publication_type")),
+        "abstract": clean(draft.get("abstract")),
+        "task": task,
+        "subtask": subtask,
+        "scope_status": scope_status,
+        "source_database": source_database,
+        "metadata_source": clean(
+            draft.get("metadata_source")
+            or (existing or {}).get("metadata_source")
+            or current_paper.get("metadata_source")
+            or source_database
+        ),
+        "curation_status": curation_status,
+        "review_status": review_status,
+        "review_note": clean(draft.get("review_note")),
+    }
+    if not all_identity_keys(normalized):
+        raise CuratedPaperError(
+            "paper requires a DOI, OpenAlex URL, or title + year identity"
+        )
+
+    other_curated = [row for row in existing_rows if row is not existing]
+    collisions = duplicate_matches(
+        normalized,
+        (("public_preview", preview_records), ("curated_papers", other_curated)),
+    )
+    allowed_keys = current_keys | set(all_identity_keys(existing or {}))
+    collisions = [
+        match
+        for match in collisions
+        if not (set(match["matched_keys"]) & allowed_keys)
+    ]
+    if collisions:
+        raise DuplicatePaperError(collisions)
+
+    now = _timestamp()
+    if existing:
+        row = {
+            "paper_id": clean(existing.get("paper_id")),
+            **normalized,
+            "created_at": clean(existing.get("created_at")) or now,
+            "updated_at": now,
+        }
+        existing_rows[existing_rows.index(existing)] = row
+    else:
+        identity = normalized_title_year_key(normalized)
+        digest = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20]
+        row = {
+            "paper_id": f"curated:{digest}",
+            **normalized,
+            "created_at": now,
+            "updated_at": now,
+        }
+        existing_rows.append(row)
+    write_curated_papers(existing_rows, path)
     return row
