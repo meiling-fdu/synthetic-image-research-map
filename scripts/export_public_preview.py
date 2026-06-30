@@ -121,6 +121,9 @@ DEFAULT_PAPER_ARXIV_LINKS = Path("data/manual/paper_arxiv_links.csv")
 DEFAULT_PUBLICATION_OVERRIDES = Path("data/manual/publication_overrides.csv")
 DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
 DEFAULT_PAPER_EXCLUSIONS = DEFAULT_EXCLUSIONS_PATH
+DEFAULT_REVIEW_DECISIONS = (
+    Path("data/curated/review_decisions.csv")
+)
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -339,6 +342,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Curated author–institution mapping CSV "
             f"(default: {DEFAULT_CURATED_MAPPINGS_PATH})."
+        ),
+    )
+    parser.add_argument(
+        "--review-decisions",
+        type=Path,
+        default=DEFAULT_REVIEW_DECISIONS,
+        help=(
+            "Durable admin review decisions CSV "
+            f"(default: {DEFAULT_REVIEW_DECISIONS})."
         ),
     )
     parser.add_argument(
@@ -687,6 +699,37 @@ def identity_key(record: Dict[str, Any]) -> Tuple[str, Any]:
     if keys:
         return keys[0]
     return ("title_year", (normalize_title(record.get("title")), parse_year(record.get("year"))))
+
+
+def apply_mapping_exclusion_decisions(
+    records: Sequence[Dict[str, Any]],
+    decisions: Sequence[Dict[str, str]],
+) -> Tuple[List[Dict[str, Any]], int]:
+    """Remove marker records explicitly rejected through an admin review queue."""
+    exclusions = [
+        row
+        for row in decisions
+        if clean_text(row.get("action")) == "exclude_wrong_mapping"
+        and clean_text(row.get("institution"))
+    ]
+    kept: List[Dict[str, Any]] = []
+    removed = 0
+    for record in records:
+        record_keys = set(paper_identity_keys(record))
+        institution = normalize_title(record.get("institution"))
+        excluded = any(
+            institution == normalize_title(decision.get("institution"))
+            and bool(
+                record_keys
+                & set(paper_identity_keys(dict(decision)))
+            )
+            for decision in exclusions
+        )
+        if excluded:
+            removed += 1
+        else:
+            kept.append(record)
+    return kept, removed
 
 
 def build_identity_lookup(records: Sequence[Dict[str, Any]]) -> Dict[Tuple[str, Any], List[Dict[str, Any]]]:
@@ -1622,6 +1665,10 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
         "  Curated mappings missing/ambiguous coordinates: "
         f"{summary.get('curated_mappings_missing_coordinates', 0) + summary.get('curated_mappings_ambiguous_coordinates', 0)}"
     )
+    print(
+        "  Marker exclusion review decisions applied: "
+        f"{summary.get('review_mapping_exclusions_applied', 0)}"
+    )
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
 
@@ -1757,6 +1804,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         integrated_maps, curated_preprint_map_records_excluded = (
             exclude_preprint_versions(integrated_maps)
         )
+        review_decisions = read_csv_rows(args.review_decisions)
+        integrated_maps, review_mapping_exclusions_applied = (
+            apply_mapping_exclusion_decisions(
+                integrated_maps, review_decisions
+            )
+        )
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         summary["preprint_version_records_excluded"] += (
@@ -1800,6 +1853,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             }
 
         summary.update(curated_summary)
+        summary["review_mapping_exclusions_applied"] = (
+            review_mapping_exclusions_applied
+        )
         summary["records_exported"] = len(integrated_maps)
         summary["unique_papers_exported"] = len(
             {identity_key(record) for record in integrated_maps}

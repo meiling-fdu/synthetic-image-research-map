@@ -16,6 +16,146 @@
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+.console-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background: var(--paper);
+}
+
+.console-nav button {
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 0.75rem;
+  background: var(--green-soft);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.dashboard-panel,
+.review-queue-panel,
+.paper-metadata-section {
+  margin: 1rem 0;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: var(--paper);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.dashboard-grid article {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-height: 5rem;
+  padding: 0.9rem;
+  border-radius: 0.75rem;
+  background: var(--green-soft);
+}
+
+.dashboard-grid strong {
+  font-size: 1.55rem;
+}
+
+.review-filters,
+.review-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+
+.review-filters input,
+.review-filters select {
+  min-width: min(100%, 13rem);
+}
+
+.review-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.review-queue-panel tbody tr {
+  cursor: pointer;
+}
+
+.review-queue-panel tbody tr:hover,
+.review-queue-panel tbody tr:focus {
+  background: var(--green-soft);
+  outline: none;
+}
+
+.review-detail {
+  position: sticky;
+  top: 5rem;
+  max-height: 72vh;
+  overflow: auto;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--panel);
+}
+
+.review-detail dl {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.45fr) 1fr;
+  gap: 0.35rem 0.75rem;
+}
+
+.review-detail dt {
+  font-weight: 700;
+}
+
+.review-detail dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.metadata-compare {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1rem 0;
+}
+
+.metadata-compare details {
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+}
+
+.metadata-compare pre {
+  max-height: 18rem;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 900px) {
+  .review-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .review-detail {
+    position: static;
+    max-height: none;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

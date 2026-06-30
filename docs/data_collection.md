@@ -659,6 +659,12 @@ python3 scripts/validate_public_preview.py --strict
 
 Validation also enforces the public regional convention: records identified as Hong Kong, Macau/Macao, or Taiwan must use `country=China`, `country_code=CN`, and the matching `region` and `region_code`. The quality report applies the same normalization when counting countries, so these records contribute to China in the Top Countries table even when reporting on an older preview file.
 
+### Interactive Curation Console data boundaries
+
+The localhost console treats `data/curated/*.csv` as the only durable human-decision layer. Paper metadata overrides, exclusions, mappings, location confirmations, location-review queue entries, and review outcomes are stored there. Generated `data/manual/*.csv` reports are read-only diagnostic queues; `data/processed/*.csv` remains the OpenAlex/processed source layer; and `web/data/public_preview_*.json` is produced only by the exporter or full refresh.
+
+`scripts/report_high_risk_markers.py` deterministically combines available public markers, candidate markers, marker blockers, and key-paper coverage diagnostics into `data/manual/high_risk_marker_review.csv`. Missing optional inputs are tolerated. Reviewing this report never changes it: actions are routed to the relevant curated CSV or to `data/curated/review_decisions.csv`. The public exporter applies `exclude_wrong_mapping` decisions as institution-and-paper-specific marker suppressions.
+
 ### Recommended Refresh Workflow
 
 `scripts/refresh_public_preview.py` is the recommended pre-commit workflow. It calls the existing scoped pipeline, public-preview exporter, quality-report generator, and validator in that order. Each step is a subprocess, and the refresh stops immediately if any command fails. It does not duplicate pipeline logic, modify manual data, commit, or push.

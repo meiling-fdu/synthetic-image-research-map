@@ -34,6 +34,7 @@ try:
         CuratedPaperError,
         DuplicatePaperError,
         create_curated_paper,
+        update_curated_paper,
     )
     from .curated_mappings import (
         DEFAULT_LOCATION_REVIEW_PATH,
@@ -49,6 +50,7 @@ try:
         mappings_for_paper,
         replace_all_mappings,
         update_mapping,
+        save_location_reviews,
     )
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -68,6 +70,17 @@ try:
         restore_active_exclusions,
         upsert_active_exclusion,
     )
+    from .admin_review_queues import (
+        AdminReviewQueueError,
+        dashboard_data,
+        load_manual_import_queue,
+        load_queue,
+    )
+    from .review_decisions import (
+        DEFAULT_REVIEW_DECISIONS_PATH,
+        ReviewDecisionError,
+        upsert_review_decision,
+    )
 except ImportError:
     from admin_workflows import (
         AdminWorkflowError,
@@ -80,6 +93,7 @@ except ImportError:
         CuratedPaperError,
         DuplicatePaperError,
         create_curated_paper,
+        update_curated_paper,
     )
     from curated_mappings import (
         DEFAULT_LOCATION_REVIEW_PATH,
@@ -95,6 +109,7 @@ except ImportError:
         mappings_for_paper,
         replace_all_mappings,
         update_mapping,
+        save_location_reviews,
     )
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -113,6 +128,17 @@ except ImportError:
         PaperExclusionError,
         restore_active_exclusions,
         upsert_active_exclusion,
+    )
+    from admin_review_queues import (
+        AdminReviewQueueError,
+        dashboard_data,
+        load_manual_import_queue,
+        load_queue,
+    )
+    from review_decisions import (
+        DEFAULT_REVIEW_DECISIONS_PATH,
+        ReviewDecisionError,
+        upsert_review_decision,
     )
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
@@ -133,6 +159,7 @@ EXCLUSION_WRITE_LOCK = threading.Lock()
 CURATED_PAPER_WRITE_LOCK = threading.Lock()
 CURATED_MAPPING_WRITE_LOCK = threading.Lock()
 CURATED_LOCATION_WRITE_LOCK = threading.Lock()
+REVIEW_DECISION_WRITE_LOCK = threading.Lock()
 
 WORKFLOW_ENDPOINTS = {
     "/api/run-curated-validation": "curated_validation",
@@ -368,30 +395,29 @@ def merge_curated_fields(
     public_record: Dict[str, Any], curated_record: Mapping[str, Any]
 ) -> None:
     for field in (
-        "metadata_source",
-        "curation_status",
-        "review_status",
-        "review_note",
-        "scope_status",
-    ):
-        value = curated_record.get(field)
-        if clean(value):
-            public_record[field] = value
-    for field in (
         "title",
         "year",
         "authors",
         "venue",
         "doi",
+        "arxiv_id",
         "openalex_url",
         "paper_url",
         "publication_type",
+        "abstract",
         "task",
         "subtask",
+        "scope_status",
         "source_database",
+        "metadata_source",
+        "curation_status",
+        "review_status",
+        "review_note",
     ):
-        if not public_record.get(field) and curated_record.get(field):
+        if field in curated_record:
             public_record[field] = curated_record[field]
+    public_record["publication_year"] = public_record.get("year")
+    public_record["notes"] = clean(public_record.get("review_note"))
 
 
 def load_admin_data(
@@ -572,6 +598,91 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
     return {field: paper.get(field) for field in fields}
 
 
+def api_payload(
+    *,
+    success: bool = True,
+    message: str = "",
+    data: Any = None,
+    warnings: Sequence[str] = (),
+    errors: Sequence[str] = (),
+) -> Dict[str, Any]:
+    return {
+        "success": success,
+        "message": message,
+        "data": data,
+        "warnings": list(warnings),
+        "errors": list(errors),
+    }
+
+
+def original_public_record(paper: Mapping[str, Any]) -> Dict[str, Any] | None:
+    index = index_by_identity(read_json_records(PUBLIC_PAPERS_PATH))
+    matches = strongest_matching_records(paper, index)
+    return dict(matches[0]) if matches else None
+
+
+def queue_location_review(
+    draft: Mapping[str, Any],
+    *,
+    path: Path,
+) -> Dict[str, str]:
+    institution = clean(draft.get("institution"))
+    note = clean(draft.get("review_note"))
+    if not institution:
+        raise AdminDataError("institution is required for location review")
+    if not note:
+        raise AdminDataError("review note is required")
+    rows = load_location_reviews(path)
+    identity = (
+        normalized_title(draft.get("title")),
+        record_year(draft),
+        institution.casefold(),
+    )
+    existing = next(
+        (
+            row
+            for row in rows
+            if (
+                normalized_title(row.get("title")),
+                record_year(row),
+                clean(row.get("institution")).casefold(),
+            )
+            == identity
+        ),
+        None,
+    )
+    now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace(
+        "+00:00", "Z"
+    )
+    row = {
+        "institution": institution,
+        "related_paper_id": clean(
+            draft.get("paper_id") or draft.get("id")
+        ),
+        "title": clean(draft.get("title")),
+        "year": record_year(draft),
+        "doi": clean(draft.get("doi")),
+        "openalex_url": clean(draft.get("openalex_url")),
+        "institution_authors": clean(draft.get("institution_authors")),
+        "raw_affiliation": clean(draft.get("raw_affiliation")),
+        "evidence_source": clean(draft.get("evidence_source")),
+        "evidence_url": clean(draft.get("evidence_url")),
+        "suggested_city": clean(draft.get("city")),
+        "suggested_country": clean(draft.get("country")),
+        "location_status": "needs_location_review",
+        "coordinate_status": "missing",
+        "review_note": note,
+        "created_at": clean((existing or {}).get("created_at")) or now,
+        "updated_at": now,
+    }
+    if existing:
+        rows[rows.index(existing)] = row
+    else:
+        rows.append(row)
+    save_location_reviews(rows, path)
+    return row
+
+
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Serve the local maintainer paper curation browser."
@@ -647,6 +758,7 @@ def make_handler(
     mappings_path: Path = CURATED_MAPPINGS_PATH,
     location_review_path: Path = LOCATION_REVIEW_PATH,
     institution_locations_path: Path = INSTITUTION_LOCATIONS_PATH,
+    review_decisions_path: Path = DEFAULT_REVIEW_DECISIONS_PATH,
 ) -> type[BaseHTTPRequestHandler]:
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
@@ -919,6 +1031,129 @@ def make_handler(
                     return
                 self.send_json(HTTPStatus.OK, payload)
                 return
+            review_get_paths = {
+                "/api/review/high-risk-markers": "high_risk_marker",
+                "/api/review/marker-blockers": "marker_blocker",
+                "/api/review/key-paper-coverage": "key_paper_coverage",
+            }
+            if request.path in review_get_paths or request.path in {
+                "/api/review/manual-import",
+                "/api/dashboard",
+                "/api/paper/metadata",
+            }:
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        api_payload(
+                            success=False,
+                            errors=("X-Admin-Token header is required",),
+                        ),
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        api_payload(
+                            success=False,
+                            errors=("admin review APIs are restricted to loopback clients",),
+                        ),
+                    )
+                    return
+                try:
+                    if request.path in review_get_paths:
+                        queue = load_queue(review_get_paths[request.path])
+                        self.send_json(HTTPStatus.OK, api_payload(data=queue))
+                        return
+                    if request.path == "/api/review/manual-import":
+                        self.send_json(
+                            HTTPStatus.OK,
+                            api_payload(data=load_manual_import_queue()),
+                        )
+                        return
+                    if request.path == "/api/dashboard":
+                        _papers, admin_data = load_admin_data(
+                            exclusions_path, curated_papers_path
+                        )
+                        counts = admin_data["status"]["counts"]
+                        location_payload = location_review_payload(
+                            review_path=location_review_path,
+                            locations_path=institution_locations_path,
+                        )
+                        curated_counts = {
+                            "curated_papers": counts["curated_papers"],
+                            "active_exclusions": counts["active_exclusions"],
+                            "curated_mappings": len(load_mappings(mappings_path)),
+                            "pending_location_reviews": sum(
+                                clean(row.get("coordinate_status")) != "known"
+                                for row in location_payload.get("records", [])
+                            ),
+                            "confirmed_institution_locations": len(
+                                read_csv_rows(institution_locations_path)
+                            ),
+                        }
+                        dashboard = dashboard_data(
+                            curated_counts=curated_counts,
+                            validation_status=self.workflow_status_snapshot(),
+                            git_status=git_status_result(),
+                        )
+                        self.send_json(
+                            HTTPStatus.OK, api_payload(data=dashboard)
+                        )
+                        return
+                    paper_id = next(iter(query.get("id", [])), "")
+                    if not paper_id:
+                        raise AdminDataError("id query parameter is required")
+                    _papers, admin_data = load_admin_data(
+                        exclusions_path, curated_papers_path
+                    )
+                    paper = admin_data["papers_by_id"].get(paper_id)
+                    if paper is None:
+                        self.send_json(
+                            HTTPStatus.NOT_FOUND,
+                            api_payload(
+                                success=False, errors=("paper not found",)
+                            ),
+                        )
+                        return
+                    curated_record = paper.get("curated_record")
+                    self.send_json(
+                        HTTPStatus.OK,
+                        api_payload(
+                            data={
+                                "public_preview_record": original_public_record(
+                                    paper
+                                ),
+                                "curated_record": curated_record,
+                                "effective_record": paper,
+                                "identity_keys": {
+                                    "paper_id": clean(
+                                        (curated_record or {}).get("paper_id")
+                                        or paper.get("paper_id")
+                                        or paper.get("display_id")
+                                    ),
+                                    "doi": clean(paper.get("doi")),
+                                    "openalex_url": clean(
+                                        paper.get("openalex_url")
+                                    ),
+                                    "normalized_title_year": title_year_key(
+                                        paper
+                                    ),
+                                },
+                            }
+                        ),
+                    )
+                    return
+                except (
+                    AdminDataError,
+                    AdminReviewQueueError,
+                    CuratedLocationError,
+                    CuratedMappingError,
+                ) as error:
+                    self.send_json(
+                        HTTPStatus.BAD_REQUEST,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
+                    return
             try:
                 papers, data = load_admin_data(
                     exclusions_path,
@@ -1018,6 +1253,12 @@ def make_handler(
                 "/api/latest-validation-status",
                 "/api/git-status",
                 "/api/location-review",
+                "/api/dashboard",
+                "/api/review/high-risk-markers",
+                "/api/review/marker-blockers",
+                "/api/review/key-paper-coverage",
+                "/api/review/manual-import",
+                "/api/paper/metadata",
             }:
                 self.send_method_not_allowed("GET")
                 return
@@ -1103,11 +1344,301 @@ def make_handler(
                 "/api/paper/mapping/update",
                 "/api/paper/mapping/exclude",
                 "/api/paper/mappings/replace-all",
+                "/api/paper/metadata/update",
+                "/api/review/high-risk-markers/action",
+                "/api/review/marker-blockers/action",
+                "/api/review/key-paper-coverage/action",
+                "/api/review/manual-import/action",
             }:
                 self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
                 return
             try:
                 payload = self.read_json_body()
+                new_write_paths = {
+                    "/api/paper/metadata/update",
+                    "/api/review/high-risk-markers/action",
+                    "/api/review/marker-blockers/action",
+                    "/api/review/key-paper-coverage/action",
+                    "/api/review/manual-import/action",
+                }
+                if request.path in new_write_paths:
+                    if not self.is_header_authorized():
+                        self.send_json(
+                            HTTPStatus.UNAUTHORIZED,
+                            api_payload(
+                                success=False,
+                                errors=("X-Admin-Token header is required",),
+                            ),
+                        )
+                        return
+                    if not self.is_loopback_client():
+                        self.send_json(
+                            HTTPStatus.FORBIDDEN,
+                            api_payload(
+                                success=False,
+                                errors=(
+                                    "admin review writes are restricted to loopback clients",
+                                ),
+                            ),
+                        )
+                        return
+
+                if request.path == "/api/paper/metadata/update":
+                    paper_id = clean(payload.get("id"))
+                    if not paper_id:
+                        raise AdminDataError("paper id is required")
+                    _papers, admin_data = load_admin_data(
+                        exclusions_path, curated_papers_path
+                    )
+                    paper = admin_data["papers_by_id"].get(paper_id)
+                    if paper is None:
+                        self.send_json(
+                            HTTPStatus.NOT_FOUND,
+                            api_payload(
+                                success=False, errors=("paper not found",)
+                            ),
+                        )
+                        return
+                    try:
+                        with CURATED_PAPER_WRITE_LOCK:
+                            row = update_curated_paper(
+                                paper,
+                                payload,
+                                preview_records=read_json_records(
+                                    PUBLIC_PAPERS_PATH
+                                ),
+                                path=curated_papers_path,
+                            )
+                    except DuplicatePaperError as error:
+                        self.send_json(
+                            HTTPStatus.CONFLICT,
+                            api_payload(
+                                success=False,
+                                data={"duplicate_matches": error.matches},
+                                errors=("paper identity collides with another paper",),
+                            ),
+                        )
+                        return
+                    self.send_json(
+                        HTTPStatus.OK,
+                        api_payload(
+                            message=(
+                                "Saved to curated database. Run full refresh "
+                                "pipeline to update public preview."
+                            ),
+                            data={"paper": row},
+                        ),
+                    )
+                    return
+
+                review_action_paths = {
+                    "/api/review/high-risk-markers/action": "high_risk_marker",
+                    "/api/review/marker-blockers/action": "marker_blocker",
+                    "/api/review/key-paper-coverage/action": "key_paper_coverage",
+                    "/api/review/manual-import/action": "manual_import",
+                }
+                if request.path in review_action_paths:
+                    note = clean(payload.get("review_note"))
+                    if not note:
+                        raise AdminDataError("review note is required")
+                    action = clean(payload.get("action"))
+                    action_warnings: List[str] = []
+                    mapping_result = None
+                    exclusion_result = None
+                    if action == "send_to_location_review":
+                        with CURATED_LOCATION_WRITE_LOCK:
+                            location_row = queue_location_review(
+                                payload, path=location_review_path
+                            )
+                    else:
+                        location_row = None
+                    if action == "confirm_marker":
+                        papers, admin_data = load_admin_data(
+                            exclusions_path, curated_papers_path
+                        )
+                        requested_id = clean(
+                            payload.get("id") or payload.get("paper_id")
+                        )
+                        paper = admin_data["papers_by_id"].get(requested_id)
+                        if paper is None:
+                            requested_keys = set(identity_keys(payload))
+                            paper = next(
+                                (
+                                    candidate
+                                    for candidate in papers
+                                    if requested_keys
+                                    & set(identity_keys(candidate))
+                                ),
+                                None,
+                            )
+                        institution = clean(payload.get("institution"))
+                        institution_authors = clean(
+                            payload.get("institution_authors")
+                        )
+                        if paper and institution and institution_authors:
+                            mapping_draft = {
+                                "institution": institution,
+                                "institution_authors": institution_authors,
+                                "raw_affiliation": clean(
+                                    payload.get("raw_affiliation")
+                                    or payload.get("resolution_notes")
+                                    or institution
+                                ),
+                                "evidence_source": clean(
+                                    payload.get("evidence_source")
+                                    or payload.get("resolution_method")
+                                    or "Admin marker review"
+                                ),
+                                "evidence_url": clean(
+                                    payload.get("evidence_url")
+                                    or payload.get("paper_url")
+                                    or payload.get("openalex_url")
+                                ),
+                                "affiliation_note": (
+                                    "Confirmed from the high-risk marker review queue."
+                                ),
+                                "mapping_status": "active",
+                                "review_note": note,
+                            }
+                            existing = next(
+                                (
+                                    row
+                                    for row in mappings_for_paper(
+                                        paper, load_mappings(mappings_path)
+                                    )
+                                    if clean(row.get("institution")).casefold()
+                                    == institution.casefold()
+                                    and clean(row.get("institution_authors")).casefold()
+                                    == institution_authors.casefold()
+                                ),
+                                None,
+                            )
+                            with CURATED_MAPPING_WRITE_LOCK:
+                                if existing and clean(
+                                    existing.get("mapping_status")
+                                ) == "active":
+                                    mapping_result = {
+                                        "mapping": existing,
+                                        "status": "already_active",
+                                    }
+                                elif existing:
+                                    mapping_result = update_mapping(
+                                        paper,
+                                        clean(existing.get("mapping_id")),
+                                        mapping_draft,
+                                        map_records=read_json_records(
+                                            PUBLIC_MAP_PATH
+                                        ),
+                                        mappings_path=mappings_path,
+                                        location_review_path=location_review_path,
+                                    )
+                                else:
+                                    mapping_result = create_mapping(
+                                        paper,
+                                        mapping_draft,
+                                        map_records=read_json_records(
+                                            PUBLIC_MAP_PATH
+                                        ),
+                                        mappings_path=mappings_path,
+                                        location_review_path=location_review_path,
+                                    )
+                        else:
+                            action_warnings.append(
+                                "Marker confirmation was recorded, but no curated "
+                                "mapping was created because paper, institution, or "
+                                "institution-author evidence was incomplete."
+                            )
+                    if action == "exclude_wrong_mapping":
+                        papers, admin_data = load_admin_data(
+                            exclusions_path, curated_papers_path
+                        )
+                        requested_keys = set(identity_keys(payload))
+                        paper = next(
+                            (
+                                candidate
+                                for candidate in papers
+                                if requested_keys
+                                & set(identity_keys(candidate))
+                            ),
+                            None,
+                        )
+                        institution = clean(payload.get("institution"))
+                        matching_mappings = (
+                            [
+                                row
+                                for row in mappings_for_paper(
+                                    paper, load_mappings(mappings_path)
+                                )
+                                if clean(row.get("institution")).casefold()
+                                == institution.casefold()
+                                and clean(row.get("mapping_status"))
+                                in {"active", "needs_review"}
+                            ]
+                            if paper and institution
+                            else []
+                        )
+                        if matching_mappings:
+                            excluded_mappings = []
+                            with CURATED_MAPPING_WRITE_LOCK:
+                                for mapping in matching_mappings:
+                                    excluded_mappings.append(
+                                        exclude_mapping(
+                                            paper,
+                                            clean(mapping.get("mapping_id")),
+                                            note,
+                                            mappings_path=mappings_path,
+                                        )
+                                    )
+                            mapping_result = {
+                                "excluded_mappings": excluded_mappings
+                            }
+                        else:
+                            action_warnings.append(
+                                "No curated mapping matched; the durable review "
+                                "decision will suppress matching automatic markers "
+                                "during export."
+                            )
+                    if action == "exclude_paper_scope":
+                        if identity_keys(payload):
+                            with EXCLUSION_WRITE_LOCK:
+                                exclusion_result = upsert_active_exclusion(
+                                    payload,
+                                    "out_of_scope",
+                                    note,
+                                    exclusions_path,
+                                )
+                        else:
+                            action_warnings.append(
+                                "The scope decision was recorded, but no paper "
+                                "exclusion was created because stable identity "
+                                "evidence was missing."
+                            )
+                    decision_draft = {
+                        **payload,
+                        "review_queue": review_action_paths[request.path],
+                    }
+                    with REVIEW_DECISION_WRITE_LOCK:
+                        decision = upsert_review_decision(
+                            decision_draft, path=review_decisions_path
+                        )
+                    self.send_json(
+                        HTTPStatus.OK,
+                        api_payload(
+                            message=(
+                                "Saved to curated database. Run full refresh "
+                                "pipeline to update public preview."
+                            ),
+                            data={
+                                "decision": decision,
+                                "location_review": location_row,
+                                "mapping": mapping_result,
+                                "exclusion": exclusion_result,
+                            },
+                            warnings=action_warnings,
+                        ),
+                    )
+                    return
+
                 if request.path == "/api/openalex/search-paper":
                     try:
                         results = search_openalex_papers(payload)
@@ -1314,11 +1845,25 @@ def make_handler(
                 CuratedPaperError,
                 CuratedMappingError,
                 PaperExclusionError,
+                ReviewDecisionError,
+                AdminReviewQueueError,
             ) as error:
-                self.send_json(
-                    HTTPStatus.BAD_REQUEST,
-                    {"error": str(error)},
-                )
+                if request.path in {
+                    "/api/paper/metadata/update",
+                    "/api/review/high-risk-markers/action",
+                    "/api/review/marker-blockers/action",
+                    "/api/review/key-paper-coverage/action",
+                    "/api/review/manual-import/action",
+                }:
+                    self.send_json(
+                        HTTPStatus.BAD_REQUEST,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
+                else:
+                    self.send_json(
+                        HTTPStatus.BAD_REQUEST,
+                        {"error": str(error)},
+                    )
 
         def log_message(self, format_string: str, *args: Any) -> None:
             sys.stderr.write(

@@ -20,6 +20,10 @@ try:
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
+        ALLOWED_REVIEW_ACTIONS,
+        ALLOWED_REVIEW_QUEUES,
+        ALLOWED_SCOPE_STATUSES,
+        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         EXPECTED_COLUMNS,
@@ -32,6 +36,10 @@ except ImportError:  # Support direct execution from the repository root.
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
+        ALLOWED_REVIEW_ACTIONS,
+        ALLOWED_REVIEW_QUEUES,
+        ALLOWED_SCOPE_STATUSES,
+        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         EXPECTED_COLUMNS,
@@ -610,6 +618,7 @@ def main() -> int:
     exclusions = datasets.get("paper_exclusions.csv", [])
     locations = datasets.get("institution_location_review.csv", [])
     confirmed_locations = datasets.get("institution_locations.csv", [])
+    review_decisions = datasets.get("review_decisions.csv", [])
 
     validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
     validate_allowed_value(
@@ -621,6 +630,12 @@ def main() -> int:
     )
     validate_allowed_value(
         papers, "papers.csv", "review_status", ALLOWED_REVIEW_STATUSES, issues
+    )
+    validate_allowed_value(
+        papers, "papers.csv", "scope_status", ALLOWED_SCOPE_STATUSES, issues
+    )
+    validate_allowed_value(
+        papers, "papers.csv", "subtask", ALLOWED_SUBTASKS, issues
     )
     validate_allowed_value(
         exclusions,
@@ -658,6 +673,50 @@ def main() -> int:
         issues,
     )
     validate_boolean_fields(exclusions, "paper_exclusions.csv", issues)
+    validate_allowed_value(
+        review_decisions,
+        "review_decisions.csv",
+        "review_queue",
+        ALLOWED_REVIEW_QUEUES,
+        issues,
+    )
+    validate_allowed_value(
+        review_decisions,
+        "review_decisions.csv",
+        "action",
+        ALLOWED_REVIEW_ACTIONS,
+        issues,
+    )
+    for row_number, row in enumerate(review_decisions, start=2):
+        for field in (
+            "decision_id",
+            "review_queue",
+            "target_type",
+            "action",
+            "review_note",
+            "created_at",
+            "updated_at",
+            "created_by",
+        ):
+            if not clean(row.get(field)):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "review_decisions.csv",
+                    f"{field} is required",
+                    row_number,
+                )
+        if not any(
+            clean(row.get(field))
+            for field in ("title", "doi", "openalex_url", "institution")
+        ):
+            add_issue(
+                issues,
+                "ERROR",
+                "review_decisions.csv",
+                "paper or institution identity is required",
+                row_number,
+            )
     validate_references(datasets, issues)
     validate_mapping_evidence(mappings, issues)
     validate_confirmed_locations(confirmed_locations, issues)

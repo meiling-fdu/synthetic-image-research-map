@@ -10,6 +10,9 @@ const state = {
   locationReviews: [],
   locationSummary: {},
   selectedLocationReviewId: "",
+  dashboard: {},
+  reviewQueues: {},
+  paperMetadata: null,
 };
 
 const elements = {};
@@ -176,6 +179,39 @@ document.addEventListener("DOMContentLoaded", () => {
     "scope-form-error",
     "scope-cancel",
     "scope-submit",
+    "console-nav",
+    "dashboard-panel",
+    "dashboard-grid",
+    "reload-review-queues",
+    "dashboard-git-status",
+    "dashboard-run-full-refresh",
+    "paper-metadata-section",
+    "metadata-edit-button",
+    "metadata-compare",
+    "metadata-edit-form",
+    "metadata-paper-id",
+    "metadata-title",
+    "metadata-year",
+    "metadata-authors",
+    "metadata-venue",
+    "metadata-doi",
+    "metadata-arxiv-id",
+    "metadata-openalex-url",
+    "metadata-paper-url",
+    "metadata-publication-type",
+    "metadata-task",
+    "metadata-subtask",
+    "metadata-scope-status",
+    "metadata-curation-status",
+    "metadata-review-status",
+    "metadata-abstract",
+    "metadata-review-note",
+    "metadata-edit-error",
+    "metadata-edit-cancel",
+    "high-risk-review-panel",
+    "marker-blocker-review-panel",
+    "key-coverage-review-panel",
+    "manual-import-review-panel",
   ].forEach((id) => {
     elements[id] = document.getElementById(id);
   });
@@ -246,6 +282,27 @@ document.addEventListener("DOMContentLoaded", () => {
   elements["location-mark-unresolved"].addEventListener("click", () => {
     markLocationReview("unresolved");
   });
+  document.querySelectorAll("[data-console-target]").forEach((button) => {
+    button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
+  });
+  elements["reload-review-queues"].addEventListener("click", loadDashboardAndQueues);
+  elements["dashboard-git-status"].addEventListener("click", () => {
+    navigateConsole("workflows");
+    showGitStatus();
+  });
+  elements["dashboard-run-full-refresh"].addEventListener("click", () => {
+    navigateConsole("workflows");
+    runAdminWorkflow("/api/run-full-refresh", "Full refresh");
+  });
+  elements["metadata-edit-button"].addEventListener("click", openMetadataEditor);
+  elements["metadata-edit-cancel"].addEventListener("click", closeMetadataEditor);
+  elements["metadata-edit-form"].addEventListener("submit", saveMetadata);
+  document.querySelectorAll(".review-queue-panel").forEach((panel) => {
+    panel.querySelectorAll("input, select").forEach((control) => {
+      control.addEventListener("input", () => renderReviewQueue(panel.dataset.queue));
+      control.addEventListener("change", () => renderReviewQueue(panel.dataset.queue));
+    });
+  });
 
   if (state.token) loadApplication();
   else requestToken();
@@ -261,7 +318,9 @@ async function apiFetch(path, options = {}) {
   });
   const payload = await response.json().catch(() => ({ error: "Invalid server response" }));
   if (!response.ok) {
-    const error = new Error(payload.error || `Request failed (${response.status})`);
+    const error = new Error(
+      payload.error || payload.errors?.join("; ") || `Request failed (${response.status})`
+    );
     error.status = response.status;
     error.payload = payload;
     throw error;
@@ -289,6 +348,8 @@ async function loadApplication(preserveSelection = false) {
     setConnection("ok", "Local curation · connected");
     renderLatestWorkflowStatus(workflowStatus);
     applyLocationPayload(locationPayload);
+    elements["console-nav"].hidden = false;
+    await loadDashboardAndQueues();
     if (preserveSelection && state.selectedId) {
       const stillPresent = state.papers.some((paper) => paper.display_id === state.selectedId);
       if (stillPresent) await selectPaper(state.selectedId);
@@ -302,6 +363,336 @@ async function loadApplication(preserveSelection = false) {
     }
     requestToken(`Could not load admin data: ${error.message}`);
     setConnection("error", "Connection error");
+  }
+}
+
+async function loadDashboardAndQueues() {
+  const button = elements["reload-review-queues"];
+  button.disabled = true;
+  try {
+    const paths = {
+      dashboard: "/api/dashboard",
+      "high-risk": "/api/review/high-risk-markers",
+      "marker-blockers": "/api/review/marker-blockers",
+      "key-paper-coverage": "/api/review/key-paper-coverage",
+      "manual-import": "/api/review/manual-import",
+    };
+    const entries = await Promise.all(
+      Object.entries(paths).map(async ([name, path]) => [name, await apiFetch(path)])
+    );
+    entries.forEach(([name, payload]) => {
+      if (name === "dashboard") state.dashboard = payload.data || {};
+      else state.reviewQueues[name] = payload.data || {};
+    });
+    renderDashboard();
+    Object.keys(state.reviewQueues).forEach(renderReviewQueue);
+  } catch (error) {
+    showNotice(`Review queues could not be loaded: ${error.message}`, "error");
+  } finally {
+    button.disabled = false;
+  }
+}
+
+function navigateConsole(target) {
+  const targets = {
+    dashboard: elements["dashboard-panel"],
+    papers: elements.workspace,
+    "add-paper": elements["add-paper-panel"],
+    "scope-review": elements.workspace,
+    "metadata-editor": elements["paper-metadata-section"],
+    mappings: document.querySelector(".mappings-section"),
+    "location-review": elements["location-review-panel"],
+    "high-risk": elements["high-risk-review-panel"],
+    "marker-blockers": elements["marker-blocker-review-panel"],
+    "key-coverage": elements["key-coverage-review-panel"],
+    "manual-import": elements["manual-import-review-panel"],
+    workflows: elements["workflow-panel"],
+  };
+  if (target === "add-paper") openAddPaperPanel();
+  if (target === "location-review") openLocationReview();
+  const node = targets[target];
+  if (!node) return;
+  if ("hidden" in node) node.hidden = false;
+  node.scrollIntoView({ behavior: "smooth", block: "start" });
+  if (["metadata-editor", "mappings", "scope-review"].includes(target) && !state.selectedPaper) {
+    showNotice("Select a paper first, then open its curation editor.", "error");
+  }
+  if (target === "metadata-editor" && state.selectedPaper) openMetadataEditor();
+}
+
+function renderDashboard() {
+  const data = state.dashboard;
+  const cards = [
+    ["Public preview papers", data.counts?.public_preview_papers],
+    ["Map markers", data.counts?.map_markers],
+    ["Curated papers", data.counts?.curated_papers],
+    ["Active exclusions", data.counts?.active_exclusions],
+    ["Curated mappings", data.counts?.curated_mappings],
+    ["Pending locations", data.counts?.pending_location_reviews],
+    ["Confirmed locations", data.counts?.confirmed_institution_locations],
+  ];
+  elements["dashboard-grid"].replaceChildren();
+  cards.forEach(([label, value]) => {
+    const card = document.createElement("article");
+    const strong = document.createElement("strong");
+    strong.textContent = formatNumber(value);
+    const span = document.createElement("span");
+    span.textContent = label;
+    card.append(strong, span);
+    elements["dashboard-grid"].append(card);
+  });
+  Object.entries(data.queues || {}).forEach(([name, queue]) => {
+    const card = document.createElement("article");
+    const strong = document.createElement("strong");
+    strong.textContent = formatNumber(queue.count);
+    const span = document.createElement("span");
+    const groups = Object.entries(queue.summary || {})
+      .map(([key, count]) => `${key}: ${count}`).join(" · ");
+    span.textContent = `${humanize(name)}${groups ? ` · ${groups}` : ""}`;
+    card.append(strong, span);
+    elements["dashboard-grid"].append(card);
+  });
+}
+
+function queuePanel(name) {
+  return document.querySelector(`.review-queue-panel[data-queue="${name}"]`);
+}
+
+function queueFields(name, row) {
+  if (name === "high-risk") {
+    return [row.priority, row.title, row.institution, row.review_type, row.recommended_action];
+  }
+  if (name === "marker-blockers") {
+    return [row.blocker_type, row.title, row.institutions || row.institution, row.has_map_location, row.recommended_action];
+  }
+  if (name === "key-paper-coverage") {
+    return [row.missing_stage, row.title, row.year, row.coverage_status, row.recommended_action];
+  }
+  return [
+    row.candidate_status,
+    row.title,
+    row.candidate_title || row.best_match_title,
+    row.similarity,
+    row.source_file,
+  ];
+}
+
+function queueGroupField(name) {
+  return {
+    "high-risk": "priority",
+    "marker-blockers": "blocker_type",
+    "key-paper-coverage": "missing_stage",
+    "manual-import": "candidate_status",
+  }[name];
+}
+
+function renderReviewQueue(name) {
+  const panel = queuePanel(name);
+  const queue = state.reviewQueues[name] || {};
+  if (!panel) return;
+  const records = queue.records || [];
+  const group = panel.querySelector('[data-role="group"]');
+  const previous = group.value;
+  const values = [...new Set(records.map((row) => text(row[queueGroupField(name)]) || "unknown"))].sort();
+  group.replaceChildren(new Option(group.options[0]?.textContent || "All", ""));
+  values.forEach((value) => group.append(new Option(value, value)));
+  group.value = previous;
+  const search = normalize(panel.querySelector('[data-role="search"]').value);
+  const actionFilter = panel.querySelector('[data-role="action-filter"]');
+  const typeFilter = panel.querySelector('[data-role="type-filter"]');
+  [actionFilter, typeFilter].filter(Boolean).forEach((select) => {
+    const field = select === actionFilter ? "recommended_action" : "review_type";
+    const selected = select.value;
+    const first = select.options[0]?.textContent || "All";
+    select.replaceChildren(new Option(first, ""));
+    [...new Set(records.map((row) => text(row[field])).filter(Boolean))].sort()
+      .forEach((value) => select.append(new Option(value, value)));
+    select.value = selected;
+  });
+  const filtered = records.filter((row) => {
+    if (group.value && text(row[queueGroupField(name)]) !== group.value) return false;
+    if (actionFilter?.value && text(row.recommended_action) !== actionFilter.value) return false;
+    if (typeFilter?.value && text(row.review_type) !== typeFilter.value) return false;
+    return !search || normalize(Object.values(row).join(" ")).includes(search);
+  }).slice(0, 500);
+  const body = panel.querySelector('[data-role="rows"]');
+  body.replaceChildren();
+  filtered.forEach((row) => {
+    const tr = document.createElement("tr");
+    queueFields(name, row).forEach((value) => {
+      const td = document.createElement("td");
+      td.textContent = text(value) || "—";
+      tr.append(td);
+    });
+    tr.tabIndex = 0;
+    tr.addEventListener("click", () => renderReviewDetail(name, row));
+    tr.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") renderReviewDetail(name, row);
+    });
+    body.append(tr);
+  });
+  const empty = panel.querySelector('[data-role="empty"]');
+  empty.textContent = !queue.available
+    ? "Diagnostic report is missing. Run the full refresh pipeline."
+    : filtered.length ? "" : "No rows match these filters.";
+}
+
+function renderReviewDetail(name, row) {
+  const detail = queuePanel(name).querySelector('[data-role="detail"]');
+  detail.replaceChildren();
+  const heading = document.createElement("h3");
+  heading.textContent = text(row.title) || "Review row";
+  const dl = document.createElement("dl");
+  Object.entries(row).filter(([, value]) => text(value)).forEach(([key, value]) => {
+    const dt = document.createElement("dt");
+    dt.textContent = humanize(key);
+    const dd = document.createElement("dd");
+    dd.textContent = text(value);
+    dl.append(dt, dd);
+  });
+  const actions = document.createElement("div");
+  actions.className = "review-actions";
+  reviewActionsFor(name, row).forEach(([label, action]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "secondary-button";
+    button.textContent = label;
+    button.addEventListener("click", () => handleReviewAction(name, row, action));
+    actions.append(button);
+  });
+  detail.append(heading, dl, actions);
+}
+
+function reviewActionsFor(name, row) {
+  const common = [["Open metadata", "open_metadata"], ["Open scope review", "open_scope"]];
+  if (name === "high-risk") return [
+    ["Confirm marker", "confirm_marker"],
+    ["Replace mapping", "replace_author_institution_mapping"],
+    ["Exclude wrong mapping", "exclude_wrong_mapping"],
+    ["Send to location review", "send_to_location_review"],
+    ["No action after review", "no_action_after_review"],
+    ...common,
+  ];
+  if (name === "marker-blockers") return [
+    ["Open mapping editor", "replace_author_institution_mapping"],
+    ["Send to location review", "send_to_location_review"],
+    ["Open high-risk review", "open_high_risk"],
+    ["No action after review", "no_action_after_review"],
+    ...common,
+  ];
+  if (name === "key-paper-coverage") return [
+    ["Open blocker review", "open_blockers"],
+    ["Open mapping editor", "replace_author_institution_mapping"],
+    ["Add manually", "add_manually"],
+    ["Confirm same paper", "no_action_after_review"],
+    ["Mark unresolved", "unresolved"],
+    ...common,
+  ];
+  return [
+    ["Use OpenAlex record", "use_openalex"],
+    ["Add manually", "add_manually"],
+    ["Retry search", "retry_search"],
+    ["Reject as out-of-scope", "open_scope"],
+    ["Mark weak match unresolved", "unresolved"],
+    ["No action after review", "no_action_after_review"],
+  ];
+}
+
+function findRelatedPaper(row) {
+  const doi = normalize(text(row.doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, ""));
+  const openalex = normalize(row.openalex_url);
+  const title = normalize(row.title);
+  const year = text(row.year);
+  return state.papers.find((paper) =>
+    (doi && normalize(text(paper.doi).replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "")) === doi) ||
+    (openalex && normalize(paper.openalex_url) === openalex) ||
+    (title && normalize(paper.title) === title && text(paper.year || paper.publication_year) === year)
+  );
+}
+
+async function openRelatedPaper(row) {
+  const paper = findRelatedPaper(row);
+  if (!paper) {
+    showNotice("No matching paper is currently visible. Use Add Paper or refresh the preview.", "error");
+    return null;
+  }
+  navigateConsole("papers");
+  await selectPaper(paper.display_id);
+  return paper;
+}
+
+async function handleReviewAction(name, row, action) {
+  if (action === "open_high_risk") return navigateConsole("high-risk");
+  if (action === "open_blockers") return navigateConsole("marker-blockers");
+  if (action === "open_metadata") {
+    if (await openRelatedPaper(row)) openMetadataEditor();
+    return;
+  }
+  if (action === "open_scope") {
+    const paper = await openRelatedPaper(row);
+    if (paper) openScopeDialog(state.selectedPaper, "exclude");
+    else {
+      const note = window.prompt("Review note for this out-of-scope candidate:");
+      if (note) await saveReviewDecision(name, row, "exclude_paper_scope", note);
+    }
+    return;
+  }
+  if (action === "replace_author_institution_mapping") {
+    if (await openRelatedPaper(row)) openMappingDialog("replace");
+    return;
+  }
+  if (action === "send_to_location_review" && !text(row.institution)) {
+    openLocationReview();
+    elements["location-search"].value = text(row.title);
+    renderLocationReviewList();
+    showNotice("Opened the existing location queue filtered to this paper.");
+    return;
+  }
+  if (action === "use_openalex" || action === "add_manually") {
+    openAddPaperPanel();
+    const candidate = action === "use_openalex" ? {
+      ...row,
+      title: row.candidate_title || row.best_match_title || row.title,
+      year: row.candidate_year || row.best_match_year || row.year,
+      venue: row.venue || row.publication_venue,
+    } : row;
+    startPaperDraft(candidate, action === "use_openalex" ? "openalex" : "manual");
+    return;
+  }
+  if (action === "retry_search") {
+    openAddPaperPanel();
+    elements["openalex-title"].value = text(row.title);
+    elements["openalex-doi"].value = text(row.doi);
+    elements["openalex-paper-url"].value = text(row.openalex_url);
+    await searchOpenAlex({ preventDefault() {} });
+    return;
+  }
+  const note = window.prompt("Required review note:");
+  if (!note) return;
+  await saveReviewDecision(name, row, action, note);
+}
+
+async function saveReviewDecision(name, row, action, note) {
+  const endpoints = {
+    "high-risk": "/api/review/high-risk-markers/action",
+    "marker-blockers": "/api/review/marker-blockers/action",
+    "key-paper-coverage": "/api/review/key-paper-coverage/action",
+    "manual-import": "/api/review/manual-import/action",
+  };
+  try {
+    const payload = await apiFetch(endpoints[name], {
+      method: "POST",
+      body: JSON.stringify({
+        ...row,
+        action,
+        review_note: note,
+        target_type: row.institution ? "marker" : "paper",
+      }),
+    });
+    showNotice(payload.message);
+    await loadDashboardAndQueues();
+  } catch (error) {
+    showNotice(`Could not save review action: ${error.message}`, "error");
   }
 }
 
@@ -1081,19 +1472,109 @@ async function selectPaper(id) {
   elements["detail-title"].textContent = "Loading…";
   elements["mapping-panel-error"].hidden = true;
   try {
-    const [paperPayload, mappingsPayload] = await Promise.all([
+    const [paperPayload, mappingsPayload, metadataPayload] = await Promise.all([
       apiFetch(`/api/paper?id=${encodeURIComponent(id)}`),
       apiFetch(`/api/paper/mappings?id=${encodeURIComponent(id)}`),
+      apiFetch(`/api/paper/metadata?id=${encodeURIComponent(id)}`),
     ]);
     state.selectedPaper = paperPayload.paper;
     state.selectedMappings = mappingsPayload.curated_mappings || [];
+    state.paperMetadata = metadataPayload.data;
     renderPaperDetail(paperPayload.paper);
     renderMappings(mappingsPayload);
+    renderMetadataComparison();
   } catch (error) {
     elements["detail-title"].textContent = "Could not load paper";
     elements["detail-notes"].textContent = error.message;
     elements["mapping-panel-error"].hidden = false;
     elements["mapping-panel-error"].textContent = error.message;
+  }
+}
+
+function renderMetadataComparison() {
+  const payload = state.paperMetadata || {};
+  const sources = [
+    ["Effective metadata", payload.effective_record],
+    ["Original public preview metadata", payload.public_preview_record],
+    ["Curated override metadata", payload.curated_record],
+  ];
+  elements["metadata-compare"].replaceChildren();
+  sources.forEach(([label, record]) => {
+    const details = document.createElement("details");
+    if (label === "Effective metadata") details.open = true;
+    const summary = document.createElement("summary");
+    summary.textContent = `${label}${record ? "" : " · none"}`;
+    const pre = document.createElement("pre");
+    pre.textContent = record ? JSON.stringify(record, null, 2) : "No record.";
+    details.append(summary, pre);
+    elements["metadata-compare"].append(details);
+  });
+}
+
+function metadataValue(record, field) {
+  const value = record?.[field];
+  return Array.isArray(value) ? value.join("; ") : text(value);
+}
+
+function openMetadataEditor() {
+  if (!state.selectedPaper || !state.paperMetadata) {
+    showNotice("Select a paper before editing metadata.", "error");
+    return;
+  }
+  const record = state.paperMetadata.effective_record || state.selectedPaper;
+  const fields = [
+    "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
+    "paper_url", "publication_type", "task", "subtask", "scope_status",
+    "curation_status", "review_status", "abstract", "review_note",
+  ];
+  fields.forEach((field) => {
+    const id = `metadata-${field.replaceAll("_", "-")}`;
+    if (elements[id]) elements[id].value = metadataValue(record, field);
+  });
+  elements["metadata-paper-id"].value = state.selectedId;
+  elements["metadata-curation-status"].value =
+    metadataValue(record, "curation_status") || "corrected_by_admin";
+  elements["metadata-review-status"].value =
+    metadataValue(record, "review_status") || "reviewed";
+  elements["metadata-scope-status"].value =
+    metadataValue(record, "scope_status") || "in_scope";
+  elements["metadata-edit-error"].hidden = true;
+  elements["metadata-edit-form"].hidden = false;
+  elements["metadata-title"].focus();
+}
+
+function closeMetadataEditor() {
+  elements["metadata-edit-form"].hidden = true;
+}
+
+async function saveMetadata(event) {
+  event.preventDefault();
+  const fields = [
+    "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
+    "paper_url", "publication_type", "task", "subtask", "scope_status",
+    "curation_status", "review_status", "abstract", "review_note",
+  ];
+  const draft = { id: elements["metadata-paper-id"].value };
+  fields.forEach((field) => {
+    draft[field] = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
+  });
+  elements["metadata-edit-error"].hidden = true;
+  try {
+    const payload = await apiFetch("/api/paper/metadata/update", {
+      method: "POST",
+      body: JSON.stringify(draft),
+    });
+    showNotice(payload.message);
+    closeMetadataEditor();
+    await loadApplication(false);
+    const updated = state.papers.find((paper) =>
+      normalize(paper.openalex_url) === normalize(draft.openalex_url) ||
+      (normalize(paper.title) === normalize(draft.title) && text(paper.year) === draft.year)
+    );
+    if (updated) await selectPaper(updated.display_id);
+  } catch (error) {
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent = error.message;
   }
 }
 

@@ -112,12 +112,29 @@ INSTITUTION_LOCATION_COLUMNS = (
     "created_by",
 )
 
+REVIEW_DECISION_COLUMNS = (
+    "decision_id",
+    "review_queue",
+    "target_type",
+    "title",
+    "year",
+    "doi",
+    "openalex_url",
+    "institution",
+    "action",
+    "review_note",
+    "created_at",
+    "updated_at",
+    "created_by",
+)
+
 EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "papers.csv": PAPERS_COLUMNS,
     "author_institution_mappings.csv": AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     "paper_exclusions.csv": PAPER_EXCLUSION_COLUMNS,
     "institution_location_review.csv": INSTITUTION_LOCATION_REVIEW_COLUMNS,
     "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
+    "review_decisions.csv": REVIEW_DECISION_COLUMNS,
 }
 
 ALLOWED_TASKS = {
@@ -125,6 +142,16 @@ ALLOWED_TASKS = {
     "detection_and_source_attribution",
     "source_attribution",
     "uncertain",
+}
+
+ALLOWED_SUBTASKS = {
+    "ai_generated_image_detection",
+    "deepfake_image_detection",
+    "detection_and_source_attribution",
+    "generated_image_source_attribution",
+    "source_identification",
+    "synthetic_image_detection",
+    "unknown",
 }
 
 ALLOWED_CURATION_STATUSES = {
@@ -173,4 +200,34 @@ ALLOWED_COORDINATE_STATUSES = {
     "known",
     "ambiguous",
     "needs_coordinate_review",
+}
+
+ALLOWED_SCOPE_STATUSES = {
+    "in_scope",
+    "out_of_scope",
+    "uncertain",
+    "needs_review",
+}
+
+ALLOWED_REVIEW_QUEUES = {
+    "high_risk_marker",
+    "marker_blocker",
+    "key_paper_coverage",
+    "manual_import",
+    "title_match",
+    "other",
+}
+
+ALLOWED_REVIEW_ACTIONS = {
+    "confirm_marker",
+    "replace_author_institution_mapping",
+    "exclude_wrong_mapping",
+    "send_to_location_review",
+    "exclude_paper_scope",
+    "add_paper",
+    "add_manually",
+    "retry_search",
+    "no_action_after_review",
+    "unresolved",
+    "other",
 }

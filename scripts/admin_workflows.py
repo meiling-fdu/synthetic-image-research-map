@@ -21,6 +21,7 @@ KNOWN_WORKFLOW_OUTPUTS = (
     Path("data/curated/institution_location_review.csv"),
     Path("data/manual/key_paper_coverage_report.csv"),
     Path("data/manual/paper_marker_blocker_report.csv"),
+    Path("data/manual/high_risk_marker_review.csv"),
 )
 
 CURATED_VALIDATION = (
@@ -47,6 +48,10 @@ MARKER_BLOCKER_DIAGNOSIS = (
     "python3",
     "scripts/diagnose_paper_marker_blockers.py",
 )
+HIGH_RISK_MARKER_REPORT = (
+    "python3",
+    "scripts/report_high_risk_markers.py",
+)
 
 ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
     "curated_validation": (CURATED_VALIDATION,),
@@ -59,6 +64,7 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         PUBLIC_VALIDATION,
         KEY_PAPER_AUDIT,
         MARKER_BLOCKER_DIAGNOSIS,
+        HIGH_RISK_MARKER_REPORT,
     ),
 }
 

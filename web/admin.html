@@ -12,8 +12,8 @@
     <header class="masthead">
       <div>
         <p class="eyebrow">Maintainer-only · localhost</p>
-        <h1>Paper curation browser</h1>
-        <p class="lede">Inspect records and make durable paper-scope exclusion decisions locally.</p>
+        <h1>Interactive Curation Console</h1>
+        <p class="lede">Review diagnostics, record durable curated decisions, refresh, validate, then inspect Git manually.</p>
       </div>
       <div class="masthead-actions">
         <button class="secondary-button" id="location-review-toggle" type="button">Institution Location Review</button>
@@ -24,6 +24,21 @@
 
     <main>
       <div class="notice" id="action-notice" role="status" hidden></div>
+
+      <nav class="console-nav" id="console-nav" aria-label="Curation console" hidden>
+        <button data-console-target="dashboard" type="button">Dashboard</button>
+        <button data-console-target="papers" type="button">Papers</button>
+        <button data-console-target="add-paper" type="button">Add Paper</button>
+        <button data-console-target="scope-review" type="button">Scope Review</button>
+        <button data-console-target="metadata-editor" type="button">Metadata Editor</button>
+        <button data-console-target="mappings" type="button">Author–Institution Mappings</button>
+        <button data-console-target="location-review" type="button">Location Review</button>
+        <button data-console-target="high-risk" type="button">High-risk Marker Review</button>
+        <button data-console-target="marker-blockers" type="button">Marker Blocker Review</button>
+        <button data-console-target="key-coverage" type="button">Key Paper Coverage Review</button>
+        <button data-console-target="manual-import" type="button">Manual Import Review</button>
+        <button data-console-target="workflows" type="button">Workflows / Validation</button>
+      </nav>
 
       <section class="token-panel" id="token-panel" hidden>
         <form id="token-form">
@@ -43,6 +58,23 @@
         <article><strong id="count-coordinates">—</strong><span>Missing coordinates</span></article>
         <article><strong id="count-curated">—</strong><span>Curated papers</span></article>
         <article><strong id="count-exclusions">—</strong><span>Active exclusions</span></article>
+      </section>
+      <section class="dashboard-panel" id="dashboard-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Review queues</p><h2>Admin Dashboard</h2></div>
+          <button class="secondary-button" id="reload-review-queues" type="button">Reload all review queues</button>
+        </div>
+        <div class="dashboard-grid" id="dashboard-grid"><p>Dashboard data loads after authentication.</p></div>
+        <div class="workflow-actions">
+          <button class="primary-button" id="dashboard-run-full-refresh" type="button">Run full refresh pipeline</button>
+          <button class="secondary-button" data-console-target="add-paper" type="button">Open Add Paper</button>
+          <button class="secondary-button" data-console-target="high-risk" type="button">Open High-risk Marker Review</button>
+          <button class="secondary-button" data-console-target="marker-blockers" type="button">Open Marker Blocker Review</button>
+          <button class="secondary-button" data-console-target="key-coverage" type="button">Open Key Paper Coverage Review</button>
+          <button class="secondary-button" data-console-target="manual-import" type="button">Open Manual Import Review</button>
+          <button class="secondary-button" data-console-target="location-review" type="button">Open Location Review</button>
+          <button class="secondary-button" id="dashboard-git-status" type="button">Open Git status</button>
+        </div>
       </section>
 
       <section class="workflow-panel" id="workflow-panel">
@@ -159,10 +191,22 @@
             </select>
           </label>
           <label>Subtask
-            <input id="paper-subtask" name="subtask" type="text">
+            <select id="paper-subtask" name="subtask">
+              <option value="">none</option>
+              <option value="ai_generated_image_detection">ai_generated_image_detection</option>
+              <option value="deepfake_image_detection">deepfake_image_detection</option>
+              <option value="detection_and_source_attribution">detection_and_source_attribution</option>
+              <option value="generated_image_source_attribution">generated_image_source_attribution</option>
+              <option value="source_identification">source_identification</option>
+              <option value="synthetic_image_detection">synthetic_image_detection</option>
+              <option value="unknown">unknown</option>
+            </select>
           </label>
           <label>Scope status
-            <input id="paper-scope-status" name="scope_status" type="text" value="in_scope">
+            <select id="paper-scope-status" name="scope_status">
+              <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>
+              <option value="uncertain">uncertain</option><option value="needs_review">needs_review</option>
+            </select>
           </label>
           <label>Review status
             <select id="paper-review-status" name="review_status">
@@ -305,6 +349,61 @@
               <div class="badge-row" id="detail-badges"></div>
             </div>
             <dl class="metadata-grid" id="metadata-grid"></dl>
+            <section class="paper-metadata-section" id="paper-metadata-section">
+              <div class="mapping-heading">
+                <div>
+                  <h3>Paper Metadata</h3>
+                  <p>Compare generated source metadata with the durable curated override.</p>
+                </div>
+                <button class="primary-button" id="metadata-edit-button" type="button">Edit metadata</button>
+              </div>
+              <div class="metadata-compare" id="metadata-compare"></div>
+              <form class="paper-draft-form" id="metadata-edit-form" hidden>
+                <input id="metadata-paper-id" type="hidden">
+                <label>Title<input id="metadata-title" required></label>
+                <label>Year<input id="metadata-year" type="number" min="1000" max="9999" required></label>
+                <label class="full-width">Authors<textarea id="metadata-authors" rows="2"></textarea></label>
+                <label>Venue<input id="metadata-venue"></label>
+                <label>DOI<input id="metadata-doi"></label>
+                <label>arXiv ID<input id="metadata-arxiv-id"></label>
+                <label>OpenAlex URL<input id="metadata-openalex-url" type="url"></label>
+                <label>Paper URL<input id="metadata-paper-url" type="url"></label>
+                <label>Publication type<input id="metadata-publication-type"></label>
+                <label>Task<select id="metadata-task" required>
+                  <option value="detection">detection</option>
+                  <option value="detection_and_source_attribution">detection_and_source_attribution</option>
+                  <option value="source_attribution">source_attribution</option>
+                  <option value="uncertain">uncertain</option>
+                </select></label>
+                <label>Subtask<select id="metadata-subtask">
+                  <option value="">none</option><option value="ai_generated_image_detection">ai_generated_image_detection</option>
+                  <option value="deepfake_image_detection">deepfake_image_detection</option>
+                  <option value="detection_and_source_attribution">detection_and_source_attribution</option>
+                  <option value="generated_image_source_attribution">generated_image_source_attribution</option>
+                  <option value="source_identification">source_identification</option>
+                  <option value="synthetic_image_detection">synthetic_image_detection</option><option value="unknown">unknown</option>
+                </select></label>
+                <label>Scope status<select id="metadata-scope-status">
+                  <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>
+                  <option value="uncertain">uncertain</option><option value="needs_review">needs_review</option>
+                </select></label>
+                <label>Curation status<select id="metadata-curation-status">
+                  <option value="corrected_by_admin">corrected_by_admin</option><option value="manually_confirmed">manually_confirmed</option>
+                  <option value="manually_added">manually_added</option><option value="needs_review">needs_review</option>
+                  <option value="auto_imported">auto_imported</option>
+                </select></label>
+                <label>Review status<select id="metadata-review-status">
+                  <option value="reviewed">reviewed</option><option value="pending">pending</option><option value="needs_check">needs_check</option>
+                </select></label>
+                <label class="full-width">Abstract<textarea id="metadata-abstract" rows="5"></textarea></label>
+                <label class="full-width">Review note<textarea id="metadata-review-note" rows="3"></textarea></label>
+                <p class="form-error full-width" id="metadata-edit-error" hidden></p>
+                <div class="form-actions full-width">
+                  <button class="primary-button" type="submit">Save curated override</button>
+                  <button class="secondary-button" id="metadata-edit-cancel" type="button">Cancel</button>
+                </div>
+              </form>
+            </section>
             <section class="notes-section">
               <h3>Notes</h3>
               <p id="detail-notes"></p>
@@ -375,6 +474,30 @@
             </section>
           </div>
         </article>
+      </section>
+
+      <section class="review-queue-panel" id="high-risk-review-panel" hidden data-queue="high-risk">
+        <div class="section-heading"><div><p class="eyebrow">P0 / P1 / P2</p><h2>High-risk Marker Review</h2><p>Generated suspicious-marker evidence; actions persist only in the curated layer.</p></div></div>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Title, institution, author, DOI, OpenAlex…"><select data-role="group"><option value="">All priorities</option></select><select data-role="action-filter"><option value="">All recommended actions</option></select><select data-role="type-filter"><option value="">All review types</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Institution</th><th>Review type</th><th>Recommended action</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="marker-blocker-review-panel" hidden data-queue="marker-blockers">
+        <div class="section-heading"><div><p class="eyebrow">Generated diagnostic</p><h2>Marker Blocker Review</h2><p>Resolve affiliations, coordinates, review confidence, scope, or metadata through curated editors.</p></div></div>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Search blocker queue…"><select data-role="group"><option value="">All blocker types</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Blocker</th><th>Title</th><th>Institution</th><th>Map status</th><th>Recommended action</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="key-coverage-review-panel" hidden data-queue="key-paper-coverage">
+        <div class="section-heading"><div><p class="eyebrow">Key-paper audit</p><h2>Key Paper Coverage Review</h2><p>Inspect missing stages and possible title-match failures without editing the generated audit.</p></div></div>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Search coverage queue…"><select data-role="group"><option value="">All missing stages</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Missing stage</th><th>Title</th><th>Year</th><th>Map status</th><th>Recommended action</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="manual-import-review-panel" hidden data-queue="manual-import">
+        <div class="section-heading"><div><p class="eyebrow">Candidate CSVs</p><h2>Manual Import Review</h2><p>Review available ready, weak-match, query-failed, no-match, and manual-review candidates.</p></div></div>
+        <div class="review-filters"><input type="search" data-role="search" placeholder="Search import candidates…"><select data-role="group"><option value="">All candidate statuses</option></select></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Status</th><th>Requested title</th><th>Candidate</th><th>Similarity</th><th>Source file</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>
     </main>
 
