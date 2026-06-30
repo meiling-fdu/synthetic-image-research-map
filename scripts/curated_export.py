@@ -190,6 +190,35 @@ def normalize_institution(value: Any) -> str:
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
 
 
+def normalize_regional_location(
+    record: Mapping[str, Any],
+) -> Dict[str, Any]:
+    """Return a copy with canonical public fields for Taiwan locations."""
+    normalized = dict(record)
+    country = clean(record.get("country")).casefold()
+    country_code = clean(record.get("country_code")).upper()
+    region = clean(record.get("region")).casefold()
+    taiwan_names = {"taiwan", "taiwan, china"}
+    if (
+        country in taiwan_names
+        or region == "taiwan, china"
+        or (
+            country == "china"
+            and country_code == "CN"
+            and region == "taiwan"
+        )
+    ):
+        normalized.update(
+            {
+                "country": "China",
+                "country_code": "CN",
+                "region": "Taiwan",
+                "region_code": "TW",
+            }
+        )
+    return normalized
+
+
 def normalize_task_subtask(
     record: Mapping[str, Any],
 ) -> Tuple[str, str] | None:
@@ -561,7 +590,7 @@ def _curated_marker(
         or paper.get("primary_url")
         or paper.get("openalex_url")
     )
-    return {
+    return normalize_regional_location({
         "id": _marker_id(paper, mapping),
         "paper_id": clean(paper.get("paper_id")),
         "title": clean(paper.get("title")),
@@ -626,7 +655,7 @@ def _curated_marker(
         "resolution_confidence": "high",
         "needs_review": False,
         "notes": _mapping_note(mapping),
-    }
+    })
 
 
 def _mapping_matches_paper(
