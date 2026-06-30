@@ -3184,19 +3184,100 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 5,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing Normal University",
+        "Central University of Finance and Economics",
+        "Fudan University",
+        "Tsinghua University",
+        "University of Chinese Academy of Sciences"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:5f59ed9881d881a5168a",
+          "institution": "Beijing Normal University",
+          "institution_authors": [
+            "Chunxiao Li",
+            "Boming Miao"
+          ],
+          "raw_affiliation": "Beijing Normal University, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Li_Bridging_the_Gap_Between_Ideal_and_Real-world_Evaluation_Benchmarking_AI-Generated_ICCV_2025_paper.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:1184be4809269e9f25e3",
+          "institution": "University of Chinese Academy of Sciences",
+          "institution_authors": [
+            "Xiaoxiao Wang"
+          ],
+          "raw_affiliation": "University of Chinese Academy of Sciences, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Li_Bridging_the_Gap_Between_Ideal_and_Real-world_Evaluation_Benchmarking_AI-Generated_ICCV_2025_paper.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:741622c4ba72f8715918",
+          "institution": "Fudan University",
+          "institution_authors": [
+            "Meiling Li"
+          ],
+          "raw_affiliation": "Fudan University, Shanghai, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Li_Bridging_the_Gap_Between_Ideal_and_Real-world_Evaluation_Benchmarking_AI-Generated_ICCV_2025_paper.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:2a07fe0bece072bc56e7",
+          "institution": "Central University of Finance and Economics",
+          "institution_authors": [
+            "Peng Sun"
+          ],
+          "raw_affiliation": "Central University of Finance and Economics, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Li_Bridging_the_Gap_Between_Ideal_and_Real-world_Evaluation_Benchmarking_AI-Generated_ICCV_2025_paper.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:8b0f5e6db66108758731",
+          "institution": "Tsinghua University",
+          "institution_authors": [
+            "Yunjian Zhang",
+            "Xiangyang Ji",
+            "Yao Zhu"
+          ],
+          "raw_affiliation": "Tsinghua University, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Li_Bridging_the_Gap_Between_Ideal_and_Real-world_Evaluation_Benchmarking_AI-Generated_ICCV_2025_paper.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "C2P-CLIP: Injecting Category Common Prompt in CLIP to Enhance Generalization in Deepfake Detection",
