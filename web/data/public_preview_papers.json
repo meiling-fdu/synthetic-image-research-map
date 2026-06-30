@@ -1389,6 +1389,97 @@
       "aggregated_region_codes": []
     },
     {
+      "paper_id": "curated:35aae1e2c9d673ab1a97",
+      "title": "Source Attribution of AI-Generated Images: a Principled Survey",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "Zenodo (CERN European Organization for Nuclear Research)",
+      "venue_name": "Zenodo (CERN European Organization for Nuclear Research)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "preprint",
+      "abstract": "This record contains the preprint version of a survey manuscript on source attribution of AI-generated images. The manuscript reviews existing approaches for tracing synthetic images back to their generative sources, with a focus on passive attribution methods. It organizes the literature under a unified conceptual framework, covering different attribution scenarios, methodological paradigms, attribution granularities, open-set settings, commonly used datasets, and remaining challenges in the field. PS: This version has not yet undergone formal journal peer review. The final published version, if accepted, may differ from this preprint.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.5281/zenodo.20814592",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.5281/zenodo.20814592",
+      "primary_url": "https://doi.org/10.5281/zenodo.20814592",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7165659096",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.5281/zenodo.20814592",
+      "authors": [
+        "Meiling Li, Benedetta Tondi, Pietro Bongini, Zhenxing Qian, Xi Zhang, Mauro Barni"
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Fudan University",
+        "University of Siena"
+      ],
+      "aggregated_country_names": [
+        "China",
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "IT"
+      ],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:741b65f145c1af759479",
+          "institution": "Fudan University",
+          "institution_authors": [
+            "Meiling Li",
+            "Zhenxing Qian",
+            "Xinpeng Zhang"
+          ],
+          "raw_affiliation": "College of Computer Science and Artificial Intelligence, Fudan University, Songhu Road 2005, Shanghai, 200438, China.",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ai.fudan.edu.cn/",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:e8c28a522b523fbce1d6",
+          "institution": "University of Siena",
+          "institution_authors": [
+            "Benedetta Tondi",
+            "Pietro Bongini",
+            "Mauro Barni"
+          ],
+          "raw_affiliation": "Department of Information Engineering and Mathematics, University of Siena, Via Roma 56, Siena, 53100, Italy.",
+          "evidence_source": "PDF",
+          "evidence_url": "https://www.diism.unisi.it/en",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ]
+    },
+    {
       "title": "SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection",
       "in_scope": true,
       "year": 2026,
@@ -3055,6 +3146,57 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
+    },
+    {
+      "paper_id": "curated:e256ad6b672c3cf433ba",
+      "title": "Bridging the Gap Between Ideal and Real-World Evaluation: Benchmarking AI-Generated Image Detection in Challenging Scenarios",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "article",
+      "abstract": "With the rapid advancement of generative models, highly realistic image synthesis has posed new challenges to digital security and media credibility. Although AI-generated image detection methods have partially addressed these concerns, a substantial research gap remains in evaluating their performance under complex real-world conditions. This paper introduces the Real-World Robustness Dataset (RRDataset) for comprehensive evaluation of detection models across three dimensions: 1) Scenario Generalization: RRDataset encompasses high-quality images from seven major scenarios (War and Conflict, Disasters and Accidents, Political and Social Events, Medical and Public Health, Culture and Religion, Labor and Production, and everyday life), addressing existing dataset gaps from a content perspective. 2) Internet Transmission Robustness: examining detector performance on images that have undergone multiple rounds of sharing across various social media platforms. 3) Re-digitization Robustness: assessing model effectiveness on images altered through four distinct re-digitization methods. We benchmarked 17 detectors and 10 vision-language models (VLMs) on RRDataset and conducted a large-scale human study involving 192 participants to investigate human few-shot learning capabilities in detecting AI-generated images. The benchmarking results reveal the limitations of current AI detection methods under real-world conditions and underscore the importance of drawing on human adaptability to develop more robust detection algorithms.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/iccv51701.2025.01895",
+      "arxiv_id": "2509.09172",
+      "arxiv_url": "https://arxiv.org/abs/2509.09172",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1109/iccv51701.2025.01895",
+      "primary_url": "https://doi.org/10.1109/iccv51701.2025.01895",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4417071442",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/iccv51701.2025.01895",
+      "authors": [
+        "Chunxiao Li, Xiaoxiao Wang, Meiling Li, Boming Miao, Peng Sun, Yunjian Zhang, Xiangyang Ji, Yao Zhu"
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "curated_mappings": []
     },
     {
       "title": "C2P-CLIP: Injecting Category Common Prompt in CLIP to Enhance Generalization in Deepfake Detection",
@@ -8371,6 +8513,95 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": []
+    },
+    {
+      "paper_id": "curated:ee47e898ad64ec14b709",
+      "title": "Training-free Source Attribution of AI-generated Images via Resynthesis",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "Use Siena air (University of Siena)",
+      "venue_name": "Use Siena air (University of Siena)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "article",
+      "abstract": "Synthetic Image source attribution Is a challenging task, especially in data scarcity conditions requiring few-shot or zero-shot classification capabilities. We present a new training-free one-shot attribution method based on image resynthesis. A prompt describing the image under analysis is generated, then it is used to resynthesize the image with all the candidate sources. The image is attributed to the model which produced the resynthesis closest to the original image in a proper feature space. We also introduce a new dataset for synthetic image attribution consisting of face images from commercial and open-source text-to-image generators. The dataset provides a challenging attribution framework, useful for developing new attribution models and testing their capabilities on different generative architectures. The dataset structure allows to test approaches based on resynthesis and to compare them to few-shot methods. Results from state-of-the-art few-shot approaches and other baselines show that the proposed resynthesis method outperforms existing techniques when only a few samples are available for training or fine-tuning. The experiments also demonstrate that the new dataset is a challenging one and represents a valuable benchmark for developing and evaluating future few-shot and zero-shot methods.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/wifs66636.2025.00028",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/wifs66636.2025.00028",
+      "primary_url": "https://doi.org/10.1109/wifs66636.2025.00028",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7148430317",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/wifs66636.2025.00028",
+      "authors": [
+        "Pietro Bongini, Valentina Molinari, Andrea Costanzo, Benedetta Tondi, Mauro Barni"
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "IMT School for Advanced Studies Lucca",
+        "University of Siena"
+      ],
+      "aggregated_country_names": [
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:344baa593244c92aca85",
+          "institution": "University of Siena",
+          "institution_authors": [
+            "Pietro Bongini",
+            "Valentina Molinari",
+            "Andrea Costanzo",
+            "Benedetta Tondi",
+            "Mauro Barni"
+          ],
+          "raw_affiliation": "University of Siena, Department of Information Engineering and Mathematics, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/11458543/",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        },
+        {
+          "mapping_id": "mapping:d0c529dffed7f4d4eaa1",
+          "institution": "IMT School for Advanced Studies Lucca",
+          "institution_authors": [
+            "Valentina Molinari"
+          ],
+          "raw_affiliation": "IMT School, Lucca, Italy",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/11458543/",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
+        }
+      ]
     },
     {
       "title": "TriFusionNet: Multi-Branch Architecture for AI-Generated Image Detection",
