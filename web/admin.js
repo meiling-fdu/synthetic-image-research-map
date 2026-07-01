@@ -727,11 +727,29 @@ async function saveReviewDecision(name, row, action, note) {
         target_type: row.institution ? "marker" : "paper",
       }),
     });
+    await rebuildPaper(paperIdForRecord(row));
     showNotice(payload.message);
     await loadDashboardAndQueues();
   } catch (error) {
     showNotice(`Could not save review action: ${error.message}`, "error");
   }
+}
+
+function paperIdForRecord(record = {}) {
+  return record.display_id
+    || record.paper_id
+    || record.related_paper_id
+    || record.id
+    || (record.openalex_url
+      ? `openalex:${record.openalex_url.split("/").pop()}`
+      : "");
+}
+
+function selectedLocationPaperId() {
+  const row = state.locationReviews.find(
+    (candidate) => candidate.queue_id === state.selectedLocationReviewId,
+  );
+  return paperIdForRecord(row);
 }
 
 function applyLocationPayload(payload) {
@@ -986,6 +1004,7 @@ async function confirmLocation(event) {
       method: "POST",
       body: JSON.stringify(draft),
     });
+    await rebuildPaper(selectedLocationPaperId());
     showNotice(result.message);
     await loadLocationReviews();
   } catch (error) {
@@ -1024,6 +1043,7 @@ async function markLocationReview(status) {
         }),
       }
     );
+    await rebuildPaper(selectedLocationPaperId());
     showNotice(result.message);
     await loadLocationReviews();
   } catch (error) {
@@ -1046,6 +1066,7 @@ async function confirmLocationAlias() {
       method: "POST",
       body: JSON.stringify(draft),
     });
+    await rebuildPaper(selectedLocationPaperId());
     showNotice(result.message);
     await loadLocationReviews();
   } catch (error) {
@@ -1060,6 +1081,7 @@ async function saveLocationMetadata() {
       method: "POST",
       body: JSON.stringify(locationDraft()),
     });
+    await rebuildPaper(selectedLocationPaperId());
     showNotice(result.message);
     await loadLocationReviews();
   } catch (error) {
@@ -1184,6 +1206,19 @@ async function runAdminWorkflow(path, label, payload = null) {
   } finally {
     setWorkflowRunning(false);
   }
+}
+
+async function rebuildPaper(paperId) {
+  if (!paperId) return;
+  const result = await apiFetch(
+    `/rebuild-paper/${encodeURIComponent(paperId)}`,
+    { method: "POST" },
+  );
+  if (!result.success) {
+    throw new Error(result.stderr_tail || "Paper rebuild failed.");
+  }
+  window.dispatchEvent(new Event("paperUpdated"));
+  localStorage.setItem("paperUpdated", String(Date.now()));
 }
 
 async function reloadPreviewData() {
@@ -1475,6 +1510,7 @@ async function createPaper(event) {
       method: "POST",
       body: JSON.stringify(draft),
     });
+    await rebuildPaper(paperIdForRecord(result.paper));
     showNotice(result.message);
     cancelPaperDraft();
     await loadApplication();
@@ -1764,6 +1800,7 @@ async function saveMetadata(event) {
       method: "POST",
       body: JSON.stringify(draft),
     });
+    await rebuildPaper(draft.id);
     showNotice(payload.message);
     closeMetadataEditor();
     await loadApplication(false);
@@ -2011,6 +2048,7 @@ async function submitMapping(event) {
       method: "POST",
       body: JSON.stringify(body),
     });
+    await rebuildPaper(state.selectedId);
     closeMappingDialog();
     showNotice(result.message);
     await loadSelectedMappings();
@@ -2093,6 +2131,7 @@ async function submitScopeDecision(event) {
       method: "POST",
       body: JSON.stringify(body),
     });
+    await rebuildPaper(elements["scope-paper-id"].value);
     closeScopeDialog();
     showNotice(result.message);
     await loadApplication(true);

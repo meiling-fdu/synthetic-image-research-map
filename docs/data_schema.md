@@ -1,5 +1,17 @@
 # Data Schema
 
+## Canonical publication authority
+
+`scripts/canonical_authorship.py` is the only module permitted to load primary
+paper, author, institution, affiliation, and location data. It merges reviewed
+source rows into one entity using DOI, then arXiv ID, then OpenAlex ID, then a
+normalized-title hash. External records are retained through
+`provenance_sources`; they are never independent public paper nodes.
+
+The runtime pipeline is strictly `canonical_authorship → curated_export →
+export_public_preview`. Runtime validation fails immediately if the retired
+candidate-map filename appears in a script or frontend runtime path.
+
 ## Overview
 
 The project uses four core related CSV tables to represent papers, authors, institutions, and the affiliations connecting them, plus auxiliary manual correction tables. The schema is intentionally small and compatible with metadata commonly available from OpenAlex, Semantic Scholar, Crossref, arXiv, and manual research.
@@ -442,7 +454,30 @@ Affiliation is a property of an author's relationship to a particular paper, not
 
 `data/curated/author_institution_mappings.csv` keeps the reviewable paper-level grouping used by the admin and exporter. In addition to the canonical `institution` and `institution_authors`, imported candidates preserve `author_order`, `raw_affiliation`, `openalex_institution_id`, source city/country/latitude/longitude, and `provenance_source`. Missing coordinates never remove a candidate. Unmatched institutions use `mapping_status=needs_review`; confirmed canonical or alias matches may use `active`.
 
-Public paper records expose `author_institution_affiliations` (numbered institution groups) and `author_institution_indices` (author-to-index and stable institution-ID relationships). Public marker records expose `institution_id`; the frontend falls back to a normalized canonical institution name only for legacy records.
+Public paper and marker records expose `canonical_authorship`, the sole
+downstream author–institution graph:
+
+```json
+{
+  "authors": [{"name": "Ada Researcher", "institutions": ["institution:example"]}],
+  "institutions": [
+    {
+      "institution_id": "institution:example",
+      "canonical_name": "Example University",
+      "index": 1
+    }
+  ]
+}
+```
+
+Institution order comes from the authoritative per-paper source order and is
+deduplicated by stable ID. Legacy `author_institution_affiliations` and
+`author_institution_indices` fields, while present during migration, are derived
+from this graph and are not independent inputs. Raw OpenAlex affiliation text is
+source-only and is stripped from public JSON. Authors without resolved evidence
+receive the explicit indexed sentinel `institution:unresolved` with canonical
+name `Unresolved institution (manual review)`; this preserves uncertainty
+without inventing an affiliation or breaking the graph.
 
 When a paper has at least one `active` curated mapping, that active mapping set supersedes automatic OpenAlex/public affiliation evidence for the paper. The exporter removes automatic markers across every matching DOI, OpenAlex ID, or normalized title/year version before adding curated markers. Only an institution-record override explicitly marked as an admin-approved `add` supplement may coexist. Author conflict checks prefer aligned canonical author IDs when present and otherwise compare normalized names, including `Family, Given` versus `Given Family`.
 

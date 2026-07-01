@@ -68,7 +68,6 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         EXPORT_PREVIEW,
         PUBLIC_VALIDATION,
         KEY_PAPER_AUDIT,
-        MARKER_BLOCKER_DIAGNOSIS,
         HIGH_RISK_MARKER_REPORT,
     ),
     "publish_changes": (PUBLISH_CHANGES,),
@@ -248,4 +247,26 @@ def run_workflow(name: str) -> Dict[str, Any]:
             after_outputs,
         ),
         "steps": steps,
+    }
+
+
+def run_paper_rebuild(paper_id: str) -> Dict[str, Any]:
+    """Regenerate and atomically splice one paper into both public exports."""
+    if not paper_id or any(character in paper_id for character in "\r\n\x00"):
+        raise AdminWorkflowError("a valid paper id is required")
+    command = (
+        "python3",
+        "scripts/export_public_preview.py",
+        "--paper-id",
+        paper_id,
+    )
+    before = _known_output_signatures()
+    result = _run(command, timeout=COMMAND_TIMEOUT_SECONDS)
+    after = _known_output_signatures()
+    return {
+        **result,
+        "changed_files": sorted(
+            path for path in before if before.get(path) != after.get(path)
+        ),
+        "paper_id": paper_id,
     }

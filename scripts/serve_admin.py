@@ -20,12 +20,13 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tuple
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 
 try:
     from .admin_workflows import (
         AdminWorkflowError,
         git_status_result,
+        run_paper_rebuild,
         run_workflow,
     )
     from .curated_schema import ALLOWED_EXCLUSION_REASONS
@@ -92,6 +93,7 @@ except ImportError:
     from admin_workflows import (
         AdminWorkflowError,
         git_status_result,
+        run_paper_rebuild,
         run_workflow,
     )
     from curated_schema import ALLOWED_EXCLUSION_REASONS
@@ -1433,13 +1435,42 @@ def make_handler(
         def do_POST(self) -> None:  # noqa: N802 - BaseHTTPRequestHandler API
             request = urlsplit(self.path)
             query = parse_qs(request.query)
-            if not request.path.startswith("/api/"):
+            is_rebuild_request = request.path.startswith("/rebuild-paper/")
+            if not request.path.startswith("/api/") and not is_rebuild_request:
                 self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
                 return
             if not self.is_authorized(query):
                 self.send_json(
                     HTTPStatus.UNAUTHORIZED,
                     {"error": "missing or invalid admin token"},
+                )
+                return
+            if is_rebuild_request:
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {"error": "paper rebuilds are restricted to loopback clients"},
+                    )
+                    return
+                paper_id = unquote(
+                    request.path.removeprefix("/rebuild-paper/")
+                ).strip()
+                try:
+                    result = run_paper_rebuild(paper_id)
+                except AdminWorkflowError as error:
+                    self.send_json(
+                        HTTPStatus.BAD_REQUEST, {"error": str(error)}
+                    )
+                    return
+                self.send_json(
+                    HTTPStatus.OK if result["success"] else HTTPStatus.INTERNAL_SERVER_ERROR,
+                    result,
                 )
                 return
             if request.path in {

@@ -738,6 +738,12 @@ input:disabled {
   padding: 2px 4px;
 }
 
+.paper-details-affiliations li:focus-visible,
+.paper-author:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 .paper-details-affiliations li::marker {
   color: var(--accent-dark);
   font-weight: 800;
@@ -795,8 +801,8 @@ input:disabled {
 
 .paper-author.is-active-institution-author,
 .paper-current-institution.is-active,
-.is-hover-author,
-.is-hover-institution .affiliation-institution {
+.paper-author.is-related-highlight,
+.paper-details-affiliations li.is-related-highlight .affiliation-institution {
   font-weight: 800;
 }
 
@@ -976,6 +982,12 @@ input:disabled {
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.provenance-badge {
+  border-color: var(--line);
+  background: #f7f8f8;
+  color: var(--muted);
 }
 
 .popup-task {

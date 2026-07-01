@@ -1,5 +1,9 @@
 # Local Admin Workflow
 
+Admin writes rebuild through the canonical-only publication chain. The
+incremental rebuild endpoint never reads candidate-map or pre-canonical
+aggregation artifacts.
+
 This runbook covers the local **Interactive Curation Console**. Run all commands from the repository root. Ordinary edit and save actions write durable human decisions locally and never stage, commit, or push them. Publishing is a separate, explicit, confirmed action.
 
 The data boundaries are deliberate:
@@ -33,7 +37,7 @@ The data boundaries are deliberate:
 3. Confirm the task, optional subtask, provenance, links, and review note before saving. OpenAlex authorships are retained as mapping candidates. For manual or arXiv-only records, enter affiliation rows as `authors | institution | raw affiliation`.
 4. Saving creates reviewable author–institution mapping candidates. Exact confirmed institution or alias matches are eligible immediately; unresolved names use `needs_review`.
 
-The paper record is written to `data/curated/papers.csv`, and candidates are written to `data/curated/author_institution_mappings.csv`. A paper with no affiliation evidence is blocked until the maintainer explicitly acknowledges the missing-mapping diagnostic. Saving does not invent coordinates, create markers directly, or update generated preview JSON.
+The paper record is written to `data/curated/papers.csv`, and candidates are written to `data/curated/author_institution_mappings.csv`. A paper with no affiliation evidence is blocked until the maintainer explicitly acknowledges the missing-mapping diagnostic. Saving does not invent coordinates. After a successful paper mutation, the admin calls `POST /rebuild-paper/{paper_id}` to regenerate that paper's canonical authorship and splice its paper/marker records into both public-preview JSON files immediately.
 
 ## Paper Metadata Editor
 
@@ -45,7 +49,7 @@ Select a paper, open **Paper Metadata**, and compare its effective record, origi
 2. Select the most specific reason and record a review note that explains the decision.
 3. Use **Restore** if the scope decision is later reversed.
 
-This creates or updates an auditable decision in `data/curated/paper_exclusions.csv`; it does not delete source or processed metadata. The exclusion reaches the public preview only after a full refresh.
+This creates or updates an auditable decision in `data/curated/paper_exclusions.csv`; it does not delete source or processed metadata. The affected paper is removed from the local public preview by the incremental rebuild immediately.
 
 ## Author–Institution Mappings
 

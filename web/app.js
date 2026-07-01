@@ -6,12 +6,6 @@ const DATASET_CONFIG = {
     recordLabel: "fictional record",
     emptyMessage: "The fictional sample dataset contains no map records.",
   },
-  openalex: {
-    url: "data/openalex_candidate_map_data.json",
-    recordLabel: "uncurated OpenAlex candidate",
-    emptyMessage:
-      "The OpenAlex candidate dataset contains no records with valid coordinates. Run the local export after adding reviewed coordinates to the processed affiliation data.",
-  },
   preview: {
     url: "data/public_preview_map_data.json",
     paperUrl: "data/public_preview_papers.json",
@@ -21,7 +15,7 @@ const DATASET_CONFIG = {
 };
 
 function resolveDatasetName(requestedName) {
-  if (requestedName === "sample" || requestedName === "openalex") {
+  if (requestedName === "sample") {
     return requestedName;
   }
   return "preview";
@@ -137,7 +131,7 @@ let paperRecords = [];
 let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
-let resultsView = "institutions";
+let resultsView = "papers";
 let visibleMarkerEntries = [];
 let hoveredPaperIdentity = "";
 let hoveredPaperRecord = null;
@@ -349,36 +343,56 @@ function affiliationIdentity(record) {
 }
 
 function visiblePaperAffiliations(currentRecord, relatedEntries) {
-  const currentIdentity = currentRecord ? affiliationIdentity(currentRecord) : "";
-  const affiliationsByIdentity = new Map();
+  const sourceRecord = currentRecord
+    || relatedEntries.find(({ record }) => record.canonical_authorship)?.record;
+  const canonical = sourceRecord?.canonical_authorship;
+  if (!canonical || !Array.isArray(canonical.authors)
+      || !Array.isArray(canonical.institutions)) {
+    return [];
+  }
+  const currentInstitutionId = String(
+    currentRecord?.institution_id
+    || currentRecord?.canonical_institution_id
+    || currentRecord?.institution_openalex_id
+    || "",
+  ).trim();
+  const currentInstitutionName = normalizedTitle(
+    currentRecord ? recordInstitution(currentRecord) : "",
+  );
+  const locationsById = new Map();
+  const locationsByName = new Map();
   relatedEntries.forEach(({ record }) => {
-    const identity = affiliationIdentity(record);
-    let affiliation = affiliationsByIdentity.get(identity);
-    if (!affiliation) {
-      affiliation = {
-        institution: recordInstitution(record) || "Unknown institution",
-        institutionId: institutionIdentity(record),
-        location: recordLocation(record),
-        authors: [],
-        authorKeys: new Set(),
-        isCurrent: Boolean(currentIdentity) && identity === currentIdentity,
-      };
-      affiliationsByIdentity.set(identity, affiliation);
-    } else if (identity === currentIdentity) {
-      affiliation.isCurrent = true;
-    }
-    recordInstitutionAuthors(record).forEach((author) => {
-      const authorKey = normalizedAuthorName(author);
-      if (authorKey && !affiliation.authorKeys.has(authorKey)) {
-        affiliation.authorKeys.add(authorKey);
-        affiliation.authors.push(author);
-      }
-    });
+    const stableId = String(
+      record.institution_id
+      || record.canonical_institution_id
+      || record.institution_openalex_id
+      || "",
+    ).trim();
+    if (stableId) locationsById.set(stableId, recordLocation(record));
+    locationsByName.set(
+      normalizedTitle(recordInstitution(record)),
+      recordLocation(record),
+    );
   });
-  return [...affiliationsByIdentity.values()].map((affiliation, index) => ({
-    ...affiliation,
-    number: index + 1,
-  }));
+  return canonical.institutions.map((institution) => {
+    const institutionId = String(institution.institution_id || "");
+    const institutionName = String(institution.canonical_name || "");
+    return {
+      institution: institutionName,
+      institutionId,
+      location: locationsById.get(institutionId)
+        || locationsByName.get(normalizedTitle(institutionName))
+        || "",
+      authors: canonical.authors
+        .filter((author) => (author.institutions || []).includes(institutionId))
+        .map((author) => author.name),
+      isCurrent: Boolean(currentRecord) && (
+        (currentInstitutionId && institutionId === currentInstitutionId)
+        || normalizedTitle(institutionName) === currentInstitutionName
+      ),
+      number: institution.index,
+    };
+  }).sort((left, right) => left.number - right.number);
 }
 
 function paperAuthorsWithAffiliations(
@@ -408,7 +422,7 @@ function paperAuthorsWithAffiliations(
       : "";
     const isActive = currentAffiliationNumber !== null
       && numbers.includes(currentAffiliationNumber);
-    const authorHtml = `<span class="paper-author${isActive ? " is-active-institution-author is-hover-author" : ""}">${escapeHtml(author)}${superscript}</span>`;
+    const authorHtml = `<span class="paper-author${isActive ? " is-active-institution-author" : ""}" data-institution-indices="${numbers.join(",")}" tabindex="0">${escapeHtml(author)}${superscript}</span>`;
     return isActive
       ? `<strong class="current-institution-author">${authorHtml}</strong>`
       : authorHtml;
@@ -1165,6 +1179,9 @@ function paperDetailsHtml(record, relatedEntries) {
     : hasArxivVersion(record)
       ? '<span class="popup-badge confidence-unresolved">arXiv version</span>'
       : "";
+  const provenanceBadges = (record.provenance_sources || [])
+    .map((source) => `<span class="popup-badge provenance-badge">${escapeHtml(source)}</span>`)
+    .join("");
   const hasResolution = hasResolutionMetadata(record);
   const confidence = resolutionConfidence(record);
   const needsReview = reviewStatus(record);
@@ -1197,7 +1214,7 @@ function paperDetailsHtml(record, relatedEntries) {
     </section>
   `;
   const affiliationsBlock = affiliations.length
-    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current is-hover-institution"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${escapeHtml(affiliation.institution)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
+    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li class="${affiliation.isCurrent ? "is-current" : ""}" data-institution-index="${affiliation.number}" tabindex="0"><div class="affiliation-heading"><span class="affiliation-institution">${escapeHtml(affiliation.institution)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div></li>`).join("")}</ol></section>`
     : "";
 
   return `
@@ -1206,6 +1223,7 @@ function paperDetailsHtml(record, relatedEntries) {
       <span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
       ${versionBadge}
       ${confidenceBadge}
+      ${provenanceBadges}
     </div>
     <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
     <dl class="popup-details paper-details-summary">
@@ -1364,9 +1382,60 @@ function resetPaperDetails() {
 
 function showPaperDetails(record, relatedEntries) {
   paperDetailsContent.innerHTML = paperDetailsHtml(record, relatedEntries);
+  bindAuthorshipHighlighting();
   paperDetails.classList.add("has-content");
   closePaperDetailsButton.disabled = false;
   paperDetails.scrollTop = 0;
+}
+
+function bindAuthorshipHighlighting() {
+  const authors = [...paperDetailsContent.querySelectorAll(".paper-author")];
+  const institutions = [
+    ...paperDetailsContent.querySelectorAll("[data-institution-index]"),
+  ];
+  const selectedIndices = new Set(
+    institutions
+      .filter((institution) => institution.classList.contains("is-current"))
+      .map((institution) => institution.dataset.institutionIndex),
+  );
+  const applyHighlight = (indices = selectedIndices) => {
+    authors.forEach((author) => {
+      const memberships = new Set(
+        (author.dataset.institutionIndices || "").split(",").filter(Boolean),
+      );
+      author.classList.toggle(
+        "is-related-highlight",
+        [...indices].some((index) => memberships.has(index)),
+      );
+    });
+    institutions.forEach((institution) => {
+      institution.classList.toggle(
+        "is-related-highlight",
+        indices.has(institution.dataset.institutionIndex),
+      );
+    });
+  };
+  applyHighlight();
+  institutions.forEach((institution) => {
+    const highlight = () => applyHighlight(
+      new Set([institution.dataset.institutionIndex]),
+    );
+    institution.addEventListener("mouseenter", highlight);
+    institution.addEventListener("focus", highlight);
+    institution.addEventListener("mouseleave", () => applyHighlight());
+    institution.addEventListener("blur", () => applyHighlight());
+  });
+  authors.forEach((author) => {
+    const highlight = () => applyHighlight(
+      new Set(
+        (author.dataset.institutionIndices || "").split(",").filter(Boolean),
+      ),
+    );
+    author.addEventListener("mouseenter", highlight);
+    author.addEventListener("focus", highlight);
+    author.addEventListener("mouseleave", () => applyHighlight());
+    author.addEventListener("blur", () => applyHighlight());
+  });
 }
 
 function restoreBaseMarkerStyles() {
@@ -1665,14 +1734,6 @@ function updateDatasetLabels() {
     mapStatus.textContent = "Loading public preview data...";
     datasetStatisticsNote.textContent =
       "Paper coverage includes records without map markers; map records require institution coordinates.";
-  } else {
-    datasetStatusNote.textContent =
-      "Uncurated candidate data";
-    datasetNoticeCopy.textContent =
-      "This local view contains automatically extracted OpenAlex candidate metadata for exploratory review. Paper relevance, task labels, institution names, and coordinates may contain errors.";
-    mapStatus.textContent = "Loading local OpenAlex candidate data...";
-    datasetStatisticsNote.textContent =
-      "Institution-level records matching the current filters.";
   }
   renderDatasetSwitcher();
 }
@@ -1733,7 +1794,8 @@ function displayMetadataWarning(metadata) {
 
 async function readDataset(name) {
   const config = DATASET_CONFIG[name];
-  const response = await fetch(config.url, { cache: "no-cache" });
+  const cacheVersion = Date.now();
+  const response = await fetch(`${config.url}?v=${cacheVersion}`, { cache: "no-store" });
   if (!response.ok) {
     throw new Error(`${name} data request failed with status ${response.status}`);
   }
@@ -1749,7 +1811,10 @@ async function readDataset(name) {
     throw new Error(`${name} data does not match the expected format`);
   }
   if (config.paperUrl) {
-    const paperResponse = await fetch(config.paperUrl, { cache: "no-cache" });
+    const paperResponse = await fetch(
+      `${config.paperUrl}?v=${cacheVersion}`,
+      { cache: "no-store" },
+    );
     if (!paperResponse.ok) {
       throw new Error(`${name} paper data request failed with status ${paperResponse.status}`);
     }
@@ -1832,8 +1897,6 @@ async function loadData() {
       return;
     }
     const messages = {
-      openalex:
-        "OpenAlex candidate map data could not be loaded. Generate it locally with scripts/export_candidate_map_data.py.",
       preview:
         "Preview dataset could not be loaded. Check that web/data/public_preview_map_data.json is published.",
       sample: "Fictional sample data could not be loaded. Preview the site through a local server.",
@@ -1841,6 +1904,13 @@ async function loadData() {
     showDatasetMessage(messages[datasetName], true);
   }
 }
+
+window.addEventListener("paperUpdated", () => {
+  if (datasetName === "preview") loadData();
+});
+window.addEventListener("storage", (event) => {
+  if (event.key === "paperUpdated" && datasetName === "preview") loadData();
+});
 
 keywordFilter.addEventListener("input", renderRecords);
 taskFilter.addEventListener("change", renderRecords);

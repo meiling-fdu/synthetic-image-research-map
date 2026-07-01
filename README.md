@@ -1,5 +1,10 @@
 # Synthetic Image Research Map
 
+> Publication architecture: `canonical_authorship.py → curated_export.py →
+> export_public_preview.py`. Historical OpenAlex extraction/geocoding tools are
+> not runtime publication inputs; OpenAlex, IRIS, and arXiv remain provenance
+> evidence on canonical paper entities.
+
 An interactive academic world map for exploring papers, researchers, and institutions working on AI-generated/synthetic image detection and generated-image source attribution. The project is a lightweight static website backed by transparent, reviewable datasets and Python preprocessing.
 
 **Online demo:** [Synthetic Image Research Map on GitHub Pages](https://meiling-fdu.github.io/synthetic-image-research-map/)
