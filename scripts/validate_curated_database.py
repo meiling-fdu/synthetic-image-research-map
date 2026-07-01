@@ -18,6 +18,7 @@ try:
         ALLOWED_CURATION_STATUSES,
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
+        ALLOWED_INSTITUTION_REVIEW_STATUSES,
         ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_REVIEW_ACTIONS,
@@ -34,6 +35,7 @@ except ImportError:  # Support direct execution from the repository root.
         ALLOWED_CURATION_STATUSES,
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
+        ALLOWED_INSTITUTION_REVIEW_STATUSES,
         ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_REVIEW_ACTIONS,
@@ -608,6 +610,54 @@ def print_summary(
         )
 
 
+def validate_institution_aliases(
+    aliases: Sequence[Mapping[str, str]],
+    confirmed_locations: Sequence[Mapping[str, str]],
+    issues: List[Issue],
+) -> None:
+    confirmed_by_name = {}
+    for row in confirmed_locations:
+        confirmed_by_name[normalize_institution(row.get("institution"))] = row
+        confirmed_by_name[normalize_institution(
+            row.get("normalized_institution")
+        )] = row
+    alias_targets: DefaultDict[str, set[str]] = defaultdict(set)
+    alias_rows: DefaultDict[Tuple[str, str], List[int]] = defaultdict(list)
+    for row_number, row in enumerate(aliases, start=2):
+        alias = normalize_institution(row.get("alias_name"))
+        canonical = normalize_institution(row.get("canonical_institution_name"))
+        if not alias or not canonical:
+            add_issue(
+                issues, "ERROR", "institution_aliases.csv",
+                "alias_name and canonical_institution_name are required", row_number
+            )
+            continue
+        if clean(row.get("review_status")) != "confirmed":
+            add_issue(
+                issues, "ERROR", "institution_aliases.csv",
+                "curated aliases must have review_status=confirmed", row_number
+            )
+        if canonical not in confirmed_by_name:
+            add_issue(
+                issues, "ERROR", "institution_aliases.csv",
+                "canonical target is not a confirmed institution", row_number
+            )
+        alias_targets[alias].add(canonical)
+        alias_rows[(alias, canonical)].append(row_number)
+    for (alias, canonical), row_numbers in alias_rows.items():
+        if len(row_numbers) > 1:
+            add_issue(
+                issues, "ERROR", "institution_aliases.csv",
+                f"duplicate alias mapping on rows {row_numbers}: {alias} -> {canonical}"
+            )
+    for alias, targets in alias_targets.items():
+        if len(targets) > 1:
+            add_issue(
+                issues, "ERROR", "institution_aliases.csv",
+                f"ambiguous alias maps to multiple canonical institutions: {alias}"
+            )
+
+
 def main() -> int:
     issues: List[Issue] = []
     datasets, row_counts = read_curated_files(issues)
@@ -618,6 +668,7 @@ def main() -> int:
     exclusions = datasets.get("paper_exclusions.csv", [])
     locations = datasets.get("institution_location_review.csv", [])
     confirmed_locations = datasets.get("institution_locations.csv", [])
+    aliases = datasets.get("institution_aliases.csv", [])
     review_decisions = datasets.get("review_decisions.csv", [])
 
     validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
@@ -642,6 +693,13 @@ def main() -> int:
         "paper_exclusions.csv",
         "reason",
         ALLOWED_EXCLUSION_REASONS,
+        issues,
+    )
+    validate_allowed_value(
+        locations,
+        "institution_location_review.csv",
+        "review_status",
+        ALLOWED_INSTITUTION_REVIEW_STATUSES,
         issues,
     )
     validate_allowed_value(
@@ -720,6 +778,26 @@ def main() -> int:
     validate_references(datasets, issues)
     validate_mapping_evidence(mappings, issues)
     validate_confirmed_locations(confirmed_locations, issues)
+    confirmed_by_name = {}
+    for row in confirmed_locations:
+        confirmed_by_name[normalize_institution(row.get("institution"))] = row
+        confirmed_by_name[normalize_institution(
+            row.get("normalized_institution")
+        )] = row
+    validate_institution_aliases(aliases, confirmed_locations, issues)
+    for row_number, row in enumerate(locations, start=2):
+        status = clean(row.get("review_status"))
+        canonical = normalize_institution(row.get("canonical_institution_name"))
+        if status == "confirmed" and canonical not in confirmed_by_name:
+            add_issue(
+                issues, "ERROR", "institution_location_review.csv",
+                "confirmed status requires a canonical confirmed location", row_number
+            )
+        if status == "alias_of_confirmed" and canonical not in confirmed_by_name:
+            add_issue(
+                issues, "ERROR", "institution_location_review.csv",
+                "alias_of_confirmed requires a confirmed canonical target", row_number
+            )
     duplicates = validate_paper_duplicates(papers, issues)
     print_summary(row_counts, issues, duplicates)
     return 1 if any(issue.level == "ERROR" for issue in issues) else 0

@@ -53,11 +53,14 @@ try:
         save_location_reviews,
     )
     from .curated_locations import (
+        DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         CuratedLocationError,
+        confirm_alias,
         create_or_update_confirmed_location,
         location_review_payload,
         mark_queue_row,
+        save_queue_metadata,
     )
     from .openalex_paper_search import (
         OpenAlexFetchError,
@@ -112,11 +115,14 @@ except ImportError:
         save_location_reviews,
     )
     from curated_locations import (
+        DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         CuratedLocationError,
+        confirm_alias,
         create_or_update_confirmed_location,
         location_review_payload,
         mark_queue_row,
+        save_queue_metadata,
     )
     from openalex_paper_search import (
         OpenAlexFetchError,
@@ -670,6 +676,7 @@ def queue_location_review(
         "evidence_url": clean(draft.get("evidence_url")),
         "suggested_city": clean(draft.get("city")),
         "suggested_country": clean(draft.get("country")),
+        "review_status": "needs_coordinates",
         "location_status": "needs_location_review",
         "coordinate_status": "missing",
         "review_note": note,
@@ -749,6 +756,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
             f"(default: {INSTITUTION_LOCATIONS_PATH})."
         ),
     )
+    parser.add_argument(
+        "--institution-aliases",
+        type=Path,
+        default=DEFAULT_INSTITUTION_ALIASES_PATH,
+        help=f"Curated institution alias CSV (default: {DEFAULT_INSTITUTION_ALIASES_PATH}).",
+    )
     return parser.parse_args(argv)
 
 
@@ -759,6 +772,7 @@ def make_handler(
     mappings_path: Path = CURATED_MAPPINGS_PATH,
     location_review_path: Path = LOCATION_REVIEW_PATH,
     institution_locations_path: Path = INSTITUTION_LOCATIONS_PATH,
+    institution_aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
     review_decisions_path: Path = DEFAULT_REVIEW_DECISIONS_PATH,
 ) -> type[BaseHTTPRequestHandler]:
     workflow_lock = threading.Lock()
@@ -1024,6 +1038,7 @@ def make_handler(
                     payload = location_review_payload(
                         review_path=location_review_path,
                         locations_path=institution_locations_path,
+                        aliases_path=institution_aliases_path,
                     )
                 except CuratedLocationError as error:
                     self.send_json(
@@ -1079,6 +1094,7 @@ def make_handler(
                         location_payload = location_review_payload(
                             review_path=location_review_path,
                             locations_path=institution_locations_path,
+                            aliases_path=institution_aliases_path,
                         )
                         curated_counts = {
                             "curated_papers": counts["curated_papers"],
@@ -1295,7 +1311,13 @@ def make_handler(
             location_actions = {
                 "/api/location-review/confirm": "confirm",
                 "/api/location-review/mark-ambiguous": "ambiguous",
-                "/api/location-review/mark-unresolved": "unresolved",
+                "/api/location-review/mark-needs-coordinates": "needs_coordinates",
+                "/api/location-review/mark-pending-review": "pending_review",
+                "/api/location-review/mark-alias-candidate": "alias_candidate",
+                "/api/location-review/mark-ignore": "ignore",
+                "/api/location-review/mark-excluded": "excluded",
+                "/api/location-review/confirm-alias": "confirm_alias",
+                "/api/location-review/save-metadata": "save_metadata",
             }
             if request.path in location_actions:
                 if not self.is_header_authorized():
@@ -1317,7 +1339,8 @@ def make_handler(
                 try:
                     payload = self.read_json_body()
                     with CURATED_LOCATION_WRITE_LOCK:
-                        if location_actions[request.path] == "confirm":
+                        action = location_actions[request.path]
+                        if action == "confirm":
                             result = create_or_update_confirmed_location(
                                 payload.get("queue_id"),
                                 payload,
@@ -1328,11 +1351,33 @@ def make_handler(
                                 "Location saved. Run full refresh pipeline "
                                 "to update markers."
                             )
+                        elif action == "confirm_alias":
+                            result = confirm_alias(
+                                payload.get("queue_id"),
+                                payload.get("canonical_institution_name"),
+                                alias_language=payload.get("detected_language"),
+                                alias_source=payload.get("alias_source"),
+                                note=payload.get("coordinate_review_note")
+                                or payload.get("review_note"),
+                                review_path=location_review_path,
+                                locations_path=institution_locations_path,
+                                aliases_path=institution_aliases_path,
+                            )
+                            message = "Alias confirmed against the canonical institution."
+                        elif action == "save_metadata":
+                            result = {
+                                "queue_row": save_queue_metadata(
+                                    payload.get("queue_id"),
+                                    payload,
+                                    review_path=location_review_path,
+                                )
+                            }
+                            message = "Institution metadata saved."
                         else:
                             result = {
                                 "queue_row": mark_queue_row(
                                     payload.get("queue_id"),
-                                    location_actions[request.path],
+                                    action,
                                     payload.get("coordinate_review_note")
                                     or payload.get("review_note"),
                                     review_path=location_review_path,
@@ -1915,6 +1960,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         args.curated_mappings,
         args.location_review,
         args.institution_locations,
+        args.institution_aliases,
     )
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)

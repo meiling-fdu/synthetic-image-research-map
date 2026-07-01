@@ -4,7 +4,7 @@ from scripts.curated_export import build_curated_map_records
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
-    def test_processed_cache_fallback_creates_marker(self):
+    def test_processed_cache_fallback_is_not_publicly_exportable(self):
         paper = {
             "paper_id": "curated:test",
             "title": "Cache fallback test",
@@ -47,20 +47,9 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             processed_cache_records=[cache_record],
         )
 
-        self.assertEqual(summary["curated_markers_created"], 1)
-        self.assertEqual(len(markers), 1)
-        self.assertEqual(markers[0]["institution"], "Fudan University")
-        self.assertEqual(markers[0]["latitude"], 31.22222)
-        self.assertEqual(markers[0]["longitude"], 121.45806)
-        self.assertEqual(
-            markers[0]["resolution_method"],
-            "processed_institution_resolution_cache_fallback",
-        )
-        self.assertIn(
-            "Coordinates applied from processed "
-            "institution_resolution_cache fallback",
-            markers[0]["notes"],
-        )
+        self.assertEqual(summary["curated_markers_created"], 0)
+        self.assertEqual(markers, [])
+        self.assertEqual(summary["curated_mappings_missing_coordinates"], 1)
 
     def test_confirmed_curated_location_has_priority_over_cache(self):
         paper = {

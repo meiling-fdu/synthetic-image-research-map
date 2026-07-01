@@ -246,6 +246,7 @@
               <span>Search queue</span>
               <input id="location-search" type="search" placeholder="Institution, paper, author, status…">
             </label>
+            <div class="location-status-filters" id="location-status-filters" aria-label="Filter institutions by review status"></div>
             <ol id="location-review-list"></ol>
             <p class="empty-markers" id="empty-location-reviews" hidden>No location-review rows match.</p>
           </aside>
@@ -260,6 +261,24 @@
               <div class="location-form-grid">
                 <label class="full-width">Confirmed institution
                   <input id="confirmed-institution" type="text" required>
+                </label>
+                <label>Detected language
+                  <input id="institution-language" type="text" placeholder="en, es, zh…">
+                </label>
+                <label>Current review status
+                  <select id="institution-review-status">
+                    <option value="pending_review">Pending Review</option>
+                    <option value="needs_coordinates">Needs Coordinates</option>
+                    <option value="ambiguous">Ambiguous</option>
+                    <option value="alias_candidate">Alias Candidate</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="alias_of_confirmed">Alias of Confirmed</option>
+                    <option value="ignore">Ignore</option>
+                    <option value="excluded">Excluded</option>
+                  </select>
+                </label>
+                <label class="full-width">Canonical institution
+                  <select id="canonical-institution"><option value="">Select confirmed institution…</option></select>
                 </label>
                 <label>Confirmed city
                   <input id="confirmed-city" type="text">
@@ -292,9 +311,14 @@
               <p class="workflow-note">Provide a coordinate source or source URL, plus a non-blank review note. Saving does not run the exporter.</p>
               <p class="form-error" id="location-form-error" role="alert" hidden></p>
               <div class="location-form-actions">
-                <button class="primary-button" id="location-confirm" type="submit">Confirm coordinates</button>
+                <button class="primary-button" id="location-confirm" type="submit">Confirm location</button>
+                <button class="secondary-button" id="location-confirm-alias" type="button">Confirm as alias of selected institution</button>
+                <button class="secondary-button" id="location-save-metadata" type="button">Save edited metadata</button>
+                <button class="secondary-button" id="location-create-new" type="button">Create as new institution</button>
+                <button class="secondary-button" id="location-needs-coordinates" type="button">Needs coordinate review</button>
                 <button class="secondary-button" id="location-mark-ambiguous" type="button">Mark ambiguous</button>
-                <button class="secondary-button" id="location-mark-unresolved" type="button">Mark unresolved</button>
+                <button class="secondary-button" id="location-ignore" type="button">Ignore this institution</button>
+                <button class="secondary-button" id="location-exclude" type="button">Exclude from public map</button>
               </div>
             </form>
           </article>

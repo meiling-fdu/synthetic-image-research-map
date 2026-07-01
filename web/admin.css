@@ -593,6 +593,54 @@ button:focus-visible {
   color: var(--ink);
 }
 
+.location-status-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+}
+
+.location-status-filters button {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.location-status-filters button[data-active="true"] {
+  border-color: #497b68;
+  color: #244f40;
+  background: var(--green-soft);
+}
+
+.institution-status-badge {
+  justify-self: start;
+  padding: 0.2rem 0.45rem;
+  border-radius: 999px;
+  color: #5b4214 !important;
+  background: #f6e7bd;
+  font-weight: 800;
+}
+
+.institution-status-badge[data-status="confirmed"],
+.institution-status-badge[data-status="alias_of_confirmed"] {
+  color: #20513d !important;
+  background: #dcefe6;
+}
+
+.institution-status-badge[data-status="ambiguous"],
+.institution-status-badge[data-status="excluded"] {
+  color: #792f2f !important;
+  background: #f6dddd;
+}
+
+.institution-status-badge[data-status="ignore"] {
+  color: #555 !important;
+  background: #e8e8e8;
+}
+
 .location-review-workspace {
   display: grid;
   grid-template-columns: minmax(18rem, 0.8fr) minmax(24rem, 1.6fr);

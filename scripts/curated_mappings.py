@@ -348,6 +348,7 @@ def _sync_location_review(
         "evidence_url": clean(mapping.get("evidence_url")),
         "suggested_city": "",
         "suggested_country": "",
+        "review_status": "needs_coordinates",
         "location_status": "missing",
         "coordinate_status": "missing",
         "review_note": clean(mapping.get("review_note")),

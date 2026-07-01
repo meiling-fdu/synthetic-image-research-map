@@ -319,6 +319,12 @@ Do not merge two author records solely because their names match. Identity resol
 
 One row represents one institution or organizational unit used for affiliation and map placement. Original names remain available while a reviewed normalized form supports display and grouping.
 
+### Curated institution review and aliases
+
+`data/curated/institution_location_review.csv` keeps raw institution evidence and an authoritative `review_status`: `confirmed`, `pending_review`, `needs_coordinates`, `ambiguous`, `alias_candidate`, `alias_of_confirmed`, `ignore`, or `excluded`. Legacy location/coordinate diagnostics remain secondary fields.
+
+`data/curated/institution_aliases.csv` has `alias_name`, `canonical_institution_name`, `alias_language`, `alias_source`, `review_status`, and `notes`. Alias targets must exist in `institution_locations.csv`. Duplicate mappings are invalid, and one normalized alias pointing to multiple canonical institutions is ambiguous. Confirmed aliases resolve to the canonical public name and coordinates; no alias is exported as a separate node.
+
 | Column | Definition |
 | --- | --- |
 | `institution_id` | Stable, project-assigned identifier for the institution; primary key. |

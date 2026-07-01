@@ -22,12 +22,14 @@ try:
         DEFAULT_CURATED_MAPPINGS_PATH,
         DEFAULT_CURATED_PAPERS_PATH,
         DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH,
+        DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
         load_institution_resolution_cache,
+        load_institution_aliases,
         load_location_review_queue,
         save_location_review_queue,
     )
@@ -67,12 +69,14 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_CURATED_MAPPINGS_PATH,
         DEFAULT_CURATED_PAPERS_PATH,
         DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH,
+        DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
         load_institution_resolution_cache,
+        load_institution_aliases,
         load_location_review_queue,
         save_location_review_queue,
     )
@@ -369,6 +373,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Confirmed curated institution-location CSV "
             f"(default: {DEFAULT_INSTITUTION_LOCATIONS_PATH})."
+        ),
+    )
+    parser.add_argument(
+        "--institution-aliases",
+        type=Path,
+        default=DEFAULT_INSTITUTION_ALIASES_PATH,
+        help=(
+            "Curated confirmed institution aliases "
+            f"(default: {DEFAULT_INSTITUTION_ALIASES_PATH})."
         ),
     )
     parser.add_argument(
@@ -1779,6 +1792,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         confirmed_location_rows = load_confirmed_locations(
             args.institution_locations
         )
+        institution_alias_rows = load_institution_aliases(
+            args.institution_aliases
+        )
         processed_cache_rows = load_institution_resolution_cache(
             args.institution_resolution_cache
         )
@@ -1797,6 +1813,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             location_review_rows,
             confirmed_location_rows,
             processed_cache_rows,
+            institution_alias_rows,
         )
         integrated_papers, curated_preprint_papers_excluded = (
             exclude_preprint_versions(integrated_papers)

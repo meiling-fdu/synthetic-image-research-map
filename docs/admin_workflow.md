@@ -65,6 +65,17 @@ Mappings are written to `data/curated/author_institution_mappings.csv`. Do not a
 
 Confirmed coordinates are written to `data/curated/institution_locations.csv`, and the corresponding row in `data/curated/institution_location_review.csv` is updated. Never guess coordinates or resolve ambiguity merely to create a marker.
 
+### Institution review statuses and aliases
+
+Use the status chips to separate `pending_review`, `needs_coordinates`, `ambiguous`, `alias_candidate`, `confirmed`, `ignore`, and `excluded` rows. `alias_of_confirmed` rows are included with confirmed work in the summary and resolve through their selected canonical institution.
+
+- **Confirm location** only after verifying the canonical name, city, country, latitude, and longitude.
+- **Confirm as alias** when the raw name is another language, acronym, or historical name for a selected confirmed institution. This writes `data/curated/institution_aliases.csv`; it does not create another location.
+- **Mark ambiguous** when identity or location is uncertain. Use **Needs coordinate review** for a valid institution whose coordinates still need verification.
+- **Ignore** parsed non-institutions. Use **Exclude** for valid records that must not appear publicly.
+
+Only `confirmed` and `alias_of_confirmed` are exportable, and aliases use the canonical institution's verified coordinates. Fuzzy or translation-only suggestions remain `alias_candidate` or `ambiguous` until a reviewer decides. Raw multilingual affiliation text remains evidence even after canonicalization.
+
 ## Diagnostic review queues
 
 The console exposes four generated queues:

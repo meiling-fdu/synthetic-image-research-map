@@ -18,6 +18,7 @@ try:
     from .curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
+        INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
     )
@@ -36,6 +37,7 @@ except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
+        INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
     )
@@ -59,6 +61,7 @@ DEFAULT_CURATED_MAPPINGS_PATH = (
 DEFAULT_LOCATION_REVIEW_PATH = (
     CURATED_DATA_DIR / "institution_location_review.csv"
 )
+DEFAULT_INSTITUTION_ALIASES_PATH = CURATED_DATA_DIR / "institution_aliases.csv"
 DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH = Path(
     "data/processed/institution_resolution_cache.json"
 )
@@ -155,6 +158,12 @@ def load_location_review_queue(
     path: Path = DEFAULT_LOCATION_REVIEW_PATH,
 ) -> List[Dict[str, str]]:
     return _read_csv(path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
+
+
+def load_institution_aliases(
+    path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
+) -> List[Dict[str, str]]:
+    return _read_csv(path, INSTITUTION_ALIAS_COLUMNS)
 
 
 def load_institution_resolution_cache(
@@ -825,6 +834,11 @@ def _upsert_location_review(
         "evidence_url": clean(mapping.get("evidence_url")),
         "suggested_city": "",
         "suggested_country": "",
+        "review_status": (
+            "ambiguous"
+            if coordinate_status == "ambiguous"
+            else "needs_coordinates"
+        ),
         "location_status": location_status,
         "coordinate_status": coordinate_status,
         "review_note": clean(mapping.get("review_note")),
@@ -872,6 +886,7 @@ def build_curated_map_records(
     location_review_rows: List[Dict[str, str]] | None = None,
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
     processed_cache_records: Sequence[Mapping[str, Any]] = (),
+    institution_aliases: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     paper_index = _paper_index(paper_records)
     exclusion_index = build_active_exclusion_index(exclusion_rows)
@@ -893,6 +908,34 @@ def build_curated_map_records(
     skipped_task = 0
     resolved_mapping_ids = set()
     matched_paper_mappings = 0
+    emitted_marker_keys = set()
+    confirmed_aliases = {
+        normalize_institution(row.get("alias_name")):
+        clean(row.get("canonical_institution_name"))
+        for row in institution_aliases
+        if clean(row.get("review_status")) == "confirmed"
+        and clean(row.get("alias_name"))
+        and clean(row.get("canonical_institution_name"))
+    }
+    confirmed_location_keys = {
+        normalize_institution(
+            row.get("normalized_institution") or row.get("institution")
+        )
+        for row in confirmed_location_records
+        if _valid_coordinates(row)
+    }
+    review_status_by_key = {
+        _queue_key(row): clean(row.get("review_status")) or "pending_review"
+        for row in review_rows
+    }
+    non_exportable_statuses = {
+        "pending_review",
+        "needs_coordinates",
+        "ambiguous",
+        "alias_candidate",
+        "ignore",
+        "excluded",
+    }
 
     for mapping in mappings:
         if clean(mapping.get("mapping_status")) != ACTIVE_MAPPING_STATUS:
@@ -907,8 +950,24 @@ def build_curated_map_records(
             skipped_paper += 1
             continue
         matched_paper_mappings += 1
-        institution_key = normalize_institution(mapping.get("institution"))
-        match = locations.get(institution_key, CoordinateMatch("missing", None))
+        raw_institution_key = normalize_institution(mapping.get("institution"))
+        canonical_institution = confirmed_aliases.get(raw_institution_key)
+        queue_status = (
+            "alias_of_confirmed"
+            if canonical_institution
+            else review_status_by_key.get(_queue_key(mapping))
+        )
+        if queue_status in non_exportable_statuses:
+            skipped_status += 1
+            continue
+        institution_key = normalize_institution(
+            canonical_institution or mapping.get("institution")
+        )
+        match = (
+            locations.get(institution_key, CoordinateMatch("missing", None))
+            if institution_key in confirmed_location_keys
+            else CoordinateMatch("missing", None)
+        )
         if match.status != "known" or match.record is None:
             coordinate_status = (
                 "ambiguous" if match.status == "ambiguous" else "missing"
@@ -926,7 +985,17 @@ def build_curated_map_records(
         if clean(paper.get("task")) not in PUBLIC_MAP_TASKS:
             skipped_task += 1
             continue
-        markers.append(_curated_marker(paper, mapping, match.record))
+        export_mapping = dict(mapping)
+        if canonical_institution:
+            export_mapping["institution"] = canonical_institution
+        marker_key = (
+            next(iter(normalize_paper_identity_keys(paper)), ""),
+            normalize_institution(export_mapping.get("institution")),
+        )
+        if marker_key in emitted_marker_keys:
+            continue
+        emitted_marker_keys.add(marker_key)
+        markers.append(_curated_marker(paper, export_mapping, match.record))
 
     return markers, {
         "curated_mappings_loaded": len(mappings),
@@ -1082,6 +1151,7 @@ def integrate_curated_records(
     location_review_rows: Sequence[Mapping[str, Any]] = (),
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
     processed_cache_records: Sequence[Mapping[str, Any]] = (),
+    institution_aliases: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[
     List[Dict[str, Any]],
     List[Dict[str, Any]],
@@ -1143,6 +1213,7 @@ def integrate_curated_records(
         reviews,
         confirmed_location_records,
         processed_cache_records,
+        institution_aliases,
     )
     replaced_markers = 0
     for marker in marker_records:

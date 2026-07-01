@@ -75,6 +75,8 @@ PAPER_EXCLUSION_COLUMNS = (
 
 INSTITUTION_LOCATION_REVIEW_COLUMNS = (
     "institution",
+    "canonical_institution_name",
+    "detected_language",
     "related_paper_id",
     "title",
     "year",
@@ -86,11 +88,29 @@ INSTITUTION_LOCATION_REVIEW_COLUMNS = (
     "evidence_url",
     "suggested_city",
     "suggested_country",
+    "matched_institution",
+    "suggested_canonical_institution",
+    "match_method",
+    "similarity_score",
+    "confidence",
+    "openalex_institution_id",
+    "ror_id",
+    "wikidata_id",
+    "review_status",
     "location_status",
     "coordinate_status",
     "review_note",
     "created_at",
     "updated_at",
+)
+
+INSTITUTION_ALIAS_COLUMNS = (
+    "alias_name",
+    "canonical_institution_name",
+    "alias_language",
+    "alias_source",
+    "review_status",
+    "notes",
 )
 
 INSTITUTION_LOCATION_COLUMNS = (
@@ -133,6 +153,7 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "author_institution_mappings.csv": AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     "paper_exclusions.csv": PAPER_EXCLUSION_COLUMNS,
     "institution_location_review.csv": INSTITUTION_LOCATION_REVIEW_COLUMNS,
+    "institution_aliases.csv": INSTITUTION_ALIAS_COLUMNS,
     "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
     "review_decisions.csv": REVIEW_DECISION_COLUMNS,
 }
@@ -180,6 +201,17 @@ ALLOWED_LOCATION_STATUSES = {
     "ambiguous",
     "needs_location_review",
     "needs_coordinate_review",
+}
+
+ALLOWED_INSTITUTION_REVIEW_STATUSES = {
+    "confirmed",
+    "pending_review",
+    "needs_coordinates",
+    "ambiguous",
+    "alias_candidate",
+    "alias_of_confirmed",
+    "ignore",
+    "excluded",
 }
 
 ALLOWED_EXCLUSION_REASONS = {
