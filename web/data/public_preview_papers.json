@@ -26079,18 +26079,24 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Institute of Computing Technology, Chinese Academy of Sciences",
         "University of Sydney"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "Australia"
+      ],
+      "aggregated_country_codes": [
+        "AU"
+      ],
+      "aggregated_regions": [
+        "New South Wales"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
