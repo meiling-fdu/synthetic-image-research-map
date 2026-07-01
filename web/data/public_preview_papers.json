@@ -968,10 +968,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -12193,10 +12193,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -12206,14 +12206,17 @@
         "Université de Lille"
       ],
       "aggregated_country_names": [
-        "France"
+        "France",
+        "Japan"
       ],
       "aggregated_country_codes": [
-        "FR"
+        "FR",
+        "JP"
       ],
       "aggregated_regions": [
         "Grand Est",
-        "Hauts-de-France"
+        "Hauts-de-France",
+        "Miyagi"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -13090,10 +13093,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -13111,6 +13114,7 @@
       ],
       "aggregated_regions": [
         "California",
+        "New Jersey",
         "Wisconsin"
       ],
       "aggregated_region_codes": [],
@@ -14965,10 +14969,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -14985,6 +14989,7 @@
       ],
       "aggregated_regions": [
         "Emilia-Romagna",
+        "Lazio",
         "Tuscany"
       ],
       "aggregated_region_codes": [],
@@ -16326,10 +16331,10 @@
         "Shu Hu"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 4,
+      "map_record_count": 5,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -16354,7 +16359,8 @@
         "Campania",
         "Indiana",
         "Jiangxi",
-        "New York"
+        "New York",
+        "Washington"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -16601,20 +16607,27 @@
         "Jakaria Islam Emon"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 2,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "American International University-Bangladesh",
         "Barisal Information Technology College"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "Bangladesh"
+      ],
+      "aggregated_country_codes": [
+        "BD"
+      ],
+      "aggregated_regions": [
+        "Barisal Division",
+        "Dhaka Division"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -17171,10 +17184,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 4,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -17193,9 +17206,9 @@
         "US"
       ],
       "aggregated_regions": [
-        "California",
         "Indiana",
-        "Seoul"
+        "Seoul",
+        "Washington"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -19870,10 +19883,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -20047,10 +20060,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -20060,15 +20073,18 @@
         "Université Paris-Saclay"
       ],
       "aggregated_country_names": [
+        "Brazil",
         "China",
         "France"
       ],
       "aggregated_country_codes": [
+        "BR",
         "CN",
         "FR"
       ],
       "aggregated_regions": [
         "Hong Kong",
+        "Rio de Janeiro",
         "Île-de-France"
       ],
       "aggregated_region_codes": [
@@ -23615,10 +23631,10 @@
         "Ning Yu"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -23627,12 +23643,15 @@
         "Netflix Eyeline Studios"
       ],
       "aggregated_country_names": [
-        "China"
+        "China",
+        "United States"
       ],
       "aggregated_country_codes": [
-        "CN"
+        "CN",
+        "US"
       ],
       "aggregated_regions": [
+        "California",
         "Taiwan"
       ],
       "aggregated_region_codes": [
@@ -24298,10 +24317,10 @@
         "Roy, Swalpa Kumar"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -24312,15 +24331,18 @@
       ],
       "aggregated_country_names": [
         "China",
+        "India",
         "United States"
       ],
       "aggregated_country_codes": [
         "CN",
+        "IN",
         "US"
       ],
       "aggregated_regions": [
         "Alabama",
-        "Chongqing"
+        "Chongqing",
+        "West Bengal"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -27903,10 +27925,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -27921,7 +27943,8 @@
         "JP"
       ],
       "aggregated_regions": [
-        "Ibaraki"
+        "Ibaraki",
+        "Tokyo"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -30893,10 +30916,10 @@
         "Nicolas Papernot"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
