@@ -20,6 +20,9 @@ class RecordingRunner:
 
 
 class AdminPublishChangesTests(unittest.TestCase):
+    def test_publish_scope_includes_both_public_preview_outputs(self):
+        self.assertIn("web/data/", admin_publish_changes.PUBLISH_PATHS)
+
     def git(self, repository, *arguments):
         return subprocess.run(
             ("git", *arguments),
@@ -106,12 +109,14 @@ class AdminPublishChangesTests(unittest.TestCase):
                 repository / "data/manual/key_papers_missing_batch.csv"
             )
             preview = repository / "web/data/public_preview_papers.json"
+            map_preview = repository / "web/data/public_preview_map_data.json"
             test_marker = repository / "tests/.gitkeep"
             unrelated = repository / "notes.txt"
             for path in (
                 curated,
                 temporary_batch,
                 preview,
+                map_preview,
                 test_marker,
                 unrelated,
             ):
@@ -131,6 +136,7 @@ class AdminPublishChangesTests(unittest.TestCase):
 
             curated.write_text("published\n", encoding="utf-8")
             preview.write_text("published\n", encoding="utf-8")
+            map_preview.write_text("published map\n", encoding="utf-8")
             temporary_batch.write_text("temporary\n", encoding="utf-8")
             unrelated.write_text("unrelated\n", encoding="utf-8")
             self.git(repository, "add", "notes.txt")
@@ -176,6 +182,14 @@ class AdminPublishChangesTests(unittest.TestCase):
                     "HEAD:web/data/public_preview_papers.json",
                 ),
                 "published",
+            )
+            self.assertEqual(
+                self.git(
+                    repository,
+                    "show",
+                    "HEAD:web/data/public_preview_map_data.json",
+                ),
+                "published map",
             )
             self.assertEqual(
                 self.git(

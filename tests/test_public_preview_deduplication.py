@@ -2,9 +2,81 @@ import unittest
 
 from scripts.export_public_preview import exclude_preprint_versions
 from scripts.validate_public_preview import validate_preprint_version_duplicates
+from scripts.validate_public_preview import (
+    normalized_author_name,
+    validate_curated_affiliation_supersession,
+)
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_reversed_author_name_matches_curated_name(self):
+        self.assertEqual(
+            normalized_author_name("Marra, Francesco"),
+            normalized_author_name("Francesco Marra"),
+        )
+
+    def test_validator_rejects_stale_openalex_affiliation(self):
+        paper = {
+            "title": "Example",
+            "year": 2019,
+            "doi": "10.1000/example",
+            "curated_mappings": [
+                {
+                    "institution": "Correct University",
+                    "institution_authors": ["Francesco Marra"],
+                    "mapping_status": "active",
+                }
+            ],
+        }
+        stale = {
+            **paper,
+            "institution": "Stale Hospital",
+            "institution_authors": ["Marra, Francesco"],
+            "source_database": "OpenAlex",
+        }
+        issues = []
+
+        validate_curated_affiliation_supersession(
+            [stale], [paper], issues
+        )
+
+        self.assertTrue(
+            any("stale public and curated institutions" in issue.message for issue in issues)
+        )
+
+    def test_validator_uses_canonical_author_id_when_names_differ(self):
+        paper = {
+            "title": "Canonical author test",
+            "year": 2020,
+            "doi": "10.1000/author-id",
+            "curated_mappings": [
+                {
+                    "institution": "Correct University",
+                    "institution_authors": ["F. Marra"],
+                    "institution_author_ids": [
+                        "https://openalex.org/A123"
+                    ],
+                    "mapping_status": "active",
+                }
+            ],
+        }
+        stale = {
+            **paper,
+            "institution": "Stale Hospital",
+            "institution_authors": ["Francesco Marra"],
+            "institution_author_ids": ["https://openalex.org/A123"],
+            "source_database": "OpenAlex",
+        }
+        issues = []
+
+        validate_curated_affiliation_supersession(
+            [stale], [paper], issues
+        )
+
+        self.assertTrue(
+            any("stale public and curated institutions" in issue.message for issue in issues)
+        )
+
     def setUp(self):
         self.preprint = {
             "title": "A Siamese-based Verification System",

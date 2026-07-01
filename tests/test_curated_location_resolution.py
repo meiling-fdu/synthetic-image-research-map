@@ -1,9 +1,181 @@
 import unittest
+import json
 
 from scripts.curated_export import build_curated_map_records, integrate_curated_records
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_explicit_admin_supplement_survives_curated_supersession(self):
+        paper = {
+            "title": "Supplement test",
+            "year": 2026,
+            "task": "detection",
+            "doi": "10.1000/supplement",
+            "authors": ["Ada Researcher"],
+        }
+        supplement = {
+            **paper,
+            "institution": "Approved Lab",
+            "institution_authors": ["Ada Researcher"],
+            "public_evidence_mode": "add",
+            "public_evidence_approval": "explicit_admin_supplement",
+            "latitude": 40.0,
+            "longitude": 10.0,
+        }
+        mapping = {
+            "mapping_id": "mapping:primary",
+            "title": paper["title"],
+            "year": "2026",
+            "doi": paper["doi"],
+            "institution": "Primary University",
+            "institution_authors": "Ada Researcher",
+            "mapping_status": "active",
+        }
+
+        papers, maps, _reviews, _summary = integrate_curated_records(
+            [paper], [supplement], [], [mapping]
+        )
+
+        self.assertEqual(
+            [record["institution"] for record in maps], ["Approved Lab"]
+        )
+        self.assertEqual(
+            [
+                affiliation["institution"]
+                for affiliation in papers[0][
+                    "author_institution_affiliations"
+                ]
+            ],
+            ["Primary University", "Approved Lab"],
+        )
+
+    def test_active_curated_mappings_replace_stale_openalex_affiliations(self):
+        paper = {
+            "title": (
+                "Incremental learning for the detection and classification "
+                "of GAN-generated images"
+            ),
+            "year": 2019,
+            "publication_year": 2019,
+            "task": "detection",
+            "doi": "10.1109/wifs47025.2019.9035099",
+            "openalex_url": "https://openalex.org/W3010699567",
+            "authors": [
+                "Francesco Marra",
+                "Luisa Verdoliva",
+                "Cristiano Saltori",
+                "Giulia Boato",
+            ],
+        }
+        stale_markers = [
+            {
+                **paper,
+                "id": "stale-primary",
+                "institution": "Federico II University Hospital",
+                "institution_authors": [
+                    "Marra, Francesco",
+                    "Luisa Verdoliva",
+                ],
+                "source_database": "OpenAlex",
+                "latitude": 40.85,
+                "longitude": 14.26,
+            },
+            {
+                **paper,
+                "id": "stale-version",
+                "openalex_url": "https://openalex.org/W2978778164",
+                "institution": "Federico II University Hospital",
+                "institution_authors": [
+                    "Francesco Marra",
+                    "Luisa Verdoliva",
+                ],
+                "source_database": "OpenAlex",
+                "latitude": 40.85,
+                "longitude": 14.26,
+            },
+        ]
+        mappings = [
+            {
+                "mapping_id": "mapping:naples",
+                "title": paper["title"],
+                "year": "2019",
+                "doi": paper["doi"],
+                "openalex_url": paper["openalex_url"],
+                "institution": "University of Naples Federico II",
+                "institution_authors": "Francesco Marra; Luisa Verdoliva",
+                "mapping_status": "active",
+            },
+            {
+                "mapping_id": "mapping:trento",
+                "title": paper["title"],
+                "year": "2019",
+                "doi": paper["doi"],
+                "openalex_url": paper["openalex_url"],
+                "institution": "University of Trento",
+                "institution_authors": "Cristiano Saltori; Giulia Boato",
+                "mapping_status": "active",
+            },
+        ]
+        locations = [
+            {
+                "institution": "University of Naples Federico II",
+                "normalized_institution": "university of naples federico ii",
+                "city": "Naples",
+                "country": "Italy",
+                "country_code": "IT",
+                "lat": 40.8463,
+                "lon": 14.2572,
+            },
+            {
+                "institution": "University of Trento",
+                "normalized_institution": "university of trento",
+                "city": "Trento",
+                "country": "Italy",
+                "country_code": "IT",
+                "lat": 46.0668,
+                "lon": 11.1232,
+            },
+        ]
+
+        papers, maps, _reviews, summary = integrate_curated_records(
+            [paper],
+            stale_markers,
+            [],
+            mappings,
+            confirmed_location_records=locations,
+        )
+
+        self.assertEqual(
+            {record["institution"] for record in maps},
+            {"University of Naples Federico II", "University of Trento"},
+        )
+        self.assertEqual(summary["stale_public_markers_suppressed"], 2)
+        self.assertNotIn("Federico II University Hospital", json.dumps(maps))
+        self.assertNotIn(
+            "Federico II University Hospital", json.dumps(papers)
+        )
+        self.assertEqual(
+            papers[0]["author_institution_affiliations"],
+            [
+                {
+                    "index": 1,
+                    "institution_id": papers[0][
+                        "author_institution_affiliations"
+                    ][0]["institution_id"],
+                    "institution": "University of Naples Federico II",
+                    "authors": ["Francesco Marra", "Luisa Verdoliva"],
+                },
+                {
+                    "index": 2,
+                    "institution_id": papers[0][
+                        "author_institution_affiliations"
+                    ][1]["institution_id"],
+                    "institution": "University of Trento",
+                    "authors": ["Cristiano Saltori", "Giulia Boato"],
+                },
+            ],
+        )
+
     def test_exported_paper_has_author_institution_indices(self):
         curated_paper = {
             "paper_id": "curated:indices",
