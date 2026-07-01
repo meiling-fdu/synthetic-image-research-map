@@ -18,11 +18,23 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 try:
+    from .canonical_authorship import (
+        CanonicalAuthorshipError,
+        guard_no_legacy_runtime_references,
+        normalize_arxiv,
+        normalize_doi,
+    )
     from .country_normalization import (
         CHINA_REGION_BY_CODE,
         normalize_country_region,
     )
 except ImportError:  # Direct execution from the scripts directory.
+    from canonical_authorship import (
+        CanonicalAuthorshipError,
+        guard_no_legacy_runtime_references,
+        normalize_arxiv,
+        normalize_doi,
+    )
     from country_normalization import (
         CHINA_REGION_BY_CODE,
         normalize_country_region,
@@ -441,6 +453,7 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
     if not isinstance(record, dict):
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
+    validate_canonical_authorship(index, record, issues)
     validate_forbidden_institution_names(index, record, issues)
 
     title = record_title(record)
@@ -635,6 +648,7 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
     validate_forbidden_institution_names(index, record, issues)
+    validate_canonical_authorship(index, record, issues)
 
     title = record_title(record)
     raw_title = clean_text(record.get("title"))
@@ -745,22 +759,134 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
             "public paper has no eligible author–institution mapping; markers "
             "and author affiliation numbers are unavailable",
         )
-    author_indices = record.get("author_institution_indices")
-    if isinstance(author_indices, list) and author_indices:
-        indexed = {
-            normalized_author_name(item.get("author"))
-            for item in author_indices
-            if isinstance(item, dict) and item.get("institution_indices")
-        }
-        for author in record.get("authors") or []:
-            if normalized_author_name(author) not in indexed:
-                add_issue(
-                    issues,
-                    "WARNING",
-                    index,
-                    title,
-                    f"author has no institution index: {clean_text(author)}",
-                )
+
+
+def validate_canonical_authorship(
+    index: int,
+    record: Dict[str, Any],
+    issues: List[Issue],
+) -> None:
+    """Hard-check the sole public author–institution representation."""
+    title = record_title(record)
+    canonical = record.get("canonical_authorship")
+    if not isinstance(canonical, dict):
+        add_issue(
+            issues, "ERROR", index, title, "canonical_authorship is missing"
+        )
+        return
+    authors = canonical.get("authors")
+    institutions = canonical.get("institutions")
+    if not isinstance(authors, list) or not isinstance(institutions, list):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "canonical_authorship authors/institutions must be arrays",
+        )
+        return
+    indices = [
+        institution.get("index")
+        for institution in institutions
+        if isinstance(institution, dict)
+    ]
+    expected = list(range(1, len(institutions) + 1))
+    if indices != expected:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "canonical institution indices must be unique, consecutive, and ordered",
+        )
+    institution_ids = {
+        clean_text(institution.get("institution_id"))
+        for institution in institutions
+        if isinstance(institution, dict)
+    }
+    if "" in institution_ids or len(institution_ids) != len(institutions):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "canonical institution IDs must be non-empty and unique",
+        )
+    referenced_ids: set[str] = set()
+    for author in authors:
+        if not isinstance(author, dict) or not clean_text(author.get("name")):
+            add_issue(
+                issues, "ERROR", index, title, "canonical author name is missing"
+            )
+            continue
+        memberships = author.get("institutions")
+        if not isinstance(memberships, list):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author has invalid institution membership: {author.get('name')}",
+            )
+            continue
+        unknown = {
+            clean_text(stable_id)
+            for stable_id in memberships
+        } - institution_ids
+        if unknown:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author references unknown institution IDs: {sorted(unknown)}",
+            )
+        if institutions and not memberships:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author has no institution index: {author.get('name')}",
+            )
+        referenced_ids.update(clean_text(value) for value in memberships)
+    orphaned = institution_ids - referenced_ids
+    if orphaned:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            f"orphan canonical institution IDs: {sorted(orphaned)}",
+        )
+    if "institution:unresolved" in institution_ids:
+        add_issue(
+            issues,
+            "WARNING",
+            index,
+            title,
+            "canonical authorship contains unresolved institution membership",
+        )
+    if contains_raw_affiliation_field(record):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "raw OpenAlex affiliation field appears in frontend dataset",
+        )
+
+
+def contains_raw_affiliation_field(value: Any) -> bool:
+    if isinstance(value, dict):
+        return any(
+            key in {"raw_affiliation", "raw_affiliation_text", "raw_affiliations"}
+            or contains_raw_affiliation_field(item)
+            for key, item in value.items()
+        )
+    if isinstance(value, list):
+        return any(contains_raw_affiliation_field(item) for item in value)
+    return False
 
 
 def print_summary(
@@ -813,12 +939,34 @@ def print_summary(
             )
 
 
+def validate_canonical_paper_uniqueness(
+    records: Sequence[Dict[str, Any]], issues: List[Issue]
+) -> None:
+    for label, getter in (
+        ("canonical paper", lambda row: clean_text(row.get("paper_id"))),
+        ("DOI", lambda row: normalize_doi(row.get("doi"))),
+        ("arXiv ID", lambda row: normalize_arxiv(row.get("arxiv_id"))),
+    ):
+        seen = set()
+        for index, record in enumerate(records):
+            value = getter(record)
+            if not value:
+                continue
+            if value in seen:
+                add_issue(
+                    issues, "ERROR", index, record_title(record),
+                    f"duplicate {label}: {value}",
+                )
+            seen.add(value)
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
+        guard_no_legacy_runtime_references()
         _metadata, records = read_dataset(args.input)
         _paper_metadata, paper_records = read_dataset(args.paper_input)
-    except ValidationInputError as error:
+    except (ValidationInputError, CanonicalAuthorshipError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 2
 
@@ -829,6 +977,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     paper_issues: List[Issue] = []
     for index, record in enumerate(paper_records):
         validate_paper_record(index, record, paper_issues)
+    validate_canonical_paper_uniqueness(paper_records, paper_issues)
     validate_preprint_version_duplicates(paper_records, paper_issues)
     validate_curated_affiliation_supersession(
         records, paper_records, issues
