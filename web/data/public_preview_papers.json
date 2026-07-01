@@ -10139,14 +10139,98 @@
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "MIT Lincoln Laboratory",
+        "Yale University"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:362237aabd27819d2de7",
+          "institution_id": "institution:39fbdba5585bb3c4",
+          "institution": "MIT Lincoln Laboratory",
+          "institution_authors": [
+            "Danielle Sullivan-Pao",
+            "Pooya Khorrami"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "MIT Lincoln Laboratory, Lexington MA, USA",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2504.08149",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:aedc5325a2ce0b18f982",
+          "institution_id": "institution:0d3d34a24da64353",
+          "institution": "Yale University",
+          "institution_authors": [
+            "Nicole Tian"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Yale University, New Haven CT, USA",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2504.08149",
+          "affiliation_note": "Author superscript 2. Nicole Tian is affiliated with Yale University.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:39fbdba5585bb3c4",
+          "institution": "MIT Lincoln Laboratory",
+          "authors": [
+            "Danielle Sullivan-Pao",
+            "Pooya Khorrami"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:0d3d34a24da64353",
+          "institution": "Yale University",
+          "authors": [
+            "Nicole Tian"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Danielle Sullivan-Pao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:39fbdba5585bb3c4"
+          ]
+        },
+        {
+          "author": "Pooya Khorrami",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:39fbdba5585bb3c4"
+          ]
+        },
+        {
+          "author": "Nicole Tian",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:0d3d34a24da64353"
+          ]
+        }
+      ]
     },
     {
       "title": "LOTA: Bit-Planes Guided AI-Generated Image Detection",
@@ -10714,19 +10798,233 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 4,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing Academy of Artificial Intelligence",
+        "Harbin Institute of Technology, Shenzhen",
+        "Institute of Automation, Chinese Academy of Sciences",
+        "Peking University",
+        "Tsinghua Shenzhen International Graduate School",
+        "University of Chinese Academy of Sciences"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing",
+        "Guangdong"
+      ],
       "aggregated_region_codes": [],
-      "curated_mappings": [],
-      "author_institution_affiliations": [],
-      "author_institution_indices": []
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:77894a0acfa5fc9b5ffb",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Shiyu Wu",
+            "Jing Liu"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Institute of Automation, Chinese Academy of Sciences, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/abs/2509.25682v2",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:2391cb1e3de48572854c",
+          "institution_id": "institution:985443a2d7239406",
+          "institution": "Beijing Academy of Artificial Intelligence",
+          "institution_authors": [
+            "Shiyu Wu",
+            "Yequan Wang"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Beijing Academy of Artificial Intelligence, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/abs/2509.25682v2",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:ae25da6f63839fbcc58c",
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "institution_authors": [
+            "Shiyu Wu",
+            "Jing Liu"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "University of Chinese Academy of Sciences, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/abs/2509.25682v2",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:1d0aacb6cf8c65276dd1",
+          "institution_id": "institution:230f59b4fb28c236",
+          "institution": "Tsinghua Shenzhen International Graduate School",
+          "institution_authors": [
+            "Shuyan Li"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Tsinghua Shenzhen International Graduate School, Tsinghua University, Shenzhen",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/abs/2509.25682v2",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:852424da507d0dae6688",
+          "institution_id": "institution:6c5bb70e9f4b77ba",
+          "institution": "Harbin Institute of Technology, Shenzhen",
+          "institution_authors": [
+            "Jing Li"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Harbin Institute of Technology, Shenzhen, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/abs/2509.25682v2",
+          "affiliation_note": "Author superscript 5. Jing Li is affiliated with Harbin Institute of Technology, Shenzhen.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:670f178db17daff837e2",
+          "institution_id": "institution:46e4866d3b2954ab",
+          "institution": "Peking University",
+          "institution_authors": [
+            "Yequan Wang"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Peking University, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/abs/2509.25682v2",
+          "affiliation_note": "Author superscript 6. Yequan Wang is affiliated with Peking University.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "authors": [
+            "Shiyu Wu",
+            "Jing Liu"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:985443a2d7239406",
+          "institution": "Beijing Academy of Artificial Intelligence",
+          "authors": [
+            "Shiyu Wu",
+            "Yequan Wang"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Shiyu Wu",
+            "Jing Liu"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:230f59b4fb28c236",
+          "institution": "Tsinghua Shenzhen International Graduate School",
+          "authors": [
+            "Shuyan Li"
+          ]
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:6c5bb70e9f4b77ba",
+          "institution": "Harbin Institute of Technology, Shenzhen",
+          "authors": [
+            "Jing Li"
+          ]
+        },
+        {
+          "index": 6,
+          "institution_id": "institution:46e4866d3b2954ab",
+          "institution": "Peking University",
+          "authors": [
+            "Yequan Wang"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Shiyu Wu",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0",
+            "institution:985443a2d7239406",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Jing Liu",
+          "institution_indices": [
+            1,
+            3
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Yequan Wang",
+          "institution_indices": [
+            2,
+            6
+          ],
+          "institution_ids": [
+            "institution:985443a2d7239406",
+            "institution:46e4866d3b2954ab"
+          ]
+        },
+        {
+          "author": "Shuyan Li",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:230f59b4fb28c236"
+          ]
+        },
+        {
+          "author": "Jing Li",
+          "institution_indices": [
+            5
+          ],
+          "institution_ids": [
+            "institution:6c5bb70e9f4b77ba"
+          ]
+        }
+      ]
     },
     {
       "title": "OpenSDI: Spotting Diffusion-Generated Images in the Open World",
@@ -14348,11 +14646,62 @@
       "missing_affiliation": false,
       "missing_coordinates": true,
       "coverage_status": "missing_coordinates",
-      "aggregated_institutions": [],
+      "aggregated_institutions": [
+        "Nottingham Trent University"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:5a0179f25f2588bb3bd0",
+          "institution_id": "institution:c055ca96e505b797",
+          "institution": "Nottingham Trent University",
+          "institution_authors": [
+            "Jordan J. Bird",
+            "Ahmad Lotfi"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Department of Computer Science, Nottingham Trent University, Nottingham, U.K.",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/10409290",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:c055ca96e505b797",
+          "institution": "Nottingham Trent University",
+          "authors": [
+            "Jordan J. Bird",
+            "Ahmad Lotfi"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Jordan J. Bird",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c055ca96e505b797"
+          ]
+        },
+        {
+          "author": "Ahmad Lotfi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c055ca96e505b797"
+          ]
+        }
+      ]
     },
     {
       "paper_id": "curated:253c210194ac9348f9e6",
@@ -25732,14 +26081,109 @@
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Institute of Computing Technology, Chinese Academy of Sciences",
+        "University of Sydney"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:0bfd8321c81ef84531d3",
+          "institution_id": "institution:e278f75918ccf8a7",
+          "institution": "Institute of Computing Technology, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Tianyun Yang",
+            "Juan Cao",
+            "Danding Wang"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Institute of Computing Technology, Chinese Academy of Sciences, Beijing, China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2307.15977",
+          "affiliation_note": "Tianyun Yang, Juan Cao, and Danding Wang are affiliated with Institute of Computing Technology, Chinese Academy of Sciences.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:77a03ef3ec868b6fa41e",
+          "institution_id": "institution:965434eee0b97685",
+          "institution": "University of Sydney",
+          "institution_authors": [
+            "Chang Xu"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "School of Computer Science, Faculty of Engineering, University of Sydney, Australia",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2307.15977",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:e278f75918ccf8a7",
+          "institution": "Institute of Computing Technology, Chinese Academy of Sciences",
+          "authors": [
+            "Tianyun Yang",
+            "Juan Cao",
+            "Danding Wang"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:965434eee0b97685",
+          "institution": "University of Sydney",
+          "authors": [
+            "Chang Xu"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Tianyun Yang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7"
+          ]
+        },
+        {
+          "author": "Juan Cao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7"
+          ]
+        },
+        {
+          "author": "Danding Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7"
+          ]
+        },
+        {
+          "author": "Chang Xu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:965434eee0b97685"
+          ]
+        }
+      ]
     },
     {
       "title": "On The Detection of Synthetic Images Generated by Diffusion Models",
@@ -26070,54 +26514,6 @@
       "aggregated_country_codes": [
         "IN"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
-    },
-    {
-      "title": "Reverse Engineering of Generative Models: Inferring Model Hyperparameters From Generated Images",
-      "in_scope": true,
-      "year": 2023,
-      "publication_year": 2023,
-      "publication_date": "2023-08-02",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
-      "venue_name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
-      "venue_type": "journal",
-      "publisher": "IEEE Computer Society",
-      "publication_type": "article",
-      "abstract": "State-of-the-art (SOTA) Generative Models (GMs) can synthesize photo-realistic images that are hard for humans to distinguish from genuine photos. Identifying and understanding manipulated media are crucial to mitigate the social concerns on the potential misuse of GMs. We propose to perform reverse engineering of GMs to infer model hyperparameters from the images generated by these models. We define a novel problem, \"model parsing\", as estimating GM network architectures and training loss functions by examining their generated images - a task seemingly impossible for human beings. To tackle this problem, we propose a framework with two components: a Fingerprint Estimation Network (FEN), which estimates a GM fingerprint from a generated image by training with four constraints to encourage the fingerprint to have desired properties, and a Parsing Network (PN), which predicts network architecture and loss functions from the estimated fingerprints. To evaluate our approach, we collect a fake image dataset with 100 K images generated by 116 different GMs. Extensive experiments show encouraging results in parsing the hyperparameters of the unseen models. Finally, our fingerprint estimation can be leveraged for deepfake detection and image attribution, as we show by reporting SOTA results on both the deepfake detection (Celeb-DF) and image attribution benchmarks.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.1109/tpami.2023.3301451",
-      "arxiv_id": "2106.07873v3",
-      "arxiv_url": "https://arxiv.org/abs/2106.07873v3",
-      "arxiv_year": 2021,
-      "has_arxiv_version": true,
-      "paper_url": "https://doi.org/10.1109/tpami.2023.3301451",
-      "primary_url": "https://doi.org/10.1109/tpami.2023.3301451",
-      "landing_page_url": "https://doi.org/10.1109/tpami.2023.3301451",
-      "openalex_url": "https://openalex.org/W4385486282",
-      "is_arxiv_preprint": false,
-      "url": "https://doi.org/10.1109/tpami.2023.3301451",
-      "authors": [
-        "Vishal Asnani",
-        "Xi Yin",
-        "Tal Hassner",
-        "Xiaoming Liu"
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": []
     },
@@ -27152,16 +27548,166 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Institute of Computing Technology, Chinese Academy of Sciences",
+        "Renmin University of China",
+        "University of Chinese Academy of Sciences"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:9fb883d2a41c0a2a749e",
+          "institution_id": "institution:e278f75918ccf8a7",
+          "institution": "Institute of Computing Technology, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Tianyun Yang",
+            "Ziyao Huang",
+            "Juan Cao",
+            "Lei Li"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Institute of Computing Technology, Chinese Academy of Sciences; University of Chinese Academy of Sciences",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/20391",
+          "affiliation_note": "Tianyun Yang, Ziyao Huang, Juan Cao, and Lei Li are affiliated with Institute of Computing Technology, Chinese Academy of Sciences.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:120fde26932c93fc752e",
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "institution_authors": [
+            "Tianyun Yang",
+            "Ziyao Huang",
+            "Juan Cao",
+            "Lei Li"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Institute of Computing Technology, Chinese Academy of Sciences; University of Chinese Academy of Sciences",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/20391",
+          "affiliation_note": "Tianyun Yang, Ziyao Huang, Juan Cao, and Lei Li are also affiliated with University of Chinese Academy of Sciences.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:7e868171a9c8e18a9602",
+          "institution_id": "institution:5fbb6e2cbdd4ea21",
+          "institution": "Renmin University of China",
+          "institution_authors": [
+            "Xirong Li"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Renmin University of China",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/20391",
+          "affiliation_note": "Xirong Li is affiliated with Renmin University of China.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:e278f75918ccf8a7",
+          "institution": "Institute of Computing Technology, Chinese Academy of Sciences",
+          "authors": [
+            "Tianyun Yang",
+            "Ziyao Huang",
+            "Juan Cao",
+            "Lei Li"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Tianyun Yang",
+            "Ziyao Huang",
+            "Juan Cao",
+            "Lei Li"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:5fbb6e2cbdd4ea21",
+          "institution": "Renmin University of China",
+          "authors": [
+            "Xirong Li"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Tianyun Yang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Ziyao Huang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Juan Cao",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Lei Li",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Xirong Li",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:5fbb6e2cbdd4ea21"
+          ]
+        }
+      ]
     },
     {
       "title": "Detecting Deepfake Images Using Deep Learning Techniques and Explainable AI Methods",
@@ -27880,11 +28426,121 @@
       "missing_affiliation": false,
       "missing_coordinates": true,
       "coverage_status": "missing_coordinates",
-      "aggregated_institutions": [],
+      "aggregated_institutions": [
+        "Adobe Research",
+        "Salesforce Research",
+        "University of Surrey"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:f2502efaf655f6cf14ff",
+          "institution_id": "institution:29276dc7d9ce02fd",
+          "institution": "University of Surrey",
+          "institution_authors": [
+            "Tu Bui",
+            "John Collomosse"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "University of Surrey, Guildford, UK",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9",
+          "affiliation_note": "Author superscript 1. Tu Bui and John Collomosse are affiliated with University of Surrey.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:19dedb80fb3be2f5a9dd",
+          "institution_id": "institution:41db7d042136daef",
+          "institution": "Salesforce Research",
+          "institution_authors": [
+            "Ning Yu"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Salesforce Research, Palo Alto, USA",
+          "evidence_source": "PDF",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9",
+          "affiliation_note": "Author superscript 2. Ning Yu is affiliated with Salesforce Research.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:2988be2800f85af4d31a",
+          "institution_id": "institution:7a0d6a63667ac750",
+          "institution": "Adobe Research",
+          "institution_authors": [
+            "John Collomosse"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Adobe Research, San Jose, USA",
+          "evidence_source": "",
+          "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9",
+          "affiliation_note": "Author superscript 3. John Collomosse is also affiliated with Adobe Research.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:29276dc7d9ce02fd",
+          "institution": "University of Surrey",
+          "authors": [
+            "Tu Bui",
+            "John Collomosse"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:41db7d042136daef",
+          "institution": "Salesforce Research",
+          "authors": [
+            "Ning Yu"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:7a0d6a63667ac750",
+          "institution": "Adobe Research",
+          "authors": [
+            "John Collomosse"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Tu Bui",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:29276dc7d9ce02fd"
+          ]
+        },
+        {
+          "author": "John Collomosse",
+          "institution_indices": [
+            1,
+            3
+          ],
+          "institution_ids": [
+            "institution:29276dc7d9ce02fd",
+            "institution:7a0d6a63667ac750"
+          ]
+        },
+        {
+          "author": "Ning Yu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:41db7d042136daef"
+          ]
+        }
+      ]
     },
     {
       "title": "The Face Deepfake Detection Challenge",
@@ -28058,14 +28714,98 @@
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": false,
       "map_record_count": 0,
-      "missing_affiliation": true,
-      "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
+      "missing_affiliation": false,
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_institutions": [
+        "Monash University",
+        "Monash University Malaysia"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:d0300282572168272365",
+          "institution_id": "institution:ae914839cab3ba03",
+          "institution": "Monash University Malaysia",
+          "institution_authors": [
+            "Brandon B. G. Khoo",
+            "Chern Hong Lim"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "School of Information Technology, Monash University Malaysia",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2203.09777",
+          "affiliation_note": "Asterisk affiliation. Brandon B. G. Khoo and Chern Hong Lim are affiliated with School of Information Technology, Monash University Malaysia.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:f77813cf3b7fce01efea",
+          "institution_id": "institution:02e0cb0a82c051ec",
+          "institution": "Monash University",
+          "institution_authors": [
+            "Raphaël C.-W. Phan"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Faculty of Information Technology, Monash University",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2203.09777",
+          "affiliation_note": "Double-asterisk affiliation. Raphaël C.-W. Phan is affiliated with Faculty of Information Technology, Monash University.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:ae914839cab3ba03",
+          "institution": "Monash University Malaysia",
+          "authors": [
+            "Brandon B. G. Khoo",
+            "Chern Hong Lim"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:02e0cb0a82c051ec",
+          "institution": "Monash University",
+          "authors": [
+            "Raphaël C.-W. Phan"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Brandon B. G. Khoo",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ae914839cab3ba03"
+          ]
+        },
+        {
+          "author": "Chern Hong Lim",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ae914839cab3ba03"
+          ]
+        },
+        {
+          "author": "Raphaël C.-W. Phan",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:02e0cb0a82c051ec"
+          ]
+        }
+      ]
     },
     {
       "title": "A Closer Look at Fourier Spectrum Discrepancies for CNN-generated Images Detection",
@@ -30101,16 +30841,159 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Cambridge",
+        "University of Toronto",
+        "Vector Institute"
+      ],
+      "aggregated_country_names": [
+        "Canada"
+      ],
+      "aggregated_country_codes": [
+        "CA"
+      ],
+      "aggregated_regions": [
+        "Ontario"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:333364a0c1c4f010722e",
+          "institution_id": "institution:6a892bbe4ee57122",
+          "institution": "University of Toronto",
+          "institution_authors": [
+            "Baiwu Zhang",
+            "Jin Peng Zhou",
+            "Ilia Shumailov",
+            "Nicolas Papernot"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "University of Toronto and Vector Institute",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2008.09194",
+          "affiliation_note": "Baiwu Zhang, Jin Peng Zhou, Ilia Shumailov, and Nicolas Papernot are affiliated with University of Toronto.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:7aaea612dbef90a4256e",
+          "institution_id": "institution:dc213653c8edb0fa",
+          "institution": "Vector Institute",
+          "institution_authors": [
+            "Baiwu Zhang",
+            "Jin Peng Zhou",
+            "Ilia Shumailov",
+            "Nicolas Papernot"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "University of Toronto and Vector Institute / University of Toronto, Vector Institute and University of Cambridge",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2008.09194",
+          "affiliation_note": "Baiwu Zhang, Jin Peng Zhou, Ilia Shumailov, and Nicolas Papernot are affiliated with Vector Institute.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:0b1477e193d59a455b9d",
+          "institution_id": "institution:0418834df0ffcdf2",
+          "institution": "University of Cambridge",
+          "institution_authors": [
+            "Ilia Shumailov"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "University of Toronto, Vector Institute and University of Cambridge",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/2008.09194",
+          "affiliation_note": "Ilia Shumailov is also affiliated with University of Cambridge.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:6a892bbe4ee57122",
+          "institution": "University of Toronto",
+          "authors": [
+            "Baiwu Zhang",
+            "Jin Peng Zhou",
+            "Ilia Shumailov",
+            "Nicolas Papernot"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:dc213653c8edb0fa",
+          "institution": "Vector Institute",
+          "authors": [
+            "Baiwu Zhang",
+            "Jin Peng Zhou",
+            "Ilia Shumailov",
+            "Nicolas Papernot"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:0418834df0ffcdf2",
+          "institution": "University of Cambridge",
+          "authors": [
+            "Ilia Shumailov"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Baiwu Zhang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:6a892bbe4ee57122",
+            "institution:dc213653c8edb0fa"
+          ]
+        },
+        {
+          "author": "Jin Peng Zhou",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:6a892bbe4ee57122",
+            "institution:dc213653c8edb0fa"
+          ]
+        },
+        {
+          "author": "Ilia Shumailov",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:6a892bbe4ee57122",
+            "institution:dc213653c8edb0fa",
+            "institution:0418834df0ffcdf2"
+          ]
+        },
+        {
+          "author": "Nicolas Papernot",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:6a892bbe4ee57122",
+            "institution:dc213653c8edb0fa"
+          ]
+        }
+      ]
     },
     {
       "title": "On the use of Benford's law to detect GAN-generated images",
@@ -30446,11 +31329,121 @@
       "missing_affiliation": false,
       "missing_coordinates": true,
       "coverage_status": "missing_coordinates",
-      "aggregated_institutions": [],
+      "aggregated_institutions": [
+        "CISPA Helmholtz Center for Information Security",
+        "Max Planck Institute for Informatics",
+        "University of Maryland"
+      ],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
       "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:fa48c67676a8f806e4a9",
+          "institution_id": "institution:13f7c73ae8019e75",
+          "institution": "University of Maryland",
+          "institution_authors": [
+            "Ning Yu",
+            "Larry Davis"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "University of Maryland, College Park",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/9010964",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Author superscript 1. Ning Yu and Larry Davis are affiliated with University of Maryland, College Park."
+        },
+        {
+          "mapping_id": "mapping:6d6b161b15c567a2a13b",
+          "institution_id": "institution:bef37c90751e824e",
+          "institution": "Max Planck Institute for Informatics",
+          "institution_authors": [
+            "Ning Yu"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Max Planck Institute for Informatics, Saarland Informatics Campus, Germany",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/9010964",
+          "affiliation_note": "Author superscript 2. Ning Yu is affiliated with Max Planck Institute for Informatics.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:f85249eb07e4fec52b3c",
+          "institution_id": "institution:aea376936c88135b",
+          "institution": "CISPA Helmholtz Center for Information Security",
+          "institution_authors": [
+            "Mario Fritz"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "CISPA Helmholtz Center for Information Security, Saarland Informatics Campus, Germany",
+          "evidence_source": "PDF",
+          "evidence_url": "https://ieeexplore.ieee.org/document/9010964",
+          "affiliation_note": "Author superscript 3. Mario Fritz is affiliated with CISPA Helmholtz Center for Information Security.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:13f7c73ae8019e75",
+          "institution": "University of Maryland",
+          "authors": [
+            "Ning Yu",
+            "Larry Davis"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:bef37c90751e824e",
+          "institution": "Max Planck Institute for Informatics",
+          "authors": [
+            "Ning Yu"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:aea376936c88135b",
+          "institution": "CISPA Helmholtz Center for Information Security",
+          "authors": [
+            "Mario Fritz"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Ning Yu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:13f7c73ae8019e75",
+            "institution:bef37c90751e824e"
+          ]
+        },
+        {
+          "author": "Larry Davis",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:13f7c73ae8019e75"
+          ]
+        },
+        {
+          "author": "Mario Fritz",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:aea376936c88135b"
+          ]
+        }
+      ]
     },
     {
       "title": "Complement Face Forensic Detection and Localization with FacialLandmarks",
