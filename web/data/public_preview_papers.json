@@ -553,20 +553,26 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "HKISI, Chinese Academy of Sciences",
         "Institute of Automation, Chinese Academy of Sciences",
         "Sangfor Technologies Inc.",
         "University of Chinese Academy of Sciences"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -4771,10 +4777,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 4,
+      "map_record_count": 5,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -7379,20 +7385,26 @@
       "review_note": "",
       "needs_review": true,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Academy of Artificial Intelligence",
         "Harbin Institute of Technology, Shenzhen",
         "Institute of Automation, Chinese Academy of Sciences",
         "University of Chinese Academy of Sciences"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {

@@ -42894,6 +42894,189 @@
       ]
     },
     {
+      "id": "curated-map:fbb2b0f3c888fb95db43",
+      "paper_id": "curated:e256ad6b672c3cf433ba",
+      "title": "Bridging the Gap Between Ideal and Real-World Evaluation: Benchmarking AI-Generated Image Detection in Challenging Scenarios",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "publication_type": "article",
+      "abstract": "With the rapid advancement of generative models, highly realistic image synthesis has posed new challenges to digital security and media credibility. Although AI-generated image detection methods have partially addressed these concerns, a substantial research gap remains in evaluating their performance under complex real-world conditions. This paper introduces the Real-World Robustness Dataset (RRDataset) for comprehensive evaluation of detection models across three dimensions: 1) Scenario Generalization: RRDataset encompasses high-quality images from seven major scenarios (War and Conflict, Disasters and Accidents, Political and Social Events, Medical and Public Health, Culture and Religion, Labor and Production, and everyday life), addressing existing dataset gaps from a content perspective. 2) Internet Transmission Robustness: examining detector performance on images that have undergone multiple rounds of sharing across various social media platforms. 3) Re-digitization Robustness: assessing model effectiveness on images altered through four distinct re-digitization methods. We benchmarked 17 detectors and 10 vision-language models (VLMs) on RRDataset and conducted a large-scale human study involving 192 participants to investigate human few-shot learning capabilities in detecting AI-generated images. The benchmarking results reveal the limitations of current AI detection methods under real-world conditions and underscore the importance of drawing on human adaptability to develop more robust detection algorithms.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/iccv51701.2025.01895",
+      "arxiv_id": "2509.09172",
+      "arxiv_url": "https://arxiv.org/abs/2509.09172",
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1109/iccv51701.2025.01895",
+      "primary_url": "https://doi.org/10.1109/iccv51701.2025.01895",
+      "openalex_url": "https://openalex.org/W4417071442",
+      "url": "https://doi.org/10.1109/iccv51701.2025.01895",
+      "authors": [
+        "Chunxiao Li",
+        "Xiaoxiao Wang",
+        "Meiling Li",
+        "Boming Miao",
+        "Peng Sun",
+        "Yunjian Zhang",
+        "Xiangyang Ji",
+        "Yao Zhu"
+      ],
+      "institution": "University of Chinese Academy of Sciences",
+      "institution_id": "institution:69309405e04976ec",
+      "institution_authors": [
+        "Xiaoxiao Wang"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Beijing",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Beijing",
+      "latitude": 39.9078,
+      "longitude": 116.2523,
+      "lat": 39.9078,
+      "lon": 116.2523,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:1184be4809269e9f25e3",
+      "raw_affiliation": "University of Chinese Academy of Sciences, Beijing, China",
+      "evidence_source": "PDF",
+      "evidence_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Li_Bridging_the_Gap_Between_Ideal_and_Real-world_Evaluation_Benchmarking_AI-Generated_ICCV_2025_paper.pdf",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://english.ucas.ac.cn/index.php/about-ucas/contact",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: University of Chinese Academy of Sciences, Beijing, China | Evidence source: PDF | Evidence URL: https://openaccess.thecvf.com/content/ICCV2025/papers/Li_Bridging_the_Gap_Between_Ideal_and_Real-world_Evaluation_Benchmarking_AI-Generated_ICCV_2025_paper.pdf | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:924e1e0e9723b423",
+          "institution": "Beijing Normal University",
+          "authors": [
+            "Chunxiao Li",
+            "Boming Miao"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Xiaoxiao Wang"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "authors": [
+            "Meiling Li"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:15e8da2735014d49",
+          "institution": "Central University of Finance and Economics",
+          "authors": [
+            "Peng Sun"
+          ]
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:4ae45b121fe12e9c",
+          "institution": "Tsinghua University",
+          "authors": [
+            "Yunjian Zhang",
+            "Xiangyang Ji",
+            "Yao Zhu"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Chunxiao Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:924e1e0e9723b423"
+          ]
+        },
+        {
+          "author": "Boming Miao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:924e1e0e9723b423"
+          ]
+        },
+        {
+          "author": "Xiaoxiao Wang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Meiling Li",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Peng Sun",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:15e8da2735014d49"
+          ]
+        },
+        {
+          "author": "Yunjian Zhang",
+          "institution_indices": [
+            5
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Xiangyang Ji",
+          "institution_indices": [
+            5
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Yao Zhu",
+          "institution_indices": [
+            5
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:3782bf1ee8cca0a40fa6",
       "paper_id": "curated:e256ad6b672c3cf433ba",
       "title": "Bridging the Gap Between Ideal and Real-World Evaluation: Benchmarking AI-Generated Image Detection in Challenging Scenarios",
@@ -46196,6 +46379,182 @@
       ]
     },
     {
+      "id": "curated-map:23776e41e28ddf702f74",
+      "paper_id": "",
+      "title": "CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "2026-03-02",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "publication_type": "article",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "",
+      "arxiv_id": "2603.01878",
+      "arxiv_url": "https://arxiv.org/abs/2603.01878",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2603.01878",
+      "primary_url": "http://arxiv.org/abs/2603.01878",
+      "openalex_url": "https://openalex.org/W7133363592",
+      "url": "http://arxiv.org/abs/2603.01878",
+      "authors": [
+        "Yiheng Li",
+        "Zichang Tan",
+        "Guoqing Xu",
+        "Yijun Ye",
+        "Yang Yang",
+        "Zhen Lei"
+      ],
+      "institution": "University of Chinese Academy of Sciences",
+      "institution_id": "institution:69309405e04976ec",
+      "institution_authors": [
+        "Yiheng Li",
+        "Guoqing Xu",
+        "Yijun Ye",
+        "Yang Yang",
+        "Zhen Lei"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Beijing",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Beijing",
+      "latitude": 39.9078,
+      "longitude": 116.2523,
+      "lat": 39.9078,
+      "lon": 116.2523,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:42ea7ad9432f95d0dc69",
+      "raw_affiliation": "School of Artificial Intelligence, University of Chinese Academy of Sciences",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2603.01878",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://english.ucas.ac.cn/index.php/about-ucas/contact",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: School of Artificial Intelligence, University of Chinese Academy of Sciences | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2603.01878 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Yijun Ye",
+            "Yang Yang",
+            "Zhen Lei"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Yijun Ye",
+            "Yang Yang",
+            "Zhen Lei"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution": "HKISI, Chinese Academy of Sciences",
+          "authors": [
+            "Zhen Lei"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:a86e3c911036d069",
+          "institution": "Sangfor Technologies Inc.",
+          "authors": [
+            "Zicang Tan"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yiheng Li",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Guoqing Xu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Yijun Ye",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Yang Yang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Zhen Lei",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0",
+            "institution:9dd7b58a09f6962c"
+          ]
+        },
+        {
+          "author": "Zicang Tan",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:a86e3c911036d069"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:280a31606d6aee628e74",
       "paper_id": "curated:3bd79627ad7e70a28a97",
       "title": "D$^3$: Scaling Up Deepfake Detection by Learning from Discrepancy",
@@ -49360,6 +49719,148 @@
           ],
           "institution_ids": [
             "institution:e80b94c605da24ce"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:6eed9bc88cd141e0eb6a",
+      "paper_id": "curated:4d91354cd919a64a2259",
+      "title": "Few-Shot Learner Generalizes Across AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "publication_type": "preprint",
+      "abstract": "Current fake image detectors trained on large synthetic image datasets perform satisfactorily on limited studied generative models. However, these detectors suffer a notable performance decline over unseen models. Besides, collecting adequate training data from online generative models is often expensive or infeasible. To overcome these issues, we propose Few-Shot Detector (FSD), a novel AI-generated image detector which learns a specialized metric space for effectively distinguishing unseen fake images using very few samples. Experiments show that FSD achieves state-of-the-art performance by $+11.6\\%$ average accuracy on the GenImage dataset with only $10$ additional samples. More importantly, our method is better capable of capturing the intra-category commonality in unseen images without further training. Our code is available at https://github.com/teheperinko541/Few-Shot-AIGI-Detector.",
+      "abstract_source": "openalex",
+      "doi": "10.48550/arxiv.2501.08763",
+      "arxiv_id": "2501.08763",
+      "arxiv_url": "https://arxiv.org/abs/2501.08763",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2501.08763",
+      "primary_url": "http://arxiv.org/abs/2501.08763",
+      "openalex_url": "https://openalex.org/W4406484960",
+      "url": "http://arxiv.org/abs/2501.08763",
+      "authors": [
+        "Shiyu Wu",
+        "Jing Liu",
+        "Jing Li",
+        "Yequan Wang"
+      ],
+      "institution": "University of Chinese Academy of Sciences",
+      "institution_id": "institution:69309405e04976ec",
+      "institution_authors": [
+        "Shiyu Wu",
+        "Jing Liu"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Beijing",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Beijing",
+      "latitude": 39.9078,
+      "longitude": 116.2523,
+      "lat": 39.9078,
+      "lon": 116.2523,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:beaedcf0f98809ec782e",
+      "raw_affiliation": "University of Chinese Academy of Sciences, Beijing, China",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2501.08763",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://english.ucas.ac.cn/index.php/about-ucas/contact",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: University of Chinese Academy of Sciences, Beijing, China | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2501.08763 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "authors": [
+            "Shiyu Wu",
+            "Jing Liu"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:985443a2d7239406",
+          "institution": "Beijing Academy of Artificial Intelligence",
+          "authors": [
+            "Shiyu Wu",
+            "Yequan Wang"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Shiyu Wu",
+            "Jing Liu"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:6c5bb70e9f4b77ba",
+          "institution": "Harbin Institute of Technology, Shenzhen",
+          "authors": [
+            "Jing Li"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Shiyu Wu",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0",
+            "institution:985443a2d7239406",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Jing Liu",
+          "institution_indices": [
+            1,
+            3
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Yequan Wang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:985443a2d7239406"
+          ]
+        },
+        {
+          "author": "Jing Li",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:6c5bb70e9f4b77ba"
           ]
         }
       ]
