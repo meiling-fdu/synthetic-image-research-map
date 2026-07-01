@@ -665,6 +665,94 @@ def stable_institution_id(value: Any) -> str:
     return f"institution:{digest}" if normalized else ""
 
 
+def build_canonical_institution_lookup(
+    confirmed_location_records: Sequence[Mapping[str, Any]] = (),
+    institution_aliases: Sequence[Mapping[str, Any]] = (),
+) -> Dict[str, str]:
+    """Build the export-time institution authority from curated data only."""
+    lookup = {
+        normalize_institution(row.get("normalized_institution") or row.get("institution")):
+        clean(row.get("institution"))
+        for row in confirmed_location_records
+        if clean(row.get("institution"))
+    }
+    lookup.update(
+        {
+            normalize_institution(row.get("alias_name")):
+            clean(row.get("canonical_institution_name"))
+            for row in institution_aliases
+            if clean(row.get("review_status")) == "confirmed"
+            and clean(row.get("alias_name"))
+            and clean(row.get("canonical_institution_name"))
+        }
+    )
+    return {key: value for key, value in lookup.items() if key and value}
+
+
+def resolve_canonical_institution(
+    record: Mapping[str, Any],
+    canonical_lookup: Mapping[str, str],
+) -> str:
+    """Resolve curated names first, falling back to the cleaned display name."""
+    display_name = clean(
+        record.get("institution")
+        or record.get("institution_name")
+        or record.get("canonical_institution_name")
+    )
+    for value in (
+        display_name,
+        record.get("raw_affiliation"),
+        record.get("raw_affiliation_text"),
+    ):
+        canonical = canonical_lookup.get(normalize_institution(value))
+        if canonical:
+            return canonical
+    return display_name
+
+
+def canonicalize_export_institutions(
+    records: Sequence[MutableMapping[str, Any]],
+    confirmed_location_records: Sequence[Mapping[str, Any]] = (),
+    institution_aliases: Sequence[Mapping[str, Any]] = (),
+) -> None:
+    """Apply curated canonical names to all public institution display fields."""
+    canonical_lookup = build_canonical_institution_lookup(
+        confirmed_location_records, institution_aliases
+    )
+    if not canonical_lookup:
+        return
+
+    def canonicalize_record(record: MutableMapping[str, Any]) -> None:
+        institution = resolve_canonical_institution(record, canonical_lookup)
+        if institution:
+            record["institution"] = institution
+            if "institution_name" in record:
+                record["institution_name"] = institution
+            if "canonical_institution_name" in record:
+                record["canonical_institution_name"] = institution
+            if "institution_id" in record:
+                record["institution_id"] = stable_institution_id(institution)
+        for field in ("author_institution_affiliations", "curated_mappings"):
+            values = record.get(field)
+            if isinstance(values, list):
+                for value in values:
+                    if isinstance(value, MutableMapping):
+                        canonicalize_record(value)
+        aggregated = record.get("aggregated_institutions")
+        if isinstance(aggregated, list):
+            record["aggregated_institutions"] = sorted(
+                {
+                    canonical_lookup.get(normalize_institution(value), clean(value))
+                    for value in aggregated
+                    if clean(value)
+                },
+                key=str.casefold,
+            )
+
+    for record in records:
+        canonicalize_record(record)
+
+
 def _marker_id(
     paper: Mapping[str, Any], mapping: Mapping[str, Any]
 ) -> str:
@@ -1285,10 +1373,24 @@ def integrate_curated_records(
     List[Dict[str, str]],
     Dict[str, Any],
 ]:
+    papers = [dict(record) for record in paper_records]
+    maps = [dict(record) for record in map_records]
+    canonical_mappings = [dict(mapping) for mapping in mappings]
+    canonicalize_export_institutions(
+        papers, confirmed_location_records, institution_aliases
+    )
+    canonicalize_export_institutions(
+        maps, confirmed_location_records, institution_aliases
+    )
+    canonicalize_export_institutions(
+        canonical_mappings, confirmed_location_records, institution_aliases
+    )
+    mappings = canonical_mappings
+
     if not curated_papers and not mappings:
         return (
-            [dict(record) for record in paper_records],
-            [dict(record) for record in map_records],
+            papers,
+            maps,
             [dict(row) for row in location_review_rows],
             {
                 "curated_papers_loaded": 0,
@@ -1307,8 +1409,6 @@ def integrate_curated_records(
             },
         )
 
-    papers = [dict(record) for record in paper_records]
-    maps = [dict(record) for record in map_records]
     reviews = [dict(row) for row in location_review_rows]
     curated_records, paper_summary = build_curated_paper_preview_records(
         curated_papers, exclusion_rows
@@ -1385,6 +1485,12 @@ def integrate_curated_records(
             mapping_summary["resolved_mapping_ids"],
         )
 
+    canonicalize_export_institutions(
+        papers, confirmed_location_records, institution_aliases
+    )
+    canonicalize_export_institutions(
+        maps, confirmed_location_records, institution_aliases
+    )
     papers.sort(
         key=lambda record: (
             -(_parse_year(record.get("publication_year") or record.get("year")) or 0),

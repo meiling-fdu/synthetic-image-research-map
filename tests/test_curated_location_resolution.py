@@ -5,6 +5,39 @@ from scripts.curated_export import build_curated_map_records, integrate_curated_
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_curated_alias_canonicalizes_automatic_export_without_mappings(self):
+        stale = {
+            "title": "Automatic candidate",
+            "institution": "Federico II University Hospital",
+            "institution_id": "institution:stale",
+            "raw_affiliation": "University Federico II of Naples",
+        }
+        locations = [
+            {
+                "institution": "University of Naples Federico II",
+                "normalized_institution": "university of naples federico ii",
+            }
+        ]
+        aliases = [
+            {
+                "alias_name": "Federico II University Hospital",
+                "canonical_institution_name": "University of Naples Federico II",
+                "review_status": "confirmed",
+            }
+        ]
+
+        papers, maps, _reviews, _summary = integrate_curated_records(
+            [], [stale], [], [],
+            confirmed_location_records=locations,
+            institution_aliases=aliases,
+        )
+
+        self.assertEqual(papers, [])
+        self.assertEqual(
+            maps[0]["institution"], "University of Naples Federico II"
+        )
+        self.assertNotEqual(maps[0]["institution_id"], "institution:stale")
+
     def test_explicit_admin_supplement_survives_curated_supersession(self):
         paper = {
             "title": "Supplement test",

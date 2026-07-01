@@ -166,6 +166,39 @@ def institution_name(record: Dict[str, Any]) -> str:
     return ""
 
 
+FORBIDDEN_INSTITUTION_NAMES = {"Federico II University Hospital"}
+
+
+def validate_forbidden_institution_names(
+    index: int,
+    record: Dict[str, Any],
+    issues: List[Issue],
+) -> None:
+    title = record_title(record)
+    values = [record]
+    for field in ("author_institution_affiliations", "curated_mappings"):
+        nested = record.get(field)
+        if isinstance(nested, list):
+            values.extend(value for value in nested if isinstance(value, dict))
+    aggregated = record.get("aggregated_institutions")
+    names = [
+        institution_name(value)
+        for value in values
+        if institution_name(value)
+    ]
+    if isinstance(aggregated, list):
+        names.extend(clean_text(value) for value in aggregated)
+    for name in names:
+        if name in FORBIDDEN_INSTITUTION_NAMES:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"forbidden non-canonical institution name: {name}",
+            )
+
+
 def normalized_doi(value: Any) -> str:
     return re.sub(
         r"^https?://(?:dx\.)?doi\.org/",
@@ -408,6 +441,7 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
     if not isinstance(record, dict):
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
+    validate_forbidden_institution_names(index, record, issues)
 
     title = record_title(record)
     raw_title = clean_text(record.get("title"))
@@ -600,6 +634,7 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
     if not isinstance(record, dict):
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
+    validate_forbidden_institution_names(index, record, issues)
 
     title = record_title(record)
     raw_title = clean_text(record.get("title"))

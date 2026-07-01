@@ -22,8 +22,20 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 try:
     from .country_normalization import normalize_country_region
+    from .curated_locations import (
+        DEFAULT_INSTITUTION_ALIASES_PATH,
+        DEFAULT_INSTITUTION_LOCATIONS_PATH,
+        load_confirmed_locations,
+        load_institution_aliases,
+    )
 except ImportError:  # Direct execution from the scripts directory.
     from country_normalization import normalize_country_region
+    from curated_locations import (
+        DEFAULT_INSTITUTION_ALIASES_PATH,
+        DEFAULT_INSTITUTION_LOCATIONS_PATH,
+        load_confirmed_locations,
+        load_institution_aliases,
+    )
 
 
 DEFAULT_PAPERS_CSV = Path(
@@ -2129,6 +2141,8 @@ def build_export(
     institution_record_overrides: Sequence[Dict[str, Any]] = (),
     paper_abstracts: Sequence[Dict[str, Any]] = (),
     local_abstracts: Sequence[Dict[str, Any]] = (),
+    confirmed_location_records: Sequence[Dict[str, Any]] = (),
+    institution_aliases: Sequence[Dict[str, Any]] = (),
 ) -> Dict[str, Any]:
     records, counters = group_map_records(paper_rows, affiliation_rows)
     institution_record_override_summary = apply_institution_record_overrides(
@@ -2154,6 +2168,14 @@ def build_export(
         records,
         paper_abstracts,
         local_abstracts,
+    )
+    # Import lazily to avoid the curated-export/candidate-export module cycle.
+    try:
+        from .curated_export import canonicalize_export_institutions
+    except ImportError:
+        from curated_export import canonicalize_export_institutions
+    canonicalize_export_institutions(
+        records, confirmed_location_records, institution_aliases
     )
     available_records = len(records)
     if max_records is not None:
@@ -2454,6 +2476,12 @@ def run(args: argparse.Namespace) -> int:
         local_abstracts = read_local_openalex_abstracts()
         institution_author_overrides = load_institution_author_overrides()
         institution_record_overrides = load_institution_record_overrides()
+        confirmed_location_records = load_confirmed_locations(
+            DEFAULT_INSTITUTION_LOCATIONS_PATH
+        )
+        institution_aliases = load_institution_aliases(
+            DEFAULT_INSTITUTION_ALIASES_PATH
+        )
         payload = build_export(
             paper_rows,
             affiliation_rows,
@@ -2465,6 +2493,8 @@ def run(args: argparse.Namespace) -> int:
             institution_record_overrides,
             paper_abstracts,
             local_abstracts,
+            confirmed_location_records,
+            institution_aliases,
         )
         payload["summary"].update(scope_counts)
         payload["summary"].update(key_attempt_summary)

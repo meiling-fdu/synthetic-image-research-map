@@ -5,10 +5,27 @@ from scripts.validate_public_preview import validate_preprint_version_duplicates
 from scripts.validate_public_preview import (
     normalized_author_name,
     validate_curated_affiliation_supersession,
+    validate_forbidden_institution_names,
 )
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_validator_rejects_forbidden_institution_name(self):
+        issues = []
+
+        validate_forbidden_institution_names(
+            0,
+            {
+                "title": "Canonicalization regression",
+                "institution": "Federico II University Hospital",
+            },
+            issues,
+        )
+
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0].level, "ERROR")
+        self.assertIn("forbidden non-canonical institution", issues[0].message)
+
     def test_reversed_author_name_matches_curated_name(self):
         self.assertEqual(
             normalized_author_name("Marra, Francesco"),
