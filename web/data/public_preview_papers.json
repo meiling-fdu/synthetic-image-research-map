@@ -10137,18 +10137,24 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "MIT Lincoln Laboratory",
         "Yale University"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
+      "aggregated_regions": [
+        "Connecticut"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -10796,10 +10802,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 4,
+      "map_record_count": 6,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -14644,8 +14650,8 @@
       "has_map_location": false,
       "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "paper_only_review",
       "aggregated_institutions": [
         "Nottingham Trent University"
       ],
@@ -26077,10 +26083,10 @@
         "Chang Xu"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -26089,12 +26095,15 @@
         "University of Sydney"
       ],
       "aggregated_country_names": [
-        "Australia"
+        "Australia",
+        "China"
       ],
       "aggregated_country_codes": [
-        "AU"
+        "AU",
+        "CN"
       ],
       "aggregated_regions": [
+        "Beijing",
         "New South Wales"
       ],
       "aggregated_region_codes": [],
@@ -27555,7 +27564,7 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -28427,19 +28436,25 @@
       "source_database": "OpenAlex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Adobe Research",
         "Salesforce Research",
         "University of Surrey"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "United Kingdom"
+      ],
+      "aggregated_country_codes": [
+        "GB"
+      ],
+      "aggregated_regions": [
+        "Surrey"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -28716,20 +28731,29 @@
         "Raphaël C.‐W. Phan"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 2,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Monash University",
         "Monash University Malaysia"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "Australia",
+        "Malaysia"
+      ],
+      "aggregated_country_codes": [
+        "AU",
+        "MY"
+      ],
+      "aggregated_regions": [
+        "Selangor",
+        "Victoria"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -30848,7 +30872,7 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -30858,12 +30882,15 @@
         "Vector Institute"
       ],
       "aggregated_country_names": [
-        "Canada"
+        "Canada",
+        "United Kingdom"
       ],
       "aggregated_country_codes": [
-        "CA"
+        "CA",
+        "GB"
       ],
       "aggregated_regions": [
+        "Cambridgeshire",
         "Ontario"
       ],
       "aggregated_region_codes": [],
