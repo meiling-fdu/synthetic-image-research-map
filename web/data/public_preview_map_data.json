@@ -1886,7 +1886,6 @@
         "Ngoc-Trung Tran",
         "Ngai-Man Cheung"
       ],
-      "institution_author_ids": [],
       "institution": "Singapore University of Technology and Design",
       "country": "Singapore",
       "country_code": "SG",
@@ -1898,13 +1897,124 @@
       "latitude": 1.3414,
       "longitude": 103.9638,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt | manual institution-record replace override applied | Confirmed correction. Removes wrong institution such as Unge aksjonaerer. | manual institution-record replace override applied | Confirmed correction. Removes wrong institution such as Unge aksjonaerer.",
       "institution_id": "institution:6dd3ce9e0d5fd1ab"
+    },
+    {
+      "id": "openalex-candidate-4e6d86fe47c07afe",
+      "title": "Incremental learning for the detection and classification of GAN-generated images",
+      "in_scope": true,
+      "year": 2019,
+      "publication_year": 2019,
+      "publication_date": "2019-01-01",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "Institutional Research Information System (Università degli Studi di Trento)",
+      "venue_name": "Institutional Research Information System (Università degli Studi di Trento)",
+      "venue_type": "repository",
+      "publisher": "University of Trento",
+      "publication_type": "article",
+      "abstract": "Current developments in computer vision and deep learning allow to automatically generate hyper-realistic images, hardly distinguishable from real ones. In particular, human face generation achieved a stunning level of realism, opening new opportunities for the creative industry but, at the same time, new scary scenarios where such content can be maliciously misused. Therefore, it is essential to develop innovative methodologies to automatically tell apart real from computer generated multimedia, possibly able to follow the evolution and continuous improvement of data in terms of quality and realism. In the last few years, several deep learning-based solutions have been proposed for this problem, mostly based on Convolutional Neural Networks (CNNs). Although results are good in controlled conditions, it is not clear how such proposals can adapt to real-world scenarios, where learning needs to continuously evolve as new types of generated data appear. In this work, we tackle this proble...",
+      "abstract_source": "OpenAlex local raw cache",
+      "ai_summary": "",
+      "doi": "10.1109/wifs47025.2019.9035099",
+      "arxiv_id": "1910.01568",
+      "arxiv_url": "https://arxiv.org/abs/1910.01568",
+      "arxiv_year": 2019,
+      "has_arxiv_version": true,
+      "primary_url": "http://hdl.handle.net/11572/296754",
+      "landing_page_url": "http://hdl.handle.net/11572/296754",
+      "openalex_url": "https://openalex.org/W3010699567",
+      "is_arxiv_preprint": false,
+      "url": "http://hdl.handle.net/11572/296754",
+      "authors": [
+        "Marra, Francesco",
+        "Saltori, Cristiano",
+        "Boato, Giulia",
+        "Luisa Verdoliva"
+      ],
+      "institution_authors": [
+        "Marra, Francesco",
+        "Luisa Verdoliva"
+      ],
+      "institution": "Federico II University Hospital",
+      "country": "IT",
+      "country_code": "IT",
+      "region": "",
+      "region_code": "",
+      "raw_country": "IT",
+      "raw_country_code": "IT",
+      "city": "Naples",
+      "latitude": 40.85216,
+      "longitude": 14.26811,
+      "source_database": "OpenAlex",
+      "resolution_method": "ror_id",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. OpenAlex author ID missing. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt | Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "authors": [
+            "Francesco Marra",
+            "Luisa Verdoliva"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:3c4903b35459f2b5",
+          "institution": "University of Trento",
+          "authors": [
+            "Cristiano Saltori",
+            "Giulia Boato"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Francesco Marra",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d046d2c57bb3a863"
+          ]
+        },
+        {
+          "author": "Luisa Verdoliva",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d046d2c57bb3a863"
+          ]
+        },
+        {
+          "author": "Cristiano Saltori",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3c4903b35459f2b5"
+          ]
+        },
+        {
+          "author": "Giulia Boato",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3c4903b35459f2b5"
+          ]
+        }
+      ],
+      "institution_id": "institution:9852946b0cf30de8"
     },
     {
       "id": "openalex-candidate-28c479752f087a8f",
@@ -2300,6 +2410,119 @@
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt",
       "institution_id": "institution:ca4ec8b3c028069a"
+    },
+    {
+      "id": "openalex-candidate-172fa4555b357577",
+      "title": "Incremental learning for the detection and classification of GAN-generated images",
+      "in_scope": true,
+      "year": 2019,
+      "publication_year": 2019,
+      "publication_date": "2019-12-01",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "2019 IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "venue_name": "2019 IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "venue_type": "repository",
+      "publisher": "Cornell University",
+      "publication_type": "preprint",
+      "abstract": "Current developments in computer vision and deep learning allow to automatically generate hyper-realistic images, hardly distinguishable from real ones. In particular, human face generation achieved a stunning level of realism, opening new opportunities for the creative industry but, at the same time, new scary scenarios where such content can be maliciously misused. Therefore, it is essential to develop innovative methodologies to automatically tell apart real from computer generated multimedia, possibly able to follow the evolution and continuous improvement of data in terms of quality and realism. In the last few years, several deep learning-based solutions have been proposed for this problem, mostly based on Convolutional Neural Networks (CNNs). Although results are good in controlled conditions, it is not clear how such proposals can adapt to real-world scenarios, where learning needs to continuously evolve as new types of generated data appear. In this work, we tackle this proble...",
+      "abstract_source": "OpenAlex local raw cache",
+      "ai_summary": "",
+      "doi": "10.1109/wifs47025.2019.9035099",
+      "arxiv_id": "1910.01568",
+      "arxiv_url": "https://arxiv.org/abs/1910.01568",
+      "arxiv_year": 2019,
+      "has_arxiv_version": true,
+      "primary_url": "https://doi.org/10.1109/wifs47025.2019.9035099",
+      "landing_page_url": "https://doi.org/10.1109/wifs47025.2019.9035099",
+      "openalex_url": "https://openalex.org/W2978778164",
+      "is_arxiv_preprint": true,
+      "url": "https://doi.org/10.1109/wifs47025.2019.9035099",
+      "authors": [
+        "Marra, Francesco",
+        "Saltori, Cristiano",
+        "Boato, Giulia",
+        "Luisa Verdoliva"
+      ],
+      "institution_authors": [
+        "Francesco Marra",
+        "Luisa Verdoliva"
+      ],
+      "institution": "Federico II University Hospital",
+      "country": "IT",
+      "country_code": "IT",
+      "region": "",
+      "region_code": "",
+      "raw_country": "IT",
+      "raw_country_code": "IT",
+      "city": "Naples",
+      "latitude": 40.85216,
+      "longitude": 14.26811,
+      "source_database": "OpenAlex",
+      "resolution_method": "ror_id",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "authors": [
+            "Francesco Marra",
+            "Luisa Verdoliva"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:3c4903b35459f2b5",
+          "institution": "University of Trento",
+          "authors": [
+            "Cristiano Saltori",
+            "Giulia Boato"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Francesco Marra",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d046d2c57bb3a863"
+          ]
+        },
+        {
+          "author": "Luisa Verdoliva",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d046d2c57bb3a863"
+          ]
+        },
+        {
+          "author": "Cristiano Saltori",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3c4903b35459f2b5"
+          ]
+        },
+        {
+          "author": "Giulia Boato",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3c4903b35459f2b5"
+          ]
+        }
+      ],
+      "institution_id": "institution:9852946b0cf30de8"
     },
     {
       "id": "openalex-candidate-ba2a7b5115a9d06b",
@@ -8752,7 +8975,6 @@
         "Huijia Zhu",
         "Weiqiang Wang"
       ],
-      "institution_author_ids": [],
       "institution": "Ant Group",
       "country": "China",
       "country_code": "CN",
@@ -8764,8 +8986,6 @@
       "latitude": 30.2741,
       "longitude": 120.1551,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -10352,7 +10572,6 @@
         "Tanusree Ghosh",
         "Ruchira Naskar"
       ],
-      "institution_author_ids": [],
       "institution": "Indian Institute of Engineering Science and Technology, Shibpur",
       "country": "India",
       "country_code": "IN",
@@ -10364,8 +10583,6 @@
       "latitude": 22.555,
       "longitude": 88.3064,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -13096,7 +13313,6 @@
       "institution_authors": [
         "T. J. Thomson"
       ],
-      "institution_author_ids": [],
       "institution": "RMIT University",
       "country": "Australia",
       "country_code": "AU",
@@ -13108,8 +13324,6 @@
       "latitude": -37.8142,
       "longitude": 144.9631,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -17457,7 +17671,6 @@
       "institution_authors": [
         "Alexander Binder"
       ],
-      "institution_author_ids": [],
       "institution": "Singapore Institute of Technology",
       "country": "Singapore",
       "country_code": "SG",
@@ -17469,8 +17682,6 @@
       "latitude": 1.3008,
       "longitude": 103.789,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -17514,7 +17725,6 @@
       "institution_authors": [
         "Alexander Binder"
       ],
-      "institution_author_ids": [],
       "institution": "University of Oslo",
       "country": "Norway",
       "country_code": "NO",
@@ -17526,8 +17736,6 @@
       "latitude": 59.9399,
       "longitude": 10.7216,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -25624,7 +25832,6 @@
       "institution_authors": [
         "Jianfu Zhang"
       ],
-      "institution_author_ids": [],
       "institution": "Shanghai Jiao Tong University",
       "country": "China",
       "country_code": "CN",
@@ -25636,8 +25843,6 @@
       "latitude": 31.2,
       "longitude": 121.4242,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -29363,7 +29568,6 @@
       "institution_authors": [
         "Ryan J. Thomas"
       ],
-      "institution_author_ids": [],
       "institution": "Washington State University",
       "country": "United States",
       "country_code": "US",
@@ -29375,8 +29579,6 @@
       "latitude": 46.7319,
       "longitude": -117.1542,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -29419,7 +29621,6 @@
       "institution_authors": [
         "Phoebe Matich"
       ],
-      "institution_author_ids": [],
       "institution": "Queensland University of Technology",
       "country": "Australia",
       "country_code": "AU",
@@ -29431,8 +29632,6 @@
       "latitude": -27.477,
       "longitude": 153.0281,
       "source_database": "OpenAlex",
-      "public_evidence_mode": "replace",
-      "public_evidence_approval": "explicit_admin_override",
       "resolution_method": "manual_institution_record_override",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -33188,7 +33387,6 @@
         "Ana Lucila Sandoval Orozco",
         "Luis Javier García Villalba"
       ],
-      "institution_author_ids": [],
       "country": "Spain",
       "country_code": "ES",
       "region": "Community of Madrid",
@@ -33293,7 +33491,6 @@
         "Joo-Hwee Lim",
         "Hongyuan Zhu"
       ],
-      "institution_author_ids": [],
       "country": "Singapore",
       "country_code": "SG",
       "region": "Singapore",
@@ -33460,7 +33657,6 @@
         "Chenghao Xu",
         "Yanhua Yang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shaanxi",
@@ -33628,7 +33824,6 @@
         "Zhenxing Qian",
         "Xinpeng Zhang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shanghai",
@@ -33728,7 +33923,6 @@
         "Yu Cai",
         "Siwei Lyu"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Amherst",
@@ -33867,7 +34061,6 @@
         "Jiao Dai",
         "Jizhong Han"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -34007,7 +34200,6 @@
         "Dario Cioni",
         "Lorenzo Seidenari"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Tuscany",
@@ -34136,7 +34328,6 @@
       "institution_authors": [
         "Christos Tzelepis"
       ],
-      "institution_author_ids": [],
       "country": "United Kingdom",
       "country_code": "GB",
       "region": "England",
@@ -34266,7 +34457,6 @@
         "Dario Cioni",
         "Ioannis Patras"
       ],
-      "institution_author_ids": [],
       "country": "United Kingdom",
       "country_code": "GB",
       "region": "England",
@@ -34392,7 +34582,6 @@
       "institution_authors": [
         "Seunghyeon Park"
       ],
-      "institution_author_ids": [],
       "country": "South Korea",
       "country_code": "KR",
       "region": "Incheon",
@@ -34522,7 +34711,6 @@
       "institution_authors": [
         "Youngho Bae"
       ],
-      "institution_author_ids": [],
       "country": "South Korea",
       "country_code": "KR",
       "region": "Seoul",
@@ -34652,7 +34840,6 @@
       "institution_authors": [
         "Gunhui Han"
       ],
-      "institution_author_ids": [],
       "country": "South Korea",
       "country_code": "KR",
       "region": "Seoul",
@@ -34782,7 +34969,6 @@
       "institution_authors": [
         "Alexander W. Olson"
       ],
-      "institution_author_ids": [],
       "country": "Canada",
       "country_code": "CA",
       "region": "Ontario",
@@ -34912,7 +35098,6 @@
       "institution_authors": [
         "Guang Yang"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -34997,7 +35182,6 @@
         "Can Wang",
         "Jiawei Chen"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Zhejiang",
@@ -35145,7 +35329,6 @@
         "Can Wang",
         "Jiawei Chen"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Zhejiang",
@@ -35292,7 +35475,6 @@
         "Siwei Lyu",
         "Defang Chen"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Amherst",
@@ -35436,7 +35618,6 @@
         "Nicholas Chivaran",
         "Jianbing Ni"
       ],
-      "institution_author_ids": [],
       "country": "Canada",
       "country_code": "CA",
       "region": "Ontario",
@@ -35527,7 +35708,6 @@
         "Hessen B. Eutamene",
         "Abdelmalik Taleb-Ahmed"
       ],
-      "institution_author_ids": [],
       "country": "France",
       "country_code": "FR",
       "region": "Hauts-de-France",
@@ -35660,7 +35840,6 @@
       "institution_authors": [
         "Wassim Hamidouche"
       ],
-      "institution_author_ids": [],
       "country": "United Arab Emirates",
       "country_code": "AE",
       "region": "Abu Dhabi",
@@ -35793,7 +35972,6 @@
       "institution_authors": [
         "Abdenour Hadid"
       ],
-      "institution_author_ids": [],
       "country": "United Arab Emirates",
       "country_code": "AE",
       "region": "Abu Dhabi",
@@ -35932,7 +36110,6 @@
         "Arthur Méreur",
         "Rémi Cogranne"
       ],
-      "institution_author_ids": [],
       "country": "France",
       "country_code": "FR",
       "region": "Grand Est",
@@ -36069,7 +36246,6 @@
       "institution_authors": [
         "Minoru Kuribayashi"
       ],
-      "institution_author_ids": [],
       "country": "Japan",
       "country_code": "JP",
       "region": "Miyagi",
@@ -36206,7 +36382,6 @@
       "institution_authors": [
         "Patrick Bas"
       ],
-      "institution_author_ids": [],
       "country": "France",
       "country_code": "FR",
       "region": "Hauts-de-France",
@@ -36341,7 +36516,6 @@
         "Anirudh Sundara Rajan",
         "Yong Jae Lee"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Wisconsin",
@@ -36433,7 +36607,6 @@
       "institution_authors": [
         "Haoyue Bai"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Wisconsin",
@@ -36559,7 +36732,6 @@
       "institution_authors": [
         "Yiyou Sun"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -36686,7 +36858,6 @@
         "Wei Cheng",
         "Haifeng Chen"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "New Jersey",
@@ -36811,7 +36982,6 @@
         "Xi Wang",
         "Vicky Kalogeiton"
       ],
-      "institution_author_ids": [],
       "country": "France",
       "country_code": "FR",
       "region": "Île-de-France",
@@ -36904,7 +37074,6 @@
         "Denis Lukovnikov",
         "Asja Fischer"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "North Rhine-Westphalia",
@@ -37005,7 +37174,6 @@
         "Sohail Ahmed Khan",
         "Duc-Tien Dang-Nguyen"
       ],
-      "institution_author_ids": [],
       "country": "Norway",
       "country_code": "NO",
       "region": "Vestland",
@@ -37097,7 +37265,6 @@
         "Lorenzo Baraldi",
         "Rita Cucchiara"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Emilia-Romagna",
@@ -37237,7 +37404,6 @@
         "Lorenzo Baraldi",
         "Federico Cocchi"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Tuscany",
@@ -37376,7 +37542,6 @@
       "institution_authors": [
         "Alessandro Nicolosi"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Lazio",
@@ -37522,7 +37687,6 @@
         "Kassem Fawaz",
         "Somesh Jha"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Wisconsin",
@@ -37665,7 +37829,6 @@
         "Ryan Feng",
         "Atul Prakash"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Michigan",
@@ -37807,7 +37970,6 @@
         "Denise Moussa",
         "Christian Riess"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "Bavaria",
@@ -37938,7 +38100,6 @@
         "Davide Cozzolino",
         "Luisa Verdoliva"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Campania",
@@ -38068,7 +38229,6 @@
         "Yewon Lim",
         "Changyeon Lee"
       ],
-      "institution_author_ids": [],
       "country": "South Korea",
       "country_code": "KR",
       "region": "Seoul",
@@ -38217,7 +38377,6 @@
         "Yewon Lim",
         "Changyeon Lee"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Indiana",
@@ -38367,7 +38526,6 @@
         "Changyeon Lee",
         "Aerin Kim"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Washington",
@@ -38516,7 +38674,6 @@
         "Aerin Kim",
         "Oren Etzioni"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Washington",
@@ -38664,7 +38821,6 @@
       "institution_authors": [
         "George Cazenavette"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Massachusetts",
@@ -38785,7 +38941,6 @@
         "Thomas Leung",
         "Ben Usman"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -38909,7 +39064,6 @@
         "Marco Raoul Marini",
         "Luigi Cinque"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Lazio",
@@ -39030,7 +39184,6 @@
         "Hessen Bougueffa Eutamene",
         "Abdelmalik Taleb-Ahmed"
       ],
-      "institution_author_ids": [],
       "country": "France",
       "country_code": "FR",
       "region": "Hauts-de-France",
@@ -39163,7 +39316,6 @@
       "institution_authors": [
         "Wassim Hamidouche"
       ],
-      "institution_author_ids": [],
       "country": "France",
       "country_code": "FR",
       "region": "Brittany",
@@ -39296,7 +39448,6 @@
       "institution_authors": [
         "Abdenour Hadid"
       ],
-      "institution_author_ids": [],
       "country": "United Arab Emirates",
       "country_code": "AE",
       "region": "Abu Dhabi",
@@ -39430,7 +39581,6 @@
         "Chandler Timm Doloriel",
         "Ngai-Man Cheung"
       ],
-      "institution_author_ids": [],
       "country": "Singapore",
       "country_code": "SG",
       "region": "Singapore",
@@ -39527,7 +39677,6 @@
         "Shikui Wei",
         "Yunchao Wei"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -39675,7 +39824,6 @@
       "institution_authors": [
         "Guanghua Gu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hebei",
@@ -39823,7 +39971,6 @@
       "institution_authors": [
         "Ping Liu"
       ],
-      "institution_author_ids": [],
       "country": "Singapore",
       "country_code": "SG",
       "region": "Singapore",
@@ -39967,7 +40114,6 @@
         "Zhenting Wang",
         "Dimitris N. Metaxas"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "New Jersey",
@@ -40112,7 +40258,6 @@
         "Chen Chen",
         "Lingjuan Lyu"
       ],
-      "institution_author_ids": [],
       "country": "Japan",
       "country_code": "JP",
       "region": "Tokyo",
@@ -40255,7 +40400,6 @@
       "institution_authors": [
         "Shiqing Ma"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Massachusetts",
@@ -40401,7 +40545,6 @@
         "Hae Jin Song",
         "Mahyar Khayatkhoei"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -40523,7 +40666,6 @@
         "Hae Jin Song",
         "Mahyar Khayatkhoei"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -40644,7 +40786,6 @@
       "institution_authors": [
         "Wael AbdAlmageed"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "South Carolina",
@@ -40773,7 +40914,6 @@
         "Miguel Colom",
         "Rafael Grompone von Gioi"
       ],
-      "institution_author_ids": [],
       "country": "France",
       "country_code": "FR",
       "region": "Île-de-France",
@@ -40932,7 +41072,6 @@
       "institution_authors": [
         "Marina Gardella"
       ],
-      "institution_author_ids": [],
       "country": "Brazil",
       "country_code": "BR",
       "region": "Rio de Janeiro",
@@ -41091,7 +41230,6 @@
       "institution_authors": [
         "Jean-Michel Morel"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hong Kong",
@@ -41248,7 +41386,6 @@
         "Luca Guarnera",
         "Sebastiano Battiato"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Sicily",
@@ -41352,7 +41489,6 @@
         "Haitao Zheng",
         "Ben Y. Zhao"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Illinois",
@@ -41484,7 +41620,6 @@
         "Chengchun Liu",
         "Li Yuan"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -41675,7 +41810,6 @@
         "Taiping Yao",
         "Shouhong Ding"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shanghai",
@@ -41861,7 +41995,6 @@
       "institution_authors": [
         "Baoyuan Wu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -42051,7 +42184,6 @@
         "Svetlana Lazebnik",
         "D.A. Forsyth"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Illinois",
@@ -42187,7 +42319,6 @@
       "institution_authors": [
         "Anand Bhattad"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Illinois",
@@ -42333,7 +42464,6 @@
         "Xiaoshuai Sun",
         "Rongrong Ji"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Fujian",
@@ -42472,7 +42602,6 @@
         "Paolo Frasconi",
         "Alessandro Piva"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Tuscany",
@@ -42606,7 +42735,6 @@
         "Simon Damm",
         "Asja Fischer"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "North Rhine-Westphalia",
@@ -42725,7 +42853,6 @@
       "institution_authors": [
         "Thorsten Holz"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "Saarland",
@@ -42848,7 +42975,6 @@
         "Philip Torr",
         "Jindong Gu"
       ],
-      "institution_author_ids": [],
       "country": "United Kingdom",
       "country_code": "GB",
       "region": "England",
@@ -42978,7 +43104,6 @@
       "institution_authors": [
         "Yiming Li"
       ],
-      "institution_author_ids": [],
       "country": "Singapore",
       "country_code": "SG",
       "region": "Singapore",
@@ -43112,7 +43237,6 @@
         "Michael Backes",
         "Yang Zhang"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "Saarland",
@@ -43229,7 +43353,6 @@
       "institution_authors": [
         "Mohammed Thajeel Abdullah"
       ],
-      "institution_author_ids": [],
       "country": "Iraq",
       "country_code": "IQ",
       "region": "Baghdad",
@@ -43323,7 +43446,6 @@
       "institution_authors": [
         "Nada Hussein M. Ali"
       ],
-      "institution_author_ids": [],
       "country": "Iraq",
       "country_code": "IQ",
       "region": "Baghdad Governorate",
@@ -43424,7 +43546,6 @@
         "Jonas Ricker",
         "Asja Fischer"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "North Rhine-Westphalia",
@@ -43543,7 +43664,6 @@
       "institution_authors": [
         "Johannes Lederer"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "Hamburg",
@@ -43662,7 +43782,6 @@
         "Yohei Akimoto",
         "Jun Sakuma"
       ],
-      "institution_author_ids": [],
       "country": "Japan",
       "country_code": "JP",
       "region": "Ibaraki",
@@ -43781,7 +43900,6 @@
       "institution_authors": [
         "Jun Sakuma"
       ],
-      "institution_author_ids": [],
       "country": "Japan",
       "country_code": "JP",
       "region": "Tokyo",
@@ -43904,7 +44022,6 @@
         "Nupur Thakur",
         "Baoxin Li"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Arizona",
@@ -44005,7 +44122,6 @@
         "Matthew Joslin",
         "Shuang Hao"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Texas",
@@ -44099,7 +44215,6 @@
         "Jie Zhou",
         "Jiwen Lu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -44250,7 +44365,6 @@
         "Meng-Luen Wu",
         "Cheng-Pin Cheng"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Taiwan",
@@ -44341,7 +44455,6 @@
         "Zhenxing Qian",
         "Xinpeng Zhang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shanghai",
@@ -44479,7 +44592,6 @@
         "Pietro Bongini",
         "Mauro Barni"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Toscany",
@@ -44623,7 +44735,6 @@
         "Benedetta Tondi",
         "Mauro Barni"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Toscany",
@@ -44756,7 +44867,6 @@
       "institution_authors": [
         "Valentina Molinari"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Toscany",
@@ -44893,7 +45003,6 @@
         "Chunxiao Li",
         "Boming Miao"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -45077,7 +45186,6 @@
       "institution_authors": [
         "Xiaoxiao Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -45261,7 +45369,6 @@
       "institution_authors": [
         "Meiling Li"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shanghai",
@@ -45445,7 +45552,6 @@
       "institution_authors": [
         "Peng Sun"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -45631,7 +45737,6 @@
         "Xiangyang Ji",
         "Yao Zhu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -45818,7 +45923,6 @@
         "Shuai Liu",
         "Chao Shen"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shaanxi",
@@ -45977,7 +46081,6 @@
       "institution_authors": [
         "Zhe Peng"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hong Kong",
@@ -46136,7 +46239,6 @@
       "institution_authors": [
         "Qian Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hubei",
@@ -46300,7 +46402,6 @@
         "Bingde Hu",
         "Yang Gao"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Zhejiang",
@@ -46471,7 +46572,6 @@
         "Junjun Zheng",
         "Xiangheng Kong"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Zhejiang",
@@ -46641,7 +46741,6 @@
       "institution_authors": [
         "Jie Lei"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Zhejiang",
@@ -46803,7 +46902,6 @@
         "Yichen Jiang",
         "Fakhri Karray"
       ],
-      "institution_author_ids": [],
       "country": "Canada",
       "country_code": "CA",
       "region": "Ontario",
@@ -46934,7 +47032,6 @@
       "institution_authors": [
         "Mohammed Talha Alam"
       ],
-      "institution_author_ids": [],
       "country": "United Arab Emirates",
       "country_code": "AE",
       "region": "Abu Dhabi",
@@ -47066,7 +47163,6 @@
         "Sohail Ahmed Khan",
         "Duc-Tien Dang-Nguyen"
       ],
-      "institution_author_ids": [],
       "country": "Norway",
       "country_code": "NO",
       "region": "Vestland",
@@ -47204,7 +47300,6 @@
         "You-Ming Chang",
         "Wei-Chen Chiu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Taiwan",
@@ -47323,7 +47418,6 @@
       "institution_authors": [
         "Ning Yu"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -47454,7 +47548,6 @@
         "Lei Jin",
         "Chi Zhang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -47679,7 +47772,6 @@
         "Jiaming Chu",
         "Zhaofeng He"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -47902,7 +47994,6 @@
       "institution_authors": [
         "Jian Zhao"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shaanxi",
@@ -48126,7 +48217,6 @@
         "Yuchu Jiang",
         "Xu Yang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Jiangsu",
@@ -48349,7 +48439,6 @@
       "institution_authors": [
         "Xin Zhang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Gansu",
@@ -48566,7 +48655,6 @@
         "Tai D. Nguyen",
         "Matthew C. Stamm"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Philadelphia",
@@ -48668,7 +48756,6 @@
         "Yabin Wang",
         "Xiaopeng Hong"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shaanxi",
@@ -48810,7 +48897,6 @@
         "Yabin Wang",
         "Zhiwu Huang"
       ],
-      "institution_author_ids": [],
       "country": "Singapore",
       "country_code": "SG",
       "region": "Singapore",
@@ -48951,7 +49037,6 @@
       "institution_authors": [
         "Zhiwu Huang"
       ],
-      "institution_author_ids": [],
       "country": "United Kingdom",
       "country_code": "GB",
       "region": "England",
@@ -49092,7 +49177,6 @@
       "institution_authors": [
         "Xiaopeng Hong"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Heilongjiang",
@@ -49233,7 +49317,6 @@
       "institution_authors": [
         "Xiaopeng Hong"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -49374,7 +49457,6 @@
         "Yifan Chang",
         "Jiawei Liu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Anhui",
@@ -49606,7 +49688,6 @@
         "Yifan Chang",
         "Kaipeng Zhang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shanghai",
@@ -49830,7 +49911,6 @@
         "Chuanhao Li",
         "Kaipeng Zhang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shanghai",
@@ -50064,7 +50144,6 @@
         "Yang Yang",
         "Zhen Lei"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -50241,7 +50320,6 @@
         "Yang Yang",
         "Zhen Lei"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -50414,7 +50492,6 @@
       "institution_authors": [
         "Zhen Lei"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hong Kong",
@@ -50587,7 +50664,6 @@
       "institution_authors": [
         "Zicang Tan"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -50761,7 +50837,6 @@
         "Zhihao Qian",
         "Yu Wu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hubei",
@@ -50892,7 +50967,6 @@
         "Ye Zhu",
         "Olga Russakovsky"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "New Jersey",
@@ -51028,7 +51102,6 @@
         "Yao Zhao",
         "Yunchao Wei"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -51187,7 +51260,6 @@
       "institution_authors": [
         "Ping Liu"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Nevada",
@@ -51346,7 +51418,6 @@
       "institution_authors": [
         "Baoyuan Wu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -51503,7 +51574,6 @@
         "Wentao Wang",
         "Xuanyao Huang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Chongqing",
@@ -51629,7 +51699,6 @@
       "institution_authors": [
         "Tianyang Wang"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Alabama",
@@ -51755,7 +51824,6 @@
       "institution_authors": [
         "Swalpa Kumar Roy"
       ],
-      "institution_author_ids": [],
       "country": "India",
       "country_code": "IN",
       "region": "West Bengal",
@@ -51886,7 +51954,6 @@
         "Giuseppe Amato",
         "Fabrizio Falchi"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Toscany",
@@ -52044,7 +52111,6 @@
       "institution_authors": [
         "Roberto Caldelli"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Tuscany",
@@ -52202,7 +52268,6 @@
       "institution_authors": [
         "Roberto Caldelli"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Lazio",
@@ -52360,7 +52425,6 @@
       "institution_authors": [
         "Giuseppe Fiameni"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Lazio",
@@ -52515,7 +52579,6 @@
         "Danial Samadi Vahdati",
         "Matthew C. Stamm"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Philadelphia",
@@ -52597,9 +52660,9 @@
       "openalex_url": "https://openalex.org/W3010699567",
       "url": "http://hdl.handle.net/11572/296754",
       "authors": [
-        "Francesco Marra",
-        "Cristiano Saltori",
-        "Giulia Boato",
+        "Marra, Francesco",
+        "Saltori, Cristiano",
+        "Boato, Giulia",
         "Luisa Verdoliva"
       ],
       "institution": "University of Naples Federico II",
@@ -52608,7 +52671,6 @@
         "Francesco Marra",
         "Luisa Verdoliva"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Campania",
@@ -52717,9 +52779,9 @@
       "openalex_url": "https://openalex.org/W3010699567",
       "url": "http://hdl.handle.net/11572/296754",
       "authors": [
-        "Francesco Marra",
-        "Cristiano Saltori",
-        "Giulia Boato",
+        "Marra, Francesco",
+        "Saltori, Cristiano",
+        "Boato, Giulia",
         "Luisa Verdoliva"
       ],
       "institution": "University of Trento",
@@ -52728,7 +52790,6 @@
         "Cristiano Saltori",
         "Giulia Boato"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Trentino-Alto Adige/Südtirol",
@@ -52855,7 +52916,6 @@
         "Neeraj Gupta",
         "Shu Hu"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Indiana",
@@ -53052,7 +53112,6 @@
         "Yue Zhang",
         "Feng Ding"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Jiangxi",
@@ -53248,7 +53307,6 @@
       "institution_authors": [
         "Chun-Hao Liu"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Washington",
@@ -53445,7 +53503,6 @@
         "Xin Wang",
         "Xin Li"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "New York",
@@ -53641,7 +53698,6 @@
       "institution_authors": [
         "Luisa Verdoliva"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Campania",
@@ -53829,7 +53885,6 @@
       "institution_authors": [
         "Taharim Rahman Anon"
       ],
-      "institution_author_ids": [],
       "country": "Bangladesh",
       "country_code": "BD",
       "region": "Barisal Division",
@@ -53926,7 +53981,6 @@
       "institution_authors": [
         "Jakaria Islam Emon"
       ],
-      "institution_author_ids": [],
       "country": "Bangladesh",
       "country_code": "BD",
       "region": "Dhaka Division",
@@ -54024,7 +54078,6 @@
         "Jonathan Gallagher",
         "William Pugsley"
       ],
-      "institution_author_ids": [],
       "country": "Canada",
       "country_code": "CA",
       "region": "Ontario",
@@ -54115,7 +54168,6 @@
         "Yichi Zhang",
         "Xiaogang Xu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Zhejiang",
@@ -54205,7 +54257,6 @@
         "Chenyang Zhu",
         "Isao Echizen"
       ],
-      "institution_author_ids": [],
       "country": "Japan",
       "country_code": "JP",
       "region": "Tokyo",
@@ -54341,7 +54392,6 @@
         "Ching-Chun Chang",
         "Isao Echizen"
       ],
-      "institution_author_ids": [],
       "country": "Japan",
       "country_code": "JP",
       "region": "Tokyo",
@@ -54481,7 +54531,6 @@
         "Xuelin Liu",
         "Shiqi Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hong Kong",
@@ -54647,7 +54696,6 @@
       "institution_authors": [
         "Xiaoyang Wang"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Philadelphia",
@@ -54813,7 +54861,6 @@
       "institution_authors": [
         "Anderson Rocha"
       ],
-      "institution_author_ids": [],
       "country": "Brazil",
       "country_code": "BR",
       "region": "São Paulo",
@@ -54980,7 +55027,6 @@
         "Bu Sung Lee",
         "Weisi Lin"
       ],
-      "institution_author_ids": [],
       "country": "Singapore",
       "country_code": "SG",
       "region": "Singapore",
@@ -55140,7 +55186,6 @@
         "Yu Tian",
         "Shiqi Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hong Kong",
@@ -55305,7 +55350,6 @@
       "institution_authors": [
         "Yipo Huang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Shaanxi",
@@ -55470,7 +55514,6 @@
       "institution_authors": [
         "Wei Lu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -55635,7 +55678,6 @@
       "institution_authors": [
         "Weisi Lin"
       ],
-      "institution_author_ids": [],
       "country": "Singapore",
       "country_code": "SG",
       "region": "Singapore",
@@ -55800,7 +55842,6 @@
       "institution_authors": [
         "Anderson Rocha"
       ],
-      "institution_author_ids": [],
       "country": "Brazil",
       "country_code": "BR",
       "region": "São Paulo",
@@ -55975,7 +56016,6 @@
         "Jianjie Luo",
         "Zhenguo Yang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -56117,7 +56157,6 @@
         "Lap-Kei Lee",
         "Fu Lee Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hong Kong",
@@ -56259,7 +56298,6 @@
         "Renzhang Chen",
         "Quanlong Guan"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -56370,7 +56408,6 @@
         "Hanbyul Lee",
         "Juneho Yi"
       ],
-      "institution_author_ids": [],
       "country": "South Korea",
       "country_code": "KR",
       "region": "Gyeonggi-do",
@@ -56463,7 +56500,6 @@
         "Shiyu Wu",
         "Jing Liu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -56606,7 +56642,6 @@
         "Shiyu Wu",
         "Yequan Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -56749,7 +56784,6 @@
         "Shiyu Wu",
         "Jing Liu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -56891,7 +56925,6 @@
       "institution_authors": [
         "Jing Li"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -57031,7 +57064,6 @@
       "institution_authors": [
         "Md Ashik Khan"
       ],
-      "institution_author_ids": [],
       "country": "India",
       "country_code": "IN",
       "region": "West Bengal",
@@ -57128,7 +57160,6 @@
       "institution_authors": [
         "Arafat Alam Jion"
       ],
-      "institution_author_ids": [],
       "country": "Bangladesh",
       "country_code": "BD",
       "region": "Chattogram",
@@ -57225,7 +57256,6 @@
       "institution_authors": [
         "Run Hao"
       ],
-      "institution_author_ids": [],
       "country": "Denmark",
       "country_code": "DK",
       "region": "Central Denmark Region",
@@ -57322,7 +57352,6 @@
       "institution_authors": [
         "Peng Ying"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Jiangsu",
@@ -57429,7 +57458,6 @@
         "Kaiwen Feng",
         "Zhe Yang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Sichuan",
@@ -57633,7 +57661,6 @@
         "Jian Liu",
         "Ji-Zhe Zhou"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Zhejiang",
@@ -57834,7 +57861,6 @@
       "institution_authors": [
         "Xiaochen Ma"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hongkong",
@@ -58035,7 +58061,6 @@
       "institution_authors": [
         "Chenfan Qu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -58236,7 +58261,6 @@
       "institution_authors": [
         "Chi-Man Pun"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Macau",
@@ -58431,7 +58455,6 @@
         "Michael Backes",
         "Yang Zhang"
       ],
-      "institution_author_ids": [],
       "country": "Germany",
       "country_code": "DE",
       "region": "Saarland",
@@ -58562,7 +58585,6 @@
         "Jie Hu",
         "Yunhe Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hong Kong",
@@ -58703,7 +58725,6 @@
         "Zeming Liu",
         "Yunhong Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -58837,7 +58858,6 @@
       "institution_authors": [
         "Liang Yang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Tianjin",
@@ -58976,7 +58996,6 @@
         "Davide Maltoni",
         "Matteo Ferrara"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Emilia-Romagna",
@@ -59113,7 +59132,6 @@
         "Marco Pati",
         "Marco Ramilli"
       ],
-      "institution_author_ids": [],
       "country": "Italy",
       "country_code": "IT",
       "region": "Lombardy",
@@ -59255,7 +59273,6 @@
         "Junyaub Kim",
         "Simon S. Woo"
       ],
-      "institution_author_ids": [],
       "country": "South Korea",
       "country_code": "KR",
       "region": "Gyeonggi-do",
@@ -59376,7 +59393,6 @@
         "Jiacheng Deng",
         "Jiawei Song"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Hubei",
@@ -59522,7 +59538,6 @@
         "Juan Cao",
         "Lei Li"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -59674,7 +59689,6 @@
         "Juan Cao",
         "Lei Li"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -59823,7 +59837,6 @@
       "institution_authors": [
         "Xirong Li"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -59971,7 +59984,6 @@
         "Tu Bui",
         "John Collomosse"
       ],
-      "institution_author_ids": [],
       "country": "United Kingdom",
       "country_code": "GB",
       "region": "Surrey",
@@ -60089,7 +60101,6 @@
       "institution_authors": [
         "Ning Yu"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -60207,7 +60218,6 @@
       "institution_authors": [
         "John Collomosse"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "California",
@@ -60328,7 +60338,6 @@
         "Juan Cao",
         "Danding Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -60447,7 +60456,6 @@
       "institution_authors": [
         "Chang Xu"
       ],
-      "institution_author_ids": [],
       "country": "Australia",
       "country_code": "AU",
       "region": "New South Wales",
@@ -60564,7 +60572,6 @@
         "Shiyu Wu",
         "Jing Liu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -60731,7 +60738,6 @@
         "Shiyu Wu",
         "Yequan Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -60898,7 +60904,6 @@
         "Shiyu Wu",
         "Jing Liu"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -61064,7 +61069,6 @@
       "institution_authors": [
         "Shuyan Li"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -61230,7 +61234,6 @@
       "institution_authors": [
         "Jing Li"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Guangdong",
@@ -61396,7 +61399,6 @@
       "institution_authors": [
         "Yequan Wang"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
@@ -61565,7 +61567,6 @@
         "Brandon B. G. Khoo",
         "Chern Hong Lim"
       ],
-      "institution_author_ids": [],
       "country": "Malaysia",
       "country_code": "MY",
       "region": "Selangor",
@@ -61673,7 +61674,6 @@
       "institution_authors": [
         "Raphaël C.-W. Phan"
       ],
-      "institution_author_ids": [],
       "country": "Australia",
       "country_code": "AU",
       "region": "Victoria",
@@ -61785,7 +61785,6 @@
         "Ilia Shumailov",
         "Nicolas Papernot"
       ],
-      "institution_author_ids": [],
       "country": "Canada",
       "country_code": "CA",
       "region": "Ontario",
@@ -61929,7 +61928,6 @@
         "Ilia Shumailov",
         "Nicolas Papernot"
       ],
-      "institution_author_ids": [],
       "country": "Canada",
       "country_code": "CA",
       "region": "Ontario",
@@ -62070,7 +62068,6 @@
       "institution_authors": [
         "Ilia Shumailov"
       ],
-      "institution_author_ids": [],
       "country": "United Kingdom",
       "country_code": "GB",
       "region": "Cambridgeshire",
@@ -62211,7 +62208,6 @@
         "Danielle Sullivan-Pao",
         "Pooya Khorrami"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Massachusetts",
@@ -62319,7 +62315,6 @@
       "institution_authors": [
         "Nicole Tian"
       ],
-      "institution_author_ids": [],
       "country": "United States",
       "country_code": "US",
       "region": "Connecticut",
@@ -62431,7 +62426,6 @@
         "Wei Wang",
         "Jing Dong"
       ],
-      "institution_author_ids": [],
       "country": "China",
       "country_code": "CN",
       "region": "Beijing",
