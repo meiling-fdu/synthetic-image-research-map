@@ -37928,6 +37928,156 @@
       ]
     },
     {
+      "id": "curated-map:de7ca20dbc45b231228f",
+      "paper_id": "curated:87ef976b546206fde199",
+      "title": "DistilDIRE: A Small, Fast, Cheap and Lightweight Diffusion Synthesized Deepfake Detection",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "publication_type": "preprint",
+      "abstract": "A dramatic influx of diffusion-generated images has marked recent years, posing unique challenges to current detection technologies. While the task of identifying these images falls under binary classification, a seemingly straightforward category, the computational load is significant when employing the \"reconstruction then compare\" technique. This approach, known as DIRE (Diffusion Reconstruction Error), not only identifies diffusion-generated images but also detects those produced by GANs, highlighting the technique's broad applicability. To address the computational challenges and improve efficiency, we propose distilling the knowledge embedded in diffusion models to develop rapid deepfake detection models. Our approach, aimed at creating a small, fast, cheap, and lightweight diffusion synthesized deepfake detector, maintains robust performance while significantly reducing operational demands. Maintaining performance, our experimental results indicate an inference speed 3.2 times faster than the existing DIRE framework. This advance not only enhances the practicality of deploying these systems in real-world settings but also paves the way for future research endeavors that seek to leverage diffusion model knowledge.",
+      "abstract_source": "openalex",
+      "doi": "10.48550/arxiv.2406.00856",
+      "arxiv_id": "2406.00856",
+      "arxiv_url": "https://arxiv.org/abs/2406.00856",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2406.00856",
+      "primary_url": "http://arxiv.org/abs/2406.00856",
+      "openalex_url": "https://openalex.org/W4399399328",
+      "url": "http://arxiv.org/abs/2406.00856",
+      "authors": [
+        "Yewon Lim",
+        "Changyeon Lee",
+        "Aerin Kim",
+        "Oren Etzioni"
+      ],
+      "institution": "Miraflow",
+      "institution_id": "institution:a1b609b0fc5c2e23",
+      "institution_authors": [
+        "Yewon Lim",
+        "Changyeon Lee",
+        "Aerin Kim"
+      ],
+      "institution_author_ids": [],
+      "country": "United States",
+      "country_code": "US",
+      "region": "California",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "San Francisco",
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "lat": 37.7749,
+      "lon": -122.4194,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:f88d9b9e08a4c4013c79",
+      "raw_affiliation": "Miraflow, Kirkland, WA, United States",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2406.00856",
+      "coordinate_source": "Company profile / LinkedIn / city-level geocoding",
+      "coordinate_source_url": "https://www.linkedin.com/company/miraflow",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Miraflow, Kirkland, WA, United States | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2406.00856 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:42992b97b8e05dd4",
+          "institution": "Yonsei University, Sinchon Campus",
+          "authors": [
+            "Yewon Lim",
+            "Changyeon Lee"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:90b589325857dff0",
+          "institution": "Purdue University",
+          "authors": [
+            "Yewon Lim",
+            "Changyeon Lee"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:a1b609b0fc5c2e23",
+          "institution": "Miraflow",
+          "authors": [
+            "Yewon Lim",
+            "Changyeon Lee",
+            "Aerin Kim"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:2592e804f95fa542",
+          "institution": "TrueMedia.org",
+          "authors": [
+            "Aerin Kim",
+            "Oren Etzioni"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yewon Lim",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:42992b97b8e05dd4",
+            "institution:90b589325857dff0",
+            "institution:a1b609b0fc5c2e23"
+          ]
+        },
+        {
+          "author": "Changyeon Lee",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:42992b97b8e05dd4",
+            "institution:90b589325857dff0",
+            "institution:a1b609b0fc5c2e23"
+          ]
+        },
+        {
+          "author": "Aerin Kim",
+          "institution_indices": [
+            3,
+            4
+          ],
+          "institution_ids": [
+            "institution:a1b609b0fc5c2e23",
+            "institution:2592e804f95fa542"
+          ]
+        },
+        {
+          "author": "Oren Etzioni",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:2592e804f95fa542"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:fb04c70446816af0d5d9",
       "paper_id": "curated:1eef07ebb6bd7e596f61",
       "title": "FakeInversion: Learning to Detect Images from Unseen Text-to-Image Models by Inverting Stable Diffusion",
@@ -39377,6 +39527,151 @@
       ]
     },
     {
+      "id": "curated-map:023778d324fa2872f03b",
+      "paper_id": "curated:b65aca5f04f1f41ad725",
+      "title": "How to Trace Latent Generative Model Generated Images without Artificial Watermark?",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "publication_type": "preprint",
+      "abstract": "Latent generative models (e.g., Stable Diffusion) have become more and more popular, but concerns have arisen regarding potential misuse related to images generated by these models. It is, therefore, necessary to analyze the origin of images by inferring if a particular image was generated by a specific latent generative model. Most existing methods (e.g., image watermark and model fingerprinting) require extra steps during training or generation. These requirements restrict their usage on the generated images without such extra operations, and the extra required operations might compromise the quality of the generated images. In this work, we ask whether it is possible to effectively and efficiently trace the images generated by a specific latent generative model without the aforementioned requirements. To study this problem, we design a latent inversion based method called LatentTracer to trace the generated images of the inspected model by checking if the examined images can be well-reconstructed with an inverted latent input. We leverage gradient based latent inversion and identify a encoder-based initialization critical to the success of our approach. Our experiments on the state-of-the-art latent generative models, such as Stable Diffusion, show that our method can distinguish the images generated by the inspected model and other images with a high accuracy and efficiency. Our findings suggest the intriguing possibility that today's latent generative generated images are naturally watermarked by the decoder used in the source models. Code: https://github.com/ZhentingWang/LatentTracer.",
+      "abstract_source": "openalex",
+      "doi": "10.48550/arxiv.2405.13360",
+      "arxiv_id": "2405.13360",
+      "arxiv_url": "https://arxiv.org/abs/2405.13360",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2405.13360",
+      "primary_url": "http://arxiv.org/abs/2405.13360",
+      "openalex_url": "https://openalex.org/W4398795245",
+      "url": "http://arxiv.org/abs/2405.13360",
+      "authors": [
+        "Zhenting Wang, Vikash Sehwag, Chen Chen, Lingjuan Lyu, Dimitris Metaxas, Shiqing Ma"
+      ],
+      "institution": "Sony AI",
+      "institution_id": "institution:cf2639c8e56f6453",
+      "institution_authors": [
+        "Vikash Sehwag",
+        "Chen Chen",
+        "Lingjuan Lyu"
+      ],
+      "institution_author_ids": [],
+      "country": "Japan",
+      "country_code": "JP",
+      "region": "Tokyo",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Tokyo",
+      "latitude": 35.6302,
+      "longitude": 139.7408,
+      "lat": 35.6302,
+      "lon": 139.7408,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:fe9cf3377aafb37400d2",
+      "raw_affiliation": "Sony Ai",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2405.13360",
+      "coordinate_source": "Official Sony AI / Sony Group address",
+      "coordinate_source_url": "https://ai.sony/about/labs-offices",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Sony Ai | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2405.13360 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:33a58a66974db112",
+          "institution": "Rutgers University",
+          "authors": [
+            "Zhenting Wang",
+            "Dimitris N. Metaxas"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:cf2639c8e56f6453",
+          "institution": "Sony AI",
+          "authors": [
+            "Vikash Sehwag",
+            "Chen Chen",
+            "Lingjuan Lyu"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:304707b21fcfbd4d",
+          "institution": "University of Massachusetts Amherst",
+          "authors": [
+            "Shiqing Ma"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Zhenting Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:33a58a66974db112"
+          ]
+        },
+        {
+          "author": "Dimitris N. Metaxas",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:33a58a66974db112"
+          ]
+        },
+        {
+          "author": "Vikash Sehwag",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:cf2639c8e56f6453"
+          ]
+        },
+        {
+          "author": "Chen Chen",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:cf2639c8e56f6453"
+          ]
+        },
+        {
+          "author": "Lingjuan Lyu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:cf2639c8e56f6453"
+          ]
+        },
+        {
+          "author": "Shiqing Ma",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:304707b21fcfbd4d"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:f512391bb44765cb44f9",
       "paper_id": "curated:b65aca5f04f1f41ad725",
       "title": "How to Trace Latent Generative Model Generated Images without Artificial Watermark?",
@@ -40511,6 +40806,197 @@
       ]
     },
     {
+      "id": "curated-map:ad85d592b0fc7058e0cc",
+      "paper_id": "curated:1f9d168cc6c4c445a231",
+      "title": "Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "publication_type": "preprint",
+      "abstract": "AI-generated images (AIGIs), such as natural or face images, have become increasingly important yet challenging. In this paper, we start from a new perspective to excavate the reason behind the failure generalization in AIGI detection, named the \\textit{asymmetry phenomenon}, where a naively trained detector tends to favor overfitting to the limited and monotonous fake patterns, causing the feature space to become highly constrained and low-ranked, which is proved seriously limiting the expressivity and generalization. One potential remedy is incorporating the pre-trained knowledge within the vision foundation models (higher-ranked) to expand the feature space, alleviating the model's overfitting to fake. To this end, we employ Singular Value Decomposition (SVD) to decompose the original feature space into \\textit{two orthogonal subspaces}. By freezing the principal components and adapting only the remained components, we preserve the pre-trained knowledge while learning fake patterns. Compared to existing full-parameters and LoRA-based tuning methods, we explicitly ensure orthogonality, enabling the higher rank of the whole feature space, effectively minimizing overfitting and enhancing generalization. We finally identify a crucial insight: our method implicitly learns \\textit{a vital prior that fakes are actually derived from the real}, indicating a hierarchical relationship rather than independence. Modeling this prior, we believe, is essential for achieving superior generalization. Our codes are publicly available at \\href{https://github.com/YZY-stack/Effort-AIGI-Detection}{GitHub}.",
+      "abstract_source": "openalex",
+      "doi": "10.48550/arxiv.2411.15633",
+      "arxiv_id": "2411.15633",
+      "arxiv_url": "https://arxiv.org/abs/2411.15633",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2411.15633",
+      "primary_url": "http://arxiv.org/abs/2411.15633",
+      "openalex_url": "https://openalex.org/W4404986693",
+      "url": "http://arxiv.org/abs/2411.15633",
+      "authors": [
+        "Zhiyuan Yan, Jiangming Wang, Peng Jin, Ke-Yue Zhang, Liu, Chengchun, Chen Shen, Taiping Yao, Shouhong Ding, Baoyuan Wu, Yuan Li"
+      ],
+      "institution": "Tencent Youtu Lab",
+      "institution_id": "institution:3e78e883c14f8bb8",
+      "institution_authors": [
+        "Zhiyuan Yan",
+        "Jiangming Wang",
+        "Ke-Yue Zhang",
+        "Shen Chen",
+        "Taiping Yao",
+        "Shouhong Ding"
+      ],
+      "institution_author_ids": [],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Shanghai",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Shanghai",
+      "latitude": 31.1836,
+      "longitude": 121.4502,
+      "lat": 31.1836,
+      "lon": 121.4502,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:534a2e8014547d4a8eab",
+      "raw_affiliation": "",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2411.15633",
+      "coordinate_source": "Public Tencent Youtu Lab profile / city-level geocoding",
+      "coordinate_source_url": "https://github.com/TencentYoutuResearch",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2411.15633 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:6346b1a9c3b5ccd7",
+          "institution": "Peking University Shenzhen Graduate School",
+          "authors": [
+            "Zhiyuan Yan",
+            "Peng Jin",
+            "Chengchun Liu",
+            "Li Yuan"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:3e78e883c14f8bb8",
+          "institution": "Tencent Youtu Lab",
+          "authors": [
+            "Zhiyuan Yan",
+            "Jiangming Wang",
+            "Ke-Yue Zhang",
+            "Shen Chen",
+            "Taiping Yao",
+            "Shouhong Ding"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:5dbb9ac6a407e079",
+          "institution": "The Chinese University of Hong Kong, Shenzhen",
+          "authors": [
+            "Baoyuan Wu"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Zhiyuan Yan",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:6346b1a9c3b5ccd7",
+            "institution:3e78e883c14f8bb8"
+          ]
+        },
+        {
+          "author": "Peng Jin",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6346b1a9c3b5ccd7"
+          ]
+        },
+        {
+          "author": "Chengchun Liu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6346b1a9c3b5ccd7"
+          ]
+        },
+        {
+          "author": "Li Yuan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:6346b1a9c3b5ccd7"
+          ]
+        },
+        {
+          "author": "Jiangming Wang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3e78e883c14f8bb8"
+          ]
+        },
+        {
+          "author": "Ke-Yue Zhang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3e78e883c14f8bb8"
+          ]
+        },
+        {
+          "author": "Shen Chen",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3e78e883c14f8bb8"
+          ]
+        },
+        {
+          "author": "Taiping Yao",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3e78e883c14f8bb8"
+          ]
+        },
+        {
+          "author": "Shouhong Ding",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:3e78e883c14f8bb8"
+          ]
+        },
+        {
+          "author": "Baoyuan Wu",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:5dbb9ac6a407e079"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:ad8ea64fd2389aa22057",
       "paper_id": "curated:1f9d168cc6c4c445a231",
       "title": "Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection",
@@ -40753,6 +41239,142 @@
       "evidence_url": "https://ieeexplore.ieee.org/document/10658385",
       "coordinate_source": "Official institution page + map coordinate check",
       "coordinate_source_url": "https://illinois.edu/contacts/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Evidence source: PDF | Evidence URL: https://ieeexplore.ieee.org/document/10658385 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:bf3ddd5552577ff0",
+          "institution": "University of Illinois Urbana-Champaign",
+          "authors": [
+            "Ayush Sarkar",
+            "Hanlin Mai",
+            "Amitabh Mahapatra",
+            "Svetlana Lazebnik",
+            "D.A. Forsyth"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:386b7a411f4a3220",
+          "institution": "Toyota Technological Institute at Chicago",
+          "authors": [
+            "Anand Bhattad"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Ayush Sarkar",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Hanlin Mai",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Amitabh Mahapatra",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Svetlana Lazebnik",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "D.A. Forsyth",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Anand Bhattad",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:386b7a411f4a3220"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:74fa58d8d6ebd6f0c84f",
+      "paper_id": "curated:b286f4a33839eed35258",
+      "title": "Shadows Don't Lie and Lines Can't Bend! Generative Models Don't know Projective Geometry…for Now",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "",
+      "venue_name": "",
+      "publication_type": "article",
+      "abstract": "Generative models can produce impressively realistic images. This paper demonstrates that generated images have geometric features different from those of real images. We build a set of collections of generated images, prequalified to fool simple, signal-based classifiers into believing they are real. We then show that prequalified generated images can be identified reliably by classifiers that only look at geometric properties. We use three such classifiers. All three classifiers are denied access to image pixels, and look only at derived geometric features. The first classifier looks at the perspective field of the image, the second looks at lines detected in the image, and the third looks at relations between detected objects and shadows. Our procedure detects generated images more reliably than SOTA local signal based detectors, for images from a number of distinct generators. Saliency maps suggest that the classifiers can identify geometric problems reliably. We conclude that current generators cannot reliably reproduce geometric properties of real images.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/cvpr52733.2024.02658",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/cvpr52733.2024.02658",
+      "primary_url": "https://doi.org/10.1109/cvpr52733.2024.02658",
+      "openalex_url": "https://openalex.org/W4402754249",
+      "url": "https://doi.org/10.1109/cvpr52733.2024.02658",
+      "authors": [
+        "Ayush Sarkar, Hanlin Mai, Amitabh Mahapatra, Svetlana Lazebnik, David Forsyth, Anand Bhattad"
+      ],
+      "institution": "Toyota Technological Institute at Chicago",
+      "institution_id": "institution:386b7a411f4a3220",
+      "institution_authors": [
+        "Anand Bhattad"
+      ],
+      "institution_author_ids": [],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Illinois",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Chicago",
+      "latitude": 41.7846,
+      "longitude": -87.6024,
+      "lat": 41.7846,
+      "lon": -87.6024,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:4ca6afd7962e90523eeb",
+      "raw_affiliation": "",
+      "evidence_source": "PDF",
+      "evidence_url": "https://ieeexplore.ieee.org/document/10658385",
+      "coordinate_source": "Official institution address / Wikidata",
+      "coordinate_source_url": "https://www.wikidata.org/wiki/Q7828961",
       "resolution_method": "curated_confirmed_location",
       "resolution_confidence": "high",
       "needs_review": false,
@@ -45715,6 +46337,234 @@
       ]
     },
     {
+      "id": "curated-map:a1678b84152a1d4ce60a",
+      "paper_id": "curated:074bb9a77ee85d50090c",
+      "title": "Aperture: a patch-aware framework for joint forgery detection and localization",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "Vicinagearth.",
+      "venue_name": "Vicinagearth.",
+      "publication_type": "article",
+      "abstract": "Abstract The proliferation of advanced generative models presents a significant threat to the authenticity of digital visual content, creating an urgent demand for robust forgery detection technologies. A primary challenge lies in developing a unified and generalizable framework that can not only classify an image as authentic or forged but also precisely localize the manipulated regions, all while maintaining computational efficiency and adapting to unseen manipulation techniques. To address these challenges, we introduce Aperture, a lightweight and effective framework for joint deepfake detection and localization. Our framework integrates a novel patch-aware classifier that fuses local and global features to enhance classification robustness. For localization, a segmentation module guided by conditional queries is employed to generate fine-grained masks of tampered regions. Crucially, we propose a pseudo-label-guided test-time adaptation mechanism, which leverages the classifier’s patch-level predictions to dynamically supervise the segmentation head. This allows the model to improve its robustness against out-of-distribution data encountered during testing.",
+      "abstract_source": "openalex",
+      "doi": "10.1007/s44336-025-00027-8",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1007/s44336-025-00027-8",
+      "primary_url": "https://doi.org/10.1007/s44336-025-00027-8",
+      "openalex_url": "https://openalex.org/W4417449415",
+      "url": "https://doi.org/10.1007/s44336-025-00027-8",
+      "authors": [
+        "Anwen Yang",
+        "Jian Zhao",
+        "Yuchen Yuan",
+        "Tianle Zhang",
+        "Yuchu Jiang",
+        "Jiaming Chu",
+        "Xin Zhang",
+        "Xu Yang",
+        "Lei Jin",
+        "Chi Zhang",
+        "Zhaofeng He"
+      ],
+      "institution": "Institute of Artificial Intelligence (TeleAI), China Telecom",
+      "institution_id": "institution:a1ff6f7123083db9",
+      "institution_authors": [
+        "Anwen Yang",
+        "Jian Zhao",
+        "Yuchen Yuan",
+        "Tianle Zhang",
+        "Lei Jin",
+        "Chi Zhang"
+      ],
+      "institution_author_ids": [],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Beijing",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Beijing",
+      "latitude": 39.9439,
+      "longitude": 116.3526,
+      "lat": 39.9439,
+      "lon": 116.3526,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:21c7cd6ee821d386f58f",
+      "raw_affiliation": "Institute of Artificial Intelligence (TeleAI), China Telecom, Beijing, China",
+      "evidence_source": "PDF",
+      "evidence_url": "https://link.springer.com/content/pdf/10.1007/s44336-025-00027-8.pdf",
+      "coordinate_source": "Official TeleAI page / address geocoding",
+      "coordinate_source_url": "https://www.teleai.com.cn/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Institute of Artificial Intelligence (TeleAI), China Telecom, Beijing, China | Evidence source: PDF | Evidence URL: https://link.springer.com/content/pdf/10.1007/s44336-025-00027-8.pdf | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:a1ff6f7123083db9",
+          "institution": "Institute of Artificial Intelligence (TeleAI), China Telecom",
+          "authors": [
+            "Anwen Yang",
+            "Jian Zhao",
+            "Yuchen Yuan",
+            "Tianle Zhang",
+            "Lei Jin",
+            "Chi Zhang"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "authors": [
+            "Anwen Yang",
+            "Jiaming Chu",
+            "Zhaofeng He"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:bc1d8b5fba4bc5ff",
+          "institution": "Northwestern Polytechnical University",
+          "authors": [
+            "Jian Zhao"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:592f613084a7ca9d",
+          "institution": "Southeast University",
+          "authors": [
+            "Yuchu Jiang",
+            "Xu Yang"
+          ]
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:a28e1611e5e6b8b6",
+          "institution": "Lanzhou University",
+          "authors": [
+            "Xin Zhang"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Anwen Yang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:a1ff6f7123083db9",
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Jian Zhao",
+          "institution_indices": [
+            1,
+            3
+          ],
+          "institution_ids": [
+            "institution:a1ff6f7123083db9",
+            "institution:bc1d8b5fba4bc5ff"
+          ]
+        },
+        {
+          "author": "Yuchen Yuan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a1ff6f7123083db9"
+          ]
+        },
+        {
+          "author": "Tianle Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a1ff6f7123083db9"
+          ]
+        },
+        {
+          "author": "Lei Jin",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a1ff6f7123083db9"
+          ]
+        },
+        {
+          "author": "Chi Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a1ff6f7123083db9"
+          ]
+        },
+        {
+          "author": "Jiaming Chu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Zhaofeng He",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Yuchu Jiang",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:592f613084a7ca9d"
+          ]
+        },
+        {
+          "author": "Xu Yang",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:592f613084a7ca9d"
+          ]
+        },
+        {
+          "author": "Xin Zhang",
+          "institution_indices": [
+            5
+          ],
+          "institution_ids": [
+            "institution:a28e1611e5e6b8b6"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:94bf8f591000fca0a68c",
       "paper_id": "curated:074bb9a77ee85d50090c",
       "title": "Aperture: a patch-aware framework for joint forgery detection and localization",
@@ -48630,6 +49480,179 @@
       ]
     },
     {
+      "id": "curated-map:a439ab8f0c9cd5ec63bb",
+      "paper_id": "",
+      "title": "CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "2026-03-02",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "publication_type": "article",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "",
+      "arxiv_id": "2603.01878",
+      "arxiv_url": "https://arxiv.org/abs/2603.01878",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2603.01878",
+      "primary_url": "http://arxiv.org/abs/2603.01878",
+      "openalex_url": "https://openalex.org/W7133363592",
+      "url": "http://arxiv.org/abs/2603.01878",
+      "authors": [
+        "Yiheng Li",
+        "Zichang Tan",
+        "Guoqing Xu",
+        "Yijun Ye",
+        "Yang Yang",
+        "Zhen Lei"
+      ],
+      "institution": "Sangfor Technologies Inc.",
+      "institution_id": "institution:a86e3c911036d069",
+      "institution_authors": [
+        "Zicang Tan"
+      ],
+      "institution_author_ids": [],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Guangdong",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Shenzhen",
+      "latitude": 22.5903,
+      "longitude": 113.9608,
+      "lat": 22.5903,
+      "lon": 113.9608,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:f18315bcfa8161b164b2",
+      "raw_affiliation": "",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2603.01878",
+      "coordinate_source": "Official institution page / address geocoding",
+      "coordinate_source_url": "https://www.sangfor.com/about-us/global-offices/china-office-headquarters",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2603.01878 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Yijun Ye",
+            "Yang Yang",
+            "Zhen Lei"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Yijun Ye",
+            "Yang Yang",
+            "Zhen Lei"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution": "HKISI, Chinese Academy of Sciences",
+          "authors": [
+            "Zhen Lei"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:a86e3c911036d069",
+          "institution": "Sangfor Technologies Inc.",
+          "authors": [
+            "Zicang Tan"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yiheng Li",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Guoqing Xu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Yijun Ye",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Yang Yang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Zhen Lei",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0",
+            "institution:9dd7b58a09f6962c"
+          ]
+        },
+        {
+          "author": "Zicang Tan",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:a86e3c911036d069"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:280a31606d6aee628e74",
       "paper_id": "curated:3bd79627ad7e70a28a97",
       "title": "D$^3$: Scaling Up Deepfake Detection by Learning from Discrepancy",
@@ -49721,8 +50744,8 @@
         },
         {
           "index": 4,
-          "institution_id": "institution:44518a67397b66af",
-          "institution": "NVIDIA AI Technology Center",
+          "institution_id": "institution:0b1cc69a0a28e0c1",
+          "institution": "NVIDIA AI Technology Center Italy",
           "authors": [
             "Giuseppe Fiameni"
           ]
@@ -49782,7 +50805,7 @@
             4
           ],
           "institution_ids": [
-            "institution:44518a67397b66af"
+            "institution:0b1cc69a0a28e0c1"
           ]
         }
       ]
@@ -49879,8 +50902,8 @@
         },
         {
           "index": 4,
-          "institution_id": "institution:44518a67397b66af",
-          "institution": "NVIDIA AI Technology Center",
+          "institution_id": "institution:0b1cc69a0a28e0c1",
+          "institution": "NVIDIA AI Technology Center Italy",
           "authors": [
             "Giuseppe Fiameni"
           ]
@@ -49940,7 +50963,7 @@
             4
           ],
           "institution_ids": [
-            "institution:44518a67397b66af"
+            "institution:0b1cc69a0a28e0c1"
           ]
         }
       ]
@@ -50037,8 +51060,8 @@
         },
         {
           "index": 4,
-          "institution_id": "institution:44518a67397b66af",
-          "institution": "NVIDIA AI Technology Center",
+          "institution_id": "institution:0b1cc69a0a28e0c1",
+          "institution": "NVIDIA AI Technology Center Italy",
           "authors": [
             "Giuseppe Fiameni"
           ]
@@ -50098,7 +51121,165 @@
             4
           ],
           "institution_ids": [
-            "institution:44518a67397b66af"
+            "institution:0b1cc69a0a28e0c1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:95fc42c329c7e32f6f9e",
+      "paper_id": "",
+      "title": "Deepfake Detection without Deepfakes: Generalization via Synthetic Frequency Patterns Injection",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "2024-03-20",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "10.48550/arxiv.2403.13479",
+      "arxiv_id": "2403.13479",
+      "arxiv_url": "https://arxiv.org/abs/2403.13479",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2403.13479",
+      "primary_url": "http://arxiv.org/abs/2403.13479",
+      "openalex_url": "https://openalex.org/W4393063559",
+      "url": "http://arxiv.org/abs/2403.13479",
+      "authors": [
+        "Davide Alessandro Coccomini",
+        "Roberto Caldelli",
+        "Claudio Gennaro",
+        "Giuseppe Fiameni",
+        "Giuseppe Amato",
+        "Fabrizio Falchi"
+      ],
+      "institution": "NVIDIA AI Technology Center Italy",
+      "institution_id": "institution:0b1cc69a0a28e0c1",
+      "institution_authors": [
+        "Giuseppe Fiameni"
+      ],
+      "institution_author_ids": [],
+      "country": "Italy",
+      "country_code": "IT",
+      "region": "Lazio",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Rome",
+      "latitude": 41.9028,
+      "longitude": 12.4964,
+      "lat": 41.9028,
+      "lon": 12.4964,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:7e8d4e92ec526ab401de",
+      "raw_affiliation": "NVIDIA AI Technology Center, Italy",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2403.13479",
+      "coordinate_source": "Paper affiliation / NVIDIA NVAITC Italy program page / city-level geocoding",
+      "coordinate_source_url": "https://www.consorzio-cini.it/index.php/en/labaiis-home/labaiis-nvaitc",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: NVIDIA AI Technology Center, Italy | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2403.13479 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:541450f1f663948c",
+          "institution": "ISTI-CNR",
+          "authors": [
+            "Davide Alessandro Coccomini",
+            "Claudio Gennaro",
+            "Giuseppe Amato",
+            "Fabrizio Falchi"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:721b1fe645c5b099",
+          "institution": "CNIT",
+          "authors": [
+            "Roberto Caldelli"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:1afce89cd4f3571f",
+          "institution": "Universitas Mercatorum",
+          "authors": [
+            "Roberto Caldelli"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:0b1cc69a0a28e0c1",
+          "institution": "NVIDIA AI Technology Center Italy",
+          "authors": [
+            "Giuseppe Fiameni"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Davide Alessandro Coccomini",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:541450f1f663948c"
+          ]
+        },
+        {
+          "author": "Claudio Gennaro",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:541450f1f663948c"
+          ]
+        },
+        {
+          "author": "Giuseppe Amato",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:541450f1f663948c"
+          ]
+        },
+        {
+          "author": "Fabrizio Falchi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:541450f1f663948c"
+          ]
+        },
+        {
+          "author": "Roberto Caldelli",
+          "institution_indices": [
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:721b1fe645c5b099",
+            "institution:1afce89cd4f3571f"
+          ]
+        },
+        {
+          "author": "Giuseppe Fiameni",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:0b1cc69a0a28e0c1"
           ]
         }
       ]
@@ -54095,6 +55276,103 @@
       ]
     },
     {
+      "id": "curated-map:65d639a397e11e444043",
+      "paper_id": "",
+      "title": "Fixed-Threshold Evaluation of a Hybrid CNN-ViT for AI-Generated Image Detection Across Photos and Art",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "2025-12-25",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "10.48550/arxiv.2512.21512",
+      "arxiv_id": "2512.21512",
+      "arxiv_url": "https://arxiv.org/abs/2512.21512",
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.48550/arxiv.2512.21512",
+      "primary_url": "https://doi.org/10.48550/arxiv.2512.21512",
+      "openalex_url": "https://openalex.org/W7117537373",
+      "url": "https://doi.org/10.48550/arxiv.2512.21512",
+      "authors": [
+        "Md Ashik Khan",
+        "Arafat Alam Jion"
+      ],
+      "institution": "Indian Institute of Technology Kharagpur",
+      "institution_id": "institution:f0c3da144873207a",
+      "institution_authors": [
+        "Md Ashik Khan"
+      ],
+      "institution_author_ids": [],
+      "country": "India",
+      "country_code": "IN",
+      "region": "West Bengal",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Kharagpur",
+      "latitude": 22.3193,
+      "longitude": 87.3095,
+      "lat": 22.3193,
+      "lon": 87.3095,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:76d949429d768196f87e",
+      "raw_affiliation": "Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur, India",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2512.21512",
+      "coordinate_source": "Official institution address / Wikidata",
+      "coordinate_source_url": "https://www.wikidata.org/wiki/Q955255",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur, India | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2512.21512 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:f0c3da144873207a",
+          "institution": "Indian Institute of Technology Kharagpur",
+          "authors": [
+            "Md Ashik Khan"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:488418437bfc9b2c",
+          "institution": "Chittagong University of Engineering and Technology",
+          "authors": [
+            "Arafat Alam Jion"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Md Ashik Khan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f0c3da144873207a"
+          ]
+        },
+        {
+          "author": "Arafat Alam Jion",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:488418437bfc9b2c"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:65f1f60db9635a78af1c",
       "paper_id": "",
       "title": "Fixed-Threshold Evaluation of a Hybrid CNN-ViT for AI-Generated Image Detection Across Photos and Art",
@@ -56080,6 +57358,143 @@
       ]
     },
     {
+      "id": "curated-map:14a6a84e6f4b7348ed8b",
+      "paper_id": "curated:3c3cd6143ece4045b378",
+      "title": "Generalized Design Choices for Deepfake Detectors",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "publication_type": "preprint",
+      "abstract": "The effectiveness of deepfake detection methods often depends less on their core design and more on implementation details such as data preprocessing, augmentation strategies, and optimization techniques. These factors make it difficult to fairly compare detectors and to understand which factors truly contribute to their performance. To address this, we systematically investigate how different design choices influence the accuracy and generalization capabilities of deepfake detection models, focusing on aspects related to training, inference, and incremental updates. By isolating the impact of individual factors, we aim to establish robust, architecture-agnostic best practices for the design and development of future deepfake detection systems. Our experiments identify a set of design choices that consistently improve deepfake detection and enable state-of-the-art performance on the AI-GenBench benchmark.",
+      "abstract_source": "openalex",
+      "doi": "10.48550/arxiv.2511.21507",
+      "arxiv_id": "2511.21507",
+      "arxiv_url": "https://arxiv.org/abs/2511.21507",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2511.21507",
+      "primary_url": "http://arxiv.org/abs/2511.21507",
+      "openalex_url": "https://openalex.org/W4416790887",
+      "url": "http://arxiv.org/abs/2511.21507",
+      "authors": [
+        "Lorenzo Pellegrini, Serafino Pandolfini, Davide Maltoni, Ferrara, Matteo, Marco Prati, Marco Ramilli"
+      ],
+      "institution": "IdentifAI",
+      "institution_id": "institution:fe7a819f82113c79",
+      "institution_authors": [
+        "Marco Pati",
+        "Marco Ramilli"
+      ],
+      "institution_author_ids": [],
+      "country": "Italy",
+      "country_code": "IT",
+      "region": "Lombardy",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Milan",
+      "latitude": 45.4642,
+      "longitude": 9.19,
+      "lat": 45.4642,
+      "lon": 9.19,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:b8b14d310139f20907d6",
+      "raw_affiliation": "IdentifAI, Italy",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2511.21507",
+      "coordinate_source": "Official company website / company profile / city-level geocoding",
+      "coordinate_source_url": "https://identifai.net/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: IdentifAI, Italy | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2511.21507 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:e73ae6a6d6ff3735",
+          "institution": "University of Bologna",
+          "authors": [
+            "Lorenzo Pellegrini",
+            "Serafino Pandolfini",
+            "Davide Maltoni",
+            "Matteo Ferrara"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:fe7a819f82113c79",
+          "institution": "IdentifAI",
+          "authors": [
+            "Marco Pati",
+            "Marco Ramilli"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Lorenzo Pellegrini",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e73ae6a6d6ff3735"
+          ]
+        },
+        {
+          "author": "Serafino Pandolfini",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e73ae6a6d6ff3735"
+          ]
+        },
+        {
+          "author": "Davide Maltoni",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e73ae6a6d6ff3735"
+          ]
+        },
+        {
+          "author": "Matteo Ferrara",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e73ae6a6d6ff3735"
+          ]
+        },
+        {
+          "author": "Marco Pati",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:fe7a819f82113c79"
+          ]
+        },
+        {
+          "author": "Marco Ramilli",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:fe7a819f82113c79"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:cd8bf4c7e6936bf2b473",
       "paper_id": "",
       "title": "T-GD: Transferable GAN-generated Images Detection Framework",
@@ -56341,6 +57756,158 @@
           ],
           "institution_ids": [
             "institution:f23b95ce92de4591"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:eff3fef5f1ad37842cd2",
+      "paper_id": "",
+      "title": "Deepfake Network Architecture Attribution",
+      "in_scope": true,
+      "year": 2022,
+      "publication_year": 2022,
+      "publication_date": "2022-06-28",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "venue_name": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "publication_type": "article",
+      "abstract": "With the rapid progress of generation technology, it has become necessary to attribute the origin of fake images. Existing works on fake image attribution perform multi-class classification on several Generative Adversarial Network (GAN) models and obtain high accuracies. While encouraging, these works are restricted to model-level attribution, only capable of handling images generated by seen models with a specific seed, loss and dataset, which is limited in real-world scenarios when fake images may be generated by privately trained models. This motivates us to ask whether it is possible to attribute fake images to the source models' architectures even if they are finetuned or retrained under different configurations. In this work, we present the first study on Deepfake Network Architecture Attribution to attribute fake images on architecture-level. Based on an observation that GAN architecture is likely to leave globally consistent fingerprints while traces left by model weights vary in different regions, we provide a simple yet effective solution named by DNA-Det for this problem. Extensive experiments on multiple cross-test setups and a large-scale dataset demonstrate the effectiveness of DNA-Det.",
+      "abstract_source": "OpenAlex local raw cache",
+      "doi": "10.1609/aaai.v36i4.20391",
+      "arxiv_id": "2202.13843v2",
+      "arxiv_url": "https://arxiv.org/abs/2202.13843v2",
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1609/aaai.v36i4.20391",
+      "primary_url": "https://doi.org/10.1609/aaai.v36i4.20391",
+      "openalex_url": "https://openalex.org/W4283811667",
+      "url": "https://doi.org/10.1609/aaai.v36i4.20391",
+      "authors": [
+        "Tianyun Yang",
+        "Ziyao Huang",
+        "Juan Cao",
+        "Lei Li",
+        "Xirong Li"
+      ],
+      "institution": "Institute of Computing Technology, Chinese Academy of Sciences",
+      "institution_id": "institution:e278f75918ccf8a7",
+      "institution_authors": [
+        "Tianyun Yang",
+        "Ziyao Huang",
+        "Juan Cao",
+        "Lei Li"
+      ],
+      "institution_author_ids": [],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Beijing",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Beijing",
+      "latitude": 39.9784,
+      "longitude": 116.33,
+      "lat": 39.9784,
+      "lon": 116.33,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:9fb883d2a41c0a2a749e",
+      "raw_affiliation": "Institute of Computing Technology, Chinese Academy of Sciences; University of Chinese Academy of Sciences",
+      "evidence_source": "PDF",
+      "evidence_url": "https://ojs.aaai.org/index.php/AAAI/article/view/20391",
+      "coordinate_source": "Official institution address / campus geocoding",
+      "coordinate_source_url": "https://english.ict.cas.cn/about/con/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Institute of Computing Technology, Chinese Academy of Sciences; University of Chinese Academy of Sciences | Evidence source: PDF | Evidence URL: https://ojs.aaai.org/index.php/AAAI/article/view/20391 | Affiliation note: Tianyun Yang, Ziyao Huang, Juan Cao, and Lei Li are affiliated with Institute of Computing Technology, Chinese Academy of Sciences. | Review note: ML",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:e278f75918ccf8a7",
+          "institution": "Institute of Computing Technology, Chinese Academy of Sciences",
+          "authors": [
+            "Tianyun Yang",
+            "Ziyao Huang",
+            "Juan Cao",
+            "Lei Li"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "authors": [
+            "Tianyun Yang",
+            "Ziyao Huang",
+            "Juan Cao",
+            "Lei Li"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:5fbb6e2cbdd4ea21",
+          "institution": "Renmin University of China",
+          "authors": [
+            "Xirong Li"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Tianyun Yang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Ziyao Huang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Juan Cao",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Lei Li",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:e278f75918ccf8a7",
+            "institution:69309405e04976ec"
+          ]
+        },
+        {
+          "author": "Xirong Li",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:5fbb6e2cbdd4ea21"
           ]
         }
       ]
@@ -56706,6 +58273,242 @@
       "resolution_confidence": "high",
       "needs_review": false,
       "notes": "Raw affiliation: University of Surrey, Guildford, UK | Evidence source: PDF | Evidence URL: https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9 | Affiliation note: Author superscript 1. Tu Bui and John Collomosse are affiliated with University of Surrey. | Review note: ML",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:29276dc7d9ce02fd",
+          "institution": "University of Surrey",
+          "authors": [
+            "Tu Bui",
+            "John Collomosse"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:41db7d042136daef",
+          "institution": "Salesforce Research",
+          "authors": [
+            "Ning Yu"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:7a0d6a63667ac750",
+          "institution": "Adobe Research",
+          "authors": [
+            "John Collomosse"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Tu Bui",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:29276dc7d9ce02fd"
+          ]
+        },
+        {
+          "author": "John Collomosse",
+          "institution_indices": [
+            1,
+            3
+          ],
+          "institution_ids": [
+            "institution:29276dc7d9ce02fd",
+            "institution:7a0d6a63667ac750"
+          ]
+        },
+        {
+          "author": "Ning Yu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:41db7d042136daef"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:01eb2fee1cf6f2427858",
+      "paper_id": "",
+      "title": "RepMix: Representation Mixing for Robust Attribution of Synthesized Images",
+      "in_scope": true,
+      "year": 2022,
+      "publication_year": 2022,
+      "publication_date": "2022-01-01",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "Lecture notes in computer science",
+      "venue_name": "Lecture notes in computer science",
+      "publication_type": "book-chapter",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "10.1007/978-3-031-19781-9_9",
+      "arxiv_id": "2207.02063v2",
+      "arxiv_url": "https://arxiv.org/abs/2207.02063v2",
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1007/978-3-031-19781-9_9",
+      "primary_url": "https://doi.org/10.1007/978-3-031-19781-9_9",
+      "openalex_url": "https://openalex.org/W4284702842",
+      "url": "https://doi.org/10.1007/978-3-031-19781-9_9",
+      "authors": [
+        "Tu Bui",
+        "Ning Yu",
+        "John Collomosse"
+      ],
+      "institution": "Salesforce Research",
+      "institution_id": "institution:41db7d042136daef",
+      "institution_authors": [
+        "Ning Yu"
+      ],
+      "institution_author_ids": [],
+      "country": "United States",
+      "country_code": "US",
+      "region": "California",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "San Francisco",
+      "latitude": 37.7897,
+      "longitude": -122.396,
+      "lat": 37.7897,
+      "lon": -122.396,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:19dedb80fb3be2f5a9dd",
+      "raw_affiliation": "Salesforce Research, Palo Alto, USA",
+      "evidence_source": "PDF",
+      "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9",
+      "coordinate_source": "Official Salesforce global offices / headquarters geocoding",
+      "coordinate_source_url": "https://www.salesforce.com/ap/company/locations/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Salesforce Research, Palo Alto, USA | Evidence source: PDF | Evidence URL: https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9 | Affiliation note: Author superscript 2. Ning Yu is affiliated with Salesforce Research. | Review note: ML",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:29276dc7d9ce02fd",
+          "institution": "University of Surrey",
+          "authors": [
+            "Tu Bui",
+            "John Collomosse"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:41db7d042136daef",
+          "institution": "Salesforce Research",
+          "authors": [
+            "Ning Yu"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:7a0d6a63667ac750",
+          "institution": "Adobe Research",
+          "authors": [
+            "John Collomosse"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Tu Bui",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:29276dc7d9ce02fd"
+          ]
+        },
+        {
+          "author": "John Collomosse",
+          "institution_indices": [
+            1,
+            3
+          ],
+          "institution_ids": [
+            "institution:29276dc7d9ce02fd",
+            "institution:7a0d6a63667ac750"
+          ]
+        },
+        {
+          "author": "Ning Yu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:41db7d042136daef"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:14d522a88f732754b225",
+      "paper_id": "",
+      "title": "RepMix: Representation Mixing for Robust Attribution of Synthesized Images",
+      "in_scope": true,
+      "year": 2022,
+      "publication_year": 2022,
+      "publication_date": "2022-01-01",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "Lecture notes in computer science",
+      "venue_name": "Lecture notes in computer science",
+      "publication_type": "book-chapter",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "10.1007/978-3-031-19781-9_9",
+      "arxiv_id": "2207.02063v2",
+      "arxiv_url": "https://arxiv.org/abs/2207.02063v2",
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1007/978-3-031-19781-9_9",
+      "primary_url": "https://doi.org/10.1007/978-3-031-19781-9_9",
+      "openalex_url": "https://openalex.org/W4284702842",
+      "url": "https://doi.org/10.1007/978-3-031-19781-9_9",
+      "authors": [
+        "Tu Bui",
+        "Ning Yu",
+        "John Collomosse"
+      ],
+      "institution": "Adobe Research",
+      "institution_id": "institution:7a0d6a63667ac750",
+      "institution_authors": [
+        "John Collomosse"
+      ],
+      "institution_author_ids": [],
+      "country": "United States",
+      "country_code": "US",
+      "region": "California",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "San Jose",
+      "latitude": 37.3318,
+      "longitude": -121.894,
+      "lat": 37.3318,
+      "lon": -121.894,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:2988be2800f85af4d31a",
+      "raw_affiliation": "Adobe Research, San Jose, USA",
+      "evidence_source": "",
+      "evidence_url": "https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9",
+      "coordinate_source": "Official Adobe Research / Adobe corporate address",
+      "coordinate_source_url": "https://research.adobe.com/careers/san-jose/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Adobe Research, San Jose, USA | Evidence URL: https://link.springer.com/chapter/10.1007/978-3-031-19781-9_9 | Affiliation note: Author superscript 3. John Collomosse is also affiliated with Adobe Research. | Review note: ML",
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -58507,6 +60310,115 @@
       ]
     },
     {
+      "id": "curated-map:0f6716f87e1ff6d5ad6e",
+      "paper_id": "",
+      "title": "LoRAX: LoRA eXpandable Networks for Continual Synthetic Image Attribution",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "2025-04-10",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "ArXiv.org",
+      "venue_name": "ArXiv.org",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "https://doi.org/10.48550/arxiv.2504.08149",
+      "arxiv_id": "2504.08149",
+      "arxiv_url": "https://arxiv.org/abs/2504.08149",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2504.08149",
+      "primary_url": "http://arxiv.org/abs/2504.08149",
+      "openalex_url": "https://openalex.org/W4414827699",
+      "url": "http://arxiv.org/abs/2504.08149",
+      "authors": [
+        "Danielle Sullivan-Pao",
+        "Tian, Nicole",
+        "Pooya Khorrami"
+      ],
+      "institution": "MIT Lincoln Laboratory",
+      "institution_id": "institution:39fbdba5585bb3c4",
+      "institution_authors": [
+        "Danielle Sullivan-Pao",
+        "Pooya Khorrami"
+      ],
+      "institution_author_ids": [],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Massachusetts",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Lexington",
+      "latitude": 42.4597,
+      "longitude": -71.2674,
+      "lat": 42.4597,
+      "lon": -71.2674,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:362237aabd27819d2de7",
+      "raw_affiliation": "MIT Lincoln Laboratory, Lexington MA, USA",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2504.08149",
+      "coordinate_source": "Official institution address / Wikidata",
+      "coordinate_source_url": "https://www.wikidata.org/wiki/Q1095702",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: MIT Lincoln Laboratory, Lexington MA, USA | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2504.08149 | Review note: ML",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:39fbdba5585bb3c4",
+          "institution": "MIT Lincoln Laboratory",
+          "authors": [
+            "Danielle Sullivan-Pao",
+            "Pooya Khorrami"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:0d3d34a24da64353",
+          "institution": "Yale University",
+          "authors": [
+            "Nicole Tian"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Danielle Sullivan-Pao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:39fbdba5585bb3c4"
+          ]
+        },
+        {
+          "author": "Pooya Khorrami",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:39fbdba5585bb3c4"
+          ]
+        },
+        {
+          "author": "Nicole Tian",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:0d3d34a24da64353"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:24f09e9c1e63b8598218",
       "paper_id": "",
       "title": "LoRAX: LoRA eXpandable Networks for Continual Synthetic Image Attribution",
@@ -58610,6 +60522,121 @@
           ],
           "institution_ids": [
             "institution:0d3d34a24da64353"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:530a33ea83773ea8ae13",
+      "paper_id": "",
+      "title": "Scalable Fine-grained Generated Image Classification Based on Deep Metric Learning",
+      "in_scope": true,
+      "year": 2019,
+      "publication_year": 2019,
+      "publication_date": "2019-12-10",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "publication_type": "preprint",
+      "abstract": "",
+      "abstract_source": "",
+      "doi": "10.48550/arxiv.1912.11082",
+      "arxiv_id": "1912.11082",
+      "arxiv_url": "https://arxiv.org/abs/1912.11082",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/1912.11082",
+      "primary_url": "http://arxiv.org/abs/1912.11082",
+      "openalex_url": "https://openalex.org/W2997633607",
+      "url": "http://arxiv.org/abs/1912.11082",
+      "authors": [
+        "Xinsheng Xuan",
+        "Bo Peng",
+        "Wei Wang",
+        "Jing Dong"
+      ],
+      "institution": "Institute of Automation, Chinese Academy of Sciences",
+      "institution_id": "institution:966ff12833f90bb0",
+      "institution_authors": [
+        "Xinsheng Xuan",
+        "Bo Peng",
+        "Wei Wang",
+        "Jing Dong"
+      ],
+      "institution_author_ids": [],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Beijing",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Beijing",
+      "latitude": 39.9826,
+      "longitude": 116.3336,
+      "lat": 39.9826,
+      "lon": 116.3336,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:014011f7dcaa4611eb1b",
+      "raw_affiliation": "Center for Research on Intelligent Perception and Computing (CRIPAC), National Laboratory of Pattern Recognition (NLPR), Institute of Automation, Chinese Academy of Sciences (CASIA)",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/1912.11082",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://english.ia.cas.cn/au/cu/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Center for Research on Intelligent Perception and Computing (CRIPAC), National Laboratory of Pattern Recognition (NLPR), Institute of Automation, Chinese Academy of Sciences (CASIA) | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/1912.11082 | Review note: ML",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "authors": [
+            "Xinsheng Xuan",
+            "Bo Peng",
+            "Wei Wang",
+            "Jing Dong"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Xinsheng Xuan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Bo Peng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Wei Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Jing Dong",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
           ]
         }
       ]

@@ -555,10 +555,10 @@
         "Zhen Lei"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 4,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -576,6 +576,7 @@
       ],
       "aggregated_regions": [
         "Beijing",
+        "Guangdong",
         "Hong Kong"
       ],
       "aggregated_region_codes": [
@@ -3986,10 +3987,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 4,
+      "map_record_count": 5,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -7717,10 +7718,10 @@
         "Arafat Alam Jion"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex match recovered by conservative query-failure retry. Ready for manual paper import review.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -7729,13 +7730,16 @@
         "Indian Institute of Technology Kharagpur"
       ],
       "aggregated_country_names": [
-        "Bangladesh"
+        "Bangladesh",
+        "India"
       ],
       "aggregated_country_codes": [
-        "BD"
+        "BD",
+        "IN"
       ],
       "aggregated_regions": [
-        "Chattogram"
+        "Chattogram",
+        "West Bengal"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -9289,10 +9293,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -9307,7 +9311,8 @@
         "IT"
       ],
       "aggregated_regions": [
-        "Emilia-Romagna"
+        "Emilia-Romagna",
+        "Lombardy"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -10136,10 +10141,10 @@
         "Pooya Khorrami"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -10154,7 +10159,8 @@
         "US"
       ],
       "aggregated_regions": [
-        "Connecticut"
+        "Connecticut",
+        "Massachusetts"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -15595,17 +15601,17 @@
         "Fabrizio Falchi"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 4,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "CNIT",
         "ISTI-CNR",
-        "NVIDIA AI Technology Center",
+        "NVIDIA AI Technology Center Italy",
         "Universitas Mercatorum"
       ],
       "aggregated_country_names": [
@@ -15671,8 +15677,8 @@
         },
         {
           "mapping_id": "mapping:7e8d4e92ec526ab401de",
-          "institution_id": "institution:44518a67397b66af",
-          "institution": "NVIDIA AI Technology Center",
+          "institution_id": "institution:0b1cc69a0a28e0c1",
+          "institution": "NVIDIA AI Technology Center Italy",
           "institution_authors": [
             "Giuseppe Fiameni"
           ],
@@ -15715,8 +15721,8 @@
         },
         {
           "index": 4,
-          "institution_id": "institution:44518a67397b66af",
-          "institution": "NVIDIA AI Technology Center",
+          "institution_id": "institution:0b1cc69a0a28e0c1",
+          "institution": "NVIDIA AI Technology Center Italy",
           "authors": [
             "Giuseppe Fiameni"
           ]
@@ -15776,7 +15782,7 @@
             4
           ],
           "institution_ids": [
-            "institution:44518a67397b66af"
+            "institution:0b1cc69a0a28e0c1"
           ]
         }
       ]
@@ -17168,7 +17174,7 @@
       "needs_review": true,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -17187,6 +17193,7 @@
         "US"
       ],
       "aggregated_regions": [
+        "California",
         "Indiana",
         "Seoul"
       ],
@@ -19294,10 +19301,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -19307,14 +19314,17 @@
         "University of Massachusetts Amherst"
       ],
       "aggregated_country_names": [
+        "Japan",
         "United States"
       ],
       "aggregated_country_codes": [
+        "JP",
         "US"
       ],
       "aggregated_regions": [
         "Massachusetts",
-        "New Jersey"
+        "New Jersey",
+        "Tokyo"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -20760,10 +20770,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -20779,7 +20789,8 @@
         "CN"
       ],
       "aggregated_regions": [
-        "Guangdong"
+        "Guangdong",
+        "Shanghai"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -21408,10 +21419,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -27571,10 +27582,10 @@
         "Xirong Li"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -28444,10 +28455,10 @@
         "John Collomosse"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -28457,12 +28468,15 @@
         "University of Surrey"
       ],
       "aggregated_country_names": [
-        "United Kingdom"
+        "United Kingdom",
+        "United States"
       ],
       "aggregated_country_codes": [
-        "GB"
+        "GB",
+        "US"
       ],
       "aggregated_regions": [
+        "California",
         "Surrey"
       ],
       "aggregated_region_codes": [],
@@ -31370,8 +31384,8 @@
       "has_map_location": false,
       "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "paper_only_review",
       "aggregated_institutions": [
         "CISPA Helmholtz Center for Information Security",
         "Max Planck Institute for Informatics",
@@ -32211,18 +32225,97 @@
         "Jing Dong"
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": true,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "missing_affiliation",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": []
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Institute of Automation, Chinese Academy of Sciences"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:014011f7dcaa4611eb1b",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Xinsheng Xuan",
+            "Bo Peng",
+            "Wei Wang",
+            "Jing Dong"
+          ],
+          "institution_author_ids": [],
+          "raw_affiliation": "Center for Research on Intelligent Perception and Computing (CRIPAC), National Laboratory of Pattern Recognition (NLPR), Institute of Automation, Chinese Academy of Sciences (CASIA)",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/1912.11082",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "authors": [
+            "Xinsheng Xuan",
+            "Bo Peng",
+            "Wei Wang",
+            "Jing Dong"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Xinsheng Xuan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Bo Peng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Wei Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Jing Dong",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        }
+      ]
     },
     {
       "title": "Source Generator Attribution via Inversion",
