@@ -12,6 +12,7 @@ import json
 import math
 import re
 import sys
+import unicodedata
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -177,6 +178,144 @@ def normalized_doi(value: Any) -> str:
 def normalized_title(value: Any) -> str:
     normalized = re.sub(r"[^\w]+", " ", normalized_text(value))
     return " ".join(normalized.replace("_", " ").split())
+
+
+def normalized_author_name(value: Any) -> str:
+    text = unicodedata.normalize("NFKC", clean_text(value)).casefold()
+    if "," in text:
+        family, given = text.split(",", 1)
+        text = f"{given} {family}"
+    return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+
+
+def public_paper_identity_keys(record: Dict[str, Any]) -> set[str]:
+    keys = set()
+    openalex_url = normalized_text(record.get("openalex_url")).rstrip("/")
+    doi = normalized_doi(record.get("doi"))
+    title = normalized_title(record.get("title"))
+    year = clean_text(record.get("publication_year") or record.get("year"))
+    if openalex_url:
+        keys.add(f"openalex:{openalex_url}")
+    if doi:
+        keys.add(f"doi:{doi}")
+    if title and year:
+        keys.add(f"title_year:{title}|{year}")
+    return keys
+
+
+def _people(value: Any) -> List[str]:
+    if isinstance(value, list):
+        return [clean_text(item) for item in value if clean_text(item)]
+    return [
+        clean_text(item)
+        for item in re.split(r"\s*;\s*", clean_text(value))
+        if clean_text(item)
+    ]
+
+
+def _author_comparison_entries(record: Dict[str, Any]) -> List[Tuple[str, set[str]]]:
+    authors = _people(record.get("institution_authors"))
+    raw_author_ids = record.get("institution_author_ids")
+    if isinstance(raw_author_ids, list):
+        author_ids = [normalized_text(value) for value in raw_author_ids]
+    else:
+        author_ids = [
+            normalized_text(value)
+            for value in clean_text(raw_author_ids).split(";")
+        ]
+    entries = []
+    for index, author in enumerate(authors):
+        keys = {f"name:{normalized_author_name(author)}"}
+        if index < len(author_ids) and normalized_text(author_ids[index]):
+            keys.add(
+                f"id:{normalized_text(author_ids[index]).rstrip('/')}"
+            )
+        entries.append((author, keys))
+    return entries
+
+
+def validate_curated_affiliation_supersession(
+    map_records: Sequence[Any],
+    paper_records: Sequence[Any],
+    issues: List[Issue],
+) -> None:
+    curated_contexts = []
+    for paper in paper_records:
+        if not isinstance(paper, dict):
+            continue
+        mappings = [
+            mapping
+            for mapping in paper.get("curated_mappings") or []
+            if isinstance(mapping, dict)
+            and normalized_text(mapping.get("mapping_status")) == "active"
+        ]
+        if not mappings:
+            continue
+        author_institutions: Dict[str, set[str]] = {}
+        for mapping in mappings:
+            institution = normalized_title(mapping.get("institution"))
+            for _author, author_keys in _author_comparison_entries(mapping):
+                for author_key in author_keys:
+                    author_institutions.setdefault(author_key, set()).add(
+                        institution
+                    )
+        curated_contexts.append(
+            (
+                public_paper_identity_keys(paper),
+                author_institutions,
+            )
+        )
+
+    for index, record in enumerate(map_records):
+        if not isinstance(record, dict):
+            continue
+        matching_context = next(
+            (
+                context
+                for context in curated_contexts
+                if context[0] & public_paper_identity_keys(record)
+            ),
+            None,
+        )
+        if matching_context is None:
+            continue
+        if normalized_text(record.get("source_database")) == "curated" or clean_text(
+            record.get("mapping_id")
+        ):
+            continue
+        if (
+            normalized_text(record.get("public_evidence_mode")) == "add"
+            and normalized_text(record.get("public_evidence_approval"))
+            == "explicit_admin_supplement"
+        ):
+            continue
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            record_title(record),
+            "non-curated institution evidence remains after active curated "
+            "author–institution mappings superseded public evidence",
+        )
+        stale_institution = normalized_title(
+            record.get("institution_name") or record.get("institution")
+        )
+        author_institutions = matching_context[1]
+        for author, author_keys in _author_comparison_entries(record):
+            curated_institutions = {
+                institution
+                for author_key in author_keys
+                for institution in author_institutions.get(author_key, set())
+            }
+            if curated_institutions and stale_institution not in curated_institutions:
+                add_issue(
+                    issues,
+                    "ERROR",
+                    index,
+                    record_title(record),
+                    f"normalized author {author!r} is assigned to stale public "
+                    "and curated institutions",
+                )
 
 
 def has_formal_publication_evidence(record: Dict[str, Any]) -> bool:
@@ -574,12 +713,12 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
     author_indices = record.get("author_institution_indices")
     if isinstance(author_indices, list) and author_indices:
         indexed = {
-            normalized_text(item.get("author"))
+            normalized_author_name(item.get("author"))
             for item in author_indices
             if isinstance(item, dict) and item.get("institution_indices")
         }
         for author in record.get("authors") or []:
-            if normalized_text(author) not in indexed:
+            if normalized_author_name(author) not in indexed:
                 add_issue(
                     issues,
                     "WARNING",
@@ -656,6 +795,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for index, record in enumerate(paper_records):
         validate_paper_record(index, record, paper_issues)
     validate_preprint_version_duplicates(paper_records, paper_issues)
+    validate_curated_affiliation_supersession(
+        records, paper_records, issues
+    )
 
     print_summary(args.input, records, issues)
     print()

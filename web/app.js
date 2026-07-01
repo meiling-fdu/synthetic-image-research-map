@@ -301,9 +301,12 @@ function recordInstitutionAuthors(record) {
 }
 
 function normalizedAuthorName(value) {
-  return String(value || "")
-    .normalize("NFKC")
-    .toLocaleLowerCase()
+  let text = String(value || "").normalize("NFKC").toLocaleLowerCase();
+  if (text.includes(",")) {
+    const [family, ...givenParts] = text.split(",");
+    text = `${givenParts.join(" ")} ${family}`;
+  }
+  return text
     .replace(/[^\p{L}\p{N}]+/gu, " ")
     .trim();
 }

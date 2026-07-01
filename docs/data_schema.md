@@ -444,6 +444,8 @@ Affiliation is a property of an author's relationship to a particular paper, not
 
 Public paper records expose `author_institution_affiliations` (numbered institution groups) and `author_institution_indices` (author-to-index and stable institution-ID relationships). Public marker records expose `institution_id`; the frontend falls back to a normalized canonical institution name only for legacy records.
 
+When a paper has at least one `active` curated mapping, that active mapping set supersedes automatic OpenAlex/public affiliation evidence for the paper. The exporter removes automatic markers across every matching DOI, OpenAlex ID, or normalized title/year version before adding curated markers. Only an institution-record override explicitly marked as an admin-approved `add` supplement may coexist. Author conflict checks prefer aligned canonical author IDs when present and otherwise compare normalized names, including `Family, Given` versus `Given Family`.
+
 ## Paper Labeling
 
 Labels describe scope without collapsing related categories into one field:
