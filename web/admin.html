@@ -13,7 +13,7 @@
       <div>
         <p class="eyebrow">Maintainer-only · localhost</p>
         <h1>Interactive Curation Console</h1>
-        <p class="lede">Review diagnostics, record durable curated decisions, refresh, validate, then inspect Git manually.</p>
+        <p class="lede">Review diagnostics, record durable curated decisions, refresh and validate locally, then explicitly publish when ready.</p>
       </div>
       <div class="masthead-actions">
         <button class="secondary-button" id="location-review-toggle" type="button">Institution Location Review</button>
@@ -91,10 +91,11 @@
           <button class="secondary-button workflow-command" id="run-export-preview" type="button">Run export preview</button>
           <button class="secondary-button workflow-command" id="run-public-validation" type="button">Run public-preview validation</button>
           <button class="primary-button workflow-command" id="run-full-refresh" type="button">Run full refresh pipeline</button>
+          <button class="primary-button workflow-command" id="publish-changes" type="button">Publish Changes</button>
           <button class="secondary-button" id="reload-preview-data" type="button">Reload preview data</button>
           <button class="secondary-button" id="show-git-status" type="button">Show git status</button>
         </div>
-        <p class="workflow-guidance" id="workflow-guidance">Local preview updates do not publish the site. Commit and push manually to update GitHub Pages.</p>
+        <p class="workflow-guidance" id="workflow-guidance">Admin saves remain local. Publish Changes refreshes and validates first, then commits selected project data and pushes only after confirmation.</p>
         <details class="workflow-log-panel" id="workflow-log-panel">
           <summary>Command log</summary>
           <pre id="workflow-log">No command output yet.</pre>

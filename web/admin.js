@@ -21,6 +21,7 @@ const workflowCommandIds = [
   "run-export-preview",
   "run-public-validation",
   "run-full-refresh",
+  "publish-changes",
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -137,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "run-export-preview",
     "run-public-validation",
     "run-full-refresh",
+    "publish-changes",
     "reload-preview-data",
     "show-git-status",
     "location-review-toggle",
@@ -269,6 +271,18 @@ document.addEventListener("DOMContentLoaded", () => {
     ["run-full-refresh", "/api/run-full-refresh", "Full refresh"],
   ].forEach(([id, path, label]) => {
     elements[id].addEventListener("click", () => runAdminWorkflow(path, label));
+  });
+  elements["publish-changes"].addEventListener("click", () => {
+    const confirmed = window.confirm(
+      "Publish Changes will refresh and validate the public preview, commit selected curated/manual/web-data/test files, and push the current branch. Continue?"
+    );
+    if (confirmed) {
+      runAdminWorkflow(
+        "/api/publish-changes",
+        "Publish Changes",
+        { confirmed: true }
+      );
+    }
   });
   elements["reload-preview-data"].addEventListener("click", reloadPreviewData);
   elements["show-git-status"].addEventListener("click", showGitStatus);
@@ -1008,11 +1022,14 @@ function renderWorkflowLog(result, heading = "") {
   ].filter((part) => part !== "").join("\n");
 }
 
-async function runAdminWorkflow(path, label) {
+async function runAdminWorkflow(path, label, payload = null) {
   setWorkflowRunning(true, label);
   elements["workflow-log"].textContent = `${label} is running…`;
   try {
-    const result = await apiFetch(path, { method: "POST" });
+    const result = await apiFetch(path, {
+      method: "POST",
+      ...(payload ? { body: JSON.stringify(payload) } : {}),
+    });
     renderWorkflowLog(result, label);
     elements["workflow-log-panel"].open = true;
     elements["workflow-state"].dataset.state =
@@ -1023,10 +1040,13 @@ async function runAdminWorkflow(path, label) {
       showNotice(`${label} failed. Review the command log; preview data was not treated as validated.`, "error");
       return;
     }
-    if (path === "/api/export-preview" || path === "/api/run-full-refresh") {
+    if (path === "/api/publish-changes") {
+      await loadApplication(true);
+      showNotice("Changes committed and pushed. GitHub Pages will update after deployment.");
+    } else if (path === "/api/export-preview" || path === "/api/run-full-refresh") {
       await loadApplication(true);
       showNotice(
-        "Local preview updated. Commit and push manually to update GitHub Pages."
+        "Local preview updated. Use Publish Changes when you are ready to commit and push."
       );
     } else {
       showNotice(`${label} completed successfully.`);

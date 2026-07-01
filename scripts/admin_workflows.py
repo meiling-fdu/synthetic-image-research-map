@@ -13,6 +13,7 @@ from typing import Any, Dict, Mapping, Sequence
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 COMMAND_TIMEOUT_SECONDS = 180
+PUBLISH_TIMEOUT_SECONDS = 1_200
 GIT_TIMEOUT_SECONDS = 15
 TAIL_CHARACTER_LIMIT = 16_000
 KNOWN_WORKFLOW_OUTPUTS = (
@@ -52,6 +53,10 @@ HIGH_RISK_MARKER_REPORT = (
     "python3",
     "scripts/report_high_risk_markers.py",
 )
+PUBLISH_CHANGES = (
+    "python3",
+    "scripts/admin_publish_changes.py",
+)
 
 ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
     "curated_validation": (CURATED_VALIDATION,),
@@ -66,6 +71,7 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         MARKER_BLOCKER_DIAGNOSIS,
         HIGH_RISK_MARKER_REPORT,
     ),
+    "publish_changes": (PUBLISH_CHANGES,),
 }
 
 
@@ -202,7 +208,12 @@ def run_workflow(name: str) -> Dict[str, Any]:
     started = time.monotonic()
     steps = []
     for command in commands:
-        result = _run(command, timeout=COMMAND_TIMEOUT_SECONDS)
+        timeout = (
+            PUBLISH_TIMEOUT_SECONDS
+            if name == "publish_changes"
+            else COMMAND_TIMEOUT_SECONDS
+        )
+        result = _run(command, timeout=timeout)
         steps.append(result)
         if not result["success"]:
             break

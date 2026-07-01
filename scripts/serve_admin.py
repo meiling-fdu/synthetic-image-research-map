@@ -166,6 +166,7 @@ WORKFLOW_ENDPOINTS = {
     "/api/export-preview": "export_preview",
     "/api/run-public-validation": "public_validation",
     "/api/run-full-refresh": "full_refresh",
+    "/api/publish-changes": "publish_changes",
 }
 
 STATIC_ROUTES = {
@@ -1269,6 +1270,26 @@ def make_handler(
                         {"error": "X-Admin-Token header is required"},
                     )
                     return
+                if request.path == "/api/publish-changes":
+                    try:
+                        payload = self.read_json_body()
+                    except AdminDataError as error:
+                        self.send_json(
+                            HTTPStatus.BAD_REQUEST,
+                            {"error": str(error)},
+                        )
+                        return
+                    if payload.get("confirmed") is not True:
+                        self.send_json(
+                            HTTPStatus.BAD_REQUEST,
+                            {
+                                "error": (
+                                    "explicit confirmation is required "
+                                    "before publishing"
+                                )
+                            },
+                        )
+                        return
                 self.run_admin_workflow(WORKFLOW_ENDPOINTS[request.path])
                 return
             location_actions = {

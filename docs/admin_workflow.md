@@ -1,6 +1,6 @@
 # Local Admin Workflow
 
-This runbook covers the local **Interactive Curation Console**. Run all commands from the repository root. The console reads generated diagnostics and writes durable human decisions only to `data/curated/*.csv`; it never stages, commits, pushes, or publishes changes.
+This runbook covers the local **Interactive Curation Console**. Run all commands from the repository root. Ordinary edit and save actions write durable human decisions locally and never stage, commit, or push them. Publishing is a separate, explicit, confirmed action.
 
 The data boundaries are deliberate:
 
@@ -94,13 +94,30 @@ python3 scripts/report_high_risk_markers.py
 
 The pipeline stops at the first failure. Read the command log, correct the underlying curated record, and run it again. **Reload preview data** only rereads existing JSON; it does not export changes.
 
-After a successful refresh:
+After a successful local refresh:
 
 1. Inspect the changed-file list and command log.
 2. Review `git status --short` and the relevant diffs, especially curated CSVs and `web/data/public_preview_*.json`.
 3. Check that paper coverage, mappings, exclusions, and markers match the intended decisions.
-4. Commit and push separately only after review. GitHub Pages is unchanged until that manual publication step.
+4. Choose **Publish Changes** only when the local changes are ready to publish.
+
+## Publish Changes
+
+The intended publishing workflow is:
+
+```text
+Admin edit
+→ Publish Changes
+→ full refresh pipeline runs
+→ public preview validation runs
+→ selected files are committed and pushed
+→ GitHub Pages updates after deployment
+```
+
+**Publish Changes** always asks for confirmation and cannot start while another admin workflow is running. It runs `python3 scripts/admin_publish_changes.py`, stops immediately on refresh or validation failure, shows the final command output, and does not create an empty commit.
+
+Only maintained files under `data/curated/`, `data/manual/`, `web/data/`, and `tests/` are eligible for the publication commit. `data/backups/` and temporary `data/manual/key_papers_missing_*` or `data/manual/key_papers_query_failed_*` batch artifacts are excluded. Unrelated staged files are not included in the publication commit. Git and push errors remain visible in the command log; if push fails, the new commit remains local for inspection and retry.
 
 Recommended order: fix P0 public-marker issues; confirm P1 candidates; resolve missing coordinates; resolve missing affiliations; review missing key papers; only then expand OpenAlex coverage.
 
-The server binds to `127.0.0.1` by default, requires its random token for every API, requires explicit `--unsafe-bind-all` for non-loopback binding, and runs only fixed `shell=False` command lists. It offers Git status visibility but no commit or push action.
+The server binds to `127.0.0.1` by default, requires its random token for every API, requires explicit `--unsafe-bind-all` for non-loopback binding, and runs only fixed `shell=False` command lists. Git commit and push are available only through the confirmed **Publish Changes** workflow.
