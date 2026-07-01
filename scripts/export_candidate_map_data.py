@@ -1812,11 +1812,16 @@ def group_map_records(
         group["notes"] = " | ".join(unique_strings(group["notes"]))
         author_key = group["_institution_author_key"]
         if author_key not in unresolved_institution_authors:
+            ordered_entries = sorted(
+                institution_author_entries.get(author_key, {}).items(),
+                key=lambda item: item[1],
+            )
             group["institution_authors"] = [
-                author_name
-                for _, author_name in sorted(
-                    institution_author_entries.get(author_key, {}).values()
-                )
+                value[1] for _, value in ordered_entries
+            ]
+            group["institution_author_ids"] = [
+                identity if not identity.startswith("order:") else ""
+                for identity, _ in ordered_entries
             ]
         if group["_has_resolution_metadata"]:
             group["resolution_notes"] = " | ".join(
@@ -1949,6 +1954,7 @@ def apply_institution_record_overrides(
                 "institution_openalex_id": "",
                 "institution": institution,
                 "institution_authors": list(override["institution_authors"]),
+                "institution_author_ids": [],
                 "city": city,
                 "country": normalized_location["country"],
                 "country_code": normalized_location["country_code"],
@@ -1960,6 +1966,12 @@ def apply_institution_record_overrides(
                 "longitude": longitude,
                 "location": location,
                 "resolution_method": "manual_institution_record_override",
+                "public_evidence_mode": override["mode"],
+                "public_evidence_approval": (
+                    "explicit_admin_supplement"
+                    if override["mode"] == "add"
+                    else "explicit_admin_override"
+                ),
                 "_coordinate_sources": {"manual"}
                 if latitude is not None and longitude is not None
                 else set(),
@@ -2058,6 +2070,17 @@ def apply_institution_record_overrides(
             == institution_key
             for index in matching_indexes
         ):
+            for index in matching_indexes:
+                if (
+                    normalize_institution_name(
+                        records[index].get("institution")
+                    )
+                    == institution_key
+                ):
+                    records[index]["public_evidence_mode"] = "add"
+                    records[index]["public_evidence_approval"] = (
+                        "explicit_admin_supplement"
+                    )
             applied_indexes.add(override_index)
             continue
         insertion_index = matching_indexes[-1] + 1

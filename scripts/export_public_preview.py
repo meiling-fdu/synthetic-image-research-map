@@ -175,6 +175,7 @@ PUBLIC_FIELDS = (
     "url",
     "authors",
     "institution_authors",
+    "institution_author_ids",
     "institution",
     "country",
     "country_code",
@@ -186,6 +187,8 @@ PUBLIC_FIELDS = (
     "latitude",
     "longitude",
     "source_database",
+    "public_evidence_mode",
+    "public_evidence_approval",
     "resolution_method",
     "resolution_confidence",
     "needs_review",
@@ -1675,6 +1678,10 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print(
         "  Existing markers replaced by curated mappings: "
         f"{summary.get('curated_markers_replaced', 0)}"
+    )
+    print(
+        "  Stale public/OpenAlex markers suppressed by active mappings: "
+        f"{summary.get('stale_public_markers_suppressed', 0)}"
     )
     print(
         "  Curated mappings missing/ambiguous coordinates: "

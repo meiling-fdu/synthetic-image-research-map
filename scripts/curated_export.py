@@ -228,6 +228,14 @@ def normalize_institution(value: Any) -> str:
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
 
 
+def normalize_author_name(value: Any) -> str:
+    text = unicodedata.normalize("NFKC", clean(value)).casefold()
+    if "," in text:
+        family, given = text.split(",", 1)
+        text = f"{given} {family}"
+    return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+
+
 def normalize_regional_location(
     record: Mapping[str, Any],
 ) -> Dict[str, Any]:
@@ -639,6 +647,9 @@ def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
         "institution_authors": _parse_people(
             mapping.get("institution_authors")
         ),
+        "institution_author_ids": _parse_people(
+            mapping.get("institution_author_ids")
+        ),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
         "evidence_source": clean(mapping.get("evidence_source")),
         "evidence_url": clean(mapping.get("evidence_url")),
@@ -746,6 +757,9 @@ def _curated_marker(
         "institution_id": stable_institution_id(mapping.get("institution")),
         "institution_authors": _parse_people(
             mapping.get("institution_authors")
+        ),
+        "institution_author_ids": _parse_people(
+            mapping.get("institution_author_ids")
         ),
         "country": clean(location.get("country")),
         "country_code": clean(location.get("country_code")),
@@ -1042,6 +1056,42 @@ def _remove_overridden_markers(
     return removed
 
 
+def _is_explicit_supplemental_public_evidence(
+    record: Mapping[str, Any],
+) -> bool:
+    return (
+        clean(record.get("public_evidence_mode")).casefold() == "add"
+        and clean(record.get("public_evidence_approval")).casefold()
+        == "explicit_admin_supplement"
+    )
+
+
+def _suppress_default_public_markers_for_active_mappings(
+    map_records: List[Dict[str, Any]],
+    papers: Sequence[Mapping[str, Any]],
+) -> int:
+    paper_keys = {
+        key
+        for paper in papers
+        for key in normalize_paper_identity_keys(paper)
+    }
+    kept = []
+    removed = 0
+    for marker in map_records:
+        matches_paper = bool(
+            paper_keys & set(normalize_paper_identity_keys(marker))
+        )
+        if (
+            matches_paper
+            and not _is_explicit_supplemental_public_evidence(marker)
+        ):
+            removed += 1
+            continue
+        kept.append(marker)
+    map_records[:] = kept
+    return removed
+
+
 def _recalculate_paper_details(
     paper: MutableMapping[str, Any],
     map_records: Sequence[Mapping[str, Any]],
@@ -1066,6 +1116,7 @@ def _recalculate_paper_details(
         for mapping in visible_mappings
         if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
     ]
+    effective_mappings = active_mappings or visible_mappings
     missing_coordinates = (
         not has_map_location
         and any(
@@ -1107,14 +1158,14 @@ def _recalculate_paper_details(
         )
     )
     paper["curated_mappings"] = [
-        _mapping_public_fields(mapping) for mapping in visible_mappings
+        _mapping_public_fields(mapping) for mapping in effective_mappings
     ]
     current_authors = _parse_people(paper.get("authors"))
     mapping_authors = []
-    for mapping in visible_mappings:
+    for mapping in effective_mappings:
         for author in _parse_people(mapping.get("institution_authors")):
-            if normalize_institution(author) not in {
-                normalize_institution(value) for value in mapping_authors
+            if normalize_author_name(author) not in {
+                normalize_author_name(value) for value in mapping_authors
             }:
                 mapping_authors.append(author)
     if len(current_authors) == 1:
@@ -1133,7 +1184,19 @@ def _recalculate_paper_details(
         paper["authors"] = mapping_authors
     affiliations = []
     author_affiliations: Dict[str, Dict[str, Any]] = {}
-    for index, mapping in enumerate(visible_mappings, start=1):
+    affiliation_sources: List[Mapping[str, Any]] = list(effective_mappings)
+    mapped_institution_keys = {
+        normalize_institution(mapping.get("institution"))
+        for mapping in effective_mappings
+    }
+    affiliation_sources.extend(
+        marker
+        for marker in markers
+        if _is_explicit_supplemental_public_evidence(marker)
+        and normalize_institution(marker.get("institution"))
+        not in mapped_institution_keys
+    )
+    for index, mapping in enumerate(affiliation_sources, start=1):
         institution = clean(mapping.get("institution"))
         institution_id = stable_institution_id(institution)
         mapping_authors = _parse_people(mapping.get("institution_authors"))
@@ -1146,7 +1209,7 @@ def _recalculate_paper_details(
             }
         )
         for author in mapping_authors:
-            author_key = normalize_institution(author)
+            author_key = normalize_author_name(author)
             values = author_affiliations.setdefault(
                 author_key,
                 {
@@ -1279,24 +1342,35 @@ def integrate_curated_records(
         processed_cache_records,
         institution_aliases,
     )
+    active_mapping_papers: List[Mapping[str, Any]] = []
+    for mapping in mappings:
+        if clean(mapping.get("mapping_status")) != ACTIVE_MAPPING_STATUS:
+            continue
+        active_mapping_papers.extend(_matching_papers(mapping, paper_index))
+    active_mapping_papers = list(
+        {id(paper): paper for paper in active_mapping_papers}.values()
+    )
+    suppressed_public_markers = (
+        _suppress_default_public_markers_for_active_mappings(
+            maps, active_mapping_papers
+        )
+    )
     replaced_markers = 0
     for marker in marker_records:
-        matching = _matching_papers(marker, paper_index)
-        if not matching:
+        matching_papers = _matching_papers(marker, paper_index)
+        if not matching_papers:
             continue
-        paper = matching[0]
+        paper = matching_papers[0]
         replaced_markers += _remove_overridden_markers(
             maps, paper, marker.get("institution")
         )
         maps.append(marker)
-        affected_papers.append(paper)
+        affected_papers.extend(matching_papers)
 
     for mapping in mappings:
         if clean(mapping.get("mapping_status")) not in VISIBLE_MAPPING_STATUSES:
             continue
-        matching = _matching_papers(mapping, paper_index)
-        if matching:
-            affected_papers.append(matching[0])
+        affected_papers.extend(_matching_papers(mapping, paper_index))
 
     seen = set()
     for paper in affected_papers:
@@ -1325,4 +1399,5 @@ def integrate_curated_records(
         "curated_papers_added": added,
         "curated_papers_merged": merged,
         "curated_markers_replaced": replaced_markers,
+        "stale_public_markers_suppressed": suppressed_public_markers,
     }
