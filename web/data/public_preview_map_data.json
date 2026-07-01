@@ -2932,6 +2932,57 @@
       "resolution_confidence": "high",
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex authorship/affiliation candidate; verify the author, institution, and location manually. | Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | key-paper checklist export attempt",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:e80b94c605da24ce",
+          "institution": "Sungkyunkwan University",
+          "authors": [
+            "Hyeonseong Jeon",
+            "Youngoh Bang",
+            "Junyaub Kim",
+            "Simon S. Woo"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Hyeonseong Jeon",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ]
+        },
+        {
+          "author": "Youngoh Bang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ]
+        },
+        {
+          "author": "Junyaub Kim",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ]
+        },
+        {
+          "author": "Simon S. Woo",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ]
+        }
+      ],
       "institution_id": "institution:e80b94c605da24ce"
     },
     {
@@ -35685,6 +35736,136 @@
       ]
     },
     {
+      "id": "curated-map:01a82e06536e4e4b04f6",
+      "paper_id": "curated:19c7b91816312d2877c9",
+      "title": "Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "",
+      "venue_name": "",
+      "publication_type": "article",
+      "abstract": "High-quality artificially generated images are widely available now and increasingly realistic, posing challenges for image forensics in distinguishing them from real ones. Unfortunately, building a single detector that generalizes well to unseen generators is very difficult, creating the need for diverse cues. In this paper, we show that natural and synthetic images differ in their color statistics, possibly due to the widely used perceptual loss, which is more sensitive to brightness than to chroma differences. Consequently, color statistics offer valuable cues for forensic analysis and the development of robust detectors. Our experiments using simple hand-crafted color functions with a random forest achieve 91% accuracy averaged over all tested Diffusion Models, even with limited training samples.",
+      "abstract_source": "openalex",
+      "doi": "10.1145/3658664.3659652",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1145/3658664.3659652",
+      "primary_url": "https://doi.org/10.1145/3658664.3659652",
+      "openalex_url": "https://openalex.org/W4399556631",
+      "url": "https://doi.org/10.1145/3658664.3659652",
+      "authors": [
+        "Lea Uhlenbrock",
+        "Davide Cozzolino",
+        "Denise Moussa",
+        "Luisa Verdoliva",
+        "Christian Riess"
+      ],
+      "institution": "University of Naples Federico II",
+      "institution_id": "institution:d046d2c57bb3a863",
+      "institution_authors": [
+        "Davide Cozzolino",
+        "Luisa Verdoliva"
+      ],
+      "country": "Italy",
+      "country_code": "IT",
+      "region": "Campania",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Naples",
+      "latitude": 40.8463,
+      "longitude": 14.2572,
+      "lat": 40.8463,
+      "lon": 14.2572,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:45e9778ff31af0a2c84c",
+      "raw_affiliation": "Università degli Studi di Napoli Federico II, Naples, Italy",
+      "evidence_source": "PDF",
+      "evidence_url": "https://dl.acm.org/doi/10.1145/3658664.3659652",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://www.international.unina.it/contacts/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Università degli Studi di Napoli Federico II, Naples, Italy | Evidence source: PDF | Evidence URL: https://dl.acm.org/doi/10.1145/3658664.3659652 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:73bb0fe265f6e090",
+          "institution": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+          "authors": [
+            "Lea Uhlenbrock",
+            "Denise Moussa",
+            "Christian Riess"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "authors": [
+            "Davide Cozzolino",
+            "Luisa Verdoliva"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Lea Uhlenbrock",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:73bb0fe265f6e090"
+          ]
+        },
+        {
+          "author": "Denise Moussa",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:73bb0fe265f6e090"
+          ]
+        },
+        {
+          "author": "Christian Riess",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:73bb0fe265f6e090"
+          ]
+        },
+        {
+          "author": "Davide Cozzolino",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:d046d2c57bb3a863"
+          ]
+        },
+        {
+          "author": "Luisa Verdoliva",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:d046d2c57bb3a863"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:c84b8d19bd23ccd93b6a",
       "paper_id": "curated:87ef976b546206fde199",
       "title": "DistilDIRE: A Small, Fast, Cheap and Lightweight Diffusion Synthesized Deepfake Detection",
@@ -35744,6 +35925,154 @@
       "resolution_confidence": "high",
       "needs_review": false,
       "notes": "Raw affiliation: Department of Computer Science and Engineering, Yonsei University, Seoul, Republic of Korea | Evidence URL: https://arxiv.org/pdf/2406.00856 | Review note: Manually confirmed from the paper PDF affiliation section. Department of Computer Science and Engineering is located at Yonsei University's Seoul/Sinchon campus.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:42992b97b8e05dd4",
+          "institution": "Yonsei University, Sinchon Campus",
+          "authors": [
+            "Yewon Lim",
+            "Changyeon Lee"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:90b589325857dff0",
+          "institution": "Purdue University",
+          "authors": [
+            "Yewon Lim",
+            "Changyeon Lee"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:a1b609b0fc5c2e23",
+          "institution": "Miraflow",
+          "authors": [
+            "Yewon Lim",
+            "Changyeon Lee",
+            "Aerin Kim"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:2592e804f95fa542",
+          "institution": "TrueMedia.org",
+          "authors": [
+            "Aerin Kim",
+            "Oren Etzioni"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yewon Lim",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:42992b97b8e05dd4",
+            "institution:90b589325857dff0",
+            "institution:a1b609b0fc5c2e23"
+          ]
+        },
+        {
+          "author": "Changyeon Lee",
+          "institution_indices": [
+            1,
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:42992b97b8e05dd4",
+            "institution:90b589325857dff0",
+            "institution:a1b609b0fc5c2e23"
+          ]
+        },
+        {
+          "author": "Aerin Kim",
+          "institution_indices": [
+            3,
+            4
+          ],
+          "institution_ids": [
+            "institution:a1b609b0fc5c2e23",
+            "institution:2592e804f95fa542"
+          ]
+        },
+        {
+          "author": "Oren Etzioni",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:2592e804f95fa542"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:24eedf113451f6ea672a",
+      "paper_id": "curated:87ef976b546206fde199",
+      "title": "DistilDIRE: A Small, Fast, Cheap and Lightweight Diffusion Synthesized Deepfake Detection",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "arXiv (Cornell University)",
+      "venue_name": "arXiv (Cornell University)",
+      "publication_type": "preprint",
+      "abstract": "A dramatic influx of diffusion-generated images has marked recent years, posing unique challenges to current detection technologies. While the task of identifying these images falls under binary classification, a seemingly straightforward category, the computational load is significant when employing the \"reconstruction then compare\" technique. This approach, known as DIRE (Diffusion Reconstruction Error), not only identifies diffusion-generated images but also detects those produced by GANs, highlighting the technique's broad applicability. To address the computational challenges and improve efficiency, we propose distilling the knowledge embedded in diffusion models to develop rapid deepfake detection models. Our approach, aimed at creating a small, fast, cheap, and lightweight diffusion synthesized deepfake detector, maintains robust performance while significantly reducing operational demands. Maintaining performance, our experimental results indicate an inference speed 3.2 times faster than the existing DIRE framework. This advance not only enhances the practicality of deploying these systems in real-world settings but also paves the way for future research endeavors that seek to leverage diffusion model knowledge.",
+      "abstract_source": "openalex",
+      "doi": "10.48550/arxiv.2406.00856",
+      "arxiv_id": "2406.00856",
+      "arxiv_url": "https://arxiv.org/abs/2406.00856",
+      "has_arxiv_version": true,
+      "paper_url": "http://arxiv.org/abs/2406.00856",
+      "primary_url": "http://arxiv.org/abs/2406.00856",
+      "openalex_url": "https://openalex.org/W4399399328",
+      "url": "http://arxiv.org/abs/2406.00856",
+      "authors": [
+        "Yewon Lim",
+        "Changyeon Lee",
+        "Aerin Kim",
+        "Oren Etzioni"
+      ],
+      "institution": "Purdue University",
+      "institution_id": "institution:90b589325857dff0",
+      "institution_authors": [
+        "Yewon Lim",
+        "Changyeon Lee"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Indiana",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "West Lafayette",
+      "latitude": 40.4237,
+      "longitude": -86.9212,
+      "lat": 40.4237,
+      "lon": -86.9212,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:124455beaf0fbdac0e07",
+      "raw_affiliation": "Computer and Information Technology, Purdue University, West Lafayette, IN, United States",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2406.00856",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://www.purdue.edu/home/contact-us/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Computer and Information Technology, Purdue University, West Lafayette, IN, United States | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2406.00856 | Review note: Manually confirmed from the paper PDF affiliation section.",
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -37028,6 +37357,278 @@
       ]
     },
     {
+      "id": "curated-map:a1affc963366afe082ca",
+      "paper_id": "curated:0b2081f70faaf81278dc",
+      "title": "Organic or Diffused: Can We Distinguish Human Art from AI-generated Images?",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "Knowledge@UChicago (University of Chicago)",
+      "venue_name": "Knowledge@UChicago (University of Chicago)",
+      "publication_type": "article",
+      "abstract": "The advent of generative AI images has completely disrupted the art world. Distinguishing AI generated images from human art is a challenging problem whose impact is growing over time. A failure to address this problem allows bad actors to defraud individuals paying a premium for human art and companies whose stated policies forbid AI imagery. It is also critical for content owners to establish copyright, and for model trainers interested in curating training data in order to avoid potential model collapse. There are several different approaches to distinguishing human art from AI images, including classifiers trained by supervised learning, research tools targeting diffusion models, and identification by professional artists using their knowledge of artistic techniques. In this paper, we seek to understand how well these approaches can perform against today's modern generative models in both benign and adversarial settings. We curate real human art across 7 styles, generate matching images from 5 generative models, and apply 8 detectors (5 automated detectors and 3 different human groups including 180 crowdworkers, 3800+ professional artists, and 13 expert artists experienced at detecting AI). Both Hive and expert artists do very well, but make mistakes in different ways (Hive is weaker against adversarial perturbations while Expert artists produce higher false positives). We believe these weaknesses will persist, and argue that a combination of human and automated detectors provides the best combination of accuracy and robustness.",
+      "abstract_source": "openalex",
+      "doi": "10.1145/3658644.3670306",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1145/3658644.3670306",
+      "primary_url": "https://doi.org/10.1145/3658644.3670306",
+      "openalex_url": "https://openalex.org/W4405181141",
+      "url": "https://doi.org/10.1145/3658644.3670306",
+      "authors": [
+        "Anna Yoo Jeong Ha, Josephine Passananti, Ronik Bhaskar, Shawn Shan, Reid Southen, Haitao Zheng, Ben Y. Zhao"
+      ],
+      "institution": "University of Chicago",
+      "institution_id": "institution:7d7f56dced000a09",
+      "institution_authors": [
+        "Anna Yoo Jeong Ha",
+        "Josephine Passananti",
+        "Ronik Bhaskar",
+        "Shawn Shan",
+        "Haitao Zheng",
+        "Ben Y. Zhao"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Illinois",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Chicago",
+      "latitude": 41.7897,
+      "longitude": -87.5997,
+      "lat": 41.7897,
+      "lon": -87.5997,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:9d901bfed4e78dedd3b5",
+      "raw_affiliation": "University of Chicago, Chicago, IL, USA",
+      "evidence_source": "PDF",
+      "evidence_url": "https://dl.acm.org/doi/10.1145/3658644.3670306",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://www.uchicago.edu/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: University of Chicago, Chicago, IL, USA | Evidence source: PDF | Evidence URL: https://dl.acm.org/doi/10.1145/3658644.3670306 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:7d7f56dced000a09",
+          "institution": "University of Chicago",
+          "authors": [
+            "Anna Yoo Jeong Ha",
+            "Josephine Passananti",
+            "Ronik Bhaskar",
+            "Shawn Shan",
+            "Haitao Zheng",
+            "Ben Y. Zhao"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Anna Yoo Jeong Ha",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:7d7f56dced000a09"
+          ]
+        },
+        {
+          "author": "Josephine Passananti",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:7d7f56dced000a09"
+          ]
+        },
+        {
+          "author": "Ronik Bhaskar",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:7d7f56dced000a09"
+          ]
+        },
+        {
+          "author": "Shawn Shan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:7d7f56dced000a09"
+          ]
+        },
+        {
+          "author": "Haitao Zheng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:7d7f56dced000a09"
+          ]
+        },
+        {
+          "author": "Ben Y. Zhao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:7d7f56dced000a09"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:0a0fdc5a8a3277b59027",
+      "paper_id": "curated:b286f4a33839eed35258",
+      "title": "Shadows Don't Lie and Lines Can't Bend! Generative Models Don't know Projective Geometry…for Now",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "method",
+      "venue": "",
+      "venue_name": "",
+      "publication_type": "article",
+      "abstract": "Generative models can produce impressively realistic images. This paper demonstrates that generated images have geometric features different from those of real images. We build a set of collections of generated images, prequalified to fool simple, signal-based classifiers into believing they are real. We then show that prequalified generated images can be identified reliably by classifiers that only look at geometric properties. We use three such classifiers. All three classifiers are denied access to image pixels, and look only at derived geometric features. The first classifier looks at the perspective field of the image, the second looks at lines detected in the image, and the third looks at relations between detected objects and shadows. Our procedure detects generated images more reliably than SOTA local signal based detectors, for images from a number of distinct generators. Saliency maps suggest that the classifiers can identify geometric problems reliably. We conclude that current generators cannot reliably reproduce geometric properties of real images.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/cvpr52733.2024.02658",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/cvpr52733.2024.02658",
+      "primary_url": "https://doi.org/10.1109/cvpr52733.2024.02658",
+      "openalex_url": "https://openalex.org/W4402754249",
+      "url": "https://doi.org/10.1109/cvpr52733.2024.02658",
+      "authors": [
+        "Ayush Sarkar, Hanlin Mai, Amitabh Mahapatra, Svetlana Lazebnik, David Forsyth, Anand Bhattad"
+      ],
+      "institution": "University of Illinois Urbana-Champaign",
+      "institution_id": "institution:bf3ddd5552577ff0",
+      "institution_authors": [
+        "Ayush Sarkar",
+        "Hanlin Mai",
+        "Amitabh Mahapatra",
+        "Svetlana Lazebnik",
+        "D.A. Forsyth"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Illinois",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Urbana",
+      "latitude": 40.1095,
+      "longitude": -88.2272,
+      "lat": 40.1095,
+      "lon": -88.2272,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:f0371b34ab032286200d",
+      "raw_affiliation": "",
+      "evidence_source": "PDF",
+      "evidence_url": "https://ieeexplore.ieee.org/document/10658385",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://illinois.edu/contacts/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Evidence source: PDF | Evidence URL: https://ieeexplore.ieee.org/document/10658385 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:bf3ddd5552577ff0",
+          "institution": "University of Illinois Urbana-Champaign",
+          "authors": [
+            "Ayush Sarkar",
+            "Hanlin Mai",
+            "Amitabh Mahapatra",
+            "Svetlana Lazebnik",
+            "D.A. Forsyth"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:386b7a411f4a3220",
+          "institution": "Toyota Technological Institute at Chicago",
+          "authors": [
+            "Anand Bhattad"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Ayush Sarkar",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Hanlin Mai",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Amitabh Mahapatra",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Svetlana Lazebnik",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "D.A. Forsyth",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bf3ddd5552577ff0"
+          ]
+        },
+        {
+          "author": "Anand Bhattad",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:386b7a411f4a3220"
+          ]
+        }
+      ]
+    },
+    {
       "id": "curated-map:c339f8bd4ffbcaada177",
       "paper_id": "curated:b1977dc0fcca329719f0",
       "title": "Towards the Detection of Diffusion Model Deepfakes",
@@ -37385,6 +37986,198 @@
           ],
           "institution_ids": [
             "institution:5a73fc9b412db6f4"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:319fdde1a1ac93153f76",
+      "paper_id": "curated:07ee620b8169b67b900f",
+      "title": "Does a GAN leave distinct model-specific fingerprints?",
+      "in_scope": true,
+      "year": 2021,
+      "publication_year": 2021,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "",
+      "venue_name": "",
+      "publication_type": "article",
+      "abstract": "",
+      "abstract_source": "openalex",
+      "doi": "10.5244/c.35.53",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.5244/c.35.53",
+      "primary_url": "https://doi.org/10.5244/c.35.53",
+      "openalex_url": "https://openalex.org/W4411245244",
+      "url": "https://doi.org/10.5244/c.35.53",
+      "authors": [
+        "Yuzhen Ding",
+        "Nupur Thakur",
+        "Baoxin Li"
+      ],
+      "institution": "Arizona State University",
+      "institution_id": "institution:ac7aeed6b85a0a40",
+      "institution_authors": [
+        "Yuzhen Ding",
+        "Nupur Thakur",
+        "Baoxin Li"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Arizona",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Tempe",
+      "latitude": 33.4215,
+      "longitude": -111.9332,
+      "lat": 33.4215,
+      "lon": -111.9332,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:0fe9617de122773e1c25",
+      "raw_affiliation": "Ira A. Fulton Schools of Engineering, Arizona State University, 699 S Mill Ave, Tempe, AZ 85281",
+      "evidence_source": "PDF",
+      "evidence_url": "https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/0197.pdf",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://www.asu.edu/about/contact",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Ira A. Fulton Schools of Engineering, Arizona State University, 699 S Mill Ave, Tempe, AZ 85281 | Evidence source: PDF | Evidence URL: https://www.bmva-archive.org.uk/bmvc/2021/assets/papers/0197.pdf | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:ac7aeed6b85a0a40",
+          "institution": "Arizona State University",
+          "authors": [
+            "Yuzhen Ding",
+            "Nupur Thakur",
+            "Baoxin Li"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yuzhen Ding",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ac7aeed6b85a0a40"
+          ]
+        },
+        {
+          "author": "Nupur Thakur",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ac7aeed6b85a0a40"
+          ]
+        },
+        {
+          "author": "Baoxin Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ac7aeed6b85a0a40"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:f5ea1c7c2d0cbd15646e",
+      "paper_id": "curated:af47c4b83dfd43175a4a",
+      "title": "Attributing and Detecting Fake Images Generated by Known GANs",
+      "in_scope": true,
+      "year": 2020,
+      "publication_year": 2020,
+      "publication_date": "",
+      "task": "detection_and_source_attribution",
+      "subtask": "detection_and_source_attribution",
+      "entry_type": "method",
+      "venue": "",
+      "venue_name": "",
+      "publication_type": "article",
+      "abstract": "The quality of GAN-generated fake images has improved significantly, and recent GAN approaches, such as StyleGAN, achieve near indistinguishability from real images for the naked eye. As a result, adversaries are attracted to using GAN-generated fake images for disinformation campaigns and fraud on social networks. However, training an image generation network to produce realistic-looking samples remains a time-consuming and difficult problem, so adversaries are more likely to use published GAN models to generate fake images. In this paper, we analyze the frequency domain to attribute and detect fake images generated by a known GAN model. We derive a similarity metric on the frequency domain and develop a new approach for GAN image attribution. We conduct experiments on four trained GAN models and two real image datasets. Our results show high attribution accuracy against real images and those from other GAN models. We further analyze our method under evasion attempts and find the frequency-based approach is comparatively robust. In this paper, we analyze the frequency domain to attribute and detect fake images generated by a known GAN model. We derive a similarity metric on the frequency domain and develop a new approach for GAN image attribution. We conduct experiments on four trained GAN models and two real image datasets. Our results show high attribution accuracy against real images and those from other GAN models. We further analyze our method under evasion attempts and find the frequency-based approach is comparatively robust.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/spw50608.2020.00019",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/spw50608.2020.00019",
+      "primary_url": "https://doi.org/10.1109/spw50608.2020.00019",
+      "openalex_url": "https://openalex.org/W3117441857",
+      "url": "https://doi.org/10.1109/spw50608.2020.00019",
+      "authors": [
+        "Matthew Joslin",
+        "Shuang Hao"
+      ],
+      "institution": "University of Texas at Dallas",
+      "institution_id": "institution:a55a77635edc8711",
+      "institution_authors": [
+        "Matthew Joslin",
+        "Shuang Hao"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Texas",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Richardson",
+      "latitude": 32.9858,
+      "longitude": -96.7501,
+      "lat": 32.9858,
+      "lon": -96.7501,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:5958624e4e80750d8bef",
+      "raw_affiliation": "",
+      "evidence_source": "PDF",
+      "evidence_url": "https://ieeexplore.ieee.org/document/9283853",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://www.utdallas.edu/about-us/contact-location/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Evidence source: PDF | Evidence URL: https://ieeexplore.ieee.org/document/9283853 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:a55a77635edc8711",
+          "institution": "University of Texas at Dallas",
+          "authors": [
+            "Matthew Joslin",
+            "Shuang Hao"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Matthew Joslin",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a55a77635edc8711"
+          ]
+        },
+        {
+          "author": "Shuang Hao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a55a77635edc8711"
           ]
         }
       ]
@@ -39736,6 +40529,201 @@
       "resolution_confidence": "high",
       "needs_review": false,
       "notes": "Raw affiliation: Department of Computer and Information Technology, Purdue University, West Lafayette, IN 47907, USA | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2402.00045 | Review note: Manually confirmed from the paper PDF affiliation section.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:90b589325857dff0",
+          "institution": "Purdue University",
+          "authors": [
+            "Li Lin",
+            "Neeraj Gupta",
+            "Shu Hu"
+          ]
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:74eb5a7db0242865",
+          "institution": "Nanchang University",
+          "authors": [
+            "Yue Zhang",
+            "Feng Ding"
+          ]
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:284bfcf10a3b1ebf",
+          "institution": "Amazon Prime Video",
+          "authors": [
+            "Chun-Hao Liu"
+          ]
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:7506c126bc077e9b",
+          "institution": "University at Albany, SUNY",
+          "authors": [
+            "Xin Wang",
+            "Xin Li"
+          ]
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "authors": [
+            "Luisa Verdoliva"
+          ]
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Li Lin",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:90b589325857dff0"
+          ]
+        },
+        {
+          "author": "Neeraj Gupta",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:90b589325857dff0"
+          ]
+        },
+        {
+          "author": "Shu Hu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:90b589325857dff0"
+          ]
+        },
+        {
+          "author": "Yue Zhang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:74eb5a7db0242865"
+          ]
+        },
+        {
+          "author": "Feng Ding",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:74eb5a7db0242865"
+          ]
+        },
+        {
+          "author": "Chun-Hao Liu",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:284bfcf10a3b1ebf"
+          ]
+        },
+        {
+          "author": "Xin Wang",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:7506c126bc077e9b"
+          ]
+        },
+        {
+          "author": "Xin Li",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:7506c126bc077e9b"
+          ]
+        },
+        {
+          "author": "Luisa Verdoliva",
+          "institution_indices": [
+            5
+          ],
+          "institution_ids": [
+            "institution:d046d2c57bb3a863"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "curated-map:340e86a93668e1bc01e3",
+      "paper_id": "",
+      "title": "Detecting Multimedia Generated by Large AI Models: A Survey",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "2024-02-06",
+      "task": "detection",
+      "subtask": "synthetic_image_detection",
+      "entry_type": "survey",
+      "venue": "Authorea, Inc.",
+      "venue_name": "Authorea, Inc.",
+      "publication_type": "preprint",
+      "abstract": "The rapid advancement of Large AI Models (LAIMs), particularly diffusion models and large language models, has marked a new era where AI-generated multimedia is increasingly integrated into various aspects of daily life. Although beneficial in numerous fields, this content presents significant risks, including potential misuse, societal disruptions, and ethical concerns. Consequently, detecting multimedia generated by LAIMs has become crucial, with a marked rise in related research. Despite this, there remains a notable gap in systematic surveys that focus specifically on detecting LAIM-generated multimedia. Addressing this, we provide the first survey to comprehensively cover existing research on detecting multimedia (such as text, images, videos, audio, and multimodal content) created by LAIMs. Specifically, we introduce a novel taxonomy for detection methods, categorized by media modality, and aligned with two perspectives: pure detection (aiming to enhance detection performance) and beyond detection (adding attributes like generalizability, robustness, and interpretability to detectors). Additionally, we have presented a brief overview of generation mechanisms, public datasets, and online detection tools to provide a valuable resource for researchers and practitioners in this field. Furthermore, we identify current challenges in detection and propose directions for future research that address unexplored, ongoing, and emerging issues in detecting multimedia generated by LAIMs. Our aim for this survey is to fill an academic gap and contribute to global AI security efforts, helping to ensure the integrity of information in the digital realm. The project link is https://github.com/Purdue-M2/Detect-LAIM-generated-Multimedia-Survey.",
+      "abstract_source": "OpenAlex local raw cache",
+      "doi": "10.36227/techrxiv.170723324.44685515/v1",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.36227/techrxiv.170723324.44685515/v1",
+      "primary_url": "https://doi.org/10.36227/techrxiv.170723324.44685515/v1",
+      "openalex_url": "https://openalex.org/W4391563741",
+      "url": "https://doi.org/10.36227/techrxiv.170723324.44685515/v1",
+      "authors": [
+        "Li Lin",
+        "Neeraj Gupta",
+        "Yue Zhang",
+        "Hainan Ren",
+        "Chun-Hao Liu",
+        "Feng Ding",
+        "Xin Wang",
+        "Xin Li",
+        "Luisa Verdoliva",
+        "Shu Hu"
+      ],
+      "institution": "University of Naples Federico II",
+      "institution_id": "institution:d046d2c57bb3a863",
+      "institution_authors": [
+        "Luisa Verdoliva"
+      ],
+      "country": "Italy",
+      "country_code": "IT",
+      "region": "Campania",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Naples",
+      "latitude": 40.8463,
+      "longitude": 14.2572,
+      "lat": 40.8463,
+      "lon": 14.2572,
+      "source_database": "curated",
+      "metadata_source": "",
+      "curation_status": "",
+      "mapping_id": "mapping:bbda6216b8a09f39bef2",
+      "raw_affiliation": "Department of Electrical Engineering and Information Technology, University Federico II of Naples, Naples 80125, Italy",
+      "evidence_source": "PDF",
+      "evidence_url": "https://arxiv.org/pdf/2402.00045",
+      "coordinate_source": "Official institution page + map coordinate check",
+      "coordinate_source_url": "https://www.international.unina.it/contacts/",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Department of Electrical Engineering and Information Technology, University Federico II of Naples, Naples 80125, Italy | Evidence source: PDF | Evidence URL: https://arxiv.org/pdf/2402.00045 | Review note: Manually confirmed from the paper PDF affiliation section.",
       "author_institution_affiliations": [
         {
           "index": 1,
