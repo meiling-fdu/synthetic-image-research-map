@@ -793,6 +793,13 @@ input:disabled {
   font-weight: 800;
 }
 
+.paper-author.is-active-institution-author,
+.paper-current-institution.is-active,
+.is-hover-author,
+.is-hover-institution .affiliation-institution {
+  font-weight: 800;
+}
+
 .current-affiliation-number {
   margin-right: 4px;
   margin-left: 0;

@@ -32,6 +32,7 @@ try:
         load_institution_aliases,
         load_location_review_queue,
         save_location_review_queue,
+        stable_institution_id,
     )
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -79,6 +80,7 @@ except ImportError:  # Direct execution from the scripts directory.
         load_institution_aliases,
         load_location_review_queue,
         save_location_review_queue,
+        stable_institution_id,
     )
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -1827,6 +1829,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 integrated_maps, review_decisions
             )
         )
+        for record in integrated_maps:
+            record["institution_id"] = (
+                clean_text(record.get("institution_id"))
+                or stable_institution_id(
+                    record.get("canonical_institution_name")
+                    or record.get("institution_name")
+                    or record.get("institution")
+                )
+            )
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         summary["preprint_version_records_excluded"] += (

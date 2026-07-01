@@ -467,6 +467,33 @@ def validate_mapping_evidence(
                 )
 
 
+def validate_paper_mapping_coverage(
+    papers: Sequence[Mapping[str, str]],
+    mappings: Sequence[Mapping[str, str]],
+    issues: List[Issue],
+) -> None:
+    eligible_statuses = {"active", "needs_review"}
+    mapping_paper_ids = {
+        clean(row.get("paper_id"))
+        for row in mappings
+        if clean(row.get("mapping_status")) in eligible_statuses
+        and clean(row.get("paper_id"))
+    }
+    for row_number, paper in enumerate(papers, start=2):
+        if clean(paper.get("scope_status")) == "out_of_scope":
+            continue
+        paper_id = clean(paper.get("paper_id"))
+        if paper_id and paper_id not in mapping_paper_ids:
+            add_issue(
+                issues,
+                "WARNING",
+                "papers.csv",
+                "in-scope paper has no active or needs_review "
+                "author–institution mapping",
+                row_number,
+            )
+
+
 def validate_confirmed_locations(
     rows: Sequence[Mapping[str, str]],
     issues: List[Issue],
@@ -777,6 +804,7 @@ def main() -> int:
             )
     validate_references(datasets, issues)
     validate_mapping_evidence(mappings, issues)
+    validate_paper_mapping_coverage(papers, mappings, issues)
     validate_confirmed_locations(confirmed_locations, issues)
     confirmed_by_name = {}
     for row in confirmed_locations:

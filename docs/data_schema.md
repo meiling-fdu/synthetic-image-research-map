@@ -438,6 +438,12 @@ One row represents a specific author-institution affiliation on a specific paper
 
 Affiliation is a property of an author's relationship to a particular paper, not a permanent property of either the author or paper. Researchers move between institutions, papers can have many authors, and one author can list several affiliations on the same paper. Paper-level or first-author-only locations would discard this information and misrepresent collaboration geography. Relationship-level records preserve every reported affiliation, author order, corresponding-author status, and original affiliation text while supporting accurate institution and map views. Map exports create a marker for every affiliated institution with usable coordinates, but every marker reuses the same paper-level `authors_ordered` list and separately derives `institution_authors`. Both fields follow original paper order. Institution grouping never sorts, groups, or truncates the full display author list, and it does not replace or collapse the underlying relationship rows.
 
+## Curated author–institution mapping evidence
+
+`data/curated/author_institution_mappings.csv` keeps the reviewable paper-level grouping used by the admin and exporter. In addition to the canonical `institution` and `institution_authors`, imported candidates preserve `author_order`, `raw_affiliation`, `openalex_institution_id`, source city/country/latitude/longitude, and `provenance_source`. Missing coordinates never remove a candidate. Unmatched institutions use `mapping_status=needs_review`; confirmed canonical or alias matches may use `active`.
+
+Public paper records expose `author_institution_affiliations` (numbered institution groups) and `author_institution_indices` (author-to-index and stable institution-ID relationships). Public marker records expose `institution_id`; the frontend falls back to a normalized canonical institution name only for legacy records.
+
 ## Paper Labeling
 
 Labels describe scope without collapsing related categories into one field:

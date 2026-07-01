@@ -1,9 +1,43 @@
 import unittest
 
-from scripts.curated_export import build_curated_map_records
+from scripts.curated_export import build_curated_map_records, integrate_curated_records
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_exported_paper_has_author_institution_indices(self):
+        curated_paper = {
+            "paper_id": "curated:indices",
+            "title": "Author index test",
+            "year": "2026",
+            "authors": "Ada Researcher; Ben Researcher",
+            "task": "detection",
+            "scope_status": "in_scope",
+            "review_status": "reviewed",
+        }
+        mapping = {
+            "mapping_id": "mapping:indices",
+            "paper_id": "curated:indices",
+            "institution": "Example University",
+            "institution_authors": "Ada Researcher",
+            "mapping_status": "needs_review",
+        }
+
+        papers, _maps, _reviews, _summary = integrate_curated_records(
+            [], [], [curated_paper], [mapping]
+        )
+
+        self.assertEqual(
+            papers[0]["author_institution_affiliations"][0]["index"], 1
+        )
+        self.assertEqual(
+            papers[0]["author_institution_indices"][0]["institution_indices"],
+            [1],
+        )
+        self.assertEqual(
+            papers[0]["author_institution_indices"][0]["author"],
+            "Ada Researcher",
+        )
+
     def test_processed_cache_fallback_is_not_publicly_exportable(self):
         paper = {
             "paper_id": "curated:test",

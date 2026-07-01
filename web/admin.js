@@ -15,6 +15,7 @@ const state = {
   dashboard: {},
   reviewQueues: {},
   paperMetadata: null,
+  draftMappingCandidates: [],
 };
 
 const elements = {};
@@ -54,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "paper-title",
     "paper-year",
     "paper-authors",
+    "paper-affiliations",
     "paper-venue",
     "paper-doi",
     "paper-arxiv-id",
@@ -67,6 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "paper-abstract",
     "paper-review-note",
     "paper-duplicate-warning",
+    "paper-mapping-warning",
+    "paper-acknowledge-missing-mappings",
     "paper-create-error",
     "paper-create-submit",
     "token-panel",
@@ -102,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "mapping-table-body",
     "empty-mappings",
     "mapping-panel-error",
+    "mapping-diagnostic",
     "mapping-dialog",
     "mapping-form",
     "mapping-mode",
@@ -1347,6 +1352,30 @@ function updateOpenAlexResultCount() {
 }
 
 function startPaperDraft(candidate, source) {
+  state.draftMappingCandidates = Array.isArray(candidate.mapping_candidates)
+    ? candidate.mapping_candidates
+    : [];
+  if (
+    state.draftMappingCandidates.length === 0
+    && text(candidate.institution)
+    && text(candidate.institution_authors || candidate.authors)
+  ) {
+    const sourceAuthors = candidate.institution_authors || candidate.authors;
+    state.draftMappingCandidates = [{
+      institution: text(candidate.institution),
+      institution_authors: (Array.isArray(sourceAuthors)
+        ? sourceAuthors
+        : text(sourceAuthors).split(";")
+      ).map((author) => text(author).trim()).filter(Boolean),
+      raw_affiliation: text(
+        candidate.raw_affiliation || candidate.institution,
+      ),
+      provenance_source: text(
+        candidate.evidence_source || "Manual import review",
+      ),
+      evidence_url: text(candidate.evidence_url || candidate.paper_url),
+    }];
+  }
   elements["paper-draft-form"].reset();
   elements["paper-source-database"].value = source;
   elements["paper-draft-origin"].textContent =
@@ -1358,6 +1387,7 @@ function startPaperDraft(candidate, source) {
   elements["paper-title"].value = text(candidate.title);
   elements["paper-year"].value = text(candidate.year);
   elements["paper-authors"].value = listText(candidate.authors);
+  elements["paper-affiliations"].value = "";
   elements["paper-venue"].value = text(candidate.venue);
   elements["paper-doi"].value = text(candidate.doi);
   elements["paper-arxiv-id"].value = text(candidate.arxiv_id);
@@ -1369,6 +1399,9 @@ function startPaperDraft(candidate, source) {
   elements["paper-review-status"].value =
     source === "openalex" ? "reviewed" : "pending";
   elements["paper-duplicate-warning"].hidden = true;
+  elements["paper-mapping-warning"].hidden =
+    state.draftMappingCandidates.length !== 0;
+  elements["paper-acknowledge-missing-mappings"].checked = false;
   elements["paper-create-error"].hidden = true;
   elements["paper-draft-form"].hidden = false;
   elements["paper-title"].focus();
@@ -1376,13 +1409,25 @@ function startPaperDraft(candidate, source) {
 }
 
 function cancelPaperDraft() {
+  state.draftMappingCandidates = [];
   elements["paper-draft-form"].reset();
   elements["paper-draft-form"].hidden = true;
   elements["paper-duplicate-warning"].hidden = true;
+  elements["paper-mapping-warning"].hidden = true;
   elements["paper-create-error"].hidden = true;
 }
 
 function paperDraftPayload() {
+  const manualCandidates = elements["paper-affiliations"].value
+    .split(/\r?\n/)
+    .map((line) => line.split("|").map((value) => value.trim()))
+    .filter((parts) => parts.length >= 2 && parts[0] && parts[1])
+    .map(([authors, institution, rawAffiliation = ""]) => ({
+      institution,
+      institution_authors: authors.split(";").map((author) => author.trim()).filter(Boolean),
+      raw_affiliation: rawAffiliation || institution,
+      provenance_source: "Manual Add Paper affiliation input",
+    }));
   return {
     source_database: elements["paper-source-database"].value,
     title: elements["paper-title"].value.trim(),
@@ -1400,6 +1445,12 @@ function paperDraftPayload() {
     scope_status: elements["paper-scope-status"].value.trim(),
     review_status: elements["paper-review-status"].value,
     review_note: elements["paper-review-note"].value.trim(),
+    mapping_candidates: [
+      ...state.draftMappingCandidates,
+      ...manualCandidates,
+    ],
+    acknowledge_missing_mappings:
+      elements["paper-acknowledge-missing-mappings"].checked,
   };
 }
 
@@ -1409,9 +1460,20 @@ async function createPaper(event) {
   elements["paper-duplicate-warning"].hidden = true;
   elements["paper-create-submit"].disabled = true;
   try {
+    const draft = paperDraftPayload();
+    if (
+      draft.mapping_candidates.length === 0
+      && !draft.acknowledge_missing_mappings
+    ) {
+      elements["paper-mapping-warning"].hidden = false;
+      elements["paper-create-error"].hidden = false;
+      elements["paper-create-error"].textContent =
+        "Add author affiliation evidence or acknowledge the missing mapping.";
+      return;
+    }
     const result = await apiFetch("/api/paper/create", {
       method: "POST",
-      body: JSON.stringify(paperDraftPayload()),
+      body: JSON.stringify(draft),
     });
     showNotice(result.message);
     cancelPaperDraft();
@@ -1770,6 +1832,10 @@ function renderMappings(payload) {
   const paper = payload.paper || state.selectedPaper || {};
   const mappings = payload.curated_mappings || [];
   state.selectedMappings = mappings;
+  const diagnostic = payload.mapping_diagnostic || {};
+  elements["mapping-diagnostic"].hidden =
+    diagnostic.status !== "missing_mapping";
+  elements["mapping-diagnostic"].textContent = text(diagnostic.message);
   elements["mapping-paper-context"].textContent = [
     text(paper.title),
     paper.year || paper.publication_year,
@@ -1784,6 +1850,10 @@ function renderMappings(payload) {
     const row = document.createElement("tr");
     const evidence = [
       mapping.raw_affiliation,
+      mapping.openalex_institution_id,
+      [mapping.institution_city, mapping.institution_country].filter(Boolean).join(", "),
+      [mapping.institution_latitude, mapping.institution_longitude].filter(Boolean).join(", "),
+      mapping.provenance_source,
       mapping.evidence_source,
       mapping.evidence_url,
       mapping.affiliation_note,

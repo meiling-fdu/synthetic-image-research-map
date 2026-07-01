@@ -30,10 +30,10 @@ The data boundaries are deliberate:
 
 1. Choose **Add Paper** and search by title, DOI, arXiv ID, or paper URL.
 2. Select the correct OpenAlex result and verify every prefilled field. If no result is correct, use **Add manually instead**.
-3. Confirm the task, optional subtask, provenance, links, and review note before saving.
-4. Select the saved paper and add its author–institution mappings separately.
+3. Confirm the task, optional subtask, provenance, links, and review note before saving. OpenAlex authorships are retained as mapping candidates. For manual or arXiv-only records, enter affiliation rows as `authors | institution | raw affiliation`.
+4. Saving creates reviewable author–institution mapping candidates. Exact confirmed institution or alias matches are eligible immediately; unresolved names use `needs_review`.
 
-The paper record is written to `data/curated/papers.csv`. Saving a paper does not create affiliations, coordinates, map markers, or generated preview JSON.
+The paper record is written to `data/curated/papers.csv`, and candidates are written to `data/curated/author_institution_mappings.csv`. A paper with no affiliation evidence is blocked until the maintainer explicitly acknowledges the missing-mapping diagnostic. Saving does not invent coordinates, create markers directly, or update generated preview JSON.
 
 ## Paper Metadata Editor
 

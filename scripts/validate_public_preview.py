@@ -562,6 +562,31 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
             title,
             f"coverage_status must be one of {', '.join(sorted(allowed_statuses))}",
         )
+    if parse_boolean(record.get("missing_affiliation")) is True:
+        add_issue(
+            issues,
+            "WARNING",
+            index,
+            title,
+            "public paper has no eligible author–institution mapping; markers "
+            "and author affiliation numbers are unavailable",
+        )
+    author_indices = record.get("author_institution_indices")
+    if isinstance(author_indices, list) and author_indices:
+        indexed = {
+            normalized_text(item.get("author"))
+            for item in author_indices
+            if isinstance(item, dict) and item.get("institution_indices")
+        }
+        for author in record.get("authors") or []:
+            if normalized_text(author) not in indexed:
+                add_issue(
+                    issues,
+                    "WARNING",
+                    index,
+                    title,
+                    f"author has no institution index: {clean_text(author)}",
+                )
 
 
 def print_summary(

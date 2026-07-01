@@ -205,7 +205,16 @@ def _mapping_fields(
         **_paper_fields(paper),
         "institution": institution,
         "institution_authors": institution_authors,
+        "author_order": clean(draft.get("author_order")),
         "raw_affiliation": raw_affiliation,
+        "openalex_institution_id": clean(
+            draft.get("openalex_institution_id")
+        ),
+        "institution_city": clean(draft.get("institution_city")),
+        "institution_country": clean(draft.get("institution_country")),
+        "institution_latitude": clean(draft.get("institution_latitude")),
+        "institution_longitude": clean(draft.get("institution_longitude")),
+        "provenance_source": clean(draft.get("provenance_source")),
         "evidence_source": evidence_source,
         "evidence_url": evidence_url,
         "affiliation_note": clean(draft.get("affiliation_note")),
@@ -346,8 +355,11 @@ def _sync_location_review(
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
         "evidence_source": clean(mapping.get("evidence_source")),
         "evidence_url": clean(mapping.get("evidence_url")),
-        "suggested_city": "",
-        "suggested_country": "",
+        "suggested_city": clean(mapping.get("institution_city")),
+        "suggested_country": clean(mapping.get("institution_country")),
+        "openalex_institution_id": clean(
+            mapping.get("openalex_institution_id")
+        ),
         "review_status": "needs_coordinates",
         "location_status": "missing",
         "coordinate_status": "missing",
@@ -394,6 +406,49 @@ def create_mapping(
     if location_status in {"created", "updated"}:
         save_location_reviews(location_rows, location_review_path)
     return {"mapping": row, "location_review": location_status}
+
+
+def create_mapping_candidates(
+    paper: Mapping[str, Any],
+    drafts: Sequence[Mapping[str, Any]],
+    *,
+    map_records: Sequence[Mapping[str, Any]],
+    mappings_path: Path = DEFAULT_MAPPINGS_PATH,
+    location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
+) -> Dict[str, Any]:
+    """Atomically append all non-duplicate candidates for a newly added paper."""
+    rows = load_mappings(mappings_path)
+    location_rows = load_location_reviews(location_review_path)
+    created: List[Dict[str, str]] = []
+    location_results: List[str] = []
+    for index, draft in enumerate(drafts):
+        candidate = _mapping_fields(paper, draft)
+        duplicate = _duplicate_mapping(candidate, [*rows, *created])
+        if duplicate:
+            continue
+        now = _timestamp()
+        row = {
+            "mapping_id": _unique_mapping_id(
+                candidate, [*rows, *created], f"{now}|candidate|{index}"
+            ),
+            **candidate,
+            "created_at": now,
+            "updated_at": now,
+        }
+        created.append(row)
+        location_results.append(
+            _sync_location_review(
+                row, map_records=map_records, location_rows=location_rows
+            )
+        )
+    if created:
+        save_mappings([*rows, *created], mappings_path)
+    if any(status in {"created", "updated"} for status in location_results):
+        save_location_reviews(location_rows, location_review_path)
+    return {
+        "mappings": created,
+        "location_reviews": location_results,
+    }
 
 
 def update_mapping(

@@ -164,6 +164,10 @@
           <label class="full-width">Authors
             <textarea id="paper-authors" name="authors" rows="2" placeholder="Separate authors with semicolons"></textarea>
           </label>
+          <label class="full-width">Author affiliations
+            <textarea id="paper-affiliations" name="affiliations" rows="4" placeholder="One per line: Author 1; Author 2 | Institution | Raw affiliation text"></textarea>
+            <span class="field-help">OpenAlex candidates are prefilled automatically. For manual/arXiv records, add one line per institution.</span>
+          </label>
           <label>Venue
             <input id="paper-venue" name="venue" type="text">
           </label>
@@ -222,11 +226,16 @@
             <textarea id="paper-review-note" name="review_note" rows="3"></textarea>
           </label>
           <div class="duplicate-warning full-width" id="paper-duplicate-warning" hidden></div>
+          <div class="duplicate-warning full-width" id="paper-mapping-warning" hidden>
+            <strong>Missing author–institution mapping</strong>
+            <p>This paper cannot produce institution markers or author affiliation numbers.</p>
+            <label><input id="paper-acknowledge-missing-mappings" type="checkbox"> Save to the review queue without affiliation evidence.</label>
+          </div>
           <p class="form-error full-width" id="paper-create-error" role="alert" hidden></p>
           <div class="form-actions full-width">
             <button class="primary-button" id="paper-create-submit" type="submit">Save to curated database</button>
           </div>
-          <p class="workflow-note full-width">After saving, select the paper to curate author–institution mappings. Coordinates remain a separate review step, and saving here does not update public preview JSON.</p>
+          <p class="workflow-note full-width">Saving also creates reviewable author–institution mapping candidates. Coordinates remain a separate review step, and saving here does not update public preview JSON.</p>
         </form>
       </section>
 
@@ -453,6 +462,7 @@
                 </div>
               </div>
               <p class="mapping-paper-context" id="mapping-paper-context"></p>
+              <p class="form-error" id="mapping-diagnostic" role="status" hidden></p>
               <div class="table-wrap">
                 <table class="mapping-table">
                   <thead>

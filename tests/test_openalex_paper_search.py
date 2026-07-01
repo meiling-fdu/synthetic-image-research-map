@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch
 
 from scripts.curated_papers import normalize_paper_draft
-from scripts.openalex_paper_search import search_openalex_papers
+from scripts.openalex_paper_search import search_openalex_papers, shape_work
 from scripts.openalex_utils import normalize_title, title_similarity
 
 
@@ -31,6 +31,39 @@ def work(work_id, title, *, doi="", arxiv_id=""):
 
 
 class OpenAlexPaperSearchTests(unittest.TestCase):
+    def test_authorship_institutions_create_mapping_candidates(self):
+        candidate = work("WMAP", TITLE)
+        candidate["authorships"] = [
+            {
+                "author_position": "first",
+                "author": {"display_name": "Ada Researcher"},
+                "raw_affiliation_strings": ["Vision Lab, Example University"],
+                "institutions": [
+                    {
+                        "id": "https://openalex.org/I123",
+                        "display_name": "Example University",
+                        "country_code": "IT",
+                        "geo": {
+                            "city": "Rome",
+                            "country": "Italy",
+                            "latitude": 41.9,
+                            "longitude": 12.5,
+                        },
+                    }
+                ],
+            }
+        ]
+
+        shaped = shape_work(candidate)
+
+        self.assertEqual(len(shaped["mapping_candidates"]), 1)
+        mapping = shaped["mapping_candidates"][0]
+        self.assertEqual(mapping["institution_authors"], ["Ada Researcher"])
+        self.assertEqual(mapping["author_order"], ["first"])
+        self.assertEqual(mapping["openalex_institution_id"], "https://openalex.org/I123")
+        self.assertEqual(mapping["city"], "Rome")
+        self.assertEqual(mapping["latitude"], 41.9)
+
     def test_title_normalization_equates_typographic_variants(self):
         first = "Real-world “evaluation”—now!"
         second = "real world evaluation now."

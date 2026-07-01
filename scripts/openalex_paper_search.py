@@ -86,6 +86,93 @@ def _work_authors(work: Mapping[str, Any]) -> List[str]:
     return authors
 
 
+def _institution_geo(institution: Mapping[str, Any]) -> Dict[str, Any]:
+    geo = institution.get("geo")
+    geo = geo if isinstance(geo, dict) else {}
+    return {
+        "city": clean(geo.get("city")),
+        "country": clean(geo.get("country") or institution.get("country_code")),
+        "latitude": geo.get("latitude") if geo.get("latitude") is not None else "",
+        "longitude": geo.get("longitude") if geo.get("longitude") is not None else "",
+    }
+
+
+def _work_mapping_candidates(work: Mapping[str, Any]) -> List[Dict[str, Any]]:
+    """Group OpenAlex authorship evidence by institution without dropping gaps."""
+    grouped: Dict[str, Dict[str, Any]] = {}
+    for index, authorship in enumerate(work.get("authorships") or [], start=1):
+        if not isinstance(authorship, dict):
+            continue
+        author = authorship.get("author")
+        author_name = (
+            clean(author.get("display_name")) if isinstance(author, dict) else ""
+        )
+        raw_affiliations = [
+            clean(value)
+            for value in authorship.get("raw_affiliation_strings") or []
+            if clean(value)
+        ]
+        institutions = [
+            value
+            for value in authorship.get("institutions") or []
+            if isinstance(value, dict)
+        ]
+        if not institutions:
+            for raw_affiliation in raw_affiliations:
+                key = f"raw:{raw_affiliation.casefold()}"
+                candidate = grouped.setdefault(
+                    key,
+                    {
+                        "institution": raw_affiliation,
+                        "openalex_institution_id": "",
+                        "institution_authors": [],
+                        "author_order": [],
+                        "raw_affiliations": [],
+                        "city": "",
+                        "country": "",
+                        "latitude": "",
+                        "longitude": "",
+                        "provenance_source": (
+                            "OpenAlex raw affiliation strings"
+                        ),
+                    },
+                )
+                if author_name not in candidate["institution_authors"]:
+                    candidate["institution_authors"].append(author_name)
+                    candidate["author_order"].append(
+                        clean(authorship.get("author_position")) or str(index)
+                    )
+                if raw_affiliation not in candidate["raw_affiliations"]:
+                    candidate["raw_affiliations"].append(raw_affiliation)
+        for institution in institutions:
+            institution_name = clean(institution.get("display_name"))
+            institution_id = clean(institution.get("id"))
+            if not institution_name:
+                continue
+            key = institution_id or institution_name.casefold()
+            candidate = grouped.setdefault(
+                key,
+                {
+                    "institution": institution_name,
+                    "openalex_institution_id": institution_id,
+                    "institution_authors": [],
+                    "author_order": [],
+                    "raw_affiliations": [],
+                    **_institution_geo(institution),
+                    "provenance_source": "OpenAlex authorships",
+                },
+            )
+            if author_name and author_name not in candidate["institution_authors"]:
+                candidate["institution_authors"].append(author_name)
+                candidate["author_order"].append(
+                    clean(authorship.get("author_position")) or str(index)
+                )
+            for raw_affiliation in raw_affiliations:
+                if raw_affiliation not in candidate["raw_affiliations"]:
+                    candidate["raw_affiliations"].append(raw_affiliation)
+    return list(grouped.values())
+
+
 def _work_venue(work: Mapping[str, Any]) -> str:
     locations = [
         work.get("primary_location"),
@@ -143,6 +230,7 @@ def shape_work(work: Mapping[str, Any], query_title: str = "") -> Dict[str, Any]
         "title": title,
         "year": work.get("publication_year") or "",
         "authors": _work_authors(work),
+        "mapping_candidates": _work_mapping_candidates(work),
         "venue": _work_venue(work),
         "doi": doi,
         "arxiv_id": _work_arxiv_id(work),

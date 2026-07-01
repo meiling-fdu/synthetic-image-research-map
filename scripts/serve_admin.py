@@ -42,6 +42,7 @@ try:
         CuratedMappingError,
         DuplicateMappingError,
         create_mapping,
+        create_mapping_candidates,
         exclude_mapping,
         load_location_reviews,
         load_mappings,
@@ -59,6 +60,9 @@ try:
         confirm_alias,
         create_or_update_confirmed_location,
         location_review_payload,
+        load_confirmed_locations,
+        load_institution_aliases,
+        normalize_institution_name,
         mark_queue_row,
         save_queue_metadata,
     )
@@ -104,6 +108,7 @@ except ImportError:
         CuratedMappingError,
         DuplicateMappingError,
         create_mapping,
+        create_mapping_candidates,
         exclude_mapping,
         load_location_reviews,
         load_mappings,
@@ -121,6 +126,9 @@ except ImportError:
         confirm_alias,
         create_or_update_confirmed_location,
         location_review_payload,
+        load_confirmed_locations,
+        load_institution_aliases,
+        normalize_institution_name,
         mark_queue_row,
         save_queue_metadata,
     )
@@ -620,6 +628,152 @@ def api_payload(
         "warnings": list(warnings),
         "errors": list(errors),
     }
+
+
+def prepare_mapping_candidates(
+    paper: Mapping[str, Any],
+    raw_candidates: Any,
+    *,
+    institution_locations: Sequence[Mapping[str, Any]],
+    institution_aliases: Sequence[Mapping[str, Any]],
+) -> Tuple[List[Dict[str, str]], List[str]]:
+    """Normalize imported affiliation evidence and prefill reviewed canonicals."""
+    candidates = raw_candidates if isinstance(raw_candidates, list) else []
+    canonical_by_key = {
+        normalize_institution_name(
+            row.get("normalized_institution") or row.get("institution")
+        ): clean(row.get("institution"))
+        for row in institution_locations
+        if clean(row.get("institution"))
+    }
+    for alias in institution_aliases:
+        if clean(alias.get("review_status")) != "confirmed":
+            continue
+        alias_key = normalize_institution_name(alias.get("alias_name"))
+        canonical = clean(alias.get("canonical_institution_name"))
+        if alias_key and canonical:
+            canonical_by_key[alias_key] = canonical
+
+    normalized: List[Dict[str, str]] = []
+    warnings: List[str] = []
+    for candidate in candidates:
+        if not isinstance(candidate, Mapping):
+            continue
+        raw_institution = clean(
+            candidate.get("institution")
+            or candidate.get("raw_institution_name")
+        )
+        authors_value = candidate.get("institution_authors")
+        authors = (
+            [clean(value) for value in authors_value if clean(value)]
+            if isinstance(authors_value, list)
+            else parse_people(authors_value)
+        )
+        if not raw_institution or not authors:
+            warnings.append(
+                "Skipped incomplete affiliation evidence without both an "
+                "institution and associated author."
+            )
+            continue
+        canonical = canonical_by_key.get(
+            normalize_institution_name(raw_institution), ""
+        )
+        raw_affiliations = candidate.get("raw_affiliations")
+        raw_affiliation = (
+            " | ".join(
+                clean(value) for value in raw_affiliations if clean(value)
+            )
+            if isinstance(raw_affiliations, list)
+            else clean(candidate.get("raw_affiliation"))
+        )
+        source = clean(
+            candidate.get("provenance_source")
+            or candidate.get("evidence_source")
+            or paper.get("source_database")
+            or "manual"
+        )
+        latitude = candidate.get("latitude")
+        if latitude in (None, ""):
+            latitude = candidate.get("institution_latitude")
+        longitude = candidate.get("longitude")
+        if longitude in (None, ""):
+            longitude = candidate.get("institution_longitude")
+        normalized.append(
+            {
+                "institution": canonical or raw_institution,
+                "institution_authors": "; ".join(authors),
+                "author_order": "; ".join(
+                    clean(value)
+                    for value in candidate.get("author_order", [])
+                    if clean(value)
+                )
+                if isinstance(candidate.get("author_order"), list)
+                else clean(candidate.get("author_order")),
+                "raw_affiliation": raw_affiliation or raw_institution,
+                "openalex_institution_id": clean(
+                    candidate.get("openalex_institution_id")
+                ),
+                "institution_city": clean(
+                    candidate.get("city") or candidate.get("institution_city")
+                ),
+                "institution_country": clean(
+                    candidate.get("country")
+                    or candidate.get("institution_country")
+                ),
+                "institution_latitude": clean(latitude),
+                "institution_longitude": clean(longitude),
+                "provenance_source": source,
+                "evidence_source": source,
+                "evidence_url": clean(
+                    candidate.get("evidence_url")
+                    or paper.get("openalex_url")
+                    or paper.get("paper_url")
+                ),
+                "affiliation_note": (
+                    f"Raw institution: {raw_institution}"
+                    if canonical and canonical != raw_institution
+                    else ""
+                ),
+                "mapping_status": "active" if canonical else "needs_review",
+                "review_note": (
+                    "Automatically matched to a confirmed canonical institution; "
+                    "review imported authorship evidence."
+                    if canonical
+                    else "Automatically imported affiliation candidate; confirm "
+                    "the canonical institution before public export."
+                ),
+            }
+        )
+    grouped: Dict[str, Dict[str, str]] = {}
+    for candidate in normalized:
+        key = normalize_institution_name(candidate["institution"])
+        existing = grouped.get(key)
+        if existing is None:
+            grouped[key] = candidate
+            continue
+        existing["institution_authors"] = "; ".join(
+            dict.fromkeys(
+                parse_people(existing["institution_authors"])
+                + parse_people(candidate["institution_authors"])
+            )
+        )
+        for field in ("author_order", "raw_affiliation"):
+            values = [
+                value
+                for value in (
+                    clean(existing.get(field)),
+                    clean(candidate.get(field)),
+                )
+                if value
+            ]
+            existing[field] = " | ".join(dict.fromkeys(values))
+    normalized = list(grouped.values())
+    if not normalized:
+        warnings.append(
+            "Missing author–institution mapping: this paper cannot produce "
+            "institution markers or author affiliation numbers until reviewed."
+        )
+    return normalized, warnings
 
 
 def original_public_record(paper: Mapping[str, Any]) -> Dict[str, Any] | None:
@@ -1249,6 +1403,28 @@ def make_handler(
                         "public_marker_records": paper.get("marker_records", []),
                         "curated_mappings": mapping_rows,
                         "location_reviews": location_rows,
+                        "mapping_diagnostic": {
+                            "status": (
+                                "available"
+                                if any(
+                                    clean(row.get("mapping_status"))
+                                    in {"active", "needs_review"}
+                                    for row in mapping_rows
+                                )
+                                else "missing_mapping"
+                            ),
+                            "message": (
+                                ""
+                                if any(
+                                    clean(row.get("mapping_status"))
+                                    in {"active", "needs_review"}
+                                    for row in mapping_rows
+                                )
+                                else "No eligible author–institution mapping "
+                                "exists; public markers and author affiliation "
+                                "numbers are blocked."
+                            ),
+                        },
                     },
                 )
                 return
@@ -1735,13 +1911,47 @@ def make_handler(
                 if request.path == "/api/paper/create":
                     preview_records = read_json_records(PUBLIC_PAPERS_PATH)
                     exclusion_records = read_csv_rows(exclusions_path)
+                    candidate_drafts, mapping_warnings = prepare_mapping_candidates(
+                        payload,
+                        payload.get("mapping_candidates"),
+                        institution_locations=load_confirmed_locations(
+                            institution_locations_path
+                        ),
+                        institution_aliases=load_institution_aliases(
+                            institution_aliases_path
+                        ),
+                    )
+                    if (
+                        not candidate_drafts
+                        and payload.get("acknowledge_missing_mappings") is not True
+                    ):
+                        self.send_json(
+                            HTTPStatus.UNPROCESSABLE_ENTITY,
+                            {
+                                "error": mapping_warnings[-1],
+                                "code": "missing_author_institution_mapping",
+                                "warnings": mapping_warnings,
+                            },
+                        )
+                        return
                     try:
-                        with CURATED_PAPER_WRITE_LOCK:
+                        # Preflight both stores before the first write, then hold
+                        # their existing locks for the coupled create operation.
+                        load_mappings(mappings_path)
+                        load_location_reviews(location_review_path)
+                        with CURATED_PAPER_WRITE_LOCK, CURATED_MAPPING_WRITE_LOCK:
                             row = create_curated_paper(
                                 payload,
                                 preview_records=preview_records,
                                 exclusion_records=exclusion_records,
                                 path=curated_papers_path,
+                            )
+                            mapping_result = create_mapping_candidates(
+                                row,
+                                candidate_drafts,
+                                map_records=read_json_records(PUBLIC_MAP_PATH),
+                                mappings_path=mappings_path,
+                                location_review_path=location_review_path,
                             )
                     except DuplicatePaperError as error:
                         self.send_json(
@@ -1759,9 +1969,25 @@ def make_handler(
                         HTTPStatus.CREATED,
                         {
                             "paper": row,
+                            "mapping_candidates": mapping_result["mappings"],
+                            "mapping_diagnostic": {
+                                "status": (
+                                    "candidates_created"
+                                    if mapping_result["mappings"]
+                                    else "missing_mapping"
+                                ),
+                                "candidate_count": len(
+                                    mapping_result["mappings"]
+                                ),
+                                "warnings": mapping_warnings,
+                            },
+                            "warnings": mapping_warnings,
                             "message": (
-                                "Saved to curated database. Run Export preview or "
-                                "Full refresh to update local public-preview JSON."
+                                f"Saved to curated database with "
+                                f"{len(mapping_result['mappings'])} "
+                                "author–institution mapping candidate(s). "
+                                "Run Export preview or Full refresh to update "
+                                "local public-preview JSON."
                             ),
                         },
                     )

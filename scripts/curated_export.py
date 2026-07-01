@@ -634,6 +634,7 @@ def _merge_curated_paper(
 def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "mapping_id": clean(mapping.get("mapping_id")),
+        "institution_id": stable_institution_id(mapping.get("institution")),
         "institution": clean(mapping.get("institution")),
         "institution_authors": _parse_people(
             mapping.get("institution_authors")
@@ -645,6 +646,12 @@ def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
         "mapping_status": clean(mapping.get("mapping_status")),
         "review_note": clean(mapping.get("review_note")),
     }
+
+
+def stable_institution_id(value: Any) -> str:
+    normalized = normalize_institution(value)
+    digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+    return f"institution:{digest}" if normalized else ""
 
 
 def _marker_id(
@@ -736,6 +743,7 @@ def _curated_marker(
         "url": paper_url,
         "authors": _parse_people(paper.get("authors")),
         "institution": clean(mapping.get("institution")),
+        "institution_id": stable_institution_id(mapping.get("institution")),
         "institution_authors": _parse_people(
             mapping.get("institution_authors")
         ),
@@ -1101,6 +1109,62 @@ def _recalculate_paper_details(
     paper["curated_mappings"] = [
         _mapping_public_fields(mapping) for mapping in visible_mappings
     ]
+    current_authors = _parse_people(paper.get("authors"))
+    mapping_authors = []
+    for mapping in visible_mappings:
+        for author in _parse_people(mapping.get("institution_authors")):
+            if normalize_institution(author) not in {
+                normalize_institution(value) for value in mapping_authors
+            }:
+                mapping_authors.append(author)
+    if len(current_authors) == 1:
+        normalized_author_line = normalize_institution(current_authors[0])
+        mapping_authors.sort(
+            key=lambda author: normalized_author_line.find(
+                normalize_institution(author)
+            )
+        )
+    if (
+        len(current_authors) == 1
+        and len(mapping_authors) > 1
+        and normalize_institution(current_authors[0])
+        == normalize_institution(" ".join(mapping_authors))
+    ):
+        paper["authors"] = mapping_authors
+    affiliations = []
+    author_affiliations: Dict[str, Dict[str, Any]] = {}
+    for index, mapping in enumerate(visible_mappings, start=1):
+        institution = clean(mapping.get("institution"))
+        institution_id = stable_institution_id(institution)
+        mapping_authors = _parse_people(mapping.get("institution_authors"))
+        affiliations.append(
+            {
+                "index": index,
+                "institution_id": institution_id,
+                "institution": institution,
+                "authors": mapping_authors,
+            }
+        )
+        for author in mapping_authors:
+            author_key = normalize_institution(author)
+            values = author_affiliations.setdefault(
+                author_key,
+                {
+                    "author": author,
+                    "institution_indices": [],
+                    "institution_ids": [],
+                },
+            )
+            values["institution_indices"].append(index)
+            values["institution_ids"].append(institution_id)
+    paper["author_institution_affiliations"] = affiliations
+    paper["author_institution_indices"] = list(author_affiliations.values())
+    for marker in markers:
+        marker["authors"] = list(paper.get("authors") or [])
+        marker["author_institution_affiliations"] = affiliations
+        marker["author_institution_indices"] = list(
+            author_affiliations.values()
+        )
     paper["aggregated_institutions"] = sorted(
         {
             clean(record.get("institution"))
