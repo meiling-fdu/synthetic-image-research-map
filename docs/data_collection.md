@@ -360,7 +360,7 @@ Run the imports, then rebuild and validate the preview:
 python3 scripts/import_manual_openalex_papers.py
 python3 scripts/import_manual_openalex_affiliations.py
 python3 scripts/export_candidate_map_data.py
-python3 scripts/export_public_preview.py
+python3 scripts/export_public_preview.py --preserve-existing
 python3 scripts/validate_public_preview.py
 python3 scripts/audit_key_paper_coverage.py
 ```
@@ -569,7 +569,15 @@ python3 scripts/diagnose_paper_marker_blockers.py
 
 The server captures bounded stdout/stderr tails, exit status, duration, and any Git-status paths changed by the workflow. Only one maintenance workflow may run at a time, and each subprocess has a timeout. A failed validation is shown in the collapsible command log; later full-refresh steps are not run, and the UI does not describe the preview as validated.
 
-Export and full refresh update the local generated files under `web/data/` through `scripts/export_public_preview.py`, then reload the paper list and selected-paper details from the refreshed JSON. **Reload preview data** only rereads the current local JSON and does not run an export. The optional Git-status view runs only `git status --short`.
+Export and full refresh update the local generated files under `web/data/`
+through `scripts/export_public_preview.py --preserve-existing`, then reload the
+paper list and selected-paper details from the refreshed JSON. This unions a
+partial local candidate cache with the current complete preview. The confirmed
+**Publish Changes** workflow additionally aborts before Git staging if map or
+paper coverage shrinks by more than 5%, or falls below the project safety
+floors of 700 map records and 350 papers. **Reload preview data** only rereads
+the current local JSON and does not run an export. The optional Git-status view
+runs only `git status --short`.
 
 These actions never stage, commit, push, or publish anything. After a successful export the UI explicitly reports: **Local preview updated. Commit and push manually to update GitHub Pages.** The deployed GitHub Pages site changes only after the maintainer reviews the diff and manually commits and pushes it.
 
@@ -668,6 +676,11 @@ The localhost console treats `data/curated/*.csv` as the only durable human-deci
 ### Recommended Refresh Workflow
 
 `scripts/refresh_public_preview.py` is the recommended pre-commit workflow. It calls the existing scoped pipeline, public-preview exporter, quality-report generator, and validator in that order. Each step is a subprocess, and the refresh stops immediately if any command fails. It does not duplicate pipeline logic, modify manual data, commit, or push.
+
+Refresh always preserves the current complete preview while merging newly
+derived records. It has no default processing limit or public-record cap:
+`--limit` and `--max-records` are applied only when the maintainer passes them
+explicitly.
 
 Run a full refresh including a new OpenAlex search:
 

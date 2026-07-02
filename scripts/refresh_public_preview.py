@@ -58,8 +58,11 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--limit",
         type=positive_int,
-        default=800,
-        help="Maximum resolution/geocoding requests per pipeline step (default: 800).",
+        default=None,
+        help=(
+            "Maximum resolution/geocoding requests per pipeline step "
+            "(default: no limit)."
+        ),
     )
     parser.add_argument(
         "--max-records",
@@ -105,28 +108,29 @@ def build_steps(args: argparse.Namespace) -> List[RefreshStep]:
     )
     if args.max_records is not None:
         preview_command.extend(["--max-records", args.max_records])
-    if args.skip_search:
-        # A no-search admin refresh must preserve the branch's committed large
-        # preview baseline instead of rebuilding a smaller candidate snapshot.
-        preview_command.append("--preserve-existing")
+    # Every default refresh preserves the complete published baseline. Search
+    # and local candidate snapshots can be partial; only an explicit
+    # --max-records request may reduce the final preview.
+    preview_command.append("--preserve-existing")
     validation_command = script_command("validate_public_preview.py")
     if args.strict:
         validation_command.append("--strict")
 
     commands = []
     if not args.skip_search:
+        pipeline_command = script_command(
+            "run_pipeline.py",
+            "--max-results",
+            args.max_results,
+            "--user-agent",
+            args.user_agent.strip(),
+        )
+        if args.limit is not None:
+            pipeline_command.extend(["--limit", str(args.limit)])
         commands.append(
             (
                 "Run scoped candidate pipeline",
-                script_command(
-                    "run_pipeline.py",
-                    "--max-results",
-                    args.max_results,
-                    "--limit",
-                    args.limit,
-                    "--user-agent",
-                    args.user_agent.strip(),
-                ),
+                pipeline_command,
             )
         )
     commands.extend(

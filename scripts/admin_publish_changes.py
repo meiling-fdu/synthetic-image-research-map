@@ -3,9 +3,11 @@
 
 from __future__ import annotations
 
+import json
 import shlex
 import subprocess
 import sys
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Sequence
@@ -30,6 +32,113 @@ EXCLUDED_PATHSPECS = (
 )
 PUBLISH_PATHSPECS = (*PUBLISH_PATHS, *EXCLUDED_PATHSPECS)
 RunCommand = Callable[[Sequence[str], Path], subprocess.CompletedProcess[str]]
+MAP_PREVIEW_PATH = Path("web/data/public_preview_map_data.json")
+PAPER_PREVIEW_PATH = Path("web/data/public_preview_papers.json")
+MAX_SHRINKAGE_RATIO = 0.05
+MIN_MAP_RECORDS = 700
+MIN_PAPER_RECORDS = 350
+
+
+class PublishDataError(RuntimeError):
+    """Preview data cannot be measured safely before publication."""
+
+
+@dataclass(frozen=True)
+class PreviewCounts:
+    map_records: int
+    paper_records: int
+
+
+PreviewCountReader = Callable[[Path], PreviewCounts]
+
+
+def _read_record_count(path: Path) -> int:
+    try:
+        with path.open(encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise PublishDataError(f"could not read {path}: {error}") from error
+    records = payload.get("records") if isinstance(payload, dict) else None
+    if not isinstance(records, list):
+        raise PublishDataError(f"{path} does not contain a records array")
+    return len(records)
+
+
+def read_preview_counts(repository_root: Path) -> PreviewCounts:
+    return PreviewCounts(
+        map_records=_read_record_count(repository_root / MAP_PREVIEW_PATH),
+        paper_records=_read_record_count(repository_root / PAPER_PREVIEW_PATH),
+    )
+
+
+def shrinkage_percentage(before: int, after: int) -> float:
+    if before <= 0 or after >= before:
+        return 0.0
+    return (before - after) / before * 100.0
+
+
+def preview_shrinkage_reasons(
+    before: PreviewCounts,
+    after: PreviewCounts,
+) -> list[str]:
+    reasons = []
+    map_shrinkage = shrinkage_percentage(
+        before.map_records, after.map_records
+    )
+    paper_shrinkage = shrinkage_percentage(
+        before.paper_records, after.paper_records
+    )
+    if map_shrinkage > MAX_SHRINKAGE_RATIO * 100:
+        reasons.append(
+            f"map records decreased by {map_shrinkage:.2f}% "
+            f"(maximum allowed: {MAX_SHRINKAGE_RATIO * 100:.0f}%)"
+        )
+    if paper_shrinkage > MAX_SHRINKAGE_RATIO * 100:
+        reasons.append(
+            f"paper records decreased by {paper_shrinkage:.2f}% "
+            f"(maximum allowed: {MAX_SHRINKAGE_RATIO * 100:.0f}%)"
+        )
+    if after.map_records < MIN_MAP_RECORDS:
+        reasons.append(
+            f"after map records {after.map_records} is below "
+            f"the safety floor {MIN_MAP_RECORDS}"
+        )
+    if after.paper_records < MIN_PAPER_RECORDS:
+        reasons.append(
+            f"after paper records {after.paper_records} is below "
+            f"the safety floor {MIN_PAPER_RECORDS}"
+        )
+    return reasons
+
+
+def print_preview_counts(
+    label: str,
+    counts: PreviewCounts,
+    *,
+    before: PreviewCounts | None = None,
+) -> None:
+    print(f"{label} map records: {counts.map_records}", flush=True)
+    print(f"{label} paper records: {counts.paper_records}", flush=True)
+    if before is not None:
+        print(
+            "Map records shrinkage: "
+            f"{shrinkage_percentage(before.map_records, counts.map_records):.2f}%",
+            flush=True,
+        )
+        print(
+            "Paper records shrinkage: "
+            f"{shrinkage_percentage(before.paper_records, counts.paper_records):.2f}%",
+            flush=True,
+        )
+
+
+def print_publish_size_summary(
+    before: PreviewCounts,
+    after: PreviewCounts,
+) -> None:
+    print("\n== Public preview size summary ==", flush=True)
+    print_preview_counts("Before", before)
+    print_preview_counts("After", after, before=before)
 
 
 def run_command(
@@ -87,8 +196,19 @@ def publish_changes(
     repository_root: Path = REPOSITORY_ROOT,
     runner: RunCommand = run_command,
     now: Callable[[], datetime] = datetime.now,
+    preview_count_reader: PreviewCountReader = read_preview_counts,
 ) -> int:
     print("Publishing curated data and public preview.", flush=True)
+    try:
+        before_counts = preview_count_reader(repository_root)
+    except PublishDataError as error:
+        print(
+            f"ERROR: publish aborted before refresh: {error}",
+            file=sys.stderr,
+        )
+        return 1
+    print("\n== Public preview size before refresh ==", flush=True)
+    print_preview_counts("Before", before_counts)
 
     print("\n== Full refresh pipeline ==", flush=True)
     for command in ALLOWED_WORKFLOWS["full_refresh"]:
@@ -101,6 +221,33 @@ def publish_changes(
             print("ERROR: publishing stopped during refresh.", file=sys.stderr)
             return 1
     print("Full refresh pipeline result: succeeded.", flush=True)
+
+    try:
+        after_counts = preview_count_reader(repository_root)
+    except PublishDataError as error:
+        print(
+            f"ERROR: publish aborted after refresh: {error}",
+            file=sys.stderr,
+        )
+        return 1
+    print("\n== Public preview shrinkage guard ==", flush=True)
+    print_preview_counts("After", after_counts, before=before_counts)
+    shrinkage_reasons = preview_shrinkage_reasons(
+        before_counts, after_counts
+    )
+    if shrinkage_reasons:
+        print(
+            "ERROR: Publish Changes aborted by public preview shrinkage guard.",
+            file=sys.stderr,
+        )
+        for reason in shrinkage_reasons:
+            print(f"  - {reason}", file=sys.stderr)
+        print(
+            "No files were staged, committed, or pushed.",
+            file=sys.stderr,
+        )
+        return 1
+    print("Public preview shrinkage guard: passed.", flush=True)
 
     if not run_step(
         "Public preview validation",
@@ -148,6 +295,7 @@ def publish_changes(
         return 1
     if not staged_files:
         print("No changes to publish.", flush=True)
+        print_publish_size_summary(before_counts, after_counts)
         return 0
     print("Staged files:", flush=True)
     for path in staged_files.splitlines():
@@ -201,6 +349,7 @@ def publish_changes(
         )
         return 1
     print(f"Push result: succeeded for {branch}.", flush=True)
+    print_publish_size_summary(before_counts, after_counts)
     print("Publish Changes completed successfully.", flush=True)
     return 0
 

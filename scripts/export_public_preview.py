@@ -469,6 +469,18 @@ def detail_institution_identity(value: Dict[str, Any]) -> str:
     return f"name:{normalize_title(name)}"
 
 
+def _affiliation_values(record: Dict[str, Any]) -> List[Any]:
+    """Normalize legacy scalar/dict affiliations to the current list shape."""
+    raw_affiliations = record.get("affiliations")
+    if raw_affiliations in (None, "", []):
+        raw_affiliations = record.get("author_institution_affiliations")
+    if raw_affiliations in (None, ""):
+        return []
+    if isinstance(raw_affiliations, list):
+        return raw_affiliations
+    return [raw_affiliations]
+
+
 def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
     if isinstance(value, str):
         value = {"name": value}
@@ -571,6 +583,7 @@ def add_public_detail_fields(
         affiliation_by_identity: Dict[str, Dict[str, Any]] = {}
         source_index_identities: Dict[int, Dict[int, str]] = {}
         author_affiliation_identities: Dict[str, List[str]] = defaultdict(list)
+        marker_current_identities: Dict[int, str] = {}
 
         def add_affiliation(
             raw_affiliation: Any,
@@ -621,12 +634,8 @@ def add_public_detail_fields(
         # stable across refreshes. Curated export currently writes the legacy
         # field; the new field is consumed first on subsequent transformations.
         for record in records:
-            raw_affiliations = record.get("affiliations")
-            if not isinstance(raw_affiliations, list) or not raw_affiliations:
-                raw_affiliations = record.get("author_institution_affiliations")
-            if isinstance(raw_affiliations, list):
-                for raw_affiliation in raw_affiliations:
-                    add_affiliation(raw_affiliation, source_record=record)
+            for raw_affiliation in _affiliation_values(record):
+                add_affiliation(raw_affiliation, source_record=record)
 
         # Preserve paper-level institutions even when no author-level mapping
         # exists. This intentionally does not assign authors.
@@ -646,6 +655,7 @@ def add_public_detail_fields(
             current_identity = add_affiliation(current)
             if current_identity is None:
                 continue
+            marker_current_identities[id(record)] = current_identity
             current_affiliation = affiliation_by_identity[current_identity]
             for author in record.get("institution_authors") or []:
                 author_name = author_display_name(author)
@@ -709,15 +719,7 @@ def add_public_detail_fields(
                     mapped_author_keys.add(author_key)
 
         for record in records:
-            current_identity = ""
-            if id(record) in map_record_ids:
-                current_identity = detail_institution_identity(
-                    {
-                        "institution_id": record.get("institution_id"),
-                        "canonical_name": record.get("canonical_institution_name"),
-                        "name": institution_name(record),
-                    }
-                )
+            current_identity = marker_current_identities.get(id(record), "")
             current_affiliation = affiliation_by_identity.get(current_identity)
             current_index = (
                 current_affiliation.get("index") if current_affiliation else None
@@ -888,9 +890,17 @@ def parse_year(value: Any) -> Optional[int]:
 
 
 def institution_name(record: Dict[str, Any]) -> str:
-    return clean_text(
-        record.get("institution") or record.get("institution_name")
-    )
+    name = clean_text(record.get("institution") or record.get("institution_name"))
+    if name:
+        return name
+    current = record.get("current_institution")
+    if isinstance(current, dict):
+        return clean_text(
+            current.get("name")
+            or current.get("canonical_name")
+            or current.get("institution")
+        )
+    return clean_text(current)
 
 
 def has_valid_institution(record: Dict[str, Any]) -> bool:

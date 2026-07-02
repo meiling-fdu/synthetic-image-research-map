@@ -36,6 +36,7 @@ PAPER_EXCLUSION_VALIDATION = (
 EXPORT_PREVIEW = (
     "python3",
     "scripts/export_public_preview.py",
+    "--preserve-existing",
 )
 PUBLIC_VALIDATION = (
     "python3",

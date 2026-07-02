@@ -96,14 +96,19 @@ After curation changes, choose **Run full refresh pipeline**. It runs, in order:
 ```text
 python3 scripts/validate_curated_database.py
 python3 scripts/validate_paper_exclusions.py
-python3 scripts/export_public_preview.py
+python3 scripts/export_public_preview.py --preserve-existing
 python3 scripts/validate_public_preview.py
 python3 scripts/audit_key_paper_coverage.py
 python3 scripts/diagnose_paper_marker_blockers.py
 python3 scripts/report_high_risk_markers.py
 ```
 
-The pipeline stops at the first failure. Read the command log, correct the underlying curated record, and run it again. **Reload preview data** only rereads existing JSON; it does not export changes.
+The pipeline stops at the first failure. The preserve-existing export unions the
+current complete public preview with the local candidate snapshot, so a
+no-search admin refresh cannot silently replace full coverage with a partial
+cache. Read the command log, correct the underlying curated record, and run it
+again. **Reload preview data** only rereads existing JSON; it does not export
+changes.
 
 After a successful local refresh:
 
@@ -125,7 +130,15 @@ Admin edit
 → GitHub Pages updates after deployment
 ```
 
-**Publish Changes** always asks for confirmation and cannot start while another admin workflow is running. It runs `python3 scripts/admin_publish_changes.py`, stops immediately on refresh or validation failure, shows the final command output, and does not create an empty commit.
+**Publish Changes** always asks for confirmation and cannot start while another
+admin workflow is running. It runs
+`python3 scripts/admin_publish_changes.py`, stops immediately on refresh or
+validation failure, shows the final command output, and does not create an
+empty commit. Before refresh and again before Git staging, it counts both
+public-preview datasets and reports their sizes and shrinkage percentages. It
+aborts without staging, committing, or pushing if either dataset shrinks by
+more than 5%, or if the result falls below 700 map records or 350 paper
+records. There is intentionally no override.
 
 Only maintained files under `data/curated/`, `data/manual/`, `web/data/`, and `tests/` are eligible for the publication commit. `data/backups/` and temporary `data/manual/key_papers_missing_*` or `data/manual/key_papers_query_failed_*` batch artifacts are excluded. Unrelated staged files are not included in the publication commit. Git and push errors remain visible in the command log; if push fails, the new commit remains local for inspection and retry.
 

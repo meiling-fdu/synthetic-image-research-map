@@ -36,6 +36,18 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertIn("--preserve-existing", commands[0])
         self.assertNotIn("--max-records", commands[0])
 
+    def test_default_search_refresh_has_no_implicit_processing_or_record_cap(self):
+        args = parse_args(["--user-agent", "test refresh"])
+
+        steps = build_steps(args)
+        pipeline_command = steps[0].command
+        export_command = steps[1].command
+
+        self.assertIn("run_pipeline.py", " ".join(pipeline_command))
+        self.assertNotIn("--limit", pipeline_command)
+        self.assertIn("--preserve-existing", export_command)
+        self.assertNotIn("--max-records", export_command)
+
     def test_reversed_author_name_matches_curated_name(self):
         self.assertEqual(
             normalized_author_name("Marra, Francesco"),
@@ -156,6 +168,42 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertEqual(paper["affiliations"][0]["name"], "Known University")
         self.assertEqual(paper["authors"][0]["affiliation_indices"], [])
         self.assertFalse(paper["authors"][0]["is_current_marker_author"])
+
+    def test_legacy_detail_fields_migrate_without_fabricated_indices(self):
+        paper = {
+            "title": "Legacy schema migration",
+            "year": 2021,
+            "doi": "10.1000/legacy",
+            "authors": "Doe, Jane; John Roe",
+            "affiliations": "Legacy Paper University",
+        }
+        marker = {
+            **paper,
+            "affiliations": [],
+            "current_institution": "Legacy Marker University",
+        }
+
+        add_public_detail_fields([paper], [marker])
+
+        self.assertEqual(
+            [author["name"] for author in paper["authors"]],
+            ["Doe, Jane", "John Roe"],
+        )
+        self.assertTrue(
+            all(
+                author["affiliation_indices"] == []
+                for author in paper["authors"]
+            )
+        )
+        self.assertEqual(
+            [affiliation["name"] for affiliation in paper["affiliations"]],
+            ["Legacy Paper University", "Legacy Marker University"],
+        )
+        self.assertIsInstance(marker["current_institution"], dict)
+        self.assertEqual(
+            marker["current_institution"]["name"],
+            "Legacy Marker University",
+        )
 
     def test_incremental_learning_regression_mapping(self):
         title = (
