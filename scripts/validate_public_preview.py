@@ -101,6 +101,20 @@ def normalized_text(value: Any) -> str:
     return clean_text(value).casefold()
 
 
+def author_name(value: Any) -> str:
+    if isinstance(value, dict):
+        return clean_text(value.get("name") or value.get("author"))
+    return clean_text(value)
+
+
+def normalized_author_name(value: Any) -> str:
+    name = author_name(value)
+    if name.count(",") == 1:
+        family, given = (part.strip() for part in name.split(",", 1))
+        name = f"{given} {family}"
+    return " ".join(re.findall(r"\w+", name.casefold(), flags=re.UNICODE))
+
+
 def is_missing_value(value: Any) -> bool:
     return normalized_text(value) in MISSING_VALUE_STRINGS
 
@@ -255,6 +269,78 @@ def validate_preprint_version_duplicates(
                 )
 
 
+def validate_curated_affiliation_supersession(
+    map_records: Sequence[Any],
+    paper_records: Sequence[Any],
+    issues: List[Issue],
+) -> None:
+    """Report automatic institutions superseded by confirmed author mappings."""
+    paper_by_doi = {
+        normalized_doi(record.get("doi")): record
+        for record in paper_records
+        if isinstance(record, dict) and normalized_doi(record.get("doi"))
+    }
+    for index, record in enumerate(map_records):
+        if (
+            not isinstance(record, dict)
+            or normalized_text(record.get("source_database")) != "openalex"
+        ):
+            continue
+        paper = paper_by_doi.get(normalized_doi(record.get("doi")))
+        if not paper:
+            continue
+        mappings = [
+            mapping
+            for mapping in paper.get("curated_mappings") or []
+            if isinstance(mapping, dict)
+            and normalized_text(mapping.get("mapping_status")) == "active"
+        ]
+        curated_institutions = {
+            normalized_text(mapping.get("institution"))
+            for mapping in mappings
+            if clean_text(mapping.get("institution"))
+        }
+        if normalized_text(institution_name(record)) in curated_institutions:
+            continue
+        record_author_ids = {
+            normalized_text(value)
+            for value in record.get("institution_author_ids") or []
+            if clean_text(value)
+        }
+        record_authors = {
+            normalized_author_name(value)
+            for value in record.get("institution_authors") or []
+            if author_name(value)
+        }
+        overlaps_confirmed_author = any(
+            bool(
+                record_author_ids
+                & {
+                    normalized_text(value)
+                    for value in mapping.get("institution_author_ids") or []
+                    if clean_text(value)
+                }
+            )
+            or bool(
+                record_authors
+                & {
+                    normalized_author_name(value)
+                    for value in mapping.get("institution_authors") or []
+                    if author_name(value)
+                }
+            )
+            for mapping in mappings
+        )
+        if overlaps_confirmed_author:
+            add_issue(
+                issues,
+                "WARNING",
+                index,
+                record_title(record),
+                "stale public and curated institutions overlap for a confirmed author",
+            )
+
+
 def add_issue(
     issues: List[Issue],
     level: str,
@@ -265,10 +351,150 @@ def add_issue(
     issues.append(Issue(level=level, index=index, title=title, message=message))
 
 
+def validate_paper_detail_schema(
+    index: int,
+    record: Dict[str, Any],
+    issues: List[Issue],
+    *,
+    marker_record: bool,
+) -> None:
+    title = record_title(record)
+    affiliations = record.get("affiliations")
+    if not isinstance(affiliations, list):
+        add_issue(issues, "ERROR", index, title, "affiliations must be an array")
+        affiliations = []
+    valid_indices = set()
+    for expected_index, affiliation in enumerate(affiliations, start=1):
+        if not isinstance(affiliation, dict):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "affiliation entries must be objects",
+            )
+            continue
+        affiliation_index = parse_integer(affiliation.get("index"))
+        if affiliation_index != expected_index:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "affiliation indices must be consecutive and start at 1",
+            )
+        else:
+            valid_indices.add(affiliation_index)
+        if not clean_text(
+            affiliation.get("name") or affiliation.get("canonical_name")
+        ):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"affiliation {expected_index} has no name",
+            )
+        for field in ("institution_id", "country", "region"):
+            if field not in affiliation:
+                add_issue(
+                    issues,
+                    "ERROR",
+                    index,
+                    title,
+                    f"affiliation {expected_index} is missing {field}",
+                )
+
+    authors = record.get("authors")
+    if not isinstance(authors, list):
+        add_issue(issues, "ERROR", index, title, "authors must be an array")
+        return
+    for author in authors:
+        if not isinstance(author, dict):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "author entries must be objects",
+            )
+            continue
+        name = author_name(author)
+        if not name:
+            add_issue(issues, "ERROR", index, title, "author name is missing")
+        indices = author.get("affiliation_indices")
+        if not isinstance(indices, list):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author affiliation_indices must be an array: {name}",
+            )
+            continue
+        invalid_indices = [
+            value
+            for value in indices
+            if parse_integer(value) not in valid_indices
+        ]
+        if invalid_indices:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author references unknown affiliation index: {name}",
+            )
+        if not isinstance(author.get("is_current_marker_author"), bool):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author is_current_marker_author must be boolean: {name}",
+            )
+        if not marker_record and author.get("is_current_marker_author") is True:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "paper-level authors cannot be current marker authors",
+            )
+
+    current_institution = record.get("current_institution")
+    if marker_record:
+        if not isinstance(current_institution, dict):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "marker current_institution must be an object",
+            )
+        elif parse_integer(current_institution.get("index")) not in valid_indices:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "marker current_institution references an unknown affiliation",
+            )
+    elif current_institution is not None:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "paper-level current_institution must be null",
+        )
+
+
 def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
     if not isinstance(record, dict):
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
+    validate_paper_detail_schema(index, record, issues, marker_record=True)
 
     title = record_title(record)
     raw_title = clean_text(record.get("title"))
@@ -461,6 +687,7 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
     if not isinstance(record, dict):
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
+    validate_paper_detail_schema(index, record, issues, marker_record=False)
 
     title = record_title(record)
     raw_title = clean_text(record.get("title"))
@@ -571,22 +798,23 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
             "public paper has no eligible author–institution mapping; markers "
             "and author affiliation numbers are unavailable",
         )
-    author_indices = record.get("author_institution_indices")
-    if isinstance(author_indices, list) and author_indices:
-        indexed = {
-            normalized_text(item.get("author"))
-            for item in author_indices
-            if isinstance(item, dict) and item.get("institution_indices")
-        }
-        for author in record.get("authors") or []:
-            if normalized_text(author) not in indexed:
-                add_issue(
-                    issues,
-                    "WARNING",
-                    index,
-                    title,
-                    f"author has no institution index: {clean_text(author)}",
-                )
+    mapped_author_keys = {
+        normalized_author_name(author)
+        for author in record.get("authors") or []
+        if isinstance(author, dict) and author.get("affiliation_indices")
+    }
+    for author in record.get("authors") or []:
+        if (
+            mapped_author_keys
+            and normalized_author_name(author) not in mapped_author_keys
+        ):
+            add_issue(
+                issues,
+                "WARNING",
+                index,
+                title,
+                f"author has no institution index: {author_name(author)}",
+            )
 
 
 def print_summary(

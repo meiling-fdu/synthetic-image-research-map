@@ -64,8 +64,8 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--max-records",
         type=positive_int,
-        default=500,
-        help="Maximum records in the public preview (default: 500).",
+        default=None,
+        help="Maximum records in the public preview (default: no maximum).",
     )
     parser.add_argument(
         "--min-confidence",
@@ -98,38 +98,50 @@ def script_command(script_name: str, *arguments: object) -> List[str]:
 
 
 def build_steps(args: argparse.Namespace) -> List[RefreshStep]:
-    pipeline_command = script_command(
-        "run_pipeline.py",
-        "--max-results",
-        args.max_results,
-        "--limit",
-        args.limit,
-        "--user-agent",
-        args.user_agent.strip(),
-    )
-    if args.skip_search:
-        pipeline_command.append("--skip-search")
-
     preview_command = script_command(
         "export_public_preview.py",
-        "--max-records",
-        args.max_records,
         "--min-confidence",
         args.min_confidence,
     )
+    if args.max_records is not None:
+        preview_command.extend(["--max-records", args.max_records])
+    if args.skip_search:
+        # A no-search admin refresh must preserve the branch's committed large
+        # preview baseline instead of rebuilding a smaller candidate snapshot.
+        preview_command.append("--preserve-existing")
     validation_command = script_command("validate_public_preview.py")
     if args.strict:
         validation_command.append("--strict")
 
+    commands = []
+    if not args.skip_search:
+        commands.append(
+            (
+                "Run scoped candidate pipeline",
+                script_command(
+                    "run_pipeline.py",
+                    "--max-results",
+                    args.max_results,
+                    "--limit",
+                    args.limit,
+                    "--user-agent",
+                    args.user_agent.strip(),
+                ),
+            )
+        )
+    commands.extend(
+        [
+            ("Export public preview JSON", preview_command),
+            (
+                "Generate public preview quality report",
+                script_command("report_public_preview.py"),
+            ),
+            ("Validate public preview", validation_command),
+        ]
+    )
     return [
-        RefreshStep(1, "Run scoped candidate pipeline", pipeline_command),
-        RefreshStep(2, "Export public preview JSON", preview_command),
-        RefreshStep(
-            3,
-            "Generate public preview quality report",
-            script_command("report_public_preview.py"),
-        ),
-        RefreshStep(4, "Validate public preview", validation_command),
+        RefreshStep(number, name, command)
+        for number, (name, command) in enumerate(commands, start=1)
     ]
 
 

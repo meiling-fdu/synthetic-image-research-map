@@ -276,7 +276,17 @@ def _parse_year(value: Any) -> int | None:
 
 def _parse_people(value: Any) -> List[str]:
     if isinstance(value, list):
-        return [clean(item) for item in value if clean(item)]
+        return [
+            clean(item.get("name") or item.get("author"))
+            if isinstance(item, dict)
+            else clean(item)
+            for item in value
+            if (
+                clean(item.get("name") or item.get("author"))
+                if isinstance(item, dict)
+                else clean(item)
+            )
+        ]
     text = clean(value)
     if not text:
         return []
@@ -291,6 +301,22 @@ def _parse_people(value: Any) -> List[str]:
     if separator:
         return [clean(item) for item in text.split(separator) if clean(item)]
     return [text]
+
+
+def _normalized_person(value: Any) -> str:
+    name = clean(value)
+    if name.count(",") == 1:
+        family, given = (part.strip() for part in name.split(",", 1))
+        name = f"{given} {family}"
+    return normalize_institution(name)
+
+
+def _is_explicit_admin_supplement(record: Mapping[str, Any]) -> bool:
+    return (
+        clean(record.get("public_evidence_mode")) == "add"
+        and clean(record.get("public_evidence_approval"))
+        == "explicit_admin_supplement"
+    )
 
 
 def _valid_coordinates(record: Mapping[str, Any]) -> bool:
@@ -878,6 +904,11 @@ def _mark_location_known(
     key = _queue_key(mapping)
     for row in rows:
         if _queue_key(row) == key:
+            if (
+                clean(row.get("location_status")) == "known"
+                and clean(row.get("coordinate_status")) == "known"
+            ):
+                return False
             row["location_status"] = "known"
             row["coordinate_status"] = "known"
             row["updated_at"] = _timestamp()
@@ -1024,16 +1055,36 @@ def build_curated_map_records(
 def _remove_overridden_markers(
     map_records: List[Dict[str, Any]],
     paper: Mapping[str, Any],
-    institution: Any,
+    replacement_marker: Mapping[str, Any],
 ) -> int:
     paper_keys = set(normalize_paper_identity_keys(paper))
-    institution_key = normalize_institution(institution)
+    institution_key = normalize_institution(replacement_marker.get("institution"))
+    replacement_authors = {
+        _normalized_person(author)
+        for author in _parse_people(
+            replacement_marker.get("institution_authors")
+        )
+    }
     kept = []
     removed = 0
     for marker in map_records:
-        if (
+        same_paper = bool(
             paper_keys & set(normalize_paper_identity_keys(marker))
-            and normalize_institution(marker.get("institution")) == institution_key
+        )
+        same_institution = (
+            normalize_institution(marker.get("institution")) == institution_key
+        )
+        marker_authors = {
+            _normalized_person(author)
+            for author in _parse_people(marker.get("institution_authors"))
+        }
+        superseded_automatic_mapping = bool(
+            replacement_authors & marker_authors
+        ) and clean(marker.get("source_database")).casefold() != "curated"
+        if (
+            same_paper
+            and not _is_explicit_admin_supplement(marker)
+            and (same_institution or superseded_automatic_mapping)
         ):
             removed += 1
         else:
@@ -1110,8 +1161,23 @@ def _recalculate_paper_details(
         _mapping_public_fields(mapping) for mapping in visible_mappings
     ]
     current_authors = _parse_people(paper.get("authors"))
+    affiliation_records = list(visible_mappings)
+    known_affiliation_keys = {
+        normalize_institution(mapping.get("institution"))
+        for mapping in affiliation_records
+    }
+    for marker in markers:
+        marker_key = normalize_institution(marker.get("institution"))
+        if (
+            _is_explicit_admin_supplement(marker)
+            and marker_key
+            and marker_key not in known_affiliation_keys
+        ):
+            affiliation_records.append(marker)
+            known_affiliation_keys.add(marker_key)
+
     mapping_authors = []
-    for mapping in visible_mappings:
+    for mapping in affiliation_records:
         for author in _parse_people(mapping.get("institution_authors")):
             if normalize_institution(author) not in {
                 normalize_institution(value) for value in mapping_authors
@@ -1133,7 +1199,7 @@ def _recalculate_paper_details(
         paper["authors"] = mapping_authors
     affiliations = []
     author_affiliations: Dict[str, Dict[str, Any]] = {}
-    for index, mapping in enumerate(visible_mappings, start=1):
+    for index, mapping in enumerate(affiliation_records, start=1):
         institution = clean(mapping.get("institution"))
         institution_id = stable_institution_id(institution)
         mapping_authors = _parse_people(mapping.get("institution_authors"))
@@ -1286,7 +1352,7 @@ def integrate_curated_records(
             continue
         paper = matching[0]
         replaced_markers += _remove_overridden_markers(
-            maps, paper, marker.get("institution")
+            maps, paper, marker
         )
         maps.append(marker)
         affected_papers.append(paper)
@@ -1325,4 +1391,5 @@ def integrate_curated_records(
         "curated_papers_added": added,
         "curated_papers_merged": merged,
         "curated_markers_replaced": replaced_markers,
+        "stale_public_markers_suppressed": replaced_markers,
     }

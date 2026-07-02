@@ -327,6 +327,14 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help="Print filtering results without writing the public JSON file.",
     )
     parser.add_argument(
+        "--preserve-existing",
+        action="store_true",
+        help=(
+            "Union the existing public outputs into a no-search refresh so a "
+            "partial local candidate snapshot cannot shrink published coverage."
+        ),
+    )
+    parser.add_argument(
         "--paper-exclusions",
         type=Path,
         default=DEFAULT_PAPER_EXCLUSIONS,
@@ -409,6 +417,327 @@ def clean_text(value: Any) -> str:
     if value is None:
         return ""
     return " ".join(str(value).split())
+
+
+def author_display_name(value: Any) -> str:
+    """Read an author name from either the legacy string or object schema."""
+    if isinstance(value, dict):
+        return clean_text(value.get("name") or value.get("author"))
+    return clean_text(value)
+
+
+def normalized_author_name(value: Any) -> str:
+    """Normalize display-order and ``Family, Given`` author names alike."""
+    name = author_display_name(value)
+    if name.count(",") == 1:
+        family, given = (part.strip() for part in name.split(",", 1))
+        name = f"{given} {family}"
+    return " ".join(re.findall(r"\w+", name.casefold(), flags=re.UNICODE))
+
+
+def detail_paper_identity(record: Dict[str, Any]) -> Tuple[str, Any]:
+    """Group publication versions conservatively for affiliation unioning."""
+    doi = normalize_doi(record.get("doi"))
+    if doi:
+        return ("doi", doi)
+    arxiv_id = clean_text(record.get("arxiv_id")).casefold().removeprefix("arxiv:")
+    if arxiv_id:
+        return ("arxiv", arxiv_id)
+    return (
+        "title_year",
+        (
+            normalize_title(record.get("title")),
+            parse_year(record.get("publication_year") or record.get("year")),
+        ),
+    )
+
+
+def detail_institution_identity(value: Dict[str, Any]) -> str:
+    institution_id = clean_text(
+        value.get("institution_id") or value.get("canonical_institution_id")
+    )
+    if institution_id:
+        return f"id:{institution_id.casefold()}"
+    name = clean_text(
+        value.get("canonical_name")
+        or value.get("canonical_institution_name")
+        or value.get("name")
+        or value.get("institution")
+        or value.get("institution_name")
+    )
+    return f"name:{normalize_title(name)}"
+
+
+def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
+    if isinstance(value, str):
+        value = {"name": value}
+    if not isinstance(value, dict):
+        return None
+    name = clean_text(
+        value.get("name")
+        or value.get("canonical_name")
+        or value.get("institution")
+        or value.get("institution_name")
+    )
+    if not name:
+        return None
+    institution_id = clean_text(
+        value.get("institution_id") or value.get("canonical_institution_id")
+    ) or stable_institution_id(name)
+    authors = [
+        author_display_name(author)
+        for author in value.get("authors", [])
+        if author_display_name(author)
+    ]
+    return {
+        "index": parse_year(value.get("index")),
+        "name": name,
+        "canonical_name": clean_text(value.get("canonical_name")) or name,
+        "institution_id": institution_id,
+        "country": clean_text(value.get("country")),
+        "region": clean_text(value.get("region")),
+        "authors": authors,
+    }
+
+
+def _record_authors(record: Dict[str, Any]) -> List[str]:
+    values = record.get("authors") or []
+    if not isinstance(values, list):
+        values = [values]
+    return [
+        author_display_name(author)
+        for author in values
+        if author_display_name(author)
+    ]
+
+
+def add_public_detail_fields(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+) -> None:
+    """Export one stable author/affiliation schema to papers and markers.
+
+    Existing confirmed affiliation lists and author mappings take precedence.
+    Marker institutions are unioned as paper-level affiliations, but an author
+    is only assigned to one when the source record explicitly names that author
+    in ``institution_authors``.
+    """
+    map_record_ids = {id(record) for record in map_records}
+    grouped: Dict[Tuple[str, Any], List[Dict[str, Any]]] = defaultdict(list)
+    for record in [*paper_records, *map_records]:
+        grouped[detail_paper_identity(record)].append(record)
+
+    for records in grouped.values():
+        affiliations: List[Dict[str, Any]] = []
+        affiliation_by_identity: Dict[str, Dict[str, Any]] = {}
+        source_index_identities: Dict[int, Dict[int, str]] = {}
+        author_affiliation_identities: Dict[str, List[str]] = defaultdict(list)
+
+        def add_affiliation(
+            raw_affiliation: Any,
+            *,
+            source_record: Optional[Dict[str, Any]] = None,
+        ) -> Optional[str]:
+            affiliation = _detail_affiliation(raw_affiliation)
+            if affiliation is None:
+                return None
+            identity = detail_institution_identity(affiliation)
+            existing = affiliation_by_identity.get(identity)
+            if existing is None:
+                affiliation["index"] = len(affiliations) + 1
+                affiliations.append(affiliation)
+                affiliation_by_identity[identity] = affiliation
+                existing = affiliation
+            else:
+                for field in ("canonical_name", "country", "region"):
+                    if not clean_text(existing.get(field)) and clean_text(
+                        affiliation.get(field)
+                    ):
+                        existing[field] = affiliation[field]
+                known_authors = {
+                    normalized_author_name(author)
+                    for author in existing.get("authors", [])
+                }
+                for author in affiliation.get("authors", []):
+                    if normalized_author_name(author) not in known_authors:
+                        existing["authors"].append(author)
+                        known_authors.add(normalized_author_name(author))
+            for author in affiliation.get("authors", []):
+                author_key = normalized_author_name(author)
+                if author_key and identity not in author_affiliation_identities[author_key]:
+                    author_affiliation_identities[author_key].append(identity)
+            if source_record is not None:
+                original_index = parse_year(
+                    raw_affiliation.get("index")
+                    if isinstance(raw_affiliation, dict)
+                    else None
+                )
+                if original_index is not None:
+                    source_index_identities.setdefault(id(source_record), {})[
+                        original_index
+                    ] = identity
+            return identity
+
+        # Prefer already exported/confirmed lists so their numbering remains
+        # stable across refreshes. Curated export currently writes the legacy
+        # field; the new field is consumed first on subsequent transformations.
+        for record in records:
+            raw_affiliations = record.get("affiliations")
+            if not isinstance(raw_affiliations, list) or not raw_affiliations:
+                raw_affiliations = record.get("author_institution_affiliations")
+            if isinstance(raw_affiliations, list):
+                for raw_affiliation in raw_affiliations:
+                    add_affiliation(raw_affiliation, source_record=record)
+
+        # Preserve paper-level institutions even when no author-level mapping
+        # exists. This intentionally does not assign authors.
+        for record in records:
+            if id(record) not in map_record_ids:
+                continue
+            current = {
+                "name": institution_name(record),
+                "canonical_name": clean_text(
+                    record.get("canonical_institution_name")
+                )
+                or institution_name(record),
+                "institution_id": clean_text(record.get("institution_id")),
+                "country": clean_text(record.get("country")),
+                "region": clean_text(record.get("region")),
+            }
+            current_identity = add_affiliation(current)
+            if current_identity is None:
+                continue
+            current_affiliation = affiliation_by_identity[current_identity]
+            for author in record.get("institution_authors") or []:
+                author_name = author_display_name(author)
+                author_key = normalized_author_name(author_name)
+                if not author_key:
+                    continue
+                if current_identity not in author_affiliation_identities[author_key]:
+                    author_affiliation_identities[author_key].append(current_identity)
+                if all(
+                    normalized_author_name(existing) != author_key
+                    for existing in current_affiliation["authors"]
+                ):
+                    current_affiliation["authors"].append(author_name)
+
+        # Consume legacy index mappings only after every source record's
+        # original index-to-institution relationship is known.
+        for record in records:
+            mappings = record.get("author_institution_indices")
+            if not isinstance(mappings, list):
+                continue
+            source_indices = source_index_identities.get(id(record), {})
+            for mapping in mappings:
+                if not isinstance(mapping, dict):
+                    continue
+                author_key = normalized_author_name(
+                    mapping.get("author") or mapping.get("name")
+                )
+                if not author_key:
+                    continue
+                for raw_index in (
+                    mapping.get("institution_indices")
+                    or mapping.get("affiliation_indices")
+                    or []
+                ):
+                    index = parse_year(raw_index)
+                    identity = source_indices.get(index or -1)
+                    if (
+                        identity
+                        and identity not in author_affiliation_identities[author_key]
+                    ):
+                        author_affiliation_identities[author_key].append(identity)
+
+        exported_affiliations = [
+            {
+                "index": affiliation["index"],
+                "name": affiliation["name"],
+                "canonical_name": affiliation["canonical_name"],
+                "institution_id": affiliation["institution_id"],
+                "country": affiliation["country"],
+                "region": affiliation["region"],
+            }
+            for affiliation in affiliations
+        ]
+
+        for record in records:
+            current_identity = ""
+            if id(record) in map_record_ids:
+                current_identity = detail_institution_identity(
+                    {
+                        "institution_id": record.get("institution_id"),
+                        "canonical_name": record.get("canonical_institution_name"),
+                        "name": institution_name(record),
+                    }
+                )
+            current_affiliation = affiliation_by_identity.get(current_identity)
+            current_index = (
+                current_affiliation.get("index") if current_affiliation else None
+            )
+            current_author_keys = {
+                normalized_author_name(author)
+                for author in record.get("institution_authors") or []
+                if normalized_author_name(author)
+            }
+
+            author_objects = []
+            legacy_indices = []
+            for author in _record_authors(record):
+                author_key = normalized_author_name(author)
+                indices = sorted(
+                    {
+                        affiliation_by_identity[identity]["index"]
+                        for identity in author_affiliation_identities.get(
+                            author_key, []
+                        )
+                        if identity in affiliation_by_identity
+                    }
+                )
+                is_current = bool(
+                    current_index is not None
+                    and (
+                        author_key in current_author_keys
+                        or current_index in indices
+                    )
+                )
+                author_objects.append(
+                    {
+                        "name": author,
+                        "affiliation_indices": indices,
+                        "is_current_marker_author": is_current,
+                    }
+                )
+                if indices:
+                    legacy_indices.append(
+                        {
+                            "author": author,
+                            "institution_indices": indices,
+                            "institution_ids": [
+                                affiliations[index - 1]["institution_id"]
+                                for index in indices
+                            ],
+                        }
+                    )
+
+            record["authors"] = author_objects
+            record["affiliations"] = [dict(item) for item in exported_affiliations]
+            record["current_institution"] = (
+                dict(exported_affiliations[current_index - 1])
+                if current_index is not None
+                else None
+            )
+            # Keep the existing fields available to older consumers.
+            record["author_institution_affiliations"] = [
+                {
+                    "index": affiliation["index"],
+                    "institution_id": affiliation["institution_id"],
+                    "institution": affiliation["name"],
+                    "authors": list(affiliation["authors"]),
+                }
+                for affiliation in affiliations
+            ]
+            record["author_institution_indices"] = legacy_indices
 
 
 def normalize_entry_type(record: Dict[str, Any]) -> str:
@@ -1253,6 +1582,31 @@ def read_candidate_records(path: Path) -> List[Dict[str, Any]]:
     return payload["records"]
 
 
+def merge_existing_records(
+    existing: Sequence[Dict[str, Any]],
+    fresh: Sequence[Dict[str, Any]],
+    *,
+    map_records: bool,
+) -> List[Dict[str, Any]]:
+    """Merge a committed preview baseline with newly derived local records."""
+    merged: Dict[Any, Dict[str, Any]] = {}
+    order: List[Any] = []
+    for record in [*existing, *fresh]:
+        if map_records:
+            key = clean_text(record.get("id")) or (
+                detail_paper_identity(record),
+                detail_institution_identity(record),
+                clean_text(record.get("latitude")),
+                clean_text(record.get("longitude")),
+            )
+        else:
+            key = identity_key(record)
+        if key not in merged:
+            order.append(key)
+        merged[key] = dict(record)
+    return [merged[key] for key in order]
+
+
 def has_resolved_coordinate_metadata(record: Dict[str, Any]) -> bool:
     """Return whether coordinates came through a resolution/manual layer."""
     method = clean_text(record.get("resolution_method")).casefold()
@@ -1746,6 +2100,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
         records = read_candidate_records(args.input)
+        if args.preserve_existing and args.output.exists():
+            records = merge_existing_records(
+                read_candidate_records(args.output),
+                records,
+                map_records=True,
+            )
         paper_version_overrides = read_paper_version_overrides()
         paper_arxiv_links = read_paper_arxiv_links()
         publication_overrides = read_publication_overrides()
@@ -1786,6 +2146,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             read_csv_rows(DEFAULT_EXPORT_DIAGNOSTICS),
             exclusion_rows,
         )
+        if args.preserve_existing and args.paper_output.exists():
+            previous_papers = read_candidate_records(args.paper_output)
+            exclusion_index = build_active_exclusion_index(exclusion_rows)
+            previous_papers = [
+                record
+                for record in previous_papers
+                if not record_is_excluded(record, exclusion_index)
+            ]
+            paper_payload["records"] = merge_existing_records(
+                previous_papers,
+                paper_payload["records"],
+                map_records=False,
+            )
         curated_papers = load_curated_papers(args.curated_papers)
         curated_mappings = load_curated_mappings(args.curated_mappings)
         location_review_rows = load_location_review_queue(
@@ -1838,6 +2211,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     or record.get("institution")
                 )
             )
+        add_public_detail_fields(integrated_papers, integrated_maps)
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         summary["preprint_version_records_excluded"] += (
