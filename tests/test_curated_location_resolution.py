@@ -1,10 +1,70 @@
 import unittest
 import json
 
-from scripts.curated_export import build_curated_map_records, integrate_curated_records
+from scripts.curated_export import (
+    _recalculate_paper_details,
+    _remove_overridden_markers,
+    build_curated_map_records,
+    integrate_curated_records,
+)
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_recalculation_discards_stale_derived_affiliations(self):
+        paper = {
+            "title": "Corrected derived details",
+            "year": 2022,
+            "doi": "10.1000/derived",
+            "authors": ["Ada Researcher"],
+            "affiliations": [{"index": 1, "name": "Old University"}],
+            "current_institution": {"index": 1, "name": "Old University"},
+        }
+        mapping = {
+            **paper,
+            "mapping_id": "mapping:corrected",
+            "institution": "Correct University",
+            "institution_authors": "Ada Researcher",
+            "mapping_status": "active",
+        }
+
+        _recalculate_paper_details(
+            paper, [], [mapping], {"mapping:corrected"}
+        )
+
+        self.assertNotIn("affiliations", paper)
+        self.assertNotIn("current_institution", paper)
+        self.assertEqual(
+            paper["author_institution_affiliations"][0]["institution"],
+            "Correct University",
+        )
+
+    def test_curated_marker_id_replaces_stale_institution_spelling(self):
+        paper = {
+            "title": "Corrected institution",
+            "year": 2022,
+            "doi": "10.1000/corrected",
+        }
+        stale = {
+            **paper,
+            "id": "curated-map:stable",
+            "institution": "Univresity of Example",
+            "institution_authors": ["Ada Researcher"],
+            "source_database": "curated",
+        }
+        replacement = {
+            **paper,
+            "id": "curated-map:stable",
+            "institution": "University of Example",
+            "institution_authors": ["Ada Researcher"],
+            "source_database": "curated",
+        }
+        records = [stale]
+
+        removed = _remove_overridden_markers(records, paper, replacement)
+
+        self.assertEqual(removed, 1)
+        self.assertEqual(records, [])
+
     def test_explicit_admin_supplement_survives_curated_supersession(self):
         paper = {
             "title": "Supplement test",

@@ -10,6 +10,7 @@ from scripts.export_public_preview import (
 from scripts.refresh_public_preview import build_steps, parse_args
 from scripts.validate_public_preview import validate_preprint_version_duplicates
 from scripts.validate_public_preview import (
+    is_bad_author_candidate,
     normalized_author_name,
     validate_curated_affiliation_supersession,
 )
@@ -211,7 +212,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 for author in naples["authors"]
                 if author["is_current_marker_author"]
             ],
-            ["Marra, Francesco", "Luisa Verdoliva"],
+            ["Francesco Marra", "Luisa Verdoliva"],
         )
         self.assertEqual(
             [
@@ -219,8 +220,93 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 for author in trento["authors"]
                 if author["is_current_marker_author"]
             ],
-            ["Saltori, Cristiano", "Boato, Giulia"],
+            ["Cristiano Saltori", "Giulia Boato"],
         )
+
+    def test_latent_recovery_mapping_uses_mapping_author_roster(self):
+        title = (
+            "Did You Use My GAN to Generate Fake? Post-hoc Attribution of "
+            "GAN Generated Images via Latent Recovery"
+        )
+        paper = {
+            "title": title,
+            "year": 2022,
+            "doi": "10.1109/ijcnn55064.2022.9892704",
+            "authors": [
+                "Syou Hirofumi, Kazuto Fukuchi, Youhei Akimoto, Jun Sakuma"
+            ],
+        }
+        tsukuba = {
+            **paper,
+            "institution": "University of Tsukuba",
+            "institution_id": "institution:tsukuba",
+            "institution_authors": [
+                "Syou Hirofumi",
+                "Kazuto Fukuchi",
+                "Youhei Akimoto",
+                "Jun Sakuma",
+            ],
+        }
+        riken = {
+            **paper,
+            "institution": "RIKEN Center for Advanced Intelligence Project",
+            "institution_id": "institution:riken",
+            "institution_authors": ["Jun Sakuma"],
+        }
+
+        add_public_detail_fields([paper], [tsukuba, riken])
+
+        expected_indices = [[1], [1], [1], [1, 2]]
+        self.assertEqual(
+            [author["affiliation_indices"] for author in paper["authors"]],
+            expected_indices,
+        )
+        self.assertTrue(
+            all(
+                not author["is_current_marker_author"]
+                for author in paper["authors"]
+            )
+        )
+        self.assertEqual(
+            [
+                author["is_current_marker_author"]
+                for author in tsukuba["authors"]
+            ],
+            [True, True, True, True],
+        )
+        self.assertEqual(
+            [
+                author["is_current_marker_author"]
+                for author in riken["authors"]
+            ],
+            [False, False, False, True],
+        )
+
+    def test_generated_previews_have_fewer_unsplit_mapped_author_lines(self):
+        repository = Path(__file__).resolve().parents[1]
+        target_title = (
+            "Did You Use My GAN to Generate Fake? Post-hoc Attribution of "
+            "GAN Generated Images via Latent Recovery"
+        )
+        limits = {
+            "public_preview_map_data.json": 41,
+            "public_preview_papers.json": 21,
+        }
+        for filename, maximum in limits.items():
+            with (repository / "web" / "data" / filename).open(
+                encoding="utf-8"
+            ) as handle:
+                records = json.load(handle)["records"]
+            bad = [
+                record for record in records
+                if is_bad_author_candidate(record)
+            ]
+            self.assertLessEqual(len(bad), maximum, filename)
+            self.assertNotIn(
+                target_title,
+                {record.get("title") for record in bad},
+                filename,
+            )
 
     def test_frontend_renders_numbers_and_current_author_bold(self):
         helper = (

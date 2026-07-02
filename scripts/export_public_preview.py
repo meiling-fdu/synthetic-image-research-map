@@ -174,6 +174,7 @@ PUBLIC_FIELDS = (
     "is_arxiv_preprint",
     "url",
     "authors",
+    "authors_text",
     "institution_authors",
     "institution",
     "country",
@@ -504,11 +505,49 @@ def _record_authors(record: Dict[str, Any]) -> List[str]:
     values = record.get("authors") or []
     if not isinstance(values, list):
         values = [values]
-    return [
-        author_display_name(author)
-        for author in values
-        if author_display_name(author)
-    ]
+    authors = []
+    for value in values:
+        author = author_display_name(value)
+        if not author:
+            continue
+        # Semicolons are the repository's unambiguous person delimiter. Commas
+        # are deliberately preserved because "Family, Given" is also valid.
+        authors.extend(
+            clean_text(part)
+            for part in author.split(";")
+            if clean_text(part)
+        )
+    return authors
+
+
+def _ordered_export_authors(
+    record_authors: Sequence[str],
+    mapped_authors: Sequence[str],
+) -> List[str]:
+    """Use mapped authors as canonical names without losing reliable order."""
+    mapped_by_key = {
+        normalized_author_name(author): author
+        for author in mapped_authors
+        if normalized_author_name(author)
+    }
+    ambiguous_author_line = (
+        len(record_authors) == 1 and record_authors[0].count(",") >= 2
+    )
+    ordered = []
+    seen = set()
+    if not ambiguous_author_line:
+        for author in record_authors:
+            key = normalized_author_name(author)
+            value = mapped_by_key.get(key) or author
+            if key and key not in seen:
+                ordered.append(value)
+                seen.add(key)
+    for author in mapped_authors:
+        key = normalized_author_name(author)
+        if key and key not in seen:
+            ordered.append(author)
+            seen.add(key)
+    return ordered
 
 
 def add_public_detail_fields(
@@ -660,6 +699,14 @@ def add_public_detail_fields(
             }
             for affiliation in affiliations
         ]
+        mapped_authors = []
+        mapped_author_keys = set()
+        for affiliation in affiliations:
+            for author in affiliation.get("authors", []):
+                author_key = normalized_author_name(author)
+                if author_key and author_key not in mapped_author_keys:
+                    mapped_authors.append(author)
+                    mapped_author_keys.add(author_key)
 
         for record in records:
             current_identity = ""
@@ -675,15 +722,23 @@ def add_public_detail_fields(
             current_index = (
                 current_affiliation.get("index") if current_affiliation else None
             )
-            current_author_keys = {
-                normalized_author_name(author)
-                for author in record.get("institution_authors") or []
-                if normalized_author_name(author)
-            }
-
             author_objects = []
             legacy_indices = []
-            for author in _record_authors(record):
+            record_authors = _record_authors(record)
+            author_names = _ordered_export_authors(
+                record_authors, mapped_authors
+            )
+            ambiguous_legacy_text = (
+                not mapped_authors
+                and len(author_names) == 1
+                and author_names[0].count(",") >= 2
+            )
+            if ambiguous_legacy_text:
+                record["authors_text"] = author_names[0]
+                author_names = []
+            else:
+                record.pop("authors_text", None)
+            for author in author_names:
                 author_key = normalized_author_name(author)
                 indices = sorted(
                     {
@@ -696,10 +751,7 @@ def add_public_detail_fields(
                 )
                 is_current = bool(
                     current_index is not None
-                    and (
-                        author_key in current_author_keys
-                        or current_index in indices
-                    )
+                    and current_index in indices
                 )
                 author_objects.append(
                     {

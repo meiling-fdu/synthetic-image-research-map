@@ -286,13 +286,18 @@ function recordTitle(record) {
 
 function recordAuthors(record) {
   const authors = Array.isArray(record.authors) ? record.authors : [record.authors];
-  return authors
+  const names = authors
     .map((author) => String(
       author && typeof author === "object"
         ? author.name || author.author || ""
         : author || "",
     ).trim())
     .filter(Boolean);
+  if (names.length) {
+    return names;
+  }
+  const legacyText = String(record.authors_text || "").trim();
+  return legacyText ? [legacyText] : [];
 }
 
 function recordInstitutionAuthors(record) {
@@ -533,7 +538,11 @@ function normalizePaperDetailsRecord(record, context = {}) {
   const institutionAuthorKeys = new Set(recordInstitutionAuthors(record || {}).map(
     normalizedAuthorName,
   ));
-  const rawAuthors = Array.isArray(record?.authors) ? record.authors : [record?.authors];
+  const rawAuthors = Array.isArray(record?.authors) && record.authors.length
+    ? record.authors
+    : record?.authors_text
+      ? [record.authors_text]
+      : [record?.authors];
   const authors = rawAuthors.map((rawAuthor) => {
     const raw = rawAuthor && typeof rawAuthor === "object" ? rawAuthor : {};
     const name = String(raw.name || raw.author || rawAuthor || "").trim();

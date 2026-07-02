@@ -303,6 +303,37 @@ def _parse_people(value: Any) -> List[str]:
     return [text]
 
 
+def _ordered_mapping_authors(
+    paper_authors: Sequence[str],
+    mapping_authors: Sequence[str],
+) -> List[str]:
+    """Prefer mapped people while retaining a trustworthy publication order."""
+    mapped_by_key = {
+        _normalized_person(author): author
+        for author in mapping_authors
+        if _normalized_person(author)
+    }
+    ordered = []
+    seen = set()
+    ambiguous_author_line = (
+        len(paper_authors) == 1 and paper_authors[0].count(",") >= 2
+    )
+    if not ambiguous_author_line:
+        for author in paper_authors:
+            key = _normalized_person(author)
+            mapped_author = mapped_by_key.get(key)
+            value = mapped_author or author
+            if key and key not in seen:
+                ordered.append(value)
+                seen.add(key)
+    for author in mapping_authors:
+        key = _normalized_person(author)
+        if key and key not in seen:
+            ordered.append(author)
+            seen.add(key)
+    return ordered
+
+
 def _normalized_person(value: Any) -> str:
     name = clean(value)
     if name.count(",") == 1:
@@ -1071,6 +1102,10 @@ def _remove_overridden_markers(
         same_paper = bool(
             paper_keys & set(normalize_paper_identity_keys(marker))
         )
+        same_marker_id = bool(
+            clean(replacement_marker.get("id"))
+            and clean(marker.get("id")) == clean(replacement_marker.get("id"))
+        )
         same_institution = (
             normalize_institution(marker.get("institution")) == institution_key
         )
@@ -1084,7 +1119,11 @@ def _remove_overridden_markers(
         if (
             same_paper
             and not _is_explicit_admin_supplement(marker)
-            and (same_institution or superseded_automatic_mapping)
+            and (
+                same_marker_id
+                or same_institution
+                or superseded_automatic_mapping
+            )
         ):
             removed += 1
         else:
@@ -1183,20 +1222,10 @@ def _recalculate_paper_details(
                 normalize_institution(value) for value in mapping_authors
             }:
                 mapping_authors.append(author)
-    if len(current_authors) == 1:
-        normalized_author_line = normalize_institution(current_authors[0])
-        mapping_authors.sort(
-            key=lambda author: normalized_author_line.find(
-                normalize_institution(author)
-            )
+    if mapping_authors:
+        paper["authors"] = _ordered_mapping_authors(
+            current_authors, mapping_authors
         )
-    if (
-        len(current_authors) == 1
-        and len(mapping_authors) > 1
-        and normalize_institution(current_authors[0])
-        == normalize_institution(" ".join(mapping_authors))
-    ):
-        paper["authors"] = mapping_authors
     affiliations = []
     author_affiliations: Dict[str, Dict[str, Any]] = {}
     for index, mapping in enumerate(affiliation_records, start=1):
@@ -1225,12 +1254,19 @@ def _recalculate_paper_details(
             values["institution_ids"].append(institution_id)
     paper["author_institution_affiliations"] = affiliations
     paper["author_institution_indices"] = list(author_affiliations.values())
+    # The final public-detail pass rebuilds these fields from the current
+    # curated mappings. Do not let a preserved preview's stale derived schema
+    # outrank corrected institution names or author mappings.
+    paper.pop("affiliations", None)
+    paper.pop("current_institution", None)
     for marker in markers:
         marker["authors"] = list(paper.get("authors") or [])
         marker["author_institution_affiliations"] = affiliations
         marker["author_institution_indices"] = list(
             author_affiliations.values()
         )
+        marker.pop("affiliations", None)
+        marker.pop("current_institution", None)
     paper["aggregated_institutions"] = sorted(
         {
             clean(record.get("institution"))

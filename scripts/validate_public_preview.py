@@ -115,6 +115,28 @@ def normalized_author_name(value: Any) -> str:
     return " ".join(re.findall(r"\w+", name.casefold(), flags=re.UNICODE))
 
 
+def is_bad_author_candidate(record: Any) -> bool:
+    """Flag a mapped paper whose author list is still one unsplit long line."""
+    if not isinstance(record, dict):
+        return False
+    authors = record.get("authors")
+    affiliations = record.get("affiliations")
+    if (
+        not isinstance(authors, list)
+        or len(authors) != 1
+        or not isinstance(authors[0], dict)
+        or not isinstance(affiliations, list)
+        or len(affiliations) < 2
+    ):
+        return False
+    author = authors[0]
+    name = author_name(author)
+    return (
+        name.count(",") >= 2
+        and author.get("affiliation_indices") == []
+    )
+
+
 def is_missing_value(value: Any) -> bool:
     return normalized_text(value) in MISSING_VALUE_STRINGS
 
@@ -409,6 +431,23 @@ def validate_paper_detail_schema(
     if not isinstance(authors, list):
         add_issue(issues, "ERROR", index, title, "authors must be an array")
         return
+    authors_text = record.get("authors_text")
+    if authors_text is not None and not clean_text(authors_text):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "authors_text must be a non-empty legacy display string",
+        )
+    if is_bad_author_candidate(record):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "mapped multi-affiliation record has an unsplit author line",
+        )
     for author in authors:
         if not isinstance(author, dict):
             add_issue(
