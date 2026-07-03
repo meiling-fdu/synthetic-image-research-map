@@ -30,12 +30,14 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         steps = build_steps(args)
         commands = [step.command for step in steps]
 
-        self.assertEqual(len(steps), 3)
+        self.assertEqual(len(steps), 4)
         self.assertTrue(
             all("run_pipeline.py" not in " ".join(command) for command in commands)
         )
         self.assertIn("--preserve-existing", commands[0])
         self.assertNotIn("--max-records", commands[0])
+        self.assertIn("report_public_preview.py", " ".join(commands[1]))
+        self.assertIn("report_missing_author_mappings.py", " ".join(commands[2]))
 
     def test_default_search_refresh_has_no_implicit_processing_or_record_cap(self):
         args = parse_args(["--user-agent", "test refresh"])

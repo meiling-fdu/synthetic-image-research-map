@@ -2,7 +2,7 @@
 """Refresh, report on, and validate the public preview dataset.
 
 This convenience command delegates all work to the existing pipeline, preview
-export, quality-report, and validation scripts. It never commits or pushes data.
+export, reporting, and validation scripts. It never commits or pushes data.
 """
 
 from __future__ import annotations
@@ -20,6 +20,8 @@ REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS_DIR = REPOSITORY_ROOT / "scripts"
 PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
 QUALITY_REPORT = Path("docs/public_preview_report.md")
+MAPPING_REPORT = Path("docs/missing_author_mappings_report.md")
+MAPPING_REPORT_CSV = Path("data/manual/missing_author_mappings_report.csv")
 CONFIDENCE_LEVELS = ("unresolved", "low", "medium", "high")
 
 
@@ -140,6 +142,10 @@ def build_steps(args: argparse.Namespace) -> List[RefreshStep]:
                 "Generate public preview quality report",
                 script_command("report_public_preview.py"),
             ),
+            (
+                "Generate missing author mappings report",
+                script_command("report_missing_author_mappings.py"),
+            ),
             ("Validate public preview", validation_command),
         ]
     )
@@ -180,6 +186,8 @@ def execute_steps(steps: Sequence[RefreshStep]) -> int:
     print("Inspect these files before committing:")
     print(f"  - {PREVIEW_JSON}")
     print(f"  - {QUALITY_REPORT}")
+    print(f"  - {MAPPING_REPORT}")
+    print(f"  - {MAPPING_REPORT_CSV}")
     print("No files were committed or pushed.")
     return 0
 
