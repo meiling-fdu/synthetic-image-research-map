@@ -23,6 +23,8 @@ KNOWN_WORKFLOW_OUTPUTS = (
     Path("data/manual/key_paper_coverage_report.csv"),
     Path("data/manual/paper_marker_blocker_report.csv"),
     Path("data/manual/high_risk_marker_review.csv"),
+    Path("data/manual/missing_author_mappings_report.csv"),
+    Path("docs/missing_author_mappings_report.md"),
 )
 
 CURATED_VALIDATION = (
@@ -54,6 +56,10 @@ HIGH_RISK_MARKER_REPORT = (
     "python3",
     "scripts/report_high_risk_markers.py",
 )
+AUTHOR_MAPPING_REPORT = (
+    "python3",
+    "scripts/report_missing_author_mappings.py",
+)
 PUBLISH_CHANGES = (
     "python3",
     "scripts/admin_publish_changes.py",
@@ -63,10 +69,12 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
     "curated_validation": (CURATED_VALIDATION,),
     "export_preview": (EXPORT_PREVIEW,),
     "public_validation": (PUBLIC_VALIDATION,),
+    "author_mapping_report": (AUTHOR_MAPPING_REPORT,),
     "full_refresh": (
         CURATED_VALIDATION,
         PAPER_EXCLUSION_VALIDATION,
         EXPORT_PREVIEW,
+        AUTHOR_MAPPING_REPORT,
         PUBLIC_VALIDATION,
         KEY_PAPER_AUDIT,
         MARKER_BLOCKER_DIAGNOSIS,

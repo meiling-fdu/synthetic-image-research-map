@@ -11,9 +11,11 @@ from pathlib import Path
 
 from scripts.serve_admin import (
     AdminDataError,
+    ensure_author_mapping_report,
     load_author_mapping_coverage,
     make_handler,
 )
+from scripts.admin_workflows import ALLOWED_WORKFLOWS
 
 
 FIELDS = (
@@ -86,10 +88,15 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             writer.writerows(rows)
 
     @contextmanager
-    def server(self, report_path):
+    def server(self, report_path, generator=None):
+        generator = generator or (lambda: {"success": False})
         server = ThreadingHTTPServer(
             ("127.0.0.1", 0),
-            make_handler("test-token", author_mapping_report_path=report_path),
+            make_handler(
+                "test-token",
+                author_mapping_report_path=report_path,
+                author_mapping_report_generator=generator,
+            ),
         )
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
@@ -144,39 +151,80 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             with self.assertRaisesRegex(AdminDataError, "Run the refresh pipeline"):
                 load_author_mapping_coverage(path)
 
+    def test_startup_generates_only_when_report_is_missing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "report.csv"
+            calls = []
+
+            def generate():
+                calls.append("generated")
+                self.write_report(path)
+                return {"success": True}
+
+            first = ensure_author_mapping_report(path, generate)
+            second = ensure_author_mapping_report(path, generate)
+
+        self.assertTrue(first["generated"])
+        self.assertFalse(second["generated"])
+        self.assertEqual(calls, ["generated"])
+
+    def test_admin_full_refresh_includes_author_mapping_report(self):
+        commands = [" ".join(command) for command in ALLOWED_WORKFLOWS["full_refresh"]]
+        self.assertIn(
+            "python3 scripts/report_missing_author_mappings.py",
+            commands,
+        )
+
     def test_endpoint_returns_report_and_requires_header_token(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "report.csv"
             self.write_report(path)
             with self.server(path) as base_url:
                 status, payload = self.request(
-                    f"{base_url}/api/reports/author-mapping-coverage"
+                    f"{base_url}/api/review/author-mapping-coverage"
                 )
                 unauthorized_status, _ = self.request(
-                    f"{base_url}/api/reports/author-mapping-coverage",
+                    f"{base_url}/api/review/author-mapping-coverage",
                     token="wrong",
+                )
+                alias_status, _ = self.request(
+                    f"{base_url}/api/reports/author-mapping-coverage"
                 )
 
         self.assertEqual(status, 200)
         self.assertTrue(payload["success"])
         self.assertEqual(payload["data"]["summary"]["total_public_papers"], 3)
         self.assertEqual(unauthorized_status, 401)
+        self.assertEqual(alias_status, 200)
 
-    def test_endpoint_is_read_only_and_missing_report_is_graceful(self):
+    def test_missing_report_returns_empty_state_and_generate_populates_it(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "missing.csv"
-            with self.server(path) as base_url:
+            generated = []
+
+            def generate():
+                generated.append(True)
+                self.write_report(path)
+                return {"success": True}
+
+            with self.server(path, generate) as base_url:
                 get_status, get_payload = self.request(
-                    f"{base_url}/api/reports/author-mapping-coverage"
+                    f"{base_url}/api/review/author-mapping-coverage"
                 )
-                post_status, _ = self.request(
-                    f"{base_url}/api/reports/author-mapping-coverage",
+                generate_status, generate_payload = self.request(
+                    f"{base_url}/api/review/author-mapping-coverage/generate",
                     method="POST",
                 )
 
-        self.assertEqual(get_status, 404)
-        self.assertIn("Run the refresh pipeline", get_payload["errors"][0])
-        self.assertEqual(post_status, 405)
+        self.assertEqual(get_status, 200)
+        self.assertFalse(get_payload["data"]["available"])
+        self.assertEqual(
+            get_payload["data"]["message"],
+            "Author mapping report has not been generated.",
+        )
+        self.assertEqual(generate_status, 200)
+        self.assertTrue(generate_payload["data"]["available"])
+        self.assertEqual(generated, [True])
 
 
 if __name__ == "__main__":

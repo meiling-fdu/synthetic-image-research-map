@@ -19,7 +19,7 @@ from datetime import datetime, timezone
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from typing import Any, DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tuple
+from typing import Any, Callable, DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tuple
 from urllib.parse import parse_qs, urlsplit
 
 try:
@@ -180,6 +180,15 @@ CURATED_PAPER_WRITE_LOCK = threading.Lock()
 CURATED_MAPPING_WRITE_LOCK = threading.Lock()
 CURATED_LOCATION_WRITE_LOCK = threading.Lock()
 REVIEW_DECISION_WRITE_LOCK = threading.Lock()
+AUTHOR_MAPPING_REPORT_WRITE_LOCK = threading.Lock()
+
+AUTHOR_MAPPING_COVERAGE_ENDPOINTS = {
+    "/api/review/author-mapping-coverage",
+    "/api/reports/author-mapping-coverage",
+}
+AUTHOR_MAPPING_GENERATE_ENDPOINT = (
+    "/api/review/author-mapping-coverage/generate"
+)
 
 WORKFLOW_ENDPOINTS = {
     "/api/run-curated-validation": "curated_validation",
@@ -416,6 +425,55 @@ def load_author_mapping_coverage(path: Path = AUTHOR_MAPPING_REPORT_PATH) -> Dic
         "available": True,
         "summary": summary,
         "records": records,
+        "report_url": "/docs/missing_author_mappings_report.md",
+        "source": "data/manual/missing_author_mappings_report.csv",
+    }
+
+
+def generate_author_mapping_report() -> Dict[str, Any]:
+    """Run the whitelisted local report-only workflow."""
+    return run_workflow("author_mapping_report")
+
+
+def ensure_author_mapping_report(
+    path: Path = AUTHOR_MAPPING_REPORT_PATH,
+    generator: Callable[[], Mapping[str, Any]] = generate_author_mapping_report,
+    companion_path: Path | None = None,
+) -> Dict[str, Any]:
+    """Generate the report once when the Admin starts without one."""
+    if path.exists() and (
+        companion_path is None or companion_path.exists()
+    ):
+        return {
+            "success": True,
+            "generated": False,
+            "message": "Report already exists.",
+        }
+    result = dict(generator())
+    outputs_exist = path.exists() and (
+        companion_path is None or companion_path.exists()
+    )
+    success = bool(result.get("success")) and outputs_exist
+    return {
+        **result,
+        "success": success,
+        "generated": success,
+        "message": (
+            "Author mapping report generated."
+            if success
+            else "Author mapping report could not be generated."
+        ),
+    }
+
+
+def unavailable_author_mapping_coverage(
+    message: str = "Author mapping report has not been generated.",
+) -> Dict[str, Any]:
+    return {
+        "available": False,
+        "message": message,
+        "summary": {},
+        "records": [],
         "report_url": "/docs/missing_author_mappings_report.md",
         "source": "data/manual/missing_author_mappings_report.csv",
     }
@@ -1031,6 +1089,9 @@ def make_handler(
     institution_aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
     review_decisions_path: Path = DEFAULT_REVIEW_DECISIONS_PATH,
     author_mapping_report_path: Path = AUTHOR_MAPPING_REPORT_PATH,
+    author_mapping_report_generator: Callable[
+        [], Mapping[str, Any]
+    ] = generate_author_mapping_report,
 ) -> type[BaseHTTPRequestHandler]:
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
@@ -1304,7 +1365,7 @@ def make_handler(
                     return
                 self.send_json(HTTPStatus.OK, payload)
                 return
-            if request.path == "/api/reports/author-mapping-coverage":
+            if request.path in AUTHOR_MAPPING_COVERAGE_ENDPOINTS:
                 if not self.is_header_authorized():
                     self.send_json(
                         HTTPStatus.UNAUTHORIZED,
@@ -1329,8 +1390,16 @@ def make_handler(
                     )
                 except AdminDataError as error:
                     self.send_json(
-                        HTTPStatus.NOT_FOUND,
-                        api_payload(success=False, errors=(str(error),)),
+                        HTTPStatus.OK,
+                        api_payload(
+                            data=unavailable_author_mapping_coverage(
+                                (
+                                    "Author mapping report has not been generated."
+                                    if not author_mapping_report_path.exists()
+                                    else str(error)
+                                )
+                            )
+                        ),
                     )
                     return
                 self.send_json(HTTPStatus.OK, api_payload(data=report))
@@ -1401,6 +1470,16 @@ def make_handler(
                             validation_status=self.workflow_status_snapshot(),
                             git_status=git_status_result(),
                         )
+                        try:
+                            dashboard["author_mapping_coverage"] = (
+                                load_author_mapping_coverage(
+                                    author_mapping_report_path
+                                )
+                            )
+                        except AdminDataError:
+                            dashboard["author_mapping_coverage"] = (
+                                unavailable_author_mapping_coverage()
+                            )
                         self.send_json(
                             HTTPStatus.OK, api_payload(data=dashboard)
                         )
@@ -1585,7 +1664,7 @@ def make_handler(
                 "/api/review/marker-blockers",
                 "/api/review/key-paper-coverage",
                 "/api/review/manual-import",
-                "/api/reports/author-mapping-coverage",
+                *AUTHOR_MAPPING_COVERAGE_ENDPOINTS,
                 "/api/paper/metadata",
             }:
                 self.send_method_not_allowed("GET")
@@ -1618,6 +1697,65 @@ def make_handler(
                         )
                         return
                 self.run_admin_workflow(WORKFLOW_ENDPOINTS[request.path])
+                return
+            if request.path == AUTHOR_MAPPING_GENERATE_ENDPOINT:
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        api_payload(
+                            success=False,
+                            errors=("X-Admin-Token header is required",),
+                        ),
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        api_payload(
+                            success=False,
+                            errors=("admin report generation is restricted to loopback clients",),
+                        ),
+                    )
+                    return
+                if not AUTHOR_MAPPING_REPORT_WRITE_LOCK.acquire(blocking=False):
+                    self.send_json(
+                        HTTPStatus.CONFLICT,
+                        api_payload(
+                            success=False,
+                            errors=("Author mapping report generation is already running.",),
+                        ),
+                    )
+                    return
+                try:
+                    result = dict(author_mapping_report_generator())
+                    if not result.get("success"):
+                        message = clean(
+                            result.get("stderr_tail")
+                            or result.get("stdout_tail")
+                            or "Author mapping report generation failed."
+                        )
+                        self.send_json(
+                            HTTPStatus.INTERNAL_SERVER_ERROR,
+                            api_payload(success=False, errors=(message,)),
+                        )
+                        return
+                    report = load_author_mapping_coverage(
+                        author_mapping_report_path
+                    )
+                    self.send_json(
+                        HTTPStatus.OK,
+                        api_payload(
+                            message="Author mapping report generated.",
+                            data=report,
+                        ),
+                    )
+                except AdminDataError as error:
+                    self.send_json(
+                        HTTPStatus.INTERNAL_SERVER_ERROR,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
+                finally:
+                    AUTHOR_MAPPING_REPORT_WRITE_LOCK.release()
                 return
             location_actions = {
                 "/api/location-review/confirm": "confirm",
@@ -2312,6 +2450,22 @@ def main(argv: Sequence[str] | None = None) -> int:
             file=sys.stderr,
         )
         return 2
+
+    startup_report = ensure_author_mapping_report(
+        companion_path=AUTHOR_MAPPING_MARKDOWN_PATH
+    )
+    if startup_report.get("generated"):
+        print("Generated missing Author Mapping Coverage report.")
+    elif not startup_report.get("success"):
+        detail = clean(
+            startup_report.get("stderr_tail")
+            or startup_report.get("stdout_tail")
+            or startup_report.get("message")
+        )
+        print(
+            f"WARNING: Author Mapping Coverage report is unavailable: {detail}",
+            file=sys.stderr,
+        )
 
     token = secrets.token_urlsafe(32)
     handler = make_handler(

@@ -140,12 +140,44 @@
   font-size: 0.75rem;
 }
 
-.mapping-coverage-table td:nth-child(2) {
+.mapping-report-title {
   min-width: 16rem;
 }
 
-.mapping-coverage-table td:nth-last-child(3) {
+.mapping-report-missing-authors {
   min-width: 18rem;
+}
+
+.mapping-report-missing-authors span {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.mapping-report-link {
+  padding: 0;
+  border: 0;
+  color: var(--blue);
+  background: transparent;
+  font-weight: 750;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mapping-report-link:hover {
+  text-decoration: underline;
+}
+
+.mapping-coverage-empty-state {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--amber);
+  border-radius: 0.65rem;
+  background: var(--amber-soft);
+}
+
+.mapping-coverage-empty-state p {
+  margin-top: 0;
+  font-weight: 750;
 }
 
 .review-filters,

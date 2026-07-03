@@ -85,10 +85,12 @@ The console exposes four generated queues:
 - **Key Paper Coverage Review** reads `data/manual/key_paper_coverage_report.csv`.
 - **Manual Import Review** discovers the supported `key_papers_*` candidate CSVs.
 
-The Dashboard also shows a read-only **Author Mapping Coverage** card with complete, partial, and zero-mapping counts, missing author-link totals, full-paper coverage percentage, and the ten highest-priority gaps. Its dedicated tab provides searchable status and key-paper filters over the full generated CSV. Use **Reload mapping coverage** to reread only this report; use **Open full mapping report** for the generated Markdown detail.
+The Dashboard also shows a read-only **Author Mapping Coverage** card with complete, partial, and missing-mapping counts, full-paper coverage percentage, and the ten highest-priority gaps. Its dedicated tab provides search, status and key-paper filters, rank/missing-author sorting, and direct links into the paper's Author–Institution Mapping Editor. **Map missing authors** opens a new mapping draft with the missing names prefilled; institution and affiliation evidence still require maintainer confirmation.
 
 - Dashboard data source: `data/manual/missing_author_mappings_report.csv`
 - Full narrative report: `docs/missing_author_mappings_report.md`
+
+The Admin server checks for the CSV at startup and generates it once when absent. If generation cannot complete, the UI shows **Author mapping report has not been generated.** with a **Generate Report** action. **Reload mapping coverage** bypasses browser caching and rereads only this report. The Admin full-refresh workflow also regenerates both report artifacts.
 
 Use queue actions to open the metadata, scope, mapping, location, or Add Paper editor. Explicit reviewed/no-action, unresolved, marker-confirmation, and candidate outcomes are written to `data/curated/review_decisions.csv`; location-review actions also update `data/curated/institution_location_review.csv`. Confirm-marker actions create or activate a curated mapping only when paper, institution, and institution-author evidence are present. Exclude-wrong-mapping decisions exclude matching curated mappings and suppress matching automatic markers during export. The queue source CSV is never edited as durable state.
 

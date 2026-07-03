@@ -80,8 +80,12 @@
           <div class="mapping-coverage-summary" id="mapping-coverage-summary">
             <p>Mapping coverage loads after authentication.</p>
           </div>
-          <h4>Highest Priority Missing Mappings</h4>
-          <div class="table-wrap">
+          <div class="mapping-coverage-empty-state" id="mapping-coverage-empty-state" hidden>
+            <p>Author mapping report has not been generated.</p>
+            <button class="primary-button" id="generate-mapping-report" type="button">Generate Report</button>
+          </div>
+          <h4 id="mapping-priority-heading">Highest Priority Missing Mappings</h4>
+          <div class="table-wrap" id="mapping-priority-table-wrap">
             <table class="mapping-coverage-table">
               <thead><tr><th>Status</th><th>Paper title</th><th>Year</th><th>Missing</th><th>Missing author names</th><th>Markers</th><th>Key</th></tr></thead>
               <tbody id="mapping-priority-rows"></tbody>
@@ -569,11 +573,16 @@
         <div class="review-filters">
           <input id="mapping-coverage-search" type="search" placeholder="Search title, author, DOI, OpenAlex…">
           <select id="mapping-coverage-status"><option value="">All statuses</option><option value="complete">Complete</option><option value="partial">Partial</option><option value="zero">Zero</option></select>
+          <select id="mapping-coverage-sort"><option value="rank-asc">Rank: ascending</option><option value="rank-desc">Rank: descending</option><option value="missing-desc">Missing authors: most first</option><option value="missing-asc">Missing authors: least first</option></select>
           <select id="mapping-coverage-key"><option value="">All papers</option><option value="true">Key papers</option><option value="false">Non-key papers</option></select>
         </div>
-        <div class="table-wrap">
+        <div class="mapping-coverage-empty-state" id="mapping-coverage-full-empty-state" hidden>
+          <p>Author mapping report has not been generated.</p>
+          <button class="primary-button" id="generate-mapping-report-full" type="button">Generate Report</button>
+        </div>
+        <div class="table-wrap" id="mapping-coverage-table-wrap">
           <table class="mapping-coverage-table">
-            <thead><tr><th>Rank</th><th>Status</th><th>Paper title</th><th>Year</th><th>Mapped / total</th><th>Missing</th><th>Missing author names</th><th>Markers</th><th>Key</th></tr></thead>
+            <thead><tr><th>Rank</th><th>Status</th><th>Paper title</th><th>Year</th><th>Mapped / total</th><th>Missing</th><th>Missing authors</th><th>Markers</th><th>Key</th></tr></thead>
             <tbody id="mapping-coverage-rows"></tbody>
           </table>
         </div>
