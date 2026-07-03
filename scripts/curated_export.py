@@ -1421,8 +1421,7 @@ def integrate_curated_records(
         if clean(mapping.get("mapping_status")) not in VISIBLE_MAPPING_STATUSES:
             continue
         matching = _matching_papers(mapping, paper_index)
-        if matching:
-            affected_papers.append(matching[0])
+        affected_papers.extend(matching)
 
     seen = set()
     for paper in affected_papers:

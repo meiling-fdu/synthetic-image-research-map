@@ -5993,7 +5993,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 3,
@@ -6001,13 +6001,13 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital",
         "Google (United States)",
-        "Google DeepMind (United Kingdom)"
+        "Google DeepMind (United Kingdom)",
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
         "GB",
-        "IT",
+        "Italy",
         "US"
       ],
       "aggregated_country_codes": [
@@ -6015,40 +6015,34 @@
         "IT",
         "US"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "Google (United States)",
-          "canonical_name": "Google (United States)",
-          "institution_id": "institution:4b1c57114ce0aa58",
-          "country": "US",
-          "region": ""
-        },
-        {
-          "index": 3,
-          "name": "Google DeepMind (United Kingdom)",
-          "canonical_name": "Google DeepMind (United Kingdom)",
-          "institution_id": "institution:1029e8d37a657d08",
-          "country": "GB",
-          "region": ""
+          "mapping_id": "mapping:c2e51f8cca3f3a7f984f",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Fabrizio Guillaro",
+            "Giada Zingarini",
+            "Davide Cozzolino",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W4413145917",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
           "authors": [
             "Fabrizio Guillaro",
             "Giada Zingarini",
@@ -6082,7 +6076,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -6091,7 +6085,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -6122,7 +6116,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -6131,10 +6125,37 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        },
+        {
+          "index": 2,
+          "name": "Google (United States)",
+          "canonical_name": "Google (United States)",
+          "institution_id": "institution:4b1c57114ce0aa58",
+          "country": "US",
+          "region": ""
+        },
+        {
+          "index": 3,
+          "name": "Google DeepMind (United Kingdom)",
+          "canonical_name": "Google DeepMind (United Kingdom)",
+          "institution_id": "institution:1029e8d37a657d08",
+          "country": "GB",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "A Deepfake Image Detection Method Based on a Multi-Graph Attention Network",
@@ -35514,7 +35535,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -35522,32 +35543,43 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital"
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "IT"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
+          "mapping_id": "mapping:aea5511fffd31f012e3d",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Vincenzo De Rosa",
+            "Fabrizio Guillaro",
+            "Giovanni Poggi",
+            "Davide Cozzolino",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples, Italy",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W4405845641",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
           "authors": [
             "Vincenzo De Rosa",
             "Fabrizio Guillaro",
@@ -35564,7 +35596,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -35573,7 +35605,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -35582,7 +35614,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -35591,7 +35623,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -35600,10 +35632,21 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "FakeBench: Probing Explainable Fake Image Detection via Large Multimodal Models",
@@ -41155,7 +41198,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 2,
@@ -41163,43 +41206,45 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital",
-        "Technical University of Munich"
+        "Technical University of Munich",
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
         "DE",
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "DE",
         "IT"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "Technical University of Munich",
-          "canonical_name": "Technical University of Munich",
-          "institution_id": "institution:f42de06978b10eb5",
-          "country": "DE",
-          "region": ""
+          "mapping_id": "mapping:ebc9e29dcf2424bc0ca8",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Davide Cozzolino",
+            "Giovanni Poggi",
+            "Riccardo Corvi",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W4402915983",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
           "authors": [
             "Davide Cozzolino",
             "Giovanni Poggi",
@@ -41223,7 +41268,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -41232,7 +41277,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -41241,7 +41286,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -41259,10 +41304,29 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        },
+        {
+          "index": 2,
+          "name": "Technical University of Munich",
+          "canonical_name": "Technical University of Munich",
+          "institution_id": "institution:f42de06978b10eb5",
+          "country": "DE",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Real-Time Deepfake Detection in the Real-World",
@@ -45136,23 +45200,21 @@
         {
           "name": "Davide Cozzolino",
           "affiliation_indices": [
-            1,
-            2
+            1
           ],
           "is_current_marker_author": false
         },
         {
           "name": "Giovanni Poggi",
           "affiliation_indices": [
-            1,
-            2
+            1
           ],
           "is_current_marker_author": false
         },
         {
           "name": "Matthias Nießner",
           "affiliation_indices": [
-            3
+            2
           ],
           "is_current_marker_author": false
         },
@@ -45160,75 +45222,72 @@
           "name": "Luisa Verdoliva",
           "affiliation_indices": [
             1,
-            2,
-            3
+            2
           ],
           "is_current_marker_author": false
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital",
         "Technical University of Munich",
         "University of Naples Federico II"
       ],
       "aggregated_country_names": [
-        "DE",
-        "IT"
+        "Germany",
+        "Italy"
       ],
       "aggregated_country_codes": [
         "DE",
         "IT"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "University of Naples Federico II",
-          "canonical_name": "University of Naples Federico II",
-          "institution_id": "institution:d046d2c57bb3a863",
-          "country": "IT",
-          "region": ""
-        },
-        {
-          "index": 3,
-          "name": "Technical University of Munich",
-          "canonical_name": "Technical University of Munich",
-          "institution_id": "institution:f42de06978b10eb5",
-          "country": "DE",
-          "region": ""
-        }
+      "aggregated_regions": [
+        "Bavaria",
+        "Campania"
       ],
-      "current_institution": null,
-      "author_institution_affiliations": [
+      "aggregated_region_codes": [],
+      "curated_mappings": [
         {
-          "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
-          "authors": [
+          "mapping_id": "mapping:4bad8cb1fbf9b289552b",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
             "Davide Cozzolino",
             "Giovanni Poggi",
             "Luisa Verdoliva"
-          ]
+          ],
+          "raw_affiliation": "University Federico II of Naples, 80125, Naples, Italy",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W4402952411",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         },
         {
-          "index": 2,
+          "mapping_id": "mapping:00a1d1b8c309acfeced2",
+          "institution_id": "institution:f42de06978b10eb5",
+          "institution": "Technical University of Munich",
+          "institution_authors": [
+            "Matthias Nießner",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "Technical University of Munich, 85748, Garching, Germany",
+          "evidence_source": "Paper PDF",
+          "evidence_url": "https://www.ecva.net/papers/eccv_2024/papers_ECCV/papers/02665.pdf",
+          "affiliation_note": "Author superscripts 2 and 1,2.",
+          "mapping_status": "active",
+          "review_note": "The paper PDF assigns Matthias Nießner and Luisa Verdoliva to Technical University of Munich."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
           "institution_id": "institution:d046d2c57bb3a863",
           "institution": "University of Naples Federico II",
           "authors": [
@@ -45238,7 +45297,7 @@
           ]
         },
         {
-          "index": 3,
+          "index": 2,
           "institution_id": "institution:f42de06978b10eb5",
           "institution": "Technical University of Munich",
           "authors": [
@@ -45251,29 +45310,25 @@
         {
           "author": "Davide Cozzolino",
           "institution_indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8",
             "institution:d046d2c57bb3a863"
           ]
         },
         {
           "author": "Giovanni Poggi",
           "institution_indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8",
             "institution:d046d2c57bb3a863"
           ]
         },
         {
           "author": "Matthias Nießner",
           "institution_indices": [
-            3
+            2
           ],
           "institution_ids": [
             "institution:f42de06978b10eb5"
@@ -45283,16 +45338,33 @@
           "author": "Luisa Verdoliva",
           "institution_indices": [
             1,
-            2,
-            3
+            2
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8",
             "institution:d046d2c57bb3a863",
             "institution:f42de06978b10eb5"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        },
+        {
+          "index": 2,
+          "name": "Technical University of Munich",
+          "canonical_name": "Technical University of Munich",
+          "institution_id": "institution:f42de06978b10eb5",
+          "country": "Germany",
+          "region": "Bavaria"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:a87d86d7032f5a751004",
@@ -51736,7 +51808,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -51744,32 +51816,42 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital"
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "IT"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
+          "mapping_id": "mapping:c8b0073f8dfebc49ad07",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Riccardo Corvi",
+            "Davide Cozzolino",
+            "Giovanni Poggi",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W4385815563",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
           "authors": [
             "Riccardo Corvi",
             "Davide Cozzolino",
@@ -51785,7 +51867,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -51794,7 +51876,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -51803,7 +51885,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -51812,10 +51894,21 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Learning on Gradients: Generalized Artifacts Representation for GAN-Generated Images Detection",
@@ -52384,7 +52477,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -52392,32 +52485,43 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital"
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "IT"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
+          "mapping_id": "mapping:9721d804ebc7376687c1",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Riccardo Corvi",
+            "Davide Cozzolino",
+            "Giada Zingarini",
+            "Giovanni Poggi",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples, Italy",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W4375869427",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
           "authors": [
             "Riccardo Corvi",
             "Davide Cozzolino",
@@ -52434,7 +52538,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -52443,7 +52547,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -52452,7 +52556,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -52461,7 +52565,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -52470,10 +52574,21 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Online Detection of AI-Generated Images",
@@ -59241,7 +59356,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex match recovered by conservative query-failure retry. Ready for manual paper import review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -59249,7 +59364,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital"
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
         "Italy"
@@ -59257,24 +59372,15 @@
       "aggregated_country_codes": [
         "IT"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "Italy",
-          "region": ""
-        }
+      "aggregated_regions": [
+        "Campania"
       ],
-      "current_institution": null,
+      "aggregated_region_codes": [],
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
           "authors": [
             "Diego Gragnaniello",
             "Davide Cozzolino",
@@ -59291,7 +59397,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -59300,7 +59406,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -59309,7 +59415,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -59318,7 +59424,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -59327,10 +59433,41 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:c24d990d3ecf62b8b3cf",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Diego Gragnaniello",
+            "Davide Cozzolino",
+            "Francesco Marra",
+            "Giovanni Poggi",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples",
+          "evidence_source": "Paper PDF",
+          "evidence_url": "https://arxiv.org/pdf/2104.02617",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "The paper affiliation line names University Federico II of Naples for the full author group."
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Beyond the Spectrum: Detecting Deepfakes via Re-Synthesis",
@@ -61915,7 +62052,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -61923,32 +62060,42 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital"
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "IT"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
+          "mapping_id": "mapping:24a9d00d08b91f44b112",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Davide Cozzolino",
+            "Diego Gragnaniello",
+            "Giovanni Poggi",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples, Italy",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W4206030296",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
           "authors": [
             "Davide Cozzolino",
             "Diego Gragnaniello",
@@ -61964,7 +62111,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -61973,7 +62120,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -61982,7 +62129,7 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -61991,10 +62138,21 @@
             1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "VIPPrint: Validating Synthetic Image Detection and Source Linking Methods on a Large Scale Dataset of Printed Documents",
@@ -65608,21 +65766,21 @@
         {
           "name": "Andreas Rössler",
           "affiliation_indices": [
-            1
+            2
           ],
           "is_current_marker_author": false
         },
         {
           "name": "Davide Cozzolino",
           "affiliation_indices": [
-            2
+            1
           ],
           "is_current_marker_author": false
         },
         {
           "name": "Luisa Verdoliva",
           "affiliation_indices": [
-            2
+            1
           ],
           "is_current_marker_author": false
         },
@@ -65636,20 +65794,20 @@
         {
           "name": "Justus Thies",
           "affiliation_indices": [
-            1
+            2
           ],
           "is_current_marker_author": false
         },
         {
           "name": "Matthias Nießner",
           "affiliation_indices": [
-            1
+            2
           ],
           "is_current_marker_author": false
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 3,
@@ -65657,65 +65815,57 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital",
         "Friedrich-Alexander-Universität Erlangen-Nürnberg",
-        "Technical University of Munich"
+        "Technical University of Munich",
+        "University of Naples Federico II"
       ],
       "aggregated_country_names": [
         "DE",
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "DE",
         "IT"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Technical University of Munich",
-          "canonical_name": "Technical University of Munich",
-          "institution_id": "institution:f42de06978b10eb5",
-          "country": "DE",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "Federico II University Hospital",
-          "canonical_name": "Federico II University Hospital",
-          "institution_id": "institution:9852946b0cf30de8",
-          "country": "IT",
-          "region": ""
-        },
-        {
-          "index": 3,
-          "name": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
-          "canonical_name": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
-          "institution_id": "institution:73bb0fe265f6e090",
-          "country": "DE",
-          "region": ""
+          "mapping_id": "mapping:dfe0646a75ffe7f566ef",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Davide Cozzolino",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "University Federico II of Naples",
+          "evidence_source": "OpenAlex authorship metadata",
+          "evidence_url": "https://openalex.org/W2912336782",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Raw affiliation metadata names University Federico II of Naples; the automatic institution resolution was stale."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
+          "institution_id": "institution:d046d2c57bb3a863",
+          "institution": "University of Naples Federico II",
+          "authors": [
+            "Davide Cozzolino",
+            "Luisa Verdoliva"
+          ]
+        },
+        {
+          "index": 2,
           "institution_id": "institution:f42de06978b10eb5",
           "institution": "Technical University of Munich",
           "authors": [
             "Andreas Rössler",
             "Justus Thies",
             "Matthias Nießner"
-          ]
-        },
-        {
-          "index": 2,
-          "institution_id": "institution:9852946b0cf30de8",
-          "institution": "Federico II University Hospital",
-          "authors": [
-            "Davide Cozzolino",
-            "Luisa Verdoliva"
           ]
         },
         {
@@ -65731,7 +65881,7 @@
         {
           "author": "Andreas Rössler",
           "institution_indices": [
-            1
+            2
           ],
           "institution_ids": [
             "institution:f42de06978b10eb5"
@@ -65740,19 +65890,19 @@
         {
           "author": "Davide Cozzolino",
           "institution_indices": [
-            2
+            1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
           "author": "Luisa Verdoliva",
           "institution_indices": [
-            2
+            1
           ],
           "institution_ids": [
-            "institution:9852946b0cf30de8"
+            "institution:d046d2c57bb3a863"
           ]
         },
         {
@@ -65767,7 +65917,7 @@
         {
           "author": "Justus Thies",
           "institution_indices": [
-            1
+            2
           ],
           "institution_ids": [
             "institution:f42de06978b10eb5"
@@ -65776,13 +65926,40 @@
         {
           "author": "Matthias Nießner",
           "institution_indices": [
-            1
+            2
           ],
           "institution_ids": [
             "institution:f42de06978b10eb5"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        },
+        {
+          "index": 2,
+          "name": "Technical University of Munich",
+          "canonical_name": "Technical University of Munich",
+          "institution_id": "institution:f42de06978b10eb5",
+          "country": "DE",
+          "region": ""
+        },
+        {
+          "index": 3,
+          "name": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+          "canonical_name": "Friedrich-Alexander-Universität Erlangen-Nürnberg",
+          "institution_id": "institution:73bb0fe265f6e090",
+          "country": "DE",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Fourier Spectrum Discrepancies in Deep Network Generated Images",
@@ -66173,7 +66350,7 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 2,
@@ -66181,36 +66358,52 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Federico II University Hospital",
+        "University of Naples Federico II",
         "University of Trento"
       ],
       "aggregated_country_names": [
-        "IT"
+        "Italy"
       ],
       "aggregated_country_codes": [
         "IT"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Campania",
+        "Trentino-Alto Adige/Südtirol"
+      ],
       "aggregated_region_codes": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "University of Naples Federico II",
-          "canonical_name": "University of Naples Federico II",
+          "mapping_id": "mapping:3c8ae1b28e85e160472a",
           "institution_id": "institution:d046d2c57bb3a863",
-          "country": "Italy",
-          "region": "Campania"
+          "institution": "University of Naples Federico II",
+          "institution_authors": [
+            "Francesco Marra",
+            "Luisa Verdoliva"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/1910.01568",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
         },
         {
-          "index": 2,
-          "name": "University of Trento",
-          "canonical_name": "University of Trento",
+          "mapping_id": "mapping:129a03359b485cc8c9af",
           "institution_id": "institution:3c4903b35459f2b5",
-          "country": "Italy",
-          "region": "Trentino-Alto Adige/Südtirol"
+          "institution": "University of Trento",
+          "institution_authors": [
+            "Cristiano Saltori",
+            "Giulia Boato"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://arxiv.org/pdf/1910.01568",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Manually confirmed from the paper PDF affiliation section."
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -66268,7 +66461,26 @@
             "institution:d046d2c57bb3a863"
           ]
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Naples Federico II",
+          "canonical_name": "University of Naples Federico II",
+          "institution_id": "institution:d046d2c57bb3a863",
+          "country": "Italy",
+          "region": "Campania"
+        },
+        {
+          "index": 2,
+          "name": "University of Trento",
+          "canonical_name": "University of Trento",
+          "institution_id": "institution:3c4903b35459f2b5",
+          "country": "Italy",
+          "region": "Trentino-Alto Adige/Südtirol"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "No One Can Escape: A General Approach to Detect Tampered and Generated Image",

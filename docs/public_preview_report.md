@@ -17,13 +17,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 789 |
+| Map records | 788 |
 | Unique papers | 365 |
-| Unique institutions | 481 |
+| Unique institutions | 480 |
 | Countries | 70 |
-| arXiv/preprint records | 311 |
-| Records with DOI | 774 |
-| Records with venue | 705 |
+| arXiv/preprint records | 310 |
+| Records with DOI | 773 |
+| Records with venue | 704 |
 | Records missing venue | 84 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -34,7 +34,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 684 |
+| detection | 683 |
 | source_attribution | 64 |
 | detection_and_source_attribution | 41 |
 
@@ -42,7 +42,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 326 |
+| ai_generated_image_detection | 325 |
 | synthetic_image_detection | 255 |
 | deepfake_image_detection | 103 |
 | generated_image_source_attribution | 61 |
@@ -55,7 +55,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | 2026 | 66 |
 | 2025 | 258 |
-| 2024 | 201 |
+| 2024 | 200 |
 | 2023 | 116 |
 | 2022 | 60 |
 | 2021 | 34 |
@@ -70,7 +70,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | arXiv (Cornell University) | 77 |
 | ArXiv.org | 55 |
-| Lecture notes in computer science | 52 |
+| Lecture notes in computer science | 51 |
 | Proceedings of the AAAI Conference on Artificial Intelligence | 21 |
 | 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 17 |
 | IEEE Access | 14 |
@@ -87,34 +87,34 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | CN | 141 |
 | US | 63 |
 | United States | 59 |
-| IT | 42 |
 | IN | 40 |
-| Italy | 29 |
-| DE | 20 |
+| Italy | 37 |
+| IT | 33 |
+| DE | 19 |
 | GB | 18 |
-| Germany | 17 |
+| Germany | 18 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
+| University of Naples Federico II | 16 |
 | Beijing Jiaotong University | 11 |
 | Shanghai Jiao Tong University | 11 |
 | University of Siena | 10 |
-| Federico II University Hospital | 9 |
 | University of Chinese Academy of Sciences | 9 |
 | Chinese Academy of Sciences | 8 |
 | Information Technologies Institute | 8 |
-| University of Naples Federico II | 8 |
 | City University of Hong Kong | 7 |
 | Fudan University | 7 |
+| Centre for Research and Technology Hellas | 6 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
 | high | 614 |
-| medium | 175 |
+| medium | 174 |
 
 ## Potential quality issues
 
