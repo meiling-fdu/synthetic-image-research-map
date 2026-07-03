@@ -457,6 +457,17 @@ def normalized_author_name(value: Any) -> str:
     return " ".join(re.findall(r"\w+", name.casefold(), flags=re.UNICODE))
 
 
+def relaxed_author_name(value: Any) -> str:
+    """Ignore middle initials only when matching an existing author roster."""
+    tokens = normalized_author_name(value).split()
+    if len(tokens) < 3:
+        return " ".join(tokens)
+    return " ".join(
+        token for index, token in enumerate(tokens)
+        if index in (0, len(tokens) - 1) or len(token) > 1
+    )
+
+
 def detail_paper_identity(record: Dict[str, Any]) -> Tuple[str, Any]:
     """Group publication versions conservatively for affiliation unioning."""
     doi = normalize_doi(record.get("doi"))
@@ -531,6 +542,10 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
         "country": clean_text(value.get("country")),
         "region": clean_text(value.get("region")),
         "authors": authors,
+        "mapping_source": _author_mapping_source(
+            value.get("mapping_source")
+        ),
+        "mapping_fallback": value.get("mapping_fallback") is True,
     }
 
 
@@ -596,6 +611,23 @@ def _ordered_export_authors(
     ]
 
 
+AUTHOR_MAPPING_SOURCE_PRIORITY = {
+    "curated_admin": 1,
+    "canonical_author_mapping": 2,
+    "raw_affiliation": 3,
+    "paper_institution_fallback": 4,
+    "unmapped": 99,
+}
+
+
+def _author_mapping_source(
+    value: Any,
+    default: str = "raw_affiliation",
+) -> str:
+    source = clean_text(value)
+    return source if source in AUTHOR_MAPPING_SOURCE_PRIORITY else default
+
+
 def add_public_detail_fields(
     paper_records: Sequence[Dict[str, Any]],
     map_records: Sequence[Dict[str, Any]],
@@ -617,7 +649,37 @@ def add_public_detail_fields(
         affiliation_by_identity: Dict[str, Dict[str, Any]] = {}
         source_index_identities: Dict[int, Dict[int, str]] = {}
         author_affiliation_identities: Dict[str, List[str]] = defaultdict(list)
+        author_mapping_sources: Dict[str, str] = {}
+        author_mapping_fallbacks: Dict[str, bool] = {}
         marker_current_identities: Dict[int, str] = {}
+
+        def add_author_mapping(
+            author: Any,
+            identity: str,
+            *,
+            source: str,
+            fallback: bool = False,
+        ) -> None:
+            author_key = normalized_author_name(author)
+            if not author_key or not identity:
+                return
+            normalized_source = _author_mapping_source(source)
+            incoming_priority = AUTHOR_MAPPING_SOURCE_PRIORITY[normalized_source]
+            current_source = author_mapping_sources.get(author_key, "unmapped")
+            current_priority = AUTHOR_MAPPING_SOURCE_PRIORITY[current_source]
+            if incoming_priority < current_priority:
+                author_affiliation_identities[author_key] = []
+                author_mapping_sources[author_key] = normalized_source
+                author_mapping_fallbacks[author_key] = bool(fallback)
+            elif incoming_priority > current_priority:
+                return
+            else:
+                author_mapping_fallbacks[author_key] = (
+                    author_mapping_fallbacks.get(author_key, False)
+                    or bool(fallback)
+                )
+            if identity not in author_affiliation_identities[author_key]:
+                author_affiliation_identities[author_key].append(identity)
 
         def add_affiliation(
             raw_affiliation: Any,
@@ -648,10 +710,22 @@ def add_public_detail_fields(
                     if normalized_author_name(author) not in known_authors:
                         existing["authors"].append(author)
                         known_authors.add(normalized_author_name(author))
+            mapping_source = _author_mapping_source(
+                raw_affiliation.get("mapping_source")
+                if isinstance(raw_affiliation, dict)
+                else None
+            )
+            mapping_fallback = bool(
+                isinstance(raw_affiliation, dict)
+                and raw_affiliation.get("mapping_fallback") is True
+            )
             for author in affiliation.get("authors", []):
-                author_key = normalized_author_name(author)
-                if author_key and identity not in author_affiliation_identities[author_key]:
-                    author_affiliation_identities[author_key].append(identity)
+                add_author_mapping(
+                    author,
+                    identity,
+                    source=mapping_source,
+                    fallback=mapping_fallback,
+                )
             if source_record is not None:
                 original_index = parse_year(
                     raw_affiliation.get("index")
@@ -696,22 +770,57 @@ def add_public_detail_fields(
                 author_key = normalized_author_name(author_name)
                 if not author_key:
                     continue
-                if current_identity not in author_affiliation_identities[author_key]:
-                    author_affiliation_identities[author_key].append(current_identity)
+                source = (
+                    "curated_admin"
+                    if clean_text(record.get("source_database")).casefold()
+                    == "curated"
+                    else "raw_affiliation"
+                )
+                add_author_mapping(
+                    author_name,
+                    current_identity,
+                    source=source,
+                )
                 if all(
                     normalized_author_name(existing) != author_key
                     for existing in current_affiliation["authors"]
                 ):
                     current_affiliation["authors"].append(author_name)
 
-        # Consume legacy index mappings only after every source record's
+        # Consume stable and legacy index mappings only after every source record's
         # original index-to-institution relationship is known.
         for record in records:
-            mappings = record.get("author_institution_indices")
-            if not isinstance(mappings, list):
-                continue
             source_indices = source_index_identities.get(id(record), {})
-            for mapping in mappings:
+            stable_mappings = record.get("author_affiliation_indices")
+            canonical_mappings = record.get("canonical_author_mappings")
+            legacy_mappings = record.get("author_institution_indices")
+            mappings = [
+                *[
+                    (mapping, "raw_affiliation")
+                    for mapping in (
+                        stable_mappings
+                        if isinstance(stable_mappings, list)
+                        else []
+                    )
+                ],
+                *[
+                    (mapping, "canonical_author_mapping")
+                    for mapping in (
+                        canonical_mappings
+                        if isinstance(canonical_mappings, list)
+                        else []
+                    )
+                ],
+                *[
+                    (mapping, "raw_affiliation")
+                    for mapping in (
+                        legacy_mappings
+                        if isinstance(legacy_mappings, list)
+                        else []
+                    )
+                ],
+            ]
+            for mapping, default_source in mappings:
                 if not isinstance(mapping, dict):
                     continue
                 author_key = normalized_author_name(
@@ -720,17 +829,23 @@ def add_public_detail_fields(
                 if not author_key:
                     continue
                 for raw_index in (
-                    mapping.get("institution_indices")
+                    mapping.get("indices")
+                    or mapping.get("institution_indices")
                     or mapping.get("affiliation_indices")
                     or []
                 ):
                     index = parse_year(raw_index)
                     identity = source_indices.get(index or -1)
-                    if (
-                        identity
-                        and identity not in author_affiliation_identities[author_key]
-                    ):
-                        author_affiliation_identities[author_key].append(identity)
+                    if identity:
+                        add_author_mapping(
+                            mapping.get("author") or mapping.get("name"),
+                            identity,
+                            source=_author_mapping_source(
+                                mapping.get("source"),
+                                default_source,
+                            ),
+                            fallback=mapping.get("fallback") is True,
+                        )
 
         exported_affiliations = [
             {
@@ -760,6 +875,7 @@ def add_public_detail_fields(
             )
             author_objects = []
             legacy_indices = []
+            stable_indices = []
             record_authors = _record_authors(record)
             author_names = _ordered_export_authors(
                 record_authors, mapped_authors
@@ -775,11 +891,21 @@ def add_public_detail_fields(
                 record.pop("authors_text", None)
             for author in author_names:
                 author_key = normalized_author_name(author)
+                evidence_key = author_key
+                if evidence_key not in author_affiliation_identities:
+                    relaxed_key = relaxed_author_name(author)
+                    relaxed_matches = [
+                        candidate
+                        for candidate in author_affiliation_identities
+                        if relaxed_author_name(candidate) == relaxed_key
+                    ]
+                    if len(relaxed_matches) == 1:
+                        evidence_key = relaxed_matches[0]
                 indices = sorted(
                     {
                         affiliation_by_identity[identity]["index"]
                         for identity in author_affiliation_identities.get(
-                            author_key, []
+                            evidence_key, []
                         )
                         if identity in affiliation_by_identity
                     }
@@ -793,6 +919,28 @@ def add_public_detail_fields(
                         "name": author,
                         "affiliation_indices": indices,
                         "is_current_marker_author": is_current,
+                        "affiliation_source": author_mapping_sources.get(
+                            evidence_key, "unmapped"
+                        ),
+                        "affiliation_fallback": author_mapping_fallbacks.get(
+                            evidence_key, False
+                        ),
+                    }
+                )
+                stable_indices.append(
+                    {
+                        "author": author,
+                        "indices": indices,
+                        "institution_ids": [
+                            affiliations[index - 1]["institution_id"]
+                            for index in indices
+                        ],
+                        "source": author_mapping_sources.get(
+                            evidence_key, "unmapped"
+                        ),
+                        "fallback": author_mapping_fallbacks.get(
+                            evidence_key, False
+                        ),
                     }
                 )
                 if indices:
@@ -821,9 +969,16 @@ def add_public_detail_fields(
                     "institution_id": affiliation["institution_id"],
                     "institution": affiliation["name"],
                     "authors": list(affiliation["authors"]),
+                    "mapping_source": _author_mapping_source(
+                        affiliation.get("mapping_source")
+                    ),
+                    "mapping_fallback": bool(
+                        affiliation.get("mapping_fallback") is True
+                    ),
                 }
                 for affiliation in affiliations
             ]
+            record["author_affiliation_indices"] = stable_indices
             record["author_institution_indices"] = legacy_indices
 
 

@@ -303,6 +303,14 @@ def _parse_people(value: Any) -> List[str]:
     return [text]
 
 
+def _parse_curated_authors(value: Any) -> List[str]:
+    """Parse the curated papers.csv author column using its documented format."""
+    people = _parse_people(value)
+    if len(people) != 1 or "," not in people[0]:
+        return people
+    return [clean(author) for author in people[0].split(",") if clean(author)]
+
+
 def _ordered_mapping_authors(
     paper_authors: Sequence[str],
     mapping_authors: Sequence[str],
@@ -637,7 +645,7 @@ def _curated_paper_record(
         "openalex_url": openalex_url,
         "is_arxiv_preprint": bool(arxiv_id and not doi),
         "url": paper_url,
-        "authors": _parse_people(row.get("authors")),
+        "authors": _parse_curated_authors(row.get("authors")),
         "source_database": clean(row.get("source_database")) or "curated",
         "metadata_source": clean(row.get("metadata_source")),
         "curation_status": clean(row.get("curation_status")),
@@ -1256,12 +1264,19 @@ def _recalculate_paper_details(
         institution = clean(mapping.get("institution"))
         institution_id = stable_institution_id(institution)
         mapping_authors = _parse_people(mapping.get("institution_authors"))
+        mapping_source = (
+            "curated_admin"
+            if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+            else "raw_affiliation"
+        )
         affiliations.append(
             {
                 "index": index,
                 "institution_id": institution_id,
                 "institution": institution,
                 "authors": mapping_authors,
+                "mapping_source": mapping_source,
+                "mapping_fallback": False,
             }
         )
         for author in mapping_authors:
@@ -1272,6 +1287,8 @@ def _recalculate_paper_details(
                     "author": author,
                     "institution_indices": [],
                     "institution_ids": [],
+                    "source": mapping_source,
+                    "fallback": False,
                 },
             )
             values["institution_indices"].append(index)

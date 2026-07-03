@@ -326,24 +326,6 @@ function normalizedAuthorName(value) {
     .trim();
 }
 
-function highlightedPaperAuthors(record) {
-  const institutionAuthorCounts = new Map();
-  recordInstitutionAuthors(record).forEach((author) => {
-    const key = normalizedAuthorName(author);
-    institutionAuthorCounts.set(key, (institutionAuthorCounts.get(key) || 0) + 1);
-  });
-
-  return recordAuthors(record).map((author) => {
-    const key = normalizedAuthorName(author);
-    const remaining = institutionAuthorCounts.get(key) || 0;
-    if (remaining > 0) {
-      institutionAuthorCounts.set(key, remaining - 1);
-      return `<strong class="institution-author-highlight">${escapeHtml(author)}</strong>`;
-    }
-    return escapeHtml(author);
-  }).join(", ");
-}
-
 function institutionIdentity(record) {
   const stableId = String(
     record.institution_id || record.canonical_institution_id || "",
@@ -511,12 +493,19 @@ function normalizePaperDetailsRecord(record, context = {}) {
 
   sourceRecords.forEach((sourceRecord) => {
     const indexIdentities = sourceIndexIdentities.get(sourceRecord) || new Map();
-    const mappings = Array.isArray(sourceRecord?.author_institution_indices)
-      ? sourceRecord.author_institution_indices
-      : [];
+    const mappings = [
+      ...(Array.isArray(sourceRecord?.author_affiliation_indices)
+        ? sourceRecord.author_affiliation_indices
+        : []),
+      ...(Array.isArray(sourceRecord?.author_institution_indices)
+        ? sourceRecord.author_institution_indices
+        : []),
+    ];
     mappings.forEach((mapping) => {
       const authorKey = normalizedAuthorName(mapping.author || mapping.name);
       const mappedIndices = (
+        mapping.indices
+        ||
         mapping.institution_indices
         || mapping.affiliation_indices
         || []
@@ -588,31 +577,10 @@ function visiblePaperAffiliations(currentRecord, relatedEntries) {
   }).affiliations;
 }
 
-function paperAuthorsWithAffiliations(
-  record,
-  affiliations,
-  currentAffiliationNumber = null,
-) {
+function renderPaperAuthors(record, currentAffiliationNumber = null) {
   const normalized = normalizePaperDetailsRecord(record);
-  const fallbackNumbersByAuthor = new Map();
-  affiliations.forEach((affiliation) => {
-    affiliation.authors.forEach((affiliationAuthor) => {
-      const authorKey = normalizedAuthorName(affiliationAuthor);
-      const numbers = fallbackNumbersByAuthor.get(authorKey) || [];
-      if (authorKey && !numbers.includes(affiliation.number)) {
-        numbers.push(affiliation.number);
-        fallbackNumbersByAuthor.set(authorKey, numbers);
-      }
-    });
-  });
-  const authorsForRendering = normalized.authors.map((author) => {
-    const numbers = author.affiliation_indices.length
-      ? author.affiliation_indices
-      : fallbackNumbersByAuthor.get(normalizedAuthorName(author.name)) || [];
-    return { ...author, affiliation_indices: numbers };
-  });
-  return PaperDetailsHelpers.renderAuthors(
-    authorsForRendering,
+  return PaperDetailsHelpers.renderPaperAuthors(
+    normalized,
     escapeHtml,
     currentAffiliationNumber,
   );
@@ -1356,13 +1324,10 @@ function paperDetailsHtml(record, relatedEntries) {
   const affiliations = normalizedRecord.affiliations;
   const currentAffiliation = affiliations.find((affiliation) => affiliation.isCurrent);
   const authors = orderedAuthors.length
-    ? affiliations.length
-      ? paperAuthorsWithAffiliations(
-          normalizedRecord,
-          affiliations,
-          currentAffiliation?.number ?? null,
-        )
-      : highlightedPaperAuthors(normalizedRecord)
+    ? renderPaperAuthors(
+        normalizedRecord,
+        currentAffiliation?.number ?? null,
+      )
     : "Unknown";
   const institutionAuthors = recordInstitutionAuthors(record);
   const institutionAuthorsRow = !affiliations.length && institutionAuthors.length
@@ -1478,9 +1443,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
   const linksRow = links ? `<div class="result-links">${links}</div>` : "";
   const authors = recordAuthors(normalizedRecord);
   const authorsHtml = authors.length
-    ? affiliations.length
-      ? paperAuthorsWithAffiliations(normalizedRecord, affiliations)
-      : authors.map(escapeHtml).join(", ")
+    ? renderPaperAuthors(normalizedRecord)
     : "Unknown";
   const authorsRow = `<p class="result-author-affiliations"><strong>Authors:</strong> ${authorsHtml}</p>`;
   const affiliationsHtml = compactAffiliationsHtml(affiliations);

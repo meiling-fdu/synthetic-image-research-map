@@ -70,6 +70,13 @@ FORBIDDEN_LABELS = {
 }
 MISSING_VALUE_STRINGS = {"", "none", "nan", "null"}
 PAPER_LINK_FIELDS = ("paper_url", "openalex_url", "doi", "arxiv_url", "paper_id")
+AUTHOR_MAPPING_SOURCES = {
+    "curated_admin",
+    "canonical_author_mapping",
+    "raw_affiliation",
+    "paper_institution_fallback",
+    "unmapped",
+}
 
 
 class ValidationInputError(RuntimeError):
@@ -559,6 +566,15 @@ def validate_paper_detail_schema(
                 title,
                 f"author references unknown affiliation index: {name}",
             )
+        parsed_indices = [parse_integer(value) for value in indices]
+        if len(parsed_indices) != len(set(parsed_indices)):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author has duplicate affiliation indices: {name}",
+            )
         if not isinstance(author.get("is_current_marker_author"), bool):
             add_issue(
                 issues,
@@ -574,6 +590,97 @@ def validate_paper_detail_schema(
                 index,
                 title,
                 "paper-level authors cannot be current marker authors",
+            )
+
+    stable_mappings = record.get("author_affiliation_indices")
+    if not isinstance(stable_mappings, list):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "author_affiliation_indices must be an array",
+        )
+        stable_mappings = []
+    author_keys = {
+        normalized_author_name(author)
+        for author in authors
+        if isinstance(author, dict) and author_name(author)
+    }
+    seen_mapping_authors = set()
+    for mapping in stable_mappings:
+        if not isinstance(mapping, dict):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                "author_affiliation_indices entries must be objects",
+            )
+            continue
+        name = author_name(mapping)
+        author_key = normalized_author_name(mapping)
+        if not name or author_key not in author_keys:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author mapping does not match exported author: {name or '<empty>'}",
+            )
+        if author_key in seen_mapping_authors:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"duplicate author mapping: {name}",
+            )
+        seen_mapping_authors.add(author_key)
+        mapping_indices = mapping.get("indices")
+        if not isinstance(mapping_indices, list):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author mapping indices must be an array: {name}",
+            )
+            continue
+        parsed_mapping_indices = [
+            parse_integer(value) for value in mapping_indices
+        ]
+        if any(value not in valid_indices for value in parsed_mapping_indices):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author mapping references unknown affiliation index: {name}",
+            )
+        if len(parsed_mapping_indices) != len(set(parsed_mapping_indices)):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author mapping has duplicate affiliation indices: {name}",
+            )
+        if clean_text(mapping.get("source")) not in AUTHOR_MAPPING_SOURCES:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author mapping has unknown source: {name}",
+            )
+        if not isinstance(mapping.get("fallback"), bool):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"author mapping fallback must be boolean: {name}",
             )
 
     current_institution = record.get("current_institution")
@@ -594,6 +701,34 @@ def validate_paper_detail_schema(
                 title,
                 "marker current_institution references an unknown affiliation",
             )
+        else:
+            current_index = parse_integer(current_institution.get("index"))
+            current_affiliation = affiliations[current_index - 1]
+            current_id = clean_text(current_institution.get("institution_id"))
+            affiliation_id = clean_text(current_affiliation.get("institution_id"))
+            current_name = normalized_text(
+                current_institution.get("name")
+                or current_institution.get("canonical_name")
+            )
+            affiliation_name = normalized_text(
+                current_affiliation.get("name")
+                or current_affiliation.get("canonical_name")
+            )
+            if (
+                current_id
+                and affiliation_id
+                and current_id.casefold() != affiliation_id.casefold()
+            ) or (
+                not current_id
+                and current_name != affiliation_name
+            ):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    index,
+                    title,
+                    "marker current institution does not match affiliation list",
+                )
     elif current_institution is not None:
         add_issue(
             issues,
@@ -912,15 +1047,11 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
             "public paper has no eligible author–institution mapping; markers "
             "and author affiliation numbers are unavailable",
         )
-    mapped_author_keys = {
-        normalized_author_name(author)
-        for author in record.get("authors") or []
-        if isinstance(author, dict) and author.get("affiliation_indices")
-    }
     for author in record.get("authors") or []:
         if (
-            mapped_author_keys
-            and normalized_author_name(author) not in mapped_author_keys
+            record.get("affiliations")
+            and isinstance(author, dict)
+            and not author.get("affiliation_indices")
         ):
             add_issue(
                 issues,
@@ -929,6 +1060,14 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
                 title,
                 f"author has no institution index: {author_name(author)}",
             )
+    if record.get("affiliations") and not record.get("authors"):
+        add_issue(
+            issues,
+            "WARNING",
+            index,
+            title,
+            "paper has affiliations but no exported author roster",
+        )
 
 
 def print_summary(

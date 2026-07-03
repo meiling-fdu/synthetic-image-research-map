@@ -5,7 +5,8 @@
   }
   root.PaperDetailsHelpers = helpers;
 }(typeof globalThis !== "undefined" ? globalThis : this, function buildHelpers() {
-  function renderAuthors(authors, escapeHtml, currentAffiliationNumber = null) {
+  function renderPaperAuthors(paper, escapeHtml, currentAffiliationNumber = null) {
+    const authors = Array.isArray(paper?.authors) ? paper.authors : [];
     return authors.map((author) => {
       const numbers = Array.isArray(author.affiliation_indices)
         ? author.affiliation_indices
@@ -24,5 +25,5 @@
     }).join(", ");
   }
 
-  return { renderAuthors };
+  return { renderPaperAuthors };
 }));

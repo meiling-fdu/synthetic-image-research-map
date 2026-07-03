@@ -224,6 +224,8 @@ class CuratedLocationResolutionTests(unittest.TestCase):
                     ][0]["institution_id"],
                     "institution": "University of Naples Federico II",
                     "authors": ["Francesco Marra", "Luisa Verdoliva"],
+                    "mapping_source": "curated_admin",
+                    "mapping_fallback": False,
                 },
                 {
                     "index": 2,
@@ -232,6 +234,8 @@ class CuratedLocationResolutionTests(unittest.TestCase):
                     ][1]["institution_id"],
                     "institution": "University of Trento",
                     "authors": ["Cristiano Saltori", "Giulia Boato"],
+                    "mapping_source": "curated_admin",
+                    "mapping_fallback": False,
                 },
             ],
         )

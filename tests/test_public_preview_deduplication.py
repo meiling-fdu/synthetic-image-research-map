@@ -13,6 +13,8 @@ from scripts.validate_public_preview import validate_preprint_version_duplicates
 from scripts.validate_public_preview import (
     is_bad_author_candidate,
     normalized_author_name,
+    validate_paper_detail_schema,
+    validate_paper_record,
     validate_curated_affiliation_supersession,
 )
 
@@ -170,7 +172,45 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
 
         self.assertEqual(paper["affiliations"][0]["name"], "Known University")
         self.assertEqual(paper["authors"][0]["affiliation_indices"], [])
+        self.assertEqual(
+            paper["author_affiliation_indices"][0]["source"], "unmapped"
+        )
+        self.assertFalse(
+            paper["author_affiliation_indices"][0]["fallback"]
+        )
         self.assertFalse(paper["authors"][0]["is_current_marker_author"])
+
+    def test_curated_mapping_outranks_stale_raw_author_mapping(self):
+        paper = {
+            "title": "Admin mapping priority",
+            "year": 2024,
+            "authors": ["Ada Researcher"],
+            "author_institution_affiliations": [
+                {
+                    "index": 1,
+                    "institution": "Stale University",
+                    "authors": ["Ada Researcher"],
+                },
+                {
+                    "index": 2,
+                    "institution": "Curated University",
+                    "authors": ["Ada Researcher"],
+                    "mapping_source": "curated_admin",
+                    "mapping_fallback": False,
+                },
+            ],
+        }
+
+        add_public_detail_fields([paper], [])
+
+        self.assertEqual(paper["authors"][0]["affiliation_indices"], [2])
+        self.assertEqual(
+            paper["author_affiliation_indices"][0]["source"],
+            "curated_admin",
+        )
+        self.assertFalse(
+            paper["author_affiliation_indices"][0]["fallback"]
+        )
 
     def test_author_order_preserved_from_paper_metadata(self):
         paper = {
@@ -515,6 +555,49 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                     filename,
                 )
 
+    def test_evoguard_curated_author_mapping_regression(self):
+        repository = Path(__file__).resolve().parents[1]
+        title = (
+            "EvoGuard: An Extensible Agentic RL-based Framework for Practical "
+            "and Evolving AI-Generated Image Detection"
+        )
+        expected = {
+            "Chenyang Zhu": [1, 2],
+            "Maorong Wang": [2],
+            "Jun O. Liu": [2],
+            "Ching-Chun Chang": [2],
+            "Isao Echizen": [1, 2],
+        }
+        for filename in (
+            "public_preview_map_data.json",
+            "public_preview_papers.json",
+        ):
+            with (repository / "web" / "data" / filename).open(
+                encoding="utf-8"
+            ) as handle:
+                records = json.load(handle)["records"]
+            matches = [
+                record for record in records if record.get("title") == title
+            ]
+            self.assertTrue(matches, filename)
+            for record in matches:
+                self.assertEqual(
+                    {
+                        author["name"]: author["affiliation_indices"]
+                        for author in record["authors"]
+                    },
+                    expected,
+                    filename,
+                )
+                self.assertEqual(
+                    {
+                        mapping["source"]
+                        for mapping in record["author_affiliation_indices"]
+                    },
+                    {"curated_admin"},
+                    filename,
+                )
+
     def test_frontend_renders_numbers_and_current_author_bold(self):
         helper = (
             Path(__file__).resolve().parents[1]
@@ -527,11 +610,11 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         )
         script = """
 const helpers = require(process.argv[1]);
-const html = helpers.renderAuthors(
-  [
+const html = helpers.renderPaperAuthors(
+  {authors: [
     {name: "Jane Doe", affiliation_indices: [1, 2], is_current_marker_author: true},
     {name: "John Roe", affiliation_indices: [], is_current_marker_author: false},
-  ],
+  ]},
   (value) => value,
   1,
 );
@@ -548,6 +631,107 @@ process.stdout.write(JSON.stringify(html));
         self.assertIn(">1,2</sup>", rendered)
         self.assertIn('<strong class="current-institution-author">', rendered)
         self.assertNotIn("John Roe<sup", rendered)
+
+    def test_validator_warns_for_missing_mapping_without_crashing(self):
+        record = {
+            "title": "Partially mapped",
+            "authors": [
+                {
+                    "name": "Unmapped Author",
+                    "affiliation_indices": [],
+                    "is_current_marker_author": False,
+                }
+            ],
+            "affiliations": [
+                {
+                    "index": 1,
+                    "name": "Known University",
+                    "institution_id": "institution:known",
+                    "country": "",
+                    "region": "",
+                }
+            ],
+            "author_affiliation_indices": [
+                {
+                    "author": "Unmapped Author",
+                    "indices": [],
+                    "institution_ids": [],
+                    "source": "unmapped",
+                    "fallback": False,
+                }
+            ],
+            "current_institution": None,
+        }
+        issues = []
+
+        validate_paper_detail_schema(
+            0, record, issues, marker_record=False
+        )
+
+        self.assertFalse(
+            any(issue.level == "ERROR" for issue in issues)
+        )
+        validate_paper_record(0, record, issues)
+        self.assertTrue(
+            any(
+                issue.level == "WARNING"
+                and "no institution index" in issue.message
+                for issue in issues
+            )
+        )
+
+    def test_validator_rejects_invalid_mapping_indices_and_current_institution(self):
+        record = {
+            "title": "Invalid mapping",
+            "authors": [
+                {
+                    "name": "Ada Researcher",
+                    "affiliation_indices": [1, 1],
+                    "is_current_marker_author": True,
+                }
+            ],
+            "affiliations": [
+                {
+                    "index": 1,
+                    "name": "",
+                    "institution_id": "institution:one",
+                    "country": "",
+                    "region": "",
+                }
+            ],
+            "author_affiliation_indices": [
+                {
+                    "author": "Ada Researcher",
+                    "indices": [2],
+                    "institution_ids": ["institution:two"],
+                    "source": "raw_affiliation",
+                    "fallback": False,
+                }
+            ],
+            "current_institution": {
+                "index": 1,
+                "name": "Different University",
+                "institution_id": "institution:different",
+            },
+        }
+        issues = []
+
+        validate_paper_detail_schema(
+            0, record, issues, marker_record=True
+        )
+
+        messages = {issue.message for issue in issues}
+        self.assertTrue(any("has no name" in message for message in messages))
+        self.assertTrue(
+            any("duplicate affiliation indices" in message for message in messages)
+        )
+        self.assertTrue(
+            any("unknown affiliation index" in message for message in messages)
+        )
+        self.assertIn(
+            "marker current institution does not match affiliation list",
+            messages,
+        )
 
     def setUp(self):
         self.preprint = {

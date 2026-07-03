@@ -442,7 +442,17 @@ Affiliation is a property of an author's relationship to a particular paper, not
 
 `data/curated/author_institution_mappings.csv` keeps the reviewable paper-level grouping used by the admin and exporter. In addition to the canonical `institution` and `institution_authors`, imported candidates preserve `author_order`, `raw_affiliation`, `openalex_institution_id`, source city/country/latitude/longitude, and `provenance_source`. Missing coordinates never remove a candidate. Unmatched institutions use `mapping_status=needs_review`; confirmed canonical or alias matches may use `active`.
 
-Public paper records expose `author_institution_affiliations` (numbered institution groups) and `author_institution_indices` (author-to-index and stable institution-ID relationships). Public marker records expose `institution_id`; the frontend falls back to a normalized canonical institution name only for legacy records.
+Public paper and marker records expose one stable author mapping field,
+`author_affiliation_indices`. Each entry contains the display `author`, one-based
+`indices` into the record's `affiliations` list, corresponding
+`institution_ids`, a `source`, and a boolean `fallback`. Source priority is
+`curated_admin`, `canonical_author_mapping`, `raw_affiliation`, then
+`paper_institution_fallback`; an unresolved author is retained with
+`source=unmapped` and an empty index list. A fallback is never labeled as a
+confirmed curated mapping. The legacy `author_institution_affiliations` and
+`author_institution_indices` fields remain temporarily for older consumers.
+Public marker records also expose `institution_id`; the frontend falls back to
+a normalized canonical institution name only for legacy records.
 
 ## Confirmed paper-version merges
 
