@@ -307,12 +307,17 @@ def _ordered_mapping_authors(
     paper_authors: Sequence[str],
     mapping_authors: Sequence[str],
 ) -> List[str]:
-    """Prefer mapped people while retaining a trustworthy publication order."""
-    mapped_by_key = {
-        _normalized_person(author): author
-        for author in mapping_authors
-        if _normalized_person(author)
-    }
+    """Keep paper order; use mappings only when they are the sole usable source."""
+    if not paper_authors:
+        ordered_mapping_authors = []
+        seen_mapping_keys = set()
+        for author in mapping_authors:
+            key = _normalized_person(author)
+            if key and key not in seen_mapping_keys:
+                ordered_mapping_authors.append(author)
+                seen_mapping_keys.add(key)
+        return ordered_mapping_authors
+
     ordered = []
     seen = set()
     ambiguous_author_line = (
@@ -321,17 +326,36 @@ def _ordered_mapping_authors(
     if not ambiguous_author_line:
         for author in paper_authors:
             key = _normalized_person(author)
-            mapped_author = mapped_by_key.get(key)
-            value = mapped_author or author
             if key and key not in seen:
-                ordered.append(value)
+                ordered.append(author)
                 seen.add(key)
+        if ordered:
+            return ordered
+
+    # A legacy comma-separated line cannot be split blindly because it may
+    # contain "Family, Given" names. Mapping names may identify boundaries,
+    # but their positions in the paper line still determine the order.
+    author_line = clean(paper_authors[0]).casefold()
+    positioned = []
+    mapping_keys = set()
     for author in mapping_authors:
         key = _normalized_person(author)
-        if key and key not in seen:
-            ordered.append(author)
-            seen.add(key)
-    return ordered
+        if not key or key in mapping_keys:
+            continue
+        mapping_keys.add(key)
+        position = author_line.find(clean(author).casefold())
+        if position >= 0:
+            positioned.append((position, author))
+    if mapping_keys and len(positioned) == len(mapping_keys):
+        return [author for _position, author in sorted(positioned)]
+
+    if paper_authors:
+        return list(paper_authors)
+    return [
+        author
+        for author in mapping_authors
+        if _normalized_person(author)
+    ]
 
 
 def _normalized_person(value: Any) -> str:

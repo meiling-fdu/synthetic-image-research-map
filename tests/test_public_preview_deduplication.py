@@ -3,6 +3,7 @@ import subprocess
 import unittest
 from pathlib import Path
 
+from scripts.curated_export import _ordered_mapping_authors
 from scripts.export_public_preview import (
     add_public_detail_fields,
     exclude_preprint_versions,
@@ -169,6 +170,90 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertEqual(paper["authors"][0]["affiliation_indices"], [])
         self.assertFalse(paper["authors"][0]["is_current_marker_author"])
 
+    def test_author_order_preserved_from_paper_metadata(self):
+        paper = {
+            "title": "Paper order wins",
+            "year": 2024,
+            "doi": "10.1000/paper-order",
+            "authors": [
+                "Author One",
+                "Author Two",
+                "Unmapped Author",
+                "Author Three",
+                "Author Four",
+            ],
+        }
+        first_institution = {
+            **paper,
+            "institution": "First University",
+            "institution_id": "institution:first",
+            "institution_authors": [
+                "Author One",
+                "Author Three",
+                "Mapping-only Author",
+            ],
+        }
+        second_institution = {
+            **paper,
+            "institution": "Second University",
+            "institution_id": "institution:second",
+            "institution_authors": ["Author Two", "Author Four"],
+        }
+
+        add_public_detail_fields(
+            [paper], [first_institution, second_institution]
+        )
+
+        self.assertEqual(
+            [author["name"] for author in paper["authors"]],
+            [
+                "Author One",
+                "Author Two",
+                "Unmapped Author",
+                "Author Three",
+                "Author Four",
+            ],
+        )
+        self.assertEqual(
+            [
+                author["affiliation_indices"]
+                for author in paper["authors"]
+            ],
+            [[1], [2], [], [1], [2]],
+        )
+
+    def test_mapping_authors_are_fallback_when_paper_authors_are_missing(self):
+        self.assertEqual(
+            _ordered_mapping_authors([], ["Mapped One", "Mapped Two"]),
+            ["Mapped One", "Mapped Two"],
+        )
+        paper = {
+            "title": "Mapping-only author source",
+            "year": 2024,
+            "doi": "10.1000/mapping-only",
+            "authors": [],
+        }
+        marker = {
+            **paper,
+            "institution": "Fallback University",
+            "institution_id": "institution:fallback",
+            "institution_authors": ["Mapped One", "Mapped Two"],
+        }
+
+        add_public_detail_fields([paper], [marker])
+
+        self.assertEqual(
+            [author["name"] for author in paper["authors"]],
+            ["Mapped One", "Mapped Two"],
+        )
+        self.assertEqual(
+            [
+                author["affiliation_indices"]
+                for author in paper["authors"]
+            ],
+            [[1], [1]],
+        )
+
     def test_legacy_detail_fields_migrate_without_fabricated_indices(self):
         paper = {
             "title": "Legacy schema migration",
@@ -260,7 +345,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 for author in naples["authors"]
                 if author["is_current_marker_author"]
             ],
-            ["Francesco Marra", "Luisa Verdoliva"],
+            ["Marra, Francesco", "Luisa Verdoliva"],
         )
         self.assertEqual(
             [
@@ -268,7 +353,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 for author in trento["authors"]
                 if author["is_current_marker_author"]
             ],
-            ["Cristiano Saltori", "Giulia Boato"],
+            ["Saltori, Cristiano", "Boato, Giulia"],
         )
 
     def test_latent_recovery_mapping_uses_mapping_author_roster(self):
@@ -355,6 +440,78 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 {record.get("title") for record in bad},
                 filename,
             )
+
+    def test_source_attribution_survey_author_order_regression(self):
+        repository = Path(__file__).resolve().parents[1]
+        title = "Source Attribution of AI-Generated Images: a Principled Survey"
+        expected_names = [
+            "Meiling Li",
+            "Benedetta Tondi",
+            "Pietro Bongini",
+            "Zhenxing Qian",
+            "Xinpeng Zhang",
+            "Mauro Barni",
+        ]
+        expected_indices = [[1], [2], [2], [1], [1], [2]]
+
+        for filename in (
+            "public_preview_map_data.json",
+            "public_preview_papers.json",
+        ):
+            with (repository / "web" / "data" / filename).open(
+                encoding="utf-8"
+            ) as handle:
+                records = json.load(handle)["records"]
+            matches = [
+                record for record in records
+                if record.get("title") == title
+            ]
+            self.assertTrue(matches, filename)
+            for record in matches:
+                names = [author["name"] for author in record["authors"]]
+                self.assertEqual(names, expected_names, filename)
+                self.assertNotIn("Xi Zhang", names, filename)
+                self.assertLess(
+                    names.index("Benedetta Tondi"),
+                    names.index("Zhenxing Qian"),
+                )
+                self.assertLess(
+                    names.index("Pietro Bongini"),
+                    names.index("Zhenxing Qian"),
+                )
+                self.assertEqual(names[0], "Meiling Li")
+                self.assertEqual(names[-1], "Mauro Barni")
+                self.assertEqual(
+                    [
+                        author["affiliation_indices"]
+                        for author in record["authors"]
+                    ],
+                    expected_indices,
+                    filename,
+                )
+                active_names = [
+                    author["name"]
+                    for author in record["authors"]
+                    if author["is_current_marker_author"]
+                ]
+                expected_active = {
+                    "Fudan University": [
+                        "Meiling Li",
+                        "Zhenxing Qian",
+                        "Xinpeng Zhang",
+                    ],
+                    "University of Siena": [
+                        "Benedetta Tondi",
+                        "Pietro Bongini",
+                        "Mauro Barni",
+                    ],
+                    None: [],
+                }
+                self.assertEqual(
+                    active_names,
+                    expected_active[record.get("institution")],
+                    filename,
+                )
 
     def test_frontend_renders_numbers_and_current_author_bold(self):
         helper = (

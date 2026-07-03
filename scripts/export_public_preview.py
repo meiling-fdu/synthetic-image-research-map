@@ -536,12 +536,7 @@ def _ordered_export_authors(
     record_authors: Sequence[str],
     mapped_authors: Sequence[str],
 ) -> List[str]:
-    """Use mapped authors as canonical names without losing reliable order."""
-    mapped_by_key = {
-        normalized_author_name(author): author
-        for author in mapped_authors
-        if normalized_author_name(author)
-    }
+    """Keep paper order and use mapped authors only as a fallback roster."""
     ambiguous_author_line = (
         len(record_authors) == 1 and record_authors[0].count(",") >= 2
     )
@@ -550,16 +545,34 @@ def _ordered_export_authors(
     if not ambiguous_author_line:
         for author in record_authors:
             key = normalized_author_name(author)
-            value = mapped_by_key.get(key) or author
             if key and key not in seen:
-                ordered.append(value)
+                ordered.append(author)
                 seen.add(key)
+        if ordered:
+            return ordered
+
+    author_line = (
+        clean_text(record_authors[0]).casefold()
+        if ambiguous_author_line
+        else ""
+    )
+    positioned = []
+    mapped_keys = set()
     for author in mapped_authors:
         key = normalized_author_name(author)
-        if key and key not in seen:
-            ordered.append(author)
-            seen.add(key)
-    return ordered
+        if not key or key in mapped_keys:
+            continue
+        mapped_keys.add(key)
+        position = author_line.find(clean_text(author).casefold())
+        if position >= 0:
+            positioned.append((position, author))
+    if mapped_keys and len(positioned) == len(mapped_keys):
+        return [author for _position, author in sorted(positioned)]
+    if record_authors:
+        return list(record_authors)
+    return [
+        author for author in mapped_authors if normalized_author_name(author)
+    ]
 
 
 def add_public_detail_fields(
@@ -731,8 +744,7 @@ def add_public_detail_fields(
                 record_authors, mapped_authors
             )
             ambiguous_legacy_text = (
-                not mapped_authors
-                and len(author_names) == 1
+                len(author_names) == 1
                 and author_names[0].count(",") >= 2
             )
             if ambiguous_legacy_text:
