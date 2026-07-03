@@ -71,6 +71,83 @@
   font-size: 1.55rem;
 }
 
+.mapping-coverage-card {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background: var(--panel);
+}
+
+.mapping-coverage-card h3,
+.mapping-coverage-card h4 {
+  margin-bottom: 0.5rem;
+}
+
+.mapping-coverage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.mapping-coverage-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+
+.mapping-coverage-summary article {
+  padding: 0.75rem;
+  border-left: 4px solid var(--blue);
+  border-radius: 0.55rem;
+  background: var(--blue-soft);
+}
+
+.mapping-coverage-summary article[data-status="good"] {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.mapping-coverage-summary article[data-status="warning"] {
+  border-color: var(--amber);
+  background: var(--amber-soft);
+}
+
+.mapping-coverage-summary article[data-status="priority"] {
+  border-color: var(--red);
+  background: var(--red-soft);
+}
+
+.mapping-coverage-summary strong,
+.mapping-coverage-summary span {
+  display: block;
+}
+
+.mapping-coverage-summary strong {
+  font-size: 1.35rem;
+}
+
+.mapping-coverage-summary span,
+.mapping-coverage-empty {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.mapping-coverage-table td:nth-child(2) {
+  min-width: 16rem;
+}
+
+.mapping-coverage-table td:nth-last-child(3) {
+  min-width: 18rem;
+}
+
 .review-filters,
 .review-actions {
   display: flex;

@@ -159,6 +159,12 @@ REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = REPOSITORY_ROOT / "web"
 PUBLIC_PAPERS_PATH = WEB_DIR / "data" / "public_preview_papers.json"
 PUBLIC_MAP_PATH = WEB_DIR / "data" / "public_preview_map_data.json"
+AUTHOR_MAPPING_REPORT_PATH = (
+    REPOSITORY_ROOT / "data" / "manual" / "missing_author_mappings_report.csv"
+)
+AUTHOR_MAPPING_MARKDOWN_PATH = (
+    REPOSITORY_ROOT / "docs" / "missing_author_mappings_report.md"
+)
 CURATED_PAPERS_PATH = DEFAULT_CURATED_PAPERS_PATH
 CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 CURATED_MAPPINGS_PATH = DEFAULT_MAPPINGS_PATH
@@ -187,6 +193,10 @@ STATIC_ROUTES = {
     "/admin/": (WEB_DIR / "admin.html", "text/html; charset=utf-8"),
     "/admin.js": (WEB_DIR / "admin.js", "text/javascript; charset=utf-8"),
     "/admin.css": (WEB_DIR / "admin.css", "text/css; charset=utf-8"),
+    "/docs/missing_author_mappings_report.md": (
+        AUTHOR_MAPPING_MARKDOWN_PATH,
+        "text/markdown; charset=utf-8",
+    ),
 }
 
 
@@ -317,6 +327,98 @@ def read_csv_rows(path: Path) -> List[Dict[str, str]]:
             return [dict(row) for row in csv.DictReader(handle)]
     except (OSError, UnicodeError, csv.Error) as error:
         raise AdminDataError(f"could not read {path}: {error}") from error
+
+
+def load_author_mapping_coverage(path: Path = AUTHOR_MAPPING_REPORT_PATH) -> Dict[str, Any]:
+    """Load the fixed generated author-mapping report for the local dashboard."""
+    if not path.exists():
+        raise AdminDataError(
+            "Author mapping coverage report is missing. Run the refresh pipeline "
+            "to generate data/manual/missing_author_mappings_report.csv."
+        )
+    rows = read_csv_rows(path)
+    required_fields = {
+        "priority_rank",
+        "mapping_status",
+        "title",
+        "year",
+        "is_key_paper",
+        "missing_authors",
+        "missing_author_names",
+        "marker_count",
+    }
+    if rows:
+        missing_fields = required_fields - set(rows[0])
+        if missing_fields:
+            raise AdminDataError(
+                "Author mapping coverage report is missing required columns: "
+                + ", ".join(sorted(missing_fields))
+            )
+
+    records: List[Dict[str, Any]] = []
+    for index, row in enumerate(rows, start=2):
+        try:
+            priority_rank = int(clean(row.get("priority_rank")))
+            missing_authors = int(clean(row.get("missing_authors")) or 0)
+            marker_count = int(clean(row.get("marker_count")) or 0)
+        except ValueError as error:
+            raise AdminDataError(
+                f"Author mapping coverage report has invalid numeric data on row {index}."
+            ) from error
+        status = clean(row.get("mapping_status")).casefold()
+        if status not in {"complete", "partial", "zero"}:
+            raise AdminDataError(
+                f"Author mapping coverage report has invalid status on row {index}."
+            )
+        record: Dict[str, Any] = dict(row)
+        record.update(
+            {
+                "priority_rank": priority_rank,
+                "missing_authors": missing_authors,
+                "marker_count": marker_count,
+                "is_key_paper": clean(row.get("is_key_paper")).casefold()
+                in TRUE_VALUES,
+                "is_curated_paper": clean(row.get("is_curated_paper")).casefold()
+                in TRUE_VALUES,
+                "mapping_status": status,
+            }
+        )
+        for field in ("total_authors", "mapped_authors"):
+            try:
+                record[field] = int(clean(row.get(field)) or 0)
+            except ValueError as error:
+                raise AdminDataError(
+                    f"Author mapping coverage report has invalid numeric data on row {index}."
+                ) from error
+        records.append(record)
+
+    records.sort(key=lambda row: row["priority_rank"])
+    counts = {
+        status: sum(row["mapping_status"] == status for row in records)
+        for status in ("complete", "partial", "zero")
+    }
+    total = len(records)
+    complete = counts["complete"]
+    summary = {
+        "total_public_papers": total,
+        "complete_mappings": complete,
+        "partial_mappings": counts["partial"],
+        "zero_mappings": counts["zero"],
+        "total_missing_author_links": sum(
+            row["missing_authors"] for row in records
+        ),
+        "mapping_coverage_percentage": round(
+            (complete / total * 100) if total else 0.0, 1
+        ),
+        "map_markers_reconciled": sum(row["marker_count"] for row in records),
+    }
+    return {
+        "available": True,
+        "summary": summary,
+        "records": records,
+        "report_url": "/docs/missing_author_mappings_report.md",
+        "source": "data/manual/missing_author_mappings_report.csv",
+    }
 
 
 def curated_paper_record(row: Mapping[str, str]) -> Dict[str, Any]:
@@ -928,6 +1030,7 @@ def make_handler(
     institution_locations_path: Path = INSTITUTION_LOCATIONS_PATH,
     institution_aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
     review_decisions_path: Path = DEFAULT_REVIEW_DECISIONS_PATH,
+    author_mapping_report_path: Path = AUTHOR_MAPPING_REPORT_PATH,
 ) -> type[BaseHTTPRequestHandler]:
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
@@ -1201,6 +1304,37 @@ def make_handler(
                     return
                 self.send_json(HTTPStatus.OK, payload)
                 return
+            if request.path == "/api/reports/author-mapping-coverage":
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        api_payload(
+                            success=False,
+                            errors=("X-Admin-Token header is required",),
+                        ),
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        api_payload(
+                            success=False,
+                            errors=("admin report APIs are restricted to loopback clients",),
+                        ),
+                    )
+                    return
+                try:
+                    report = load_author_mapping_coverage(
+                        author_mapping_report_path
+                    )
+                except AdminDataError as error:
+                    self.send_json(
+                        HTTPStatus.NOT_FOUND,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
+                    return
+                self.send_json(HTTPStatus.OK, api_payload(data=report))
+                return
             review_get_paths = {
                 "/api/review/high-risk-markers": "high_risk_marker",
                 "/api/review/marker-blockers": "marker_blocker",
@@ -1451,6 +1585,7 @@ def make_handler(
                 "/api/review/marker-blockers",
                 "/api/review/key-paper-coverage",
                 "/api/review/manual-import",
+                "/api/reports/author-mapping-coverage",
                 "/api/paper/metadata",
             }:
                 self.send_method_not_allowed("GET")

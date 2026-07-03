@@ -32,6 +32,7 @@
         <button data-console-target="scope-review" type="button">Scope Review</button>
         <button data-console-target="metadata-editor" type="button">Metadata Editor</button>
         <button data-console-target="mappings" type="button">Author–Institution Mappings</button>
+        <button data-console-target="author-mapping-coverage" type="button">Author Mapping Coverage</button>
         <button data-console-target="location-review" type="button">Location Review</button>
         <button data-console-target="high-risk" type="button">High-risk Marker Review</button>
         <button data-console-target="marker-blockers" type="button">Marker Blocker Review</button>
@@ -65,12 +66,36 @@
           <button class="secondary-button" id="reload-review-queues" type="button">Reload all review queues</button>
         </div>
         <div class="dashboard-grid" id="dashboard-grid"><p>Dashboard data loads after authentication.</p></div>
+        <section class="mapping-coverage-card" aria-labelledby="mapping-coverage-dashboard-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Generated maintenance report</p>
+              <h3 id="mapping-coverage-dashboard-title">Author Mapping Coverage</h3>
+            </div>
+            <div class="mapping-coverage-actions">
+              <a class="secondary-button button-link" id="open-mapping-report" href="/docs/missing_author_mappings_report.md" target="_blank" rel="noreferrer">Open full mapping report</a>
+              <button class="secondary-button" id="reload-mapping-coverage" type="button">Reload mapping coverage</button>
+            </div>
+          </div>
+          <div class="mapping-coverage-summary" id="mapping-coverage-summary">
+            <p>Mapping coverage loads after authentication.</p>
+          </div>
+          <h4>Highest Priority Missing Mappings</h4>
+          <div class="table-wrap">
+            <table class="mapping-coverage-table">
+              <thead><tr><th>Status</th><th>Paper title</th><th>Year</th><th>Missing</th><th>Missing author names</th><th>Markers</th><th>Key</th></tr></thead>
+              <tbody id="mapping-priority-rows"></tbody>
+            </table>
+          </div>
+          <p id="mapping-priority-empty" class="mapping-coverage-empty"></p>
+        </section>
         <div class="workflow-actions">
           <button class="primary-button" id="dashboard-run-full-refresh" type="button">Run full refresh pipeline</button>
           <button class="secondary-button" data-console-target="add-paper" type="button">Open Add Paper</button>
           <button class="secondary-button" data-console-target="high-risk" type="button">Open High-risk Marker Review</button>
           <button class="secondary-button" data-console-target="marker-blockers" type="button">Open Marker Blocker Review</button>
           <button class="secondary-button" data-console-target="key-coverage" type="button">Open Key Paper Coverage Review</button>
+          <button class="secondary-button" data-console-target="author-mapping-coverage" type="button">Open Author Mapping Coverage</button>
           <button class="secondary-button" data-console-target="manual-import" type="button">Open Manual Import Review</button>
           <button class="secondary-button" data-console-target="location-review" type="button">Open Location Review</button>
           <button class="secondary-button" id="dashboard-git-status" type="button">Open Git status</button>
@@ -527,6 +552,32 @@
         <div class="section-heading"><div><p class="eyebrow">Key-paper audit</p><h2>Key Paper Coverage Review</h2><p>Inspect missing stages and possible title-match failures without editing the generated audit.</p></div></div>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Search coverage queue…"><select data-role="group"><option value="">All missing stages</option></select></div>
         <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Missing stage</th><th>Title</th><th>Year</th><th>Map status</th><th>Recommended action</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="author-mapping-coverage-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Read-only generated report</p>
+            <h2>Author Mapping Coverage</h2>
+            <p>Search and filter the complete author–institution mapping coverage report. Resolve records through the existing paper mapping editor.</p>
+          </div>
+          <div class="mapping-coverage-actions">
+            <a class="secondary-button button-link" href="/docs/missing_author_mappings_report.md" target="_blank" rel="noreferrer">Open full mapping report</a>
+            <button class="secondary-button" id="reload-mapping-coverage-full" type="button">Reload mapping coverage</button>
+          </div>
+        </div>
+        <div class="review-filters">
+          <input id="mapping-coverage-search" type="search" placeholder="Search title, author, DOI, OpenAlex…">
+          <select id="mapping-coverage-status"><option value="">All statuses</option><option value="complete">Complete</option><option value="partial">Partial</option><option value="zero">Zero</option></select>
+          <select id="mapping-coverage-key"><option value="">All papers</option><option value="true">Key papers</option><option value="false">Non-key papers</option></select>
+        </div>
+        <div class="table-wrap">
+          <table class="mapping-coverage-table">
+            <thead><tr><th>Rank</th><th>Status</th><th>Paper title</th><th>Year</th><th>Mapped / total</th><th>Missing</th><th>Missing author names</th><th>Markers</th><th>Key</th></tr></thead>
+            <tbody id="mapping-coverage-rows"></tbody>
+          </table>
+        </div>
+        <p id="mapping-coverage-empty" class="mapping-coverage-empty"></p>
       </section>
 
       <section class="review-queue-panel" id="manual-import-review-panel" hidden data-queue="manual-import">

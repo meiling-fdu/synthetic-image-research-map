@@ -76,7 +76,7 @@ Use the status chips to separate `pending_review`, `needs_coordinates`, `ambiguo
 
 Only `confirmed` and `alias_of_confirmed` are exportable, and aliases use the canonical institution's verified coordinates. Fuzzy or translation-only suggestions remain `alias_candidate` or `ambiguous` until a reviewer decides. Raw multilingual affiliation text remains evidence even after canonicalization.
 
-## Diagnostic review queues
+## Diagnostic review queues and mapping coverage
 
 The console exposes four generated queues:
 
@@ -84,6 +84,11 @@ The console exposes four generated queues:
 - **Marker Blocker Review** reads `data/manual/paper_marker_blocker_report.csv`.
 - **Key Paper Coverage Review** reads `data/manual/key_paper_coverage_report.csv`.
 - **Manual Import Review** discovers the supported `key_papers_*` candidate CSVs.
+
+The Dashboard also shows a read-only **Author Mapping Coverage** card with complete, partial, and zero-mapping counts, missing author-link totals, full-paper coverage percentage, and the ten highest-priority gaps. Its dedicated tab provides searchable status and key-paper filters over the full generated CSV. Use **Reload mapping coverage** to reread only this report; use **Open full mapping report** for the generated Markdown detail.
+
+- Dashboard data source: `data/manual/missing_author_mappings_report.csv`
+- Full narrative report: `docs/missing_author_mappings_report.md`
 
 Use queue actions to open the metadata, scope, mapping, location, or Add Paper editor. Explicit reviewed/no-action, unresolved, marker-confirmation, and candidate outcomes are written to `data/curated/review_decisions.csv`; location-review actions also update `data/curated/institution_location_review.csv`. Confirm-marker actions create or activate a curated mapping only when paper, institution, and institution-author evidence are present. Exclude-wrong-mapping decisions exclude matching curated mappings and suppress matching automatic markers during export. The queue source CSV is never edited as durable state.
 
@@ -101,6 +106,7 @@ python3 scripts/validate_public_preview.py
 python3 scripts/audit_key_paper_coverage.py
 python3 scripts/diagnose_paper_marker_blockers.py
 python3 scripts/report_high_risk_markers.py
+python3 scripts/report_missing_author_mappings.py
 ```
 
 The pipeline stops at the first failure. The preserve-existing export unions the

@@ -14,6 +14,7 @@ const state = {
   selectedLocationReviewId: "",
   dashboard: {},
   reviewQueues: {},
+  authorMappingCoverage: null,
   paperMetadata: null,
   draftMappingCandidates: [],
 };
@@ -230,6 +231,17 @@ document.addEventListener("DOMContentLoaded", () => {
     "marker-blocker-review-panel",
     "key-coverage-review-panel",
     "manual-import-review-panel",
+    "author-mapping-coverage-panel",
+    "mapping-coverage-summary",
+    "mapping-priority-rows",
+    "mapping-priority-empty",
+    "reload-mapping-coverage",
+    "reload-mapping-coverage-full",
+    "mapping-coverage-search",
+    "mapping-coverage-status",
+    "mapping-coverage-key",
+    "mapping-coverage-rows",
+    "mapping-coverage-empty",
   ].forEach((id) => {
     elements[id] = document.getElementById(id);
   });
@@ -324,6 +336,13 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
   });
   elements["reload-review-queues"].addEventListener("click", loadDashboardAndQueues);
+  elements["reload-mapping-coverage"].addEventListener("click", loadAuthorMappingCoverage);
+  elements["reload-mapping-coverage-full"].addEventListener("click", loadAuthorMappingCoverage);
+  [
+    "mapping-coverage-search",
+    "mapping-coverage-status",
+    "mapping-coverage-key",
+  ].forEach((id) => elements[id].addEventListener("input", renderFullMappingCoverage));
   elements["dashboard-git-status"].addEventListener("click", () => {
     navigateConsole("workflows");
     showGitStatus();
@@ -429,6 +448,29 @@ async function loadDashboardAndQueues() {
   } finally {
     button.disabled = false;
   }
+  await loadAuthorMappingCoverage({ showError: false });
+}
+
+async function loadAuthorMappingCoverage({ showError = true } = {}) {
+  const buttons = [
+    elements["reload-mapping-coverage"],
+    elements["reload-mapping-coverage-full"],
+  ];
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
+  try {
+    const payload = await apiFetch("/api/reports/author-mapping-coverage");
+    state.authorMappingCoverage = payload.data || {};
+  } catch (error) {
+    state.authorMappingCoverage = { available: false, error: error.message, records: [] };
+    if (showError) showNotice(`Mapping coverage could not be loaded: ${error.message}`, "error");
+  } finally {
+    buttons.forEach((button) => {
+      button.disabled = false;
+    });
+  }
+  renderMappingCoverage();
 }
 
 function navigateConsole(target) {
@@ -443,6 +485,7 @@ function navigateConsole(target) {
     "high-risk": elements["high-risk-review-panel"],
     "marker-blockers": elements["marker-blocker-review-panel"],
     "key-coverage": elements["key-coverage-review-panel"],
+    "author-mapping-coverage": elements["author-mapping-coverage-panel"],
     "manual-import": elements["manual-import-review-panel"],
     workflows: elements["workflow-panel"],
   };
@@ -490,6 +533,101 @@ function renderDashboard() {
     card.append(strong, span);
     elements["dashboard-grid"].append(card);
   });
+}
+
+function mappingStatusBadge(status) {
+  const variants = { complete: "curated", partial: "restored", zero: "excluded" };
+  return makeBadge(humanize(status), variants[status] || "map");
+}
+
+function mappingCoverageRow(row, { includeRank = false } = {}) {
+  const tr = document.createElement("tr");
+  const values = [
+    ...(includeRank ? [row.priority_rank] : []),
+    null,
+    row.title,
+    row.year,
+    ...(includeRank ? [`${formatNumber(row.mapped_authors)} / ${formatNumber(row.total_authors)}`] : []),
+    row.missing_authors,
+    row.missing_author_names,
+    row.marker_count,
+    row.is_key_paper ? "Yes" : "—",
+  ];
+  values.forEach((value, index) => {
+    const td = document.createElement("td");
+    if (index === (includeRank ? 1 : 0)) td.append(mappingStatusBadge(row.mapping_status));
+    else td.textContent = text(value) || "—";
+    tr.append(td);
+  });
+  return tr;
+}
+
+function renderMappingCoverage() {
+  const report = state.authorMappingCoverage;
+  const summaryNode = elements["mapping-coverage-summary"];
+  const priorityBody = elements["mapping-priority-rows"];
+  summaryNode.replaceChildren();
+  priorityBody.replaceChildren();
+  if (!report?.available) {
+    const message = report?.error || "Mapping coverage has not loaded yet.";
+    const paragraph = document.createElement("p");
+    paragraph.className = "mapping-coverage-empty";
+    paragraph.textContent = message;
+    summaryNode.append(paragraph);
+    elements["mapping-priority-empty"].textContent = message;
+    renderFullMappingCoverage();
+    return;
+  }
+  const summary = report.summary || {};
+  const metrics = [
+    ["Total public papers", summary.total_public_papers, "neutral"],
+    ["Complete mappings", summary.complete_mappings, "good"],
+    ["Partial mappings", summary.partial_mappings, "warning"],
+    ["Zero mappings", summary.zero_mappings, "priority"],
+    ["Missing author links", summary.total_missing_author_links, "priority"],
+    ["Mapping coverage", `${Number(summary.mapping_coverage_percentage || 0).toFixed(1)}%`, "good"],
+  ];
+  metrics.forEach(([label, value, status]) => {
+    const article = document.createElement("article");
+    article.dataset.status = status;
+    const strong = document.createElement("strong");
+    strong.textContent = typeof value === "number" ? formatNumber(value) : value;
+    const span = document.createElement("span");
+    span.textContent = label;
+    article.append(strong, span);
+    summaryNode.append(article);
+  });
+  const priorityRows = (report.records || [])
+    .filter((row) => row.mapping_status !== "complete")
+    .slice(0, 10);
+  priorityRows.forEach((row) => priorityBody.append(mappingCoverageRow(row)));
+  elements["mapping-priority-empty"].textContent = priorityRows.length
+    ? ""
+    : "No missing mappings are present in the report.";
+  renderFullMappingCoverage();
+}
+
+function renderFullMappingCoverage() {
+  const report = state.authorMappingCoverage;
+  const body = elements["mapping-coverage-rows"];
+  body.replaceChildren();
+  if (!report?.available) {
+    elements["mapping-coverage-empty"].textContent =
+      report?.error || "Mapping coverage has not loaded yet.";
+    return;
+  }
+  const search = normalize(elements["mapping-coverage-search"].value);
+  const status = elements["mapping-coverage-status"].value;
+  const keyFilter = elements["mapping-coverage-key"].value;
+  const filtered = (report.records || []).filter((row) => {
+    if (status && row.mapping_status !== status) return false;
+    if (keyFilter && String(Boolean(row.is_key_paper)) !== keyFilter) return false;
+    return !search || normalize(Object.values(row).join(" ")).includes(search);
+  });
+  filtered.forEach((row) => body.append(mappingCoverageRow(row, { includeRank: true })));
+  elements["mapping-coverage-empty"].textContent = filtered.length
+    ? `${formatNumber(filtered.length)} report rows`
+    : "No rows match these filters.";
 }
 
 function queuePanel(name) {
