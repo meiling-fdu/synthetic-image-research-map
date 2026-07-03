@@ -46,6 +46,12 @@ try:
         read_exclusion_rows,
         record_is_excluded,
     )
+    from .paper_version_merges import (
+        DEFAULT_PAPER_VERSION_MERGES_PATH,
+        PaperVersionMergeError,
+        apply_confirmed_version_merges,
+        read_paper_version_merges,
+    )
     from .export_candidate_map_data import (
         ExportError,
         apply_paper_abstracts,
@@ -93,6 +99,12 @@ except ImportError:  # Direct execution from the scripts directory.
         build_active_exclusion_index,
         read_exclusion_rows,
         record_is_excluded,
+    )
+    from paper_version_merges import (
+        DEFAULT_PAPER_VERSION_MERGES_PATH,
+        PaperVersionMergeError,
+        apply_confirmed_version_merges,
+        read_paper_version_merges,
     )
     from export_candidate_map_data import (
         ExportError,
@@ -357,6 +369,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Curated author–institution mapping CSV "
             f"(default: {DEFAULT_CURATED_MAPPINGS_PATH})."
+        ),
+    )
+    parser.add_argument(
+        "--paper-version-merges",
+        type=Path,
+        default=DEFAULT_PAPER_VERSION_MERGES_PATH,
+        help=(
+            "Confirmed paper-version merge CSV "
+            f"(default: {DEFAULT_PAPER_VERSION_MERGES_PATH})."
         ),
     )
     parser.add_argument(
@@ -2163,6 +2184,12 @@ def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) ->
         f"{summary.get('curated_mappings_matched_papers', 0)}"
     )
     print(
+        "  Confirmed paper-version merges applied: "
+        f"{summary.get('confirmed_version_merges_applied', 0)} "
+        f"({summary.get('duplicate_papers_removed', 0)} paper records, "
+        f"{summary.get('duplicate_markers_removed', 0)} marker records removed)"
+    )
+    print(
         "  Location-review rows created / updated: "
         f"{summary.get('location_review_rows_created', 0)} / "
         f"{summary.get('location_review_rows_updated', 0)}"
@@ -2264,6 +2291,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             processed_cache_rows,
             institution_alias_rows,
         )
+        (
+            integrated_papers,
+            integrated_maps,
+            version_merge_summary,
+        ) = apply_confirmed_version_merges(
+            integrated_papers,
+            integrated_maps,
+            read_paper_version_merges(args.paper_version_merges),
+        )
         integrated_papers, curated_preprint_papers_excluded = (
             exclude_preprint_versions(integrated_papers)
         )
@@ -2328,6 +2364,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 ),
             }
 
+        curated_summary.update(version_merge_summary)
         summary.update(curated_summary)
         summary["review_mapping_exclusions_applied"] = (
             review_mapping_exclusions_applied
@@ -2398,6 +2435,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         PreviewExportError,
         ExportError,
         PaperExclusionError,
+        PaperVersionMergeError,
         CuratedExportError,
     ) as error:
         print(f"Error: {error}", file=sys.stderr)

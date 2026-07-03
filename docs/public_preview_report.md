@@ -17,13 +17,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 788 |
-| Unique papers | 365 |
+| Map records | 786 |
+| Unique papers | 364 |
 | Unique institutions | 480 |
 | Countries | 70 |
-| arXiv/preprint records | 310 |
-| Records with DOI | 773 |
-| Records with venue | 704 |
+| arXiv/preprint records | 311 |
+| Records with DOI | 771 |
+| Records with venue | 702 |
 | Records missing venue | 84 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -34,7 +34,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 683 |
+| detection | 681 |
 | source_attribution | 64 |
 | detection_and_source_attribution | 41 |
 
@@ -42,7 +42,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 325 |
+| ai_generated_image_detection | 323 |
 | synthetic_image_detection | 255 |
 | deepfake_image_detection | 103 |
 | generated_image_source_attribution | 61 |
@@ -55,7 +55,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | 2026 | 66 |
 | 2025 | 258 |
-| 2024 | 200 |
+| 2024 | 198 |
 | 2023 | 116 |
 | 2022 | 60 |
 | 2021 | 34 |
@@ -68,7 +68,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Venue | Records |
 | --- | ---: |
-| arXiv (Cornell University) | 77 |
+| arXiv (Cornell University) | 75 |
 | ArXiv.org | 55 |
 | Lecture notes in computer science | 51 |
 | Proceedings of the AAAI Conference on Artificial Intelligence | 21 |
@@ -83,8 +83,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 141 |
 | CN | 141 |
+| China | 139 |
 | US | 63 |
 | United States | 59 |
 | IN | 40 |
@@ -100,7 +100,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | University of Naples Federico II | 16 |
 | Beijing Jiaotong University | 11 |
-| Shanghai Jiao Tong University | 11 |
+| Shanghai Jiao Tong University | 10 |
 | University of Siena | 10 |
 | University of Chinese Academy of Sciences | 9 |
 | Chinese Academy of Sciences | 8 |
@@ -113,7 +113,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 614 |
+| high | 612 |
 | medium | 174 |
 
 ## Potential quality issues

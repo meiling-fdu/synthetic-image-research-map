@@ -27191,10 +27191,10 @@
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
       "doi": "10.1609/aaai.v39i4.32363",
-      "arxiv_id": "",
-      "arxiv_url": "",
-      "arxiv_year": null,
-      "has_arxiv_version": false,
+      "arxiv_id": "2402.11843",
+      "arxiv_url": "https://arxiv.org/abs/2402.11843",
+      "arxiv_year": 2024,
+      "has_arxiv_version": true,
       "paper_url": "https://doi.org/10.1609/aaai.v39i4.32363",
       "primary_url": "https://doi.org/10.1609/aaai.v39i4.32363",
       "landing_page_url": "https://doi.org/10.1609/aaai.v39i4.32363",
@@ -27275,6 +27275,16 @@
         "Zhejiang"
       ],
       "aggregated_region_codes": [],
+      "merged_versions": [
+        {
+          "title": "WildFake: A Large-scale Challenging Dataset for AI-Generated Images Detection",
+          "year": "2024",
+          "doi": "10.48550/arxiv.2402.11843",
+          "arxiv_id": "2402.11843",
+          "arxiv_url": "https://arxiv.org/abs/2402.11843",
+          "openalex_url": "https://openalex.org/W4391987733"
+        }
+      ],
       "affiliations": [
         {
           "index": 1,
@@ -38647,74 +38657,6 @@
       ]
     },
     {
-      "title": "LaRE$^2$: Latent Reconstruction Error Based Method for Diffusion-Generated Image Detection",
-      "in_scope": true,
-      "year": 2024,
-      "publication_year": 2024,
-      "publication_date": "2024-03-26",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "The evolution of Diffusion Models has dramatically improved image generation quality, making it increasingly difficult to differentiate between real and generated images. This development, while impressive, also raises significant privacy and security concerns. In response to this, we propose a novel Latent REconstruction error guided feature REfinement method (LaRE^2) for detecting the diffusion-generated images. We come up with the Latent Reconstruction Error (LaRE), the first reconstruction-error based feature in the latent space for generated image detection. LaRE surpasses existing methods in terms of feature extraction efficiency while preserving crucial cues required to differentiate between the real and the fake. To exploit LaRE, we propose an Error-Guided feature REfinement module (EGRE), which can refine the image feature guided by LaRE to enhance the discriminativeness of the feature. Our EGRE utilizes an align-then-refine mechanism, which effectively refines the image feature for generated-image detection from both spatial and channel perspectives. Extensive experiments on the large-scale GenImage benchmark demonstrate the superiority of our LaRE^2, which surpasses the best SoTA method by up to 11.9%/12.1% average ACC/AP across 8 different image generators. LaRE also surpasses existing methods in terms of feature extraction cost, delivering an impressive speed enhancement of 8 times. Code is available.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2403.17465",
-      "arxiv_id": "2403.17465",
-      "arxiv_url": "https://arxiv.org/abs/2403.17465",
-      "arxiv_year": 2024,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2403.17465",
-      "primary_url": "http://arxiv.org/abs/2403.17465",
-      "landing_page_url": "http://arxiv.org/abs/2403.17465",
-      "openalex_url": "https://openalex.org/W4393284560",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2403.17465",
-      "authors": [
-        {
-          "name": "Yunpeng Luo",
-          "affiliation_indices": [],
-          "is_current_marker_author": false
-        },
-        {
-          "name": "Junlong Du",
-          "affiliation_indices": [],
-          "is_current_marker_author": false
-        },
-        {
-          "name": "Ke Yan",
-          "affiliation_indices": [],
-          "is_current_marker_author": false
-        },
-        {
-          "name": "Shouhong Ding",
-          "affiliation_indices": [],
-          "is_current_marker_author": false
-        }
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
-      "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliations": [],
-      "current_institution": null,
-      "author_institution_affiliations": [],
-      "author_institution_indices": []
-    },
-    {
       "title": "LaRE<sup>2</sup>: Latent Reconstruction Error Based Method for Diffusion-Generated Image Detection",
       "in_scope": true,
       "year": 2024,
@@ -38732,10 +38674,10 @@
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
       "doi": "10.1109/cvpr52733.2024.01609",
-      "arxiv_id": "",
-      "arxiv_url": "",
-      "arxiv_year": null,
-      "has_arxiv_version": false,
+      "arxiv_id": "2403.17465",
+      "arxiv_url": "https://arxiv.org/abs/2403.17465",
+      "arxiv_year": 2024,
+      "has_arxiv_version": true,
       "paper_url": "https://doi.org/10.1109/cvpr52733.2024.01609",
       "primary_url": "https://doi.org/10.1109/cvpr52733.2024.01609",
       "landing_page_url": "https://doi.org/10.1109/cvpr52733.2024.01609",
@@ -38791,6 +38733,16 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
+      "merged_versions": [
+        {
+          "title": "LaRE$^2$: Latent Reconstruction Error Based Method for Diffusion-Generated Image Detection",
+          "year": "2024",
+          "doi": "10.48550/arxiv.2403.17465",
+          "arxiv_id": "2403.17465",
+          "arxiv_url": "https://arxiv.org/abs/2403.17465",
+          "openalex_url": "https://openalex.org/W4393284560"
+        }
+      ],
       "affiliations": [
         {
           "index": 1,
@@ -44763,128 +44715,6 @@
           ],
           "institution_ids": [
             "institution:66101d2ca048704e"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "WildFake: A Large-scale Challenging Dataset for AI-Generated Images Detection",
-      "in_scope": true,
-      "year": 2024,
-      "publication_year": 2024,
-      "publication_date": "2024-02-19",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "dataset",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "The extraordinary ability of generative models enabled the generation of images with such high quality that human beings cannot distinguish Artificial Intelligence (AI) generated images from real-life photographs. The development of generation techniques opened up new opportunities but concurrently introduced potential risks to privacy, authenticity, and security. Therefore, the task of detecting AI-generated imagery is of paramount importance to prevent illegal activities. To assess the generalizability and robustness of AI-generated image detection, we present a large-scale dataset, referred to as WildFake, comprising state-of-the-art generators, diverse object categories, and real-world applications. WildFake dataset has the following advantages: 1) Rich Content with Wild collection: WildFake collects fake images from the open-source community, enriching its diversity with a broad range of image classes and image styles. 2) Hierarchical structure: WildFake contains fake images synthesized by different types of generators from GANs, diffusion models, to other generative models. These key strengths enhance the generalization and robustness of detectors trained on WildFake, thereby demonstrating WildFake's considerable relevance and effectiveness for AI-generated detectors in real-world scenarios. Moreover, our extensive evaluation experiments are tailored to yield profound insights into the capabilities of different levels of generative models, a distinctive advantage afforded by WildFake's unique hierarchical structure.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2402.11843",
-      "arxiv_id": "2402.11843",
-      "arxiv_url": "https://arxiv.org/abs/2402.11843",
-      "arxiv_year": 2024,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2402.11843",
-      "primary_url": "http://arxiv.org/abs/2402.11843",
-      "landing_page_url": "http://arxiv.org/abs/2402.11843",
-      "openalex_url": "https://openalex.org/W4391987733",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2402.11843",
-      "authors": [
-        {
-          "name": "Hong, Yan",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false
-        },
-        {
-          "name": "Jianfu Zhang",
-          "affiliation_indices": [
-            2
-          ],
-          "is_current_marker_author": false
-        }
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Ant Group",
-        "Shanghai Jiao Tong University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Ant Group",
-          "canonical_name": "Ant Group",
-          "institution_id": "institution:5a28a1a99a417ba5",
-          "country": "China",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "Shanghai Jiao Tong University",
-          "canonical_name": "Shanghai Jiao Tong University",
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "country": "China",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:5a28a1a99a417ba5",
-          "institution": "Ant Group",
-          "authors": [
-            "Hong, Yan"
-          ]
-        },
-        {
-          "index": 2,
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution": "Shanghai Jiao Tong University",
-          "authors": [
-            "Jianfu Zhang"
-          ]
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Hong, Yan",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:5a28a1a99a417ba5"
-          ]
-        },
-        {
-          "author": "Jianfu Zhang",
-          "institution_indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:fccd5d0ac9cc52f9"
           ]
         }
       ]
@@ -66105,197 +65935,6 @@
       "in_scope": true,
       "year": 2019,
       "publication_year": 2019,
-      "publication_date": "2019-01-01",
-      "task": "detection",
-      "subtask": "synthetic_image_detection",
-      "entry_type": "method",
-      "venue": "Institutional Research Information System (Università degli Studi di Trento)",
-      "venue_name": "Institutional Research Information System (Università degli Studi di Trento)",
-      "venue_type": "repository",
-      "publisher": "University of Trento",
-      "publication_type": "article",
-      "abstract": "Current developments in computer vision and deep learning allow to automatically generate hyper-realistic images, hardly distinguishable from real ones. In particular, human face generation achieved a stunning level of realism, opening new opportunities for the creative industry but, at the same time, new scary scenarios where such content can be maliciously misused. Therefore, it is essential to develop innovative methodologies to automatically tell apart real from computer generated multimedia, possibly able to follow the evolution and continuous improvement of data in terms of quality and realism. In the last few years, several deep learning-based solutions have been proposed for this problem, mostly based on Convolutional Neural Networks (CNNs). Although results are good in controlled conditions, it is not clear how such proposals can adapt to real-world scenarios, where learning needs to continuously evolve as new types of generated data appear. In this work, we tackle this proble...",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.1109/wifs47025.2019.9035099",
-      "arxiv_id": "1910.01568",
-      "arxiv_url": "https://arxiv.org/abs/1910.01568",
-      "arxiv_year": 2019,
-      "has_arxiv_version": true,
-      "paper_url": "http://hdl.handle.net/11572/296754",
-      "primary_url": "http://hdl.handle.net/11572/296754",
-      "landing_page_url": "http://hdl.handle.net/11572/296754",
-      "openalex_url": "https://openalex.org/W3010699567",
-      "is_arxiv_preprint": false,
-      "url": "http://hdl.handle.net/11572/296754",
-      "authors": [
-        {
-          "name": "Marra, Francesco",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false
-        },
-        {
-          "name": "Saltori, Cristiano",
-          "affiliation_indices": [
-            2
-          ],
-          "is_current_marker_author": false
-        },
-        {
-          "name": "Boato, Giulia",
-          "affiliation_indices": [
-            2
-          ],
-          "is_current_marker_author": false
-        },
-        {
-          "name": "Luisa Verdoliva",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false
-        }
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": false,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 2,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Naples Federico II",
-        "University of Trento"
-      ],
-      "aggregated_country_names": [
-        "Italy"
-      ],
-      "aggregated_country_codes": [
-        "IT"
-      ],
-      "aggregated_regions": [
-        "Campania",
-        "Trentino-Alto Adige/Südtirol"
-      ],
-      "aggregated_region_codes": [],
-      "curated_mappings": [
-        {
-          "mapping_id": "mapping:3c8ae1b28e85e160472a",
-          "institution_id": "institution:d046d2c57bb3a863",
-          "institution": "University of Naples Federico II",
-          "institution_authors": [
-            "Francesco Marra",
-            "Luisa Verdoliva"
-          ],
-          "raw_affiliation": "",
-          "evidence_source": "PDF",
-          "evidence_url": "https://arxiv.org/pdf/1910.01568",
-          "affiliation_note": "",
-          "mapping_status": "active",
-          "review_note": "Manually confirmed from the paper PDF affiliation section."
-        },
-        {
-          "mapping_id": "mapping:129a03359b485cc8c9af",
-          "institution_id": "institution:3c4903b35459f2b5",
-          "institution": "University of Trento",
-          "institution_authors": [
-            "Cristiano Saltori",
-            "Giulia Boato"
-          ],
-          "raw_affiliation": "",
-          "evidence_source": "PDF",
-          "evidence_url": "https://arxiv.org/pdf/1910.01568",
-          "affiliation_note": "",
-          "mapping_status": "active",
-          "review_note": "Manually confirmed from the paper PDF affiliation section."
-        }
-      ],
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:d046d2c57bb3a863",
-          "institution": "University of Naples Federico II",
-          "authors": [
-            "Francesco Marra",
-            "Luisa Verdoliva"
-          ]
-        },
-        {
-          "index": 2,
-          "institution_id": "institution:3c4903b35459f2b5",
-          "institution": "University of Trento",
-          "authors": [
-            "Cristiano Saltori",
-            "Giulia Boato"
-          ]
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Marra, Francesco",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d046d2c57bb3a863"
-          ]
-        },
-        {
-          "author": "Saltori, Cristiano",
-          "institution_indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:3c4903b35459f2b5"
-          ]
-        },
-        {
-          "author": "Boato, Giulia",
-          "institution_indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:3c4903b35459f2b5"
-          ]
-        },
-        {
-          "author": "Luisa Verdoliva",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d046d2c57bb3a863"
-          ]
-        }
-      ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "University of Naples Federico II",
-          "canonical_name": "University of Naples Federico II",
-          "institution_id": "institution:d046d2c57bb3a863",
-          "country": "Italy",
-          "region": "Campania"
-        },
-        {
-          "index": 2,
-          "name": "University of Trento",
-          "canonical_name": "University of Trento",
-          "institution_id": "institution:3c4903b35459f2b5",
-          "country": "Italy",
-          "region": "Trentino-Alto Adige/Südtirol"
-        }
-      ],
-      "current_institution": null
-    },
-    {
-      "title": "Incremental learning for the detection and classification of GAN-generated images",
-      "in_scope": true,
-      "year": 2019,
-      "publication_year": 2019,
       "publication_date": "2019-12-01",
       "task": "detection",
       "subtask": "synthetic_image_detection",
@@ -66460,6 +66099,16 @@
           "institution_ids": [
             "institution:d046d2c57bb3a863"
           ]
+        }
+      ],
+      "merged_versions": [
+        {
+          "title": "Incremental learning for the detection and classification of GAN-generated images",
+          "year": "2019",
+          "doi": "10.1109/wifs47025.2019.9035099",
+          "arxiv_id": "1910.01568",
+          "arxiv_url": "https://arxiv.org/abs/1910.01568",
+          "openalex_url": "https://openalex.org/W3010699567"
         }
       ],
       "affiliations": [

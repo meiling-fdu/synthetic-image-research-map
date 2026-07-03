@@ -155,6 +155,26 @@ REVIEW_DECISION_COLUMNS = (
     "created_by",
 )
 
+PAPER_VERSION_MERGE_COLUMNS = (
+    "merge_id",
+    "canonical_title",
+    "canonical_year",
+    "canonical_doi",
+    "canonical_arxiv_id",
+    "canonical_openalex_url",
+    "duplicate_title",
+    "duplicate_year",
+    "duplicate_doi",
+    "duplicate_arxiv_id",
+    "duplicate_arxiv_url",
+    "duplicate_openalex_url",
+    "status",
+    "reason",
+    "is_active",
+    "created_at",
+    "created_by",
+)
+
 EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "papers.csv": PAPERS_COLUMNS,
     "author_institution_mappings.csv": AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -163,6 +183,7 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "institution_aliases.csv": INSTITUTION_ALIAS_COLUMNS,
     "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
     "review_decisions.csv": REVIEW_DECISION_COLUMNS,
+    "paper_version_merges.csv": PAPER_VERSION_MERGE_COLUMNS,
 }
 
 ALLOWED_TASKS = {

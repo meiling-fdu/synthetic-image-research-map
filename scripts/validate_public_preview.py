@@ -27,6 +27,23 @@ except ImportError:  # Direct execution from the scripts directory.
         normalize_country_region,
     )
 
+try:
+    from .paper_version_merges import (
+        DEFAULT_PAPER_VERSION_MERGES_PATH,
+        PaperVersionMergeError,
+        active_confirmed_merges,
+        read_paper_version_merges,
+        record_matches_merge_side,
+    )
+except ImportError:
+    from paper_version_merges import (
+        DEFAULT_PAPER_VERSION_MERGES_PATH,
+        PaperVersionMergeError,
+        active_confirmed_merges,
+        read_paper_version_merges,
+        record_matches_merge_side,
+    )
+
 
 DEFAULT_INPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_PAPER_INPUT = Path("web/data/public_preview_papers.json")
@@ -76,6 +93,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         type=Path,
         default=DEFAULT_INPUT,
         help=f"Public preview JSON (default: {DEFAULT_INPUT}).",
+    )
+    parser.add_argument(
+        "--paper-version-merges",
+        type=Path,
+        default=DEFAULT_PAPER_VERSION_MERGES_PATH,
+        help=(
+            "Confirmed paper-version merge CSV "
+            f"(default: {DEFAULT_PAPER_VERSION_MERGES_PATH})."
+        ),
     )
     parser.add_argument(
         "--paper-input",
@@ -289,6 +315,55 @@ def validate_preprint_version_duplicates(
                     "preprint version duplicates a formal publication with the "
                     "same normalized title",
                 )
+
+
+def validate_confirmed_version_merges(
+    records: Sequence[Any],
+    merge_rows: Sequence[Dict[str, str]],
+    issues: List[Issue],
+    *,
+    paper_level: bool,
+) -> None:
+    """Reject confirmed duplicate leakage and missing canonical arXiv metadata."""
+    for merge in active_confirmed_merges(merge_rows):
+        for index, record in enumerate(records):
+            if not isinstance(record, dict):
+                continue
+            if record_matches_merge_side(record, merge, "duplicate"):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    index,
+                    record_title(record),
+                    "confirmed duplicate paper version leaked into public preview",
+                )
+        if not paper_level:
+            continue
+        canonical = [
+            (index, record)
+            for index, record in enumerate(records)
+            if isinstance(record, dict)
+            and record_matches_merge_side(record, merge, "canonical")
+        ]
+        if len(canonical) != 1:
+            add_issue(
+                issues,
+                "ERROR",
+                canonical[0][0] if canonical else -1,
+                clean_text(merge.get("canonical_title")) or "<missing canonical>",
+                "confirmed version merge must resolve to exactly one canonical paper",
+            )
+            continue
+        index, record = canonical[0]
+        expected_arxiv = normalized_text(merge.get("duplicate_arxiv_id"))
+        if expected_arxiv and normalized_text(record.get("arxiv_id")) != expected_arxiv:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                record_title(record),
+                "canonical paper is missing the confirmed duplicate arXiv ID",
+            )
 
 
 def validate_curated_affiliation_supersession(
@@ -911,7 +986,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     try:
         _metadata, records = read_dataset(args.input)
         _paper_metadata, paper_records = read_dataset(args.paper_input)
-    except ValidationInputError as error:
+        merge_rows = read_paper_version_merges(args.paper_version_merges)
+    except (ValidationInputError, PaperVersionMergeError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 2
 
@@ -919,10 +995,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     for index, record in enumerate(records):
         validate_record(index, record, issues)
     validate_preprint_version_duplicates(records, issues)
+    validate_confirmed_version_merges(
+        records, merge_rows, issues, paper_level=False
+    )
     paper_issues: List[Issue] = []
     for index, record in enumerate(paper_records):
         validate_paper_record(index, record, paper_issues)
     validate_preprint_version_duplicates(paper_records, paper_issues)
+    validate_confirmed_version_merges(
+        paper_records, merge_rows, paper_issues, paper_level=True
+    )
 
     print_summary(args.input, records, issues)
     print()

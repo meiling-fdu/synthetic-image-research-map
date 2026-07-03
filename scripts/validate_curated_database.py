@@ -697,6 +697,7 @@ def main() -> int:
     confirmed_locations = datasets.get("institution_locations.csv", [])
     aliases = datasets.get("institution_aliases.csv", [])
     review_decisions = datasets.get("review_decisions.csv", [])
+    version_merges = datasets.get("paper_version_merges.csv", [])
 
     validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
     validate_allowed_value(
@@ -758,6 +759,61 @@ def main() -> int:
         issues,
     )
     validate_boolean_fields(exclusions, "paper_exclusions.csv", issues)
+    validate_boolean_fields(version_merges, "paper_version_merges.csv", issues)
+    validate_allowed_value(
+        version_merges,
+        "paper_version_merges.csv",
+        "status",
+        {"confirmed_duplicate", "needs_review", "distinct"},
+        issues,
+    )
+    merge_ids = set()
+    duplicate_identities = set()
+    for row_number, row in enumerate(version_merges, start=2):
+        merge_id = clean(row.get("merge_id"))
+        if not merge_id:
+            add_issue(
+                issues,
+                "ERROR",
+                "paper_version_merges.csv",
+                "merge_id is required",
+                row_number,
+            )
+        elif merge_id in merge_ids:
+            add_issue(
+                issues,
+                "ERROR",
+                "paper_version_merges.csv",
+                f"duplicate merge_id {merge_id!r}",
+                row_number,
+            )
+        merge_ids.add(merge_id)
+        for prefix in ("canonical", "duplicate"):
+            if not clean(row.get(f"{prefix}_title")):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "paper_version_merges.csv",
+                    f"{prefix}_title is required",
+                    row_number,
+                )
+        duplicate_identity = (
+            normalize_openalex_url(row.get("duplicate_openalex_url"))
+            or normalize_doi(row.get("duplicate_doi"))
+            or (
+                normalize_title(row.get("duplicate_title")),
+                clean(row.get("duplicate_year")),
+            )
+        )
+        if duplicate_identity in duplicate_identities:
+            add_issue(
+                issues,
+                "ERROR",
+                "paper_version_merges.csv",
+                "duplicate paper is assigned to more than one canonical paper",
+                row_number,
+            )
+        duplicate_identities.add(duplicate_identity)
     validate_allowed_value(
         review_decisions,
         "review_decisions.csv",

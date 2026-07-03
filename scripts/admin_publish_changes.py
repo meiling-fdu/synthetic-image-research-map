@@ -247,6 +247,15 @@ def publish_changes(
             file=sys.stderr,
         )
         return 1
+    if (
+        after_counts.map_records < before_counts.map_records
+        or after_counts.paper_records < before_counts.paper_records
+    ):
+        print(
+            "Small preview decrease accepted; confirmed paper-version merges "
+            "can legitimately remove duplicate papers and markers.",
+            flush=True,
+        )
     print("Public preview shrinkage guard: passed.", flush=True)
 
     if not run_step(

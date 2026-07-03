@@ -264,6 +264,29 @@ class AdminPublishChangesTests(unittest.TestCase):
         self.assertTrue(any("safety floor 700" in reason for reason in reasons))
         self.assertTrue(any("safety floor 350" in reason for reason in reasons))
 
+    def test_small_confirmed_duplicate_decrease_passes_shrinkage_guard(self):
+        counts = iter(
+            [
+                admin_publish_changes.PreviewCounts(788, 397),
+                admin_publish_changes.PreviewCounts(786, 394),
+            ]
+        )
+        runner = RecordingRunner()
+        output = io.StringIO()
+
+        with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
+            result = admin_publish_changes.publish_changes(
+                repository_root=Path("/repo"),
+                runner=runner,
+                preview_count_reader=lambda _repository: next(counts),
+            )
+
+        self.assertEqual(result, 0)
+        self.assertIn(
+            "confirmed paper-version merges can legitimately remove",
+            output.getvalue(),
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
