@@ -15,11 +15,42 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260622-map-viewport">
+    <link rel="stylesheet" href="style.css?v=20260704-compact-dashboard">
   </head>
   <body>
     <header class="site-header">
-      <h1>Synthetic Image Research Map</h1>
+      <div class="header-title-block">
+        <h1>Synthetic Image Research Map</h1>
+        <nav class="task-legend" aria-label="Task key">
+          <ul>
+            <li><span class="legend-dot detection"></span>Detection</li>
+            <li><span class="legend-dot source-attribution"></span>Source attribution</li>
+            <li><span class="legend-dot combined-task"></span>Detection + source attribution</li>
+          </ul>
+        </nav>
+      </div>
+
+      <section class="header-statistics" aria-label="Filtered research statistics">
+        <article class="header-chart task-chart">
+          <h2>Task distribution</h2>
+          <div id="task-chart-content" class="header-chart-content" aria-live="polite">
+            <p class="chart-empty">Loading…</p>
+          </div>
+        </article>
+        <article class="header-chart institution-chart">
+          <h2>Top institutions</h2>
+          <div id="institution-chart-content" class="header-chart-content" aria-live="polite">
+            <p class="chart-empty">Loading…</p>
+          </div>
+        </article>
+        <article class="header-chart year-chart">
+          <h2>Year distribution</h2>
+          <div id="year-chart-content" class="header-chart-content" aria-live="polite">
+            <p class="chart-empty">Loading…</p>
+          </div>
+        </article>
+      </section>
+
       <a
         class="header-repository-link"
         href="https://github.com/meiling-fdu/synthetic-image-research-map"
@@ -27,14 +58,6 @@
         rel="noopener noreferrer"
       >GitHub repository</a>
     </header>
-
-    <nav class="task-legend" aria-label="Task key">
-      <ul>
-        <li><span class="legend-dot detection"></span>Detection</li>
-        <li><span class="legend-dot source-attribution"></span>Source attribution</li>
-        <li><span class="legend-dot combined-task"></span>Detection and source attribution</li>
-      </ul>
-    </nav>
 
     <main class="page-shell">
       <aside class="sidebar" aria-label="Map controls and summary">
@@ -149,30 +172,22 @@
               <dd id="dataset-country-count">0</dd>
             </div>
             <div>
-              <dt>Detection records</dt>
+              <dt>Detection</dt>
               <dd id="dataset-detection-count">0</dd>
             </div>
             <div>
-              <dt>Source attribution records</dt>
+              <dt>Source attribution</dt>
               <dd id="dataset-attribution-count">0</dd>
             </div>
             <div>
               <dt>Detection + source attribution</dt>
               <dd id="dataset-combined-count">0</dd>
             </div>
-            <div id="dataset-preprint-stat">
-              <dt>Preprint-only records</dt>
-              <dd id="dataset-preprint-count">0</dd>
-            </div>
           </dl>
         </section>
 
-        <section class="map-panel" aria-labelledby="map-heading">
-          <div class="map-heading-row">
-            <div>
-              <p class="eyebrow">Global view</p>
-              <h2 id="map-heading">Research locations</h2>
-            </div>
+        <section class="map-panel" aria-label="Research locations">
+          <div class="map-status-row">
             <p id="map-status" class="map-status" role="status">
               Loading public preview data...
             </p>
@@ -349,6 +364,6 @@
       crossorigin=""
     ></script>
     <script src="paper_details_helpers.js?v=20260703-author-affiliations"></script>
-    <script src="app.js?v=20260703-author-affiliations"></script>
+    <script src="app.js?v=20260704-compact-dashboard"></script>
   </body>
 </html>

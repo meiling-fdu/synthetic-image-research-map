@@ -118,9 +118,10 @@ const datasetCountryCount = document.querySelector("#dataset-country-count");
 const datasetDetectionCount = document.querySelector("#dataset-detection-count");
 const datasetAttributionCount = document.querySelector("#dataset-attribution-count");
 const datasetCombinedCount = document.querySelector("#dataset-combined-count");
-const datasetPreprintCount = document.querySelector("#dataset-preprint-count");
-const datasetPreprintStat = document.querySelector("#dataset-preprint-stat");
 const datasetStatisticsNote = document.querySelector("#dataset-statistics-note");
+const taskChartContent = document.querySelector("#task-chart-content");
+const institutionChartContent = document.querySelector("#institution-chart-content");
+const yearChartContent = document.querySelector("#year-chart-content");
 const resultsCount = document.querySelector("#results-count");
 const resultsList = document.querySelector("#results-list");
 const resultsEmpty = document.querySelector("#results-empty");
@@ -1144,12 +1145,101 @@ function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
   datasetCombinedCount.textContent = paperCoverageRecords.filter(
     (record) => record.task === "detection_and_source_attribution",
   ).length;
+}
 
-  const supportsPreprintMetadata = [...records, ...paperRecords].some(hasPreprintMetadata);
-  datasetPreprintStat.hidden = !supportsPreprintMetadata;
-  datasetPreprintCount.textContent = supportsPreprintMetadata
-    ? paperCoverageRecords.filter(isPreprintOnlyRecord).length
-    : 0;
+function renderChartEmpty(container) {
+  container.innerHTML = '<p class="chart-empty">No data</p>';
+}
+
+function renderTaskChart(paperCoverageRecords) {
+  const tasks = [
+    ["detection", "Detection"],
+    ["source_attribution", "Source attribution"],
+    ["detection_and_source_attribution", "Detection + attribution"],
+  ].map(([task, label]) => ({
+    task,
+    label,
+    color: TASK_COLORS[task],
+    count: paperCoverageRecords.filter((record) => record.task === task).length,
+  }));
+  const total = tasks.reduce((sum, task) => sum + task.count, 0);
+  if (!total) {
+    renderChartEmpty(taskChartContent);
+    return;
+  }
+  const segments = tasks
+    .filter((task) => task.count)
+    .map((task) => (
+      `<span class="task-chart-segment" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count}"></span>`
+    ))
+    .join("");
+  const items = tasks
+    .map((task) => (
+      `<div class="task-chart-item"><i style="background:${task.color}"></i><span title="${escapeHtml(task.label)}">${escapeHtml(task.label)}</span><strong>${task.count}</strong></div>`
+    ))
+    .join("");
+  taskChartContent.innerHTML = (
+    `<div class="task-chart-bar" aria-label="${total} filtered papers">${segments}</div><div class="task-chart-list">${items}</div>`
+  );
+}
+
+function renderInstitutionChart(datasetRecords) {
+  const institutions = new Map();
+  datasetRecords.forEach((record) => {
+    const institution = String(recordInstitution(record) || "").trim();
+    if (!institution) {
+      return;
+    }
+    const key = normalizedSearchText(institution);
+    const entry = institutions.get(key) || { name: institution, papers: new Set() };
+    entry.papers.add(paperIdentity(record));
+    institutions.set(key, entry);
+  });
+  const topInstitutions = [...institutions.values()]
+    .map((entry) => ({ name: entry.name, count: entry.papers.size }))
+    .sort((first, second) => (
+      second.count - first.count || compareTextValues(first.name, second.name)
+    ))
+    .slice(0, 10);
+  if (!topInstitutions.length) {
+    renderChartEmpty(institutionChartContent);
+    return;
+  }
+  const maximum = topInstitutions[0].count;
+  institutionChartContent.innerHTML = (
+    `<div class="institution-chart-list">${topInstitutions.map((entry) => (
+      `<div class="institution-chart-row" title="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><div class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></div><span class="institution-chart-count">${entry.count}</span></div>`
+    )).join("")}</div>`
+  );
+}
+
+function renderYearChart(paperCoverageRecords) {
+  const countsByYear = new Map();
+  paperCoverageRecords.forEach((record) => {
+    const year = publicationYear(record);
+    if (year === null) {
+      return;
+    }
+    countsByYear.set(year, (countsByYear.get(year) || 0) + 1);
+  });
+  const years = [...countsByYear.entries()].sort((first, second) => first[0] - second[0]);
+  if (!years.length) {
+    renderChartEmpty(yearChartContent);
+    return;
+  }
+  const maximum = Math.max(...years.map(([, count]) => count));
+  yearChartContent.innerHTML = (
+    `<div class="year-chart-bars">${years.map(([year, count]) => (
+      `<div class="year-chart-item" title="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></div>`
+    )).join("")}</div>`
+  );
+}
+
+function renderHeaderStatistics(datasetRecords, datasetPaperRecords = []) {
+  const paperCoverageRecords = paperListRecordsForDisplay(datasetPaperRecords);
+  renderTaskChart(paperCoverageRecords);
+  renderInstitutionChart(datasetRecords);
+  renderYearChart(paperCoverageRecords);
 }
 
 function hasResolutionMetadata(record) {
@@ -1533,9 +1623,11 @@ function selectResultsView(view) {
 }
 
 function baseMapStatusText(visibleRecords) {
-  const recordLabel = datasetConfig.recordLabel;
+  const recordLabel = datasetName === "preview"
+    ? "public preview record"
+    : datasetConfig.recordLabel;
   const interactionHint = supportsMarkerHover
-    ? " Hover over a marker to preview paper details; click to pin them."
+    ? " Hover over a marker to preview paper details; click to pin."
     : " Tap a marker to pin paper details.";
   return visibleRecords.length
     ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}.${interactionHint}`
@@ -1718,6 +1810,7 @@ function renderRecords() {
   });
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
+  renderHeaderStatistics(visibleRecords, visiblePaperRecords);
   renderResults(visibleRecords, visiblePaperRecords);
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", false);
@@ -1830,6 +1923,7 @@ function showDatasetMessage(message, isError = false) {
   visibleMarkerEntries = [];
   hoveredPaperIdentity = "";
   updateDatasetStatistics(records, paperRecords);
+  renderHeaderStatistics(records, paperRecords);
   renderResults(records, paperRecords);
   mapStatus.textContent = message;
   mapStatus.classList.toggle("error", isError);
