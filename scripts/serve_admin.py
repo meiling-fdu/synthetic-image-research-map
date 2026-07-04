@@ -1454,8 +1454,15 @@ def make_handler(
                             aliases_path=institution_aliases_path,
                         )
                         curated_counts = {
+                            "total_papers": counts["total_papers"],
                             "curated_papers": counts["curated_papers"],
                             "active_exclusions": counts["active_exclusions"],
+                            "papers_missing_affiliations": counts[
+                                "papers_missing_affiliations"
+                            ],
+                            "papers_missing_coordinates": counts[
+                                "papers_missing_coordinates"
+                            ],
                             "curated_mappings": len(load_mappings(mappings_path)),
                             "pending_location_reviews": sum(
                                 clean(row.get("coordinate_status")) != "known"
@@ -1465,21 +1472,20 @@ def make_handler(
                                 read_csv_rows(institution_locations_path)
                             ),
                         }
+                        try:
+                            author_mapping_coverage = (
+                                load_author_mapping_coverage(author_mapping_report_path)
+                            )
+                        except AdminDataError:
+                            author_mapping_coverage = unavailable_author_mapping_coverage(
+                                "Report missing"
+                            )
                         dashboard = dashboard_data(
                             curated_counts=curated_counts,
                             validation_status=self.workflow_status_snapshot(),
                             git_status=git_status_result(),
+                            author_mapping_coverage=author_mapping_coverage,
                         )
-                        try:
-                            dashboard["author_mapping_coverage"] = (
-                                load_author_mapping_coverage(
-                                    author_mapping_report_path
-                                )
-                            )
-                        except AdminDataError:
-                            dashboard["author_mapping_coverage"] = (
-                                unavailable_author_mapping_coverage()
-                            )
                         self.send_json(
                             HTTPStatus.OK, api_payload(data=dashboard)
                         )

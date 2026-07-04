@@ -8,7 +8,7 @@ import fnmatch
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any, Dict, Iterable, Mapping
+from typing import Any, Dict, Iterable, Mapping, Sequence
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
@@ -137,11 +137,189 @@ def _count_csv(path: Path) -> int:
     return len(read_csv(path))
 
 
+def project_health_data(
+    *,
+    counts: Mapping[str, int],
+    queues: Mapping[str, Mapping[str, Any]],
+    author_mapping_coverage: Mapping[str, Any],
+) -> Dict[str, Any]:
+    """Arrange existing dashboard/report totals into UI-ready health groups."""
+
+    def metric(
+        key: str,
+        label: str,
+        value: Any,
+        *,
+        target: str = "",
+        source_available: bool = True,
+        suffix: str = "",
+    ) -> Dict[str, Any]:
+        return {
+            "key": key,
+            "label": label,
+            "value": value if source_available else None,
+            "display_value": (
+                f"{value}{suffix}" if source_available else "Report missing"
+            ),
+            "available": source_available,
+            "target": target,
+        }
+
+    def group(
+        key: str, label: str, metrics: Sequence[Mapping[str, Any]]
+    ) -> Dict[str, Any]:
+        return {"key": key, "label": label, "metrics": list(metrics)}
+
+    mapping_available = bool(author_mapping_coverage.get("available"))
+    mapping_summary = author_mapping_coverage.get("summary") or {}
+    queue_available = {
+        name: bool(queue.get("available")) for name, queue in queues.items()
+    }
+
+    groups = [
+        group(
+            "corpus",
+            "Corpus",
+            [
+                metric("total_papers", "Total papers", counts.get("total_papers", 0)),
+                metric(
+                    "public_preview_papers",
+                    "Public preview papers",
+                    counts.get("public_preview_papers", 0),
+                ),
+                metric("map_markers", "Map markers", counts.get("map_markers", 0)),
+                metric(
+                    "missing_affiliations",
+                    "Missing affiliations",
+                    counts.get("papers_missing_affiliations", 0),
+                ),
+                metric(
+                    "missing_coordinates",
+                    "Missing coordinates",
+                    counts.get("papers_missing_coordinates", 0),
+                ),
+            ],
+        ),
+        group(
+            "author_mapping",
+            "Author Mapping",
+            [
+                metric(
+                    "author_mapping_coverage",
+                    "Author Mapping Coverage",
+                    mapping_summary.get("mapping_coverage_percentage", 0),
+                    target="author-mapping-coverage",
+                    source_available=mapping_available,
+                    suffix="%",
+                ),
+                metric(
+                    "complete_author_mappings",
+                    "Complete author mappings",
+                    mapping_summary.get("complete_mappings", 0),
+                    target="author-mapping-coverage",
+                    source_available=mapping_available,
+                ),
+                metric(
+                    "partial_author_mappings",
+                    "Partial author mappings",
+                    mapping_summary.get("partial_mappings", 0),
+                    target="author-mapping-coverage",
+                    source_available=mapping_available,
+                ),
+                metric(
+                    "missing_author_mappings",
+                    "Missing author mappings",
+                    mapping_summary.get("zero_mappings", 0),
+                    target="author-mapping-coverage",
+                    source_available=mapping_available,
+                ),
+                metric(
+                    "missing_author_links",
+                    "Missing author links",
+                    mapping_summary.get("total_missing_author_links", 0),
+                    target="author-mapping-coverage",
+                    source_available=mapping_available,
+                ),
+            ],
+        ),
+        group(
+            "institution_location",
+            "Institution / Location",
+            [
+                metric(
+                    "pending_locations",
+                    "Pending locations",
+                    counts.get("pending_location_reviews", 0),
+                    target="location-review",
+                ),
+                metric(
+                    "confirmed_locations",
+                    "Confirmed locations",
+                    counts.get("confirmed_institution_locations", 0),
+                    target="location-review",
+                ),
+            ],
+        ),
+        group(
+            "review_queues",
+            "Review Queues",
+            [
+                metric(
+                    "high_risk_markers",
+                    "High-risk markers",
+                    queues["high_risk_marker"].get("count", 0),
+                    target="high-risk",
+                    source_available=queue_available["high_risk_marker"],
+                ),
+                metric(
+                    "marker_blockers",
+                    "Marker blockers",
+                    queues["marker_blocker"].get("count", 0),
+                    target="marker-blockers",
+                    source_available=queue_available["marker_blocker"],
+                ),
+                metric(
+                    "key_paper_coverage_queue",
+                    "Key paper coverage queue",
+                    queues["key_paper_coverage"].get("count", 0),
+                    target="key-coverage",
+                    source_available=queue_available["key_paper_coverage"],
+                ),
+                metric(
+                    "manual_import_queue",
+                    "Manual import queue",
+                    queues["manual_import"].get("count", 0),
+                    target="manual-import",
+                    source_available=queue_available["manual_import"],
+                ),
+            ],
+        ),
+        group(
+            "publication_exclusions",
+            "Publication / Exclusions",
+            [
+                metric(
+                    "curated_papers",
+                    "Curated papers",
+                    counts.get("curated_papers", 0),
+                ),
+                metric(
+                    "active_exclusions",
+                    "Active exclusions",
+                    counts.get("active_exclusions", 0),
+                ),
+            ],
+        ),
+    ]
+    return {"groups": groups}
+
+
 def dashboard_data(
     *,
     curated_counts: Mapping[str, int],
     validation_status: Mapping[str, Any],
     git_status: Mapping[str, Any],
+    author_mapping_coverage: Mapping[str, Any],
 ) -> Dict[str, Any]:
     public_papers = read_json(WEB_DATA_DIR / "public_preview_papers.json")
     map_markers = read_json(WEB_DATA_DIR / "public_preview_map_data.json")
@@ -151,20 +329,30 @@ def dashboard_data(
         "key_paper_coverage": load_queue("key_paper_coverage"),
         "manual_import": load_manual_import_queue(),
     }
+    counts = {
+        "public_preview_papers": len(public_papers),
+        "map_markers": len(map_markers),
+        **dict(curated_counts),
+    }
+    queue_summaries = {
+        name: {
+            "available": queue["available"],
+            "count": queue["count"],
+            "summary": queue["summary"],
+        }
+        for name, queue in queues.items()
+    }
     return {
-        "counts": {
-            "public_preview_papers": len(public_papers),
-            "map_markers": len(map_markers),
-            **dict(curated_counts),
-        },
+        "counts": counts,
         "queues": {
-            name: {
-                "available": queue["available"],
-                "count": queue["count"],
-                "summary": queue["summary"],
-            }
-            for name, queue in queues.items()
+            name: dict(summary) for name, summary in queue_summaries.items()
         },
+        "author_mapping_coverage": dict(author_mapping_coverage),
+        "project_health": project_health_data(
+            counts=counts,
+            queues=queue_summaries,
+            author_mapping_coverage=author_mapping_coverage,
+        ),
         "latest_validation_status": validation_status,
         "git_status": git_status,
     }

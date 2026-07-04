@@ -61,11 +61,27 @@
         <article><strong id="count-exclusions">—</strong><span>Active exclusions</span></article>
       </section>
       <section class="dashboard-panel" id="dashboard-panel">
+        <section class="project-health" aria-labelledby="project-health-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Data quality and maintenance</p>
+              <h2 id="project-health-title">Project Health</h2>
+              <p>Current corpus, mapping, location, review, and publication status.</p>
+            </div>
+            <button class="secondary-button" id="refresh-project-health" type="button">Refresh Project Health</button>
+          </div>
+          <div class="project-health-groups" id="project-health-groups">
+            <p>Project health loads after authentication.</p>
+          </div>
+        </section>
         <div class="section-heading">
-          <div><p class="eyebrow">Review queues</p><h2>Admin Dashboard</h2></div>
+          <div><p class="eyebrow">Review queue details</p><h2>Admin Dashboard</h2></div>
           <button class="secondary-button" id="reload-review-queues" type="button">Reload all review queues</button>
         </div>
-        <div class="dashboard-grid" id="dashboard-grid"><p>Dashboard data loads after authentication.</p></div>
+        <details class="secondary-summary">
+          <summary>Queue breakdown and secondary totals</summary>
+          <div class="dashboard-grid" id="dashboard-grid"><p>Dashboard data loads after authentication.</p></div>
+        </details>
         <section class="mapping-coverage-card" aria-labelledby="mapping-coverage-dashboard-title">
           <div class="section-heading">
             <div>

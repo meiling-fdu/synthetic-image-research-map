@@ -85,6 +85,10 @@ The console exposes four generated queues:
 - **Key Paper Coverage Review** reads `data/manual/key_paper_coverage_report.csv`.
 - **Manual Import Review** discovers the supported `key_papers_*` candidate CSVs.
 
+The Dashboard starts with a grouped **Project Health** module covering the corpus, author mapping, institution/location maintenance, review queues, and publication/exclusion state. Metrics link to their corresponding review workflow where one exists. **Refresh Project Health**, **Reload all review queues**, and a successful full refresh all reload the same dashboard aggregation. Missing generated reports appear as **Report missing** rather than as a zero or a file-system error.
+
+Project Health reuses the public-preview JSON counts, Admin corpus counts, location review payload, the four generated review queue loaders listed above, and `data/manual/missing_author_mappings_report.csv`. The older detailed queue cards remain collapsed as a secondary summary.
+
 The Dashboard also shows a read-only **Author Mapping Coverage** card with complete, partial, and missing-mapping counts, full-paper coverage percentage, and the ten highest-priority gaps. Its dedicated tab provides search, status and key-paper filters, rank/missing-author sorting, and direct links into the paper's Author–Institution Mapping Editor. **Map missing authors** opens a new mapping draft with the missing names prefilled; institution and affiliation evidence still require maintainer confirmation.
 
 - Dashboard data source: `data/manual/missing_author_mappings_report.csv`

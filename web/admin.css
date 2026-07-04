@@ -71,6 +71,90 @@
   font-size: 1.55rem;
 }
 
+.project-health {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  border: 1px solid #a7cdbd;
+  border-radius: 0.85rem;
+  background: var(--panel);
+}
+
+.project-health-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 0.8rem;
+}
+
+.project-health-group {
+  min-width: 0;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--paper);
+}
+
+.project-health-group h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.92rem;
+}
+
+.project-health-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.project-health-metric {
+  min-width: 0;
+  padding: 0.65rem;
+  border: 0;
+  border-radius: 0.55rem;
+  color: var(--ink);
+  background: var(--green-soft);
+  text-align: left;
+}
+
+button.project-health-metric:hover,
+button.project-health-metric:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 1px;
+}
+
+.project-health-metric[data-status="missing"] {
+  color: var(--amber);
+  background: var(--amber-soft);
+}
+
+.project-health-metric strong,
+.project-health-metric span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.project-health-metric strong {
+  margin-bottom: 0.15rem;
+  font-size: 1.15rem;
+}
+
+.project-health-metric span {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.secondary-summary {
+  margin: 0.75rem 0 1rem;
+}
+
+.secondary-summary summary {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.project-health-fallback {
+  color: var(--amber);
+  font-weight: 700;
+}
+
 .mapping-coverage-card {
   margin: 1rem 0;
   padding: 1rem;
@@ -262,6 +346,18 @@
   .review-detail {
     position: static;
     max-height: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .project-health .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .project-health-metrics {
+    grid-template-columns: 1fr;
   }
 }
 

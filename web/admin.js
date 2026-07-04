@@ -201,6 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
     "console-nav",
     "dashboard-panel",
     "dashboard-grid",
+    "project-health-groups",
+    "refresh-project-health",
     "reload-review-queues",
     "dashboard-git-status",
     "dashboard-run-full-refresh",
@@ -344,6 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
   });
   elements["reload-review-queues"].addEventListener("click", loadDashboardAndQueues);
+  elements["refresh-project-health"].addEventListener("click", loadDashboardAndQueues);
   elements["reload-mapping-coverage"].addEventListener("click", loadAuthorMappingCoverage);
   elements["reload-mapping-coverage-full"].addEventListener("click", loadAuthorMappingCoverage);
   elements["generate-mapping-report"].addEventListener("click", generateAuthorMappingReport);
@@ -435,8 +438,13 @@ async function loadApplication(preserveSelection = false) {
 }
 
 async function loadDashboardAndQueues() {
-  const button = elements["reload-review-queues"];
-  button.disabled = true;
+  const buttons = [
+    elements["reload-review-queues"],
+    elements["refresh-project-health"],
+  ];
+  buttons.forEach((button) => {
+    button.disabled = true;
+  });
   try {
     const paths = {
       dashboard: "/api/dashboard",
@@ -458,12 +466,15 @@ async function loadDashboardAndQueues() {
       else state.reviewQueues[name] = payload.data || {};
     });
     renderDashboard();
+    renderProjectHealth();
     renderMappingCoverage();
     Object.keys(state.reviewQueues).forEach(renderReviewQueue);
   } catch (error) {
     showNotice(`Review queues could not be loaded: ${error.message}`, "error");
   } finally {
-    button.disabled = false;
+    buttons.forEach((button) => {
+      button.disabled = false;
+    });
   }
   await loadAuthorMappingCoverage({ showError: false });
 }
@@ -517,6 +528,7 @@ async function generateAuthorMappingReport() {
     );
     state.authorMappingCoverage = payload.data || {};
     renderMappingCoverage();
+    await loadDashboardAndQueues();
     showNotice(payload.message || "Author mapping report generated.");
   } catch (error) {
     showNotice(`Author mapping report could not be generated: ${error.message}`, "error");
@@ -587,6 +599,49 @@ function renderDashboard() {
     span.textContent = `${humanize(name)}${groups ? ` · ${groups}` : ""}`;
     card.append(strong, span);
     elements["dashboard-grid"].append(card);
+  });
+}
+
+function renderProjectHealth() {
+  const groups = state.dashboard.project_health?.groups || [];
+  const container = elements["project-health-groups"];
+  container.replaceChildren();
+  if (!groups.length) {
+    const message = document.createElement("p");
+    message.className = "project-health-fallback";
+    message.textContent = "Needs refresh";
+    container.append(message);
+    return;
+  }
+  groups.forEach((group) => {
+    const section = document.createElement("section");
+    section.className = "project-health-group";
+    section.dataset.healthGroup = group.key;
+    const heading = document.createElement("h3");
+    heading.textContent = group.label;
+    const metrics = document.createElement("div");
+    metrics.className = "project-health-metrics";
+    (group.metrics || []).forEach((metric) => {
+      const item = metric.target
+        ? document.createElement("button")
+        : document.createElement("div");
+      if (metric.target) {
+        item.type = "button";
+        item.dataset.consoleTarget = metric.target;
+        item.addEventListener("click", () => navigateConsole(metric.target));
+      }
+      item.className = "project-health-metric";
+      item.dataset.healthMetric = metric.key;
+      if (!metric.available) item.dataset.status = "missing";
+      const value = document.createElement("strong");
+      value.textContent = text(metric.display_value) || "Needs refresh";
+      const label = document.createElement("span");
+      label.textContent = metric.label;
+      item.append(value, label);
+      metrics.append(item);
+    });
+    section.append(heading, metrics);
+    container.append(section);
   });
 }
 

@@ -16,6 +16,7 @@ from scripts.serve_admin import (
     make_handler,
 )
 from scripts.admin_workflows import ALLOWED_WORKFLOWS
+from scripts.admin_review_queues import project_health_data
 
 
 FIELDS = (
@@ -197,6 +198,90 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
         self.assertEqual(unauthorized_status, 401)
         self.assertEqual(alias_status, 200)
 
+    def test_project_health_uses_author_mapping_report_numbers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "report.csv"
+            self.write_report(path)
+            with self.server(path) as base_url:
+                status, payload = self.request(f"{base_url}/api/dashboard")
+
+        self.assertEqual(status, 200)
+        groups = {
+            group["key"]: group
+            for group in payload["data"]["project_health"]["groups"]
+        }
+        mapping_metrics = {
+            metric["key"]: metric
+            for metric in groups["author_mapping"]["metrics"]
+        }
+        self.assertEqual(mapping_metrics["author_mapping_coverage"]["value"], 33.3)
+        self.assertEqual(mapping_metrics["complete_author_mappings"]["value"], 1)
+        self.assertEqual(mapping_metrics["partial_author_mappings"]["value"], 1)
+        self.assertEqual(mapping_metrics["missing_author_mappings"]["value"], 1)
+        self.assertEqual(mapping_metrics["missing_author_links"]["value"], 4)
+
+    def test_project_health_missing_reports_have_graceful_fallback(self):
+        queues = {
+            name: {"available": False, "count": 0}
+            for name in (
+                "high_risk_marker",
+                "marker_blocker",
+                "key_paper_coverage",
+                "manual_import",
+            )
+        }
+        health = project_health_data(
+            counts={},
+            queues=queues,
+            author_mapping_coverage={"available": False, "summary": {}},
+        )
+
+        metrics = [
+            metric
+            for group in health["groups"]
+            for metric in group["metrics"]
+            if not metric["available"]
+        ]
+        self.assertTrue(metrics)
+        self.assertTrue(
+            all(metric["display_value"] == "Report missing" for metric in metrics)
+        )
+        self.assertNotIn("not found", json.dumps(health).casefold())
+
+    def test_project_health_exposes_all_frontend_groups(self):
+        queues = {
+            name: {"available": True, "count": 0}
+            for name in (
+                "high_risk_marker",
+                "marker_blocker",
+                "key_paper_coverage",
+                "manual_import",
+            )
+        }
+        health = project_health_data(
+            counts={},
+            queues=queues,
+            author_mapping_coverage={"available": True, "summary": {}},
+        )
+        self.assertEqual(
+            [group["key"] for group in health["groups"]],
+            [
+                "corpus",
+                "author_mapping",
+                "institution_location",
+                "review_queues",
+                "publication_exclusions",
+            ],
+        )
+        repository_root = Path(__file__).resolve().parent.parent
+        html = (repository_root / "web" / "admin.html").read_text(encoding="utf-8")
+        javascript = (repository_root / "web" / "admin.js").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('id="project-health-groups"', html)
+        self.assertIn("function renderProjectHealth()", javascript)
+        self.assertIn("navigateConsole(metric.target)", javascript)
+
     def test_missing_report_returns_empty_state_and_generate_populates_it(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "missing.csv"
@@ -211,6 +296,9 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
                 get_status, get_payload = self.request(
                     f"{base_url}/api/review/author-mapping-coverage"
                 )
+                dashboard_status, dashboard_payload = self.request(
+                    f"{base_url}/api/dashboard"
+                )
                 generate_status, generate_payload = self.request(
                     f"{base_url}/api/review/author-mapping-coverage/generate",
                     method="POST",
@@ -221,6 +309,18 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
         self.assertEqual(
             get_payload["data"]["message"],
             "Author mapping report has not been generated.",
+        )
+        self.assertEqual(dashboard_status, 200)
+        mapping_group = next(
+            group
+            for group in dashboard_payload["data"]["project_health"]["groups"]
+            if group["key"] == "author_mapping"
+        )
+        self.assertTrue(
+            all(
+                metric["display_value"] == "Report missing"
+                for metric in mapping_group["metrics"]
+            )
         )
         self.assertEqual(generate_status, 200)
         self.assertTrue(generate_payload["data"]["available"])
