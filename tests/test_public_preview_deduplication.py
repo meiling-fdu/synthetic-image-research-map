@@ -160,6 +160,81 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertFalse(trento["authors"][0]["is_current_marker_author"])
         self.assertTrue(trento["authors"][1]["is_current_marker_author"])
 
+    def test_chinese_surname_first_authors_match_curated_western_order(self):
+        paper = {
+            "title": "人工智能生成图像检测技术综述",
+            "year": 2026,
+            "doi": "10.11834/jig.250053",
+            "authors": [
+                "Li Meiling",
+                "Qian Zhenxing",
+                "Zhang Xinpeng",
+            ],
+        }
+        marker = {
+            **paper,
+            "institution": "Fudan University",
+            "institution_id": "institution:fudan",
+            "institution_authors": [
+                "Meiling Li",
+                "Zhenxing Qian",
+                "Xinpeng Zhang",
+            ],
+            "source_database": "curated",
+        }
+
+        add_public_detail_fields([paper], [marker])
+
+        self.assertEqual(
+            [author["affiliation_indices"] for author in paper["authors"]],
+            [[1], [1], [1]],
+        )
+        self.assertEqual(
+            [
+                author["name"]
+                for author in marker["authors"]
+                if author["is_current_marker_author"]
+            ],
+            ["Li Meiling", "Qian Zhenxing", "Zhang Xinpeng"],
+        )
+        self.assertEqual(
+            {mapping["source"] for mapping in paper["author_affiliation_indices"]},
+            {"curated_admin"},
+        )
+
+    def test_one_author_can_have_multiple_affiliations(self):
+        paper = {
+            "title": "Multiple affiliations",
+            "year": 2024,
+            "doi": "10.1000/multiple-affiliations",
+            "authors": ["Li Meiling", "Jane Doe"],
+        }
+        first = {
+            **paper,
+            "institution": "First University",
+            "institution_id": "institution:first",
+            "institution_authors": ["Meiling Li"],
+            "source_database": "curated",
+        }
+        second = {
+            **paper,
+            "institution": "Second University",
+            "institution_id": "institution:second",
+            "institution_authors": ["Li Meiling", "Jane Doe"],
+            "source_database": "curated",
+        }
+
+        add_public_detail_fields([paper], [first, second])
+
+        self.assertEqual(
+            [author["affiliation_indices"] for author in paper["authors"]],
+            [[1, 2], [2]],
+        )
+        self.assertTrue(first["authors"][0]["is_current_marker_author"])
+        self.assertFalse(first["authors"][1]["is_current_marker_author"])
+        self.assertTrue(second["authors"][0]["is_current_marker_author"])
+        self.assertTrue(second["authors"][1]["is_current_marker_author"])
+
     def test_paper_level_affiliation_does_not_fabricate_author_mapping(self):
         paper = {
             "title": "Manual paper",
@@ -631,6 +706,35 @@ process.stdout.write(JSON.stringify(html));
         self.assertIn(">1,2</sup>", rendered)
         self.assertIn('<strong class="current-institution-author">', rendered)
         self.assertNotIn("John Roe<sup", rendered)
+
+    def test_frontend_legacy_name_fallback_matches_reversed_order_safely(self):
+        helper = (
+            Path(__file__).resolve().parents[1]
+            / "web"
+            / "paper_details_helpers.js"
+        )
+        node = Path(
+            "/Users/meilinger/.cache/codex-runtimes/"
+            "codex-primary-runtime/dependencies/node/bin/node"
+        )
+        script = """
+const helpers = require(process.argv[1]);
+process.stdout.write(JSON.stringify({
+  reversed: helpers.namesMatch("Li Meiling", "Meiling Li"),
+  unrelated: helpers.namesMatch("Li Wei", "Wei Zhang"),
+}));
+"""
+        result = subprocess.run(
+            [str(node), "-e", script, str(helper)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertEqual(
+            json.loads(result.stdout),
+            {"reversed": True, "unrelated": False},
+        )
 
     def test_validator_warns_for_missing_mapping_without_crashing(self):
         record = {

@@ -5,6 +5,53 @@
   }
   root.PaperDetailsHelpers = helpers;
 }(typeof globalThis !== "undefined" ? globalThis : this, function buildHelpers() {
+  function canonicalNameTokens(value) {
+    const displayName = String(
+      value && typeof value === "object"
+        ? value.name || value.author || ""
+        : value || "",
+    ).trim();
+    const commaParts = displayName.split(",");
+    const orderedName = commaParts.length === 2
+      ? `${commaParts[1].trim()} ${commaParts[0].trim()}`
+      : displayName;
+    return orderedName
+      .normalize("NFKD")
+      .replace(/\p{M}/gu, "")
+      .toLocaleLowerCase()
+      .match(/[\p{L}\p{N}]+/gu) || [];
+  }
+
+  function namesMatch(left, right) {
+    const leftTokens = canonicalNameTokens(left);
+    const rightTokens = canonicalNameTokens(right);
+    if (!leftTokens.length || leftTokens.length !== rightTokens.length) {
+      return false;
+    }
+    if (leftTokens.every((token, index) => token === rightTokens[index])) {
+      return true;
+    }
+    const sortedLeft = [...leftTokens].sort();
+    const sortedRight = [...rightTokens].sort();
+    if (sortedLeft.every((token, index) => token === sortedRight[index])) {
+      return true;
+    }
+    if (leftTokens.length < 3) {
+      return false;
+    }
+    const tokenMatches = (leftToken, rightToken) => (
+      leftToken === rightToken
+      || (
+        Math.min(leftToken.length, rightToken.length) === 1
+        && leftToken[0] === rightToken[0]
+      )
+    );
+    return leftTokens.every((token, index) => tokenMatches(token, rightTokens[index]))
+      || leftTokens.every((token, index) => (
+        tokenMatches(token, rightTokens[rightTokens.length - index - 1])
+      ));
+  }
+
   function renderPaperAuthors(paper, escapeHtml, currentAffiliationNumber = null) {
     const authors = Array.isArray(paper?.authors) ? paper.authors : [];
     return authors.map((author) => {
@@ -25,5 +72,5 @@
     }).join(", ");
   }
 
-  return { renderPaperAuthors };
+  return { namesMatch, renderPaperAuthors };
 }));

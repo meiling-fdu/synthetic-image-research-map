@@ -17,6 +17,11 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 try:
+    from .name_matching import canonical_name_key
+except ImportError:
+    from name_matching import canonical_name_key
+
+try:
     from .country_normalization import (
         CHINA_REGION_BY_CODE,
         normalize_country_region,
@@ -141,11 +146,7 @@ def author_name(value: Any) -> str:
 
 
 def normalized_author_name(value: Any) -> str:
-    name = author_name(value)
-    if name.count(",") == 1:
-        family, given = (part.strip() for part in name.split(",", 1))
-        name = f"{given} {family}"
-    return " ".join(re.findall(r"\w+", name.casefold(), flags=re.UNICODE))
+    return canonical_name_key(value)
 
 
 def is_bad_author_candidate(record: Any) -> bool:

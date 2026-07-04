@@ -327,6 +327,17 @@ function normalizedAuthorName(value) {
     .trim();
 }
 
+function matchingAuthorMapValue(authorName, valuesByAuthor) {
+  const exact = valuesByAuthor.get(normalizedAuthorName(authorName));
+  if (exact !== undefined) {
+    return exact;
+  }
+  const matches = [...valuesByAuthor.entries()].filter(([candidate]) => (
+    PaperDetailsHelpers.namesMatch(authorName, candidate)
+  ));
+  return matches.length === 1 ? matches[0][1] : undefined;
+}
+
 function institutionIdentity(record) {
   const stableId = String(
     record.institution_id || record.canonical_institution_id || "",
@@ -542,7 +553,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
       : [];
     const affiliationIndices = explicitIndices.length
       ? explicitIndices
-      : affiliationNumbersByAuthor.get(authorKey) || [];
+      : matchingAuthorMapValue(name, affiliationNumbersByAuthor) || [];
     const isCurrentMarkerAuthor = typeof raw.is_current_marker_author === "boolean"
       ? raw.is_current_marker_author
       : Boolean(
@@ -550,6 +561,9 @@ function normalizePaperDetailsRecord(record, context = {}) {
           && (
             affiliationIndices.includes(currentNumber)
             || institutionAuthorKeys.has(authorKey)
+            || [...institutionAuthorKeys].some((candidate) => (
+              PaperDetailsHelpers.namesMatch(name, candidate)
+            ))
           )
         );
     return {

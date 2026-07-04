@@ -13,6 +13,11 @@ import unicodedata
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set, Tuple
 
+try:
+    from .name_matching import canonical_name_key, names_match
+except ImportError:
+    from name_matching import canonical_name_key, names_match
+
 
 DEFAULT_PAPERS = Path("web/data/public_preview_papers.json")
 DEFAULT_MAP_DATA = Path("web/data/public_preview_map_data.json")
@@ -72,13 +77,7 @@ def normalize_title(value: Any) -> str:
 
 
 def normalize_author(value: Any) -> str:
-    if isinstance(value, Mapping):
-        value = value.get("name") or value.get("author")
-    name = clean(value)
-    if name.count(",") == 1:
-        family, given = (part.strip() for part in name.split(",", 1))
-        name = f"{given} {family}"
-    return " ".join(re.findall(r"\w+", name.casefold(), flags=re.UNICODE))
+    return canonical_name_key(value)
 
 
 def author_name(value: Any) -> str:
@@ -250,7 +249,9 @@ def author_coverage(record: Mapping[str, Any]) -> Tuple[int, int, List[str]]:
                 or author.get("institution_indices")
             )
         )
-        if has_direct_indexes or normalize_author(author) in mapped_names:
+        if has_direct_indexes or any(
+            names_match(author, mapped_name) for mapped_name in mapped_names
+        ):
             mapped += 1
         else:
             missing.append(name or "<unnamed author>")

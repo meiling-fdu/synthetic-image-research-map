@@ -52,6 +52,11 @@ try:
         apply_confirmed_version_merges,
         read_paper_version_merges,
     )
+    from .name_matching import (
+        canonical_name_key,
+        names_match,
+        unique_matching_name,
+    )
     from .export_candidate_map_data import (
         ExportError,
         apply_paper_abstracts,
@@ -105,6 +110,11 @@ except ImportError:  # Direct execution from the scripts directory.
         PaperVersionMergeError,
         apply_confirmed_version_merges,
         read_paper_version_merges,
+    )
+    from name_matching import (
+        canonical_name_key,
+        names_match,
+        unique_matching_name,
     )
     from export_candidate_map_data import (
         ExportError,
@@ -450,11 +460,7 @@ def author_display_name(value: Any) -> str:
 
 def normalized_author_name(value: Any) -> str:
     """Normalize display-order and ``Family, Given`` author names alike."""
-    name = author_display_name(value)
-    if name.count(",") == 1:
-        family, given = (part.strip() for part in name.split(",", 1))
-        name = f"{given} {family}"
-    return " ".join(re.findall(r"\w+", name.casefold(), flags=re.UNICODE))
+    return canonical_name_key(value)
 
 
 def relaxed_author_name(value: Any) -> str:
@@ -663,6 +669,12 @@ def add_public_detail_fields(
             author_key = normalized_author_name(author)
             if not author_key or not identity:
                 return
+            matched_key = unique_matching_name(
+                author,
+                list(author_affiliation_identities),
+            )
+            if matched_key is not None:
+                author_key = matched_key
             normalized_source = _author_mapping_source(source)
             incoming_priority = AUTHOR_MAPPING_SOURCE_PRIORITY[normalized_source]
             current_source = author_mapping_sources.get(author_key, "unmapped")
@@ -781,8 +793,8 @@ def add_public_detail_fields(
                     current_identity,
                     source=source,
                 )
-                if all(
-                    normalized_author_name(existing) != author_key
+                if not any(
+                    names_match(existing, author_name)
                     for existing in current_affiliation["authors"]
                 ):
                     current_affiliation["authors"].append(author_name)
@@ -893,14 +905,21 @@ def add_public_detail_fields(
                 author_key = normalized_author_name(author)
                 evidence_key = author_key
                 if evidence_key not in author_affiliation_identities:
-                    relaxed_key = relaxed_author_name(author)
-                    relaxed_matches = [
-                        candidate
-                        for candidate in author_affiliation_identities
-                        if relaxed_author_name(candidate) == relaxed_key
-                    ]
-                    if len(relaxed_matches) == 1:
-                        evidence_key = relaxed_matches[0]
+                    matched_key = unique_matching_name(
+                        author,
+                        list(author_affiliation_identities),
+                    )
+                    if matched_key is not None:
+                        evidence_key = matched_key
+                    else:
+                        relaxed_key = relaxed_author_name(author)
+                        relaxed_matches = [
+                            candidate
+                            for candidate in author_affiliation_identities
+                            if relaxed_author_name(candidate) == relaxed_key
+                        ]
+                        if len(relaxed_matches) == 1:
+                            evidence_key = relaxed_matches[0]
                 indices = sorted(
                     {
                         affiliation_by_identity[identity]["index"]

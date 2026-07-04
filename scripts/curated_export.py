@@ -33,6 +33,7 @@ try:
         record_is_excluded,
         build_active_exclusion_index,
     )
+    from .name_matching import canonical_name_key, names_match
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -52,6 +53,7 @@ except ImportError:
         record_is_excluded,
         build_active_exclusion_index,
     )
+    from name_matching import canonical_name_key, names_match
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -367,11 +369,7 @@ def _ordered_mapping_authors(
 
 
 def _normalized_person(value: Any) -> str:
-    name = clean(value)
-    if name.count(",") == 1:
-        family, given = (part.strip() for part in name.split(",", 1))
-        name = f"{given} {family}"
-    return normalize_institution(name)
+    return canonical_name_key(value)
 
 
 def _is_explicit_admin_supplement(record: Mapping[str, Any]) -> bool:
@@ -1260,6 +1258,7 @@ def _recalculate_paper_details(
         )
     affiliations = []
     author_affiliations: Dict[str, Dict[str, Any]] = {}
+    paper_authors = _parse_people(paper.get("authors"))
     for index, mapping in enumerate(affiliation_records, start=1):
         institution = clean(mapping.get("institution"))
         institution_id = stable_institution_id(institution)
@@ -1280,11 +1279,21 @@ def _recalculate_paper_details(
             }
         )
         for author in mapping_authors:
-            author_key = normalize_institution(author)
+            matched_paper_authors = [
+                paper_author
+                for paper_author in paper_authors
+                if names_match(paper_author, author)
+            ]
+            author_name = (
+                matched_paper_authors[0]
+                if len(matched_paper_authors) == 1
+                else author
+            )
+            author_key = canonical_name_key(author_name)
             values = author_affiliations.setdefault(
                 author_key,
                 {
-                    "author": author,
+                    "author": author_name,
                     "institution_indices": [],
                     "institution_ids": [],
                     "source": mapping_source,
