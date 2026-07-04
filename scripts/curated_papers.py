@@ -13,6 +13,7 @@ from typing import Any, Dict, Iterable, List, Mapping, Sequence
 try:
     from .curated_schema import (
         ALLOWED_CURATION_STATUSES,
+        ALLOWED_ENTRY_TYPES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_SCOPE_STATUSES,
         ALLOWED_SUBTASKS,
@@ -28,6 +29,7 @@ try:
 except ImportError:
     from curated_schema import (
         ALLOWED_CURATION_STATUSES,
+        ALLOWED_ENTRY_TYPES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_SCOPE_STATUSES,
         ALLOWED_SUBTASKS,
@@ -108,6 +110,7 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
+    entry_type = clean(draft.get("entry_type")).casefold() or "method"
     subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     if not title:
@@ -117,6 +120,11 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     if task not in ALLOWED_TASKS:
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
+        )
+    if entry_type not in ALLOWED_ENTRY_TYPES:
+        raise CuratedPaperError(
+            "entry_type must be one of "
+            + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
         )
     if subtask and subtask not in ALLOWED_SUBTASKS:
         raise CuratedPaperError(
@@ -161,6 +169,7 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "publication_type": clean(draft.get("publication_type")),
         "abstract": clean(draft.get("abstract")),
         "task": task,
+        "entry_type": entry_type,
         "subtask": subtask,
         "scope_status": scope_status,
         "source_database": source_database,
@@ -258,6 +267,7 @@ def update_curated_paper(
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
+    entry_type = clean(draft.get("entry_type")).casefold()
     subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     curation_status = (
@@ -271,6 +281,13 @@ def update_curated_paper(
     if task not in ALLOWED_TASKS:
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
+        )
+    if not entry_type:
+        raise CuratedPaperError("entry_type is required")
+    if entry_type not in ALLOWED_ENTRY_TYPES:
+        raise CuratedPaperError(
+            "entry_type must be one of "
+            + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
         )
     if subtask and subtask not in ALLOWED_SUBTASKS:
         raise CuratedPaperError(
@@ -334,6 +351,7 @@ def update_curated_paper(
         "publication_type": clean(draft.get("publication_type")),
         "abstract": clean(draft.get("abstract")),
         "task": task,
+        "entry_type": entry_type,
         "subtask": subtask,
         "scope_status": scope_status,
         "source_database": source_database,

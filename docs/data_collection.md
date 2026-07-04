@@ -504,6 +504,8 @@ The local admin browser's **Add Paper** workflow searches OpenAlex by title, DOI
 
 Review the returned candidates, choose **Use this OpenAlex record**, correct or complete the prefilled metadata, assign the task and optional subtask, and save the confirmed record to `data/curated/papers.csv`. OpenAlex supplies candidate metadata; the saved curated row represents the maintainer's confirmation and uses `source_database=openalex`, `metadata_source=openalex`, and `curation_status=manually_confirmed`. When an exact arXiv ID is not found in OpenAlex, the workflow may retrieve public Atom metadata directly from arXiv; a confirmed fallback row instead records `source_database=arxiv` and `metadata_source=arxiv`.
 
+For an existing paper, the admin **Paper Metadata** editor writes `task` and the controlled `entry_type` contribution category (`method`, `dataset`, `benchmark`, `survey`, or `analysis`) to the same curated paper row. `entry_type` is independent of the bibliographic `publication_type`. Values are normalized to lowercase and flow through the normal refresh/export/publish process; generated `web/data/` files are never the source of truth.
+
 If no candidate is correct—or OpenAlex is unavailable—choose **Add manually instead**. The same form opens without metadata and saves the record with manual provenance and `curation_status=manually_added`. OpenAlex failures do not write any files and do not disable this manual fallback.
 
 Before saving, the server compares DOI, OpenAlex URL, and normalized title plus year against the current public-preview papers, curated papers, and paper-exclusion history. A match is shown as a duplicate warning and creation is blocked; Step 4 does not merge or override records.

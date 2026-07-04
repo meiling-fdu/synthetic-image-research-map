@@ -218,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "metadata-openalex-url",
     "metadata-paper-url",
     "metadata-publication-type",
+    "metadata-entry-type",
     "metadata-task",
     "metadata-subtask",
     "metadata-scope-status",
@@ -2051,7 +2052,7 @@ function openMetadataEditor() {
   const record = state.paperMetadata.effective_record || state.selectedPaper;
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "task", "subtask", "scope_status",
+    "paper_url", "publication_type", "entry_type", "task", "subtask", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
   fields.forEach((field) => {
@@ -2078,7 +2079,7 @@ async function saveMetadata(event) {
   event.preventDefault();
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "task", "subtask", "scope_status",
+    "paper_url", "publication_type", "entry_type", "task", "subtask", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
   const draft = { id: elements["metadata-paper-id"].value };
@@ -2128,6 +2129,7 @@ function renderPaperDetail(paper) {
     ["OpenAlex", linkValue(paper.openalex_url, paper.openalex_url)],
     ["Paper URL", linkValue(paper.paper_url, paper.paper_url)],
     ["Task", humanize(paper.task)],
+    ["Paper type", humanize(paper.entry_type)],
     ["Subtask", humanize(paper.subtask)],
     ["Coverage", humanize(paper.coverage_status)],
     ["Has map location", yesNo(paper.has_map_location)],

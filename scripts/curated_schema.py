@@ -32,6 +32,7 @@ PAPERS_COLUMNS = (
     "review_note",
     "created_at",
     "updated_at",
+    "entry_type",
 )
 
 AUTHOR_INSTITUTION_MAPPING_COLUMNS = (
@@ -191,6 +192,14 @@ ALLOWED_TASKS = {
     "detection_and_source_attribution",
     "source_attribution",
     "uncertain",
+}
+
+ALLOWED_ENTRY_TYPES = {
+    "method",
+    "dataset",
+    "benchmark",
+    "survey",
+    "analysis",
 }
 
 ALLOWED_SUBTASKS = {

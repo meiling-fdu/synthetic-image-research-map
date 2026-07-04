@@ -99,6 +99,7 @@ CURATED_OVERRIDE_FIELDS = (
     "abstract",
     "task",
     "subtask",
+    "entry_type",
     "source_database",
     "metadata_source",
     "curation_status",
@@ -605,7 +606,7 @@ def _curated_paper_record(
     note = clean(row.get("review_note"))
     publication_type = clean(row.get("publication_type"))
     normalized_type = publication_type.casefold()
-    entry_type = (
+    entry_type = clean(row.get("entry_type")).casefold() or (
         "survey"
         if normalized_type in {"survey", "review", "systematic review"}
         else "dataset"
@@ -1403,6 +1404,7 @@ def integrate_curated_records(
         curated_papers, exclusion_rows
     )
     paper_index = _paper_index(papers)
+    map_index = _paper_index(maps)
     added = 0
     merged = 0
     affected_papers = []
@@ -1418,6 +1420,8 @@ def integrate_curated_records(
             for key in normalize_paper_identity_keys(target):
                 paper_index.setdefault(key, []).append(target)
             added += 1
+        for map_record in _matching_papers(curated, map_index):
+            _merge_curated_paper(map_record, curated)
         affected_papers.append(target)
 
     marker_records, mapping_summary = build_curated_map_records(

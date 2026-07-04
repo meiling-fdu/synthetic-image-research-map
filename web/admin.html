@@ -448,7 +448,12 @@
                 <label>OpenAlex URL<input id="metadata-openalex-url" type="url"></label>
                 <label>Paper URL<input id="metadata-paper-url" type="url"></label>
                 <label>Publication type<input id="metadata-publication-type"></label>
-                <label>Task<select id="metadata-task" required>
+                <label>Paper type / category<select id="metadata-entry-type" required>
+                  <option value="method">method</option><option value="survey">survey</option>
+                  <option value="dataset">dataset</option><option value="benchmark">benchmark</option>
+                  <option value="analysis">analysis</option>
+                </select></label>
+                <label>Task / research direction<select id="metadata-task" required>
                   <option value="detection">detection</option>
                   <option value="detection_and_source_attribution">detection_and_source_attribution</option>
                   <option value="source_attribution">source_attribution</option>

@@ -16,6 +16,7 @@ try:
     from .curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
+        ALLOWED_ENTRY_TYPES,
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
@@ -33,6 +34,7 @@ except ImportError:  # Support direct execution from the repository root.
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
+        ALLOWED_ENTRY_TYPES,
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
@@ -700,6 +702,18 @@ def main() -> int:
     version_merges = datasets.get("paper_version_merges.csv", [])
 
     validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
+    validate_allowed_value(
+        papers, "papers.csv", "entry_type", ALLOWED_ENTRY_TYPES, issues
+    )
+    for row_number, paper in enumerate(papers, start=2):
+        if not clean(paper.get("entry_type")):
+            add_issue(
+                issues,
+                "ERROR",
+                "papers.csv",
+                "entry_type is required",
+                row_number,
+            )
     validate_allowed_value(
         papers,
         "papers.csv",
