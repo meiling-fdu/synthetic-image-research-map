@@ -16,7 +16,11 @@ from scripts.serve_admin import (
     make_handler,
 )
 from scripts.admin_workflows import ALLOWED_WORKFLOWS
-from scripts.admin_review_queues import project_health_data
+from scripts.admin_review_queues import (
+    overall_project_health,
+    project_health_data,
+    project_health_severity,
+)
 
 
 FIELDS = (
@@ -247,6 +251,144 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             all(metric["display_value"] == "Report missing" for metric in metrics)
         )
         self.assertNotIn("not found", json.dumps(health).casefold())
+        self.assertFalse(health["overall"]["available"])
+        self.assertEqual(health["overall"]["display_value"], "Needs refresh")
+
+    def test_project_health_severity_boundaries(self):
+        self.assertEqual(
+            project_health_severity("author_mapping_coverage", 95), "good"
+        )
+        self.assertEqual(
+            project_health_severity("author_mapping_coverage", 90), "warning"
+        )
+        self.assertEqual(
+            project_health_severity("author_mapping_coverage", 89.9), "critical"
+        )
+        for key, warning_max in (
+            ("missing_author_mappings", 10),
+            ("missing_author_links", 50),
+            ("missing_coordinates", 5),
+            ("missing_affiliations", 20),
+        ):
+            self.assertEqual(project_health_severity(key, 0), "good")
+            self.assertEqual(
+                project_health_severity(key, warning_max), "warning"
+            )
+            self.assertEqual(
+                project_health_severity(key, warning_max + 1), "critical"
+            )
+        self.assertEqual(project_health_severity("marker_blockers", 100), "warning")
+        self.assertEqual(project_health_severity("marker_blockers", 101), "critical")
+
+    def test_project_health_score_boundaries_and_caps(self):
+        def score(
+            *,
+            coverage=100,
+            coordinates=0,
+            affiliations=0,
+            high_risk=0,
+            blockers=0,
+            missing_links=0,
+        ):
+            return overall_project_health(
+                counts={
+                    "papers_missing_coordinates": coordinates,
+                    "papers_missing_affiliations": affiliations,
+                },
+                queues={
+                    "high_risk_marker": {
+                        "available": True,
+                        "count": high_risk,
+                    },
+                    "marker_blocker": {
+                        "available": True,
+                        "count": blockers,
+                    },
+                },
+                author_mapping_coverage={
+                    "available": True,
+                    "summary": {
+                        "mapping_coverage_percentage": coverage,
+                        "total_missing_author_links": missing_links,
+                    },
+                },
+            )
+
+        self.assertEqual(score()["score"], 100)
+        self.assertEqual(score()["level"], "Excellent")
+        self.assertEqual(score(high_risk=1500)["score"], 90)
+        self.assertEqual(score(high_risk=1650)["level"], "Needs attention")
+        self.assertEqual(
+            score(coverage=0, coordinates=2)["level"],
+            "Critical maintenance",
+        )
+        capped = score(
+            coverage=-100,
+            coordinates=1000,
+            affiliations=1000,
+            high_risk=10000,
+            blockers=10000,
+            missing_links=10000,
+        )
+        self.assertGreaterEqual(capped["score"], 0)
+        self.assertLessEqual(capped["score"], 100)
+        self.assertEqual(capped["deductions"]["author_mapping_coverage"], 25)
+        self.assertEqual(capped["deductions"]["review_backlog"], 20)
+
+    def test_project_health_includes_existing_queue_breakdowns(self):
+        queues = {
+            "high_risk_marker": {
+                "available": True,
+                "count": 614,
+                "summary": {"P1": 437, "P2": 177},
+            },
+            "marker_blocker": {
+                "available": True,
+                "count": 281,
+                "summary": {
+                    "already_mapped": 264,
+                    "missing_affiliation_rows": 6,
+                    "has_affiliation_missing_coordinates": 3,
+                },
+            },
+            "key_paper_coverage": {
+                "available": True,
+                "count": 298,
+                "summary": {
+                    "covered_as_map_marker": 121,
+                    "missing_from_candidate_pool": 160,
+                },
+            },
+            "manual_import": {
+                "available": True,
+                "count": 475,
+                "summary": {"ready": 207, "manual_review": 111, "weak_match": 85},
+            },
+        }
+        health = project_health_data(
+            counts={},
+            queues=queues,
+            author_mapping_coverage={
+                "available": True,
+                "summary": {
+                    "mapping_coverage_percentage": 100,
+                    "total_missing_author_links": 0,
+                },
+            },
+        )
+        review_group = next(
+            group for group in health["groups"] if group["key"] == "review_queues"
+        )
+        metrics = {metric["key"]: metric for metric in review_group["metrics"]}
+        self.assertEqual(metrics["high_risk_markers"]["display_value"], "614 total")
+        self.assertEqual(
+            metrics["high_risk_markers"]["detail"],
+            "P1: 437 · P2: 177",
+        )
+        self.assertIn(
+            "missing_from_candidate_pool: 160",
+            metrics["key_paper_coverage_queue"]["full_detail"],
+        )
 
     def test_project_health_exposes_all_frontend_groups(self):
         queues = {
@@ -279,6 +421,8 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             encoding="utf-8"
         )
         self.assertIn('id="project-health-groups"', html)
+        self.assertNotIn('id="summary-grid"', html)
+        self.assertIn('class="secondary-summary" open', html)
         self.assertIn("function renderProjectHealth()", javascript)
         self.assertIn("navigateConsole(metric.target)", javascript)
 

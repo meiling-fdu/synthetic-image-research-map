@@ -130,12 +130,6 @@ document.addEventListener("DOMContentLoaded", () => {
     "mapping-form-error",
     "mapping-cancel",
     "mapping-submit",
-    "count-total",
-    "count-mapped",
-    "count-affiliation",
-    "count-coordinates",
-    "count-curated",
-    "count-exclusions",
     "action-notice",
     "workflow-panel",
     "workflow-state",
@@ -202,6 +196,10 @@ document.addEventListener("DOMContentLoaded", () => {
     "dashboard-panel",
     "dashboard-grid",
     "project-health-groups",
+    "project-health-score",
+    "project-health-score-value",
+    "project-health-score-level",
+    "project-health-score-note",
     "refresh-project-health",
     "reload-review-queues",
     "dashboard-git-status",
@@ -412,7 +410,6 @@ async function loadApplication(preserveSelection = false) {
     state.papers = papersPayload.records.slice().sort((left, right) =>
       text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
     );
-    renderSummary(status.counts);
     populateFilters();
     applyFilters();
     elements.workspace.hidden = false;
@@ -571,13 +568,7 @@ function navigateConsole(target) {
 function renderDashboard() {
   const data = state.dashboard;
   const cards = [
-    ["Public preview papers", data.counts?.public_preview_papers],
-    ["Map markers", data.counts?.map_markers],
-    ["Curated papers", data.counts?.curated_papers],
-    ["Active exclusions", data.counts?.active_exclusions],
     ["Curated mappings", data.counts?.curated_mappings],
-    ["Pending locations", data.counts?.pending_location_reviews],
-    ["Confirmed locations", data.counts?.confirmed_institution_locations],
   ];
   elements["dashboard-grid"].replaceChildren();
   cards.forEach(([label, value]) => {
@@ -592,7 +583,7 @@ function renderDashboard() {
   Object.entries(data.queues || {}).forEach(([name, queue]) => {
     const card = document.createElement("article");
     const strong = document.createElement("strong");
-    strong.textContent = formatNumber(queue.count);
+    strong.textContent = queue.available ? formatNumber(queue.count) : "Report missing";
     const span = document.createElement("span");
     const groups = Object.entries(queue.summary || {})
       .map(([key, count]) => `${key}: ${count}`).join(" · ");
@@ -602,9 +593,36 @@ function renderDashboard() {
   });
 }
 
+function navigateProjectHealthMetric(metric) {
+  const navigation = metric.navigation || {};
+  if (metric.target === "author-mapping-coverage") {
+    elements["mapping-coverage-status"].value = navigation.mapping_status || "";
+    elements["mapping-coverage-sort"].value = navigation.mapping_sort || "rank-asc";
+    renderFullMappingCoverage();
+  }
+  if (metric.target === "location-review" && navigation.location_status) {
+    state.locationStatusFilter = navigation.location_status;
+    renderLocationSummary();
+    renderLocationReviewList();
+  }
+  navigateConsole(metric.target);
+}
+
 function renderProjectHealth() {
   const groups = state.dashboard.project_health?.groups || [];
+  const overall = state.dashboard.project_health?.overall || {};
   const container = elements["project-health-groups"];
+  elements["project-health-score"].dataset.severity =
+    overall.severity || "neutral";
+  elements["project-health-score-value"].textContent =
+    text(overall.display_value) || "Needs refresh";
+  elements["project-health-score-level"].textContent =
+    text(overall.level) || "Unavailable";
+  elements["project-health-score-note"].textContent =
+    text(overall.note)
+    || "Heuristic maintenance score; not a paper-quality rating.";
+  elements["project-health-score"].title =
+    text(overall.explanation) || "Needs refresh";
   container.replaceChildren();
   if (!groups.length) {
     const message = document.createElement("p");
@@ -628,16 +646,24 @@ function renderProjectHealth() {
       if (metric.target) {
         item.type = "button";
         item.dataset.consoleTarget = metric.target;
-        item.addEventListener("click", () => navigateConsole(metric.target));
+        item.addEventListener("click", () => navigateProjectHealthMetric(metric));
       }
       item.className = "project-health-metric";
       item.dataset.healthMetric = metric.key;
+      item.dataset.severity = metric.severity || "neutral";
       if (!metric.available) item.dataset.status = "missing";
+      if (metric.full_detail) item.title = metric.full_detail;
       const value = document.createElement("strong");
       value.textContent = text(metric.display_value) || "Needs refresh";
       const label = document.createElement("span");
       label.textContent = metric.label;
       item.append(value, label);
+      if (metric.detail) {
+        const detail = document.createElement("small");
+        detail.className = "project-health-detail";
+        detail.textContent = metric.detail;
+        item.append(detail);
+      }
       metrics.append(item);
     });
     section.append(heading, metrics);
@@ -726,23 +752,13 @@ function renderMappingCoverage() {
   elements["mapping-priority-heading"].hidden = false;
   elements["mapping-priority-table-wrap"].hidden = false;
   const summary = report.summary || {};
-  const metrics = [
-    ["Total public papers", summary.total_public_papers, "neutral"],
-    ["Complete mappings", summary.complete_mappings, "good"],
-    ["Partial mappings", summary.partial_mappings, "warning"],
-    ["Missing mappings", summary.zero_mappings, "priority"],
-    ["Coverage", `${Number(summary.mapping_coverage_percentage || 0).toFixed(1)}%`, "good"],
-  ];
-  metrics.forEach(([label, value, status]) => {
-    const article = document.createElement("article");
-    article.dataset.status = status;
-    const strong = document.createElement("strong");
-    strong.textContent = typeof value === "number" ? formatNumber(value) : value;
-    const span = document.createElement("span");
-    span.textContent = label;
-    article.append(strong, span);
-    summaryNode.append(article);
-  });
+  const compact = document.createElement("p");
+  compact.textContent = [
+    `${formatNumber(summary.total_public_papers)} report rows`,
+    `${formatNumber((summary.partial_mappings || 0) + (summary.zero_mappings || 0))} need mapping work`,
+    `${formatNumber(summary.total_missing_author_links)} missing author links`,
+  ].join(" · ");
+  summaryNode.append(compact);
   const priorityRows = (report.records || [])
     .filter((row) => row.mapping_status !== "complete")
     .slice(0, 10);
@@ -1832,15 +1848,6 @@ function renderDuplicateWarning(matches) {
   });
   warning.append(heading, intro, list);
   warning.hidden = false;
-}
-
-function renderSummary(counts) {
-  elements["count-total"].textContent = formatNumber(counts.total_papers);
-  elements["count-mapped"].textContent = formatNumber(counts.papers_with_map_locations);
-  elements["count-affiliation"].textContent = formatNumber(counts.papers_missing_affiliations);
-  elements["count-coordinates"].textContent = formatNumber(counts.papers_missing_coordinates);
-  elements["count-curated"].textContent = formatNumber(counts.curated_papers);
-  elements["count-exclusions"].textContent = formatNumber(counts.active_exclusions);
 }
 
 function populateFilters() {

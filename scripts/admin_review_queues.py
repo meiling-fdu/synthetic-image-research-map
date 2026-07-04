@@ -137,6 +137,144 @@ def _count_csv(path: Path) -> int:
     return len(read_csv(path))
 
 
+def project_health_severity(
+    key: str, value: float | int | None, *, available: bool = True
+) -> str:
+    """Classify a health metric using stable, maintainer-facing thresholds."""
+    if not available or value is None:
+        return "neutral"
+    numeric = float(value)
+    if key == "author_mapping_coverage":
+        return (
+            "good"
+            if numeric >= 95
+            else "warning"
+            if numeric >= 90
+            else "critical"
+        )
+    thresholds = {
+        "missing_author_mappings": (10, 0),
+        "missing_author_links": (50, 0),
+        "missing_coordinates": (5, 0),
+        "missing_affiliations": (20, 0),
+    }
+    if key in thresholds:
+        warning_max, good_max = thresholds[key]
+        return (
+            "good"
+            if numeric <= good_max
+            else "warning"
+            if numeric <= warning_max
+            else "critical"
+        )
+    if key in {
+        "high_risk_markers",
+        "marker_blockers",
+        "key_paper_coverage_queue",
+        "manual_import_queue",
+    }:
+        return (
+            "good"
+            if numeric == 0
+            else "warning"
+            if numeric <= 100
+            else "critical"
+        )
+    if key == "partial_author_mappings":
+        return "good" if numeric == 0 else "warning"
+    if key == "pending_locations":
+        return "good" if numeric == 0 else "warning" if numeric <= 100 else "critical"
+    return "neutral"
+
+
+def overall_project_health(
+    *,
+    counts: Mapping[str, int],
+    queues: Mapping[str, Mapping[str, Any]],
+    author_mapping_coverage: Mapping[str, Any],
+) -> Dict[str, Any]:
+    """Return a bounded heuristic maintenance score and its deductions."""
+    required_queues = ("high_risk_marker", "marker_blocker")
+    if not author_mapping_coverage.get("available") or any(
+        not queues[name].get("available") for name in required_queues
+    ):
+        return {
+            "available": False,
+            "score": None,
+            "display_value": "Needs refresh",
+            "level": "Unavailable",
+            "severity": "neutral",
+            "note": "Heuristic maintenance score; not a paper-quality rating.",
+            "explanation": (
+                "Heuristic maintenance score; refresh missing reports. "
+                "It is not a paper-quality rating."
+            ),
+            "deductions": {},
+        }
+
+    summary = author_mapping_coverage.get("summary") or {}
+    coverage = max(
+        0.0,
+        min(100.0, float(summary.get("mapping_coverage_percentage", 0))),
+    )
+    high_risk_backlog = int(queues["high_risk_marker"].get("count", 0))
+    blocker_backlog = int(queues["marker_blocker"].get("count", 0))
+    deductions = {
+        "author_mapping_coverage": min(25.0, (100.0 - coverage) * 0.25),
+        "missing_coordinates": min(
+            15.0, float(counts.get("papers_missing_coordinates", 0)) * 0.5
+        ),
+        "missing_affiliations": min(
+            15.0, float(counts.get("papers_missing_affiliations", 0)) * 0.1
+        ),
+        "review_backlog": min(
+            20.0, float(high_risk_backlog + blocker_backlog) / 150.0
+        ),
+        "missing_author_links": min(
+            15.0, float(summary.get("total_missing_author_links", 0)) / 50.0
+        ),
+    }
+    score = max(0, min(100, round(100.0 - sum(deductions.values()))))
+    level = (
+        "Excellent"
+        if score >= 90
+        else "Needs attention"
+        if score >= 75
+        else "Critical maintenance"
+    )
+    severity = "good" if score >= 90 else "warning" if score >= 75 else "critical"
+    return {
+        "available": True,
+        "score": score,
+        "display_value": f"{score} / 100",
+        "level": level,
+        "severity": severity,
+        "note": "Heuristic maintenance score; not a paper-quality rating.",
+        "explanation": (
+            "Starts at 100. Deductions: 0.25 per uncovered author-mapping "
+            "percentage point (max 25), 0.5 per missing coordinate (max 15), "
+            "0.1 per missing affiliation (max 15), one per 150 combined "
+            "high-risk and blocker rows (max 20), and one per 50 missing "
+            "author links (max 15). This is not a paper-quality rating."
+        ),
+        "deductions": {
+            key: round(value, 2) for key, value in deductions.items()
+        },
+    }
+
+
+def compact_queue_breakdown(summary: Mapping[str, Any]) -> Dict[str, str]:
+    """Format existing queue summary counts without recomputing the queue."""
+    ordered = sorted(
+        ((clean(key), int(value)) for key, value in summary.items()),
+        key=lambda item: (-item[1], item[0]),
+    )
+    return {
+        "compact": " · ".join(f"{key}: {value}" for key, value in ordered[:3]),
+        "full": " · ".join(f"{key}: {value}" for key, value in ordered),
+    }
+
+
 def project_health_data(
     *,
     counts: Mapping[str, int],
@@ -153,6 +291,9 @@ def project_health_data(
         target: str = "",
         source_available: bool = True,
         suffix: str = "",
+        navigation: Mapping[str, str] | None = None,
+        detail: str = "",
+        full_detail: str = "",
     ) -> Dict[str, Any]:
         return {
             "key": key,
@@ -163,6 +304,12 @@ def project_health_data(
             ),
             "available": source_available,
             "target": target,
+            "navigation": dict(navigation or {}),
+            "severity": project_health_severity(
+                key, value, available=source_available
+            ),
+            "detail": detail,
+            "full_detail": full_detail or detail,
         }
 
     def group(
@@ -174,6 +321,10 @@ def project_health_data(
     mapping_summary = author_mapping_coverage.get("summary") or {}
     queue_available = {
         name: bool(queue.get("available")) for name, queue in queues.items()
+    }
+    queue_breakdowns = {
+        name: compact_queue_breakdown(queue.get("summary") or {})
+        for name, queue in queues.items()
     }
 
     groups = [
@@ -197,6 +348,8 @@ def project_health_data(
                     "missing_coordinates",
                     "Missing coordinates",
                     counts.get("papers_missing_coordinates", 0),
+                    target="location-review",
+                    navigation={"location_status": "needs_coordinates"},
                 ),
             ],
         ),
@@ -211,6 +364,7 @@ def project_health_data(
                     target="author-mapping-coverage",
                     source_available=mapping_available,
                     suffix="%",
+                    navigation={"mapping_status": "", "mapping_sort": "rank-asc"},
                 ),
                 metric(
                     "complete_author_mappings",
@@ -218,6 +372,10 @@ def project_health_data(
                     mapping_summary.get("complete_mappings", 0),
                     target="author-mapping-coverage",
                     source_available=mapping_available,
+                    navigation={
+                        "mapping_status": "complete",
+                        "mapping_sort": "rank-asc",
+                    },
                 ),
                 metric(
                     "partial_author_mappings",
@@ -225,6 +383,10 @@ def project_health_data(
                     mapping_summary.get("partial_mappings", 0),
                     target="author-mapping-coverage",
                     source_available=mapping_available,
+                    navigation={
+                        "mapping_status": "partial",
+                        "mapping_sort": "rank-asc",
+                    },
                 ),
                 metric(
                     "missing_author_mappings",
@@ -232,6 +394,10 @@ def project_health_data(
                     mapping_summary.get("zero_mappings", 0),
                     target="author-mapping-coverage",
                     source_available=mapping_available,
+                    navigation={
+                        "mapping_status": "zero",
+                        "mapping_sort": "rank-asc",
+                    },
                 ),
                 metric(
                     "missing_author_links",
@@ -239,6 +405,10 @@ def project_health_data(
                     mapping_summary.get("total_missing_author_links", 0),
                     target="author-mapping-coverage",
                     source_available=mapping_available,
+                    navigation={
+                        "mapping_status": "",
+                        "mapping_sort": "missing-desc",
+                    },
                 ),
             ],
         ),
@@ -251,6 +421,7 @@ def project_health_data(
                     "Pending locations",
                     counts.get("pending_location_reviews", 0),
                     target="location-review",
+                    navigation={"location_status": "pending_review"},
                 ),
                 metric(
                     "confirmed_locations",
@@ -270,6 +441,9 @@ def project_health_data(
                     queues["high_risk_marker"].get("count", 0),
                     target="high-risk",
                     source_available=queue_available["high_risk_marker"],
+                    suffix=" total",
+                    detail=queue_breakdowns["high_risk_marker"]["compact"],
+                    full_detail=queue_breakdowns["high_risk_marker"]["full"],
                 ),
                 metric(
                     "marker_blockers",
@@ -277,6 +451,9 @@ def project_health_data(
                     queues["marker_blocker"].get("count", 0),
                     target="marker-blockers",
                     source_available=queue_available["marker_blocker"],
+                    suffix=" total",
+                    detail=queue_breakdowns["marker_blocker"]["compact"],
+                    full_detail=queue_breakdowns["marker_blocker"]["full"],
                 ),
                 metric(
                     "key_paper_coverage_queue",
@@ -284,6 +461,9 @@ def project_health_data(
                     queues["key_paper_coverage"].get("count", 0),
                     target="key-coverage",
                     source_available=queue_available["key_paper_coverage"],
+                    suffix=" total",
+                    detail=queue_breakdowns["key_paper_coverage"]["compact"],
+                    full_detail=queue_breakdowns["key_paper_coverage"]["full"],
                 ),
                 metric(
                     "manual_import_queue",
@@ -291,6 +471,9 @@ def project_health_data(
                     queues["manual_import"].get("count", 0),
                     target="manual-import",
                     source_available=queue_available["manual_import"],
+                    suffix=" total",
+                    detail=queue_breakdowns["manual_import"]["compact"],
+                    full_detail=queue_breakdowns["manual_import"]["full"],
                 ),
             ],
         ),
@@ -311,7 +494,14 @@ def project_health_data(
             ],
         ),
     ]
-    return {"groups": groups}
+    return {
+        "overall": overall_project_health(
+            counts=counts,
+            queues=queues,
+            author_mapping_coverage=author_mapping_coverage,
+        ),
+        "groups": groups,
+    }
 
 
 def dashboard_data(

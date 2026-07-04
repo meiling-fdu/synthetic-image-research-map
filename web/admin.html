@@ -52,14 +52,6 @@
         </form>
       </section>
 
-      <section class="summary-grid" id="summary-grid" aria-label="Database summary">
-        <article><strong id="count-total">—</strong><span>Total papers</span></article>
-        <article><strong id="count-mapped">—</strong><span>With map locations</span></article>
-        <article><strong id="count-affiliation">—</strong><span>Missing affiliations</span></article>
-        <article><strong id="count-coordinates">—</strong><span>Missing coordinates</span></article>
-        <article><strong id="count-curated">—</strong><span>Curated papers</span></article>
-        <article><strong id="count-exclusions">—</strong><span>Active exclusions</span></article>
-      </section>
       <section class="dashboard-panel" id="dashboard-panel">
         <section class="project-health" aria-labelledby="project-health-title">
           <div class="section-heading">
@@ -68,7 +60,14 @@
               <h2 id="project-health-title">Project Health</h2>
               <p>Current corpus, mapping, location, review, and publication status.</p>
             </div>
-            <button class="secondary-button" id="refresh-project-health" type="button">Refresh Project Health</button>
+            <div class="project-health-heading-actions">
+              <div class="project-health-score" id="project-health-score" data-severity="neutral">
+                <strong id="project-health-score-value">Needs refresh</strong>
+                <span id="project-health-score-level">Unavailable</span>
+                <small id="project-health-score-note">Heuristic maintenance score; not a paper-quality rating.</small>
+              </div>
+              <button class="secondary-button" id="refresh-project-health" type="button">Refresh Project Health</button>
+            </div>
           </div>
           <div class="project-health-groups" id="project-health-groups">
             <p>Project health loads after authentication.</p>
@@ -78,22 +77,23 @@
           <div><p class="eyebrow">Review queue details</p><h2>Admin Dashboard</h2></div>
           <button class="secondary-button" id="reload-review-queues" type="button">Reload all review queues</button>
         </div>
-        <details class="secondary-summary">
+        <details class="secondary-summary" open>
           <summary>Queue breakdown and secondary totals</summary>
           <div class="dashboard-grid" id="dashboard-grid"><p>Dashboard data loads after authentication.</p></div>
         </details>
         <section class="mapping-coverage-card" aria-labelledby="mapping-coverage-dashboard-title">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Generated maintenance report</p>
-              <h3 id="mapping-coverage-dashboard-title">Author Mapping Coverage</h3>
+              <p class="eyebrow">Detailed generated report</p>
+              <h3 id="mapping-coverage-dashboard-title">Detailed Author Mapping Coverage</h3>
+              <p>Prioritized records for mapping maintenance; the Project Health module carries the overview.</p>
             </div>
             <div class="mapping-coverage-actions">
               <a class="secondary-button button-link" id="open-mapping-report" href="/docs/missing_author_mappings_report.md" target="_blank" rel="noreferrer">Open full mapping report</a>
               <button class="secondary-button" id="reload-mapping-coverage" type="button">Reload mapping coverage</button>
             </div>
           </div>
-          <div class="mapping-coverage-summary" id="mapping-coverage-summary">
+          <div class="mapping-coverage-compact" id="mapping-coverage-summary">
             <p>Mapping coverage loads after authentication.</p>
           </div>
           <div class="mapping-coverage-empty-state" id="mapping-coverage-empty-state" hidden>
