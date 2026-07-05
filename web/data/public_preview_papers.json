@@ -6414,6 +6414,293 @@
       ]
     },
     {
+      "paper_id": "curated:a1eea412716e4d045da6",
+      "title": "Source Attribution of AI-Generated Images in Data Scarcity Conditions via Training-Free Resynthesis",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "IEEE Open Journal of Signal Processing",
+      "venue_name": "IEEE Open Journal of Signal Processing",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "article",
+      "abstract": "Attributing synthetic images to the source that generated them is a difficult problem, particularly in data-scarcity conditions requiring the adoption of few-shot or zero-shot learning strategies. In this paper, we tackle this problem by introducing a training-free attribution method based on image resynthesis. Our method works by first automatically generating a textual prompt which describes the target image, and then using it to resynthesize the image with each candidate generator. Attribution is obtained by matching the image to the model whose resynthesis is most similar to the original one within an appropriate feature space - chosen based on a preliminary experimental analysis - among several possibilities offered by modern deep learning image analysis tools. Experiments using state-of-the-art few-shot models and other baselines show that our resynthesis-based method outperforms existing techniques when only a limited number of images are available for training or fine-tuning. Particular attention is given to assessing the robustness of the proposed method against common image processing operators and its adversarial robustness. In particular, the experimental results show that our method is robust to post-processing and that its adversarial robustness is significantly higher than that of baselines.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/ojsp.2026.3710125",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/ojsp.2026.3710125",
+      "primary_url": "https://doi.org/10.1109/ojsp.2026.3710125",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7167258238",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/ojsp.2026.3710125",
+      "authors": [
+        {
+          "name": "Pietro Bongini",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Meiling Li",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Andrea Costanzo",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Benedetta Tondi",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Mauro Barni",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Fudan University",
+        "University of Siena"
+      ],
+      "aggregated_country_names": [
+        "China",
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "IT"
+      ],
+      "aggregated_regions": [
+        "Shanghai",
+        "Toscany"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:fc5a4a0ff7b7abc291c4",
+          "institution_id": "institution:65dbfd1e022f02e2",
+          "institution": "University of Siena",
+          "institution_authors": [
+            "Pietro Bongini",
+            "Andrea Costanzo",
+            "Benedetta Tondi",
+            "Mauro Barni"
+          ],
+          "raw_affiliation": "Department of Information Engineering and Mathematics, University of Siena, Siena, Italy",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7167258238",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        },
+        {
+          "mapping_id": "mapping:3fd1b361c0e73ea1c81f",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "institution_authors": [
+            "Meiling Li"
+          ],
+          "raw_affiliation": "College of Computer Science and Artificial Intelligence, Fudan University, Shanghai, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7167258238",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:65dbfd1e022f02e2",
+          "institution": "University of Siena",
+          "authors": [
+            "Pietro Bongini",
+            "Andrea Costanzo",
+            "Benedetta Tondi",
+            "Mauro Barni"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "authors": [
+            "Meiling Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Pietro Bongini",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ]
+        },
+        {
+          "author": "Meiling Li",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Andrea Costanzo",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ]
+        },
+        {
+          "author": "Benedetta Tondi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ]
+        },
+        {
+          "author": "Mauro Barni",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ]
+        }
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Pietro Bongini",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Meiling Li",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Andrea Costanzo",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Benedetta Tondi",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mauro Barni",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Siena",
+          "canonical_name": "University of Siena",
+          "institution_id": "institution:65dbfd1e022f02e2",
+          "country": "Italy",
+          "region": "Toscany"
+        },
+        {
+          "index": 2,
+          "name": "Fudan University",
+          "canonical_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "country": "China",
+          "region": "Shanghai"
+        }
+      ],
+      "current_institution": null
+    },
+    {
       "paper_id": "curated:35aae1e2c9d673ab1a97",
       "title": "Source Attribution of AI-Generated Images: a Principled Survey",
       "in_scope": true,
