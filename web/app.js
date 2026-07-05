@@ -1359,20 +1359,20 @@ function paperExternalLinks(record, includeArxivId = false) {
   const safeArxivUrl = safeHttpUrl(arxivUrl);
   const openalexUrl = safeHttpUrl(record.openalex_url);
   const paperUrl = recordLandingPageUrl(record);
-  const paperLinkIsDistinct = paperUrl
-    && ![doiUrl, safeArxivUrl, openalexUrl].includes(paperUrl);
+  const linkCandidates = [
+    { label: "Paper", url: paperUrl },
+    { label: "DOI", url: doiUrl },
+    {
+      label: "arXiv",
+      displayLabel: includeArxivId && arxivId ? `arXiv ${arxivId}` : "arXiv",
+      url: safeArxivUrl,
+    },
+    { label: "OpenAlex", url: openalexUrl },
+  ];
 
-  return [
-    paperLinkIsDistinct ? externalLink(paperUrl, "Paper") : "",
-    doiUrl ? externalLink(doiUrl, "DOI") : "",
-    safeArxivUrl
-      ? externalLink(
-          safeArxivUrl,
-          includeArxivId && arxivId ? `arXiv ${arxivId}` : "arXiv",
-        )
-      : "",
-    openalexUrl ? externalLink(openalexUrl, "OpenAlex") : "",
-  ].filter(Boolean);
+  return PaperLinkHelpers.deduplicatePaperLinks(linkCandidates)
+    .map((link) => externalLink(link.url, link.displayLabel || link.label))
+    .filter(Boolean);
 }
 
 function escapeCsvValue(value) {

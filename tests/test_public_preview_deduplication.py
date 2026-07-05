@@ -780,6 +780,71 @@ process.stdout.write(JSON.stringify({
             {"reversed": True, "unrelated": False},
         )
 
+    def test_frontend_paper_links_normalize_and_deduplicate_targets(self):
+        helper = (
+            Path(__file__).resolve().parents[1]
+            / "web"
+            / "paper_link_helpers.js"
+        )
+        node = Path(
+            "/Users/meilinger/.cache/codex-runtimes/"
+            "codex-primary-runtime/dependencies/node/bin/node"
+        )
+        script = """
+const helpers = require(process.argv[1]);
+const normalize = (links) => helpers.deduplicatePaperLinks(links);
+process.stdout.write(JSON.stringify({
+  arxivHttp: normalize([
+    {label: "Paper", url: "http://arxiv.org/pdf/2603.01878.pdf/"},
+    {label: "arXiv", url: "https://arxiv.org/abs/2603.01878"},
+    {label: "OpenAlex", url: "https://openalex.org/W1"},
+  ]),
+  doiSlash: normalize([
+    {label: "Paper", url: "http://dx.doi.org/10.1145/123/"},
+    {label: "DOI", url: "https://doi.org/10.1145/123"},
+  ]),
+  openalexHttp: normalize([
+    {label: "Paper", url: "http://openalex.org/W123/"},
+    {label: "OpenAlex", url: "https://openalex.org/W123"},
+  ]),
+  distinct: normalize([
+    {label: "Paper", url: "https://publisher.example/paper"},
+    {label: "DOI", url: "https://doi.org/10.1145/123"},
+    {label: "arXiv", url: "https://arxiv.org/abs/2401.12345"},
+    {label: "OpenAlex", url: "https://openalex.org/W1"},
+  ]),
+  empty: normalize([
+    {label: "Paper", url: ""},
+    {label: "DOI", url: "javascript:alert(1)"},
+  ]),
+}));
+"""
+        result = subprocess.run(
+            [str(node), "-e", script, str(helper)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        rendered = json.loads(result.stdout)
+
+        self.assertEqual(
+            [link["label"] for link in rendered["arxivHttp"]],
+            ["arXiv", "OpenAlex"],
+        )
+        self.assertEqual(
+            [link["label"] for link in rendered["doiSlash"]],
+            ["DOI"],
+        )
+        self.assertEqual(
+            [link["label"] for link in rendered["openalexHttp"]],
+            ["OpenAlex"],
+        )
+        self.assertEqual(
+            [link["label"] for link in rendered["distinct"]],
+            ["Paper", "DOI", "arXiv", "OpenAlex"],
+        )
+        self.assertEqual(rendered["empty"], [])
+
     def test_validator_warns_for_missing_mapping_without_crashing(self):
         record = {
             "title": "Partially mapped",
