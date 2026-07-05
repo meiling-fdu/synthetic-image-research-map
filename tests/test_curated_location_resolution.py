@@ -7,6 +7,7 @@ from scripts.curated_export import (
     build_curated_map_records,
     integrate_curated_records,
 )
+from scripts.export_public_preview import add_public_detail_fields
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
@@ -248,6 +249,8 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "authors": "Ada Researcher; Ben Researcher",
             "task": "detection",
             "scope_status": "in_scope",
+            "source_database": "manual",
+            "curation_status": "manually_added",
             "review_status": "reviewed",
         }
         mapping = {
@@ -255,7 +258,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "paper_id": "curated:indices",
             "institution": "Example University",
             "institution_authors": "Ada Researcher",
-            "mapping_status": "needs_review",
+            "mapping_status": "active",
         }
 
         papers, _maps, _reviews, _summary = integrate_curated_records(
@@ -272,6 +275,29 @@ class CuratedLocationResolutionTests(unittest.TestCase):
         self.assertEqual(
             papers[0]["author_institution_indices"][0]["author"],
             "Ada Researcher",
+        )
+        add_public_detail_fields(papers, [])
+        self.assertEqual(
+            papers[0]["authors"],
+            [
+                {
+                    "name": "Ada Researcher",
+                    "affiliation_indices": [1],
+                    "is_current_marker_author": False,
+                    "affiliation_source": "curated_admin",
+                    "affiliation_fallback": False,
+                },
+                {
+                    "name": "Ben Researcher",
+                    "affiliation_indices": [],
+                    "is_current_marker_author": False,
+                    "affiliation_source": "unmapped",
+                    "affiliation_fallback": False,
+                },
+            ],
+        )
+        self.assertEqual(
+            papers[0]["affiliations"][0]["name"], "Example University"
         )
 
     def test_processed_cache_fallback_is_not_publicly_exportable(self):

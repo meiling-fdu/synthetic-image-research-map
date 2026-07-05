@@ -22,6 +22,11 @@ except ImportError:
     from name_matching import canonical_name_key
 
 try:
+    from .export_public_preview import paper_is_retracted
+except ImportError:
+    from export_public_preview import paper_is_retracted
+
+try:
     from .country_normalization import (
         CHINA_REGION_BY_CODE,
         normalize_country_region,
@@ -752,6 +757,14 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
         add_issue(issues, "ERROR", index, title, "title is missing or empty")
     elif is_missing_value(raw_title):
         add_issue(issues, "ERROR", index, title, "title contains a missing-value placeholder")
+    elif paper_is_retracted(record):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "retracted paper must not appear in public preview",
+        )
 
     task = clean_text(record.get("task"))
     if task.casefold() in FORBIDDEN_LABELS:
@@ -943,6 +956,14 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
     raw_title = clean_text(record.get("title"))
     if not raw_title or is_missing_value(raw_title):
         add_issue(issues, "ERROR", index, title, "title is missing or empty")
+    elif paper_is_retracted(record):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "retracted paper must not appear in public preview",
+        )
 
     task = clean_text(record.get("task"))
     allowed_paper_tasks = {*ALLOWED_TASKS, "uncertain"}

@@ -120,9 +120,13 @@ python3 scripts/report_missing_author_mappings.py
 The pipeline stops at the first failure. The preserve-existing export unions the
 current complete public preview with the local candidate snapshot, so a
 no-search admin refresh cannot silently replace full coverage with a partial
-cache. Read the command log, correct the underlying curated record, and run it
-again. **Reload preview data** only rereads existing JSON; it does not export
-changes.
+cache. The final export still reapplies active exclusions and retraction checks
+to that union; preserved JSON cannot keep a paper whose current title starts
+with `[Retracted]` or `Retracted:`, whose publication type/flag marks a
+retraction, or whose exclusion metadata marks it retracted. The same rule is
+applied to both the paper list and map markers. Read the command log, correct
+the underlying curated record, and run it again. **Reload preview data** only
+rereads existing JSON; it does not export changes.
 
 After a successful local refresh:
 
@@ -153,6 +157,12 @@ public-preview datasets and reports their sizes and shrinkage percentages. It
 aborts without staging, committing, or pushing if either dataset shrinks by
 more than 5%, or if the result falls below 700 map records or 350 paper
 records. There is intentionally no override.
+
+Small decreases of at most 5% are accepted because confirmed version merges
+and newly recognized retractions can intentionally remove duplicate or
+ineligible records. The absolute floors and post-export validation remain in
+force, so a partial refresh cannot be published merely because its percentage
+change is small.
 
 Only maintained files under `data/curated/`, `data/manual/`, `web/data/`, and `tests/` are eligible for the publication commit. `data/backups/` and temporary `data/manual/key_papers_missing_*` or `data/manual/key_papers_query_failed_*` batch artifacts are excluded. Unrelated staged files are not included in the publication commit. Git and push errors remain visible in the command log; if push fails, the new commit remains local for inspection and retry.
 

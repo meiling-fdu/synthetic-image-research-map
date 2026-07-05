@@ -606,6 +606,13 @@ Allowed reason values are:
 
 The exporter reads active exclusions and matches DOI first, OpenAlex URL second, and normalized title plus year otherwise. It removes matches from both public-preview JSON files. Excluded checklist papers are also omitted from the normal key-paper coverage audit; the marker-blocker report reads the already-filtered paper preview and therefore excludes them naturally.
 
+Retractions are also excluded defensively even without a matching curated
+exclusion row. The final export removes them from both public-preview files
+after candidate, preserved-preview, and curated records have been combined.
+Recognized signals are a `retraction`/`retracted` publication type, an explicit
+`is_retracted`/`retracted` flag, a title beginning with `[Retracted]` or
+`Retracted:`, or retraction text in exclusion metadata.
+
 After making or restoring a decision, refresh generated outputs and checks from the repository root:
 
 ```bash

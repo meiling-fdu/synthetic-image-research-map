@@ -1246,12 +1246,24 @@ def paper_is_retracted(row: Dict[str, Any]) -> bool:
     exclusion_reason = clean_text(row.get("exclusion_reason")).casefold()
     notes = clean_text(row.get("notes")).casefold()
     return (
-        publication_type == "retraction"
-        or title.startswith("retracted:")
+        publication_type in {"retraction", "retracted"}
+        or any(
+            parse_bool(row.get(field))
+            for field in ("is_retracted", "retracted")
+        )
+        or bool(re.match(r"^(?:\[\s*retracted\s*\]|retracted\s*:)", title))
         or "retracted" in exclusion_reason
         or "retraction" in exclusion_reason
         or "retracted" in notes
     )
+
+
+def exclude_retracted_records(
+    records: Sequence[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], int]:
+    """Remove retractions from any candidate, preserved, or curated layer."""
+    kept = [record for record in records if not paper_is_retracted(record)]
+    return kept, len(records) - len(kept)
 
 
 def paper_url(row: Dict[str, Any]) -> str:
@@ -1998,6 +2010,8 @@ def build_preview(
             excluded_curated_records += 1
             excluded_curated_paper_keys.add(identity_key(record))
             continue
+        if paper_is_retracted(record):
+            continue
         in_scope = parse_bool(record.get("in_scope"))
         if not in_scope and not include_out_of_scope:
             excluded_out_of_scope += 1
@@ -2307,6 +2321,10 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
         "  Marker exclusion review decisions applied: "
         f"{summary.get('review_mapping_exclusions_applied', 0)}"
     )
+    print(
+        "  Retracted map records excluded after integration: "
+        f"{summary.get('retracted_map_records_excluded', 0)}"
+    )
     print(f"  Output: {output}{' (not written; dry run)' if dry_run else ''}")
 
 
@@ -2339,6 +2357,10 @@ def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) ->
     print(
         "  Papers excluded by curated paper exclusions: "
         f"{summary['paper_preview_papers_excluded_curated']}"
+    )
+    print(
+        "  Retracted paper records excluded after integration: "
+        f"{summary.get('paper_preview_retracted_records_excluded', 0)}"
     )
     print(
         "  Paper preview records with non-empty abstract: "
@@ -2486,6 +2508,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 integrated_maps, review_decisions
             )
         )
+        integrated_papers, retracted_papers_excluded = (
+            exclude_retracted_records(integrated_papers)
+        )
+        integrated_maps, retracted_map_records_excluded = (
+            exclude_retracted_records(integrated_maps)
+        )
         for record in integrated_maps:
             record["institution_id"] = (
                 clean_text(record.get("institution_id"))
@@ -2503,6 +2531,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         paper_summary["paper_preview_preprint_versions_excluded"] += (
             curated_preprint_papers_excluded
+        )
+        paper_summary["paper_preview_retracted_records_excluded"] = (
+            retracted_papers_excluded
+        )
+        summary["retracted_map_records_excluded"] = (
+            retracted_map_records_excluded
         )
 
         if (

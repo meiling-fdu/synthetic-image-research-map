@@ -7,6 +7,8 @@ from scripts.curated_export import _ordered_mapping_authors
 from scripts.export_public_preview import (
     add_public_detail_fields,
     exclude_preprint_versions,
+    exclude_retracted_records,
+    paper_is_retracted,
 )
 from scripts.refresh_public_preview import build_steps, parse_args
 from scripts.validate_public_preview import validate_preprint_version_duplicates
@@ -15,11 +17,53 @@ from scripts.validate_public_preview import (
     normalized_author_name,
     validate_paper_detail_schema,
     validate_paper_record,
+    validate_record,
     validate_curated_affiliation_supersession,
 )
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_retractions_are_removed_from_paper_and_map_outputs(self):
+        retractions = [
+            {"title": "[Retracted] Bracketed title"},
+            {"title": "Retracted: Colon title"},
+            {"title": "Retraction notice", "publication_type": "retraction"},
+            {"title": "Flagged record", "is_retracted": True},
+            {"title": "Curated flag", "retracted": "true"},
+            {"title": "Excluded record", "exclusion_reason": "retracted"},
+        ]
+        normal = {"title": "A valid paper", "publication_type": "article"}
+
+        for record in retractions:
+            with self.subTest(record=record):
+                self.assertTrue(paper_is_retracted(record))
+        self.assertFalse(paper_is_retracted(normal))
+
+        papers, paper_count = exclude_retracted_records(
+            [normal, *retractions]
+        )
+        markers, marker_count = exclude_retracted_records(
+            [{**normal, "institution": "Example University"}, *retractions]
+        )
+
+        self.assertEqual(papers, [normal])
+        self.assertEqual(
+            markers,
+            [{**normal, "institution": "Example University"}],
+        )
+        self.assertEqual(paper_count, len(retractions))
+        self.assertEqual(marker_count, len(retractions))
+
+        for validator in (validate_record, validate_paper_record):
+            issues = []
+            validator(0, retractions[0], issues)
+            self.assertTrue(
+                any(
+                    "retracted paper must not appear" in issue.message
+                    for issue in issues
+                )
+            )
+
     def test_no_search_refresh_preserves_large_preview_without_default_cap(self):
         args = parse_args(
             [
