@@ -103,7 +103,7 @@
           <h4 id="mapping-priority-heading">Highest Priority Missing Mappings</h4>
           <div class="table-wrap" id="mapping-priority-table-wrap">
             <table class="mapping-coverage-table">
-              <thead><tr><th>Status</th><th>Paper title</th><th>Year</th><th>Missing</th><th>Missing author names</th><th>Markers</th><th>Key</th></tr></thead>
+              <thead><tr><th>Status</th><th>Priority</th><th>Paper title</th><th>Year</th><th>Missing</th><th>Missing author names</th><th>Known institutions / evidence</th><th>Suggested action</th><th>Public impact</th><th>Markers</th><th>Key</th></tr></thead>
               <tbody id="mapping-priority-rows"></tbody>
             </table>
           </div>
@@ -593,7 +593,8 @@
         </div>
         <div class="review-filters">
           <input id="mapping-coverage-search" type="search" placeholder="Search title, author, DOI, OpenAlex…">
-          <select id="mapping-coverage-status"><option value="">All statuses</option><option value="complete">Complete</option><option value="partial">Partial</option><option value="zero">Zero</option></select>
+          <select id="mapping-coverage-status"><option value="warning">All warnings</option><option value="zero">Zero</option><option value="partial">Partial</option><option value="complete">Complete</option><option value="">All statuses</option></select>
+          <select id="mapping-coverage-triage"><option value="">All triage classes</option><option value="likely_auto_fixable">Likely auto-fixable</option><option value="needs_manual_review">Needs manual review</option></select>
           <select id="mapping-coverage-sort"><option value="rank-asc">Rank: ascending</option><option value="rank-desc">Rank: descending</option><option value="missing-desc">Missing authors: most first</option><option value="missing-asc">Missing authors: least first</option></select>
           <select id="mapping-coverage-key"><option value="">All papers</option><option value="true">Key papers</option><option value="false">Non-key papers</option></select>
         </div>
@@ -603,7 +604,7 @@
         </div>
         <div class="table-wrap" id="mapping-coverage-table-wrap">
           <table class="mapping-coverage-table">
-            <thead><tr><th>Rank</th><th>Status</th><th>Paper title</th><th>Year</th><th>Mapped / total</th><th>Missing</th><th>Missing authors</th><th>Markers</th><th>Key</th></tr></thead>
+            <thead><tr><th>Rank</th><th>Status</th><th>Priority</th><th>Paper title</th><th>Year</th><th>Mapped / total</th><th>Missing</th><th>Missing authors</th><th>Known institutions / evidence</th><th>Suggested action</th><th>Public impact</th><th>Markers</th><th>Key</th></tr></thead>
             <tbody id="mapping-coverage-rows"></tbody>
           </table>
         </div>

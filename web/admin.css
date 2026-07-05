@@ -284,6 +284,30 @@ button.project-health-metric:focus-visible {
   margin-bottom: 0.5rem;
 }
 
+.mapping-report-evidence {
+  min-width: 15rem;
+}
+
+.mapping-report-evidence > span {
+  display: block;
+}
+
+.mapping-report-evidence details {
+  margin-top: 0.4rem;
+}
+
+.mapping-report-evidence summary {
+  color: var(--blue);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.mapping-report-evidence p {
+  margin: 0.35rem 0 0;
+  max-width: 32rem;
+  white-space: normal;
+}
+
 .mapping-report-link {
   padding: 0;
   border: 0;

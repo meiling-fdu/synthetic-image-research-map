@@ -10,6 +10,7 @@ import json
 import re
 import sys
 import unicodedata
+from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set, Tuple
 
@@ -30,6 +31,15 @@ DEFAULT_MARKDOWN_OUTPUT = Path("docs/missing_author_mappings_report.md")
 CSV_COLUMNS = (
     "priority_rank",
     "mapping_status",
+    "priority",
+    "triage_status",
+    "suggested_action",
+    "public_impact",
+    "current_mapping_state",
+    "known_canonical_institutions",
+    "existing_mapping_authors",
+    "suggested_author_matches",
+    "raw_affiliation_evidence",
     "paper_id",
     "title",
     "year",
@@ -203,6 +213,66 @@ def split_author_text(value: Any) -> List[str]:
     return [clean(part) for part in text.split(separator) if clean(part)]
 
 
+def unique_text(values: Iterable[Any]) -> List[str]:
+    """Preserve source order while removing blank and duplicate evidence."""
+    seen: Set[str] = set()
+    result: List[str] = []
+    for value in values:
+        text = clean(value)
+        key = text.casefold()
+        if text and key not in seen:
+            seen.add(key)
+            result.append(text)
+    return result
+
+
+def suggested_author_matches(
+    missing_names: Sequence[str], mapping_author_groups: Sequence[str]
+) -> List[str]:
+    """Return conservative name-reconciliation suggestions for manual review."""
+    mapping_authors = unique_text(
+        author
+        for group in mapping_author_groups
+        for author in split_author_text(group)
+    )
+    suggestions: List[str] = []
+    for missing_name in missing_names:
+        missing_key = normalize_author(missing_name)
+        if not missing_key:
+            continue
+        missing_tokens = missing_key.split()
+        scored = sorted(
+            (
+                SequenceMatcher(
+                    None, missing_key, normalize_author(candidate)
+                ).ratio(),
+                candidate,
+            )
+            for candidate in mapping_authors
+            if normalize_author(candidate)
+        )
+        best_score, best_candidate = scored[-1] if scored else (0.0, "")
+        token_candidates = (
+            [
+                candidate
+                for candidate in mapping_authors
+                if missing_tokens[0] in normalize_author(candidate).split()
+            ]
+            if len(missing_tokens) == 1
+            else []
+        )
+        candidate = (
+            token_candidates[0]
+            if len(token_candidates) == 1
+            else best_candidate
+            if best_score >= 0.82
+            else ""
+        )
+        if candidate:
+            suggestions.append(f"{missing_name} → {candidate}")
+    return unique_text(suggestions)
+
+
 def report_authors(record: Mapping[str, Any]) -> List[Any]:
     raw_authors = record.get("authors")
     if isinstance(raw_authors, list) and raw_authors:
@@ -325,6 +395,77 @@ def build_report_rows(
 
         curated_matches = matching_rows(paper, curated_papers)
         mapping_matches = matching_rows(paper, curated_mappings)
+        visible_mapping_matches = [
+            mapping
+            for mapping in mapping_matches
+            if clean(mapping.get("mapping_status")).casefold()
+            in {"active", "needs_review"}
+        ]
+        active_mapping_matches = [
+            mapping
+            for mapping in visible_mapping_matches
+            if clean(mapping.get("mapping_status")).casefold() == "active"
+        ]
+        pending_mapping_matches = [
+            mapping
+            for mapping in visible_mapping_matches
+            if clean(mapping.get("mapping_status")).casefold() == "needs_review"
+        ]
+        known_institutions = unique_text(
+            mapping.get("institution") for mapping in visible_mapping_matches
+        )
+        mapping_authors = unique_text(
+            mapping.get("institution_authors") for mapping in visible_mapping_matches
+        )
+        author_match_suggestions = suggested_author_matches(
+            missing_names, mapping_authors
+        )
+        raw_affiliations = unique_text(
+            mapping.get("raw_affiliation") for mapping in mapping_matches
+        )
+        if active_mapping_matches:
+            current_mapping_state = "confirmed"
+        elif pending_mapping_matches:
+            current_mapping_state = "pending"
+        elif mapping_matches:
+            current_mapping_state = "excluded"
+        else:
+            current_mapping_state = "missing"
+
+        if status == "complete":
+            priority = ""
+            triage_status = "complete"
+            suggested_action = "No mapping action needed"
+            public_impact = "none"
+        else:
+            priority = "high" if status == "zero" else "normal"
+            public_impact = (
+                "paper details; map markers blocked"
+                if paper_marker_counts[id(paper)] == 0
+                else "paper details; marker coverage may be incomplete"
+            )
+            if total == 0:
+                triage_status = "needs_manual_review"
+                suggested_action = "Add or correct paper author metadata"
+            elif active_mapping_matches and author_match_suggestions:
+                triage_status = "likely_auto_fixable"
+                suggested_action = (
+                    "Review existing mapping author names against paper authors"
+                )
+            elif active_mapping_matches:
+                triage_status = "needs_manual_review"
+                suggested_action = (
+                    "Verify missing authors against existing mappings or add evidence"
+                )
+            elif pending_mapping_matches:
+                triage_status = "needs_manual_review"
+                suggested_action = "Confirm pending curated mapping evidence"
+            elif mapping_matches:
+                triage_status = "needs_manual_review"
+                suggested_action = "Review excluded mappings or add verified evidence"
+            else:
+                triage_status = "needs_manual_review"
+                suggested_action = "Find affiliation evidence and add a mapping"
         matched_ids = sorted(
             {
                 clean(match.get("paper_id"))
@@ -349,6 +490,15 @@ def build_report_rows(
         rows.append(
             {
                 "mapping_status": status,
+                "priority": priority,
+                "triage_status": triage_status,
+                "suggested_action": suggested_action,
+                "public_impact": public_impact,
+                "current_mapping_state": current_mapping_state,
+                "known_canonical_institutions": " | ".join(known_institutions),
+                "existing_mapping_authors": " | ".join(mapping_authors),
+                "suggested_author_matches": " | ".join(author_match_suggestions),
+                "raw_affiliation_evidence": " | ".join(raw_affiliations),
                 "paper_id": paper_id,
                 "title": clean(paper.get("title")),
                 "year": year_text(paper),

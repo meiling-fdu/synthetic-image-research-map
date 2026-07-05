@@ -244,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "reload-mapping-coverage-full",
     "mapping-coverage-search",
     "mapping-coverage-status",
+    "mapping-coverage-triage",
     "mapping-coverage-sort",
     "mapping-coverage-key",
     "mapping-coverage-full-empty-state",
@@ -353,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
   [
     "mapping-coverage-search",
     "mapping-coverage-status",
+    "mapping-coverage-triage",
     "mapping-coverage-sort",
     "mapping-coverage-key",
   ].forEach((id) => elements[id].addEventListener("input", renderFullMappingCoverage));
@@ -689,6 +691,7 @@ function mappingCoverageRow(row, { includeRank = false } = {}) {
 
   const statusCell = document.createElement("td");
   statusCell.append(mappingStatusBadge(row.mapping_status));
+  const priorityCell = mappingTextCell(row.priority);
 
   const titleCell = document.createElement("td");
   titleCell.className = "mapping-report-title";
@@ -716,7 +719,45 @@ function mappingCoverageRow(row, { includeRank = false } = {}) {
     missingCell.textContent = "—";
   }
 
-  tr.append(statusCell, titleCell, mappingTextCell(row.year));
+  const evidenceCell = document.createElement("td");
+  evidenceCell.className = "mapping-report-evidence";
+  const institutions = document.createElement("span");
+  institutions.textContent =
+    text(row.known_canonical_institutions) || "No canonical institution yet";
+  evidenceCell.append(institutions);
+  if (
+    row.existing_mapping_authors
+    || row.suggested_author_matches
+    || row.raw_affiliation_evidence
+    || row.doi
+    || row.arxiv_id
+    || row.openalex_id
+  ) {
+    const evidence = document.createElement("details");
+    const summary = document.createElement("summary");
+    summary.textContent = "Review evidence";
+    evidence.append(summary);
+    [
+      ["Mapping state", humanize(row.current_mapping_state)],
+      ["Mapped author text", row.existing_mapping_authors],
+      ["Suggested name reconciliation", row.suggested_author_matches],
+      ["Raw affiliation", row.raw_affiliation_evidence],
+      ["DOI", row.doi],
+      ["arXiv", row.arxiv_id],
+      ["OpenAlex", row.openalex_id],
+    ]
+      .filter(([, value]) => text(value))
+      .forEach(([label, value]) => {
+        const line = document.createElement("p");
+        const strong = document.createElement("strong");
+        strong.textContent = `${label}: `;
+        line.append(strong, document.createTextNode(text(value)));
+        evidence.append(line);
+      });
+    evidenceCell.append(evidence);
+  }
+
+  tr.append(statusCell, priorityCell, titleCell, mappingTextCell(row.year));
   if (includeRank) {
     tr.append(
       mappingTextCell(
@@ -727,6 +768,9 @@ function mappingCoverageRow(row, { includeRank = false } = {}) {
   tr.append(
     mappingTextCell(row.missing_authors),
     missingCell,
+    evidenceCell,
+    mappingTextCell(row.suggested_action),
+    mappingTextCell(row.public_impact),
     mappingTextCell(row.marker_count),
     mappingTextCell(row.is_key_paper ? "Yes" : "—")
   );
@@ -784,10 +828,13 @@ function renderFullMappingCoverage() {
   elements["mapping-coverage-table-wrap"].hidden = false;
   const search = normalize(elements["mapping-coverage-search"].value);
   const status = elements["mapping-coverage-status"].value;
+  const triage = elements["mapping-coverage-triage"].value;
   const sort = elements["mapping-coverage-sort"].value;
   const keyFilter = elements["mapping-coverage-key"].value;
   const filtered = (report.records || []).filter((row) => {
-    if (status && row.mapping_status !== status) return false;
+    if (status === "warning" && row.mapping_status === "complete") return false;
+    if (status && status !== "warning" && row.mapping_status !== status) return false;
+    if (triage && row.triage_status !== triage) return false;
     if (keyFilter && String(Boolean(row.is_key_paper)) !== keyFilter) return false;
     return !search || normalize(Object.values(row).join(" ")).includes(search);
   });

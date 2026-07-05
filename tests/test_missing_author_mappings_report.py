@@ -72,7 +72,25 @@ class MissingAuthorMappingsReportTests(unittest.TestCase):
                 ["paper_id", "title", "year"],
                 [{"paper_id": "paper:complete", "title": "Complete Paper", "year": "2022"}],
             )
-            self.write_csv(mappings_path, ["paper_id", "mapping_status"])
+            self.write_csv(
+                mappings_path,
+                [
+                    "paper_id",
+                    "mapping_status",
+                    "institution",
+                    "institution_authors",
+                    "raw_affiliation",
+                ],
+                [
+                    {
+                        "paper_id": "paper:partial",
+                        "mapping_status": "active",
+                        "institution": "Example University",
+                        "institution_authors": "Dino Example",
+                        "raw_affiliation": "Department, Example University",
+                    }
+                ],
+            )
 
             arguments = [
                 "--papers",
@@ -107,6 +125,20 @@ class MissingAuthorMappingsReportTests(unittest.TestCase):
             self.assertEqual(rows[0]["missing_author_names"], "Eve")
             self.assertEqual(rows[1]["mapped_authors"], "1")
             self.assertEqual(rows[1]["missing_authors"], "1")
+            self.assertEqual(rows[1]["priority"], "normal")
+            self.assertEqual(rows[1]["triage_status"], "likely_auto_fixable")
+            self.assertEqual(
+                rows[1]["suggested_author_matches"],
+                "Dino → Dino Example",
+            )
+            self.assertEqual(
+                rows[1]["known_canonical_institutions"],
+                "Example University",
+            )
+            self.assertEqual(
+                rows[1]["raw_affiliation_evidence"],
+                "Department, Example University",
+            )
             self.assertEqual(rows[2]["marker_count"], "2")
             self.assertEqual(rows[2]["is_curated_paper"], "true")
 

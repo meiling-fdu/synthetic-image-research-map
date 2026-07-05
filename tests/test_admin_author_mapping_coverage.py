@@ -26,6 +26,15 @@ from scripts.admin_review_queues import (
 FIELDS = (
     "priority_rank",
     "mapping_status",
+    "priority",
+    "triage_status",
+    "suggested_action",
+    "public_impact",
+    "current_mapping_state",
+    "known_canonical_institutions",
+    "existing_mapping_authors",
+    "suggested_author_matches",
+    "raw_affiliation_evidence",
     "paper_id",
     "title",
     "year",
@@ -50,6 +59,15 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             {
                 "priority_rank": 2,
                 "mapping_status": "partial",
+                "priority": "normal",
+                "triage_status": "likely_auto_fixable",
+                "suggested_action": "Review existing mapping author names",
+                "public_impact": "paper details",
+                "current_mapping_state": "confirmed",
+                "known_canonical_institutions": "Example University",
+                "existing_mapping_authors": "Ada",
+                "suggested_author_matches": "Ada L. → Ada",
+                "raw_affiliation_evidence": "Example University",
                 "title": "Partial",
                 "year": 2024,
                 "is_key_paper": "false",
@@ -63,6 +81,15 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             {
                 "priority_rank": 1,
                 "mapping_status": "zero",
+                "priority": "high",
+                "triage_status": "needs_manual_review",
+                "suggested_action": "Find affiliation evidence and add a mapping",
+                "public_impact": "paper details; map markers blocked",
+                "current_mapping_state": "missing",
+                "known_canonical_institutions": "",
+                "existing_mapping_authors": "",
+                "suggested_author_matches": "",
+                "raw_affiliation_evidence": "",
                 "title": "Zero",
                 "year": 2025,
                 "is_key_paper": "true",
@@ -76,6 +103,15 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             {
                 "priority_rank": 3,
                 "mapping_status": "complete",
+                "priority": "",
+                "triage_status": "complete",
+                "suggested_action": "No mapping action needed",
+                "public_impact": "none",
+                "current_mapping_state": "confirmed",
+                "known_canonical_institutions": "Complete Institute",
+                "existing_mapping_authors": "Complete Author",
+                "suggested_author_matches": "",
+                "raw_affiliation_evidence": "",
                 "title": "Complete",
                 "year": 2023,
                 "is_key_paper": "false",
@@ -149,6 +185,10 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
             },
         )
         self.assertTrue(report["records"][0]["is_key_paper"])
+        self.assertEqual(
+            report["records"][1]["known_canonical_institutions"],
+            "Example University",
+        )
 
     def test_loader_missing_report_explains_refresh_action(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -425,6 +465,8 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
         self.assertIn('class="secondary-summary" open', html)
         self.assertIn("function renderProjectHealth()", javascript)
         self.assertIn("navigateConsole(metric.target)", javascript)
+        self.assertIn('id="mapping-coverage-triage"', html)
+        self.assertIn("row.raw_affiliation_evidence", javascript)
 
     def test_missing_report_returns_empty_state_and_generate_populates_it(self):
         with tempfile.TemporaryDirectory() as directory:
