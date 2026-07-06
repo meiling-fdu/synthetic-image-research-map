@@ -154,45 +154,52 @@ let hoveredMarker = null;
 let activeInstitutionTooltipMarker = null;
 let pinnedPaperIdentity = "";
 let pinnedPaperRecord = null;
+let pinnedInstitutionKey = "";
 
 const supportsMarkerHover = window.matchMedia?.(
   "(hover: hover) and (pointer: fine)",
 ).matches ?? false;
 
 const rootStyles = getComputedStyle(document.documentElement);
-const MARKER_PALETTE = {
-  fill: rootStyles.getPropertyValue("--map-marker-fill").trim() || "#5a9da6",
-  stroke: rootStyles.getPropertyValue("--map-marker-stroke").trim() || "#376f78",
+const MARKER_TASK_PALETTES = {
+  detection: {
+    fill: rootStyles.getPropertyValue("--map-detection-fill").trim() || "#5a9da6",
+    stroke: rootStyles.getPropertyValue("--map-detection-stroke").trim() || "#376f78",
+  },
+  source_attribution: {
+    fill: rootStyles.getPropertyValue("--map-attribution-fill").trim() || "#c58a55",
+    stroke: rootStyles.getPropertyValue("--map-attribution-stroke").trim() || "#8b5a32",
+  },
+  detection_and_source_attribution: {
+    fill: rootStyles.getPropertyValue("--map-mixed-fill").trim() || "#8b6fa8",
+    stroke: rootStyles.getPropertyValue("--map-mixed-stroke").trim() || "#604877",
+  },
+  unknown: {
+    fill: rootStyles.getPropertyValue("--map-unknown-fill").trim() || "#8a98a3",
+    stroke: rootStyles.getPropertyValue("--map-unknown-stroke").trim() || "#5d6b75",
+  },
 };
 const BASE_MARKER_STYLE = {
   radius: 8,
-  color: MARKER_PALETTE.stroke,
   weight: 1.5,
-  fillColor: MARKER_PALETTE.fill,
   fillOpacity: 0.5,
   opacity: 0.68,
 };
 const DIMMED_MARKER_STYLE = {
   radius: 7.5,
-  color: MARKER_PALETTE.stroke,
   weight: 1.1,
-  fillColor: MARKER_PALETTE.fill,
   fillOpacity: 0.24,
   opacity: 0.42,
 };
 const RELATED_MARKER_STYLE = {
   radius: 9.5,
-  color: MARKER_PALETTE.stroke,
   weight: 1.8,
-  fillColor: MARKER_PALETTE.fill,
   fillOpacity: 0.62,
   opacity: 0.82,
 };
 const CURRENT_MARKER_STYLE = {
   radius: 11.5,
-  color: MARKER_PALETTE.stroke,
   weight: 2.2,
-  fillColor: MARKER_PALETTE.fill,
   fillOpacity: 0.7,
   opacity: 0.9,
 };
@@ -703,18 +710,23 @@ function uniqueMarkerLocations(entries) {
   return locations;
 }
 
-function markerStyle(record, state = "base", paperCount = 1) {
+function markerStyle(taskKey, state = "base", paperCount = 1) {
+  const normalizedTask = taskKey === "mixed"
+    ? "detection_and_source_attribution"
+    : MarkerSizeHelpers.normalizeTaskLabel(taskKey);
+  const palette = MARKER_TASK_PALETTES[normalizedTask] || MARKER_TASK_PALETTES.unknown;
+  const colors = { color: palette.stroke, fillColor: palette.fill };
   const radius = MarkerSizeHelpers.getMarkerRadius(paperCount);
   if (state === "current") {
-    return { ...CURRENT_MARKER_STYLE, radius: Math.min(20, radius + 2) };
+    return { ...CURRENT_MARKER_STYLE, ...colors, radius: Math.min(20, radius + 2) };
   }
   if (state === "related") {
-    return { ...RELATED_MARKER_STYLE, radius: Math.min(19, radius + 1) };
+    return { ...RELATED_MARKER_STYLE, ...colors, radius: Math.min(19, radius + 1) };
   }
   if (state === "dimmed") {
-    return { ...DIMMED_MARKER_STYLE, radius: Math.max(5.5, radius - 0.5) };
+    return { ...DIMMED_MARKER_STYLE, ...colors, radius: Math.max(5.5, radius - 0.5) };
   }
-  return { ...BASE_MARKER_STYLE, radius };
+  return { ...BASE_MARKER_STYLE, ...colors, radius };
 }
 
 function closeActiveInstitutionTooltip(marker = null) {
@@ -725,12 +737,15 @@ function closeActiveInstitutionTooltip(marker = null) {
   activeInstitutionTooltipMarker = null;
 }
 
-function openInstitutionTooltip(marker, record, paperCount) {
+function openInstitutionTooltip(marker, record, paperCount, taskBreakdown) {
   closeActiveInstitutionTooltip();
+  const breakdownLine = taskBreakdown
+    ? `<br>${escapeHtml(taskBreakdown)}`
+    : "";
   institutionHoverTooltip
     .setLatLng(marker.getLatLng())
     .setContent(
-      `<strong>${escapeHtml(recordInstitution(record) || "Unknown institution")}</strong><br>${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(paperCount))}`,
+      `<strong>${escapeHtml(recordInstitution(record) || "Unknown institution")}</strong><br>${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(paperCount))}${breakdownLine}`,
     )
     .openOn(map);
   activeInstitutionTooltipMarker = marker;
@@ -1719,8 +1734,8 @@ function showPaperDetails(record, relatedEntries) {
 }
 
 function restoreBaseMarkerStyles() {
-  visibleMarkerEntries.forEach(({ marker, record, paperCount }) => {
-    marker.setStyle(markerStyle(record, "base", paperCount));
+  visibleMarkerEntries.forEach(({ marker, taskKey, paperCount }) => {
+    marker.setStyle(markerStyle(taskKey, "base", paperCount));
   });
 }
 
@@ -1731,6 +1746,7 @@ function clearPaperInteraction(updateStatus = true) {
   hoveredMarker = null;
   pinnedPaperIdentity = "";
   pinnedPaperRecord = null;
+  pinnedInstitutionKey = "";
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   restoreBaseMarkerStyles();
@@ -1781,6 +1797,7 @@ function showPaperInteraction(record, identity, mode) {
       marker,
       record: markerRecord,
       records: markerRecords,
+      taskKey,
       paperCount,
     } = entry;
     const isCurrent = markerRecords.includes(record);
@@ -1791,7 +1808,7 @@ function showPaperInteraction(record, identity, mode) {
       currentMarker = marker;
     }
     marker.setStyle(markerStyle(
-      markerRecord,
+      taskKey,
       isCurrent ? "current" : isRelated ? "related" : "dimmed",
       paperCount,
     ));
@@ -1831,8 +1848,8 @@ function restorePaperInteraction() {
   mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
 }
 
-function activateHoverPreview(record, identity, marker, paperCount) {
-  openInstitutionTooltip(marker, record, paperCount);
+function activateHoverPreview(record, identity, marker, paperCount, taskBreakdown) {
+  openInstitutionTooltip(marker, record, paperCount, taskBreakdown);
   hoveredPaperIdentity = identity;
   hoveredPaperRecord = record;
   hoveredMarker = marker;
@@ -1850,19 +1867,28 @@ function clearHoverPreview(marker) {
   restorePaperInteraction();
 }
 
-function pinPaper(record, identity) {
+function pinPaper(record, identity, institutionKey) {
   closeActiveInstitutionTooltip();
   hoveredPaperIdentity = "";
   hoveredPaperRecord = null;
   hoveredMarker = null;
   pinnedPaperIdentity = identity;
   pinnedPaperRecord = record;
+  pinnedInstitutionKey = institutionKey;
   restorePaperInteraction();
   scheduleMapResize();
 }
 
 function renderRecords() {
-  clearPaperInteraction(false);
+  const previousPin = pinnedPaperIdentity && pinnedInstitutionKey
+    ? { identity: pinnedPaperIdentity, institutionKey: pinnedInstitutionKey }
+    : null;
+  closeActiveInstitutionTooltip();
+  hoveredPaperIdentity = "";
+  hoveredPaperRecord = null;
+  hoveredMarker = null;
+  hoverConnectionLayer.clearLayers();
+  selectedConnectionLayer.clearLayers();
   const keywordTerms = normalizedSearchText(keywordFilter.value)
     .trim()
     .split(/\s+/)
@@ -1900,18 +1926,30 @@ function renderRecords() {
     const record = group.record;
     const locationRecord = institutionRepresentatives.get(group.key) || record;
     const identity = paperIdentity(record);
+    const taskCounts = MarkerSizeHelpers.getInstitutionTaskCounts(
+      group.records,
+      paperIdentity,
+    );
+    const taskKey = MarkerSizeHelpers.getDominantInstitutionTask(taskCounts);
+    const taskBreakdown = MarkerSizeHelpers.formatTaskBreakdown(taskCounts);
     const marker = L.circleMarker(
       [locationRecord.latitude, locationRecord.longitude],
-      markerStyle(record, "base", group.paperCount),
+      markerStyle(taskKey, "base", group.paperCount),
     )
-      .on("click", () => pinPaper(record, identity))
+      .on("click", () => pinPaper(record, identity, group.key))
       .on("remove", () => closeActiveInstitutionTooltip(marker))
       .addTo(markerLayer);
     if (supportsMarkerHover) {
       marker
         .on(
           "mouseover",
-          () => activateHoverPreview(record, identity, marker, group.paperCount),
+          () => activateHoverPreview(
+            record,
+            identity,
+            marker,
+            group.paperCount,
+            taskBreakdown,
+          ),
         )
         .on("mouseout", () => clearHoverPreview(marker));
     }
@@ -1920,16 +1958,43 @@ function renderRecords() {
       records: group.records,
       marker,
       identity,
+      institutionKey: group.key,
       paperCount: group.paperCount,
+      taskBreakdown,
+      taskCounts,
+      taskKey,
     });
   });
+
+  const restoredPinEntry = previousPin
+    ? visibleMarkerEntries.find(
+      (entry) => entry.institutionKey === previousPin.institutionKey,
+    )
+    : null;
+  const restoredPinRecord = restoredPinEntry?.records.find(
+    (record) => paperIdentity(record) === previousPin?.identity,
+  );
+  if (restoredPinEntry && restoredPinRecord) {
+    pinnedPaperIdentity = previousPin.identity;
+    pinnedPaperRecord = restoredPinRecord;
+    pinnedInstitutionKey = previousPin.institutionKey;
+  } else {
+    pinnedPaperIdentity = "";
+    pinnedPaperRecord = null;
+    pinnedInstitutionKey = "";
+  }
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
   renderHeaderStatistics(visibleRecords, visiblePaperRecords);
   renderResults(visibleRecords, visiblePaperRecords);
   mapStatus.classList.toggle("error", false);
-  mapStatus.classList.toggle("paper-highlight-active", false);
-  mapStatus.textContent = baseMapStatusText(visibleRecords);
+  if (pinnedPaperRecord) {
+    restorePaperInteraction();
+  } else {
+    resetPaperDetails();
+    mapStatus.classList.toggle("paper-highlight-active", false);
+    mapStatus.textContent = baseMapStatusText(visibleRecords);
+  }
   scheduleMapResize();
 }
 

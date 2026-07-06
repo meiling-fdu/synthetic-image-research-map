@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260706-marker-visual-polish">
+    <link rel="stylesheet" href="style.css?v=20260706-task-markers-pin">
   </head>
   <body>
     <header class="site-header">
@@ -188,13 +188,23 @@
 
         <section class="map-panel" aria-label="Research locations">
           <div class="map-status-row">
-            <p class="marker-size-legend" aria-label="Circle size represents papers in current view">
-              <span class="marker-size-examples" aria-hidden="true">
-                <i class="marker-size-example small"></i>
-                <i class="marker-size-example medium"></i>
-                <i class="marker-size-example large"></i>
+            <p class="map-encoding-legend" aria-label="Circle size represents papers in the current view; circle color represents dominant task">
+              <span class="map-encoding-item">
+                <span class="marker-size-examples" aria-hidden="true">
+                  <i class="marker-size-example small"></i>
+                  <i class="marker-size-example medium"></i>
+                  <i class="marker-size-example large"></i>
+                </span>
+                Circle size = papers in current view
               </span>
-              Circle size = papers in current view
+              <span class="map-encoding-item">
+                <span class="marker-color-examples" aria-hidden="true">
+                  <i class="marker-color-example detection"></i>
+                  <i class="marker-color-example source-attribution"></i>
+                  <i class="marker-color-example mixed"></i>
+                </span>
+                Circle color = dominant task
+              </span>
             </p>
             <p id="map-status" class="map-status" role="status">
               Loading public preview data...
@@ -373,7 +383,7 @@
     ></script>
     <script src="paper_details_helpers.js?v=20260703-author-affiliations"></script>
     <script src="paper_link_helpers.js?v=20260705-link-deduplication"></script>
-    <script src="marker_size_helpers.js?v=20260706-filter-aware-marker-size"></script>
-    <script src="app.js?v=20260706-marker-visual-polish"></script>
+    <script src="marker_size_helpers.js?v=20260706-task-markers"></script>
+    <script src="app.js?v=20260706-task-markers-pin"></script>
   </body>
 </html>
