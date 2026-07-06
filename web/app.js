@@ -685,18 +685,19 @@ function uniqueMarkerLocations(entries) {
   return locations;
 }
 
-function markerStyle(record, state = "base") {
+function markerStyle(record, state = "base", paperCount = 1) {
   const fillColor = TASK_COLORS[record.task] ?? TASK_COLORS.uncertain;
+  const radius = MarkerSizeHelpers.getMarkerRadius(paperCount);
   if (state === "current") {
-    return { ...CURRENT_MARKER_STYLE, fillColor };
+    return { ...CURRENT_MARKER_STYLE, radius: Math.min(20, radius + 2), fillColor };
   }
   if (state === "related") {
-    return { ...RELATED_MARKER_STYLE, fillColor };
+    return { ...RELATED_MARKER_STYLE, radius: Math.min(19, radius + 1), fillColor };
   }
   if (state === "dimmed") {
-    return { ...DIMMED_MARKER_STYLE, fillColor };
+    return { ...DIMMED_MARKER_STYLE, radius: Math.max(5.5, radius - 0.5), fillColor };
   }
-  return { ...BASE_MARKER_STYLE, fillColor };
+  return { ...BASE_MARKER_STYLE, radius, fillColor };
 }
 
 function normalizedLocationName(value) {
@@ -1663,8 +1664,8 @@ function showPaperDetails(record, relatedEntries) {
 }
 
 function restoreBaseMarkerStyles() {
-  visibleMarkerEntries.forEach(({ marker, record }) => {
-    marker.setStyle(markerStyle(record));
+  visibleMarkerEntries.forEach(({ marker, record, paperCount }) => {
+    marker.setStyle(markerStyle(record, "base", paperCount));
   });
 }
 
@@ -1704,9 +1705,14 @@ function drawConnectionLines(relatedEntries, currentRecord, targetLayer) {
 }
 
 function showPaperInteraction(record, identity, mode) {
-  const relatedEntries = visibleMarkerEntries.filter(
-    (entry) => entry.identity === identity,
-  );
+  const relatedEntries = visibleMarkerEntries
+    .map((entry) => {
+      const matchingRecord = entry.records.find(
+        (candidate) => paperIdentity(candidate) === identity,
+      );
+      return matchingRecord ? { ...entry, record: matchingRecord } : null;
+    })
+    .filter(Boolean);
   if (!relatedEntries.length) {
     return;
   }
@@ -1714,14 +1720,24 @@ function showPaperInteraction(record, identity, mode) {
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   let currentMarker = null;
-  visibleMarkerEntries.forEach(({ marker, record: markerRecord, identity: markerIdentity }) => {
-    const isCurrent = markerRecord === record;
+  visibleMarkerEntries.forEach((entry) => {
+    const {
+      marker,
+      record: markerRecord,
+      records: markerRecords,
+      paperCount,
+    } = entry;
+    const isCurrent = markerRecords.includes(record);
+    const isRelated = markerRecords.some(
+      (candidate) => paperIdentity(candidate) === identity,
+    );
     if (isCurrent) {
       currentMarker = marker;
     }
     marker.setStyle(markerStyle(
       markerRecord,
-      isCurrent ? "current" : markerIdentity === identity ? "related" : "dimmed",
+      isCurrent ? "current" : isRelated ? "related" : "dimmed",
+      paperCount,
     ));
   });
 
@@ -1807,20 +1823,45 @@ function renderRecords() {
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
 
-  visibleRecords.forEach((record) => {
+  const institutionRepresentatives = new Map();
+  records.forEach((record) => {
+    const key = institutionIdentity(record);
+    if (!institutionRepresentatives.has(key)) {
+      institutionRepresentatives.set(key, record);
+    }
+  });
+  const institutionGroups = MarkerSizeHelpers.groupInstitutionRecords(
+    visibleRecords,
+    institutionIdentity,
+    paperIdentity,
+  );
+
+  institutionGroups.forEach((group) => {
+    const record = group.record;
+    const locationRecord = institutionRepresentatives.get(group.key) || record;
     const identity = paperIdentity(record);
     const marker = L.circleMarker(
-      [record.latitude, record.longitude],
-      markerStyle(record),
+      [locationRecord.latitude, locationRecord.longitude],
+      markerStyle(record, "base", group.paperCount),
     )
       .on("click", () => pinPaper(record, identity))
+      .bindTooltip(
+        `<strong>${escapeHtml(recordInstitution(record) || "Unknown institution")}</strong><br>${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(group.paperCount))}`,
+        { direction: "top", offset: [0, -4] },
+      )
       .addTo(markerLayer);
     if (supportsMarkerHover) {
       marker
         .on("mouseover", () => activateHoverPreview(record, identity, marker))
         .on("mouseout", () => clearHoverPreview(marker));
     }
-    visibleMarkerEntries.push({ record, marker, identity });
+    visibleMarkerEntries.push({
+      record,
+      records: group.records,
+      marker,
+      identity,
+      paperCount: group.paperCount,
+    });
   });
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);

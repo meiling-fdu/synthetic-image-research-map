@@ -829,7 +829,50 @@ input:disabled {
 
 .map-status-row {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.marker-size-legend {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
+.marker-size-examples {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+}
+
+.marker-size-example {
+  display: inline-block;
+  box-sizing: border-box;
+  border: 1.5px solid #ffffff;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-dark);
+}
+
+.marker-size-example.small {
+  width: 8px;
+  height: 8px;
+}
+
+.marker-size-example.medium {
+  width: 12px;
+  height: 12px;
+}
+
+.marker-size-example.large {
+  width: 17px;
+  height: 17px;
 }
 
 .map-status {
@@ -1589,6 +1632,12 @@ footer a {
 
   .map-status {
     text-align: left;
+  }
+
+  .map-status-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
   }
 
   .results-heading-row {
