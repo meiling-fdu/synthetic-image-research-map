@@ -54,7 +54,7 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(values["singular"], "1 paper in current view")
         self.assertEqual(values["plural"], "3 papers in current view")
 
-    def test_tooltip_lifecycle_and_marker_stroke_are_explicit(self):
+    def test_tooltip_lifecycle_and_marker_palette_are_explicit(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
         style_source = (REPOSITORY / "web/style.css").read_text()
         base_style = app_source.split(
@@ -70,10 +70,19 @@ process.stdout.write(JSON.stringify({
             'mapElement.addEventListener("mouseleave"', app_source
         )
         self.assertNotIn(".bindTooltip(", app_source)
-        self.assertIn('color: "#1f5964"', base_style)
+        self.assertIn("color: MARKER_PALETTE.stroke", base_style)
+        self.assertIn("fillColor: MARKER_PALETTE.fill", base_style)
+        self.assertIn("fillOpacity: 0.5", base_style)
+        self.assertIn("opacity: 0.68", base_style)
         self.assertNotIn("#ffffff", base_style)
-        self.assertIn("border: 1.75px solid #1f5964", style_source)
-        self.assertIn("background: var(--detection)", style_source)
+        self.assertIn("--map-marker-fill: #5a9da6", style_source)
+        self.assertIn("--map-marker-stroke: #376f78", style_source)
+        self.assertIn(
+            "border: 1.5px solid rgb(55 111 120 / 68%)", style_source
+        )
+        self.assertIn(
+            "background: rgb(90 157 166 / 50%)", style_source
+        )
 
     def test_public_preview_record_counts_are_unchanged(self):
         map_payload = json.loads(

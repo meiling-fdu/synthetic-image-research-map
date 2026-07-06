@@ -9,6 +9,8 @@
   --detection: #287d8e;
   --attribution: #b66a37;
   --both: #76589b;
+  --map-marker-fill: #5a9da6;
+  --map-marker-stroke: #376f78;
   --shadow: 0 12px 30px rgb(28 53 67 / 8%);
 }
 
@@ -854,9 +856,9 @@ input:disabled {
 .marker-size-example {
   display: inline-block;
   box-sizing: border-box;
-  border: 1.75px solid #1f5964;
+  border: 1.5px solid rgb(55 111 120 / 68%);
   border-radius: 50%;
-  background: var(--detection);
+  background: rgb(90 157 166 / 50%);
 }
 
 .marker-size-example.small {

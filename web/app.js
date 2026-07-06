@@ -159,33 +159,42 @@ const supportsMarkerHover = window.matchMedia?.(
   "(hover: hover) and (pointer: fine)",
 ).matches ?? false;
 
+const rootStyles = getComputedStyle(document.documentElement);
+const MARKER_PALETTE = {
+  fill: rootStyles.getPropertyValue("--map-marker-fill").trim() || "#5a9da6",
+  stroke: rootStyles.getPropertyValue("--map-marker-stroke").trim() || "#376f78",
+};
 const BASE_MARKER_STYLE = {
   radius: 8,
-  color: "#1f5964",
-  weight: 1.75,
-  fillOpacity: 0.94,
-  opacity: 0.88,
+  color: MARKER_PALETTE.stroke,
+  weight: 1.5,
+  fillColor: MARKER_PALETTE.fill,
+  fillOpacity: 0.5,
+  opacity: 0.68,
 };
 const DIMMED_MARKER_STYLE = {
   radius: 7.5,
-  color: "#466a73",
-  weight: 1.25,
-  fillOpacity: 0.55,
-  opacity: 0.68,
+  color: MARKER_PALETTE.stroke,
+  weight: 1.1,
+  fillColor: MARKER_PALETTE.fill,
+  fillOpacity: 0.24,
+  opacity: 0.42,
 };
 const RELATED_MARKER_STYLE = {
   radius: 9.5,
-  color: "#173f48",
-  weight: 2.5,
-  fillOpacity: 1,
-  opacity: 1,
+  color: MARKER_PALETTE.stroke,
+  weight: 1.8,
+  fillColor: MARKER_PALETTE.fill,
+  fillOpacity: 0.62,
+  opacity: 0.82,
 };
 const CURRENT_MARKER_STYLE = {
   radius: 11.5,
-  color: "#12343c",
-  weight: 3,
-  fillOpacity: 1,
-  opacity: 1,
+  color: MARKER_PALETTE.stroke,
+  weight: 2.2,
+  fillColor: MARKER_PALETTE.fill,
+  fillOpacity: 0.7,
+  opacity: 0.9,
 };
 const CONNECTION_LINE_STYLE = {
   color: "#455d6c",
@@ -695,18 +704,17 @@ function uniqueMarkerLocations(entries) {
 }
 
 function markerStyle(record, state = "base", paperCount = 1) {
-  const fillColor = TASK_COLORS[record.task] ?? TASK_COLORS.uncertain;
   const radius = MarkerSizeHelpers.getMarkerRadius(paperCount);
   if (state === "current") {
-    return { ...CURRENT_MARKER_STYLE, radius: Math.min(20, radius + 2), fillColor };
+    return { ...CURRENT_MARKER_STYLE, radius: Math.min(20, radius + 2) };
   }
   if (state === "related") {
-    return { ...RELATED_MARKER_STYLE, radius: Math.min(19, radius + 1), fillColor };
+    return { ...RELATED_MARKER_STYLE, radius: Math.min(19, radius + 1) };
   }
   if (state === "dimmed") {
-    return { ...DIMMED_MARKER_STYLE, radius: Math.max(5.5, radius - 0.5), fillColor };
+    return { ...DIMMED_MARKER_STYLE, radius: Math.max(5.5, radius - 0.5) };
   }
-  return { ...BASE_MARKER_STYLE, radius, fillColor };
+  return { ...BASE_MARKER_STYLE, radius };
 }
 
 function closeActiveInstitutionTooltip(marker = null) {
