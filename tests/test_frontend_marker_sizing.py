@@ -54,6 +54,27 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(values["singular"], "1 paper in current view")
         self.assertEqual(values["plural"], "3 papers in current view")
 
+    def test_tooltip_lifecycle_and_marker_stroke_are_explicit(self):
+        app_source = (REPOSITORY / "web/app.js").read_text()
+        style_source = (REPOSITORY / "web/style.css").read_text()
+        base_style = app_source.split(
+            "const BASE_MARKER_STYLE = {", 1
+        )[1].split("};", 1)[0]
+
+        self.assertIn("permanent: false", app_source)
+        self.assertIn("sticky: false", app_source)
+        self.assertIn("function closeActiveInstitutionTooltip(", app_source)
+        self.assertIn("function openInstitutionTooltip(", app_source)
+        self.assertIn('map.on("mousemove"', app_source)
+        self.assertIn(
+            'mapElement.addEventListener("mouseleave"', app_source
+        )
+        self.assertNotIn(".bindTooltip(", app_source)
+        self.assertIn('color: "#1f5964"', base_style)
+        self.assertNotIn("#ffffff", base_style)
+        self.assertIn("border: 1.75px solid #1f5964", style_source)
+        self.assertIn("background: var(--detection)", style_source)
+
     def test_public_preview_record_counts_are_unchanged(self):
         map_payload = json.loads(
             (REPOSITORY / "web/data/public_preview_map_data.json").read_text()

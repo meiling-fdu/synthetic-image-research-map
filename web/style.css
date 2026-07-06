@@ -854,10 +854,9 @@ input:disabled {
 .marker-size-example {
   display: inline-block;
   box-sizing: border-box;
-  border: 1.5px solid #ffffff;
+  border: 1.75px solid #1f5964;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent-dark);
+  background: var(--detection);
 }
 
 .marker-size-example.small {

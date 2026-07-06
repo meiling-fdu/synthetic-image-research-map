@@ -100,6 +100,14 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 const markerLayer = L.layerGroup().addTo(map);
 const hoverConnectionLayer = L.layerGroup().addTo(map);
 const selectedConnectionLayer = L.layerGroup().addTo(map);
+const institutionHoverTooltip = L.tooltip({
+  className: "institution-marker-tooltip",
+  direction: "top",
+  interactive: false,
+  offset: [0, -4],
+  permanent: false,
+  sticky: false,
+});
 const keywordFilter = document.querySelector("#keyword-filter");
 const taskFilter = document.querySelector("#task-filter");
 const entryTypeFilter = document.querySelector("#entry-type-filter");
@@ -143,6 +151,7 @@ let visibleMarkerEntries = [];
 let hoveredPaperIdentity = "";
 let hoveredPaperRecord = null;
 let hoveredMarker = null;
+let activeInstitutionTooltipMarker = null;
 let pinnedPaperIdentity = "";
 let pinnedPaperRecord = null;
 
@@ -152,29 +161,29 @@ const supportsMarkerHover = window.matchMedia?.(
 
 const BASE_MARKER_STYLE = {
   radius: 8,
-  color: "#ffffff",
-  weight: 2,
+  color: "#1f5964",
+  weight: 1.75,
   fillOpacity: 0.94,
-  opacity: 1,
+  opacity: 0.88,
 };
 const DIMMED_MARKER_STYLE = {
   radius: 7.5,
-  color: "#d7e0e4",
+  color: "#466a73",
   weight: 1.25,
   fillOpacity: 0.55,
   opacity: 0.68,
 };
 const RELATED_MARKER_STYLE = {
   radius: 9.5,
-  color: "#263744",
+  color: "#173f48",
   weight: 2.5,
   fillOpacity: 1,
   opacity: 1,
 };
 const CURRENT_MARKER_STYLE = {
   radius: 11.5,
-  color: "#c83f35",
-  weight: 3.5,
+  color: "#12343c",
+  weight: 3,
   fillOpacity: 1,
   opacity: 1,
 };
@@ -699,6 +708,44 @@ function markerStyle(record, state = "base", paperCount = 1) {
   }
   return { ...BASE_MARKER_STYLE, radius, fillColor };
 }
+
+function closeActiveInstitutionTooltip(marker = null) {
+  if (marker && activeInstitutionTooltipMarker !== marker) {
+    return;
+  }
+  institutionHoverTooltip.remove();
+  activeInstitutionTooltipMarker = null;
+}
+
+function openInstitutionTooltip(marker, record, paperCount) {
+  closeActiveInstitutionTooltip();
+  institutionHoverTooltip
+    .setLatLng(marker.getLatLng())
+    .setContent(
+      `<strong>${escapeHtml(recordInstitution(record) || "Unknown institution")}</strong><br>${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(paperCount))}`,
+    )
+    .openOn(map);
+  activeInstitutionTooltipMarker = marker;
+}
+
+function clearActiveInstitutionHover() {
+  const marker = activeInstitutionTooltipMarker;
+  if (marker && hoveredMarker === marker) {
+    clearHoverPreview(marker);
+    return;
+  }
+  closeActiveInstitutionTooltip();
+}
+
+map.on("mousemove", (event) => {
+  const marker = activeInstitutionTooltipMarker;
+  if (!marker || event.originalEvent?.target === marker.getElement()) {
+    return;
+  }
+  clearActiveInstitutionHover();
+});
+map.on("movestart zoomstart", clearActiveInstitutionHover);
+mapElement.addEventListener("mouseleave", clearActiveInstitutionHover);
 
 function normalizedLocationName(value) {
   return String(value || "")
@@ -1670,6 +1717,7 @@ function restoreBaseMarkerStyles() {
 }
 
 function clearPaperInteraction(updateStatus = true) {
+  closeActiveInstitutionTooltip();
   hoveredPaperIdentity = "";
   hoveredPaperRecord = null;
   hoveredMarker = null;
@@ -1775,7 +1823,8 @@ function restorePaperInteraction() {
   mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
 }
 
-function activateHoverPreview(record, identity, marker) {
+function activateHoverPreview(record, identity, marker, paperCount) {
+  openInstitutionTooltip(marker, record, paperCount);
   hoveredPaperIdentity = identity;
   hoveredPaperRecord = record;
   hoveredMarker = marker;
@@ -1783,6 +1832,7 @@ function activateHoverPreview(record, identity, marker) {
 }
 
 function clearHoverPreview(marker) {
+  closeActiveInstitutionTooltip(marker);
   if (hoveredMarker !== marker) {
     return;
   }
@@ -1793,6 +1843,7 @@ function clearHoverPreview(marker) {
 }
 
 function pinPaper(record, identity) {
+  closeActiveInstitutionTooltip();
   hoveredPaperIdentity = "";
   hoveredPaperRecord = null;
   hoveredMarker = null;
@@ -1818,6 +1869,7 @@ function renderRecords() {
   currentFilteredRecords = visibleRecords;
   currentFilteredPaperRecords = visiblePaperRecords;
 
+  closeActiveInstitutionTooltip();
   markerLayer.clearLayers();
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
@@ -1845,14 +1897,14 @@ function renderRecords() {
       markerStyle(record, "base", group.paperCount),
     )
       .on("click", () => pinPaper(record, identity))
-      .bindTooltip(
-        `<strong>${escapeHtml(recordInstitution(record) || "Unknown institution")}</strong><br>${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(group.paperCount))}`,
-        { direction: "top", offset: [0, -4] },
-      )
+      .on("remove", () => closeActiveInstitutionTooltip(marker))
       .addTo(markerLayer);
     if (supportsMarkerHover) {
       marker
-        .on("mouseover", () => activateHoverPreview(record, identity, marker))
+        .on(
+          "mouseover",
+          () => activateHoverPreview(record, identity, marker, group.paperCount),
+        )
         .on("mouseout", () => clearHoverPreview(marker));
     }
     visibleMarkerEntries.push({
@@ -1972,6 +2024,7 @@ function showDatasetMessage(message, isError = false) {
   currentFilteredRecords = [];
   currentFilteredPaperRecords = [];
   currentDisplayedResults = [];
+  closeActiveInstitutionTooltip();
   markerLayer.clearLayers();
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
