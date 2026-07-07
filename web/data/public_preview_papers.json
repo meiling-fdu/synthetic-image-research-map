@@ -5935,91 +5935,35 @@
       "task": "detection",
       "subtask": "ai_generated_image_detection",
       "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
+      "venue": "2026 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "venue_name": "2026 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "venue_type": "repository",
       "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recent rapid advancement of generative models has significantly improved the fidelity and accessibility of AI-generated synthetic images. While enabling various innovative applications, the unprecedented realism of these synthetics makes them increasingly indistinguishable from authentic photographs, posing serious security risks, such as media credibility and content manipulation. Although extensive efforts have been dedicated to detecting synthetic images, most existing approaches suffer from poor generalization to unseen data due to their reliance on model-specific artifacts or low-level statistical cues. In this work, we identify a previously unexplored distinction that real images maintain consistent semantic attention and structural coherence in their latent representations, exhibiting more stable feature transitions across network layers, whereas synthetic ones present discernible distinct patterns. Therefore, we propose a novel approach termed latent transition discrepancy (LTD), which captures the inter-layer consistency differences of real and synthetic images. LTD adaptively identifies the most discriminative layers and assesses the transition discrepancies across layers. Benefiting from the proposed inter-layer discriminative modeling, our approach exceeds the base model by 14.35\\% in mean Acc across three datasets containing diverse GANs and DMs. Extensive experiments demonstrate that LTD outperforms recent state-of-the-art methods, achieving superior detection accuracy, generalizability, and robustness.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.48550/arxiv.2603.10598",
-      "arxiv_id": "",
-      "arxiv_url": "",
+      "arxiv_id": "2603.10598",
+      "arxiv_url": "https://arxiv.org/abs/2603.10598",
       "arxiv_year": null,
       "has_arxiv_version": false,
-      "paper_url": "https://doi.org/10.48550/arxiv.2603.10598",
-      "primary_url": "https://doi.org/10.48550/arxiv.2603.10598",
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Yang_Layer_Consistency_Matters_Elegant_Latent_Transition_Discrepancy_for_Generalizable_Synthetic_CVPR_2026_paper.pdf",
+      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Yang_Layer_Consistency_Matters_Elegant_Latent_Transition_Discrepancy_for_Generalizable_Synthetic_CVPR_2026_paper.pdf",
       "landing_page_url": "https://doi.org/10.48550/arxiv.2603.10598",
       "openalex_url": "https://openalex.org/W7135092069",
       "is_arxiv_preprint": true,
       "url": "https://doi.org/10.48550/arxiv.2603.10598",
       "authors": [
         {
-          "name": "Yawen Yang",
-          "affiliation_indices": [
-            1
-          ],
+          "name": "[object Object]",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Feng Li",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Shuqi Kong",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Yunfeng Diao",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Xinjian Gao",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Zenglin Shi",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Meng Wang",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": false,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": true,
@@ -6058,147 +6002,13 @@
           "mapping_fallback": false
         }
       ],
-      "author_institution_indices": [
-        {
-          "author": "Yawen Yang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ]
-        },
-        {
-          "author": "Feng Li",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ]
-        },
-        {
-          "author": "Shuqi Kong",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ]
-        },
-        {
-          "author": "Yunfeng Diao",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ]
-        },
-        {
-          "author": "Xinjian Gao",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ]
-        },
-        {
-          "author": "Zenglin Shi",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ]
-        },
-        {
-          "author": "Meng Wang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ]
-        }
-      ],
+      "author_institution_indices": [],
       "author_affiliation_indices": [
         {
-          "author": "Yawen Yang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Feng Li",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Shuqi Kong",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Yunfeng Diao",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Xinjian Gao",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Zenglin Shi",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Meng Wang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:f6342fd457763517"
-          ],
-          "source": "curated_admin",
+          "author": "[object Object]",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         }
       ],
@@ -6224,6 +6034,10 @@
           "review_note": "ML"
         }
       ],
+      "paper_id": "curated:3fcd3bc4dd2c9d8c3b80",
+      "metadata_source": "openalex",
+      "curation_status": "corrected_by_admin",
+      "review_status": "reviewed",
       "affiliations": [
         {
           "index": 1,
