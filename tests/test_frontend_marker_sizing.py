@@ -127,6 +127,8 @@ process.stdout.write(JSON.stringify({
         self.assertIn(
             'mapElement.addEventListener("mouseleave"', app_source
         )
+        self.assertIn("paperDetails.contains(event.relatedTarget)", app_source)
+        self.assertIn('paperDetails.addEventListener("mouseleave"', app_source)
         self.assertNotIn(".bindTooltip(", app_source)
         self.assertIn("fillOpacity: 0.5", base_style)
         self.assertIn("opacity: 0.68", base_style)
@@ -149,6 +151,71 @@ process.stdout.write(JSON.stringify({
             "closePaperDetailsButton.addEventListener",
             app_source,
         )
+
+    def test_preview_status_omits_long_paper_titles(self):
+        app_source = (REPOSITORY / "web/app.js").read_text()
+        style_source = (REPOSITORY / "web/style.css").read_text()
+        interaction_body = app_source.split(
+            "function showPaperInteraction(record, identity, mode) {", 1
+        )[1].split("\nfunction restorePaperInteraction()", 1)[0]
+
+        self.assertIn(
+            "`Previewing ${visibleCount} visible institution record",
+            interaction_body,
+        )
+        self.assertIn('lineCount ? " · Connections shown." : "."', interaction_body)
+        self.assertNotIn("recordTitle(record)", interaction_body)
+        self.assertNotIn("paperTitle", interaction_body)
+        self.assertNotIn(" for “", interaction_body)
+        self.assertIn("white-space: nowrap", style_source)
+        self.assertIn("overflow: hidden", style_source)
+        self.assertIn("text-overflow: ellipsis", style_source)
+
+    def test_pinned_details_survive_hover_cleanup_and_close_explicitly(self):
+        app_source = (REPOSITORY / "web/app.js").read_text()
+        restore_body = app_source.split(
+            "function restorePaperInteraction() {", 1
+        )[1].split("\nfunction activateHoverPreview", 1)[0]
+        hover_body = app_source.split(
+            "function activateHoverPreview(", 1
+        )[1].split("\nfunction clearHoverPreview", 1)[0]
+
+        self.assertLess(
+            restore_body.index("if (pinnedPaperIdentity && pinnedPaperRecord)"),
+            restore_body.index("if (hoveredPaperIdentity && hoveredPaperRecord)"),
+        )
+        self.assertIn("showPaperInteraction(pinnedPaperRecord, pinnedPaperIdentity, \"pinned\")", restore_body)
+        self.assertIn("if (pinnedPaperIdentity && pinnedPaperRecord)", hover_body)
+        self.assertIn("return;", hover_body)
+        self.assertIn('closePaperDetailsButton.addEventListener("click", () => clearPaperInteraction())', app_source)
+
+    def test_rerender_restores_only_visible_pinned_marker(self):
+        app_source = (REPOSITORY / "web/app.js").read_text()
+        render_body = app_source.split(
+            "function renderRecords() {", 1
+        )[1].split("\nfunction configureYearRange()", 1)[0]
+
+        self.assertIn("const previousPin = pinnedPaperIdentity && pinnedInstitutionKey", render_body)
+        self.assertIn("visibleMarkerEntries.find", render_body)
+        self.assertIn("entry.institutionKey === previousPin.institutionKey", render_body)
+        self.assertIn("paperIdentity(record) === previousPin?.identity", render_body)
+        self.assertIn("pinnedPaperIdentity = previousPin.identity", render_body)
+        self.assertIn("pinnedPaperRecord = restoredPinRecord", render_body)
+        self.assertIn("pinnedPaperIdentity = \"\"", render_body)
+        self.assertIn("pinnedPaperRecord = null", render_body)
+
+    def test_connection_lines_use_visible_slate_style(self):
+        app_source = (REPOSITORY / "web/app.js").read_text()
+        style_source = (REPOSITORY / "web/style.css").read_text()
+        connection_style = app_source.split(
+            "const CONNECTION_LINE_STYLE = {", 1
+        )[1].split("};", 1)[0]
+
+        self.assertIn("--map-connection-line: #2f4554", style_source)
+        self.assertIn('getPropertyValue("--map-connection-line")', connection_style)
+        self.assertIn('|| "#2f4554"', connection_style)
+        self.assertIn("weight: 2.4", connection_style)
+        self.assertIn("opacity: 0.68", connection_style)
 
     def test_public_preview_record_counts_are_unchanged(self):
         map_payload = json.loads(

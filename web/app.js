@@ -204,9 +204,9 @@ const CURRENT_MARKER_STYLE = {
   opacity: 0.9,
 };
 const CONNECTION_LINE_STYLE = {
-  color: "#455d6c",
-  weight: 2,
-  opacity: 0.5,
+  color: rootStyles.getPropertyValue("--map-connection-line").trim() || "#2f4554",
+  weight: 2.4,
+  opacity: 0.68,
   interactive: false,
   dashArray: "6 5",
   lineCap: "round",
@@ -768,7 +768,19 @@ map.on("mousemove", (event) => {
   clearActiveInstitutionHover();
 });
 map.on("movestart zoomstart", clearActiveInstitutionHover);
-mapElement.addEventListener("mouseleave", clearActiveInstitutionHover);
+mapElement.addEventListener("mouseleave", (event) => {
+  if (paperDetails.contains(event.relatedTarget)) {
+    return;
+  }
+  clearActiveInstitutionHover();
+});
+paperDetails.addEventListener("mouseleave", () => {
+  if (pinnedPaperIdentity && pinnedPaperRecord) {
+    closeActiveInstitutionTooltip();
+    return;
+  }
+  clearActiveInstitutionHover();
+});
 
 function normalizedLocationName(value) {
   return String(value || "")
@@ -1820,23 +1832,21 @@ function showPaperInteraction(record, identity, mode) {
   relatedEntries.forEach(({ marker }) => marker.bringToFront());
   currentMarker?.bringToFront();
   showPaperDetails(record, relatedEntries);
-  const paperTitle = recordTitle(record) || "Selected paper";
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", true);
-  const action = mode === "pinned" ? "Pinned" : "Previewing";
   const visibleCount = relatedEntries.length;
-  const connectionText = lineCount ? " Connections shown." : "";
+  const connectionText = lineCount ? " · Connections shown." : ".";
   mapStatus.textContent =
-    `${action} ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"} for “${paperTitle}”.${connectionText}`;
+    `Previewing ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"}${connectionText}`;
 }
 
 function restorePaperInteraction() {
-  if (hoveredPaperIdentity && hoveredPaperRecord) {
-    showPaperInteraction(hoveredPaperRecord, hoveredPaperIdentity, "hover");
-    return;
-  }
   if (pinnedPaperIdentity && pinnedPaperRecord) {
     showPaperInteraction(pinnedPaperRecord, pinnedPaperIdentity, "pinned");
+    return;
+  }
+  if (hoveredPaperIdentity && hoveredPaperRecord) {
+    showPaperInteraction(hoveredPaperRecord, hoveredPaperIdentity, "hover");
     return;
   }
 
@@ -1850,6 +1860,9 @@ function restorePaperInteraction() {
 
 function activateHoverPreview(record, identity, marker, paperCount, taskBreakdown) {
   openInstitutionTooltip(marker, record, paperCount, taskBreakdown);
+  if (pinnedPaperIdentity && pinnedPaperRecord) {
+    return;
+  }
   hoveredPaperIdentity = identity;
   hoveredPaperRecord = record;
   hoveredMarker = marker;

@@ -17,6 +17,7 @@
   --map-mixed-stroke: #604877;
   --map-unknown-fill: #8a98a3;
   --map-unknown-stroke: #5d6b75;
+  --map-connection-line: #2f4554;
   --shadow: 0 12px 30px rgb(28 53 67 / 8%);
 }
 
@@ -844,9 +845,11 @@ input:disabled {
 
 .map-encoding-legend {
   display: flex;
+  flex: 0 1 auto;
   align-items: center;
   flex-wrap: wrap;
   gap: 5px 12px;
+  min-width: 0;
   margin-bottom: 7px;
   color: var(--muted);
   font-size: 0.68rem;
@@ -918,11 +921,16 @@ input:disabled {
 }
 
 .map-status {
+  flex: 1 1 auto;
+  min-width: 0;
   margin-bottom: 7px;
+  overflow: hidden;
   color: var(--muted);
   font-size: 0.68rem;
   line-height: 1.25;
   text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .map-status.error {
@@ -949,6 +957,7 @@ input:disabled {
 .paper-details {
   height: clamp(320px, 28vw, 420px);
   min-height: 320px;
+  max-height: clamp(320px, 28vw, 420px);
   overflow-y: auto;
   border: 1px solid var(--line);
   border-radius: 6px;
