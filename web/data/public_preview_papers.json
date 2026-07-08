@@ -1892,10 +1892,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -2011,25 +2011,6 @@
           ]
         }
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Southeast University",
-          "canonical_name": "Southeast University",
-          "institution_id": "institution:592f613084a7ca9d",
-          "country": "China",
-          "region": "Jiangsu"
-        },
-        {
-          "index": 2,
-          "name": "Purple Mountain Laboratories",
-          "canonical_name": "Purple Mountain Laboratories",
-          "institution_id": "institution:a4cdf5c9d1038c90",
-          "country": "",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Hongsong Wang",
@@ -2077,7 +2058,26 @@
           "source": "curated_admin",
           "fallback": false
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Southeast University",
+          "canonical_name": "Southeast University",
+          "institution_id": "institution:592f613084a7ca9d",
+          "country": "China",
+          "region": "Jiangsu"
+        },
+        {
+          "index": 2,
+          "name": "Purple Mountain Laboratories",
+          "canonical_name": "Purple Mountain Laboratories",
+          "institution_id": "institution:a4cdf5c9d1038c90",
+          "country": "China",
+          "region": "Jiangsu"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Automated In-the-Wild Data Collection for Continual AI Generated Image Detection",
@@ -5927,25 +5927,6 @@
           ]
         }
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Fudan University",
-          "canonical_name": "Fudan University",
-          "institution_id": "institution:baa1df7c4adddbda",
-          "country": "China",
-          "region": "Shanghai"
-        },
-        {
-          "index": 2,
-          "name": "University of California, Berkeley",
-          "canonical_name": "University of California, Berkeley",
-          "institution_id": "institution:be74dcf5d0cb77ea",
-          "country": "United States",
-          "region": "California"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Tingshu Mou",
@@ -6000,6 +5981,165 @@
             "institution:baa1df7c4adddbda"
           ],
           "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Fudan University",
+          "canonical_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "country": "China",
+          "region": "Shanghai"
+        },
+        {
+          "index": 2,
+          "name": "University of California, Berkeley",
+          "canonical_name": "University of California, Berkeley",
+          "institution_id": "institution:be74dcf5d0cb77ea",
+          "country": "United States",
+          "region": "California"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:246f07c81b9f91e527eb",
+      "title": "IncreFA: Breaking the Static Wall of Generative Model Attribution",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "source_identification",
+      "entry_type": "method",
+      "venue": "2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "venue_name": "2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "As AI generative models evolve at unprecedented speed, image attribution has become a moving target. New diffusion, adversarial and autoregressive generators appear almost monthly, making existing watermark, classifier and inversion methods obsolete upon release. The core problem lies not in model recognition, but in the inability to adapt attribution itself. We introduce IncreFA, a framework that redefines attribution as a structured incremental learning problem, allowing the system to learn continuously as new generative models emerge. IncreFA departs from conventional incremental learning by exploiting the hierarchical relationships among generative architectures and coupling them with continual adaptation. It integrates two mutually reinforcing mechanisms: (1) Hierarchical Constraints, which encode architectural hierarchies through learnable orthogonal priors to disentangle family-level invariants from model-specific idiosyncrasies; and (2) a Latent Memory Bank, which replays compact latent exemplars and mixes them to generate pseudo-unseen samples, stabilising representation drift and enhancing open-set awareness. On the newly constructed Incremental Attribution Benchmark (IABench) covering 28 generative models released between 2022 and 2025, IncreFA achieves state-of-the-art attribution accuracy and 98.93% unseen detection under a temporally ordered open-set protocol. Code will be available at https://github.com/Ant0ny44/IncreFA.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2604.17736",
+      "arxiv_url": "https://arxiv.org/abs/2604.17736",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Qin_IncreFA_Breaking_the_Static_Wall_of_Generative_Model_Attribution_CVPR_2026_paper.pdf",
+      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Qin_IncreFA_Breaking_the_Static_Wall_of_Generative_Model_Attribution_CVPR_2026_paper.pdf",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7155451413",
+      "is_arxiv_preprint": true,
+      "url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Qin_IncreFA_Breaking_the_Static_Wall_of_Generative_Model_Attribution_CVPR_2026_paper.pdf",
+      "authors": [
+        {
+          "name": "Haotian Qin",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Dongliang Chang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yueying Gao",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yuexuan Tan",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Lei Chen",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Zhanyu Ma",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "curated_mappings": [],
+      "author_institution_affiliations": [],
+      "author_institution_indices": [],
+      "affiliations": [],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Haotian Qin",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Dongliang Chang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Yueying Gao",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Yuexuan Tan",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Lei Chen",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Zhanyu Ma",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         }
       ]
@@ -7749,6 +7889,386 @@
           "institution_ids": [
             "institution:cdad7d04e2565c8f"
           ]
+        }
+      ]
+    },
+    {
+      "paper_id": "curated:16646ad4b7b77cde2ad8",
+      "title": "One for All: Synthesis-Free Fingerprint Learning for Attribution of In-the-Wild Synthetic Images",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "source_identification",
+      "entry_type": "method",
+      "venue": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "venue_name": "Proceedings of the AAAI Conference on Artificial Intelligence",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "Attributing synthetic images to their source generative models is critical for digital forensics and security. While most existing attribution methods can distinguish images produced by known models and reject those from unknown ones, they are unable to verify whether a given image was produced by a specific, previously unseen model. To address this limitation, we formulate an open-set verification problem: determining whether a given image was generated by a specific model. Our key insight is that synthetic images from different models show consistent, content-independent fingerprints in their amplitude spectrum. Based on this insight, we design a dynamic fingerprint simulator capable of simulating over 1.6 trillion generative model architectures. We further train an extractor to capture model-specific fingerprint representations with supervised contrastive learning, enabling accurate attribution of synthetic images, even from previously unseen models. Our method does not rely on any synthetic images, instead, it is trained solely on real images. On DMDetection and AIGCBenchmark, which comprises dozens of state-of-the-art and in-the-wild generative models, our method improves the attribution performance (AUC) of the prior method from random level to 94.05% and 83.05%, respectively. On GenImage and OSMA datasets, we obtain 85.08%, and 88.48% OSCR, outperforming the SOTA methods by 4.30% and 9.37% under the same settings.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1609/aaai.v40i42.40851",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1609/aaai.v40i42.40851",
+      "primary_url": "https://doi.org/10.1609/aaai.v40i42.40851",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7138936966",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1609/aaai.v40i42.40851",
+      "authors": [
+        {
+          "name": "Jianwei Fei",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yunshu Dai",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Peipeng Yu",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Zhihua Xia",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Dasara Shullani",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Daniele Baracchi",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Alessandro Piva",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Jinan University",
+        "Sun Yat-sen University",
+        "University of Florence"
+      ],
+      "aggregated_country_names": [
+        "China",
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "IT"
+      ],
+      "aggregated_regions": [
+        "Guangdong",
+        "Tuscany"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:46ad67f8b0f46d763505",
+          "institution_id": "institution:42fcf4ae44e1a706",
+          "institution": "University of Florence",
+          "institution_authors": [
+            "Jianwei Fei",
+            "Dasara Shullani",
+            "Daniele Baracchi",
+            "Alessandro Piva"
+          ],
+          "raw_affiliation": "University of Florence",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7138936966",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        },
+        {
+          "mapping_id": "mapping:1d6182f3b080c78a5d64",
+          "institution_id": "institution:5c85faa51cc57a24",
+          "institution": "Sun Yat-sen University",
+          "institution_authors": [
+            "Yunshu Dai"
+          ],
+          "raw_affiliation": "Sun Yat-sen University",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7138936966",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        },
+        {
+          "mapping_id": "mapping:0d4dc179a09bb89f290b",
+          "institution_id": "institution:8632718a2c1444c6",
+          "institution": "Jinan University",
+          "institution_authors": [
+            "Peipeng Yu",
+            "Zhihua Xia"
+          ],
+          "raw_affiliation": "Jinan University",
+          "evidence_source": "OpenAlex raw affiliation strings",
+          "evidence_url": "https://openalex.org/W7138936966",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:42fcf4ae44e1a706",
+          "institution": "University of Florence",
+          "authors": [
+            "Jianwei Fei",
+            "Dasara Shullani",
+            "Daniele Baracchi",
+            "Alessandro Piva"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:5c85faa51cc57a24",
+          "institution": "Sun Yat-sen University",
+          "authors": [
+            "Yunshu Dai"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:8632718a2c1444c6",
+          "institution": "Jinan University",
+          "authors": [
+            "Peipeng Yu",
+            "Zhihua Xia"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Jianwei Fei",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ]
+        },
+        {
+          "author": "Yunshu Dai",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:5c85faa51cc57a24"
+          ]
+        },
+        {
+          "author": "Peipeng Yu",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:8632718a2c1444c6"
+          ]
+        },
+        {
+          "author": "Zhihua Xia",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:8632718a2c1444c6"
+          ]
+        },
+        {
+          "author": "Dasara Shullani",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ]
+        },
+        {
+          "author": "Daniele Baracchi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ]
+        },
+        {
+          "author": "Alessandro Piva",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Florence",
+          "canonical_name": "University of Florence",
+          "institution_id": "institution:42fcf4ae44e1a706",
+          "country": "Italy",
+          "region": "Tuscany"
+        },
+        {
+          "index": 2,
+          "name": "Sun Yat-sen University",
+          "canonical_name": "Sun Yat-sen University",
+          "institution_id": "institution:5c85faa51cc57a24",
+          "country": "China",
+          "region": "Guangdong"
+        },
+        {
+          "index": 3,
+          "name": "Jinan University",
+          "canonical_name": "Jinan University",
+          "institution_id": "institution:8632718a2c1444c6",
+          "country": "China",
+          "region": "Guangdong"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Jianwei Fei",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yunshu Dai",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:5c85faa51cc57a24"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Peipeng Yu",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:8632718a2c1444c6"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zhihua Xia",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:8632718a2c1444c6"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Dasara Shullani",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Daniele Baracchi",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Alessandro Piva",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:42fcf4ae44e1a706"
+          ],
+          "source": "curated_admin",
+          "fallback": false
         }
       ]
     },
@@ -11575,347 +12095,6 @@
       "current_institution": null
     },
     {
-      "title": "$\\bf{D^3}$QE: Learning Discrete Distribution Discrepancy-aware Quantization Error for Autoregressive-Generated Image Detection",
-      "in_scope": true,
-      "year": 2025,
-      "publication_year": 2025,
-      "publication_date": "2025-10-07",
-      "task": "detection",
-      "subtask": "ai_generated_image_detection",
-      "entry_type": "method",
-      "venue": "ArXiv.org",
-      "venue_name": "ArXiv.org",
-      "venue_type": "repository",
-      "publisher": "",
-      "publication_type": "preprint",
-      "abstract": "",
-      "abstract_source": "",
-      "ai_summary": "",
-      "doi": "https://doi.org/10.48550/arxiv.2510.05891",
-      "arxiv_id": "2510.05891",
-      "arxiv_url": "http://arxiv.org/abs/2510.05891",
-      "arxiv_year": null,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2510.05891",
-      "primary_url": "http://arxiv.org/abs/2510.05891",
-      "landing_page_url": "http://arxiv.org/abs/2510.05891",
-      "openalex_url": "https://openalex.org/W4414979736",
-      "is_arxiv_preprint": true,
-      "url": "https://openalex.org/W4414979736",
-      "authors": [
-        {
-          "name": "Yannan Zhang",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Bingyao Yu",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Yu Zheng",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Wenzhao Zheng",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Yueqi Duan",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Lei Chen",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Jie Zhou",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Jiwen Lu",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        }
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": false,
-      "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
-      "has_map_location": true,
-      "map_record_count": 1,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Tsinghua University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
-      "aggregated_regions": [
-        "Beijing"
-      ],
-      "aggregated_region_codes": [],
-      "curated_mappings": [
-        {
-          "mapping_id": "mapping:bd612da7e8a66cf8332d",
-          "institution_id": "institution:4ae45b121fe12e9c",
-          "institution": "Tsinghua University",
-          "institution_authors": [
-            "Yannan Zhang",
-            "Bingyao Yu",
-            "Yu Zheng",
-            "Wenzhao Zheng",
-            "Yueqi Duan",
-            "Lei Chen",
-            "Jie Zhou",
-            "Jiwen Lu"
-          ],
-          "raw_affiliation": "Department of Automation, Tsinghua University, China; Department of Electronic Engineering, Tsinghua University, China",
-          "evidence_source": "PDF",
-          "evidence_url": "https://openaccess.thecvf.com/content/ICCV2025/papers/Zhang_D3QE_Learning_Discrete_Distribution_Discrepancy-aware_Quantization_Error_for_Autoregressive-Generated_Image_ICCV_2025_paper.pdf",
-          "affiliation_note": "",
-          "mapping_status": "active",
-          "review_note": "Manually confirmed from the paper PDF affiliation section."
-        }
-      ],
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:4ae45b121fe12e9c",
-          "institution": "Tsinghua University",
-          "authors": [
-            "Yannan Zhang",
-            "Bingyao Yu",
-            "Yu Zheng",
-            "Wenzhao Zheng",
-            "Yueqi Duan",
-            "Lei Chen",
-            "Jie Zhou",
-            "Jiwen Lu"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Yannan Zhang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        },
-        {
-          "author": "Bingyao Yu",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        },
-        {
-          "author": "Yu Zheng",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        },
-        {
-          "author": "Wenzhao Zheng",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        },
-        {
-          "author": "Yueqi Duan",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        },
-        {
-          "author": "Lei Chen",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        },
-        {
-          "author": "Jie Zhou",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        },
-        {
-          "author": "Jiwen Lu",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ]
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Yannan Zhang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Bingyao Yu",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Yu Zheng",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Wenzhao Zheng",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Yueqi Duan",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Lei Chen",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Jie Zhou",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Jiwen Lu",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4ae45b121fe12e9c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        }
-      ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Tsinghua University",
-          "canonical_name": "Tsinghua University",
-          "institution_id": "institution:4ae45b121fe12e9c",
-          "country": "China",
-          "region": "Beijing"
-        }
-      ],
-      "current_institution": null
-    },
-    {
       "title": "A Bias-Free Training Paradigm for More General AI-generated Image Detection",
       "in_scope": true,
       "year": 2025,
@@ -14756,17 +14935,17 @@
       "task": "detection",
       "subtask": "ai_generated_image_detection",
       "entry_type": "method",
-      "venue": "",
-      "venue_name": "",
+      "venue": "2025 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "venue_name": "2025 IEEE/CVF International Conference on Computer Vision (ICCV)",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "preprint",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "The rapid development of AI-generated content (AIGC) technology has led to the misuse of highly realistic AI-generated images (AIGI) in spreading misinformation, posing a threat to public information security. Although existing AIGI detection techniques are generally effective, they face two issues: 1) a lack of human-verifiable explanations, and 2) a lack of generalization in the latest generation technology. To address these issues, we introduce a large-scale and comprehensive dataset, Holmes-Set, which includes the HolmesSFTSet, an instruction-tuning dataset with explanations on whether images are AI-generated, and the Holmes-DPOSet, a human-aligned preference dataset. Our work introduces an efficient data annotation method called the Multi-Expert Jury, enhancing data generation through structured MLLM explanations and quality control via cross-model evaluation, expert defect filtering, and human preference modification. In addition, we propose Holmes Pipeline, a meticulously designed three-stage training framework comprising visual expert pre-training, supervised fine-tuning, and direct preference optimization. Holmes Pipeline adapts multimodal large language models (MLLMs) for AIGI detection while generating human-verifiable and human-aligned explanations, ultimately yielding our model AIGI-Holmes. During the inference stage, we introduce a collaborative decoding strategy that integrates the model perception of the visual expert with the semantic reasoning of MLLMs, further enhancing the generalization capabilities. Extensive experiments on three benchmarks validate the effectiveness of our AIGI-Holmes.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/iccv51701.2025.01742",
       "arxiv_id": "2507.02664",
-      "arxiv_url": "http://arxiv.org/abs/2507.02664",
+      "arxiv_url": "https://arxiv.org/abs/2507.02664",
       "arxiv_year": null,
       "has_arxiv_version": true,
       "paper_url": "https://doi.org/10.1109/iccv51701.2025.01742",
@@ -14782,43 +14961,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Ke Sun",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Jiayi Ji",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Xiaoshuai Sun",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Rongrong Ji",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -14827,7 +14970,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -14836,7 +14979,25 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Ke Sun",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jiayi Ji",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -14845,7 +15006,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -14854,7 +15015,16 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xiaoshuai Sun",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -14863,12 +15033,21 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Rongrong Ji",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
       "has_map_location": true,
       "map_record_count": 2,
@@ -14887,25 +15066,6 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Xiamen University",
-          "canonical_name": "Xiamen University",
-          "institution_id": "institution:929ddef9540ec1e7",
-          "country": "CN",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "Tencent (China)",
-          "canonical_name": "Tencent (China)",
-          "institution_id": "institution:a992a0408381afc7",
-          "country": "CN",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -14947,42 +15107,6 @@
           ]
         },
         {
-          "author": "Ke Sun",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ]
-        },
-        {
-          "author": "Jiayi Ji",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ]
-        },
-        {
-          "author": "Xiaoshuai Sun",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ]
-        },
-        {
-          "author": "Rongrong Ji",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ]
-        },
-        {
           "author": "Yunpeng Luo",
           "institution_indices": [
             2
@@ -14998,6 +15122,24 @@
           ],
           "institution_ids": [
             "institution:a992a0408381afc7"
+          ]
+        },
+        {
+          "author": "Ke Sun",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
+          ]
+        },
+        {
+          "author": "Jiayi Ji",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
           ]
         },
         {
@@ -15019,12 +15161,30 @@
           ]
         },
         {
+          "author": "Xiaoshuai Sun",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
+          ]
+        },
+        {
           "author": "Yunsheng Wu",
           "institution_indices": [
             2
           ],
           "institution_ids": [
             "institution:a992a0408381afc7"
+          ]
+        },
+        {
+          "author": "Rongrong Ji",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
           ]
         }
       ],
@@ -15037,51 +15197,7 @@
           "institution_ids": [
             "institution:929ddef9540ec1e7"
           ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Ke Sun",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Jiayi Ji",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Xiaoshuai Sun",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Rongrong Ji",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:929ddef9540ec1e7"
-          ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -15092,7 +15208,7 @@
           "institution_ids": [
             "institution:a992a0408381afc7"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -15103,7 +15219,29 @@
           "institution_ids": [
             "institution:a992a0408381afc7"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Ke Sun",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Jiayi Ji",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
+          ],
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -15114,7 +15252,7 @@
           "institution_ids": [
             "institution:a992a0408381afc7"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -15125,7 +15263,18 @@
           "institution_ids": [
             "institution:a992a0408381afc7"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Xiaoshuai Sun",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
+          ],
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -15136,10 +15285,45 @@
           "institution_ids": [
             "institution:a992a0408381afc7"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Rongrong Ji",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:929ddef9540ec1e7"
+          ],
+          "source": "raw_affiliation",
           "fallback": false
         }
-      ]
+      ],
+      "paper_id": "curated:2465f28a94bb45bec499",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "curated_mappings": [],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Xiamen University",
+          "canonical_name": "Xiamen University",
+          "institution_id": "institution:929ddef9540ec1e7",
+          "country": "CN",
+          "region": ""
+        },
+        {
+          "index": 2,
+          "name": "Tencent (China)",
+          "canonical_name": "Tencent (China)",
+          "institution_id": "institution:a992a0408381afc7",
+          "country": "CN",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:0b34eeaa2b4f5b0a7b3b",
@@ -15362,6 +15546,222 @@
         }
       ],
       "current_institution": null
+    },
+    {
+      "paper_id": "curated:1c590f67c931d712bb78",
+      "title": "An Efficient Frequency Domain Based Attribution and Detection Network",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection_and_source_attribution",
+      "subtask": "detection_and_source_attribution",
+      "entry_type": "method",
+      "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "article",
+      "abstract": "People nowadays can easily synthesize high fidelity fake images with different types of image content due to the rapid advances of deep learning technologies. Detecting such images and attributing them to their generative models (GMs) is crucial. Existing deep learning methods attempt to identify and classify GM-specific artifacts but often struggle with content-independence and generalizability. In this paper, we observe that while GMs leave unique artifacts in the frequency domain, they are coupled with the image content. Based on this observation, we propose a novel deep learning-based solution that learns input-adaptive masks to highlight GMs’ artifacts and achieve high accuracy on the synthesized image attribution task. In addition, we observed that GMs’ artifacts in the frequency domain remain intact in sub-images of the original image, and they are even retained when the images are distorted. To further improve the accuracy of the proposed solution, we leverage the characteristics of GMs artifacts in sub-images and distorted images to make our network perform more effectively. Our evaluation results show that our proposed solution outperforms other state-of-the-art methods on unseen image types, showing great generalizability.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/access.2025.3534829",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/access.2025.3534829",
+      "primary_url": "https://doi.org/10.1109/access.2025.3534829",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4406857602",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/access.2025.3534829",
+      "authors": [
+        {
+          "name": "Junbin Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yixiao Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Hamid Reza Tohidypour",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Panos Nasiopoulos",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [
+        "University of British Columbia"
+      ],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:d2177acec383989750a4",
+          "institution_id": "institution:05b67f44dd9f6846",
+          "institution": "University of British Columbia",
+          "institution_authors": [
+            "Junbin Zhang",
+            "Yixiao Wang",
+            "Hamid Reza Tohidypour",
+            "Panos Nasiopoulos"
+          ],
+          "raw_affiliation": "Department of Electrical and Computer Engineering, The University of British Columbia, Vancouver, BC, Canada | Department of Electrical an Computer Engineering, University of British Columbia, Vancouver, BC, Canada",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4406857602",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:05b67f44dd9f6846",
+          "institution": "University of British Columbia",
+          "authors": [
+            "Junbin Zhang",
+            "Yixiao Wang",
+            "Hamid Reza Tohidypour",
+            "Panos Nasiopoulos"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Junbin Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ]
+        },
+        {
+          "author": "Yixiao Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ]
+        },
+        {
+          "author": "Hamid Reza Tohidypour",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ]
+        },
+        {
+          "author": "Panos Nasiopoulos",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of British Columbia",
+          "canonical_name": "University of British Columbia",
+          "institution_id": "institution:05b67f44dd9f6846",
+          "country": "",
+          "region": ""
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Junbin Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Yixiao Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Hamid Reza Tohidypour",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Panos Nasiopoulos",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:05b67f44dd9f6846"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        }
+      ]
     },
     {
       "title": "Any-Resolution AI-Generated Image Detection by Spectral Learning",
@@ -16203,19 +16603,19 @@
       "publication_year": 2025,
       "publication_date": "",
       "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
+      "subtask": "source_identification",
       "entry_type": "method",
-      "venue": "Lecture notes in computer science",
-      "venue_name": "Lecture notes in computer science",
+      "venue": "2024 European Conference on Computer Vision (ECCV) Workshops",
+      "venue_name": "2024 European Conference on Computer Vision (ECCV) Workshops",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "book-chapter",
+      "publication_type": "conference",
       "abstract": "",
       "abstract_source": "openalex",
       "ai_summary": "",
       "doi": "10.1007/978-3-031-92648-8_22",
-      "arxiv_id": "",
-      "arxiv_url": "",
+      "arxiv_id": "2408.09153",
+      "arxiv_url": "https://arxiv.org/abs/2408.09153",
       "arxiv_year": null,
       "has_arxiv_version": false,
       "paper_url": "https://doi.org/10.1007/978-3-031-92648-8_22",
@@ -16652,6 +17052,191 @@
             "institution:e80b94c605da24ce"
           ],
           "source": "canonical_author_mapping",
+          "fallback": false
+        }
+      ]
+    },
+    {
+      "paper_id": "curated:78e64e4829587c072681",
+      "title": "Attribution of AI-Generated Images Across Multiple Models: a Benchmark",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "source_identification",
+      "entry_type": "benchmark",
+      "venue": "Image Analysis and Processing - ICIAP 2025 Workshops: 23rd International Conference",
+      "venue_name": "Image Analysis and Processing - ICIAP 2025 Workshops: 23rd International Conference",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1007/978-3-032-11381-8_32",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1007/978-3-032-11381-8_32",
+      "primary_url": "https://doi.org/10.1007/978-3-032-11381-8_32",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7122619085",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1007/978-3-032-11381-8_32",
+      "authors": [
+        {
+          "name": "Giuseppe Mazzola",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Liliana Lo Presti",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Marco La Cascia",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [
+        "University of Palermo"
+      ],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:b8f33d38c88db04b2267",
+          "institution_id": "institution:a407f4c649ba4c6a",
+          "institution": "University of Palermo",
+          "institution_authors": [
+            "Giuseppe Mazzola",
+            "Liliana Lo Presti",
+            "Marco La Cascia"
+          ],
+          "raw_affiliation": "Dipartimento di Ingegneria, Università degli Studi di Palermo, 90128, Palermo, Italy",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7122619085",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:a407f4c649ba4c6a",
+          "institution": "University of Palermo",
+          "authors": [
+            "Giuseppe Mazzola",
+            "Liliana Lo Presti",
+            "Marco La Cascia"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Giuseppe Mazzola",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a407f4c649ba4c6a"
+          ]
+        },
+        {
+          "author": "Liliana Lo Presti",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a407f4c649ba4c6a"
+          ]
+        },
+        {
+          "author": "Marco La Cascia",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a407f4c649ba4c6a"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Palermo",
+          "canonical_name": "University of Palermo",
+          "institution_id": "institution:a407f4c649ba4c6a",
+          "country": "",
+          "region": ""
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Giuseppe Mazzola",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a407f4c649ba4c6a"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Liliana Lo Presti",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a407f4c649ba4c6a"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Marco La Cascia",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a407f4c649ba4c6a"
+          ],
+          "source": "raw_affiliation",
           "fallback": false
         }
       ]
@@ -20828,6 +21413,352 @@
             "institution:296a64109854afc5"
           ],
           "source": "canonical_author_mapping",
+          "fallback": false
+        }
+      ]
+    },
+    {
+      "paper_id": "curated:3e94d8fc69e41aade2cc",
+      "title": "D <sup>3</sup> QE: Learning Discrete Distribution Discrepancy-Aware Quantization Error for Autoregressive-Generated Image Detection",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "2025 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "venue_name": "2025 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "The emergence of visual autoregressive (AR) models has revolutionized image generation while presenting new challenges for synthetic image detection. Unlike previ\u0002ous GAN or diffusion-based methods, AR models gen\u0002erate images through discrete token prediction, exhibit\u0002ing both marked improvements in image synthesis qual\u0002ity and unique characteristics in their vector-quantized representations. In this paper, we propose to lever\u0002age Discrete Distribution Discrepancy-aware Quantization Error (D 3QE) for autoregressive-generated image detec\u0002tion that exploits the distinctive patterns and the frequency distribution bias of the codebook existing in real and fake images. We introduce a discrete distribution discrepancy\u0002aware transformer that integrates dynamic codebook fre\u0002quency statistics into its attention mechanism, fusing semantic features and quantization error latent. To evaluate our method, we construct a comprehensive dataset termed ARForensics covering 7 mainstream visual AR models. Experiments demonstrate superior detection accuracy and strong generalization of D3QE across different AR models, with robustness to real-world perturbations. Code is available at https://github.com/Zhangyr2022/D3QE.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/iccv51701.2025.01512",
+      "arxiv_id": "2510.05891",
+      "arxiv_url": "https://arxiv.org/abs/2510.05891",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1109/iccv51701.2025.01512",
+      "primary_url": "https://doi.org/10.1109/iccv51701.2025.01512",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7160175092",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/iccv51701.2025.01512",
+      "authors": [
+        {
+          "name": "Yanran Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Bingyao Yu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yu Zheng",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Wenzhao Zheng",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yueqi Duan",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "L Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jie Zhou",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jiwen Lu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Tsinghua University"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:9739afc94e1ea0e1d6c5",
+          "institution_id": "institution:4ae45b121fe12e9c",
+          "institution": "Tsinghua University",
+          "institution_authors": [
+            "Yanran Zhang",
+            "Bingyao Yu",
+            "Yu Zheng",
+            "Wenzhao Zheng",
+            "Yueqi Duan",
+            "L Chen",
+            "Jie Zhou",
+            "Jiwen Lu"
+          ],
+          "raw_affiliation": "Tsinghua University,Department of Automation,China | Tsinghua University,Department of Electronic Engineering,China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7160175092",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:4ae45b121fe12e9c",
+          "institution": "Tsinghua University",
+          "authors": [
+            "Yanran Zhang",
+            "Bingyao Yu",
+            "Yu Zheng",
+            "Wenzhao Zheng",
+            "Yueqi Duan",
+            "L Chen",
+            "Jie Zhou",
+            "Jiwen Lu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yanran Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Bingyao Yu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Yu Zheng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Wenzhao Zheng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Yueqi Duan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "L Chen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Jie Zhou",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        },
+        {
+          "author": "Jiwen Lu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Tsinghua University",
+          "canonical_name": "Tsinghua University",
+          "institution_id": "institution:4ae45b121fe12e9c",
+          "country": "China",
+          "region": "Beijing"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Yanran Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Bingyao Yu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yu Zheng",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Wenzhao Zheng",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yueqi Duan",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "L Chen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jie Zhou",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiwen Lu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4ae45b121fe12e9c"
+          ],
+          "source": "curated_admin",
           "fallback": false
         }
       ]
@@ -31077,17 +32008,6 @@
           ]
         }
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Stuttgart Media University",
-          "canonical_name": "Stuttgart Media University",
-          "institution_id": "institution:d4c79ca44c5dbbbc",
-          "country": "",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Philipp Moeßner",
@@ -31111,7 +32031,18 @@
           "source": "raw_affiliation",
           "fallback": false
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Stuttgart Media University",
+          "canonical_name": "Stuttgart Media University",
+          "institution_id": "institution:d4c79ca44c5dbbbc",
+          "country": "",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective",
@@ -32292,20 +33223,27 @@
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 2,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Netherlands Forensic Institute",
         "University of Amsterdam"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "Netherlands"
+      ],
+      "aggregated_country_codes": [
+        "NL"
+      ],
+      "aggregated_regions": [
+        "North Holland",
+        "South Holland"
+      ],
       "aggregated_region_codes": [],
       "author_institution_affiliations": [
         {
@@ -32465,16 +33403,16 @@
           "name": "University of Amsterdam",
           "canonical_name": "University of Amsterdam",
           "institution_id": "institution:4a9a14dbf4357b38",
-          "country": "",
-          "region": ""
+          "country": "Netherlands",
+          "region": "North Holland"
         },
         {
           "index": 2,
           "name": "Netherlands Forensic Institute",
           "canonical_name": "Netherlands Forensic Institute",
           "institution_id": "institution:bda289c20f284717",
-          "country": "",
-          "region": ""
+          "country": "Netherlands",
+          "region": "South Holland"
         }
       ],
       "current_institution": null
@@ -33533,6 +34471,521 @@
           "institution_ids": [
             "institution:592f613084a7ca9d"
           ]
+        }
+      ]
+    },
+    {
+      "paper_id": "curated:2c278dcd079ea27d0f73",
+      "title": "MAID: Model Attribution via Inverse Diffusion",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "source_identification",
+      "entry_type": "method",
+      "venue": "2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "venue_name": "2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "The surge in AI-generated images, blending authentic and synthetic content, raises security concerns and complicates model attribution, especially with limited transparency. Existing methods either struggle to attribute across multiple frameworks or rely on additional conditions, such as textual descriptions and white-box access to the source model, limiting their practicality and effectiveness in real-world scenarios. To address this gap, we introduce Model Attribution via Inverse Diffusion (MAID), the first framework-agnostic and self-sufficient approach that leverages the source model features extracted by diffusion models, which also works for images generated from GANs. By employing the inverse diffusion process, we are able to utilize pre-trained Diffusion Models as Denoising Autoencoders, mapping images into a latent space and extracting the Diffusion Model Activations (DMA). This mapping effectively captures the unique characteristics of images originating from different source models, including authentic images, which showcase distinct latent Gaussian signatures. Experimental results show that, even in data-asymmetric unfair comparisons, the attribution classifier trained with our proposed DMA achieves approximately 15% and 3% higher ACC compared to SOTA methods on the DiffusionForensics and Artifact datasets, respectively. The code is available at https://github.com/Zhu-Luyu/MAID.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/icassp49660.2025.10888869",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/icassp49660.2025.10888869",
+      "primary_url": "https://doi.org/10.1109/icassp49660.2025.10888869",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4408354801",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/icassp49660.2025.10888869",
+      "authors": [
+        {
+          "name": "Luyu Zhu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Kai Ye",
+          "affiliation_indices": [
+            2,
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jiayu Yao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Chenxi Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Luwen Zhao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yuxin Cao",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Derui Wang",
+          "affiliation_indices": [
+            5,
+            6
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jie Hao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Beijing University of Posts and Telecommunications",
+        "Chinese University of Hong Kong",
+        "Commonwealth Scientific and Industrial Research Organisation",
+        "Data61",
+        "National University of Singapore",
+        "University of Hong Kong"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:db10d64daaec605391b6",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "institution_authors": [
+            "Luyu Zhu",
+            "Jiayu Yao",
+            "Chenxi Li",
+            "Luwen Zhao",
+            "Jie Hao"
+          ],
+          "raw_affiliation": "Beijing University of Posts and Telecommunications,China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4408354801",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        },
+        {
+          "mapping_id": "mapping:9a5b09bedd8308cd489d",
+          "institution_id": "institution:ff4b6fb0e7e3f155",
+          "institution": "Chinese University of Hong Kong",
+          "institution_authors": [
+            "Kai Ye"
+          ],
+          "raw_affiliation": "The University of Hong Kong,Hong Kong SAR",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4408354801",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:043c8f41f17c996a33b1",
+          "institution_id": "institution:da2d97c082267c13",
+          "institution": "University of Hong Kong",
+          "institution_authors": [
+            "Kai Ye"
+          ],
+          "raw_affiliation": "The University of Hong Kong,Hong Kong SAR",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4408354801",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:e2c2d89ca68832dbd32e",
+          "institution_id": "institution:70ccb485197bbb6c",
+          "institution": "National University of Singapore",
+          "institution_authors": [
+            "Yuxin Cao"
+          ],
+          "raw_affiliation": "National University of Singapore,Singapore",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4408354801",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:57379b0ca2796ded4d28",
+          "institution_id": "institution:3da00d58d4c97192",
+          "institution": "Commonwealth Scientific and Industrial Research Organisation",
+          "institution_authors": [
+            "Derui Wang"
+          ],
+          "raw_affiliation": "CSIRO&#x2019;s Data61,Australia",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4408354801",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:2dbbb9cbae3a5e15b83a",
+          "institution_id": "institution:3be1ce40ea53f6d2",
+          "institution": "Data61",
+          "institution_authors": [
+            "Derui Wang"
+          ],
+          "raw_affiliation": "CSIRO&#x2019;s Data61,Australia",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4408354801",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:1502cb7c96ae3095",
+          "institution": "Beijing University of Posts and Telecommunications",
+          "authors": [
+            "Luyu Zhu",
+            "Jiayu Yao",
+            "Chenxi Li",
+            "Luwen Zhao",
+            "Jie Hao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:ff4b6fb0e7e3f155",
+          "institution": "Chinese University of Hong Kong",
+          "authors": [
+            "Kai Ye"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:da2d97c082267c13",
+          "institution": "University of Hong Kong",
+          "authors": [
+            "Kai Ye"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:70ccb485197bbb6c",
+          "institution": "National University of Singapore",
+          "authors": [
+            "Yuxin Cao"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:3da00d58d4c97192",
+          "institution": "Commonwealth Scientific and Industrial Research Organisation",
+          "authors": [
+            "Derui Wang"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 6,
+          "institution_id": "institution:3be1ce40ea53f6d2",
+          "institution": "Data61",
+          "authors": [
+            "Derui Wang"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Luyu Zhu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Kai Ye",
+          "institution_indices": [
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:ff4b6fb0e7e3f155",
+            "institution:da2d97c082267c13"
+          ]
+        },
+        {
+          "author": "Jiayu Yao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Chenxi Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Luwen Zhao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        },
+        {
+          "author": "Yuxin Cao",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:70ccb485197bbb6c"
+          ]
+        },
+        {
+          "author": "Derui Wang",
+          "institution_indices": [
+            5,
+            6
+          ],
+          "institution_ids": [
+            "institution:3da00d58d4c97192",
+            "institution:3be1ce40ea53f6d2"
+          ]
+        },
+        {
+          "author": "Jie Hao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Beijing University of Posts and Telecommunications",
+          "canonical_name": "Beijing University of Posts and Telecommunications",
+          "institution_id": "institution:1502cb7c96ae3095",
+          "country": "China",
+          "region": "Beijing"
+        },
+        {
+          "index": 2,
+          "name": "Chinese University of Hong Kong",
+          "canonical_name": "Chinese University of Hong Kong",
+          "institution_id": "institution:ff4b6fb0e7e3f155",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 3,
+          "name": "University of Hong Kong",
+          "canonical_name": "University of Hong Kong",
+          "institution_id": "institution:da2d97c082267c13",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 4,
+          "name": "National University of Singapore",
+          "canonical_name": "National University of Singapore",
+          "institution_id": "institution:70ccb485197bbb6c",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 5,
+          "name": "Commonwealth Scientific and Industrial Research Organisation",
+          "canonical_name": "Commonwealth Scientific and Industrial Research Organisation",
+          "institution_id": "institution:3da00d58d4c97192",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 6,
+          "name": "Data61",
+          "canonical_name": "Data61",
+          "institution_id": "institution:3be1ce40ea53f6d2",
+          "country": "",
+          "region": ""
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Luyu Zhu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Kai Ye",
+          "indices": [
+            2,
+            3
+          ],
+          "institution_ids": [
+            "institution:ff4b6fb0e7e3f155",
+            "institution:da2d97c082267c13"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Jiayu Yao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Chenxi Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Luwen Zhao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yuxin Cao",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:70ccb485197bbb6c"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Derui Wang",
+          "indices": [
+            5,
+            6
+          ],
+          "institution_ids": [
+            "institution:3da00d58d4c97192",
+            "institution:3be1ce40ea53f6d2"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Jie Hao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:1502cb7c96ae3095"
+          ],
+          "source": "curated_admin",
+          "fallback": false
         }
       ]
     },
@@ -35073,25 +36526,6 @@
           ]
         }
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Institute for Scientific Interchange",
-          "canonical_name": "Institute for Scientific Interchange",
-          "institution_id": "institution:e4ca3896941052d9",
-          "country": "",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "Polytechnic Institute of Turin, Turin, Italy",
-          "canonical_name": "Polytechnic Institute of Turin, Turin, Italy",
-          "institution_id": "institution:35caf31d5104b996",
-          "country": "",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Alan Perotti",
@@ -35126,7 +36560,26 @@
           "source": "raw_affiliation",
           "fallback": false
         }
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Institute for Scientific Interchange",
+          "canonical_name": "Institute for Scientific Interchange",
+          "institution_id": "institution:e4ca3896941052d9",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 2,
+          "name": "Polytechnic Institute of Turin, Turin, Italy",
+          "canonical_name": "Polytechnic Institute of Turin, Turin, Italy",
+          "institution_id": "institution:35caf31d5104b996",
+          "country": "",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Noise-Informed Diffusion-Generated Image Detection With Anomaly Attention",
@@ -37416,11 +38869,11 @@
       "task": "detection",
       "subtask": "ai_generated_image_detection",
       "entry_type": "method",
-      "venue": "",
-      "venue_name": "",
+      "venue": "2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "venue_name": "2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "article",
+      "publication_type": "conference",
       "abstract": "",
       "abstract_source": "",
       "ai_summary": "",
@@ -37443,7 +38896,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -37453,7 +38906,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -37463,7 +38916,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -37473,7 +38926,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -37483,7 +38936,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -37493,12 +38946,12 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": true,
       "map_record_count": 2,
@@ -37517,25 +38970,6 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "country": "CN",
-          "region": ""
-        },
-        {
-          "index": 2,
-          "name": "Institute of Information Engineering",
-          "canonical_name": "Institute of Information Engineering",
-          "institution_id": "institution:9aae8d70d2d6eed8",
-          "country": "CN",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -37647,7 +39081,7 @@
             "institution:3afb6cc453e0a8d9",
             "institution:9aae8d70d2d6eed8"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -37660,7 +39094,7 @@
             "institution:3afb6cc453e0a8d9",
             "institution:9aae8d70d2d6eed8"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -37673,7 +39107,7 @@
             "institution:3afb6cc453e0a8d9",
             "institution:9aae8d70d2d6eed8"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -37686,7 +39120,7 @@
             "institution:3afb6cc453e0a8d9",
             "institution:9aae8d70d2d6eed8"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -37699,7 +39133,7 @@
             "institution:3afb6cc453e0a8d9",
             "institution:9aae8d70d2d6eed8"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -37712,10 +39146,34 @@
             "institution:3afb6cc453e0a8d9",
             "institution:9aae8d70d2d6eed8"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         }
-      ]
+      ],
+      "paper_id": "curated:1ec62a78a4e0372bc0d9",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "curated_mappings": [],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Chinese Academy of Sciences",
+          "canonical_name": "Chinese Academy of Sciences",
+          "institution_id": "institution:3afb6cc453e0a8d9",
+          "country": "CN",
+          "region": ""
+        },
+        {
+          "index": 2,
+          "name": "Institute of Information Engineering",
+          "canonical_name": "Institute of Information Engineering",
+          "institution_id": "institution:9aae8d70d2d6eed8",
+          "country": "CN",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:6ca781a0d606a5d5db64",
@@ -47948,6 +49406,324 @@
       ]
     },
     {
+      "paper_id": "curated:1d944c47839b3890a623",
+      "title": "Are handcrafted filters helpful for attributing AI-generated images?",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "source_identification",
+      "entry_type": "method",
+      "venue": "Proceedings of the 32nd ACM International Conference on Multimedia",
+      "venue_name": "Proceedings of the 32nd ACM International Conference on Multimedia",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "Recently, a vast number of image generation models have been proposed, which raises concerns regarding the misuse of these artificial intelligence (AI) techniques for generating fake images. To attribute the AI-generated images, existing schemes usually design and train deep neural networks (DNNs) to learn the model fingerprints, which usually requires a large amount of data for effective learning. In this paper, we aim to answer the following two questions for AI-generated image attribution, 1) is it possible to design useful handcrafted filters to facilitate the fingerprint learning? and 2) how we could reduce the amount of training data after we incorporate the handcrafted filters? We first propose a set of Multi-Directional High-Pass Filters (MHFs) which are capable to extract the subtle fingerprints from various directions. Then, we propose a Directional Enhanced Feature Learning network (DEFL) to take both the MHFs and randomly-initialized filters into consideration. The output of the DEFL is fused with the semantic features to produce a compact fingerprint. To make the compact fingerprint discriminative among different models, we propose a Dual-Margin Contrastive (DMC) loss to tune our DEFL. Finally, we propose a reference based fingerprint classification scheme for image attribution. Experimental results demonstrate that it is indeed helpful to use our MHFs for attributing the AI-generated images. The performance of our proposed method is significantly better than the state-of-the-art for both the closed-set and open-set image attribution, where only a small amount of images are required for training.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1145/3664647.3680945",
+      "arxiv_id": "2407.14570",
+      "arxiv_url": "https://arxiv.org/abs/2407.14570",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1145/3664647.3680945",
+      "primary_url": "https://doi.org/10.1145/3664647.3680945",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4403791664",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1145/3664647.3680945",
+      "authors": [
+        {
+          "name": "Jialiang Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Haoyue Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Sheng Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Zhenxing Qian",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xinpeng Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Athanasios V. Vasilakos",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Fudan University",
+        "University of Agder"
+      ],
+      "aggregated_country_names": [
+        "China",
+        "Norway"
+      ],
+      "aggregated_country_codes": [
+        "CN",
+        "NO"
+      ],
+      "aggregated_regions": [
+        "Agder",
+        "Shanghai"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:6c65608e250cf9cf5f0a",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "institution_authors": [
+            "Jialiang Li",
+            "Haoyue Wang",
+            "Sheng Li",
+            "Zhenxing Qian",
+            "Xinpeng Zhang"
+          ],
+          "raw_affiliation": "Fudan University, Shanghai, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4403791664",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        },
+        {
+          "mapping_id": "mapping:60885b2524f55089d4f9",
+          "institution_id": "institution:51bbeb5bfb404721",
+          "institution": "University of Agder",
+          "institution_authors": [
+            "Athanasios V. Vasilakos"
+          ],
+          "raw_affiliation": "University of Adger, Grimstad, Norway",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4403791664",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "authors": [
+            "Jialiang Li",
+            "Haoyue Wang",
+            "Sheng Li",
+            "Zhenxing Qian",
+            "Xinpeng Zhang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:51bbeb5bfb404721",
+          "institution": "University of Agder",
+          "authors": [
+            "Athanasios V. Vasilakos"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Jialiang Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Haoyue Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Sheng Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Zhenxing Qian",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Xinpeng Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Athanasios V. Vasilakos",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:51bbeb5bfb404721"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Fudan University",
+          "canonical_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "country": "China",
+          "region": "Shanghai"
+        },
+        {
+          "index": 2,
+          "name": "University of Agder",
+          "canonical_name": "University of Agder",
+          "institution_id": "institution:51bbeb5bfb404721",
+          "country": "Norway",
+          "region": "Agder"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Jialiang Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haoyue Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Sheng Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zhenxing Qian",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xinpeng Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Athanasios V. Vasilakos",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:51bbeb5bfb404721"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ]
+    },
+    {
       "title": "Artifact feature purification for cross-domain detection of AI-generated images",
       "in_scope": true,
       "year": 2024,
@@ -56096,6 +57872,377 @@
       ]
     },
     {
+      "paper_id": "curated:2117831292318de4cf18",
+      "title": "Explainable Artifacts for Synthetic Western Blot Source Attribution",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "source_identification",
+      "entry_type": "method",
+      "venue": "2024 IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "venue_name": "2024 IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "Recent advancements in artificial intelligence have enabled generative models to produce synthetic scientific images that are indistinguishable from pristine ones, posing a challenge even for expert scientists habituated to working with such content. When exploited by organizations known as paper mills, which systematically generate fraudulent articles, these technologies can significantly contribute to the spread of misinformation about ungrounded science, potentially undermining trust in scientific research. While previous studies have explored black-box solutions, such as Convolutional Neural Networks, for identifying synthetic content, only some have addressed the challenge of generalizing across different models and providing insight into the artifacts in synthetic images that inform the detection process. This study aims to identify explainable artifacts generated by state-of-the-art generative models (e.g., Generative Adversarial Networks and Diffusion Models) and leverage them for open-set identification and source attribution (i.e., pointing to the model that created the image).",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/wifs61860.2024.10810680",
+      "arxiv_id": "2409.18881",
+      "arxiv_url": "https://arxiv.org/abs/2409.18881",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+      "primary_url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4405845437",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/wifs61860.2024.10810680",
+      "authors": [
+        {
+          "name": "João Phillipe Cardenuto",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Sara Mandelli",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Daniel Moreira",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Paolo Bestagini",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Edward J. Delp",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Anderson Rocha",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "paper_only_review",
+      "aggregated_institutions": [
+        "Loyola University Chicago",
+        "Politecnico di Milano",
+        "Purdue University West Lafayette",
+        "Universidade Estadual de Campinas (UNICAMP)"
+      ],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:52ce396bb8d6c7a0b6bc",
+          "institution_id": "institution:14daf7f722d7d91d",
+          "institution": "Universidade Estadual de Campinas (UNICAMP)",
+          "institution_authors": [
+            "João Phillipe Cardenuto",
+            "Anderson Rocha"
+          ],
+          "raw_affiliation": "Recod.ai, Institute of Computing, Universidade Estadual de Campinas (UNICAMP),Artificial Intelligence Lab.,Campinas,SP,Brazil",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4405845437",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:6a1f1135c52904549c2d",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano",
+          "institution_authors": [
+            "Sara Mandelli",
+            "Paolo Bestagini"
+          ],
+          "raw_affiliation": "Politecnico di Milano,Dipartimento di Elettronica, Informazione e Bioingegneria,Milan,Italy,20133",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4405845437",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:1bf645607b0257dfbde5",
+          "institution_id": "institution:d30e2f168f8ccc03",
+          "institution": "Loyola University Chicago",
+          "institution_authors": [
+            "Daniel Moreira"
+          ],
+          "raw_affiliation": "Loyola University Chicago,Department of Computer Science,Chicago,IL,USA",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4405845437",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:38ebe8aa01fb879c4361",
+          "institution_id": "institution:312d37d9636306c2",
+          "institution": "Purdue University West Lafayette",
+          "institution_authors": [
+            "Edward J. Delp"
+          ],
+          "raw_affiliation": "Purdue University,School of Electrical and Computer Engineering,West Lafayette,IN,USA",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4405845437",
+          "affiliation_note": "",
+          "mapping_status": "needs_review",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:14daf7f722d7d91d",
+          "institution": "Universidade Estadual de Campinas (UNICAMP)",
+          "authors": [
+            "João Phillipe Cardenuto",
+            "Anderson Rocha"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano",
+          "authors": [
+            "Sara Mandelli",
+            "Paolo Bestagini"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:d30e2f168f8ccc03",
+          "institution": "Loyola University Chicago",
+          "authors": [
+            "Daniel Moreira"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:312d37d9636306c2",
+          "institution": "Purdue University West Lafayette",
+          "authors": [
+            "Edward J. Delp"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "João Phillipe Cardenuto",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:14daf7f722d7d91d"
+          ]
+        },
+        {
+          "author": "Sara Mandelli",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:1ee9da20656fd88b"
+          ]
+        },
+        {
+          "author": "Daniel Moreira",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:d30e2f168f8ccc03"
+          ]
+        },
+        {
+          "author": "Paolo Bestagini",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:1ee9da20656fd88b"
+          ]
+        },
+        {
+          "author": "Edward J. Delp",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:312d37d9636306c2"
+          ]
+        },
+        {
+          "author": "Anderson Rocha",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:14daf7f722d7d91d"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Universidade Estadual de Campinas (UNICAMP)",
+          "canonical_name": "Universidade Estadual de Campinas (UNICAMP)",
+          "institution_id": "institution:14daf7f722d7d91d",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 2,
+          "name": "Politecnico di Milano",
+          "canonical_name": "Politecnico di Milano",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 3,
+          "name": "Loyola University Chicago",
+          "canonical_name": "Loyola University Chicago",
+          "institution_id": "institution:d30e2f168f8ccc03",
+          "country": "",
+          "region": ""
+        },
+        {
+          "index": 4,
+          "name": "Purdue University West Lafayette",
+          "canonical_name": "Purdue University West Lafayette",
+          "institution_id": "institution:312d37d9636306c2",
+          "country": "",
+          "region": ""
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "João Phillipe Cardenuto",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:14daf7f722d7d91d"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Sara Mandelli",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:1ee9da20656fd88b"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Daniel Moreira",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:d30e2f168f8ccc03"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Paolo Bestagini",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:1ee9da20656fd88b"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Edward J. Delp",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:312d37d9636306c2"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Anderson Rocha",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:14daf7f722d7d91d"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        }
+      ]
+    },
+    {
       "title": "Exploring the Adversarial Robustness of CLIP for AI-generated Image Detection",
       "in_scope": true,
       "year": 2024,
@@ -57886,17 +60033,17 @@
       "task": "detection_and_source_attribution",
       "subtask": "detection_and_source_attribution",
       "entry_type": "method",
-      "venue": "Lecture notes in computer science",
-      "venue_name": "Lecture notes in computer science",
+      "venue": "27th International Conference on Pattern Recognition (ICPR)",
+      "venue_name": "27th International Conference on Pattern Recognition (ICPR)",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "book-chapter",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "We introduce FIDAVL: Fake Image Detection and Attribution using a Vision-Language Model. FIDAVL is a novel and efficient multitask approach inspired by the synergies between vision and language processing. Leveraging the benefits of zero-shot learning, FIDAVL exploits the complementarity between vision and language along with soft prompt-tuning strategy to detect fake images and accurately attribute them to their originating source models. We conducted extensive experiments on a comprehensive dataset comprising synthetic images generated by various state-of-the-art models. Our results demonstrate that FIDAVL achieves an encouraging average detection accuracy of 95.42% and F1-score of 95.47% while also obtaining noteworthy performance metrics, with an average F1-score of 92.64% and ROUGE-L score of 96.50% for attributing synthetic images to their respective source generation models. The source code of this work will be publicly released at https://github.com/Mamadou-Keita/FIDAVL.",
       "abstract_source": "openalex",
       "ai_summary": "",
       "doi": "10.1007/978-3-031-78305-0_11",
-      "arxiv_id": "",
-      "arxiv_url": "",
+      "arxiv_id": "2409.03109",
+      "arxiv_url": "https://arxiv.org/abs/2409.03109",
       "arxiv_year": null,
       "has_arxiv_version": false,
       "paper_url": "https://doi.org/10.1007/978-3-031-78305-0_11",
@@ -60598,13 +62745,13 @@
       "publication_year": 2024,
       "publication_date": "",
       "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
+      "subtask": "source_identification",
       "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
+      "venue": "Proceedings of the 41st International Conference on Machine Learning",
+      "venue_name": "Proceedings of the 41st International Conference on Machine Learning",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "preprint",
+      "publication_type": "conference",
       "abstract": "Latent generative models (e.g., Stable Diffusion) have become more and more popular, but concerns have arisen regarding potential misuse related to images generated by these models. It is, therefore, necessary to analyze the origin of images by inferring if a particular image was generated by a specific latent generative model. Most existing methods (e.g., image watermark and model fingerprinting) require extra steps during training or generation. These requirements restrict their usage on the generated images without such extra operations, and the extra required operations might compromise the quality of the generated images. In this work, we ask whether it is possible to effectively and efficiently trace the images generated by a specific latent generative model without the aforementioned requirements. To study this problem, we design a latent inversion based method called LatentTracer to trace the generated images of the inspected model by checking if the examined images can be well-reconstructed with an inverted latent input. We leverage gradient based latent inversion and identify a encoder-based initialization critical to the success of our approach. Our experiments on the state-of-the-art latent generative models, such as Stable Diffusion, show that our method can distinguish the images generated by the inspected model and other images with a high accuracy and efficiency. Our findings suggest the intriguing possibility that today's latent generative generated images are naturally watermarked by the decoder used in the source models. Code: https://github.com/ZhentingWang/LatentTracer.",
       "abstract_source": "openalex",
       "ai_summary": "",
@@ -60613,8 +62760,8 @@
       "arxiv_url": "https://arxiv.org/abs/2405.13360",
       "arxiv_year": null,
       "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2405.13360",
-      "primary_url": "http://arxiv.org/abs/2405.13360",
+      "paper_url": "https://openreview.net/pdf?id=TwZ2sY6eJj",
+      "primary_url": "https://openreview.net/pdf?id=TwZ2sY6eJj",
       "landing_page_url": "",
       "openalex_url": "https://openalex.org/W4398795245",
       "is_arxiv_preprint": false,
@@ -60994,10 +63141,10 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -61006,12 +63153,15 @@
         "Stanford University"
       ],
       "aggregated_country_names": [
-        "Bulgaria"
+        "Bulgaria",
+        "United States"
       ],
       "aggregated_country_codes": [
-        "BG"
+        "BG",
+        "US"
       ],
       "aggregated_regions": [
+        "California",
         "Sofia City Province"
       ],
       "aggregated_region_codes": [],
@@ -61125,8 +63275,8 @@
           "name": "Stanford University",
           "canonical_name": "Stanford University",
           "institution_id": "institution:ed72534d79b73fac",
-          "country": "",
-          "region": ""
+          "country": "United States",
+          "region": "California"
         }
       ],
       "current_institution": null
@@ -62634,19 +64784,19 @@
       "publication_year": 2024,
       "publication_date": "",
       "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
+      "subtask": "source_identification",
       "entry_type": "method",
-      "venue": "",
-      "venue_name": "",
+      "venue": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+      "venue_name": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "article",
+      "publication_type": "conference",
       "abstract": "Recent works have shown that generative models leave traces of their underlying generative process on the generated samples, broadly referred to as fingerprints of a generative model, and have studied their utility in detecting synthetic images from real ones. However, the extend to which these fingerprints can distinguish between various types of synthetic image and help identify the underlying generative process remain under-explored. In particular, the very definition of a fingerprint remains unclear, to our knowledge. To that end, in this work, we formalize the definition of artifact and fingerprint in generative models, propose an algorithm for computing them in practice, and finally study its effectiveness in distinguishing a large array of different generative models. We find that using our proposed definition can significantly improve the performance on the task of identifying the underlying generative process from samples (model attribution) compared to existing methods. Additionally, we study the structure of the fingerprints, and observe that it is very predictive of the effect of different design choices on the generative process.",
       "abstract_source": "openalex",
       "ai_summary": "",
       "doi": "10.1109/cvpr52733.2024.01026",
-      "arxiv_id": "",
-      "arxiv_url": "",
+      "arxiv_id": "2402.10401",
+      "arxiv_url": "https://arxiv.org/abs/2402.10401",
       "arxiv_year": null,
       "has_arxiv_version": false,
       "paper_url": "https://doi.org/10.1109/cvpr52733.2024.01026",
@@ -64771,6 +66921,197 @@
       "current_institution": null
     },
     {
+      "paper_id": "curated:56cb44d373ab183b7df9",
+      "title": "On the Use of Mixup Augmentation for Synthetic Image Attribution in the Wild",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "source_identification",
+      "entry_type": "method",
+      "venue": "2024 IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "venue_name": "2024 IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "venue_type": "",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "Due to the continuous proliferation of generative models and the often unauthorized dissemination of synthetic images, the problem of tracing back the origin of a synthetic image, namely, synthetic image attribution, has raised a lot of interest. Despite the recent advances in this field, performing synthetic image attribution in the wild is still challenging. Recent literature on Open Set Recognition (OSR) in machine learning has shown that training augmentation has a strong effect on the open-set performance of OSR methods. Inspired by this literature, in this paper, we assess the impact on the synthetic image attribution task of a new type of augmentation, called mixup augmentation, that consists of interpolating data from different classes. Our experiments with models based on Convolutional Neural Networks (CNNs) as well as Vision Transformers (ViTs), reveal that this type of augmentation is indeed effective in improving robustness and generalization of synthetic image attribution classifiers, yet at the expense of a reduction of open-set performance. We also proposed a new variant of this type of augmentation, performing mixup of the samples with frozen labels, that keeps the benefits of the standard mixup in terms of robustness and generalization, at the same time mitigating the performance drop in open-set.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/wifs61860.2024.10810696",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/wifs61860.2024.10810696",
+      "primary_url": "https://doi.org/10.1109/wifs61860.2024.10810696",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4405846649",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/wifs61860.2024.10810696",
+      "authors": [
+        {
+          "name": "Jun Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Benedetta Tondi",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Mauro Barni",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Siena"
+      ],
+      "aggregated_country_names": [
+        "Italy"
+      ],
+      "aggregated_country_codes": [
+        "IT"
+      ],
+      "aggregated_regions": [
+        "Toscany"
+      ],
+      "aggregated_region_codes": [],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:855d3030f4c5daec9da0",
+          "institution_id": "institution:65dbfd1e022f02e2",
+          "institution": "University of Siena",
+          "institution_authors": [
+            "Jun Wang",
+            "Benedetta Tondi",
+            "Mauro Barni"
+          ],
+          "raw_affiliation": "University of Siena,Siena,Italy",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W4405846649",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:65dbfd1e022f02e2",
+          "institution": "University of Siena",
+          "authors": [
+            "Jun Wang",
+            "Benedetta Tondi",
+            "Mauro Barni"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Jun Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ]
+        },
+        {
+          "author": "Benedetta Tondi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ]
+        },
+        {
+          "author": "Mauro Barni",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Siena",
+          "canonical_name": "University of Siena",
+          "institution_id": "institution:65dbfd1e022f02e2",
+          "country": "Italy",
+          "region": "Toscany"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Jun Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Benedetta Tondi",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mauro Barni",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:65dbfd1e022f02e2"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ]
+    },
+    {
       "paper_id": "curated:0b2081f70faaf81278dc",
       "title": "Organic or Diffused: Can We Distinguish Human Art from AI-generated Images?",
       "in_scope": true,
@@ -65078,11 +67419,11 @@
       "task": "detection",
       "subtask": "synthetic_image_detection",
       "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
+      "venue": "Proceedings of the 42nd International Conference on Machine Learning",
+      "venue_name": "Proceedings of the 42nd International Conference on Machine Learning",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "preprint",
+      "publication_type": "conference",
       "abstract": "AI-generated images (AIGIs), such as natural or face images, have become increasingly important yet challenging. In this paper, we start from a new perspective to excavate the reason behind the failure generalization in AIGI detection, named the \\textit{asymmetry phenomenon}, where a naively trained detector tends to favor overfitting to the limited and monotonous fake patterns, causing the feature space to become highly constrained and low-ranked, which is proved seriously limiting the expressivity and generalization. One potential remedy is incorporating the pre-trained knowledge within the vision foundation models (higher-ranked) to expand the feature space, alleviating the model's overfitting to fake. To this end, we employ Singular Value Decomposition (SVD) to decompose the original feature space into \\textit{two orthogonal subspaces}. By freezing the principal components and adapting only the remained components, we preserve the pre-trained knowledge while learning fake patterns. Compared to existing full-parameters and LoRA-based tuning methods, we explicitly ensure orthogonality, enabling the higher rank of the whole feature space, effectively minimizing overfitting and enhancing generalization. We finally identify a crucial insight: our method implicitly learns \\textit{a vital prior that fakes are actually derived from the real}, indicating a hierarchical relationship rather than independence. Modeling this prior, we believe, is essential for achieving superior generalization. Our codes are publicly available at \\href{https://github.com/YZY-stack/Effort-AIGI-Detection}{GitHub}.",
       "abstract_source": "openalex",
       "ai_summary": "",
@@ -67821,7 +70162,7 @@
       "venue_name": "2024 Asia Pacific Signal and Information Processing Association Annual Summit and Conference (APSIPA ASC)",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "article",
+      "publication_type": "conference",
       "abstract": "As the image generation technology continues to advance, images generated by artificial intelligence have become ubiquitous on the internet, leading to a plethora of controversies regarding image copyright. Addressing this issue, tracing back to the source model of generated images has become a crucial approach to resolving it, aiding in establishing the legitimacy and ownership of images. Most existing approaches primarily focus on discerning image authenticity while overlooking the issue of source attribution for generated images. Few traditional image attribution methods are constrained by temporal limitations, only applicable to attributing past generative models such as GANs, while their effectiveness is limited for newer methods like diffusion generative models that have emerged in recent years. This paper proposes a novel method capable of attributing images generated by text-to-image diffusion models and maintaining effectiveness even for untrained models. We construct a semantic feature extraction network and train a feature-difference recognition model using a siamese network approach based on the semantic similarity of generated images. We collect and construct a dataset for training and testing, validating the outstanding performance of our method. Our method enhances compatibility with black-box models, ensuring effective source identification for images generated through text input. Through rigorous experimental validation, our method demonstrates significant progress, providing effective forensics approach for attributing generated images.",
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
@@ -67856,8 +70197,8 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -67879,17 +70220,11 @@
       "aggregated_region_codes": [
         "MO"
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Macau University of Science and Technology",
-          "canonical_name": "Macau University of Science and Technology",
-          "institution_id": "institution:d8d45546142be201",
-          "country": "China",
-          "region": "Macau"
-        }
-      ],
-      "current_institution": null,
+      "paper_id": "curated:8c85a92b00aa321fbe8c",
+      "metadata_source": "openalex",
+      "curation_status": "corrected_by_admin",
+      "review_status": "reviewed",
+      "curated_mappings": [],
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -67903,6 +70238,37 @@
           "mapping_fallback": false
         }
       ],
+      "author_institution_indices": [
+        {
+          "author": "Xinqi Jiang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d8d45546142be201"
+          ]
+        },
+        {
+          "author": "Jinyu Tian",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d8d45546142be201"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Macau University of Science and Technology",
+          "canonical_name": "Macau University of Science and Technology",
+          "institution_id": "institution:d8d45546142be201",
+          "country": "China",
+          "region": "Macau"
+        }
+      ],
+      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Xinqi Jiang",
@@ -67925,26 +70291,6 @@
           ],
           "source": "raw_affiliation",
           "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Xinqi Jiang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d8d45546142be201"
-          ]
-        },
-        {
-          "author": "Jinyu Tian",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d8d45546142be201"
-          ]
         }
       ]
     },
@@ -84398,13 +86744,13 @@
       "publication_year": 2023,
       "publication_date": "",
       "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
+      "subtask": "source_identification",
       "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
+      "venue": "Proceedings of the 41st International Conference on Machine Learning",
+      "venue_name": "Proceedings of the 41st International Conference on Machine Learning",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "preprint",
+      "publication_type": "conference",
       "abstract": "Recent breakthroughs in generative modeling have sparked interest in practical single-model attribution. Such methods predict whether a sample was generated by a specific generator or not, for instance, to prove intellectual property theft. However, previous works are either limited to the closed-world setting or require undesirable changes to the generative model. We address these shortcomings by, first, viewing single-model attribution through the lens of anomaly detection. Arising from this change of perspective, we propose FLIPAD, a new approach for single-model attribution in the open-world setting based on final-layer inversion and anomaly detection. We show that the utilized final-layer inversion can be reduced to a convex lasso optimization problem, making our approach theoretically sound and computationally efficient. The theoretical findings are accompanied by an experimental study demonstrating the effectiveness of our approach and its flexibility to various domains.",
       "abstract_source": "openalex",
       "ai_summary": "",
@@ -84413,8 +86759,8 @@
       "arxiv_url": "https://arxiv.org/abs/2306.06210",
       "arxiv_year": null,
       "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2306.06210",
-      "primary_url": "http://arxiv.org/abs/2306.06210",
+      "paper_url": "https://openreview.net/pdf?id=Hs9GcILuZN",
+      "primary_url": "https://openreview.net/pdf?id=Hs9GcILuZN",
       "landing_page_url": "",
       "openalex_url": "https://openalex.org/W4380551225",
       "is_arxiv_preprint": false,
@@ -85408,12 +87754,12 @@
       "venue_type": "",
       "publisher": "",
       "publication_type": "article",
-      "abstract": "",
+      "abstract": "With generative models proliferating at a rapid rate, there is a growing need for general purpose fake image detectors. In this work, we first show that the existing paradigm, which consists of training a deep network for real-vs-fake classification, fails to detect fake images from newer breeds of generative models when trained to detect GAN fake images. Upon analysis, we find that the resulting classifier is asymmetrically tuned to detect patterns that make an image fake. The real class becomes a sink class holding anything that is not fake, including generated images from models not accessible during training. Building upon this discovery, we propose to perform real-vs-fake classification without learning; i.e., using a feature space not explicitly trained to distinguish real from fake images. We use nearest neighbor and linear probing as instantiations of this idea. When given access to the feature space of a large pretrained vision-language model, the very simple baseline of nearest neighbor classification has surprisingly good generalization ability in detecting fake images from a wide variety of generative models; e.g., it improves upon the SoTA by +15.07 mAP and +25.90% acc when tested on unseen diffusion and autoregressive models.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.1109/cvpr52729.2023.02345",
-      "arxiv_id": "",
-      "arxiv_url": "",
+      "arxiv_id": "2302.10174",
+      "arxiv_url": "https://arxiv.org/abs/2302.10174",
       "arxiv_year": null,
       "has_arxiv_version": false,
       "paper_url": "https://doi.org/10.1109/cvpr52729.2023.02345",
@@ -85429,7 +87775,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -85438,7 +87784,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -85447,12 +87793,12 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -85470,17 +87816,6 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "University of Wisconsin–Madison",
-          "canonical_name": "University of Wisconsin–Madison",
-          "institution_id": "institution:3e2e527953176c93",
-          "country": "United States",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -85533,7 +87868,7 @@
           "institution_ids": [
             "institution:3e2e527953176c93"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -85544,7 +87879,7 @@
           "institution_ids": [
             "institution:3e2e527953176c93"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -85555,10 +87890,26 @@
           "institution_ids": [
             "institution:3e2e527953176c93"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         }
-      ]
+      ],
+      "paper_id": "curated:1ef55e4fc03eb4880beb",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "curated_mappings": [],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Wisconsin–Madison",
+          "canonical_name": "University of Wisconsin–Madison",
+          "institution_id": "institution:3e2e527953176c93",
+          "country": "United States",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Universal Detection and Source Attribution of Diffusion Model Generated Images with High Generalization and Robustness",
@@ -85569,12 +87920,12 @@
       "task": "detection_and_source_attribution",
       "subtask": "detection_and_source_attribution",
       "entry_type": "method",
-      "venue": "Lecture notes in computer science",
-      "venue_name": "Lecture notes in computer science",
+      "venue": "Included in the following conference series: International Conference on Pattern Recognition and Machine Intelligence (PReMI)",
+      "venue_name": "Included in the following conference series: International Conference on Pattern Recognition and Machine Intelligence (PReMI)",
       "venue_type": "book series",
       "publisher": "Springer Science+Business Media",
-      "publication_type": "book-chapter",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "The proliferation of synthetic media over the internet is posing a significant social threat. Recent advancements in Diffusion Models (DM) have made it easier to create astonishingly photo-realistic synthetic media with high stability and control. Moreover, applications like DALLE-2, powered by DM and Large Language Models (LLM), permit visual content generation from natural language description, enabling opportunities for everyone to generate visual media. Hence, there is an immediate need to identify synthetic images and attribute them to their source architectures. In this work, we propose a synthetic image detector as universal detector and a source model attributor based on a popular transfer-learning model ResNet-50 and compare the results with other popular models, including Visual Geometry Group (VGG) 16, XceptionNet and InceptionNet. The proposed universal detector attains over 96% accuracy, with a source attribution, accuracy over 93% for detection of Diffusion Model generated images. The model also succeeds in achieving significant generalization and robustness capabilities under different training-testing configurations, as proven by our experiments.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.1007/978-3-031-45170-6_45",
@@ -85590,44 +87941,15 @@
       "url": "https://doi.org/10.1007/978-3-031-45170-6_45",
       "authors": [
         {
-          "name": "Sanandita Das",
-          "affiliation_indices": [
-            1
-          ],
+          "name": "[object Object]",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Debapriyo Dutta",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Tanusree Ghosh",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Ruchira Naskar",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -85645,17 +87967,11 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Indian Institute of Engineering Science and Technology, Shibpur",
-          "canonical_name": "Indian Institute of Engineering Science and Technology, Shibpur",
-          "institution_id": "institution:4269181ef8bd7d6e",
-          "country": "IN",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
+      "paper_id": "curated:baa48a1bff3effa2e915",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "curated_mappings": [],
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -85671,88 +87987,25 @@
           "mapping_fallback": false
         }
       ],
-      "author_affiliation_indices": [
+      "author_institution_indices": [],
+      "affiliations": [
         {
-          "author": "Sanandita Das",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Debapriyo Dutta",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Tanusree Ghosh",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Ruchira Naskar",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
+          "index": 1,
+          "name": "Indian Institute of Engineering Science and Technology, Shibpur",
+          "canonical_name": "Indian Institute of Engineering Science and Technology, Shibpur",
+          "institution_id": "institution:4269181ef8bd7d6e",
+          "country": "IN",
+          "region": ""
         }
       ],
-      "author_institution_indices": [
+      "current_institution": null,
+      "author_affiliation_indices": [
         {
-          "author": "Sanandita Das",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ]
-        },
-        {
-          "author": "Debapriyo Dutta",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ]
-        },
-        {
-          "author": "Tanusree Ghosh",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ]
-        },
-        {
-          "author": "Ruchira Naskar",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4269181ef8bd7d6e"
-          ]
+          "author": "[object Object]",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
         }
       ]
     },
@@ -90826,12 +93079,12 @@
       "task": "source_attribution",
       "subtask": "generated_image_source_attribution",
       "entry_type": "method",
-      "venue": "Lecture notes in computer science",
-      "venue_name": "Lecture notes in computer science",
+      "venue": "European Conference on Computer Vision (ECCV)",
+      "venue_name": "European Conference on Computer Vision (ECCV)",
       "venue_type": "book series",
       "publisher": "Springer Science+Business Media",
-      "publication_type": "book-chapter",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Rapid advances in Generative Adversarial Networks (GANs) raise new challenges for image attribution; detecting whether an image is synthetic and, if so, determining which GAN architecture created it. Uniquely, we present a solution to this task capable of 1) matching images invariant to their semantic content; 2) robust to benign transformations (changes in quality, resolution, shape, etc.) commonly encountered as images are re-shared online. In order to formalize our research, a chal\u0002lenging benchmark, Attribution88, is collected for robust and practical image attribution. We then propose RepMix, our GAN fingerprinting technique based on representation mixing and a novel loss. We validate its capability of tracing the provenance of GAN-generated images invari\u0002ant to the semantic content of the image and also robust to perturbations. We show our approach improves significantly from existing GAN finger\u0002printing works on both semantic generalization and robustness. Data and code are available at https://github.com/TuBui/image attribution.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.1007/978-3-031-19781-9_9",
@@ -90875,7 +93128,7 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
@@ -90901,6 +93154,10 @@
         "Surrey"
       ],
       "aggregated_region_codes": [],
+      "paper_id": "curated:625ba11125534aedd39d",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
       "curated_mappings": [
         {
           "mapping_id": "mapping:f2502efaf655f6cf14ff",
@@ -95608,14 +97865,14 @@
       "publication_year": 2021,
       "publication_date": "",
       "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
+      "subtask": "source_identification",
       "entry_type": "method",
-      "venue": "",
-      "venue_name": "",
+      "venue": "Conference32nd British Machine Vision Conference, BMVC 2021",
+      "venue_name": "Conference32nd British Machine Vision Conference, BMVC 2021",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "article",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Generative Adversarial Networks (GANs) have been breaking their own records in terms of the quality of the synthesized images, which could be so high as to make it impossible to distinguish generated images from real ones by human eyes. This has raised threats to security and privacy-sensitive applications, and thus it is important to be able to tell if an image is generated by GANs, and better yet, by which GAN. The task is in a sense similar to digital image forensics for establishing image authenticity, but the literature has inconclusive reports as to whether GANs leave unique fingerprints in the generated images. In this paper, we attempt to develop a comprehensive understanding towards answering this question. We propose a model to extract fingerprints that can be viewed largely as GAN-specific. We further identify a few key components that contribute to defining the fingerprint of the generated images. Using experiments based on state-of-the-art GAN models and different datasets, we evaluate the performance of our model and verify the major conclusions of our analysis.",
       "abstract_source": "openalex",
       "ai_summary": "",
       "doi": "10.5244/c.35.53",
@@ -97519,11 +99776,11 @@
       "task": "detection_and_source_attribution",
       "subtask": "detection_and_source_attribution",
       "entry_type": "method",
-      "venue": "",
-      "venue_name": "",
+      "venue": "2020 IEEE Security and Privacy Workshops (SPW)",
+      "venue_name": "2020 IEEE Security and Privacy Workshops (SPW)",
       "venue_type": "",
       "publisher": "",
-      "publication_type": "article",
+      "publication_type": "conference",
       "abstract": "The quality of GAN-generated fake images has improved significantly, and recent GAN approaches, such as StyleGAN, achieve near indistinguishability from real images for the naked eye. As a result, adversaries are attracted to using GAN-generated fake images for disinformation campaigns and fraud on social networks. However, training an image generation network to produce realistic-looking samples remains a time-consuming and difficult problem, so adversaries are more likely to use published GAN models to generate fake images. In this paper, we analyze the frequency domain to attribute and detect fake images generated by a known GAN model. We derive a similarity metric on the frequency domain and develop a new approach for GAN image attribution. We conduct experiments on four trained GAN models and two real image datasets. Our results show high attribution accuracy against real images and those from other GAN models. We further analyze our method under evasion attempts and find the frequency-based approach is comparatively robust. In this paper, we analyze the frequency domain to attribute and detect fake images generated by a known GAN model. We derive a similarity metric on the frequency domain and develop a new approach for GAN image attribution. We conduct experiments on four trained GAN models and two real image datasets. Our results show high attribution accuracy against real images and those from other GAN models. We further analyze our method under evasion attempts and find the frequency-based approach is comparatively robust.",
       "abstract_source": "openalex",
       "ai_summary": "",
@@ -99417,15 +101674,15 @@
       "year": 2020,
       "publication_year": 2020,
       "publication_date": "2020-03-19",
-      "task": "detection_and_source_attribution",
-      "subtask": "detection_and_source_attribution",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
       "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
+      "venue": "Proceedings of the 37th International Conference on Machine Learning",
+      "venue_name": "Proceedings of the 37th International Conference on Machine Learning",
       "venue_type": "repository",
       "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Deep neural networks can generate images that are astonishingly realistic, so much so that it is often hard for humans to distinguish them from actual photos. These achievements have been largely made possible by Generative Adversarial Networks (GANs). While deep fake images have been thoroughly investigated in the image domain--a classical approach from the area of image forensics--an analysis in the frequency domain has been missing so far. In this paper, we address this shortcoming and our results reveal that in frequency space, GAN-generated images exhibit severe artifacts that can be easily identified. We perform a comprehensive analysis, showing that these artifacts are consistent across different neural network architectures, data sets, and resolutions. In a further investigation, we demonstrate that these artifacts are caused by upsampling operations found in all current GAN architectures, indicating a structural and fundamental problem in the way images are generated via GANs. Based on this analysis, we demonstrate how the frequency representation can be used to identify deep fake images in an automated way, surpassing state-of-the-art methods.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.48550/arxiv.2003.08685",
@@ -99441,12 +101698,10 @@
       "url": "http://arxiv.org/abs/2003.08685",
       "authors": [
         {
-          "name": "J. Howard Frank",
-          "affiliation_indices": [
-            1
-          ],
+          "name": "Joel Frank",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -99485,8 +101740,8 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -99504,17 +101759,6 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Ruhr University Bochum",
-          "canonical_name": "Ruhr University Bochum",
-          "institution_id": "institution:8f8dd64c6339c8ff",
-          "country": "Germany",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -99527,27 +101771,13 @@
           "mapping_fallback": false
         }
       ],
-      "author_institution_indices": [
-        {
-          "author": "J. Howard Frank",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:8f8dd64c6339c8ff"
-          ]
-        }
-      ],
+      "author_institution_indices": [],
       "author_affiliation_indices": [
         {
-          "author": "J. Howard Frank",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:8f8dd64c6339c8ff"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Joel Frank",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -99585,7 +101815,23 @@
           "source": "unmapped",
           "fallback": false
         }
-      ]
+      ],
+      "paper_id": "curated:dcf7aae2c8590b07aff3",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "curated_mappings": [],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Ruhr University Bochum",
+          "canonical_name": "Ruhr University Bochum",
+          "institution_id": "institution:8f8dd64c6339c8ff",
+          "country": "Germany",
+          "region": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "On Attribution of Deepfakes",
@@ -100783,8 +103029,8 @@
       "year": 2019,
       "publication_year": 2019,
       "publication_date": "2019-10-01",
-      "task": "uncertain",
-      "subtask": "unknown",
+      "task": "source_attribution",
+      "subtask": "source_identification",
       "entry_type": "method",
       "venue": "2019 IEEE/CVF International Conference on Computer Vision (ICCV)",
       "venue_name": "2019 IEEE/CVF International Conference on Computer Vision (ICCV)",
@@ -100817,7 +103063,7 @@
           "affiliation_fallback": false
         },
         {
-          "name": "Larry S. Davis",
+          "name": "Larry Davis",
           "affiliation_indices": [
             1
           ],
@@ -100835,23 +103081,36 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "paper_only_review",
+      "coverage_status": "map_ready",
       "aggregated_institutions": [
         "CISPA Helmholtz Center for Information Security",
         "Max Planck Institute for Informatics",
         "University of Maryland"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "Germany",
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "DE",
+        "US"
+      ],
+      "aggregated_regions": [
+        "Maryland",
+        "Saarland"
+      ],
       "aggregated_region_codes": [],
+      "paper_id": "curated:170f07b3d7020611e566",
+      "metadata_source": "openalex",
+      "curation_status": "corrected_by_admin",
+      "review_status": "reviewed",
       "curated_mappings": [
         {
           "mapping_id": "mapping:fa48c67676a8f806e4a9",
@@ -100943,7 +103202,7 @@
           ]
         },
         {
-          "author": "Larry S. Davis",
+          "author": "Larry Davis",
           "institution_indices": [
             1
           ],
@@ -100967,24 +103226,24 @@
           "name": "University of Maryland",
           "canonical_name": "University of Maryland",
           "institution_id": "institution:13f7c73ae8019e75",
-          "country": "",
-          "region": ""
+          "country": "United States",
+          "region": "Maryland"
         },
         {
           "index": 2,
           "name": "Max Planck Institute for Informatics",
           "canonical_name": "Max Planck Institute for Informatics",
           "institution_id": "institution:bef37c90751e824e",
-          "country": "",
-          "region": ""
+          "country": "Germany",
+          "region": "Saarland"
         },
         {
           "index": 3,
           "name": "CISPA Helmholtz Center for Information Security",
           "canonical_name": "CISPA Helmholtz Center for Information Security",
           "institution_id": "institution:aea376936c88135b",
-          "country": "",
-          "region": ""
+          "country": "Germany",
+          "region": "Saarland"
         }
       ],
       "current_institution": null,
@@ -101003,7 +103262,7 @@
           "fallback": false
         },
         {
-          "author": "Larry S. Davis",
+          "author": "Larry Davis",
           "indices": [
             1
           ],
@@ -103068,11 +105327,11 @@
       "task": "source_attribution",
       "subtask": "generated_image_source_attribution",
       "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
+      "venue": "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+      "venue_name": "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
       "venue_type": "repository",
       "publisher": "Cornell University",
-      "publication_type": "article",
+      "publication_type": "conference",
       "abstract": "With advances in Generative Adversarial Networks (GANs) leading to dramatically-improved synthetic images and video, there is an increased need for algorithms which extend traditional forensics to this new category of imagery. While GANs have been shown to be helpful in a number of computer vision applications, there are other problematic uses such as `deep fakes' which necessitate such forensics. Source camera attribution algorithms using various cues have addressed this need for imagery captured by a camera, but there are fewer options for synthetic imagery. We address the problem of attributing a synthetic image to a specific generator in a white box setting, by inverting the process of generation. This enables us to simultaneously determine whether the generator produced the image and recover an input which produces a close match to the synthetic image.",
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
@@ -103107,11 +105366,11 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -103126,17 +105385,11 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Honeywell (United States)",
-          "canonical_name": "Honeywell (United States)",
-          "institution_id": "institution:834e8b5e7fb040b9",
-          "country": "US",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
+      "paper_id": "curated:fb05dfbc95518f6fb1db",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "curated_mappings": [],
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -103150,6 +105403,37 @@
           "mapping_fallback": false
         }
       ],
+      "author_institution_indices": [
+        {
+          "author": "Michael Albright",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:834e8b5e7fb040b9"
+          ]
+        },
+        {
+          "author": "Scott McCloskey",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:834e8b5e7fb040b9"
+          ]
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Honeywell (United States)",
+          "canonical_name": "Honeywell (United States)",
+          "institution_id": "institution:834e8b5e7fb040b9",
+          "country": "US",
+          "region": ""
+        }
+      ],
+      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Michael Albright",
@@ -103172,162 +105456,6 @@
           ],
           "source": "raw_affiliation",
           "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Michael Albright",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:834e8b5e7fb040b9"
-          ]
-        },
-        {
-          "author": "Scott McCloskey",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:834e8b5e7fb040b9"
-          ]
-        }
-      ]
-    },
-    {
-      "title": "Source Generator Attribution via Inversion",
-      "in_scope": true,
-      "year": 2019,
-      "publication_year": 2019,
-      "publication_date": "2019-05-06",
-      "task": "source_attribution",
-      "subtask": "generated_image_source_attribution",
-      "entry_type": "method",
-      "venue": "arXiv (Cornell University)",
-      "venue_name": "arXiv (Cornell University)",
-      "venue_type": "repository",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "With advances in Generative Adversarial Networks (GANs) leading to dramatically-improved synthetic images and video, there is an increased need for algorithms which extend traditional forensics to this new category of imagery. While GANs have been shown to be helpful in a number of computer vision applications, there are other problematic uses such as `deep fakes' which necessitate such forensics. Source camera attribution algorithms using various cues have addressed this need for imagery captured by a camera, but there are fewer options for synthetic imagery. We address the problem of attributing a synthetic image to a specific generator in a white box setting, by inverting the process of generation. This enables us to simultaneously determine whether the generator produced the image and recover an input which produces a close match to the synthetic image.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.1905.02259",
-      "arxiv_id": "1905.02259",
-      "arxiv_url": "https://arxiv.org/abs/1905.02259",
-      "arxiv_year": 2019,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/1905.02259",
-      "primary_url": "http://arxiv.org/abs/1905.02259",
-      "landing_page_url": "http://arxiv.org/abs/1905.02259",
-      "openalex_url": "https://openalex.org/W2943961047",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/1905.02259",
-      "authors": [
-        {
-          "name": "Michael Albright",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Scott McCloskey",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
-          "affiliation_fallback": false
-        }
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Honeywell (United States)"
-      ],
-      "aggregated_country_names": [
-        "US"
-      ],
-      "aggregated_country_codes": [
-        "US"
-      ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Honeywell (United States)",
-          "canonical_name": "Honeywell (United States)",
-          "institution_id": "institution:834e8b5e7fb040b9",
-          "country": "US",
-          "region": ""
-        }
-      ],
-      "current_institution": null,
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:834e8b5e7fb040b9",
-          "institution": "Honeywell (United States)",
-          "authors": [
-            "Michael Albright",
-            "Scott McCloskey"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Michael Albright",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:834e8b5e7fb040b9"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Scott McCloskey",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:834e8b5e7fb040b9"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Michael Albright",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:834e8b5e7fb040b9"
-          ]
-        },
-        {
-          "author": "Scott McCloskey",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:834e8b5e7fb040b9"
-          ]
         }
       ]
     },
