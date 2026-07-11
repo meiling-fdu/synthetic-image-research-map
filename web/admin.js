@@ -14,6 +14,7 @@ const state = {
   selectedLocationReviewId: "",
   dashboard: {},
   reviewQueues: {},
+  selectedReviewKeys: {},
   authorMappingCoverage: null,
   paperMetadata: null,
   draftMappingCandidates: [],
@@ -28,7 +29,7 @@ const workflowCommandIds = [
   "publish-changes",
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
+if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", () => {
   [
     "connection-status",
     "add-paper-toggle",
@@ -447,14 +448,18 @@ async function loadDashboardAndQueues() {
   buttons.forEach((button) => {
     button.disabled = true;
   });
+  const paths = {
+    dashboard: "/api/dashboard",
+    "high-risk": "/api/review/high-risk-markers",
+    "marker-blockers": "/api/review/marker-blockers",
+    "key-paper-coverage": "/api/review/key-paper-coverage",
+    "manual-import": "/api/review/manual-import",
+  };
+  Object.keys(paths).filter((name) => name !== "dashboard").forEach((name) => {
+    state.reviewQueues[name] = { available: true, records: [], hidden_resolved: 0 };
+    renderReviewQueue(name);
+  });
   try {
-    const paths = {
-      dashboard: "/api/dashboard",
-      "high-risk": "/api/review/high-risk-markers",
-      "marker-blockers": "/api/review/marker-blockers",
-      "key-paper-coverage": "/api/review/key-paper-coverage",
-      "manual-import": "/api/review/manual-import",
-    };
     const entries = await Promise.all(
       Object.entries(paths).map(async ([name, path]) => [name, await apiFetch(path)])
     );
@@ -878,12 +883,34 @@ function queueFields(name, row) {
   ];
 }
 
-function suppressionCountText(queue) {
+function suppressionCountText(queue, unresolvedCount = null) {
   const reasons = Object.entries(queue.suppression_reasons || {});
   const breakdown = reasons.length
     ? ` · ${reasons.map(([reason, count]) => `${humanize(reason)}: ${formatNumber(count)}`).join(" · ")}`
     : "";
-  return `${formatNumber(queue.total_unresolved || 0)} unresolved · ${formatNumber(queue.hidden_resolved || 0)} hidden/resolved${breakdown}`;
+  const unresolved = unresolvedCount === null
+    ? (queue.records || []).length
+    : unresolvedCount;
+  return `${formatNumber(unresolved)} unresolved · ${formatNumber(queue.hidden_resolved || 0)} hidden/resolved${breakdown}`;
+}
+
+function reviewRecordKey(row) {
+  return [
+    row.paper_id,
+    row.doi,
+    row.openalex_url || row.openalex_id,
+    row.title || row.requested_title,
+    row.year || row.candidate_year,
+    row.institution || row.institutions,
+    row.institution_authors,
+    row.review_type || row.blocker_type || row.missing_stage || row.candidate_status,
+  ].map((value) => normalize(value)).join("|");
+}
+
+function clearReviewDetail(name) {
+  delete state.selectedReviewKeys[name];
+  const detail = queuePanel(name)?.querySelector('[data-role="detail"]');
+  if (detail) detail.textContent = "Select a row.";
 }
 
 function queueGroupField(name) {
@@ -900,8 +927,6 @@ function renderReviewQueue(name) {
   const queue = state.reviewQueues[name] || {};
   if (!panel) return;
   const records = queue.records || [];
-  const counts = panel.querySelector('[data-role="counts"]');
-  if (counts) counts.textContent = suppressionCountText(queue);
   const group = panel.querySelector('[data-role="group"]');
   const previous = group.value;
   const values = [...new Set(records.map((row) => text(row[queueGroupField(name)]) || "unknown"))].sort();
@@ -928,6 +953,13 @@ function renderReviewQueue(name) {
   }).slice(0, 500);
   const body = panel.querySelector('[data-role="rows"]');
   body.replaceChildren();
+  const visibleKeys = new Set(filtered.map(reviewRecordKey));
+  if (
+    state.selectedReviewKeys[name]
+    && !visibleKeys.has(state.selectedReviewKeys[name])
+  ) clearReviewDetail(name);
+  const counts = panel.querySelector('[data-role="counts"]');
+  if (counts) counts.textContent = suppressionCountText(queue, filtered.length);
   filtered.forEach((row) => {
     const tr = document.createElement("tr");
     queueFields(name, row).forEach((value) => {
@@ -950,6 +982,7 @@ function renderReviewQueue(name) {
 
 function renderReviewDetail(name, row) {
   const detail = queuePanel(name).querySelector('[data-role="detail"]');
+  state.selectedReviewKeys[name] = reviewRecordKey(row);
   detail.replaceChildren();
   const heading = document.createElement("h3");
   heading.textContent = text(row.title) || "Review row";
