@@ -2019,6 +2019,7 @@ function renderPaperList() {
 
     const action = document.createElement("button");
     action.type = "button";
+    action.dataset.paperId = paper.display_id;
     if (paper.has_active_exclusion) {
       action.className = "restore-button compact-action";
       action.textContent = "Restore";
@@ -2419,7 +2420,13 @@ function openScopeDialog(paper, mode) {
   elements["scope-form"].reset();
   elements["scope-paper-id"].value = paper.display_id;
   elements["scope-mode"].value = mode;
-  elements["scope-paper-title"].textContent = text(paper.title) || "Untitled paper";
+  elements["scope-paper-title"].textContent = [
+    text(paper.title) || "Untitled paper",
+    paper.openalex_url ? `OpenAlex ${paper.openalex_url}` : "",
+    paper.doi ? `DOI ${paper.doi}` : "",
+    text(paper.source_database) ? `Source ${text(paper.source_database)}` : "",
+    text(paper.venue || paper.venue_name) ? `Venue ${text(paper.venue || paper.venue_name)}` : "",
+  ].filter(Boolean).join(" · ");
   elements["scope-form-error"].hidden = true;
   const restoring = mode === "restore";
   elements["scope-dialog-title"].textContent = restoring

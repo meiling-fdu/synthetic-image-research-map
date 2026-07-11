@@ -8,8 +8,13 @@ from scripts.curated_papers import (
     CuratedPaperError,
     update_curated_paper,
 )
-from scripts.curated_schema import PAPERS_COLUMNS
+from scripts.curated_schema import PAPERS_COLUMNS, PAPER_EXCLUSION_COLUMNS
 from scripts.export_public_preview import normalize_entry_type
+from scripts.paper_exclusions import (
+    build_active_exclusion_index,
+    record_is_excluded,
+    upsert_active_exclusion,
+)
 
 
 def curated_row(**overrides):
@@ -46,7 +51,42 @@ def write_papers(path, rows):
         writer.writerows(rows)
 
 
+def write_exclusions(path, rows=()):
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=PAPER_EXCLUSION_COLUMNS)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
 class PaperMetadataEditingTests(unittest.TestCase):
+    def test_excluding_one_same_title_record_does_not_exclude_the_other(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            path = Path(temporary_directory) / "paper_exclusions.csv"
+            write_exclusions(path)
+            published = curated_row(
+                paper_id="openalex:W-PUBLISHED",
+                title="Source Generator Attribution via Inversion",
+                doi="10.1000/published",
+                openalex_url="https://openalex.org/W-PUBLISHED",
+                venue="Published Venue",
+            )
+            preprint = curated_row(
+                paper_id="openalex:W-ARXIV",
+                title=published["title"],
+                doi="10.48550/arxiv.2401.00001",
+                openalex_url="https://openalex.org/W-ARXIV",
+                venue="arXiv",
+            )
+
+            upsert_active_exclusion(preprint, "duplicate", "Duplicate preprint", path)
+
+            with path.open(encoding="utf-8", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+            index = build_active_exclusion_index(rows)
+            self.assertEqual(len(rows), 1)
+            self.assertTrue(record_is_excluded(preprint, index))
+            self.assertFalse(record_is_excluded(published, index))
+
     def test_admin_update_persists_normalized_entry_type_to_curated_source(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "papers.csv"

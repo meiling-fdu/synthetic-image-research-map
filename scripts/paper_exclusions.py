@@ -76,9 +76,12 @@ def normalized_title_year_key(record: Mapping[str, Any]) -> str:
 
 def all_identity_keys(record: Mapping[str, Any]) -> List[str]:
     keys: List[str] = []
+    paper_id = clean(record.get("paper_id")).casefold()
     doi = normalize_doi(record.get("doi"))
     openalex_url = normalize_openalex_url(record.get("openalex_url"))
     title_year = normalized_title_year_key(record)
+    if paper_id:
+        keys.append(f"paper_id:{paper_id}")
     if doi:
         keys.append(f"doi:{doi}")
     if openalex_url:
@@ -89,7 +92,7 @@ def all_identity_keys(record: Mapping[str, Any]) -> List[str]:
 
 
 def primary_identity_key(record: Mapping[str, Any]) -> str:
-    """Return the required DOI → OpenAlex → title/year match key."""
+    """Return the strongest available stable record identity."""
     keys = all_identity_keys(record)
     return keys[0] if keys else ""
 
@@ -143,8 +146,9 @@ def build_active_exclusion_index(
 ) -> Dict[str, List[Mapping[str, Any]]]:
     index: Dict[str, List[Mapping[str, Any]]] = {}
     for row in active_exclusions(rows):
-        key = primary_identity_key(row)
-        if key:
+        keys = all_identity_keys(row)
+        strong_keys = [key for key in keys if not key.startswith("title_year:")]
+        for key in strong_keys or keys:
             index.setdefault(key, []).append(row)
     return index
 
@@ -153,14 +157,26 @@ def record_is_excluded(
     record: Mapping[str, Any],
     active_index: Mapping[str, Sequence[Mapping[str, Any]]],
 ) -> bool:
-    return any(key in active_index for key in all_identity_keys(record))
+    keys = all_identity_keys(record)
+    strong_keys = [key for key in keys if not key.startswith("title_year:")]
+    return any(key in active_index for key in (strong_keys or keys))
 
 
 def records_share_any_identity(
     left: Mapping[str, Any],
     right: Mapping[str, Any],
 ) -> bool:
-    return bool(set(all_identity_keys(left)) & set(all_identity_keys(right)))
+    left_keys = all_identity_keys(left)
+    right_keys = all_identity_keys(right)
+    left_strong = {key for key in left_keys if not key.startswith("title_year:")}
+    right_strong = {key for key in right_keys if not key.startswith("title_year:")}
+    if left_strong and right_strong:
+        return bool(left_strong & right_strong)
+    # A title/year identity is inherently ambiguous and is safe only when both
+    # records lack a stable paper ID, DOI, and OpenAlex ID.
+    if left_strong or right_strong:
+        return False
+    return bool(set(left_keys) & set(right_keys))
 
 
 def matching_exclusion_rows(
@@ -194,7 +210,7 @@ def exclusion_row_from_paper(
         raise PaperExclusionError("review_note is required")
     if not primary_identity_key(paper):
         raise PaperExclusionError(
-            "paper requires a DOI, OpenAlex URL, or title + year identity"
+            "paper requires a paper ID, DOI, OpenAlex URL, or title + year identity"
         )
     return {
         "exclusion_id": f"exclusion-{uuid.uuid4().hex}",
@@ -225,6 +241,10 @@ def upsert_active_exclusion(
 ) -> Dict[str, Any]:
     rows = read_exclusion_rows(path)
     matches = matching_exclusion_rows(paper, rows, active_only=True)
+    if len(matches) > 1:
+        raise PaperExclusionError(
+            "multiple active exclusions match this paper; refusing an ambiguous update"
+        )
     if matches:
         existing = matches[0]
         existing_note = clean(existing.get("review_note"))

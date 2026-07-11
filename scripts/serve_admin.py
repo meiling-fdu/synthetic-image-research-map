@@ -627,14 +627,9 @@ def load_admin_data(
 
     for curated_row in curated_rows:
         curated_record = curated_paper_record(curated_row)
-        match = next(
-            (
-                paper_identity_index[key]
-                for key in identity_keys(curated_record)
-                if key in paper_identity_index
-            ),
-            None,
-        )
+        match = next(iter(strongest_matching_records(
+            curated_record, paper_identity_index
+        )), None)
         if match is None:
             match = curated_record
             match["is_in_curated_papers"] = True
@@ -651,14 +646,9 @@ def load_admin_data(
     # so maintainers can inspect or restore them later.
     for exclusion_row in exclusion_rows:
         exclusion_record = exclusion_only_paper_record(exclusion_row)
-        match = next(
-            (
-                paper_identity_index[key]
-                for key in identity_keys(exclusion_record)
-                if key in paper_identity_index
-            ),
-            None,
-        )
+        match = next(iter(strongest_matching_records(
+            exclusion_record, paper_identity_index
+        )), None)
         if match is not None:
             continue
         papers.append(exclusion_record)
@@ -672,7 +662,7 @@ def load_admin_data(
             marker_for_api(record)
             for record in strongest_matching_records(paper, marker_index)
         ]
-        exclusions = matching_records(paper, exclusion_index)
+        exclusions = strongest_matching_records(paper, exclusion_index)
         aggregated_institutions = parse_people(
             paper.get("aggregated_institutions")
         )
