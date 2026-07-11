@@ -17,14 +17,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 786 |
-| Unique papers | 364 |
-| Unique institutions | 480 |
-| Countries | 70 |
-| arXiv/preprint records | 311 |
-| Records with DOI | 771 |
-| Records with venue | 702 |
-| Records missing venue | 84 |
+| Map records | 878 |
+| Unique papers | 404 |
+| Unique institutions | 506 |
+| Countries | 73 |
+| arXiv/preprint records | 486 |
+| Records with DOI | 863 |
+| Records with venue | 808 |
+| Records missing venue | 70 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -34,33 +34,33 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 681 |
-| source_attribution | 64 |
-| detection_and_source_attribution | 41 |
+| detection | 752 |
+| source_attribution | 82 |
+| detection_and_source_attribution | 44 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 323 |
-| synthetic_image_detection | 255 |
-| deepfake_image_detection | 103 |
-| generated_image_source_attribution | 61 |
-| detection_and_source_attribution | 41 |
-| source_identification | 3 |
+| ai_generated_image_detection | 381 |
+| synthetic_image_detection | 266 |
+| deepfake_image_detection | 105 |
+| generated_image_source_attribution | 56 |
+| detection_and_source_attribution | 44 |
+| source_identification | 26 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 66 |
-| 2025 | 258 |
-| 2024 | 198 |
-| 2023 | 116 |
+| 2026 | 92 |
+| 2025 | 274 |
+| 2024 | 233 |
+| 2023 | 125 |
 | 2022 | 60 |
-| 2021 | 34 |
+| 2021 | 38 |
 | 2020 | 28 |
-| 2019 | 19 |
+| 2019 | 21 |
 | 2018 | 6 |
 | 2017 | 1 |
 
@@ -68,69 +68,66 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Venue | Records |
 | --- | ---: |
-| arXiv (Cornell University) | 75 |
-| ArXiv.org | 55 |
-| Lecture notes in computer science | 51 |
-| Proceedings of the AAAI Conference on Artificial Intelligence | 21 |
+| arXiv (Cornell University) | 95 |
+| ArXiv.org | 53 |
+| Lecture notes in computer science | 40 |
+| Proceedings of the AAAI Conference on Artificial Intelligence | 31 |
 | 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 17 |
 | IEEE Access | 14 |
 | Pattern Recognition Letters | 14 |
+| IEEE Signal Processing Letters | 13 |
+| IEEE Transactions on Information Forensics and Security | 13 |
 | Applied Sciences | 12 |
-| IEEE Transactions on Information Forensics and Security | 11 |
-| Journal of Imaging | 10 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
+| China | 189 |
 | CN | 141 |
-| China | 139 |
-| US | 63 |
-| United States | 59 |
+| United States | 70 |
+| US | 62 |
+| Italy | 43 |
 | IN | 40 |
-| Italy | 37 |
-| IT | 33 |
+| IT | 32 |
+| Germany | 20 |
 | DE | 19 |
 | GB | 18 |
-| Germany | 18 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
 | University of Naples Federico II | 16 |
-| Beijing Jiaotong University | 11 |
-| Shanghai Jiao Tong University | 10 |
-| University of Siena | 10 |
-| University of Chinese Academy of Sciences | 9 |
+| Shanghai Jiao Tong University | 14 |
+| University of Siena | 14 |
+| Beijing Jiaotong University | 12 |
+| University of Chinese Academy of Sciences | 12 |
+| Fudan University | 11 |
+| City University of Hong Kong | 9 |
 | Chinese Academy of Sciences | 8 |
 | Information Technologies Institute | 8 |
-| City University of Hong Kong | 7 |
-| Fudan University | 7 |
-| Centre for Research and Technology Hellas | 6 |
+| University of Science and Technology of China | 7 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 612 |
-| medium | 174 |
+| high | 705 |
+| medium | 173 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **84**
+Count: **70**
 
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
-- ReTD: Reconstruction-Based Traceability Detection for Generated Images (2025) - Chinese Academy of Sciences; `openalex-candidate-aa0d52041ecd0c07`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Xi'an Jiaotong University; `openalex-candidate-20ef2bae71c5cf78`
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025) - Tencent (China); `openalex-candidate-6162788b83db1bc7`
 - CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025) - Purdue University West Lafayette; `openalex-candidate-000ae598a83c4cc6`
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - University of Hong Kong; `openalex-candidate-3e36acb7cecb0f1d`
-- Aigi-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models (2025) - Xiamen University; `openalex-candidate-10e227bebd064499`
-- Diffusion Epistemic Uncertainty with Asymmetric Learning for Diffusion-Generated Image Detection (2025) - Tencent (China); `openalex-candidate-f0876f99ba262471`
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Shanghai Jiao Tong University; `openalex-candidate-90b5060d79313344`
 - Semantic Discrepancy-Aware Detector for Image Forgery Identification (2025) - Nanjing University of Science and Technology; `openalex-candidate-caad465d68fa7710`
 - ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection (2025) - Henan University of Engineering; `openalex-candidate-af86ed74fc84674b`
@@ -144,7 +141,6 @@ Count: **84**
 - Light2Lie: Detecting Deepfake Images Using Physical Reflectance Laws (2026) - Technische Universität Darmstadt; `openalex-candidate-ffc5d929530a3f5f`
 - "That's another doom I haven't thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Leibniz University Hannover; `openalex-candidate-d2a030d99b35b5f8`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Jahangirnagar University; `openalex-candidate-b8c048d2bb06f247`
-- ReTD: Reconstruction-Based Traceability Detection for Generated Images (2025) - Institute of Information Engineering; `openalex-candidate-17d580ff48497e58`
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - University of Southampton; `openalex-candidate-2e38546bdad915a5`
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Harbin Institute of Technology; `openalex-candidate-b09b2a90b0de5f28`
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025) - Peking University; `openalex-candidate-c7a9ed2c288b1391`
@@ -158,9 +154,6 @@ Count: **84**
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - Zhejiang Lab; `openalex-candidate-4cf5006b59bb9f1e`
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - ShangHai JiAi Genetics & IVF Institute; `openalex-candidate-a20705bf89a876c7`
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - Shanghai Artificial Intelligence Laboratory; `openalex-candidate-adbae163f891d223`
-- Aigi-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models (2025) - Tencent (China); `openalex-candidate-eeca6a851cd66fb5`
-- Diffusion Epistemic Uncertainty with Asymmetric Learning for Diffusion-Generated Image Detection (2025) - Microsoft (United States); `openalex-candidate-ac875fc3866340eb`
-- Diffusion Epistemic Uncertainty with Asymmetric Learning for Diffusion-Generated Image Detection (2025) - Microsoft Research (United Kingdom); `openalex-candidate-b592fe539708d9a4`
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Beihang University; `openalex-candidate-14fd0a26117cf71b`
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Beijing Academy of Artificial Intelligence; `openalex-candidate-bf82bd2badee947a`
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Shanghai Artificial Intelligence Laboratory; `openalex-candidate-e0b769e76fa2e1a5`
@@ -192,20 +185,13 @@ Count: **84**
 - D4: Detection of Adversarial Diffusion Deepfakes Using Disjoint Ensembles (2024) - University of Michigan; `curated-map:c0f651d6e27ca965e3ec`
 - Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics (2024) - Friedrich-Alexander-Universität Erlangen-Nürnberg; `curated-map:ca27e713b4099020e422`
 - Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics (2024) - University of Naples Federico II; `curated-map:01a82e06536e4e4b04f6`
-- FakeInversion: Learning to Detect Images from Unseen Text-to-Image Models by Inverting Stable Diffusion (2024) - Massachusetts Institute of Technology; `curated-map:fb04c70446816af0d5d9`
-- FakeInversion: Learning to Detect Images from Unseen Text-to-Image Models by Inverting Stable Diffusion (2024) - Google Research; `curated-map:cc7719d9264e44cafc17`
 - Frequency Masking for Universal Deepfake Detection (2024) - Singapore University of Technology and Design; `curated-map:9a264429d9d6fe9f88f5`
-- ManiFPT: Defining and Analyzing Fingerprints of Generative Models (2024) - University of Southern California; `curated-map:592377478476673177b7`
-- ManiFPT: Defining and Analyzing Fingerprints of Generative Models (2024) - USC Information Sciences Institute; `curated-map:9ea209ce67c34ae9c430`
-- ManiFPT: Defining and Analyzing Fingerprints of Generative Models (2024) - Clemson University; `curated-map:e2dd74aa3296c0f3510d`
 - On the Exploitation of DCT-Traces in the Generative-AI Domain (2024) - University of Catania; `curated-map:30d9fa78419fea0e6766`
 - Shadows Don't Lie and Lines Can't Bend! Generative Models Don't know Projective Geometry…for Now (2024) - University of Illinois Urbana-Champaign; `curated-map:0a0fdc5a8a3277b59027`
 - Shadows Don't Lie and Lines Can't Bend! Generative Models Don't know Projective Geometry…for Now (2024) - Toyota Technological Institute at Chicago; `curated-map:74fa58d8d6ebd6f0c84f`
 - StealthDiffusion: Towards Evading Diffusion Forensic Detection through Diffusion Model (2024) - Xiamen University; `curated-map:44d04408ebfffce2ca15`
 - Towards the Detection of Diffusion Model Deepfakes (2024) - Ruhr University Bochum; `curated-map:7eb6a019bf3f0f4fce56`
 - Towards the Detection of Diffusion Model Deepfakes (2024) - CISPA Helmholtz Center for Information Security; `curated-map:c339f8bd4ffbcaada177`
-- Does a GAN leave distinct model-specific fingerprints? (2021) - Arizona State University; `curated-map:319fdde1a1ac93153f76`
-- Attributing and Detecting Fake Images Generated by Known GANs (2020) - University of Texas at Dallas; `curated-map:f5ea1c7c2d0cbd15646e`
 
 ### Records missing URL
 
