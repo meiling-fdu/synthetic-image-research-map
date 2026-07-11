@@ -320,7 +320,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["autofill-arxiv"].addEventListener("click", autofillArxivIds);
   elements["publish-changes"].addEventListener("click", () => {
     const confirmed = window.confirm(
-      "Publish Changes will refresh and validate the public preview, commit selected curated/manual/web-data/test files, and push the current branch. Continue?"
+      "Publish Changes will validate curated data, regenerate and validate every public-preview output, commit all changed admin-managed files (plus modified frontend assets), and push the current branch. Continue?"
     );
     if (confirmed) {
       runAdminWorkflow(
@@ -1589,6 +1589,9 @@ function renderWorkflowLog(result, heading = "") {
   const changedFiles = (result.changed_files || []).length
     ? result.changed_files.join("\n")
     : "None detected";
+  const steps = (result.steps || []).map((step, index) =>
+    `${index + 1}. ${step.success ? "PASS" : "FAIL"} ${step.command} (${step.duration_seconds}s)`
+  ).join("\n") || "None";
   elements["workflow-log"].textContent = [
     heading,
     `Success: ${result.success ? "yes" : "no"}`,
@@ -1598,6 +1601,8 @@ function renderWorkflowLog(result, heading = "") {
     command || "—",
     "Changed files:",
     changedFiles,
+    "Validation/export steps executed:",
+    steps,
     "Standard output:",
     result.stdout_tail || "—",
     "Standard error:",

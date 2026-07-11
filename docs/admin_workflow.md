@@ -164,7 +164,16 @@ ineligible records. The absolute floors and post-export validation remain in
 force, so a partial refresh cannot be published merely because its percentage
 change is small.
 
-Only maintained files under `data/curated/`, `data/manual/`, `web/data/`, and `tests/` are eligible for the publication commit. `data/backups/` and temporary `data/manual/key_papers_missing_*` or `data/manual/key_papers_query_failed_*` batch artifacts are excluded. Unrelated staged files are not included in the publication commit. Git and push errors remain visible in the command log; if push fails, the new commit remains local for inspection and retry.
+The publish set is calculated from Git's changed tracked files after refresh. It
+includes the complete durable admin layer under `data/curated/`, review outputs
+under `data/manual/`, generated `web/data/` previews, and the generated reports
+declared by the canonical admin workflow. Modified frontend assets under `web/`
+are included only when Git reports an actual change. `data/backups/` and
+temporary `data/manual/key_papers_missing_*` or
+`data/manual/key_papers_query_failed_*` batches are excluded. Unrelated staged
+files are not included. The result log lists changed and generated files, every
+validation/export step, and the commit/push outcome; a failed step stops before
+staging and retains its command output.
 
 Recommended order: fix P0 public-marker issues; confirm P1 candidates; resolve missing coordinates; resolve missing affiliations; review missing key papers; only then expand OpenAlex coverage.
 

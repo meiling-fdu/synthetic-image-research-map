@@ -33,6 +33,35 @@ class AdminPublishChangesTests(unittest.TestCase):
     def test_publish_scope_includes_both_public_preview_outputs(self):
         self.assertIn("web/data/", admin_publish_changes.PUBLISH_PATHS)
 
+    def test_every_admin_editable_category_is_publishable(self):
+        expected = {
+            "papers.csv",
+            "paper_exclusions.csv",
+            "author_institution_mappings.csv",
+            "institution_location_review.csv",
+            "institution_locations.csv",
+            "institution_aliases.csv",
+            "review_decisions.csv",
+            "paper_arxiv_links.csv",
+        }
+        actual = {
+            path.name for path in admin_publish_changes.ADMIN_EDITABLE_PATHS
+            if admin_publish_changes.is_publishable(str(path))
+        }
+        self.assertEqual(actual, expected)
+
+    def test_future_curated_file_and_modified_frontend_are_publishable(self):
+        self.assertTrue(admin_publish_changes.is_publishable("data/curated/new_admin_data.csv"))
+        self.assertTrue(admin_publish_changes.is_publishable("web/admin.js"))
+        self.assertFalse(admin_publish_changes.is_publishable("notes.txt"))
+        self.assertFalse(admin_publish_changes.is_publishable("data/manual/key_papers_missing_batch.csv"))
+
+    def test_all_declared_generated_outputs_are_publishable(self):
+        self.assertTrue(all(
+            admin_publish_changes.is_publishable(str(path))
+            for path in admin_publish_changes.KNOWN_WORKFLOW_OUTPUTS
+        ))
+
     def test_admin_export_preserves_existing_complete_preview(self):
         self.assertIn(
             "--preserve-existing",
@@ -75,16 +104,22 @@ class AdminPublishChangesTests(unittest.TestCase):
         self.assertNotIn(("git", "push"), runner.commands)
 
     def test_commit_is_scoped_and_pushes_after_commit(self):
+        status_command = ("git", "status", "--short")
+        publish_files = (
+            "data/curated/papers.csv",
+            "web/data/public_preview_papers.json",
+        )
         staged_command = (
             "git",
             "diff",
             "--cached",
             "--name-only",
             "--",
-            *admin_publish_changes.PUBLISH_PATHSPECS,
+            *publish_files,
         )
         runner = RecordingRunner(
             {
+                status_command: (0, " M data/curated/papers.csv\n M web/data/public_preview_papers.json\n"),
                 staged_command: (0, "data/curated/papers.csv\nweb/data/public_preview_papers.json\n"),
                 ("git", "branch", "--show-current"): (0, "main\n"),
                 ("git", "rev-parse", "HEAD"): (0, "abc123\n"),
@@ -107,14 +142,8 @@ class AdminPublishChangesTests(unittest.TestCase):
             "Update curated data and public preview 2026-07-01 14:30",
             commit,
         )
-        self.assertIn(
-            ":(exclude,glob)data/manual/key_papers_missing_*",
-            commit,
-        )
-        self.assertIn(
-            ":(exclude,glob)data/manual/key_papers_query_failed_*",
-            commit,
-        )
+        self.assertIn("data/curated/papers.csv", commit)
+        self.assertIn("web/data/public_preview_papers.json", commit)
         self.assertEqual(runner.commands[-1], ("git", "push"))
 
     def test_real_git_commit_excludes_temporary_and_unrelated_staged_files(self):

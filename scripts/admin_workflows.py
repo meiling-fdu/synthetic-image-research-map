@@ -16,6 +16,19 @@ COMMAND_TIMEOUT_SECONDS = 180
 PUBLISH_TIMEOUT_SECONDS = 1_200
 GIT_TIMEOUT_SECONDS = 15
 TAIL_CHARACTER_LIMIT = 16_000
+ADMIN_EDITABLE_PATHS = (
+    Path("data/curated/papers.csv"),
+    Path("data/curated/paper_exclusions.csv"),
+    Path("data/curated/author_institution_mappings.csv"),
+    Path("data/curated/institution_location_review.csv"),
+    Path("data/curated/institution_locations.csv"),
+    Path("data/curated/institution_aliases.csv"),
+    Path("data/curated/review_decisions.csv"),
+    Path("data/curated/paper_arxiv_links.csv"),
+)
+
+# Files written by the canonical full-refresh pipeline. Keep this list beside the
+# workflow itself so publishing and the admin result UI cannot drift from it.
 KNOWN_WORKFLOW_OUTPUTS = (
     Path("web/data/public_preview_map_data.json"),
     Path("web/data/public_preview_papers.json"),
@@ -25,6 +38,7 @@ KNOWN_WORKFLOW_OUTPUTS = (
     Path("data/manual/high_risk_marker_review.csv"),
     Path("data/manual/missing_author_mappings_report.csv"),
     Path("docs/missing_author_mappings_report.md"),
+    Path("docs/public_preview_report.md"),
 )
 
 CURATED_VALIDATION = (
@@ -39,6 +53,10 @@ EXPORT_PREVIEW = (
     "python3",
     "scripts/export_public_preview.py",
     "--preserve-existing",
+)
+PUBLIC_PREVIEW_REPORT = (
+    "python3",
+    "scripts/report_public_preview.py",
 )
 PUBLIC_VALIDATION = (
     "python3",
@@ -74,6 +92,7 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         CURATED_VALIDATION,
         PAPER_EXCLUSION_VALIDATION,
         EXPORT_PREVIEW,
+        PUBLIC_PREVIEW_REPORT,
         AUTHOR_MAPPING_REPORT,
         PUBLIC_VALIDATION,
         KEY_PAPER_AUDIT,
