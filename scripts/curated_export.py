@@ -34,6 +34,7 @@ try:
         build_active_exclusion_index,
     )
     from .name_matching import canonical_name_key, names_match
+    from .curated_papers import normalize_author_names
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -54,6 +55,7 @@ except ImportError:
         build_active_exclusion_index,
     )
     from name_matching import canonical_name_key, names_match
+    from curated_papers import normalize_author_names
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -308,7 +310,7 @@ def _parse_people(value: Any) -> List[str]:
 
 def _parse_curated_authors(value: Any) -> List[str]:
     """Parse the curated papers.csv author column using its documented format."""
-    people = _parse_people(value)
+    people = normalize_author_names(value)
     if len(people) != 1 or "," not in people[0]:
         return people
     return [clean(author) for author in people[0].split(",") if clean(author)]

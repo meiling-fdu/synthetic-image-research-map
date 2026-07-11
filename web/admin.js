@@ -1678,7 +1678,7 @@ function renderOpenAlexResults(results, debug = {}) {
         : `title similarity ${Number(candidate.similarity_score).toFixed(3)}`,
     ].filter(Boolean).join(" · ");
     const authors = document.createElement("p");
-    authors.textContent = listText(candidate.authors) || "Authors unavailable";
+    authors.textContent = authorListText(candidate.authors) || "Authors unavailable";
     const identifiers = document.createElement("p");
     identifiers.className = "candidate-identifiers";
     identifiers.textContent = [
@@ -1770,7 +1770,7 @@ function startPaperDraft(candidate, source) {
         : "Manual paper draft";
   elements["paper-title"].value = text(candidate.title);
   elements["paper-year"].value = text(candidate.year);
-  elements["paper-authors"].value = listText(candidate.authors);
+  elements["paper-authors"].value = authorListText(candidate.authors, "; ");
   elements["paper-affiliations"].value = "";
   elements["paper-venue"].value = text(candidate.venue);
   elements["paper-doi"].value = text(candidate.doi);
@@ -1981,7 +1981,7 @@ function renderPaperList() {
     const title = document.createElement("strong");
     title.textContent = text(paper.title) || "Untitled paper";
     const authors = document.createElement("span");
-    authors.textContent = listText(paper.authors) || "Authors unavailable";
+    authors.textContent = authorListText(paper.authors) || "Authors unavailable";
     const venue = document.createElement("span");
     venue.textContent = text(paper.venue || paper.venue_name) || "Venue unavailable";
     const identifiers = document.createElement("span");
@@ -2089,6 +2089,7 @@ function renderMetadataComparison() {
 
 function metadataValue(record, field) {
   const value = record?.[field];
+  if (field === "authors") return authorListText(value, "; ");
   return Array.isArray(value) ? value.join("; ") : text(value);
 }
 
@@ -2171,7 +2172,7 @@ function renderPaperDetail(paper) {
   const metadata = [
     ["Display ID", paper.display_id],
     ["Year", paper.year || paper.publication_year],
-    ["Authors", listText(paper.authors)],
+    ["Authors", authorListText(paper.authors)],
     ["Venue", paper.venue || paper.venue_name],
     ["DOI", linkValue(paper.doi, doiUrl(paper.doi))],
     ["OpenAlex", linkValue(paper.openalex_url, paper.openalex_url)],
@@ -2216,7 +2217,7 @@ function renderMappings(payload) {
   elements["mapping-paper-context"].textContent = [
     text(paper.title),
     paper.year || paper.publication_year,
-    listText(paper.authors),
+    authorListText(paper.authors),
     paper.doi ? `DOI ${paper.doi}` : "",
     paper.openalex_url,
   ].filter(Boolean).join(" · ");
@@ -2555,6 +2556,24 @@ function coordinateText(marker) {
 
 function listText(value) {
   return Array.isArray(value) ? value.join(", ") : text(value);
+}
+
+function authorListText(value, separator = ", ") {
+  let authors = value;
+  if (typeof authors === "string" && /^[\[{]/.test(authors.trim())) {
+    try {
+      authors = JSON.parse(authors);
+    } catch (_error) {
+      authors = value;
+    }
+  }
+  if (!Array.isArray(authors)) authors = authors == null || authors === "" ? [] : [authors];
+  return authors.map((author) => {
+    if (author && typeof author === "object") {
+      return text(author.name || author.display_name || author.author).trim();
+    }
+    return text(author).trim();
+  }).filter((name) => name && name.toLocaleLowerCase() !== "[object object]").join(separator);
 }
 
 function normalize(value) {

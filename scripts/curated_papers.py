@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -94,10 +95,43 @@ def write_curated_papers(
         raise CuratedPaperError(f"could not write {path}: {error}") from error
 
 
+def normalize_author_names(value: Any) -> List[str]:
+    """Return author names from supported API, CSV, and JSON value shapes."""
+    if value is None:
+        return []
+    if isinstance(value, Mapping):
+        name = clean(
+            value.get("name") or value.get("display_name") or value.get("author")
+        )
+        return [name] if name and name.casefold() != "[object object]" else []
+    if isinstance(value, (list, tuple)):
+        return [
+            name
+            for item in value
+            for name in normalize_author_names(item)
+            if name
+        ]
+    text = clean(value)
+    if not text:
+        return []
+    if text.startswith(("[", "{")):
+        try:
+            parsed = json.loads(text)
+        except (TypeError, json.JSONDecodeError):
+            parsed = None
+        if isinstance(parsed, (list, dict)):
+            return normalize_author_names(parsed)
+    separator = ";" if ";" in text else "|" if "|" in text else None
+    names = (
+        [clean(item) for item in text.split(separator) if clean(item)]
+        if separator
+        else [text]
+    )
+    return [name for name in names if name.casefold() != "[object object]"]
+
+
 def _authors_text(value: Any) -> str:
-    if isinstance(value, list):
-        return "; ".join(clean(author) for author in value if clean(author))
-    return clean(value)
+    return "; ".join(normalize_author_names(value))
 
 
 def _timestamp() -> str:

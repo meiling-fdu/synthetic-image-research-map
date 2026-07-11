@@ -454,8 +454,12 @@ def clean_text(value: Any) -> str:
 def author_display_name(value: Any) -> str:
     """Read an author name from either the legacy string or object schema."""
     if isinstance(value, dict):
-        return clean_text(value.get("name") or value.get("author"))
-    return clean_text(value)
+        name = clean_text(
+            value.get("name") or value.get("display_name") or value.get("author")
+        )
+    else:
+        name = clean_text(value)
+    return "" if name.casefold() == "[object object]" else name
 
 
 def normalized_author_name(value: Any) -> str:

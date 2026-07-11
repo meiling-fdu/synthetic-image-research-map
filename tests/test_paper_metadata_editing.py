@@ -6,6 +6,7 @@ from pathlib import Path
 from scripts.curated_export import integrate_curated_records
 from scripts.curated_papers import (
     CuratedPaperError,
+    normalize_author_names,
     update_curated_paper,
 )
 from scripts.curated_schema import PAPERS_COLUMNS, PAPER_EXCLUSION_COLUMNS
@@ -59,6 +60,39 @@ def write_exclusions(path, rows=()):
 
 
 class PaperMetadataEditingTests(unittest.TestCase):
+    def test_author_normalization_accepts_strings_objects_and_json(self):
+        cases = (
+            ("Alice; Bob", ["Alice", "Bob"]),
+            (["Alice", "Bob"], ["Alice", "Bob"]),
+            ([{"name": "Alice"}, {"name": "Bob"}], ["Alice", "Bob"]),
+            ([{"display_name": "Alice"}, {"display_name": "Bob"}], ["Alice", "Bob"]),
+            ('[{"name":"Alice"},{"display_name":"Bob"}]', ["Alice", "Bob"]),
+            ('{"display_name":"Alice"}', ["Alice"]),
+            (None, []),
+            ("", []),
+        )
+        for value, expected in cases:
+            with self.subTest(value=value):
+                self.assertEqual(normalize_author_names(value), expected)
+
+    def test_admin_update_serializes_object_authors_to_canonical_csv_text(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            path = Path(temporary_directory) / "papers.csv"
+            original = curated_row()
+            write_papers(path, [original])
+
+            update_curated_paper(
+                original,
+                {**original, "authors": [{"name": "Alice"}, {"display_name": "Bob"}]},
+                preview_records=[],
+                path=path,
+            )
+
+            with path.open(encoding="utf-8", newline="") as handle:
+                saved = next(csv.DictReader(handle))
+            self.assertEqual(saved["authors"], "Alice; Bob")
+            self.assertNotIn("[object Object]", saved["authors"])
+
     def test_excluding_one_same_title_record_does_not_exclude_the_other(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "paper_exclusions.csv"

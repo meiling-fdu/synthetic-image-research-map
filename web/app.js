@@ -311,14 +311,22 @@ function recordTitle(record) {
 }
 
 function recordAuthors(record) {
-  const authors = Array.isArray(record.authors) ? record.authors : [record.authors];
+  let authorValue = record.authors;
+  if (typeof authorValue === "string" && /^[\[{]/.test(authorValue.trim())) {
+    try {
+      authorValue = JSON.parse(authorValue);
+    } catch (_error) {
+      authorValue = record.authors;
+    }
+  }
+  const authors = Array.isArray(authorValue) ? authorValue : [authorValue];
   const names = authors
     .map((author) => String(
       author && typeof author === "object"
-        ? author.name || author.author || ""
+        ? author.name || author.display_name || author.author || ""
         : author || "",
     ).trim())
-    .filter(Boolean);
+    .filter((name) => name && name.toLocaleLowerCase() !== "[object object]");
   if (names.length) {
     return names;
   }
@@ -571,7 +579,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
       : [record?.authors];
   const authors = rawAuthors.map((rawAuthor) => {
     const raw = rawAuthor && typeof rawAuthor === "object" ? rawAuthor : {};
-    const name = String(raw.name || raw.author || rawAuthor || "").trim();
+    const name = String(raw.name || raw.display_name || raw.author || (typeof rawAuthor === "object" ? "" : rawAuthor) || "").trim();
     const authorKey = normalizedAuthorName(name);
     const explicitIndices = Array.isArray(raw.affiliation_indices)
       ? raw.affiliation_indices.map(Number).filter((index) => Number.isInteger(index) && index > 0)

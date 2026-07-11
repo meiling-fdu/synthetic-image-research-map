@@ -146,8 +146,18 @@ def normalized_text(value: Any) -> str:
 
 def author_name(value: Any) -> str:
     if isinstance(value, dict):
-        return clean_text(value.get("name") or value.get("author"))
+        return clean_text(
+            value.get("name") or value.get("display_name") or value.get("author")
+        )
     return clean_text(value)
+
+
+def contains_object_object(value: Any) -> bool:
+    if isinstance(value, dict):
+        return any(contains_object_object(item) for item in value.values())
+    if isinstance(value, list):
+        return any(contains_object_object(item) for item in value)
+    return "[object object]" in clean_text(value).casefold()
 
 
 def normalized_author_name(value: Any) -> str:
@@ -520,6 +530,19 @@ def validate_paper_detail_schema(
         add_issue(issues, "ERROR", index, title, "authors must be an array")
         return
     authors_text = record.get("authors_text")
+    author_related_values = {
+        key: value
+        for key, value in record.items()
+        if "author" in key.casefold()
+    }
+    if contains_object_object(author_related_values):
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "author-related fields contain [object Object]",
+        )
     if authors_text is not None and not clean_text(authors_text):
         add_issue(
             issues,
