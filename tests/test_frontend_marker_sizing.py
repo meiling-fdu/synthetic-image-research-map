@@ -225,8 +225,8 @@ process.stdout.write(JSON.stringify({
             (REPOSITORY / "web/data/public_preview_papers.json").read_text()
         )
 
-        self.assertEqual(len(map_payload["records"]), 827)
-        self.assertEqual(len(paper_payload["records"]), 402)
+        self.assertEqual(len(map_payload["records"]), 878)
+        self.assertEqual(len(paper_payload["records"]), 444)
 
 
 if __name__ == "__main__":

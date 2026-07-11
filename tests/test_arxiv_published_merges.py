@@ -3,7 +3,7 @@ import json
 import unittest
 from pathlib import Path
 
-from scripts.audit_arxiv_published_duplicates import audit_pairs
+from scripts.audit_arxiv_published_duplicates import audit_duplicates, audit_input_records
 from scripts.paper_version_merges import (
     apply_confirmed_version_merges,
     read_paper_version_merges,
@@ -129,25 +129,29 @@ class ArxivPublishedMergeTests(unittest.TestCase):
             "venue": "arXiv",
             "publication_type": "preprint",
             "doi": "10.48550/arxiv.1234.00001",
+            "openalex_url": "https://openalex.org/W100",
             "authors": [{"name": "Ada Example"}],
             "task": "detection",
             "subtask": "synthetic_image_detection",
         }
         formal = {
-            "title": "A Similar Framework for Synthetic Image Detection",
+            "title": "A Similar Method for Synthetic Image Detection",
             "year": 2025,
             "venue": "Example Conference",
             "publication_type": "article",
             "doi": "10.1000/distinct",
+            "openalex_url": "https://openalex.org/W200",
             "authors": [{"name": "Ada Example"}],
             "task": "detection",
             "subtask": "synthetic_image_detection",
         }
 
-        report = audit_pairs([preprint, formal], [])
+        report = audit_duplicates(audit_input_records([preprint, formal], []))
 
         self.assertEqual(len(report), 1)
-        self.assertEqual(report[0]["recommended_action"], "needs_review")
+        self.assertEqual(
+            report[0]["recommended_action"], "needs_manual_review"
+        )
 
     def test_merge_table_has_only_confirmed_reviewed_rows(self):
         with MERGES_PATH.open(encoding="utf-8", newline="") as handle:
