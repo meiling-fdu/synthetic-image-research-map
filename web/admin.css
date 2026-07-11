@@ -348,6 +348,16 @@ button.project-health-metric:focus-visible {
   min-width: min(100%, 13rem);
 }
 
+.review-scope-help {
+  max-width: 78rem;
+  color: var(--muted);
+}
+
+.review-counts {
+  font-weight: 750;
+  color: var(--green-dark);
+}
+
 .review-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(18rem, 1fr);
@@ -389,6 +399,22 @@ button.project-health-metric:focus-visible {
 .review-detail dd {
   margin: 0;
   overflow-wrap: anywhere;
+}
+
+.review-detail-groups {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.review-detail-groups section,
+.review-detail details {
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+}
+
+.review-detail-groups h4 {
+  margin: 0 0 0.5rem;
 }
 
 .metadata-compare {

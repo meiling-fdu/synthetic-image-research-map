@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "location-search",
     "location-status-filters",
     "location-review-list",
+    "location-review-counts",
     "empty-location-reviews",
     "location-editor-placeholder",
     "location-form",
@@ -248,6 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
     "mapping-coverage-sort",
     "mapping-coverage-key",
     "mapping-coverage-full-empty-state",
+    "mapping-coverage-counts",
     "generate-mapping-report-full",
     "mapping-coverage-table-wrap",
     "mapping-coverage-rows",
@@ -783,6 +785,9 @@ function renderMappingCoverage() {
   const priorityBody = elements["mapping-priority-rows"];
   summaryNode.replaceChildren();
   priorityBody.replaceChildren();
+  elements["mapping-coverage-counts"].textContent = report?.available
+    ? suppressionCountText(report)
+    : "";
   if (!report?.available) {
     summaryNode.hidden = true;
     elements["mapping-coverage-empty-state"].hidden = false;
@@ -861,22 +866,24 @@ function queuePanel(name) {
 }
 
 function queueFields(name, row) {
-  if (name === "high-risk") {
-    return [row.priority, row.title, row.institution, row.review_type, row.recommended_action];
-  }
-  if (name === "marker-blockers") {
-    return [row.blocker_type, row.title, row.institutions || row.institution, row.has_map_location, row.recommended_action];
-  }
-  if (name === "key-paper-coverage") {
-    return [row.missing_stage, row.title, row.year, row.coverage_status, row.recommended_action];
-  }
   return [
-    row.candidate_status,
-    row.title,
-    row.candidate_title || row.best_match_title,
-    row.similarity,
-    row.source_file,
+    row.priority || row.priority_rank || "—",
+    row.title || row.requested_title,
+    row.year || row.candidate_year,
+    row.institution || row.institutions,
+    row.institution_authors,
+    row.review_type || row.blocker_type || row.missing_stage || "import candidate",
+    row.recommended_action,
+    row.current_public_preview_status || row.coverage_status || row.candidate_status || row.review_status,
   ];
+}
+
+function suppressionCountText(queue) {
+  const reasons = Object.entries(queue.suppression_reasons || {});
+  const breakdown = reasons.length
+    ? ` · ${reasons.map(([reason, count]) => `${humanize(reason)}: ${formatNumber(count)}`).join(" · ")}`
+    : "";
+  return `${formatNumber(queue.total_unresolved || 0)} unresolved · ${formatNumber(queue.hidden_resolved || 0)} hidden/resolved${breakdown}`;
 }
 
 function queueGroupField(name) {
@@ -893,6 +900,8 @@ function renderReviewQueue(name) {
   const queue = state.reviewQueues[name] || {};
   if (!panel) return;
   const records = queue.records || [];
+  const counts = panel.querySelector('[data-role="counts"]');
+  if (counts) counts.textContent = suppressionCountText(queue);
   const group = panel.querySelector('[data-role="group"]');
   const previous = group.value;
   const values = [...new Set(records.map((row) => text(row[queueGroupField(name)]) || "unknown"))].sort();
@@ -944,14 +953,39 @@ function renderReviewDetail(name, row) {
   detail.replaceChildren();
   const heading = document.createElement("h3");
   heading.textContent = text(row.title) || "Review row";
-  const dl = document.createElement("dl");
-  Object.entries(row).filter(([, value]) => text(value)).forEach(([key, value]) => {
-    const dt = document.createElement("dt");
-    dt.textContent = humanize(key);
-    const dd = document.createElement("dd");
-    dd.textContent = text(value);
-    dl.append(dt, dd);
+  const groups = [
+    ["Paper", [["Title", row.title || row.requested_title], ["Year", row.year || row.candidate_year], ["DOI", row.doi], ["OpenAlex", row.openalex_url || row.openalex_id]]],
+    ["Marker / Institution", [["Institution", row.institution || row.institutions], ["Institution authors", row.institution_authors], ["Location", [row.city, row.region, row.country].filter(Boolean).join(", ")]]],
+    ["Evidence", [["Evidence source", row.evidence_source || row.source_file], ["Evidence URL", row.evidence_url], ["Resolution", row.resolution_notes || row.notes]]],
+    ["Current curated status", [["Status", row.current_public_preview_status || row.coverage_status || row.candidate_status || row.review_status], ["Review type", row.review_type || row.blocker_type || row.missing_stage]]],
+    ["Recommended action", [["Action", row.recommended_action], ["Priority", row.priority]]],
+  ];
+  const grouped = document.createElement("div");
+  grouped.className = "review-detail-groups";
+  groups.forEach(([label, fields]) => {
+    const section = document.createElement("section");
+    const groupHeading = document.createElement("h4");
+    groupHeading.textContent = label;
+    const dl = document.createElement("dl");
+    fields.filter(([, value]) => text(value)).forEach(([key, value]) => {
+      const dt = document.createElement("dt");
+      dt.textContent = key;
+      const dd = document.createElement("dd");
+      dd.textContent = text(value);
+      dl.append(dt, dd);
+    });
+    section.append(groupHeading, dl);
+    grouped.append(section);
   });
+  const extra = document.createElement("details");
+  extra.innerHTML = "<summary>Additional generated metadata</summary>";
+  const extraDl = document.createElement("dl");
+  Object.entries(row).filter(([, value]) => text(value)).forEach(([key, value]) => {
+    const dt = document.createElement("dt"); dt.textContent = humanize(key);
+    const dd = document.createElement("dd"); dd.textContent = text(value);
+    extraDl.append(dt, dd);
+  });
+  extra.append(extraDl);
   const actions = document.createElement("div");
   actions.className = "review-actions";
   reviewActionsFor(name, row).forEach(([label, action]) => {
@@ -962,7 +996,7 @@ function renderReviewDetail(name, row) {
     button.addEventListener("click", () => handleReviewAction(name, row, action));
     actions.append(button);
   });
-  detail.append(heading, dl, actions);
+  detail.append(heading, grouped, extra, actions);
 }
 
 function reviewActionsFor(name, row) {
@@ -1122,6 +1156,7 @@ function applyLocationPayload(payload) {
   state.locationReviews = payload.records || [];
   state.confirmedLocations = payload.confirmed_locations || [];
   state.locationSummary = payload.summary || {};
+  elements["location-review-counts"].textContent = suppressionCountText(payload);
   renderLocationSummary();
   renderLocationReviewList();
   if (state.selectedLocationReviewId) {

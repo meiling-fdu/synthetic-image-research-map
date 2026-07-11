@@ -6,6 +6,8 @@ from __future__ import annotations
 import csv
 import fnmatch
 import json
+import re
+import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, Sequence
@@ -14,6 +16,13 @@ from typing import Any, Dict, Iterable, Mapping, Sequence
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 MANUAL_DIR = REPOSITORY_ROOT / "data" / "manual"
 WEB_DATA_DIR = REPOSITORY_ROOT / "web" / "data"
+CURATED_DIR = REPOSITORY_ROOT / "data" / "curated"
+
+DEFAULT_MAPPINGS_PATH = CURATED_DIR / "author_institution_mappings.csv"
+DEFAULT_EXCLUSIONS_PATH = CURATED_DIR / "paper_exclusions.csv"
+DEFAULT_RECORD_OVERRIDES_PATH = MANUAL_DIR / "institution_record_overrides.csv"
+DEFAULT_AUTHOR_OVERRIDES_PATH = MANUAL_DIR / "institution_author_overrides.csv"
+DEFAULT_CORRECTIONS_PATH = MANUAL_DIR / "institution_corrections.csv"
 
 QUEUE_PATHS = {
     "high_risk_marker": MANUAL_DIR / "high_risk_marker_review.csv",
@@ -35,6 +44,118 @@ class AdminReviewQueueError(RuntimeError):
 
 def clean(value: Any) -> str:
     return " ".join(str(value or "").split())
+
+
+def _normalized_words(value: Any) -> str:
+    value = unicodedata.normalize("NFKC", clean(value)).casefold()
+    return " ".join(re.findall(r"\w+", value, flags=re.UNICODE))
+
+
+def _normalized_doi(value: Any) -> str:
+    return re.sub(r"^https?://(?:dx\.)?doi\.org/", "", clean(value), flags=re.I).casefold()
+
+
+def _identity_keys(row: Mapping[str, Any]) -> set[str]:
+    keys: set[str] = set()
+    if clean(row.get("paper_id")):
+        keys.add(f"paper:{clean(row.get('paper_id')).casefold()}")
+    doi = _normalized_doi(row.get("doi"))
+    if doi:
+        keys.add(f"doi:{doi}")
+    openalex = clean(row.get("openalex_url") or row.get("openalex_id")).casefold().rstrip("/")
+    if openalex:
+        if not openalex.startswith("http"):
+            openalex = f"https://openalex.org/{openalex}"
+        keys.add(f"openalex:{openalex}")
+    title = _normalized_words(row.get("title") or row.get("requested_title"))
+    year = clean(row.get("year") or row.get("publication_year"))
+    if title and year:
+        keys.add(f"title-year:{title}|{year}")
+    return keys
+
+
+def _same_paper(left: Mapping[str, Any], right: Mapping[str, Any]) -> bool:
+    left_keys, right_keys = _identity_keys(left), _identity_keys(right)
+    left_strong = {key for key in left_keys if not key.startswith("title-year:")}
+    right_strong = {key for key in right_keys if not key.startswith("title-year:")}
+    if left_strong and right_strong:
+        return bool(left_strong & right_strong)
+    return not (left_strong or right_strong) and bool(left_keys & right_keys)
+
+
+def _authors(row: Mapping[str, Any]) -> set[str]:
+    value = row.get("institution_authors") or row.get("authors") or ""
+    if isinstance(value, list):
+        parts = [item.get("display_name", "") if isinstance(item, dict) else item for item in value]
+    else:
+        parts = re.split(r"\s*;\s*", clean(value))
+    return {_normalized_words(part) for part in parts if _normalized_words(part)}
+
+
+def suppression_reason(
+    row: Mapping[str, Any],
+    *,
+    mappings: Sequence[Mapping[str, Any]] = (),
+    exclusions: Sequence[Mapping[str, Any]] = (),
+    record_overrides: Sequence[Mapping[str, Any]] = (),
+    author_overrides: Sequence[Mapping[str, Any]] = (),
+    corrections: Sequence[Mapping[str, Any]] = (),
+) -> str:
+    """Return the curated fact that makes a generated review row non-actionable."""
+    if any(clean(item.get("is_active")).casefold() in {"1", "true", "yes", "y"} and _same_paper(row, item) for item in exclusions):
+        return "resolved_by_durable_exclusion"
+
+    institution = _normalized_words(row.get("institution"))
+    row_authors = _authors(row)
+    active_mappings = [
+        item for item in mappings
+        if clean(item.get("mapping_status")).casefold() == "active" and _same_paper(row, item)
+    ]
+    if institution and any(_normalized_words(item.get("institution")) == institution for item in active_mappings):
+        return "resolved_by_active_curated_mapping"
+    if row_authors and any(_authors(item) == row_authors for item in active_mappings):
+        return "superseded_by_active_curated_mapping"
+
+    for item in record_overrides:
+        if _same_paper(row, item) and (
+            not institution
+            or _normalized_words(item.get("institution")) == institution
+            or clean(item.get("mode")).casefold() == "replace"
+        ):
+            return "resolved_by_active_institution_override"
+    for item in author_overrides:
+        if _same_paper(row, item) and (
+            not row_authors or _authors(item) == row_authors
+        ):
+            return "resolved_by_curated_correction"
+    if institution and any(
+        _normalized_words(item.get("match_key")) == institution for item in corrections
+    ):
+        return "resolved_by_curated_correction"
+
+    # Paper-level diagnostics without a candidate institution are resolved only
+    # when their stated missing stage is exactly what an active mapping supplies.
+    if not institution and active_mappings:
+        diagnostic = " ".join(clean(row.get(field)).casefold() for field in (
+            "blocker_type", "missing_stage", "recommended_action"
+        ))
+        if any(token in diagnostic for token in ("mapping", "affiliation", "marker")):
+            return "resolved_by_active_curated_mapping"
+    return ""
+
+
+def suppress_resolved_records(
+    records: Sequence[Mapping[str, Any]], **evidence: Sequence[Mapping[str, Any]]
+) -> tuple[list[Dict[str, Any]], Counter[str]]:
+    visible: list[Dict[str, Any]] = []
+    hidden: Counter[str] = Counter()
+    for source in records:
+        reason = suppression_reason(source, **evidence)
+        if reason:
+            hidden[reason] += 1
+        else:
+            visible.append(dict(source))
+    return visible, hidden
 
 
 def read_csv(path: Path) -> list[Dict[str, str]]:
@@ -63,11 +184,27 @@ def _summary(rows: Iterable[Mapping[str, Any]], field: str) -> Dict[str, int]:
     return dict(sorted(Counter(clean(row.get(field)) or "unknown" for row in rows).items()))
 
 
-def load_queue(name: str) -> Dict[str, Any]:
+def load_queue(
+    name: str,
+    *,
+    mappings_path: Path = DEFAULT_MAPPINGS_PATH,
+    exclusions_path: Path = DEFAULT_EXCLUSIONS_PATH,
+    record_overrides_path: Path = DEFAULT_RECORD_OVERRIDES_PATH,
+    author_overrides_path: Path = DEFAULT_AUTHOR_OVERRIDES_PATH,
+    corrections_path: Path = DEFAULT_CORRECTIONS_PATH,
+) -> Dict[str, Any]:
     path = QUEUE_PATHS.get(name)
     if path is None:
         raise AdminReviewQueueError(f"unsupported review queue: {name}")
-    rows = read_csv(path)
+    source_rows = read_csv(path)
+    rows, hidden = suppress_resolved_records(
+        source_rows,
+        mappings=read_csv(mappings_path),
+        exclusions=read_csv(exclusions_path),
+        record_overrides=read_csv(record_overrides_path),
+        author_overrides=read_csv(author_overrides_path),
+        corrections=read_csv(corrections_path),
+    )
     group_field = {
         "high_risk_marker": "priority",
         "marker_blocker": "blocker_type",
@@ -78,6 +215,9 @@ def load_queue(name: str) -> Dict[str, Any]:
         "available": path.exists(),
         "source_file": str(path.relative_to(REPOSITORY_ROOT)),
         "count": len(rows),
+        "total_unresolved": len(rows),
+        "hidden_resolved": sum(hidden.values()),
+        "suppression_reasons": dict(sorted(hidden.items())),
         "summary": _summary(rows, group_field),
         "records": rows,
         "durable_source": False,
@@ -109,7 +249,11 @@ def _candidate_status(row: Mapping[str, Any], filename: str) -> str:
     return "manual_review"
 
 
-def load_manual_import_queue() -> Dict[str, Any]:
+def load_manual_import_queue(
+    *,
+    mappings_path: Path = DEFAULT_MAPPINGS_PATH,
+    exclusions_path: Path = DEFAULT_EXCLUSIONS_PATH,
+) -> Dict[str, Any]:
     records: list[Dict[str, Any]] = []
     files = _manual_import_files()
     for path in files:
@@ -122,13 +266,24 @@ def load_manual_import_queue() -> Dict[str, Any]:
             row.setdefault("candidate_year", row.get("best_match_year", ""))
             row.setdefault("venue", row.get("publication_venue", ""))
             records.append(row)
+    visible, hidden = suppress_resolved_records(
+        records,
+        mappings=read_csv(mappings_path),
+        exclusions=read_csv(exclusions_path),
+        record_overrides=read_csv(DEFAULT_RECORD_OVERRIDES_PATH),
+        author_overrides=read_csv(DEFAULT_AUTHOR_OVERRIDES_PATH),
+        corrections=read_csv(DEFAULT_CORRECTIONS_PATH),
+    )
     return {
         "queue": "manual_import",
         "available": bool(files),
         "source_files": [str(path.relative_to(REPOSITORY_ROOT)) for path in files],
-        "count": len(records),
-        "summary": _summary(records, "candidate_status"),
-        "records": records,
+        "count": len(visible),
+        "total_unresolved": len(visible),
+        "hidden_resolved": sum(hidden.values()),
+        "suppression_reasons": dict(sorted(hidden.items())),
+        "summary": _summary(visible, "candidate_status"),
+        "records": visible,
         "durable_source": False,
     }
 

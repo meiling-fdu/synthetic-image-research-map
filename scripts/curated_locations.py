@@ -572,6 +572,7 @@ def location_review_payload(
             )
         ].append(location)
     records = []
+    suppression_reasons: Counter[str] = Counter()
     for row in reviews:
         raw_key = normalize_institution_name(row.get("institution"))
         alias_target = confirmed_alias_targets.get(raw_key)
@@ -583,8 +584,7 @@ def location_review_payload(
         effective_status = clean(row.get("review_status"))
         if alias_target and effective_status not in {"ignore", "excluded"}:
             effective_status = "alias_of_confirmed"
-        records.append(
-            {
+        record = {
                 **row,
                 "review_status": effective_status or "pending_review",
                 "canonical_institution_name": clean(
@@ -595,9 +595,19 @@ def location_review_payload(
                 "confirmed_location_count": len(matches),
                 "existing_aliases": aliases_by_canonical.get(canonical_key, []),
             }
-        )
+        if effective_status in {"ignore", "excluded"}:
+            suppression_reasons["resolved_by_durable_exclusion"] += 1
+        elif alias_target or effective_status == "alias_of_confirmed":
+            suppression_reasons["resolved_by_curated_correction"] += 1
+        elif matches or effective_status == "confirmed" or clean(row.get("coordinate_status")) == "known":
+            suppression_reasons["resolved_by_active_institution_override"] += 1
+        else:
+            records.append(record)
     return {
         "records": records,
+        "total_unresolved": len(records),
+        "hidden_resolved": sum(suppression_reasons.values()),
+        "suppression_reasons": dict(sorted(suppression_reasons.items())),
         "confirmed_locations": locations,
         "institution_aliases": aliases,
         "summary": location_review_report(reviews, locations),

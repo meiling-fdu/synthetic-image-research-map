@@ -338,7 +338,9 @@ def read_csv_rows(path: Path) -> List[Dict[str, str]]:
         raise AdminDataError(f"could not read {path}: {error}") from error
 
 
-def load_author_mapping_coverage(path: Path = AUTHOR_MAPPING_REPORT_PATH) -> Dict[str, Any]:
+def load_author_mapping_coverage(
+    path: Path = AUTHOR_MAPPING_REPORT_PATH, *, unresolved_only: bool = False
+) -> Dict[str, Any]:
     """Load the fixed generated author-mapping report for the local dashboard."""
     if not path.exists():
         raise AdminDataError(
@@ -430,10 +432,21 @@ def load_author_mapping_coverage(path: Path = AUTHOR_MAPPING_REPORT_PATH) -> Dic
         ),
         "map_markers_reconciled": sum(row["marker_count"] for row in records),
     }
+    all_records = records
+    hidden_complete = sum(row["mapping_status"] == "complete" for row in all_records)
+    if unresolved_only:
+        records = [row for row in all_records if row["mapping_status"] != "complete"]
     return {
         "available": True,
         "summary": summary,
         "records": records,
+        "total_unresolved": len(records),
+        "hidden_resolved": hidden_complete if unresolved_only else 0,
+        "suppression_reasons": (
+            {"resolved_by_active_curated_mapping": hidden_complete}
+            if unresolved_only and hidden_complete
+            else {}
+        ),
         "report_url": "/docs/missing_author_mappings_report.md",
         "source": "data/manual/missing_author_mappings_report.csv",
     }
@@ -615,7 +628,7 @@ def load_admin_data(
     exclusion_rows = read_csv_rows(exclusions_path)
 
     papers: List[Dict[str, Any]] = []
-    paper_identity_index: Dict[str, Dict[str, Any]] = {}
+    paper_identity_index: DefaultDict[str, List[Mapping[str, Any]]] = defaultdict(list)
     for source_record in public_papers:
         record = dict(source_record)
         record["record_source"] = "public_preview"
@@ -623,7 +636,7 @@ def load_admin_data(
         record["curated_record"] = None
         papers.append(record)
         for key in identity_keys(record):
-            paper_identity_index.setdefault(key, record)
+            paper_identity_index[key].append(record)
 
     for curated_row in curated_rows:
         curated_record = curated_paper_record(curated_row)
@@ -636,7 +649,7 @@ def load_admin_data(
             match["curated_record"] = dict(curated_row)
             papers.append(match)
             for key in identity_keys(match):
-                paper_identity_index.setdefault(key, match)
+                paper_identity_index[key].append(match)
         else:
             match["is_in_curated_papers"] = True
             match["curated_record"] = dict(curated_row)
@@ -653,7 +666,7 @@ def load_admin_data(
             continue
         papers.append(exclusion_record)
         for key in identity_keys(exclusion_record):
-            paper_identity_index.setdefault(key, exclusion_record)
+            paper_identity_index[key].append(exclusion_record)
 
     marker_index = index_by_identity(map_records)
     exclusion_index = index_by_identity(exclusion_rows)
@@ -1388,7 +1401,8 @@ def make_handler(
                     return
                 try:
                     report = load_author_mapping_coverage(
-                        author_mapping_report_path
+                        author_mapping_report_path,
+                        unresolved_only=True,
                     )
                 except AdminDataError as error:
                     self.send_json(
@@ -1436,13 +1450,20 @@ def make_handler(
                     return
                 try:
                     if request.path in review_get_paths:
-                        queue = load_queue(review_get_paths[request.path])
+                        queue = load_queue(
+                            review_get_paths[request.path],
+                            mappings_path=mappings_path,
+                            exclusions_path=exclusions_path,
+                        )
                         self.send_json(HTTPStatus.OK, api_payload(data=queue))
                         return
                     if request.path == "/api/review/manual-import":
                         self.send_json(
                             HTTPStatus.OK,
-                            api_payload(data=load_manual_import_queue()),
+                            api_payload(data=load_manual_import_queue(
+                                mappings_path=mappings_path,
+                                exclusions_path=exclusions_path,
+                            )),
                         )
                         return
                     if request.path == "/api/dashboard":

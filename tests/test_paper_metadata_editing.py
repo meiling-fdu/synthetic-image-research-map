@@ -1,7 +1,9 @@
 import csv
+import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.curated_export import integrate_curated_records
 from scripts.curated_papers import (
@@ -16,6 +18,7 @@ from scripts.paper_exclusions import (
     record_is_excluded,
     upsert_active_exclusion,
 )
+from scripts.serve_admin import load_admin_data
 
 
 def curated_row(**overrides):
@@ -60,6 +63,75 @@ def write_exclusions(path, rows=()):
 
 
 class PaperMetadataEditingTests(unittest.TestCase):
+    def test_admin_data_loading_resolves_identity_matches_to_paper_records(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            directory = Path(temporary_directory)
+            public_papers_path = directory / "public_preview_papers.json"
+            public_map_path = directory / "public_preview_map_data.json"
+            curated_papers_path = directory / "papers.csv"
+            exclusions_path = directory / "paper_exclusions.csv"
+
+            shared_title = "Source Generator Attribution via Inversion"
+            public_papers_path.write_text(
+                json.dumps(
+                    [
+                        {
+                            "paper_id": "openalex:W-PUBLISHED",
+                            "title": shared_title,
+                            "year": 2025,
+                            "authors": ["Published Author"],
+                            "doi": "10.1000/published",
+                            "openalex_url": "https://openalex.org/W-PUBLISHED",
+                        },
+                        {
+                            "paper_id": "openalex:W-ARXIV",
+                            "title": shared_title,
+                            "year": 2025,
+                            "authors": [{"display_name": "Preprint Author"}],
+                            "doi": "10.48550/arxiv.2401.00001",
+                            "openalex_url": "https://openalex.org/W-ARXIV",
+                        },
+                    ]
+                ),
+                encoding="utf-8",
+            )
+            public_map_path.write_text("[]", encoding="utf-8")
+            write_papers(
+                curated_papers_path,
+                [
+                    curated_row(
+                        paper_id="openalex:W-ARXIV",
+                        title=shared_title,
+                        year="2025",
+                        authors='[{"display_name":"Preprint Author"}]',
+                        doi="10.48550/arxiv.2401.00001",
+                        openalex_url="https://openalex.org/W-ARXIV",
+                    )
+                ],
+            )
+            write_exclusions(exclusions_path)
+
+            with (
+                patch("scripts.serve_admin.PUBLIC_PAPERS_PATH", public_papers_path),
+                patch("scripts.serve_admin.PUBLIC_MAP_PATH", public_map_path),
+            ):
+                papers, admin_data = load_admin_data(
+                    exclusions_path=exclusions_path,
+                    curated_papers_path=curated_papers_path,
+                )
+
+            self.assertEqual(len(papers), 2)
+            self.assertTrue(all(isinstance(record, dict) for record in papers))
+            papers_by_paper_id = {record["paper_id"]: record for record in papers}
+            self.assertEqual(len(papers_by_paper_id), 2)
+            self.assertTrue(
+                papers_by_paper_id["openalex:W-ARXIV"]["is_in_curated_papers"]
+            )
+            self.assertFalse(
+                papers_by_paper_id["openalex:W-PUBLISHED"]["is_in_curated_papers"]
+            )
+            self.assertEqual(len(admin_data["papers_by_id"]), 2)
+
     def test_author_normalization_accepts_strings_objects_and_json(self):
         cases = (
             ("Alice; Bob", ["Alice", "Bob"]),
