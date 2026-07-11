@@ -9,6 +9,7 @@ import hashlib
 import hmac
 import ipaddress
 import json
+import logging
 import re
 import secrets
 import sys
@@ -29,6 +30,7 @@ try:
         run_workflow,
     )
     from .curated_schema import ALLOWED_EXCLUSION_REASONS
+    from .arxiv_autofill import ArxivLookupError, autofill_public_map_arxiv_ids
     from .curated_papers import (
         DEFAULT_CURATED_PAPERS_PATH,
         CuratedPaperError,
@@ -95,6 +97,7 @@ except ImportError:
         run_workflow,
     )
     from curated_schema import ALLOWED_EXCLUSION_REASONS
+    from arxiv_autofill import ArxivLookupError, autofill_public_map_arxiv_ids
     from curated_papers import (
         DEFAULT_CURATED_PAPERS_PATH,
         CuratedPaperError,
@@ -177,6 +180,23 @@ TRUE_VALUES = {"1", "true", "yes", "y"}
 MAX_REQUEST_BYTES = 64 * 1024
 EXCLUSION_WRITE_LOCK = threading.Lock()
 CURATED_PAPER_WRITE_LOCK = threading.Lock()
+ARXIV_AUTOFILL_LOCK = threading.Lock()
+ARXIV_AUTOFILL_STATE_LOCK = threading.Lock()
+ARXIV_AUTOFILL_STATE: Dict[str, Any] = {
+    "status": "idle",
+    "total_eligible_papers": 0,
+    "papers_requiring_lookup": 0,
+    "processed_lookups": 0,
+    "exact_matches_added": 0,
+    "no_matches": 0,
+    "ambiguous_matches": 0,
+    "failed_lookups": 0,
+    "current_paper_title": "",
+    "start_time": None,
+    "completion_time": None,
+    "final_error": "",
+    "result": None,
+}
 CURATED_MAPPING_WRITE_LOCK = threading.Lock()
 CURATED_LOCATION_WRITE_LOCK = threading.Lock()
 REVIEW_DECISION_WRITE_LOCK = threading.Lock()
@@ -207,6 +227,7 @@ STATIC_ROUTES = {
         "text/markdown; charset=utf-8",
     ),
 }
+LOGGER = logging.getLogger(__name__)
 
 
 class AdminDataError(RuntimeError):
@@ -1107,6 +1128,9 @@ def make_handler(
     author_mapping_report_generator: Callable[
         [], Mapping[str, Any]
     ] = generate_author_mapping_report,
+    autofill_runner: Callable[..., Mapping[str, Any]] = (
+        autofill_public_map_arxiv_ids
+    ),
 ) -> type[BaseHTTPRequestHandler]:
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
@@ -1180,6 +1204,73 @@ def make_handler(
         def workflow_status_snapshot(self) -> Dict[str, Any]:
             with workflow_status_lock:
                 return dict(latest_workflow_status)
+
+        def autofill_status_snapshot(self) -> Dict[str, Any]:
+            with ARXIV_AUTOFILL_STATE_LOCK:
+                return dict(ARXIV_AUTOFILL_STATE)
+
+        @staticmethod
+        def update_autofill_progress(progress: Mapping[str, Any]) -> None:
+            with ARXIV_AUTOFILL_STATE_LOCK:
+                ARXIV_AUTOFILL_STATE.update({
+                    "total_eligible_papers": int(
+                        progress.get("eligible_public_map_papers", 0)
+                    ),
+                    "papers_requiring_lookup": int(
+                        progress.get("papers_requiring_lookup", 0)
+                    ),
+                    "processed_lookups": int(
+                        progress.get("processed_lookups", 0)
+                    ),
+                    "exact_matches_added": int(
+                        progress.get("exact_matches_added", 0)
+                    ),
+                    "no_matches": int(progress.get("no_match_count", 0)),
+                    "ambiguous_matches": int(
+                        progress.get("ambiguous_match_count", 0)
+                    ),
+                    "failed_lookups": int(
+                        progress.get("failed_lookup_count", 0)
+                    ),
+                    "current_paper_title": clean(
+                        progress.get("current_paper_title")
+                    ),
+                })
+
+        @classmethod
+        def run_arxiv_autofill_job(cls) -> None:
+            try:
+                stats = dict(autofill_runner(
+                    export=lambda: run_workflow("export_preview"),
+                    progress=cls.update_autofill_progress,
+                ))
+                cls.update_autofill_progress(stats)
+                export_failed = bool(
+                    stats.get("export_ran")
+                    and not stats.get("export_success")
+                )
+                with ARXIV_AUTOFILL_STATE_LOCK:
+                    ARXIV_AUTOFILL_STATE.update({
+                        "status": "failed" if export_failed else "completed",
+                        "completion_time": datetime.now(timezone.utc).isoformat(),
+                        "current_paper_title": "",
+                        "final_error": (
+                            "Public preview export failed."
+                            if export_failed else ""
+                        ),
+                        "result": stats,
+                    })
+            except Exception as error:  # Preserve status for polling clients.
+                LOGGER.exception("arXiv autofill job failed")
+                with ARXIV_AUTOFILL_STATE_LOCK:
+                    ARXIV_AUTOFILL_STATE.update({
+                        "status": "failed",
+                        "completion_time": datetime.now(timezone.utc).isoformat(),
+                        "current_paper_title": "",
+                        "final_error": f"{type(error).__name__}: {error}",
+                    })
+            finally:
+                ARXIV_AUTOFILL_LOCK.release()
 
         def run_admin_workflow(self, workflow_name: str) -> None:
             if not self.is_loopback_client():
@@ -1324,6 +1415,15 @@ def make_handler(
             if request.path in WORKFLOW_ENDPOINTS:
                 self.send_method_not_allowed("POST")
                 return
+            if request.path == "/api/admin/papers/autofill-arxiv/status":
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                self.send_json(HTTPStatus.OK, self.autofill_status_snapshot())
+                return
             if request.path == "/api/latest-validation-status":
                 if not self.is_header_authorized():
                     self.send_json(
@@ -1429,6 +1529,7 @@ def make_handler(
                 "/api/review/manual-import",
                 "/api/dashboard",
                 "/api/paper/metadata",
+                "/api/admin/papers/autofill-arxiv/status",
             }:
                 if not self.is_header_authorized():
                     self.send_json(
@@ -1726,6 +1827,73 @@ def make_handler(
                         )
                         return
                 self.run_admin_workflow(WORKFLOW_ENDPOINTS[request.path])
+                return
+            if request.path == "/api/admin/papers/autofill-arxiv":
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        {"error": "X-Admin-Token header is required"},
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {
+                            "error": (
+                                "arXiv auto-fill is restricted to "
+                                "loopback clients"
+                            )
+                        },
+                    )
+                    return
+                if not ARXIV_AUTOFILL_LOCK.acquire(blocking=False):
+                    self.send_json(
+                        HTTPStatus.CONFLICT,
+                        {"error": "arXiv auto-fill is already running"},
+                    )
+                    return
+                try:
+                    with ARXIV_AUTOFILL_STATE_LOCK:
+                        ARXIV_AUTOFILL_STATE.update({
+                            "status": "running",
+                            "total_eligible_papers": 0,
+                            "papers_requiring_lookup": 0,
+                            "processed_lookups": 0,
+                            "exact_matches_added": 0,
+                            "no_matches": 0,
+                            "ambiguous_matches": 0,
+                            "failed_lookups": 0,
+                            "current_paper_title": "",
+                            "start_time": datetime.now(timezone.utc).isoformat(),
+                            "completion_time": None,
+                            "final_error": "",
+                            "result": None,
+                        })
+                    worker = threading.Thread(
+                        target=self.run_arxiv_autofill_job,
+                        name="arxiv-autofill",
+                        daemon=True,
+                    )
+                    worker.start()
+                    self.send_json(
+                        HTTPStatus.ACCEPTED,
+                        api_payload(
+                            message="arXiv ID auto-fill started.",
+                            data=self.autofill_status_snapshot(),
+                        ),
+                    )
+                except Exception as error:
+                    ARXIV_AUTOFILL_LOCK.release()
+                    with ARXIV_AUTOFILL_STATE_LOCK:
+                        ARXIV_AUTOFILL_STATE.update({
+                            "status": "failed",
+                            "completion_time": datetime.now(timezone.utc).isoformat(),
+                            "final_error": f"{type(error).__name__}: {error}",
+                        })
+                    self.send_json(
+                        HTTPStatus.INTERNAL_SERVER_ERROR,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
                 return
             if request.path == AUTHOR_MAPPING_GENERATE_ENDPOINT:
                 if not self.is_header_authorized():

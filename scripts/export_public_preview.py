@@ -152,6 +152,7 @@ DEFAULT_PAPER_EXCLUSIONS = DEFAULT_EXCLUSIONS_PATH
 DEFAULT_REVIEW_DECISIONS = (
     Path("data/curated/review_decisions.csv")
 )
+DEFAULT_CURATED_ARXIV_LINKS = Path("data/curated/paper_arxiv_links.csv")
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -2408,7 +2409,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 map_records=True,
             )
         paper_version_overrides = read_paper_version_overrides()
-        paper_arxiv_links = read_paper_arxiv_links()
+        paper_arxiv_links = [
+            *read_paper_arxiv_links(),
+            *read_csv_rows(DEFAULT_CURATED_ARXIV_LINKS),
+        ]
         publication_overrides = read_publication_overrides()
         paper_abstracts = read_paper_abstracts()
         local_abstracts = read_local_openalex_abstracts()

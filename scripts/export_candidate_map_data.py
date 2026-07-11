@@ -1405,6 +1405,8 @@ def apply_paper_arxiv_links(
             applied_indexes.add(row_index)
             merge_arxiv_value(record, "arxiv_id", arxiv_id)
             merge_arxiv_value(record, "arxiv_url", arxiv_url)
+            if arxiv_id and not clean_text(record.get("paper_url")):
+                record["paper_url"] = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
             if not clean_text(record.get("arxiv_year")):
                 record["arxiv_year"] = parse_year(row.get("arxiv_year"))
             record["has_arxiv_version"] = bool(

@@ -176,6 +176,16 @@ PAPER_VERSION_MERGE_COLUMNS = (
     "created_by",
 )
 
+CURATED_ARXIV_LINK_COLUMNS = (
+    "title",
+    "year",
+    "doi",
+    "openalex_url",
+    "arxiv_id",
+    "match_status",
+    "source",
+)
+
 EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "papers.csv": PAPERS_COLUMNS,
     "author_institution_mappings.csv": AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -185,6 +195,7 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
     "review_decisions.csv": REVIEW_DECISION_COLUMNS,
     "paper_version_merges.csv": PAPER_VERSION_MERGE_COLUMNS,
+    "paper_arxiv_links.csv": CURATED_ARXIV_LINK_COLUMNS,
 }
 
 ALLOWED_TASKS = {

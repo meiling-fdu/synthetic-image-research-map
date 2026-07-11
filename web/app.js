@@ -1446,8 +1446,9 @@ function paperExternalLinks(record, includeArxivId = false) {
   const doi = recordDoi(record);
   const doiUrl = doi ? safeHttpUrl(`https://doi.org/${doi}`) : "";
   const arxivId = recordArxivId(record);
-  const arxivUrl = recordArxivUrl(record);
-  const safeArxivUrl = safeHttpUrl(arxivUrl);
+  const safeArxivUrl = arxivId
+    ? safeHttpUrl(`https://arxiv.org/abs/${arxivId}`)
+    : "";
   const openalexUrl = safeHttpUrl(record.openalex_url);
   const paperUrl = recordLandingPageUrl(record);
   const linkCandidates = [

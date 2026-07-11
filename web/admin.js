@@ -21,10 +21,13 @@ const state = {
 };
 
 const elements = {};
+let arxivAutofillPollTimer = null;
+let arxivAutofillPolling = false;
 const workflowCommandIds = [
   "run-curated-validation",
   "run-export-preview",
   "run-public-validation",
+  "autofill-arxiv",
   "run-full-refresh",
   "publish-changes",
 ];
@@ -140,6 +143,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "run-curated-validation",
     "run-export-preview",
     "run-public-validation",
+    "autofill-arxiv",
     "run-full-refresh",
     "publish-changes",
     "reload-preview-data",
@@ -313,6 +317,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   ].forEach(([id, path, label]) => {
     elements[id].addEventListener("click", () => runAdminWorkflow(path, label));
   });
+  elements["autofill-arxiv"].addEventListener("click", autofillArxivIds);
   elements["publish-changes"].addEventListener("click", () => {
     const confirmed = window.confirm(
       "Publish Changes will refresh and validate the public preview, commit selected curated/manual/web-data/test files, and push the current branch. Continue?"
@@ -407,11 +412,12 @@ async function loadApplication(preserveSelection = false) {
   setConnection("loading", "Loading…");
   elements["token-panel"].hidden = true;
   try {
-    const [status, papersPayload, workflowStatus, locationPayload] = await Promise.all([
+    const [status, papersPayload, workflowStatus, locationPayload, autofillStatus] = await Promise.all([
       apiFetch("/api/status"),
       apiFetch("/api/papers"),
       apiFetch("/api/latest-validation-status"),
       apiFetch("/api/location-review"),
+      apiFetch("/api/admin/papers/autofill-arxiv/status"),
     ]);
     state.papers = papersPayload.records.slice().sort((left, right) =>
       text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
@@ -422,6 +428,8 @@ async function loadApplication(preserveSelection = false) {
     setConnection("ok", "Local curation · connected");
     renderLatestWorkflowStatus(workflowStatus);
     applyLocationPayload(locationPayload);
+    renderArxivAutofillStatus(autofillStatus);
+    if (autofillStatus.status === "running") scheduleArxivAutofillPoll();
     elements["console-nav"].hidden = false;
     await loadDashboardAndQueues();
     if (preserveSelection && state.selectedId) {
@@ -1635,6 +1643,93 @@ async function runAdminWorkflow(path, label, payload = null) {
     showNotice(`${label} failed: ${error.message}`, "error");
   } finally {
     setWorkflowRunning(false);
+  }
+}
+
+async function autofillArxivIds() {
+  const button = elements["autofill-arxiv"];
+  if (button.disabled) return;
+  button.disabled = true;
+  button.textContent = "Auto-filling arXiv IDs…";
+  try {
+    await apiFetch("/api/admin/papers/autofill-arxiv", {
+      method: "POST",
+      body: JSON.stringify({}),
+    });
+    await pollArxivAutofillStatus();
+  } catch (error) {
+    if (error.status === 409) {
+      await pollArxivAutofillStatus();
+    } else {
+      restoreArxivAutofillButton();
+      showNotice(`arXiv auto-fill failed: ${error.message}`, "error");
+    }
+  }
+}
+
+function restoreArxivAutofillButton() {
+  elements["autofill-arxiv"].disabled = false;
+  elements["autofill-arxiv"].textContent = "Auto-fill missing arXiv IDs";
+}
+
+function renderArxivAutofillStatus(status) {
+  const running = status?.status === "running";
+  const button = elements["autofill-arxiv"];
+  button.disabled = running;
+  button.textContent = running
+    ? "Auto-filling arXiv IDs…"
+    : "Auto-fill missing arXiv IDs";
+  if (!status || status.status === "idle") return;
+  const result = status.result || {};
+  const failures = (result.failed_lookups || [])
+    .map((failure) => `${failure.title} — ${failure.reason}`)
+    .join("\n") || "None";
+  const updated = (result.updated_papers || [])
+    .map((paper) => `${paper.title} — ${paper.arxiv_id}`)
+    .join("\n") || "None";
+  elements["workflow-log"].textContent = [
+    `Status: ${status.status}`,
+    `Processing ${status.processed_lookups ?? 0} / ${status.papers_requiring_lookup ?? 0}`,
+    `Added: ${status.exact_matches_added ?? 0} · No match: ${status.no_matches ?? 0} · Ambiguous: ${status.ambiguous_matches ?? 0} · Failed: ${status.failed_lookups ?? 0}`,
+    `Current: ${status.current_paper_title || "—"}`,
+    status.final_error ? `Error: ${status.final_error}` : "",
+    status.status === "completed" || status.status === "failed"
+      ? `Failed lookup details:\n${failures}\nUpdated papers:\n${updated}`
+      : "",
+  ].filter(Boolean).join("\n");
+  elements["workflow-log-panel"].open = true;
+}
+
+function scheduleArxivAutofillPoll() {
+  if (arxivAutofillPollTimer !== null) return;
+  arxivAutofillPollTimer = window.setTimeout(() => {
+    arxivAutofillPollTimer = null;
+    pollArxivAutofillStatus();
+  }, 1500);
+}
+
+async function pollArxivAutofillStatus() {
+  if (arxivAutofillPolling) return;
+  arxivAutofillPolling = true;
+  try {
+    const status = await apiFetch("/api/admin/papers/autofill-arxiv/status");
+    renderArxivAutofillStatus(status);
+    if (status.status === "running") {
+      scheduleArxivAutofillPoll();
+    } else {
+      restoreArxivAutofillButton();
+      if (status.status === "completed") {
+        await loadApplication(true);
+        showNotice(`Added ${status.exact_matches_added ?? 0} arXiv IDs.`);
+      } else if (status.status === "failed") {
+        showNotice(`arXiv auto-fill failed: ${status.final_error || "unknown error"}`, "error");
+      }
+    }
+  } catch (error) {
+    restoreArxivAutofillButton();
+    showNotice(`Could not read arXiv auto-fill progress: ${error.message}`, "error");
+  } finally {
+    arxivAutofillPolling = false;
   }
 }
 
