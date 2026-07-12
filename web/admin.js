@@ -18,6 +18,7 @@ const state = {
   authorMappingCoverage: null,
   paperMetadata: null,
   draftMappingCandidates: [],
+  selectedGeocodeCandidate: null,
 };
 
 const elements = {};
@@ -178,11 +179,22 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "location-confirm",
     "location-confirm-alias",
     "location-save-metadata",
+    "location-geocode",
     "location-create-new",
     "location-needs-coordinates",
     "location-mark-ambiguous",
     "location-ignore",
     "location-exclude",
+    "geocode-dialog",
+    "geocode-form",
+    "geocode-dialog-title",
+    "geocode-query",
+    "geocode-replace-warning",
+    "geocode-candidates",
+    "geocode-empty",
+    "geocode-error",
+    "geocode-cancel",
+    "geocode-confirm",
     "scope-dialog",
     "scope-form",
     "scope-paper-id",
@@ -346,6 +358,12 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["location-exclude"].addEventListener("click", () => markLocationReview("excluded"));
   elements["location-confirm-alias"].addEventListener("click", confirmLocationAlias);
   elements["location-save-metadata"].addEventListener("click", saveLocationMetadata);
+  elements["location-geocode"].addEventListener("click", findInstitutionCoordinates);
+  elements["geocode-cancel"].addEventListener("click", closeGeocodeDialog);
+  elements["geocode-confirm"].addEventListener("click", confirmGeocodeCandidate);
+  elements["geocode-dialog"].addEventListener("close", () => {
+    state.selectedGeocodeCandidate = null;
+  });
   elements["location-create-new"].addEventListener("click", () => {
     elements["canonical-institution"].value = "";
     elements["confirmed-institution"].focus();
@@ -888,6 +906,7 @@ function queueFields(name, row) {
     row.review_type || row.blocker_type || row.missing_stage || "import candidate",
     row.recommended_action,
     row.current_public_preview_status || row.coverage_status || row.candidate_status || row.review_status,
+    row.public_visibility_label || "Not visible on map",
   ];
 }
 
@@ -998,7 +1017,7 @@ function renderReviewDetail(name, row) {
     ["Paper", [["Title", row.title || row.requested_title], ["Year", row.year || row.candidate_year], ["DOI", row.doi], ["OpenAlex", row.openalex_url || row.openalex_id]]],
     ["Marker / Institution", [["Institution", row.institution || row.institutions], ["Institution authors", row.institution_authors], ["Location", [row.city, row.region, row.country].filter(Boolean).join(", ")]]],
     ["Evidence", [["Evidence source", row.evidence_source || row.source_file], ["Evidence URL", row.evidence_url], ["Resolution", row.resolution_notes || row.notes]]],
-    ["Current curated status", [["Status", row.current_public_preview_status || row.coverage_status || row.candidate_status || row.review_status], ["Review type", row.review_type || row.blocker_type || row.missing_stage]]],
+    ["Current curated status", [["Public visibility", row.public_visibility_label || "Not visible on map"], ["Status", row.current_public_preview_status || row.coverage_status || row.candidate_status || row.review_status], ["Review type", row.review_type || row.blocker_type || row.missing_stage]]],
     ["Recommended action", [["Action", row.recommended_action], ["Priority", row.priority]]],
   ];
   const grouped = document.createElement("div");
@@ -1428,6 +1447,103 @@ function locationDraft() {
     coordinate_review_note:
       elements["coordinate-review-note"].value.trim(),
   };
+}
+
+function geocodeAddress() {
+  return [
+    elements["confirmed-city"].value.trim(),
+    elements["confirmed-region"].value.trim(),
+    elements["confirmed-country"].value.trim(),
+  ].filter(Boolean).join(", ");
+}
+
+function renderGeocodeCandidates(result) {
+  const candidates = result.candidates || [];
+  state.selectedGeocodeCandidate = null;
+  elements["geocode-query"].textContent = `Query: ${text(result.query)}`;
+  elements["geocode-candidates"].replaceChildren();
+  elements["geocode-candidates"].hidden = candidates.length === 0;
+  elements["geocode-empty"].hidden = candidates.length !== 0;
+  elements["geocode-error"].hidden = true;
+  elements["geocode-confirm"].disabled = true;
+  elements["geocode-replace-warning"].hidden = !(
+    elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim()
+  );
+  candidates.forEach((candidate, index) => {
+    const label = document.createElement("label");
+    label.className = "geocode-candidate";
+    const radio = document.createElement("input");
+    radio.type = "radio";
+    radio.name = "geocode-candidate";
+    radio.value = String(index);
+    const content = document.createElement("span");
+    const title = document.createElement("strong");
+    title.textContent = text(candidate.institution_name || candidate.display_name);
+    const address = document.createElement("span");
+    address.textContent = text(candidate.address || candidate.display_name);
+    const coordinates = document.createElement("span");
+    const confidence = candidate.confidence === null || candidate.confidence === undefined
+      ? ""
+      : ` · relevance ${Number(candidate.confidence).toFixed(3)}`;
+    coordinates.textContent = `${candidate.latitude}, ${candidate.longitude}${confidence} · ${text(candidate.provider)}`;
+    content.append(title, address, coordinates);
+    if (safeUrl(candidate.map_url)) {
+      const mapLink = linkValue(candidate.map_url, "Preview on OpenStreetMap");
+      mapLink.target = "_blank";
+      mapLink.rel = "noopener noreferrer";
+      content.append(mapLink);
+    }
+    radio.addEventListener("change", () => {
+      state.selectedGeocodeCandidate = candidate;
+      elements["geocode-confirm"].disabled = false;
+    });
+    label.append(radio, content);
+    elements["geocode-candidates"].append(label);
+  });
+  elements["geocode-dialog"].showModal();
+  (elements["geocode-candidates"].querySelector("input") || elements["geocode-cancel"]).focus();
+}
+
+async function findInstitutionCoordinates() {
+  const button = elements["location-geocode"];
+  const originalLabel = button.textContent;
+  button.disabled = true;
+  button.textContent = "Searching…";
+  elements["location-form-error"].hidden = true;
+  try {
+    const payload = await apiFetch("/api/institution/geocode", {
+      method: "POST",
+      body: JSON.stringify({
+        institution_name: elements["confirmed-institution"].value.trim(),
+        address: geocodeAddress(),
+      }),
+    });
+    renderGeocodeCandidates(payload.data || {});
+  } catch (error) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = `Coordinate search failed: ${error.message}`;
+  } finally {
+    button.disabled = false;
+    button.textContent = originalLabel;
+  }
+}
+
+function closeGeocodeDialog() {
+  elements["geocode-dialog"].close();
+}
+
+function confirmGeocodeCandidate() {
+  const candidate = state.selectedGeocodeCandidate;
+  if (!candidate) return;
+  const hasExisting = elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim();
+  if (hasExisting && !window.confirm("Replace the existing latitude and longitude with the selected candidate?")) {
+    return;
+  }
+  elements["confirmed-lat"].value = candidate.latitude;
+  elements["confirmed-lon"].value = candidate.longitude;
+  elements["coordinate-source"].value = text(candidate.provider);
+  elements["coordinate-source-url"].value = safeUrl(candidate.map_url) ? candidate.map_url : "";
+  closeGeocodeDialog();
 }
 
 async function confirmLocation(event) {

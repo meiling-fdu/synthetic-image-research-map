@@ -12,6 +12,21 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping, Sequence
 
+try:
+    from .export_candidate_map_data import paper_identity_keys
+    from .paper_version_merges import (
+        active_confirmed_merges,
+        read_paper_version_merges,
+        record_matches_merge_side,
+    )
+except ImportError:  # pragma: no cover - direct script execution
+    from export_candidate_map_data import paper_identity_keys
+    from paper_version_merges import (
+        active_confirmed_merges,
+        read_paper_version_merges,
+        record_matches_merge_side,
+    )
+
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 MANUAL_DIR = REPOSITORY_ROOT / "data" / "manual"
@@ -23,6 +38,8 @@ DEFAULT_EXCLUSIONS_PATH = CURATED_DIR / "paper_exclusions.csv"
 DEFAULT_RECORD_OVERRIDES_PATH = MANUAL_DIR / "institution_record_overrides.csv"
 DEFAULT_AUTHOR_OVERRIDES_PATH = MANUAL_DIR / "institution_author_overrides.csv"
 DEFAULT_CORRECTIONS_PATH = MANUAL_DIR / "institution_corrections.csv"
+DEFAULT_PUBLIC_PAPERS_PATH = WEB_DATA_DIR / "public_preview_papers.json"
+DEFAULT_PUBLIC_MAP_PATH = WEB_DATA_DIR / "public_preview_map_data.json"
 
 QUEUE_PATHS = {
     "high_risk_marker": MANUAL_DIR / "high_risk_marker_review.csv",
@@ -184,6 +201,78 @@ def _summary(rows: Iterable[Mapping[str, Any]], field: str) -> Dict[str, int]:
     return dict(sorted(Counter(clean(row.get(field)) or "unknown" for row in rows).items()))
 
 
+PUBLIC_VISIBILITY_LABELS = {
+    "visible_on_map": "Visible on map",
+    "not_visible_on_map": "Not visible on map",
+    "visible_through_canonical_paper": "Visible through canonical paper",
+    "identity_unresolved": "Identity unresolved",
+}
+
+
+def build_public_visibility_index(
+    public_papers: Sequence[Mapping[str, Any]],
+    public_map_records: Sequence[Mapping[str, Any]],
+) -> set[tuple[str, Any]]:
+    """Index identities already emitted by the effective public export."""
+    return {
+        key
+        for record in (*public_papers, *public_map_records)
+        for key in paper_identity_keys(dict(record))
+    }
+
+
+def public_visibility_status(
+    row: Mapping[str, Any],
+    public_identity_index: set[tuple[str, Any]],
+    merge_rows: Sequence[Mapping[str, Any]] = (),
+) -> Dict[str, str]:
+    """Return authoritative public visibility for one review record."""
+    identities = paper_identity_keys(dict(row))
+    if not identities:
+        status = "identity_unresolved"
+    elif any(key in public_identity_index for key in identities):
+        status = "visible_on_map"
+    else:
+        status = "not_visible_on_map"
+        for merge in active_confirmed_merges(merge_rows):
+            if not record_matches_merge_side(row, merge, "duplicate"):
+                continue
+            canonical = {
+                "title": merge.get("canonical_title"),
+                "year": merge.get("canonical_year"),
+                "doi": merge.get("canonical_doi"),
+                "openalex_url": merge.get("canonical_openalex_url"),
+            }
+            if any(
+                key in public_identity_index
+                for key in paper_identity_keys(canonical)
+            ):
+                status = "visible_through_canonical_paper"
+                break
+    return {
+        "public_visibility_status": status,
+        "public_visibility_label": PUBLIC_VISIBILITY_LABELS[status],
+    }
+
+
+def annotate_public_visibility(
+    rows: Sequence[Mapping[str, Any]],
+    *,
+    public_papers_path: Path = DEFAULT_PUBLIC_PAPERS_PATH,
+    public_map_path: Path = DEFAULT_PUBLIC_MAP_PATH,
+    merge_rows: Sequence[Mapping[str, Any]] | None = None,
+) -> list[Dict[str, Any]]:
+    """Annotate rows while loading/indexing effective public data only once."""
+    public_index = build_public_visibility_index(
+        read_json(public_papers_path), read_json(public_map_path)
+    )
+    merges = list(merge_rows) if merge_rows is not None else read_paper_version_merges()
+    return [
+        {**dict(row), **public_visibility_status(row, public_index, merges)}
+        for row in rows
+    ]
+
+
 def load_queue(
     name: str,
     *,
@@ -192,6 +281,9 @@ def load_queue(
     record_overrides_path: Path = DEFAULT_RECORD_OVERRIDES_PATH,
     author_overrides_path: Path = DEFAULT_AUTHOR_OVERRIDES_PATH,
     corrections_path: Path = DEFAULT_CORRECTIONS_PATH,
+    public_papers_path: Path = DEFAULT_PUBLIC_PAPERS_PATH,
+    public_map_path: Path = DEFAULT_PUBLIC_MAP_PATH,
+    merge_rows: Sequence[Mapping[str, Any]] | None = None,
 ) -> Dict[str, Any]:
     path = QUEUE_PATHS.get(name)
     if path is None:
@@ -219,7 +311,12 @@ def load_queue(
         "hidden_resolved": sum(hidden.values()),
         "suppression_reasons": dict(sorted(hidden.items())),
         "summary": _summary(rows, group_field),
-        "records": rows,
+        "records": annotate_public_visibility(
+            rows,
+            public_papers_path=public_papers_path,
+            public_map_path=public_map_path,
+            merge_rows=merge_rows,
+        ),
         "durable_source": False,
     }
 
@@ -253,6 +350,9 @@ def load_manual_import_queue(
     *,
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     exclusions_path: Path = DEFAULT_EXCLUSIONS_PATH,
+    public_papers_path: Path = DEFAULT_PUBLIC_PAPERS_PATH,
+    public_map_path: Path = DEFAULT_PUBLIC_MAP_PATH,
+    merge_rows: Sequence[Mapping[str, Any]] | None = None,
 ) -> Dict[str, Any]:
     records: list[Dict[str, Any]] = []
     files = _manual_import_files()
@@ -283,7 +383,12 @@ def load_manual_import_queue(
         "hidden_resolved": sum(hidden.values()),
         "suppression_reasons": dict(sorted(hidden.items())),
         "summary": _summary(visible, "candidate_status"),
-        "records": visible,
+        "records": annotate_public_visibility(
+            visible,
+            public_papers_path=public_papers_path,
+            public_map_path=public_map_path,
+            merge_rows=merge_rows,
+        ),
         "durable_source": False,
     }
 

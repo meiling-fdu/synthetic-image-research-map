@@ -360,6 +360,10 @@
                 <label>Longitude
                   <input id="confirmed-lon" type="number" min="-180" max="180" step="any" required>
                 </label>
+                <div class="full-width geocode-action-row">
+                  <button class="secondary-button" id="location-geocode" type="button">Find coordinates</button>
+                  <span>Searches the institution name and current city, region, and country. Nothing changes until you confirm a result.</span>
+                </div>
                 <label>Coordinate source
                   <input id="coordinate-source" type="text" placeholder="Official institution page, Wikidata…">
                 </label>
@@ -576,21 +580,21 @@
         <div class="section-heading"><div><p class="eyebrow">P0 / P1 / P2</p><h2>High-risk Marker Review</h2><p>Generated suspicious-marker evidence; actions persist only in the curated layer.</p></div></div>
         <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Title, institution, author, DOI, OpenAlex…"><select data-role="group"><option value="">All priorities</option></select><select data-role="action-filter"><option value="">All recommended actions</option></select><select data-role="type-filter"><option value="">All review types</option></select></div>
-        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>
 
       <section class="review-queue-panel" id="marker-blocker-review-panel" hidden data-queue="marker-blockers">
         <div class="section-heading"><div><p class="eyebrow">Generated diagnostic</p><h2>Marker Blocker Review</h2><p>Resolve affiliations, coordinates, review confidence, scope, or metadata through curated editors.</p></div></div>
         <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Search blocker queue…"><select data-role="group"><option value="">All blocker types</option></select></div>
-        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>
 
       <section class="review-queue-panel" id="key-coverage-review-panel" hidden data-queue="key-paper-coverage">
         <div class="section-heading"><div><p class="eyebrow">Key-paper audit</p><h2>Key Paper Coverage Review</h2><p>Inspect missing stages and possible title-match failures without editing the generated audit.</p></div></div>
         <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Search coverage queue…"><select data-role="group"><option value="">All missing stages</option></select></div>
-        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>
 
       <section class="review-queue-panel" id="author-mapping-coverage-panel" hidden>
@@ -630,9 +634,25 @@
         <div class="section-heading"><div><p class="eyebrow">Candidate CSVs</p><h2>Manual Import Review</h2><p>Review available ready, weak-match, query-failed, no-match, and manual-review candidates.</p></div></div>
         <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Search import candidates…"><select data-role="group"><option value="">All candidate statuses</option></select></div>
-        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>
     </main>
+
+    <dialog id="geocode-dialog" aria-labelledby="geocode-dialog-title">
+      <form id="geocode-form" method="dialog">
+        <p class="eyebrow">Assisted institution geocoding</p>
+        <h2 id="geocode-dialog-title">Select a location candidate</h2>
+        <p id="geocode-query"></p>
+        <p class="dialog-warning" id="geocode-replace-warning" hidden>Confirming will replace the latitude and longitude currently in the form.</p>
+        <fieldset id="geocode-candidates" class="geocode-candidates"></fieldset>
+        <p id="geocode-empty" hidden>No location candidates were found. Existing form values are unchanged.</p>
+        <p class="form-error" id="geocode-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="geocode-cancel" type="button">Cancel</button>
+          <button class="primary-button" id="geocode-confirm" type="button" disabled>Use selected coordinates</button>
+        </div>
+      </form>
+    </dialog>
 
     <dialog id="scope-dialog">
       <form id="scope-form">

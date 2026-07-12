@@ -92,6 +92,12 @@ try:
         load_manual_import_queue,
         load_queue,
     )
+    from .admin_geocoding import (
+        GeocodingInputError,
+        GeocodingProviderError,
+        GeocodingRateLimitError,
+        configured_geocoder,
+    )
     from .review_decisions import (
         DEFAULT_REVIEW_DECISIONS_PATH,
         ReviewDecisionError,
@@ -165,6 +171,12 @@ except ImportError:
         dashboard_data,
         load_manual_import_queue,
         load_queue,
+    )
+    from admin_geocoding import (
+        GeocodingInputError,
+        GeocodingProviderError,
+        GeocodingRateLimitError,
+        configured_geocoder,
     )
     from review_decisions import (
         DEFAULT_REVIEW_DECISIONS_PATH,
@@ -1167,7 +1179,9 @@ def make_handler(
     ),
     curated_arxiv_links_path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
     metadata_export_runner: Callable[[str], Mapping[str, Any]] = run_workflow,
+    geocoder: Any = None,
 ) -> type[BaseHTTPRequestHandler]:
+    institution_geocoder = geocoder or configured_geocoder()
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
     latest_workflow_status: Dict[str, Any] = {
@@ -1992,6 +2006,41 @@ def make_handler(
                     )
                 finally:
                     AUTHOR_MAPPING_REPORT_WRITE_LOCK.release()
+                return
+            if request.path == "/api/institution/geocode":
+                if not self.is_header_authorized():
+                    self.send_json(
+                        HTTPStatus.UNAUTHORIZED,
+                        api_payload(success=False, errors=("X-Admin-Token header is required",)),
+                    )
+                    return
+                if not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        api_payload(success=False, errors=("institution geocoding is restricted to loopback clients",)),
+                    )
+                    return
+                try:
+                    payload = self.read_json_body()
+                    result = institution_geocoder.search(
+                        payload.get("institution_name"), payload.get("address")
+                    )
+                    self.send_json(HTTPStatus.OK, api_payload(data=result))
+                except GeocodingInputError as error:
+                    self.send_json(
+                        HTTPStatus.BAD_REQUEST,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
+                except GeocodingRateLimitError as error:
+                    self.send_json(
+                        HTTPStatus.TOO_MANY_REQUESTS,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
+                except GeocodingProviderError as error:
+                    self.send_json(
+                        HTTPStatus.BAD_GATEWAY,
+                        api_payload(success=False, errors=(str(error),)),
+                    )
                 return
             location_actions = {
                 "/api/location-review/confirm": "confirm",

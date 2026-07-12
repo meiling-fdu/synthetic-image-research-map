@@ -1474,18 +1474,62 @@ dialog::backdrop {
 }
 
 #scope-form,
-#mapping-form {
+#mapping-form,
+#geocode-form {
   display: grid;
   gap: 0.9rem;
   padding: 1.4rem;
 }
 
 #scope-form h2,
-#mapping-form h2 {
+#mapping-form h2,
+#geocode-form h2 {
   margin-bottom: 0;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.8rem;
   font-weight: 500;
+}
+
+.geocode-action-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.geocode-action-row span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.geocode-candidates {
+  display: grid;
+  max-height: min(24rem, 50vh);
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border: 0;
+  gap: 0.65rem;
+}
+
+.geocode-candidate {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.geocode-candidate:has(input:checked) {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.geocode-candidate > span {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.8rem;
 }
 
 #scope-form label,
