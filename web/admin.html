@@ -230,7 +230,12 @@
             <input id="paper-url" name="paper_url" type="url">
           </label>
           <label>Publication type
-            <input id="paper-publication-type" name="publication_type" type="text">
+            <select id="paper-publication-type" name="publication_type" required>
+              <option value="conference">conference</option>
+              <option value="article" selected>article</option>
+              <option value="preprint">preprint</option>
+              <option value="book">book</option>
+            </select>
           </label>
           <label>Task
             <select id="paper-task" name="task" required>
@@ -450,7 +455,10 @@
                 <label>arXiv ID<input id="metadata-arxiv-id"></label>
                 <label>OpenAlex URL<input id="metadata-openalex-url" type="url"></label>
                 <label>Paper URL<input id="metadata-paper-url" type="url"></label>
-                <label>Publication type<input id="metadata-publication-type"></label>
+                <label>Publication type<select id="metadata-publication-type" required>
+                  <option value="conference">conference</option><option value="article">article</option>
+                  <option value="preprint">preprint</option><option value="book">book</option>
+                </select></label>
                 <label>Paper type / category<select id="metadata-entry-type" required>
                   <option value="method">method</option><option value="survey">survey</option>
                   <option value="dataset">dataset</option><option value="benchmark">benchmark</option>

@@ -62,7 +62,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `venue_name` | Source or repository display name, preferring `primary_location.source.display_name`; empty when unavailable. |
 | `venue_type` | OpenAlex source type, such as journal, conference, or repository, when available. |
 | `publisher` | Publisher or source host-organization name reported by OpenAlex. |
-| `publication_type` | OpenAlex work `type`, falling back to `type_crossref` when needed. |
+| `publication_type` | Controlled lowercase bibliographic type: `conference`, `article`, `preprint`, or `book`. OpenAlex/Crossref aliases are normalized during ingestion and export; conference or proceedings venue evidence takes precedence over an `article` source type. |
 | `doi` | Canonical DOI without a resolver URL when available. |
 | `arxiv_id` | arXiv identifier detected from source identifiers, a `10.48550/arXiv.*` DOI, or an arXiv location URL. |
 | `arxiv_url` | Canonical `https://arxiv.org/abs/...` URL when an arXiv identifier can be extracted. |

@@ -34,6 +34,7 @@ try:
         save_location_review_queue,
         stable_institution_id,
     )
+    from .publication_types import normalize_publication_type
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -93,6 +94,7 @@ except ImportError:  # Direct execution from the scripts directory.
         save_location_review_queue,
         stable_institution_id,
     )
+    from publication_types import normalize_publication_type
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -1302,7 +1304,11 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
         "venue_name": clean_text(row.get("venue_name") or row.get("venue")),
         "venue_type": clean_text(row.get("venue_type")),
         "publisher": clean_text(row.get("publisher")),
-        "publication_type": clean_text(row.get("publication_type")),
+        "publication_type": normalize_publication_type(
+            row.get("publication_type"),
+            venue=row.get("venue") or row.get("venue_name"),
+            venue_type=row.get("venue_type"),
+        ),
         "abstract": clean_text(row.get("abstract")),
         "abstract_source": clean_text(row.get("abstract_source")),
         "ai_summary": clean_text(row.get("ai_summary")),

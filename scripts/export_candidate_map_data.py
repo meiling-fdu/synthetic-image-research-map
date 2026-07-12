@@ -22,8 +22,10 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
 try:
     from .country_normalization import normalize_country_region
+    from .publication_types import normalize_publication_type
 except ImportError:  # Direct execution from the scripts directory.
     from country_normalization import normalize_country_region
+    from publication_types import normalize_publication_type
 
 
 DEFAULT_PAPERS_CSV = Path(
@@ -1175,7 +1177,9 @@ def apply_publication_overrides(
             formal_venue = clean_text(override.get("formal_venue"))
             formal_doi = clean_text(override.get("formal_doi"))
             formal_paper_url = clean_text(override.get("formal_paper_url"))
-            publication_type = clean_text(override.get("publication_type"))
+            publication_type = normalize_publication_type(
+                override.get("publication_type"), venue=formal_venue
+            )
             record["year"] = formal_year
             record["publication_year"] = formal_year
             record["venue"] = formal_venue
@@ -1755,7 +1759,11 @@ def group_map_records(
                 "venue_name": venue_name,
                 "venue_type": clean_text(paper.get("venue_type")),
                 "publisher": clean_text(paper.get("publisher")),
-                "publication_type": clean_text(paper.get("publication_type")),
+                "publication_type": normalize_publication_type(
+                    paper.get("publication_type"),
+                    venue=venue_name,
+                    venue_type=paper.get("venue_type"),
+                ),
                 "abstract": clean_text(
                     paper.get("abstract")
                     or paper.get("abstract_text")

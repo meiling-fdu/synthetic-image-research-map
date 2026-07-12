@@ -27,6 +27,7 @@ try:
         clean,
         normalized_title_year_key,
     )
+    from .publication_types import ALLOWED_PUBLICATION_TYPES, normalize_publication_type
 except ImportError:
     from curated_schema import (
         ALLOWED_CURATION_STATUSES,
@@ -39,6 +40,7 @@ except ImportError:
         PAPERS_COLUMNS,
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
+    from publication_types import ALLOWED_PUBLICATION_TYPES, normalize_publication_type
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -147,10 +149,17 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     entry_type = clean(draft.get("entry_type")).casefold() or "method"
     subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
+    publication_type = normalize_publication_type(
+        draft.get("publication_type"), venue=draft.get("venue")
+    ) or ("preprint" if clean(draft.get("source_database")).casefold() == "arxiv" else "")
     if not title:
         raise CuratedPaperError("title is required")
     if not YEAR_RE.fullmatch(year):
         raise CuratedPaperError("year must be a four-digit integer")
+    if not publication_type:
+        raise CuratedPaperError(
+            "publication_type must be one of " + ", ".join(ALLOWED_PUBLICATION_TYPES)
+        )
     if task not in ALLOWED_TASKS:
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
@@ -200,7 +209,7 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "arxiv_id": clean(draft.get("arxiv_id")),
         "openalex_url": clean(draft.get("openalex_url")),
         "paper_url": clean(draft.get("paper_url")),
-        "publication_type": clean(draft.get("publication_type")),
+        "publication_type": publication_type,
         "abstract": clean(draft.get("abstract")),
         "task": task,
         "entry_type": entry_type,
@@ -304,6 +313,9 @@ def update_curated_paper(
     entry_type = clean(draft.get("entry_type")).casefold()
     subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
+    publication_type = normalize_publication_type(
+        draft.get("publication_type"), venue=draft.get("venue")
+    )
     curation_status = (
         clean(draft.get("curation_status")) or "corrected_by_admin"
     )
@@ -312,6 +324,10 @@ def update_curated_paper(
         raise CuratedPaperError("title is required")
     if not YEAR_RE.fullmatch(year):
         raise CuratedPaperError("year must be a four-digit integer")
+    if not publication_type:
+        raise CuratedPaperError(
+            "publication_type must be one of " + ", ".join(ALLOWED_PUBLICATION_TYPES)
+        )
     if task not in ALLOWED_TASKS:
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
@@ -382,7 +398,7 @@ def update_curated_paper(
         "arxiv_id": clean(draft.get("arxiv_id")),
         "openalex_url": clean(draft.get("openalex_url")),
         "paper_url": clean(draft.get("paper_url")),
-        "publication_type": clean(draft.get("publication_type")),
+        "publication_type": publication_type,
         "abstract": clean(draft.get("abstract")),
         "task": task,
         "entry_type": entry_type,

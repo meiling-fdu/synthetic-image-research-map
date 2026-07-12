@@ -15,6 +15,11 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
+try:
+    from .publication_types import normalize_publication_type
+except ImportError:
+    from publication_types import normalize_publication_type
+
 
 DEFAULT_INPUT_DIR = Path("data/raw/openalex")
 DEFAULT_OUTPUT_DIR = Path("data/processed")
@@ -750,7 +755,11 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     publication_year = clean_text(work.get("publication_year"))
     publication_date = clean_text(work.get("publication_date"))
     venue_name, venue_type, publisher = extract_venue_metadata(work)
-    publication_type = first_nonempty(work.get("type"), work.get("type_crossref"))
+    publication_type = normalize_publication_type(
+        first_nonempty(work.get("type"), work.get("type_crossref")),
+        venue=venue_name,
+        venue_type=venue_type,
+    )
     doi = normalize_doi(first_nonempty(work.get("doi"), ids.get("doi")))
     landing_page_url = extract_landing_page_url(work)
     openalex_url = openalex_id

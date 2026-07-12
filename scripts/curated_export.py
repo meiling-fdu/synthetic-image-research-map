@@ -23,6 +23,7 @@ try:
         PAPERS_COLUMNS,
     )
     from .country_normalization import normalize_country_region
+    from .publication_types import normalize_publication_type
     from .export_candidate_map_data import normalize_export_task_labels
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -44,6 +45,7 @@ except ImportError:
         PAPERS_COLUMNS,
     )
     from country_normalization import normalize_country_region
+    from publication_types import normalize_publication_type
     from export_candidate_map_data import normalize_export_task_labels
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -606,7 +608,9 @@ def _curated_paper_record(
             paper_url = openalex_url
     review_status = clean(row.get("review_status"))
     note = clean(row.get("review_note"))
-    publication_type = clean(row.get("publication_type"))
+    publication_type = normalize_publication_type(
+        row.get("publication_type"), venue=row.get("venue"), venue_type=row.get("venue_type")
+    )
     normalized_type = publication_type.casefold()
     entry_type = clean(row.get("entry_type")).casefold() or (
         "survey"
@@ -818,7 +822,11 @@ def _curated_marker(
         "entry_type": clean(paper.get("entry_type")) or "method",
         "venue": clean(paper.get("venue") or paper.get("venue_name")),
         "venue_name": clean(paper.get("venue_name") or paper.get("venue")),
-        "publication_type": clean(paper.get("publication_type")),
+        "publication_type": normalize_publication_type(
+            paper.get("publication_type"),
+            venue=paper.get("venue") or paper.get("venue_name"),
+            venue_type=paper.get("venue_type"),
+        ),
         "abstract": clean(paper.get("abstract")),
         "abstract_source": clean(paper.get("abstract_source")),
         "doi": clean(paper.get("doi")),

@@ -10,6 +10,11 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 try:
+    from .publication_types import normalize_publication_type
+except ImportError:
+    from publication_types import normalize_publication_type
+
+try:
     from .openalex_utils import (
         OPENALEX_API,
         OpenAlexFetchError,
@@ -237,7 +242,11 @@ def shape_work(work: Mapping[str, Any], query_title: str = "") -> Dict[str, Any]
         "openalex_url": openalex_url,
         "primary_url": primary_url,
         "paper_url": primary_url,
-        "publication_type": clean(work.get("type")),
+        "publication_type": normalize_publication_type(
+            work.get("type"),
+            venue=_work_venue(work),
+            venue_type=((work.get("primary_location") or {}).get("source") or {}).get("type", ""),
+        ),
         "similarity_score": round(similarity, 4) if similarity is not None else None,
         "abstract": abstract_from_inverted_index(
             work.get("abstract_inverted_index")
