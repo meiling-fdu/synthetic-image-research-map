@@ -13,12 +13,18 @@
       <div>
         <p class="eyebrow">Maintainer-only · localhost</p>
         <h1>Interactive Curation Console</h1>
-        <p class="lede">Review diagnostics, record durable curated decisions, refresh and validate locally, then explicitly publish when ready.</p>
+        <p class="lede">Review, correct, validate, and publish the data shown on the public map.</p>
       </div>
       <div class="masthead-actions">
-        <button class="secondary-button" id="location-review-toggle" type="button">Institution Location Review</button>
-        <button class="primary-button" id="add-paper-toggle" type="button">Add Paper</button>
-        <div class="status-pill" id="connection-status" data-state="loading">Connecting…</div>
+        <button class="primary-button" id="add-paper-toggle" type="button">Add paper</button>
+        <button class="release-button" id="global-publish-toggle" type="button">Publish changes</button>
+        <div class="status-pill" id="connection-status" data-state="loading" role="status">● Local curation connecting…</div>
+      </div>
+      <div class="global-search">
+        <label class="visually-hidden" for="global-search-input">Search papers, authors, and institutions</label>
+        <input id="global-search-input" type="search" placeholder="Search title, DOI, arXiv ID, author, institution…" autocomplete="off" aria-controls="global-search-results" aria-expanded="false">
+        <div class="global-search-results" id="global-search-results" role="listbox" hidden></div>
+        <span class="search-shortcut" aria-hidden="true">/</span>
       </div>
     </header>
 
@@ -26,19 +32,28 @@
       <div class="notice" id="action-notice" role="status" hidden></div>
 
       <nav class="console-nav" id="console-nav" aria-label="Curation console" hidden>
-        <button data-console-target="dashboard" type="button">Dashboard</button>
-        <button data-console-target="papers" type="button">Papers</button>
-        <button data-console-target="add-paper" type="button">Add Paper</button>
-        <button data-console-target="scope-review" type="button">Scope Review</button>
-        <button data-console-target="metadata-editor" type="button">Metadata Editor</button>
-        <button data-console-target="mappings" type="button">Author–Institution Mappings</button>
-        <button data-console-target="author-mapping-coverage" type="button">Author Mapping Coverage</button>
-        <button data-console-target="location-review" type="button">Location Review</button>
-        <button data-console-target="high-risk" type="button">High-risk Marker Review</button>
-        <button data-console-target="marker-blockers" type="button">Marker Blocker Review</button>
-        <button data-console-target="key-coverage" type="button">Key Paper Coverage Review</button>
-        <button data-console-target="manual-import" type="button">Manual Import Review</button>
-        <button data-console-target="workflows" type="button">Workflows / Validation</button>
+        <button data-console-target="dashboard" type="button" aria-current="page">Dashboard</button>
+        <details class="nav-menu"><summary>Review</summary><div class="nav-menu-items" role="menu">
+          <button role="menuitem" data-console-target="scope-review" type="button">Scope review</button>
+          <button role="menuitem" data-console-target="high-risk" type="button">High-risk papers</button>
+          <button role="menuitem" data-console-target="marker-blockers" type="button">Marker blockers</button>
+          <button role="menuitem" data-console-target="key-coverage" type="button">Key-paper coverage</button>
+          <button role="menuitem" data-console-target="manual-import" type="button">Manual imports</button>
+        </div></details>
+        <details class="nav-menu"><summary>Papers</summary><div class="nav-menu-items" role="menu">
+          <button role="menuitem" data-console-target="add-paper" type="button">Add paper</button>
+          <button role="menuitem" data-console-target="metadata-editor" type="button">Paper metadata</button>
+          <button role="menuitem" data-console-target="papers" type="button">Candidate papers</button>
+          <a role="menuitem" href="/" target="_blank" rel="noreferrer">Public preview</a>
+        </div></details>
+        <details class="nav-menu nav-menu-align-end"><summary>Authors &amp; Institutions</summary><div class="nav-menu-items" role="menu">
+          <button role="menuitem" data-console-target="papers" type="button">Authors</button>
+          <button role="menuitem" data-console-target="mappings" type="button">Author mappings</button>
+          <button role="menuitem" data-console-target="author-mapping-coverage" type="button">Author mapping coverage</button>
+          <button role="menuitem" data-console-target="papers" type="button">Institutions</button>
+          <button role="menuitem" data-console-target="location-review" type="button">Institution locations</button>
+        </div></details>
+        <button data-console-target="validation" type="button">Validation</button>
       </nav>
 
       <section class="token-panel" id="token-panel" hidden>
@@ -53,97 +68,71 @@
       </section>
 
       <section class="dashboard-panel" id="dashboard-panel">
-        <section class="project-health" aria-labelledby="project-health-title">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Data quality and maintenance</p>
-              <h2 id="project-health-title">Project Health</h2>
-              <p>Current corpus, mapping, location, review, and publication status.</p>
-            </div>
-            <div class="project-health-heading-actions">
-              <div class="project-health-score" id="project-health-score" data-severity="neutral">
-                <strong id="project-health-score-value">Needs refresh</strong>
-                <span id="project-health-score-level">Unavailable</span>
-                <small id="project-health-score-note">Heuristic maintenance score; not a paper-quality rating.</small>
-              </div>
-              <button class="secondary-button" id="refresh-project-health" type="button">Refresh Project Health</button>
-            </div>
-          </div>
-          <div class="project-health-groups" id="project-health-groups">
-            <p>Project health loads after authentication.</p>
-          </div>
-        </section>
         <div class="section-heading">
-          <div><p class="eyebrow">Review queue details</p><h2>Admin Dashboard</h2></div>
-          <button class="secondary-button" id="reload-review-queues" type="button">Reload all review queues</button>
+          <div><p class="eyebrow">Work queue</p><h2>Action required</h2><p>Only unresolved items that need maintainer attention are shown.</p></div>
+          <button class="secondary-button" id="reload-review-queues" type="button">Refresh</button>
         </div>
-        <details class="secondary-summary" open>
-          <summary>Queue breakdown and secondary totals</summary>
-          <div class="dashboard-grid" id="dashboard-grid"><p>Dashboard data loads after authentication.</p></div>
-        </details>
+        <div class="action-queue" id="dashboard-grid"><p>Action queue loads after authentication.</p></div>
+        <p class="action-queue-empty" id="action-queue-empty" hidden>No review actions are currently required.</p>
         <section class="mapping-coverage-card" aria-labelledby="mapping-coverage-dashboard-title">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">Detailed generated report</p>
-              <h3 id="mapping-coverage-dashboard-title">Detailed Author Mapping Coverage</h3>
-              <p>Prioritized records for mapping maintenance; the Project Health module carries the overview.</p>
+              <p class="eyebrow">Public-map impact</p>
+              <h3 id="mapping-coverage-dashboard-title">Priority papers</h3>
+              <p>The five most urgent papers with unresolved author mappings.</p>
             </div>
-            <div class="mapping-coverage-actions">
-              <a class="secondary-button button-link" id="open-mapping-report" href="/docs/missing_author_mappings_report.md" target="_blank" rel="noreferrer">Open full mapping report</a>
-              <button class="secondary-button" id="reload-mapping-coverage" type="button">Reload mapping coverage</button>
-            </div>
+            <button class="text-button" data-console-target="author-mapping-coverage" type="button">View all</button>
           </div>
-          <div class="mapping-coverage-compact" id="mapping-coverage-summary">
-            <p>Mapping coverage loads after authentication.</p>
-          </div>
+          <div id="mapping-coverage-summary" hidden></div>
           <div class="mapping-coverage-empty-state" id="mapping-coverage-empty-state" hidden>
-            <p>Author mapping report has not been generated.</p>
-            <button class="primary-button" id="generate-mapping-report" type="button">Generate Report</button>
+            <p>Priority-paper report is unavailable.</p>
+            <button class="secondary-button" id="generate-mapping-report" type="button">Generate report</button>
           </div>
-          <h4 id="mapping-priority-heading">Highest Priority Missing Mappings</h4>
+          <h4 class="visually-hidden" id="mapping-priority-heading">Priority papers</h4>
           <div class="table-wrap" id="mapping-priority-table-wrap">
-            <table class="mapping-coverage-table">
-              <thead><tr><th>Status</th><th>Priority</th><th>Paper title</th><th>Year</th><th>Missing</th><th>Missing author names</th><th>Known institutions / evidence</th><th>Suggested action</th><th>Public impact</th><th>Markers</th><th>Key</th></tr></thead>
+            <table class="priority-paper-table">
+              <thead><tr><th>Paper</th><th>Issue</th><th>Public-map impact</th><th>Action</th></tr></thead>
               <tbody id="mapping-priority-rows"></tbody>
             </table>
           </div>
           <p id="mapping-priority-empty" class="mapping-coverage-empty"></p>
         </section>
-        <div class="workflow-actions">
-          <button class="primary-button" id="dashboard-run-full-refresh" type="button">Run full refresh pipeline</button>
-          <button class="secondary-button" data-console-target="add-paper" type="button">Open Add Paper</button>
-          <button class="secondary-button" data-console-target="high-risk" type="button">Open High-risk Marker Review</button>
-          <button class="secondary-button" data-console-target="marker-blockers" type="button">Open Marker Blocker Review</button>
-          <button class="secondary-button" data-console-target="key-coverage" type="button">Open Key Paper Coverage Review</button>
-          <button class="secondary-button" data-console-target="author-mapping-coverage" type="button">Open Author Mapping Coverage</button>
-          <button class="secondary-button" data-console-target="manual-import" type="button">Open Manual Import Review</button>
-          <button class="secondary-button" data-console-target="location-review" type="button">Open Location Review</button>
-          <button class="secondary-button" id="dashboard-git-status" type="button">Open Git status</button>
-        </div>
+        <section class="publish-status-card" aria-labelledby="dashboard-publish-title">
+          <div><p class="eyebrow">Release readiness</p><h3 id="dashboard-publish-title">Publish readiness</h3><p id="dashboard-release-state">Checking local release state…</p></div>
+          <dl class="publish-status-summary">
+            <div><dt>Changed files</dt><dd id="dashboard-changed-files">Check status</dd></div>
+            <div><dt>Validation</dt><dd id="dashboard-validation-status">Not run</dd></div>
+            <div><dt>Local preview</dt><dd id="dashboard-preview-status">Not refreshed</dd></div>
+            <div><dt>Git</dt><dd id="dashboard-git-summary">Not checked</dd></div>
+          </dl>
+          <div class="card-actions"><button class="secondary-button" id="dashboard-open-publish" type="button">View publish status</button></div>
+        </section>
       </section>
 
-      <section class="workflow-panel" id="workflow-panel">
+      <section class="workflow-panel" id="workflow-panel" hidden>
         <div class="workflow-heading">
           <div>
-            <p class="eyebrow">Local export and validation</p>
-            <h2>Refresh local preview</h2>
-            <p>Run the fixed local maintenance commands, inspect their output, and reload the paper browser without restarting the server.</p>
+            <p class="eyebrow">Release workflow</p>
+            <h2>Publish</h2>
+            <p>Review readiness, validate, and publish the current admin-managed changes.</p>
           </div>
           <div class="workflow-state" id="workflow-state" data-state="idle" role="status" aria-live="polite">No workflow run yet</div>
         </div>
-        <div class="workflow-actions">
-          <button class="secondary-button workflow-command" id="run-curated-validation" type="button">Run curated validation</button>
-          <button class="secondary-button workflow-command" id="run-export-preview" type="button">Run export preview</button>
-          <button class="secondary-button workflow-command" id="run-public-validation" type="button">Run public-preview validation</button>
-          <button class="secondary-button workflow-command" id="autofill-arxiv" type="button">Auto-fill missing arXiv IDs</button>
-          <button class="primary-button workflow-command" id="run-full-refresh" type="button">Run full refresh pipeline</button>
-          <button class="primary-button workflow-command" id="publish-changes" type="button">Publish Changes</button>
-          <button class="secondary-button" id="reload-preview-data" type="button">Reload preview data</button>
-          <button class="secondary-button" id="show-git-status" type="button">Show git status</button>
+        <div class="workflow-actions publish-actions">
+          <button class="secondary-button" id="show-git-status" type="button">Review changes</button>
+          <button class="primary-button workflow-command" id="publish-changes" type="button">Publish</button>
+          <details class="overflow-menu"><summary aria-label="More publish actions">More <span aria-hidden="true">⋯</span></summary><div class="overflow-menu-items">
+            <button class="secondary-button workflow-command" id="run-export-preview" type="button">Refresh preview</button>
+            <button class="secondary-button workflow-command" id="run-curated-validation" type="button">Run validation</button>
+            <button class="secondary-button workflow-command" id="run-public-validation" type="button">Validate public preview</button>
+            <button class="secondary-button workflow-command" id="run-full-refresh" type="button">Rebuild data</button>
+            <button class="secondary-button" id="reload-preview-data" type="button">Reload preview data</button>
+            <button class="secondary-button workflow-command" id="autofill-arxiv" type="button">Auto-fill missing arXiv IDs</button>
+          </div></details>
         </div>
         <p class="workflow-guidance" id="workflow-guidance">Admin saves remain local. Publish Changes refreshes and validates first, then commits selected project data and pushes only after confirmation.</p>
         <details class="workflow-log-panel" id="workflow-log-panel">
-          <summary>Command log</summary>
+          <summary>Diagnostics and command output</summary>
           <pre id="workflow-log">No command output yet.</pre>
         </details>
       </section>

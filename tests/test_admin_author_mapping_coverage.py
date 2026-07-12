@@ -460,10 +460,10 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
         javascript = (repository_root / "web" / "admin.js").read_text(
             encoding="utf-8"
         )
-        self.assertIn('id="project-health-groups"', html)
+        self.assertIn('id="dashboard-grid"', html)
         self.assertNotIn('id="summary-grid"', html)
-        self.assertIn('class="secondary-summary" open', html)
-        self.assertIn("function renderProjectHealth()", javascript)
+        self.assertIn('id="action-queue-empty"', html)
+        self.assertIn("function renderDashboard()", javascript)
         self.assertIn("navigateConsole(metric.target)", javascript)
         self.assertIn('id="mapping-coverage-triage"', html)
         self.assertIn("row.raw_affiliation_evidence", javascript)

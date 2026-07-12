@@ -19,11 +19,13 @@ const state = {
   paperMetadata: null,
   draftMappingCandidates: [],
   selectedGeocodeCandidate: null,
+  release: { validation: "required", preview: "required", changedFiles: 0 },
 };
 
 const elements = {};
 let arxivAutofillPollTimer = null;
 let arxivAutofillPolling = false;
+let noticeTimer = null;
 const workflowCommandIds = [
   "run-curated-validation",
   "run-export-preview",
@@ -37,6 +39,9 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   [
     "connection-status",
     "add-paper-toggle",
+    "global-publish-toggle",
+    "global-search-input",
+    "global-search-results",
     "add-paper-panel",
     "add-paper-close",
     "openalex-search-form",
@@ -149,7 +154,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "publish-changes",
     "reload-preview-data",
     "show-git-status",
-    "location-review-toggle",
     "location-review-panel",
     "location-review-close",
     "location-summary",
@@ -213,15 +217,14 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "console-nav",
     "dashboard-panel",
     "dashboard-grid",
-    "project-health-groups",
-    "project-health-score",
-    "project-health-score-value",
-    "project-health-score-level",
-    "project-health-score-note",
-    "refresh-project-health",
+    "action-queue-empty",
     "reload-review-queues",
-    "dashboard-git-status",
-    "dashboard-run-full-refresh",
+    "dashboard-open-publish",
+    "dashboard-changed-files",
+    "dashboard-validation-status",
+    "dashboard-preview-status",
+    "dashboard-git-summary",
+    "dashboard-release-state",
     "paper-metadata-section",
     "metadata-edit-button",
     "metadata-compare",
@@ -258,7 +261,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "mapping-priority-table-wrap",
     "mapping-priority-rows",
     "mapping-priority-empty",
-    "reload-mapping-coverage",
     "reload-mapping-coverage-full",
     "mapping-coverage-search",
     "mapping-coverage-status",
@@ -308,6 +310,9 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["scope-cancel"].addEventListener("click", closeScopeDialog);
   elements["scope-form"].addEventListener("submit", submitScopeDecision);
   elements["add-paper-toggle"].addEventListener("click", openAddPaperPanel);
+  elements["global-publish-toggle"].addEventListener("click", () => navigateConsole("publish"));
+  elements["global-search-input"].addEventListener("input", renderGlobalSearch);
+  elements["global-search-input"].addEventListener("keydown", handleGlobalSearchKeydown);
   elements["add-paper-close"].addEventListener("click", closeAddPaperPanel);
   elements["openalex-search-form"].addEventListener("submit", searchOpenAlex);
   elements["add-manually-button"].addEventListener("click", () => startPaperDraft({}, "manual"));
@@ -344,7 +349,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   });
   elements["reload-preview-data"].addEventListener("click", reloadPreviewData);
   elements["show-git-status"].addEventListener("click", showGitStatus);
-  elements["location-review-toggle"].addEventListener("click", openLocationReview);
   elements["location-review-close"].addEventListener("click", closeLocationReview);
   elements["location-search"].addEventListener("input", renderLocationReviewList);
   elements["location-form"].addEventListener("submit", confirmLocation);
@@ -371,9 +375,17 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   document.querySelectorAll("[data-console-target]").forEach((button) => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
   });
+  initializeNavigationMenus();
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) {
+      event.preventDefault();
+      elements["global-search-input"].focus();
+    }
+  });
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest(".global-search")) closeGlobalSearch();
+  });
   elements["reload-review-queues"].addEventListener("click", loadDashboardAndQueues);
-  elements["refresh-project-health"].addEventListener("click", loadDashboardAndQueues);
-  elements["reload-mapping-coverage"].addEventListener("click", loadAuthorMappingCoverage);
   elements["reload-mapping-coverage-full"].addEventListener("click", loadAuthorMappingCoverage);
   elements["generate-mapping-report"].addEventListener("click", generateAuthorMappingReport);
   elements["generate-mapping-report-full"].addEventListener("click", generateAuthorMappingReport);
@@ -384,14 +396,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "mapping-coverage-sort",
     "mapping-coverage-key",
   ].forEach((id) => elements[id].addEventListener("input", renderFullMappingCoverage));
-  elements["dashboard-git-status"].addEventListener("click", () => {
-    navigateConsole("workflows");
-    showGitStatus();
-  });
-  elements["dashboard-run-full-refresh"].addEventListener("click", () => {
-    navigateConsole("workflows");
-    runAdminWorkflow("/api/run-full-refresh", "Full refresh");
-  });
+  elements["dashboard-open-publish"].addEventListener("click", () => navigateConsole("publish"));
   elements["metadata-edit-button"].addEventListener("click", openMetadataEditor);
   elements["metadata-edit-cancel"].addEventListener("click", closeMetadataEditor);
   elements["metadata-edit-form"].addEventListener("submit", saveMetadata);
@@ -427,15 +432,16 @@ async function apiFetch(path, options = {}) {
 }
 
 async function loadApplication(preserveSelection = false) {
-  setConnection("loading", "Loading…");
+  setConnection("loading", "● Local curation loading…");
   elements["token-panel"].hidden = true;
   try {
-    const [status, papersPayload, workflowStatus, locationPayload, autofillStatus] = await Promise.all([
+    const [status, papersPayload, workflowStatus, locationPayload, autofillStatus, gitStatus] = await Promise.all([
       apiFetch("/api/status"),
       apiFetch("/api/papers"),
       apiFetch("/api/latest-validation-status"),
       apiFetch("/api/location-review"),
       apiFetch("/api/admin/papers/autofill-arxiv/status"),
+      apiFetch("/api/git-status").catch(() => null),
     ]);
     state.papers = papersPayload.records.slice().sort((left, right) =>
       text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
@@ -443,8 +449,9 @@ async function loadApplication(preserveSelection = false) {
     populateFilters();
     applyFilters();
     elements.workspace.hidden = false;
-    setConnection("ok", "Local curation · connected");
+    setConnection("ok", "● Local curation connected");
     renderLatestWorkflowStatus(workflowStatus);
+    renderGitSummary(gitStatus);
     applyLocationPayload(locationPayload);
     renderArxivAutofillStatus(autofillStatus);
     if (autofillStatus.status === "running") scheduleArxivAutofillPoll();
@@ -467,10 +474,7 @@ async function loadApplication(preserveSelection = false) {
 }
 
 async function loadDashboardAndQueues() {
-  const buttons = [
-    elements["reload-review-queues"],
-    elements["refresh-project-health"],
-  ];
+  const buttons = [elements["reload-review-queues"]];
   buttons.forEach((button) => {
     button.disabled = true;
   });
@@ -499,7 +503,6 @@ async function loadDashboardAndQueues() {
       else state.reviewQueues[name] = payload.data || {};
     });
     renderDashboard();
-    renderProjectHealth();
     renderMappingCoverage();
     Object.keys(state.reviewQueues).forEach(renderReviewQueue);
   } catch (error) {
@@ -513,10 +516,7 @@ async function loadDashboardAndQueues() {
 }
 
 async function loadAuthorMappingCoverage({ showError = true } = {}) {
-  const buttons = [
-    elements["reload-mapping-coverage"],
-    elements["reload-mapping-coverage-full"],
-  ];
+  const buttons = [elements["reload-mapping-coverage-full"]].filter(Boolean);
   buttons.forEach((button) => {
     button.disabled = true;
   });
@@ -587,12 +587,22 @@ function navigateConsole(target) {
     "key-coverage": elements["key-coverage-review-panel"],
     "author-mapping-coverage": elements["author-mapping-coverage-panel"],
     "manual-import": elements["manual-import-review-panel"],
+    validation: elements["workflow-panel"],
+    publish: elements["workflow-panel"],
     workflows: elements["workflow-panel"],
   };
   if (target === "add-paper") openAddPaperPanel();
   if (target === "location-review") openLocationReview();
   const node = targets[target];
   if (!node) return;
+  document.querySelectorAll("[data-console-target]").forEach((control) => {
+    if (control.dataset.consoleTarget === target) control.setAttribute("aria-current", "page");
+    else control.removeAttribute("aria-current");
+  });
+  document.querySelectorAll(".nav-menu").forEach((menu) => {
+    menu.dataset.childActive = String(Boolean(menu.querySelector('[aria-current="page"]')));
+    menu.open = false;
+  });
   if ("hidden" in node) node.hidden = false;
   node.scrollIntoView({ behavior: "smooth", block: "start" });
   if (["metadata-editor", "mappings", "scope-review"].includes(target) && !state.selectedPaper) {
@@ -602,31 +612,134 @@ function navigateConsole(target) {
 }
 
 function renderDashboard() {
-  const data = state.dashboard;
-  const cards = [
-    ["Curated mappings", data.counts?.curated_mappings],
-  ];
+  const metrics = (state.dashboard.project_health?.groups || [])
+    .flatMap((group) => group.metrics || []);
+  const wanted = {
+    marker_blockers: { title: "Marker blockers", priority: 1, impact: "Preventing papers from appearing correctly on the public map." },
+    identity_unresolved: { title: "Unresolved paper identities", priority: 2, impact: "Canonical papers cannot yet be resolved reliably." },
+    retracted_publications: { title: "Retracted or invalid publications", priority: 3, impact: "Publication status may make public display incorrect." },
+    missing_author_mappings: { title: "Missing author mappings", priority: 4, impact: "Author identities cannot yet be resolved reliably." },
+    missing_affiliations: { title: "Missing affiliations", priority: 4, impact: "Papers are missing institution context on the public map." },
+    missing_coordinates: { title: "Missing institution locations", priority: 5, impact: "Institutions cannot be placed on the map." },
+    high_risk_markers: { title: "High-risk papers", priority: 6, impact: "Low-confidence metadata needs review before release." },
+    key_paper_coverage_queue: { title: "Key-paper coverage", priority: 7, impact: "Important corpus coverage needs maintainer review." },
+    manual_import_queue: { title: "Manual imports", priority: 7, impact: "Imported records still need cleanup or confirmation." },
+  };
+  const queue = metrics.filter((metric) =>
+    wanted[metric.key] && metric.available !== false && Number(metric.value) > 0
+  ).sort((left, right) => wanted[left.key].priority - wanted[right.key].priority);
   elements["dashboard-grid"].replaceChildren();
-  cards.forEach(([label, value]) => {
-    const card = document.createElement("article");
-    const strong = document.createElement("strong");
-    strong.textContent = formatNumber(value);
-    const span = document.createElement("span");
-    span.textContent = label;
-    card.append(strong, span);
-    elements["dashboard-grid"].append(card);
+  elements["action-queue-empty"].hidden = queue.length !== 0;
+  queue.slice(0, 5).forEach((metric) => {
+    const copy = wanted[metric.key];
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "action-queue-row";
+    row.setAttribute("aria-label", `${copy.title}: ${metric.value}. ${copy.impact} Review`);
+    const description = document.createElement("span");
+    const label = document.createElement("strong");
+    label.textContent = copy.title;
+    const impact = document.createElement("span");
+    impact.className = "action-impact";
+    impact.textContent = copy.impact;
+    description.append(label, impact);
+    const count = document.createElement("span");
+    count.className = "action-count";
+    count.textContent = formatNumber(metric.value);
+    const action = document.createElement("span");
+    action.className = "action-link";
+    action.textContent = "Review";
+    row.append(description, count, action);
+    row.addEventListener("click", () => navigateProjectHealthMetric(metric));
+    elements["dashboard-grid"].append(row);
   });
-  Object.entries(data.queues || {}).forEach(([name, queue]) => {
-    const card = document.createElement("article");
-    const strong = document.createElement("strong");
-    strong.textContent = queue.available ? formatNumber(queue.count) : "Report missing";
-    const span = document.createElement("span");
-    const groups = Object.entries(queue.summary || {})
-      .map(([key, count]) => `${key}: ${count}`).join(" · ");
-    span.textContent = `${humanize(name)}${groups ? ` · ${groups}` : ""}`;
-    card.append(strong, span);
-    elements["dashboard-grid"].append(card);
+  if (queue.length > 5) {
+    const expand = document.createElement("button");
+    expand.type = "button";
+    expand.className = "text-button queue-expand";
+    expand.textContent = "View all review queues";
+    expand.addEventListener("click", () => navigateConsole("validation"));
+    elements["dashboard-grid"].append(expand);
+  }
+}
+
+function initializeNavigationMenus() {
+  const menus = [...document.querySelectorAll(".nav-menu")];
+  menus.forEach((menu, index) => {
+    const trigger = menu.querySelector("summary");
+    const popup = menu.querySelector(".nav-menu-items");
+    popup.id = popup.id || `admin-nav-menu-${index + 1}`;
+    trigger.setAttribute("aria-controls", popup.id);
+    trigger.setAttribute("aria-expanded", "false");
+    menu.addEventListener("toggle", () => {
+      trigger.setAttribute("aria-expanded", String(menu.open));
+      if (menu.open) menus.filter((other) => other !== menu).forEach((other) => { other.open = false; });
+    });
+    trigger.addEventListener("keydown", (event) => {
+      if (!["ArrowDown", "ArrowUp", "Escape"].includes(event.key)) return;
+      event.preventDefault();
+      if (event.key === "Escape") { menu.open = false; trigger.focus(); return; }
+      menu.open = true;
+      const items = [...popup.querySelectorAll('[role="menuitem"]')];
+      items[event.key === "ArrowUp" ? items.length - 1 : 0]?.focus();
+    });
+    popup.addEventListener("keydown", (event) => {
+      const items = [...popup.querySelectorAll('[role="menuitem"]')];
+      const current = items.indexOf(document.activeElement);
+      if (event.key === "Escape") { event.preventDefault(); menu.open = false; trigger.focus(); }
+      if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+        event.preventDefault();
+        const delta = event.key === "ArrowDown" ? 1 : -1;
+        items[(current + delta + items.length) % items.length]?.focus();
+      }
+    });
   });
+  document.addEventListener("click", (event) => {
+    menus.filter((menu) => !menu.contains(event.target)).forEach((menu) => { menu.open = false; });
+  });
+}
+
+function closeGlobalSearch() {
+  elements["global-search-results"].hidden = true;
+  elements["global-search-input"].setAttribute("aria-expanded", "false");
+}
+
+function renderGlobalSearch() {
+  const query = normalize(elements["global-search-input"].value);
+  const results = elements["global-search-results"];
+  results.replaceChildren();
+  if (query.length < 2) { closeGlobalSearch(); return; }
+  const matches = state.papers.filter((paper) => normalize([
+    paper.title, paper.doi, paper.arxiv_id, paper.authors, paper.affiliations,
+    paper.institutions, paper.openalex_id,
+  ].map((value) => typeof value === "object" ? JSON.stringify(value) : text(value)).join(" ")).includes(query)).slice(0, 8);
+  matches.forEach((paper) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "global-search-result";
+    button.setAttribute("role", "option");
+    const title = document.createElement("strong");
+    title.textContent = text(paper.title) || "Untitled paper";
+    const meta = document.createElement("small");
+    meta.textContent = `Paper · ${text(paper.doi || paper.arxiv_id || paper.display_id) || "local record"}`;
+    button.append(title, meta);
+    button.addEventListener("click", () => {
+      elements["search-input"].value = text(paper.title);
+      applyFilters();
+      navigateConsole("papers");
+      closeGlobalSearch();
+    });
+    results.append(button);
+  });
+  if (!matches.length) results.textContent = "No matching local records.";
+  results.hidden = false;
+  elements["global-search-input"].setAttribute("aria-expanded", "true");
+}
+
+function handleGlobalSearchKeydown(event) {
+  const options = [...elements["global-search-results"].querySelectorAll('[role="option"]')];
+  if (event.key === "Escape") { closeGlobalSearch(); elements["global-search-input"].focus(); }
+  if (event.key === "ArrowDown" && options.length) { event.preventDefault(); options[0].focus(); }
 }
 
 function navigateProjectHealthMetric(metric) {
@@ -642,69 +755,6 @@ function navigateProjectHealthMetric(metric) {
     renderLocationReviewList();
   }
   navigateConsole(metric.target);
-}
-
-function renderProjectHealth() {
-  const groups = state.dashboard.project_health?.groups || [];
-  const overall = state.dashboard.project_health?.overall || {};
-  const container = elements["project-health-groups"];
-  elements["project-health-score"].dataset.severity =
-    overall.severity || "neutral";
-  elements["project-health-score-value"].textContent =
-    text(overall.display_value) || "Needs refresh";
-  elements["project-health-score-level"].textContent =
-    text(overall.level) || "Unavailable";
-  elements["project-health-score-note"].textContent =
-    text(overall.note)
-    || "Heuristic maintenance score; not a paper-quality rating.";
-  elements["project-health-score"].title =
-    text(overall.explanation) || "Needs refresh";
-  container.replaceChildren();
-  if (!groups.length) {
-    const message = document.createElement("p");
-    message.className = "project-health-fallback";
-    message.textContent = "Needs refresh";
-    container.append(message);
-    return;
-  }
-  groups.forEach((group) => {
-    const section = document.createElement("section");
-    section.className = "project-health-group";
-    section.dataset.healthGroup = group.key;
-    const heading = document.createElement("h3");
-    heading.textContent = group.label;
-    const metrics = document.createElement("div");
-    metrics.className = "project-health-metrics";
-    (group.metrics || []).forEach((metric) => {
-      const item = metric.target
-        ? document.createElement("button")
-        : document.createElement("div");
-      if (metric.target) {
-        item.type = "button";
-        item.dataset.consoleTarget = metric.target;
-        item.addEventListener("click", () => navigateProjectHealthMetric(metric));
-      }
-      item.className = "project-health-metric";
-      item.dataset.healthMetric = metric.key;
-      item.dataset.severity = metric.severity || "neutral";
-      if (!metric.available) item.dataset.status = "missing";
-      if (metric.full_detail) item.title = metric.full_detail;
-      const value = document.createElement("strong");
-      value.textContent = text(metric.display_value) || "Needs refresh";
-      const label = document.createElement("span");
-      label.textContent = metric.label;
-      item.append(value, label);
-      if (metric.detail) {
-        const detail = document.createElement("small");
-        detail.className = "project-health-detail";
-        detail.textContent = metric.detail;
-        item.append(detail);
-      }
-      metrics.append(item);
-    });
-    section.append(heading, metrics);
-    container.append(section);
-  });
 }
 
 function mappingStatusBadge(status) {
@@ -810,6 +860,28 @@ function mappingCoverageRow(row, { includeRank = false } = {}) {
   return tr;
 }
 
+function priorityPaperRow(row) {
+  const tr = document.createElement("tr");
+  const paper = mappingTextCell(row.title || "Untitled paper");
+  paper.className = "priority-paper-title";
+  const issue = mappingTextCell(
+    row.mapping_status === "zero"
+      ? "No resolved author mappings"
+      : `${formatNumber(row.missing_authors)} missing author mapping${Number(row.missing_authors) === 1 ? "" : "s"}`
+  );
+  const impact = mappingTextCell(row.public_impact || "May affect public-map coverage");
+  const action = document.createElement("td");
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "secondary-button compact-action";
+  button.textContent = "Review";
+  button.setAttribute("aria-label", `Review ${text(row.title) || "priority paper"}`);
+  button.addEventListener("click", () => openCoverageMappingEditor(row));
+  action.append(button);
+  tr.append(paper, issue, impact, action);
+  return tr;
+}
+
 function renderMappingCoverage() {
   const report = state.authorMappingCoverage;
   const summaryNode = elements["mapping-coverage-summary"];
@@ -833,17 +905,10 @@ function renderMappingCoverage() {
   elements["mapping-priority-heading"].hidden = false;
   elements["mapping-priority-table-wrap"].hidden = false;
   const summary = report.summary || {};
-  const compact = document.createElement("p");
-  compact.textContent = [
-    `${formatNumber(summary.total_public_papers)} report rows`,
-    `${formatNumber((summary.partial_mappings || 0) + (summary.zero_mappings || 0))} need mapping work`,
-    `${formatNumber(summary.total_missing_author_links)} missing author links`,
-  ].join(" · ");
-  summaryNode.append(compact);
   const priorityRows = (report.records || [])
     .filter((row) => row.mapping_status !== "complete")
-    .slice(0, 10);
-  priorityRows.forEach((row) => priorityBody.append(mappingCoverageRow(row)));
+    .slice(0, 5);
+  priorityRows.forEach((row) => priorityBody.append(priorityPaperRow(row)));
   elements["mapping-priority-empty"].textContent = priorityRows.length
     ? ""
     : "No missing mappings are present in the report.";
@@ -1658,9 +1723,16 @@ function setConnection(status, label) {
 }
 
 function showNotice(message, variant = "success") {
+  if (noticeTimer !== null) window.clearTimeout(noticeTimer);
   elements["action-notice"].hidden = false;
   elements["action-notice"].dataset.variant = variant;
   elements["action-notice"].textContent = message;
+  if (variant === "success") {
+    noticeTimer = window.setTimeout(() => {
+      elements["action-notice"].hidden = true;
+      noticeTimer = null;
+    }, 4000);
+  }
 }
 
 function setWorkflowRunning(running, label = "") {
@@ -1679,6 +1751,11 @@ function renderLatestWorkflowStatus(status) {
   if (!status || status.state === "idle") {
     elements["workflow-state"].dataset.state = "idle";
     elements["workflow-state"].textContent = "No workflow run yet";
+    elements["dashboard-validation-status"].textContent = "Not run";
+    elements["dashboard-preview-status"].textContent = "Not refreshed";
+    state.release.validation = "required";
+    state.release.preview = "required";
+    updatePublishReadiness();
     return;
   }
   if (status.state === "running") {
@@ -1695,6 +1772,13 @@ function renderLatestWorkflowStatus(status) {
       ? `${status.result.duration_seconds}s`
       : "",
   ].filter(Boolean).join(" · ");
+  elements["dashboard-validation-status"].textContent =
+    status.state === "succeeded" ? "Passed" : humanize(status.state);
+  elements["dashboard-preview-status"].textContent =
+    status.state === "succeeded" ? "Ready" : "Needs attention";
+  state.release.validation = status.state === "succeeded" ? "passed" : "failed";
+  state.release.preview = status.state === "succeeded" ? "ready" : "required";
+  updatePublishReadiness();
   if (status.result) renderWorkflowLog(status.result);
 }
 
@@ -1870,11 +1954,41 @@ async function showGitStatus() {
     const result = await apiFetch("/api/git-status");
     renderWorkflowLog(result, "git status --short");
     elements["workflow-log-panel"].open = true;
+    renderGitSummary(result);
   } catch (error) {
     showNotice(`Could not read git status: ${error.message}`, "error");
   } finally {
     elements["show-git-status"].disabled = false;
   }
+}
+
+function renderGitSummary(result) {
+  if (!result) return;
+  const changed = (result.changed_files || []).length
+    ? result.changed_files
+    : text(result.stdout_tail).split("\n").filter((line) => line.trim());
+  elements["dashboard-changed-files"].textContent = formatNumber(changed.length);
+  elements["dashboard-git-summary"].textContent = changed.length
+    ? "Unpublished changes"
+    : "Working tree clean";
+  state.release.changedFiles = changed.length;
+  elements["global-publish-toggle"].textContent = changed.length
+    ? `Publish changes · ${formatNumber(changed.length)}`
+    : "Publish changes";
+  updatePublishReadiness();
+}
+
+function updatePublishReadiness() {
+  const { validation, preview, changedFiles } = state.release;
+  let stage = "Published";
+  let action = "View publish status";
+  if (changedFiles > 0) { stage = "Changes detected"; action = "Review changes"; }
+  if (changedFiles > 0 && validation === "required") { stage = "Validation required"; action = "Run validation"; }
+  if (validation === "failed") { stage = "Validation failed"; action = "Inspect failure"; }
+  if (changedFiles > 0 && validation === "passed" && preview !== "ready") { stage = "Preview refresh required"; action = "Refresh preview"; }
+  if (changedFiles > 0 && validation === "passed" && preview === "ready") { stage = "Ready to publish"; action = "Publish changes"; }
+  elements["dashboard-release-state"].textContent = stage;
+  elements["dashboard-open-publish"].textContent = action;
 }
 
 function openAddPaperPanel() {
