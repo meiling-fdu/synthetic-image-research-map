@@ -147,9 +147,10 @@ process.stdout.write(JSON.stringify({
         self.assertIn(
             "background: rgb(90 157 166 / 50%)", style_source
         )
-        self.assertIn("let pinnedInstitutionKey", app_source)
+        self.assertIn("let hoveredSelection = null", app_source)
+        self.assertIn("let pinnedSelection = null", app_source)
         self.assertIn("const previousPin =", app_source)
-        self.assertIn("if (pinnedPaperRecord)", app_source)
+        self.assertIn("if (pinnedSelection)", app_source)
         self.assertIn(
             "closePaperDetailsButton.addEventListener",
             app_source,
@@ -183,14 +184,31 @@ process.stdout.write(JSON.stringify({
             "function activateHoverPreview(", 1
         )[1].split("\nfunction clearHoverPreview", 1)[0]
 
-        self.assertLess(
-            restore_body.index("if (pinnedPaperIdentity && pinnedPaperRecord)"),
-            restore_body.index("if (hoveredPaperIdentity && hoveredPaperRecord)"),
+        self.assertIn(
+            "const displayedSelection = pinnedSelection || hoveredSelection",
+            restore_body,
         )
-        self.assertIn("showPaperInteraction(pinnedPaperRecord, pinnedPaperIdentity, \"pinned\")", restore_body)
-        self.assertIn("if (pinnedPaperIdentity && pinnedPaperRecord)", hover_body)
-        self.assertIn("return;", hover_body)
+        self.assertIn("pinnedSelection ? \"pinned\" : \"hover\"", restore_body)
+        self.assertIn(
+            "hoveredSelection = { identity, record, marker }", hover_body
+        )
         self.assertIn('closePaperDetailsButton.addEventListener("click", () => clearPaperInteraction())', app_source)
+
+        clear_body = app_source.split(
+            "function clearHoverPreview(marker) {", 1
+        )[1].split("\nfunction pinPaper", 1)[0]
+        pin_body = app_source.split(
+            "function pinPaper(", 1
+        )[1].split("\nfunction renderRecords", 1)[0]
+        panel_leave_body = app_source.split(
+            'paperDetails.addEventListener("mouseleave", () => {', 1
+        )[1].split("\n});", 1)[0]
+        self.assertIn("hoveredSelection?.marker !== marker", clear_body)
+        self.assertIn("hoveredSelection = null", clear_body)
+        self.assertNotIn("pinnedSelection = null", clear_body)
+        self.assertIn("pinnedSelection = { identity, record, institutionKey }", pin_body)
+        self.assertIn("if (pinnedSelection)", panel_leave_body)
+        self.assertNotIn("clearPaperInteraction", panel_leave_body)
 
     def test_rerender_restores_only_visible_pinned_marker(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
@@ -198,14 +216,37 @@ process.stdout.write(JSON.stringify({
             "function renderRecords() {", 1
         )[1].split("\nfunction configureYearRange()", 1)[0]
 
-        self.assertIn("const previousPin = pinnedPaperIdentity && pinnedInstitutionKey", render_body)
+        self.assertIn("const previousPin = pinnedSelection", render_body)
         self.assertIn("visibleMarkerEntries.find", render_body)
         self.assertIn("entry.institutionKey === previousPin.institutionKey", render_body)
         self.assertIn("paperIdentity(record) === previousPin?.identity", render_body)
-        self.assertIn("pinnedPaperIdentity = previousPin.identity", render_body)
-        self.assertIn("pinnedPaperRecord = restoredPinRecord", render_body)
-        self.assertIn("pinnedPaperIdentity = \"\"", render_body)
-        self.assertIn("pinnedPaperRecord = null", render_body)
+        self.assertIn("pinnedSelection = {", render_body)
+        self.assertIn("record: restoredPinRecord", render_body)
+        self.assertIn("pinnedSelection = null", render_body)
+
+    def test_marker_handlers_are_rebuilt_once_and_ai_summary_is_absent(self):
+        app_source = (REPOSITORY / "web/app.js").read_text()
+        style_source = (REPOSITORY / "web/style.css").read_text()
+        render_body = app_source.split(
+            "function renderRecords() {", 1
+        )[1].split("\nfunction configureYearRange()", 1)[0]
+        details_body = app_source.split(
+            "function paperDetailsHtml(record, relatedEntries) {", 1
+        )[1].split("\nfunction resultContent", 1)[0]
+
+        self.assertEqual(render_body.count('markerLayer.clearLayers();'), 1)
+        self.assertEqual(render_body.count('.on("click"'), 1)
+        self.assertEqual(render_body.count('.on("mouseout"'), 1)
+        self.assertNotIn("AI-generated summary", details_body)
+        self.assertNotIn("ai_summary", details_body)
+        self.assertNotIn("paper-ai-summary", style_source)
+
+        for metadata in (
+            "Authors", "Year", "Venue", "Affiliations", "Abstract",
+            "Location", "Publication type",
+        ):
+            self.assertIn(metadata, details_body)
+        self.assertIn("paperExternalLinks(record, true)", details_body)
 
     def test_connection_lines_use_visible_slate_style(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
