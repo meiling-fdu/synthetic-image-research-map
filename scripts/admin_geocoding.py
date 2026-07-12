@@ -79,6 +79,24 @@ def normalize_nominatim_candidate(row: Mapping[str, Any]) -> Dict[str, Any] | No
     if not display_name:
         return None
     address_data = row.get("address") if isinstance(row.get("address"), Mapping) else {}
+    city = clean(
+        address_data.get("city")
+        or address_data.get("town")
+        or address_data.get("village")
+        or address_data.get("municipality")
+    )
+    region = clean(
+        address_data.get("state")
+        or address_data.get("region")
+        or address_data.get("province")
+    )
+    country = clean(address_data.get("country"))
+    raw_country_code = clean(address_data.get("country_code"))
+    country_code = (
+        raw_country_code.upper()
+        if len(raw_country_code) == 2 and raw_country_code.isalpha()
+        else ""
+    )
     institution = clean(
         address_data.get("university")
         or address_data.get("college")
@@ -98,6 +116,10 @@ def normalize_nominatim_candidate(row: Mapping[str, Any]) -> Dict[str, Any] | No
         "display_name": display_name,
         "institution_name": institution,
         "address": display_name,
+        "city": city,
+        "region": region,
+        "country": country,
+        "country_code": country_code,
         "latitude": latitude,
         "longitude": longitude,
         "confidence": confidence,
