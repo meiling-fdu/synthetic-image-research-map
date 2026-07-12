@@ -23,8 +23,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Countries | 73 |
 | arXiv/preprint records | 486 |
 | Records with DOI | 872 |
-| Records with venue | 817 |
-| Records missing venue | 70 |
+| Records with venue | 822 |
+| Records missing venue | 65 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -120,7 +120,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 ### Records missing venue
 
-Count: **70**
+Count: **65**
 
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
@@ -139,7 +139,6 @@ Count: **70**
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Aristotle University of Thessaloniki; `openalex-candidate-d451b0dc194a56c5`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - Fraunhofer-Gesellschaft; `openalex-candidate-6ba9fdeb3689ccf0`
 - Light2Lie: Detecting Deepfake Images Using Physical Reflectance Laws (2026) - Technische Universität Darmstadt; `openalex-candidate-ffc5d929530a3f5f`
-- "That's another doom I haven't thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Leibniz University Hannover; `openalex-candidate-d2a030d99b35b5f8`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Jahangirnagar University; `openalex-candidate-b8c048d2bb06f247`
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - University of Southampton; `openalex-candidate-2e38546bdad915a5`
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Harbin Institute of Technology; `openalex-candidate-b09b2a90b0de5f28`
@@ -164,10 +163,6 @@ Count: **70**
 - TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping (2025) - Centre for Research and Technology Hellas; `openalex-candidate-d9a6970b5514e649`
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Centre for Research and Technology Hellas; `openalex-candidate-4a516cc1ca95d8a3`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-a66244e63c273fee`
-- "That's another doom I haven't thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Helmholtz Center for Information Security; `openalex-candidate-ff2c575fbe73b2dd`
-- "That's another doom I haven't thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Hannover Re (Germany); `openalex-candidate-2d8466e77a874e50`
-- "That's another doom I haven't thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Ruhr University Bochum; `openalex-candidate-ee0060dfde947124`
-- "That's another doom I haven't thought about": A User Study on AI Labels as a Safeguard Against Image-Based Misinformation (2026) - Max Planck Institute for Security and Privacy; `openalex-candidate-01f34db1cddbd93f`
 - A Survey on Deep-Learning-Based Techniques for Detecting AI-Generated Synthetic Images (2026) - Complutense University of Madrid; `curated-map:af83a7022d551570f56c`
 - Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - University at Buffalo; `curated-map:5c099af144a9f6b6b234`
 - Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - Institute of Information Engineering, Chinese Academy of Sciences; `curated-map:44229f2cf573ad44149f`

@@ -2061,7 +2061,9 @@ function startPaperDraft(candidate, source) {
   elements["paper-arxiv-id"].value = text(candidate.arxiv_id);
   elements["paper-openalex-url"].value = text(candidate.openalex_url);
   elements["paper-url"].value = text(candidate.paper_url || candidate.primary_url);
-  elements["paper-publication-type"].value = text(candidate.publication_type);
+  elements["paper-publication-type"].value = normalizePublicationTypeForForm(
+    candidate.publication_type
+  );
   elements["paper-abstract"].value = text(candidate.abstract);
   elements["paper-scope-status"].value = "in_scope";
   elements["paper-review-status"].value =
@@ -2377,6 +2379,14 @@ function metadataValue(record, field) {
   return Array.isArray(value) ? value.join("; ") : text(value);
 }
 
+function normalizePublicationTypeForForm(value) {
+  const normalized = text(value).trim().toLowerCase().replaceAll("_", "-");
+  if (["article", "article-journal", "journal-article", "journal article"].includes(normalized)) {
+    return "journal";
+  }
+  return normalized;
+}
+
 function openMetadataEditor() {
   if (!state.selectedPaper || !state.paperMetadata) {
     showNotice("Select a paper before editing metadata.", "error");
@@ -2390,7 +2400,11 @@ function openMetadataEditor() {
   ];
   fields.forEach((field) => {
     const id = `metadata-${field.replaceAll("_", "-")}`;
-    if (elements[id]) elements[id].value = metadataValue(record, field);
+    if (elements[id]) {
+      elements[id].value = field === "publication_type"
+        ? normalizePublicationTypeForForm(record?.[field])
+        : metadataValue(record, field);
+    }
   });
   elements["metadata-paper-id"].value = state.selectedId;
   elements["metadata-curation-status"].value =
