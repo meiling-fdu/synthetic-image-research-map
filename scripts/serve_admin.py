@@ -30,7 +30,14 @@ try:
         run_workflow,
     )
     from .curated_schema import ALLOWED_EXCLUSION_REASONS
-    from .arxiv_autofill import ArxivLookupError, autofill_public_map_arxiv_ids
+    from .arxiv_autofill import (
+        DEFAULT_CURATED_ARXIV_LINKS_PATH,
+        ArxivLookupError,
+        apply_curated_arxiv_metadata,
+        autofill_public_map_arxiv_ids,
+        curated_arxiv_override_for_record,
+        set_curated_arxiv_override,
+    )
     from .curated_papers import (
         DEFAULT_CURATED_PAPERS_PATH,
         CuratedPaperError,
@@ -97,7 +104,14 @@ except ImportError:
         run_workflow,
     )
     from curated_schema import ALLOWED_EXCLUSION_REASONS
-    from arxiv_autofill import ArxivLookupError, autofill_public_map_arxiv_ids
+    from arxiv_autofill import (
+        DEFAULT_CURATED_ARXIV_LINKS_PATH,
+        ArxivLookupError,
+        apply_curated_arxiv_metadata,
+        autofill_public_map_arxiv_ids,
+        curated_arxiv_override_for_record,
+        set_curated_arxiv_override,
+    )
     from curated_papers import (
         DEFAULT_CURATED_PAPERS_PATH,
         CuratedPaperError,
@@ -182,6 +196,7 @@ EXCLUSION_WRITE_LOCK = threading.Lock()
 CURATED_PAPER_WRITE_LOCK = threading.Lock()
 ARXIV_AUTOFILL_LOCK = threading.Lock()
 ARXIV_AUTOFILL_STATE_LOCK = threading.Lock()
+CURATED_ARXIV_LINK_WRITE_LOCK = threading.Lock()
 ARXIV_AUTOFILL_STATE: Dict[str, Any] = {
     "status": "idle",
     "total_eligible_papers": 0,
@@ -1131,6 +1146,8 @@ def make_handler(
     autofill_runner: Callable[..., Mapping[str, Any]] = (
         autofill_public_map_arxiv_ids
     ),
+    curated_arxiv_links_path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+    metadata_export_runner: Callable[[str], Mapping[str, Any]] = run_workflow,
 ) -> type[BaseHTTPRequestHandler]:
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
@@ -1630,6 +1647,9 @@ def make_handler(
                         )
                         return
                     curated_record = paper.get("curated_record")
+                    effective_record = apply_curated_arxiv_metadata(
+                        paper, curated_arxiv_links_path
+                    )
                     self.send_json(
                         HTTPStatus.OK,
                         api_payload(
@@ -1638,7 +1658,7 @@ def make_handler(
                                     paper
                                 ),
                                 "curated_record": curated_record,
-                                "effective_record": paper,
+                                "effective_record": effective_record,
                                 "identity_keys": {
                                     "paper_id": clean(
                                         (curated_record or {}).get("paper_id")
@@ -2112,14 +2132,55 @@ def make_handler(
                         )
                         return
                     try:
-                        with CURATED_PAPER_WRITE_LOCK:
+                        requested_arxiv_id = clean(payload.get("arxiv_id"))
+                        curated_record = paper.get("curated_record")
+                        existing_override = curated_arxiv_override_for_record(
+                            paper, curated_arxiv_links_path
+                        )
+                        base_record = curated_record or paper
+                        base_arxiv_id = clean(base_record.get("arxiv_id"))
+                        base_paper_url = clean(base_record.get("paper_url"))
+                        if curated_record is None and existing_override:
+                            base_arxiv_id = ""
+                            override_pdf_url = (
+                                "https://arxiv.org/pdf/"
+                                f"{clean(existing_override.get('arxiv_id'))}.pdf"
+                            )
+                            if base_paper_url == override_pdf_url:
+                                base_paper_url = ""
+                        draft = dict(payload)
+                        draft["arxiv_id"] = base_arxiv_id
+                        auto_pdf_url = (
+                            f"https://arxiv.org/pdf/{requested_arxiv_id}.pdf"
+                            if requested_arxiv_id else ""
+                        )
+                        existing_override_pdf_url = (
+                            "https://arxiv.org/pdf/"
+                            f"{clean((existing_override or {}).get('arxiv_id'))}.pdf"
+                            if existing_override else ""
+                        )
+                        if (
+                            not base_paper_url
+                            and clean(draft.get("paper_url"))
+                            in {auto_pdf_url, existing_override_pdf_url}
+                        ):
+                            draft["paper_url"] = ""
+                        with (
+                            CURATED_PAPER_WRITE_LOCK,
+                            CURATED_ARXIV_LINK_WRITE_LOCK,
+                        ):
                             row = update_curated_paper(
                                 paper,
-                                payload,
+                                draft,
                                 preview_records=read_json_records(
                                     PUBLIC_PAPERS_PATH
                                 ),
                                 path=curated_papers_path,
+                            )
+                            set_curated_arxiv_override(
+                                row,
+                                requested_arxiv_id,
+                                curated_arxiv_links_path,
                             )
                     except DuplicatePaperError as error:
                         self.send_json(
@@ -2131,14 +2192,25 @@ def make_handler(
                             ),
                         )
                         return
+                    export_result = dict(metadata_export_runner("export_preview"))
+                    effective_row = apply_curated_arxiv_metadata(
+                        row, curated_arxiv_links_path
+                    )
                     self.send_json(
-                        HTTPStatus.OK,
+                        (
+                            HTTPStatus.OK
+                            if export_result.get("success")
+                            else HTTPStatus.INTERNAL_SERVER_ERROR
+                        ),
                         api_payload(
                             message=(
-                                "Saved to curated database. Run full refresh "
-                                "pipeline to update public preview."
+                                "Saved metadata and regenerated public preview."
                             ),
-                            data={"paper": row},
+                            success=bool(export_result.get("success")),
+                            data={
+                                "paper": effective_row,
+                                "export": export_result,
+                            },
                         ),
                     )
                     return

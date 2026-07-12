@@ -1398,13 +1398,27 @@ def apply_paper_arxiv_links(
             matched_indexes.add(row_index)
             arxiv_id = clean_text(row.get("arxiv_id"))
             arxiv_url = clean_text(row.get("arxiv_url"))
+            explicit_admin_override = (
+                clean_text(row.get("source")) == "admin_metadata_edit"
+            )
             if arxiv_id and not arxiv_url:
                 arxiv_url = f"https://arxiv.org/abs/{arxiv_id}"
-            if not arxiv_enrichment_is_compatible(record, arxiv_id, arxiv_url):
+            if (
+                not explicit_admin_override
+                and not arxiv_enrichment_is_compatible(
+                    record, arxiv_id, arxiv_url
+                )
+            ):
                 continue
             applied_indexes.add(row_index)
-            merge_arxiv_value(record, "arxiv_id", arxiv_id)
-            merge_arxiv_value(record, "arxiv_url", arxiv_url)
+            if explicit_admin_override:
+                if arxiv_id:
+                    record["arxiv_id"] = arxiv_id
+                if arxiv_url:
+                    record["arxiv_url"] = arxiv_url
+            else:
+                merge_arxiv_value(record, "arxiv_id", arxiv_id)
+                merge_arxiv_value(record, "arxiv_url", arxiv_url)
             if arxiv_id and not clean_text(record.get("paper_url")):
                 record["paper_url"] = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
             if not clean_text(record.get("arxiv_year")):

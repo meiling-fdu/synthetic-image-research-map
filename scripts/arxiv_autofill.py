@@ -37,12 +37,20 @@ except ImportError:
 
 try:
     from .export_public_preview import build_preview, identity_key
+    from .export_candidate_map_data import (
+        apply_paper_arxiv_links,
+        paper_identity_keys,
+    )
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
         read_exclusion_rows,
     )
 except ImportError:
     from export_public_preview import build_preview, identity_key
+    from export_candidate_map_data import (
+        apply_paper_arxiv_links,
+        paper_identity_keys,
+    )
     from paper_exclusions import DEFAULT_EXCLUSIONS_PATH, read_exclusion_rows
 
 
@@ -353,7 +361,9 @@ def eligible_public_map_papers(
     return list(unique.values())
 
 
-def _read_curated_arxiv_links(path: Path) -> List[Dict[str, str]]:
+def read_curated_arxiv_links(
+    path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+) -> List[Dict[str, str]]:
     if not path.exists():
         return []
     try:
@@ -369,7 +379,7 @@ def _read_curated_arxiv_links(path: Path) -> List[Dict[str, str]]:
         raise ArxivLookupError(str(error), kind="input_error") from error
 
 
-def _write_curated_arxiv_links(
+def write_curated_arxiv_links(
     rows: Sequence[Mapping[str, Any]], path: Path
 ) -> None:
     temporary_path = path.with_suffix(path.suffix + ".tmp")
@@ -387,6 +397,61 @@ def _write_curated_arxiv_links(
         temporary_path.replace(path)
     except OSError as error:
         raise ArxivLookupError(str(error), kind="write_error") from error
+
+
+def apply_curated_arxiv_metadata(
+    record: Mapping[str, Any],
+    path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+) -> Dict[str, Any]:
+    """Return admin metadata with the same arXiv enrichment used by export."""
+    effective = dict(record)
+    effective_records = [effective]
+    apply_paper_arxiv_links(effective_records, read_curated_arxiv_links(path))
+    return effective_records[0]
+
+
+def curated_arxiv_override_for_record(
+    record: Mapping[str, Any],
+    path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+) -> Dict[str, str] | None:
+    target_keys = set(paper_identity_keys(dict(record)))
+    return next(
+        (
+            row for row in read_curated_arxiv_links(path)
+            if target_keys & set(paper_identity_keys(row))
+        ),
+        None,
+    )
+
+
+def set_curated_arxiv_override(
+    paper: Mapping[str, Any],
+    arxiv_id: Any,
+    path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+) -> List[Dict[str, str]]:
+    """Upsert or remove one paper's curated arXiv override atomically."""
+    target_keys = set(paper_identity_keys(dict(paper)))
+    rows = read_curated_arxiv_links(path)
+    kept = [
+        row for row in rows
+        if not (target_keys & set(paper_identity_keys(row)))
+    ]
+    normalized_id = base_arxiv_id(arxiv_id)
+    if normalized_id:
+        kept.append({
+            "title": str(paper.get("title") or "").strip(),
+            "year": str(
+                paper.get("year") or paper.get("publication_year") or ""
+            ).strip(),
+            "doi": str(paper.get("doi") or "").strip(),
+            "openalex_url": str(paper.get("openalex_url") or "").strip(),
+            "arxiv_id": normalized_id,
+            "match_status": "linked_to_arxiv",
+            "source": "admin_metadata_edit",
+        })
+    if kept != rows:
+        write_curated_arxiv_links(kept, path)
+    return kept
 
 
 def autofill_public_map_arxiv_ids(
@@ -509,12 +574,12 @@ def autofill_public_map_arxiv_ids(
             })
 
     if additions:
-        existing = _read_curated_arxiv_links(links_path)
+        existing = read_curated_arxiv_links(links_path)
         existing_keys = {identity_key(row) for row in existing}
         existing.extend(
             row for row in additions if identity_key(row) not in existing_keys
         )
-        _write_curated_arxiv_links(existing, links_path)
+        write_curated_arxiv_links(existing, links_path)
         if export is not None:
             export_result = dict(export())
             stats["export_ran"] = True

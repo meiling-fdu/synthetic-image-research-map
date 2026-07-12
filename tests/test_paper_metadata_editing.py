@@ -1,7 +1,12 @@
 import csv
+import contextlib
 import json
 import tempfile
+import threading
 import unittest
+import urllib.request
+import urllib.parse
+from http.server import ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
 
@@ -12,13 +17,18 @@ from scripts.curated_papers import (
     update_curated_paper,
 )
 from scripts.curated_schema import PAPERS_COLUMNS, PAPER_EXCLUSION_COLUMNS
+from scripts.arxiv_autofill import (
+    apply_curated_arxiv_metadata,
+    read_curated_arxiv_links,
+    set_curated_arxiv_override,
+)
 from scripts.export_public_preview import normalize_entry_type
 from scripts.paper_exclusions import (
     build_active_exclusion_index,
     record_is_excluded,
     upsert_active_exclusion,
 )
-from scripts.serve_admin import load_admin_data
+from scripts.serve_admin import load_admin_data, make_handler
 
 
 def curated_row(**overrides):
@@ -63,6 +73,188 @@ def write_exclusions(path, rows=()):
 
 
 class PaperMetadataEditingTests(unittest.TestCase):
+    @contextlib.contextmanager
+    def metadata_server(self, directory, export_calls):
+        directory = Path(directory)
+        curated_path = directory / "papers.csv"
+        exclusions_path = directory / "paper_exclusions.csv"
+        links_path = directory / "paper_arxiv_links.csv"
+        public_papers = directory / "public_papers.json"
+        public_map = directory / "public_map.json"
+        original = curated_row(arxiv_id="", paper_url="")
+        write_papers(curated_path, [original])
+        write_exclusions(exclusions_path)
+        public_papers.write_text("[]", encoding="utf-8")
+        public_map.write_text("[]", encoding="utf-8")
+        set_curated_arxiv_override(original, "2501.01234", links_path)
+        with (
+            patch("scripts.serve_admin.PUBLIC_PAPERS_PATH", public_papers),
+            patch("scripts.serve_admin.PUBLIC_MAP_PATH", public_map),
+        ):
+            _papers, admin_data = load_admin_data(
+                exclusions_path=exclusions_path,
+                curated_papers_path=curated_path,
+            )
+            display_id = next(iter(admin_data["papers_by_id"]))
+            server = ThreadingHTTPServer(
+                ("127.0.0.1", 0),
+                make_handler(
+                    "test-token",
+                    exclusions_path=exclusions_path,
+                    curated_papers_path=curated_path,
+                    curated_arxiv_links_path=links_path,
+                    metadata_export_runner=lambda name: (
+                        export_calls.append(name) or {"success": True}
+                    ),
+                ),
+            )
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                yield (
+                    f"http://127.0.0.1:{server.server_port}",
+                    original,
+                    curated_path,
+                    links_path,
+                    display_id,
+                )
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=2)
+
+    def metadata_request(self, base_url, path, payload=None):
+        request = urllib.request.Request(
+            base_url + path,
+            data=(json.dumps(payload).encode("utf-8") if payload is not None else None),
+            method="POST" if payload is not None else "GET",
+            headers={
+                "X-Admin-Token": "test-token",
+                "Content-Type": "application/json",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=3) as response:
+            return json.loads(response.read())
+
+    def test_metadata_endpoint_reads_edits_and_clears_arxiv_override(self):
+        with tempfile.TemporaryDirectory() as directory:
+            exports = []
+            with self.metadata_server(directory, exports) as (
+                base_url,
+                original,
+                curated_path,
+                links_path,
+                display_id,
+            ):
+                metadata = self.metadata_request(
+                    base_url,
+                    f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
+                )["data"]["effective_record"]
+                self.assertEqual(metadata["arxiv_id"], "2501.01234")
+                self.assertEqual(
+                    metadata["paper_url"],
+                    "https://arxiv.org/pdf/2501.01234.pdf",
+                )
+
+                edit = {
+                    **original,
+                    "id": display_id,
+                    "arxiv_id": "2501.99999v2",
+                    "paper_url": metadata["paper_url"],
+                }
+                updated = self.metadata_request(
+                    base_url, "/api/paper/metadata/update", edit
+                )["data"]["paper"]
+                self.assertEqual(updated["arxiv_id"], "2501.99999")
+                self.assertEqual(len(read_curated_arxiv_links(links_path)), 1)
+                self.assertEqual(exports, ["export_preview"])
+                with curated_path.open(encoding="utf-8", newline="") as handle:
+                    saved = next(csv.DictReader(handle))
+                self.assertEqual(saved["arxiv_id"], "")
+                self.assertEqual(saved["authors"], original["authors"])
+
+                cleared = {**edit, "arxiv_id": ""}
+                self.metadata_request(
+                    base_url, "/api/paper/metadata/update", cleared
+                )
+                self.assertEqual(read_curated_arxiv_links(links_path), [])
+                self.assertEqual(exports, ["export_preview", "export_preview"])
+
+    def test_curated_arxiv_override_matches_public_effective_metadata(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            links = Path(temporary_directory) / "paper_arxiv_links.csv"
+            base = curated_row(arxiv_id="", paper_url="")
+            set_curated_arxiv_override(base, "2501.01234", links)
+
+            admin = apply_curated_arxiv_metadata(base, links)
+            public = dict(base)
+            from scripts.export_candidate_map_data import apply_paper_arxiv_links
+            apply_paper_arxiv_links([public], read_curated_arxiv_links(links))
+
+            self.assertEqual(admin["arxiv_id"], "2501.01234")
+            self.assertEqual(admin["arxiv_id"], public["arxiv_id"])
+            self.assertEqual(
+                admin["paper_url"], "https://arxiv.org/pdf/2501.01234.pdf"
+            )
+            self.assertEqual(admin["paper_url"], public["paper_url"])
+            self.assertEqual(admin["authors"], base["authors"])
+
+    def test_base_arxiv_and_empty_records_are_preserved_without_override(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            links = Path(temporary_directory) / "paper_arxiv_links.csv"
+            base = curated_row(arxiv_id="2401.00001", paper_url="publisher")
+            self.assertEqual(
+                apply_curated_arxiv_metadata(base, links)["arxiv_id"],
+                "2401.00001",
+            )
+            empty = curated_row(arxiv_id="", paper_url="")
+            effective = apply_curated_arxiv_metadata(empty, links)
+            self.assertEqual(effective["arxiv_id"], "")
+            self.assertEqual(effective["paper_url"], "")
+
+    def test_clearing_admin_override_reveals_unchanged_base_arxiv_id(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            links = Path(temporary_directory) / "paper_arxiv_links.csv"
+            base = curated_row(arxiv_id="2401.00001")
+            set_curated_arxiv_override(base, "2501.00002", links)
+            self.assertEqual(
+                apply_curated_arxiv_metadata(base, links)["arxiv_id"],
+                "2501.00002",
+            )
+            set_curated_arxiv_override(base, "", links)
+            self.assertEqual(read_curated_arxiv_links(links), [])
+            self.assertEqual(
+                apply_curated_arxiv_metadata(base, links)["arxiv_id"],
+                "2401.00001",
+            )
+
+    def test_arxiv_override_edit_clear_and_deduplicate_preserve_other_rows(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            links = Path(temporary_directory) / "paper_arxiv_links.csv"
+            target = curated_row(arxiv_id="")
+            other = curated_row(
+                paper_id="curated:other",
+                title="Other paper",
+                doi="10.1000/other",
+                openalex_url="https://openalex.org/W-OTHER",
+            )
+            set_curated_arxiv_override(other, "2501.11111", links)
+            set_curated_arxiv_override(target, "2501.22222", links)
+            set_curated_arxiv_override(target, "2501.33333v2", links)
+            rows = read_curated_arxiv_links(links)
+            self.assertEqual(len(rows), 2)
+            target_rows = [row for row in rows if row["doi"] == target["doi"]]
+            self.assertEqual(len(target_rows), 1)
+            self.assertEqual(target_rows[0]["arxiv_id"], "2501.33333")
+            self.assertEqual(
+                next(row for row in rows if row["doi"] == other["doi"])["arxiv_id"],
+                "2501.11111",
+            )
+            set_curated_arxiv_override(target, "", links)
+            remaining = read_curated_arxiv_links(links)
+            self.assertEqual(len(remaining), 1)
+            self.assertEqual(remaining[0]["doi"], other["doi"])
+
     def test_admin_data_loading_resolves_identity_matches_to_paper_records(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             directory = Path(temporary_directory)

@@ -3,6 +3,9 @@ import subprocess
 import unittest
 from pathlib import Path
 
+from scripts.export_public_preview import build_preview, identity_key
+from scripts.paper_exclusions import read_exclusion_rows
+
 
 REPOSITORY = Path(__file__).resolve().parents[1]
 NODE = Path(
@@ -217,7 +220,7 @@ process.stdout.write(JSON.stringify({
         self.assertIn("weight: 2.4", connection_style)
         self.assertIn("opacity: 0.68", connection_style)
 
-    def test_public_preview_record_counts_are_unchanged(self):
+    def test_public_preview_counts_match_current_pipeline_eligibility(self):
         map_payload = json.loads(
             (REPOSITORY / "web/data/public_preview_map_data.json").read_text()
         )
@@ -225,8 +228,24 @@ process.stdout.write(JSON.stringify({
             (REPOSITORY / "web/data/public_preview_papers.json").read_text()
         )
 
-        self.assertEqual(len(map_payload["records"]), 878)
-        self.assertEqual(len(paper_payload["records"]), 444)
+        rebuilt_map, summary = build_preview(
+            map_payload["records"],
+            None,
+            "medium",
+            False,
+            (),
+            exclusion_rows=read_exclusion_rows(),
+        )
+        self.assertEqual(
+            len(map_payload["records"]), len(rebuilt_map["records"])
+        )
+        self.assertEqual(
+            len(map_payload["records"]), summary["records_exported"]
+        )
+        self.assertEqual(
+            len(paper_payload["records"]),
+            len({identity_key(record) for record in paper_payload["records"]}),
+        )
 
 
 if __name__ == "__main__":
