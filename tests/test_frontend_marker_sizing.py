@@ -161,7 +161,7 @@ process.stdout.write(JSON.stringify({
         app_source = (REPOSITORY / "web/app.js").read_text()
         style_source = (REPOSITORY / "web/style.css").read_text()
         interaction_body = app_source.split(
-            "function showPaperInteraction(record, identity, mode) {", 1
+            "function showPaperInteraction(detailSelection, connectionSelection) {", 1
         )[1].split("\nfunction renderActiveSelection()", 1)[0]
 
         self.assertIn(
@@ -186,10 +186,13 @@ process.stdout.write(JSON.stringify({
         )[1].split("\nfunction clearHoverPreview", 1)[0]
 
         self.assertIn(
-            "const displayedSelection = interactionState.pinned || interactionState.hovered",
+            "const detailSelection = interactionState.pinned || interactionState.hovered",
             restore_body,
         )
-        self.assertIn("interactionState.pinned ? \"pinned\" : \"hover\"", restore_body)
+        self.assertIn(
+            "const connectionSelection = interactionState.hovered || interactionState.pinned",
+            restore_body,
+        )
         self.assertIn(
             "setHoveredSelection({ identity, record, marker })", hover_body
         )
@@ -206,6 +209,40 @@ process.stdout.write(JSON.stringify({
         self.assertIn("setPinnedSelection({ identity, record, institutionKey })", pin_body)
         self.assertNotIn('paperDetails.addEventListener("mouseleave"', app_source)
         self.assertIn("event.originalEvent?.stopPropagation()", app_source)
+
+    def test_hover_lines_take_precedence_without_replacing_pinned_details(self):
+        app_source = (REPOSITORY / "web/app.js").read_text()
+        active_body = app_source.split(
+            "function renderActiveSelection() {", 1
+        )[1].split("\nfunction setHoveredSelection", 1)[0]
+        interaction_body = app_source.split(
+            "function showPaperInteraction(detailSelection, connectionSelection) {", 1
+        )[1].split("\nfunction renderActiveSelection", 1)[0]
+        connection_body = app_source.split(
+            "function renderConnectionSelection(selection, mode) {", 1
+        )[1].split("\nfunction renderPaperSelection", 1)[0]
+        draw_body = app_source.split(
+            "function drawConnectionLines(relatedEntries, currentRecord, targetLayer) {", 1
+        )[1].split("\nfunction relatedMarkerEntries", 1)[0]
+
+        self.assertIn(
+            "interactionState.pinned || interactionState.hovered", active_body
+        )
+        self.assertIn(
+            "interactionState.hovered || interactionState.pinned", active_body
+        )
+        self.assertIn(
+            "renderPaperSelection(detailSelection)", interaction_body
+        )
+        self.assertIn(
+            "renderConnectionSelection(", interaction_body
+        )
+        self.assertIn("hoverConnectionLayer.clearLayers()", connection_body)
+        self.assertIn("selectedConnectionLayer.clearLayers()", connection_body)
+        self.assertIn("drawConnectionLines(", connection_body)
+        self.assertIn('mode === "hover"', connection_body)
+        self.assertIn("if (locations.length < 2)", draw_body)
+        self.assertIn("return 0", draw_body)
 
     def test_rerender_restores_only_visible_pinned_marker(self):
         app_source = (REPOSITORY / "web/app.js").read_text()

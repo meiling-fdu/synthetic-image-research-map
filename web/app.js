@@ -1775,21 +1775,26 @@ function drawConnectionLines(relatedEntries, currentRecord, targetLayer) {
   return connectedLocations.length;
 }
 
-function showPaperInteraction(record, identity, mode) {
-  const relatedEntries = visibleMarkerEntries
+function relatedMarkerEntries(selection) {
+  return visibleMarkerEntries
     .map((entry) => {
       const matchingRecord = entry.records.find(
-        (candidate) => paperIdentity(candidate) === identity,
+        (candidate) => paperIdentity(candidate) === selection.identity,
       );
       return matchingRecord ? { ...entry, record: matchingRecord } : null;
     })
     .filter(Boolean);
-  if (!relatedEntries.length) {
-    return;
-  }
+}
 
+function renderConnectionSelection(selection, mode) {
+  const relatedEntries = selection ? relatedMarkerEntries(selection) : [];
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
+  if (!relatedEntries.length) {
+    restoreBaseMarkerStyles();
+    return { lineCount: 0, visibleCount: 0 };
+  }
+
   let currentMarker = null;
   visibleMarkerEntries.forEach((entry) => {
     const {
@@ -1799,9 +1804,9 @@ function showPaperInteraction(record, identity, mode) {
       taskKey,
       paperCount,
     } = entry;
-    const isCurrent = markerRecords.includes(record);
+    const isCurrent = markerRecords.includes(selection.record);
     const isRelated = markerRecords.some(
-      (candidate) => paperIdentity(candidate) === identity,
+      (candidate) => paperIdentity(candidate) === selection.identity,
     );
     if (isCurrent) {
       currentMarker = marker;
@@ -1815,26 +1820,44 @@ function showPaperInteraction(record, identity, mode) {
 
   const isHover = mode === "hover";
   const targetLayer = isHover ? hoverConnectionLayer : selectedConnectionLayer;
-  const lineCount = drawConnectionLines(relatedEntries, record, targetLayer);
+  const lineCount = drawConnectionLines(
+    relatedEntries,
+    selection.record,
+    targetLayer,
+  );
   relatedEntries.forEach(({ marker }) => marker.bringToFront());
   currentMarker?.bringToFront();
-  showPaperDetails(record, relatedEntries);
+  return { lineCount, visibleCount: relatedEntries.length };
+}
+
+function renderPaperSelection(selection) {
+  const relatedEntries = selection ? relatedMarkerEntries(selection) : [];
+  if (!relatedEntries.length) {
+    resetPaperDetails();
+    return;
+  }
+  showPaperDetails(selection.record, relatedEntries);
+}
+
+function showPaperInteraction(detailSelection, connectionSelection) {
+  const isHoverConnection = connectionSelection === interactionState.hovered;
+  const { lineCount, visibleCount } = renderConnectionSelection(
+    connectionSelection,
+    isHoverConnection ? "hover" : "pinned",
+  );
+  renderPaperSelection(detailSelection);
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", true);
-  const visibleCount = relatedEntries.length;
   const connectionText = lineCount ? " · Connections shown." : ".";
   mapStatus.textContent =
     `Previewing ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"}${connectionText}`;
 }
 
 function renderActiveSelection() {
-  const displayedSelection = interactionState.pinned || interactionState.hovered;
-  if (displayedSelection) {
-    showPaperInteraction(
-      displayedSelection.record,
-      displayedSelection.identity,
-      interactionState.pinned ? "pinned" : "hover",
-    );
+  const detailSelection = interactionState.pinned || interactionState.hovered;
+  const connectionSelection = interactionState.hovered || interactionState.pinned;
+  if (detailSelection) {
+    showPaperInteraction(detailSelection, connectionSelection);
     return;
   }
 
