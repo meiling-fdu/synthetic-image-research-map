@@ -191,8 +191,6 @@ def _mapping_fields(
         raise CuratedMappingError("institution is required")
     if not institution_authors:
         raise CuratedMappingError("institution authors are required")
-    if not review_note:
-        raise CuratedMappingError("review note is required")
     if not any((raw_affiliation, evidence_source, evidence_url)):
         raise CuratedMappingError(
             "raw affiliation or evidence source/evidence URL is required"
@@ -467,7 +465,10 @@ def update_mapping(
     )
     if row is None or not records_share_paper_identity(paper, row):
         raise CuratedMappingError("mapping not found for selected paper")
-    candidate = _mapping_fields(paper, draft)
+    candidate_draft = dict(draft)
+    if "review_note" not in candidate_draft:
+        candidate_draft["review_note"] = row.get("review_note")
+    candidate = _mapping_fields(paper, candidate_draft)
     duplicate = _duplicate_mapping(
         candidate, rows, ignore_mapping_id=clean(mapping_id)
     )

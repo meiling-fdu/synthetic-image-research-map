@@ -228,6 +228,44 @@ class PaperMetadataEditingTests(unittest.TestCase):
             "draft.arxiv_id_changed =\n    draft.arxiv_id !==", source
         )
 
+    def test_frontend_loads_and_clears_metadata_on_paper_selection(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "web" / "admin.js"
+        ).read_text()
+        select_body = source.split("async function selectPaper(id) {", 1)[1].split(
+            "\nfunction clearPaperMetadata", 1
+        )[0]
+        editor_body = source.split("function openMetadataEditor() {", 1)[1].split(
+            "\nfunction populateMetadataForm", 1
+        )[0]
+        self.assertIn('clearPaperMetadata("Loading metadata…")', select_body)
+        self.assertIn("apiFetch(`/api/paper/metadata?id=", select_body)
+        self.assertIn("populateMetadataForm();", select_body)
+        self.assertNotIn("apiFetch(", editor_body)
+        self.assertNotIn("populateMetadataForm();", editor_body)
+
+    def test_frontend_rejects_stale_metadata_responses_and_stale_saves(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "web" / "admin.js"
+        ).read_text()
+        self.assertIn("let paperSelectionSequence = 0;", source)
+        self.assertGreaterEqual(
+            source.count(
+                "selectionSequence !== paperSelectionSequence || state.selectedId !=="
+            ),
+            3,
+        )
+        self.assertIn('elements["metadata-paper-id"].value = "";', source)
+        self.assertIn('elements["metadata-edit-button"].disabled = true;', source)
+        self.assertIn("Metadata is not loaded for the currently selected paper.", source)
+
+    def test_frontend_renders_empty_metadata_records_explicitly(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "web" / "admin.js"
+        ).read_text()
+        self.assertIn('summary.textContent = `${label}${record ? "" : " · none"}`;', source)
+        self.assertIn('pre.textContent = record ? JSON.stringify(record, null, 2) : "No record.";', source)
+
     def test_export_failure_rolls_back_metadata_and_override_files(self):
         with tempfile.TemporaryDirectory() as directory:
             exports = []
