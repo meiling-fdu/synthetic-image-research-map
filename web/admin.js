@@ -2283,6 +2283,8 @@ function openMetadataEditor() {
     metadataValue(record, "review_status") || "reviewed";
   elements["metadata-scope-status"].value =
     metadataValue(record, "scope_status") || "in_scope";
+  elements["metadata-arxiv-id"].dataset.originalValue =
+    metadataValue(record, "arxiv_id").trim();
   elements["metadata-edit-error"].hidden = true;
   elements["metadata-edit-form"].hidden = false;
   elements["metadata-title"].focus();
@@ -2303,6 +2305,8 @@ async function saveMetadata(event) {
   fields.forEach((field) => {
     draft[field] = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
   });
+  draft.arxiv_id_changed =
+    draft.arxiv_id !== elements["metadata-arxiv-id"].dataset.originalValue;
   elements["metadata-edit-error"].hidden = true;
   try {
     const payload = await apiFetch("/api/paper/metadata/update", {

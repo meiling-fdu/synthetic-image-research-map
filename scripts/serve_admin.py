@@ -245,6 +245,25 @@ STATIC_ROUTES = {
 LOGGER = logging.getLogger(__name__)
 
 
+def snapshot_files(paths: Sequence[Path]) -> Dict[Path, bytes | None]:
+    return {
+        path: path.read_bytes() if path.exists() else None
+        for path in paths
+    }
+
+
+def restore_file_snapshots(snapshots: Mapping[Path, bytes | None]) -> None:
+    for path, content in snapshots.items():
+        if content is None:
+            if path.exists():
+                path.unlink()
+            continue
+        temporary = path.with_suffix(path.suffix + ".rollback.tmp")
+        temporary.parent.mkdir(parents=True, exist_ok=True)
+        temporary.write_bytes(content)
+        temporary.replace(path)
+
+
 class AdminDataError(RuntimeError):
     """An expected local data error that should not produce a traceback."""
 
@@ -2132,6 +2151,7 @@ def make_handler(
                         )
                         return
                     try:
+                        arxiv_id_changed = payload.get("arxiv_id_changed") is True
                         requested_arxiv_id = clean(payload.get("arxiv_id"))
                         curated_record = paper.get("curated_record")
                         existing_override = curated_arxiv_override_for_record(
@@ -2169,19 +2189,37 @@ def make_handler(
                             CURATED_PAPER_WRITE_LOCK,
                             CURATED_ARXIV_LINK_WRITE_LOCK,
                         ):
-                            row = update_curated_paper(
-                                paper,
-                                draft,
-                                preview_records=read_json_records(
-                                    PUBLIC_PAPERS_PATH
-                                ),
-                                path=curated_papers_path,
-                            )
-                            set_curated_arxiv_override(
-                                row,
-                                requested_arxiv_id,
+                            snapshots = snapshot_files((
+                                curated_papers_path,
                                 curated_arxiv_links_path,
-                            )
+                                PUBLIC_PAPERS_PATH,
+                                PUBLIC_MAP_PATH,
+                                location_review_path,
+                            ))
+                            try:
+                                row = update_curated_paper(
+                                    paper,
+                                    draft,
+                                    preview_records=read_json_records(
+                                        PUBLIC_PAPERS_PATH
+                                    ),
+                                    path=curated_papers_path,
+                                )
+                                if arxiv_id_changed:
+                                    set_curated_arxiv_override(
+                                        row,
+                                        requested_arxiv_id,
+                                        curated_arxiv_links_path,
+                                        match_record=paper,
+                                    )
+                                export_result = dict(
+                                    metadata_export_runner("export_preview")
+                                )
+                            except Exception:
+                                restore_file_snapshots(snapshots)
+                                raise
+                            if not export_result.get("success"):
+                                restore_file_snapshots(snapshots)
                     except DuplicatePaperError as error:
                         self.send_json(
                             HTTPStatus.CONFLICT,
@@ -2192,9 +2230,9 @@ def make_handler(
                             ),
                         )
                         return
-                    export_result = dict(metadata_export_runner("export_preview"))
                     effective_row = apply_curated_arxiv_metadata(
-                        row, curated_arxiv_links_path
+                        row if export_result.get("success") else paper,
+                        curated_arxiv_links_path,
                     )
                     self.send_json(
                         (

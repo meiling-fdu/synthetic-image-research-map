@@ -6,6 +6,7 @@ import threading
 import unittest
 import urllib.request
 import urllib.parse
+import urllib.error
 from http.server import ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
@@ -74,7 +75,7 @@ def write_exclusions(path, rows=()):
 
 class PaperMetadataEditingTests(unittest.TestCase):
     @contextlib.contextmanager
-    def metadata_server(self, directory, export_calls):
+    def metadata_server(self, directory, export_calls, export_success=True):
         directory = Path(directory)
         curated_path = directory / "papers.csv"
         exclusions_path = directory / "paper_exclusions.csv"
@@ -104,7 +105,8 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     curated_papers_path=curated_path,
                     curated_arxiv_links_path=links_path,
                     metadata_export_runner=lambda name: (
-                        export_calls.append(name) or {"success": True}
+                        export_calls.append(name)
+                        or {"success": export_success}
                     ),
                 ),
             )
@@ -160,6 +162,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     **original,
                     "id": display_id,
                     "arxiv_id": "2501.99999v2",
+                    "arxiv_id_changed": True,
                     "paper_url": metadata["paper_url"],
                 }
                 updated = self.metadata_request(
@@ -173,12 +176,87 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 self.assertEqual(saved["arxiv_id"], "")
                 self.assertEqual(saved["authors"], original["authors"])
 
-                cleared = {**edit, "arxiv_id": ""}
+                cleared = {**edit, "arxiv_id": "", "arxiv_id_changed": True}
                 self.metadata_request(
                     base_url, "/api/paper/metadata/update", cleared
                 )
                 self.assertEqual(read_curated_arxiv_links(links_path), [])
                 self.assertEqual(exports, ["export_preview", "export_preview"])
+
+    def test_unchanged_or_omitted_arxiv_field_preserves_override_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            exports = []
+            with self.metadata_server(directory, exports) as (
+                base_url,
+                original,
+                _curated_path,
+                links_path,
+                display_id,
+            ):
+                before = links_path.read_bytes()
+                unchanged = {
+                    **original,
+                    "id": display_id,
+                    "venue": "Updated venue only",
+                    "arxiv_id": "2501.01234",
+                    "arxiv_id_changed": False,
+                    "paper_url": "https://arxiv.org/pdf/2501.01234.pdf",
+                }
+                self.metadata_request(
+                    base_url, "/api/paper/metadata/update", unchanged
+                )
+                self.assertEqual(links_path.read_bytes(), before)
+
+                omitted = dict(unchanged)
+                omitted.pop("arxiv_id")
+                omitted.pop("arxiv_id_changed")
+                omitted["venue"] = "Another venue update"
+                self.metadata_request(
+                    base_url, "/api/paper/metadata/update", omitted
+                )
+                self.assertEqual(links_path.read_bytes(), before)
+                self.assertEqual(exports, ["export_preview", "export_preview"])
+
+    def test_frontend_marks_arxiv_changes_explicitly(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "web" / "admin.js"
+        ).read_text()
+        self.assertIn(
+            'elements["metadata-arxiv-id"].dataset.originalValue', source
+        )
+        self.assertIn(
+            "draft.arxiv_id_changed =\n    draft.arxiv_id !==", source
+        )
+
+    def test_export_failure_rolls_back_metadata_and_override_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            exports = []
+            with self.metadata_server(
+                directory, exports, export_success=False
+            ) as (
+                base_url,
+                original,
+                curated_path,
+                links_path,
+                display_id,
+            ):
+                curated_before = curated_path.read_bytes()
+                links_before = links_path.read_bytes()
+                edit = {
+                    **original,
+                    "id": display_id,
+                    "venue": "Must roll back",
+                    "arxiv_id": "2501.99999",
+                    "arxiv_id_changed": True,
+                    "paper_url": "https://arxiv.org/pdf/2501.01234.pdf",
+                }
+                with self.assertRaises(urllib.error.HTTPError) as raised:
+                    self.metadata_request(
+                        base_url, "/api/paper/metadata/update", edit
+                    )
+                self.assertEqual(raised.exception.code, 500)
+                self.assertEqual(curated_path.read_bytes(), curated_before)
+                self.assertEqual(links_path.read_bytes(), links_before)
 
     def test_curated_arxiv_override_matches_public_effective_metadata(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
@@ -254,6 +332,34 @@ class PaperMetadataEditingTests(unittest.TestCase):
             remaining = read_curated_arxiv_links(links)
             self.assertEqual(len(remaining), 1)
             self.assertEqual(remaining[0]["doi"], other["doi"])
+
+    def test_override_upsert_does_not_collide_on_same_title_and_year(self):
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            links = Path(temporary_directory) / "paper_arxiv_links.csv"
+            first = curated_row(
+                title="Shared title",
+                year="2025",
+                doi="10.1000/first",
+                openalex_url="https://openalex.org/W-FIRST",
+            )
+            second = curated_row(
+                paper_id="curated:second",
+                title="Shared title",
+                year="2025",
+                doi="10.1000/second",
+                openalex_url="https://openalex.org/W-SECOND",
+            )
+            set_curated_arxiv_override(first, "2501.00001", links)
+            set_curated_arxiv_override(second, "2501.00002", links)
+            set_curated_arxiv_override(first, "2501.00003", links)
+            rows = read_curated_arxiv_links(links)
+            self.assertEqual([row["doi"] for row in rows], [
+                "10.1000/first", "10.1000/second"
+            ])
+            self.assertEqual([row["arxiv_id"] for row in rows], [
+                "2501.00003", "2501.00002"
+            ])
+            self.assertNotIn(b"\r\n", links.read_bytes())
 
     def test_admin_data_loading_resolves_identity_matches_to_paper_records(self):
         with tempfile.TemporaryDirectory() as temporary_directory:

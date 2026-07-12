@@ -428,17 +428,20 @@ def set_curated_arxiv_override(
     paper: Mapping[str, Any],
     arxiv_id: Any,
     path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+    *,
+    match_record: Mapping[str, Any] | None = None,
 ) -> List[Dict[str, str]]:
     """Upsert or remove one paper's curated arXiv override atomically."""
-    target_keys = set(paper_identity_keys(dict(paper)))
+    target_key = identity_key(dict(match_record or paper))
     rows = read_curated_arxiv_links(path)
-    kept = [
-        row for row in rows
-        if not (target_keys & set(paper_identity_keys(row)))
+    matching_indexes = [
+        index for index, row in enumerate(rows)
+        if identity_key(row) == target_key
     ]
     normalized_id = base_arxiv_id(arxiv_id)
+    replacement = None
     if normalized_id:
-        kept.append({
+        replacement = {
             "title": str(paper.get("title") or "").strip(),
             "year": str(
                 paper.get("year") or paper.get("publication_year") or ""
@@ -448,10 +451,21 @@ def set_curated_arxiv_override(
             "arxiv_id": normalized_id,
             "match_status": "linked_to_arxiv",
             "source": "admin_metadata_edit",
-        })
-    if kept != rows:
-        write_curated_arxiv_links(kept, path)
-    return kept
+        }
+    updated: List[Dict[str, str]] = []
+    replacement_written = False
+    for index, row in enumerate(rows):
+        if index not in matching_indexes:
+            updated.append(row)
+            continue
+        if replacement is not None and not replacement_written:
+            updated.append(replacement)
+            replacement_written = True
+    if replacement is not None and not replacement_written:
+        updated.append(replacement)
+    if updated != rows:
+        write_curated_arxiv_links(updated, path)
+    return updated
 
 
 def autofill_public_map_arxiv_ids(
