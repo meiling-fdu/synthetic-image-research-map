@@ -149,6 +149,7 @@ let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
+let yearRangeBeforeChartSelection = null;
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -1244,6 +1245,10 @@ function renderChartEmpty(container) {
   container.innerHTML = '<p class="chart-empty">No data</p>';
 }
 
+function chartButtonAttributes(isSelected, label) {
+  return `type="button" aria-pressed="${String(isSelected)}" aria-label="${escapeHtml(label)}"`;
+}
+
 function renderTaskChart(paperCoverageRecords) {
   const tasks = [
     ["detection", "Detection"],
@@ -1262,9 +1267,11 @@ function renderTaskChart(paperCoverageRecords) {
   }
   const segments = tasks
     .filter((task) => task.count)
-    .map((task) => (
-      `<span class="task-chart-segment" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count}"></span>`
-    ))
+    .map((task) => {
+      const isSelected = taskFilter.value === task.task;
+      const action = isSelected ? "Clear task filter" : `Filter by ${task.label}`;
+      return `<button class="task-chart-segment${isSelected ? " is-selected" : ""}" ${chartButtonAttributes(isSelected, `${action}; ${task.count} paper${task.count === 1 ? "" : "s"}`)} data-chart-task="${task.task}" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count}"></button>`;
+    })
     .join("");
   const items = tasks
     .map((task) => (
@@ -1301,7 +1308,7 @@ function renderInstitutionChart(datasetRecords) {
   const maximum = topInstitutions[0].count;
   institutionChartContent.innerHTML = (
     `<div class="institution-chart-list">${topInstitutions.map((entry) => (
-      `<div class="institution-chart-row" title="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><div class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></div><span class="institution-chart-count">${entry.count}</span></div>`
+      `<button class="institution-chart-row${keywordFilter.value === entry.name ? " is-selected" : ""}" ${chartButtonAttributes(keywordFilter.value === entry.name, `${keywordFilter.value === entry.name ? "Clear institution filter" : "Filter by institution"}: ${entry.name}; ${entry.count} paper${entry.count === 1 ? "" : "s"}`)} data-chart-institution="${escapeHtml(entry.name)}" title="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><span class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></span><span class="institution-chart-count">${entry.count}</span></button>`
     )).join("")}</div>`
   );
 }
@@ -1321,11 +1328,41 @@ function renderYearChart(paperCoverageRecords) {
     return;
   }
   const maximum = Math.max(...years.map(([, count]) => count));
+  const selectedMinimum = yearFilterValue(minYearFilter);
+  const selectedMaximum = yearFilterValue(maxYearFilter);
   yearChartContent.innerHTML = (
     `<div class="year-chart-bars">${years.map(([year, count]) => (
-      `<div class="year-chart-item" title="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></div>`
+      `<button class="year-chart-item${selectedMinimum === year && selectedMaximum === year ? " is-selected" : ""}" ${chartButtonAttributes(selectedMinimum === year && selectedMaximum === year, `${selectedMinimum === year && selectedMaximum === year ? "Restore previous year range" : "Filter by year"} ${year}; ${count} paper${count === 1 ? "" : "s"}`)} data-chart-year="${year}" title="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></button>`
     )).join("")}</div>`
   );
+}
+
+function activateChartFilter(button) {
+  if (button.dataset.chartTask) {
+    taskFilter.value = taskFilter.value === button.dataset.chartTask
+      ? "all"
+      : button.dataset.chartTask;
+  } else if (button.dataset.chartInstitution) {
+    keywordFilter.value = keywordFilter.value === button.dataset.chartInstitution
+      ? ""
+      : button.dataset.chartInstitution;
+  } else if (button.dataset.chartYear) {
+    const year = button.dataset.chartYear;
+    const isSelected = minYearFilter.value === year && maxYearFilter.value === year;
+    if (isSelected) {
+      minYearFilter.value = yearRangeBeforeChartSelection?.minimum || "";
+      maxYearFilter.value = yearRangeBeforeChartSelection?.maximum || "";
+      yearRangeBeforeChartSelection = null;
+    } else {
+      yearRangeBeforeChartSelection = {
+        minimum: minYearFilter.value,
+        maximum: maxYearFilter.value,
+      };
+      minYearFilter.value = year;
+      maxYearFilter.value = year;
+    }
+  }
+  renderRecords();
 }
 
 function renderHeaderStatistics(datasetRecords, datasetPaperRecords = []) {
@@ -2407,8 +2444,20 @@ entryTypeFilter.addEventListener("change", renderRecords);
 sortControl.addEventListener("change", renderRecords);
 venueFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
-minYearFilter.addEventListener("input", renderRecords);
-maxYearFilter.addEventListener("input", renderRecords);
+[minYearFilter, maxYearFilter].forEach((input) => {
+  input.addEventListener("input", () => {
+    yearRangeBeforeChartSelection = null;
+    renderRecords();
+  });
+});
+[taskChartContent, institutionChartContent, yearChartContent].forEach((chart) => {
+  chart.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-chart-task], [data-chart-institution], [data-chart-year]");
+    if (button) {
+      activateChartFilter(button);
+    }
+  });
+});
 window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
@@ -2439,6 +2488,7 @@ resetButton.addEventListener("click", () => {
   preprintFilter.value = "all";
   minYearFilter.value = "";
   maxYearFilter.value = "";
+  yearRangeBeforeChartSelection = null;
   renderRecords();
   scheduleMapResize(true);
 });

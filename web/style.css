@@ -526,7 +526,20 @@ input:disabled {
 }
 
 .task-chart-segment {
+  appearance: none;
+  border: 0;
+  padding: 0;
   min-width: 2px;
+  cursor: pointer;
+  opacity: 0.82;
+}
+
+.task-chart-segment:hover,
+.task-chart-segment:focus-visible,
+.task-chart-segment.is-selected {
+  opacity: 1;
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
 }
 
 .task-chart-list {
@@ -572,6 +585,15 @@ input:disabled {
 }
 
 .institution-chart-row {
+  appearance: none;
+  width: 100%;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18px;
   align-items: center;
@@ -579,6 +601,18 @@ input:disabled {
   min-width: 0;
   font-size: 0.56rem;
   line-height: 1;
+}
+
+.institution-chart-row:hover,
+.institution-chart-row:focus-visible,
+.institution-chart-row.is-selected {
+  border-color: var(--accent-dark);
+  outline: none;
+}
+
+.institution-chart-row.is-selected .institution-chart-name {
+  font-weight: 700;
+  text-decoration: underline;
 }
 
 .institution-chart-label {
@@ -618,6 +652,14 @@ input:disabled {
 }
 
 .year-chart-item {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
   display: grid;
   flex: 1 1 0;
   grid-template-rows: 11px minmax(4px, 1fr) 11px;
@@ -625,6 +667,19 @@ input:disabled {
   min-width: 7px;
   height: 100%;
   text-align: center;
+}
+
+.year-chart-item:hover,
+.year-chart-item:focus-visible,
+.year-chart-item.is-selected {
+  border-color: var(--accent-dark);
+  outline: none;
+}
+
+.year-chart-item.is-selected .year-chart-label {
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: underline;
 }
 
 .year-chart-count,
