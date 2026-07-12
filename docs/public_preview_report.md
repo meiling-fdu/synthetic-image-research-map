@@ -17,13 +17,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 878 |
-| Unique papers | 404 |
+| Map records | 887 |
+| Unique papers | 408 |
 | Unique institutions | 506 |
 | Countries | 73 |
 | arXiv/preprint records | 486 |
-| Records with DOI | 863 |
-| Records with venue | 808 |
+| Records with DOI | 872 |
+| Records with venue | 817 |
 | Records missing venue | 70 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -34,7 +34,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 752 |
+| detection | 761 |
 | source_attribution | 82 |
 | detection_and_source_attribution | 44 |
 
@@ -42,7 +42,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 381 |
+| ai_generated_image_detection | 390 |
 | synthetic_image_detection | 266 |
 | deepfake_image_detection | 105 |
 | generated_image_source_attribution | 56 |
@@ -53,7 +53,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 92 |
+| 2026 | 101 |
 | 2025 | 274 |
 | 2024 | 233 |
 | 2023 | 125 |
@@ -83,7 +83,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 189 |
+| China | 197 |
 | CN | 141 |
 | United States | 70 |
 | US | 62 |
@@ -105,15 +105,15 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | University of Chinese Academy of Sciences | 12 |
 | Fudan University | 11 |
 | City University of Hong Kong | 9 |
+| Beijing University of Posts and Telecommunications | 8 |
 | Chinese Academy of Sciences | 8 |
 | Information Technologies Institute | 8 |
-| University of Science and Technology of China | 7 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 705 |
+| high | 714 |
 | medium | 173 |
 
 ## Potential quality issues
