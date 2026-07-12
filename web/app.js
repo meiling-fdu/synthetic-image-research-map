@@ -2269,6 +2269,26 @@ function displayMetadataWarning(metadata) {
   }
 }
 
+function formatPublicPreviewDate(value) {
+  if (typeof value !== "string" || !value.trim()) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(date);
+}
+
+function displayPublicPreviewDate(metadata) {
+  const element = document.querySelector("#data-updated");
+  if (!element) return;
+  const formattedDate = formatPublicPreviewDate(metadata.public_preview_generated_at);
+  element.hidden = !formattedDate;
+  element.textContent = formattedDate ? `Data updated: ${formattedDate}` : "";
+}
+
 async function readDataset(name) {
   const config = DATASET_CONFIG[name];
   const response = await fetch(config.url, { cache: "no-cache" });
@@ -2316,6 +2336,7 @@ function displayDataset(normalizedData) {
   records = normalizedData.records;
   paperRecords = normalizedData.paperRecords || [];
   displayMetadataWarning(normalizedData.metadata);
+  displayPublicPreviewDate(normalizedData.metadata);
   if (normalizedData.paperMetadata) {
     displayMetadataWarning(normalizedData.paperMetadata);
   }

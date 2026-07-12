@@ -182,6 +182,15 @@ def execute_steps(steps: Sequence[RefreshStep]) -> int:
             return result.returncode or 1
         print(f"{prefix} COMPLETE: {step.name}", flush=True)
 
+    stamp_result = subprocess.run(
+        script_command("stamp_public_preview.py"),
+        cwd=REPOSITORY_ROOT,
+        check=False,
+    )
+    if stamp_result.returncode != 0:
+        print("FAILED: validated preview timestamp was not updated.", file=sys.stderr)
+        return stamp_result.returncode or 1
+
     print("\nPublic preview refresh complete.")
     print("Inspect these files before committing:")
     print(f"  - {PREVIEW_JSON}")

@@ -91,6 +91,41 @@ class AdminPublishChangesTests(unittest.TestCase):
         self.assertEqual(result, 1)
         self.assertEqual(runner.commands, [first_refresh])
 
+    def test_failed_publish_restores_previous_success_timestamp(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            for relative in (
+                admin_publish_changes.MAP_PREVIEW_PATH,
+                admin_publish_changes.PAPER_PREVIEW_PATH,
+            ):
+                path = repository / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('{"metadata":{"public_preview_generated_at":"old"},"records":[]}\n')
+            original = {
+                relative: (repository / relative).read_bytes()
+                for relative in (
+                    admin_publish_changes.MAP_PREVIEW_PATH,
+                    admin_publish_changes.PAPER_PREVIEW_PATH,
+                )
+            }
+
+            def runner(command, repository_root):
+                if tuple(command) == ("git", "status", "--short"):
+                    return subprocess.CompletedProcess(command, 2, stdout="status failed")
+                if tuple(command) == ("python3", "scripts/stamp_public_preview.py"):
+                    for relative in original:
+                        (repository_root / relative).write_text('{"metadata":{"public_preview_generated_at":"new"},"records":[]}\n')
+                return subprocess.CompletedProcess(command, 0, stdout="")
+
+            result = admin_publish_changes.publish_changes(
+                repository_root=repository,
+                runner=runner,
+                preview_count_reader=lambda _repository: self.stable_counts,
+            )
+            self.assertEqual(result, 1)
+            for relative, content in original.items():
+                self.assertEqual((repository / relative).read_bytes(), content)
+
     def test_no_eligible_staged_files_does_not_commit_or_push(self):
         runner = RecordingRunner()
 

@@ -78,6 +78,22 @@ def read_preview_counts(repository_root: Path) -> PreviewCounts:
     )
 
 
+def snapshot_preview_files(repository_root: Path) -> dict[Path, bytes]:
+    """Capture preview outputs so a failed publish can retain the prior stamp."""
+    # Command-runner unit tests use a synthetic, non-existent repository root.
+    if not repository_root.exists():
+        return {}
+    return {
+        path: (repository_root / path).read_bytes()
+        for path in (MAP_PREVIEW_PATH, PAPER_PREVIEW_PATH)
+    }
+
+
+def restore_preview_files(repository_root: Path, snapshot: dict[Path, bytes]) -> None:
+    for path, content in snapshot.items():
+        (repository_root / path).write_bytes(content)
+
+
 def shrinkage_percentage(before: int, after: int) -> float:
     if before <= 0 or after >= before:
         return 0.0
@@ -291,15 +307,31 @@ def publish_changes(
         )
     print("Public preview shrinkage guard: passed.", flush=True)
 
+    try:
+        preview_snapshot = snapshot_preview_files(repository_root)
+    except OSError as error:
+        print(f"ERROR: could not preserve the previous preview timestamp: {error}", file=sys.stderr)
+        return 1
+
     if not run_step(
         "Public preview validation",
         PUBLIC_VALIDATION,
         repository_root,
         runner,
     ):
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: publishing stopped before Git staging.", file=sys.stderr)
         return 1
     print("Validation result: succeeded.", flush=True)
+
+    if not run_step(
+        "Stamp successful public preview generation",
+        ("python3", "scripts/stamp_public_preview.py"),
+        repository_root,
+        runner,
+    ):
+        print("ERROR: publishing stopped before Git staging.", file=sys.stderr)
+        return 1
 
     print("\n== Changed files after refresh ==", flush=True)
     status_code, status = git_output(
@@ -308,6 +340,7 @@ def publish_changes(
         runner,
     )
     if status_code != 0:
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: could not inspect Git status.", file=sys.stderr)
         return 1
     if not status:
@@ -330,6 +363,7 @@ def publish_changes(
         print("  - none", flush=True)
 
     if not publish_files:
+        restore_preview_files(repository_root, preview_snapshot)
         print("No changes to publish.", flush=True)
         print_publish_size_summary(before_counts, after_counts)
         return 0
@@ -337,6 +371,7 @@ def publish_changes(
     print("\n== Stage publishable files ==", flush=True)
     stage_command = ("git", "add", "-A", "--", *publish_files)
     if runner(stage_command, repository_root).returncode != 0:
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: Git staging failed.", file=sys.stderr)
         return 1
 
@@ -354,9 +389,11 @@ def publish_changes(
         runner,
     )
     if staged_code != 0:
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: could not inspect staged files.", file=sys.stderr)
         return 1
     if not staged_files:
+        restore_preview_files(repository_root, preview_snapshot)
         print("No changes to publish.", flush=True)
         print_publish_size_summary(before_counts, after_counts)
         return 0
@@ -370,9 +407,11 @@ def publish_changes(
         runner,
     )
     if branch_code != 0:
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: could not determine the current branch.", file=sys.stderr)
         return 1
     if not branch:
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: cannot publish from a detached HEAD.", file=sys.stderr)
         return 1
 
@@ -391,6 +430,7 @@ def publish_changes(
         *publish_files,
     )
     if runner(commit_command, repository_root).returncode != 0:
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: Git commit failed.", file=sys.stderr)
         return 1
 
@@ -400,12 +440,14 @@ def publish_changes(
         runner,
     )
     if hash_code != 0:
+        restore_preview_files(repository_root, preview_snapshot)
         print("ERROR: commit was created but its hash could not be read.", file=sys.stderr)
         return 1
     print(f"Commit created: {commit_hash}", flush=True)
 
     print(f"\n== Push current branch: {branch} ==", flush=True)
     if runner(("git", "push"), repository_root).returncode != 0:
+        restore_preview_files(repository_root, preview_snapshot)
         print(
             f"ERROR: push failed. Commit {commit_hash} remains local on {branch}.",
             file=sys.stderr,
