@@ -368,6 +368,68 @@ h2 {
   gap: 14px;
 }
 
+.active-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 12px;
+  border: 1px solid #a9bcc5;
+  border-radius: 999px;
+  padding: 4px 6px 4px 9px;
+  background: #edf4f6;
+  color: var(--accent-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.active-filter-chip[hidden] {
+  display: none;
+}
+
+.active-filter-chip span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.active-filter-chip button {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  line-height: 1;
+}
+
+button.institution-filter-link {
+  display: inline;
+  width: auto;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: rgb(36 86 111 / 42%);
+  text-underline-offset: 2px;
+}
+
+button.institution-filter-link:hover:not(:disabled),
+button.institution-filter-link:focus-visible {
+  border: 0;
+  background: transparent;
+  color: var(--accent-dark);
+  text-decoration-color: currentColor;
+}
+
 .year-range {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -526,20 +588,7 @@ input:disabled {
 }
 
 .task-chart-segment {
-  appearance: none;
-  border: 0;
-  padding: 0;
   min-width: 2px;
-  cursor: pointer;
-  opacity: 0.82;
-}
-
-.task-chart-segment:hover,
-.task-chart-segment:focus-visible,
-.task-chart-segment.is-selected {
-  opacity: 1;
-  outline: 2px solid var(--ink);
-  outline-offset: -2px;
 }
 
 .task-chart-list {
@@ -585,15 +634,6 @@ input:disabled {
 }
 
 .institution-chart-row {
-  appearance: none;
-  width: 100%;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  padding: 0;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 18px;
   align-items: center;
@@ -601,18 +641,6 @@ input:disabled {
   min-width: 0;
   font-size: 0.56rem;
   line-height: 1;
-}
-
-.institution-chart-row:hover,
-.institution-chart-row:focus-visible,
-.institution-chart-row.is-selected {
-  border-color: var(--accent-dark);
-  outline: none;
-}
-
-.institution-chart-row.is-selected .institution-chart-name {
-  font-weight: 700;
-  text-decoration: underline;
 }
 
 .institution-chart-label {
@@ -652,14 +680,6 @@ input:disabled {
 }
 
 .year-chart-item {
-  appearance: none;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  padding: 0;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
   display: grid;
   flex: 1 1 0;
   grid-template-rows: 11px minmax(4px, 1fr) 11px;
@@ -667,19 +687,6 @@ input:disabled {
   min-width: 7px;
   height: 100%;
   text-align: center;
-}
-
-.year-chart-item:hover,
-.year-chart-item:focus-visible,
-.year-chart-item.is-selected {
-  border-color: var(--accent-dark);
-  outline: none;
-}
-
-.year-chart-item.is-selected .year-chart-label {
-  color: var(--ink);
-  font-weight: 800;
-  text-decoration: underline;
 }
 
 .year-chart-count,

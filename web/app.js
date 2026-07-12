@@ -117,6 +117,7 @@ const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
 const resetButton = document.querySelector("#reset-filters");
+const activeInstitutionFilterChip = document.querySelector("#active-institution-filter");
 const mapStatus = document.querySelector("#map-status");
 const datasetRecordCount = document.querySelector("#dataset-record-count");
 const datasetPaperCount = document.querySelector("#dataset-paper-count");
@@ -149,7 +150,7 @@ let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
-let yearRangeBeforeChartSelection = null;
+let activeInstitutionFilter = null;
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -385,6 +386,31 @@ function institutionIdentity(record) {
   return `name:${normalizedTitle(
     record.canonical_institution_name || recordInstitution(record),
   )}`;
+}
+
+function recordInstitutionIdentities(record) {
+  const identities = new Set();
+  if (recordInstitution(record)) {
+    identities.add(institutionIdentity(record));
+  }
+  const affiliations = [
+    ...(Array.isArray(record.affiliations) ? record.affiliations : []),
+    ...(Array.isArray(record.author_institution_affiliations)
+      ? record.author_institution_affiliations
+      : []),
+  ];
+  affiliations.forEach((rawAffiliation) => {
+    const affiliation = typeof rawAffiliation === "string"
+      ? { institution: rawAffiliation }
+      : rawAffiliation || {};
+    identities.add(institutionIdentity({
+      institution: affiliation.name || affiliation.institution || affiliation.institution_name,
+      institution_id: affiliation.institution_id || affiliation.canonical_institution_id,
+      canonical_institution_name: affiliation.canonical_name,
+    }));
+  });
+  identities.delete("name:");
+  return identities;
 }
 
 function affiliationIdentity(record) {
@@ -634,16 +660,46 @@ function renderPaperAuthors(record, currentAffiliationNumber = null) {
   );
 }
 
+function institutionFilterButtonHtml(affiliation) {
+  const label = String(affiliation.institution || affiliation.name || "").trim();
+  if (!label) {
+    return "";
+  }
+  const identity = institutionIdentity({
+    institution: label,
+    institution_id: affiliation.institutionId || affiliation.institution_id,
+    canonical_institution_name: affiliation.canonicalName || affiliation.canonical_name,
+  });
+  return `<button type="button" class="institution-filter-link" data-institution-filter="${escapeHtml(identity)}" data-institution-label="${escapeHtml(label)}" aria-label="Filter by institution ${escapeHtml(label)}">${escapeHtml(label)}</button>`;
+}
+
 function compactAffiliationsHtml(affiliations, limit = 3) {
   const visibleAffiliations = affiliations.slice(0, limit);
   const items = visibleAffiliations.map((affiliation) => (
-    `<span class="result-affiliation-item${affiliation.isCurrent ? " is-current" : ""}"><sup>${affiliation.number}</sup>${escapeHtml(affiliation.institution)}</span>`
+    `<span class="result-affiliation-item${affiliation.isCurrent ? " is-current" : ""}"><sup>${affiliation.number}</sup>${institutionFilterButtonHtml(affiliation)}</span>`
   ));
   const remaining = affiliations.length - visibleAffiliations.length;
   if (remaining > 0) {
     items.push(`<span class="result-affiliation-more">+${remaining} more</span>`);
   }
   return items.join("; ");
+}
+
+function renderActiveInstitutionFilter() {
+  activeInstitutionFilterChip.hidden = !activeInstitutionFilter;
+  activeInstitutionFilterChip.innerHTML = activeInstitutionFilter
+    ? `<span>Institution: ${escapeHtml(activeInstitutionFilter.label)}</span><button type="button" data-clear-institution-filter aria-label="Clear institution filter for ${escapeHtml(activeInstitutionFilter.label)}">×</button>`
+    : "";
+}
+
+function applyInstitutionFilter(identity, label) {
+  activeInstitutionFilter = { identity, label };
+  renderRecords();
+}
+
+function clearInstitutionFilter() {
+  activeInstitutionFilter = null;
+  renderRecords();
 }
 
 function normalizedIdentityValue(value) {
@@ -1077,6 +1133,8 @@ function recordMatchesActiveFilters(record, keywordTerms) {
   const maximumYear = yearFilterValue(maxYearFilter);
   const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
   const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
+  const matchesInstitution = !activeInstitutionFilter
+    || recordInstitutionIdentities(record).has(activeInstitutionFilter.identity);
   return (
     matchesKeyword &&
     matchesTask &&
@@ -1084,7 +1142,8 @@ function recordMatchesActiveFilters(record, keywordTerms) {
     matchesVenue &&
     matchesVersion &&
     matchesMinimumYear &&
-    matchesMaximumYear
+    matchesMaximumYear &&
+    matchesInstitution
   );
 }
 
@@ -1245,10 +1304,6 @@ function renderChartEmpty(container) {
   container.innerHTML = '<p class="chart-empty">No data</p>';
 }
 
-function chartButtonAttributes(isSelected, label) {
-  return `type="button" aria-pressed="${String(isSelected)}" aria-label="${escapeHtml(label)}"`;
-}
-
 function renderTaskChart(paperCoverageRecords) {
   const tasks = [
     ["detection", "Detection"],
@@ -1267,11 +1322,9 @@ function renderTaskChart(paperCoverageRecords) {
   }
   const segments = tasks
     .filter((task) => task.count)
-    .map((task) => {
-      const isSelected = taskFilter.value === task.task;
-      const action = isSelected ? "Clear task filter" : `Filter by ${task.label}`;
-      return `<button class="task-chart-segment${isSelected ? " is-selected" : ""}" ${chartButtonAttributes(isSelected, `${action}; ${task.count} paper${task.count === 1 ? "" : "s"}`)} data-chart-task="${task.task}" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count}"></button>`;
-    })
+    .map((task) => (
+      `<span class="task-chart-segment" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count}"></span>`
+    ))
     .join("");
   const items = tasks
     .map((task) => (
@@ -1308,7 +1361,7 @@ function renderInstitutionChart(datasetRecords) {
   const maximum = topInstitutions[0].count;
   institutionChartContent.innerHTML = (
     `<div class="institution-chart-list">${topInstitutions.map((entry) => (
-      `<button class="institution-chart-row${keywordFilter.value === entry.name ? " is-selected" : ""}" ${chartButtonAttributes(keywordFilter.value === entry.name, `${keywordFilter.value === entry.name ? "Clear institution filter" : "Filter by institution"}: ${entry.name}; ${entry.count} paper${entry.count === 1 ? "" : "s"}`)} data-chart-institution="${escapeHtml(entry.name)}" title="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><span class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></span><span class="institution-chart-count">${entry.count}</span></button>`
+      `<div class="institution-chart-row" title="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><div class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></div><span class="institution-chart-count">${entry.count}</span></div>`
     )).join("")}</div>`
   );
 }
@@ -1328,41 +1381,11 @@ function renderYearChart(paperCoverageRecords) {
     return;
   }
   const maximum = Math.max(...years.map(([, count]) => count));
-  const selectedMinimum = yearFilterValue(minYearFilter);
-  const selectedMaximum = yearFilterValue(maxYearFilter);
   yearChartContent.innerHTML = (
     `<div class="year-chart-bars">${years.map(([year, count]) => (
-      `<button class="year-chart-item${selectedMinimum === year && selectedMaximum === year ? " is-selected" : ""}" ${chartButtonAttributes(selectedMinimum === year && selectedMaximum === year, `${selectedMinimum === year && selectedMaximum === year ? "Restore previous year range" : "Filter by year"} ${year}; ${count} paper${count === 1 ? "" : "s"}`)} data-chart-year="${year}" title="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></button>`
+      `<div class="year-chart-item" title="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></div>`
     )).join("")}</div>`
   );
-}
-
-function activateChartFilter(button) {
-  if (button.dataset.chartTask) {
-    taskFilter.value = taskFilter.value === button.dataset.chartTask
-      ? "all"
-      : button.dataset.chartTask;
-  } else if (button.dataset.chartInstitution) {
-    keywordFilter.value = keywordFilter.value === button.dataset.chartInstitution
-      ? ""
-      : button.dataset.chartInstitution;
-  } else if (button.dataset.chartYear) {
-    const year = button.dataset.chartYear;
-    const isSelected = minYearFilter.value === year && maxYearFilter.value === year;
-    if (isSelected) {
-      minYearFilter.value = yearRangeBeforeChartSelection?.minimum || "";
-      maxYearFilter.value = yearRangeBeforeChartSelection?.maximum || "";
-      yearRangeBeforeChartSelection = null;
-    } else {
-      yearRangeBeforeChartSelection = {
-        minimum: minYearFilter.value,
-        maximum: maxYearFilter.value,
-      };
-      minYearFilter.value = year;
-      maxYearFilter.value = year;
-    }
-  }
-  renderRecords();
 }
 
 function renderHeaderStatistics(datasetRecords, datasetPaperRecords = []) {
@@ -1557,6 +1580,11 @@ function paperDetailsHtml(record, relatedEntries) {
   const currentAffiliationNumber = currentAffiliation
     ? `<sup class="current-affiliation-number" aria-label="Affiliation ${currentAffiliation.number}">${currentAffiliation.number}</sup>`
     : "";
+  const currentInstitutionButton = institutionFilterButtonHtml(currentAffiliation || {
+    institution: recordInstitution(record),
+    institutionId: record.institution_id || record.canonical_institution_id,
+    canonicalName: record.canonical_institution_name,
+  });
   const year = record.publication_year ?? record.year ?? "Unknown";
   const venue = getRecordVenue(record) || "unknown";
   const publicationType = record.publication_type || "Unknown";
@@ -1600,7 +1628,7 @@ function paperDetailsHtml(record, relatedEntries) {
     </section>
   `;
   const affiliationsBlock = affiliations.length
-    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current is-hover-institution"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${escapeHtml(affiliation.institution)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
+    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current is-hover-institution"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${institutionFilterButtonHtml(affiliation)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
     : "";
 
   return `
@@ -1613,7 +1641,7 @@ function paperDetailsHtml(record, relatedEntries) {
     <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
     <dl class="popup-details paper-details-summary">
       <dt>Authors</dt><dd>${authors}</dd>
-      <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value paper-current-institution${currentAffiliation ? " is-active is-hover-institution" : ""}">${currentAffiliationNumber}${escapeHtml(recordInstitution(record) || "Unknown")}</dd>
+      <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value paper-current-institution${currentAffiliation ? " is-active is-hover-institution" : ""}">${currentAffiliationNumber}${currentInstitutionButton || "Unknown"}</dd>
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
       <dt>Venue</dt><dd>${escapeHtml(venue)}</dd>
     </dl>
@@ -2098,6 +2126,7 @@ function renderRecords() {
   }
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
+  renderActiveInstitutionFilter();
   renderHeaderStatistics(visibleRecords, visiblePaperRecords);
   renderResults(visibleRecords, visiblePaperRecords);
   mapStatus.classList.toggle("error", false);
@@ -2444,19 +2473,20 @@ entryTypeFilter.addEventListener("change", renderRecords);
 sortControl.addEventListener("change", renderRecords);
 venueFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
-[minYearFilter, maxYearFilter].forEach((input) => {
-  input.addEventListener("input", () => {
-    yearRangeBeforeChartSelection = null;
-    renderRecords();
-  });
-});
-[taskChartContent, institutionChartContent, yearChartContent].forEach((chart) => {
-  chart.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-chart-task], [data-chart-institution], [data-chart-year]");
+minYearFilter.addEventListener("input", renderRecords);
+maxYearFilter.addEventListener("input", renderRecords);
+[resultsList, paperDetails].forEach((container) => {
+  container.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-institution-filter]");
     if (button) {
-      activateChartFilter(button);
+      applyInstitutionFilter(button.dataset.institutionFilter, button.dataset.institutionLabel);
     }
   });
+});
+activeInstitutionFilterChip.addEventListener("click", (event) => {
+  if (event.target.closest("[data-clear-institution-filter]")) {
+    clearInstitutionFilter();
+  }
 });
 window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
@@ -2488,7 +2518,7 @@ resetButton.addEventListener("click", () => {
   preprintFilter.value = "all";
   minYearFilter.value = "";
   maxYearFilter.value = "";
-  yearRangeBeforeChartSelection = null;
+  activeInstitutionFilter = null;
   renderRecords();
   scheduleMapResize(true);
 });
