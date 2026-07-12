@@ -62,7 +62,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("button.institution-filter-link", self.css)
 
     def test_filter_uses_shared_record_and_paper_pipeline(self):
-        self.assertIn("deriveFilteredRecordSets(records, paperRecords, matchesRecord)", self.app)
+        self.assertIn("matchesInstitutionRecord,\n    matchesPublicPaper", self.app)
         self.assertIn("updateDatasetStatistics(visibleRecords, visiblePaperRecords)", self.app)
         self.assertIn("renderHeaderStatistics(visibleRecords, visiblePaperRecords)", self.app)
         self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", self.app)
@@ -71,7 +71,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-exact-institution-filter', self.html)
-        self.assertIn('app.js?v=20260713-unified-filtered-sets', self.html)
+        self.assertIn('app.js?v=20260713-institution-record-semantics', self.html)
 
     def test_keyword_search_text_includes_supported_record_fields(self):
         search = self.app[
@@ -110,7 +110,11 @@ const matches = record => [record.institution, record.venue]
   .filter(Boolean).join(' ').toLowerCase().includes('university of siena');
 const identity = record => record.canonical || record.id;
 const aggregate = records => [...new Map(records.map(record => [identity(record), record])).values()];
-const result = deriveFilteredRecordSets(mapRecords, papers, matches, identity, aggregate);
+const institutionMatches = record => (record.institution || '').toLowerCase()
+  .includes('university of siena');
+const result = deriveFilteredRecordSets(
+  mapRecords, papers, institutionMatches, matches, identity, aggregate,
+);
 process.stdout.write(JSON.stringify({{
   recordIds: result.filteredRecords.map(record => record.id),
   paperIds: result.filteredPapers.map(identity),
@@ -123,6 +127,22 @@ process.stdout.write(JSON.stringify({{
         self.assertEqual(result["recordIds"], ["mapped", "mapped"])
         self.assertEqual(set(result["paperIds"]), {"mapped", "venue-only", "standalone"})
         self.assertEqual(result["paperIds"].count("mapped"), 1)
+
+    def test_institution_keyword_and_exact_filter_match_only_the_current_row(self):
+        render = self.app[
+            self.app.index("function renderRecords()"):
+            self.app.index("function configureYearRange()")
+        ]
+        predicate = self.app[
+            self.app.index("function recordMatchesActiveFilters"):
+            self.app.index("function deriveFilteredRecordSets")
+        ]
+        self.assertIn("recordInstitutionSearchText(record)", render)
+        self.assertIn("{ institutionRecord: true, institutionKeyword }", render)
+        self.assertIn("institutionIdentity(record) === activeInstitutionFilter.identity", predicate)
+        self.assertIn("recordInstitutionIdentities(record).has(activeInstitutionFilter.identity)", predicate)
+        self.assertIn("const visibleRecords = filteredSets.filteredRecords", render)
+        self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords", render)
 
     def test_toggle_and_csv_reuse_the_same_current_filtered_sets(self):
         toggle = self.app[

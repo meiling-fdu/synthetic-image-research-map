@@ -1106,6 +1106,18 @@ function recordSearchText(record) {
   ].filter(Boolean).join(" "));
 }
 
+function recordInstitutionSearchText(record) {
+  return normalizedSearchText([
+    record.institution_name,
+    record.institution,
+    record.canonical_institution_name,
+  ].filter(Boolean).join(" "));
+}
+
+function searchTextMatchesTerms(searchableText, keywordTerms) {
+  return keywordTerms.every((term) => searchableText.includes(term));
+}
+
 function yearFilterValue(input) {
   if (!input.value.trim()) {
     return null;
@@ -1114,9 +1126,12 @@ function yearFilterValue(input) {
   return Number.isInteger(value) ? value : null;
 }
 
-function recordMatchesActiveFilters(record, keywordTerms) {
-  const searchableText = recordSearchText(record);
-  const matchesKeyword = keywordTerms.every((term) => searchableText.includes(term));
+function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
+  const institutionRecord = options.institutionRecord === true;
+  const searchableText = options.institutionKeyword === true
+    ? recordInstitutionSearchText(record)
+    : recordSearchText(record);
+  const matchesKeyword = searchTextMatchesTerms(searchableText, keywordTerms);
   const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
   const matchesEntryType =
     entryTypeFilter.value === "all" || getEntryType(record) === entryTypeFilter.value;
@@ -1134,8 +1149,11 @@ function recordMatchesActiveFilters(record, keywordTerms) {
   const maximumYear = yearFilterValue(maxYearFilter);
   const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
   const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
-  const matchesInstitution = !activeInstitutionFilter
-    || recordInstitutionIdentities(record).has(activeInstitutionFilter.identity);
+  const matchesInstitution = !activeInstitutionFilter || (
+    institutionRecord
+      ? institutionIdentity(record) === activeInstitutionFilter.identity
+      : recordInstitutionIdentities(record).has(activeInstitutionFilter.identity)
+  );
   return (
     matchesKeyword &&
     matchesTask &&
@@ -1151,11 +1169,12 @@ function recordMatchesActiveFilters(record, keywordTerms) {
 function deriveFilteredRecordSets(
   mapRecords,
   publicPaperRecords,
-  matchesRecord,
+  matchesInstitutionRecord,
+  matchesPublicPaper = matchesInstitutionRecord,
   identityForRecord = paperIdentity,
   aggregateRecords = aggregateUniquePapers,
 ) {
-  const filteredRecords = mapRecords.filter(matchesRecord);
+  const filteredRecords = mapRecords.filter(matchesInstitutionRecord);
   const papersByIdentity = new Map();
 
   // Paper-level records preserve the public preview's standalone-paper coverage and
@@ -1171,7 +1190,7 @@ function deriveFilteredRecordSets(
     filteredRecords.map(identityForRecord),
   );
   publicPaperRecords.forEach((paper) => {
-    if (matchesRecord(paper)) {
+    if (matchesPublicPaper(paper)) {
       matchingPaperIdentities.add(identityForRecord(paper));
     }
   });
@@ -2072,8 +2091,21 @@ function renderRecords() {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  const matchesRecord = (record) => recordMatchesActiveFilters(record, keywordTerms);
-  const filteredSets = deriveFilteredRecordSets(records, paperRecords, matchesRecord);
+  const institutionKeyword = keywordTerms.length > 0 && records.some((record) => (
+    searchTextMatchesTerms(recordInstitutionSearchText(record), keywordTerms)
+  ));
+  const matchesInstitutionRecord = (record) => recordMatchesActiveFilters(
+    record,
+    keywordTerms,
+    { institutionRecord: true, institutionKeyword },
+  );
+  const matchesPublicPaper = (record) => recordMatchesActiveFilters(record, keywordTerms);
+  const filteredSets = deriveFilteredRecordSets(
+    records,
+    paperRecords,
+    matchesInstitutionRecord,
+    matchesPublicPaper,
+  );
   const visibleRecords = filteredSets.filteredRecords
     .sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
   const visiblePaperRecords = filteredSets.filteredPapers
