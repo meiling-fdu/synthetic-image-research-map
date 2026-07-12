@@ -148,9 +148,11 @@ let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
-let hoveredSelection = null;
+const interactionState = {
+  hovered: null,
+  pinned: null,
+};
 let activeInstitutionTooltipMarker = null;
-let pinnedSelection = null;
 
 const supportsMarkerHover = window.matchMedia?.(
   "(hover: hover) and (pointer: fine)",
@@ -757,7 +759,7 @@ function openInstitutionTooltip(marker, record, paperCount, taskBreakdown) {
 
 function clearActiveInstitutionHover() {
   const marker = activeInstitutionTooltipMarker;
-  if (marker && hoveredSelection?.marker === marker) {
+  if (marker && interactionState.hovered?.marker === marker) {
     clearHoverPreview(marker);
     return;
   }
@@ -778,14 +780,6 @@ mapElement.addEventListener("mouseleave", (event) => {
   }
   clearActiveInstitutionHover();
 });
-paperDetails.addEventListener("mouseleave", () => {
-  if (pinnedSelection) {
-    closeActiveInstitutionTooltip();
-    return;
-  }
-  clearActiveInstitutionHover();
-});
-
 function normalizedLocationName(value) {
   return String(value || "")
     .normalize("NFKC")
@@ -1750,8 +1744,8 @@ function restoreBaseMarkerStyles() {
 
 function clearPaperInteraction(updateStatus = true) {
   closeActiveInstitutionTooltip();
-  hoveredSelection = null;
-  pinnedSelection = null;
+  interactionState.hovered = null;
+  interactionState.pinned = null;
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   restoreBaseMarkerStyles();
@@ -1833,13 +1827,13 @@ function showPaperInteraction(record, identity, mode) {
     `Previewing ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"}${connectionText}`;
 }
 
-function restorePaperInteraction() {
-  const displayedSelection = pinnedSelection || hoveredSelection;
+function renderActiveSelection() {
+  const displayedSelection = interactionState.pinned || interactionState.hovered;
   if (displayedSelection) {
     showPaperInteraction(
       displayedSelection.record,
       displayedSelection.identity,
-      pinnedSelection ? "pinned" : "hover",
+      interactionState.pinned ? "pinned" : "hover",
     );
     return;
   }
@@ -1852,33 +1846,51 @@ function restorePaperInteraction() {
   mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
 }
 
+function setHoveredSelection(selection) {
+  interactionState.hovered = selection;
+  renderActiveSelection();
+}
+
+function clearHoveredSelection(marker) {
+  if (marker && interactionState.hovered?.marker !== marker) {
+    return;
+  }
+  interactionState.hovered = null;
+  renderActiveSelection();
+}
+
+function setPinnedSelection(selection) {
+  interactionState.hovered = null;
+  interactionState.pinned = selection;
+  renderActiveSelection();
+  scheduleMapResize();
+}
+
+function clearPinnedSelection() {
+  interactionState.pinned = null;
+  renderActiveSelection();
+  scheduleMapResize();
+}
+
 function activateHoverPreview(record, identity, marker, paperCount, taskBreakdown) {
   openInstitutionTooltip(marker, record, paperCount, taskBreakdown);
-  hoveredSelection = { identity, record, marker };
-  restorePaperInteraction();
+  setHoveredSelection({ identity, record, marker });
 }
 
 function clearHoverPreview(marker) {
   closeActiveInstitutionTooltip(marker);
-  if (hoveredSelection?.marker !== marker) {
-    return;
-  }
-  hoveredSelection = null;
-  restorePaperInteraction();
+  clearHoveredSelection(marker);
 }
 
 function pinPaper(record, identity, institutionKey) {
   closeActiveInstitutionTooltip();
-  hoveredSelection = null;
-  pinnedSelection = { identity, record, institutionKey };
-  restorePaperInteraction();
-  scheduleMapResize();
+  setPinnedSelection({ identity, record, institutionKey });
 }
 
 function renderRecords() {
-  const previousPin = pinnedSelection;
+  const previousPin = interactionState.pinned;
   closeActiveInstitutionTooltip();
-  hoveredSelection = null;
+  interactionState.hovered = null;
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   const keywordTerms = normalizedSearchText(keywordFilter.value)
@@ -1928,7 +1940,10 @@ function renderRecords() {
       [locationRecord.latitude, locationRecord.longitude],
       markerStyle(taskKey, "base", group.paperCount),
     )
-      .on("click", () => pinPaper(record, identity, group.key))
+      .on("click", (event) => {
+        event.originalEvent?.stopPropagation();
+        pinPaper(record, identity, group.key);
+      })
       .on("remove", () => closeActiveInstitutionTooltip(marker))
       .addTo(markerLayer);
     if (supportsMarkerHover) {
@@ -1967,21 +1982,21 @@ function renderRecords() {
     (record) => paperIdentity(record) === previousPin?.identity,
   );
   if (restoredPinEntry && restoredPinRecord) {
-    pinnedSelection = {
+    interactionState.pinned = {
       identity: previousPin.identity,
       record: restoredPinRecord,
       institutionKey: previousPin.institutionKey,
     };
   } else {
-    pinnedSelection = null;
+    interactionState.pinned = null;
   }
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
   renderHeaderStatistics(visibleRecords, visiblePaperRecords);
   renderResults(visibleRecords, visiblePaperRecords);
   mapStatus.classList.toggle("error", false);
-  if (pinnedSelection) {
-    restorePaperInteraction();
+  if (interactionState.pinned) {
+    renderActiveSelection();
   } else {
     resetPaperDetails();
     mapStatus.classList.toggle("paper-highlight-active", false);
@@ -2094,7 +2109,7 @@ function showDatasetMessage(message, isError = false) {
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
-  hoveredSelection = null;
+  interactionState.hovered = null;
   updateDatasetStatistics(records, paperRecords);
   renderHeaderStatistics(records, paperRecords);
   renderResults(records, paperRecords);
@@ -2306,7 +2321,7 @@ minYearFilter.addEventListener("input", renderRecords);
 maxYearFilter.addEventListener("input", renderRecords);
 window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
-closePaperDetailsButton.addEventListener("click", () => clearPaperInteraction());
+closePaperDetailsButton.addEventListener("click", clearPinnedSelection);
 resultsViewButtons.forEach((button) => {
   button.addEventListener("click", () => selectResultsView(button.dataset.resultsView));
 });
