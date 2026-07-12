@@ -303,6 +303,7 @@ h2 {
 
 .dataset-statistics {
   display: flex;
+  flex-wrap: nowrap;
   gap: 7px;
   margin: 0;
   overflow-x: auto;
@@ -312,7 +313,7 @@ h2 {
 
 .dataset-statistics div {
   display: flex;
-  flex: 1 0 auto;
+  flex: 1 1 0;
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;

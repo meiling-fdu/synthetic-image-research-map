@@ -121,7 +121,6 @@ const activeInstitutionFilterChip = document.querySelector("#active-institution-
 const mapStatus = document.querySelector("#map-status");
 const datasetRecordCount = document.querySelector("#dataset-record-count");
 const datasetPaperCount = document.querySelector("#dataset-paper-count");
-const datasetPaperWithoutLocationCount = document.querySelector("#dataset-paper-without-location-count");
 const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
 const datasetCountryCount = document.querySelector("#dataset-country-count");
 const datasetDetectionCount = document.querySelector("#dataset-detection-count");
@@ -1336,11 +1335,6 @@ function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
   const paperCoverageRecords = paperListRecordsForDisplay(datasetPaperRecords);
   datasetRecordCount.textContent = datasetRecords.length;
   datasetPaperCount.textContent = paperCoverageRecords.length;
-  if (datasetPaperWithoutLocationCount) {
-    datasetPaperWithoutLocationCount.textContent = paperCoverageRecords.filter(
-      (record) => !record.has_map_location,
-    ).length;
-  }
   datasetInstitutionCount.textContent = normalizedSetSize(
     datasetRecords.map(recordInstitution),
   );
@@ -2339,7 +2333,7 @@ function updateDatasetLabels() {
       "This public preview is generated from OpenAlex candidate metadata and local manual review caches. It includes paper-level coverage even when institution/location data is incomplete; only papers with valid reviewed coordinates appear as map markers.";
     mapStatus.textContent = "Loading public preview data...";
     datasetStatisticsNote.textContent =
-      "Paper coverage includes records without map markers; map records require institution coordinates.";
+      "Institution-level records matching the current filters.";
   } else {
     datasetStatusNote.textContent =
       "Uncurated candidate data";

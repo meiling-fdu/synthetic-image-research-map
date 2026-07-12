@@ -70,8 +70,27 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
     def test_responsive_dimensions_and_asset_versions_are_preserved(self):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
-        self.assertIn('style.css?v=20260713-exact-institution-filter', self.html)
-        self.assertIn('app.js?v=20260713-institution-record-semantics', self.html)
+        self.assertIn('style.css?v=20260713-public-overview', self.html)
+        self.assertIn('app.js?v=20260713-public-overview', self.html)
+
+    def test_public_overview_omits_non_map_metric_and_explanation(self):
+        self.assertNotIn("Papers without map location", self.html)
+        self.assertNotIn("dataset-paper-without-location-count", self.html)
+        self.assertNotIn("datasetPaperWithoutLocationCount", self.app)
+        self.assertNotIn(
+            "Paper coverage includes records without map markers; map records require institution coordinates.",
+            self.app,
+        )
+
+    def test_overview_metrics_redistribute_without_responsive_wrapping(self):
+        statistics = self.css[
+            self.css.index(".dataset-statistics {"):
+            self.css.index(".dataset-statistics dt")
+        ]
+        self.assertIn("display: flex", statistics)
+        self.assertIn("flex-wrap: nowrap", statistics)
+        self.assertIn("flex: 1 1 0", statistics)
+        self.assertIn("overflow-x: auto", statistics)
 
     def test_keyword_search_text_includes_supported_record_fields(self):
         search = self.app[
@@ -156,6 +175,73 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("renderResults(currentFilteredRecords, currentFilteredPaperRecords)", toggle)
         self.assertIn("buildCsv(currentDisplayedResults, columns)", export)
         self.assertNotIn("recordMatchesActiveFilters", toggle)
+
+    def test_paper_coverage_results_and_csv_keep_matching_non_map_papers(self):
+        statistics_start = self.app.index("function updateDatasetStatistics(")
+        statistics = self.app[
+            statistics_start:
+            self.app.index("function renderTaskChart", statistics_start)
+        ]
+        render = self.app[
+            self.app.index("function renderRecords()"):
+            self.app.index("function configureYearRange()")
+        ]
+        self.assertIn("datasetPaperCount.textContent = paperCoverageRecords.length", statistics)
+        self.assertIn("const matchesPublicPaper", render)
+        self.assertIn("currentFilteredPaperRecords = visiblePaperRecords", render)
+        self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", render)
+        self.assertIn('resultsView === "papers"\n    ? PAPER_CSV_COLUMNS', self.app)
+
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        derive_start = self.app.index("function deriveFilteredRecordSets")
+        derive_end = self.app.index("\nfunction normalizedSetSize", derive_start)
+        csv_start = self.app.index("function escapeCsvValue")
+        csv_end = self.app.index("\nfunction exportFilename", csv_start)
+        script = f"""
+{self.app[derive_start:derive_end]}
+{self.app[csv_start:csv_end]}
+const maps = [{{id: 'mapped', title: 'Mapped detection'}}];
+const papers = [
+  {{id: 'mapped', title: 'Mapped detection', has_map_location: true}},
+  {{id: 'non-map', title: 'Needle attribution study', has_map_location: false}},
+];
+const matchesKeyword = record => record.title.toLowerCase().includes('needle');
+const result = deriveFilteredRecordSets(
+  maps, papers, matchesKeyword, matchesKeyword, record => record.id, records => records,
+);
+const csv = buildCsv(result.filteredPapers, [
+  ['title', record => record.title],
+  ['has_map_location', record => String(record.has_map_location)],
+]);
+process.stdout.write(JSON.stringify({{
+  mapRecords: result.filteredRecords.length,
+  papers: result.filteredPapers.map(record => record.id),
+  csv,
+}}));
+"""
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["mapRecords"], 0)
+        self.assertEqual(result["papers"], ["non-map"])
+        self.assertIn("Needle attribution study,false", result["csv"])
+
+    def test_map_records_and_markers_remain_institution_record_based(self):
+        statistics_start = self.app.index("function updateDatasetStatistics(")
+        statistics = self.app[
+            statistics_start:
+            self.app.index("function renderTaskChart", statistics_start)
+        ]
+        render = self.app[
+            self.app.index("function renderRecords()"):
+            self.app.index("function configureYearRange()")
+        ]
+        self.assertIn("datasetRecordCount.textContent = datasetRecords.length", statistics)
+        self.assertIn("groupInstitutionRecords(\n    visibleRecords", render)
+        self.assertIn("visibleMarkerEntries.push", render)
 
 
 if __name__ == "__main__":
