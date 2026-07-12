@@ -766,13 +766,6 @@ function clearActiveInstitutionHover() {
   closeActiveInstitutionTooltip();
 }
 
-map.on("mousemove", (event) => {
-  const marker = activeInstitutionTooltipMarker;
-  if (!marker || event.originalEvent?.target === marker.getElement()) {
-    return;
-  }
-  clearActiveInstitutionHover();
-});
 map.on("movestart zoomstart", clearActiveInstitutionHover);
 mapElement.addEventListener("mouseleave", (event) => {
   if (paperDetails.contains(event.relatedTarget)) {
@@ -1963,26 +1956,20 @@ function renderRecords() {
       [locationRecord.latitude, locationRecord.longitude],
       markerStyle(taskKey, "base", group.paperCount),
     )
-      .on("click", (event) => {
-        event.originalEvent?.stopPropagation();
-        pinPaper(record, identity, group.key);
-      })
       .on("remove", () => closeActiveInstitutionTooltip(marker))
       .addTo(markerLayer);
-    if (supportsMarkerHover) {
-      marker
-        .on(
-          "mouseover",
-          () => activateHoverPreview(
-            record,
-            identity,
-            marker,
-            group.paperCount,
-            taskBreakdown,
-          ),
-        )
-        .on("mouseout", () => clearHoverPreview(marker));
-    }
+    MarkerInteractionHelpers.bindMarkerHandlers(marker, {
+      supportsHover: supportsMarkerHover,
+      click: () => pinPaper(record, identity, group.key),
+      hover: () => activateHoverPreview(
+        record,
+        identity,
+        marker,
+        group.paperCount,
+        taskBreakdown,
+      ),
+      leave: () => clearHoverPreview(marker),
+    });
     visibleMarkerEntries.push({
       record,
       records: group.records,

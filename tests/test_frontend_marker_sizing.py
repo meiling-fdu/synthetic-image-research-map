@@ -126,7 +126,7 @@ process.stdout.write(JSON.stringify({
         self.assertIn("sticky: false", app_source)
         self.assertIn("function closeActiveInstitutionTooltip(", app_source)
         self.assertIn("function openInstitutionTooltip(", app_source)
-        self.assertIn('map.on("mousemove"', app_source)
+        self.assertNotIn('map.on("mousemove"', app_source)
         self.assertIn(
             'mapElement.addEventListener("mouseleave"', app_source
         )
@@ -208,7 +208,7 @@ process.stdout.write(JSON.stringify({
         self.assertNotIn("interactionState.pinned = null", clear_body)
         self.assertIn("setPinnedSelection({ identity, record, institutionKey })", pin_body)
         self.assertNotIn('paperDetails.addEventListener("mouseleave"', app_source)
-        self.assertIn("event.originalEvent?.stopPropagation()", app_source)
+        self.assertIn("MarkerInteractionHelpers.bindMarkerHandlers", app_source)
 
     def test_hover_lines_take_precedence_without_replacing_pinned_details(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
@@ -269,8 +269,9 @@ process.stdout.write(JSON.stringify({
         )[1].split("\nfunction resultContent", 1)[0]
 
         self.assertEqual(render_body.count('markerLayer.clearLayers();'), 1)
-        self.assertEqual(render_body.count('.on("click"'), 1)
-        self.assertEqual(render_body.count('.on("mouseout"'), 1)
+        self.assertEqual(
+            render_body.count("MarkerInteractionHelpers.bindMarkerHandlers"), 1
+        )
         self.assertNotIn("AI-generated summary", details_body)
         self.assertNotIn("ai_summary", details_body)
         self.assertNotIn("paper-ai-summary", style_source)
