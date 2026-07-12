@@ -367,13 +367,18 @@
               <p class="form-error" id="location-form-error" role="alert" hidden></p>
               <div class="location-form-actions">
                 <button class="primary-button" id="location-confirm" type="submit">Confirm location</button>
-                <button class="secondary-button" id="location-confirm-alias" type="button">Confirm as alias of selected institution</button>
                 <button class="secondary-button" id="location-save-metadata" type="button">Save edited metadata</button>
-                <button class="secondary-button" id="location-create-new" type="button">Create as new institution</button>
                 <button class="secondary-button" id="location-needs-coordinates" type="button">Needs coordinate review</button>
-                <button class="secondary-button" id="location-mark-ambiguous" type="button">Mark ambiguous</button>
-                <button class="secondary-button" id="location-ignore" type="button">Ignore this institution</button>
-                <button class="secondary-button" id="location-exclude" type="button">Exclude from public map</button>
+                <button class="secondary-button" id="location-confirm-alias" type="button" hidden>Confirm as alias of selected institution</button>
+                <button class="secondary-button" id="location-create-new" type="button">Create as new institution</button>
+                <details class="overflow-menu location-more-actions" id="location-more-actions">
+                  <summary>More actions <span aria-hidden="true">⋯</span></summary>
+                  <div class="overflow-menu-items" id="location-more-actions-menu">
+                    <button class="secondary-button" id="location-mark-ambiguous" type="button">Mark ambiguous</button>
+                    <button class="secondary-button" id="location-ignore" type="button">Ignore this institution</button>
+                    <button class="secondary-button" id="location-exclude" type="button">Exclude from public map</button>
+                  </div>
+                </details>
               </div>
             </form>
           </article>
@@ -638,7 +643,7 @@
         <p class="form-error" id="geocode-error" role="alert" hidden></p>
         <div class="dialog-actions">
           <button class="secondary-button" id="geocode-cancel" type="button">Cancel</button>
-          <button class="primary-button" id="geocode-confirm" type="button" disabled>Use selected coordinates</button>
+          <button class="primary-button" id="geocode-confirm" type="button" disabled>Use this location</button>
         </div>
       </form>
     </dialog>
