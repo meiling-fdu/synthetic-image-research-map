@@ -90,9 +90,73 @@ process.stdout.write(JSON.stringify({
     def test_index_loads_latest_marker_helper_and_app_versions(self):
         html = (REPOSITORY / "web" / "index.html").read_text()
         self.assertIn(
-            'marker_interaction_helpers.js?v=20260712-hover-events', html
+            'marker_interaction_helpers.js?v=20260712-pinned-state', html
         )
-        self.assertIn('app.js?v=20260712-hover-connections-v2', html)
+        self.assertIn('app.js?v=20260712-pinned-state', html)
+
+    def test_marker_keyboard_activation_and_accessible_button_state(self):
+        helper = REPOSITORY / "web" / "marker_interaction_helpers.js"
+        script = r"""
+const helpers = require(process.argv[1]);
+const markerCallbacks = new Map();
+const domCallbacks = new Map();
+const attributes = {};
+const element = {
+  setAttribute(name, value) { attributes[name] = value; },
+  addEventListener(name, callback) { domCallbacks.set(name, callback); },
+};
+const marker = {
+  on(name, callback) { markerCallbacks.set(name, callback); return this; },
+  getElement() { return element; },
+};
+let activations = 0;
+helpers.bindMarkerHandlers(marker, {
+  supportsHover: false,
+  click() { activations += 1; },
+});
+let prevented = 0;
+let stopped = 0;
+for (const key of ["Enter", " ", "Escape"]) {
+  domCallbacks.get("keydown")({
+    key,
+    preventDefault() { prevented += 1; },
+    stopPropagation() { stopped += 1; },
+  });
+}
+process.stdout.write(JSON.stringify({attributes, activations, prevented, stopped}));
+"""
+        result = subprocess.run(
+            [str(NODE), "-e", script, str(helper)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        values = json.loads(result.stdout)
+        self.assertEqual(values["attributes"], {"role": "button", "tabindex": "0"})
+        self.assertEqual(values["activations"], 2)
+        self.assertEqual(values["prevented"], 2)
+        self.assertEqual(values["stopped"], 2)
+
+    def test_explicit_pin_state_and_pointer_transition_guards_are_wired(self):
+        app = (REPOSITORY / "web" / "app.js").read_text()
+        html = (REPOSITORY / "web" / "index.html").read_text()
+        css = (REPOSITORY / "web" / "style.css").read_text()
+
+        for field in (
+            "hoveredMarkerId", "pinnedMarkerId", "detailsSource",
+            "isPointerInsideDetails",
+        ):
+            self.assertIn(field, app)
+        self.assertIn("paperDetails.contains(relatedTarget)", app)
+        self.assertIn('paperDetails.addEventListener("pointerenter"', app)
+        self.assertIn('paperDetails.addEventListener("pointerleave"', app)
+        self.assertIn('element?.setAttribute("aria-pressed", String(isPinned))', app)
+        self.assertIn("interactionState.pinnedMarkerId === institutionKey", app)
+        self.assertIn("restoredPinRecord", app)
+        self.assertIn("paper-details-pin-status", html)
+        self.assertIn("Pinned", html)
+        self.assertIn(".leaflet-interactive.is-paper-pinned", css)
+        self.assertIn("stroke-dasharray", css)
 
 
 if __name__ == "__main__":

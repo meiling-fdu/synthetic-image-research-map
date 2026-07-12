@@ -1102,6 +1102,30 @@ input:disabled {
   gap: 3px 8px;
 }
 
+.paper-details-pin-status {
+  border: 1px solid var(--accent-dark);
+  border-radius: 999px;
+  padding: 2px 7px;
+  color: var(--accent-dark);
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.paper-details.is-pinned {
+  box-shadow: inset 4px 0 0 var(--accent-dark);
+}
+
+.leaflet-interactive.is-paper-pinned {
+  filter: drop-shadow(0 0 0.18rem #fff) drop-shadow(0 0 0.32rem currentColor);
+  stroke-dasharray: 2.5 2;
+  stroke-width: 4;
+}
+
+.leaflet-interactive.is-paper-pinned:focus-visible {
+  outline: 3px solid #111;
+  outline-offset: 3px;
+}
+
 .paper-details-links {
   display: flex;
   flex-wrap: wrap;

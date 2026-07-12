@@ -138,6 +138,7 @@ const resultsViewButtons = document.querySelectorAll("[data-results-view]");
 const paperDetails = document.querySelector("#paper-details");
 const paperDetailsContent = document.querySelector("#paper-details-content");
 const closePaperDetailsButton = document.querySelector("#close-paper-details");
+const paperDetailsPinStatus = document.querySelector("#paper-details-pin-status");
 const datasetStatusNote = document.querySelector("#dataset-status-note");
 const datasetNoticeCopy = document.querySelector("#dataset-notice-copy");
 
@@ -149,6 +150,10 @@ let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
 const interactionState = {
+  hoveredMarkerId: null,
+  pinnedMarkerId: null,
+  detailsSource: null,
+  isPointerInsideDetails: false,
   hovered: null,
   pinned: null,
 };
@@ -1720,12 +1725,24 @@ function resetPaperDetails() {
   paperDetailsContent.innerHTML =
     '<p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>';
   closePaperDetailsButton.disabled = true;
+  closePaperDetailsButton.textContent = "Close";
+  closePaperDetailsButton.setAttribute("aria-label", "Close paper details");
+  paperDetailsPinStatus.hidden = true;
+  paperDetails.classList.remove("is-pinned");
 }
 
-function showPaperDetails(record, relatedEntries) {
+function showPaperDetails(record, relatedEntries, source) {
   paperDetailsContent.innerHTML = paperDetailsHtml(record, relatedEntries);
   paperDetails.classList.add("has-content");
   closePaperDetailsButton.disabled = false;
+  const isPinned = source === "pinned";
+  paperDetails.classList.toggle("is-pinned", isPinned);
+  paperDetailsPinStatus.hidden = !isPinned;
+  closePaperDetailsButton.textContent = isPinned ? "Unpin" : "Close";
+  closePaperDetailsButton.setAttribute(
+    "aria-label",
+    isPinned ? "Unpin paper details" : "Close paper details",
+  );
   paperDetails.scrollTop = 0;
 }
 
@@ -1739,6 +1756,9 @@ function clearPaperInteraction(updateStatus = true) {
   closeActiveInstitutionTooltip();
   interactionState.hovered = null;
   interactionState.pinned = null;
+  interactionState.hoveredMarkerId = null;
+  interactionState.pinnedMarkerId = null;
+  interactionState.detailsSource = null;
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   restoreBaseMarkerStyles();
@@ -1823,13 +1843,26 @@ function renderConnectionSelection(selection, mode) {
   return { lineCount, visibleCount: relatedEntries.length };
 }
 
-function renderPaperSelection(selection) {
+function setMarkerPinnedState(markerId) {
+  visibleMarkerEntries.forEach((entry) => {
+    const isPinned = entry.institutionKey === markerId;
+    const element = entry.marker.getElement?.();
+    element?.classList.toggle("is-paper-pinned", isPinned);
+    element?.setAttribute("aria-pressed", String(isPinned));
+    element?.setAttribute(
+      "aria-label",
+      `${isPinned ? "Unpin" : "Pin"} paper details for ${recordInstitution(entry.record) || "institution"}`,
+    );
+  });
+}
+
+function renderPaperSelection(selection, source) {
   const relatedEntries = selection ? relatedMarkerEntries(selection) : [];
   if (!relatedEntries.length) {
     resetPaperDetails();
     return;
   }
-  showPaperDetails(selection.record, relatedEntries);
+  showPaperDetails(selection.record, relatedEntries, source);
 }
 
 function showPaperInteraction(detailSelection, connectionSelection) {
@@ -1838,7 +1871,7 @@ function showPaperInteraction(detailSelection, connectionSelection) {
     connectionSelection,
     isHoverConnection ? "hover" : "pinned",
   );
-  renderPaperSelection(detailSelection);
+  renderPaperSelection(detailSelection, interactionState.detailsSource);
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", true);
   const connectionText = lineCount ? " · Connections shown." : ".";
@@ -1849,6 +1882,10 @@ function showPaperInteraction(detailSelection, connectionSelection) {
 function renderActiveSelection() {
   const detailSelection = interactionState.pinned || interactionState.hovered;
   const connectionSelection = interactionState.hovered || interactionState.pinned;
+  interactionState.detailsSource = interactionState.pinned
+    ? "pinned"
+    : interactionState.hovered ? "hover" : null;
+  setMarkerPinnedState(interactionState.pinnedMarkerId);
   if (detailSelection) {
     showPaperInteraction(detailSelection, connectionSelection);
     return;
@@ -1864,6 +1901,7 @@ function renderActiveSelection() {
 
 function setHoveredSelection(selection) {
   interactionState.hovered = selection;
+  interactionState.hoveredMarkerId = selection?.markerId || null;
   renderActiveSelection();
 }
 
@@ -1872,35 +1910,52 @@ function clearHoveredSelection(marker) {
     return;
   }
   interactionState.hovered = null;
+  interactionState.hoveredMarkerId = null;
   renderActiveSelection();
 }
 
 function setPinnedSelection(selection) {
   interactionState.hovered = null;
+  interactionState.hoveredMarkerId = null;
   interactionState.pinned = selection;
+  interactionState.pinnedMarkerId = selection?.markerId || null;
   renderActiveSelection();
   scheduleMapResize();
 }
 
 function clearPinnedSelection() {
   interactionState.pinned = null;
+  interactionState.pinnedMarkerId = null;
   renderActiveSelection();
   scheduleMapResize();
 }
 
-function activateHoverPreview(record, identity, marker, paperCount, taskBreakdown) {
+function activateHoverPreview(record, identity, markerId, marker, paperCount, taskBreakdown) {
   openInstitutionTooltip(marker, record, paperCount, taskBreakdown);
-  setHoveredSelection({ identity, record, marker });
+  setHoveredSelection({ identity, record, markerId, marker });
 }
 
-function clearHoverPreview(marker) {
+function clearHoverPreview(marker, event = null) {
   closeActiveInstitutionTooltip(marker);
+  const relatedTarget = event?.originalEvent?.relatedTarget || event?.relatedTarget;
+  if (relatedTarget && paperDetails.contains(relatedTarget)) {
+    interactionState.isPointerInsideDetails = true;
+    return;
+  }
+  if (interactionState.isPointerInsideDetails) {
+    return;
+  }
   clearHoveredSelection(marker);
 }
 
 function pinPaper(record, identity, institutionKey) {
   closeActiveInstitutionTooltip();
-  setPinnedSelection({ identity, record, institutionKey });
+  if (interactionState.pinnedMarkerId === institutionKey &&
+      interactionState.pinned?.identity === identity) {
+    clearPinnedSelection();
+    return;
+  }
+  setPinnedSelection({ identity, record, markerId: institutionKey, institutionKey });
 }
 
 function renderRecords() {
@@ -1964,11 +2019,12 @@ function renderRecords() {
       hover: () => activateHoverPreview(
         record,
         identity,
+        group.key,
         marker,
         group.paperCount,
         taskBreakdown,
       ),
-      leave: () => clearHoverPreview(marker),
+      leave: (event) => clearHoverPreview(marker, event),
     });
     visibleMarkerEntries.push({
       record,
@@ -1995,10 +2051,13 @@ function renderRecords() {
     interactionState.pinned = {
       identity: previousPin.identity,
       record: restoredPinRecord,
+      markerId: previousPin.institutionKey,
       institutionKey: previousPin.institutionKey,
     };
+    interactionState.pinnedMarkerId = previousPin.institutionKey;
   } else {
     interactionState.pinned = null;
+    interactionState.pinnedMarkerId = null;
   }
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
@@ -2331,7 +2390,22 @@ minYearFilter.addEventListener("input", renderRecords);
 maxYearFilter.addEventListener("input", renderRecords);
 window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
-closePaperDetailsButton.addEventListener("click", clearPinnedSelection);
+closePaperDetailsButton.addEventListener("click", () => {
+  if (interactionState.pinned) {
+    clearPinnedSelection();
+  } else {
+    clearHoveredSelection();
+  }
+});
+paperDetails.addEventListener("pointerenter", () => {
+  interactionState.isPointerInsideDetails = true;
+});
+paperDetails.addEventListener("pointerleave", () => {
+  interactionState.isPointerInsideDetails = false;
+  if (!interactionState.pinned && !interactionState.hoveredMarkerId) {
+    clearHoveredSelection();
+  }
+});
 resultsViewButtons.forEach((button) => {
   button.addEventListener("click", () => selectResultsView(button.dataset.resultsView));
 });

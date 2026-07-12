@@ -194,19 +194,22 @@ process.stdout.write(JSON.stringify({
             restore_body,
         )
         self.assertIn(
-            "setHoveredSelection({ identity, record, marker })", hover_body
+            "setHoveredSelection({ identity, record, markerId, marker })", hover_body
         )
-        self.assertIn('closePaperDetailsButton.addEventListener("click", clearPinnedSelection)', app_source)
+        self.assertIn('closePaperDetailsButton.addEventListener("click", () => {', app_source)
 
         clear_body = app_source.split(
-            "function clearHoverPreview(marker) {", 1
+            "function clearHoverPreview(marker, event = null) {", 1
         )[1].split("\nfunction pinPaper", 1)[0]
         pin_body = app_source.split(
             "function pinPaper(", 1
         )[1].split("\nfunction renderRecords", 1)[0]
         self.assertIn("clearHoveredSelection(marker)", clear_body)
         self.assertNotIn("interactionState.pinned = null", clear_body)
-        self.assertIn("setPinnedSelection({ identity, record, institutionKey })", pin_body)
+        self.assertIn(
+            "setPinnedSelection({ identity, record, markerId: institutionKey, institutionKey })",
+            pin_body,
+        )
         self.assertNotIn('paperDetails.addEventListener("mouseleave"', app_source)
         self.assertIn("MarkerInteractionHelpers.bindMarkerHandlers", app_source)
 
@@ -232,7 +235,7 @@ process.stdout.write(JSON.stringify({
             "interactionState.hovered || interactionState.pinned", active_body
         )
         self.assertIn(
-            "renderPaperSelection(detailSelection)", interaction_body
+            "renderPaperSelection(detailSelection, interactionState.detailsSource)", interaction_body
         )
         self.assertIn(
             "renderConnectionSelection(", interaction_body

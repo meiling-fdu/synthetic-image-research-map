@@ -24,6 +24,20 @@
         .on("mouseover", handlers.hover)
         .on("mouseout", handlers.leave);
     }
+
+    const element = marker.getElement?.();
+    if (element) {
+      element.setAttribute("role", "button");
+      element.setAttribute("tabindex", "0");
+      element.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") {
+          return;
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        handlers.click(event);
+      });
+    }
     return true;
   }
 
