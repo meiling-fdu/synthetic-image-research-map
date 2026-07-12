@@ -15,7 +15,7 @@ class ArxivLinkEnrichmentTests(unittest.TestCase):
             "title": "A Siamese-based Verification System",
             "publication_year": "2024",
             "venue": "Pattern Recognition Letters",
-            "publication_type": "article",
+            "publication_type": "journal",
             "doi": "10.1016/example",
             "authors_ordered": '["Lydia Abady", "Jun Wang", "Mauro Barni"]',
         }

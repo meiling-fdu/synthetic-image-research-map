@@ -776,13 +776,13 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
 
     title = record_title(record)
     publication_type = clean_text(record.get("publication_type"))
-    if publication_type not in {"conference", "article", "preprint", "book"}:
+    if publication_type not in {"conference", "journal", "preprint", "book"}:
         add_issue(
             issues,
             "ERROR",
             index,
             title,
-            "publication_type must be conference, article, preprint, or book",
+            "publication_type must be conference, journal, preprint, or book",
         )
     raw_title = clean_text(record.get("title"))
     if not raw_title:
@@ -985,6 +985,15 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
     validate_paper_detail_schema(index, record, issues, marker_record=False)
 
     title = record_title(record)
+    publication_type = clean_text(record.get("publication_type"))
+    if publication_type not in {"conference", "journal", "preprint", "book"}:
+        add_issue(
+            issues,
+            "ERROR",
+            index,
+            title,
+            "publication_type must be conference, journal, preprint, or book",
+        )
     raw_title = clean_text(record.get("title"))
     if not raw_title or is_missing_value(raw_title):
         add_issue(issues, "ERROR", index, title, "title is missing or empty")

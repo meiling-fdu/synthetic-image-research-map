@@ -1708,7 +1708,9 @@ def apply_publication_overrides(
             formal_venue = clean_text(override.get("formal_venue"))
             formal_doi = clean_text(override.get("formal_doi"))
             formal_paper_url = clean_text(override.get("formal_paper_url"))
-            publication_type = clean_text(override.get("publication_type"))
+            publication_type = normalize_publication_type(
+                override.get("publication_type"), venue=formal_venue
+            )
             record["year"] = formal_year
             record["publication_year"] = formal_year
             record["venue"] = formal_venue
@@ -1736,6 +1738,68 @@ def apply_publication_overrides(
         "publication_overrides_applied": len(applied_indexes),
         "publication_overrides_unmatched": unmatched,
     }
+
+
+def synchronize_publication_types(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+) -> List[Dict[str, str]]:
+    """Normalize canonical papers, then copy their type to every map marker.
+
+    The returned review list is paper-level, so affiliation expansion cannot
+    multiply an unresolved publication type into duplicate admin items.
+    """
+    unresolved: Dict[Tuple[str, Any], Dict[str, str]] = {}
+
+    marker_lookup = build_identity_lookup(map_records)
+
+    def normalize_record(
+        record: Dict[str, Any], evidence: Optional[Dict[str, Any]] = None
+    ) -> str:
+        evidence = evidence or {}
+        return normalize_publication_type(
+            record.get("publication_type"),
+            venue=record.get("venue") or record.get("venue_name"),
+            venue_type=record.get("venue_type"),
+            arxiv_id=record.get("arxiv_id") or evidence.get("arxiv_id"),
+            arxiv_url=record.get("arxiv_url") or evidence.get("arxiv_url"),
+            doi=record.get("doi"),
+        )
+
+    for paper in paper_records:
+        raw_publication_type = clean_text(paper.get("publication_type"))
+        marker_matches = matching_records(paper, marker_lookup)
+        normalized = normalize_record(
+            paper, marker_matches[0] if marker_matches else None
+        )
+        paper["publication_type"] = normalized
+        if not normalized:
+            unresolved.setdefault(
+                identity_key(paper),
+                {
+                    "title": clean_text(paper.get("title")),
+                    "publication_type": raw_publication_type,
+                },
+            )
+
+    paper_lookup = build_identity_lookup(paper_records)
+    for marker in map_records:
+        matches = matching_records(marker, paper_lookup)
+        if matches:
+            marker["publication_type"] = clean_text(matches[0].get("publication_type"))
+            continue
+        raw_publication_type = clean_text(marker.get("publication_type"))
+        normalized = normalize_record(marker)
+        marker["publication_type"] = normalized
+        if not normalized:
+            unresolved.setdefault(
+                identity_key(marker),
+                {
+                    "title": clean_text(marker.get("title")),
+                    "publication_type": raw_publication_type,
+                },
+            )
+    return list(unresolved.values())
 
 
 def arxiv_link_key(row: Dict[str, Any]) -> Optional[Tuple[str, Any]]:
@@ -2528,6 +2592,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         integrated_maps, retracted_map_records_excluded = (
             exclude_retracted_records(integrated_maps)
         )
+        unresolved_publication_types = synchronize_publication_types(
+            integrated_papers, integrated_maps
+        )
+        if unresolved_publication_types:
+            details = "; ".join(
+                f"{row['title']!r} ({row['publication_type'] or 'missing'})"
+                for row in unresolved_publication_types
+            )
+            raise PreviewExportError(
+                "Unresolved publication types require admin review: " + details
+            )
         for record in integrated_maps:
             record["institution_id"] = (
                 clean_text(record.get("institution_id"))

@@ -62,7 +62,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `venue_name` | Source or repository display name, preferring `primary_location.source.display_name`; empty when unavailable. |
 | `venue_type` | OpenAlex source type, such as journal, conference, or repository, when available. |
 | `publisher` | Publisher or source host-organization name reported by OpenAlex. |
-| `publication_type` | Controlled lowercase bibliographic type: `conference`, `article`, `preprint`, or `book`. OpenAlex/Crossref aliases are normalized during ingestion and export; conference or proceedings venue evidence takes precedence over an `article` source type. |
+| `publication_type` | Controlled lowercase bibliographic type: `conference`, `journal`, `preprint`, or `book`. Legacy OpenAlex/Crossref values such as `article`, `journal-article`, and `proceedings-article` are normalized during ingestion and export; conference or proceedings evidence takes precedence over a generic legacy `article` source type. |
 | `doi` | Canonical DOI without a resolver URL when available. |
 | `arxiv_id` | arXiv identifier detected from source identifiers, a `10.48550/arXiv.*` DOI, or an arXiv location URL. |
 | `arxiv_url` | Canonical `https://arxiv.org/abs/...` URL when an arXiv identifier can be extracted. |
@@ -391,7 +391,7 @@ When an override matches by OpenAlex URL, DOI, or normalized title, map and publ
 | `formal_venue` | Correct formal venue written to `venue` and `venue_name`. |
 | `formal_doi` | Correct formal publication DOI. |
 | `formal_paper_url` | Preferred formal publication landing page, written to the map/public URL aliases including `paper_url` and `primary_url`. |
-| `publication_type` | Correct formal publication type, such as `Article`. |
+| `publication_type` | Correct formal publication type, using the canonical values `conference`, `journal`, `preprint`, or `book`; legacy provider values such as `Article` are accepted only as migration input and normalize to `journal`. |
 | `notes` | Human-readable provenance and reason for the correction. |
 
 Matching uses normalized title and, when supplied, `match_year` against the record before the override. A match replaces only formal display/publication metadata. It preserves the OpenAlex URL and all `arxiv_id`, `arxiv_url`, `arxiv_year`, and `has_arxiv_version` values. A formal venue means the record is no longer preprint-only even though its arXiv version remains known.

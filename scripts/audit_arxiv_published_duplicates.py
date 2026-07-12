@@ -129,7 +129,9 @@ def is_published_record(record: Mapping[str, Any]) -> bool:
     publication_type = clean(record.get("publication_type")).casefold()
     formal_doi = bool(doi and not ARXIV_DOI_RE.match(doi))
     formal_venue = bool(venue and "arxiv" not in venue.casefold())
-    return formal_doi or formal_venue or publication_type in {"article", "conference", "proceedings"}
+    return formal_doi or formal_venue or publication_type in {
+        "journal", "article", "conference", "proceedings"
+    }
 
 
 def year_distance(left: Mapping[str, Any], right: Mapping[str, Any]) -> Optional[int]:

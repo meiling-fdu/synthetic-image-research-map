@@ -9,6 +9,7 @@ from scripts.export_public_preview import (
     exclude_preprint_versions,
     exclude_retracted_records,
     paper_is_retracted,
+    synchronize_publication_types,
 )
 from scripts.refresh_public_preview import build_steps, parse_args
 from scripts.validate_public_preview import validate_preprint_version_duplicates
@@ -23,6 +24,38 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_map_markers_inherit_one_normalized_canonical_publication_type(self):
+        paper = {
+            "title": "Shared paper",
+            "year": 2025,
+            "publication_type": "journal",
+        }
+        markers = [
+            {**paper, "publication_type": "review", "institution": "One"},
+            {**paper, "publication_type": "", "institution": "Two"},
+        ]
+
+        unresolved = synchronize_publication_types([paper], markers)
+
+        self.assertEqual(paper["publication_type"], "journal")
+        self.assertEqual(
+            [marker["publication_type"] for marker in markers],
+            ["journal", "journal"],
+        )
+        self.assertEqual(unresolved, [])
+
+    def test_unresolved_type_is_reported_once_for_many_institutions(self):
+        paper = {"title": "Unknown type", "year": 2025, "publication_type": "report"}
+        markers = [
+            {**paper, "institution": "One"},
+            {**paper, "institution": "Two"},
+        ]
+
+        unresolved = synchronize_publication_types([paper], markers)
+
+        self.assertEqual(len(unresolved), 1)
+        self.assertEqual(unresolved[0]["title"], "Unknown type")
+
     def test_retractions_are_removed_from_paper_and_map_outputs(self):
         retractions = [
             {"title": "[Retracted] Bracketed title"},
@@ -32,7 +65,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             {"title": "Curated flag", "retracted": "true"},
             {"title": "Excluded record", "exclusion_reason": "retracted"},
         ]
-        normal = {"title": "A valid paper", "publication_type": "article"}
+        normal = {"title": "A valid paper", "publication_type": "journal"}
 
         for record in retractions:
             with self.subTest(record=record):
@@ -959,7 +992,7 @@ process.stdout.write(JSON.stringify({
             "title": "a siamese based verification system",
             "year": 2024,
             "venue": "Pattern Recognition Letters",
-            "publication_type": "article",
+            "publication_type": "journal",
             "doi": "10.1016/j.patrec.2024.03.002",
             "is_arxiv_preprint": False,
             "authors": ["Lydia Abady"],

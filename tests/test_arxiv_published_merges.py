@@ -138,7 +138,7 @@ class ArxivPublishedMergeTests(unittest.TestCase):
             "title": "A Similar Method for Synthetic Image Detection",
             "year": 2025,
             "venue": "Example Conference",
-            "publication_type": "article",
+            "publication_type": "journal",
             "doi": "10.1000/distinct",
             "openalex_url": "https://openalex.org/W200",
             "authors": [{"name": "Ada Example"}],
