@@ -26,6 +26,7 @@ const elements = {};
 let arxivAutofillPollTimer = null;
 let arxivAutofillPolling = false;
 let noticeTimer = null;
+let paperSelectionSequence = 0;
 const workflowCommandIds = [
   "run-curated-validation",
   "run-export-preview",
@@ -2441,7 +2442,11 @@ function renderPaperList() {
 }
 
 async function selectPaper(id) {
+  const selectionSequence = ++paperSelectionSequence;
   state.selectedId = id;
+  state.selectedPaper = null;
+  state.selectedMappings = [];
+  clearPaperMetadata("Loading metadata…");
   renderPaperList();
   elements["detail-placeholder"].hidden = true;
   elements["detail-content"].hidden = false;
@@ -2453,18 +2458,39 @@ async function selectPaper(id) {
       apiFetch(`/api/paper/mappings?id=${encodeURIComponent(id)}`),
       apiFetch(`/api/paper/metadata?id=${encodeURIComponent(id)}`),
     ]);
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== id) return;
     state.selectedPaper = paperPayload.paper;
     state.selectedMappings = mappingsPayload.curated_mappings || [];
     state.paperMetadata = metadataPayload.data;
     renderPaperDetail(paperPayload.paper);
     renderMappings(mappingsPayload);
     renderMetadataComparison();
+    populateMetadataForm();
   } catch (error) {
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== id) return;
+    state.selectedPaper = null;
+    state.selectedMappings = [];
+    clearPaperMetadata(`Could not load metadata: ${error.message}`, true);
     elements["detail-title"].textContent = "Could not load paper";
     elements["detail-notes"].textContent = error.message;
     elements["mapping-panel-error"].hidden = false;
     elements["mapping-panel-error"].textContent = error.message;
   }
+}
+
+function clearPaperMetadata(message, isError = false) {
+  state.paperMetadata = null;
+  elements["metadata-compare"].replaceChildren();
+  const status = document.createElement("p");
+  status.className = isError ? "form-error" : "muted";
+  status.textContent = message;
+  elements["metadata-compare"].append(status);
+  elements["metadata-edit-button"].disabled = true;
+  elements["metadata-edit-form"].hidden = true;
+  elements["metadata-paper-id"].value = "";
+  elements["metadata-edit-form"].querySelectorAll("input, textarea, select").forEach((control) => {
+    if (control.id !== "metadata-paper-id") control.value = "";
+  });
 }
 
 function renderMetadataComparison() {
@@ -2475,6 +2501,7 @@ function renderMetadataComparison() {
     ["Curated override metadata", payload.curated_record],
   ];
   elements["metadata-compare"].replaceChildren();
+  elements["metadata-edit-button"].disabled = false;
   sources.forEach(([label, record]) => {
     const details = document.createElement("details");
     if (label === "Effective metadata") details.open = true;
@@ -2506,6 +2533,13 @@ function openMetadataEditor() {
     showNotice("Select a paper before editing metadata.", "error");
     return;
   }
+  elements["metadata-edit-error"].hidden = true;
+  elements["metadata-edit-form"].hidden = false;
+  elements["metadata-title"].focus();
+}
+
+function populateMetadataForm() {
+  if (!state.selectedPaper || !state.paperMetadata) return;
   const record = state.paperMetadata.effective_record || state.selectedPaper;
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
@@ -2530,8 +2564,6 @@ function openMetadataEditor() {
   elements["metadata-arxiv-id"].dataset.originalValue =
     metadataValue(record, "arxiv_id").trim();
   elements["metadata-edit-error"].hidden = true;
-  elements["metadata-edit-form"].hidden = false;
-  elements["metadata-title"].focus();
 }
 
 function closeMetadataEditor() {
@@ -2540,6 +2572,15 @@ function closeMetadataEditor() {
 
 async function saveMetadata(event) {
   event.preventDefault();
+  const selectedId = state.selectedId;
+  const selectionSequence = paperSelectionSequence;
+  if (!state.paperMetadata || !state.selectedPaper ||
+      !selectedId || elements["metadata-paper-id"].value !== selectedId) {
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent =
+      "Metadata is not loaded for the currently selected paper.";
+    return;
+  }
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
     "paper_url", "publication_type", "entry_type", "task", "subtask", "scope_status",
@@ -2557,15 +2598,15 @@ async function saveMetadata(event) {
       method: "POST",
       body: JSON.stringify(draft),
     });
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
     showNotice(payload.message);
     closeMetadataEditor();
     await loadApplication(false);
-    const updated = state.papers.find((paper) =>
-      normalize(paper.openalex_url) === normalize(draft.openalex_url) ||
-      (normalize(paper.title) === normalize(draft.title) && text(paper.year) === draft.year)
-    );
-    if (updated) await selectPaper(updated.display_id);
+    if (selectionSequence === paperSelectionSequence && state.selectedId === selectedId) {
+      await selectPaper(selectedId);
+    }
   } catch (error) {
+    if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
     elements["metadata-edit-error"].hidden = false;
     elements["metadata-edit-error"].textContent = error.message;
   }

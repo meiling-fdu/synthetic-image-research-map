@@ -17,13 +17,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 887 |
-| Unique papers | 408 |
+| Map records | 894 |
+| Unique papers | 412 |
 | Unique institutions | 506 |
 | Countries | 73 |
-| arXiv/preprint records | 486 |
-| Records with DOI | 872 |
-| Records with venue | 822 |
+| arXiv/preprint records | 493 |
+| Records with DOI | 877 |
+| Records with venue | 829 |
 | Records missing venue | 65 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -34,26 +34,26 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 761 |
-| source_attribution | 82 |
+| detection | 766 |
+| source_attribution | 84 |
 | detection_and_source_attribution | 44 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 390 |
+| ai_generated_image_detection | 395 |
 | synthetic_image_detection | 266 |
 | deepfake_image_detection | 105 |
 | generated_image_source_attribution | 56 |
 | detection_and_source_attribution | 44 |
-| source_identification | 26 |
+| source_identification | 28 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 101 |
+| 2026 | 108 |
 | 2025 | 274 |
 | 2024 | 233 |
 | 2023 | 125 |
@@ -83,11 +83,11 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 197 |
+| China | 202 |
 | CN | 141 |
 | United States | 70 |
 | US | 62 |
-| Italy | 43 |
+| Italy | 44 |
 | IN | 40 |
 | IT | 32 |
 | Germany | 20 |
@@ -104,8 +104,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Beijing Jiaotong University | 12 |
 | University of Chinese Academy of Sciences | 12 |
 | Fudan University | 11 |
+| Beijing University of Posts and Telecommunications | 9 |
 | City University of Hong Kong | 9 |
-| Beijing University of Posts and Telecommunications | 8 |
 | Chinese Academy of Sciences | 8 |
 | Information Technologies Institute | 8 |
 
@@ -113,7 +113,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 714 |
+| high | 721 |
 | medium | 173 |
 
 ## Potential quality issues
