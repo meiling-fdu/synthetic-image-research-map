@@ -1090,6 +1090,7 @@ function recordSearchText(record) {
   return normalizedSearchText([
     recordTitle(record),
     ...authors,
+    publicationYear(record),
     record.institution_name,
     record.institution,
     record.country,
@@ -1145,6 +1146,44 @@ function recordMatchesActiveFilters(record, keywordTerms) {
     matchesMaximumYear &&
     matchesInstitution
   );
+}
+
+function deriveFilteredRecordSets(
+  mapRecords,
+  publicPaperRecords,
+  matchesRecord,
+  identityForRecord = paperIdentity,
+  aggregateRecords = aggregateUniquePapers,
+) {
+  const filteredRecords = mapRecords.filter(matchesRecord);
+  const papersByIdentity = new Map();
+
+  // Paper-level records preserve the public preview's standalone-paper coverage and
+  // are the preferred display record when a matching map record references them.
+  publicPaperRecords.forEach((paper) => {
+    const identity = identityForRecord(paper);
+    if (!papersByIdentity.has(identity)) {
+      papersByIdentity.set(identity, paper);
+    }
+  });
+
+  const matchingPaperIdentities = new Set(
+    filteredRecords.map(identityForRecord),
+  );
+  publicPaperRecords.forEach((paper) => {
+    if (matchesRecord(paper)) {
+      matchingPaperIdentities.add(identityForRecord(paper));
+    }
+  });
+
+  const fallbackPapersByIdentity = new Map(
+    aggregateRecords(filteredRecords).map((paper) => [identityForRecord(paper), paper]),
+  );
+  const filteredPapers = [...matchingPaperIdentities]
+    .map((identity) => papersByIdentity.get(identity) || fallbackPapersByIdentity.get(identity))
+    .filter(Boolean);
+
+  return { filteredRecords, filteredPapers };
 }
 
 function normalizedSetSize(values) {
@@ -2033,11 +2072,11 @@ function renderRecords() {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  const visibleRecords = records
-    .filter((record) => recordMatchesActiveFilters(record, keywordTerms))
+  const matchesRecord = (record) => recordMatchesActiveFilters(record, keywordTerms);
+  const filteredSets = deriveFilteredRecordSets(records, paperRecords, matchesRecord);
+  const visibleRecords = filteredSets.filteredRecords
     .sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
-  const visiblePaperRecords = paperRecords
-    .filter((record) => recordMatchesActiveFilters(record, keywordTerms))
+  const visiblePaperRecords = filteredSets.filteredPapers
     .sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
 
   currentFilteredRecords = visibleRecords;

@@ -1,4 +1,7 @@
 import unittest
+import json
+import shutil
+import subprocess
 from pathlib import Path
 
 
@@ -59,7 +62,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("button.institution-filter-link", self.css)
 
     def test_filter_uses_shared_record_and_paper_pipeline(self):
-        self.assertIn(".filter((record) => recordMatchesActiveFilters(record, keywordTerms))", self.app)
+        self.assertIn("deriveFilteredRecordSets(records, paperRecords, matchesRecord)", self.app)
         self.assertIn("updateDatasetStatistics(visibleRecords, visiblePaperRecords)", self.app)
         self.assertIn("renderHeaderStatistics(visibleRecords, visiblePaperRecords)", self.app)
         self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", self.app)
@@ -68,7 +71,71 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-exact-institution-filter', self.html)
-        self.assertIn('app.js?v=20260713-exact-institution-filter', self.html)
+        self.assertIn('app.js?v=20260713-unified-filtered-sets', self.html)
+
+    def test_keyword_search_text_includes_supported_record_fields(self):
+        search = self.app[
+            self.app.index("function recordSearchText"):
+            self.app.index("function yearFilterValue")
+        ]
+        for field in (
+            "recordTitle(record)", "...authors", "record.institution_name",
+            "record.institution", "record.venue_name", "record.venue",
+            "record.task", "record.subtask", "getEntryTypeLabel",
+            "publicationYear(record)",
+        ):
+            self.assertIn(field, search)
+
+    def test_unified_sets_deduplicate_map_matches_and_keep_standalone_matches(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        start = self.app.index("function deriveFilteredRecordSets")
+        end = self.app.index("\nfunction normalizedSetSize", start)
+        function_source = self.app[start:end]
+        script = f"""
+{function_source}
+const mapRecords = [
+  {{id: 'mapped', institution: 'University of Siena'}},
+  {{id: 'mapped', institution: 'University of Siena'}},
+  {{id: 'venue-only', institution: 'Elsewhere'}},
+];
+const papers = [
+  {{id: 'mapped', venue: 'Journal'}},
+  {{id: 'venue-only', venue: 'University of Siena Press'}},
+  {{id: 'standalone', venue: 'University of Siena Proceedings'}},
+  {{id: 'duplicate-version', canonical: 'mapped', venue: 'Journal'}},
+];
+const matches = record => [record.institution, record.venue]
+  .filter(Boolean).join(' ').toLowerCase().includes('university of siena');
+const identity = record => record.canonical || record.id;
+const aggregate = records => [...new Map(records.map(record => [identity(record), record])).values()];
+const result = deriveFilteredRecordSets(mapRecords, papers, matches, identity, aggregate);
+process.stdout.write(JSON.stringify({{
+  recordIds: result.filteredRecords.map(record => record.id),
+  paperIds: result.filteredPapers.map(identity),
+}}));
+"""
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["recordIds"], ["mapped", "mapped"])
+        self.assertEqual(set(result["paperIds"]), {"mapped", "venue-only", "standalone"})
+        self.assertEqual(result["paperIds"].count("mapped"), 1)
+
+    def test_toggle_and_csv_reuse_the_same_current_filtered_sets(self):
+        toggle = self.app[
+            self.app.index("function selectResultsView"):
+            self.app.index("function baseMapStatusText")
+        ]
+        export = self.app[
+            self.app.index("function downloadFilteredCsv"):
+            self.app.index("function formatResolutionValue")
+        ]
+        self.assertIn("renderResults(currentFilteredRecords, currentFilteredPaperRecords)", toggle)
+        self.assertIn("buildCsv(currentDisplayedResults, columns)", export)
+        self.assertNotIn("recordMatchesActiveFilters", toggle)
 
 
 if __name__ == "__main__":
