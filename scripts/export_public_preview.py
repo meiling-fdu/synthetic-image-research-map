@@ -39,7 +39,7 @@ try:
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
     )
-    from .country_normalization import normalize_country_region
+    from .country_normalization import normalize_country_region, public_location_display
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
@@ -99,7 +99,7 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
     )
-    from country_normalization import normalize_country_region
+    from country_normalization import normalize_country_region, public_location_display
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
@@ -209,6 +209,7 @@ PUBLIC_FIELDS = (
     "raw_country",
     "raw_country_code",
     "city",
+    "location_display",
     "latitude",
     "longitude",
     "source_database",
@@ -547,13 +548,18 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
         for author in value.get("authors", [])
         if author_display_name(author)
     ]
+    country = clean_text(value.get("country"))
+    country_code = clean_text(value.get("country_code"))
+    region = clean_text(value.get("region"))
     return {
         "index": parse_year(value.get("index")),
         "name": name,
         "canonical_name": clean_text(value.get("canonical_name")) or name,
         "institution_id": institution_id,
-        "country": clean_text(value.get("country")),
-        "region": clean_text(value.get("region")),
+        "country": country,
+        "country_code": country_code,
+        "region": region,
+        "location_display": public_location_display(region, country, country_code),
         "authors": authors,
         "mapping_source": _author_mapping_source(
             value.get("mapping_source")
@@ -716,7 +722,10 @@ def add_public_detail_fields(
                 affiliation_by_identity[identity] = affiliation
                 existing = affiliation
             else:
-                for field in ("canonical_name", "country", "region"):
+                for field in (
+                    "canonical_name", "country", "country_code", "region",
+                    "location_display",
+                ):
                     if not clean_text(existing.get(field)) and clean_text(
                         affiliation.get(field)
                     ):
@@ -873,7 +882,9 @@ def add_public_detail_fields(
                 "canonical_name": affiliation["canonical_name"],
                 "institution_id": affiliation["institution_id"],
                 "country": affiliation["country"],
+                "country_code": affiliation["country_code"],
                 "region": affiliation["region"],
+                "location_display": affiliation["location_display"],
             }
             for affiliation in affiliations
         ]
@@ -2145,6 +2156,11 @@ def build_preview(
                     else None
                 ),
             )
+        )
+        public_record["location_display"] = public_location_display(
+            public_record.get("region"),
+            public_record.get("country"),
+            public_record.get("country_code"),
         )
         public_record["resolution_confidence"] = confidence
         public_record["needs_review"] = needs_review

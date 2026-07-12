@@ -28,6 +28,27 @@ CHINA_REGION_NAME_ALIASES = {
     "tw": "TW",
 }
 
+COUNTRY_NAME_BY_CODE = {
+    "AE": "United Arab Emirates", "AT": "Austria", "AU": "Australia",
+    "BD": "Bangladesh", "BG": "Bulgaria", "BR": "Brazil",
+    "BE": "Belgium", "CA": "Canada", "CH": "Switzerland", "CN": "China",
+    "CO": "Colombia", "CZ": "Czechia",
+    "DE": "Germany", "DK": "Denmark", "DZ": "Algeria", "EG": "Egypt",
+    "ES": "Spain", "FI": "Finland", "FR": "France", "GB": "United Kingdom",
+    "GR": "Greece", "HR": "Croatia", "ID": "Indonesia", "IE": "Ireland",
+    "IL": "Israel", "IN": "India", "IQ": "Iraq", "IR": "Iran",
+    "IT": "Italy", "JO": "Jordan", "JP": "Japan", "KR": "South Korea",
+    "HK": "Hong Kong", "LB": "Lebanon", "ME": "Montenegro",
+    "MO": "Macau", "MT": "Malta", "MX": "Mexico",
+    "MY": "Malaysia", "NL": "Netherlands", "NO": "Norway", "NP": "Nepal",
+    "NZ": "New Zealand", "PK": "Pakistan", "PL": "Poland",
+    "PT": "Portugal", "RU": "Russia", "SA": "Saudi Arabia",
+    "SE": "Sweden", "SG": "Singapore", "SI": "Slovenia",
+    "SK": "Slovakia", "SY": "Syria", "TH": "Thailand", "TR": "Türkiye",
+    "TW": "Taiwan", "UA": "Ukraine", "US": "United States",
+    "VN": "Vietnam", "ZA": "South Africa",
+}
+
 
 def clean_text(value: Any) -> str:
     if value is None:
@@ -39,6 +60,31 @@ def normalized_location_name(value: Any) -> str:
     return " ".join(
         re.sub(r"[^a-z0-9]+", " ", clean_text(value).casefold()).split()
     )
+
+
+def public_country_name(country: Any, country_code: Any = "") -> str:
+    """Return a concise country name without exposing a raw alpha-2 code."""
+    country_text = clean_text(country)
+    country_as_code = country_text.upper()
+    if len(country_as_code) == 2 and country_as_code.isalpha():
+        return COUNTRY_NAME_BY_CODE.get(country_as_code, "")
+    if country_text:
+        return country_text
+    return COUNTRY_NAME_BY_CODE.get(clean_text(country_code).upper(), "")
+
+
+def public_location_display(
+    region: Any, country: Any, country_code: Any = ""
+) -> str:
+    """Format a public institution location without including its city."""
+    values = []
+    for value in (clean_text(region), public_country_name(country, country_code)):
+        normalized = normalized_location_name(value)
+        if value and normalized not in {
+            normalized_location_name(existing) for existing in values
+        }:
+            values.append(value)
+    return ", ".join(values)
 
 
 def normalize_country_region(

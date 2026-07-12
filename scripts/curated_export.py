@@ -22,7 +22,7 @@ try:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
     )
-    from .country_normalization import normalize_country_region
+    from .country_normalization import normalize_country_region, public_location_display
     from .publication_types import normalize_publication_type
     from .export_candidate_map_data import normalize_export_task_labels
     from .paper_exclusions import (
@@ -44,7 +44,7 @@ except ImportError:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
     )
-    from country_normalization import normalize_country_region
+    from country_normalization import normalize_country_region, public_location_display
     from publication_types import normalize_publication_type
     from export_candidate_map_data import normalize_export_task_labels
     from paper_exclusions import (
@@ -257,6 +257,11 @@ def normalize_regional_location(
                 else None
             ),
         )
+    )
+    normalized["location_display"] = public_location_display(
+        normalized.get("region"),
+        normalized.get("country"),
+        normalized.get("country_code"),
     )
     return normalized
 

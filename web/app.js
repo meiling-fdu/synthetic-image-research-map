@@ -451,11 +451,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
         ).trim(),
         country: String(raw.country || "").trim(),
         region: String(raw.region || "").trim(),
-        location: uniqueTextValues([
-          raw.city,
-          raw.region,
-          raw.country,
-        ]).join(", "),
+        location: recordLocation(raw),
         authors: [],
         authorKeys: new Set(),
         isCurrent: false,
@@ -833,7 +829,11 @@ function normalizeCountryRegionRecord(record) {
 }
 
 function recordLocation(record) {
-  return uniqueTextValues([record.city, record.region, record.country]).join(", ");
+  const exportedDisplay = String(record.location_display || "").trim();
+  if (exportedDisplay) return exportedDisplay;
+  const country = String(record.country || "").trim();
+  const defensiveCountry = /^[A-Za-z]{2}$/.test(country) ? "" : country;
+  return uniqueTextValues([record.region, defensiveCountry]).join(", ");
 }
 
 function recordPaperUrl(record) {
