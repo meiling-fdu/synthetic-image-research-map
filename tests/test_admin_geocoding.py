@@ -57,7 +57,13 @@ class AdminGeocodingTests(unittest.TestCase):
                 "lat": "41.9",
                 "lon": "12.5",
                 "importance": 0.82,
-                "address": {"university": "Example University"},
+                "address": {
+                    "university": "Example University",
+                    "municipality": "Rome",
+                    "province": "Lazio",
+                    "country": "Italy",
+                    "country_code": "it",
+                },
             }]),
         )
         result = CachedGeocoder(provider, minimum_interval=0).search(
@@ -68,7 +74,27 @@ class AdminGeocodingTests(unittest.TestCase):
         self.assertEqual(candidate["institution_name"], "Example University")
         self.assertEqual((candidate["latitude"], candidate["longitude"]), (41.9, 12.5))
         self.assertEqual(candidate["provider"], "OpenStreetMap Nominatim")
+        self.assertEqual(candidate["city"], "Rome")
+        self.assertEqual(candidate["region"], "Lazio")
+        self.assertEqual(candidate["country"], "Italy")
+        self.assertEqual(candidate["country_code"], "IT")
         self.assertNotIn("test-agent", json.dumps(result))
+
+    def test_macau_country_code_is_normalized_without_stale_fallback(self):
+        candidate = normalize_nominatim_candidate({
+            "name": "University of Macau",
+            "display_name": "University of Macau, Avenida da Universidade, Taipa, Macau",
+            "lat": "22.1295",
+            "lon": "113.5453",
+            "address": {
+                "university": "University of Macau",
+                "city": "Macau",
+                "country": "Macau",
+                "country_code": "mo",
+            },
+        })
+        self.assertEqual(candidate["country_code"], "MO")
+        self.assertEqual(candidate["region"], "")
 
     def test_empty_overlong_and_malformed_queries_are_rejected(self):
         with self.assertRaises(GeocodingInputError):

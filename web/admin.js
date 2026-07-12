@@ -1,5 +1,8 @@
 "use strict";
 
+const NOMINATIM_REVIEW_NOTE =
+  "Coordinates selected from an OpenStreetMap Nominatim result and confirmed by the reviewer.";
+
 const state = {
   token: "",
   papers: [],
@@ -190,6 +193,8 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "location-mark-ambiguous",
     "location-ignore",
     "location-exclude",
+    "location-more-actions",
+    "location-more-actions-menu",
     "geocode-dialog",
     "geocode-form",
     "geocode-dialog-title",
@@ -363,6 +368,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["location-exclude"].addEventListener("click", () => markLocationReview("excluded"));
   elements["location-confirm-alias"].addEventListener("click", confirmLocationAlias);
   elements["location-save-metadata"].addEventListener("click", saveLocationMetadata);
+  elements["canonical-institution"].addEventListener("change", renderLocationActions);
   elements["location-geocode"].addEventListener("click", findInstitutionCoordinates);
   elements["geocode-cancel"].addEventListener("click", closeGeocodeDialog);
   elements["geocode-confirm"].addEventListener("click", confirmGeocodeCandidate);
@@ -371,8 +377,11 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   });
   elements["location-create-new"].addEventListener("click", () => {
     elements["canonical-institution"].value = "";
+    clearLocationFields();
+    renderLocationActions();
     elements["confirmed-institution"].focus();
   });
+  initializeLocationMoreActions();
   document.querySelectorAll("[data-console-target]").forEach((button) => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
   });
@@ -1422,6 +1431,7 @@ function selectLocationReview(queueId) {
   elements["location-editor-placeholder"].hidden = true;
   elements["location-form"].hidden = false;
   elements["location-form"].reset();
+  clearLocationFields();
   elements["location-queue-id"].value = queueId;
   const confirmed = row.confirmed_location || {};
   elements["confirmed-institution"].value =
@@ -1449,7 +1459,76 @@ function selectLocationReview(queueId) {
     text(confirmed.coordinate_source_url);
   elements["coordinate-review-note"].value = text(confirmed.review_note);
   elements["location-form-error"].hidden = true;
+  renderLocationActions();
   renderLocationContext(row);
+}
+
+function renderLocationActions() {
+  const hasCanonicalInstitution = Boolean(
+    elements["canonical-institution"].value.trim()
+  );
+  elements["location-confirm-alias"].hidden = !hasCanonicalInstitution;
+  elements["location-create-new"].hidden = hasCanonicalInstitution;
+}
+
+function positionLocationMoreActions() {
+  const disclosure = elements["location-more-actions"];
+  const menu = elements["location-more-actions-menu"];
+  if (!disclosure.open) return;
+
+  const trigger = disclosure.querySelector("summary");
+  const triggerRect = trigger.getBoundingClientRect();
+  const viewportWidth = window.visualViewport?.width || window.innerWidth;
+  const viewportHeight = window.visualViewport?.height || window.innerHeight;
+  const viewportMargin = 8;
+  const triggerGap = 6;
+  const menuWidth = Math.min(menu.offsetWidth, viewportWidth - viewportMargin * 2);
+  const menuHeight = menu.offsetHeight;
+  const spaceBelow = viewportHeight - triggerRect.bottom - viewportMargin - triggerGap;
+  const spaceAbove = triggerRect.top - viewportMargin - triggerGap;
+  const opensUpward = spaceBelow < menuHeight && spaceAbove > spaceBelow;
+  const availableHeight = Math.max(opensUpward ? spaceAbove : spaceBelow, 0);
+
+  menu.dataset.placement = opensUpward ? "top" : "bottom";
+  menu.style.width = `${menuWidth}px`;
+  menu.style.maxHeight = `${availableHeight}px`;
+  menu.style.left = `${Math.max(
+    viewportMargin,
+    Math.min(triggerRect.right - menuWidth, viewportWidth - menuWidth - viewportMargin)
+  )}px`;
+  menu.style.top = `${opensUpward
+    ? Math.max(viewportMargin, triggerRect.top - menuHeight - triggerGap)
+    : Math.min(triggerRect.bottom + triggerGap, viewportHeight - viewportMargin)}px`;
+}
+
+function initializeLocationMoreActions() {
+  const disclosure = elements["location-more-actions"];
+  const menu = elements["location-more-actions-menu"];
+  const trigger = disclosure.querySelector("summary");
+
+  disclosure.addEventListener("toggle", () => {
+    if (disclosure.open) positionLocationMoreActions();
+  });
+  disclosure.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && disclosure.open) {
+      event.preventDefault();
+      disclosure.open = false;
+      trigger.focus();
+    } else if (event.key === "ArrowDown" && document.activeElement === trigger) {
+      event.preventDefault();
+      disclosure.open = true;
+      positionLocationMoreActions();
+      menu.querySelector("button")?.focus();
+    }
+  });
+  menu.addEventListener("click", (event) => {
+    if (event.target.closest("button")) disclosure.open = false;
+  });
+  document.addEventListener("click", (event) => {
+    if (disclosure.open && !disclosure.contains(event.target)) disclosure.open = false;
+  });
+  window.addEventListener("resize", positionLocationMoreActions);
+  window.addEventListener("scroll", positionLocationMoreActions, { capture: true, passive: true });
 }
 
 function renderLocationContext(row) {
@@ -1523,6 +1602,39 @@ function geocodeAddress() {
   ].filter(Boolean).join(", ");
 }
 
+function clearLocationFields() {
+  [
+    "confirmed-city",
+    "confirmed-region",
+    "confirmed-country",
+    "confirmed-country-code",
+    "confirmed-lat",
+    "confirmed-lon",
+    "coordinate-source",
+    "coordinate-source-url",
+    "coordinate-review-note",
+  ].forEach((id) => {
+    elements[id].value = "";
+  });
+  state.selectedGeocodeCandidate = null;
+}
+
+function candidateDetail(label, value) {
+  const row = document.createElement("span");
+  const heading = document.createElement("strong");
+  heading.textContent = `${label}: `;
+  row.append(heading);
+  if (text(value)) {
+    row.append(text(value));
+  } else {
+    const missing = document.createElement("em");
+    missing.className = "geocode-missing";
+    missing.textContent = "Unavailable — manual review required";
+    row.append(missing);
+  }
+  return row;
+}
+
 function renderGeocodeCandidates(result) {
   const candidates = result.candidates || [];
   state.selectedGeocodeCandidate = null;
@@ -1545,18 +1657,28 @@ function renderGeocodeCandidates(result) {
     const content = document.createElement("span");
     const title = document.createElement("strong");
     title.textContent = text(candidate.institution_name || candidate.display_name);
-    const address = document.createElement("span");
-    address.textContent = text(candidate.address || candidate.display_name);
-    const coordinates = document.createElement("span");
+    const address = candidateDetail("Full address", candidate.address || candidate.display_name);
+    const coordinates = candidateDetail(
+      "Coordinates",
+      `${candidate.latitude}, ${candidate.longitude}`
+    );
     const confidence = candidate.confidence === null || candidate.confidence === undefined
       ? ""
       : ` · relevance ${Number(candidate.confidence).toFixed(3)}`;
-    coordinates.textContent = `${candidate.latitude}, ${candidate.longitude}${confidence} · ${text(candidate.provider)}`;
-    content.append(title, address, coordinates);
+    coordinates.append(`${confidence} · ${text(candidate.provider)}`);
+    content.append(
+      title,
+      address,
+      candidateDetail("City", candidate.city),
+      candidateDetail("Region/state", candidate.region),
+      candidateDetail("Country", candidate.country),
+      candidateDetail("ISO country code", candidate.country_code),
+      candidateDetail("Latitude", candidate.latitude),
+      candidateDetail("Longitude", candidate.longitude),
+      coordinates
+    );
     if (safeUrl(candidate.map_url)) {
-      const mapLink = linkValue(candidate.map_url, "Preview on OpenStreetMap");
-      mapLink.target = "_blank";
-      mapLink.rel = "noopener noreferrer";
+      const mapLink = linkValue("Open in OpenStreetMap", candidate.map_url);
       content.append(mapLink);
     }
     radio.addEventListener("change", () => {
@@ -1607,8 +1729,16 @@ function confirmGeocodeCandidate() {
   }
   elements["confirmed-lat"].value = candidate.latitude;
   elements["confirmed-lon"].value = candidate.longitude;
-  elements["coordinate-source"].value = text(candidate.provider);
+  elements["confirmed-city"].value = text(candidate.city);
+  elements["confirmed-region"].value = text(candidate.region);
+  elements["confirmed-country"].value = text(candidate.country);
+  elements["confirmed-country-code"].value = text(candidate.country_code).toUpperCase();
+  elements["coordinate-source"].value = "OpenStreetMap Nominatim";
   elements["coordinate-source-url"].value = safeUrl(candidate.map_url) ? candidate.map_url : "";
+  const reviewNote = elements["coordinate-review-note"];
+  if (!reviewNote.value.trim() || reviewNote.value.trim() === NOMINATIM_REVIEW_NOTE) {
+    reviewNote.value = NOMINATIM_REVIEW_NOTE;
+  }
   closeGeocodeDialog();
 }
 

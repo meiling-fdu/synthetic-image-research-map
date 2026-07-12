@@ -1073,7 +1073,7 @@ button:focus-visible {
   display: grid;
   grid-template-columns: minmax(18rem, 0.8fr) minmax(24rem, 1.6fr);
   min-height: 32rem;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid var(--line);
   border-radius: 11px;
 }
@@ -1170,6 +1170,21 @@ button:focus-visible {
   flex-wrap: wrap;
   gap: 0.55rem;
   margin-top: 0.8rem;
+}
+
+.location-more-actions {
+  margin-left: auto;
+}
+
+.location-more-actions .overflow-menu-items {
+  position: fixed;
+  z-index: 2000;
+  top: auto;
+  right: auto;
+  left: auto;
+  max-width: calc(100vw - 1rem);
+  margin: 0;
+  overflow-y: auto;
 }
 
 .openalex-search-form,
@@ -1682,6 +1697,11 @@ dialog::backdrop {
   display: grid;
   gap: 0.25rem;
   font-size: 0.8rem;
+}
+
+.geocode-missing {
+  color: var(--red);
+  font-style: normal;
 }
 
 #scope-form label,
