@@ -284,7 +284,7 @@ process.stdout.write(JSON.stringify({
             "Location", "Publication type",
         ):
             self.assertIn(metadata, details_body)
-        self.assertIn("paperExternalLinks(record, true)", details_body)
+        self.assertIn("paperExternalLinks(record)", details_body)
 
     def test_connection_lines_use_visible_slate_style(self):
         app_source = (REPOSITORY / "web/app.js").read_text()

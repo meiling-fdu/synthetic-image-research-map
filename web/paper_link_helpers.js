@@ -95,5 +95,85 @@
     }).map(({ canonicalTarget, ...candidate }) => candidate);
   }
 
-  return { canonicalPaperLinkTarget, deduplicatePaperLinks };
+  function safeHttpUrl(value) {
+    const text = String(value || "").trim();
+    if (!text) {
+      return "";
+    }
+    try {
+      const url = new URL(text);
+      return ["http:", "https:"].includes(url.protocol) && url.hostname
+        ? url.href
+        : "";
+    } catch {
+      return "";
+    }
+  }
+
+  function normalizedDoi(value) {
+    const doi = String(value || "")
+      .trim()
+      .replace(/^doi:\s*/i, "")
+      .replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, "")
+      .trim();
+    return /^10\.\d{4,9}\/\S+$/i.test(doi) ? doi : "";
+  }
+
+  function firstOfficialUrl(values) {
+    for (const value of values) {
+      const url = safeHttpUrl(value);
+      const target = canonicalPaperLinkTarget(url);
+      if (
+        url
+        && !target.startsWith("arxiv:")
+        && !target.startsWith("doi:")
+        && !target.startsWith("openalex:")
+      ) {
+        return url;
+      }
+    }
+    return "";
+  }
+
+  function publishedVersionUrl(record) {
+    const publisherUrl = firstOfficialUrl([
+      record.publisher_url,
+      record.published_url,
+      record.official_publication_url,
+      record.paper_url,
+    ]);
+    if (publisherUrl) {
+      return publisherUrl;
+    }
+
+    for (const value of [record.doi, record.doi_url]) {
+      const doi = normalizedDoi(value);
+      if (doi && !doi.toLocaleLowerCase().startsWith("10.48550/arxiv.")) {
+        return safeHttpUrl(`https://doi.org/${doi}`);
+      }
+    }
+
+    return firstOfficialUrl([
+      record.venue_url,
+      record.proceedings_url,
+      record.landing_page_url,
+      record.primary_url,
+      record.url,
+    ]);
+  }
+
+  function paperVersionLinks(record, arxivUrl = "") {
+    return deduplicatePaperLinks([
+      { label: "Published version", url: publishedVersionUrl(record) },
+      { label: "arXiv version", url: safeHttpUrl(arxivUrl) },
+      { label: "OpenAlex", url: safeHttpUrl(record.openalex_url) },
+    ]);
+  }
+
+  return {
+    canonicalPaperLinkTarget,
+    deduplicatePaperLinks,
+    paperVersionLinks,
+    publishedVersionUrl,
+  };
 }));

@@ -72,7 +72,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-public-overview', self.html)
-        self.assertIn('app.js?v=20260713-automatic-institution-hierarchy', self.html)
+        self.assertIn('app.js?v=20260714-paper-version-links', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)

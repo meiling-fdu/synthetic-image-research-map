@@ -20,21 +20,63 @@ Run `python3 scripts/audit_institution_consistency.py` to regenerate
 `data/manual/institution_consistency_audit.csv`, then run
 `python3 scripts/sync_institution_review_queue.py` to import its findings into
 `data/curated/institution_review_queue.csv`. Full refresh performs both steps.
+The sync also migrates legacy terminal statuses to `archived`, archives stale
+findings tied to excluded or replaced mappings, and preserves their resolution
+notes and timestamps. Institution Cleanup only treats `open` rows as actionable.
 The **Institution Cleanup** Admin section reads only the persistent curated
 queue. The generated audit CSV is reporting-only.
+
+The default table contains one review case per paper-author pair, not one row
+per finding. Opening a case shows all current and suggested institutions, raw
+affiliation evidence, every child finding, normalized mapping provenance, and
+the risk explanation. Filters cover severity, open/resolved/ignored status,
+provenance, issue type, and paper/author/institution text. Original findings
+remain in the queue for audit history.
 
 Accept Suggestion updates the linked author-institution mapping through the
 protected mapping API and records the resolution on the queue row. Ignore and
 Mark Manually Resolved retain the finding and its evidence without changing a
-mapping. Replace Mapping opens the existing mapping editor. Compatible
+mapping. Keep Multiple Affiliations resolves the grouped case without removing
+supported mappings. Replace Mapping opens the existing mapping editor; Add
+Alias and Set Parent Institution open institution management. Compatible
 suggestions may be selected and accepted as one transactional batch; any
 failed or conflicting fix rolls back the entire batch.
 
-Unresolved high-severity findings fail curated validation and therefore block
-Publish Changes. Medium findings remain warnings; low findings are report-only.
-Ignored or otherwise resolved queue findings do not block publishing. Ignored
-institutions and explicitly confirmed aliases, parents, and merges do not
-generate blockers.
+Resolution decisions use an inline form showing the issue, paper, author,
+current institution, and selected action. Presets cover a correct existing
+mapping, alias/name variation, parent-child relationships, confirmed multiple
+affiliations, and custom notes. Notes are optional for manual resolution,
+ignore, and keep-multiple decisions; an empty note receives a stable default
+audit explanation. Mapping replacement and institution merge explanations
+remain mandatory. Multiple compatible review cases may be selected and marked
+manually resolved together; each child queue row retains the same generated
+batch note, reviewer, action, and timestamp.
+
+Use **View Evidence** to inspect a case without leaving Institution Cleanup.
+The read-only dialog combines paper and author metadata, current mapping
+IDs/status/provenance, raw affiliations, parsed suggestions, source and
+confidence fields, canonical aliases, confirmed parent/child relationships,
+the audit explanation, and risk factors. Suspicious replacements include a
+before/evidence/after comparison. Resolution shortcuts close the evidence
+dialog and enter the existing protected resolution, mapping, alias, or parent
+workflow; opening the dialog itself never writes curated data.
+
+After an author-institution mapping is excluded or retargeted, Admin mapping
+writes immediately reconcile linked cleanup findings. The old queue row is
+marked non-current and retained as historical audit evidence; a later queue
+sync cannot reopen it from a stale report. Cleanup cases derive **Current
+active institutions** only from mappings with `active` or `needs_review`
+status, and list excluded or superseded mappings separately under
+**Historical/excluded institutions**. Curated validation applies the same
+mapping-status guard so an excluded mapping cannot recreate a publish blocker.
+
+Only unresolved high-severity corruption findings (`confirmed_mapping_changed`
+and `suspicious_replacement`) fail curated validation and block Publish
+Changes. Other high findings are review cases, medium findings remain warnings,
+and low findings are report-only. Ignored or otherwise resolved queue findings
+do not block publishing. Trusted mappings are not challenged for ordinary name
+variation; ignored institutions and explicitly confirmed aliases, parents, and
+merges do not generate blockers.
 
 This runbook covers the local **Interactive Curation Console**. Run all commands from the repository root. Ordinary edit and save actions write durable human decisions locally and never stage, commit, or push them. Publishing is a separate, explicit, confirmed action.
 

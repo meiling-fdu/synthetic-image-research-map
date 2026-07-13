@@ -33,6 +33,7 @@ DEFAULT_REPORT_PATH = REPOSITORY_ROOT / "data/manual/institution_consistency_aud
 
 REPORT_COLUMNS = (
     "audit_id",
+    "review_group_id",
     "mapping_id",
     "paper_id",
     "paper_title",
@@ -45,14 +46,23 @@ REPORT_COLUMNS = (
     "raw_affiliation",
     "suggested_canonical_institution",
     "suggested_institution_id",
+    "provenance",
     "severity",
     "issue_type",
+    "classification",
+    "is_blocking",
     "reason",
     "recommended_action",
     "resolution_status",
 )
 
 SEVERITY_ORDER = {"high": 0, "medium": 1, "low": 2}
+PROVENANCE_VALUES = {
+    "manually_confirmed", "admin_accepted", "curated_import",
+    "automatic_import", "unresolved",
+}
+TRUSTED_PROVENANCE = {"manually_confirmed", "admin_accepted", "curated_import"}
+CORRUPTION_ISSUES = {"confirmed_mapping_changed", "suspicious_replacement"}
 GENERIC_TOKENS = {
     "a", "an", "and", "at", "corporation", "department", "for", "group",
     "inc", "institute", "institution", "laboratory", "lab", "of", "research",
@@ -114,6 +124,52 @@ def names_semantically_related(left: Any, right: Any) -> bool:
     ) or (
         len(right_compact) <= 12 and right_compact == institution_acronym(left)
     )
+
+
+def mapping_provenance(row: Mapping[str, Any]) -> str:
+    """Map legacy free-text provenance onto the controlled audit vocabulary."""
+    explicit = clean(row.get("mapping_provenance") or row.get("provenance"))
+    normalized = normalize_institution(explicit).replace(" ", "_")
+    if normalized in PROVENANCE_VALUES:
+        return normalized
+    source = normalize_institution(row.get("provenance_source"))
+    if source.replace(" ", "_") in PROVENANCE_VALUES:
+        return source.replace(" ", "_")
+    if clean(row.get("mapping_status")) == "needs_review":
+        return "unresolved"
+    if any(token in source for token in ("openalex", "automatic", "pipeline", "api import")):
+        return "automatic_import"
+    if any(token in source for token in ("admin accepted", "cleanup accepted")):
+        return "admin_accepted"
+    if any(token in source for token in ("manual", "curator", "confirmed")):
+        return "manually_confirmed"
+    return "curated_import" if clean(row.get("mapping_id")) else "unresolved"
+
+
+def review_group_id(row: Mapping[str, Any], author: Any) -> str:
+    identity = "|".join((_paper_key(row), normalize_institution(author)))
+    return "institution-review-group:" + hashlib.sha256(identity.encode()).hexdigest()[:20]
+
+
+def finding_blocks_publish(finding: Mapping[str, Any]) -> bool:
+    """Only strong corruption findings are publish blockers."""
+    if clean(finding.get("resolution_status")) == "resolved":
+        return False
+    issue_type = clean(finding.get("issue_type"))
+    if issue_type in CORRUPTION_ISSUES:
+        return clean(finding.get("severity")) == "high"
+    return False
+
+
+def _classification(issue_type: str) -> str:
+    return {
+        "alias_missing": "alias issue",
+        "parent_child_inconsistency": "parent-child issue",
+        "author_institution_conflict": "possible multiple affiliation",
+        "confirmed_mapping_changed": "true conflict",
+        "suspicious_replacement": "true conflict",
+        "affiliation_mismatch": "true conflict",
+    }.get(issue_type, "institution review")
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
@@ -181,6 +237,24 @@ class InstitutionResolver:
 
     def canonical_name(self, institution_id: Any) -> str:
         return clean(self.entities.get(clean(institution_id), {}).get("canonical_name"))
+
+    def organization_family(self, institution_id: Any) -> str:
+        row = self.entities.get(clean(institution_id), {})
+        institution_type = normalize_institution(row.get("institution_type"))
+        name = normalize_institution(row.get("canonical_name"))
+        if institution_type in {"company", "corporation", "industry"}:
+            return "commercial"
+        if institution_type in {"university", "research institute", "laboratory", "government"}:
+            return "research"
+        commercial_tokens = {
+            "amazon", "apple", "google", "meta", "microsoft", "nvidia",
+            "corporation", "company", "inc", "ltd", "llc",
+        }
+        if set(name.split()) & commercial_tokens:
+            return "commercial"
+        if set(name.split()) & {"university", "institute", "laboratory", "academy", "college", "cnrs", "research"}:
+            return "research"
+        return "unknown"
 
     def ancestors(self, institution_id: Any) -> set[str]:
         result: set[str] = set()
@@ -285,8 +359,10 @@ def _finding(
         _paper_key(mapping), normalize_institution(author), current_id,
         issue_type, clean(suggested_id), normalize_institution(mapping.get("raw_affiliation")),
     ))
-    return {
+    provenance = mapping_provenance(mapping)
+    finding = {
         "audit_id": "institution-consistency:" + hashlib.sha256(identity.encode()).hexdigest()[:20],
+        "review_group_id": review_group_id(mapping, author),
         "mapping_id": clean(mapping.get("mapping_id")),
         "paper_id": clean(mapping.get("paper_id")),
         "paper_title": clean(mapping.get("title")),
@@ -299,12 +375,27 @@ def _finding(
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
         "suggested_canonical_institution": resolver.canonical_name(suggested_id),
         "suggested_institution_id": clean(suggested_id),
+        "provenance": provenance,
         "severity": severity,
         "issue_type": issue_type,
+        "classification": _classification(issue_type),
+        "is_blocking": "false",
         "reason": reason,
         "recommended_action": recommended_action,
         "resolution_status": "unresolved",
     }
+    finding["is_blocking"] = "true" if finding_blocks_publish(finding) else "false"
+    return finding
+
+
+def _change_metadata(value: Any) -> dict[str, str]:
+    """Parse key=value metadata stored in an audit confirmation field."""
+    result: dict[str, str] = {}
+    for part in clean(value).split(";"):
+        key, separator, item = part.partition("=")
+        if separator and clean(key):
+            result[clean(key)] = clean(item)
+    return result
 
 
 def audit_institution_consistency(
@@ -322,6 +413,7 @@ def audit_institution_consistency(
 
     for mapping in active:
         current_id = clean(mapping.get("institution_id"))
+        provenance = mapping_provenance(mapping)
         evidence = _evidence(mapping)
         current_matches = resolver.evidence_matches(current_id, evidence) or resolver.name_matches_text(mapping.get("institution"), evidence)
         if not evidence or current_matches:
@@ -331,26 +423,39 @@ def audit_institution_consistency(
             ]
             if specific_children:
                 for author in _authors(mapping):
-                    findings.append(_finding(mapping, author, severity="low", issue_type="parent_child_inconsistency", reason="Affiliation evidence names a confirmed child institution while the mapping points to its parent.", recommended_action="Review whether the mapping should use the more specific child institution.", suggested_id=specific_children[0], resolver=resolver))
+                    findings.append(_finding(mapping, author, severity="low", issue_type="parent_child_inconsistency", reason="Why flagged: affiliation evidence names a confirmed child institution while the mapping points to its parent; the relationship is compatible and is not a conflict.", recommended_action="Review whether the mapping should use the more specific child institution.", suggested_id=specific_children[0], resolver=resolver))
             # A non-literal but token-equivalent form should be registered as an alias.
             raw = clean(mapping.get("raw_affiliation"))
             canonical = resolver.canonical_name(current_id)
             literal_names = resolver.names_by_id.get(current_id, [])
             if raw and canonical and not any(normalize_institution(name) in normalize_institution(raw) for name in literal_names) and resolver.name_matches_text(canonical, raw):
                 for author in _authors(mapping):
-                    findings.append(_finding(mapping, author, severity="low", issue_type="alias_missing", reason="Affiliation is semantically compatible but uses an unregistered institution-name variant.", recommended_action="Review and add alias if this wording recurs.", resolver=resolver))
+                    findings.append(_finding(mapping, author, severity="low", issue_type="alias_missing", reason="Why flagged: mapping differs only by an institution-name variant; the names are semantically compatible but the alias is not registered.", recommended_action="Review and add alias if this wording recurs.", resolver=resolver))
             continue
         candidates = resolver.candidates(evidence)
         unrelated = [(score, identifier) for score, identifier in candidates if not resolver.related_ids(current_id, identifier)]
         top_score = unrelated[0][0] if unrelated else 0.0
         top_candidates = [identifier for score, identifier in unrelated if score == top_score]
         suggested_id = top_candidates[0] if top_score >= 0.9 and len(top_candidates) == 1 else ""
-        issue_type = "suspicious_replacement" if suggested_id else "affiliation_mismatch"
-        severity = "high" if suggested_id else "medium"
+        issue_type = "suspicious_replacement" if suggested_id else "author_institution_conflict"
+        # A strong, unrelated institution match is contradictory evidence even
+        # for a trusted mapping. Weak naming differences never become high for
+        # a curator-confirmed mapping.
+        contradictory_families = bool(suggested_id) and {
+            resolver.organization_family(current_id),
+            resolver.organization_family(suggested_id),
+        } == {"commercial", "research"}
+        severity = (
+            "high" if contradictory_families else
+            "medium" if suggested_id else
+            "low" if provenance in TRUSTED_PROVENANCE else
+            "medium"
+        )
         reason = (
-            f"Raw affiliation strongly matches {resolver.canonical_name(suggested_id)!r}, not the current institution; no alias, parent, or merge relationship permits the replacement."
+            f"Why flagged: raw affiliation strongly matches {resolver.canonical_name(suggested_id)!r}, not the current institution; organization names have low semantic similarity and no alias, parent, or merge relationship."
+            + (" The evidence crosses research and commercial organization families." if contradictory_families else " Both organizations are research-sector entities, so this remains a review case rather than presumed corruption.")
             if suggested_id else
-            "Current institution and its aliases/parents have no semantic relation to the preserved affiliation evidence."
+            "Why flagged: current institution has weak compatibility with the preserved affiliation evidence, but no strong contradictory institution was identified."
         )
         for author in _authors(mapping):
             findings.append(_finding(mapping, author, severity=severity, issue_type=issue_type, reason=reason, recommended_action="Replace mapping after reviewing the original affiliation." if suggested_id else "Verify affiliation evidence and canonical institution.", suggested_id=suggested_id, resolver=resolver))
@@ -374,7 +479,13 @@ def audit_institution_consistency(
                 if normalize_institution(_evidence(left)) != normalize_institution(_evidence(right)):
                     continue
                 author = next((name for name in _authors(left) if normalize_institution(name) == normalized_author), normalized_author)
-                findings.append(_finding(left, author, severity="high", issue_type="author_institution_conflict", reason=f"Same author and paper have unrelated canonical institutions: {clean(left.get('institution'))!r} and {clean(right.get('institution'))!r}; preserved evidence does not establish two compatible affiliations.", recommended_action="Review both mappings and replace or exclude the incorrect one.", suggested_id=right_id if right_ok and not left_ok else "", resolver=resolver))
+                collision_severity = (
+                    "low"
+                    if mapping_provenance(left) in TRUSTED_PROVENANCE
+                    and mapping_provenance(right) in TRUSTED_PROVENANCE
+                    else "medium"
+                )
+                findings.append(_finding(left, author, severity=collision_severity, issue_type="author_institution_conflict", reason=f"Why flagged: same author and paper have unrelated canonical institutions {clean(left.get('institution'))!r} and {clean(right.get('institution'))!r}; this may be a legitimate multiple affiliation, so it is grouped for review rather than treated as corruption.", recommended_action="Review the grouped evidence and keep multiple affiliations when both are supported.", suggested_id=right_id if right_ok and not left_ok else "", resolver=resolver))
 
     signatures: dict[tuple[str, ...], list[str]] = defaultdict(list)
     for identifier in resolver.active_ids:
@@ -386,7 +497,7 @@ def audit_institution_consistency(
             continue
         first = resolver.entities[identifiers[0]]
         placeholder = {"institution": first.get("canonical_name"), "institution_id": identifiers[0]}
-        findings.append(_finding(placeholder, "", severity="low", issue_type="duplicate_institution", reason="Multiple active institution entities have semantically equivalent canonical names.", recommended_action="Review aliases and merge only with explicit confirmation.", suggested_id=identifiers[1], resolver=resolver))
+        findings.append(_finding(placeholder, "", severity="low", issue_type="duplicate_institution", reason="Why flagged: multiple active institution entities have semantically equivalent canonical names.", recommended_action="Review aliases and merge only with explicit confirmation.", suggested_id=identifiers[1], resolver=resolver))
 
     # Public markers must not contradict an explicit mapping for the same paper
     # and exact institution-author set.
@@ -401,7 +512,47 @@ def audit_institution_consistency(
         actual = clean(record.get("institution_id")) or stable_institution_id(record.get("institution"))
         if expected and all(not resolver.related_ids(actual, target) for target in expected):
             for author in _authors(record):
-                findings.append(_finding(record, author, severity="high", issue_type="suspicious_replacement", reason="Public export institution contradicts the explicit curated mapping for the same paper and authors.", recommended_action="Regenerate the public export and inspect institution resolution.", suggested_id=sorted(expected)[0], resolver=resolver))
+                findings.append(_finding(record, author, severity="high", issue_type="suspicious_replacement", reason="Why flagged: public export institution contradicts the explicit curated mapping for the same paper and authors; no compatible alias or parent relationship exists.", recommended_action="Regenerate the public export and inspect institution resolution.", suggested_id=sorted(expected)[0], resolver=resolver))
+
+    # Protected mapping-change events preserve the before/after institution IDs.
+    # Location edits never enter this log and therefore cannot trigger findings.
+    mappings_by_id = {clean(row.get("mapping_id")): row for row in mappings}
+    for event in merge_audits:
+        if clean(event.get("action")) != "confirmed_mapping_changed":
+            continue
+        metadata = _change_metadata(event.get("confirmation_text"))
+        mapping = mappings_by_id.get(metadata.get("mapping_id", ""), {})
+        if not mapping:
+            mapping = {
+                "mapping_id": metadata.get("mapping_id", ""),
+                "paper_id": metadata.get("paper_id", ""),
+                "title": metadata.get("paper_title", ""),
+                "institution_id": clean(event.get("institution_id")),
+                "institution": metadata.get("new_institution", ""),
+                "institution_authors": clean(event.get("affected_authors")),
+                "provenance": "manually_confirmed",
+            }
+        source = metadata.get("change_source", "unknown")
+        if source in {"institution_cleanup:accept_suggestion"}:
+            continue
+        for author in _authors(mapping) or [clean(event.get("affected_authors"))]:
+            finding = _finding(
+                mapping,
+                author,
+                severity="high",
+                issue_type="confirmed_mapping_changed",
+                reason=(
+                    "Why flagged: a trusted mapping changed from "
+                    f"{metadata.get('previous_institution') or clean(event.get('previous_institution_id'))!r} "
+                    f"to {metadata.get('new_institution') or clean(event.get('institution_id'))!r}; "
+                    f"change source={source}, user/action={clean(event.get('created_by')) or 'unknown'}, "
+                    f"timestamp={clean(event.get('created_at')) or 'unknown'}."
+                ),
+                recommended_action="Confirm that this institution replacement was intentional and evidence-backed.",
+                resolver=resolver,
+            )
+            finding["audit_id"] = clean(event.get("audit_id")) or finding["audit_id"]
+            findings.append(finding)
 
     resolved_targets = {
         clean(row.get("target_type"))
@@ -414,6 +565,7 @@ def audit_institution_consistency(
         target = f"institution_audit:{finding['audit_id']}"
         if target in resolved_targets:
             finding["resolution_status"] = "resolved"
+            finding["is_blocking"] = "false"
         unique[finding["audit_id"]] = finding
     return sorted(unique.values(), key=lambda row: (SEVERITY_ORDER[row["severity"]], row["paper_title"].casefold(), row["author"].casefold(), row["issue_type"]))
 
@@ -448,7 +600,7 @@ def run_repository_audit(**paths: Any) -> list[dict[str, str]]:
 
 
 def unresolved_high(findings: Iterable[Mapping[str, Any]]) -> list[Mapping[str, Any]]:
-    return [row for row in findings if clean(row.get("severity")) == "high" and clean(row.get("resolution_status")) != "resolved"]
+    return [row for row in findings if finding_blocks_publish(row)]
 
 
 def read_audit_report(path: Path = DEFAULT_REPORT_PATH) -> list[dict[str, str]]:

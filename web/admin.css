@@ -1586,6 +1586,88 @@ a {
   min-width: 68rem;
 }
 
+.mapping-group-title {
+  margin: 1rem 0 0.15rem;
+  font-size: 0.9rem;
+}
+
+.mapping-group-help,
+.historical-mappings-help {
+  margin: 0 0 0.7rem;
+  font-size: 0.78rem;
+}
+
+.historical-mappings {
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f7f7f4;
+}
+
+.historical-mappings summary {
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.historical-mappings[open] summary {
+  margin-bottom: 0.45rem;
+}
+
+.historical-mapping-row {
+  color: var(--muted);
+  background: #fafaf8;
+}
+
+.historical-mapping-labels {
+  min-width: 11rem;
+}
+
+.historical-mapping-label {
+  display: block;
+  width: fit-content;
+  margin: 0 0 0.3rem;
+  padding: 0.16rem 0.38rem;
+  border: 1px solid #cabfba;
+  border-radius: 999px;
+  color: #6d3e36;
+  background: #fff4f1;
+  font-size: 0.66rem;
+  font-weight: 800;
+}
+
+.historical-mapping-availability {
+  max-width: 12rem;
+  color: #6d3e36;
+  font-weight: 750;
+}
+
+.archived-findings {
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #f7f7f4;
+}
+
+.archived-findings summary {
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.archived-findings > p {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.archived-finding-row {
+  color: var(--muted);
+  background: #fafaf8;
+}
+
 .mapping-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1658,7 +1740,8 @@ dialog::backdrop {
 
 #scope-form,
 #mapping-form,
-#geocode-form {
+#geocode-form,
+#institution-resolution-form {
   display: grid;
   gap: 0.9rem;
   padding: 1.4rem;
@@ -1666,11 +1749,69 @@ dialog::backdrop {
 
 #scope-form h2,
 #mapping-form h2,
-#geocode-form h2 {
+#geocode-form h2,
+#institution-resolution-form h2,
+.institution-evidence-panel h2 {
   margin-bottom: 0;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.8rem;
   font-weight: 500;
+}
+
+.institution-evidence-dialog {
+  width: min(72rem, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+}
+
+.institution-evidence-panel {
+  display: grid;
+  gap: 1rem;
+  max-height: calc(100vh - 2rem);
+  padding: 1.4rem;
+  overflow: auto;
+}
+
+.institution-evidence-panel .section-heading {
+  position: sticky;
+  top: -1.4rem;
+  z-index: 1;
+  padding: 1rem 0;
+  background: var(--panel);
+}
+
+.evidence-section {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.evidence-section h3,
+.evidence-section h4 {
+  margin: 0 0 0.65rem;
+}
+
+.evidence-list {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.evidence-raw {
+  margin: 0.5rem 0;
+  padding: 0.8rem;
+  border-left: 3px solid var(--blue);
+  white-space: pre-wrap;
+  background: var(--blue-soft);
+}
+
+.evidence-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 700px) {
+  .evidence-comparison { grid-template-columns: 1fr; }
 }
 
 .geocode-action-row {

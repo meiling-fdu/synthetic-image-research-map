@@ -82,20 +82,23 @@ def apply_cleanup_action(
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    institution_audit_path: Path | None = None,
     map_records: Sequence[Mapping[str, Any]] = (),
 ) -> dict[str, Any]:
     """Resolve queue rows, updating mappings first when the action requires it."""
     note = clean(review_note)
-    if not note:
-        raise InstitutionReviewQueueError("review note is required")
     selected = _selected_open(queue_ids, queue_path)
-    if action in {"ignore", "manually_resolved"}:
+    if action in {"ignore", "manually_resolved", "keep_multiple_affiliations"}:
         resolved = resolve_rows(
             queue_ids, action, note, resolved_by=resolved_by, path=queue_path
         )
         return {"resolved": resolved, "mappings": []}
     if action not in {"accept_suggestion", "replace_mapping"}:
         raise InstitutionReviewQueueError("unsupported institution cleanup action")
+    if not note:
+        raise InstitutionReviewQueueError(
+            "review note is required for mapping replacement actions"
+        )
     if not confirmed:
         raise InstitutionReviewQueueError("mapping changes require explicit confirmation")
 
@@ -120,7 +123,10 @@ def apply_cleanup_action(
                 f"suggested institution is not active: {institution_id}"
             )
 
-    snapshots = _snapshot((mappings_path, location_review_path, queue_path))
+    snapshot_paths = [mappings_path, location_review_path, queue_path]
+    if institution_audit_path is not None:
+        snapshot_paths.append(institution_audit_path)
+    snapshots = _snapshot(snapshot_paths)
     changed: list[dict[str, Any]] = []
     try:
         for mapping_id, institution_id in fixes.items():
@@ -137,6 +143,7 @@ def apply_cleanup_action(
                 "institution_country": "",
                 "institution_latitude": "",
                 "institution_longitude": "",
+                "provenance_source": "admin_accepted",
                 "review_note": f"{prior_note} | {audit_note}" if prior_note else audit_note,
             })
             result = update_mapping(
@@ -146,6 +153,9 @@ def apply_cleanup_action(
                 map_records=map_records,
                 mappings_path=mappings_path,
                 location_review_path=location_review_path,
+                institution_audit_path=institution_audit_path,
+                change_source=f"institution_cleanup:{action}",
+                changed_by=resolved_by,
             )
             changed.append(result)
         resolved = resolve_rows(

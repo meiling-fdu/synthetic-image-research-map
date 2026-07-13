@@ -17,7 +17,7 @@ def entity(identifier, name, *, status="active", parent=""):
     }
 
 
-def mapping(identifier, institution, raw, author="Example Author", paper="paper:1"):
+def mapping(identifier, institution, raw, author="Example Author", paper="paper:1", provenance="curated_import"):
     return {
         "mapping_id": f"mapping:{identifier}:{author}",
         "paper_id": paper,
@@ -27,6 +27,7 @@ def mapping(identifier, institution, raw, author="Example Author", paper="paper:
         "institution": institution,
         "institution_authors": author,
         "raw_affiliation": raw,
+        "provenance_source": provenance,
         "mapping_status": "active",
     }
 
@@ -70,6 +71,28 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
         self.assertTrue(unresolved_high(findings))
         self.assertEqual(findings[0]["suggested_institution_id"], "institution:naples")
 
+    def test_automatic_university_to_amazon_mismatch_is_high(self):
+        findings = self.audit([mapping(
+            "institution:amazon", "Amazon", "University Federico II of Naples",
+            provenance="automatic_import",
+        )])
+        finding = next(row for row in findings if row["issue_type"] == "suspicious_replacement")
+        self.assertEqual(finding["severity"], "high")
+        self.assertEqual(finding["provenance"], "automatic_import")
+
+    def test_university_to_research_institute_mismatch_is_medium(self):
+        institute = entity("institution:institute", "Example Research Institute")
+        findings = audit_institution_consistency(
+            [mapping(
+                "institution:naples", "University of Naples Federico II",
+                "Example Research Institute", provenance="automatic_import",
+            )],
+            [*self.entities, institute], self.aliases,
+        )
+        finding = next(row for row in findings if row["suggested_institution_id"] == "institution:institute")
+        self.assertEqual(finding["severity"], "medium")
+        self.assertEqual(finding["is_blocking"], "false")
+
     def test_amazon_prime_video_affiliation_is_compatible(self):
         findings = self.audit([mapping(
             "institution:prime", "Amazon Prime Video",
@@ -95,6 +118,15 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
         self.assertFalse(unresolved_high(findings))
         self.assertFalse(any(row["issue_type"] == "affiliation_mismatch" for row in findings))
 
+    def test_cnrs_and_gipsa_parent_child_relationship_is_not_blocking(self):
+        cnrs = entity("institution:cnrs", "CNRS")
+        gipsa = entity("institution:gipsa", "GIPSA-Lab", parent="institution:cnrs")
+        findings = audit_institution_consistency(
+            [mapping("institution:gipsa", "GIPSA-Lab", "CNRS, GIPSA-Lab, Université Grenoble Alpes")],
+            [*self.entities, cnrs, gipsa], self.aliases,
+        )
+        self.assertFalse(unresolved_high(findings))
+
     def test_ignored_institution_does_not_block(self):
         ignored = entity("institution:ignored", "Wrong Institution", status="ignored")
         findings = audit_institution_consistency(
@@ -103,13 +135,42 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
         )
         self.assertFalse(unresolved_high(findings))
 
-    def test_same_author_unrelated_mapping_is_high_collision(self):
+    def test_same_author_unrelated_mapping_is_grouped_nonblocking_collision(self):
         findings = self.audit([
             mapping("institution:naples", "University of Naples Federico II", "University Federico II of Naples", author="Luisa Verdoliva"),
             mapping("institution:amazon", "Amazon", "University Federico II of Naples", author="Luisa Verdoliva"),
         ])
         collision = next(row for row in findings if row["issue_type"] == "author_institution_conflict")
-        self.assertEqual(collision["severity"], "high")
+        self.assertEqual(collision["severity"], "low")
+        self.assertEqual(collision["classification"], "possible multiple affiliation")
+        self.assertEqual(collision["is_blocking"], "false")
+
+    def test_manually_confirmed_alias_variation_is_not_high(self):
+        findings = self.audit([mapping(
+            "institution:naples", "University of Naples Federico II",
+            "Department of Electrical Engineering, University Federico II of Naples",
+            provenance="manually_confirmed",
+        )])
+        self.assertFalse(unresolved_high(findings))
+
+    def test_confirmed_mapping_change_event_is_high(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
+            author="Symeon Papadopoulos", provenance="manually_confirmed",
+        )
+        findings = self.audit([current], merge_audits=[{
+            "audit_id": "mapping-change:1",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Symeon Papadopoulos",
+            "confirmation_text": "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; previous_institution=Centre for Research and Technology Hellas; new_institution=Amazon; change_source=automatic_import",
+            "created_at": "2026-07-14T00:00:00Z",
+            "created_by": "import-job",
+        }])
+        changed = next(row for row in findings if row["issue_type"] == "confirmed_mapping_changed")
+        self.assertEqual(changed["severity"], "high")
+        self.assertEqual(changed["is_blocking"], "true")
 
     def test_explicit_merge_allows_former_name(self):
         old = entity("institution:old", "Old Research Center", status="merged")
@@ -149,6 +210,24 @@ class InstitutionConsistencyIntegrationTests(unittest.TestCase):
         for label in ("Accept suggestion", "Replace mapping", "Ignore finding", "Open institution editor", "Mark manually resolved"):
             self.assertIn(label, javascript)
         self.assertIn("Accept selected fixes", html)
+        self.assertIn('id="institution-resolution-dialog"', html)
+        self.assertIn("Existing curated mapping is correct", html)
+        self.assertIn("Alias/name variation only", html)
+        self.assertIn("Parent-child relationship", html)
+        self.assertIn("Multiple affiliation confirmed", html)
+        self.assertIn("Resolve selected cases", html)
+        self.assertNotIn('window.prompt(`${labels[action] || action} review note:`)', javascript)
+        self.assertIn('id="institution-evidence-dialog"', html)
+        self.assertIn("View evidence", javascript)
+        self.assertIn("Provenance source", javascript)
+        self.assertIn("Raw affiliation text", javascript)
+        self.assertIn("Institution relationships", javascript)
+        self.assertIn("Suspicious replacement comparison", javascript)
+        self.assertIn("resolveInstitutionAudit(item, action)", javascript)
+        self.assertIn('openMappingDialog("replace")', javascript)
+        self.assertIn("Current active institutions", html)
+        self.assertIn("Historical/excluded institutions", html)
+        self.assertIn("Historical/excluded mappings", javascript)
 
     def test_full_refresh_generates_audit_before_curated_validation(self):
         from scripts.admin_workflows import ALLOWED_WORKFLOWS, KNOWN_WORKFLOW_OUTPUTS
@@ -174,7 +253,7 @@ class InstitutionConsistencyIntegrationTests(unittest.TestCase):
             "issue_type": "affiliation_mismatch", "author": "Example",
             "paper_title": "Example", "reason": "Review requested",
         }, {
-            "severity": "high", "finding_status": "ignored", "is_current": "true",
+            "severity": "high", "finding_status": "archived", "is_current": "true",
             "issue_type": "author_institution_conflict", "author": "Resolved",
             "paper_title": "Example", "reason": "Reviewed",
         }])

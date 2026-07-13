@@ -16,6 +16,8 @@ const state = {
   institutions: [],
   institutionAudit: { records: [], summary: {} },
   institutionCleanupSelection: new Set(),
+  pendingInstitutionResolution: null,
+  institutionEvidenceCase: null,
   locationStatusFilter: "",
   selectedLocationReviewId: "",
   dashboard: {},
@@ -123,6 +125,9 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "mapping-paper-context",
     "mapping-table-body",
     "empty-mappings",
+    "historical-mappings",
+    "historical-mapping-count",
+    "historical-mapping-table-body",
     "mapping-panel-error",
     "mapping-diagnostic",
     "mapping-dialog",
@@ -142,6 +147,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "mapping-affiliation-note",
     "mapping-status",
     "mapping-review-note",
+    "mapping-review-note-label",
     "mapping-replace-confirmation",
     "mapping-confirm-replace",
     "mapping-form-error",
@@ -269,11 +275,36 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "institution-audit-counts",
     "institution-audit-search",
     "institution-audit-severity",
+    "institution-audit-provenance",
+    "institution-audit-issue",
     "institution-audit-rows",
     "institution-audit-empty",
     "institution-audit-detail",
+    "institution-archived-findings",
+    "institution-archived-count",
+    "institution-archived-rows",
     "institution-cleanup-batch",
+    "institution-resolution-batch",
     "institution-cleanup-blocker",
+    "institution-resolution-dialog",
+    "institution-resolution-form",
+    "institution-resolution-title",
+    "institution-resolution-issue",
+    "institution-resolution-paper",
+    "institution-resolution-author",
+    "institution-resolution-current",
+    "institution-resolution-action",
+    "institution-resolution-preset",
+    "institution-resolution-note",
+    "institution-resolution-note-optional",
+    "institution-resolution-error",
+    "institution-resolution-cancel",
+    "institution-resolution-submit",
+    "institution-evidence-dialog",
+    "institution-evidence-title",
+    "institution-evidence-content",
+    "institution-evidence-actions",
+    "institution-evidence-close",
     "marker-blocker-review-panel",
     "key-coverage-review-panel",
     "manual-import-review-panel",
@@ -376,7 +407,14 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["location-review-close"].addEventListener("click", closeLocationReview);
   elements["institution-audit-search"].addEventListener("input", renderInstitutionAudit);
   elements["institution-audit-severity"].addEventListener("change", renderInstitutionAudit);
+  elements["institution-audit-provenance"].addEventListener("change", renderInstitutionAudit);
+  elements["institution-audit-issue"].addEventListener("change", renderInstitutionAudit);
   elements["institution-cleanup-batch"].addEventListener("click", applySelectedInstitutionFixes);
+  elements["institution-resolution-batch"].addEventListener("click", openBatchInstitutionResolution);
+  elements["institution-resolution-preset"].addEventListener("change", applyInstitutionResolutionPreset);
+  elements["institution-resolution-cancel"].addEventListener("click", closeInstitutionResolutionDialog);
+  elements["institution-resolution-form"].addEventListener("submit", submitInstitutionResolution);
+  elements["institution-evidence-close"].addEventListener("click", closeInstitutionEvidence);
   elements["institution-management-close"].addEventListener("click", () => {
     elements["institution-management-panel"].hidden = true;
   });
@@ -1116,18 +1154,24 @@ function renderInstitutionAudit() {
   const audit = state.institutionAudit || { records: [], summary: {} };
   const search = normalize(elements["institution-audit-search"].value);
   const severity = elements["institution-audit-severity"].value;
+  const provenance = elements["institution-audit-provenance"].value;
+  const issueType = elements["institution-audit-issue"].value;
   const records = (audit.records || []).filter((row) => {
+    if (row.status !== "open") return false;
     if (severity && row.severity !== severity) return false;
+    if (provenance && !(row.provenance_values || []).includes(provenance)) return false;
+    if (issueType && !(row.issue_types || []).includes(issueType)) return false;
     return !search || normalize(Object.values(row).join(" ")).includes(search);
   });
   const summary = audit.summary || {};
-  elements["institution-audit-counts"].textContent = `${audit.total_unresolved || 0} unresolved · ${summary.high || 0} high · ${summary.medium || 0} medium · ${summary.low || 0} low · ${audit.hidden_resolved || 0} resolved`;
+  elements["institution-audit-counts"].textContent = `${audit.total_unresolved || 0} open · ${summary.high || 0} high · ${summary.medium || 0} medium · ${summary.low || 0} low · ${audit.resolved_count || 0} resolved · ${audit.archived_count || 0} archived`;
   const blocker = elements["institution-cleanup-blocker"];
-  blocker.hidden = !(summary.high > 0);
-  blocker.querySelector("span").textContent = summary.high > 0
-    ? `Publishing is blocked by ${summary.high} unresolved high-severity institution issue${summary.high === 1 ? "" : "s"}.`
+  const blockingCount = audit.blocking_count || 0;
+  blocker.hidden = !(blockingCount > 0);
+  blocker.querySelector("span").textContent = blockingCount > 0
+    ? `Publishing is blocked by ${blockingCount} true institution-corruption finding${blockingCount === 1 ? "" : "s"}.`
     : "";
-  elements["publish-changes"].disabled = summary.high > 0;
+  elements["publish-changes"].disabled = blockingCount > 0;
   const body = elements["institution-audit-rows"];
   body.replaceChildren();
   records.forEach((item) => {
@@ -1135,18 +1179,18 @@ function renderInstitutionAudit() {
     const selectionCell = document.createElement("td");
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.checked = state.institutionCleanupSelection.has(item.queue_id);
-    checkbox.disabled = !item.mapping_id || !item.suggested_institution_id;
-    checkbox.setAttribute("aria-label", `Select fix for ${item.paper_title || item.audit_id}`);
+    checkbox.checked = state.institutionCleanupSelection.has(item.review_group_id);
+    checkbox.disabled = item.status !== "open" || !(item.queue_ids || []).length;
+    checkbox.setAttribute("aria-label", `Select review case for ${item.paper_title || item.review_group_id}`);
     checkbox.addEventListener("click", (event) => event.stopPropagation());
     checkbox.addEventListener("change", () => {
-      if (checkbox.checked) state.institutionCleanupSelection.add(item.queue_id);
-      else state.institutionCleanupSelection.delete(item.queue_id);
-      elements["institution-cleanup-batch"].disabled = state.institutionCleanupSelection.size === 0;
+      if (checkbox.checked) state.institutionCleanupSelection.add(item.review_group_id);
+      else state.institutionCleanupSelection.delete(item.review_group_id);
+      updateInstitutionBatchActions();
     });
     selectionCell.append(checkbox);
     row.append(selectionCell);
-    [item.severity, item.paper_title, item.author, item.current_institution, item.issue_type, item.suggested_canonical_institution].forEach((value) => {
+    [item.severity, item.paper_title, item.author, (item.current_institutions || []).join("; "), (item.historical_institutions || []).join("; "), item.classification, (item.suggested_institutions || []).join("; ")].forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent = text(value) || "—";
       row.append(cell);
@@ -1158,8 +1202,57 @@ function renderInstitutionAudit() {
     });
     body.append(row);
   });
-  elements["institution-cleanup-batch"].disabled = state.institutionCleanupSelection.size === 0;
-  elements["institution-audit-empty"].textContent = records.length ? "" : "No audit items match these filters.";
+  updateInstitutionBatchActions();
+  elements["institution-audit-empty"].textContent = records.length ? "" : "No actionable open institution findings match these filters.";
+
+  const archived = audit.archived_records || [];
+  const archivedBody = elements["institution-archived-rows"];
+  archivedBody.replaceChildren();
+  archived.forEach((item) => {
+    const row = document.createElement("tr");
+    row.className = "archived-finding-row";
+    const resolution = (item.findings || []).map((finding) =>
+      [humanize(finding.resolution_action), finding.resolution_note]
+        .filter(Boolean).join(": ")
+    ).filter(Boolean).join(" | ");
+    [
+      humanize(item.status),
+      item.paper_title,
+      item.author,
+      (item.historical_institutions || []).join("; ") || item.current_institution,
+      (item.issue_types || []).map(humanize).join("; "),
+      resolution,
+      item.updated_at,
+    ].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+    row.tabIndex = 0;
+    row.addEventListener("click", () => openInstitutionEvidence(item));
+    row.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") openInstitutionEvidence(item);
+    });
+    archivedBody.append(row);
+  });
+  elements["institution-archived-findings"].hidden = archived.length === 0;
+  elements["institution-archived-findings"].open = false;
+  elements["institution-archived-count"].textContent = `(${archived.length})`;
+}
+
+function selectedInstitutionCases() {
+  return (state.institutionAudit?.records || []).filter((item) =>
+    item.status === "open" && state.institutionCleanupSelection.has(item.review_group_id)
+  );
+}
+
+function updateInstitutionBatchActions() {
+  const selected = selectedInstitutionCases();
+  const fixable = selected.flatMap((item) => item.findings || []).some((finding) =>
+    finding.finding_status === "open" && finding.mapping_id && finding.suggested_institution_id
+  );
+  elements["institution-cleanup-batch"].disabled = !fixable;
+  elements["institution-resolution-batch"].disabled = selected.length === 0;
 }
 
 function auditDetailLine(label, value) {
@@ -1174,10 +1267,16 @@ function renderInstitutionAuditDetail(item) {
   const detail = elements["institution-audit-detail"];
   detail.replaceChildren();
   const heading = document.createElement("h3");
-  heading.textContent = item.paper_title || "Institution audit item";
+  heading.textContent = item.paper_title || "Institution review case";
   const actions = document.createElement("div");
   actions.className = "form-actions";
-  [["Accept suggestion", "accept_suggestion"], ["Ignore finding", "ignore"]].forEach(([label, action]) => {
+  const evidenceButton = document.createElement("button");
+  evidenceButton.type = "button";
+  evidenceButton.className = "secondary-button";
+  evidenceButton.textContent = "View evidence";
+  evidenceButton.addEventListener("click", () => openInstitutionEvidence(item));
+  actions.append(evidenceButton);
+  [["Accept suggestion", "accept_suggestion"], ["Keep multiple affiliations", "keep_multiple_affiliations"], ["Ignore finding", "ignore"]].forEach(([label, action]) => {
     const button = document.createElement("button");
     button.type = "button";
     button.className = action === "ignore" ? "secondary-button" : "primary-button";
@@ -1190,18 +1289,27 @@ function renderInstitutionAuditDetail(item) {
   replace.className = "secondary-button";
   replace.textContent = "Replace mapping";
   replace.addEventListener("click", async () => {
-    const row = { ...item, title: item.paper_title, institution: item.current_institution };
+    const finding = (item.findings || [item])[0];
+    const row = { ...finding, title: item.paper_title, institution: finding.current_institution };
     if (await openRelatedPaper(row)) openMappingDialog("replace");
   });
   const institution = document.createElement("button");
   institution.type = "button";
   institution.className = "secondary-button";
-  institution.textContent = "Open institution editor";
+  institution.textContent = "Add alias / Open institution editor";
   institution.addEventListener("click", () => {
-    elements["institution-management-search"].value = item.current_institution;
+    elements["institution-management-search"].value = (item.current_institutions || [item.current_institution]).join(" ");
     openInstitutionManagement();
   });
-  actions.append(replace, institution);
+  const parent = document.createElement("button");
+  parent.type = "button";
+  parent.className = "secondary-button";
+  parent.textContent = "Set parent institution";
+  parent.addEventListener("click", () => {
+    elements["institution-management-search"].value = (item.current_institutions || [item.current_institution]).join(" ");
+    openInstitutionManagement();
+  });
+  actions.append(replace, institution, parent);
   const manual = document.createElement("button");
   manual.type = "button";
   manual.className = "secondary-button";
@@ -1211,58 +1319,366 @@ function renderInstitutionAuditDetail(item) {
   detail.append(
     heading,
     auditDetailLine("Author", item.author),
-    auditDetailLine("Current institution", item.current_institution),
-    auditDetailLine("Raw affiliation", item.raw_affiliation),
-    auditDetailLine("Suggested canonical institution", item.suggested_canonical_institution),
-    auditDetailLine("Reason", item.reason),
+    auditDetailLine("Current active institutions", (item.current_institutions || []).join("; ")),
+    auditDetailLine("Historical/excluded institutions", (item.historical_institutions || []).join("; ")),
+    auditDetailLine("Suggested institutions", (item.suggested_institutions || []).join("; ")),
+    auditDetailLine("Evidence", (item.evidence || []).join(" | ")),
+    auditDetailLine("Classification", item.classification),
+    auditDetailLine("Provenance", (item.provenance_values || []).join("; ")),
+    auditDetailLine("Why flagged", (item.findings || []).map((finding) => finding.reason).join(" | ")),
     actions,
   );
 }
 
-async function resolveInstitutionAudit(item, action) {
-  const labels = { accept_suggestion: "Accept suggestion", ignore: "Ignore finding", manually_resolved: "Manual resolution" };
-  const note = window.prompt(`${labels[action] || action} review note:`);
-  if (!note) return;
-  if (action === "accept_suggestion" && !window.confirm(`Replace the mapping with ${item.suggested_canonical_institution}?`)) return;
+function evidenceSection(title) {
+  const section = document.createElement("section");
+  section.className = "evidence-section";
+  const heading = document.createElement("h3");
+  heading.textContent = title;
+  section.append(heading);
+  return section;
+}
+
+function appendEvidenceFields(section, fields) {
+  const list = document.createElement("dl");
+  list.className = "metadata-grid";
+  fields.forEach(([label, value]) => {
+    const term = document.createElement("dt");
+    term.textContent = label;
+    const detail = document.createElement("dd");
+    if (value instanceof Node) detail.append(value);
+    else detail.textContent = text(value) || "—";
+    list.append(term, detail);
+  });
+  section.append(list);
+}
+
+function evidenceList(values) {
+  const list = document.createElement("ul");
+  list.className = "evidence-list";
+  (values || []).forEach((value) => {
+    const item = document.createElement("li");
+    item.textContent = text(value);
+    list.append(item);
+  });
+  if (!list.children.length) {
+    const item = document.createElement("li");
+    item.textContent = "None recorded";
+    list.append(item);
+  }
+  return list;
+}
+
+function evidenceLink(label, url) {
+  const href = safeUrl(url);
+  if (!href) return text(label || url);
+  const link = document.createElement("a");
+  link.href = href;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.textContent = text(label) || href;
+  return link;
+}
+
+function openInstitutionEvidence(item) {
+  state.institutionEvidenceCase = item;
+  const evidence = item.evidence_detail || {};
+  const paper = evidence.paper || {};
+  const author = evidence.author || {};
+  const affiliation = evidence.affiliation || {};
+  const audit = evidence.audit || {};
+  const risk = audit.risk_factors || {};
+  const content = elements["institution-evidence-content"];
+  content.replaceChildren();
+  elements["institution-evidence-title"].textContent = item.paper_title || "Evidence inspection";
+
+  const paperSection = evidenceSection("Paper information");
+  appendEvidenceFields(paperSection, [
+    ["Title", paper.title],
+    ["Year", paper.year],
+    ["Venue", paper.venue],
+    ["DOI", paper.doi],
+    ["arXiv identifier", paper.arxiv_id],
+    ["Paper link", evidenceLink("Open paper", paper.paper_url)],
+  ]);
+
+  const authorSection = evidenceSection("Author information");
+  appendEvidenceFields(authorSection, [["Author", author.name], ["Author ID", author.author_id]]);
+
+  const mappingsSection = evidenceSection("Current mappings");
+  (evidence.current_mappings || []).forEach((mapping) => {
+    const heading = document.createElement("h4");
+    heading.textContent = mapping.institution_name || "Current institution";
+    mappingsSection.append(heading);
+    appendEvidenceFields(mappingsSection, [
+      ["Institution ID", mapping.institution_id],
+      ["Provenance source", mapping.provenance_source || mapping.provenance],
+      ["Mapping status", mapping.mapping_status],
+      ["Review status", mapping.review_status],
+      ["Evidence source", mapping.evidence_source],
+      ["Evidence link", evidenceLink("Open evidence", mapping.evidence_url)],
+      ["Review history", mapping.review_note],
+    ]);
+  });
+  if (!(evidence.current_mappings || []).length) mappingsSection.append(evidenceList([]));
+
+  const historicalSection = evidenceSection("Historical/excluded mappings");
+  (evidence.historical_mappings || []).forEach((mapping) => {
+    const heading = document.createElement("h4");
+    heading.textContent = mapping.institution_name || "Historical institution";
+    historicalSection.append(heading);
+    appendEvidenceFields(historicalSection, [
+      ["Institution ID", mapping.institution_id],
+      ["Mapping status", mapping.mapping_status],
+      ["Provenance source", mapping.provenance_source || mapping.provenance],
+      ["Raw affiliation", mapping.raw_affiliation],
+      ["Audit history", mapping.review_note],
+    ]);
+  });
+  if (!(evidence.historical_mappings || []).length) historicalSection.append(evidenceList([]));
+
+  const affiliationSection = evidenceSection("Affiliation evidence");
+  const rawHeading = document.createElement("h4");
+  rawHeading.textContent = "Raw affiliation text";
+  affiliationSection.append(rawHeading);
+  (affiliation.raw_affiliations || []).forEach((value) => {
+    const raw = document.createElement("blockquote");
+    raw.className = "evidence-raw";
+    raw.textContent = value;
+    affiliationSection.append(raw);
+  });
+  if (!(affiliation.raw_affiliations || []).length) affiliationSection.append(evidenceList([]));
+  appendEvidenceFields(affiliationSection, [
+    ["Parsed institution candidates", (affiliation.parsed_candidates || []).join("; ")],
+    ["Original metadata sources", (affiliation.metadata_sources || []).join("; ")],
+    ["Confidence", (affiliation.confidence || []).join("; ")],
+  ]);
+
+  const relationshipSection = evidenceSection("Institution relationships");
+  (evidence.relationships || []).forEach((relationship) => {
+    const heading = document.createElement("h4");
+    heading.textContent = relationship.canonical_name || relationship.institution_id;
+    relationshipSection.append(heading);
+    appendEvidenceFields(relationshipSection, [
+      ["Institution ID", relationship.institution_id],
+      ["Aliases", (relationship.aliases || []).join("; ")],
+      ["Parent", relationship.parent ? `${relationship.parent.canonical_name || relationship.parent.institution_id} (${relationship.parent.institution_id})` : ""],
+      ["Children", (relationship.children || []).map((child) => `${child.canonical_name || child.institution_id} (${child.institution_id})`).join("; ")],
+    ]);
+  });
+  if (!(evidence.relationships || []).length) relationshipSection.append(evidenceList([]));
+
+  const auditSection = evidenceSection("Audit explanation and risk");
+  appendEvidenceFields(auditSection, [
+    ["Why flagged", (audit.why_flagged || []).join(" | ")],
+    ["Provenance", (risk.provenance || []).join("; ")],
+    ["Similarity score", (risk.similarity_scores || []).join("; ")],
+    ["Issue type", (risk.issue_types || []).join("; ")],
+    ["Severity", (risk.severities || []).join("; ")],
+  ]);
+
+  content.append(paperSection, authorSection, mappingsSection, historicalSection, affiliationSection, relationshipSection, auditSection);
+  if (evidence.comparison) {
+    const comparisonSection = evidenceSection("Suspicious replacement comparison");
+    const comparison = document.createElement("div");
+    comparison.className = "evidence-comparison";
+    const before = evidenceSection("Before");
+    appendEvidenceFields(before, [
+      ["Current mapping", (evidence.comparison.before || []).join("; ")],
+      ["Evidence", (evidence.comparison.evidence || []).join(" | ")],
+    ]);
+    const after = evidenceSection("After");
+    appendEvidenceFields(after, [
+      ["Suggested institution", (evidence.comparison.after || []).join("; ")],
+      ["Similarity / reason", (evidence.comparison.reason || []).join(" | ")],
+    ]);
+    comparison.append(before, after);
+    comparisonSection.append(comparison);
+    content.append(comparisonSection);
+  }
+  renderInstitutionEvidenceActions(item);
+  elements["institution-evidence-dialog"].showModal();
+}
+
+function closeInstitutionEvidence() {
+  state.institutionEvidenceCase = null;
+  elements["institution-evidence-dialog"].close();
+}
+
+function evidenceShortcut(label, handler, primary = false) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = primary ? "primary-button" : "secondary-button";
+  button.textContent = label;
+  button.addEventListener("click", handler);
+  return button;
+}
+
+function renderInstitutionEvidenceActions(item) {
+  const actions = elements["institution-evidence-actions"];
+  actions.replaceChildren();
+  if (item.status !== "open") {
+    const note = document.createElement("p");
+    note.className = "historical-mapping-availability";
+    note.textContent = `${humanize(item.status)} audit record — no cleanup actions available`;
+    actions.append(note);
+    return;
+  }
+  const resolutionAction = (label, action, primary = false) => evidenceShortcut(label, () => {
+    closeInstitutionEvidence();
+    resolveInstitutionAudit(item, action);
+  }, primary);
+  actions.append(
+    resolutionAction("Accept suggestion", "accept_suggestion", true),
+    resolutionAction("Keep multiple affiliations", "keep_multiple_affiliations"),
+    evidenceShortcut("Add alias", () => {
+      closeInstitutionEvidence();
+      elements["institution-management-search"].value = (item.current_institutions || []).join(" ");
+      openInstitutionManagement();
+    }),
+    evidenceShortcut("Set parent institution", () => {
+      closeInstitutionEvidence();
+      elements["institution-management-search"].value = (item.current_institutions || []).join(" ");
+      openInstitutionManagement();
+    }),
+    evidenceShortcut("Replace mapping", async () => {
+      closeInstitutionEvidence();
+      const finding = (item.findings || [item])[0];
+      const row = { ...finding, title: item.paper_title, institution: finding.current_institution };
+      if (await openRelatedPaper(row)) openMappingDialog("replace");
+    }),
+    resolutionAction("Mark manually resolved", "manually_resolved"),
+  );
+}
+
+function resolveInstitutionAudit(item, action) {
+  const queueIds = action === "accept_suggestion"
+    ? (item.findings || []).filter((finding) => finding.finding_status === "open" && finding.mapping_id && finding.suggested_institution_id).map((finding) => finding.queue_id)
+    : (item.queue_ids || [item.queue_id].filter(Boolean));
+  if (!queueIds.length) return;
+  openInstitutionResolutionDialog(item, action, queueIds);
+}
+
+const institutionResolutionNotes = {
+  existing: "Confirmed existing curated institution mapping after manual review.",
+  alias: "Resolved manually; alias/name variation only and existing mapping retained.",
+  parent: "Resolved manually; confirmed parent-child institution relationship.",
+  multiple: "Multiple affiliations confirmed after manual review.",
+  custom: "",
+};
+
+const institutionResolutionLabels = {
+  accept_suggestion: "Accept suggestion",
+  keep_multiple_affiliations: "Keep multiple affiliations",
+  ignore: "Ignore review case",
+  manually_resolved: "Mark manually resolved",
+};
+
+function openInstitutionResolutionDialog(item, action, queueIds, batch = false) {
+  const destructive = action === "accept_suggestion" || action === "replace_mapping";
+  state.pendingInstitutionResolution = { item, action, queueIds, batch, destructive };
+  elements["institution-resolution-title"].textContent = batch
+    ? `Resolve ${item.batch_count} selected review cases`
+    : "Resolve institution review case";
+  elements["institution-resolution-issue"].textContent = (item.issue_types || [item.issue_type]).filter(Boolean).join(", ") || "—";
+  elements["institution-resolution-paper"].textContent = text(item.paper_title) || "—";
+  elements["institution-resolution-author"].textContent = text(item.author) || "—";
+  elements["institution-resolution-current"].textContent = (item.current_institutions || [item.current_institution]).filter(Boolean).join("; ") || "—";
+  elements["institution-resolution-action"].textContent = institutionResolutionLabels[action] || humanize(action);
+  const preset = action === "keep_multiple_affiliations"
+    ? "multiple"
+    : item.classification === "alias issue"
+      ? "alias"
+      : item.classification === "parent-child issue"
+        ? "parent"
+        : "existing";
+  elements["institution-resolution-preset"].value = preset;
+  elements["institution-resolution-note"].required = destructive;
+  elements["institution-resolution-note-optional"].hidden = destructive;
+  elements["institution-resolution-error"].hidden = true;
+  applyInstitutionResolutionPreset();
+  elements["institution-resolution-dialog"].showModal();
+}
+
+function applyInstitutionResolutionPreset() {
+  const preset = elements["institution-resolution-preset"].value;
+  elements["institution-resolution-note"].value = institutionResolutionNotes[preset] || "";
+  if (preset === "custom") elements["institution-resolution-note"].focus();
+}
+
+function closeInstitutionResolutionDialog() {
+  state.pendingInstitutionResolution = null;
+  elements["institution-resolution-dialog"].close();
+}
+
+function openBatchInstitutionResolution() {
+  const cases = selectedInstitutionCases();
+  const queueIds = cases.flatMap((item) => item.queue_ids || []);
+  if (!queueIds.length) return;
+  openInstitutionResolutionDialog({
+    batch_count: cases.length,
+    issue_types: [...new Set(cases.flatMap((item) => item.issue_types || []))],
+    paper_title: cases.map((item) => item.paper_title).filter(Boolean).join("; "),
+    author: cases.map((item) => item.author).filter(Boolean).join("; "),
+    current_institutions: [...new Set(cases.flatMap((item) => item.current_institutions || []))],
+    classification: "",
+  }, "manually_resolved", queueIds, true);
+}
+
+async function submitInstitutionResolution(event) {
+  event.preventDefault();
+  const pending = state.pendingInstitutionResolution;
+  if (!pending) return;
+  let note = elements["institution-resolution-note"].value.trim();
+  if (pending.destructive && !note) {
+    elements["institution-resolution-error"].hidden = false;
+    elements["institution-resolution-error"].textContent = "A review note is required because this action changes a mapping.";
+    return;
+  }
+  if (pending.batch && note) note = `Batch resolution (${pending.item.batch_count} cases): ${note}`;
+  elements["institution-resolution-submit"].disabled = true;
   try {
-    await apiFetch("/api/review/institution-cleanup/action", {
+    await apiFetch(pending.batch && pending.action === "accept_suggestion"
+      ? "/api/review/institution-cleanup/batch"
+      : "/api/review/institution-cleanup/action", {
       method: "POST",
       body: JSON.stringify({
-        queue_id: item.queue_id,
-        action,
+        queue_ids: pending.queueIds,
+        action: pending.action,
         review_note: note,
-        confirmed: action === "accept_suggestion",
+        confirmed: pending.destructive,
       }),
     });
     const payload = await apiFetch("/api/review/institution-cleanup");
     state.institutionAudit = payload.data || { records: [], summary: {} };
-    state.institutionCleanupSelection.delete(item.queue_id);
+    state.institutionCleanupSelection.clear();
+    closeInstitutionResolutionDialog();
     renderInstitutionAudit();
-    elements["institution-audit-detail"].textContent = "Select a cleanup item.";
-    showNotice(action === "accept_suggestion" ? "Institution mapping corrected and cleanup finding resolved." : "Institution cleanup decision saved.");
+    elements["institution-audit-detail"].textContent = "Select a paper-author review case.";
+    showNotice(pending.action === "accept_suggestion" ? "Institution mapping corrected and cleanup finding resolved." : "Institution cleanup decision saved.");
   } catch (error) {
-    showNotice(`Could not save institution cleanup decision: ${error.message}`, "error");
+    elements["institution-resolution-error"].hidden = false;
+    elements["institution-resolution-error"].textContent = error.message;
+  } finally {
+    elements["institution-resolution-submit"].disabled = false;
   }
 }
 
-async function applySelectedInstitutionFixes() {
-  const queueIds = [...state.institutionCleanupSelection];
+function applySelectedInstitutionFixes() {
+  const cases = selectedInstitutionCases();
+  const findings = cases.flatMap((item) => item.findings || []).filter((finding) =>
+    finding.finding_status === "open" && finding.mapping_id && finding.suggested_institution_id
+  );
+  const queueIds = findings.map((finding) => finding.queue_id);
   if (!queueIds.length) return;
-  const note = window.prompt("Batch correction review note:");
-  if (!note || !window.confirm(`Apply ${queueIds.length} compatible suggested fixes? The batch rolls back if any fix fails.`)) return;
-  try {
-    await apiFetch("/api/review/institution-cleanup/batch", {
-      method: "POST",
-      body: JSON.stringify({ queue_ids: queueIds, action: "accept_suggestion", review_note: note, confirmed: true }),
-    });
-    state.institutionCleanupSelection.clear();
-    const payload = await apiFetch("/api/review/institution-cleanup");
-    state.institutionAudit = payload.data || { records: [], summary: {} };
-    renderInstitutionAudit();
-    showNotice("Selected institution fixes were applied safely.");
-  } catch (error) {
-    showNotice(`Could not apply selected fixes: ${error.message}`, "error");
-  }
+  openInstitutionResolutionDialog({
+    batch_count: cases.length,
+    issue_types: [...new Set(cases.flatMap((item) => item.issue_types || []))],
+    paper_title: cases.map((item) => item.paper_title).filter(Boolean).join("; "),
+    author: cases.map((item) => item.author).filter(Boolean).join("; "),
+    current_institutions: [...new Set(cases.flatMap((item) => item.current_institutions || []))],
+    classification: "",
+  }, "accept_suggestion", queueIds, true);
 }
 
 function renderReviewDetail(name, row) {
@@ -3143,6 +3559,13 @@ function renderPaperDetail(paper) {
 function renderMappings(payload) {
   const paper = payload.paper || state.selectedPaper || {};
   const mappings = payload.curated_mappings || [];
+  const currentStatuses = new Set(["active", "needs_review"]);
+  const currentMappings = mappings.filter((mapping) =>
+    currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
+  );
+  const historicalMappings = mappings.filter((mapping) =>
+    !currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
+  );
   state.selectedMappings = mappings;
   const diagnostic = payload.mapping_diagnostic || {};
   elements["mapping-diagnostic"].hidden =
@@ -3158,7 +3581,7 @@ function renderMappings(payload) {
 
   const body = elements["mapping-table-body"];
   body.replaceChildren();
-  mappings.forEach((mapping) => {
+  currentMappings.forEach((mapping) => {
     const row = document.createElement("tr");
     const evidence = [
       mapping.raw_affiliation,
@@ -3185,26 +3608,72 @@ function renderMappings(payload) {
 
     const actions = document.createElement("td");
     actions.className = "mapping-actions";
-    if (mapping.mapping_status !== "excluded") {
-      const edit = document.createElement("button");
-      edit.type = "button";
-      edit.className = "secondary-button compact-action";
-      edit.textContent = "Edit";
-      edit.addEventListener("click", () => openMappingDialog("update", mapping));
-      const exclude = document.createElement("button");
-      exclude.type = "button";
-      exclude.className = "danger-button compact-action";
-      exclude.textContent = "Exclude";
-      exclude.addEventListener("click", () => openMappingDialog("exclude", mapping));
-      actions.append(edit, exclude);
-    } else {
-      actions.textContent = "Audit row";
-    }
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.className = "secondary-button compact-action";
+    edit.textContent = "Edit";
+    edit.addEventListener("click", () => openMappingDialog("update", mapping));
+    const exclude = document.createElement("button");
+    exclude.type = "button";
+    exclude.className = "danger-button compact-action";
+    exclude.textContent = "Exclude";
+    exclude.addEventListener("click", () => openMappingDialog("exclude", mapping));
+    actions.append(edit, exclude);
     row.append(actions);
     body.append(row);
   });
-  elements["empty-mappings"].hidden = mappings.length !== 0;
-  body.parentElement.hidden = mappings.length === 0;
+
+  const historicalBody = elements["historical-mapping-table-body"];
+  historicalBody.replaceChildren();
+  historicalMappings.forEach((mapping) => {
+    const row = document.createElement("tr");
+    row.className = "historical-mapping-row";
+    const evidence = [
+      mapping.raw_affiliation,
+      mapping.openalex_institution_id,
+      [mapping.institution_city, mapping.institution_country].filter(Boolean).join(", "),
+      [mapping.institution_latitude, mapping.institution_longitude].filter(Boolean).join(", "),
+      mapping.provenance_source,
+      mapping.evidence_source,
+      mapping.evidence_url,
+      mapping.affiliation_note,
+    ].filter(Boolean).join(" · ");
+    [mapping.institution, mapping.institution_authors, evidence].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+
+    const status = document.createElement("td");
+    status.className = "historical-mapping-labels";
+    const labels = ["Excluded"];
+    if (/\bReplaced:/i.test(text(mapping.review_note))) labels.push("Replaced");
+    labels.push("Retained for audit history");
+    labels.forEach((label) => {
+      const badge = document.createElement("span");
+      badge.className = "historical-mapping-label";
+      badge.textContent = label;
+      status.append(badge);
+    });
+    row.append(status);
+
+    [humanize(mapping.location_status), mapping.review_note].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+    const availability = document.createElement("td");
+    availability.className = "historical-mapping-availability";
+    availability.textContent = "Audit record — not a current affiliation";
+    row.append(availability);
+    historicalBody.append(row);
+  });
+
+  elements["empty-mappings"].hidden = currentMappings.length !== 0;
+  body.parentElement.hidden = currentMappings.length === 0;
+  elements["historical-mappings"].hidden = historicalMappings.length === 0;
+  elements["historical-mappings"].open = false;
+  elements["historical-mapping-count"].textContent = `(${historicalMappings.length})`;
   elements["mapping-panel-error"].hidden = true;
 }
 
@@ -3226,6 +3695,10 @@ function openMappingDialog(mode, mapping = {}) {
     mapping.mapping_status === "needs_review" ? "needs_review" : "active";
   elements["mapping-review-note"].value =
     mode === "update" ? text(mapping.review_note) : "";
+  elements["mapping-review-note"].required = mode === "replace";
+  elements["mapping-review-note-label"].textContent = mode === "replace"
+    ? "Review note (required for replacement)"
+    : "Review note (optional)";
   elements["mapping-form-error"].hidden = true;
 
   const excluding = mode === "exclude";
@@ -3273,6 +3746,7 @@ function mappingDraft() {
     evidence_source: elements["mapping-evidence-source"].value.trim(),
     evidence_url: elements["mapping-evidence-url"].value.trim(),
     affiliation_note: elements["mapping-affiliation-note"].value.trim(),
+    provenance_source: "manually_confirmed",
     mapping_status: elements["mapping-status"].value,
     review_note: elements["mapping-review-note"].value.trim(),
   };

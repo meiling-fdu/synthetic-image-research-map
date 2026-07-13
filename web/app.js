@@ -1765,53 +1765,13 @@ function normalizedDoi(value) {
   return /^10\.\d{4,9}\/\S+$/i.test(doi) ? doi : "";
 }
 
-function recordDoi(record) {
-  for (const candidate of [record.doi, record.doi_url]) {
-    const doi = normalizedDoi(candidate);
-    if (doi) {
-      return doi;
-    }
-  }
-  return "";
-}
-
-function recordLandingPageUrl(record) {
-  for (const candidate of [
-    record.paper_url,
-    record.primary_url,
-    record.landing_page_url,
-    record.url,
-  ]) {
-    const url = safeHttpUrl(candidate);
-    if (url) {
-      return url;
-    }
-  }
-  return "";
-}
-
-function paperExternalLinks(record, includeArxivId = false) {
-  const doi = recordDoi(record);
-  const doiUrl = doi ? safeHttpUrl(`https://doi.org/${doi}`) : "";
+function paperExternalLinks(record) {
   const arxivId = recordArxivId(record);
   const safeArxivUrl = arxivId
     ? safeHttpUrl(`https://arxiv.org/abs/${arxivId}`)
     : "";
-  const openalexUrl = safeHttpUrl(record.openalex_url);
-  const paperUrl = recordLandingPageUrl(record);
-  const linkCandidates = [
-    { label: "Paper", url: paperUrl },
-    { label: "DOI", url: doiUrl },
-    {
-      label: "arXiv",
-      displayLabel: includeArxivId && arxivId ? `arXiv ${arxivId}` : "arXiv",
-      url: safeArxivUrl,
-    },
-    { label: "OpenAlex", url: openalexUrl },
-  ];
-
-  return PaperLinkHelpers.deduplicatePaperLinks(linkCandidates)
-    .map((link) => externalLink(link.url, link.displayLabel || link.label))
+  return PaperLinkHelpers.paperVersionLinks(record, safeArxivUrl)
+    .map((link) => externalLink(link.url, link.label))
     .filter(Boolean);
 }
 
@@ -1894,7 +1854,7 @@ function paperDetailsHtml(record, relatedEntries) {
   const subtaskRow = record.subtask
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
     : "";
-  const detailLinks = paperExternalLinks(record, true);
+  const detailLinks = paperExternalLinks(record);
   const linksBlock = detailLinks.length
     ? `<nav class="paper-details-links" aria-label="Paper links">${detailLinks.join("")}</nav>`
     : "";

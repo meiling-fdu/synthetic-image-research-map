@@ -14,24 +14,43 @@ the nearest confirmed parent location; its own row overrides inheritance.
 
 `institution_aliases.csv` maps a reviewed alias to one canonical ID.
 `author_institution_mappings.csv` stores the stable ID plus raw affiliation
-evidence. Reassignment is an explicit mapping or confirmed merge action.
+evidence. Its existing `provenance_source` is normalized by the audit into
+`manually_confirmed`, `admin_accepted`, `curated_import`, `automatic_import`,
+or `unresolved`; legacy values remain valid and no data migration is required.
+Reassignment is an explicit mapping or confirmed merge action.
 `institution_audit_log.csv` records ignore and global merge impact and
-confirmation. Parent and alias cycles are invalid.
+confirmation. A trusted mapping's institution-ID replacement also appends a
+`confirmed_mapping_changed` event with previous/new IDs, source, timestamp,
+and user/action metadata. Location-only changes never create this event.
+Parent and alias cycles are invalid.
 
 `data/manual/institution_consistency_audit.csv` is a generated, reporting-only
 second-layer audit. It compares explicit mappings with raw affiliation
 evidence, aliases, parents, merge history, and public exports. Findings use
-`affiliation_mismatch`, `author_institution_conflict`,
+`confirmed_mapping_changed`, `author_institution_conflict`,
 `suspicious_replacement`, `duplicate_institution`, `alias_missing`, or
-`parent_child_inconsistency`, with low/medium/high severity.
+`parent_child_inconsistency`, with low/medium/high severity. Findings include a
+stable paper-author `review_group_id`, normalized provenance, classification,
+blocking flag, and a human-readable explanation. Alias and confirmed
+parent-child compatibility lower risk; strong evidence for an unrelated
+organization can remain high even for a trusted mapping.
 
 `data/curated/institution_review_queue.csv` is the persistent Admin queue. It
 copies each finding's evidence and stable `audit_id`/`mapping_id`, then records
 `finding_status`, resolution action/note, current-state flag, reviewer, and
-timestamps. Re-auditing upserts evidence without overwriting human outcomes;
-open findings that disappear are retained as `resolved_by_reaudit`. Mapping
+timestamps. `finding_status` is a lifecycle field with exactly three values:
+`open`, `resolved`, and `archived`; the specific outcome remains in
+`resolution_action`. Re-auditing upserts evidence without overwriting human
+outcomes; open findings that disappear, or whose mappings are excluded or
+replaced, become `archived` while retaining their audit evidence. Mapping
 corrections use the existing mapping service and are committed atomically with
 queue resolution. The generated report is never edited to record an outcome.
+The Admin API groups these immutable rows by paper and author at read time.
+Resolving or ignoring a case applies the decision to every open child finding.
+Only open findings are returned in the actionable Admin list. Resolved and
+archived findings remain available in the read-only history section.
+Only high `confirmed_mapping_changed` and `suspicious_replacement` findings are
+publish blockers; naming variations and possible multiple affiliations are not.
 
 ## Overview
 

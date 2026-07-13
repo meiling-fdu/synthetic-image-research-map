@@ -22,6 +22,7 @@ try:
         clean,
         normalized_title_year_key,
     )
+    from .curated_institutions import append_confirmed_mapping_change_audit
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -29,6 +30,7 @@ except ImportError:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
+    from curated_institutions import append_confirmed_mapping_change_audit
 
 
 DEFAULT_MAPPINGS_PATH = CURATED_DATA_DIR / "author_institution_mappings.csv"
@@ -469,6 +471,9 @@ def update_mapping(
     map_records: Sequence[Mapping[str, Any]],
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
+    institution_audit_path: Path | None = None,
+    change_source: str = "admin_mapping_update",
+    changed_by: str = "local-admin",
 ) -> Dict[str, Any]:
     rows = load_mappings(mappings_path)
     row = next(
@@ -480,12 +485,15 @@ def update_mapping(
     candidate_draft = dict(draft)
     if "review_note" not in candidate_draft:
         candidate_draft["review_note"] = row.get("review_note")
+    if "provenance_source" not in candidate_draft:
+        candidate_draft["provenance_source"] = row.get("provenance_source")
     candidate = _mapping_fields(paper, candidate_draft)
     duplicate = _duplicate_mapping(
         candidate, rows, ignore_mapping_id=clean(mapping_id)
     )
     if duplicate:
         raise DuplicateMappingError(duplicate)
+    previous = dict(row)
     created_at = clean(row.get("created_at")) or _timestamp()
     row.update(candidate)
     row["created_at"] = created_at
@@ -494,10 +502,49 @@ def update_mapping(
     location_status = _sync_location_review(
         row, map_records=map_records, location_rows=location_rows
     )
-    save_mappings(rows, mappings_path)
-    if location_status in {"created", "updated"}:
-        save_location_reviews(location_rows, location_review_path)
-    return {"mapping": dict(row), "location_review": location_status}
+    snapshots = {
+        path: path.read_bytes() if path.exists() else None
+        for path in (mappings_path, location_review_path, institution_audit_path)
+        if path is not None
+    }
+    audit = None
+    try:
+        save_mappings(rows, mappings_path)
+        if location_status in {"created", "updated"}:
+            save_location_reviews(location_rows, location_review_path)
+        source = clean(previous.get("provenance_source")).casefold()
+        trusted = (
+            source.replace(" ", "_") in {
+                "manually_confirmed", "admin_accepted", "curated_import"
+            }
+            or any(token in source for token in ("manual", "curator", "confirmed", "admin accepted"))
+            or (
+                not source
+                and clean(previous.get("mapping_id"))
+                and clean(previous.get("mapping_status")) == "active"
+            )
+        )
+        if (
+            institution_audit_path is not None
+            and trusted
+            and clean(previous.get("institution_id")) != clean(row.get("institution_id"))
+        ):
+            audit = append_confirmed_mapping_change_audit(
+                previous,
+                row,
+                change_source=change_source,
+                created_by=changed_by,
+                review_note=row.get("review_note"),
+                audit_path=institution_audit_path,
+            )
+    except Exception:
+        for path, content in snapshots.items():
+            if content is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_bytes(content)
+        raise
+    return {"mapping": dict(row), "location_review": location_status, "audit": audit}
 
 
 def _append_audit_note(existing: Any, action: str, note: str) -> str:

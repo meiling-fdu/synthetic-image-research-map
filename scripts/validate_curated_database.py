@@ -876,23 +876,43 @@ def validate_institution_entities(
 def validate_institution_consistency_audit(
     issues: List[Issue],
     findings: Sequence[Mapping[str, str]] | None = None,
+    mappings: Sequence[Mapping[str, str]] | None = None,
 ) -> None:
     """Block on current, unresolved items in the persistent cleanup queue."""
     if findings is None:
         findings = []
+    mapping_by_id = {
+        clean(row.get("mapping_id")): row for row in (mappings or [])
+        if clean(row.get("mapping_id"))
+    }
     for finding in findings:
         if clean(finding.get("finding_status")) != "open":
             continue
         if clean(finding.get("is_current")).casefold() not in {"1", "true", "yes", "y"}:
             continue
+        mapping_id = clean(finding.get("mapping_id"))
+        if mapping_id and mapping_id in mapping_by_id:
+            mapping = mapping_by_id[mapping_id]
+            if clean(mapping.get("mapping_status")) not in {"active", "needs_review"}:
+                continue
+            if (
+                clean(finding.get("current_institution_id"))
+                and clean(mapping.get("institution_id"))
+                != clean(finding.get("current_institution_id"))
+            ):
+                continue
         severity = clean(finding.get("severity"))
-        if severity not in {"high", "medium"}:
+        issue_type = clean(finding.get("issue_type"))
+        blocking = severity == "high" and issue_type in {
+            "confirmed_mapping_changed", "suspicious_replacement"
+        }
+        if not blocking and severity != "medium":
             continue
         author = clean(finding.get("author")) or "institution record"
         title = clean(finding.get("paper_title")) or "no paper"
         add_issue(
             issues,
-            "ERROR" if severity == "high" else "WARNING",
+            "ERROR" if blocking else "WARNING",
             "institution_review_queue.csv",
             f"{finding.get('issue_type')}: {author} / {title}: {finding.get('reason')}",
         )
@@ -992,7 +1012,7 @@ def main() -> int:
         institution_review_queue,
         "institution_review_queue.csv",
         "finding_status",
-        {"open", "accepted", "ignored", "manually_resolved", "resolved_by_reaudit"},
+        {"open", "resolved", "archived"},
         issues,
     )
     validate_allowed_value(
@@ -1148,7 +1168,9 @@ def main() -> int:
         institutions, mappings, confirmed_locations, locations, aliases,
         institution_audits, issues,
     )
-    validate_institution_consistency_audit(issues, institution_review_queue)
+    validate_institution_consistency_audit(
+        issues, institution_review_queue, mappings
+    )
     for row_number, row in enumerate(locations, start=2):
         status = clean(row.get("review_status"))
         canonical = normalize_institution(row.get("canonical_institution_name"))

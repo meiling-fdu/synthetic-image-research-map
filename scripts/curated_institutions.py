@@ -166,6 +166,40 @@ def _append_audit(
     return row
 
 
+def append_confirmed_mapping_change_audit(
+    previous: Mapping[str, Any], updated: Mapping[str, Any], *,
+    change_source: Any, created_by: Any, review_note: Any,
+    audit_path: Path = DEFAULT_AUDIT_PATH,
+) -> dict[str, str]:
+    """Record an institution-ID replacement on a trusted mapping."""
+    previous_id = clean(previous.get("institution_id"))
+    updated_id = clean(updated.get("institution_id"))
+    if not previous_id or not updated_id or previous_id == updated_id:
+        raise CuratedInstitutionError("mapping change audit requires two distinct institution IDs")
+    metadata = "; ".join((
+        f"mapping_id={clean(updated.get('mapping_id'))}",
+        f"paper_id={clean(updated.get('paper_id'))}",
+        f"paper_title={clean(updated.get('title'))}",
+        f"previous_institution={clean(previous.get('institution'))}",
+        f"new_institution={clean(updated.get('institution'))}",
+        f"change_source={clean(change_source) or 'unknown'}",
+    ))
+    authors = [
+        author.strip() for author in clean(updated.get("institution_authors")).split(";")
+        if author.strip()
+    ]
+    return _append_audit(
+        action="confirmed_mapping_changed",
+        institution_id=updated_id,
+        previous_institution_id=previous_id,
+        impact={"papers": 1, "author_mappings": 1, "markers": 1, "authors": authors},
+        confirmation=metadata,
+        review_note=review_note,
+        created_by=created_by,
+        audit_path=audit_path,
+    )
+
+
 def update_institution_identity(
     institution_id: Any, draft: Mapping[str, Any], *,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,

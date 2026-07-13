@@ -536,6 +536,8 @@
               </div>
               <p class="mapping-paper-context" id="mapping-paper-context"></p>
               <p class="form-error" id="mapping-diagnostic" role="status" hidden></p>
+              <h4 class="mapping-group-title">Current affiliations</h4>
+              <p class="mapping-group-help">Only active and needs-review mappings appear here.</p>
               <div class="table-wrap">
                 <table class="mapping-table">
                   <thead>
@@ -552,7 +554,27 @@
                   <tbody id="mapping-table-body"></tbody>
                 </table>
               </div>
-              <p class="empty-markers" id="empty-mappings" hidden>No curated mappings are associated with this paper.</p>
+              <p class="empty-markers" id="empty-mappings" hidden>No current author–institution mappings are associated with this paper.</p>
+              <details class="historical-mappings" id="historical-mappings" hidden>
+                <summary>Historical mappings <span id="historical-mapping-count"></span></summary>
+                <p class="historical-mappings-help">These excluded or replaced records are retained for audit history. They are not current affiliations.</p>
+                <div class="table-wrap">
+                  <table class="mapping-table historical-mapping-table">
+                    <thead>
+                      <tr>
+                        <th>Institution</th>
+                        <th>Institution authors</th>
+                        <th>Evidence</th>
+                        <th>Historical status</th>
+                        <th>Location</th>
+                        <th>Audit note</th>
+                        <th>Availability</th>
+                      </tr>
+                    </thead>
+                    <tbody id="historical-mapping-table-body"></tbody>
+                  </table>
+                </div>
+              </details>
               <p class="form-error" id="mapping-panel-error" role="alert" hidden></p>
             </section>
             <section class="markers-section">
@@ -594,8 +616,13 @@
       <section class="review-queue-panel" id="institution-audit-panel" hidden>
         <div class="section-heading"><div><p class="eyebrow">Pre-publish consistency gate</p><h2>Institution Cleanup</h2><p>Resolve persistent institution findings through protected Admin APIs. The generated CSV remains reporting-only.</p></div></div>
         <p class="review-counts" id="institution-audit-counts"></p>
-        <div class="review-filters"><input id="institution-audit-search" type="search" placeholder="Paper, author, institution, issue…"><select id="institution-audit-severity"><option value="">All severities</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select><button class="primary-button" id="institution-cleanup-batch" type="button" disabled>Accept selected fixes</button></div>
-        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th><span class="visually-hidden">Select</span></th><th>Severity</th><th>Paper</th><th>Author</th><th>Current institution</th><th>Issue</th><th>Suggested institution</th></tr></thead><tbody id="institution-audit-rows"></tbody></table><p id="institution-audit-empty"></p></div><article id="institution-audit-detail" class="review-detail">Select a cleanup item.</article></div>
+        <div class="review-filters"><input id="institution-audit-search" type="search" placeholder="Paper title, author, institution…"><select id="institution-audit-severity"><option value="">All severities</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select><select id="institution-audit-provenance"><option value="">All provenance</option><option value="manually_confirmed">Manual confirmed</option><option value="automatic_import">Automatic</option><option value="curated_import">Imported</option><option value="admin_accepted">Admin accepted</option><option value="unresolved">Unresolved</option></select><select id="institution-audit-issue"><option value="">All issue types</option><option value="confirmed_mapping_changed">Confirmed mapping changed</option><option value="author_institution_conflict">Author–institution conflict</option><option value="alias_missing">Alias missing</option><option value="parent_child_inconsistency">Parent-child inconsistency</option><option value="suspicious_replacement">Suspicious replacement</option></select><button class="primary-button" id="institution-cleanup-batch" type="button" disabled>Accept selected fixes</button><button class="secondary-button" id="institution-resolution-batch" type="button" disabled>Resolve selected cases</button></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th><span class="visually-hidden">Select</span></th><th>Severity</th><th>Paper</th><th>Author</th><th>Current active institutions</th><th>Historical/excluded institutions</th><th>Classification</th><th>Suggested institutions</th></tr></thead><tbody id="institution-audit-rows"></tbody></table><p id="institution-audit-empty"></p></div><article id="institution-audit-detail" class="review-detail">Select a paper-author review case.</article></div>
+        <details class="archived-findings" id="institution-archived-findings" hidden>
+          <summary>Archived findings <span id="institution-archived-count"></span></summary>
+          <p>Resolved and archived findings are retained for audit browsing. They are read-only and never actionable cleanup items.</p>
+          <div class="table-wrap"><table><thead><tr><th>Lifecycle</th><th>Paper</th><th>Author</th><th>Historical institution</th><th>Issue</th><th>Resolution</th><th>Updated</th></tr></thead><tbody id="institution-archived-rows"></tbody></table></div>
+        </details>
       </section>
 
       <section class="review-queue-panel" id="marker-blocker-review-panel" hidden data-queue="marker-blockers">
@@ -704,6 +731,48 @@
       </form>
     </dialog>
 
+    <dialog id="institution-resolution-dialog" aria-labelledby="institution-resolution-title">
+      <form id="institution-resolution-form">
+        <p class="eyebrow">Institution cleanup resolution</p>
+        <h2 id="institution-resolution-title">Resolve review case</h2>
+        <dl class="metadata-grid">
+          <dt>Issue</dt><dd id="institution-resolution-issue"></dd>
+          <dt>Paper</dt><dd id="institution-resolution-paper"></dd>
+          <dt>Author</dt><dd id="institution-resolution-author"></dd>
+          <dt>Current institution</dt><dd id="institution-resolution-current"></dd>
+          <dt>Resolution action</dt><dd id="institution-resolution-action"></dd>
+        </dl>
+        <label>Resolution preset
+          <select id="institution-resolution-preset">
+            <option value="existing">Existing curated mapping is correct</option>
+            <option value="alias">Alias/name variation only</option>
+            <option value="parent">Parent-child relationship</option>
+            <option value="multiple">Multiple affiliation confirmed</option>
+            <option value="custom">Custom note</option>
+          </select>
+        </label>
+        <label>Review note <span id="institution-resolution-note-optional">(optional)</span>
+          <textarea id="institution-resolution-note" rows="4"></textarea>
+        </label>
+        <p class="form-error" id="institution-resolution-error" role="alert" hidden></p>
+        <div class="dialog-actions">
+          <button class="secondary-button" id="institution-resolution-cancel" type="button">Cancel</button>
+          <button class="primary-button" id="institution-resolution-submit" type="submit">Save resolution</button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog id="institution-evidence-dialog" class="institution-evidence-dialog" aria-labelledby="institution-evidence-title">
+      <div class="institution-evidence-panel">
+        <div class="section-heading">
+          <div><p class="eyebrow">Institution cleanup evidence</p><h2 id="institution-evidence-title">Evidence inspection</h2></div>
+          <button class="secondary-button" id="institution-evidence-close" type="button">Close</button>
+        </div>
+        <div id="institution-evidence-content"></div>
+        <div class="dialog-actions" id="institution-evidence-actions"></div>
+      </div>
+    </dialog>
+
     <dialog id="mapping-dialog">
       <form id="mapping-form">
         <input id="mapping-mode" type="hidden">
@@ -739,7 +808,7 @@
             </select>
           </label>
         </div>
-        <label>Review note (optional)
+        <label><span id="mapping-review-note-label">Review note (optional)</span>
           <textarea id="mapping-review-note" rows="3"></textarea>
         </label>
         <label class="replace-confirmation" id="mapping-replace-confirmation" hidden>

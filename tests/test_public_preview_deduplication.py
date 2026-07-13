@@ -969,6 +969,76 @@ process.stdout.write(JSON.stringify({
         )
         self.assertEqual(rendered["empty"], [])
 
+    def test_frontend_resolves_published_version_without_exposing_doi(self):
+        helper = (
+            Path(__file__).resolve().parents[1]
+            / "web"
+            / "paper_link_helpers.js"
+        )
+        node = Path(
+            "/Users/meilinger/.cache/codex-runtimes/"
+            "codex-primary-runtime/dependencies/node/bin/node"
+        )
+        script = """
+const helpers = require(process.argv[1]);
+const published = (record) => helpers.publishedVersionUrl(record);
+const links = (record, arxivUrl = "") => helpers.paperVersionLinks(record, arxivUrl);
+process.stdout.write(JSON.stringify({
+  publisherPreferred: published({
+    paper_url: "https://publisher.example/article/1",
+    doi: "10.1000/example",
+    proceedings_url: "https://venue.example/paper/1",
+  }),
+  doiResolved: published({doi: "doi:10.1000/example"}),
+  venueFallback: published({proceedings_url: "https://venue.example/paper/1"}),
+  preprintOnly: published({
+    paper_url: "https://arxiv.org/abs/2401.12345",
+    doi: "10.48550/arXiv.2401.12345",
+  }),
+  missing: published({openalex_url: "https://openalex.org/W1"}),
+  publishedCard: links({
+    doi: "10.1000/example",
+    openalex_url: "https://openalex.org/W1",
+  }),
+  preprintCard: links(
+    {openalex_url: ""},
+    "https://arxiv.org/abs/2401.12345",
+  ),
+  missingCard: links({}),
+}));
+"""
+        result = subprocess.run(
+            [str(node), "-e", script, str(helper)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        self.assertEqual(
+            json.loads(result.stdout),
+            {
+                "publisherPreferred": "https://publisher.example/article/1",
+                "doiResolved": "https://doi.org/10.1000/example",
+                "venueFallback": "https://venue.example/paper/1",
+                "preprintOnly": "",
+                "missing": "",
+                "publishedCard": [
+                    {
+                        "label": "Published version",
+                        "url": "https://doi.org/10.1000/example",
+                    },
+                    {"label": "OpenAlex", "url": "https://openalex.org/W1"},
+                ],
+                "preprintCard": [
+                    {
+                        "label": "arXiv version",
+                        "url": "https://arxiv.org/abs/2401.12345",
+                    }
+                ],
+                "missingCard": [],
+            },
+        )
+
     def test_validator_warns_for_missing_mapping_without_crashing(self):
         record = {
             "title": "Partially mapped",

@@ -633,11 +633,11 @@ class ArxivAdminFrontendTests(unittest.TestCase):
         self.assertIn('status.status === "failed"', polling)
         self.assertIn("1500", source)
 
-    def test_public_links_use_arxiv_id_and_preserve_doi_openalex_order(self):
+    def test_public_links_render_user_facing_paper_versions(self):
         source = (Path(__file__).resolve().parents[1] / "web" / "app.js").read_text()
         body = source.split("function paperExternalLinks(", 1)[1].split("\nfunction escapeCsvValue", 1)[0]
         self.assertIn("`https://arxiv.org/abs/${arxivId}`", body)
         self.assertNotIn("recordArxivUrl(record)", body)
-        self.assertLess(body.index('{ label: "DOI"'), body.index('label: "arXiv"'))
-        self.assertLess(body.index('label: "arXiv"'), body.index('{ label: "OpenAlex"'))
+        self.assertNotIn('label: "DOI"', body)
+        self.assertIn("PaperLinkHelpers.paperVersionLinks(record, safeArxivUrl)", body)
         self.assertIn('arxivId\n    ? safeHttpUrl', body)

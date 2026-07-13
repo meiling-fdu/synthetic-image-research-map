@@ -125,6 +125,7 @@ try:
         InstitutionReviewQueueError,
         load_queue as load_institution_review_queue,
         queue_payload as institution_queue_payload,
+        reconcile_mapping_changes,
     )
     from .institution_cleanup import apply_cleanup_action
 except ImportError:
@@ -229,6 +230,7 @@ except ImportError:
         InstitutionReviewQueueError,
         load_queue as load_institution_review_queue,
         queue_payload as institution_queue_payload,
+        reconcile_mapping_changes,
     )
     from institution_cleanup import apply_cleanup_action
 
@@ -248,6 +250,7 @@ CURATED_MAPPINGS_PATH = DEFAULT_MAPPINGS_PATH
 LOCATION_REVIEW_PATH = DEFAULT_LOCATION_REVIEW_PATH
 INSTITUTION_LOCATIONS_PATH = DEFAULT_INSTITUTION_LOCATIONS_PATH
 INSTITUTIONS_PATH = DEFAULT_INSTITUTIONS_PATH
+INSTITUTION_HIERARCHY_PATH = REPOSITORY_ROOT / "data" / "curated" / "institution_hierarchy.csv"
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
@@ -1677,9 +1680,17 @@ def make_handler(
                     return
                 try:
                     data = institution_queue_payload(
-                        load_institution_review_queue(institution_review_queue_path)
+                        load_institution_review_queue(institution_review_queue_path),
+                        load_mappings(mappings_path),
+                        load_institutions(institutions_path),
+                        load_institution_aliases(institution_aliases_path),
+                        read_csv_rows(INSTITUTION_HIERARCHY_PATH),
+                        [
+                            *read_csv_rows(curated_papers_path),
+                            *read_json_records(PUBLIC_PAPERS_PATH),
+                        ],
                     )
-                except InstitutionReviewQueueError as error:
+                except (InstitutionReviewQueueError, AdminDataError, CuratedLocationError, CuratedInstitutionError) as error:
                     self.send_json(HTTPStatus.BAD_REQUEST, api_payload(success=False, errors=(str(error),)))
                     return
                 self.send_json(HTTPStatus.OK, api_payload(data=data))
@@ -2478,6 +2489,7 @@ def make_handler(
                                 mappings_path=mappings_path,
                                 location_review_path=location_review_path,
                                 institutions_path=institutions_path,
+                                institution_audit_path=institution_audit_path,
                                 map_records=read_json_records(PUBLIC_MAP_PATH),
                             )
                     except (InstitutionReviewQueueError, CuratedMappingError, DuplicateMappingError) as error:
@@ -2586,6 +2598,9 @@ def make_handler(
                                         ),
                                         mappings_path=mappings_path,
                                         location_review_path=location_review_path,
+                                        institution_audit_path=institution_audit_path,
+                                        change_source="admin_review_action",
+                                        changed_by="local-admin",
                                     )
                                 else:
                                     mapping_result = create_mapping(
@@ -2667,6 +2682,12 @@ def make_handler(
                                 "The scope decision was recorded, but no paper "
                                 "exclusion was created because stable identity "
                                 "evidence was missing."
+                            )
+                    if mapping_result is not None:
+                        with INSTITUTION_CLEANUP_WRITE_LOCK:
+                            reconcile_mapping_changes(
+                                load_mappings(mappings_path),
+                                path=institution_review_queue_path,
                             )
                     decision_draft = {
                         **payload,
@@ -2822,7 +2843,7 @@ def make_handler(
                 if request.path.startswith("/api/paper/mapping"):
                     map_records = read_json_records(PUBLIC_MAP_PATH)
                     try:
-                        with CURATED_MAPPING_WRITE_LOCK:
+                        with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_MAPPING_WRITE_LOCK:
                             if request.path == "/api/paper/mapping/create":
                                 result = create_mapping(
                                     paper,
@@ -2841,6 +2862,9 @@ def make_handler(
                                     map_records=map_records,
                                     mappings_path=mappings_path,
                                     location_review_path=location_review_path,
+                                    institution_audit_path=institution_audit_path,
+                                    change_source="admin_mapping_update",
+                                    changed_by="local-admin",
                                 )
                                 response_status = HTTPStatus.OK
                                 message = "Curated author–institution mapping updated."
@@ -2877,6 +2901,10 @@ def make_handler(
                                     "All active curated mappings were replaced; "
                                     "prior rows remain as excluded audit records."
                                 )
+                            reconcile_mapping_changes(
+                                load_mappings(mappings_path),
+                                path=institution_review_queue_path,
+                            )
                     except DuplicateMappingError as error:
                         self.send_json(
                             HTTPStatus.CONFLICT,
