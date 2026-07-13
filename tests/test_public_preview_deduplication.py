@@ -6,9 +6,11 @@ from pathlib import Path
 from scripts.curated_export import _ordered_mapping_authors
 from scripts.export_public_preview import (
     add_public_detail_fields,
+    canonicalize_public_institutions,
     exclude_preprint_versions,
     exclude_retracted_records,
     paper_is_retracted,
+    public_institution_aliases,
     synchronize_publication_types,
 )
 from scripts.refresh_public_preview import build_steps, parse_args
@@ -24,6 +26,95 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_confirmed_astar_variants_canonicalize_and_dedupe_public_records(self):
+        aliases = public_institution_aliases(
+            [
+                {
+                    "alias_name": "Agency for Science, Technology and Research",
+                    "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)",
+                    "review_status": "confirmed",
+                    "alias_source": "local-admin",
+                }
+            ],
+            [
+                {
+                    "institution": "A*STAR",
+                    "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)",
+                    "review_status": "confirmed",
+                },
+                {
+                    "institution": "A STAR Research Lab",
+                    "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)",
+                    "review_status": "alias_candidate",
+                },
+            ],
+        )
+        self.assertIn("A*STAR", {row["alias_name"] for row in aliases})
+        self.assertNotIn("A STAR Research Lab", {row["alias_name"] for row in aliases})
+        canonical_name = "Agency for Science, Technology and Research (A*STAR)"
+        canonical_id = next(
+            row["canonical_institution_id"]
+            for row in aliases
+            if row["alias_name"] == "A*STAR"
+        )
+        paper = {
+            "title": "Shared A*STAR paper",
+            "year": 2024,
+            "doi": "10.1000/astar",
+            "authors": ["Alias Author", "Canonical Author", "Other Author"],
+            "aggregated_institutions": [
+                "A*STAR",
+                "Agency for Science, Technology and Research",
+                "Other University",
+            ],
+            "map_record_count": 3,
+            "has_map_location": True,
+        }
+        maps = [
+            {
+                **paper,
+                "institution": "A*STAR",
+                "institution_id": "institution:old-astar",
+                "institution_authors": ["Alias Author"],
+            },
+            {
+                **paper,
+                "institution": "Agency for Science, Technology and Research",
+                "institution_id": "institution:old-expanded",
+                "institution_authors": ["Canonical Author"],
+            },
+            {
+                **paper,
+                "institution": "Other University",
+                "institution_id": "institution:other",
+                "institution_authors": ["Other Author"],
+            },
+        ]
+
+        canonical_maps = canonicalize_public_institutions([paper], maps, aliases)
+        add_public_detail_fields([paper], canonical_maps)
+
+        self.assertEqual(len(canonical_maps), 2)
+        astar = next(row for row in canonical_maps if row["institution_id"] == canonical_id)
+        self.assertEqual(astar["institution"], canonical_name)
+        self.assertEqual(
+            set(astar["institution_authors"]),
+            {"Alias Author", "Canonical Author"},
+        )
+        self.assertEqual(paper["map_record_count"], 2)
+        self.assertEqual(
+            paper["aggregated_institutions"],
+            [canonical_name, "Other University"],
+        )
+        self.assertEqual(
+            [item["name"] for item in paper["affiliations"]],
+            [canonical_name, "Other University"],
+        )
+        self.assertEqual(
+            set(paper["affiliations"][0]["source_institution_names"]),
+            {"A*STAR", "Agency for Science, Technology and Research"},
+        )
+
     def test_map_markers_inherit_one_normalized_canonical_publication_type(self):
         paper = {
             "title": "Shared paper",

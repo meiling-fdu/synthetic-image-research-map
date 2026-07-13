@@ -249,6 +249,7 @@ const INSTITUTION_CSV_COLUMNS = [
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
   ["institution_name", (record) => recordInstitution(record)],
+  ["institution_id", (record) => String(record.institution_id || "")],
   ["country", (record) => record.country || ""],
   ["country_code", (record) => record.country_code || ""],
   ["region", (record) => record.region || ""],
@@ -271,6 +272,7 @@ const PAPER_CSV_COLUMNS = [
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
   ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
+  ["institution_ids", (record) => canonicalInstitutionIds(record).join("; ")],
   ["countries", (record) => (record.aggregated_country_names || []).join("; ")],
   ["country_codes", (record) => (record.aggregated_country_codes || []).join("; ")],
   ["regions", (record) => (record.aggregated_regions || []).join("; ")],
@@ -411,6 +413,12 @@ function recordInstitutionIdentities(record) {
   });
   identities.delete("name:");
   return identities;
+}
+
+function canonicalInstitutionIds(record) {
+  return [...recordInstitutionIdentities(record)]
+    .filter((identity) => identity.startsWith("id:"))
+    .map((identity) => identity.slice(3));
 }
 
 function affiliationIdentity(record) {
@@ -1141,6 +1149,115 @@ function resolveInstitutionSearch(value, searchIndex) {
   return matches?.size === 1 ? [...matches][0] : "";
 }
 
+function buildCanonicalInstitutionResolver(aliases) {
+  const resolver = new Map();
+  aliases.forEach((alias) => {
+    const canonical = {
+      name: String(alias.canonical_institution_name || "").trim(),
+      id: String(alias.canonical_institution_id || "").trim(),
+    };
+    if (!canonical.name) return;
+    resolver.set(normalizedSearchText(alias.alias_name), canonical);
+    resolver.set(normalizedSearchText(canonical.name), canonical);
+  });
+  resolver.delete("");
+  return resolver;
+}
+
+function canonicalizeInstitutionObject(value, resolver) {
+  if (!value || typeof value !== "object") return value;
+  const nameField = Object.hasOwn(value, "name") ? "name" : "institution";
+  const originalName = String(
+    value[nameField]
+      || value.institution_name
+      || value.canonical_name
+      || value.canonical_institution_name
+      || "",
+  ).trim();
+  const canonical = resolver.get(normalizedSearchText(originalName));
+  if (!canonical) return value;
+  const originalId = String(
+    value.institution_id || value.canonical_institution_id || "",
+  ).trim();
+  if (originalName && originalName !== canonical.name) {
+    value.source_institution ||= originalName;
+    value.source_institution_names = [...new Set([
+      ...(Array.isArray(value.source_institution_names)
+        ? value.source_institution_names
+        : []),
+      originalName,
+    ])];
+  }
+  if (originalId && canonical.id && originalId !== canonical.id) {
+    value.source_institution_id ||= originalId;
+  }
+  value[nameField] = canonical.name;
+  if (Object.hasOwn(value, "institution_name")) value.institution_name = canonical.name;
+  value.canonical_name = canonical.name;
+  value.canonical_institution_name = canonical.name;
+  if (canonical.id) value.institution_id = canonical.id;
+  return value;
+}
+
+function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases) {
+  const resolver = buildCanonicalInstitutionResolver(aliases);
+  const canonicalizeRecord = (record) => {
+    if (recordInstitution(record)) canonicalizeInstitutionObject(record, resolver);
+    ["affiliations", "author_institution_affiliations"].forEach((field) => {
+      if (Array.isArray(record[field])) {
+        record[field].forEach((affiliation) => (
+          canonicalizeInstitutionObject(affiliation, resolver)
+        ));
+      }
+    });
+    canonicalizeInstitutionObject(record.current_institution, resolver);
+    if (Array.isArray(record.aggregated_institutions)) {
+      record.aggregated_institutions = [...new Set(
+        record.aggregated_institutions.map((name) => (
+          resolver.get(normalizedSearchText(name))?.name || name
+        )),
+      )];
+    }
+    return record;
+  };
+  mapRecords.forEach(canonicalizeRecord);
+  publicPaperRecords.forEach(canonicalizeRecord);
+
+  const canonicalMapRecords = new Map();
+  mapRecords.forEach((record) => {
+    const key = `${paperIdentity(record)}||${institutionIdentity(record)}`;
+    const existing = canonicalMapRecords.get(key);
+    if (!existing) {
+      canonicalMapRecords.set(key, record);
+      return;
+    }
+    existing.institution_authors = [...new Set([
+      ...recordInstitutionAuthors(existing),
+      ...recordInstitutionAuthors(record),
+    ])];
+    existing.source_institution_names = [...new Set([
+      ...(existing.source_institution_names || []),
+      ...(record.source_institution_names || []),
+      ...(record.source_institution ? [record.source_institution] : []),
+    ])];
+  });
+  const canonicalMaps = [...canonicalMapRecords.values()];
+  const mapsByPaper = new Map();
+  canonicalMaps.forEach((record) => {
+    const identity = paperIdentity(record);
+    if (!mapsByPaper.has(identity)) mapsByPaper.set(identity, []);
+    mapsByPaper.get(identity).push(record);
+  });
+  publicPaperRecords.forEach((paper) => {
+    const related = mapsByPaper.get(paperIdentity(paper)) || [];
+    if (!related.length) return;
+    paper.map_record_count = related.length;
+    paper.has_map_location = true;
+    paper.aggregated_institutions = [...new Set(related.map(recordInstitution))];
+  });
+  return { mapRecords: canonicalMaps, paperRecords: publicPaperRecords };
+}
+
 function recordSearchText(record) {
   const authors = recordAuthors(record);
   return normalizedSearchText([
@@ -1395,7 +1512,7 @@ function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
   datasetRecordCount.textContent = datasetRecords.length;
   datasetPaperCount.textContent = paperCoverageRecords.length;
   datasetInstitutionCount.textContent = normalizedSetSize(
-    datasetRecords.map(recordInstitution),
+    datasetRecords.map(institutionIdentity),
   );
   datasetCountryCount.textContent = normalizedSetSize(
     datasetRecords.map(recordCountry),
@@ -1454,7 +1571,7 @@ function renderInstitutionChart(datasetRecords) {
     if (!institution) {
       return;
     }
-    const key = normalizedSearchText(institution);
+    const key = institutionIdentity(record);
     const entry = institutions.get(key) || { name: institution, papers: new Set() };
     entry.papers.add(paperIdentity(record));
     institutions.set(key, entry);
@@ -2540,9 +2657,14 @@ async function readDataset(name) {
 }
 
 function displayDataset(normalizedData) {
-  records = normalizedData.records;
-  paperRecords = normalizedData.paperRecords || [];
   institutionAliases = normalizedData.institutionAliases || [];
+  const canonicalized = canonicalizePublicDataset(
+    normalizedData.records,
+    normalizedData.paperRecords || [],
+    institutionAliases,
+  );
+  records = canonicalized.mapRecords;
+  paperRecords = canonicalized.paperRecords;
   displayMetadataWarning(normalizedData.metadata);
   displayPublicPreviewDate(normalizedData.metadata);
   if (normalizedData.paperMetadata) {

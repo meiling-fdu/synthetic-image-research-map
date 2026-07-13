@@ -130,11 +130,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Hannover Re (Germany)",
-        "Helmholtz Center for Information Security",
         "Leibniz University Hannover",
-        "Max Planck Institute for Security and Privacy",
-        "Ruhr University Bochum"
+        "Helmholtz Center for Information Security",
+        "Hannover Re (Germany)",
+        "Ruhr University Bochum",
+        "Max Planck Institute for Security and Privacy"
       ],
       "aggregated_country_names": [
         "DE"
@@ -496,8 +496,7 @@
         {
           "name": "Staycy Guevara",
           "affiliation_indices": [
-            1,
-            2
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -506,8 +505,7 @@
         {
           "name": "Ana Lucila Sandoval Orozco",
           "affiliation_indices": [
-            1,
-            2
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -516,8 +514,7 @@
         {
           "name": "Luis Javier García Villalba",
           "affiliation_indices": [
-            1,
-            2
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -537,8 +534,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Complutense University of Madrid",
-        "Universidad Complutense de Madrid"
+        "Complutense University of Madrid"
       ],
       "aggregated_country_names": [
         "Spain"
@@ -571,18 +567,6 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:2e73bb336e7ad920",
-          "institution": "Universidad Complutense de Madrid",
-          "authors": [
-            "Staycy Guevara",
-            "Ana Lucila Sandoval Orozco",
-            "Luis Javier García Villalba"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        },
-        {
-          "index": 2,
           "institution_id": "institution:6a318a8411b5cf74",
           "institution": "Complutense University of Madrid",
           "authors": [
@@ -590,41 +574,42 @@
             "Ana Lucila Sandoval Orozco",
             "Luis Javier García Villalba"
           ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Universidad Complutense de Madrid"
+          ],
+          "source_institution": "Universidad Complutense de Madrid",
+          "source_institution_id": "institution:2e73bb336e7ad920",
+          "canonical_name": "Complutense University of Madrid",
+          "canonical_institution_name": "Complutense University of Madrid"
         }
       ],
       "author_institution_indices": [
         {
           "author": "Staycy Guevara",
           "institution_indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:2e73bb336e7ad920",
             "institution:6a318a8411b5cf74"
           ]
         },
         {
           "author": "Ana Lucila Sandoval Orozco",
           "institution_indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:2e73bb336e7ad920",
             "institution:6a318a8411b5cf74"
           ]
         },
         {
           "author": "Luis Javier García Villalba",
           "institution_indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:2e73bb336e7ad920",
             "institution:6a318a8411b5cf74"
           ]
         }
@@ -633,11 +618,9 @@
         {
           "author": "Staycy Guevara",
           "indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:2e73bb336e7ad920",
             "institution:6a318a8411b5cf74"
           ],
           "source": "curated_admin",
@@ -646,11 +629,9 @@
         {
           "author": "Ana Lucila Sandoval Orozco",
           "indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:2e73bb336e7ad920",
             "institution:6a318a8411b5cf74"
           ],
           "source": "curated_admin",
@@ -659,11 +640,9 @@
         {
           "author": "Luis Javier García Villalba",
           "indices": [
-            1,
-            2
+            1
           ],
           "institution_ids": [
-            "institution:2e73bb336e7ad920",
             "institution:6a318a8411b5cf74"
           ],
           "source": "curated_admin",
@@ -673,23 +652,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Universidad Complutense de Madrid",
-          "canonical_name": "Universidad Complutense de Madrid",
-          "institution_id": "institution:2e73bb336e7ad920",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": ""
-        },
-        {
-          "index": 2,
           "name": "Complutense University of Madrid",
           "canonical_name": "Complutense University of Madrid",
           "institution_id": "institution:6a318a8411b5cf74",
-          "country": "Spain",
+          "country": "",
           "country_code": "",
-          "region": "Community of Madrid",
-          "location_display": "Community of Madrid, Spain"
+          "region": "",
+          "location_display": "",
+          "source_institution_names": [
+            "Universidad Complutense de Madrid"
+          ],
+          "source_institution": "Universidad Complutense de Madrid",
+          "source_institution_id": "institution:2e73bb336e7ad920",
+          "canonical_institution_name": "Complutense University of Madrid"
         }
       ],
       "current_institution": null
@@ -814,8 +789,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Alibaba Inc",
         "Zhejiang University",
+        "Alibaba Inc",
         "Zhejiang University of Technology"
       ],
       "aggregated_country_names": [
@@ -1583,10 +1558,6 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Anhui University",
-        "Hefei Comprehensive National Science Center",
-        "National University of Singapore",
-        "Origin Quantum Computing Technology Company (China)",
         "University of Science and Technology of China"
       ],
       "aggregated_country_names": [
@@ -2786,8 +2757,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Purple Mountain Laboratories",
-        "Southeast University"
+        "Southeast University",
+        "Purple Mountain Laboratories"
       ],
       "aggregated_country_names": [
         "China"
@@ -3312,9 +3283,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Guizhou Normal University",
-        "Harbin Institute of Technology",
-        "Xi’an Jiaotong University"
+        "Xi’an Jiaotong University",
+        "Harbin Institute of Technology"
       ],
       "aggregated_country_names": [
         "China"
@@ -3621,7 +3591,6 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Institute of Computing Technology",
         "University of Chinese Academy of Sciences"
       ],
       "aggregated_country_names": [
@@ -3961,9 +3930,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beihang University",
         "Beijing University of Posts and Telecommunications",
-        "Huawei Technologies (China)"
+        "Beihang University"
       ],
       "aggregated_country_names": [
         "China"
@@ -4507,8 +4475,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Wuhan University",
-        "Xi’an Jiaotong University"
+        "Xi’an Jiaotong University",
+        "Wuhan University"
       ],
       "aggregated_country_names": [
         "China"
@@ -5321,10 +5289,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "HKISI, Chinese Academy of Sciences",
+        "University of Chinese Academy of Sciences",
         "Institute of Automation, Chinese Academy of Sciences",
-        "Sangfor Technologies Inc.",
-        "University of Chinese Academy of Sciences"
+        "HKISI, Chinese Academy of Sciences",
+        "Sangfor Technologies Inc."
       ],
       "aggregated_country_names": [
         "China"
@@ -5730,9 +5698,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Fujian University of Technology",
         "Beijing Institute of Graphic Communication",
-        "Beijing Jiaotong University",
-        "Fujian University of Technology"
+        "Beijing Jiaotong University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -5984,8 +5952,6 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "China Academy of Information and Communications Technology",
-        "China Electronics Technology Group Corporation",
         "Sun Yat-sen University"
       ],
       "aggregated_country_names": [
@@ -6316,9 +6282,9 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Institut d'électronique de microélectronique et de nanotechnologie",
+        "Polytechnic University of Hauts-de-France",
         "Khalifa University of Science and Technology",
-        "Sorbonne University Abu Dhabi",
-        "Université Polytechnique Hauts-de-France"
+        "Sorbonne University Abu Dhabi"
       ],
       "aggregated_country_names": [
         "AE",
@@ -6343,13 +6309,19 @@
         },
         {
           "index": 2,
-          "name": "Université Polytechnique Hauts-de-France",
-          "canonical_name": "Université Polytechnique Hauts-de-France",
-          "institution_id": "institution:d09040aba5fecf8e",
+          "name": "Polytechnic University of Hauts-de-France",
+          "canonical_name": "Polytechnic University of Hauts-de-France",
+          "institution_id": "institution:1e2fe2432a089705",
           "country": "FR",
           "country_code": "",
           "region": "",
-          "location_display": "France"
+          "location_display": "France",
+          "source_institution_names": [
+            "Université Polytechnique Hauts-de-France"
+          ],
+          "source_institution": "Université Polytechnique Hauts-de-France",
+          "source_institution_id": "institution:d09040aba5fecf8e",
+          "canonical_institution_name": "Polytechnic University of Hauts-de-France"
         },
         {
           "index": 3,
@@ -6388,15 +6360,22 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:d09040aba5fecf8e",
-          "institution": "Université Polytechnique Hauts-de-France",
+          "institution_id": "institution:1e2fe2432a089705",
+          "institution": "Polytechnic University of Hauts-de-France",
           "authors": [
             "Mamadou Keïta",
             "Hessen Bougueffa Eutamene",
             "Abdelmalik Taleb-Ahmed"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Université Polytechnique Hauts-de-France"
+          ],
+          "source_institution": "Université Polytechnique Hauts-de-France",
+          "source_institution_id": "institution:d09040aba5fecf8e",
+          "canonical_name": "Polytechnic University of Hauts-de-France",
+          "canonical_institution_name": "Polytechnic University of Hauts-de-France"
         },
         {
           "index": 3,
@@ -6428,7 +6407,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -6452,7 +6431,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -6465,7 +6444,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -6491,7 +6470,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ]
         },
         {
@@ -6511,7 +6490,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ]
         },
         {
@@ -6522,7 +6501,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ]
         },
         {
@@ -8420,12 +8399,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Boston University",
         "Nanyang Technological University",
-        "Shandong University",
-        "Shandong University of Science and Technology",
-        "University of Massachusetts Boston",
-        "University of Oregon"
+        "Shandong University"
       ],
       "aggregated_country_names": [
         "China",
@@ -8917,8 +8892,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "National Institute of Informatics",
-        "The University of Tokyo"
+        "The University of Tokyo",
+        "National Institute of Informatics"
       ],
       "aggregated_country_names": [
         "Japan"
@@ -11350,9 +11325,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing Academy of Artificial Intelligence",
+        "Beijing University of Posts and Telecommunications",
         "Beijing Normal University",
-        "Beijing University of Posts and Telecommunications"
+        "Beijing Academy of Artificial Intelligence"
       ],
       "aggregated_country_names": [
         "China"
@@ -11685,8 +11660,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Fujitsu Research of Europe",
-        "Technion – Israel Institute of Technology"
+        "Technion – Israel Institute of Technology",
+        "Fujitsu Research of Europe"
       ],
       "aggregated_country_names": [
         "Israel",
@@ -12613,11 +12588,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Huazhong Agricultural University",
-        "Huazhong University of Science and Technology",
         "Jianghan University",
+        "Huazhong University of Science and Technology",
         "Tsinghua University",
-        "Wuhan Business University"
+        "Wuhan Business University",
+        "Huazhong Agricultural University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -13752,9 +13727,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Gachon University",
         "Government Sadiq College Women University",
-        "Nanfang Hospital"
+        "Nanfang Hospital",
+        "Gachon University"
       ],
       "aggregated_country_names": [
         "CN",
@@ -15566,9 +15541,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Jinan University",
+        "University of Florence",
         "Sun Yat-sen University",
-        "University of Florence"
+        "Jinan University"
       ],
       "aggregated_country_names": [
         "China",
@@ -15931,7 +15906,7 @@
       "aggregated_institutions": [
         "Harbin Institute of Technology",
         "University of Southampton",
-        "Xi'an Jiaotong University"
+        "Xi’an Jiaotong University"
       ],
       "aggregated_country_names": [
         "CN",
@@ -15966,13 +15941,18 @@
         },
         {
           "index": 3,
-          "name": "Xi'an Jiaotong University",
-          "canonical_name": "Xi'an Jiaotong University",
+          "name": "Xi’an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
           "institution_id": "institution:afc29be68ac419be",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         }
       ],
       "current_institution": null,
@@ -16002,12 +15982,18 @@
         {
           "index": 3,
           "institution_id": "institution:afc29be68ac419be",
-          "institution": "Xi'an Jiaotong University",
+          "institution": "Xi’an Jiaotong University",
           "authors": [
             "Zhou Su"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         }
       ],
       "author_institution_indices": [
@@ -16213,9 +16199,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Guangdong University of Technology",
         "Jinan University",
-        "University of Florence"
+        "University of Florence",
+        "Guangdong University of Technology"
       ],
       "aggregated_country_names": [
         "China",
@@ -17115,13 +17101,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Anqing Normal University",
-        "Beijing Normal University",
-        "Beijing University of Posts and Telecommunications",
-        "Beijing University of Technology",
         "Hong Kong University of Science and Technology",
-        "The Hong Kong University of Science and Technology (Guangzhou)",
-        "University of Hong Kong"
+        "Beijing Normal University",
+        "Beijing University of Posts and Telecommunications"
       ],
       "aggregated_country_names": [
         "China"
@@ -17638,8 +17620,7 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "City University of Hong Kong",
-        "Fudan University",
-        "The Chinese University of Hong Kong, Shenzhen"
+        "Fudan University"
       ],
       "aggregated_country_names": [
         "China"
@@ -18001,10 +17982,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
-        "Hangzhou Dianzi University",
+        "Xi’an Jiaotong University",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
         "Institute of Computing Technology",
-        "Xi'an Jiaotong University"
+        "Hangzhou Dianzi University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -18017,23 +17998,34 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Xi'an Jiaotong University",
-          "canonical_name": "Xi'an Jiaotong University",
+          "name": "Xi’an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
           "institution_id": "institution:afc29be68ac419be",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         },
         {
           "index": 2,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 3,
@@ -18061,24 +18053,37 @@
         {
           "index": 1,
           "institution_id": "institution:afc29be68ac419be",
-          "institution": "Xi'an Jiaotong University",
+          "institution": "Xi’an Jiaotong University",
           "authors": [
             "Jiehua Zhang",
             "Wei Ke",
             "Yihong Gong"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         },
         {
           "index": 2,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Liang Li"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 3,
@@ -18118,7 +18123,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7"
           ]
         },
@@ -18169,7 +18174,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7"
           ],
           "source": "canonical_author_mapping",
@@ -18299,8 +18304,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Fudan University",
-        "University of Siena"
+        "University of Siena",
+        "Fudan University"
       ],
       "aggregated_country_names": [
         "China",
@@ -19862,10 +19867,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing Institute of Graphic Communication",
         "Communication University of China",
-        "Fujian University of Technology",
-        "Hunan University"
+        "Hunan University",
+        "Beijing Institute of Graphic Communication",
+        "Fujian University of Technology"
       ],
       "aggregated_country_names": [
         "China"
@@ -20800,7 +20805,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "A*STAR",
+        "Agency for Science, Technology and Research (A*STAR)",
         "Xidian University"
       ],
       "aggregated_country_names": [
@@ -20856,8 +20861,8 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:91aeee1163fdce71",
-          "institution": "A*STAR",
+          "institution_id": "institution:e81a0314e783d8a4",
+          "institution": "Agency for Science, Technology and Research (A*STAR)",
           "authors": [
             "Muli Yang",
             "Gabriel James Goenawan",
@@ -20868,7 +20873,14 @@
             "Hongyuan Zhu"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "A*STAR"
+          ],
+          "source_institution": "A*STAR",
+          "source_institution_id": "institution:91aeee1163fdce71",
+          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)"
         },
         {
           "index": 2,
@@ -20889,7 +20901,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         },
         {
@@ -20898,7 +20910,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         },
         {
@@ -20907,7 +20919,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         },
         {
@@ -20934,7 +20946,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         },
         {
@@ -20943,7 +20955,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         },
         {
@@ -20952,7 +20964,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         },
         {
@@ -20961,7 +20973,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         }
       ],
@@ -20972,7 +20984,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -20983,7 +20995,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -21001,7 +21013,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -21034,7 +21046,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -21045,7 +21057,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -21056,7 +21068,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -21067,7 +21079,7 @@
             1
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -21076,13 +21088,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "A*STAR",
-          "canonical_name": "A*STAR",
-          "institution_id": "institution:91aeee1163fdce71",
+          "name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "institution_id": "institution:e81a0314e783d8a4",
           "country": "Singapore",
           "country_code": "",
           "region": "Singapore",
-          "location_display": "Singapore"
+          "location_display": "Singapore",
+          "source_institution_names": [
+            "A*STAR"
+          ],
+          "source_institution": "A*STAR",
+          "source_institution_id": "institution:91aeee1163fdce71",
+          "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)"
         },
         {
           "index": 2,
@@ -22122,11 +22140,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Sant Gadge Baba Amravati University",
+        "Saraswati Dental College and Hospital",
         "Chitkara University",
         "Dar Al-Hekma University",
-        "Rashtrasant Tukadoji Maharaj Nagpur University",
-        "Sant Gadge Baba Amravati University",
-        "Saraswati Dental College and Hospital"
+        "Rashtrasant Tukadoji Maharaj Nagpur University"
       ],
       "aggregated_country_names": [
         "IN",
@@ -22673,9 +22691,9 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Dehradun Institute of Technology University",
+        "University of Wollongong in Dubai",
         "Middle East University",
-        "University of Petroleum and Energy Studies",
-        "University of Wollongong in Dubai"
+        "University of Petroleum and Energy Studies"
       ],
       "aggregated_country_names": [
         "AE",
@@ -22876,8 +22894,7 @@
         {
           "name": "Yu Cai",
           "affiliation_indices": [
-            1,
-            3
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -22920,8 +22937,7 @@
         {
           "name": "Siwei Lyu",
           "affiliation_indices": [
-            1,
-            3
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -22941,9 +22957,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Institute of Information Engineering, Chinese Academy of Sciences",
         "University at Buffalo",
-        "University at Buffalo, State University of New York"
+        "Institute of Information Engineering, Chinese Academy of Sciences"
       ],
       "aggregated_country_names": [
         "China",
@@ -22995,14 +23010,21 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution_id": "institution:4f85329e76bc9454",
+          "institution": "University at Buffalo",
           "authors": [
             "Yu Cai",
             "Siwei Lyu"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo"
         },
         {
           "index": 2,
@@ -23016,28 +23038,15 @@
           ],
           "mapping_source": "curated_admin",
           "mapping_fallback": false
-        },
-        {
-          "index": 3,
-          "institution_id": "institution:4f85329e76bc9454",
-          "institution": "University at Buffalo",
-          "authors": [
-            "Yu Cai",
-            "Siwei Lyu"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
         {
           "author": "Yu Cai",
           "institution_indices": [
-            1,
-            3
+            1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ]
         },
@@ -23071,11 +23080,9 @@
         {
           "author": "Siwei Lyu",
           "institution_indices": [
-            1,
-            3
+            1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ]
         }
@@ -23084,11 +23091,9 @@
         {
           "author": "Yu Cai",
           "indices": [
-            1,
-            3
+            1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ],
           "source": "curated_admin",
@@ -23137,11 +23142,9 @@
         {
           "author": "Siwei Lyu",
           "indices": [
-            1,
-            3
+            1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ],
           "source": "curated_admin",
@@ -23151,13 +23154,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
-          "institution_id": "institution:612630c2527bff83",
+          "name": "University at Buffalo",
+          "canonical_name": "University at Buffalo",
+          "institution_id": "institution:4f85329e76bc9454",
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": ""
+          "location_display": "",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_institution_name": "University at Buffalo"
         },
         {
           "index": 2,
@@ -23168,16 +23177,6 @@
           "country_code": "",
           "region": "Beijing",
           "location_display": "Beijing, China"
-        },
-        {
-          "index": 3,
-          "name": "University at Buffalo",
-          "canonical_name": "University at Buffalo",
-          "institution_id": "institution:4f85329e76bc9454",
-          "country": "United States",
-          "country_code": "",
-          "region": "Amherst",
-          "location_display": "Amherst, United States"
         }
       ],
       "current_institution": null
@@ -23266,9 +23265,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "University of Waterloo",
         "Mohamed bin Zayed University of Artificial Intelligence",
-        "University of Bergen",
-        "University of Waterloo"
+        "University of Bergen"
       ],
       "aggregated_country_names": [
         "Canada",
@@ -23617,10 +23616,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Ingegneria dei Sistemi (Italy)",
-        "Ingegneria dei Trasporti (Italy)",
         "University of Bologna",
-        "University of Naples Federico II"
+        "Ingegneria dei Trasporti (Italy)",
+        "University of Naples Federico II",
+        "Ingegneria dei Sistemi (Italy)"
       ],
       "aggregated_country_names": [
         "IT"
@@ -24453,8 +24452,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Tencent (China)",
-        "Xiamen University"
+        "Xiamen University",
+        "Tencent (China)"
       ],
       "aggregated_country_names": [
         "CN"
@@ -25247,8 +25246,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Centre for Research and Technology Hellas",
         "Information Technologies Institute",
+        "Centre for Research and Technology Hellas",
         "University of Amsterdam"
       ],
       "aggregated_country_names": [
@@ -25572,11 +25571,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing University of Posts and Telecommunications",
         "Institute of Artificial Intelligence (TeleAI), China Telecom",
-        "Lanzhou University",
+        "Beijing University of Posts and Telecommunications",
         "Northwestern Polytechnical University",
-        "Southeast University"
+        "Southeast University",
+        "Lanzhou University"
       ],
       "aggregated_country_names": [
         "China"
@@ -26098,10 +26097,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "University of Florence",
         "City University of London",
-        "City, University of London",
-        "Queen Mary University of London",
-        "University of Florence"
+        "Queen Mary University of London"
       ],
       "aggregated_country_names": [
         "Italy",
@@ -26177,12 +26175,18 @@
         {
           "index": 2,
           "institution_id": "institution:24e78a56f93457a5",
-          "institution": "City, University of London",
+          "institution": "City University of London",
           "authors": [
             "Christos Tzelepis"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "City, University of London"
+          ],
+          "source_institution": "City, University of London",
+          "canonical_name": "City University of London",
+          "canonical_institution_name": "City University of London"
         },
         {
           "index": 3,
@@ -26297,13 +26301,18 @@
         },
         {
           "index": 2,
-          "name": "City, University of London",
-          "canonical_name": "City, University of London",
+          "name": "City University of London",
+          "canonical_name": "City University of London",
           "institution_id": "institution:24e78a56f93457a5",
           "country": "United Kingdom",
           "country_code": "",
           "region": "England",
-          "location_display": "England, United Kingdom"
+          "location_display": "England, United Kingdom",
+          "source_institution_names": [
+            "City, University of London"
+          ],
+          "source_institution": "City, University of London",
+          "canonical_institution_name": "City University of London"
         },
         {
           "index": 3,
@@ -27454,10 +27463,10 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Institut d'électronique de microélectronique et de nanotechnologie",
+        "Polytechnic University of Hauts-de-France",
         "Khalifa University of Science and Technology",
-        "Sorbonne University Abu Dhabi",
         "Universidad Politécnica de Madrid",
-        "Université Polytechnique Hauts-de-France"
+        "Sorbonne University Abu Dhabi"
       ],
       "aggregated_country_names": [
         "AE",
@@ -27484,13 +27493,19 @@
         },
         {
           "index": 2,
-          "name": "Université Polytechnique Hauts-de-France",
-          "canonical_name": "Université Polytechnique Hauts-de-France",
-          "institution_id": "institution:d09040aba5fecf8e",
+          "name": "Polytechnic University of Hauts-de-France",
+          "canonical_name": "Polytechnic University of Hauts-de-France",
+          "institution_id": "institution:1e2fe2432a089705",
           "country": "FR",
           "country_code": "",
           "region": "",
-          "location_display": "France"
+          "location_display": "France",
+          "source_institution_names": [
+            "Université Polytechnique Hauts-de-France"
+          ],
+          "source_institution": "Université Polytechnique Hauts-de-France",
+          "source_institution_id": "institution:d09040aba5fecf8e",
+          "canonical_institution_name": "Polytechnic University of Hauts-de-France"
         },
         {
           "index": 3,
@@ -27539,15 +27554,22 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:d09040aba5fecf8e",
-          "institution": "Université Polytechnique Hauts-de-France",
+          "institution_id": "institution:1e2fe2432a089705",
+          "institution": "Polytechnic University of Hauts-de-France",
           "authors": [
             "Mamadou Keïta",
             "Hessen Bougueffa Eutamene",
             "Abdelmalik Taleb‐Ahmed"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Université Polytechnique Hauts-de-France"
+          ],
+          "source_institution": "Université Polytechnique Hauts-de-France",
+          "source_institution_id": "institution:d09040aba5fecf8e",
+          "canonical_name": "Polytechnic University of Hauts-de-France",
+          "canonical_institution_name": "Polytechnic University of Hauts-de-France"
         },
         {
           "index": 3,
@@ -27589,7 +27611,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -27613,7 +27635,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -27626,7 +27648,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -27663,7 +27685,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ]
         },
         {
@@ -27683,7 +27705,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ]
         },
         {
@@ -27694,7 +27716,7 @@
           ],
           "institution_ids": [
             "institution:871c652a6d6c8673",
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ]
         },
         {
@@ -28002,10 +28024,10 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Normal University",
-        "Central University of Finance and Economics",
+        "University of Chinese Academy of Sciences",
         "Fudan University",
-        "Tsinghua University",
-        "University of Chinese Academy of Sciences"
+        "Central University of Finance and Economics",
+        "Tsinghua University"
       ],
       "aggregated_country_names": [
         "China"
@@ -28469,8 +28491,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Jiaotong University",
-        "Chinese University of Hong Kong, Shenzhen",
-        "Yanshan University"
+        "Yanshan University",
+        "Chinese University of Hong Kong, Shenzhen"
       ],
       "aggregated_country_names": [
         "CN"
@@ -29032,9 +29054,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
-        "Institute of Information Engineering",
-        "University at Buffalo, State University of New York"
+        "University at Buffalo",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
+        "Institute of Information Engineering"
       ],
       "aggregated_country_names": [
         "CN",
@@ -29049,23 +29071,35 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
-          "institution_id": "institution:612630c2527bff83",
+          "name": "University at Buffalo",
+          "canonical_name": "University at Buffalo",
+          "institution_id": "institution:4f85329e76bc9454",
           "country": "US",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_institution_name": "University at Buffalo"
         },
         {
           "index": 2,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 3,
@@ -29082,27 +29116,41 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution_id": "institution:4f85329e76bc9454",
+          "institution": "University at Buffalo",
           "authors": [
             "Yu Cai",
             "Shan Jia",
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo"
         },
         {
           "index": 2,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Jiahe Tian",
             "Jiao Dai",
             "Jizhong Han"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 3,
@@ -29124,7 +29172,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -29133,7 +29181,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -29142,7 +29190,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -29152,7 +29200,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         },
@@ -29163,7 +29211,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         },
@@ -29174,7 +29222,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         }
@@ -29186,7 +29234,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -29197,7 +29245,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -29208,7 +29256,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -29220,7 +29268,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "canonical_author_mapping",
@@ -29233,7 +29281,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "canonical_author_mapping",
@@ -29246,7 +29294,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "canonical_author_mapping",
@@ -29339,8 +29387,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Purdue University West Lafayette",
-        "Rutgers Sexual and Reproductive Health and Rights",
-        "Sony Corporation (United States)"
+        "Sony Corporation (United States)",
+        "Rutgers Sexual and Reproductive Health and Rights"
       ],
       "aggregated_country_names": [
         "NL",
@@ -29684,9 +29732,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Shanghai Artificial Intelligence Laboratory",
+        "University of Science and Technology of China",
         "Shanghai Innovation Institute",
-        "University of Science and Technology of China"
+        "Shanghai Artificial Intelligence Laboratory"
       ],
       "aggregated_country_names": [
         "China"
@@ -30509,8 +30557,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Al-Azhar University",
         "Canadian International College",
+        "Al-Azhar University",
         "Scientific Research Group in Egypt"
       ],
       "aggregated_country_names": [
@@ -31358,8 +31406,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Princeton University",
-        "Wuhan University"
+        "Wuhan University",
+        "Princeton University"
       ],
       "aggregated_country_names": [
         "China",
@@ -32213,10 +32261,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Paris-Est Sup",
         "University Frères Mentouri Constantine 1",
-        "University of Portsmouth",
-        "Université Paris-Est Créteil"
+        "Université Paris-Est Créteil",
+        "Paris-Est Sup",
+        "University of Portsmouth"
       ],
       "aggregated_country_names": [
         "DZ",
@@ -32630,8 +32678,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Louisiana State University of Alexandria",
-        "Texas Tech University"
+        "Texas Tech University",
+        "Louisiana State University of Alexandria"
       ],
       "aggregated_country_names": [
         "US"
@@ -33128,8 +33176,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Adobe Systems (United States)",
-        "California University of Pennsylvania"
+        "California University of Pennsylvania",
+        "Adobe Systems (United States)"
       ],
       "aggregated_country_names": [
         "United States"
@@ -33731,9 +33779,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Tencent (China)",
         "Microsoft (United States)",
-        "Microsoft Research (United Kingdom)",
-        "Tencent (China)"
+        "Microsoft Research (United Kingdom)"
       ],
       "aggregated_country_names": [
         "CN",
@@ -34195,8 +34243,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Dongguan University of Technology",
-        "Shenzhen University"
+        "Shenzhen University",
+        "Dongguan University of Technology"
       ],
       "aggregated_country_names": [
         "CN"
@@ -34783,12 +34831,12 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Agence France-Presse",
-        "Centre Borelli",
-        "Centre National de la Recherche Scientifique",
-        "Centre for Research and Technology Hellas",
         "Information Technologies Institute",
-        "Université Paris-Saclay"
+        "Centre for Research and Technology Hellas",
+        "Centre National de la Recherche Scientifique",
+        "Université Paris-Saclay",
+        "Centre Borelli",
+        "Agence France-Presse"
       ],
       "aggregated_country_names": [
         "France",
@@ -35578,8 +35626,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Fraunhofer Institute for Industrial Mathematics",
-        "Offenburg University of Applied Sciences",
         "Supply Chain Competence Center (Germany)",
+        "Offenburg University of Applied Sciences",
         "University of Mannheim"
       ],
       "aggregated_country_names": [
@@ -35892,10 +35940,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chang’an University",
         "City University of Hong Kong",
-        "Nanyang Technological University",
+        "Chang’an University",
         "Sun Yat-sen University",
+        "Nanyang Technological University",
         "University of Campinas"
       ],
       "aggregated_country_names": [
@@ -36703,10 +36751,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing Academy of Artificial Intelligence",
-        "Harbin Institute of Technology, Shenzhen",
         "Institute of Automation, Chinese Academy of Sciences",
-        "University of Chinese Academy of Sciences"
+        "Beijing Academy of Artificial Intelligence",
+        "University of Chinese Academy of Sciences",
+        "Harbin Institute of Technology, Shenzhen"
       ],
       "aggregated_country_names": [
         "China"
@@ -37280,8 +37328,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chittagong University of Engineering and Technology",
-        "Indian Institute of Technology Kharagpur"
+        "Indian Institute of Technology Kharagpur",
+        "Chittagong University of Engineering and Technology"
       ],
       "aggregated_country_names": [
         "Bangladesh",
@@ -37492,10 +37540,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Hanyang University",
-        "University of Toronto",
         "Yonsei University, International Campus",
-        "Yonsei University, Sinchon Campus"
+        "Hanyang University",
+        "Yonsei University, Sinchon Campus",
+        "University of Toronto"
       ],
       "aggregated_country_names": [
         "Canada",
@@ -38203,9 +38251,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Sichuan University",
         "Ant Group",
         "Hong Kong University of Science and Technology",
-        "Sichuan University",
         "South China University of Technology",
         "University of Macao"
       ],
@@ -38736,15 +38784,15 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Alibaba Group (China)",
-        "Institute for Advanced Study",
-        "Megvii (China)",
-        "ShangHai JiAi Genetics & IVF Institute",
-        "Shanghai Artificial Intelligence Laboratory",
         "University of Hong Kong",
+        "Institute for Advanced Study",
+        "Zhejiang University",
+        "Alibaba Group (China)",
         "Vi Technology (United States)",
+        "Megvii (China)",
         "Zhejiang Lab",
-        "Zhejiang University"
+        "ShangHai JiAi Genetics & IVF Institute",
+        "Shanghai Artificial Intelligence Laboratory"
       ],
       "aggregated_country_names": [
         "CN",
@@ -39735,8 +39783,7 @@
         {
           "name": "Defang Chen",
           "affiliation_indices": [
-            3,
-            4
+            3
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -39755,8 +39802,7 @@
         {
           "name": "Siwei Lyu",
           "affiliation_indices": [
-            3,
-            4
+            3
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -39786,10 +39832,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Zhejiang University",
         "Hangzhou High-Tech Zone (Binjiang) Institute of Blockchain and Data Security",
-        "University at Buffalo",
-        "University at Buffalo, State University of New York",
-        "Zhejiang University"
+        "University at Buffalo"
       ],
       "aggregated_country_names": [
         "China",
@@ -39880,25 +39925,21 @@
         },
         {
           "index": 3,
-          "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
-          "authors": [
-            "Siwei Lyu",
-            "Defang Chen"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        },
-        {
-          "index": 4,
           "institution_id": "institution:4f85329e76bc9454",
           "institution": "University at Buffalo",
           "authors": [
             "Siwei Lyu",
             "Defang Chen"
           ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "author_institution_indices": [
@@ -39916,11 +39957,9 @@
         {
           "author": "Defang Chen",
           "institution_indices": [
-            3,
-            4
+            3
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ]
         },
@@ -39938,11 +39977,9 @@
         {
           "author": "Siwei Lyu",
           "institution_indices": [
-            3,
-            4
+            3
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ]
         },
@@ -39975,11 +40012,9 @@
         {
           "author": "Defang Chen",
           "indices": [
-            3,
-            4
+            3
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ],
           "source": "curated_admin",
@@ -40001,11 +40036,9 @@
         {
           "author": "Siwei Lyu",
           "indices": [
-            3,
-            4
+            3
           ],
           "institution_ids": [
-            "institution:612630c2527bff83",
             "institution:4f85329e76bc9454"
           ],
           "source": "curated_admin",
@@ -40048,23 +40081,19 @@
         },
         {
           "index": 3,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
-          "institution_id": "institution:612630c2527bff83",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": ""
-        },
-        {
-          "index": 4,
           "name": "University at Buffalo",
           "canonical_name": "University at Buffalo",
           "institution_id": "institution:4f85329e76bc9454",
-          "country": "United States",
+          "country": "",
           "country_code": "",
-          "region": "Amherst",
-          "location_display": "Amherst, United States"
+          "region": "",
+          "location_display": "",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "current_institution": null
@@ -40710,8 +40739,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "IdentifAI",
-        "University of Bologna"
+        "University of Bologna",
+        "IdentifAI"
       ],
       "aggregated_country_names": [
         "Italy"
@@ -41589,8 +41618,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing Normal University",
         "City University of Macau",
+        "Beijing Normal University",
         "Southwest University of Science and Technology"
       ],
       "aggregated_country_names": [
@@ -43152,8 +43181,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Netherlands Forensic Institute",
-        "University of Amsterdam"
+        "University of Amsterdam",
+        "Netherlands Forensic Institute"
       ],
       "aggregated_country_names": [
         "Netherlands"
@@ -43496,10 +43525,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Shanghai Jiao Tong University",
         "Beihang University",
         "Beijing Academy of Artificial Intelligence",
-        "Shanghai Artificial Intelligence Laboratory",
-        "Shanghai Jiao Tong University"
+        "Shanghai Artificial Intelligence Laboratory"
       ],
       "aggregated_country_names": [
         "CN",
@@ -44251,8 +44280,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Shenzhen University",
-        "Southeast University"
+        "Southeast University",
+        "Shenzhen University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -44533,12 +44562,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing University of Posts and Telecommunications",
-        "Chinese University of Hong Kong",
-        "Commonwealth Scientific and Industrial Research Organisation",
-        "Data61",
-        "National University of Singapore",
-        "University of Hong Kong"
+        "Beijing University of Posts and Telecommunications"
       ],
       "aggregated_country_names": [
         "China"
@@ -46652,11 +46676,11 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Academy of Artificial Intelligence",
-        "Chinese Academy of Sciences",
-        "Communication University of China",
+        "University of Chinese Academy of Sciences",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
         "Institute of Automation",
         "Nanjing University of Information Science and Technology",
-        "University of Chinese Academy of Sciences"
+        "Communication University of China"
       ],
       "aggregated_country_names": [
         "CN"
@@ -46689,13 +46713,19 @@
         },
         {
           "index": 3,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 4,
@@ -46752,15 +46782,22 @@
         },
         {
           "index": 3,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Wei Wang",
             "Bo Peng",
             "Jing Dong"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 4,
@@ -46816,7 +46853,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880"
           ],
           "source": "raw_affiliation",
@@ -46829,7 +46866,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880"
           ],
           "source": "raw_affiliation",
@@ -46853,7 +46890,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880"
           ],
           "source": "raw_affiliation",
@@ -46890,7 +46927,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880"
           ]
         },
@@ -46901,7 +46938,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880"
           ]
         },
@@ -46921,7 +46958,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880"
           ]
         },
@@ -47319,12 +47356,12 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing Academy of Artificial Intelligence",
-        "Harbin Institute of Technology, Shenzhen",
         "Institute of Automation, Chinese Academy of Sciences",
-        "Peking University",
+        "Beijing Academy of Artificial Intelligence",
+        "University of Chinese Academy of Sciences",
         "Tsinghua Shenzhen International Graduate School",
-        "University of Chinese Academy of Sciences"
+        "Harbin Institute of Technology, Shenzhen",
+        "Peking University"
       ],
       "aggregated_country_names": [
         "China"
@@ -47731,9 +47768,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Harbin Institute of Technology",
+        "Xi’an Jiaotong University",
         "University of Southampton",
-        "Xi'an Jiaotong University"
+        "Harbin Institute of Technology"
       ],
       "aggregated_country_names": [
         "CN",
@@ -47748,13 +47785,18 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Xi'an Jiaotong University",
-          "canonical_name": "Xi'an Jiaotong University",
+          "name": "Xi’an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
           "institution_id": "institution:afc29be68ac419be",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         },
         {
           "index": 2,
@@ -47782,12 +47824,18 @@
         {
           "index": 1,
           "institution_id": "institution:afc29be68ac419be",
-          "institution": "Xi'an Jiaotong University",
+          "institution": "Xi’an Jiaotong University",
           "authors": [
             "Yabin Wang"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         },
         {
           "index": 2,
@@ -47959,8 +48007,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Academy of Artificial Intelligence",
-        "Beijing Information Science & Technology University",
-        "Innovation Team (China)"
+        "Innovation Team (China)",
+        "Beijing Information Science & Technology University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -48510,8 +48558,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beihang University",
-        "Beijing Jiaotong University",
-        "Zhejiang Sci-Tech University"
+        "Zhejiang Sci-Tech University",
+        "Beijing Jiaotong University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -49264,7 +49312,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
         "Institute of Information Engineering"
       ],
       "aggregated_country_names": [
@@ -49278,8 +49326,8 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Weizhuo Chen",
             "Fangfang Yuan",
@@ -49289,7 +49337,14 @@
             "Yanbing Liu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -49315,7 +49370,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         },
@@ -49326,7 +49381,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         },
@@ -49337,7 +49392,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         },
@@ -49348,7 +49403,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         },
@@ -49359,7 +49414,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         },
@@ -49370,7 +49425,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ]
         }
@@ -49383,7 +49438,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "raw_affiliation",
@@ -49396,7 +49451,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "raw_affiliation",
@@ -49409,7 +49464,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "raw_affiliation",
@@ -49422,7 +49477,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "raw_affiliation",
@@ -49435,7 +49490,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "raw_affiliation",
@@ -49448,7 +49503,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:9aae8d70d2d6eed8"
           ],
           "source": "raw_affiliation",
@@ -49463,13 +49518,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -49573,8 +49634,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Khalifa University",
         "Polytechnic University of Hauts-de-France",
+        "Khalifa University",
         "Sorbonne University Abu Dhabi"
       ],
       "aggregated_country_names": [
@@ -49899,9 +49960,9 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "City University of Macau",
+        "Torrens University Australia",
         "Qilu University of Technology",
         "Shandong Academy of Sciences",
-        "Torrens University Australia",
         "Wuhan Institute of Technology"
       ],
       "aggregated_country_names": [
@@ -50934,8 +50995,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Peking University",
-        "Tencent (China)"
+        "Tencent (China)",
+        "Peking University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -51504,12 +51565,12 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Asia University",
         "Chaoyang University of Technology",
+        "University of Petroleum and Energy Studies",
         "Dar Al-Hekma University",
         "King Abdulaziz University",
         "Symbiosis International University",
-        "University of Petroleum and Energy Studies"
+        "Asia University"
       ],
       "aggregated_country_names": [
         "China",
@@ -51923,10 +51984,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese University of Hong Kong, Shenzhen",
-        "Nanyang Technological University",
         "University of Liverpool",
-        "University of Warwick"
+        "Nanyang Technological University",
+        "University of Warwick",
+        "Chinese University of Hong Kong, Shenzhen"
       ],
       "aggregated_country_names": [
         "CN",
@@ -52304,8 +52365,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Center for Data-Driven Science and AI, Tohoku University, Sendai, Japan",
         "University of Technology of Troyes",
+        "Center for Data-Driven Science and AI, Tohoku University, Sendai, Japan",
         "Université de Lille"
       ],
       "aggregated_country_names": [
@@ -52633,8 +52694,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Sichuan University",
-        "Xi'an University of Technology"
+        "Xi'an University of Technology",
+        "Sichuan University"
       ],
       "aggregated_country_names": [
         "China"
@@ -52948,8 +53009,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Alibaba Group (United States)",
         "Zhejiang University",
+        "Alibaba Group (United States)",
         "Zhejiang University of Technology"
       ],
       "aggregated_country_names": [
@@ -53289,10 +53350,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beihang University",
         "Shanghai Artificial Intelligence Laboratory",
-        "Shanghai Jiao Tong University",
         "Sun Yat-sen University",
+        "Beihang University",
+        "Shanghai Jiao Tong University",
         "The Chinese University of Hong Kong, Shenzhen"
       ],
       "aggregated_country_names": [
@@ -53964,8 +54025,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Centre for Research and Technology Hellas",
-        "Information Technologies Institute"
+        "Information Technologies Institute",
+        "Centre for Research and Technology Hellas"
       ],
       "aggregated_country_names": [
         "GR"
@@ -54226,7 +54287,6 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Ant Group",
         "Shanghai Jiao Tong University"
       ],
       "aggregated_country_names": [
@@ -54861,8 +54921,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "IMT School for Advanced Studies Lucca",
-        "University of Siena"
+        "University of Siena",
+        "IMT School for Advanced Studies Lucca"
       ],
       "aggregated_country_names": [
         "Italy"
@@ -55444,9 +55504,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Intelligent Health (United Kingdom)",
         "Shandong University",
         "University of Jinan",
+        "Intelligent Health (United Kingdom)",
         "Weihai Science and Technology Bureau"
       ],
       "aggregated_country_names": [
@@ -56057,10 +56117,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "NEC Laboratories America",
-        "University of California, Berkeley",
         "University of Wisconsin-Madison",
-        "University of Wisconsin–Madison"
+        "University of California, Berkeley",
+        "NEC Laboratories America"
       ],
       "aggregated_country_names": [
         "United States"
@@ -56123,12 +56182,18 @@
         {
           "index": 1,
           "institution_id": "institution:3e2e527953176c93",
-          "institution": "University of Wisconsin–Madison",
+          "institution": "University of Wisconsin-Madison",
           "authors": [
             "Haoyue Bai"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University of Wisconsin–Madison"
+          ],
+          "source_institution": "University of Wisconsin–Madison",
+          "canonical_name": "University of Wisconsin-Madison",
+          "canonical_institution_name": "University of Wisconsin-Madison"
         },
         {
           "index": 2,
@@ -56239,13 +56304,18 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University of Wisconsin–Madison",
-          "canonical_name": "University of Wisconsin–Madison",
+          "name": "University of Wisconsin-Madison",
+          "canonical_name": "University of Wisconsin-Madison",
           "institution_id": "institution:3e2e527953176c93",
           "country": "United States",
           "country_code": "",
           "region": "Wisconsin",
-          "location_display": "Wisconsin, United States"
+          "location_display": "Wisconsin, United States",
+          "source_institution_names": [
+            "University of Wisconsin–Madison"
+          ],
+          "source_institution": "University of Wisconsin–Madison",
+          "canonical_institution_name": "University of Wisconsin-Madison"
         },
         {
           "index": 2,
@@ -56462,11 +56532,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Politecnico di Milano",
-        "Sapienza University of Rome",
-        "University of Catania",
         "University of Siena",
-        "University of Trento"
+        "Politecnico di Milano",
+        "University of Trento",
+        "University of Catania",
+        "Sapienza University of Rome"
       ],
       "aggregated_country_names": [
         "IT"
@@ -57592,8 +57662,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Altınbaş University",
-        "Middle Technical University"
+        "Middle Technical University",
+        "Altınbaş University"
       ],
       "aggregated_country_names": [
         "IQ",
@@ -58075,9 +58145,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Shanghai Jiao Tong University",
+        "xiaohongshu Inc.",
         "University of Science and Technology of China",
-        "xiaohongshu Inc."
+        "Shanghai Jiao Tong University"
       ],
       "aggregated_country_names": [
         "China"
@@ -58825,9 +58895,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Xi’an Jiaotong University",
         "The Hong Kong Polytechnic University",
-        "Wuhan University",
-        "Xi’an Jiaotong University"
+        "Wuhan University"
       ],
       "aggregated_country_names": [
         "China"
@@ -59178,8 +59248,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Indian Institute of Science Bangalore",
-        "National Institute of Technology Karnataka"
+        "National Institute of Technology Karnataka",
+        "Indian Institute of Science Bangalore"
       ],
       "aggregated_country_names": [
         "India"
@@ -60882,10 +60952,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
-        "Communication University of China",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
         "Institute of Automation",
-        "University of Chinese Academy of Sciences"
+        "University of Chinese Academy of Sciences",
+        "Communication University of China"
       ],
       "aggregated_country_names": [
         "CN"
@@ -60898,13 +60968,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -60941,15 +61017,22 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Zheling Meng",
             "Jing Dong",
             "Tieniu Tan"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -60996,7 +61079,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880",
             "institution:69309405e04976ec"
           ],
@@ -61022,7 +61105,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880",
             "institution:69309405e04976ec"
           ],
@@ -61037,7 +61120,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880",
             "institution:69309405e04976ec"
           ],
@@ -61065,7 +61148,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880",
             "institution:69309405e04976ec"
           ]
@@ -61087,7 +61170,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880",
             "institution:69309405e04976ec"
           ]
@@ -61100,7 +61183,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:707f47de3ba40880",
             "institution:69309405e04976ec"
           ]
@@ -61218,7 +61301,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Xi'an Jiaotong University"
+        "Xi’an Jiaotong University"
       ],
       "aggregated_country_names": [
         "China"
@@ -61231,13 +61314,18 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Xi'an Jiaotong University",
-          "canonical_name": "Xi'an Jiaotong University",
+          "name": "Xi’an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
           "institution_id": "institution:afc29be68ac419be",
           "country": "China",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         }
       ],
       "current_institution": null,
@@ -61245,7 +61333,7 @@
         {
           "index": 1,
           "institution_id": "institution:afc29be68ac419be",
-          "institution": "Xi'an Jiaotong University",
+          "institution": "Xi’an Jiaotong University",
           "authors": [
             "Xu Guo",
             "Chenhao Lin",
@@ -61256,7 +61344,13 @@
             "Chende Zheng"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Xi'an Jiaotong University"
+          ],
+          "source_institution": "Xi'an Jiaotong University",
+          "canonical_name": "Xi’an Jiaotong University",
+          "canonical_institution_name": "Xi’an Jiaotong University"
         }
       ],
       "author_affiliation_indices": [
@@ -62079,9 +62173,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Leonardo S.p.A.",
         "University of Modena and Reggio Emilia",
-        "University of Pisa"
+        "University of Pisa",
+        "Leonardo S.p.A."
       ],
       "aggregated_country_names": [
         "Italy"
@@ -62423,9 +62517,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "University of Michigan",
         "University of Wisconsin-Madison",
-        "University of Wisconsin–Madison"
+        "University of Michigan"
       ],
       "aggregated_country_names": [
         "United States"
@@ -62476,14 +62569,20 @@
         {
           "index": 1,
           "institution_id": "institution:3e2e527953176c93",
-          "institution": "University of Wisconsin–Madison",
+          "institution": "University of Wisconsin-Madison",
           "authors": [
             "Ashish Hooda",
             "Kassem Fawaz",
             "Somesh Jha"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University of Wisconsin–Madison"
+          ],
+          "source_institution": "University of Wisconsin–Madison",
+          "canonical_name": "University of Wisconsin-Madison",
+          "canonical_institution_name": "University of Wisconsin-Madison"
         },
         {
           "index": 2,
@@ -62625,13 +62724,18 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University of Wisconsin–Madison",
-          "canonical_name": "University of Wisconsin–Madison",
+          "name": "University of Wisconsin-Madison",
+          "canonical_name": "University of Wisconsin-Madison",
           "institution_id": "institution:3e2e527953176c93",
           "country": "United States",
           "country_code": "",
           "region": "Wisconsin",
-          "location_display": "Wisconsin, United States"
+          "location_display": "Wisconsin, United States",
+          "source_institution_names": [
+            "University of Wisconsin–Madison"
+          ],
+          "source_institution": "University of Wisconsin–Madison",
+          "canonical_institution_name": "University of Wisconsin-Madison"
         },
         {
           "index": 2,
@@ -62749,8 +62853,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Jiaotong University",
-        "The Chinese University of Hong Kong, Shenzhen",
-        "University of Nevada, Reno"
+        "University of Nevada, Reno",
+        "The Chinese University of Hong Kong, Shenzhen"
       ],
       "aggregated_country_names": [
         "China",
@@ -63260,10 +63364,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "CNIT",
         "ISTI-CNR",
-        "NVIDIA AI Technology Center Italy",
-        "Universitas Mercatorum"
+        "CNIT",
+        "Universitas Mercatorum",
+        "NVIDIA AI Technology Center Italy"
       ],
       "aggregated_country_names": [
         "Italy"
@@ -64020,8 +64124,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "King's College London",
-        "Leeds Beckett University",
         "Sheffield Hallam University",
+        "Leeds Beckett University",
         "University of Plymouth"
       ],
       "aggregated_country_names": [
@@ -64628,8 +64732,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "PSG INSTITUTE OF TECHNOLOGY AND APPLIED RESEARCH",
-        "St. Joseph's Institute of Technology"
+        "St. Joseph's Institute of Technology",
+        "PSG INSTITUTE OF TECHNOLOGY AND APPLIED RESEARCH"
       ],
       "aggregated_country_names": [
         "IN"
@@ -65390,9 +65494,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Shanghai Jiao Tong University",
         "Chongqing University of Posts and Telecommunications",
-        "City University of Hong Kong",
-        "Shanghai Jiao Tong University"
+        "City University of Hong Kong"
       ],
       "aggregated_country_names": [
         "China"
@@ -65665,9 +65769,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Université Grenoble Alpes",
         "Centre National de la Recherche Scientifique",
-        "Grenoble INP",
-        "Université Grenoble Alpes"
+        "Grenoble INP"
       ],
       "aggregated_country_names": [
         "France"
@@ -65983,9 +66087,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Amazon Prime Video",
-        "Nanchang University",
         "Purdue University",
+        "Nanchang University",
+        "Amazon Prime Video",
         "University at Albany, SUNY",
         "University of Naples Federico II"
       ],
@@ -66441,8 +66545,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "American International University-Bangladesh",
-        "Barisal Information Technology College"
+        "Barisal Information Technology College",
+        "American International University-Bangladesh"
       ],
       "aggregated_country_names": [
         "Bangladesh"
@@ -66880,10 +66984,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "King Saud University",
         "Majmaah University",
+        "University of Wollongong in Dubai",
         "Middle East University",
-        "University of Wollongong in Dubai"
+        "King Saud University"
       ],
       "aggregated_country_names": [
         "AE",
@@ -67794,10 +67898,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Miraflow",
+        "Yonsei University, Sinchon Campus",
         "Purdue University",
-        "TrueMedia.org",
-        "Yonsei University, Sinchon Campus"
+        "Miraflow",
+        "TrueMedia.org"
       ],
       "aggregated_country_names": [
         "South Korea",
@@ -68832,8 +68936,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Govind Ballabh Pant University of Agriculture and Technology",
-        "Hindustan Institute of Technology and Science"
+        "Hindustan Institute of Technology and Science",
+        "Govind Ballabh Pant University of Agriculture and Technology"
       ],
       "aggregated_country_names": [
         "IN"
@@ -69027,8 +69131,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Institute for Research in Fundamental Sciences",
-        "Shahid Beheshti University"
+        "Shahid Beheshti University",
+        "Institute for Research in Fundamental Sciences"
       ],
       "aggregated_country_names": [
         "Iran"
@@ -70093,10 +70197,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "China Telecom Cloud Technology Co., Ltd.",
-        "Institute of Automation, Chinese Academy of Sciences",
-        "Peking University",
-        "University of Chinese Academy of Sciences"
+        "University of Chinese Academy of Sciences",
+        "Peking University"
       ],
       "aggregated_country_names": [
         "China"
@@ -70464,8 +70566,8 @@
       "aggregated_institutions": [
         "City University of Hong Kong",
         "Drexel University",
-        "Nanyang Technological University",
-        "University of Campinas"
+        "University of Campinas",
+        "Nanyang Technological University"
       ],
       "aggregated_country_names": [
         "Brazil",
@@ -70862,8 +70964,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Google Research",
-        "Massachusetts Institute of Technology"
+        "Massachusetts Institute of Technology",
+        "Google Research"
       ],
       "aggregated_country_names": [
         "United States"
@@ -71655,8 +71757,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Polytechnic University of Hauts-de-France",
-        "Sorbonne University Abu Dhabi",
-        "Université de Rennes"
+        "Université de Rennes",
+        "Sorbonne University Abu Dhabi"
       ],
       "aggregated_country_names": [
         "France",
@@ -71983,8 +72085,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Baidu (China)",
-        "Beijing Jiaotong University"
+        "Beijing Jiaotong University",
+        "Baidu (China)"
       ],
       "aggregated_country_names": [
         "CN"
@@ -72428,9 +72530,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "A*STAR",
         "Beijing Jiaotong University",
-        "Yanshan University"
+        "Yanshan University",
+        "Agency for Science, Technology and Research (A*STAR)"
       ],
       "aggregated_country_names": [
         "China",
@@ -72519,13 +72621,20 @@
         },
         {
           "index": 3,
-          "institution_id": "institution:91aeee1163fdce71",
-          "institution": "A*STAR",
+          "institution_id": "institution:e81a0314e783d8a4",
+          "institution": "Agency for Science, Technology and Research (A*STAR)",
           "authors": [
             "Ping Liu"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "A*STAR"
+          ],
+          "source_institution": "A*STAR",
+          "source_institution_id": "institution:91aeee1163fdce71",
+          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)"
         }
       ],
       "author_institution_indices": [
@@ -72571,7 +72680,7 @@
             3
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ]
         },
         {
@@ -72635,7 +72744,7 @@
             3
           ],
           "institution_ids": [
-            "institution:91aeee1163fdce71"
+            "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -72675,13 +72784,19 @@
         },
         {
           "index": 3,
-          "name": "A*STAR",
-          "canonical_name": "A*STAR",
-          "institution_id": "institution:91aeee1163fdce71",
+          "name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "institution_id": "institution:e81a0314e783d8a4",
           "country": "Singapore",
           "country_code": "",
           "region": "Singapore",
-          "location_display": "Singapore"
+          "location_display": "Singapore",
+          "source_institution_names": [
+            "A*STAR"
+          ],
+          "source_institution": "A*STAR",
+          "source_institution_id": "institution:91aeee1163fdce71",
+          "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)"
         }
       ],
       "current_institution": null
@@ -72770,8 +72885,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Google (United States)",
-        "Northeastern University"
+        "Northeastern University",
+        "Google (United States)"
       ],
       "aggregated_country_names": [
         "US"
@@ -73274,9 +73389,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Queensland University of Technology",
         "RMIT University",
-        "Washington State University"
+        "Washington State University",
+        "Queensland University of Technology"
       ],
       "aggregated_country_names": [
         "Australia",
@@ -73454,8 +73569,7 @@
         {
           "name": "Mamadou Keïta",
           "affiliation_indices": [
-            1,
-            4
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -73473,8 +73587,7 @@
         {
           "name": "Hassen Bougueffa",
           "affiliation_indices": [
-            1,
-            4
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -73492,8 +73605,7 @@
         {
           "name": "Abdelmalik Taleb‐Ahmed",
           "affiliation_indices": [
-            1,
-            4
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -73510,9 +73622,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Polytechnic University of Hauts-de-France",
-        "Sorbonne University Abu Dhabi",
         "Technology Innovation Institute",
-        "Université Polytechnique Hauts-de-France"
+        "Sorbonne University Abu Dhabi"
       ],
       "aggregated_country_names": [
         "France",
@@ -73530,15 +73641,22 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:d09040aba5fecf8e",
-          "institution": "Université Polytechnique Hauts-de-France",
+          "institution_id": "institution:1e2fe2432a089705",
+          "institution": "Polytechnic University of Hauts-de-France",
           "authors": [
             "Mamadou Keita",
             "Hassen Bougueffa",
             "Abdelmalik Taleb-Ahmed"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Université Polytechnique Hauts-de-France"
+          ],
+          "source_institution": "Université Polytechnique Hauts-de-France",
+          "source_institution_id": "institution:d09040aba5fecf8e",
+          "canonical_name": "Polytechnic University of Hauts-de-France",
+          "canonical_institution_name": "Polytechnic University of Hauts-de-France"
         },
         {
           "index": 2,
@@ -73559,29 +73677,15 @@
           ],
           "mapping_source": "curated_admin",
           "mapping_fallback": false
-        },
-        {
-          "index": 4,
-          "institution_id": "institution:1e2fe2432a089705",
-          "institution": "Polytechnic University of Hauts-de-France",
-          "authors": [
-            "Mamadou Keita",
-            "Hassen Bougueffa",
-            "Abdelmalik Taleb-Ahmed"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
         {
           "author": "Mamadou Keïta",
           "institution_indices": [
-            1,
-            4
+            1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e",
             "institution:1e2fe2432a089705"
           ]
         },
@@ -73597,11 +73701,9 @@
         {
           "author": "Hassen Bougueffa",
           "institution_indices": [
-            1,
-            4
+            1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e",
             "institution:1e2fe2432a089705"
           ]
         },
@@ -73611,17 +73713,15 @@
             1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ]
         },
         {
           "author": "Abdelmalik Taleb‐Ahmed",
           "institution_indices": [
-            1,
-            4
+            1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e",
             "institution:1e2fe2432a089705"
           ]
         }
@@ -73630,11 +73730,9 @@
         {
           "author": "Mamadou Keïta",
           "indices": [
-            1,
-            4
+            1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e",
             "institution:1e2fe2432a089705"
           ],
           "source": "curated_admin",
@@ -73654,11 +73752,9 @@
         {
           "author": "Hassen Bougueffa",
           "indices": [
-            1,
-            4
+            1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e",
             "institution:1e2fe2432a089705"
           ],
           "source": "curated_admin",
@@ -73670,7 +73766,7 @@
             1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e"
+            "institution:1e2fe2432a089705"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -73678,11 +73774,9 @@
         {
           "author": "Abdelmalik Taleb‐Ahmed",
           "indices": [
-            1,
-            4
+            1
           ],
           "institution_ids": [
-            "institution:d09040aba5fecf8e",
             "institution:1e2fe2432a089705"
           ],
           "source": "curated_admin",
@@ -73738,13 +73832,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Université Polytechnique Hauts-de-France",
-          "canonical_name": "Université Polytechnique Hauts-de-France",
-          "institution_id": "institution:d09040aba5fecf8e",
+          "name": "Polytechnic University of Hauts-de-France",
+          "canonical_name": "Polytechnic University of Hauts-de-France",
+          "institution_id": "institution:1e2fe2432a089705",
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": ""
+          "location_display": "",
+          "source_institution_names": [
+            "Université Polytechnique Hauts-de-France"
+          ],
+          "source_institution": "Université Polytechnique Hauts-de-France",
+          "source_institution_id": "institution:d09040aba5fecf8e",
+          "canonical_institution_name": "Polytechnic University of Hauts-de-France"
         },
         {
           "index": 2,
@@ -73765,16 +73865,6 @@
           "country_code": "",
           "region": "Abu Dhabi",
           "location_display": "Abu Dhabi, United Arab Emirates"
-        },
-        {
-          "index": 4,
-          "name": "Polytechnic University of Hauts-de-France",
-          "canonical_name": "Polytechnic University of Hauts-de-France",
-          "institution_id": "institution:1e2fe2432a089705",
-          "country": "France",
-          "country_code": "",
-          "region": "Hauts-de-France",
-          "location_display": "Hauts-de-France, France"
         }
       ],
       "current_institution": null
@@ -74199,9 +74289,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Center for Security and Emerging Technology",
+        "Stanford University",
         "Georgetown University",
-        "Stanford University"
+        "Center for Security and Emerging Technology"
       ],
       "aggregated_country_names": [
         "US"
@@ -74967,8 +75057,7 @@
           "affiliation_indices": [
             5,
             6,
-            9,
-            10
+            9
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -74995,13 +75084,12 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Queen Mary University of London",
         "AI Foundation and Algorithm Lab",
-        "Centre National de la Recherche Scientifique",
-        "CNRS",
         "HSE University",
         "Noeon Research",
-        "Queen Mary University of London",
         "Skolkovo Institute of Science and Technology",
+        "Centre National de la Recherche Scientifique",
         "St. Petersburg Department of the Steklov Institute of Mathematics",
         "University College London",
         "Université Paris Cité"
@@ -75211,13 +75299,20 @@
         },
         {
           "index": 6,
-          "institution_id": "institution:e6405787e8a9312c",
-          "institution": "CNRS",
+          "institution_id": "institution:29645bb566fcd576",
+          "institution": "Centre National de la Recherche Scientifique",
           "authors": [
             "Serguei Barannikov"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "CNRS"
+          ],
+          "source_institution": "CNRS",
+          "source_institution_id": "institution:e6405787e8a9312c",
+          "canonical_name": "Centre National de la Recherche Scientifique",
+          "canonical_institution_name": "Centre National de la Recherche Scientifique"
         },
         {
           "index": 7,
@@ -75247,16 +75342,6 @@
             "Serguei Barannikov"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        },
-        {
-          "index": 10,
-          "institution_id": "institution:29645bb566fcd576",
-          "institution": "Centre National de la Recherche Scientifique",
-          "authors": [
-            "Serguei Barannikov"
-          ],
-          "mapping_source": "raw_affiliation",
           "mapping_fallback": false
         }
       ],
@@ -75313,14 +75398,12 @@
           "institution_indices": [
             5,
             6,
-            9,
-            10
+            9
           ],
           "institution_ids": [
             "institution:91d1003beb3bcb91",
-            "institution:e6405787e8a9312c",
-            "institution:daff50b65ce469a3",
-            "institution:29645bb566fcd576"
+            "institution:29645bb566fcd576",
+            "institution:daff50b65ce469a3"
           ]
         }
       ],
@@ -75394,14 +75477,12 @@
           "indices": [
             5,
             6,
-            9,
-            10
+            9
           ],
           "institution_ids": [
             "institution:91d1003beb3bcb91",
-            "institution:e6405787e8a9312c",
-            "institution:daff50b65ce469a3",
-            "institution:29645bb566fcd576"
+            "institution:29645bb566fcd576",
+            "institution:daff50b65ce469a3"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -75467,13 +75548,19 @@
         },
         {
           "index": 6,
-          "name": "CNRS",
-          "canonical_name": "CNRS",
-          "institution_id": "institution:e6405787e8a9312c",
+          "name": "Centre National de la Recherche Scientifique",
+          "canonical_name": "Centre National de la Recherche Scientifique",
+          "institution_id": "institution:29645bb566fcd576",
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": ""
+          "location_display": "",
+          "source_institution_names": [
+            "CNRS"
+          ],
+          "source_institution": "CNRS",
+          "source_institution_id": "institution:e6405787e8a9312c",
+          "canonical_institution_name": "Centre National de la Recherche Scientifique"
         },
         {
           "index": 7,
@@ -75500,16 +75587,6 @@
           "name": "Université Paris Cité",
           "canonical_name": "Université Paris Cité",
           "institution_id": "institution:daff50b65ce469a3",
-          "country": "France",
-          "country_code": "",
-          "region": "Île-de-France",
-          "location_display": "Île-de-France, France"
-        },
-        {
-          "index": 10,
-          "name": "Centre National de la Recherche Scientifique",
-          "canonical_name": "Centre National de la Recherche Scientifique",
-          "institution_id": "institution:29645bb566fcd576",
           "country": "France",
           "country_code": "",
           "region": "Île-de-France",
@@ -76010,8 +76087,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Bank of Italy",
-        "University of Catania"
+        "University of Catania",
+        "Bank of Italy"
       ],
       "aggregated_country_names": [
         "IT"
@@ -76191,8 +76268,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Centre for Research and Technology Hellas",
-        "Information Technologies Institute"
+        "Information Technologies Institute",
+        "Centre for Research and Technology Hellas"
       ],
       "aggregated_country_names": [
         "GR"
@@ -76483,9 +76560,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Clemson University",
         "University of Southern California",
-        "USC Information Sciences Institute"
+        "USC Information Sciences Institute",
+        "Clemson University"
       ],
       "aggregated_country_names": [
         "United States"
@@ -76791,9 +76868,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "City University of Hong Kong",
+        "Université Paris-Saclay",
         "Instituto de Matemática Pura e Aplicada",
-        "Université Paris-Saclay"
+        "City University of Hong Kong"
       ],
       "aggregated_country_names": [
         "Brazil",
@@ -77141,8 +77218,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Bank of Italy",
-        "University of Catania"
+        "University of Catania",
+        "Bank of Italy"
       ],
       "aggregated_country_names": [
         "IT"
@@ -77363,7 +77440,7 @@
       "aggregated_institutions": [
         "City University of Hong Kong",
         "Shanghai Jiao Tong University",
-        "University at Buffalo, State University of New York"
+        "University at Buffalo"
       ],
       "aggregated_country_names": [
         "China",
@@ -77402,13 +77479,19 @@
         },
         {
           "index": 3,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
-          "institution_id": "institution:612630c2527bff83",
+          "name": "University at Buffalo",
+          "canonical_name": "University at Buffalo",
+          "institution_id": "institution:4f85329e76bc9454",
           "country": "United States",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "current_institution": null,
@@ -77442,14 +77525,21 @@
         },
         {
           "index": 3,
-          "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution_id": "institution:4f85329e76bc9454",
+          "institution": "University at Buffalo",
           "authors": [
             "Shan Jia",
             "Xinghao Jiang"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "author_institution_indices": [
@@ -77474,7 +77564,7 @@
           "institution_ids": [
             "institution:ec71dc4340659fd9",
             "institution:fccd5d0ac9cc52f9",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -77485,7 +77575,7 @@
           ],
           "institution_ids": [
             "institution:fccd5d0ac9cc52f9",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -77542,7 +77632,7 @@
           "institution_ids": [
             "institution:ec71dc4340659fd9",
             "institution:fccd5d0ac9cc52f9",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -77555,7 +77645,7 @@
           ],
           "institution_ids": [
             "institution:fccd5d0ac9cc52f9",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -78165,10 +78255,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "University of Management and Technology",
         "Islamia University of Bahawalpur",
-        "Lund University",
         "Satya Wacana Christian University",
-        "University of Management and Technology"
+        "Lund University"
       ],
       "aggregated_country_names": [
         "ID",
@@ -79663,10 +79753,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Institute of Informatics and Telematics",
-        "University of Florence",
         "University of Modena and Reggio Emilia",
-        "University of Pisa"
+        "University of Pisa",
+        "University of Florence",
+        "Institute of Informatics and Telematics"
       ],
       "aggregated_country_names": [
         "Italy"
@@ -80378,8 +80468,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Jiaotong University",
-        "University of Nevada, Reno",
-        "Yanshan University"
+        "Yanshan University",
+        "University of Nevada, Reno"
       ],
       "aggregated_country_names": [
         "CN",
@@ -80846,9 +80936,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Albany State University",
         "Purdue University West Lafayette",
         "Sapienza University of Rome",
+        "Albany State University",
         "University at Albany, State University of New York"
       ],
       "aggregated_country_names": [
@@ -81177,8 +81267,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "National University of Singapore",
-        "University of Science and Technology of China"
+        "University of Science and Technology of China",
+        "National University of Singapore"
       ],
       "aggregated_country_names": [
         "CN",
@@ -81523,8 +81613,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Toyota Technological Institute at Chicago",
-        "University of Illinois Urbana-Champaign"
+        "University of Illinois Urbana-Champaign",
+        "Toyota Technological Institute at Chicago"
       ],
       "aggregated_country_names": [
         "United States"
@@ -82395,8 +82485,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Nvidia (United States)",
-        "University of Naples Federico II"
+        "University of Naples Federico II",
+        "Nvidia (United States)"
       ],
       "aggregated_country_names": [
         "IT",
@@ -82944,8 +83034,7 @@
         {
           "name": "Qing Guo",
           "affiliation_indices": [
-            3,
-            6
+            3
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -83004,10 +83093,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Agency for Science, Technology and Research",
-        "Agency for Science, Technology and Research (A*STAR)",
         "East China Normal University",
         "Nanyang Technological University",
+        "Agency for Science, Technology and Research (A*STAR)",
         "New York University",
         "Wuhan University"
       ],
@@ -83054,13 +83142,20 @@
         },
         {
           "index": 3,
-          "institution_id": "institution:6c7dc4ecc36c32ba",
-          "institution": "Agency for Science, Technology and Research",
+          "institution_id": "institution:e81a0314e783d8a4",
+          "institution": "Agency for Science, Technology and Research (A*STAR)",
           "authors": [
             "Qing Guo"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Agency for Science, Technology and Research"
+          ],
+          "source_institution": "Agency for Science, Technology and Research",
+          "source_institution_id": "institution:6c7dc4ecc36c32ba",
+          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)"
         },
         {
           "index": 4,
@@ -83080,16 +83175,6 @@
             "Run Wang"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        },
-        {
-          "index": 6,
-          "institution_id": "institution:e81a0314e783d8a4",
-          "institution": "Agency for Science, Technology and Research (A*STAR)",
-          "authors": [
-            "Qing Guo"
-          ],
-          "mapping_source": "raw_affiliation",
           "mapping_fallback": false
         }
       ],
@@ -83115,11 +83200,9 @@
         {
           "author": "Qing Guo",
           "institution_indices": [
-            3,
-            6
+            3
           ],
           "institution_ids": [
-            "institution:6c7dc4ecc36c32ba",
             "institution:e81a0314e783d8a4"
           ]
         },
@@ -83186,11 +83269,9 @@
         {
           "author": "Qing Guo",
           "indices": [
-            3,
-            6
+            3
           ],
           "institution_ids": [
-            "institution:6c7dc4ecc36c32ba",
             "institution:e81a0314e783d8a4"
           ],
           "source": "curated_admin",
@@ -83346,13 +83427,19 @@
         },
         {
           "index": 3,
-          "name": "Agency for Science, Technology and Research",
-          "canonical_name": "Agency for Science, Technology and Research",
-          "institution_id": "institution:6c7dc4ecc36c32ba",
+          "name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "institution_id": "institution:e81a0314e783d8a4",
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": ""
+          "location_display": "",
+          "source_institution_names": [
+            "Agency for Science, Technology and Research"
+          ],
+          "source_institution": "Agency for Science, Technology and Research",
+          "source_institution_id": "institution:6c7dc4ecc36c32ba",
+          "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)"
         },
         {
           "index": 4,
@@ -83373,16 +83460,6 @@
           "country_code": "",
           "region": "Hubei",
           "location_display": "Hubei, China"
-        },
-        {
-          "index": 6,
-          "name": "Agency for Science, Technology and Research (A*STAR)",
-          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
-          "institution_id": "institution:e81a0314e783d8a4",
-          "country": "Singapore",
-          "country_code": "",
-          "region": "Singapore",
-          "location_display": "Singapore"
         }
       ],
       "current_institution": null
@@ -84499,8 +84576,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "CISPA Helmholtz Center for Information Security",
-        "Ruhr University Bochum"
+        "Ruhr University Bochum",
+        "CISPA Helmholtz Center for Information Security"
       ],
       "aggregated_country_names": [
         "Germany"
@@ -85752,8 +85829,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Nanyang Technological University",
-        "University of Oxford"
+        "University of Oxford",
+        "Nanyang Technological University"
       ],
       "aggregated_country_names": [
         "Singapore",
@@ -86029,8 +86106,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Bucknell University",
-        "Technische Universität Berlin"
+        "Technische Universität Berlin",
+        "Bucknell University"
       ],
       "aggregated_country_names": [
         "DE",
@@ -86286,10 +86363,10 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Chengdu University of Information Technology",
+        "University of Indianapolis",
         "Microsoft Research Asia (China)",
         "Tunghai University",
-        "University at Albany, State University of New York",
-        "University of Indianapolis"
+        "University at Albany, State University of New York"
       ],
       "aggregated_country_names": [
         "CN",
@@ -86817,8 +86894,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Technical University of Munich",
-        "University of Naples Federico II"
+        "University of Naples Federico II",
+        "Technical University of Munich"
       ],
       "aggregated_country_names": [
         "Germany",
@@ -87540,12 +87617,12 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Amity University",
         "GLA University",
+        "University of St. Thomas - Minnesota",
         "Gyeongguk National University",
-        "Sejong University",
+        "Amity University",
         "University of Malta",
-        "University of St. Thomas - Minnesota"
+        "Sejong University"
       ],
       "aggregated_country_names": [
         "IN",
@@ -88332,10 +88409,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Cape Peninsula University of Technology",
-        "Durban University of Technology",
+        "Nirma University",
         "Najran University",
-        "Nirma University"
+        "Cape Peninsula University of Technology",
+        "Durban University of Technology"
       ],
       "aggregated_country_names": [
         "IN",
@@ -89153,7 +89230,7 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "New York University",
-        "University at Buffalo, State University of New York"
+        "University at Buffalo"
       ],
       "aggregated_country_names": [
         "US"
@@ -89176,13 +89253,19 @@
         },
         {
           "index": 2,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
-          "institution_id": "institution:612630c2527bff83",
+          "name": "University at Buffalo",
+          "canonical_name": "University at Buffalo",
+          "institution_id": "institution:4f85329e76bc9454",
           "country": "US",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "current_institution": null,
@@ -89204,8 +89287,8 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution_id": "institution:4f85329e76bc9454",
+          "institution": "University at Buffalo",
           "authors": [
             "Shan Jia",
             "Mingzhen Huang",
@@ -89215,7 +89298,14 @@
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "author_affiliation_indices": [
@@ -89227,7 +89317,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -89240,7 +89330,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -89253,7 +89343,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -89266,7 +89356,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -89279,7 +89369,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -89292,7 +89382,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -89307,7 +89397,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -89318,7 +89408,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -89329,7 +89419,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -89340,7 +89430,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -89351,7 +89441,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -89362,7 +89452,7 @@
           ],
           "institution_ids": [
             "institution:c83aeae887827902",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         }
       ]
@@ -89437,11 +89527,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Harbin Institute of Technology",
-        "Pengcheng Laboratory",
+        "Xi’an Jiaotong University",
         "Singapore Management University",
         "University of Southampton",
-        "Xi’an Jiaotong University"
+        "Harbin Institute of Technology",
+        "Pengcheng Laboratory"
       ],
       "aggregated_country_names": [
         "China",
@@ -89829,12 +89919,12 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
-        "Hangzhou Dianzi University",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
+        "Zhengzhou University of Science and Technology",
         "Institute of Information Engineering",
-        "Nanjing University of Science and Technology",
         "State Key Laboratory of Information Security",
-        "Zhengzhou University of Science and Technology"
+        "Hangzhou Dianzi University",
+        "Nanjing University of Science and Technology"
       ],
       "aggregated_country_names": [
         "China"
@@ -89847,13 +89937,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "China",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -89910,13 +90006,20 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Tong Qiao"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -89985,7 +90088,7 @@
             5
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:5d8853c0a593d41c",
             "institution:9aae8d70d2d6eed8",
             "institution:8ac3b059e7b70054",
@@ -90058,7 +90161,7 @@
             5
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:5d8853c0a593d41c",
             "institution:9aae8d70d2d6eed8",
             "institution:8ac3b059e7b70054",
@@ -90450,13 +90553,13 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "University of Engineering and Technology Taxila",
         "Chonnam National University",
         "Karnatak University",
-        "Shaqra University",
-        "Tun Hussein Onn University of Malaysia",
-        "University of Engineering and Technology Taxila",
+        "VSB - Technical University of Ostrava",
         "University of Žilina",
-        "VSB - Technical University of Ostrava"
+        "Tun Hussein Onn University of Malaysia",
+        "Shaqra University"
       ],
       "aggregated_country_names": [
         "CZ",
@@ -90832,9 +90935,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Alipurduar Government Engineering and Management College",
         "Chongqing University of Posts and Telecommunications",
-        "University of Alabama at Birmingham"
+        "University of Alabama at Birmingham",
+        "Alipurduar Government Engineering and Management College"
       ],
       "aggregated_country_names": [
         "China",
@@ -91616,9 +91719,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Nirma University",
         "Cape Peninsula University of Technology",
-        "Graphic Era University",
-        "Nirma University"
+        "Graphic Era University"
       ],
       "aggregated_country_names": [
         "IN",
@@ -92281,9 +92384,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing Jiaotong University",
         "Liaoning University",
-        "Shenzhen University Health Science Center"
+        "Shenzhen University Health Science Center",
+        "Beijing Jiaotong University"
       ],
       "aggregated_country_names": [
         "CN"
@@ -92885,10 +92988,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Institute of Art",
+        "University of Science and Technology of China",
         "Microsoft Research Asia (China)",
-        "National Science Centre",
-        "University of Science and Technology of China"
+        "Institute of Art",
+        "National Science Centre"
       ],
       "aggregated_country_names": [
         "CN",
@@ -93214,8 +93317,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Humboldt-Universität zu Berlin",
-        "University of Vienna"
+        "University of Vienna",
+        "Humboldt-Universität zu Berlin"
       ],
       "aggregated_country_names": [
         "AT",
@@ -93453,8 +93556,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Adobe Systems (United States)",
-        "University of Surrey"
+        "University of Surrey",
+        "Adobe Systems (United States)"
       ],
       "aggregated_country_names": [
         "GB",
@@ -94096,8 +94199,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chongqing University of Posts and Telecommunications",
         "City University of Hong Kong",
+        "Chongqing University of Posts and Telecommunications",
         "Shanghai Jiao Tong University",
         "Wuhan University"
       ],
@@ -95296,7 +95399,6 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Huawei Noah's Ark Lab",
         "Huawei Noah’s Ark Lab"
       ],
       "aggregated_country_names": [
@@ -95340,7 +95442,7 @@
         {
           "index": 1,
           "institution_id": "institution:2e62680df0fed751",
-          "institution": "Huawei Noah's Ark Lab",
+          "institution": "Huawei Noah’s Ark Lab",
           "authors": [
             "Mingjian Zhu",
             "Hanting Chen",
@@ -95354,7 +95456,13 @@
             "Yunhe Wang"
           ],
           "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Huawei Noah's Ark Lab"
+          ],
+          "source_institution": "Huawei Noah's Ark Lab",
+          "canonical_name": "Huawei Noah’s Ark Lab",
+          "canonical_institution_name": "Huawei Noah’s Ark Lab"
         }
       ],
       "author_institution_indices": [
@@ -95443,13 +95551,18 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Huawei Noah's Ark Lab",
-          "canonical_name": "Huawei Noah's Ark Lab",
+          "name": "Huawei Noah’s Ark Lab",
+          "canonical_name": "Huawei Noah’s Ark Lab",
           "institution_id": "institution:2e62680df0fed751",
           "country": "China",
           "country_code": "",
           "region": "Hong Kong",
-          "location_display": "Hong Kong, China"
+          "location_display": "Hong Kong, China",
+          "source_institution_names": [
+            "Huawei Noah's Ark Lab"
+          ],
+          "source_institution": "Huawei Noah's Ark Lab",
+          "canonical_institution_name": "Huawei Noah’s Ark Lab"
         }
       ],
       "current_institution": null,
@@ -95650,9 +95763,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "National Institute of Standards and Technology",
         "State University of New York",
-        "University at Buffalo, State University of New York"
+        "University at Buffalo",
+        "National Institute of Standards and Technology"
       ],
       "aggregated_country_names": [
         "US"
@@ -95675,13 +95788,19 @@
         },
         {
           "index": 2,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
-          "institution_id": "institution:612630c2527bff83",
+          "name": "University at Buffalo",
+          "canonical_name": "University at Buffalo",
+          "institution_id": "institution:4f85329e76bc9454",
           "country": "US",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_institution_name": "University at Buffalo"
         },
         {
           "index": 3,
@@ -95711,8 +95830,8 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution_id": "institution:4f85329e76bc9454",
+          "institution": "University at Buffalo",
           "authors": [
             "Yan Ju",
             "Shan Jia",
@@ -95720,7 +95839,14 @@
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo"
         },
         {
           "index": 3,
@@ -95742,7 +95868,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -95755,7 +95881,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -95768,7 +95894,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -95792,7 +95918,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -95807,7 +95933,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -95818,7 +95944,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -95829,7 +95955,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -95849,7 +95975,7 @@
           ],
           "institution_ids": [
             "institution:87cfa9f9d3bda4e1",
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         }
       ]
@@ -95934,9 +96060,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Information Technologies Institute",
         "Centre for Research and Technology Hellas",
-        "Czech Technical University in Prague",
-        "Information Technologies Institute"
+        "Czech Technical University in Prague"
       ],
       "aggregated_country_names": [
         "CZ",
@@ -96443,8 +96569,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Beijing Jiaotong University",
-        "Signal Processing (United States)",
-        "Yanshan University"
+        "Yanshan University",
+        "Signal Processing (United States)"
       ],
       "aggregated_country_names": [
         "CN",
@@ -98214,7 +98340,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
         "Institute of Computing Technology",
         "University of Chinese Academy of Sciences",
         "Zhejiang Lab"
@@ -98230,13 +98356,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "China",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -98273,8 +98405,8 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Tianyun Yang",
             "Danding Wang",
@@ -98284,7 +98416,14 @@
             "Sheng Tang"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -98335,7 +98474,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ]
@@ -98348,7 +98487,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ]
@@ -98361,7 +98500,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ]
@@ -98374,7 +98513,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ]
@@ -98387,7 +98526,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ]
@@ -98400,7 +98539,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:2f8c9f8f9209013d"
           ]
@@ -98415,7 +98554,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ],
@@ -98430,7 +98569,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ],
@@ -98445,7 +98584,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ],
@@ -98460,7 +98599,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ],
@@ -98475,7 +98614,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:69309405e04976ec"
           ],
@@ -98490,7 +98629,7 @@
             4
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:dfb3cc816a4476d7",
             "institution:2f8c9f8f9209013d"
           ],
@@ -98775,10 +98914,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Shanghai Artificial Intelligence Laboratory",
         "Shanghai Jiao Tong University",
-        "The University of Hong Kong",
-        "The University of Sydney"
+        "Shanghai Artificial Intelligence Laboratory",
+        "The University of Sydney",
+        "The University of Hong Kong"
       ],
       "aggregated_country_names": [
         "Australia",
@@ -99564,8 +99703,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Tilburg University",
-        "University College London"
+        "University College London",
+        "Tilburg University"
       ],
       "aggregated_country_names": [
         "GB",
@@ -99766,8 +99905,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Institut national de recherche en sciences et technologies du numérique",
-        "Sorbonne Université"
+        "Sorbonne Université",
+        "Institut national de recherche en sciences et technologies du numérique"
       ],
       "aggregated_country_names": [
         "FR"
@@ -99963,9 +100102,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "City University of Macau",
+        "University of Technology Sydney",
         "The University of Sydney",
-        "University of Technology Sydney"
+        "City University of Macau"
       ],
       "aggregated_country_names": [
         "AU",
@@ -100198,7 +100337,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "University of Wisconsin–Madison"
+        "University of Wisconsin-Madison"
       ],
       "aggregated_country_names": [
         "United States"
@@ -100212,14 +100351,20 @@
         {
           "index": 1,
           "institution_id": "institution:3e2e527953176c93",
-          "institution": "University of Wisconsin–Madison",
+          "institution": "University of Wisconsin-Madison",
           "authors": [
             "Utkarsh Ojha",
             "Yuheng Li",
             "Yong Jae Lee"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University of Wisconsin–Madison"
+          ],
+          "source_institution": "University of Wisconsin–Madison",
+          "canonical_name": "University of Wisconsin-Madison",
+          "canonical_institution_name": "University of Wisconsin-Madison"
         }
       ],
       "author_institution_indices": [
@@ -100294,13 +100439,18 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University of Wisconsin–Madison",
-          "canonical_name": "University of Wisconsin–Madison",
+          "name": "University of Wisconsin-Madison",
+          "canonical_name": "University of Wisconsin-Madison",
           "institution_id": "institution:3e2e527953176c93",
           "country": "United States",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University of Wisconsin–Madison"
+          ],
+          "source_institution": "University of Wisconsin–Madison",
+          "canonical_institution_name": "University of Wisconsin-Madison"
         }
       ],
       "current_institution": null
@@ -100594,8 +100744,8 @@
       "aggregated_institutions": [
         "Rutgers University",
         "Sony AI",
-        "University of Massachusetts Amherst",
-        "Virginia Tech"
+        "Virginia Tech",
+        "University of Massachusetts Amherst"
       ],
       "aggregated_country_names": [
         "Japan",
@@ -101156,11 +101306,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "The University of Sydney",
         "Chinese University of Hong Kong, Shenzhen",
-        "First Affiliated Hospital of GuangXi Medical University",
-        "Guangxi Medical University",
         "Shenzhen Academy of Robotics",
-        "The University of Sydney"
+        "Guangxi Medical University",
+        "First Affiliated Hospital of GuangXi Medical University"
       ],
       "aggregated_country_names": [
         "AU",
@@ -101918,9 +102068,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chung-Ang University",
         "Samsung (South Korea)",
-        "Samsung SDS (South Korea)"
+        "Samsung SDS (South Korea)",
+        "Chung-Ang University"
       ],
       "aggregated_country_names": [
         "South Korea"
@@ -102236,9 +102386,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Consorzio Nazionale Interuniversitario per le Telecomunicazioni",
         "Istituto di Scienza e Tecnologie dell'Informazione \"Alessandro Faedo\"",
-        "National Research Council"
+        "National Research Council",
+        "Consorzio Nazionale Interuniversitario per le Telecomunicazioni"
       ],
       "aggregated_country_names": [
         "IT"
@@ -102749,8 +102899,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Institute of Computing Technology, Chinese Academy of Sciences",
-        "Renmin University of China",
-        "University of Chinese Academy of Sciences"
+        "University of Chinese Academy of Sciences",
+        "Renmin University of China"
       ],
       "aggregated_country_names": [
         "China"
@@ -103115,10 +103265,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "CT Group Of Institutions",
         "North South University",
         "Princess Nourah bint Abdulrahman University",
-        "Taif University"
+        "Taif University",
+        "CT Group Of Institutions"
       ],
       "aggregated_country_names": [
         "BD",
@@ -103725,8 +103875,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "RIKEN Center for Advanced Intelligence Project",
-        "University of Tsukuba"
+        "University of Tsukuba",
+        "RIKEN Center for Advanced Intelligence Project"
       ],
       "aggregated_country_names": [
         "Japan"
@@ -103985,8 +104135,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Singapore Institute of Technology",
         "Singapore University of Technology and Design",
+        "Singapore Institute of Technology",
         "University of Oslo"
       ],
       "aggregated_country_names": [
@@ -104230,8 +104380,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Ollscoil na Gaillimhe – University of Galway",
-        "University of North Texas"
+        "University of North Texas",
+        "Ollscoil na Gaillimhe – University of Galway"
       ],
       "aggregated_country_names": [
         "IE",
@@ -104459,11 +104609,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chung-Ang University",
         "Naver (South Korea)",
+        "University of Seoul",
         "Samsung (South Korea)",
         "Samsung Pharm (South Korea)",
-        "University of Seoul"
+        "Chung-Ang University"
       ],
       "aggregated_country_names": [
         "KR"
@@ -104758,11 +104908,11 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chung-Ang University",
-        "Korea University",
         "Samsung (South Korea)",
         "Samsung SDS (South Korea)",
-        "University of Seoul"
+        "University of Seoul",
+        "Korea University",
+        "Chung-Ang University"
       ],
       "aggregated_country_names": [
         "KR"
@@ -105072,7 +105222,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "University at Buffalo, State University of New York"
+        "University at Buffalo"
       ],
       "aggregated_country_names": [
         "US"
@@ -105085,21 +105235,27 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
-          "institution_id": "institution:612630c2527bff83",
+          "name": "University at Buffalo",
+          "canonical_name": "University at Buffalo",
+          "institution_id": "institution:4f85329e76bc9454",
           "country": "US",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution_id": "institution:4f85329e76bc9454",
+          "institution": "University at Buffalo",
           "authors": [
             "Yan Ju",
             "Shan Jia",
@@ -105108,7 +105264,14 @@
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "source_institution": "University at Buffalo, State University of New York",
+          "source_institution_id": "institution:612630c2527bff83",
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo"
         }
       ],
       "author_affiliation_indices": [
@@ -105118,7 +105281,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -105129,7 +105292,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -105140,7 +105303,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -105151,7 +105314,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -105169,7 +105332,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -105182,7 +105345,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -105191,7 +105354,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -105200,7 +105363,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -105209,7 +105372,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         },
         {
@@ -105218,7 +105381,7 @@
             1
           ],
           "institution_ids": [
-            "institution:612630c2527bff83"
+            "institution:4f85329e76bc9454"
           ]
         }
       ]
@@ -105307,8 +105470,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Aligarh Muslim University",
-        "Sichuan University"
+        "Sichuan University",
+        "Aligarh Muslim University"
       ],
       "aggregated_country_names": [
         "CN",
@@ -105738,9 +105901,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Adobe Research",
+        "University of Surrey",
         "Salesforce Research",
-        "University of Surrey"
+        "Adobe Research"
       ],
       "aggregated_country_names": [
         "United Kingdom",
@@ -106153,12 +106316,12 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "University of Catania",
         "Bank of Italy",
-        "Consorzio Nazionale Interuniversitario per le Telecomunicazioni",
-        "Istituto di Scienza e Tecnologie dell'Informazione \"Alessandro Faedo\"",
-        "Mercatorum University",
         "University of Cagliari",
-        "University of Catania"
+        "Istituto di Scienza e Tecnologie dell'Informazione \"Alessandro Faedo\"",
+        "Consorzio Nazionale Interuniversitario per le Telecomunicazioni",
+        "Mercatorum University"
       ],
       "aggregated_country_names": [
         "IT"
@@ -106934,8 +107097,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Monash University",
-        "Monash University Malaysia"
+        "Monash University Malaysia",
+        "Monash University"
       ],
       "aggregated_country_names": [
         "Australia",
@@ -108115,8 +108278,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Monash University",
-        "Monash University Malaysia"
+        "Monash University Malaysia",
+        "Monash University"
       ],
       "aggregated_country_names": [
         "AU",
@@ -108321,9 +108484,9 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Bar-Ilan University",
+        "Tel Aviv University",
         "Menlo School",
-        "Meta (United States)",
-        "Tel Aviv University"
+        "Meta (United States)"
       ],
       "aggregated_country_names": [
         "IL",
@@ -108930,8 +109093,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Jacksonville University",
-        "Tianjin University"
+        "Tianjin University",
+        "Jacksonville University"
       ],
       "aggregated_country_names": [
         "CN",
@@ -109340,9 +109503,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "University of North Texas",
         "National University of Ireland",
-        "Ollscoil na Gaillimhe – University of Galway",
-        "University of North Texas"
+        "Ollscoil na Gaillimhe – University of Galway"
       ],
       "aggregated_country_names": [
         "IE",
@@ -109762,8 +109925,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "City University of Hong Kong",
-        "Sichuan University"
+        "Sichuan University",
+        "City University of Hong Kong"
       ],
       "aggregated_country_names": [
         "China"
@@ -110316,13 +110479,13 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Mayachitra (United States)",
-        "University of California, Santa Barbara"
+        "University of California, Santa Barbara",
+        "Mayachitra (United States)"
       ],
       "aggregated_country_names": [
         "US"
@@ -110818,8 +110981,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Shenzhen Academy of Robotics",
-        "Shenzhen University"
+        "Shenzhen University",
+        "Shenzhen Academy of Robotics"
       ],
       "aggregated_country_names": [
         "CN"
@@ -111115,8 +111278,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Institute of Computing Technology, Chinese Academy of Sciences",
-        "Renmin University of China",
-        "University of Chinese Academy of Sciences"
+        "University of Chinese Academy of Sciences",
+        "Renmin University of China"
       ],
       "aggregated_country_names": [
         "China"
@@ -112919,9 +113082,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Adobe Systems (United States)",
         "Berkeley College",
         "University of California, Berkeley",
+        "Adobe Systems (United States)",
         "University of Michigan"
       ],
       "aggregated_country_names": [
@@ -113799,8 +113962,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Microsoft Research Asia (China)",
-        "Peking University"
+        "Peking University",
+        "Microsoft Research Asia (China)"
       ],
       "aggregated_country_names": [
         "CN"
@@ -114270,8 +114433,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "University of Hong Kong",
-        "University of Oxford"
+        "University of Oxford",
+        "University of Hong Kong"
       ],
       "aggregated_country_names": [
         "China",
@@ -114657,9 +114820,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "University of Cambridge",
         "University of Toronto",
-        "Vector Institute"
+        "Vector Institute",
+        "University of Cambridge"
       ],
       "aggregated_country_names": [
         "Canada",
@@ -115382,10 +115545,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Fraunhofer Institute for Industrial Mathematics",
         "Heidelberg University",
-        "Offenburg University of Applied Sciences",
-        "University of Mannheim"
+        "Fraunhofer Institute for Industrial Mathematics",
+        "University of Mannheim",
+        "Offenburg University of Applied Sciences"
       ],
       "aggregated_country_names": [
         "Germany"
@@ -115849,9 +116012,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "CISPA Helmholtz Center for Information Security",
+        "University of Maryland",
         "Max Planck Institute for Informatics",
-        "University of Maryland"
+        "CISPA Helmholtz Center for Information Security"
       ],
       "aggregated_country_names": [
         "Germany",
@@ -116448,9 +116611,9 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Mayachitra (United States)",
+        "University of California, Riverside",
         "Naval Air Warfare Center Weapons Division",
-        "University of California, Riverside"
+        "Mayachitra (United States)"
       ],
       "aggregated_country_names": [
         "US"
@@ -116987,8 +117150,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Friedrich-Alexander-Universität Erlangen-Nürnberg",
         "Technical University of Munich",
+        "Friedrich-Alexander-Universität Erlangen-Nürnberg",
         "University of Naples Federico II"
       ],
       "aggregated_country_names": [
@@ -117279,8 +117442,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Georgia Institute of Technology",
-        "Texas A&M University"
+        "Texas A&M University",
+        "Georgia Institute of Technology"
       ],
       "aggregated_country_names": [
         "United States"
@@ -117746,8 +117909,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Beijing Electronic Science and Technology Institute",
-        "Xidian University"
+        "Xidian University",
+        "Beijing Electronic Science and Technology Institute"
       ],
       "aggregated_country_names": [
         "CN"
@@ -118547,10 +118710,10 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Chinese Academy of Sciences",
+        "Institute of Information Engineering, Chinese Academy of Sciences",
+        "Shandong Institute of Automation",
         "Qingdao Academy of Intelligent Industries",
-        "Rensselaer Polytechnic Institute",
-        "Shandong Institute of Automation"
+        "Rensselaer Polytechnic Institute"
       ],
       "aggregated_country_names": [
         "CN",
@@ -118565,13 +118728,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Chinese Academy of Sciences",
-          "canonical_name": "Chinese Academy of Sciences",
-          "institution_id": "institution:3afb6cc453e0a8d9",
+          "name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
           "country": "CN",
           "country_code": "",
           "region": "",
-          "location_display": "China"
+          "location_display": "China",
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -118608,8 +118777,8 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:3afb6cc453e0a8d9",
-          "institution": "Chinese Academy of Sciences",
+          "institution_id": "institution:cee70184073782c7",
+          "institution": "Institute of Information Engineering, Chinese Academy of Sciences",
           "authors": [
             "Chao Gou",
             "Hui Zhang",
@@ -118617,7 +118786,14 @@
             "Fei‐Yue Wang"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Chinese Academy of Sciences"
+          ],
+          "source_institution": "Chinese Academy of Sciences",
+          "source_institution_id": "institution:3afb6cc453e0a8d9",
+          "canonical_name": "Institute of Information Engineering, Chinese Academy of Sciences",
+          "canonical_institution_name": "Institute of Information Engineering, Chinese Academy of Sciences"
         },
         {
           "index": 2,
@@ -118664,7 +118840,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4",
             "institution:e64214548d48f667"
           ],
@@ -118678,7 +118854,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4"
           ],
           "source": "raw_affiliation",
@@ -118692,7 +118868,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4",
             "institution:e64214548d48f667"
           ],
@@ -118707,7 +118883,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4",
             "institution:e64214548d48f667"
           ],
@@ -118735,7 +118911,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4",
             "institution:e64214548d48f667"
           ]
@@ -118747,7 +118923,7 @@
             2
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4"
           ]
         },
@@ -118759,7 +118935,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4",
             "institution:e64214548d48f667"
           ]
@@ -118772,7 +118948,7 @@
             3
           ],
           "institution_ids": [
-            "institution:3afb6cc453e0a8d9",
+            "institution:cee70184073782c7",
             "institution:ce371e5febc146f4",
             "institution:e64214548d48f667"
           ]
@@ -119187,6 +119363,13 @@
   ],
   "institution_aliases": [
     {
+      "alias_name": "A*STAR",
+      "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)",
+      "canonical_institution_id": "institution:e81a0314e783d8a4",
+      "alias_language": "",
+      "alias_source": "institution-location-review"
+    },
+    {
       "alias_name": "Agency for Science, Technology and Research",
       "canonical_institution_name": "Agency for Science, Technology and Research (A*STAR)",
       "canonical_institution_id": "institution:e81a0314e783d8a4",
@@ -119271,6 +119454,13 @@
       "alias_source": "local-admin"
     },
     {
+      "alias_name": "IBM Research",
+      "canonical_institution_name": "IBM Thomas J. Watson Research Center",
+      "canonical_institution_id": "institution:f5c8a9b792d3b901",
+      "alias_language": "",
+      "alias_source": "institution-location-review"
+    },
+    {
       "alias_name": "Institute of Automation, Chinese Academy of Sciences",
       "canonical_institution_name": "Institute of Automation, Chinese Academy of Sciences",
       "canonical_institution_id": "institution:966ff12833f90bb0",
@@ -119339,6 +119529,13 @@
       "canonical_institution_id": "institution:fccd5d0ac9cc52f9",
       "alias_language": "",
       "alias_source": "local-admin"
+    },
+    {
+      "alias_name": "Sorbonne University",
+      "canonical_institution_name": "Sorbonne University Abu Dhabi",
+      "canonical_institution_id": "institution:271362b3e1310a1c",
+      "alias_language": "",
+      "alias_source": "institution-location-review"
     },
     {
       "alias_name": "Sungkyunkwan University",

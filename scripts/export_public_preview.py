@@ -13,6 +13,7 @@ import json
 import math
 import re
 import sys
+import unicodedata
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
@@ -551,6 +552,15 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
     country = clean_text(value.get("country"))
     country_code = clean_text(value.get("country_code"))
     region = clean_text(value.get("region"))
+    source_names = [
+        clean_text(name)
+        for name in (
+            value.get("source_institution_names")
+            if isinstance(value.get("source_institution_names"), list)
+            else [value.get("source_institution")]
+        )
+        if clean_text(name)
+    ]
     return {
         "index": parse_year(value.get("index")),
         "name": name,
@@ -565,6 +575,7 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
             value.get("mapping_source")
         ),
         "mapping_fallback": value.get("mapping_fallback") is True,
+        "source_institution_names": source_names,
     }
 
 
@@ -738,6 +749,10 @@ def add_public_detail_fields(
                     if normalized_author_name(author) not in known_authors:
                         existing["authors"].append(author)
                         known_authors.add(normalized_author_name(author))
+                existing["source_institution_names"] = list(dict.fromkeys([
+                    *existing.get("source_institution_names", []),
+                    *affiliation.get("source_institution_names", []),
+                ]))
             mapping_source = _author_mapping_source(
                 raw_affiliation.get("mapping_source")
                 if isinstance(raw_affiliation, dict)
@@ -787,6 +802,12 @@ def add_public_detail_fields(
                 "institution_id": clean_text(record.get("institution_id")),
                 "country": clean_text(record.get("country")),
                 "region": clean_text(record.get("region")),
+                "source_institution": clean_text(
+                    record.get("source_institution")
+                ),
+                "source_institution_names": record.get(
+                    "source_institution_names", []
+                ),
             }
             current_identity = add_affiliation(current)
             if current_identity is None:
@@ -885,6 +906,11 @@ def add_public_detail_fields(
                 "country_code": affiliation["country_code"],
                 "region": affiliation["region"],
                 "location_display": affiliation["location_display"],
+                **(
+                    {"source_institution_names": affiliation["source_institution_names"]}
+                    if affiliation.get("source_institution_names")
+                    else {}
+                ),
             }
             for affiliation in affiliations
         ]
@@ -1011,6 +1037,11 @@ def add_public_detail_fields(
                     ),
                     "mapping_fallback": bool(
                         affiliation.get("mapping_fallback") is True
+                    ),
+                    **(
+                        {"source_institution_names": affiliation["source_institution_names"]}
+                        if affiliation.get("source_institution_names")
+                        else {}
                     ),
                 }
                 for affiliation in affiliations
@@ -2236,12 +2267,18 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
         raise PreviewExportError(f"Could not write {path}: {error}") from error
 
 
+def normalize_institution_lookup(value: Any) -> str:
+    text = unicodedata.normalize("NFKD", clean_text(value)).casefold()
+    text = "".join(character for character in text if not unicodedata.combining(character))
+    return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+
+
 def public_institution_aliases(
     aliases: Sequence[Dict[str, Any]],
+    location_reviews: Sequence[Dict[str, Any]] = (),
 ) -> List[Dict[str, str]]:
-    """Return confirmed aliases with stable canonical IDs for public lookup."""
-    result = []
-    seen = set()
+    """Return unambiguous explicitly confirmed aliases for public lookup."""
+    candidates = []
     for row in aliases:
         alias_name = clean_text(row.get("alias_name"))
         canonical_name = clean_text(row.get("canonical_institution_name"))
@@ -2251,19 +2288,46 @@ def public_institution_aliases(
             or not canonical_name
         ):
             continue
-        key = (normalize_title(alias_name), normalize_title(canonical_name))
-        if key in seen:
+        candidates.append({
+            "alias_name": alias_name,
+            "canonical_institution_name": canonical_name,
+            "canonical_institution_id": stable_institution_id(canonical_name),
+            "alias_language": clean_text(row.get("alias_language")),
+            "alias_source": clean_text(row.get("alias_source")),
+        })
+    for row in location_reviews:
+        alias_name = clean_text(row.get("institution"))
+        canonical_name = clean_text(row.get("canonical_institution_name"))
+        if (
+            clean_text(row.get("review_status"))
+            not in {"confirmed", "alias_of_confirmed"}
+            or not alias_name
+            or not canonical_name
+            or normalize_institution_lookup(alias_name)
+            == normalize_institution_lookup(canonical_name)
+        ):
+            continue
+        candidates.append({
+            "alias_name": alias_name,
+            "canonical_institution_name": canonical_name,
+            "canonical_institution_id": stable_institution_id(canonical_name),
+            "alias_language": clean_text(row.get("detected_language")),
+            "alias_source": "institution-location-review",
+        })
+    targets_by_alias: Dict[str, set[str]] = defaultdict(set)
+    for candidate in candidates:
+        targets_by_alias[normalize_institution_lookup(candidate["alias_name"])].add(
+            candidate["canonical_institution_id"]
+        )
+    result = []
+    seen = set()
+    for candidate in candidates:
+        alias_key = normalize_institution_lookup(candidate["alias_name"])
+        key = (alias_key, candidate["canonical_institution_id"])
+        if len(targets_by_alias[alias_key]) != 1 or key in seen:
             continue
         seen.add(key)
-        result.append(
-            {
-                "alias_name": alias_name,
-                "canonical_institution_name": canonical_name,
-                "canonical_institution_id": stable_institution_id(canonical_name),
-                "alias_language": clean_text(row.get("alias_language")),
-                "alias_source": clean_text(row.get("alias_source")),
-            }
-        )
+        result.append(candidate)
     return sorted(
         result,
         key=lambda row: (
@@ -2271,6 +2335,191 @@ def public_institution_aliases(
             normalize_title(row["alias_name"]),
         ),
     )
+
+
+def canonicalize_public_institutions(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+    aliases: Sequence[Dict[str, str]],
+) -> List[Dict[str, Any]]:
+    """Canonicalize public copies and dedupe canonical paper–institution rows."""
+    resolver: Dict[str, Dict[str, str]] = {}
+    for alias in aliases:
+        canonical = {
+            "name": clean_text(alias.get("canonical_institution_name")),
+            "id": clean_text(alias.get("canonical_institution_id")),
+        }
+        resolver[normalize_institution_lookup(alias.get("alias_name"))] = canonical
+        resolver[normalize_institution_lookup(canonical["name"])] = canonical
+
+    def canonicalize_value(value: Dict[str, Any]) -> None:
+        name_field = "name" if "name" in value else "institution"
+        original_name = clean_text(
+            value.get(name_field)
+            or value.get("institution_name")
+            or value.get("canonical_name")
+            or value.get("canonical_institution_name")
+        )
+        canonical = resolver.get(normalize_institution_lookup(original_name))
+        if not canonical:
+            return
+        original_id = clean_text(
+            value.get("institution_id") or value.get("canonical_institution_id")
+        )
+        if (
+            original_name == canonical["name"]
+            and (not canonical["id"] or original_id == canonical["id"])
+        ):
+            return
+        if original_name and original_name != canonical["name"]:
+            source_names = value.get("source_institution_names")
+            if not isinstance(source_names, list):
+                source_names = []
+            value["source_institution_names"] = list(dict.fromkeys([
+                *[clean_text(name) for name in source_names if clean_text(name)],
+                original_name,
+            ]))
+            value.setdefault("source_institution", original_name)
+        if original_id and original_id != canonical["id"]:
+            value.setdefault("source_institution_id", original_id)
+        value[name_field] = canonical["name"]
+        if "institution_name" in value:
+            value["institution_name"] = canonical["name"]
+        value["canonical_name"] = canonical["name"]
+        value["canonical_institution_name"] = canonical["name"]
+        value["institution_id"] = canonical["id"]
+
+    for record in [*paper_records, *map_records]:
+        if clean_text(record.get("institution") or record.get("institution_name")):
+            canonicalize_value(record)
+        for field in ("affiliations", "author_institution_affiliations"):
+            values = record.get(field)
+            if isinstance(values, list):
+                for value in values:
+                    if isinstance(value, dict):
+                        canonicalize_value(value)
+        old_to_new: Dict[int, int] = {}
+        affiliations = record.get("affiliations")
+        if isinstance(affiliations, list):
+            deduplicated_affiliations = []
+            by_identity: Dict[str, Dict[str, Any]] = {}
+            for raw_index, affiliation in enumerate(affiliations, start=1):
+                if not isinstance(affiliation, dict):
+                    continue
+                original_index = parse_year(affiliation.get("index")) or raw_index
+                identity = detail_institution_identity(affiliation)
+                existing = by_identity.get(identity)
+                if existing is None:
+                    affiliation["index"] = len(deduplicated_affiliations) + 1
+                    deduplicated_affiliations.append(affiliation)
+                    by_identity[identity] = affiliation
+                    existing = affiliation
+                else:
+                    existing["source_institution_names"] = list(dict.fromkeys([
+                        *(existing.get("source_institution_names") or []),
+                        *(affiliation.get("source_institution_names") or []),
+                    ]))
+                old_to_new[original_index] = existing["index"]
+            record["affiliations"] = deduplicated_affiliations
+
+        author_affiliations = record.get("author_institution_affiliations")
+        if isinstance(author_affiliations, list):
+            deduplicated_author_affiliations = []
+            by_identity = {}
+            for affiliation in author_affiliations:
+                if not isinstance(affiliation, dict):
+                    continue
+                identity = detail_institution_identity(affiliation)
+                existing = by_identity.get(identity)
+                if existing is None:
+                    affiliation["index"] = len(deduplicated_author_affiliations) + 1
+                    deduplicated_author_affiliations.append(affiliation)
+                    by_identity[identity] = affiliation
+                    existing = affiliation
+                else:
+                    existing["authors"] = list(dict.fromkeys([
+                        *(existing.get("authors") or []),
+                        *(affiliation.get("authors") or []),
+                    ]))
+                    existing["source_institution_names"] = list(dict.fromkeys([
+                        *(existing.get("source_institution_names") or []),
+                        *(affiliation.get("source_institution_names") or []),
+                    ]))
+            record["author_institution_affiliations"] = deduplicated_author_affiliations
+
+        if old_to_new:
+            def remap_indices(values: Any) -> List[int]:
+                return sorted({
+                    old_to_new.get(index, index)
+                    for value in (values if isinstance(values, list) else [])
+                    if (index := parse_year(value)) is not None
+                })
+
+            canonical_affiliations = record.get("affiliations") or []
+            for author in record.get("authors") or []:
+                if isinstance(author, dict):
+                    author["affiliation_indices"] = remap_indices(
+                        author.get("affiliation_indices")
+                    )
+            for field, index_field in (
+                ("author_affiliation_indices", "indices"),
+                ("author_institution_indices", "institution_indices"),
+            ):
+                for mapping in record.get(field) or []:
+                    if not isinstance(mapping, dict):
+                        continue
+                    indices = remap_indices(mapping.get(index_field))
+                    mapping[index_field] = indices
+                    mapping["institution_ids"] = [
+                        canonical_affiliations[index - 1]["institution_id"]
+                        for index in indices
+                        if 0 < index <= len(canonical_affiliations)
+                    ]
+        current = record.get("current_institution")
+        if isinstance(current, dict):
+            canonicalize_value(current)
+            current_index = parse_year(current.get("index"))
+            if current_index in old_to_new:
+                current["index"] = old_to_new[current_index]
+        aggregated = record.get("aggregated_institutions")
+        if isinstance(aggregated, list):
+            canonical_names = []
+            for name in aggregated:
+                canonical = resolver.get(normalize_institution_lookup(name))
+                canonical_names.append(canonical["name"] if canonical else clean_text(name))
+            record["aggregated_institutions"] = list(dict.fromkeys(filter(None, canonical_names)))
+
+    deduplicated: Dict[Tuple[Any, str], Dict[str, Any]] = {}
+    order: List[Tuple[Any, str]] = []
+    for record in map_records:
+        key = (identity_key(record), detail_institution_identity(record))
+        if key not in deduplicated:
+            deduplicated[key] = record
+            order.append(key)
+            continue
+        existing = deduplicated[key]
+        existing["institution_authors"] = list(dict.fromkeys([
+            *(existing.get("institution_authors") or []),
+            *(record.get("institution_authors") or []),
+        ]))
+        existing["source_institution_names"] = list(dict.fromkeys([
+            *(existing.get("source_institution_names") or []),
+            *(record.get("source_institution_names") or []),
+            *([record.get("source_institution")] if record.get("source_institution") else []),
+        ]))
+
+    maps_by_paper: Dict[Tuple[str, Any], List[Dict[str, Any]]] = defaultdict(list)
+    for record in deduplicated.values():
+        maps_by_paper[detail_paper_identity(record)].append(record)
+    for paper in paper_records:
+        paper_maps = maps_by_paper.get(detail_paper_identity(paper), [])
+        if paper_maps:
+            paper["map_record_count"] = len(paper_maps)
+            paper["has_map_location"] = True
+            paper["aggregated_institutions"] = list(dict.fromkeys(
+                institution_name(record) for record in paper_maps if institution_name(record)
+            ))
+    return [deduplicated[key] for key in order]
 
 
 def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
@@ -2656,6 +2905,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             raise PreviewExportError(
                 "Unresolved publication types require admin review: " + details
             )
+        exported_aliases = public_institution_aliases(
+            institution_alias_rows,
+            integrated_location_reviews,
+        )
+        integrated_maps = canonicalize_public_institutions(
+            integrated_papers,
+            integrated_maps,
+            exported_aliases,
+        )
         for record in integrated_maps:
             record["institution_id"] = (
                 clean_text(record.get("institution_id"))
@@ -2668,7 +2926,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         add_public_detail_fields(integrated_papers, integrated_maps)
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
-        exported_aliases = public_institution_aliases(institution_alias_rows)
         payload["institution_aliases"] = exported_aliases
         paper_payload["institution_aliases"] = exported_aliases
         summary["preprint_version_records_excluded"] += (

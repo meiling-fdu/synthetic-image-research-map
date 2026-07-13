@@ -71,7 +71,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-public-overview', self.html)
-        self.assertIn('app.js?v=20260713-institution-alias-search', self.html)
+        self.assertIn('app.js?v=20260713-canonical-institution-aliases', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
@@ -216,6 +216,93 @@ process.stdout.write(JSON.stringify({
         self.assertIn("payload.institution_aliases", self.app)
         self.assertIn("canonical_institution_id", self.app)
         self.assertIn("institutionAliases = normalizedData.institutionAliases", self.app)
+
+    def test_frontend_defensively_consolidates_astar_records_and_papers(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        slices = []
+        for start_name, end_name in (
+            ("function institutionIdentity", "function affiliationIdentity"),
+            ("function normalizedIdentityValue", "function recordCountry"),
+            ("function normalizedSearchText", "function recordSearchText"),
+        ):
+            start = self.app.index(start_name)
+            end = self.app.index(end_name, start)
+            slices.append(self.app[start:end])
+        script = r'''
+function normalizedDoi(value) { return String(value || ''); }
+function recordPaperUrl(record) { return record.paper_url || ''; }
+function recordTitle(record) { return record.title || ''; }
+function recordInstitutionAuthors(record) { return record.institution_authors || []; }
+''' + "\n".join(slices) + r'''
+const canonicalName = 'Agency for Science, Technology and Research (A*STAR)';
+const canonicalId = 'institution:e81a0314e783d8a4';
+const aliases = [
+  {alias_name: 'A*STAR', canonical_institution_name: canonicalName, canonical_institution_id: canonicalId},
+  {alias_name: 'Agency for Science, Technology and Research', canonical_institution_name: canonicalName, canonical_institution_id: canonicalId},
+];
+const maps = [
+  {title: 'Alias paper', year: 2024, doi: '10.1/alias', institution: 'A*STAR', institution_id: 'institution:old', institution_authors: ['Alias Author']},
+  {title: 'Alias paper', year: 2024, doi: '10.1/alias', institution: 'Agency for Science, Technology and Research', institution_id: 'institution:expanded', institution_authors: ['Expanded Author']},
+  {title: 'Other paper', year: 2025, doi: '10.1/other', institution: 'A*STAR', institution_id: 'institution:old', institution_authors: ['Other Author']},
+  {title: 'Multi paper', year: 2025, doi: '10.1/multi', institution: 'Other University', institution_id: 'institution:other', institution_authors: ['Multi Author']},
+];
+const papers = [
+  {title: 'Alias paper', year: 2024, doi: '10.1/alias', map_record_count: 2, aggregated_institutions: ['A*STAR', 'Agency for Science, Technology and Research'], author_institution_affiliations: [
+    {institution: 'A*STAR', institution_id: 'institution:old'},
+    {institution: 'Agency for Science, Technology and Research', institution_id: 'institution:expanded'},
+  ]},
+  {title: 'Other paper', year: 2025, doi: '10.1/other', map_record_count: 1, author_institution_affiliations: [{institution: 'A*STAR', institution_id: 'institution:old'}]},
+];
+const canonicalized = canonicalizePublicDataset(maps, papers, aliases);
+const index = buildInstitutionSearchIndex(canonicalized.mapRecords, canonicalized.paperRecords, aliases);
+const aliasIdentity = resolveInstitutionSearch('A*STAR', index);
+const canonicalIdentity = resolveInstitutionSearch(canonicalName, index);
+const matchingPapers = canonicalized.paperRecords
+  .filter(paper => recordInstitutionIdentities(paper).has(aliasIdentity))
+  .map(paperIdentity).sort();
+process.stdout.write(JSON.stringify({
+  mapCount: canonicalized.mapRecords.length,
+  astarMapCount: canonicalized.mapRecords.filter(record => institutionIdentity(record) === aliasIdentity).length,
+  astarNames: [...new Set(canonicalized.mapRecords.filter(record => institutionIdentity(record) === aliasIdentity).map(recordInstitution))],
+  authors: canonicalized.mapRecords.find(record => record.doi === '10.1/alias').institution_authors.sort(),
+  paperInstitutions: canonicalized.paperRecords[0].aggregated_institutions,
+  paperMapCount: canonicalized.paperRecords[0].map_record_count,
+  aliasIdentity,
+  canonicalIdentity,
+  matchingPapers,
+  partial: resolveInstitutionSearch('Agency for Science', index),
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["mapCount"], 3)
+        self.assertEqual(result["astarMapCount"], 2)
+        self.assertEqual(result["astarNames"], ["Agency for Science, Technology and Research (A*STAR)"])
+        self.assertEqual(result["authors"], ["Alias Author", "Expanded Author"])
+        self.assertEqual(result["paperInstitutions"], ["Agency for Science, Technology and Research (A*STAR)"])
+        self.assertEqual(result["paperMapCount"], 1)
+        self.assertEqual(result["aliasIdentity"], result["canonicalIdentity"])
+        self.assertEqual(result["matchingPapers"], ["doi:10.1/alias", "doi:10.1/other"])
+        self.assertEqual(result["partial"], "")
+
+    def test_counts_markers_and_csv_use_canonical_identity(self):
+        statistics = self.app[
+            self.app.index("function updateDatasetStatistics"):
+            self.app.index("function renderChartEmpty")
+        ]
+        chart = self.app[
+            self.app.index("function renderInstitutionChart"):
+            self.app.index("function renderYearChart")
+        ]
+        self.assertIn("datasetRecords.map(institutionIdentity)", statistics)
+        self.assertIn("const key = institutionIdentity(record)", chart)
+        self.assertIn('["institution_id", (record)', self.app)
+        self.assertIn('["institution_ids", (record)', self.app)
+        self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords,\n    institutionIdentity", self.app)
 
     def test_toggle_and_csv_reuse_the_same_current_filtered_sets(self):
         toggle = self.app[
