@@ -2455,6 +2455,76 @@ def canonicalize_public_institutions(
         value["canonical_institution_name"] = canonical["name"]
         value["institution_id"] = canonical["id"]
 
+    def collapse_stale_alias_shadows(values: Any) -> Any:
+        """Undo a prior alias split without using hierarchy as affiliation data.
+
+        Older previews can contain both a restored canonical source and the full
+        institution that the same row previously resolved to. The provenance list
+        identifies that exact case. Replace the shadow at its existing index so
+        author numbering remains stable, then let normal identity deduplication
+        combine it with the full institution row.
+        """
+        if not isinstance(values, list):
+            return values
+        by_name = {
+            normalize_institution_lookup(
+                value.get("canonical_name")
+                or value.get("canonical_institution_name")
+                or value.get("name")
+                or value.get("institution")
+                or value.get("institution_name")
+            ): value
+            for value in values
+            if isinstance(value, dict)
+        }
+        collapsed = []
+        for value in values:
+            if not isinstance(value, dict):
+                collapsed.append(value)
+                continue
+            current_name = normalize_institution_lookup(
+                value.get("canonical_name")
+                or value.get("canonical_institution_name")
+                or value.get("name")
+                or value.get("institution")
+                or value.get("institution_name")
+            )
+            raw_source_names = value.get("source_institution_names")
+            source_names = [
+                clean_text(name)
+                for name in (
+                    raw_source_names if isinstance(raw_source_names, list) else []
+                )
+                if clean_text(name)
+            ]
+            source_keys = [
+                normalize_institution_lookup(name) for name in source_names
+            ]
+            replacement = next((
+                by_name[source_key]
+                for source_key in source_keys
+                if source_key != current_name and source_key in by_name
+            ), None) if current_name in set(source_keys) else None
+            if replacement is None or (
+                detail_institution_identity(replacement)
+                == detail_institution_identity(value)
+            ):
+                collapsed.append(value)
+                continue
+            merged = dict(replacement)
+            if "index" in value:
+                merged["index"] = value["index"]
+            merged["authors"] = list(dict.fromkeys([
+                *(replacement.get("authors") or []),
+                *(value.get("authors") or []),
+            ]))
+            merged["source_institution_names"] = list(dict.fromkeys([
+                *source_names,
+                *(replacement.get("source_institution_names") or []),
+            ]))
+            collapsed.append(merged)
+        return collapsed
+
     for record in [*paper_records, *map_records]:
         if clean_text(record.get("institution") or record.get("institution_name")):
             canonicalize_value(record)
@@ -2464,6 +2534,7 @@ def canonicalize_public_institutions(
                 for value in values:
                     if isinstance(value, dict):
                         canonicalize_value(value)
+                record[field] = collapse_stale_alias_shadows(values)
         old_to_new: Dict[int, int] = {}
         affiliations = record.get("affiliations")
         if isinstance(affiliations, list):

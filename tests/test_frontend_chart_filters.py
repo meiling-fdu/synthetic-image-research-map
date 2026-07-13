@@ -72,7 +72,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-public-overview', self.html)
-        self.assertIn('app.js?v=20260713-institution-hierarchy', self.html)
+        self.assertIn('app.js?v=20260713-automatic-institution-hierarchy', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
@@ -165,7 +165,7 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("const visibleRecords = filteredSets.filteredRecords", render)
         self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords", render)
 
-    def test_confirmed_hierarchy_expands_parent_only_when_enabled(self):
+    def test_confirmed_hierarchy_automatically_expands_top_level_parent(self):
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
@@ -184,49 +184,55 @@ const parent = 'id:institution:parent';
 const child = 'id:institution:child';
 const grandchild = 'id:institution:grandchild';
 const sibling = 'id:institution:sibling';
+const unrelatedParent = 'id:institution:unrelated-parent';
+const unrelatedChild = 'id:institution:unrelated-child';
 const relationships = [
   {parent_institution_id: 'institution:parent', child_institution_id: 'institution:child', review_status: 'confirmed'},
   {parent_institution_id: 'institution:child', child_institution_id: 'institution:grandchild', review_status: 'confirmed'},
   {parent_institution_id: 'institution:parent', child_institution_id: 'institution:sibling', review_status: 'pending_review'},
+  {parent_institution_id: 'institution:unrelated-parent', child_institution_id: 'institution:unrelated-child', review_status: 'confirmed'},
 ];
 const index = buildInstitutionHierarchyIndex(relationships);
-const direct = institutionIdentityWithDescendants(parent, index, false);
-const expanded = institutionIdentityWithDescendants(parent, index, true);
-const childOnly = institutionIdentityWithDescendants(child, index, false);
+const expanded = institutionIdentityWithDescendants(parent, index);
+const childOnly = institutionIdentityWithDescendants(child, index);
 process.stdout.write(JSON.stringify({
-  direct: [...direct].sort(),
   expanded: [...expanded].sort(),
   childOnly: [...childOnly].sort(),
-  parentMatchesChildDirect: recordMatchesInstitutionIdentities(
-    {institution_id: 'institution:child'}, direct, true,
-  ),
   parentMatchesChildExpanded: recordMatchesInstitutionIdentities(
     {institution_id: 'institution:child'}, expanded, true,
   ),
   rejectedIncluded: expanded.has(sibling),
   childIncludesParent: childOnly.has(parent),
+  unrelatedIncluded: expanded.has(unrelatedParent) || expanded.has(unrelatedChild),
 }));
 '''
         completed = subprocess.run(
             [node, "-e", script], check=True, capture_output=True, text=True,
         )
         result = json.loads(completed.stdout)
-        self.assertEqual(result["direct"], ["id:institution:parent"])
         self.assertEqual(result["expanded"], [
             "id:institution:child",
             "id:institution:grandchild",
             "id:institution:parent",
         ])
         self.assertEqual(result["childOnly"], ["id:institution:child"])
-        self.assertFalse(result["parentMatchesChildDirect"])
         self.assertTrue(result["parentMatchesChildExpanded"])
         self.assertFalse(result["rejectedIncluded"])
         self.assertFalse(result["childIncludesParent"])
+        self.assertFalse(result["unrelatedIncluded"])
 
-    def test_hierarchy_control_and_shared_outputs_use_one_filtered_set(self):
-        self.assertIn("Include affiliated institutes", self.app)
-        self.assertIn("data-include-affiliated-institutes", self.app)
-        self.assertIn("includeAffiliatedInstitutes = false", self.app)
+    def test_no_hierarchy_checkbox_or_related_state_is_rendered(self):
+        combined = "\n".join((self.app, self.css, self.html))
+        for removed in (
+            "Include affiliated institutes",
+            "data-include-affiliated-institutes",
+            "includeAffiliatedInstitutes",
+            "hierarchyExpansionIdentity",
+            "hierarchy-expansion-control",
+        ):
+            self.assertNotIn(removed, combined)
+
+    def test_automatic_hierarchy_expansion_shared_outputs_use_one_filtered_set(self):
         self.assertIn("institution_hierarchy", self.app)
         render = self.app[
             self.app.index("function renderRecords()"):
@@ -264,6 +270,15 @@ process.stdout.write(JSON.stringify({
         self.assertIn("datasetRecords.map(institutionIdentity)", statistics)
         self.assertNotIn("institutionIdentityWithDescendants", chart)
         self.assertNotIn("institutionIdentityWithDescendants", statistics)
+
+    def test_hierarchy_is_not_used_by_affiliation_canonicalization(self):
+        resolver = self.app[
+            self.app.index("function buildCanonicalInstitutionResolver"):
+            self.app.index("function recordSearchText")
+        ]
+        self.assertNotIn("institutionHierarchy", resolver)
+        self.assertNotIn("hierarchy.forEach", resolver)
+        self.assertIn("buildCanonicalInstitutionResolver(aliases)", resolver)
 
     def test_institution_alias_search_normalization_and_exact_resolution(self):
         node = shutil.which("node")

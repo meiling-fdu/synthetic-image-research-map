@@ -235,7 +235,6 @@ h2 {
 
 .project-link-list {
   display: flex;
-  flex-wrap: wrap;
   gap: 5px 14px;
 }
 
@@ -394,22 +393,6 @@ h2 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.active-filter-chip .hierarchy-expansion-control {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  width: 100%;
-  padding: 2px 4px 3px 0;
-  color: var(--text);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.active-filter-chip .hierarchy-expansion-control input {
-  width: auto;
-  margin: 0;
 }
 
 .active-filter-chip button {

@@ -153,8 +153,6 @@ let resultsView = "institutions";
 let visibleMarkerEntries = [];
 let activeInstitutionFilter = null;
 let displayedInstitutionFilter = null;
-let includeAffiliatedInstitutes = false;
-let hierarchyExpansionIdentity = "";
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -699,16 +697,13 @@ function compactAffiliationsHtml(affiliations, limit = 3) {
 
 function renderActiveInstitutionFilter() {
   activeInstitutionFilterChip.hidden = !displayedInstitutionFilter;
-  const hasChildren = displayedInstitutionFilter?.hasChildren === true;
   activeInstitutionFilterChip.innerHTML = displayedInstitutionFilter
-    ? `<span class="active-institution-label">Institution: ${escapeHtml(displayedInstitutionFilter.label)}</span><button type="button" data-clear-institution-filter aria-label="Clear institution filter for ${escapeHtml(displayedInstitutionFilter.label)}">×</button>${hasChildren ? `<label class="hierarchy-expansion-control"><input type="checkbox" data-include-affiliated-institutes${includeAffiliatedInstitutes ? " checked" : ""}> Include affiliated institutes</label>` : ""}`
+    ? `<span class="active-institution-label">Institution: ${escapeHtml(displayedInstitutionFilter.label)}</span><button type="button" data-clear-institution-filter aria-label="Clear institution filter for ${escapeHtml(displayedInstitutionFilter.label)}">×</button>`
     : "";
 }
 
 function applyInstitutionFilter(identity, label) {
   activeInstitutionFilter = { identity, label };
-  includeAffiliatedInstitutes = false;
-  hierarchyExpansionIdentity = identity;
   renderRecords();
 }
 
@@ -717,8 +712,6 @@ function clearInstitutionFilter() {
     keywordFilter.value = "";
   }
   activeInstitutionFilter = null;
-  includeAffiliatedInstitutes = false;
-  hierarchyExpansionIdentity = "";
   renderRecords();
 }
 
@@ -1171,7 +1164,7 @@ function resolveInstitutionSearch(value, searchIndex) {
   return matches?.size === 1 ? [...matches][0] : "";
 }
 
-function buildCanonicalInstitutionResolver(aliases, hierarchy = []) {
+function buildCanonicalInstitutionResolver(aliases) {
   const resolver = new Map();
   aliases.forEach((alias) => {
     const canonical = {
@@ -1181,14 +1174,6 @@ function buildCanonicalInstitutionResolver(aliases, hierarchy = []) {
     if (!canonical.name) return;
     resolver.set(normalizedSearchText(alias.alias_name), canonical);
     resolver.set(normalizedSearchText(canonical.name), canonical);
-  });
-  hierarchy.forEach((relationship) => {
-    [
-      [relationship.parent_institution_name, relationship.parent_institution_id],
-      [relationship.child_institution_name, relationship.child_institution_id],
-    ].forEach(([name, id]) => {
-      if (name && id) resolver.set(normalizedSearchText(name), { name, id });
-    });
   });
   resolver.delete("");
   return resolver;
@@ -1233,8 +1218,8 @@ function canonicalizeInstitutionObject(value, resolver) {
   return value;
 }
 
-function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases, hierarchy = []) {
-  const resolver = buildCanonicalInstitutionResolver(aliases, hierarchy);
+function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases) {
+  const resolver = buildCanonicalInstitutionResolver(aliases);
   const canonicalizeRecord = (record) => {
     if (recordInstitution(record)) canonicalizeInstitutionObject(record, resolver);
     ["affiliations", "author_institution_affiliations"].forEach((field) => {
@@ -1342,9 +1327,13 @@ function buildInstitutionHierarchyIndex(relationships) {
   return childrenByParent;
 }
 
-function institutionIdentityWithDescendants(identity, hierarchyIndex, expanded) {
+function institutionIdentityWithDescendants(identity, hierarchyIndex) {
   const identities = new Set(identity ? [identity] : []);
-  if (!expanded || !identity) return identities;
+  if (!identity) return identities;
+  const isSpecificChild = [...hierarchyIndex.values()].some((children) => (
+    children.has(identity)
+  ));
+  if (isSpecificChild) return identities;
   const pending = [...(hierarchyIndex.get(identity) || [])];
   while (pending.length) {
     const child = pending.pop();
@@ -2357,21 +2346,13 @@ function renderRecords() {
     .filter(Boolean);
   const hierarchyIndex = buildInstitutionHierarchyIndex(institutionHierarchy);
   const selectedIdentity = activeInstitutionFilter?.identity || resolvedInstitutionIdentity;
-  if (selectedIdentity !== hierarchyExpansionIdentity) {
-    includeAffiliatedInstitutes = false;
-    hierarchyExpansionIdentity = selectedIdentity;
-  }
-  const expansionEnabled = includeAffiliatedInstitutes
-    && hierarchyExpansionIdentity === selectedIdentity;
   const resolvedInstitutionIdentities = institutionIdentityWithDescendants(
     resolvedInstitutionIdentity,
     hierarchyIndex,
-    expansionEnabled && resolvedInstitutionIdentity === selectedIdentity,
   );
   const activeInstitutionIdentities = institutionIdentityWithDescendants(
     activeInstitutionFilter?.identity || "",
     hierarchyIndex,
-    expansionEnabled && activeInstitutionFilter?.identity === selectedIdentity,
   );
   const institutionLabel = activeInstitutionFilter?.label
     || hierarchyInstitutionLabel(selectedIdentity, institutionHierarchy)
@@ -2380,7 +2361,6 @@ function renderRecords() {
     identity: selectedIdentity,
     label: institutionLabel,
     source: activeInstitutionFilter ? "chip" : "keyword",
-    hasChildren: (hierarchyIndex.get(selectedIdentity)?.size || 0) > 0,
   } : null;
   const matchesInstitutionRecord = (record) => recordMatchesActiveFilters(
     record,
@@ -2779,7 +2759,6 @@ function displayDataset(normalizedData) {
     normalizedData.records,
     normalizedData.paperRecords || [],
     institutionAliases,
-    institutionHierarchy,
   );
   records = canonicalized.mapRecords;
   paperRecords = canonicalized.paperRecords;
@@ -2870,13 +2849,6 @@ activeInstitutionFilterChip.addEventListener("click", (event) => {
     clearInstitutionFilter();
   }
 });
-activeInstitutionFilterChip.addEventListener("change", (event) => {
-  if (event.target.matches("[data-include-affiliated-institutes]")) {
-    includeAffiliatedInstitutes = event.target.checked;
-    hierarchyExpansionIdentity = displayedInstitutionFilter?.identity || "";
-    renderRecords();
-  }
-});
 window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
@@ -2909,8 +2881,6 @@ resetButton.addEventListener("click", () => {
   maxYearFilter.value = "";
   activeInstitutionFilter = null;
   displayedInstitutionFilter = null;
-  includeAffiliatedInstitutes = false;
-  hierarchyExpansionIdentity = "";
   renderRecords();
   scheduleMapResize(true);
 });

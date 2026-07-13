@@ -107,6 +107,59 @@ class InstitutionHierarchyTests(unittest.TestCase):
         self.assertEqual(affiliation["institution"], PARENT_NAME)
         self.assertEqual(affiliation["source_institution"], PARENT_NAME)
 
+    def test_stale_alias_shadow_collapses_to_one_full_affiliation(self):
+        paper = {
+            "title": "One full affiliation",
+            "doi": "10.1/full",
+            "affiliations": [{
+                "index": 1,
+                "name": PARENT_NAME,
+                "institution_id": PARENT_ID,
+                "source_institution_names": [PARENT_NAME, CHILD_NAME],
+            }, {
+                "index": 2,
+                "name": CHILD_NAME,
+                "institution_id": CHILD_ID,
+            }],
+            "author_institution_affiliations": [{
+                "index": 1,
+                "institution": PARENT_NAME,
+                "institution_id": PARENT_ID,
+                "authors": ["Example Author"],
+                "source_institution_names": [PARENT_NAME, CHILD_NAME],
+            }, {
+                "index": 2,
+                "institution": CHILD_NAME,
+                "institution_id": CHILD_ID,
+                "authors": ["Example Author"],
+            }],
+            "authors": [{
+                "name": "Example Author",
+                "affiliation_indices": [1],
+            }],
+        }
+        canonicalize_public_institutions(
+            [paper], [], [], [
+                {"institution": PARENT_NAME},
+                {"institution": CHILD_NAME},
+            ],
+        )
+        self.assertEqual(len(paper["affiliations"]), 1)
+        self.assertEqual(paper["affiliations"][0]["name"], CHILD_NAME)
+        self.assertEqual(paper["affiliations"][0]["index"], 1)
+        self.assertEqual(len(paper["author_institution_affiliations"]), 1)
+        self.assertEqual(
+            paper["author_institution_affiliations"][0]["institution"],
+            CHILD_NAME,
+        )
+        self.assertEqual(
+            paper["authors"][0]["affiliation_indices"], [1]
+        )
+        self.assertIn(
+            PARENT_NAME,
+            paper["affiliations"][0]["source_institution_names"],
+        )
+
     def test_curated_hierarchy_keeps_parent_and_child_ids_distinct(self):
         relationships = self.read_csv("data/curated/institution_hierarchy.csv")
         cas_children = {
@@ -165,6 +218,49 @@ class InstitutionHierarchyTests(unittest.TestCase):
         }
         self.assertEqual(len(parent_pairs), len(parent_records))
         self.assertEqual(len(child_pairs), len(child_records))
+
+    def test_public_affiliations_keep_full_cas_institute_without_parent_split(self):
+        import json
+
+        payload = json.loads(
+            (REPOSITORY / "web/data/public_preview_papers.json").read_text()
+        )
+        full_name = (
+            "Institute of Computing Technology, Chinese Academy of Sciences"
+        )
+        matching_papers = []
+        for paper in payload["records"]:
+            affiliations = paper.get("author_institution_affiliations") or []
+            if any(row.get("institution") == full_name for row in affiliations):
+                matching_papers.append(paper)
+                self.assertFalse(any(
+                    row.get("institution") == PARENT_NAME
+                    for row in affiliations
+                ))
+                self.assertEqual(
+                    sum(row.get("institution") == full_name for row in affiliations),
+                    1,
+                )
+                indices = [row.get("index") for row in affiliations]
+                self.assertEqual(indices, list(range(1, len(affiliations) + 1)))
+                for author in paper.get("authors") or []:
+                    self.assertTrue(all(
+                        1 <= index <= len(affiliations)
+                        for index in author.get("affiliation_indices") or []
+                    ))
+        self.assertGreater(len(matching_papers), 0)
+
+    def test_restored_child_affiliations_do_not_retain_empty_parent_shadow(self):
+        import json
+
+        payload = json.loads(
+            (REPOSITORY / "web/data/public_preview_papers.json").read_text()
+        )
+        for paper in payload["records"]:
+            affiliations = paper.get("author_institution_affiliations") or []
+            names = {row.get("institution") for row in affiliations}
+            if CHILD_NAME in names:
+                self.assertNotIn(PARENT_NAME, names)
 
 
 if __name__ == "__main__":
