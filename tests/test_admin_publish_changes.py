@@ -42,6 +42,9 @@ class AdminPublishChangesTests(unittest.TestCase):
             "institution_locations.csv",
             "institution_aliases.csv",
             "institution_hierarchy.csv",
+            "institutions.csv",
+            "institution_audit_log.csv",
+            "institution_review_queue.csv",
             "review_decisions.csv",
             "paper_arxiv_links.csv",
         }
@@ -64,9 +67,13 @@ class AdminPublishChangesTests(unittest.TestCase):
         ))
 
     def test_admin_export_preserves_existing_complete_preview(self):
+        export_command = next(
+            command for command in admin_publish_changes.ALLOWED_WORKFLOWS["full_refresh"]
+            if "scripts/export_public_preview.py" in command
+        )
         self.assertIn(
             "--preserve-existing",
-            admin_publish_changes.ALLOWED_WORKFLOWS["full_refresh"][2],
+            export_command,
         )
 
     def git(self, repository, *arguments):

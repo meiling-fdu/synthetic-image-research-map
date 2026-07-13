@@ -40,6 +40,7 @@ try:
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
     )
+    from .curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
     from .country_normalization import normalize_country_region, public_location_display
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -100,6 +101,7 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
     )
+    from curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
     from country_normalization import normalize_country_region, public_location_display
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -440,6 +442,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
             "Curated confirmed institution parent/child relationships "
             f"(default: {DEFAULT_INSTITUTION_HIERARCHY})."
         ),
+    )
+    parser.add_argument(
+        "--institutions",
+        type=Path,
+        default=DEFAULT_INSTITUTIONS_PATH,
+        help=f"Canonical institution entities (default: {DEFAULT_INSTITUTIONS_PATH}).",
     )
     parser.add_argument(
         "--institution-resolution-cache",
@@ -2277,6 +2285,102 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
         raise PreviewExportError(f"Could not write {path}: {error}") from error
 
 
+def exclude_nonpublic_institutions(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+    institutions: Sequence[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], int]:
+    """Hide ignored/deprecated/merged entities without deleting traceable data."""
+    hidden_ids = {
+        clean_text(row.get("institution_id"))
+        for row in institutions
+        if clean_text(row.get("institution_status")) in {"ignored", "deprecated", "merged"}
+    }
+    hidden_ids.discard("")
+    maps = [
+        row for row in map_records
+        if clean_text(row.get("institution_id")) not in hidden_ids
+    ]
+    removed = len(map_records) - len(maps)
+    papers = []
+    for source in paper_records:
+        paper = dict(source)
+        old_affiliations = paper.get("affiliations")
+        if isinstance(old_affiliations, list):
+            kept = [
+                dict(row) for row in old_affiliations
+                if isinstance(row, dict)
+                and clean_text(row.get("institution_id")) not in hidden_ids
+            ]
+            old_to_new = {}
+            for new_index, row in enumerate(kept, start=1):
+                old_to_new[parse_year(row.get("index")) or new_index] = new_index
+                row["index"] = new_index
+            paper["affiliations"] = kept
+            for author in paper.get("authors") or []:
+                if isinstance(author, dict):
+                    author["affiliation_indices"] = [
+                        old_to_new[index]
+                        for value in author.get("affiliation_indices") or []
+                        if (index := parse_year(value)) in old_to_new
+                    ]
+        author_affiliations = paper.get("author_institution_affiliations")
+        if isinstance(author_affiliations, list):
+            filtered = [
+                dict(row) for row in author_affiliations
+                if isinstance(row, dict)
+                and clean_text(row.get("institution_id")) not in hidden_ids
+            ]
+            for index, row in enumerate(filtered, start=1):
+                row["index"] = index
+            paper["author_institution_affiliations"] = filtered
+        papers.append(paper)
+    return papers, maps, removed
+
+
+def exclude_stale_curated_mapping_markers(
+    map_records: Sequence[Dict[str, Any]],
+    mappings: Sequence[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], int]:
+    """Drop preserved markers that contradict an active explicit mapping.
+
+    This protects a repaired mapping from being shadowed by a location that was
+    generated before the repair. Multiple affiliations remain valid because
+    matching is scoped to the paper and the exact mapped author set.
+    """
+    targets: Dict[Tuple[Tuple[str, Any], Tuple[str, ...]], set[str]] = defaultdict(set)
+    for mapping in mappings:
+        if clean_text(mapping.get("mapping_status")) not in {"active", "needs_review"}:
+            continue
+        authors = tuple(sorted(
+            normalized_author_name(author)
+            for author in clean_text(mapping.get("institution_authors")).split(";")
+            if normalized_author_name(author)
+        ))
+        if not authors:
+            continue
+        institution_id = clean_text(mapping.get("institution_id")) or stable_institution_id(mapping.get("institution"))
+        targets[(detail_paper_identity(mapping), authors)].add(institution_id)
+    kept = []
+    removed = 0
+    for record in map_records:
+        record_authors = record.get("institution_authors") or []
+        if isinstance(record_authors, str):
+            record_authors = record_authors.split(";")
+        authors = tuple(sorted(
+            normalized_author_name(author)
+            for author in record_authors
+            if normalized_author_name(author)
+        ))
+        expected = targets.get((detail_paper_identity(record), authors))
+        actual = clean_text(record.get("institution_id")) or stable_institution_id(record.get("institution"))
+        if expected and actual not in expected:
+            removed += 1
+            continue
+        kept.append(record)
+    return kept, removed
+
+
 def normalize_institution_lookup(value: Any) -> str:
     text = unicodedata.normalize("NFKD", clean_text(value)).casefold()
     text = "".join(character for character in text if not unicodedata.combining(character))
@@ -2301,7 +2405,8 @@ def public_institution_aliases(
         candidates.append({
             "alias_name": alias_name,
             "canonical_institution_name": canonical_name,
-            "canonical_institution_id": stable_institution_id(canonical_name),
+            "canonical_institution_id": clean_text(row.get("institution_id"))
+            or stable_institution_id(canonical_name),
             "alias_language": clean_text(row.get("alias_language")),
             "alias_source": clean_text(row.get("alias_source")),
         })
@@ -2320,7 +2425,8 @@ def public_institution_aliases(
         candidates.append({
             "alias_name": alias_name,
             "canonical_institution_name": canonical_name,
-            "canonical_institution_id": stable_institution_id(canonical_name),
+            "canonical_institution_id": clean_text(row.get("institution_id"))
+            or stable_institution_id(canonical_name),
             "alias_language": clean_text(row.get("detected_language")),
             "alias_source": "institution-location-review",
         })
@@ -2353,7 +2459,7 @@ def public_institution_hierarchy(
 ) -> List[Dict[str, str]]:
     """Export only confirmed ID-based relationships with canonical names."""
     names_by_id = {
-        stable_institution_id(row.get("institution")): clean_text(row.get("institution"))
+        (clean_text(row.get("institution_id")) or stable_institution_id(row.get("institution"))): clean_text(row.get("institution"))
         for row in confirmed_locations
         if clean_text(row.get("institution"))
     }
@@ -3005,6 +3111,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             processed_cache_rows,
             institution_alias_rows,
         )
+        integrated_maps, stale_mapping_markers_excluded = (
+            exclude_stale_curated_mapping_markers(integrated_maps, curated_mappings)
+        )
         (
             integrated_papers,
             integrated_maps,
@@ -3066,6 +3175,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                     or record.get("institution")
                 )
             )
+        integrated_papers, integrated_maps, ignored_institution_records = (
+            exclude_nonpublic_institutions(
+                integrated_papers,
+                integrated_maps,
+                load_institutions(args.institutions),
+            )
+        )
         add_public_detail_fields(integrated_papers, integrated_maps)
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
@@ -3085,6 +3201,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         summary["retracted_map_records_excluded"] = (
             retracted_map_records_excluded
         )
+        summary["ignored_institution_records_excluded"] = ignored_institution_records
+        summary["stale_mapping_markers_excluded"] = stale_mapping_markers_excluded
 
         if (
             curated_summary.get("curated_markers_created", 0)

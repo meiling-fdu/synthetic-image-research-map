@@ -13,6 +13,7 @@ from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
 )
+from scripts.validate_curated_database import validate_mapping_evidence
 
 
 def write_empty_csv(path, columns):
@@ -89,6 +90,32 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         for field in ("institution", "institution_authors"):
             with self.subTest(field=field), self.assertRaises(CuratedMappingError):
                 self.create({**self.draft, field: "", "review_note": ""})
+
+    def test_active_mapping_with_empty_review_note_passes_database_validation(self):
+        issues = []
+
+        validate_mapping_evidence(
+            [{**self.draft, "mapping_status": "active", "review_note": ""}],
+            issues,
+        )
+
+        self.assertEqual(issues, [])
+
+    def test_active_mapping_with_review_note_passes_database_validation(self):
+        issues = []
+
+        validate_mapping_evidence(
+            [
+                {
+                    **self.draft,
+                    "mapping_status": "active",
+                    "review_note": "Confirmed in publisher PDF",
+                }
+            ],
+            issues,
+        )
+
+        self.assertEqual(issues, [])
 
     def test_frontend_marks_only_review_note_optional(self):
         html = (

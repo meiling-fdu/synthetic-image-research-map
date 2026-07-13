@@ -733,7 +733,8 @@ def _merge_curated_paper(
 def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "mapping_id": clean(mapping.get("mapping_id")),
-        "institution_id": stable_institution_id(mapping.get("institution")),
+        "institution_id": clean(mapping.get("institution_id"))
+        or stable_institution_id(mapping.get("institution")),
         "institution": clean(mapping.get("institution")),
         "institution_authors": _parse_people(
             mapping.get("institution_authors")

@@ -1,5 +1,38 @@
 # Data Schema
 
+## Canonical institution entities
+
+`data/curated/institutions.csv` owns institution identity. Each row has a stable
+`institution_id`, `canonical_name`, `institution_type`, `institution_status`, an
+optional `parent_institution_id`, and a `public_display` preference. Ignored,
+deprecated, and merged entities remain traceable but are omitted from public
+outputs.
+
+`institution_locations.csv` owns location only and references `institution_id`.
+Coordinate edits cannot change that ID. A child without a location may inherit
+the nearest confirmed parent location; its own row overrides inheritance.
+
+`institution_aliases.csv` maps a reviewed alias to one canonical ID.
+`author_institution_mappings.csv` stores the stable ID plus raw affiliation
+evidence. Reassignment is an explicit mapping or confirmed merge action.
+`institution_audit_log.csv` records ignore and global merge impact and
+confirmation. Parent and alias cycles are invalid.
+
+`data/manual/institution_consistency_audit.csv` is a generated, reporting-only
+second-layer audit. It compares explicit mappings with raw affiliation
+evidence, aliases, parents, merge history, and public exports. Findings use
+`affiliation_mismatch`, `author_institution_conflict`,
+`suspicious_replacement`, `duplicate_institution`, `alias_missing`, or
+`parent_child_inconsistency`, with low/medium/high severity.
+
+`data/curated/institution_review_queue.csv` is the persistent Admin queue. It
+copies each finding's evidence and stable `audit_id`/`mapping_id`, then records
+`finding_status`, resolution action/note, current-state flag, reviewer, and
+timestamps. Re-auditing upserts evidence without overwriting human outcomes;
+open findings that disappear are retained as `resolved_by_reaudit`. Mapping
+corrections use the existing mapping service and are committed atomically with
+queue resolution. The generated report is never edited to record an outcome.
+
 ## Overview
 
 The project uses four core related CSV tables to represent papers, authors, institutions, and the affiliations connecting them, plus auxiliary manual correction tables. The schema is intentionally small and compatible with metadata commonly available from OpenAlex, Semantic Scholar, Crossref, arXiv, and manual research.

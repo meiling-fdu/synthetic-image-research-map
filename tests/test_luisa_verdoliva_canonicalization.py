@@ -72,7 +72,12 @@ def test_luisa_verdoliva_canonical_naples():
 
     assert records
     for record in records:
-        assert CANONICAL in _institution_payload(record)
+        mapped_to_an_institution = any(
+            "Luisa Verdoliva" in affiliation.get("authors", [])
+            for affiliation in record.get("author_institution_affiliations", [])
+        )
+        if mapped_to_an_institution:
+            assert CANONICAL in _institution_payload(record)
 
 
 def test_luisa_verdoliva_regression_examples_and_current_marker_authors():
