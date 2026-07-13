@@ -17,14 +17,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 896 |
-| Unique papers | 412 |
-| Unique institutions | 508 |
-| Countries | 73 |
-| arXiv/preprint records | 495 |
-| Records with DOI | 879 |
-| Records with venue | 831 |
-| Records missing venue | 65 |
+| Map records | 963 |
+| Unique papers | 440 |
+| Unique institutions | 521 |
+| Countries | 74 |
+| arXiv/preprint records | 547 |
+| Records with DOI | 946 |
+| Records with venue | 895 |
+| Records missing venue | 68 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -34,27 +34,27 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 768 |
+| detection | 832 |
 | source_attribution | 84 |
-| detection_and_source_attribution | 44 |
+| detection_and_source_attribution | 47 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 397 |
+| ai_generated_image_detection | 461 |
 | synthetic_image_detection | 266 |
 | deepfake_image_detection | 105 |
 | generated_image_source_attribution | 56 |
-| detection_and_source_attribution | 44 |
+| detection_and_source_attribution | 47 |
 | source_identification | 28 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 110 |
-| 2025 | 274 |
+| 2026 | 151 |
+| 2025 | 300 |
 | 2024 | 233 |
 | 2023 | 125 |
 | 2022 | 60 |
@@ -70,68 +70,68 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | arXiv (Cornell University) | 95 |
 | ArXiv.org | 53 |
+| Proceedings of the AAAI Conference on Artificial Intelligence | 42 |
 | Lecture notes in computer science | 40 |
-| Proceedings of the AAAI Conference on Artificial Intelligence | 31 |
 | 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 17 |
+| NeurIPS | 17 |
+| IEEE Transactions on Information Forensics and Security | 16 |
 | IEEE Access | 14 |
+| International Conference on Machine Learning (ICML) | 14 |
 | Pattern Recognition Letters | 14 |
-| IEEE Signal Processing Letters | 13 |
-| IEEE Transactions on Information Forensics and Security | 13 |
-| Applied Sciences | 12 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| China | 203 |
+| China | 243 |
 | CN | 141 |
-| United States | 70 |
+| United States | 79 |
 | US | 62 |
-| Italy | 44 |
+| Italy | 46 |
 | IN | 40 |
 | IT | 32 |
-| Germany | 20 |
+| Germany | 21 |
 | DE | 19 |
-| GB | 18 |
+| France | 19 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
-| University of Naples Federico II | 16 |
-| Shanghai Jiao Tong University | 14 |
+| University of Naples Federico II | 17 |
+| Shanghai Jiao Tong University | 16 |
 | University of Siena | 14 |
+| University of Chinese Academy of Sciences | 13 |
 | Beijing Jiaotong University | 12 |
-| University of Chinese Academy of Sciences | 12 |
 | Fudan University | 11 |
-| Beijing University of Posts and Telecommunications | 9 |
+| Beijing University of Posts and Telecommunications | 10 |
+| University of Science and Technology of China | 10 |
 | City University of Hong Kong | 9 |
-| Chinese Academy of Sciences | 8 |
 | Information Technologies Institute | 8 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 723 |
+| high | 790 |
 | medium | 173 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **65**
+Count: **68**
 
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
-- OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Xi'an Jiaotong University; `openalex-candidate-20ef2bae71c5cf78`
+- OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Xi’an Jiaotong University; `openalex-candidate-20ef2bae71c5cf78`
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025) - Tencent (China); `openalex-candidate-6162788b83db1bc7`
 - CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025) - Purdue University West Lafayette; `openalex-candidate-000ae598a83c4cc6`
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - University of Hong Kong; `openalex-candidate-3e36acb7cecb0f1d`
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Shanghai Jiao Tong University; `openalex-candidate-90b5060d79313344`
 - Semantic Discrepancy-Aware Detector for Image Forgery Identification (2025) - Nanjing University of Science and Technology; `openalex-candidate-caad465d68fa7710`
 - ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection (2025) - Henan University of Engineering; `openalex-candidate-af86ed74fc84674b`
-- CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - University at Buffalo, State University of New York; `openalex-candidate-348a506b67288d74`
+- CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - University at Buffalo; `openalex-candidate-348a506b67288d74`
 - ExDA: Towards Universal Detection and Plug-and-Play Attribution of AI-Generated Ex-Regulatory Images (2025) - Shanghai Jiao Tong University; `openalex-candidate-071adf2c66af598a`
 - Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University; `openalex-candidate-3a2726c50ff6a7d0`
 - HFMF: Hierarchical Fusion Meets Multi-Stream Models for Deepfake Detection (2025) - Texas A&M University; `openalex-candidate-2b3de8f25296a245`
@@ -156,7 +156,7 @@ Count: **65**
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Beihang University; `openalex-candidate-14fd0a26117cf71b`
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Beijing Academy of Artificial Intelligence; `openalex-candidate-bf82bd2badee947a`
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Shanghai Artificial Intelligence Laboratory; `openalex-candidate-e0b769e76fa2e1a5`
-- CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - Chinese Academy of Sciences; `openalex-candidate-e0b2b9196a6705c5`
+- CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - Institute of Information Engineering, Chinese Academy of Sciences; `openalex-candidate-e0b2b9196a6705c5`
 - CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - Institute of Information Engineering; `openalex-candidate-452f2bb3c9879715`
 - Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Alibaba Group (United States); `openalex-candidate-35b487cf0a750d96`
 - Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University of Technology; `openalex-candidate-eced2038e5ce940f`
@@ -187,6 +187,9 @@ Count: **65**
 - StealthDiffusion: Towards Evading Diffusion Forensic Detection through Diffusion Model (2024) - Xiamen University; `curated-map:44d04408ebfffce2ca15`
 - Towards the Detection of Diffusion Model Deepfakes (2024) - Ruhr University Bochum; `curated-map:7eb6a019bf3f0f4fce56`
 - Towards the Detection of Diffusion Model Deepfakes (2024) - CISPA Helmholtz Center for Information Security; `curated-map:c339f8bd4ffbcaada177`
+- AI-Generated Image Detection: Challenges and Recent Advances (2026) - Amazon; `curated-map:974352335e3aeee1efcb`
+- AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Sheffield; `curated-map:dde274193da1c0814177`
+- AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Amsterdam; `curated-map:5c81d0cf1e05f580d116`
 
 ### Records missing URL
 
