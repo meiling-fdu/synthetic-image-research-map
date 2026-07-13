@@ -22,6 +22,7 @@ try:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
     )
+    from .curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
 except ImportError:
     from curated_schema import (
         CURATED_DATA_DIR,
@@ -30,6 +31,7 @@ except ImportError:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
     )
+    from curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
 
 
 DEFAULT_LOCATION_REVIEW_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
@@ -303,6 +305,7 @@ def _confirmed_location_fields(
         )
     return {
         "location_id": location_id_for(normalized),
+        "institution_id": clean(draft.get("institution_id")),
         "institution": institution,
         "normalized_institution": normalized,
         "city": city,
@@ -325,16 +328,36 @@ def create_or_update_confirmed_location(
     *,
     locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
     review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
+    institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     created_by: str = "local-admin",
 ) -> Dict[str, Any]:
     review_rows = load_location_review_queue(review_path)
     review_index = _find_queue_row(review_rows, queue_id)
     queue_row = review_rows[review_index]
-    queue_normalized = normalize_institution_name(
-        draft.get("confirmed_institution") or queue_row.get("institution")
+    bound_institution_id = clean(queue_row.get("institution_id"))
+    if not bound_institution_id:
+        raise CuratedLocationError("location review row is not bound to an institution_id")
+    entity = next(
+        (
+            row for row in load_institutions(institutions_path)
+            if clean(row.get("institution_id")) == bound_institution_id
+        ),
+        None,
     )
+    if entity is None:
+        raise CuratedLocationError("location review institution_id is unknown")
+    requested_id = clean(draft.get("institution_id"))
+    if requested_id and requested_id != bound_institution_id:
+        raise CuratedLocationError("editing coordinates cannot change institution_id")
+    canonical_name = clean(entity.get("canonical_name"))
+    location_draft = {
+        **draft,
+        "institution_id": bound_institution_id,
+        "confirmed_institution": canonical_name,
+    }
+    queue_normalized = normalize_institution_name(canonical_name)
     values = _confirmed_location_fields(
-        draft,
+        location_draft,
         created_by=created_by,
         normalized_institution=queue_normalized,
     )
@@ -343,10 +366,7 @@ def create_or_update_confirmed_location(
     matches = [
         index
         for index, row in enumerate(locations)
-        if normalize_institution_name(
-            row.get("normalized_institution") or row.get("institution")
-        )
-        == values["normalized_institution"]
+        if clean(row.get("institution_id")) == bound_institution_id
     ]
     if len(matches) > 1:
         raise CuratedLocationError(
@@ -370,7 +390,8 @@ def create_or_update_confirmed_location(
         values["updated_at"] = now
         locations.append(values)
 
-    queue_row["canonical_institution_name"] = values["institution"]
+    # A location action updates location state only. Identity remains owned by
+    # institutions.csv and mapping reassignment remains an explicit action.
     queue_row["review_status"] = "confirmed"
     queue_row["location_status"] = "known"
     queue_row["coordinate_status"] = "known"
@@ -437,11 +458,9 @@ def save_queue_metadata(
     index = _find_queue_row(rows, queue_id)
     row = rows[index]
     editable = (
-        "canonical_institution_name",
         "detected_language",
         "suggested_city",
         "suggested_country",
-        "matched_institution",
         "suggested_canonical_institution",
         "match_method",
         "similarity_score",
@@ -502,6 +521,11 @@ def confirm_alias(
     index = _find_queue_row(rows, queue_id)
     queue_row = rows[index]
     alias_name = clean(queue_row.get("institution"))
+    target_institution_id = clean(target.get("institution_id")) or (
+        "institution:" + hashlib.sha256(
+            normalize_institution_name(target.get("institution")).encode("utf-8")
+        ).hexdigest()[:16]
+    )
     aliases = load_institution_aliases(aliases_path)
     original_aliases = [dict(row) for row in aliases]
     normalized_alias = normalize_institution_name(alias_name)
@@ -519,7 +543,11 @@ def confirm_alias(
             "this alias already maps to a different canonical institution"
         )
     alias_row = {
+        "alias_id": "alias:" + hashlib.sha256(
+            normalized_alias.encode("utf-8")
+        ).hexdigest()[:16],
         "alias_name": alias_name,
+        "institution_id": target_institution_id,
         "canonical_institution_name": clean(target.get("institution")),
         "alias_language": clean(alias_language),
         "alias_source": clean(alias_source) or "local-admin",
@@ -608,10 +636,16 @@ def location_review_payload(
     locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
     aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
     mappings: Sequence[Mapping[str, Any]] = (),
+    institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
 ) -> Dict[str, Any]:
     reviews = load_location_review_queue(review_path)
     locations = load_confirmed_locations(locations_path)
     aliases = load_institution_aliases(aliases_path)
+    ignored_ids = {
+        clean(row.get("institution_id"))
+        for row in load_institutions(institutions_path)
+        if clean(row.get("institution_status")) == "ignored"
+    }
     aliases_by_canonical: Dict[str, List[str]] = defaultdict(list)
     confirmed_alias_targets: Dict[str, str] = {}
     for alias in aliases:
@@ -753,7 +787,9 @@ def location_review_payload(
                 ],
                 "affected_papers": list(affected_papers.values()),
             }
-        if effective_status in {"ignore", "excluded"}:
+        if clean(row.get("institution_id")) in ignored_ids:
+            suppression_reasons["resolved_by_ignored_institution"] += 1
+        elif effective_status in {"ignore", "excluded"}:
             suppression_reasons["resolved_by_durable_exclusion"] += 1
         elif alias_target or effective_status == "alias_of_confirmed":
             suppression_reasons["resolved_by_curated_correction"] += 1

@@ -21,6 +21,8 @@ try:
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
+        ALLOWED_INSTITUTION_STATUSES,
+        ALLOWED_INSTITUTION_TYPES,
         ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_REVIEW_ACTIONS,
@@ -39,6 +41,8 @@ except ImportError:  # Support direct execution from the repository root.
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
+        ALLOWED_INSTITUTION_STATUSES,
+        ALLOWED_INSTITUTION_TYPES,
         ALLOWED_MAPPING_STATUSES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_REVIEW_ACTIONS,
@@ -356,6 +360,7 @@ def validate_boolean_fields(
             "is_active",
             "excluded_from_public_preview",
             "excluded_from_map",
+            "is_current",
         ):
             value = clean(row.get(field))
             if value and value.casefold() not in BOOLEAN_LIKE_VALUES:
@@ -379,7 +384,7 @@ def validate_mapping_evidence(
         if mapping_status not in active_statuses:
             continue
         active_rows.append((row_number, row))
-        for field in ("institution", "institution_authors", "review_note"):
+        for field in ("institution", "institution_authors"):
             if not clean(row.get(field)):
                 add_issue(
                     issues,
@@ -644,6 +649,7 @@ def validate_institution_aliases(
     aliases: Sequence[Mapping[str, str]],
     confirmed_locations: Sequence[Mapping[str, str]],
     issues: List[Issue],
+    institutions: Sequence[Mapping[str, str]] = (),
 ) -> None:
     confirmed_by_name = {}
     for row in confirmed_locations:
@@ -651,6 +657,8 @@ def validate_institution_aliases(
         confirmed_by_name[normalize_institution(
             row.get("normalized_institution")
         )] = row
+    for row in institutions:
+        confirmed_by_name[normalize_institution(row.get("canonical_name"))] = row
     alias_targets: DefaultDict[str, set[str]] = defaultdict(set)
     alias_rows: DefaultDict[Tuple[str, str], List[int]] = defaultdict(list)
     for row_number, row in enumerate(aliases, start=2):
@@ -768,6 +776,128 @@ def validate_institution_hierarchy(
             )
 
 
+def validate_institution_entities(
+    institutions: Sequence[Mapping[str, str]],
+    mappings: Sequence[Mapping[str, str]],
+    locations: Sequence[Mapping[str, str]],
+    reviews: Sequence[Mapping[str, str]],
+    aliases: Sequence[Mapping[str, str]],
+    audits: Sequence[Mapping[str, str]],
+    issues: List[Issue],
+) -> None:
+    ids: Dict[str, Mapping[str, str]] = {}
+    names: Dict[str, str] = {}
+    parents: Dict[str, str] = {}
+    for row_number, row in enumerate(institutions, start=2):
+        institution_id = clean(row.get("institution_id"))
+        canonical = clean(row.get("canonical_name"))
+        if not institution_id or not canonical:
+            add_issue(issues, "ERROR", "institutions.csv", "institution_id and canonical_name are required", row_number)
+            continue
+        if institution_id in ids:
+            add_issue(issues, "ERROR", "institutions.csv", f"duplicate institution_id: {institution_id}", row_number)
+        normalized = normalize_institution(canonical)
+        if normalized in names and names[normalized] != institution_id:
+            add_issue(issues, "ERROR", "institutions.csv", f"duplicate canonical institution name: {canonical}", row_number)
+        ids[institution_id] = row
+        names[normalized] = institution_id
+        parents[institution_id] = clean(row.get("parent_institution_id"))
+    for child, parent in parents.items():
+        if parent and parent not in ids:
+            add_issue(issues, "ERROR", "institutions.csv", f"unknown parent_institution_id: {parent}")
+        seen = {child}
+        cursor = parent
+        while cursor:
+            if cursor in seen:
+                add_issue(issues, "ERROR", "institutions.csv", f"parent-child cycle involving {child}")
+                break
+            seen.add(cursor)
+            cursor = parents.get(cursor, "")
+    for filename, rows in (("author_institution_mappings.csv", mappings), ("institution_locations.csv", locations), ("institution_location_review.csv", reviews), ("institution_aliases.csv", aliases)):
+        for row_number, row in enumerate(rows, start=2):
+            institution_id = clean(row.get("institution_id"))
+            if not institution_id or institution_id not in ids:
+                add_issue(issues, "ERROR", filename, f"unknown institution_id: {institution_id or '[missing]'}", row_number)
+    merge_audits = {clean(row.get("previous_institution_id")) for row in audits if clean(row.get("action")) == "merge"}
+    for row_number, row in enumerate(institutions, start=2):
+        if clean(row.get("institution_status")) == "merged" and clean(row.get("institution_id")) not in merge_audits:
+            add_issue(issues, "ERROR", "institutions.csv", "merged institution has no replacement audit trail", row_number)
+
+    # An alias can point only one way. If an alias is itself another canonical
+    # entity, follow that edge and reject cycles of length two or greater.
+    alias_edges: Dict[str, str] = {}
+    for row in aliases:
+        source = names.get(normalize_institution(row.get("alias_name")))
+        target = clean(row.get("institution_id"))
+        if source and source != target:
+            alias_edges[source] = target
+    for source in alias_edges:
+        seen = {source}
+        cursor = alias_edges.get(source, "")
+        while cursor:
+            if cursor in seen:
+                add_issue(issues, "ERROR", "institution_aliases.csv", f"alias cycle involving {source}")
+                break
+            seen.add(cursor)
+            cursor = alias_edges.get(cursor, "")
+
+    # Multiple institutions are legitimate only when distinct affiliation
+    # evidence exists for that author-paper pair.
+    author_rows: DefaultDict[Tuple[str, str], List[Mapping[str, str]]] = defaultdict(list)
+    for row in mappings:
+        if clean(row.get("mapping_status")) not in {"active", "needs_review"}:
+            continue
+        paper = clean(row.get("paper_id")) or normalize_title(row.get("title"))
+        for author in clean(row.get("institution_authors")).split(";"):
+            if author.strip():
+                author_rows[(paper, normalize_title(author))].append(row)
+    for key, rows in author_rows.items():
+        institution_ids = {clean(row.get("institution_id")) for row in rows}
+        evidence_values = [normalize_title(row.get("raw_affiliation")) for row in rows]
+        evidence = {value for value in evidence_values if value}
+        evidenced_institutions = {
+            clean(row.get("institution_id"))
+            for row in rows
+            if normalize_institution(row.get("institution"))
+            and any(
+                normalize_institution(row.get("institution")) in raw
+                for raw in evidence
+            )
+        }
+        if (
+            len(institution_ids) > 1
+            and len(evidence) < len(institution_ids)
+            and all(evidence_values)
+            and evidenced_institutions != institution_ids
+        ):
+            add_issue(issues, "WARNING", "author_institution_mappings.csv", f"conflicting canonical institutions without distinct affiliation evidence for {key[1]}; manual review required")
+
+
+def validate_institution_consistency_audit(
+    issues: List[Issue],
+    findings: Sequence[Mapping[str, str]] | None = None,
+) -> None:
+    """Block on current, unresolved items in the persistent cleanup queue."""
+    if findings is None:
+        findings = []
+    for finding in findings:
+        if clean(finding.get("finding_status")) != "open":
+            continue
+        if clean(finding.get("is_current")).casefold() not in {"1", "true", "yes", "y"}:
+            continue
+        severity = clean(finding.get("severity"))
+        if severity not in {"high", "medium"}:
+            continue
+        author = clean(finding.get("author")) or "institution record"
+        title = clean(finding.get("paper_title")) or "no paper"
+        add_issue(
+            issues,
+            "ERROR" if severity == "high" else "WARNING",
+            "institution_review_queue.csv",
+            f"{finding.get('issue_type')}: {author} / {title}: {finding.get('reason')}",
+        )
+
+
 def main() -> int:
     issues: List[Issue] = []
     datasets, row_counts = read_curated_files(issues)
@@ -780,6 +910,9 @@ def main() -> int:
     confirmed_locations = datasets.get("institution_locations.csv", [])
     aliases = datasets.get("institution_aliases.csv", [])
     hierarchy = datasets.get("institution_hierarchy.csv", [])
+    institutions = datasets.get("institutions.csv", [])
+    institution_audits = datasets.get("institution_audit_log.csv", [])
+    institution_review_queue = datasets.get("institution_review_queue.csv", [])
     review_decisions = datasets.get("review_decisions.csv", [])
     version_merges = datasets.get("paper_version_merges.csv", [])
 
@@ -848,6 +981,28 @@ def main() -> int:
         issues,
     )
     validate_allowed_value(
+        institutions, "institutions.csv", "institution_status",
+        ALLOWED_INSTITUTION_STATUSES, issues,
+    )
+    validate_allowed_value(
+        institutions, "institutions.csv", "institution_type",
+        ALLOWED_INSTITUTION_TYPES, issues,
+    )
+    validate_allowed_value(
+        institution_review_queue,
+        "institution_review_queue.csv",
+        "finding_status",
+        {"open", "accepted", "ignored", "manually_resolved", "resolved_by_reaudit"},
+        issues,
+    )
+    validate_allowed_value(
+        institution_review_queue,
+        "institution_review_queue.csv",
+        "severity",
+        {"high", "medium", "low"},
+        issues,
+    )
+    validate_allowed_value(
         locations,
         "institution_location_review.csv",
         "coordinate_status",
@@ -856,6 +1011,29 @@ def main() -> int:
     )
     validate_boolean_fields(exclusions, "paper_exclusions.csv", issues)
     validate_boolean_fields(version_merges, "paper_version_merges.csv", issues)
+    validate_boolean_fields(
+        institution_review_queue, "institution_review_queue.csv", issues
+    )
+    for row_number, row in enumerate(institution_review_queue, start=2):
+        for field in ("queue_id", "audit_id", "severity", "issue_type", "reason", "finding_status", "created_at", "updated_at"):
+            if not clean(row.get(field)):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "institution_review_queue.csv",
+                    f"{field} is required",
+                    row_number,
+                )
+        if clean(row.get("finding_status")) != "open":
+            for field in ("resolution_action", "resolution_note", "resolved_at", "resolved_by"):
+                if not clean(row.get(field)):
+                    add_issue(
+                        issues,
+                        "ERROR",
+                        "institution_review_queue.csv",
+                        f"resolved finding requires {field}",
+                        row_number,
+                    )
     validate_allowed_value(
         version_merges,
         "paper_version_merges.csv",
@@ -964,8 +1142,13 @@ def main() -> int:
         confirmed_by_name[normalize_institution(
             row.get("normalized_institution")
         )] = row
-    validate_institution_aliases(aliases, confirmed_locations, issues)
+    validate_institution_aliases(aliases, confirmed_locations, issues, institutions)
     validate_institution_hierarchy(hierarchy, confirmed_locations, issues)
+    validate_institution_entities(
+        institutions, mappings, confirmed_locations, locations, aliases,
+        institution_audits, issues,
+    )
+    validate_institution_consistency_audit(issues, institution_review_queue)
     for row_number, row in enumerate(locations, start=2):
         status = clean(row.get("review_status"))
         canonical = normalize_institution(row.get("canonical_institution_name"))

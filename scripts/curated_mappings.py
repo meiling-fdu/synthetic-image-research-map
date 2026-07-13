@@ -181,6 +181,7 @@ def _mapping_fields(
     draft: Mapping[str, Any],
 ) -> Dict[str, str]:
     institution = clean(draft.get("institution"))
+    institution_id = clean(draft.get("institution_id"))
     institution_authors = clean(draft.get("institution_authors"))
     raw_affiliation = clean(draft.get("raw_affiliation"))
     evidence_source = clean(draft.get("evidence_source"))
@@ -189,6 +190,12 @@ def _mapping_fields(
     mapping_status = clean(draft.get("mapping_status")) or "active"
     if not institution:
         raise CuratedMappingError("institution is required")
+    if not institution_id:
+        normalized = _normalized_text(institution)
+        institution_id = (
+            f"institution:{hashlib.sha256(normalized.encode('utf-8')).hexdigest()[:16]}"
+            if normalized else ""
+        )
     if not institution_authors:
         raise CuratedMappingError("institution authors are required")
     if not any((raw_affiliation, evidence_source, evidence_url)):
@@ -202,6 +209,7 @@ def _mapping_fields(
     return {
         **_paper_fields(paper),
         "institution": institution,
+        "institution_id": institution_id,
         "institution_authors": institution_authors,
         "author_order": clean(draft.get("author_order")),
         "raw_affiliation": raw_affiliation,
@@ -227,7 +235,9 @@ def _duplicate_mapping(
     *,
     ignore_mapping_id: str = "",
 ) -> Dict[str, Any] | None:
-    institution = _normalized_text(candidate.get("institution"))
+    institution = clean(candidate.get("institution_id")) or _normalized_text(
+        candidate.get("institution")
+    )
     authors = _normalized_text(candidate.get("institution_authors"))
     for row in rows:
         if clean(row.get("mapping_id")) == ignore_mapping_id:
@@ -237,7 +247,7 @@ def _duplicate_mapping(
         if not records_share_paper_identity(candidate, row):
             continue
         if (
-            _normalized_text(row.get("institution")) == institution
+            (clean(row.get("institution_id")) or _normalized_text(row.get("institution"))) == institution
             and _normalized_text(row.get("institution_authors")) == authors
         ):
             return dict(row)
@@ -344,6 +354,8 @@ def _sync_location_review(
     now = _timestamp()
     values = {
         "institution": clean(mapping.get("institution")),
+        "canonical_institution_name": clean(mapping.get("institution")),
+        "institution_id": clean(mapping.get("institution_id")),
         "related_paper_id": clean(mapping.get("paper_id")),
         "title": clean(mapping.get("title")),
         "year": clean(mapping.get("year")),

@@ -43,6 +43,7 @@ AUTHOR_INSTITUTION_MAPPING_COLUMNS = (
     "doi",
     "openalex_url",
     "institution",
+    "institution_id",
     "institution_authors",
     "author_order",
     "raw_affiliation",
@@ -59,6 +60,35 @@ AUTHOR_INSTITUTION_MAPPING_COLUMNS = (
     "review_note",
     "created_at",
     "updated_at",
+)
+
+INSTITUTION_REVIEW_QUEUE_COLUMNS = (
+    "queue_id",
+    "audit_id",
+    "mapping_id",
+    "paper_id",
+    "paper_title",
+    "year",
+    "doi",
+    "openalex_url",
+    "author",
+    "current_institution",
+    "current_institution_id",
+    "raw_affiliation",
+    "suggested_canonical_institution",
+    "suggested_institution_id",
+    "severity",
+    "issue_type",
+    "reason",
+    "recommended_action",
+    "finding_status",
+    "resolution_action",
+    "resolution_note",
+    "is_current",
+    "created_at",
+    "updated_at",
+    "resolved_at",
+    "resolved_by",
 )
 
 PAPER_EXCLUSION_COLUMNS = (
@@ -84,6 +114,7 @@ PAPER_EXCLUSION_COLUMNS = (
 INSTITUTION_LOCATION_REVIEW_COLUMNS = (
     "institution",
     "canonical_institution_name",
+    "institution_id",
     "detected_language",
     "related_paper_id",
     "title",
@@ -113,7 +144,9 @@ INSTITUTION_LOCATION_REVIEW_COLUMNS = (
 )
 
 INSTITUTION_ALIAS_COLUMNS = (
+    "alias_id",
     "alias_name",
+    "institution_id",
     "canonical_institution_name",
     "alias_language",
     "alias_source",
@@ -133,6 +166,7 @@ INSTITUTION_HIERARCHY_COLUMNS = (
 
 INSTITUTION_LOCATION_COLUMNS = (
     "location_id",
+    "institution_id",
     "institution",
     "normalized_institution",
     "city",
@@ -147,6 +181,33 @@ INSTITUTION_LOCATION_COLUMNS = (
     "review_note",
     "created_at",
     "updated_at",
+    "created_by",
+)
+
+INSTITUTION_COLUMNS = (
+    "institution_id",
+    "canonical_name",
+    "institution_type",
+    "institution_status",
+    "parent_institution_id",
+    "public_display",
+    "created_at",
+    "updated_at",
+    "created_by",
+)
+
+INSTITUTION_AUDIT_COLUMNS = (
+    "audit_id",
+    "action",
+    "institution_id",
+    "previous_institution_id",
+    "affected_papers",
+    "affected_mappings",
+    "affected_markers",
+    "affected_authors",
+    "confirmation_text",
+    "review_note",
+    "created_at",
     "created_by",
 )
 
@@ -204,6 +265,9 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "institution_aliases.csv": INSTITUTION_ALIAS_COLUMNS,
     "institution_hierarchy.csv": INSTITUTION_HIERARCHY_COLUMNS,
     "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
+    "institutions.csv": INSTITUTION_COLUMNS,
+    "institution_audit_log.csv": INSTITUTION_AUDIT_COLUMNS,
+    "institution_review_queue.csv": INSTITUTION_REVIEW_QUEUE_COLUMNS,
     "review_decisions.csv": REVIEW_DECISION_COLUMNS,
     "paper_version_merges.csv": PAPER_VERSION_MERGE_COLUMNS,
     "paper_arxiv_links.csv": CURATED_ARXIV_LINK_COLUMNS,
@@ -252,6 +316,23 @@ ALLOWED_MAPPING_STATUSES = {
     "active",
     "excluded",
     "needs_review",
+}
+
+ALLOWED_INSTITUTION_STATUSES = {
+    "active",
+    "ignored",
+    "alias",
+    "merged",
+    "deprecated",
+}
+
+ALLOWED_INSTITUTION_TYPES = {
+    "university",
+    "department",
+    "institute",
+    "laboratory",
+    "company",
+    "research_unit",
 }
 
 ALLOWED_LOCATION_STATUSES = {
@@ -307,6 +388,7 @@ ALLOWED_REVIEW_QUEUES = {
     "manual_import",
     "title_match",
     "other",
+    "institution_consistency",
 }
 
 ALLOWED_REVIEW_ACTIONS = {
@@ -321,4 +403,7 @@ ALLOWED_REVIEW_ACTIONS = {
     "no_action_after_review",
     "unresolved",
     "other",
+    "accept_mapping",
+    "ignore_warning",
+    "replace_mapping",
 }
