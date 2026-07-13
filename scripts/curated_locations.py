@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import difflib
 import hashlib
 import math
 import re
@@ -48,6 +49,65 @@ def clean(value: Any) -> str:
 def normalize_institution_name(value: Any) -> str:
     text = unicodedata.normalize("NFKC", clean(value)).casefold()
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+
+
+def normalize_candidate_name(value: Any) -> str:
+    text = unicodedata.normalize("NFKD", clean(value)).casefold()
+    text = "".join(
+        character for character in text if not unicodedata.combining(character)
+    )
+    return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+
+
+INSTITUTION_ACRONYM_STOPWORDS = {
+    "and", "at", "de", "del", "der", "di", "for", "of", "the", "und", "universite",
+}
+INSTITUTION_SUBUNIT_TERMS = {
+    "center", "centre", "clinic", "department", "faculty", "hospital", "institute",
+    "laboratory", "lab", "school",
+}
+
+
+def institution_acronym(value: Any) -> str:
+    words = normalize_candidate_name(value).split()
+    return "".join(
+        word[0] for word in words
+        if word and word not in INSTITUTION_ACRONYM_STOPWORDS
+    )
+
+
+def institution_candidate_evidence(
+    candidate_name: Any,
+    canonical_name: Any,
+) -> tuple[float, str]:
+    """Return conservative review evidence; never a merge decision."""
+    candidate = normalize_candidate_name(candidate_name)
+    canonical = normalize_candidate_name(canonical_name)
+    if not candidate or not canonical or candidate == canonical:
+        return 0.0, ""
+    candidate_acronym = institution_acronym(candidate_name)
+    canonical_acronym = institution_acronym(canonical_name)
+    if (
+        len(candidate.replace(" ", "")) <= 12
+        and candidate.replace(" ", "") == canonical_acronym
+    ) or (
+        len(canonical.replace(" ", "")) <= 12
+        and canonical.replace(" ", "") == candidate_acronym
+    ):
+        return 1.0, "abbreviation_full_name"
+    candidate_words = set(candidate.split())
+    canonical_words = set(canonical.split())
+    if (candidate in canonical or canonical in candidate) and (
+        (candidate_words | canonical_words) & INSTITUTION_SUBUNIT_TERMS
+    ):
+        return 0.9, "parent_subunit_variant"
+    overlap = len(candidate_words & canonical_words) / max(
+        len(candidate_words | canonical_words), 1
+    )
+    similarity = difflib.SequenceMatcher(None, candidate, canonical).ratio()
+    if overlap >= 0.6 and similarity >= 0.72:
+        return round(max(overlap, similarity), 3), "near_duplicate_name"
+    return 0.0, ""
 
 
 def _timestamp() -> str:
@@ -547,6 +607,7 @@ def location_review_payload(
     review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
     aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
+    mappings: Sequence[Mapping[str, Any]] = (),
 ) -> Dict[str, Any]:
     reviews = load_location_review_queue(review_path)
     locations = load_confirmed_locations(locations_path)
@@ -573,6 +634,11 @@ def location_review_payload(
         ].append(location)
     records = []
     suppression_reasons: Counter[str] = Counter()
+    mappings_by_institution: Dict[str, List[Mapping[str, Any]]] = defaultdict(list)
+    for mapping in mappings:
+        mappings_by_institution[
+            normalize_institution_name(mapping.get("institution"))
+        ].append(mapping)
     for row in reviews:
         raw_key = normalize_institution_name(row.get("institution"))
         alias_target = confirmed_alias_targets.get(raw_key)
@@ -581,6 +647,86 @@ def location_review_payload(
             or row.get("institution")
         )
         matches = by_institution.get(canonical_key, [])
+        affected_mappings = mappings_by_institution.get(raw_key, [])
+        affected_papers = {}
+        for mapping in affected_mappings:
+            paper_id = clean(mapping.get("paper_id"))
+            paper_key = paper_id or "|".join((
+                clean(mapping.get("title")), clean(mapping.get("year"))
+            ))
+            affected_papers[paper_key] = {
+                "paper_id": paper_id,
+                "title": clean(mapping.get("title")),
+                "year": clean(mapping.get("year")),
+            }
+        candidate_suggestions = []
+        suggested_key = normalize_institution_name(
+            row.get("suggested_canonical_institution")
+            or row.get("matched_institution")
+        )
+        for location in locations:
+            canonical_name = clean(location.get("institution"))
+            location_key = normalize_institution_name(canonical_name)
+            score, reason = institution_candidate_evidence(
+                row.get("institution"), canonical_name
+            )
+            if suggested_key and suggested_key == location_key:
+                score = max(score, 1.0)
+                reason = "source_suggested_canonical_match"
+            if not reason:
+                continue
+            row_country = clean(row.get("suggested_country")).casefold()
+            canonical_country = clean(location.get("country")).casefold()
+            conflicts = []
+            if row_country and canonical_country and row_country != canonical_country:
+                conflicts.append("country")
+            candidate_suggestions.append({
+                "canonical_institution_name": canonical_name,
+                "canonical_record": dict(location),
+                "aliases": aliases_by_canonical.get(location_key, []),
+                "reason": reason,
+                "evidence": (
+                    f"{reason.replace('_', ' ')}; normalized-name score={score:.3f}"
+                ),
+                "score": score,
+                "location_conflicts": conflicts,
+            })
+        candidate_suggestions.sort(
+            key=lambda candidate: (-candidate["score"], candidate["canonical_institution_name"])
+        )
+        if len(candidate_suggestions) > 1:
+            conflict_fields = {
+                "country": "country_between_candidates",
+                "region": "region_between_candidates",
+                "coordinates": "coordinates_between_candidates",
+            }
+            candidate_values = {
+                "country": {
+                    clean(candidate["canonical_record"].get("country")).casefold()
+                    for candidate in candidate_suggestions
+                    if clean(candidate["canonical_record"].get("country"))
+                },
+                "region": {
+                    clean(candidate["canonical_record"].get("region")).casefold()
+                    for candidate in candidate_suggestions
+                    if clean(candidate["canonical_record"].get("region"))
+                },
+                "coordinates": {
+                    (
+                        clean(candidate["canonical_record"].get("lat")),
+                        clean(candidate["canonical_record"].get("lon")),
+                    )
+                    for candidate in candidate_suggestions
+                    if clean(candidate["canonical_record"].get("lat"))
+                    and clean(candidate["canonical_record"].get("lon"))
+                },
+            }
+            for field, values in candidate_values.items():
+                if len(values) > 1:
+                    for candidate in candidate_suggestions:
+                        candidate["location_conflicts"].append(
+                            conflict_fields[field]
+                        )
         effective_status = clean(row.get("review_status"))
         if alias_target and effective_status not in {"ignore", "excluded"}:
             effective_status = "alias_of_confirmed"
@@ -594,6 +740,18 @@ def location_review_payload(
                 "confirmed_location": matches[0] if len(matches) == 1 else None,
                 "confirmed_location_count": len(matches),
                 "existing_aliases": aliases_by_canonical.get(canonical_key, []),
+                "candidate_suggestions": candidate_suggestions,
+                "affected_mappings": [
+                    {
+                        field: clean(mapping.get(field))
+                        for field in (
+                            "mapping_id", "paper_id", "title", "year", "institution",
+                            "institution_authors", "raw_affiliation", "mapping_status",
+                        )
+                    }
+                    for mapping in affected_mappings
+                ],
+                "affected_papers": list(affected_papers.values()),
             }
         if effective_status in {"ignore", "excluded"}:
             suppression_reasons["resolved_by_durable_exclusion"] += 1

@@ -144,6 +144,7 @@ const datasetNoticeCopy = document.querySelector("#dataset-notice-copy");
 
 let records = [];
 let paperRecords = [];
+let institutionAliases = [];
 let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
@@ -1081,7 +1082,63 @@ function publicationYear(record) {
 }
 
 function normalizedSearchText(value) {
-  return String(value || "").normalize("NFKC").toLocaleLowerCase();
+  return String(value || "")
+    .normalize("NFKD")
+    .replace(/\p{M}+/gu, "")
+    .toLocaleLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()
+    .replace(/\s+/g, " ");
+}
+
+function buildInstitutionSearchIndex(mapRecords, publicPaperRecords, aliases) {
+  const identitiesByName = new Map();
+  const add = (name, identity) => {
+    const key = normalizedSearchText(name);
+    if (!key || !identity) return;
+    if (!identitiesByName.has(key)) identitiesByName.set(key, new Set());
+    identitiesByName.get(key).add(identity);
+  };
+  const addRecord = (record) => {
+    const identity = institutionIdentity(record);
+    add(record.canonical_institution_name || recordInstitution(record), identity);
+    const affiliations = [
+      ...(Array.isArray(record.affiliations) ? record.affiliations : []),
+      ...(Array.isArray(record.author_institution_affiliations)
+        ? record.author_institution_affiliations
+        : []),
+    ];
+    affiliations.forEach((rawAffiliation) => {
+      const affiliation = typeof rawAffiliation === "string"
+        ? { institution: rawAffiliation }
+        : rawAffiliation || {};
+      const affiliationRecord = {
+        institution: affiliation.name || affiliation.institution || affiliation.institution_name,
+        canonical_institution_name: affiliation.canonical_name,
+        institution_id: affiliation.institution_id || affiliation.canonical_institution_id,
+      };
+      add(
+        affiliationRecord.canonical_institution_name || affiliationRecord.institution,
+        institutionIdentity(affiliationRecord),
+      );
+    });
+  };
+  [...mapRecords, ...publicPaperRecords].forEach(addRecord);
+  aliases.forEach((alias) => {
+    const identity = institutionIdentity({
+      institution: alias.canonical_institution_name,
+      canonical_institution_name: alias.canonical_institution_name,
+      institution_id: alias.canonical_institution_id,
+    });
+    add(alias.alias_name, identity);
+    add(alias.canonical_institution_name, identity);
+  });
+  return identitiesByName;
+}
+
+function resolveInstitutionSearch(value, searchIndex) {
+  const matches = searchIndex.get(normalizedSearchText(value));
+  return matches?.size === 1 ? [...matches][0] : "";
 }
 
 function recordSearchText(record) {
@@ -1127,10 +1184,12 @@ function yearFilterValue(input) {
 
 function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const institutionRecord = options.institutionRecord === true;
-  const searchableText = options.institutionKeyword === true
-    ? recordInstitutionSearchText(record)
-    : recordSearchText(record);
-  const matchesKeyword = searchTextMatchesTerms(searchableText, keywordTerms);
+  const resolvedInstitutionIdentity = options.resolvedInstitutionIdentity || "";
+  const matchesKeyword = resolvedInstitutionIdentity
+    ? (institutionRecord
+      ? institutionIdentity(record) === resolvedInstitutionIdentity
+      : recordInstitutionIdentities(record).has(resolvedInstitutionIdentity))
+    : searchTextMatchesTerms(recordSearchText(record), keywordTerms);
   const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
   const matchesEntryType =
     entryTypeFilter.value === "all" || getEntryType(record) === entryTypeFilter.value;
@@ -2081,19 +2140,30 @@ function renderRecords() {
   interactionState.hovered = null;
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
-  const keywordTerms = normalizedSearchText(keywordFilter.value)
+  const normalizedKeyword = normalizedSearchText(keywordFilter.value);
+  const institutionSearchIndex = buildInstitutionSearchIndex(
+    records,
+    paperRecords,
+    institutionAliases,
+  );
+  const resolvedInstitutionIdentity = resolveInstitutionSearch(
+    normalizedKeyword,
+    institutionSearchIndex,
+  );
+  const keywordTerms = (resolvedInstitutionIdentity ? "" : normalizedKeyword)
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  const institutionKeyword = keywordTerms.length > 0 && records.some((record) => (
-    searchTextMatchesTerms(recordInstitutionSearchText(record), keywordTerms)
-  ));
   const matchesInstitutionRecord = (record) => recordMatchesActiveFilters(
     record,
     keywordTerms,
-    { institutionRecord: true, institutionKeyword },
+    { institutionRecord: true, resolvedInstitutionIdentity },
   );
-  const matchesPublicPaper = (record) => recordMatchesActiveFilters(record, keywordTerms);
+  const matchesPublicPaper = (record) => recordMatchesActiveFilters(
+    record,
+    keywordTerms,
+    { resolvedInstitutionIdentity },
+  );
   const filteredSets = deriveFilteredRecordSets(
     records,
     paperRecords,
@@ -2384,7 +2454,13 @@ function normalizeDatasetPayload(payload) {
       !Array.isArray(payload.metadata)
         ? payload.metadata
         : {};
-    return { metadata, records: payload.records };
+    return {
+      metadata,
+      records: payload.records,
+      institutionAliases: Array.isArray(payload.institution_aliases)
+        ? payload.institution_aliases
+        : [],
+    };
   }
   throw new Error(`${datasetName} data does not contain a records array`);
 }
@@ -2466,6 +2542,7 @@ async function readDataset(name) {
 function displayDataset(normalizedData) {
   records = normalizedData.records;
   paperRecords = normalizedData.paperRecords || [];
+  institutionAliases = normalizedData.institutionAliases || [];
   displayMetadataWarning(normalizedData.metadata);
   displayPublicPreviewDate(normalizedData.metadata);
   if (normalizedData.paperMetadata) {

@@ -2236,6 +2236,43 @@ def write_json(path: Path, payload: Dict[str, Any]) -> None:
         raise PreviewExportError(f"Could not write {path}: {error}") from error
 
 
+def public_institution_aliases(
+    aliases: Sequence[Dict[str, Any]],
+) -> List[Dict[str, str]]:
+    """Return confirmed aliases with stable canonical IDs for public lookup."""
+    result = []
+    seen = set()
+    for row in aliases:
+        alias_name = clean_text(row.get("alias_name"))
+        canonical_name = clean_text(row.get("canonical_institution_name"))
+        if (
+            clean_text(row.get("review_status")) != "confirmed"
+            or not alias_name
+            or not canonical_name
+        ):
+            continue
+        key = (normalize_title(alias_name), normalize_title(canonical_name))
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(
+            {
+                "alias_name": alias_name,
+                "canonical_institution_name": canonical_name,
+                "canonical_institution_id": stable_institution_id(canonical_name),
+                "alias_language": clean_text(row.get("alias_language")),
+                "alias_source": clean_text(row.get("alias_source")),
+            }
+        )
+    return sorted(
+        result,
+        key=lambda row: (
+            normalize_title(row["canonical_institution_name"]),
+            normalize_title(row["alias_name"]),
+        ),
+    )
+
+
 def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
     print("Public preview export summary:")
     print(f"  Candidate records read: {summary['candidate_records_read']}")
@@ -2631,6 +2668,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         add_public_detail_fields(integrated_papers, integrated_maps)
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
+        exported_aliases = public_institution_aliases(institution_alias_rows)
+        payload["institution_aliases"] = exported_aliases
+        paper_payload["institution_aliases"] = exported_aliases
         summary["preprint_version_records_excluded"] += (
             curated_preprint_map_records_excluded
         )

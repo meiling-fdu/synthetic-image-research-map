@@ -1522,6 +1522,7 @@ def make_handler(
                         review_path=location_review_path,
                         locations_path=institution_locations_path,
                         aliases_path=institution_aliases_path,
+                        mappings=load_mappings(mappings_path),
                     )
                 except CuratedLocationError as error:
                     self.send_json(
@@ -1626,6 +1627,7 @@ def make_handler(
                             review_path=location_review_path,
                             locations_path=institution_locations_path,
                             aliases_path=institution_aliases_path,
+                            mappings=load_mappings(mappings_path),
                         )
                         curated_counts = {
                             "total_papers": counts["total_papers"],

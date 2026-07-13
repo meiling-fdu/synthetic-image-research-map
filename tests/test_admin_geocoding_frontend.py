@@ -86,6 +86,21 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertIn('elements["location-create-new"].hidden = hasCanonicalInstitution', rendering)
         self.assertIn('elements["canonical-institution"].addEventListener("change", renderLocationActions)', self.source)
 
+    def test_alias_candidates_show_evidence_and_require_confirmation(self):
+        for field in (
+            "candidate_suggestions", "canonical_record", "location_conflicts",
+            "affected_papers", "affected_mappings",
+        ):
+            self.assertIn(field, self.source)
+        confirmation = self.source[
+            self.source.index("async function confirmLocationAlias"):
+            self.source.index("async function saveLocationMetadata")
+        ]
+        self.assertIn("window.confirm(", confirmation)
+        self.assertIn("does not merge canonical institutions or reassign mappings", confirmation)
+        self.assertLess(confirmation.index("window.confirm("), confirmation.index('apiFetch("/api/location-review/confirm-alias"'))
+        self.assertIn("Suggestions never merge canonical institutions", self.html)
+
     def test_more_actions_escapes_panel_clipping_and_has_viewport_positioning(self):
         css = (ROOT / "web/admin.css").read_text(encoding="utf-8")
         workspace = css[css.index(".location-review-workspace {") : css.index("}", css.index(".location-review-workspace {"))]

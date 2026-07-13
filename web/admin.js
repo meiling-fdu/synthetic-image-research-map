@@ -1414,7 +1414,8 @@ function renderLocationReviewList() {
     status.dataset.status = row.review_status || "pending_review";
     status.textContent = humanize(row.review_status || "pending_review");
     const diagnostic = document.createElement("small");
-    diagnostic.textContent = `Diagnostics: ${humanize(row.location_status)} · ${humanize(row.coordinate_status)}`;
+    const candidateCount = (row.candidate_suggestions || []).length;
+    diagnostic.textContent = `Diagnostics: ${humanize(row.location_status)} · ${humanize(row.coordinate_status)}${candidateCount ? ` · ${candidateCount} alias/duplicate candidate${candidateCount === 1 ? "" : "s"}` : ""}`;
     button.append(institution, paper, status, diagnostic);
     button.addEventListener("click", () => selectLocationReview(row.queue_id));
     item.append(button);
@@ -1548,6 +1549,8 @@ function renderLocationContext(row) {
     ["Match diagnostics", [row.match_method, row.similarity_score, row.confidence].filter(Boolean).join(" · ")],
     ["External IDs", [row.openalex_institution_id, row.ror_id, row.wikidata_id].filter(Boolean).join(" · ")],
     ["Existing aliases", (row.existing_aliases || []).join("; ")],
+    ["Affected papers", (row.affected_papers || []).map((paper) => [paper.title, paper.year].filter(Boolean).join(" · ")).join("; ")],
+    ["Affected mappings", (row.affected_mappings || []).map((mapping) => [mapping.mapping_id, mapping.institution, mapping.mapping_status].filter(Boolean).join(" · ")).join("; ")],
     ["Legacy diagnostics", [row.location_status, row.coordinate_status].filter(Boolean).map(humanize).join(" · ")],
     ["Review note", row.review_note],
   ];
@@ -1564,6 +1567,43 @@ function renderLocationContext(row) {
     }
     elements["location-context"].append(wrapper);
   });
+  const candidates = row.candidate_suggestions || [];
+  if (candidates.length) {
+    const section = document.createElement("section");
+    section.className = "institution-candidate-evidence";
+    const heading = document.createElement("h4");
+    heading.textContent = "Possible canonical matches — review only";
+    section.append(heading);
+    candidates.forEach((candidate) => {
+      const card = document.createElement("article");
+      const title = document.createElement("strong");
+      title.textContent = candidate.canonical_institution_name;
+      const location = candidate.canonical_record || {};
+      const details = document.createElement("p");
+      details.textContent = [
+        candidate.evidence,
+        [location.city, location.region, location.country].filter(Boolean).join(", "),
+        location.lat !== undefined && location.lon !== undefined
+          ? `${location.lat}, ${location.lon}`
+          : "",
+        (candidate.aliases || []).length ? `Aliases: ${candidate.aliases.join("; ")}` : "",
+        (candidate.location_conflicts || []).length
+          ? `Conflict: ${candidate.location_conflicts.join(", ")}`
+          : "",
+      ].filter(Boolean).join(" · ");
+      const choose = document.createElement("button");
+      choose.type = "button";
+      choose.className = "secondary-button";
+      choose.textContent = "Select as canonical alias target";
+      choose.addEventListener("click", () => {
+        elements["canonical-institution"].value = candidate.canonical_institution_name;
+        renderLocationActions();
+      });
+      card.append(title, details, choose);
+      section.append(card);
+    });
+    elements["location-context"].append(section);
+  }
 }
 
 function clearLocationEditor() {
@@ -1813,6 +1853,14 @@ async function confirmLocationAlias() {
     elements["location-form-error"].textContent = "Select a confirmed canonical institution.";
     return;
   }
+  const selected = state.locationReviews.find(
+    (row) => row.queue_id === draft.queue_id
+  );
+  const aliasName = text(selected?.institution) || "this institution name";
+  const confirmed = window.confirm(
+    `Add “${aliasName}” as a confirmed alias of “${draft.canonical_institution_name}”? This writes one alias row only; it does not merge canonical institutions or reassign mappings.`
+  );
+  if (!confirmed) return;
   try {
     const result = await apiFetch("/api/location-review/confirm-alias", {
       method: "POST",

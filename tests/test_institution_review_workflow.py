@@ -1,7 +1,23 @@
 import unittest
+import csv
+import tempfile
+from pathlib import Path
 
 from scripts.curated_export import build_curated_map_records
-from scripts.curated_locations import location_review_report
+from scripts.export_public_preview import public_institution_aliases
+from scripts.curated_locations import (
+    confirm_alias,
+    institution_candidate_evidence,
+    load_institution_aliases,
+    location_review_payload,
+    location_review_report,
+    mark_queue_row,
+)
+from scripts.curated_schema import (
+    INSTITUTION_ALIAS_COLUMNS,
+    INSTITUTION_LOCATION_COLUMNS,
+    INSTITUTION_LOCATION_REVIEW_COLUMNS,
+)
 from scripts.validate_curated_database import validate_institution_aliases
 
 
@@ -159,6 +175,105 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
         messages = [issue.message for issue in issues]
         self.assertTrue(any("duplicate alias mapping" in item for item in messages))
         self.assertTrue(any("multiple canonical" in item for item in messages))
+
+    def test_public_alias_export_is_confirmed_additive_and_provenanced(self):
+        exported = public_institution_aliases([
+            {
+                "alias_name": "UdeM",
+                "canonical_institution_name": "Université de Montréal",
+                "alias_language": "fr",
+                "alias_source": "maintainer-confirmed",
+                "review_status": "confirmed",
+            },
+            {
+                "alias_name": "Pending name",
+                "canonical_institution_name": "Université de Montréal",
+                "review_status": "pending_review",
+            },
+        ])
+        self.assertEqual(len(exported), 1)
+        self.assertEqual(exported[0]["alias_name"], "UdeM")
+        self.assertEqual(exported[0]["alias_language"], "fr")
+        self.assertEqual(exported[0]["alias_source"], "maintainer-confirmed")
+        self.assertTrue(exported[0]["canonical_institution_id"].startswith("institution:"))
+
+    def test_candidate_reasons_cover_abbreviations_subunits_and_near_duplicates(self):
+        self.assertEqual(
+            institution_candidate_evidence("MIT", "Massachusetts Institute of Technology")[1],
+            "abbreviation_full_name",
+        )
+        self.assertEqual(
+            institution_candidate_evidence("Example University Hospital", "Example University")[1],
+            "parent_subunit_variant",
+        )
+        self.assertEqual(
+            institution_candidate_evidence("Universite de Montreal", "Université de Montréal")[0],
+            0.0,
+        )
+
+    @staticmethod
+    def write_csv(path, columns, rows):
+        with path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=columns)
+            writer.writeheader()
+            writer.writerows(rows)
+
+    def test_admin_alias_confirmation_persists_and_rejection_does_not_touch_aliases(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            reviews = root / "reviews.csv"
+            locations = root / "locations.csv"
+            aliases = root / "aliases.csv"
+            review_row = {column: "" for column in INSTITUTION_LOCATION_REVIEW_COLUMNS}
+            review_row.update({
+                "institution": "MIT",
+                "related_paper_id": "curated:test",
+                "title": "Institution review test",
+                "year": "2026",
+                "review_status": "alias_candidate",
+            })
+            location_row = {column: "" for column in INSTITUTION_LOCATION_COLUMNS}
+            location_row.update({
+                "location_id": "location:mit",
+                "institution": "Massachusetts Institute of Technology",
+                "normalized_institution": "massachusetts institute of technology",
+                "country": "United States",
+                "country_code": "US",
+                "lat": "42.3601",
+                "lon": "-71.0942",
+            })
+            self.write_csv(reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [review_row])
+            self.write_csv(locations, INSTITUTION_LOCATION_COLUMNS, [location_row])
+            self.write_csv(aliases, INSTITUTION_ALIAS_COLUMNS, [])
+
+            payload = location_review_payload(
+                review_path=reviews,
+                locations_path=locations,
+                aliases_path=aliases,
+                mappings=[self.mapping("MIT")],
+            )
+            candidate = payload["records"][0]
+            self.assertEqual(candidate["candidate_suggestions"][0]["reason"], "abbreviation_full_name")
+            self.assertEqual(len(candidate["affected_mappings"]), 1)
+            self.assertEqual(len(candidate["affected_papers"]), 1)
+
+            queue_id = candidate["queue_id"]
+            mark_queue_row(queue_id, "ignore", "rejected candidate", review_path=reviews)
+            self.assertEqual(load_institution_aliases(aliases), [])
+
+            self.write_csv(reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [review_row])
+            confirm_alias(
+                queue_id,
+                "Massachusetts Institute of Technology",
+                review_path=reviews,
+                locations_path=locations,
+                aliases_path=aliases,
+            )
+            persisted = load_institution_aliases(aliases)
+            self.assertEqual(len(persisted), 1)
+            self.assertEqual(persisted[0]["alias_name"], "MIT")
+            self.assertEqual(persisted[0]["review_status"], "confirmed")
+            self.assertEqual(location_row["institution"], "Massachusetts Institute of Technology")
 
 
 if __name__ == "__main__":

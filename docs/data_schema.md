@@ -327,6 +327,10 @@ One row represents one institution or organizational unit used for affiliation a
 
 `data/curated/institution_aliases.csv` has `alias_name`, `canonical_institution_name`, `alias_language`, `alias_source`, `review_status`, and `notes`. Alias targets must exist in `institution_locations.csv`. Duplicate mappings are invalid, and one normalized alias pointing to multiple canonical institutions is ambiguous. Confirmed aliases resolve to the canonical public name and coordinates; no alias is exported as a separate node.
 
+Public-preview JSON includes an additive top-level `institution_aliases` array containing confirmed alias display text, canonical display text, the stable `canonical_institution_id`, language, and provenance source. Public search normalizes only lookup text (case folding, Unicode accent marks, punctuation, hyphens, and repeated whitespace); displayed names are unchanged. An alias activates canonical-institution filtering only when the normalized query exactly matches one unambiguous canonical name or confirmed alias. Generic keyword searches remain substring searches and therefore do not silently convert a partial institution substring into an identity merge.
+
+The local admin institution queue computes conservative alias/duplicate suggestions from queued evidence and confirmed canonical rows. It shows candidate location/coordinates, existing aliases, affected mappings and papers, name-match evidence, and country conflicts. Suggestions are read-only until the reviewer confirms an alias. Rejecting/ignoring a suggestion changes no alias or canonical row, and the queue never merges canonical institutions or reassigns mappings automatically.
+
 | Column | Definition |
 | --- | --- |
 | `institution_id` | Stable, project-assigned identifier for the institution; primary key. |

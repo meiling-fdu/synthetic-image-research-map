@@ -1001,6 +1001,22 @@ button:focus-visible {
   color: var(--muted);
 }
 
+.institution-candidate-evidence {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.institution-candidate-evidence article {
+  border: 1px solid #c9c2a8;
+  border-radius: 0.6rem;
+  padding: 0.75rem;
+}
+
+.institution-candidate-evidence p {
+  margin: 0.35rem 0 0.65rem;
+}
+
 .location-summary {
   display: flex;
   flex-wrap: wrap;

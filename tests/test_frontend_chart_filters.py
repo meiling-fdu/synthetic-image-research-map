@@ -71,7 +71,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-public-overview', self.html)
-        self.assertIn('app.js?v=20260713-public-overview', self.html)
+        self.assertIn('app.js?v=20260713-institution-alias-search', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
@@ -147,7 +147,7 @@ process.stdout.write(JSON.stringify({{
         self.assertEqual(set(result["paperIds"]), {"mapped", "venue-only", "standalone"})
         self.assertEqual(result["paperIds"].count("mapped"), 1)
 
-    def test_institution_keyword_and_exact_filter_match_only_the_current_row(self):
+    def test_alias_resolution_and_exact_filter_match_canonical_identity(self):
         render = self.app[
             self.app.index("function renderRecords()"):
             self.app.index("function configureYearRange()")
@@ -156,12 +156,66 @@ process.stdout.write(JSON.stringify({{
             self.app.index("function recordMatchesActiveFilters"):
             self.app.index("function deriveFilteredRecordSets")
         ]
-        self.assertIn("recordInstitutionSearchText(record)", render)
-        self.assertIn("{ institutionRecord: true, institutionKeyword }", render)
+        self.assertIn("buildInstitutionSearchIndex(", render)
+        self.assertIn("resolveInstitutionSearch(", render)
+        self.assertIn("{ institutionRecord: true, resolvedInstitutionIdentity }", render)
         self.assertIn("institutionIdentity(record) === activeInstitutionFilter.identity", predicate)
         self.assertIn("recordInstitutionIdentities(record).has(activeInstitutionFilter.identity)", predicate)
         self.assertIn("const visibleRecords = filteredSets.filteredRecords", render)
         self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords", render)
+
+    def test_institution_alias_search_normalization_and_exact_resolution(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        functions = []
+        for start_name, end_name in (
+            ("function normalizedTitle", "function paperIdentity"),
+            ("function recordInstitution(", "function recordCountry"),
+            ("function institutionIdentity", "function affiliationIdentity"),
+            ("function normalizedSearchText", "function recordSearchText"),
+        ):
+            start = self.app.index(start_name)
+            end = self.app.index(end_name, start)
+            functions.append(self.app[start:end])
+        script = "\n".join(functions) + r'''
+const maps = [
+  {id: 'p1', institution: 'Université de Montréal', institution_id: 'institution:um'},
+  {id: 'p1', institution: 'Université de Montréal', institution_id: 'institution:um'},
+  {id: 'p2', institution: 'Université de Montréal Hospital', institution_id: 'institution:hospital'},
+];
+const papers = [
+  {id: 'p1', author_institution_affiliations: [{institution: 'Université de Montréal', institution_id: 'institution:um'}]},
+  {id: 'p3', author_institution_affiliations: [{institution: 'Université de Montréal', institution_id: 'institution:um'}]},
+];
+const aliases = [
+  {alias_name: 'UdeM', canonical_institution_name: 'Université de Montréal', canonical_institution_id: 'institution:um'},
+  {alias_name: 'University of Montreal', canonical_institution_name: 'Université de Montréal', canonical_institution_id: 'institution:um'},
+  {alias_name: 'Université de Montréal (former)', canonical_institution_name: 'Université de Montréal', canonical_institution_id: 'institution:um'},
+];
+const index = buildInstitutionSearchIndex(maps, papers, aliases);
+const resolved = ['UNIVERSITE-DE-MONTREAL', 'udem', 'University of Montreal', 'Université de Montréal (former)']
+  .map(value => resolveInstitutionSearch(value, index));
+process.stdout.write(JSON.stringify({
+  normalized: normalizedSearchText('  École—Supérieure...  '),
+  resolved,
+  unrelated: resolveInstitutionSearch('Université de Montréal Hosp', index),
+  paperMatches: papers.filter(paper => recordInstitutionIdentities(paper).has(resolved[0])).map(paper => paper.id),
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["normalized"], "ecole superieure")
+        self.assertEqual(result["resolved"], ["id:institution:um"] * 4)
+        self.assertEqual(result["unrelated"], "")
+        self.assertEqual(result["paperMatches"], ["p1", "p3"])
+
+    def test_public_payload_preserves_alias_metadata(self):
+        self.assertIn("payload.institution_aliases", self.app)
+        self.assertIn("canonical_institution_id", self.app)
+        self.assertIn("institutionAliases = normalizedData.institutionAliases", self.app)
 
     def test_toggle_and_csv_reuse_the_same_current_filtered_sets(self):
         toggle = self.app[

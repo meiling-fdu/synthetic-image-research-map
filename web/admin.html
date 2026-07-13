@@ -51,7 +51,7 @@
           <button role="menuitem" data-console-target="mappings" type="button">Author mappings</button>
           <button role="menuitem" data-console-target="author-mapping-coverage" type="button">Author mapping coverage</button>
           <button role="menuitem" data-console-target="papers" type="button">Institutions</button>
-          <button role="menuitem" data-console-target="location-review" type="button">Institution locations</button>
+          <button role="menuitem" data-console-target="location-review" type="button">Institution aliases &amp; locations</button>
         </div></details>
         <button data-console-target="validation" type="button">Validation</button>
       </nav>
@@ -282,13 +282,13 @@
       <section class="location-review-panel" id="location-review-panel" hidden>
         <div class="section-heading">
           <div>
-            <p class="eyebrow">Confirmed coordinates · local only</p>
-            <h2>Institution Location Review</h2>
-            <p>Review queued institutions and record coordinates only after checking a reliable source. Coordinates are never inferred or invented here.</p>
+            <p class="eyebrow">Aliases, duplicates &amp; coordinates · local only</p>
+            <h2>Institution Alias and Location Review</h2>
+            <p>Review possible aliases and duplicates alongside location evidence. Suggestions never merge canonical institutions or reassign mappings; every alias addition requires explicit confirmation.</p>
           </div>
           <button class="secondary-button" id="location-review-close" type="button">Close</button>
         </div>
-        <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p>
+        <p class="review-scope-help">Review lists show unresolved paper-institution evidence and conservative canonical-name candidates. Existing canonical rows, aliases, location conflicts, and affected papers/mappings are shown as evidence only. Rejecting a candidate does not alter alias or canonical data. Canonical merges and mapping reassignment remain separate manual actions.</p>
         <p class="review-counts" id="location-review-counts"></p>
         <div class="location-summary" id="location-summary" aria-live="polite"></div>
         <div class="location-review-workspace">
