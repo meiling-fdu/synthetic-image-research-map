@@ -145,12 +145,16 @@ const datasetNoticeCopy = document.querySelector("#dataset-notice-copy");
 let records = [];
 let paperRecords = [];
 let institutionAliases = [];
+let institutionHierarchy = [];
 let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
 let activeInstitutionFilter = null;
+let displayedInstitutionFilter = null;
+let includeAffiliatedInstitutes = false;
+let hierarchyExpansionIdentity = "";
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -694,19 +698,27 @@ function compactAffiliationsHtml(affiliations, limit = 3) {
 }
 
 function renderActiveInstitutionFilter() {
-  activeInstitutionFilterChip.hidden = !activeInstitutionFilter;
-  activeInstitutionFilterChip.innerHTML = activeInstitutionFilter
-    ? `<span>Institution: ${escapeHtml(activeInstitutionFilter.label)}</span><button type="button" data-clear-institution-filter aria-label="Clear institution filter for ${escapeHtml(activeInstitutionFilter.label)}">×</button>`
+  activeInstitutionFilterChip.hidden = !displayedInstitutionFilter;
+  const hasChildren = displayedInstitutionFilter?.hasChildren === true;
+  activeInstitutionFilterChip.innerHTML = displayedInstitutionFilter
+    ? `<span class="active-institution-label">Institution: ${escapeHtml(displayedInstitutionFilter.label)}</span><button type="button" data-clear-institution-filter aria-label="Clear institution filter for ${escapeHtml(displayedInstitutionFilter.label)}">×</button>${hasChildren ? `<label class="hierarchy-expansion-control"><input type="checkbox" data-include-affiliated-institutes${includeAffiliatedInstitutes ? " checked" : ""}> Include affiliated institutes</label>` : ""}`
     : "";
 }
 
 function applyInstitutionFilter(identity, label) {
   activeInstitutionFilter = { identity, label };
+  includeAffiliatedInstitutes = false;
+  hierarchyExpansionIdentity = identity;
   renderRecords();
 }
 
 function clearInstitutionFilter() {
+  if (!activeInstitutionFilter && displayedInstitutionFilter?.source === "keyword") {
+    keywordFilter.value = "";
+  }
   activeInstitutionFilter = null;
+  includeAffiliatedInstitutes = false;
+  hierarchyExpansionIdentity = "";
   renderRecords();
 }
 
@@ -1099,7 +1111,7 @@ function normalizedSearchText(value) {
     .replace(/\s+/g, " ");
 }
 
-function buildInstitutionSearchIndex(mapRecords, publicPaperRecords, aliases) {
+function buildInstitutionSearchIndex(mapRecords, publicPaperRecords, aliases, hierarchy = []) {
   const identitiesByName = new Map();
   const add = (name, identity) => {
     const key = normalizedSearchText(name);
@@ -1141,6 +1153,16 @@ function buildInstitutionSearchIndex(mapRecords, publicPaperRecords, aliases) {
     add(alias.alias_name, identity);
     add(alias.canonical_institution_name, identity);
   });
+  hierarchy.forEach((relationship) => {
+    add(
+      relationship.parent_institution_name,
+      institutionIdentity({ institution_id: relationship.parent_institution_id }),
+    );
+    add(
+      relationship.child_institution_name,
+      institutionIdentity({ institution_id: relationship.child_institution_id }),
+    );
+  });
   return identitiesByName;
 }
 
@@ -1149,7 +1171,7 @@ function resolveInstitutionSearch(value, searchIndex) {
   return matches?.size === 1 ? [...matches][0] : "";
 }
 
-function buildCanonicalInstitutionResolver(aliases) {
+function buildCanonicalInstitutionResolver(aliases, hierarchy = []) {
   const resolver = new Map();
   aliases.forEach((alias) => {
     const canonical = {
@@ -1159,6 +1181,14 @@ function buildCanonicalInstitutionResolver(aliases) {
     if (!canonical.name) return;
     resolver.set(normalizedSearchText(alias.alias_name), canonical);
     resolver.set(normalizedSearchText(canonical.name), canonical);
+  });
+  hierarchy.forEach((relationship) => {
+    [
+      [relationship.parent_institution_name, relationship.parent_institution_id],
+      [relationship.child_institution_name, relationship.child_institution_id],
+    ].forEach(([name, id]) => {
+      if (name && id) resolver.set(normalizedSearchText(name), { name, id });
+    });
   });
   resolver.delete("");
   return resolver;
@@ -1174,7 +1204,11 @@ function canonicalizeInstitutionObject(value, resolver) {
       || value.canonical_institution_name
       || "",
   ).trim();
-  const canonical = resolver.get(normalizedSearchText(originalName));
+  const sourceCanonical = resolver.get(normalizedSearchText(value.source_institution));
+  let canonical = resolver.get(normalizedSearchText(originalName));
+  if (sourceCanonical && (!canonical || sourceCanonical.id !== canonical.id)) {
+    canonical = sourceCanonical;
+  }
   if (!canonical) return value;
   const originalId = String(
     value.institution_id || value.canonical_institution_id || "",
@@ -1199,8 +1233,8 @@ function canonicalizeInstitutionObject(value, resolver) {
   return value;
 }
 
-function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases) {
-  const resolver = buildCanonicalInstitutionResolver(aliases);
+function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases, hierarchy = []) {
+  const resolver = buildCanonicalInstitutionResolver(aliases, hierarchy);
   const canonicalizeRecord = (record) => {
     if (recordInstitution(record)) canonicalizeInstitutionObject(record, resolver);
     ["affiliations", "author_institution_affiliations"].forEach((field) => {
@@ -1291,6 +1325,55 @@ function searchTextMatchesTerms(searchableText, keywordTerms) {
   return keywordTerms.every((term) => searchableText.includes(term));
 }
 
+function buildInstitutionHierarchyIndex(relationships) {
+  const childrenByParent = new Map();
+  relationships.forEach((relationship) => {
+    if (relationship.review_status !== "confirmed") return;
+    const parent = institutionIdentity({
+      institution_id: relationship.parent_institution_id,
+    });
+    const child = institutionIdentity({
+      institution_id: relationship.child_institution_id,
+    });
+    if (!parent || !child || parent === child) return;
+    if (!childrenByParent.has(parent)) childrenByParent.set(parent, new Set());
+    childrenByParent.get(parent).add(child);
+  });
+  return childrenByParent;
+}
+
+function institutionIdentityWithDescendants(identity, hierarchyIndex, expanded) {
+  const identities = new Set(identity ? [identity] : []);
+  if (!expanded || !identity) return identities;
+  const pending = [...(hierarchyIndex.get(identity) || [])];
+  while (pending.length) {
+    const child = pending.pop();
+    if (identities.has(child)) continue;
+    identities.add(child);
+    pending.push(...(hierarchyIndex.get(child) || []));
+  }
+  return identities;
+}
+
+function recordMatchesInstitutionIdentities(record, identities, institutionRecord) {
+  if (!identities?.size) return true;
+  if (institutionRecord) return identities.has(institutionIdentity(record));
+  const recordIdentities = recordInstitutionIdentities(record);
+  return [...identities].some((identity) => recordIdentities.has(identity));
+}
+
+function hierarchyInstitutionLabel(identity, relationships) {
+  for (const relationship of relationships) {
+    if (institutionIdentity({ institution_id: relationship.parent_institution_id }) === identity) {
+      return relationship.parent_institution_name || "";
+    }
+    if (institutionIdentity({ institution_id: relationship.child_institution_id }) === identity) {
+      return relationship.child_institution_name || "";
+    }
+  }
+  return "";
+}
+
 function yearFilterValue(input) {
   if (!input.value.trim()) {
     return null;
@@ -1301,11 +1384,12 @@ function yearFilterValue(input) {
 
 function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const institutionRecord = options.institutionRecord === true;
-  const resolvedInstitutionIdentity = options.resolvedInstitutionIdentity || "";
-  const matchesKeyword = resolvedInstitutionIdentity
-    ? (institutionRecord
-      ? institutionIdentity(record) === resolvedInstitutionIdentity
-      : recordInstitutionIdentities(record).has(resolvedInstitutionIdentity))
+  const resolvedInstitutionIdentities = options.resolvedInstitutionIdentities;
+  const activeInstitutionIdentities = options.activeInstitutionIdentities;
+  const matchesKeyword = resolvedInstitutionIdentities?.size
+    ? recordMatchesInstitutionIdentities(
+      record, resolvedInstitutionIdentities, institutionRecord,
+    )
     : searchTextMatchesTerms(recordSearchText(record), keywordTerms);
   const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
   const matchesEntryType =
@@ -1324,11 +1408,10 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const maximumYear = yearFilterValue(maxYearFilter);
   const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
   const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
-  const matchesInstitution = !activeInstitutionFilter || (
-    institutionRecord
-      ? institutionIdentity(record) === activeInstitutionFilter.identity
-      : recordInstitutionIdentities(record).has(activeInstitutionFilter.identity)
-  );
+  const matchesInstitution = !activeInstitutionFilter
+    || recordMatchesInstitutionIdentities(
+      record, activeInstitutionIdentities, institutionRecord,
+    );
   return (
     matchesKeyword &&
     matchesTask &&
@@ -2262,6 +2345,7 @@ function renderRecords() {
     records,
     paperRecords,
     institutionAliases,
+    institutionHierarchy,
   );
   const resolvedInstitutionIdentity = resolveInstitutionSearch(
     normalizedKeyword,
@@ -2271,15 +2355,42 @@ function renderRecords() {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
+  const hierarchyIndex = buildInstitutionHierarchyIndex(institutionHierarchy);
+  const selectedIdentity = activeInstitutionFilter?.identity || resolvedInstitutionIdentity;
+  if (selectedIdentity !== hierarchyExpansionIdentity) {
+    includeAffiliatedInstitutes = false;
+    hierarchyExpansionIdentity = selectedIdentity;
+  }
+  const expansionEnabled = includeAffiliatedInstitutes
+    && hierarchyExpansionIdentity === selectedIdentity;
+  const resolvedInstitutionIdentities = institutionIdentityWithDescendants(
+    resolvedInstitutionIdentity,
+    hierarchyIndex,
+    expansionEnabled && resolvedInstitutionIdentity === selectedIdentity,
+  );
+  const activeInstitutionIdentities = institutionIdentityWithDescendants(
+    activeInstitutionFilter?.identity || "",
+    hierarchyIndex,
+    expansionEnabled && activeInstitutionFilter?.identity === selectedIdentity,
+  );
+  const institutionLabel = activeInstitutionFilter?.label
+    || hierarchyInstitutionLabel(selectedIdentity, institutionHierarchy)
+    || keywordFilter.value.trim();
+  displayedInstitutionFilter = selectedIdentity ? {
+    identity: selectedIdentity,
+    label: institutionLabel,
+    source: activeInstitutionFilter ? "chip" : "keyword",
+    hasChildren: (hierarchyIndex.get(selectedIdentity)?.size || 0) > 0,
+  } : null;
   const matchesInstitutionRecord = (record) => recordMatchesActiveFilters(
     record,
     keywordTerms,
-    { institutionRecord: true, resolvedInstitutionIdentity },
+    { institutionRecord: true, resolvedInstitutionIdentities, activeInstitutionIdentities },
   );
   const matchesPublicPaper = (record) => recordMatchesActiveFilters(
     record,
     keywordTerms,
-    { resolvedInstitutionIdentity },
+    { resolvedInstitutionIdentities, activeInstitutionIdentities },
   );
   const filteredSets = deriveFilteredRecordSets(
     records,
@@ -2577,6 +2688,11 @@ function normalizeDatasetPayload(payload) {
       institutionAliases: Array.isArray(payload.institution_aliases)
         ? payload.institution_aliases
         : [],
+      institutionHierarchy: Array.isArray(payload.institution_hierarchy)
+        ? payload.institution_hierarchy.filter((relationship) => (
+          relationship.review_status === "confirmed"
+        ))
+        : [],
     };
   }
   throw new Error(`${datasetName} data does not contain a records array`);
@@ -2658,10 +2774,12 @@ async function readDataset(name) {
 
 function displayDataset(normalizedData) {
   institutionAliases = normalizedData.institutionAliases || [];
+  institutionHierarchy = normalizedData.institutionHierarchy || [];
   const canonicalized = canonicalizePublicDataset(
     normalizedData.records,
     normalizedData.paperRecords || [],
     institutionAliases,
+    institutionHierarchy,
   );
   records = canonicalized.mapRecords;
   paperRecords = canonicalized.paperRecords;
@@ -2752,6 +2870,13 @@ activeInstitutionFilterChip.addEventListener("click", (event) => {
     clearInstitutionFilter();
   }
 });
+activeInstitutionFilterChip.addEventListener("change", (event) => {
+  if (event.target.matches("[data-include-affiliated-institutes]")) {
+    includeAffiliatedInstitutes = event.target.checked;
+    hierarchyExpansionIdentity = displayedInstitutionFilter?.identity || "";
+    renderRecords();
+  }
+});
 window.addEventListener("resize", () => scheduleMapResize());
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
@@ -2783,6 +2908,9 @@ resetButton.addEventListener("click", () => {
   minYearFilter.value = "";
   maxYearFilter.value = "";
   activeInstitutionFilter = null;
+  displayedInstitutionFilter = null;
+  includeAffiliatedInstitutes = false;
+  hierarchyExpansionIdentity = "";
   renderRecords();
   scheduleMapResize(true);
 });

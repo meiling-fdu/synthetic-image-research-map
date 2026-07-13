@@ -45,10 +45,11 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
             self.app.index("function recordMatchesActiveFilters"):
             self.app.index("function normalizedSetSize")
         ]
-        self.assertIn("recordInstitutionIdentities(record).has(activeInstitutionFilter.identity)", matching)
+        self.assertIn("recordMatchesInstitutionIdentities(", matching)
+        self.assertIn("activeInstitutionIdentities", matching)
         self.assertNotIn("keywordFilter.value =", self.app[
             self.app.index("function applyInstitutionFilter"):
-            self.app.index("function renderHeaderStatistics")
+            self.app.index("function clearInstitutionFilter")
         ])
         self.assertIn("data-institution-filter", self.app)
         self.assertIn("institution_id: affiliation.institutionId", self.app)
@@ -71,7 +72,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-public-overview', self.html)
-        self.assertIn('app.js?v=20260713-canonical-institution-aliases', self.html)
+        self.assertIn('app.js?v=20260713-institution-hierarchy', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
@@ -158,11 +159,111 @@ process.stdout.write(JSON.stringify({{
         ]
         self.assertIn("buildInstitutionSearchIndex(", render)
         self.assertIn("resolveInstitutionSearch(", render)
-        self.assertIn("{ institutionRecord: true, resolvedInstitutionIdentity }", render)
-        self.assertIn("institutionIdentity(record) === activeInstitutionFilter.identity", predicate)
-        self.assertIn("recordInstitutionIdentities(record).has(activeInstitutionFilter.identity)", predicate)
+        self.assertIn("resolvedInstitutionIdentities", render)
+        self.assertIn("activeInstitutionIdentities", render)
+        self.assertIn("recordMatchesInstitutionIdentities(", predicate)
         self.assertIn("const visibleRecords = filteredSets.filteredRecords", render)
         self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords", render)
+
+    def test_confirmed_hierarchy_expands_parent_only_when_enabled(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        start = self.app.index("function buildInstitutionHierarchyIndex")
+        end = self.app.index("\nfunction yearFilterValue", start)
+        source = self.app[start:end]
+        script = r'''
+function institutionIdentity(record) {
+  return record.institution_id ? `id:${record.institution_id.toLowerCase()}` : "";
+}
+function recordInstitutionIdentities(record) {
+  return new Set(record.institution_ids || [institutionIdentity(record)]);
+}
+''' + source + r'''
+const parent = 'id:institution:parent';
+const child = 'id:institution:child';
+const grandchild = 'id:institution:grandchild';
+const sibling = 'id:institution:sibling';
+const relationships = [
+  {parent_institution_id: 'institution:parent', child_institution_id: 'institution:child', review_status: 'confirmed'},
+  {parent_institution_id: 'institution:child', child_institution_id: 'institution:grandchild', review_status: 'confirmed'},
+  {parent_institution_id: 'institution:parent', child_institution_id: 'institution:sibling', review_status: 'pending_review'},
+];
+const index = buildInstitutionHierarchyIndex(relationships);
+const direct = institutionIdentityWithDescendants(parent, index, false);
+const expanded = institutionIdentityWithDescendants(parent, index, true);
+const childOnly = institutionIdentityWithDescendants(child, index, false);
+process.stdout.write(JSON.stringify({
+  direct: [...direct].sort(),
+  expanded: [...expanded].sort(),
+  childOnly: [...childOnly].sort(),
+  parentMatchesChildDirect: recordMatchesInstitutionIdentities(
+    {institution_id: 'institution:child'}, direct, true,
+  ),
+  parentMatchesChildExpanded: recordMatchesInstitutionIdentities(
+    {institution_id: 'institution:child'}, expanded, true,
+  ),
+  rejectedIncluded: expanded.has(sibling),
+  childIncludesParent: childOnly.has(parent),
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["direct"], ["id:institution:parent"])
+        self.assertEqual(result["expanded"], [
+            "id:institution:child",
+            "id:institution:grandchild",
+            "id:institution:parent",
+        ])
+        self.assertEqual(result["childOnly"], ["id:institution:child"])
+        self.assertFalse(result["parentMatchesChildDirect"])
+        self.assertTrue(result["parentMatchesChildExpanded"])
+        self.assertFalse(result["rejectedIncluded"])
+        self.assertFalse(result["childIncludesParent"])
+
+    def test_hierarchy_control_and_shared_outputs_use_one_filtered_set(self):
+        self.assertIn("Include affiliated institutes", self.app)
+        self.assertIn("data-include-affiliated-institutes", self.app)
+        self.assertIn("includeAffiliatedInstitutes = false", self.app)
+        self.assertIn("institution_hierarchy", self.app)
+        render = self.app[
+            self.app.index("function renderRecords()"):
+            self.app.index("function configureYearRange()")
+        ]
+        for consumer in (
+            "updateDatasetStatistics(visibleRecords, visiblePaperRecords)",
+            "renderHeaderStatistics(visibleRecords, visiblePaperRecords)",
+            "renderResults(visibleRecords, visiblePaperRecords)",
+            "MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords",
+        ):
+            self.assertIn(consumer, render)
+
+        csv_source = self.app[
+            self.app.index("function downloadFilteredCsv"):
+            self.app.index("function renderResults")
+        ]
+        self.assertIn("currentDisplayedResults", csv_source)
+        results_source = self.app[
+            self.app.index("function renderResults"):
+            self.app.index("function selectResultsView")
+        ]
+        self.assertIn("currentDisplayedResults", results_source)
+
+    def test_default_institution_counts_and_top_chart_keep_ids_separate(self):
+        chart = self.app[
+            self.app.index("function renderInstitutionChart"):
+            self.app.index("function renderYearChart")
+        ]
+        statistics = self.app[
+            self.app.index("function updateDatasetStatistics"):
+            self.app.index("function renderChartEmpty")
+        ]
+        self.assertIn("const key = institutionIdentity(record)", chart)
+        self.assertIn("datasetRecords.map(institutionIdentity)", statistics)
+        self.assertNotIn("institutionIdentityWithDescendants", chart)
+        self.assertNotIn("institutionIdentityWithDescendants", statistics)
 
     def test_institution_alias_search_normalization_and_exact_resolution(self):
         node = shutil.which("node")

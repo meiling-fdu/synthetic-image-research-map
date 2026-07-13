@@ -41,6 +41,7 @@ class AdminPublishChangesTests(unittest.TestCase):
             "institution_location_review.csv",
             "institution_locations.csv",
             "institution_aliases.csv",
+            "institution_hierarchy.csv",
             "review_decisions.csv",
             "paper_arxiv_links.csv",
         }

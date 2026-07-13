@@ -156,6 +156,7 @@ DEFAULT_REVIEW_DECISIONS = (
     Path("data/curated/review_decisions.csv")
 )
 DEFAULT_CURATED_ARXIV_LINKS = Path("data/curated/paper_arxiv_links.csv")
+DEFAULT_INSTITUTION_HIERARCHY = Path("data/curated/institution_hierarchy.csv")
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -429,6 +430,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Curated confirmed institution aliases "
             f"(default: {DEFAULT_INSTITUTION_ALIASES_PATH})."
+        ),
+    )
+    parser.add_argument(
+        "--institution-hierarchy",
+        type=Path,
+        default=DEFAULT_INSTITUTION_HIERARCHY,
+        help=(
+            "Curated confirmed institution parent/child relationships "
+            f"(default: {DEFAULT_INSTITUTION_HIERARCHY})."
         ),
     )
     parser.add_argument(
@@ -2337,10 +2347,53 @@ def public_institution_aliases(
     )
 
 
+def public_institution_hierarchy(
+    relationships: Sequence[Dict[str, Any]],
+    confirmed_locations: Sequence[Dict[str, Any]],
+) -> List[Dict[str, str]]:
+    """Export only confirmed ID-based relationships with canonical names."""
+    names_by_id = {
+        stable_institution_id(row.get("institution")): clean_text(row.get("institution"))
+        for row in confirmed_locations
+        if clean_text(row.get("institution"))
+    }
+    exported = []
+    seen = set()
+    for row in relationships:
+        parent_id = clean_text(row.get("parent_institution_id"))
+        child_id = clean_text(row.get("child_institution_id"))
+        key = (parent_id, child_id)
+        if (
+            clean_text(row.get("review_status")) != "confirmed"
+            or clean_text(row.get("relationship_type")) != "affiliated_institute"
+            or parent_id not in names_by_id
+            or child_id not in names_by_id
+            or parent_id == child_id
+            or key in seen
+        ):
+            continue
+        seen.add(key)
+        exported.append({
+            "parent_institution_id": parent_id,
+            "parent_institution_name": names_by_id[parent_id],
+            "child_institution_id": child_id,
+            "child_institution_name": names_by_id[child_id],
+            "relationship_type": "affiliated_institute",
+            "review_status": "confirmed",
+            "evidence_source": clean_text(row.get("evidence_source")),
+            "evidence_url": clean_text(row.get("evidence_url")),
+        })
+    return sorted(exported, key=lambda row: (
+        normalize_institution_lookup(row["parent_institution_name"]),
+        normalize_institution_lookup(row["child_institution_name"]),
+    ))
+
+
 def canonicalize_public_institutions(
     paper_records: Sequence[Dict[str, Any]],
     map_records: Sequence[Dict[str, Any]],
     aliases: Sequence[Dict[str, str]],
+    confirmed_locations: Sequence[Dict[str, Any]] = (),
 ) -> List[Dict[str, Any]]:
     """Canonicalize public copies and dedupe canonical paper–institution rows."""
     resolver: Dict[str, Dict[str, str]] = {}
@@ -2351,6 +2404,13 @@ def canonicalize_public_institutions(
         }
         resolver[normalize_institution_lookup(alias.get("alias_name"))] = canonical
         resolver[normalize_institution_lookup(canonical["name"])] = canonical
+    for row in confirmed_locations:
+        name = clean_text(row.get("institution"))
+        if name:
+            resolver.setdefault(normalize_institution_lookup(name), {
+                "name": name,
+                "id": stable_institution_id(name),
+            })
 
     def canonicalize_value(value: Dict[str, Any]) -> None:
         name_field = "name" if "name" in value else "institution"
@@ -2360,7 +2420,13 @@ def canonicalize_public_institutions(
             or value.get("canonical_name")
             or value.get("canonical_institution_name")
         )
+        source_name = clean_text(value.get("source_institution"))
+        source_canonical = resolver.get(normalize_institution_lookup(source_name))
         canonical = resolver.get(normalize_institution_lookup(original_name))
+        if source_canonical and (
+            not canonical or source_canonical["id"] != canonical["id"]
+        ):
+            canonical = source_canonical
         if not canonical:
             return
         original_id = clean_text(
@@ -2847,6 +2913,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         institution_alias_rows = load_institution_aliases(
             args.institution_aliases
         )
+        institution_hierarchy_rows = read_csv_rows(args.institution_hierarchy)
         processed_cache_rows = load_institution_resolution_cache(
             args.institution_resolution_cache
         )
@@ -2909,10 +2976,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             institution_alias_rows,
             integrated_location_reviews,
         )
+        exported_hierarchy = public_institution_hierarchy(
+            institution_hierarchy_rows,
+            confirmed_location_rows,
+        )
         integrated_maps = canonicalize_public_institutions(
             integrated_papers,
             integrated_maps,
             exported_aliases,
+            confirmed_location_rows,
         )
         for record in integrated_maps:
             record["institution_id"] = (
@@ -2928,6 +3000,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_payload["records"] = integrated_papers
         payload["institution_aliases"] = exported_aliases
         paper_payload["institution_aliases"] = exported_aliases
+        payload["institution_hierarchy"] = exported_hierarchy
+        paper_payload["institution_hierarchy"] = exported_hierarchy
         summary["preprint_version_records_excluded"] += (
             curated_preprint_map_records_excluded
         )

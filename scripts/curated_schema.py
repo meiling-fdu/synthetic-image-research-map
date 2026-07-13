@@ -121,6 +121,16 @@ INSTITUTION_ALIAS_COLUMNS = (
     "notes",
 )
 
+INSTITUTION_HIERARCHY_COLUMNS = (
+    "parent_institution_id",
+    "child_institution_id",
+    "relationship_type",
+    "review_status",
+    "evidence_source",
+    "evidence_url",
+    "notes",
+)
+
 INSTITUTION_LOCATION_COLUMNS = (
     "location_id",
     "institution",
@@ -192,6 +202,7 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "paper_exclusions.csv": PAPER_EXCLUSION_COLUMNS,
     "institution_location_review.csv": INSTITUTION_LOCATION_REVIEW_COLUMNS,
     "institution_aliases.csv": INSTITUTION_ALIAS_COLUMNS,
+    "institution_hierarchy.csv": INSTITUTION_HIERARCHY_COLUMNS,
     "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
     "review_decisions.csv": REVIEW_DECISION_COLUMNS,
     "paper_version_merges.csv": PAPER_VERSION_MERGE_COLUMNS,

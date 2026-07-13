@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import math
 import re
 import sys
@@ -687,6 +688,86 @@ def validate_institution_aliases(
             )
 
 
+def validate_institution_hierarchy(
+    relationships: Sequence[Mapping[str, str]],
+    confirmed_locations: Sequence[Mapping[str, str]],
+    issues: List[Issue],
+) -> None:
+    def stable_id(name: object) -> str:
+        normalized = normalize_institution(name)
+        digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+        return f"institution:{digest}" if normalized else ""
+
+    known_ids = {
+        stable_id(row.get("institution"))
+        for row in confirmed_locations
+        if stable_id(row.get("institution"))
+    }
+    seen = set()
+    children: DefaultDict[str, set[str]] = defaultdict(set)
+    for row_number, row in enumerate(relationships, start=2):
+        parent = clean(row.get("parent_institution_id"))
+        child = clean(row.get("child_institution_id"))
+        relationship_type = clean(row.get("relationship_type"))
+        status = clean(row.get("review_status"))
+        if not parent or not child:
+            add_issue(
+                issues, "ERROR", "institution_hierarchy.csv",
+                "parent_institution_id and child_institution_id are required", row_number,
+            )
+            continue
+        if status != "confirmed":
+            add_issue(
+                issues, "ERROR", "institution_hierarchy.csv",
+                "curated hierarchy relationships must have review_status=confirmed",
+                row_number,
+            )
+        if relationship_type != "affiliated_institute":
+            add_issue(
+                issues, "ERROR", "institution_hierarchy.csv",
+                "relationship_type must be affiliated_institute", row_number,
+            )
+        if parent == child:
+            add_issue(
+                issues, "ERROR", "institution_hierarchy.csv",
+                "an institution cannot be its own child", row_number,
+            )
+        for field, institution_id in (("parent", parent), ("child", child)):
+            if institution_id not in known_ids:
+                add_issue(
+                    issues, "ERROR", "institution_hierarchy.csv",
+                    f"{field} ID is not a confirmed canonical institution: {institution_id}",
+                    row_number,
+                )
+        key = (parent, child)
+        if key in seen:
+            add_issue(
+                issues, "ERROR", "institution_hierarchy.csv",
+                f"duplicate confirmed hierarchy relationship: {parent} -> {child}",
+                row_number,
+            )
+        seen.add(key)
+        children[parent].add(child)
+
+    def reaches(start: str, target: str, visited: set[str]) -> bool:
+        if start == target:
+            return True
+        if start in visited:
+            return False
+        visited.add(start)
+        return any(
+            reaches(child, target, visited)
+            for child in children.get(start, set())
+        )
+
+    for parent, direct_children in children.items():
+        if any(reaches(child, parent, set()) for child in direct_children):
+            add_issue(
+                issues, "ERROR", "institution_hierarchy.csv",
+                f"confirmed hierarchy contains a cycle involving {parent}",
+            )
+
+
 def main() -> int:
     issues: List[Issue] = []
     datasets, row_counts = read_curated_files(issues)
@@ -698,6 +779,7 @@ def main() -> int:
     locations = datasets.get("institution_location_review.csv", [])
     confirmed_locations = datasets.get("institution_locations.csv", [])
     aliases = datasets.get("institution_aliases.csv", [])
+    hierarchy = datasets.get("institution_hierarchy.csv", [])
     review_decisions = datasets.get("review_decisions.csv", [])
     version_merges = datasets.get("paper_version_merges.csv", [])
 
@@ -883,6 +965,7 @@ def main() -> int:
             row.get("normalized_institution")
         )] = row
     validate_institution_aliases(aliases, confirmed_locations, issues)
+    validate_institution_hierarchy(hierarchy, confirmed_locations, issues)
     for row_number, row in enumerate(locations, start=2):
         status = clean(row.get("review_status"))
         canonical = normalize_institution(row.get("canonical_institution_name"))

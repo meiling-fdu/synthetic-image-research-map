@@ -23,6 +23,7 @@ ADMIN_EDITABLE_PATHS = (
     Path("data/curated/institution_location_review.csv"),
     Path("data/curated/institution_locations.csv"),
     Path("data/curated/institution_aliases.csv"),
+    Path("data/curated/institution_hierarchy.csv"),
     Path("data/curated/review_decisions.csv"),
     Path("data/curated/paper_arxiv_links.csv"),
 )

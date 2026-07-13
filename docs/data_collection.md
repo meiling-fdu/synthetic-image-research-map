@@ -658,6 +658,8 @@ python3 scripts/export_public_preview.py
 
 The confidence threshold can be tightened with `--min-confidence high`, and `--max-map-records` can produce a limited test or performance-fallback preview. The legacy `--max-records` name remains an alias. Without either maximum option, all eligible map records are exported. `--include-needs-review` and `--include-missing-location` are explicit debugging opt-ins; review-flagged or unmappable records should normally remain local.
 
+Confirmed institution parent/child relationships are curated independently in `data/curated/institution_hierarchy.csv`. The exporter publishes only confirmed ID-based links and never uses hierarchy to rewrite source affiliations, infer a child institute from a parent name, or create an alias. The static frontend applies descendant expansion only when a user explicitly enables **Include affiliated institutes** for an exact institution selection.
+
 Only the filtered public preview JSON files should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence marker records, and records needing review remain local and ignored by Git. Paper-level preview records may still need affiliation or coordinate review; they are included to make coverage gaps visible, not to claim complete institution metadata. The preview is a provenance-labeled mixture of automatic candidates and any maintainer-confirmed curated rows, not a uniformly curated final bibliography.
 
 ### Public Preview Quality Report
