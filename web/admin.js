@@ -13,6 +13,9 @@ const state = {
   locationReviews: [],
   locationSummary: {},
   confirmedLocations: [],
+  institutions: [],
+  institutionAudit: { records: [], summary: {} },
+  institutionCleanupSelection: new Set(),
   locationStatusFilter: "",
   selectedLocationReviewId: "",
   dashboard: {},
@@ -159,6 +162,11 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "reload-preview-data",
     "show-git-status",
     "location-review-panel",
+    "institution-management-panel",
+    "institution-management-close",
+    "institution-management-search",
+    "institution-management-rows",
+    "institution-management-empty",
     "location-review-close",
     "location-summary",
     "location-search",
@@ -169,6 +177,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "location-editor-placeholder",
     "location-form",
     "location-queue-id",
+    "location-institution-id",
     "location-context",
     "confirmed-institution",
     "institution-language",
@@ -256,6 +265,15 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-edit-error",
     "metadata-edit-cancel",
     "high-risk-review-panel",
+    "institution-audit-panel",
+    "institution-audit-counts",
+    "institution-audit-search",
+    "institution-audit-severity",
+    "institution-audit-rows",
+    "institution-audit-empty",
+    "institution-audit-detail",
+    "institution-cleanup-batch",
+    "institution-cleanup-blocker",
     "marker-blocker-review-panel",
     "key-coverage-review-panel",
     "manual-import-review-panel",
@@ -356,6 +374,13 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["reload-preview-data"].addEventListener("click", reloadPreviewData);
   elements["show-git-status"].addEventListener("click", showGitStatus);
   elements["location-review-close"].addEventListener("click", closeLocationReview);
+  elements["institution-audit-search"].addEventListener("input", renderInstitutionAudit);
+  elements["institution-audit-severity"].addEventListener("change", renderInstitutionAudit);
+  elements["institution-cleanup-batch"].addEventListener("click", applySelectedInstitutionFixes);
+  elements["institution-management-close"].addEventListener("click", () => {
+    elements["institution-management-panel"].hidden = true;
+  });
+  elements["institution-management-search"].addEventListener("input", renderInstitutionManagement);
   elements["location-search"].addEventListener("input", renderLocationReviewList);
   elements["location-form"].addEventListener("submit", confirmLocation);
   elements["location-mark-ambiguous"].addEventListener("click", () => {
@@ -375,12 +400,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["geocode-dialog"].addEventListener("close", () => {
     state.selectedGeocodeCandidate = null;
   });
-  elements["location-create-new"].addEventListener("click", () => {
-    elements["canonical-institution"].value = "";
-    clearLocationFields();
-    renderLocationActions();
-    elements["confirmed-institution"].focus();
-  });
+  elements["location-create-new"].addEventListener("click", openInstitutionManagement);
   initializeLocationMoreActions();
   document.querySelectorAll("[data-console-target]").forEach((button) => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
@@ -445,11 +465,12 @@ async function loadApplication(preserveSelection = false) {
   setConnection("loading", "● Local curation loading…");
   elements["token-panel"].hidden = true;
   try {
-    const [status, papersPayload, workflowStatus, locationPayload, autofillStatus, gitStatus] = await Promise.all([
+    const [status, papersPayload, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus] = await Promise.all([
       apiFetch("/api/status"),
       apiFetch("/api/papers"),
       apiFetch("/api/latest-validation-status"),
       apiFetch("/api/location-review"),
+      apiFetch("/api/institutions"),
       apiFetch("/api/admin/papers/autofill-arxiv/status"),
       apiFetch("/api/git-status").catch(() => null),
     ]);
@@ -463,6 +484,8 @@ async function loadApplication(preserveSelection = false) {
     renderLatestWorkflowStatus(workflowStatus);
     renderGitSummary(gitStatus);
     applyLocationPayload(locationPayload);
+    state.institutions = institutionPayload.records || [];
+    renderInstitutionManagement();
     renderArxivAutofillStatus(autofillStatus);
     if (autofillStatus.status === "running") scheduleArxivAutofillPoll();
     elements["console-nav"].hidden = false;
@@ -494,8 +517,9 @@ async function loadDashboardAndQueues() {
     "marker-blockers": "/api/review/marker-blockers",
     "key-paper-coverage": "/api/review/key-paper-coverage",
     "manual-import": "/api/review/manual-import",
+    "institution-audit": "/api/review/institution-cleanup",
   };
-  Object.keys(paths).filter((name) => name !== "dashboard").forEach((name) => {
+  Object.keys(paths).filter((name) => !["dashboard", "institution-audit"].includes(name)).forEach((name) => {
     state.reviewQueues[name] = { available: true, records: [], hidden_resolved: 0 };
     renderReviewQueue(name);
   });
@@ -510,11 +534,13 @@ async function loadDashboardAndQueues() {
           state.authorMappingCoverage = state.dashboard.author_mapping_coverage;
         }
       }
+      else if (name === "institution-audit") state.institutionAudit = payload.data || { records: [], summary: {} };
       else state.reviewQueues[name] = payload.data || {};
     });
     renderDashboard();
     renderMappingCoverage();
     Object.keys(state.reviewQueues).forEach(renderReviewQueue);
+    renderInstitutionAudit();
   } catch (error) {
     showNotice(`Review queues could not be loaded: ${error.message}`, "error");
   } finally {
@@ -591,8 +617,10 @@ function navigateConsole(target) {
     "scope-review": elements.workspace,
     "metadata-editor": elements["paper-metadata-section"],
     mappings: document.querySelector(".mappings-section"),
+    "institution-management": elements["institution-management-panel"],
     "location-review": elements["location-review-panel"],
     "high-risk": elements["high-risk-review-panel"],
+    "institution-audit": elements["institution-audit-panel"],
     "marker-blockers": elements["marker-blocker-review-panel"],
     "key-coverage": elements["key-coverage-review-panel"],
     "author-mapping-coverage": elements["author-mapping-coverage-panel"],
@@ -603,6 +631,7 @@ function navigateConsole(target) {
   };
   if (target === "add-paper") openAddPaperPanel();
   if (target === "location-review") openLocationReview();
+  if (target === "institution-management") openInstitutionManagement();
   const node = targets[target];
   if (!node) return;
   document.querySelectorAll("[data-console-target]").forEach((control) => {
@@ -1082,6 +1111,160 @@ function renderReviewQueue(name) {
     : filtered.length ? "" : "No rows match these filters.";
 }
 
+function renderInstitutionAudit() {
+  if (!elements["institution-audit-rows"]) return;
+  const audit = state.institutionAudit || { records: [], summary: {} };
+  const search = normalize(elements["institution-audit-search"].value);
+  const severity = elements["institution-audit-severity"].value;
+  const records = (audit.records || []).filter((row) => {
+    if (severity && row.severity !== severity) return false;
+    return !search || normalize(Object.values(row).join(" ")).includes(search);
+  });
+  const summary = audit.summary || {};
+  elements["institution-audit-counts"].textContent = `${audit.total_unresolved || 0} unresolved · ${summary.high || 0} high · ${summary.medium || 0} medium · ${summary.low || 0} low · ${audit.hidden_resolved || 0} resolved`;
+  const blocker = elements["institution-cleanup-blocker"];
+  blocker.hidden = !(summary.high > 0);
+  blocker.querySelector("span").textContent = summary.high > 0
+    ? `Publishing is blocked by ${summary.high} unresolved high-severity institution issue${summary.high === 1 ? "" : "s"}.`
+    : "";
+  elements["publish-changes"].disabled = summary.high > 0;
+  const body = elements["institution-audit-rows"];
+  body.replaceChildren();
+  records.forEach((item) => {
+    const row = document.createElement("tr");
+    const selectionCell = document.createElement("td");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = state.institutionCleanupSelection.has(item.queue_id);
+    checkbox.disabled = !item.mapping_id || !item.suggested_institution_id;
+    checkbox.setAttribute("aria-label", `Select fix for ${item.paper_title || item.audit_id}`);
+    checkbox.addEventListener("click", (event) => event.stopPropagation());
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) state.institutionCleanupSelection.add(item.queue_id);
+      else state.institutionCleanupSelection.delete(item.queue_id);
+      elements["institution-cleanup-batch"].disabled = state.institutionCleanupSelection.size === 0;
+    });
+    selectionCell.append(checkbox);
+    row.append(selectionCell);
+    [item.severity, item.paper_title, item.author, item.current_institution, item.issue_type, item.suggested_canonical_institution].forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent = text(value) || "—";
+      row.append(cell);
+    });
+    row.tabIndex = 0;
+    row.addEventListener("click", () => renderInstitutionAuditDetail(item));
+    row.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") renderInstitutionAuditDetail(item);
+    });
+    body.append(row);
+  });
+  elements["institution-cleanup-batch"].disabled = state.institutionCleanupSelection.size === 0;
+  elements["institution-audit-empty"].textContent = records.length ? "" : "No audit items match these filters.";
+}
+
+function auditDetailLine(label, value) {
+  const paragraph = document.createElement("p");
+  const strong = document.createElement("strong");
+  strong.textContent = `${label}: `;
+  paragraph.append(strong, document.createTextNode(text(value) || "—"));
+  return paragraph;
+}
+
+function renderInstitutionAuditDetail(item) {
+  const detail = elements["institution-audit-detail"];
+  detail.replaceChildren();
+  const heading = document.createElement("h3");
+  heading.textContent = item.paper_title || "Institution audit item";
+  const actions = document.createElement("div");
+  actions.className = "form-actions";
+  [["Accept suggestion", "accept_suggestion"], ["Ignore finding", "ignore"]].forEach(([label, action]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = action === "ignore" ? "secondary-button" : "primary-button";
+    button.textContent = label;
+    button.addEventListener("click", () => resolveInstitutionAudit(item, action));
+    actions.append(button);
+  });
+  const replace = document.createElement("button");
+  replace.type = "button";
+  replace.className = "secondary-button";
+  replace.textContent = "Replace mapping";
+  replace.addEventListener("click", async () => {
+    const row = { ...item, title: item.paper_title, institution: item.current_institution };
+    if (await openRelatedPaper(row)) openMappingDialog("replace");
+  });
+  const institution = document.createElement("button");
+  institution.type = "button";
+  institution.className = "secondary-button";
+  institution.textContent = "Open institution editor";
+  institution.addEventListener("click", () => {
+    elements["institution-management-search"].value = item.current_institution;
+    openInstitutionManagement();
+  });
+  actions.append(replace, institution);
+  const manual = document.createElement("button");
+  manual.type = "button";
+  manual.className = "secondary-button";
+  manual.textContent = "Mark manually resolved";
+  manual.addEventListener("click", () => resolveInstitutionAudit(item, "manually_resolved"));
+  actions.append(manual);
+  detail.append(
+    heading,
+    auditDetailLine("Author", item.author),
+    auditDetailLine("Current institution", item.current_institution),
+    auditDetailLine("Raw affiliation", item.raw_affiliation),
+    auditDetailLine("Suggested canonical institution", item.suggested_canonical_institution),
+    auditDetailLine("Reason", item.reason),
+    actions,
+  );
+}
+
+async function resolveInstitutionAudit(item, action) {
+  const labels = { accept_suggestion: "Accept suggestion", ignore: "Ignore finding", manually_resolved: "Manual resolution" };
+  const note = window.prompt(`${labels[action] || action} review note:`);
+  if (!note) return;
+  if (action === "accept_suggestion" && !window.confirm(`Replace the mapping with ${item.suggested_canonical_institution}?`)) return;
+  try {
+    await apiFetch("/api/review/institution-cleanup/action", {
+      method: "POST",
+      body: JSON.stringify({
+        queue_id: item.queue_id,
+        action,
+        review_note: note,
+        confirmed: action === "accept_suggestion",
+      }),
+    });
+    const payload = await apiFetch("/api/review/institution-cleanup");
+    state.institutionAudit = payload.data || { records: [], summary: {} };
+    state.institutionCleanupSelection.delete(item.queue_id);
+    renderInstitutionAudit();
+    elements["institution-audit-detail"].textContent = "Select a cleanup item.";
+    showNotice(action === "accept_suggestion" ? "Institution mapping corrected and cleanup finding resolved." : "Institution cleanup decision saved.");
+  } catch (error) {
+    showNotice(`Could not save institution cleanup decision: ${error.message}`, "error");
+  }
+}
+
+async function applySelectedInstitutionFixes() {
+  const queueIds = [...state.institutionCleanupSelection];
+  if (!queueIds.length) return;
+  const note = window.prompt("Batch correction review note:");
+  if (!note || !window.confirm(`Apply ${queueIds.length} compatible suggested fixes? The batch rolls back if any fix fails.`)) return;
+  try {
+    await apiFetch("/api/review/institution-cleanup/batch", {
+      method: "POST",
+      body: JSON.stringify({ queue_ids: queueIds, action: "accept_suggestion", review_note: note, confirmed: true }),
+    });
+    state.institutionCleanupSelection.clear();
+    const payload = await apiFetch("/api/review/institution-cleanup");
+    state.institutionAudit = payload.data || { records: [], summary: {} };
+    renderInstitutionAudit();
+    showNotice("Selected institution fixes were applied safely.");
+  } catch (error) {
+    showNotice(`Could not apply selected fixes: ${error.message}`, "error");
+  }
+}
+
 function renderReviewDetail(name, row) {
   const detail = queuePanel(name).querySelector('[data-role="detail"]');
   state.selectedReviewKeys[name] = reviewRecordKey(row);
@@ -1308,6 +1491,110 @@ async function loadLocationReviews() {
   applyLocationPayload(payload);
 }
 
+function openInstitutionManagement() {
+  elements["institution-management-panel"].hidden = false;
+  renderInstitutionManagement();
+  elements["institution-management-panel"].scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function refreshInstitutions() {
+  const payload = await apiFetch("/api/institutions");
+  state.institutions = payload.records || [];
+  renderInstitutionManagement();
+}
+
+function institutionActionButton(label, action, institution) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = action === "ignore" || action === "merge" ? "danger-button" : "secondary-button";
+  button.textContent = label;
+  button.addEventListener("click", () => runInstitutionAction(action, institution));
+  return button;
+}
+
+function renderInstitutionManagement() {
+  if (!elements["institution-management-rows"]) return;
+  const query = normalize(elements["institution-management-search"].value);
+  const records = state.institutions.filter((row) => normalize([
+    row.canonical_name, row.institution_type, row.institution_status,
+    ...(row.aliases || []), row.parent_institution_id,
+  ].join(" ")).includes(query));
+  const body = elements["institution-management-rows"];
+  body.replaceChildren();
+  records.forEach((institution) => {
+    const row = document.createElement("tr");
+    const identity = document.createElement("td");
+    identity.append(document.createTextNode(institution.canonical_name), document.createElement("br"), document.createTextNode(institution.institution_id));
+    const hierarchy = document.createElement("td");
+    hierarchy.textContent = `${(institution.aliases || []).join(", ") || "No aliases"}${institution.parent_institution_id ? ` · parent ${institution.parent_institution_id}` : ""}`;
+    const status = document.createElement("td");
+    status.textContent = `${institution.institution_status} · ${institution.institution_type}`;
+    const usage = document.createElement("td");
+    const impact = institution.usage || {};
+    usage.textContent = `${impact.papers || 0} papers · ${impact.author_mappings || 0} mappings · ${impact.markers || 0} markers · ${(impact.authors || []).length} authors`;
+    const actions = document.createElement("td");
+    actions.className = "form-actions";
+    [
+      ["Edit identity", "identity"], ["Edit location", "location"],
+      ["Add alias", "alias"], ["Set parent", "parent"],
+      ["Merge", "merge"], ["Ignore", "ignore"],
+    ].forEach(([label, action]) => actions.append(institutionActionButton(label, action, institution)));
+    row.append(identity, hierarchy, status, usage, actions);
+    body.append(row);
+  });
+  elements["institution-management-empty"].hidden = records.length !== 0;
+}
+
+async function postInstitutionAction(path, body) {
+  await apiFetch(path, { method: "POST", body: JSON.stringify(body) });
+  await Promise.all([refreshInstitutions(), loadLocationReviews()]);
+}
+
+async function runInstitutionAction(action, institution) {
+  try {
+    if (action === "location") {
+      openLocationReview();
+      showNotice("Select this institution's review row to edit location only; its stable ID and mappings remain unchanged.");
+      return;
+    }
+    if (action === "identity") {
+      const canonicalName = window.prompt("Canonical name (identity only; this does not reassign mappings):", institution.canonical_name);
+      if (!canonicalName) return;
+      const institutionType = window.prompt("Institution type: university, department, institute, laboratory, company, or research_unit", institution.institution_type);
+      if (!institutionType) return;
+      await postInstitutionAction("/api/institution/identity", { institution_id: institution.institution_id, canonical_name: canonicalName, institution_type: institutionType, institution_status: institution.institution_status });
+    } else if (action === "alias") {
+      const aliasName = window.prompt("Alias to resolve to this canonical institution:");
+      if (!aliasName) return;
+      await postInstitutionAction("/api/institution/alias", { institution_id: institution.institution_id, alias_name: aliasName, review_note: "Confirmed in institution management." });
+    } else if (action === "parent") {
+      const parentId = window.prompt("Parent institution ID (blank removes parent):", institution.parent_institution_id || "");
+      if (parentId === null) return;
+      await postInstitutionAction("/api/institution/parent", { institution_id: institution.institution_id, parent_institution_id: parentId });
+    } else if (action === "ignore") {
+      if (!window.confirm("This hides this institution from public outputs without deleting data.")) return;
+      const note = window.prompt("Review note for the audit trail:");
+      if (!note) return;
+      await postInstitutionAction("/api/institution/ignore", { institution_id: institution.institution_id, confirmation: true, review_note: note });
+    } else if (action === "merge") {
+      const targetId = window.prompt("Target canonical institution ID:");
+      const target = state.institutions.find((row) => row.institution_id === targetId);
+      if (!target) throw new Error("Select an existing target institution ID.");
+      const impact = institution.usage || {};
+      const authors = (impact.authors || []).join(", ") || "none";
+      if (!window.confirm(`Are you replacing this institution globally?\n\nPapers: ${impact.papers || 0}\nAuthor mappings: ${impact.author_mappings || 0}\nMarkers: ${impact.markers || 0}\nAffected authors: ${authors}`)) return;
+      const phrase = `REPLACE ${institution.canonical_name} WITH ${target.canonical_name} GLOBALLY`;
+      if (window.prompt(`Type exactly to confirm:\n${phrase}`) !== phrase) throw new Error("Global replacement confirmation did not match.");
+      const note = window.prompt("Review note for the replacement audit trail:");
+      if (!note) return;
+      await postInstitutionAction("/api/institution/merge", { source_institution_id: institution.institution_id, target_institution_id: target.institution_id, confirmation: phrase, review_note: note });
+    }
+    showNotice(`Institution ${action} action saved.`);
+  } catch (error) {
+    showNotice(`Institution action failed: ${error.message}`, "error");
+  }
+}
+
 function openLocationReview() {
   elements["location-review-panel"].hidden = false;
   elements["location-review-panel"].scrollIntoView({
@@ -1434,6 +1721,7 @@ function selectLocationReview(queueId) {
   elements["location-form"].reset();
   clearLocationFields();
   elements["location-queue-id"].value = queueId;
+  elements["location-institution-id"].value = text(row.institution_id);
   const confirmed = row.confirmed_location || {};
   elements["confirmed-institution"].value =
     text(confirmed.institution || row.canonical_institution_name || row.institution);
@@ -1616,6 +1904,7 @@ function clearLocationEditor() {
 function locationDraft() {
   return {
     queue_id: elements["location-queue-id"].value,
+    institution_id: elements["location-institution-id"].value,
     confirmed_institution: elements["confirmed-institution"].value.trim(),
     canonical_institution_name: elements["canonical-institution"].value,
     detected_language: elements["institution-language"].value.trim(),
@@ -1635,10 +1924,17 @@ function locationDraft() {
 }
 
 function geocodeAddress() {
+  const entity = state.institutions.find(
+    (row) => row.institution_id === elements["location-institution-id"].value
+  );
+  const parent = state.institutions.find(
+    (row) => row.institution_id === entity?.parent_institution_id
+  );
   return [
     elements["confirmed-city"].value.trim(),
     elements["confirmed-region"].value.trim(),
     elements["confirmed-country"].value.trim(),
+    parent?.canonical_name,
   ].filter(Boolean).join(", ");
 }
 
@@ -1916,7 +2212,10 @@ function showNotice(message, variant = "success") {
 
 function setWorkflowRunning(running, label = "") {
   workflowCommandIds.forEach((id) => {
-    elements[id].disabled = running;
+    elements[id].disabled = running || (
+      id === "publish-changes"
+      && Number(state.institutionAudit?.summary?.high || 0) > 0
+    );
   });
   elements["reload-preview-data"].disabled = running;
   elements["show-git-status"].disabled = running;

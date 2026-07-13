@@ -24,6 +24,9 @@ ADMIN_EDITABLE_PATHS = (
     Path("data/curated/institution_locations.csv"),
     Path("data/curated/institution_aliases.csv"),
     Path("data/curated/institution_hierarchy.csv"),
+    Path("data/curated/institutions.csv"),
+    Path("data/curated/institution_audit_log.csv"),
+    Path("data/curated/institution_review_queue.csv"),
     Path("data/curated/review_decisions.csv"),
     Path("data/curated/paper_arxiv_links.csv"),
 )
@@ -38,6 +41,8 @@ KNOWN_WORKFLOW_OUTPUTS = (
     Path("data/manual/paper_marker_blocker_report.csv"),
     Path("data/manual/high_risk_marker_review.csv"),
     Path("data/manual/missing_author_mappings_report.csv"),
+    Path("data/manual/institution_consistency_audit.csv"),
+    Path("data/curated/institution_review_queue.csv"),
     Path("docs/missing_author_mappings_report.md"),
     Path("docs/public_preview_report.md"),
 )
@@ -45,6 +50,14 @@ KNOWN_WORKFLOW_OUTPUTS = (
 CURATED_VALIDATION = (
     "python3",
     "scripts/validate_curated_database.py",
+)
+INSTITUTION_CONSISTENCY_REPORT = (
+    "python3",
+    "scripts/audit_institution_consistency.py",
+)
+INSTITUTION_REVIEW_QUEUE_SYNC = (
+    "python3",
+    "scripts/sync_institution_review_queue.py",
 )
 PAPER_EXCLUSION_VALIDATION = (
     "python3",
@@ -89,7 +102,10 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
     "export_preview": (EXPORT_PREVIEW,),
     "public_validation": (PUBLIC_VALIDATION,),
     "author_mapping_report": (AUTHOR_MAPPING_REPORT,),
+    "institution_consistency_audit": (INSTITUTION_CONSISTENCY_REPORT,),
     "full_refresh": (
+        INSTITUTION_CONSISTENCY_REPORT,
+        INSTITUTION_REVIEW_QUEUE_SYNC,
         CURATED_VALIDATION,
         PAPER_EXCLUSION_VALIDATION,
         EXPORT_PREVIEW,

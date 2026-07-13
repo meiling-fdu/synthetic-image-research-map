@@ -36,6 +36,7 @@
         <details class="nav-menu"><summary>Review</summary><div class="nav-menu-items" role="menu">
           <button role="menuitem" data-console-target="scope-review" type="button">Scope review</button>
           <button role="menuitem" data-console-target="high-risk" type="button">High-risk papers</button>
+          <button role="menuitem" data-console-target="institution-audit" type="button">Institution cleanup</button>
           <button role="menuitem" data-console-target="marker-blockers" type="button">Marker blockers</button>
           <button role="menuitem" data-console-target="key-coverage" type="button">Key-paper coverage</button>
           <button role="menuitem" data-console-target="manual-import" type="button">Manual imports</button>
@@ -50,7 +51,7 @@
           <button role="menuitem" data-console-target="papers" type="button">Authors</button>
           <button role="menuitem" data-console-target="mappings" type="button">Author mappings</button>
           <button role="menuitem" data-console-target="author-mapping-coverage" type="button">Author mapping coverage</button>
-          <button role="menuitem" data-console-target="papers" type="button">Institutions</button>
+          <button role="menuitem" data-console-target="institution-management" type="button">Institutions</button>
           <button role="menuitem" data-console-target="location-review" type="button">Institution aliases &amp; locations</button>
         </div></details>
         <button data-console-target="validation" type="button">Validation</button>
@@ -131,6 +132,7 @@
           </div></details>
         </div>
         <p class="workflow-guidance" id="workflow-guidance">Admin saves remain local. Publish Changes refreshes and validates first, then commits selected project data and pushes only after confirmation.</p>
+        <div class="notice" id="institution-cleanup-blocker" role="status" hidden><span></span> <button class="text-button" data-console-target="institution-audit" type="button">Open Institution Cleanup</button></div>
         <details class="workflow-log-panel" id="workflow-log-panel">
           <summary>Diagnostics and command output</summary>
           <pre id="workflow-log">No command output yet.</pre>
@@ -279,6 +281,17 @@
         </form>
       </section>
 
+      <section class="location-review-panel" id="institution-management-panel" hidden>
+        <div class="section-heading">
+          <div><p class="eyebrow">Canonical institution registry · local only</p><h2>Institution Management</h2><p>Identity, location, aliases, hierarchy, mapping reassignment, merge, and visibility are separate actions.</p></div>
+          <button class="secondary-button" id="institution-management-close" type="button">Close</button>
+        </div>
+        <p class="review-scope-help">Location edits never change institution IDs or author mappings. Global replacement shows its paper, mapping, marker, and author impact and requires the exact confirmation phrase.</p>
+        <label class="search-field"><span>Search institutions</span><input id="institution-management-search" type="search" placeholder="Canonical name, alias, type, status…"></label>
+        <div class="table-wrap"><table><thead><tr><th>Institution identity</th><th>Aliases / parent</th><th>Status / type</th><th>Usage</th><th>Separate actions</th></tr></thead><tbody id="institution-management-rows"></tbody></table></div>
+        <p class="empty-markers" id="institution-management-empty" hidden>No institutions match.</p>
+      </section>
+
       <section class="location-review-panel" id="location-review-panel" hidden>
         <div class="section-heading">
           <div>
@@ -308,10 +321,11 @@
             </div>
             <form id="location-form" hidden>
               <input id="location-queue-id" type="hidden">
+              <input id="location-institution-id" type="hidden">
               <div class="location-context" id="location-context"></div>
               <div class="location-form-grid">
                 <label class="full-width">Confirmed institution
-                  <input id="confirmed-institution" type="text" required>
+                  <input id="confirmed-institution" type="text" required readonly>
                 </label>
                 <label>Detected language
                   <input id="institution-language" type="text" placeholder="en, es, zh…">
@@ -370,7 +384,7 @@
                 <button class="secondary-button" id="location-save-metadata" type="button">Save edited metadata</button>
                 <button class="secondary-button" id="location-needs-coordinates" type="button">Needs coordinate review</button>
                 <button class="secondary-button" id="location-confirm-alias" type="button" hidden>Confirm as alias of selected institution</button>
-                <button class="secondary-button" id="location-create-new" type="button">Create as new institution</button>
+                <button class="secondary-button" id="location-create-new" type="button" hidden>Identity changes are separate</button>
                 <details class="overflow-menu location-more-actions" id="location-more-actions">
                   <summary>More actions <span aria-hidden="true">⋯</span></summary>
                   <div class="overflow-menu-items" id="location-more-actions-menu">
@@ -575,6 +589,13 @@
         <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Title, institution, author, DOI, OpenAlex…"><select data-role="group"><option value="">All priorities</option></select><select data-role="action-filter"><option value="">All recommended actions</option></select><select data-role="type-filter"><option value="">All review types</option></select></div>
         <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
+      </section>
+
+      <section class="review-queue-panel" id="institution-audit-panel" hidden>
+        <div class="section-heading"><div><p class="eyebrow">Pre-publish consistency gate</p><h2>Institution Cleanup</h2><p>Resolve persistent institution findings through protected Admin APIs. The generated CSV remains reporting-only.</p></div></div>
+        <p class="review-counts" id="institution-audit-counts"></p>
+        <div class="review-filters"><input id="institution-audit-search" type="search" placeholder="Paper, author, institution, issue…"><select id="institution-audit-severity"><option value="">All severities</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select><button class="primary-button" id="institution-cleanup-batch" type="button" disabled>Accept selected fixes</button></div>
+        <div class="review-layout"><div class="table-wrap"><table><thead><tr><th><span class="visually-hidden">Select</span></th><th>Severity</th><th>Paper</th><th>Author</th><th>Current institution</th><th>Issue</th><th>Suggested institution</th></tr></thead><tbody id="institution-audit-rows"></tbody></table><p id="institution-audit-empty"></p></div><article id="institution-audit-detail" class="review-detail">Select a cleanup item.</article></div>
       </section>
 
       <section class="review-queue-panel" id="marker-blocker-review-panel" hidden data-queue="marker-blockers">

@@ -75,6 +75,19 @@ try:
         mark_queue_row,
         save_queue_metadata,
     )
+    from .curated_institutions import (
+        DEFAULT_AUDIT_PATH,
+        DEFAULT_INSTITUTIONS_PATH,
+        CuratedInstitutionError,
+        add_institution_alias,
+        ignore_institution,
+        institution_impact,
+        load_institutions,
+        merge_institutions,
+        set_parent_institution,
+        update_institution_identity,
+        update_institution_location,
+    )
     from .openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -101,8 +114,19 @@ try:
     from .review_decisions import (
         DEFAULT_REVIEW_DECISIONS_PATH,
         ReviewDecisionError,
+        read_review_decisions,
         upsert_review_decision,
     )
+    from .institution_consistency import (
+        DEFAULT_REPORT_PATH as INSTITUTION_CONSISTENCY_REPORT_PATH,
+    )
+    from .institution_review_queue import (
+        DEFAULT_QUEUE_PATH as INSTITUTION_REVIEW_QUEUE_PATH,
+        InstitutionReviewQueueError,
+        load_queue as load_institution_review_queue,
+        queue_payload as institution_queue_payload,
+    )
+    from .institution_cleanup import apply_cleanup_action
 except ImportError:
     from admin_workflows import (
         AdminWorkflowError,
@@ -155,6 +179,19 @@ except ImportError:
         mark_queue_row,
         save_queue_metadata,
     )
+    from curated_institutions import (
+        DEFAULT_AUDIT_PATH,
+        DEFAULT_INSTITUTIONS_PATH,
+        CuratedInstitutionError,
+        add_institution_alias,
+        ignore_institution,
+        institution_impact,
+        load_institutions,
+        merge_institutions,
+        set_parent_institution,
+        update_institution_identity,
+        update_institution_location,
+    )
     from openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -181,8 +218,19 @@ except ImportError:
     from review_decisions import (
         DEFAULT_REVIEW_DECISIONS_PATH,
         ReviewDecisionError,
+        read_review_decisions,
         upsert_review_decision,
     )
+    from institution_consistency import (
+        DEFAULT_REPORT_PATH as INSTITUTION_CONSISTENCY_REPORT_PATH,
+    )
+    from institution_review_queue import (
+        DEFAULT_QUEUE_PATH as INSTITUTION_REVIEW_QUEUE_PATH,
+        InstitutionReviewQueueError,
+        load_queue as load_institution_review_queue,
+        queue_payload as institution_queue_payload,
+    )
+    from institution_cleanup import apply_cleanup_action
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = REPOSITORY_ROOT / "web"
@@ -199,6 +247,7 @@ CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 CURATED_MAPPINGS_PATH = DEFAULT_MAPPINGS_PATH
 LOCATION_REVIEW_PATH = DEFAULT_LOCATION_REVIEW_PATH
 INSTITUTION_LOCATIONS_PATH = DEFAULT_INSTITUTION_LOCATIONS_PATH
+INSTITUTIONS_PATH = DEFAULT_INSTITUTIONS_PATH
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
@@ -226,7 +275,9 @@ ARXIV_AUTOFILL_STATE: Dict[str, Any] = {
 }
 CURATED_MAPPING_WRITE_LOCK = threading.Lock()
 CURATED_LOCATION_WRITE_LOCK = threading.Lock()
+CURATED_INSTITUTION_WRITE_LOCK = threading.Lock()
 REVIEW_DECISION_WRITE_LOCK = threading.Lock()
+INSTITUTION_CLEANUP_WRITE_LOCK = threading.Lock()
 AUTHOR_MAPPING_REPORT_WRITE_LOCK = threading.Lock()
 
 AUTHOR_MAPPING_COVERAGE_ENDPOINTS = {
@@ -1158,6 +1209,18 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default=DEFAULT_INSTITUTION_ALIASES_PATH,
         help=f"Curated institution alias CSV (default: {DEFAULT_INSTITUTION_ALIASES_PATH}).",
     )
+    parser.add_argument(
+        "--institutions",
+        type=Path,
+        default=INSTITUTIONS_PATH,
+        help=f"Canonical institution entity CSV (default: {INSTITUTIONS_PATH}).",
+    )
+    parser.add_argument(
+        "--institution-audit",
+        type=Path,
+        default=DEFAULT_AUDIT_PATH,
+        help=f"Institution action audit CSV (default: {DEFAULT_AUDIT_PATH}).",
+    )
     return parser.parse_args(argv)
 
 
@@ -1169,8 +1232,12 @@ def make_handler(
     location_review_path: Path = LOCATION_REVIEW_PATH,
     institution_locations_path: Path = INSTITUTION_LOCATIONS_PATH,
     institution_aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
+    institutions_path: Path = INSTITUTIONS_PATH,
+    institution_audit_path: Path = DEFAULT_AUDIT_PATH,
     review_decisions_path: Path = DEFAULT_REVIEW_DECISIONS_PATH,
     author_mapping_report_path: Path = AUTHOR_MAPPING_REPORT_PATH,
+    institution_consistency_report_path: Path = INSTITUTION_CONSISTENCY_REPORT_PATH,
+    institution_review_queue_path: Path = INSTITUTION_REVIEW_QUEUE_PATH,
     author_mapping_report_generator: Callable[
         [], Mapping[str, Any]
     ] = generate_author_mapping_report,
@@ -1523,6 +1590,7 @@ def make_handler(
                         locations_path=institution_locations_path,
                         aliases_path=institution_aliases_path,
                         mappings=load_mappings(mappings_path),
+                        institutions_path=institutions_path,
                     )
                 except CuratedLocationError as error:
                     self.send_json(
@@ -1530,6 +1598,30 @@ def make_handler(
                     )
                     return
                 self.send_json(HTTPStatus.OK, payload)
+                return
+            if request.path in {"/api/institutions", "/api/institution/impact"}:
+                if not self.is_header_authorized() or not self.is_loopback_client():
+                    self.send_json(HTTPStatus.FORBIDDEN, {"error": "institution management is restricted to authorized loopback clients"})
+                    return
+                try:
+                    institutions = load_institutions(institutions_path)
+                    if request.path == "/api/institution/impact":
+                        identifier = parse_qs(request.query).get("institution_id", [""])[0]
+                        self.send_json(HTTPStatus.OK, institution_impact(identifier, load_mappings(mappings_path)))
+                    else:
+                        aliases = load_institution_aliases(institution_aliases_path)
+                        mappings = load_mappings(mappings_path)
+                        records = []
+                        for institution in institutions:
+                            identifier = clean(institution.get("institution_id"))
+                            records.append({
+                                **institution,
+                                "aliases": [row.get("alias_name") for row in aliases if clean(row.get("institution_id")) == identifier and clean(row.get("review_status")) == "confirmed"],
+                                "usage": institution_impact(identifier, mappings),
+                            })
+                        self.send_json(HTTPStatus.OK, {"records": records})
+                except (CuratedInstitutionError, CuratedLocationError) as error:
+                    self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
                 return
             if request.path in AUTHOR_MAPPING_COVERAGE_ENDPOINTS:
                 if not self.is_header_authorized():
@@ -1576,6 +1668,22 @@ def make_handler(
                 "/api/review/marker-blockers": "marker_blocker",
                 "/api/review/key-paper-coverage": "key_paper_coverage",
             }
+            if request.path in {
+                "/api/review/institution-consistency",
+                "/api/review/institution-cleanup",
+            }:
+                if not self.is_header_authorized() or not self.is_loopback_client():
+                    self.send_json(HTTPStatus.FORBIDDEN, api_payload(success=False, errors=("institution cleanup is restricted to authorized loopback clients",)))
+                    return
+                try:
+                    data = institution_queue_payload(
+                        load_institution_review_queue(institution_review_queue_path)
+                    )
+                except InstitutionReviewQueueError as error:
+                    self.send_json(HTTPStatus.BAD_REQUEST, api_payload(success=False, errors=(str(error),)))
+                    return
+                self.send_json(HTTPStatus.OK, api_payload(data=data))
+                return
             if request.path in review_get_paths or request.path in {
                 "/api/review/manual-import",
                 "/api/dashboard",
@@ -2044,6 +2152,38 @@ def make_handler(
                         api_payload(success=False, errors=(str(error),)),
                     )
                 return
+            institution_actions = {
+                "/api/institution/identity": "identity",
+                "/api/institution/location": "location",
+                "/api/institution/alias": "alias",
+                "/api/institution/parent": "parent",
+                "/api/institution/merge": "merge",
+                "/api/institution/ignore": "ignore",
+            }
+            if request.path in institution_actions:
+                if not self.is_header_authorized() or not self.is_loopback_client():
+                    self.send_json(HTTPStatus.FORBIDDEN, {"error": "institution management is restricted to authorized loopback clients"})
+                    return
+                try:
+                    payload = self.read_json_body()
+                    action = institution_actions[request.path]
+                    with CURATED_INSTITUTION_WRITE_LOCK:
+                        if action == "identity":
+                            result = update_institution_identity(payload.get("institution_id"), payload, institutions_path=institutions_path)
+                        elif action == "location":
+                            result = update_institution_location(payload.get("institution_id"), payload, institutions_path=institutions_path, locations_path=institution_locations_path)
+                        elif action == "alias":
+                            result = add_institution_alias(payload.get("institution_id"), payload.get("alias_name"), note=payload.get("review_note"), institutions_path=institutions_path, aliases_path=institution_aliases_path)
+                        elif action == "parent":
+                            result = set_parent_institution(payload.get("institution_id"), payload.get("parent_institution_id"), institutions_path=institutions_path)
+                        elif action == "ignore":
+                            result = ignore_institution(payload.get("institution_id"), confirmation=payload.get("confirmation") is True, review_note=payload.get("review_note"), institutions_path=institutions_path, mappings_path=mappings_path, audit_path=institution_audit_path)
+                        else:
+                            result = merge_institutions(payload.get("source_institution_id"), payload.get("target_institution_id"), confirmation=payload.get("confirmation"), review_note=payload.get("review_note"), institutions_path=institutions_path, mappings_path=mappings_path, aliases_path=institution_aliases_path, audit_path=institution_audit_path)
+                    self.send_json(HTTPStatus.OK, {"data": result, "message": f"Institution {action} action saved."})
+                except CuratedInstitutionError as error:
+                    self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
+                return
             location_actions = {
                 "/api/location-review/confirm": "confirm",
                 "/api/location-review/mark-ambiguous": "ambiguous",
@@ -2082,6 +2222,7 @@ def make_handler(
                                 payload,
                                 locations_path=institution_locations_path,
                                 review_path=location_review_path,
+                                institutions_path=institutions_path,
                             )
                             message = (
                                 "Location saved. Run full refresh pipeline "
@@ -2151,6 +2292,9 @@ def make_handler(
                 "/api/review/marker-blockers/action",
                 "/api/review/key-paper-coverage/action",
                 "/api/review/manual-import/action",
+                "/api/review/institution-consistency/action",
+                "/api/review/institution-cleanup/action",
+                "/api/review/institution-cleanup/batch",
             }:
                 self.send_json(HTTPStatus.NOT_FOUND, {"error": "not found"})
                 return
@@ -2162,6 +2306,9 @@ def make_handler(
                     "/api/review/marker-blockers/action",
                     "/api/review/key-paper-coverage/action",
                     "/api/review/manual-import/action",
+                    "/api/review/institution-consistency/action",
+                    "/api/review/institution-cleanup/action",
+                    "/api/review/institution-cleanup/batch",
                 }
                 if request.path in new_write_paths:
                     if not self.is_header_authorized():
@@ -2302,6 +2449,41 @@ def make_handler(
                             },
                         ),
                     )
+                    return
+
+                if request.path in {
+                    "/api/review/institution-consistency/action",
+                    "/api/review/institution-cleanup/action",
+                    "/api/review/institution-cleanup/batch",
+                }:
+                    action = {
+                        "accept_mapping": "accept_suggestion",
+                        "ignore_warning": "ignore",
+                    }.get(clean(payload.get("action")), clean(payload.get("action")))
+                    queue_ids = payload.get("queue_ids")
+                    if not isinstance(queue_ids, list):
+                        queue_ids = [payload.get("queue_id")]
+                    if request.path.endswith("/batch") and action != "accept_suggestion":
+                        self.send_json(HTTPStatus.BAD_REQUEST, api_payload(success=False, errors=("batch cleanup supports compatible suggested fixes only",)))
+                        return
+                    try:
+                        with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_MAPPING_WRITE_LOCK:
+                            result = apply_cleanup_action(
+                                queue_ids,
+                                action,
+                                payload.get("review_note"),
+                                replacement_institution_id=payload.get("replacement_institution_id"),
+                                confirmed=payload.get("confirmed") is True,
+                                queue_path=institution_review_queue_path,
+                                mappings_path=mappings_path,
+                                location_review_path=location_review_path,
+                                institutions_path=institutions_path,
+                                map_records=read_json_records(PUBLIC_MAP_PATH),
+                            )
+                    except (InstitutionReviewQueueError, CuratedMappingError, DuplicateMappingError) as error:
+                        self.send_json(HTTPStatus.BAD_REQUEST, api_payload(success=False, errors=(str(error),)))
+                        return
+                    self.send_json(HTTPStatus.OK, api_payload(message="Institution cleanup action saved.", data=result))
                     return
 
                 review_action_paths = {
@@ -2828,12 +3010,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     token = secrets.token_urlsafe(32)
     handler = make_handler(
         token,
-        args.paper_exclusions,
-        args.curated_papers,
-        args.curated_mappings,
-        args.location_review,
-        args.institution_locations,
-        args.institution_aliases,
+        exclusions_path=args.paper_exclusions,
+        curated_papers_path=args.curated_papers,
+        mappings_path=args.curated_mappings,
+        location_review_path=args.location_review,
+        institution_locations_path=args.institution_locations,
+        institution_aliases_path=args.institution_aliases,
+        institutions_path=args.institutions,
+        institution_audit_path=args.institution_audit,
     )
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)

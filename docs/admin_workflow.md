@@ -1,5 +1,41 @@
 # Local Admin Workflow
 
+## Institution management safety boundary
+
+Use **Institution Management** for identity, alias, parent, status, and merge
+actions. Use **Institution Alias and Location Review** only for location and
+geocoding evidence. Location writes are bound to the row's stable
+`institution_id`; changing coordinates cannot rename an institution or reassign
+a paper author.
+
+Global merge displays affected papers, author mappings, markers, and authors,
+then requires the exact `REPLACE … WITH … GLOBALLY` phrase and writes an audit
+row. Ignore confirms that the institution is hidden from public outputs without
+deleting data. Geocoding combines canonical name with reviewed city, region,
+country, and parent context; candidate selection remains manual.
+
+## Institution cleanup queue
+
+Run `python3 scripts/audit_institution_consistency.py` to regenerate
+`data/manual/institution_consistency_audit.csv`, then run
+`python3 scripts/sync_institution_review_queue.py` to import its findings into
+`data/curated/institution_review_queue.csv`. Full refresh performs both steps.
+The **Institution Cleanup** Admin section reads only the persistent curated
+queue. The generated audit CSV is reporting-only.
+
+Accept Suggestion updates the linked author-institution mapping through the
+protected mapping API and records the resolution on the queue row. Ignore and
+Mark Manually Resolved retain the finding and its evidence without changing a
+mapping. Replace Mapping opens the existing mapping editor. Compatible
+suggestions may be selected and accepted as one transactional batch; any
+failed or conflicting fix rolls back the entire batch.
+
+Unresolved high-severity findings fail curated validation and therefore block
+Publish Changes. Medium findings remain warnings; low findings are report-only.
+Ignored or otherwise resolved queue findings do not block publishing. Ignored
+institutions and explicitly confirmed aliases, parents, and merges do not
+generate blockers.
+
 This runbook covers the local **Interactive Curation Console**. Run all commands from the repository root. Ordinary edit and save actions write durable human decisions locally and never stage, commit, or push them. Publishing is a separate, explicit, confirmed action.
 
 The data boundaries are deliberate:
