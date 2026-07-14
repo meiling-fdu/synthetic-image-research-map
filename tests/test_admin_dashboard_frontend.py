@@ -25,6 +25,36 @@ class AdminDashboardFrontendTests(unittest.TestCase):
         ])
         self.assertNotIn('data-console-target="publish"', nav)
 
+    def test_navigation_matches_current_curation_domains(self):
+        nav = self.html.split('<nav class="console-nav"', 1)[1].split("</nav>", 1)[0]
+
+        def menu(label):
+            return nav.split(f"<summary>{label}</summary>", 1)[1].split(
+                "</div></details>", 1
+            )[0]
+
+        review = menu("Review")
+        papers = menu("Papers")
+        people = menu("Authors &amp; Institutions")
+        validation = menu("Validation")
+
+        self.assertIn(">Institution cleanup</button>", people)
+        self.assertNotIn("Institution cleanup", review)
+        self.assertIn('data-console-target="validation"', validation)
+        self.assertIn(">Curated validation</button>", validation)
+        self.assertIn('href="/"', validation)
+        self.assertIn(">Public preview</a>", validation)
+        self.assertNotIn("Paper metadata", nav)
+        self.assertNotIn("Public preview", papers)
+
+    def test_reorganized_navigation_keeps_existing_routes(self):
+        self.assertIn('"institution-audit": elements["institution-audit-panel"]', self.javascript)
+        self.assertIn('"institution-audit": "/api/review/institution-cleanup"', self.javascript)
+        self.assertIn('validation: elements["workflow-panel"]', self.javascript)
+        self.assertIn('href="/" target="_blank" rel="noreferrer">Public preview</a>', self.html)
+        self.assertIn("function openMetadataEditor()", self.javascript)
+        self.assertNotIn('"metadata-editor": elements["paper-metadata-section"]', self.javascript)
+
     def test_navigation_dropdowns_are_not_clipped(self):
         css = (ROOT / "web" / "admin.css").read_text(encoding="utf-8")
         nav_rule = css.split(".console-nav {", 1)[1].split("}", 1)[0]

@@ -653,7 +653,6 @@ function navigateConsole(target) {
     papers: elements.workspace,
     "add-paper": elements["add-paper-panel"],
     "scope-review": elements.workspace,
-    "metadata-editor": elements["paper-metadata-section"],
     mappings: document.querySelector(".mappings-section"),
     "institution-management": elements["institution-management-panel"],
     "location-review": elements["location-review-panel"],
@@ -682,10 +681,9 @@ function navigateConsole(target) {
   });
   if ("hidden" in node) node.hidden = false;
   node.scrollIntoView({ behavior: "smooth", block: "start" });
-  if (["metadata-editor", "mappings", "scope-review"].includes(target) && !state.selectedPaper) {
+  if (["mappings", "scope-review"].includes(target) && !state.selectedPaper) {
     showNotice("Select a paper first, then open its curation editor.", "error");
   }
-  if (target === "metadata-editor" && state.selectedPaper) openMetadataEditor();
 }
 
 function renderDashboard() {
