@@ -1,5 +1,19 @@
 # Local Admin Workflow
 
+## Paper arXiv enrichment
+
+Open **Papers → arXiv enrichment** to review public-map papers that have no
+effective arXiv ID. **Find candidates** searches the arXiv Atom API by title and
+keeps the results in the local Admin process only; discovery does not modify
+curated or generated files.
+
+Each candidate displays its arXiv ID, evidence, source, and confidence.
+**Accept** requires explicit confirmation and writes the confirmed override
+atomically to `data/curated/paper_arxiv_links.csv`. **Ignore** also requires
+confirmation, records the outcome in `data/curated/review_decisions.csv`, and
+leaves the arXiv-link file unchanged. Preview export and validation remain
+separate release steps.
+
 ## Institution management safety boundary
 
 Use **Institution Management** for identity, alias, parent, status, and merge

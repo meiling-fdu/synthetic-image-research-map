@@ -389,6 +389,7 @@ ALLOWED_REVIEW_QUEUES = {
     "title_match",
     "other",
     "institution_consistency",
+    "arxiv_enrichment",
 }
 
 ALLOWED_REVIEW_ACTIONS = {
@@ -406,4 +407,5 @@ ALLOWED_REVIEW_ACTIONS = {
     "accept_mapping",
     "ignore_warning",
     "replace_mapping",
+    "ignore_arxiv_candidate",
 }

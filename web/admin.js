@@ -25,6 +25,7 @@ const state = {
   selectedReviewKeys: {},
   authorMappingCoverage: null,
   paperMetadata: null,
+  arxivEnrichment: { records: [], summary: {}, discovery: {} },
   draftMappingCandidates: [],
   selectedGeocodeCandidate: null,
   release: { validation: "required", preview: "required", changedFiles: 0 },
@@ -39,7 +40,6 @@ const workflowCommandIds = [
   "run-curated-validation",
   "run-export-preview",
   "run-public-validation",
-  "autofill-arxiv",
   "run-full-refresh",
   "publish-changes",
 ];
@@ -163,6 +163,10 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "run-export-preview",
     "run-public-validation",
     "autofill-arxiv",
+    "arxiv-enrichment-panel",
+    "arxiv-enrichment-summary",
+    "arxiv-enrichment-list",
+    "arxiv-enrichment-empty",
     "run-full-refresh",
     "publish-changes",
     "reload-preview-data",
@@ -503,7 +507,7 @@ async function loadApplication(preserveSelection = false) {
   setConnection("loading", "● Local curation loading…");
   elements["token-panel"].hidden = true;
   try {
-    const [status, papersPayload, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus] = await Promise.all([
+    const [status, papersPayload, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus, arxivEnrichment] = await Promise.all([
       apiFetch("/api/status"),
       apiFetch("/api/papers"),
       apiFetch("/api/latest-validation-status"),
@@ -511,6 +515,7 @@ async function loadApplication(preserveSelection = false) {
       apiFetch("/api/institutions"),
       apiFetch("/api/admin/papers/autofill-arxiv/status"),
       apiFetch("/api/git-status").catch(() => null),
+      apiFetch("/api/admin/papers/arxiv-enrichment").catch(() => null),
     ]);
     state.papers = papersPayload.records.slice().sort((left, right) =>
       text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
@@ -525,6 +530,8 @@ async function loadApplication(preserveSelection = false) {
     state.institutions = institutionPayload.records || [];
     renderInstitutionManagement();
     renderArxivAutofillStatus(autofillStatus);
+    state.arxivEnrichment = arxivEnrichment?.data || state.arxivEnrichment;
+    renderArxivEnrichment();
     if (autofillStatus.status === "running") scheduleArxivAutofillPoll();
     elements["console-nav"].hidden = false;
     await loadDashboardAndQueues();
@@ -652,6 +659,7 @@ function navigateConsole(target) {
     dashboard: elements["dashboard-panel"],
     papers: elements.workspace,
     "add-paper": elements["add-paper-panel"],
+    "arxiv-enrichment": elements["arxiv-enrichment-panel"],
     "scope-review": elements.workspace,
     mappings: document.querySelector(".mappings-section"),
     "institution-management": elements["institution-management-panel"],
@@ -669,6 +677,7 @@ function navigateConsole(target) {
   if (target === "add-paper") openAddPaperPanel();
   if (target === "location-review") openLocationReview();
   if (target === "institution-management") openInstitutionManagement();
+  if (target === "arxiv-enrichment") loadArxivEnrichment();
   const node = targets[target];
   if (!node) return;
   document.querySelectorAll("[data-console-target]").forEach((control) => {
@@ -2747,7 +2756,7 @@ async function autofillArxivIds() {
   const button = elements["autofill-arxiv"];
   if (button.disabled) return;
   button.disabled = true;
-  button.textContent = "Auto-filling arXiv IDs…";
+  button.textContent = "Finding candidates…";
   try {
     await apiFetch("/api/admin/papers/autofill-arxiv", {
       method: "POST",
@@ -2759,14 +2768,14 @@ async function autofillArxivIds() {
       await pollArxivAutofillStatus();
     } else {
       restoreArxivAutofillButton();
-      showNotice(`arXiv auto-fill failed: ${error.message}`, "error");
+      showNotice(`arXiv candidate discovery failed: ${error.message}`, "error");
     }
   }
 }
 
 function restoreArxivAutofillButton() {
   elements["autofill-arxiv"].disabled = false;
-  elements["autofill-arxiv"].textContent = "Auto-fill missing arXiv IDs";
+  elements["autofill-arxiv"].textContent = "Find candidates";
 }
 
 function renderArxivAutofillStatus(status) {
@@ -2774,27 +2783,12 @@ function renderArxivAutofillStatus(status) {
   const button = elements["autofill-arxiv"];
   button.disabled = running;
   button.textContent = running
-    ? "Auto-filling arXiv IDs…"
-    : "Auto-fill missing arXiv IDs";
+    ? "Finding candidates…"
+    : "Find candidates";
   if (!status || status.status === "idle") return;
-  const result = status.result || {};
-  const failures = (result.failed_lookups || [])
-    .map((failure) => `${failure.title} — ${failure.reason}`)
-    .join("\n") || "None";
-  const updated = (result.updated_papers || [])
-    .map((paper) => `${paper.title} — ${paper.arxiv_id}`)
-    .join("\n") || "None";
-  elements["workflow-log"].textContent = [
-    `Status: ${status.status}`,
-    `Processing ${status.processed_lookups ?? 0} / ${status.papers_requiring_lookup ?? 0}`,
-    `Added: ${status.exact_matches_added ?? 0} · No match: ${status.no_matches ?? 0} · Ambiguous: ${status.ambiguous_matches ?? 0} · Failed: ${status.failed_lookups ?? 0}`,
-    `Current: ${status.current_paper_title || "—"}`,
-    status.final_error ? `Error: ${status.final_error}` : "",
-    status.status === "completed" || status.status === "failed"
-      ? `Failed lookup details:\n${failures}\nUpdated papers:\n${updated}`
-      : "",
-  ].filter(Boolean).join("\n");
-  elements["workflow-log-panel"].open = true;
+  elements["arxiv-enrichment-summary"].textContent = running
+    ? `Searching ${status.processed_lookups ?? 0} of ${status.papers_requiring_lookup ?? 0} missing papers${status.current_paper_title ? ` · ${status.current_paper_title}` : ""}`
+    : elements["arxiv-enrichment-summary"].textContent;
 }
 
 function scheduleArxivAutofillPoll() {
@@ -2816,17 +2810,101 @@ async function pollArxivAutofillStatus() {
     } else {
       restoreArxivAutofillButton();
       if (status.status === "completed") {
-        await loadApplication(true);
-        showNotice(`Added ${status.exact_matches_added ?? 0} arXiv IDs.`);
+        await loadArxivEnrichment();
+        showNotice("Candidate discovery completed. No curated links were changed.");
       } else if (status.status === "failed") {
-        showNotice(`arXiv auto-fill failed: ${status.final_error || "unknown error"}`, "error");
+        showNotice(`arXiv candidate discovery failed: ${status.final_error || "unknown error"}`, "error");
       }
     }
   } catch (error) {
     restoreArxivAutofillButton();
-    showNotice(`Could not read arXiv auto-fill progress: ${error.message}`, "error");
+    showNotice(`Could not read arXiv discovery progress: ${error.message}`, "error");
   } finally {
     arxivAutofillPolling = false;
+  }
+}
+
+async function loadArxivEnrichment() {
+  try {
+    const payload = await apiFetch("/api/admin/papers/arxiv-enrichment");
+    state.arxivEnrichment = payload.data || { records: [], summary: {}, discovery: {} };
+    renderArxivEnrichment();
+  } catch (error) {
+    showNotice(`Could not load arXiv enrichment: ${error.message}`, "error");
+  }
+}
+
+function renderArxivEnrichment() {
+  if (!elements["arxiv-enrichment-list"]) return;
+  const records = state.arxivEnrichment.records || [];
+  const summary = state.arxivEnrichment.summary || {};
+  elements["arxiv-enrichment-summary"].textContent =
+    `${summary.unresolved ?? records.length} unresolved · ${summary.with_candidates ?? 0} with candidates · ${summary.ignored ?? 0} ignored`;
+  elements["arxiv-enrichment-empty"].hidden = records.length !== 0;
+  elements["arxiv-enrichment-list"].replaceChildren();
+  records.forEach((paper) => {
+    const card = document.createElement("article");
+    card.className = "arxiv-enrichment-card";
+    const heading = document.createElement("h3");
+    heading.textContent = paper.title || "Untitled paper";
+    const metadata = document.createElement("p");
+    metadata.className = "candidate-meta";
+    metadata.textContent = [paper.year, paper.doi && `DOI ${paper.doi}`, paper.openalex_url]
+      .filter(Boolean).join(" · ");
+    card.append(heading, metadata);
+    if (!(paper.candidates || []).length) {
+      const pending = document.createElement("p");
+      pending.textContent = "No candidate loaded. Run Find candidates to search arXiv.";
+      card.append(pending);
+    }
+    (paper.candidates || []).forEach((candidate) => {
+      const candidateCard = document.createElement("div");
+      candidateCard.className = "arxiv-candidate";
+      const link = document.createElement("a");
+      link.href = candidate.arxiv_url;
+      link.target = "_blank";
+      link.rel = "noreferrer";
+      link.textContent = `arXiv:${candidate.arxiv_id}`;
+      const evidence = document.createElement("dl");
+      [["Evidence", candidate.evidence], ["Source", candidate.source], ["Confidence", candidate.confidence]].forEach(([label, value]) => {
+        const term = document.createElement("dt");
+        term.textContent = label;
+        const detail = document.createElement("dd");
+        detail.textContent = value || "Unavailable";
+        evidence.append(term, detail);
+      });
+      const actions = document.createElement("div");
+      actions.className = "candidate-actions";
+      const accept = document.createElement("button");
+      accept.type = "button";
+      accept.className = "primary-button";
+      accept.textContent = "Accept";
+      accept.addEventListener("click", () => submitArxivDecision(paper, candidate, "accept"));
+      const ignore = document.createElement("button");
+      ignore.type = "button";
+      ignore.className = "secondary-button";
+      ignore.textContent = "Ignore";
+      ignore.addEventListener("click", () => submitArxivDecision(paper, candidate, "ignore"));
+      actions.append(accept, ignore);
+      candidateCard.append(link, evidence, actions);
+      card.append(candidateCard);
+    });
+    elements["arxiv-enrichment-list"].append(card);
+  });
+}
+
+async function submitArxivDecision(paper, candidate, action) {
+  const verb = action === "accept" ? "save this curated arXiv link" : "ignore this candidate";
+  if (!window.confirm(`Confirm you want to ${verb}?\n\n${paper.title}\narXiv:${candidate.arxiv_id}`)) return;
+  try {
+    const payload = await apiFetch("/api/admin/papers/arxiv-enrichment/action", {
+      method: "POST",
+      body: JSON.stringify({ ...paper, arxiv_id: candidate.arxiv_id, action, confirmed: true }),
+    });
+    await loadArxivEnrichment();
+    showNotice(payload.message || "arXiv enrichment decision saved.");
+  } catch (error) {
+    showNotice(`Could not save arXiv decision: ${error.message}`, "error");
   }
 }
 

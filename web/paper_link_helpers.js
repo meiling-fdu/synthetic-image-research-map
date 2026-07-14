@@ -163,10 +163,12 @@
   }
 
   function paperVersionLinks(record, arxivUrl = "") {
+    const preprintUrl = safeHttpUrl(
+      arxivUrl || record.preprint_url || record.arxiv_url,
+    );
     return deduplicatePaperLinks([
-      { label: "Published version", url: publishedVersionUrl(record) },
-      { label: "arXiv version", url: safeHttpUrl(arxivUrl) },
-      { label: "OpenAlex", url: safeHttpUrl(record.openalex_url) },
+      { label: "Paper", url: publishedVersionUrl(record) },
+      { label: "Preprint", url: preprintUrl },
     ]);
   }
 

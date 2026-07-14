@@ -43,6 +43,7 @@
         <details class="nav-menu"><summary>Papers</summary><div class="nav-menu-items" role="menu">
           <button role="menuitem" data-console-target="add-paper" type="button">Add paper</button>
           <button role="menuitem" data-console-target="papers" type="button">Candidate papers</button>
+          <button role="menuitem" data-console-target="arxiv-enrichment" type="button">arXiv enrichment</button>
         </div></details>
         <details class="nav-menu nav-menu-align-end"><summary>Authors &amp; Institutions</summary><div class="nav-menu-items" role="menu">
           <button role="menuitem" data-console-target="papers" type="button">Authors</button>
@@ -129,7 +130,6 @@
             <button class="secondary-button workflow-command" id="run-public-validation" type="button">Validate public preview</button>
             <button class="secondary-button workflow-command" id="run-full-refresh" type="button">Rebuild data</button>
             <button class="secondary-button" id="reload-preview-data" type="button">Reload preview data</button>
-            <button class="secondary-button workflow-command" id="autofill-arxiv" type="button">Auto-fill missing arXiv IDs</button>
           </div></details>
         </div>
         <p class="workflow-guidance" id="workflow-guidance">Admin saves remain local. Publish Changes refreshes and validates first, then commits selected project data and pushes only after confirmation.</p>
@@ -138,6 +138,23 @@
           <summary>Diagnostics and command output</summary>
           <pre id="workflow-log">No command output yet.</pre>
         </details>
+      </section>
+
+      <section class="arxiv-enrichment-panel" id="arxiv-enrichment-panel" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Paper metadata</p>
+            <h2>arXiv enrichment</h2>
+            <p>Review arXiv candidates for papers missing an ID. Discovery never edits curated data.</p>
+          </div>
+          <button class="primary-button" id="autofill-arxiv" type="button">Find candidates</button>
+        </div>
+        <div class="arxiv-enrichment-summary" id="arxiv-enrichment-summary" role="status">Load the queue to review missing arXiv IDs.</div>
+        <div class="notice" id="arxiv-enrichment-guidance">
+          Accept requires confirmation and writes only to <code>data/curated/paper_arxiv_links.csv</code>. Ignore records a separate review decision and does not create a link.
+        </div>
+        <div class="arxiv-enrichment-list" id="arxiv-enrichment-list"></div>
+        <p id="arxiv-enrichment-empty" hidden>No unresolved papers are missing arXiv IDs.</p>
       </section>
 
       <section class="add-paper-panel" id="add-paper-panel" hidden>

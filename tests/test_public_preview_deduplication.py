@@ -969,7 +969,7 @@ process.stdout.write(JSON.stringify({
         )
         self.assertEqual(rendered["empty"], [])
 
-    def test_frontend_resolves_published_version_without_exposing_doi(self):
+    def test_frontend_renders_public_paper_links(self):
         helper = (
             Path(__file__).resolve().parents[1]
             / "web"
@@ -997,14 +997,20 @@ process.stdout.write(JSON.stringify({
   }),
   missing: published({openalex_url: "https://openalex.org/W1"}),
   publishedCard: links({
+    publisher_url: "https://publisher.example/article/1",
+    doi: "10.1000/example",
+    openalex_url: "https://openalex.org/W1",
+  }, "https://arxiv.org/abs/2401.12345"),
+  doiCard: links({
     doi: "10.1000/example",
     openalex_url: "https://openalex.org/W1",
   }),
-  preprintCard: links(
-    {openalex_url: ""},
-    "https://arxiv.org/abs/2401.12345",
-  ),
-  missingCard: links({}),
+  preprintCard: links({
+    arxiv_url: "https://arxiv.org/abs/2401.12345",
+    openalex_url: "https://openalex.org/W1",
+  }),
+  openAlexOnlyCard: links({openalex_url: "https://openalex.org/W1"}),
+  missingCard: links({paper_url: "", arxiv_url: ""}),
 }));
 """
         result = subprocess.run(
@@ -1024,17 +1030,27 @@ process.stdout.write(JSON.stringify({
                 "missing": "",
                 "publishedCard": [
                     {
-                        "label": "Published version",
-                        "url": "https://doi.org/10.1000/example",
+                        "label": "Paper",
+                        "url": "https://publisher.example/article/1",
                     },
-                    {"label": "OpenAlex", "url": "https://openalex.org/W1"},
+                    {
+                        "label": "Preprint",
+                        "url": "https://arxiv.org/abs/2401.12345",
+                    },
+                ],
+                "doiCard": [
+                    {
+                        "label": "Paper",
+                        "url": "https://doi.org/10.1000/example",
+                    }
                 ],
                 "preprintCard": [
                     {
-                        "label": "arXiv version",
+                        "label": "Preprint",
                         "url": "https://arxiv.org/abs/2401.12345",
                     }
                 ],
+                "openAlexOnlyCard": [],
                 "missingCard": [],
             },
         )

@@ -46,11 +46,14 @@ class AdminDashboardFrontendTests(unittest.TestCase):
         self.assertIn(">Public preview</a>", validation)
         self.assertNotIn("Paper metadata", nav)
         self.assertNotIn("Public preview", papers)
+        self.assertIn('data-console-target="arxiv-enrichment"', papers)
+        self.assertNotIn("arXiv enrichment", validation)
 
     def test_reorganized_navigation_keeps_existing_routes(self):
         self.assertIn('"institution-audit": elements["institution-audit-panel"]', self.javascript)
         self.assertIn('"institution-audit": "/api/review/institution-cleanup"', self.javascript)
         self.assertIn('validation: elements["workflow-panel"]', self.javascript)
+        self.assertIn('"arxiv-enrichment": elements["arxiv-enrichment-panel"]', self.javascript)
         self.assertIn('href="/" target="_blank" rel="noreferrer">Public preview</a>', self.html)
         self.assertIn("function openMetadataEditor()", self.javascript)
         self.assertNotIn('"metadata-editor": elements["paper-metadata-section"]', self.javascript)

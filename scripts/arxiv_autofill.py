@@ -600,3 +600,138 @@ def autofill_public_map_arxiv_ids(
             stats["export_success"] = bool(export_result.get("success"))
             stats["export_result"] = export_result
     return stats
+
+
+def missing_public_map_arxiv_papers(
+    *,
+    map_path: Path = DEFAULT_PUBLIC_MAP_PATH,
+    links_path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+    exclusions_path: Path = DEFAULT_EXCLUSIONS_PATH,
+) -> List[Dict[str, Any]]:
+    """List eligible papers with no effective arXiv ID, without writing files."""
+    papers = eligible_public_map_papers(
+        _read_public_map_records(map_path), read_exclusion_rows(exclusions_path)
+    )
+    linked_keys = {
+        identity_key(row) for row in read_curated_arxiv_links(links_path)
+    }
+    return [
+        {
+            "paper_id": str(paper.get("id") or ""),
+            "title": str(paper.get("title") or "").strip(),
+            "year": str(paper.get("year") or paper.get("publication_year") or ""),
+            "doi": str(paper.get("doi") or ""),
+            "openalex_url": str(paper.get("openalex_url") or ""),
+            "candidates": [],
+        }
+        for paper in papers
+        if not str(paper.get("arxiv_id") or "").strip()
+        and identity_key(paper) not in linked_keys
+    ]
+
+
+def discover_public_map_arxiv_candidates(
+    *,
+    map_path: Path = DEFAULT_PUBLIC_MAP_PATH,
+    links_path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
+    exclusions_path: Path = DEFAULT_EXCLUSIONS_PATH,
+    lookup: Callable[[str], Sequence[Mapping[str, Any]]] = lookup_arxiv_by_title,
+    export: Callable[[], Mapping[str, Any]] | None = None,
+    request_delay_seconds: float | None = None,
+    sleep: Callable[[float], None] = time.sleep,
+    progress: Callable[[Mapping[str, Any]], None] | None = None,
+) -> Dict[str, Any]:
+    """Find review candidates without changing curated or generated files."""
+    del export  # Compatibility only: discovery intentionally never exports.
+    missing = missing_public_map_arxiv_papers(
+        map_path=map_path,
+        links_path=links_path,
+        exclusions_path=exclusions_path,
+    )
+    stats: Dict[str, Any] = {
+        "total_records": len(missing),
+        "eligible_public_map_papers": len(missing),
+        "papers_requiring_lookup": len(missing),
+        "processed_lookups": 0,
+        "candidate_papers": [],
+        "candidate_count": 0,
+        "no_match_count": 0,
+        "ambiguous_match_count": 0,
+        "failed_lookup_count": 0,
+        "failed_lookups": [],
+        "writes_performed": False,
+    }
+    production_lookup = lookup is lookup_arxiv_by_title
+    delay = (
+        NORMAL_REQUEST_DELAY_SECONDS
+        if request_delay_seconds is None and production_lookup
+        else float(request_delay_seconds or 0)
+    )
+    for index, paper in enumerate(missing):
+        title = str(paper.get("title") or "").strip()
+        if index and delay:
+            sleep(delay)
+        if progress is not None:
+            progress({**stats, "current_paper_title": title})
+        try:
+            results = lookup(title)
+        except Exception as error:
+            failure = (
+                error.as_dict(title)
+                if isinstance(error, ArxivLookupError)
+                else {
+                    "title": title,
+                    "reason": str(error) or error.__class__.__name__,
+                    "failure_type": "unexpected_error",
+                    "http_status": None,
+                    "attempts": 1,
+                }
+            )
+            stats["failed_lookup_count"] += 1
+            stats["failed_lookups"].append(failure)
+        else:
+            normalized = normalize_exact_title(title)
+            exact = [
+                candidate for candidate in results
+                if normalize_exact_title(candidate.get("title")) == normalized
+                and base_arxiv_id(candidate.get("arxiv_id"))
+            ]
+            if not exact:
+                stats["no_match_count"] += 1
+            else:
+                ambiguous = len(exact) > 1
+                if ambiguous:
+                    stats["ambiguous_match_count"] += 1
+                candidates = [{
+                    "arxiv_id": base_arxiv_id(candidate.get("arxiv_id")),
+                    "arxiv_url": (
+                        "https://arxiv.org/abs/"
+                        + base_arxiv_id(candidate.get("arxiv_id"))
+                    ),
+                    "candidate_title": str(candidate.get("title") or "").strip(),
+                    "source": "arXiv Atom API title search",
+                    "confidence": "medium" if ambiguous else "high",
+                    "evidence": (
+                        "Exact normalized title match; multiple arXiv records "
+                        "require reviewer disambiguation."
+                        if ambiguous else
+                        "Unique exact normalized title match."
+                    ),
+                } for candidate in exact]
+                stats["candidate_papers"].append({
+                    "paper_id": str(
+                        paper.get("paper_id") or paper.get("id") or ""
+                    ),
+                    "title": title,
+                    "year": str(
+                        paper.get("year") or paper.get("publication_year") or ""
+                    ),
+                    "doi": str(paper.get("doi") or ""),
+                    "openalex_url": str(paper.get("openalex_url") or ""),
+                    "candidates": candidates,
+                })
+                stats["candidate_count"] += len(candidates)
+        stats["processed_lookups"] = index + 1
+        if progress is not None:
+            progress({**stats, "current_paper_title": title})
+    return stats

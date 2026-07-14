@@ -35,6 +35,9 @@ try:
         ArxivLookupError,
         apply_curated_arxiv_metadata,
         autofill_public_map_arxiv_ids,
+        base_arxiv_id as normalize_arxiv_id,
+        discover_public_map_arxiv_candidates,
+        missing_public_map_arxiv_papers,
         curated_arxiv_override_for_record,
         set_curated_arxiv_override,
     )
@@ -140,6 +143,9 @@ except ImportError:
         ArxivLookupError,
         apply_curated_arxiv_metadata,
         autofill_public_map_arxiv_ids,
+        base_arxiv_id as normalize_arxiv_id,
+        discover_public_map_arxiv_candidates,
+        missing_public_map_arxiv_papers,
         curated_arxiv_override_for_record,
         set_curated_arxiv_override,
     )
@@ -1245,7 +1251,7 @@ def make_handler(
         [], Mapping[str, Any]
     ] = generate_author_mapping_report,
     autofill_runner: Callable[..., Mapping[str, Any]] = (
-        autofill_public_map_arxiv_ids
+        discover_public_map_arxiv_candidates
     ),
     curated_arxiv_links_path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
     metadata_export_runner: Callable[[str], Mapping[str, Any]] = run_workflow,
@@ -1329,6 +1335,51 @@ def make_handler(
             with ARXIV_AUTOFILL_STATE_LOCK:
                 return dict(ARXIV_AUTOFILL_STATE)
 
+        def arxiv_enrichment_payload(self) -> Dict[str, Any]:
+            missing = missing_public_map_arxiv_papers(
+                links_path=curated_arxiv_links_path,
+                exclusions_path=exclusions_path,
+            )
+            ignored = [
+                row for row in read_review_decisions(review_decisions_path)
+                if clean(row.get("review_queue")) == "arxiv_enrichment"
+                and clean(row.get("action")) == "ignore_arxiv_candidate"
+            ]
+
+            def identity(record: Mapping[str, Any]) -> Tuple[str, str, str, str]:
+                return (
+                    clean(record.get("openalex_url")).casefold(),
+                    clean(record.get("doi")).casefold(),
+                    clean(record.get("title")).casefold(),
+                    clean(record.get("year")),
+                )
+
+            ignored_identities = {identity(row) for row in ignored}
+            records = [
+                row for row in missing if identity(row) not in ignored_identities
+            ]
+            snapshot = self.autofill_status_snapshot()
+            discovered = {
+                identity(row): row
+                for row in (snapshot.get("result") or {}).get(
+                    "candidate_papers", []
+                )
+            }
+            for row in records:
+                row["candidates"] = list(
+                    discovered.get(identity(row), {}).get("candidates", [])
+                )
+            return api_payload(data={
+                "records": records,
+                "summary": {
+                    "missing": len(missing),
+                    "unresolved": len(records),
+                    "ignored": len(ignored_identities),
+                    "with_candidates": sum(bool(row["candidates"]) for row in records),
+                },
+                "discovery": snapshot,
+            })
+
         @staticmethod
         def update_autofill_progress(progress: Mapping[str, Any]) -> None:
             with ARXIV_AUTOFILL_STATE_LOCK:
@@ -1365,19 +1416,12 @@ def make_handler(
                     progress=cls.update_autofill_progress,
                 ))
                 cls.update_autofill_progress(stats)
-                export_failed = bool(
-                    stats.get("export_ran")
-                    and not stats.get("export_success")
-                )
                 with ARXIV_AUTOFILL_STATE_LOCK:
                     ARXIV_AUTOFILL_STATE.update({
-                        "status": "failed" if export_failed else "completed",
+                        "status": "completed",
                         "completion_time": datetime.now(timezone.utc).isoformat(),
                         "current_paper_title": "",
-                        "final_error": (
-                            "Public preview export failed."
-                            if export_failed else ""
-                        ),
+                        "final_error": "",
                         "result": stats,
                     })
             except Exception as error:  # Preserve status for polling clients.
@@ -1543,6 +1587,18 @@ def make_handler(
                     )
                     return
                 self.send_json(HTTPStatus.OK, self.autofill_status_snapshot())
+                return
+            if request.path == "/api/admin/papers/arxiv-enrichment":
+                if not self.is_header_authorized() or not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {"error": "arXiv enrichment is restricted to authorized loopback clients"},
+                    )
+                    return
+                try:
+                    self.send_json(HTTPStatus.OK, self.arxiv_enrichment_payload())
+                except (ArxivLookupError, ReviewDecisionError) as error:
+                    self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
                 return
             if request.path == "/api/latest-validation-status":
                 if not self.is_header_authorized():
@@ -1970,6 +2026,7 @@ def make_handler(
                 "/api/review/manual-import",
                 *AUTHOR_MAPPING_COVERAGE_ENDPOINTS,
                 "/api/paper/metadata",
+                "/api/admin/papers/arxiv-enrichment",
             }:
                 self.send_method_not_allowed("GET")
                 return
@@ -2068,6 +2125,63 @@ def make_handler(
                         HTTPStatus.INTERNAL_SERVER_ERROR,
                         api_payload(success=False, errors=(str(error),)),
                     )
+                return
+            if request.path == "/api/admin/papers/arxiv-enrichment/action":
+                if not self.is_header_authorized() or not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {"error": "arXiv enrichment writes are restricted to authorized loopback clients"},
+                    )
+                    return
+                try:
+                    payload = self.read_json_body()
+                    action = clean(payload.get("action"))
+                    if payload.get("confirmed") is not True:
+                        raise AdminDataError(
+                            "explicit confirmation is required before saving an arXiv decision"
+                        )
+                    paper = {
+                        field: clean(payload.get(field))
+                        for field in ("title", "year", "doi", "openalex_url")
+                    }
+                    if not paper["title"] and not paper["doi"] and not paper["openalex_url"]:
+                        raise AdminDataError("paper identity is required")
+                    if action == "accept":
+                        arxiv_id = normalize_arxiv_id(payload.get("arxiv_id"))
+                        if not arxiv_id:
+                            raise AdminDataError("a valid candidate arXiv ID is required")
+                        set_curated_arxiv_override(
+                            paper,
+                            arxiv_id,
+                            curated_arxiv_links_path,
+                            match_record=paper,
+                        )
+                        result = {"action": "accepted", "arxiv_id": arxiv_id}
+                        message = "Confirmed arXiv link saved to paper_arxiv_links.csv."
+                    elif action == "ignore":
+                        decision = upsert_review_decision({
+                            **paper,
+                            "review_queue": "arxiv_enrichment",
+                            "target_type": "paper",
+                            "action": "ignore_arxiv_candidate",
+                            "review_note": clean(payload.get("review_note"))
+                            or (
+                                "Ignored arXiv candidate "
+                                + clean(payload.get("arxiv_id"))
+                                + " after maintainer review."
+                            ),
+                        }, path=review_decisions_path)
+                        result = {"action": "ignored", "decision": decision}
+                        message = "Candidate ignored; paper_arxiv_links.csv was not changed."
+                    else:
+                        raise AdminDataError("action must be accept or ignore")
+                except (AdminDataError, ArxivLookupError, ReviewDecisionError) as error:
+                    self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
+                    return
+                self.send_json(
+                    HTTPStatus.OK,
+                    api_payload(message=message, data=result),
+                )
                 return
             if request.path == AUTHOR_MAPPING_GENERATE_ENDPOINT:
                 if not self.is_header_authorized():

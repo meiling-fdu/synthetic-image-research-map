@@ -615,12 +615,15 @@ class ArxivAdminFrontendTests(unittest.TestCase):
     def test_admin_button_loading_stats_and_duplicate_guard(self):
         source = (Path(__file__).resolve().parents[1] / "web" / "admin.js").read_text()
         html = (Path(__file__).resolve().parents[1] / "web" / "admin.html").read_text()
-        self.assertIn("Auto-fill missing arXiv IDs", html)
+        self.assertIn("Find candidates", html)
+        validation = html.split("<summary>Validation</summary>", 1)[1].split(
+            "</div></details>", 1
+        )[0]
+        self.assertNotIn("arXiv", validation)
         body = source.split("async function autofillArxivIds()", 1)[1]
         self.assertIn("if (button.disabled) return", body)
-        self.assertIn('button.textContent = "Auto-filling arXiv IDs…"', body)
-        for label in ("Processing", "Added:", "No match:", "Ambiguous:", "Failed:", "Current:"):
-            self.assertIn(label, body)
+        self.assertIn('button.textContent = "Finding candidates…"', body)
+        self.assertIn("No curated links were changed", body)
 
     def test_page_reload_resumes_polling_and_terminal_states_restore_button(self):
         source = (Path(__file__).resolve().parents[1] / "web" / "admin.js").read_text()

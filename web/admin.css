@@ -1231,6 +1231,16 @@ button:focus-visible {
   gap: 0.55rem;
 }
 
+.arxiv-enrichment-panel { margin: 1rem 0; padding: 1.25rem; border: 1px solid var(--line); border-radius: 0.8rem; background: var(--surface); }
+.arxiv-enrichment-summary { margin: 0.8rem 0; font-weight: 700; }
+.arxiv-enrichment-list { display: grid; gap: 1rem; margin-top: 1rem; }
+.arxiv-enrichment-card { padding: 1rem; border: 1px solid var(--line); border-radius: 0.7rem; background: var(--surface); }
+.arxiv-enrichment-card h3 { margin: 0; }
+.arxiv-candidate { display: grid; gap: 0.7rem; margin-top: 0.8rem; padding: 0.85rem; border-left: 3px solid var(--blue); background: var(--blue-soft); }
+.arxiv-candidate dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.25rem 0.75rem; margin: 0; }
+.arxiv-candidate dt { font-weight: 700; }
+.arxiv-candidate dd { margin: 0; }
+
 .search-results {
   margin-top: 1.4rem;
 }
