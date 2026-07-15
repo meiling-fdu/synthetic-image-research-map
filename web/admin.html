@@ -304,7 +304,7 @@
           <div><p class="eyebrow">Canonical institution registry · local only</p><h2>Institution Management</h2><p>Identity, location, aliases, hierarchy, mapping reassignment, merge, and visibility are separate actions.</p></div>
           <button class="secondary-button" id="institution-management-close" type="button">Close</button>
         </div>
-        <p class="review-scope-help">Location edits never change institution IDs or author mappings. Global replacement uses a canonical target selector and requires a final <code>MERGE</code> confirmation.</p>
+        <p class="review-scope-help">Location edits never change institution IDs or author mappings. Global replacement uses a canonical target selector and a final source/target confirmation.</p>
         <label class="search-field"><span>Search institutions</span><input id="institution-management-search" type="search" placeholder="Canonical name, alias, type, status…"></label>
         <div class="table-wrap"><table><thead><tr><th>Institution identity</th><th>Aliases / parent</th><th>Status / type</th><th>Usage</th><th>Separate actions</th></tr></thead><tbody id="institution-management-rows"></tbody></table></div>
         <p class="empty-markers" id="institution-management-empty" hidden>No institutions match.</p>
@@ -813,12 +813,6 @@
             <dt>Target</dt><dd><strong id="institution-merge-target-name"></strong><br><code id="institution-merge-target-id"></code></dd>
           </dl>
           <p class="dialog-warning">This action replaces the source institution with the target institution across mappings, aliases, locations, review records, and other institution references.</p>
-          <label>Review note
-            <textarea id="institution-merge-note" rows="3" required></textarea>
-          </label>
-          <label>Type <code>MERGE</code> to confirm
-            <input id="institution-merge-confirmation" type="text" autocomplete="off">
-          </label>
           <div class="dialog-actions">
             <button class="secondary-button" id="institution-merge-confirm-cancel" type="button">Cancel</button>
             <button class="danger-button" id="institution-merge-submit" type="submit" disabled>Merge institution</button>

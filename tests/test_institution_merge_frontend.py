@@ -10,6 +10,7 @@ class InstitutionMergeFrontendTests(unittest.TestCase):
     def setUpClass(cls):
         cls.html = (ROOT / "web/admin.html").read_text(encoding="utf-8")
         cls.source = (ROOT / "web/admin.js").read_text(encoding="utf-8")
+        cls.server_source = (ROOT / "scripts/serve_admin.py").read_text(encoding="utf-8")
         start = cls.source.index("function shortInstitutionId")
         end = cls.source.index("async function runInstitutionAction", start)
         cls.merge_source = cls.source[start:end]
@@ -44,13 +45,26 @@ class InstitutionMergeFrontendTests(unittest.TestCase):
         self.assertIn("institution.institution_id !== sourceId", self.merge_source)
         self.assertIn('institution.institution_status === "active"', self.merge_source)
 
-    def test_merge_confirmation_alone_controls_destructive_button(self):
+    def test_valid_target_immediately_enables_destructive_button(self):
         self.assertIn('id="institution-merge-submit" type="submit" disabled', self.html)
-        self.assertIn('value !== "MERGE"', self.merge_source)
-        self.assertIn('value !== "MERGE"', self.merge_source)
-        self.assertIn('Type <code>MERGE</code> to confirm', self.html)
-        self.assertNotIn("Type exactly to confirm", self.merge_source)
-        self.assertNotIn("window.prompt", self.merge_source)
+        resolved = self.merge_source[
+            self.merge_source.index("function resolveInstitutionMergeTarget"):
+            self.merge_source.index("async function submitInstitutionMerge")
+        ]
+        self.assertIn('elements["institution-merge-submit"].disabled = false', resolved)
+        self.assertIn('elements["institution-merge-submit"].disabled = true', resolved)
+
+    def test_merge_dialog_has_no_note_or_typed_confirmation_fields(self):
+        self.assertNotIn('id="institution-merge-note"', self.html)
+        self.assertNotIn('id="institution-merge-confirmation"', self.html)
+        self.assertNotIn('Type <code>MERGE</code>', self.html)
+        self.assertNotIn("institution-merge-note", self.merge_source)
+        self.assertNotIn("institution-merge-confirmation", self.merge_source)
+        self.assertNotIn("review_note:", self.merge_source)
+        self.assertIn(
+            'review_note="Merged through Institution Management."',
+            self.server_source,
+        )
 
     def test_confirmation_displays_names_and_short_ids(self):
         for element_id in (
@@ -90,7 +104,7 @@ class InstitutionMergeFrontendTests(unittest.TestCase):
         catch = self.merge_source.index("} catch (error) {", request)
         self.assertLess(refresh, catch)
 
-    def test_ui_keeps_long_backend_phrase_internal(self):
+    def test_ui_keeps_backend_confirmation_and_audit_semantics_internal(self):
         self.assertIn(
             "`REPLACE ${source.canonical_name} WITH ${target.canonical_name} GLOBALLY`",
             self.merge_source,
