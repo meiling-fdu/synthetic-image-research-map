@@ -10,6 +10,7 @@ from scripts.export_public_preview import (
     exclude_preprint_versions,
     exclude_retracted_records,
     paper_is_retracted,
+    public_canonical_institution_search_index,
     public_institution_aliases,
     synchronize_publication_types,
 )
@@ -26,6 +27,34 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_search_index_maps_merged_source_name_to_active_target_only(self):
+        target_id = "institution:e278f75918ccf8a7"
+        source_id = "institution:dfb3cc816a4476d7"
+        canonical_name = (
+            "Institute of Computing Technology, Chinese Academy of Sciences"
+        )
+        aliases = public_institution_aliases([{
+            "alias_name": "Institute of Computing Technology",
+            "canonical_institution_name": canonical_name,
+            "institution_id": target_id,
+            "review_status": "confirmed",
+            "alias_source": "institution-merge",
+        }])
+        index = public_canonical_institution_search_index([{
+            "institution_id": source_id,
+            "canonical_name": "Institute of Computing Technology",
+            "institution_status": "merged",
+        }, {
+            "institution_id": target_id,
+            "canonical_name": canonical_name,
+            "institution_status": "active",
+        }], aliases)
+
+        self.assertEqual(set(index), {target_id})
+        self.assertEqual(index[target_id]["canonical_name"], canonical_name)
+        self.assertIn("Institute of Computing Technology", index[target_id]["names"])
+        self.assertNotIn(source_id, index)
+
     def test_confirmed_astar_variants_canonicalize_and_dedupe_public_records(self):
         aliases = public_institution_aliases(
             [

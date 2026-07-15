@@ -2453,6 +2453,48 @@ def public_institution_aliases(
     )
 
 
+def public_canonical_institution_search_index(
+    institutions: Sequence[Dict[str, Any]],
+    aliases: Sequence[Dict[str, str]],
+) -> Dict[str, Dict[str, Any]]:
+    """Build an active-only canonical-name index for public institution search.
+
+    Confirmed aliases created by an institution merge retain the merged source
+    name, but always resolve to the active target ID. Merged entities themselves
+    are deliberately omitted so they cannot become separate public results.
+    """
+    active = {
+        clean_text(row.get("institution_id")): clean_text(row.get("canonical_name"))
+        for row in institutions
+        if clean_text(row.get("institution_status")) == "active"
+        and clean_text(row.get("institution_id"))
+        and clean_text(row.get("canonical_name"))
+    }
+    names_by_id: Dict[str, List[str]] = {
+        institution_id: [canonical_name]
+        for institution_id, canonical_name in active.items()
+    }
+    for alias in aliases:
+        institution_id = clean_text(alias.get("canonical_institution_id"))
+        alias_name = clean_text(alias.get("alias_name"))
+        if institution_id in names_by_id and alias_name:
+            names_by_id[institution_id].append(alias_name)
+
+    result: Dict[str, Dict[str, Any]] = {}
+    for institution_id, names in names_by_id.items():
+        unique_names: Dict[str, str] = {}
+        for name in names:
+            normalized = normalize_institution_lookup(name)
+            if normalized:
+                unique_names.setdefault(normalized, name)
+        result[institution_id] = {
+            "canonical_name": active[institution_id],
+            "names": list(unique_names.values()),
+            "normalized_names": list(unique_names),
+        }
+    return result
+
+
 def public_institution_hierarchy(
     relationships: Sequence[Dict[str, Any]],
     confirmed_locations: Sequence[Dict[str, Any]],
@@ -3152,9 +3194,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             raise PreviewExportError(
                 "Unresolved publication types require admin review: " + details
             )
+        institution_rows = load_institutions(args.institutions)
         exported_aliases = public_institution_aliases(
             institution_alias_rows,
             integrated_location_reviews,
+        )
+        canonical_institution_search_index = (
+            public_canonical_institution_search_index(
+                institution_rows,
+                exported_aliases,
+            )
         )
         exported_hierarchy = public_institution_hierarchy(
             institution_hierarchy_rows,
@@ -3179,7 +3228,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             exclude_nonpublic_institutions(
                 integrated_papers,
                 integrated_maps,
-                load_institutions(args.institutions),
+                institution_rows,
             )
         )
         add_public_detail_fields(integrated_papers, integrated_maps)
@@ -3187,6 +3236,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_payload["records"] = integrated_papers
         payload["institution_aliases"] = exported_aliases
         paper_payload["institution_aliases"] = exported_aliases
+        payload["canonical_institution_search_index"] = (
+            canonical_institution_search_index
+        )
+        paper_payload["canonical_institution_search_index"] = (
+            canonical_institution_search_index
+        )
         payload["institution_hierarchy"] = exported_hierarchy
         paper_payload["institution_hierarchy"] = exported_hierarchy
         summary["preprint_version_records_excluded"] += (

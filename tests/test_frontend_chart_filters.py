@@ -72,7 +72,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-public-overview', self.html)
-        self.assertIn('app.js?v=20260714-paper-version-links', self.html)
+        self.assertIn('app.js?v=20260715-institution-alias-search', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
@@ -96,15 +96,16 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
     def test_keyword_search_text_includes_supported_record_fields(self):
         search = self.app[
             self.app.index("function recordSearchText"):
-            self.app.index("function yearFilterValue")
+            self.app.index("function searchTextMatchesTerms")
         ]
         for field in (
-            "recordTitle(record)", "...authors", "record.institution_name",
-            "record.institution", "record.venue_name", "record.venue",
+            "recordTitle(record)", "...authors", "record.venue_name", "record.venue",
             "record.task", "record.subtask", "getEntryTypeLabel",
             "publicationYear(record)",
         ):
             self.assertIn(field, search)
+        self.assertNotIn("record.institution_name", search)
+        self.assertNotIn("record.institution,", search)
 
     def test_unified_sets_deduplicate_map_matches_and_keep_standalone_matches(self):
         node = shutil.which("node")
@@ -158,7 +159,7 @@ process.stdout.write(JSON.stringify({{
             self.app.index("function deriveFilteredRecordSets")
         ]
         self.assertIn("buildInstitutionSearchIndex(", render)
-        self.assertIn("resolveInstitutionSearch(", render)
+        self.assertIn("resolveInstitutionSearchIdentities(", render)
         self.assertIn("resolvedInstitutionIdentities", render)
         self.assertIn("activeInstitutionIdentities", render)
         self.assertIn("recordMatchesInstitutionIdentities(", predicate)
@@ -325,13 +326,91 @@ process.stdout.write(JSON.stringify({
         result = json.loads(completed.stdout)
         self.assertEqual(result["normalized"], "ecole superieure")
         self.assertEqual(result["resolved"], ["id:institution:um"] * 4)
-        self.assertEqual(result["unrelated"], "")
+        self.assertEqual(result["unrelated"], "id:institution:hospital")
         self.assertEqual(result["paperMatches"], ["p1", "p3"])
 
     def test_public_payload_preserves_alias_metadata(self):
         self.assertIn("payload.institution_aliases", self.app)
+        self.assertIn("payload.canonical_institution_search_index", self.app)
         self.assertIn("canonical_institution_id", self.app)
         self.assertIn("institutionAliases = normalizedData.institutionAliases", self.app)
+
+    def test_computing_technology_alias_resolves_to_all_canonical_records(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        functions = []
+        for start_name, end_name in (
+            ("function normalizedTitle", "function paperIdentity"),
+            ("function recordInstitution(", "function recordCountry"),
+            ("function institutionIdentity", "function affiliationIdentity"),
+            ("function normalizedSearchText", "function recordSearchText"),
+            ("function recordMatchesInstitutionIdentities", "function hierarchyInstitutionLabel"),
+            ("function deriveFilteredRecordSets", "function normalizedSetSize"),
+        ):
+            start = self.app.index(start_name)
+            end = self.app.index(end_name, start)
+            functions.append(self.app[start:end])
+        script = "\n".join(functions) + r'''
+const targetId = 'institution:e278f75918ccf8a7';
+const sourceId = 'institution:dfb3cc816a4476d7';
+const canonicalName = 'Institute of Computing Technology, Chinese Academy of Sciences';
+const maps = Array.from({length: 6}, (_, index) => ({
+  id: `paper-${index + 1}`,
+  institution: canonicalName,
+  institution_id: targetId,
+  author_institution_affiliations: index === 0 ? [
+    {institution: canonicalName, institution_id: targetId},
+    {institution: canonicalName, institution_id: targetId},
+  ] : [],
+})).concat([
+  {id: 'dehradun', institution: 'Dehradun Institute of Technology University', institution_id: 'institution:dehradun'},
+  {id: 'karnataka', institution: 'National Institute of Technology Karnataka', institution_id: 'institution:karnataka'},
+  {id: 'stale', institution: 'Institute of Computing Technology', institution_id: sourceId},
+]);
+const papers = maps.map(record => ({...record}));
+const aliases = [{
+  alias_name: 'Institute of Computing Technology',
+  canonical_institution_name: canonicalName,
+  canonical_institution_id: targetId,
+}];
+const canonicalIndex = {
+  [targetId]: {
+    canonical_name: canonicalName,
+    names: [canonicalName, 'Institute of Computing Technology'],
+  },
+};
+const index = buildInstitutionSearchIndex(maps, papers, aliases, [], canonicalIndex);
+const queries = [
+  'institute of computing technology',
+  'Institute of Computing Technology',
+  '  institute   of   computing technology  ',
+  canonicalName,
+];
+const resolved = queries.map(query => [...resolveInstitutionSearchIdentities(query, index)].sort());
+const identities = new Set(resolved[0]);
+const matches = record => recordMatchesInstitutionIdentities(record, identities, true);
+const result = deriveFilteredRecordSets(
+  maps, papers, matches,
+  record => recordMatchesInstitutionIdentities(record, identities, false),
+  record => record.id,
+  records => [...new Map(records.map(record => [record.id, record])).values()],
+);
+process.stdout.write(JSON.stringify({
+  resolved,
+  records: result.filteredRecords.map(record => record.id),
+  papers: result.filteredPapers.map(record => record.id),
+  institutions: [...new Set(result.filteredRecords.map(institutionIdentity))],
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["resolved"], [["id:institution:e278f75918ccf8a7"]] * 4)
+        self.assertEqual(result["records"], [f"paper-{index}" for index in range(1, 7)])
+        self.assertEqual(result["papers"], [f"paper-{index}" for index in range(1, 7)])
+        self.assertEqual(result["institutions"], ["id:institution:e278f75918ccf8a7"])
 
     def test_frontend_defensively_consolidates_astar_records_and_papers(self):
         node = shutil.which("node")
@@ -403,7 +482,7 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(result["paperMapCount"], 1)
         self.assertEqual(result["aliasIdentity"], result["canonicalIdentity"])
         self.assertEqual(result["matchingPapers"], ["doi:10.1/alias", "doi:10.1/other"])
-        self.assertEqual(result["partial"], "")
+        self.assertEqual(result["partial"], result["canonicalIdentity"])
 
     def test_counts_markers_and_csv_use_canonical_identity(self):
         statistics = self.app[

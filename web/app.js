@@ -146,6 +146,7 @@ let records = [];
 let paperRecords = [];
 let institutionAliases = [];
 let institutionHierarchy = [];
+let canonicalInstitutionSearchIndex = {};
 let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
@@ -1104,17 +1105,41 @@ function normalizedSearchText(value) {
     .replace(/\s+/g, " ");
 }
 
-function buildInstitutionSearchIndex(mapRecords, publicPaperRecords, aliases, hierarchy = []) {
+function buildInstitutionSearchIndex(
+  mapRecords,
+  publicPaperRecords,
+  aliases,
+  hierarchy = [],
+  canonicalIndex = {},
+) {
   const identitiesByName = new Map();
-  const add = (name, identity) => {
+  const add = (name, identity, authoritative = false) => {
     const key = normalizedSearchText(name);
     if (!key || !identity) return;
+    if (authoritative && identitiesByName.has(key)) identitiesByName.delete(key);
     if (!identitiesByName.has(key)) identitiesByName.set(key, new Set());
     identitiesByName.get(key).add(identity);
   };
+  Object.entries(canonicalIndex || {}).forEach(([institutionId, entry]) => {
+    const identity = institutionIdentity({ institution_id: institutionId });
+    const names = Array.isArray(entry?.names) ? entry.names : [];
+    [entry?.canonical_name, ...names].forEach((name) => add(name, identity, true));
+  });
+  aliases.forEach((alias) => {
+    const identity = institutionIdentity({
+      institution: alias.canonical_institution_name,
+      canonical_institution_name: alias.canonical_institution_name,
+      institution_id: alias.canonical_institution_id,
+    });
+    add(alias.alias_name, identity, true);
+    add(alias.canonical_institution_name, identity, true);
+  });
   const addRecord = (record) => {
     const identity = institutionIdentity(record);
-    add(record.canonical_institution_name || recordInstitution(record), identity);
+    const canonicalName = record.canonical_institution_name || recordInstitution(record);
+    if (!identitiesByName.has(normalizedSearchText(canonicalName))) {
+      add(canonicalName, identity);
+    }
     const affiliations = [
       ...(Array.isArray(record.affiliations) ? record.affiliations : []),
       ...(Array.isArray(record.author_institution_affiliations)
@@ -1130,22 +1155,14 @@ function buildInstitutionSearchIndex(mapRecords, publicPaperRecords, aliases, hi
         canonical_institution_name: affiliation.canonical_name,
         institution_id: affiliation.institution_id || affiliation.canonical_institution_id,
       };
-      add(
-        affiliationRecord.canonical_institution_name || affiliationRecord.institution,
-        institutionIdentity(affiliationRecord),
-      );
+      const name = affiliationRecord.canonical_institution_name
+        || affiliationRecord.institution;
+      if (!identitiesByName.has(normalizedSearchText(name))) {
+        add(name, institutionIdentity(affiliationRecord));
+      }
     });
   };
   [...mapRecords, ...publicPaperRecords].forEach(addRecord);
-  aliases.forEach((alias) => {
-    const identity = institutionIdentity({
-      institution: alias.canonical_institution_name,
-      canonical_institution_name: alias.canonical_institution_name,
-      institution_id: alias.canonical_institution_id,
-    });
-    add(alias.alias_name, identity);
-    add(alias.canonical_institution_name, identity);
-  });
   hierarchy.forEach((relationship) => {
     add(
       relationship.parent_institution_name,
@@ -1159,8 +1176,21 @@ function buildInstitutionSearchIndex(mapRecords, publicPaperRecords, aliases, hi
   return identitiesByName;
 }
 
+function resolveInstitutionSearchIdentities(value, searchIndex) {
+  const query = normalizedSearchText(value);
+  if (!query) return new Set();
+  const exact = searchIndex.get(query);
+  if (exact?.size) return new Set(exact);
+  const matches = new Set();
+  searchIndex.forEach((identities, normalizedName) => {
+    if (!normalizedName.includes(query)) return;
+    identities.forEach((identity) => matches.add(identity));
+  });
+  return matches;
+}
+
 function resolveInstitutionSearch(value, searchIndex) {
-  const matches = searchIndex.get(normalizedSearchText(value));
+  const matches = resolveInstitutionSearchIdentities(value, searchIndex);
   return matches?.size === 1 ? [...matches][0] : "";
 }
 
@@ -1283,8 +1313,6 @@ function recordSearchText(record) {
     recordTitle(record),
     ...authors,
     publicationYear(record),
-    record.institution_name,
-    record.institution,
     record.country,
     record.country_code,
     record.region,
@@ -1295,14 +1323,6 @@ function recordSearchText(record) {
     record.task,
     record.subtask,
     getEntryTypeLabel(getEntryType(record)),
-  ].filter(Boolean).join(" "));
-}
-
-function recordInstitutionSearchText(record) {
-  return normalizedSearchText([
-    record.institution_name,
-    record.institution,
-    record.canonical_institution_name,
   ].filter(Boolean).join(" "));
 }
 
@@ -1344,6 +1364,16 @@ function institutionIdentityWithDescendants(identity, hierarchyIndex) {
   return identities;
 }
 
+function institutionIdentitiesWithDescendants(identities, hierarchyIndex) {
+  const expanded = new Set();
+  (identities || []).forEach((identity) => {
+    institutionIdentityWithDescendants(identity, hierarchyIndex).forEach(
+      (candidate) => expanded.add(candidate),
+    );
+  });
+  return expanded;
+}
+
 function recordMatchesInstitutionIdentities(record, identities, institutionRecord) {
   if (!identities?.size) return true;
   if (institutionRecord) return identities.has(institutionIdentity(record));
@@ -1375,11 +1405,12 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const institutionRecord = options.institutionRecord === true;
   const resolvedInstitutionIdentities = options.resolvedInstitutionIdentities;
   const activeInstitutionIdentities = options.activeInstitutionIdentities;
-  const matchesKeyword = resolvedInstitutionIdentities?.size
-    ? recordMatchesInstitutionIdentities(
+  const matchesInstitutionKeyword = resolvedInstitutionIdentities?.size
+    && recordMatchesInstitutionIdentities(
       record, resolvedInstitutionIdentities, institutionRecord,
-    )
-    : searchTextMatchesTerms(recordSearchText(record), keywordTerms);
+    );
+  const matchesKeyword = matchesInstitutionKeyword
+    || searchTextMatchesTerms(recordSearchText(record), keywordTerms);
   const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
   const matchesEntryType =
     entryTypeFilter.value === "all" || getEntryType(record) === entryTypeFilter.value;
@@ -2295,19 +2326,23 @@ function renderRecords() {
     paperRecords,
     institutionAliases,
     institutionHierarchy,
+    canonicalInstitutionSearchIndex,
   );
-  const resolvedInstitutionIdentity = resolveInstitutionSearch(
+  const directlyResolvedInstitutionIdentities = resolveInstitutionSearchIdentities(
     normalizedKeyword,
     institutionSearchIndex,
   );
-  const keywordTerms = (resolvedInstitutionIdentity ? "" : normalizedKeyword)
+  const resolvedInstitutionIdentity = directlyResolvedInstitutionIdentities.size === 1
+    ? [...directlyResolvedInstitutionIdentities][0]
+    : "";
+  const keywordTerms = normalizedKeyword
     .trim()
     .split(/\s+/)
     .filter(Boolean);
   const hierarchyIndex = buildInstitutionHierarchyIndex(institutionHierarchy);
   const selectedIdentity = activeInstitutionFilter?.identity || resolvedInstitutionIdentity;
-  const resolvedInstitutionIdentities = institutionIdentityWithDescendants(
-    resolvedInstitutionIdentity,
+  const resolvedInstitutionIdentities = institutionIdentitiesWithDescendants(
+    directlyResolvedInstitutionIdentities,
     hierarchyIndex,
   );
   const activeInstitutionIdentities = institutionIdentityWithDescendants(
@@ -2628,6 +2663,12 @@ function normalizeDatasetPayload(payload) {
       institutionAliases: Array.isArray(payload.institution_aliases)
         ? payload.institution_aliases
         : [],
+      canonicalInstitutionSearchIndex:
+        payload.canonical_institution_search_index
+        && typeof payload.canonical_institution_search_index === "object"
+        && !Array.isArray(payload.canonical_institution_search_index)
+          ? payload.canonical_institution_search_index
+          : {},
       institutionHierarchy: Array.isArray(payload.institution_hierarchy)
         ? payload.institution_hierarchy.filter((relationship) => (
           relationship.review_status === "confirmed"
@@ -2715,6 +2756,7 @@ async function readDataset(name) {
 function displayDataset(normalizedData) {
   institutionAliases = normalizedData.institutionAliases || [];
   institutionHierarchy = normalizedData.institutionHierarchy || [];
+  canonicalInstitutionSearchIndex = normalizedData.canonicalInstitutionSearchIndex || {};
   const canonicalized = canonicalizePublicDataset(
     normalizedData.records,
     normalizedData.paperRecords || [],

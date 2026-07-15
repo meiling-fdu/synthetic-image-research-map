@@ -92,7 +92,7 @@ process.stdout.write(JSON.stringify({
         self.assertIn(
             'marker_interaction_helpers.js?v=20260712-pinned-state', html
         )
-        self.assertIn('app.js?v=20260714-paper-version-links', html)
+        self.assertIn('app.js?v=20260715-institution-alias-search', html)
 
     def test_marker_keyboard_activation_and_accessible_button_state(self):
         helper = REPOSITORY / "web" / "marker_interaction_helpers.js"
