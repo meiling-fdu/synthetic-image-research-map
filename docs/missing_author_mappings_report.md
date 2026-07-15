@@ -6,113 +6,128 @@ This audit reports author affiliation-index coverage in the current public paper
 
 | Metric | Count |
 | --- | ---: |
-| Total public papers | 466 |
-| Complete mappings | 406 |
+| Total public papers | 486 |
+| Complete mappings | 411 |
 | Partial mappings | 56 |
-| Zero mappings | 4 |
-| Total missing author links | 114 |
+| Zero mappings | 19 |
+| Total missing author links | 217 |
 
 ## Highest Priority
 
 | Rank | Paper | Year | Coverage | Missing authors | Markers | Key | Curated |
 | ---: | --- | ---: | ---: | --- | ---: | :---: | :---: |
-| 1 | Leveraging Frequency Analysis for Deep Fake Image Recognition | 2020 | 0/6 | Joel Frank; Thorsten Eisenhofer; Lea Schönherr; Asja Fischer; Dorothea Kolossa; Thorsten Holz | 1 |  | Yes |
-| 2 | GAN Generated Fake Human Face Image Detection | 2024 | 0/4 | Swati Shilaskar; Mayur Talewar; Soham Tak; Sidhesh Goud | 0 |  |  |
-| 3 | A COMPARATIVE REVIEW OF AI-GENERATED IMAGE DETECTION ACROSS SOCIAL MEDIA PLATFORMS | 2024 | 0/3 | Anjuman Ara; Md Sajadul Alam; Kamrujjaman & Afia Farjana Mifa | 1 |  |  |
-| 4 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | 0/1 | Darshan Lamichhane | 0 | Yes |  |
-| 5 | SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection | 2026 | 1/9 | Shuaibo Li; Yijun Yang; Zhaohu Xing; Hongqiu Wang; Pengfei Hao; Xingyu Li; Zekai Liu; Lei Zhu | 1 | Yes |  |
-| 6 | AI-Generated Image Detection: Challenges and Recent Advances | 2026 | 1/9 | Christos Koutlis; Riccardo Corvi; Davide Cozzolino; Quentin Bammey; Despina Konstantinidou; Manos Schinas; Dimitrios Karageorgiou; Luisa Verdoliva | 3 |  | Yes |
-| 7 | Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models | 2024 | 2/6 | Dong; Chengdong; Bhagavatula; Vijayakumar | 2 | Yes | Yes |
-| 8 | Deep Learning for Deepfakes Creation and Detection: A Survey | 2020 | 1/5 | Minh Chau Nguyen; Dung T. Nguyen; Duc Thanh Nguyen; Saeid Nahavandi | 1 |  |  |
-| 9 | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective | 2025 | 3/6 | Jiayin Cai; X.H. Jiang; Yao Hu | 1 | Yes |  |
-| 10 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-hoc Distribution Alignment | 2025 | 3/6 | Li Ping Wang; Meng; Xiangtao | 1 |  | Yes |
-| 11 | RADAR: Reasoning AI-Generated Image Detection for Semantic Fakes | 2025 | 4/7 | Haochen Wang; Xiaolong Jiang; Efstratios Gavves | 3 |  |  |
-| 12 | The Stable Signature: Rooting Watermarks in Latent Diffusion Models | 2023 | 2/5 | Pierre Fernandez; Hervé Jeǵou; Matthijs Douze | 2 |  |  |
-| 13 | The Face Deepfake Detection Challenge | 2022 | 17/20 | A. Paratore; Linh M. Q. Bui; Marco Fontani | 6 |  |  |
-| 14 | Is Artificial Intelligence Generated Image Detection a Solved Problem? | 2025 | 6/8 | Yan; Jiazhen | 2 | Yes | Yes |
-| 15 | Improving Interpretability and Robustness for the Detection of AI-Generated Images | 2024 | 6/8 | Martin Benning; Greg Slabaugh | 9 | Yes | Yes |
-| 16 | Generalizable Synthetic Image Detection via Language-guided Contrastive Learning | 2023 | 1/3 | Jiantao Zhou; Shile Zhang | 1 | Yes |  |
-| 17 | Detecting GAN generated Fake Images using Co-occurrence Matrices | 2019 | 5/7 | Arjuna Flenner; Amit K. Roy–Chowdhury | 3 | Yes |  |
-| 18 | Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images | 2026 | 7/9 | Hong; Yan | 2 |  | Yes |
-| 19 | Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable | 2025 | 9/11 | Jing Xi; Ke-Yue Zhang | 6 |  | Yes |
-| 20 | FLODA: Harnessing Vision-Language Models for Deepfake Assessment | 2025 | 2/4 | Young-Ho Bae; Gun-Hui Han | 4 |  | Yes |
-| 21 | OmniDFA: A Unified Framework for Open Set Synthesis Image Detection and Few-Shot Attribution | 2025 | 4/6 | Liu; Jing | 6 |  | Yes |
-| 22 | Evasion on general GAN-generated image detection by disentangled representation | 2024 | 4/6 | Xiao Meng; Daniel Yeung | 1 |  |  |
-| 23 | Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection | 2024 | 9/11 | Liu; Chengchun | 3 |  | Yes |
-| 24 | Deepfake Generation and Detection: Case Study and Challenges | 2023 | 6/8 | Pronaya Bhattacharya; Srinivas Aluvala | 3 |  |  |
-| 25 | Exposing the Fake: Effective Diffusion-Generated Images Detection | 2023 | 3/5 | Jinhao Duan; Kaidi Xu | 1 |  |  |
-| 26 | Wavelet-Packet Powered Deepfake Image Detection. | 2021 | 2/4 | Moritz Wolter; Charles Tapley Hoyt | 2 |  |  |
-| 27 | T-GD: Transferable GAN-generated Images Detection Framework | 2020 | 2/4 | Young Oh Bang; Junyaup Kim | 1 |  |  |
-| 28 | CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection | 2026 | 6/7 | Zichang Tan | 4 | Yes |  |
-| 29 | Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection | 2025 | 5/6 | Xiaoqin Fu | 2 | Yes | Yes |
-| 30 | A Single Simple Patch is All You Need for AI-generated Image Detection | 2024 | 2/3 | Jiaxuan Chen | 1 | Yes |  |
+| 1 | LOKI: A Comprehensive Synthetic Data Detection Benchmark using Large Multimodal Models | 2025 | 0/15 | Junyan Ye; Baichuan Zhou; Zilong Huang; Zhang, Junan; Tianyi Bai; Hengrui Kang; He, Jun; Hong‐Lin Lin; Zihao Wang; Tonghai Wu; Zhizheng Wu; Yi‐Ping Phoebe Chen; Dahua Lin; Conghui He; Weijia Li | 0 |  | Yes |
+| 2 | All Patches Matter, More Patches Better: Enhance AI-Generated Image Detection via Panoptic Patch Learning | 2026 | 0/11 | Zheng Yang; Ruoxin Chen; Zhiyuan Yan; Ke-Yue Zhang; Xinghe Fu; Shuang Wu; Xiujun Shu; Taiping Yao; Shouhong Ding; Zequn Qin; Xi Li | 0 | Yes | Yes |
+| 3 | Unveiling Perceptual Artifacts: A Fine-Grained Benchmark for Interpretable AI-Generated Image Detection | 2026 | 0/11 | Yao Xiao; Weiyan Chen; jiahao chen; Zijie Cao; Weijian Deng; Binbin Yang; Ziyi Dong; Xiangyang Ji; Wei Ke; Pengxu Wei; Liang Lin | 0 |  | Yes |
+| 4 | Are High-Quality AI-Generated Images More Difficult for Models to Detect? | 2025 | 0/10 | Yao Xiao; Binbin Yang; Weiyan Chen; Jiahao Chen; Zijie Cao; ZiYi Dong; Xiangyang Ji; Liang Lin; Wei Ke; Pengxu Wei | 0 | Yes | Yes |
+| 5 | FakeXplain: AI-Generated Image Detection via Human-Aligned Grounded Reasoning | 2026 | 0/9 | Yikun Ji; Yikun_Ji1; Yan Hong; Qi Fan; jun lan; Huijia Zhu; Weiqiang Wang; Liqing Zhang; Jianfu Zhang | 0 |  | Yes |
+| 6 | PiD: Generalized AI-Generated Images Detection with Pixelwise Decomposition Residuals | 2025 | 0/7 | Xinghe Fu; Zhiyuan Yan; Zheng Yang; Taiping Yao; Yandan Zhao; Shouhong Ding; Xi Li | 0 | Yes | Yes |
+| 7 | Breaking Manifold Continuity: Vector Quantized Modeling for Real-Centric Deepfake Detection | 2026 | 0/7 | Changshuo Wang; Jiangming Wang; Ke-Yue Zhang; Taiping Yao; Shouhong Ding; Ran Yi; Lizhuang Ma | 0 |  | Yes |
+| 8 | Multiscale Spatial Frequency-Aware Transformer and Saturation Analysis for Universal Deepfake Detection | 2026 | 0/6 | Kaiwen Xu; Xiyuan Hu; Chen Chen; Yichao Zhou; Yang Xu; Hadeel Alsolai, Shahid Mumtaz | 0 |  | Yes |
+| 9 | Leveraging Frequency Analysis for Deep Fake Image Recognition | 2020 | 0/6 | Joel Frank; Thorsten Eisenhofer; Lea Schönherr; Asja Fischer; Dorothea Kolossa; Thorsten Holz | 1 |  | Yes |
+| 10 | Leveraging Failed Samples: A Few-Shot and Training-Free Framework for Generalized Deepfake Detection | 2026 | 0/5 | Shibo Yao; Renshuai Tao; Xiaolong Zheng; Chao Liang; Chunjie Zhang | 0 |  | Yes |
+| 11 | No Pixel Left Behind: A Detail-Preserving Architecture for Robust High-Resolution AI-Generated Image Detection | 2026 | 0/5 | Lianrui Mu; Haoji Hu; Xingze Zou; Jianhong Bai; Jiaqi Hu | 0 |  | Yes |
+| 12 | DRCT: Diffusion Reconstruction Contrastive Training towards Universal Detection of Diffusion Generated Images | 2024 | 0/4 | Baoying Chen; Jishen Zeng; Jianquan Yang; Rui Yang | 0 | Yes | Yes |
+| 13 | HSIC Bottleneck for Cross-Generator and Domain-Incremental Synthetic Image Detection | 2026 | 0/4 | Chin-Chia Yang; Yung-Yu Chuang; Hwann-Tzong Chen; Tyng-Luh Liu | 0 |  | Yes |
+| 14 | Reasoning-Aware AIGC Detection via Alignment and Reinforcement | 2026 | 0/4 | Zhao Wang; Max Xiong; Jianxun Lian; Zhicheng Dou | 0 |  | Yes |
+| 15 | GAN Generated Fake Human Face Image Detection | 2024 | 0/4 | Swati Shilaskar; Mayur Talewar; Soham Tak; Sidhesh Goud | 0 |  |  |
+| 16 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | 0/3 | A Mahara; N Rishe; M Adjouadi | 0 | Yes | Yes |
+| 17 | A COMPARATIVE REVIEW OF AI-GENERATED IMAGE DETECTION ACROSS SOCIAL MEDIA PLATFORMS | 2024 | 0/3 | Anjuman Ara; Md Sajadul Alam; Kamrujjaman & Afia Farjana Mifa | 1 |  |  |
+| 18 | Position: We need to re-think the concept of “real” images. | 2026 | 0/2 | Janis Keuper; Margret Keuper | 0 |  | Yes |
+| 19 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | 0/1 | Darshan Lamichhane | 0 | Yes |  |
+| 20 | SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection | 2026 | 1/9 | Shuaibo Li; Yijun Yang; Zhaohu Xing; Hongqiu Wang; Pengfei Hao; Xingyu Li; Zekai Liu; Lei Zhu | 1 | Yes |  |
+| 21 | AI-Generated Image Detection: Challenges and Recent Advances | 2026 | 1/9 | Christos Koutlis; Riccardo Corvi; Davide Cozzolino; Quentin Bammey; Despina Konstantinidou; Manos Schinas; Dimitrios Karageorgiou; Luisa Verdoliva | 2 |  | Yes |
+| 22 | Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models | 2024 | 2/6 | Dong; Chengdong; Bhagavatula; Vijayakumar | 2 | Yes | Yes |
+| 23 | Deep Learning for Deepfakes Creation and Detection: A Survey | 2020 | 1/5 | Minh Chau Nguyen; Dung T. Nguyen; Duc Thanh Nguyen; Saeid Nahavandi | 1 |  |  |
+| 24 | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective | 2025 | 3/6 | Jiayin Cai; X.H. Jiang; Yao Hu | 1 | Yes |  |
+| 25 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-hoc Distribution Alignment | 2025 | 3/6 | Li Ping Wang; Meng; Xiangtao | 1 |  | Yes |
+| 26 | RADAR: Reasoning AI-Generated Image Detection for Semantic Fakes | 2025 | 4/7 | Haochen Wang; Xiaolong Jiang; Efstratios Gavves | 3 |  |  |
+| 27 | The Stable Signature: Rooting Watermarks in Latent Diffusion Models | 2023 | 2/5 | Pierre Fernandez; Hervé Jeǵou; Matthijs Douze | 2 |  |  |
+| 28 | The Face Deepfake Detection Challenge | 2022 | 17/20 | A. Paratore; Linh M. Q. Bui; Marco Fontani | 6 |  |  |
+| 29 | Is Artificial Intelligence Generated Image Detection a Solved Problem? | 2025 | 6/8 | Yan; Jiazhen | 2 | Yes | Yes |
+| 30 | Improving Interpretability and Robustness for the Detection of AI-Generated Images | 2024 | 6/8 | Martin Benning; Greg Slabaugh | 8 | Yes | Yes |
 
 ## Zero-Mapping Papers
 
 | Rank | Paper | Year | Coverage | Missing authors | Markers | Key | Curated |
 | ---: | --- | ---: | ---: | --- | ---: | :---: | :---: |
-| 1 | Leveraging Frequency Analysis for Deep Fake Image Recognition | 2020 | 0/6 | Joel Frank; Thorsten Eisenhofer; Lea Schönherr; Asja Fischer; Dorothea Kolossa; Thorsten Holz | 1 |  | Yes |
-| 2 | GAN Generated Fake Human Face Image Detection | 2024 | 0/4 | Swati Shilaskar; Mayur Talewar; Soham Tak; Sidhesh Goud | 0 |  |  |
-| 3 | A COMPARATIVE REVIEW OF AI-GENERATED IMAGE DETECTION ACROSS SOCIAL MEDIA PLATFORMS | 2024 | 0/3 | Anjuman Ara; Md Sajadul Alam; Kamrujjaman & Afia Farjana Mifa | 1 |  |  |
-| 4 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | 0/1 | Darshan Lamichhane | 0 | Yes |  |
+| 1 | LOKI: A Comprehensive Synthetic Data Detection Benchmark using Large Multimodal Models | 2025 | 0/15 | Junyan Ye; Baichuan Zhou; Zilong Huang; Zhang, Junan; Tianyi Bai; Hengrui Kang; He, Jun; Hong‐Lin Lin; Zihao Wang; Tonghai Wu; Zhizheng Wu; Yi‐Ping Phoebe Chen; Dahua Lin; Conghui He; Weijia Li | 0 |  | Yes |
+| 2 | All Patches Matter, More Patches Better: Enhance AI-Generated Image Detection via Panoptic Patch Learning | 2026 | 0/11 | Zheng Yang; Ruoxin Chen; Zhiyuan Yan; Ke-Yue Zhang; Xinghe Fu; Shuang Wu; Xiujun Shu; Taiping Yao; Shouhong Ding; Zequn Qin; Xi Li | 0 | Yes | Yes |
+| 3 | Unveiling Perceptual Artifacts: A Fine-Grained Benchmark for Interpretable AI-Generated Image Detection | 2026 | 0/11 | Yao Xiao; Weiyan Chen; jiahao chen; Zijie Cao; Weijian Deng; Binbin Yang; Ziyi Dong; Xiangyang Ji; Wei Ke; Pengxu Wei; Liang Lin | 0 |  | Yes |
+| 4 | Are High-Quality AI-Generated Images More Difficult for Models to Detect? | 2025 | 0/10 | Yao Xiao; Binbin Yang; Weiyan Chen; Jiahao Chen; Zijie Cao; ZiYi Dong; Xiangyang Ji; Liang Lin; Wei Ke; Pengxu Wei | 0 | Yes | Yes |
+| 5 | FakeXplain: AI-Generated Image Detection via Human-Aligned Grounded Reasoning | 2026 | 0/9 | Yikun Ji; Yikun_Ji1; Yan Hong; Qi Fan; jun lan; Huijia Zhu; Weiqiang Wang; Liqing Zhang; Jianfu Zhang | 0 |  | Yes |
+| 6 | PiD: Generalized AI-Generated Images Detection with Pixelwise Decomposition Residuals | 2025 | 0/7 | Xinghe Fu; Zhiyuan Yan; Zheng Yang; Taiping Yao; Yandan Zhao; Shouhong Ding; Xi Li | 0 | Yes | Yes |
+| 7 | Breaking Manifold Continuity: Vector Quantized Modeling for Real-Centric Deepfake Detection | 2026 | 0/7 | Changshuo Wang; Jiangming Wang; Ke-Yue Zhang; Taiping Yao; Shouhong Ding; Ran Yi; Lizhuang Ma | 0 |  | Yes |
+| 8 | Multiscale Spatial Frequency-Aware Transformer and Saturation Analysis for Universal Deepfake Detection | 2026 | 0/6 | Kaiwen Xu; Xiyuan Hu; Chen Chen; Yichao Zhou; Yang Xu; Hadeel Alsolai, Shahid Mumtaz | 0 |  | Yes |
+| 9 | Leveraging Frequency Analysis for Deep Fake Image Recognition | 2020 | 0/6 | Joel Frank; Thorsten Eisenhofer; Lea Schönherr; Asja Fischer; Dorothea Kolossa; Thorsten Holz | 1 |  | Yes |
+| 10 | Leveraging Failed Samples: A Few-Shot and Training-Free Framework for Generalized Deepfake Detection | 2026 | 0/5 | Shibo Yao; Renshuai Tao; Xiaolong Zheng; Chao Liang; Chunjie Zhang | 0 |  | Yes |
+| 11 | No Pixel Left Behind: A Detail-Preserving Architecture for Robust High-Resolution AI-Generated Image Detection | 2026 | 0/5 | Lianrui Mu; Haoji Hu; Xingze Zou; Jianhong Bai; Jiaqi Hu | 0 |  | Yes |
+| 12 | DRCT: Diffusion Reconstruction Contrastive Training towards Universal Detection of Diffusion Generated Images | 2024 | 0/4 | Baoying Chen; Jishen Zeng; Jianquan Yang; Rui Yang | 0 | Yes | Yes |
+| 13 | HSIC Bottleneck for Cross-Generator and Domain-Incremental Synthetic Image Detection | 2026 | 0/4 | Chin-Chia Yang; Yung-Yu Chuang; Hwann-Tzong Chen; Tyng-Luh Liu | 0 |  | Yes |
+| 14 | Reasoning-Aware AIGC Detection via Alignment and Reinforcement | 2026 | 0/4 | Zhao Wang; Max Xiong; Jianxun Lian; Zhicheng Dou | 0 |  | Yes |
+| 15 | GAN Generated Fake Human Face Image Detection | 2024 | 0/4 | Swati Shilaskar; Mayur Talewar; Soham Tak; Sidhesh Goud | 0 |  |  |
+| 16 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | 0/3 | A Mahara; N Rishe; M Adjouadi | 0 | Yes | Yes |
+| 17 | A COMPARATIVE REVIEW OF AI-GENERATED IMAGE DETECTION ACROSS SOCIAL MEDIA PLATFORMS | 2024 | 0/3 | Anjuman Ara; Md Sajadul Alam; Kamrujjaman & Afia Farjana Mifa | 1 |  |  |
+| 18 | Position: We need to re-think the concept of “real” images. | 2026 | 0/2 | Janis Keuper; Margret Keuper | 0 |  | Yes |
+| 19 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | 0/1 | Darshan Lamichhane | 0 | Yes |  |
 
 ## Partial-Mapping Papers
 
 | Rank | Paper | Year | Coverage | Missing authors | Markers | Key | Curated |
 | ---: | --- | ---: | ---: | --- | ---: | :---: | :---: |
-| 5 | SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection | 2026 | 1/9 | Shuaibo Li; Yijun Yang; Zhaohu Xing; Hongqiu Wang; Pengfei Hao; Xingyu Li; Zekai Liu; Lei Zhu | 1 | Yes |  |
-| 6 | AI-Generated Image Detection: Challenges and Recent Advances | 2026 | 1/9 | Christos Koutlis; Riccardo Corvi; Davide Cozzolino; Quentin Bammey; Despina Konstantinidou; Manos Schinas; Dimitrios Karageorgiou; Luisa Verdoliva | 3 |  | Yes |
-| 7 | Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models | 2024 | 2/6 | Dong; Chengdong; Bhagavatula; Vijayakumar | 2 | Yes | Yes |
-| 8 | Deep Learning for Deepfakes Creation and Detection: A Survey | 2020 | 1/5 | Minh Chau Nguyen; Dung T. Nguyen; Duc Thanh Nguyen; Saeid Nahavandi | 1 |  |  |
-| 9 | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective | 2025 | 3/6 | Jiayin Cai; X.H. Jiang; Yao Hu | 1 | Yes |  |
-| 10 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-hoc Distribution Alignment | 2025 | 3/6 | Li Ping Wang; Meng; Xiangtao | 1 |  | Yes |
-| 11 | RADAR: Reasoning AI-Generated Image Detection for Semantic Fakes | 2025 | 4/7 | Haochen Wang; Xiaolong Jiang; Efstratios Gavves | 3 |  |  |
-| 12 | The Stable Signature: Rooting Watermarks in Latent Diffusion Models | 2023 | 2/5 | Pierre Fernandez; Hervé Jeǵou; Matthijs Douze | 2 |  |  |
-| 13 | The Face Deepfake Detection Challenge | 2022 | 17/20 | A. Paratore; Linh M. Q. Bui; Marco Fontani | 6 |  |  |
-| 14 | Is Artificial Intelligence Generated Image Detection a Solved Problem? | 2025 | 6/8 | Yan; Jiazhen | 2 | Yes | Yes |
-| 15 | Improving Interpretability and Robustness for the Detection of AI-Generated Images | 2024 | 6/8 | Martin Benning; Greg Slabaugh | 9 | Yes | Yes |
-| 16 | Generalizable Synthetic Image Detection via Language-guided Contrastive Learning | 2023 | 1/3 | Jiantao Zhou; Shile Zhang | 1 | Yes |  |
-| 17 | Detecting GAN generated Fake Images using Co-occurrence Matrices | 2019 | 5/7 | Arjuna Flenner; Amit K. Roy–Chowdhury | 3 | Yes |  |
-| 18 | Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images | 2026 | 7/9 | Hong; Yan | 2 |  | Yes |
-| 19 | Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable | 2025 | 9/11 | Jing Xi; Ke-Yue Zhang | 6 |  | Yes |
-| 20 | FLODA: Harnessing Vision-Language Models for Deepfake Assessment | 2025 | 2/4 | Young-Ho Bae; Gun-Hui Han | 4 |  | Yes |
-| 21 | OmniDFA: A Unified Framework for Open Set Synthesis Image Detection and Few-Shot Attribution | 2025 | 4/6 | Liu; Jing | 6 |  | Yes |
-| 22 | Evasion on general GAN-generated image detection by disentangled representation | 2024 | 4/6 | Xiao Meng; Daniel Yeung | 1 |  |  |
-| 23 | Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection | 2024 | 9/11 | Liu; Chengchun | 3 |  | Yes |
-| 24 | Deepfake Generation and Detection: Case Study and Challenges | 2023 | 6/8 | Pronaya Bhattacharya; Srinivas Aluvala | 3 |  |  |
-| 25 | Exposing the Fake: Effective Diffusion-Generated Images Detection | 2023 | 3/5 | Jinhao Duan; Kaidi Xu | 1 |  |  |
-| 26 | Wavelet-Packet Powered Deepfake Image Detection. | 2021 | 2/4 | Moritz Wolter; Charles Tapley Hoyt | 2 |  |  |
-| 27 | T-GD: Transferable GAN-generated Images Detection Framework | 2020 | 2/4 | Young Oh Bang; Junyaup Kim | 1 |  |  |
-| 28 | CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection | 2026 | 6/7 | Zichang Tan | 4 | Yes |  |
-| 29 | Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection | 2025 | 5/6 | Xiaoqin Fu | 2 | Yes | Yes |
-| 30 | A Single Simple Patch is All You Need for AI-generated Image Detection | 2024 | 2/3 | Jiaxuan Chen | 1 | Yes |  |
-| 31 | Addressing Diffusion Model Based Counter-Forensic Image Manipulation for Synthetic Image Detection | 2024 | 3/4 | Chandra Sekhar Seelamantula | 2 | Yes |  |
-| 32 | Detecting AI Generated Images Through Texture and Frequency Analysis of Patches | 2024 | 1/2 | Yuming Chen | 1 | Yes |  |
-| 33 | Detecting Multimedia Generated by Large AI Models: A Survey | 2024 | 9/10 | Hainan Ren | 5 | Yes |  |
-| 34 | RIGID: A Training-free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2024 | 2/3 | Pin‐Yu Chen | 1 | Yes |  |
-| 35 | Shadows Don't Lie and Lines Can't Bend! Generative Models Don't know Projective Geometry…for Now | 2024 | 5/6 | David Forsyth | 2 | Yes | Yes |
-| 36 | Text Modality Oriented Image Feature Extraction for Detecting Diffusion-based DeepFake | 2024 | 7/8 | Y. Liu | 5 | Yes |  |
-| 37 | DIRE for Diffusion-Generated Image Detection | 2023 | 6/7 | Hong Chen | 4 | Yes |  |
-| 38 | GenImage: A Million-Scale Benchmark for Detecting AI-Generated Image | 2023 | 9/10 | Qiangyu Yan | 1 | Yes |  |
-| 39 | FingerprintNet: Synthesized Fingerprints for Generated Image Detection | 2022 | 4/5 | Doyeon Kim | 5 | Yes |  |
-| 40 | Fusing Global and Local Features for Generalized AI-Synthesized Image Detection | 2022 | 5/6 | Koki Nagano | 1 | Yes |  |
-| 41 | Beyond the Spectrum: Detecting Deepfakes via Re-Synthesis | 2021 | 3/4 | Ning Yu | 2 | Yes |  |
-| 42 | Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks | 2026 | 2/3 | Jia Wang | 0 |  | Yes |
-| 43 | Geometric-semantic dual-adaptation for generalizable AI-generated image detection | 2026 | 5/6 | Jiaye Li | 0 |  | Yes |
-| 44 | IncreFA: Breaking the Static Wall of Generative Model Attribution | 2026 | 5/6 | Yuexuan Tan | 2 |  | Yes |
-| 45 | Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated | 2026 | 9/10 | Henan Wang | 2 |  | Yes |
-| 46 | A Novel Framework for Deepfake Image Detection Using Deep Learning Approach | 2025 | 5/6 | Aruna J. Chamatkar | 5 |  |  |
-| 47 | ForensicHub: A Unified Benchmark &amp; Codebase for All-Domain Fake Image Detection and Localization | 2025 | 9/10 | Jizhe Zhou | 5 |  |  |
-| 48 | RealHD: A High-Quality Dataset for Robust Detection of State-of-the-Art AI-Generated Images | 2025 | 4/5 | Hanzhe Yu | 2 |  | Yes |
-| 49 | The Visual Counter Turing Test (VCT2): A Benchmark for Evaluating AI-Generated Image Detection and the Visual AI Index (VAI) | 2025 | 14/15 | Hasnat Abdullah | 12 |  | Yes |
-| 50 | Deepfake Image Detection Using ResNet50 Model | 2024 | 5/6 | Chuah ChaiWen | 2 |  |  |
-| 51 | Enhancing Deepfake Detection With Diversified Self-Blending Images and Residuals | 2024 | 3/4 | Jing Liu | 1 |  |  |
-| 52 | Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection | 2024 | 3/4 | Digvijay Pandey | 2 |  |  |
-| 53 | Organic or Diffused: Can We Distinguish Human Art from AI-generated Images? | 2024 | 6/7 | Reid Southen | 1 |  | Yes |
-| 54 | An Improved Dense CNN Architecture for Deepfake Image Detection | 2023 | 6/7 | Pronaya Bhattacharya | 4 |  |  |
-| 55 | Intriguing properties of synthetic images: from generative adversarial networks to diffusion models | 2023 | 4/5 | Koki Nagano | 1 |  |  |
-| 56 | On The Detection of Synthetic Images Generated by Diffusion Models | 2023 | 5/6 | Koki Nagano | 1 |  |  |
-| 57 | Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model | 2023 | 2/3 | Usha Kosarkar | 2 |  |  |
-| 58 | On Attribution of Deepfakes | 2020 | 4/5 | Jin Zhou | 3 |  |  |
-| 59 | Complement Face Forensic Detection and Localization with FacialLandmarks | 2019 | 1/2 | Kritaphat Songsri-in | 1 |  |  |
-| 60 | No One Can Escape: A General Approach to Detect Tampered and Generated Image | 2019 | 4/5 | Zhiqiang Wang | 2 |  |  |
+| 20 | SynerDetect: Hierarchical Synergistic Learning for Generalizable AI-Generated Image Detection | 2026 | 1/9 | Shuaibo Li; Yijun Yang; Zhaohu Xing; Hongqiu Wang; Pengfei Hao; Xingyu Li; Zekai Liu; Lei Zhu | 1 | Yes |  |
+| 21 | AI-Generated Image Detection: Challenges and Recent Advances | 2026 | 1/9 | Christos Koutlis; Riccardo Corvi; Davide Cozzolino; Quentin Bammey; Despina Konstantinidou; Manos Schinas; Dimitrios Karageorgiou; Luisa Verdoliva | 2 |  | Yes |
+| 22 | Towards More Accurate Fake Detection on Images Generated from Advanced Generative and Neural Rendering Models | 2024 | 2/6 | Dong; Chengdong; Bhagavatula; Vijayakumar | 2 | Yes | Yes |
+| 23 | Deep Learning for Deepfakes Creation and Detection: A Survey | 2020 | 1/5 | Minh Chau Nguyen; Dung T. Nguyen; Duc Thanh Nguyen; Saeid Nahavandi | 1 |  |  |
+| 24 | Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective | 2025 | 3/6 | Jiayin Cai; X.H. Jiang; Yao Hu | 1 | Yes |  |
+| 25 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-hoc Distribution Alignment | 2025 | 3/6 | Li Ping Wang; Meng; Xiangtao | 1 |  | Yes |
+| 26 | RADAR: Reasoning AI-Generated Image Detection for Semantic Fakes | 2025 | 4/7 | Haochen Wang; Xiaolong Jiang; Efstratios Gavves | 3 |  |  |
+| 27 | The Stable Signature: Rooting Watermarks in Latent Diffusion Models | 2023 | 2/5 | Pierre Fernandez; Hervé Jeǵou; Matthijs Douze | 2 |  |  |
+| 28 | The Face Deepfake Detection Challenge | 2022 | 17/20 | A. Paratore; Linh M. Q. Bui; Marco Fontani | 6 |  |  |
+| 29 | Is Artificial Intelligence Generated Image Detection a Solved Problem? | 2025 | 6/8 | Yan; Jiazhen | 2 | Yes | Yes |
+| 30 | Improving Interpretability and Robustness for the Detection of AI-Generated Images | 2024 | 6/8 | Martin Benning; Greg Slabaugh | 8 | Yes | Yes |
+| 31 | Detecting GAN generated Fake Images using Co-occurrence Matrices | 2019 | 5/7 | Arjuna Flenner; Amit K. Roy–Chowdhury | 3 | Yes |  |
+| 32 | Locate-Then-Examine: Grounded Region Reasoning Improves Detection of AI-Generated Images | 2026 | 7/9 | Hong; Yan | 2 |  | Yes |
+| 33 | Dual Data Alignment Makes AI-Generated Image Detector Easier Generalizable | 2025 | 9/11 | Jing Xi; Ke-Yue Zhang | 6 |  | Yes |
+| 34 | FLODA: Harnessing Vision-Language Models for Deepfake Assessment | 2025 | 2/4 | Young-Ho Bae; Gun-Hui Han | 4 |  | Yes |
+| 35 | Generalizable Synthetic Image Detection via Language-guided Contrastive Learning | 2025 | 1/3 | Jiantao Zhou; Shile Zhang | 1 |  | Yes |
+| 36 | OmniDFA: A Unified Framework for Open Set Synthesis Image Detection and Few-Shot Attribution | 2025 | 4/6 | Liu; Jing | 6 |  | Yes |
+| 37 | Evasion on general GAN-generated image detection by disentangled representation | 2024 | 4/6 | Xiao Meng; Daniel Yeung | 1 |  |  |
+| 38 | Orthogonal Subspace Decomposition for Generalizable AI-Generated Image Detection | 2024 | 9/11 | Liu; Chengchun | 3 |  | Yes |
+| 39 | Deepfake Generation and Detection: Case Study and Challenges | 2023 | 6/8 | Pronaya Bhattacharya; Srinivas Aluvala | 3 |  |  |
+| 40 | Exposing the Fake: Effective Diffusion-Generated Images Detection | 2023 | 3/5 | Jinhao Duan; Kaidi Xu | 1 |  |  |
+| 41 | Wavelet-Packet Powered Deepfake Image Detection. | 2021 | 2/4 | Moritz Wolter; Charles Tapley Hoyt | 2 |  |  |
+| 42 | T-GD: Transferable GAN-generated Images Detection Framework | 2020 | 2/4 | Young Oh Bang; Junyaup Kim | 1 |  |  |
+| 43 | CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection | 2026 | 6/7 | Zichang Tan | 4 | Yes |  |
+| 44 | Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection | 2025 | 5/6 | Xiaoqin Fu | 1 | Yes | Yes |
+| 45 | A Single Simple Patch is All You Need for AI-generated Image Detection | 2024 | 2/3 | Jiaxuan Chen | 1 | Yes |  |
+| 46 | Addressing Diffusion Model Based Counter-Forensic Image Manipulation for Synthetic Image Detection | 2024 | 3/4 | Chandra Sekhar Seelamantula | 2 | Yes |  |
+| 47 | Detecting AI Generated Images Through Texture and Frequency Analysis of Patches | 2024 | 1/2 | Yuming Chen | 1 | Yes |  |
+| 48 | Detecting Multimedia Generated by Large AI Models: A Survey | 2024 | 9/10 | Hainan Ren | 5 | Yes |  |
+| 49 | RIGID: A Training-free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2024 | 2/3 | Pin‐Yu Chen | 1 | Yes |  |
+| 50 | Shadows Don't Lie and Lines Can't Bend! Generative Models Don't know Projective Geometry…for Now | 2024 | 5/6 | David Forsyth | 2 | Yes | Yes |
+| 51 | Text Modality Oriented Image Feature Extraction for Detecting Diffusion-based DeepFake | 2024 | 7/8 | Y. Liu | 4 | Yes |  |
+| 52 | DIRE for Diffusion-Generated Image Detection | 2023 | 6/7 | Hong Chen | 4 | Yes |  |
+| 53 | GenImage: A Million-Scale Benchmark for Detecting AI-Generated Image | 2023 | 9/10 | Qiangyu Yan | 1 | Yes |  |
+| 54 | FingerprintNet: Synthesized Fingerprints for Generated Image Detection | 2022 | 4/5 | Doyeon Kim | 5 | Yes |  |
+| 55 | Fusing Global and Local Features for Generalized AI-Synthesized Image Detection | 2022 | 5/6 | Koki Nagano | 1 | Yes |  |
+| 56 | Beyond the Spectrum: Detecting Deepfakes via Re-Synthesis | 2021 | 3/4 | Ning Yu | 2 | Yes |  |
+| 57 | Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks | 2026 | 2/3 | Jia Wang | 0 |  | Yes |
+| 58 | Geometric-semantic dual-adaptation for generalizable AI-generated image detection | 2026 | 5/6 | Jiaye Li | 0 |  | Yes |
+| 59 | IncreFA: Breaking the Static Wall of Generative Model Attribution | 2026 | 5/6 | Yuexuan Tan | 2 |  | Yes |
+| 60 | Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated | 2026 | 9/10 | Henan Wang | 2 |  | Yes |
+| 61 | A Novel Framework for Deepfake Image Detection Using Deep Learning Approach | 2025 | 5/6 | Aruna J. Chamatkar | 5 |  |  |
+| 62 | ForensicHub: A Unified Benchmark &amp; Codebase for All-Domain Fake Image Detection and Localization | 2025 | 9/10 | Jizhe Zhou | 5 |  |  |
+| 63 | RealHD: A High-Quality Dataset for Robust Detection of State-of-the-Art AI-Generated Images | 2025 | 4/5 | Hanzhe Yu | 2 |  | Yes |
+| 64 | The Visual Counter Turing Test (VCT2): A Benchmark for Evaluating AI-Generated Image Detection and the Visual AI Index (VAI) | 2025 | 14/15 | Hasnat Abdullah | 11 |  | Yes |
+| 65 | Deepfake Image Detection Using ResNet50 Model | 2024 | 5/6 | Chuah ChaiWen | 2 |  |  |
+| 66 | Enhancing Deepfake Detection With Diversified Self-Blending Images and Residuals | 2024 | 3/4 | Jing Liu | 1 |  |  |
+| 67 | Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection | 2024 | 3/4 | Digvijay Pandey | 2 |  |  |
+| 68 | Organic or Diffused: Can We Distinguish Human Art from AI-generated Images? | 2024 | 6/7 | Reid Southen | 1 |  | Yes |
+| 69 | An Improved Dense CNN Architecture for Deepfake Image Detection | 2023 | 6/7 | Pronaya Bhattacharya | 4 |  |  |
+| 70 | Intriguing properties of synthetic images: from generative adversarial networks to diffusion models | 2023 | 4/5 | Koki Nagano | 1 |  |  |
+| 71 | On The Detection of Synthetic Images Generated by Diffusion Models | 2023 | 5/6 | Koki Nagano | 1 |  |  |
+| 72 | Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model | 2023 | 2/3 | Usha Kosarkar | 2 |  |  |
+| 73 | On Attribution of Deepfakes | 2020 | 4/5 | Jin Zhou | 3 |  |  |
+| 74 | Complement Face Forensic Detection and Localization with FacialLandmarks | 2019 | 1/2 | Kritaphat Songsri-in | 1 |  |  |
+| 75 | No One Can Escape: A General Approach to Detect Tampered and Generated Image | 2019 | 4/5 | Zhiqiang Wang | 2 |  |  |

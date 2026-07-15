@@ -17,14 +17,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 963 |
-| Unique papers | 440 |
+| Map records | 962 |
+| Unique papers | 445 |
 | Unique institutions | 521 |
 | Countries | 74 |
-| arXiv/preprint records | 547 |
-| Records with DOI | 946 |
-| Records with venue | 895 |
-| Records missing venue | 68 |
+| arXiv/preprint records | 543 |
+| Records with DOI | 945 |
+| Records with venue | 897 |
+| Records missing venue | 65 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -34,29 +34,29 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 832 |
-| source_attribution | 84 |
+| detection | 830 |
+| source_attribution | 85 |
 | detection_and_source_attribution | 47 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 461 |
-| synthetic_image_detection | 266 |
+| ai_generated_image_detection | 462 |
+| synthetic_image_detection | 263 |
 | deepfake_image_detection | 105 |
-| generated_image_source_attribution | 56 |
+| generated_image_source_attribution | 54 |
 | detection_and_source_attribution | 47 |
-| source_identification | 28 |
+| source_identification | 31 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 151 |
-| 2025 | 300 |
-| 2024 | 233 |
-| 2023 | 125 |
+| 2026 | 152 |
+| 2025 | 302 |
+| 2024 | 230 |
+| 2023 | 124 |
 | 2022 | 60 |
 | 2021 | 38 |
 | 2020 | 28 |
@@ -68,9 +68,9 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Venue | Records |
 | --- | ---: |
-| arXiv (Cornell University) | 95 |
-| ArXiv.org | 53 |
-| Proceedings of the AAAI Conference on Artificial Intelligence | 42 |
+| arXiv (Cornell University) | 91 |
+| ArXiv.org | 47 |
+| Proceedings of the AAAI Conference on Artificial Intelligence | 46 |
 | Lecture notes in computer science | 40 |
 | 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 17 |
 | NeurIPS | 17 |
@@ -83,16 +83,16 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 243 |
+| China | 248 |
 | CN | 141 |
-| United States | 79 |
+| United States | 75 |
 | US | 62 |
 | Italy | 46 |
 | IN | 40 |
 | IT | 32 |
 | Germany | 21 |
 | DE | 19 |
-| France | 19 |
+| GB | 18 |
 
 ## Top Institutions
 
@@ -104,23 +104,23 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | University of Chinese Academy of Sciences | 13 |
 | Beijing Jiaotong University | 12 |
 | Fudan University | 11 |
+| University of Science and Technology of China | 11 |
 | Beijing University of Posts and Telecommunications | 10 |
-| University of Science and Technology of China | 10 |
 | City University of Hong Kong | 9 |
-| Information Technologies Institute | 8 |
+| Centre for Research and Technology Hellas (CERTH) | 8 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 790 |
+| high | 789 |
 | medium | 173 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **68**
+Count: **65**
 
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
@@ -135,7 +135,7 @@ Count: **68**
 - ExDA: Towards Universal Detection and Plug-and-Play Attribution of AI-Generated Ex-Regulatory Images (2025) - Shanghai Jiao Tong University; `openalex-candidate-071adf2c66af598a`
 - Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University; `openalex-candidate-3a2726c50ff6a7d0`
 - HFMF: Hierarchical Fusion Meets Multi-Stream Models for Deepfake Detection (2025) - Texas A&M University; `openalex-candidate-2b3de8f25296a245`
-- TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping (2025) - Information Technologies Institute; `openalex-candidate-6d6cebc338c382bb`
+- TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-6d6cebc338c382bb`
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Aristotle University of Thessaloniki; `openalex-candidate-d451b0dc194a56c5`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - Fraunhofer-Gesellschaft; `openalex-candidate-6ba9fdeb3689ccf0`
 - Light2Lie: Detecting Deepfake Images Using Physical Reflectance Laws (2026) - Technische Universität Darmstadt; `openalex-candidate-ffc5d929530a3f5f`
@@ -163,8 +163,6 @@ Count: **68**
 - TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping (2025) - Centre for Research and Technology Hellas; `openalex-candidate-d9a6970b5514e649`
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Centre for Research and Technology Hellas; `openalex-candidate-4a516cc1ca95d8a3`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-a66244e63c273fee`
-- A Survey on Deep-Learning-Based Techniques for Detecting AI-Generated Synthetic Images (2026) - Complutense University of Madrid; `curated-map:af83a7022d551570f56c`
-- Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - University at Buffalo; `curated-map:5c099af144a9f6b6b234`
 - Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - Institute of Information Engineering, Chinese Academy of Sciences; `curated-map:44229f2cf573ad44149f`
 - FLODA: Harnessing Vision-Language Models for Deepfake Assessment (2025) - Yonsei University, International Campus; `curated-map:26f32abc1c8d21b161be`
 - FLODA: Harnessing Vision-Language Models for Deepfake Assessment (2025) - Hanyang University; `curated-map:ac242c76014bf1482da6`
@@ -187,7 +185,6 @@ Count: **68**
 - StealthDiffusion: Towards Evading Diffusion Forensic Detection through Diffusion Model (2024) - Xiamen University; `curated-map:44d04408ebfffce2ca15`
 - Towards the Detection of Diffusion Model Deepfakes (2024) - Ruhr University Bochum; `curated-map:7eb6a019bf3f0f4fce56`
 - Towards the Detection of Diffusion Model Deepfakes (2024) - CISPA Helmholtz Center for Information Security; `curated-map:c339f8bd4ffbcaada177`
-- AI-Generated Image Detection: Challenges and Recent Advances (2026) - Amazon; `curated-map:974352335e3aeee1efcb`
 - AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Sheffield; `curated-map:dde274193da1c0814177`
 - AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Amsterdam; `curated-map:5c81d0cf1e05f580d116`
 
