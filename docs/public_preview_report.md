@@ -17,14 +17,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 962 |
-| Unique papers | 445 |
+| Map records | 964 |
+| Unique papers | 446 |
 | Unique institutions | 521 |
 | Countries | 74 |
-| arXiv/preprint records | 543 |
+| arXiv/preprint records | 545 |
 | Records with DOI | 945 |
 | Records with venue | 897 |
-| Records missing venue | 65 |
+| Records missing venue | 67 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -35,7 +35,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Task | Records |
 | --- | ---: |
 | detection | 830 |
-| source_attribution | 85 |
+| source_attribution | 87 |
 | detection_and_source_attribution | 47 |
 
 ## Records by Subtask
@@ -47,13 +47,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | deepfake_image_detection | 105 |
 | generated_image_source_attribution | 54 |
 | detection_and_source_attribution | 47 |
-| source_identification | 31 |
+| source_identification | 33 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 152 |
+| 2026 | 154 |
 | 2025 | 302 |
 | 2024 | 230 |
 | 2023 | 124 |
@@ -83,11 +83,11 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 248 |
+| China | 249 |
 | CN | 141 |
 | United States | 75 |
 | US | 62 |
-| Italy | 46 |
+| Italy | 47 |
 | IN | 40 |
 | IT | 32 |
 | Germany | 21 |
@@ -100,10 +100,10 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | University of Naples Federico II | 17 |
 | Shanghai Jiao Tong University | 16 |
-| University of Siena | 14 |
+| University of Siena | 15 |
 | University of Chinese Academy of Sciences | 13 |
 | Beijing Jiaotong University | 12 |
-| Fudan University | 11 |
+| Fudan University | 12 |
 | University of Science and Technology of China | 11 |
 | Beijing University of Posts and Telecommunications | 10 |
 | City University of Hong Kong | 9 |
@@ -113,14 +113,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 789 |
+| high | 791 |
 | medium | 173 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **65**
+Count: **67**
 
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
@@ -187,6 +187,8 @@ Count: **65**
 - Towards the Detection of Diffusion Model Deepfakes (2024) - CISPA Helmholtz Center for Information Security; `curated-map:c339f8bd4ffbcaada177`
 - AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Sheffield; `curated-map:dde274193da1c0814177`
 - AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Amsterdam; `curated-map:5c81d0cf1e05f580d116`
+- Representation and Reference Selection in Training-Free Synthetic Image Attribution (2026) - Fudan University; `curated-map:3ee7aaa87f1aa61b9cf4`
+- Representation and Reference Selection in Training-Free Synthetic Image Attribution (2026) - University of Siena; `curated-map:14fde14555ab903cb5b2`
 
 ### Records missing URL
 
