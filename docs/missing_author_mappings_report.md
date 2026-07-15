@@ -32,7 +32,7 @@ This audit reports author affiliation-index coverage in the current public paper
 | 14 | HSIC Bottleneck for Cross-Generator and Domain-Incremental Synthetic Image Detection | 2026 | 0/4 | Chin-Chia Yang; Yung-Yu Chuang; Hwann-Tzong Chen; Tyng-Luh Liu | 0 |  | Yes |
 | 15 | Reasoning-Aware AIGC Detection via Alignment and Reinforcement | 2026 | 0/4 | Zhao Wang; Max Xiong; Jianxun Lian; Zhicheng Dou | 0 |  | Yes |
 | 16 | GAN Generated Fake Human Face Image Detection | 2024 | 0/4 | Swati Shilaskar; Mayur Talewar; Soham Tak; Sidhesh Goud | 0 |  |  |
-| 17 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | 0/3 | A Mahara; N Rishe; M Adjouadi | 0 | Yes | Yes |
+| 17 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | 0/3 | A Mahara; N Rishe; M Adjouadi | 1 | Yes | Yes |
 | 18 | A COMPARATIVE REVIEW OF AI-GENERATED IMAGE DETECTION ACROSS SOCIAL MEDIA PLATFORMS | 2024 | 0/3 | Anjuman Ara; Md Sajadul Alam; Kamrujjaman & Afia Farjana Mifa | 1 |  |  |
 | 19 | Position: We need to re-think the concept of “real” images. | 2026 | 0/2 | Janis Keuper; Margret Keuper | 0 |  | Yes |
 | 20 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | 0/1 | Darshan Lamichhane | 0 | Yes |  |
@@ -67,7 +67,7 @@ This audit reports author affiliation-index coverage in the current public paper
 | 14 | HSIC Bottleneck for Cross-Generator and Domain-Incremental Synthetic Image Detection | 2026 | 0/4 | Chin-Chia Yang; Yung-Yu Chuang; Hwann-Tzong Chen; Tyng-Luh Liu | 0 |  | Yes |
 | 15 | Reasoning-Aware AIGC Detection via Alignment and Reinforcement | 2026 | 0/4 | Zhao Wang; Max Xiong; Jianxun Lian; Zhicheng Dou | 0 |  | Yes |
 | 16 | GAN Generated Fake Human Face Image Detection | 2024 | 0/4 | Swati Shilaskar; Mayur Talewar; Soham Tak; Sidhesh Goud | 0 |  |  |
-| 17 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | 0/3 | A Mahara; N Rishe; M Adjouadi | 0 | Yes | Yes |
+| 17 | Forensic Detection of Generated MRI Imagery Using Autoregressive Modeling and Frequency Analysis | 2026 | 0/3 | A Mahara; N Rishe; M Adjouadi | 1 | Yes | Yes |
 | 18 | A COMPARATIVE REVIEW OF AI-GENERATED IMAGE DETECTION ACROSS SOCIAL MEDIA PLATFORMS | 2024 | 0/3 | Anjuman Ara; Md Sajadul Alam; Kamrujjaman & Afia Farjana Mifa | 1 |  |  |
 | 19 | Position: We need to re-think the concept of “real” images. | 2026 | 0/2 | Janis Keuper; Margret Keuper | 0 |  | Yes |
 | 20 | Advanced Detection of AI-Generated Images Through Vision Transformers | 2024 | 0/1 | Darshan Lamichhane | 0 | Yes |  |

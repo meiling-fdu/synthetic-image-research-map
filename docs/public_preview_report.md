@@ -17,13 +17,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 964 |
-| Unique papers | 446 |
+| Map records | 963 |
+| Unique papers | 447 |
 | Unique institutions | 521 |
 | Countries | 73 |
-| arXiv/preprint records | 545 |
-| Records with DOI | 945 |
-| Records with venue | 897 |
+| arXiv/preprint records | 542 |
+| Records with DOI | 943 |
+| Records with venue | 896 |
 | Records missing venue | 67 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -34,18 +34,18 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 830 |
-| source_attribution | 87 |
+| detection | 831 |
+| source_attribution | 85 |
 | detection_and_source_attribution | 47 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 462 |
+| ai_generated_image_detection | 463 |
 | synthetic_image_detection | 263 |
 | deepfake_image_detection | 105 |
-| generated_image_source_attribution | 54 |
+| generated_image_source_attribution | 52 |
 | detection_and_source_attribution | 47 |
 | source_identification | 33 |
 
@@ -53,10 +53,10 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 154 |
+| 2026 | 155 |
 | 2025 | 302 |
 | 2024 | 230 |
-| 2023 | 124 |
+| 2023 | 122 |
 | 2022 | 60 |
 | 2021 | 38 |
 | 2020 | 28 |
@@ -83,9 +83,9 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 249 |
+| China | 247 |
 | CN | 141 |
-| United States | 75 |
+| United States | 76 |
 | US | 62 |
 | Italy | 48 |
 | IN | 40 |
@@ -113,8 +113,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 791 |
-| medium | 173 |
+| high | 793 |
+| medium | 170 |
 
 ## Potential quality issues
 
