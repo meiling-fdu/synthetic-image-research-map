@@ -20,7 +20,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Map records | 964 |
 | Unique papers | 446 |
 | Unique institutions | 521 |
-| Countries | 74 |
+| Countries | 73 |
 | arXiv/preprint records | 545 |
 | Records with DOI | 945 |
 | Records with venue | 897 |
@@ -87,7 +87,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | CN | 141 |
 | United States | 75 |
 | US | 62 |
-| Italy | 47 |
+| Italy | 48 |
 | IN | 40 |
 | IT | 32 |
 | Germany | 21 |
