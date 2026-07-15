@@ -1676,11 +1676,21 @@ def make_handler(
                         locations = load_confirmed_locations(institution_locations_path)
                         reviews = load_location_reviews(location_review_path)
                         mappings = load_mappings(mappings_path)
+                        review_queue = load_institution_review_queue(
+                            institution_review_queue_path
+                        )
+                        current_location = next((
+                            row for row in locations
+                            if clean(row.get("institution_id")) == identifier
+                        ), None)
                         self.send_json(HTTPStatus.OK, {"data": {
                             "institution": matches[0],
+                            "editable_institution_id": identifier,
                             "aliases": [row for row in aliases if clean(row.get("institution_id")) == identifier],
-                            "location": next((row for row in locations if clean(row.get("institution_id")) == identifier), None),
+                            "current_location": current_location,
+                            "location": current_location,
                             "location_reviews": [row for row in reviews if clean(row.get("institution_id")) == identifier],
+                            "review_queue": [row for row in review_queue if clean(row.get("institution_id")) == identifier],
                             "affiliation_evidence": [
                                 {
                                     "raw_affiliation": clean(row.get("raw_affiliation")),

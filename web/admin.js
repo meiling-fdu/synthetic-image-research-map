@@ -1904,7 +1904,7 @@ function applyLocationPayload(payload) {
   elements["location-review-counts"].textContent = suppressionCountText(payload);
   renderLocationSummary();
   renderLocationReviewList();
-  if (state.selectedLocationReviewId) {
+  if (state.locationEditorMode === "review" && state.selectedLocationReviewId) {
     const selected = state.locationReviews.find(
       (row) => row.queue_id === state.selectedLocationReviewId
     );
@@ -2032,27 +2032,50 @@ async function openCanonicalInstitutionLocation(institution) {
   geocodeRequestSequence += 1;
   state.locationEditorMode = "canonical";
   state.selectedInstitutionLocationId = identifier;
+  state.selectedLocationReviewId = "";
   state.selectedGeocodeCandidate = null;
   openLocationReview();
-  elements["location-editor-placeholder"].hidden = false;
-  elements["location-editor-placeholder"].querySelector("h3").textContent = "Loading institution location…";
+  showLocationEditorPlaceholder(
+    "Loading institution location…",
+    `Loading canonical institution ${identifier}.`
+  );
   elements["location-form"].hidden = true;
-  const payload = await apiFetch(`/api/institution?institution_id=${encodeURIComponent(identifier)}`);
-  if (
-    requestSequence !== institutionLocationSequence ||
-    state.selectedInstitutionLocationId !== identifier
-  ) return;
-  const detail = payload.data || {};
-  if (text(detail.institution?.institution_id) !== identifier) {
-    throw new Error("Loaded institution details do not match the selected institution_id.");
+  renderLocationReviewList();
+  try {
+    const payload = await apiFetch(`/api/institution?institution_id=${encodeURIComponent(identifier)}`);
+    if (!isActiveCanonicalLocationRequest(requestSequence, identifier)) return;
+    const detail = payload.data || {};
+    if (text(detail.institution?.institution_id) !== identifier) {
+      throw new Error("Loaded institution details do not match the selected institution_id.");
+    }
+    selectCanonicalInstitutionLocation(detail);
+  } catch (error) {
+    if (!isActiveCanonicalLocationRequest(requestSequence, identifier)) return;
+    elements["location-form"].hidden = true;
+    showLocationEditorPlaceholder(
+      "Could not load institution location",
+      error.message
+    );
   }
-  selectCanonicalInstitutionLocation(detail);
+}
+
+function isActiveCanonicalLocationRequest(requestSequence, identifier) {
+  return requestSequence === institutionLocationSequence &&
+    state.locationEditorMode === "canonical" &&
+    state.selectedInstitutionLocationId === identifier;
+}
+
+function showLocationEditorPlaceholder(title, message) {
+  const placeholder = elements["location-editor-placeholder"];
+  placeholder.hidden = false;
+  placeholder.querySelector("h3").textContent = title;
+  placeholder.querySelector("p").textContent = message;
 }
 
 function selectCanonicalInstitutionLocation(detail) {
   const institution = detail.institution || {};
   const identifier = text(institution.institution_id);
-  const location = detail.location || {};
+  const location = detail.current_location || detail.location || {};
   const review = (detail.location_reviews || [])[0] || {};
   state.locationEditorMode = "canonical";
   state.selectedInstitutionLocationId = identifier;
@@ -2087,7 +2110,7 @@ function selectCanonicalInstitutionLocation(detail) {
 
 function renderCanonicalLocationContext(detail) {
   const institution = detail.institution || {};
-  const location = detail.location || {};
+  const location = detail.current_location || detail.location || {};
   const reviews = detail.location_reviews || [];
   const fields = [
     ["Canonical institution ID", institution.institution_id],
@@ -2415,7 +2438,11 @@ function clearLocationEditor() {
   geocodeRequestSequence += 1;
   state.selectedInstitutionLocationId = "";
   state.selectedLocationReviewId = "";
-  elements["location-editor-placeholder"].hidden = false;
+  state.locationEditorMode = "review";
+  showLocationEditorPlaceholder(
+    "Select a queued institution",
+    "Its paper context, affiliation evidence, suggestions, and current review state will appear here."
+  );
   elements["location-form"].hidden = true;
   renderLocationReviewList();
 }

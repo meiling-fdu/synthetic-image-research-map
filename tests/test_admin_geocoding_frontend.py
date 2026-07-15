@@ -64,8 +64,46 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         opening = self.source[self.source.index("async function openCanonicalInstitutionLocation") : self.source.index("function selectCanonicalInstitutionLocation")]
         self.assertIn("institution?.institution_id", opening)
         self.assertIn("/api/institution?institution_id=", opening)
-        self.assertIn("state.selectedInstitutionLocationId !== identifier", opening)
+        self.assertIn("isActiveCanonicalLocationRequest(requestSequence, identifier)", opening)
         self.assertIn("selectCanonicalInstitutionLocation(detail)", opening)
+
+    def test_direct_mode_is_independent_from_queue_rows_and_filters(self):
+        applying = self.source[
+            self.source.index("function applyLocationPayload"):
+            self.source.index("async function loadLocationReviews")
+        ]
+        self.assertIn('state.locationEditorMode === "review"', applying)
+        opening = self.source[
+            self.source.index("async function openCanonicalInstitutionLocation"):
+            self.source.index("function selectCanonicalInstitutionLocation")
+        ]
+        self.assertLess(
+            opening.index('state.selectedLocationReviewId = ""'),
+            opening.index("apiFetch(`/api/institution?institution_id=")
+        )
+        rendering = self.source[
+            self.source.index("function renderLocationReviewList"):
+            self.source.index("function selectLocationReview")
+        ]
+        self.assertNotIn("clearLocationEditor", rendering)
+
+    def test_direct_loading_resolves_on_success_and_visible_error(self):
+        opening = self.source[
+            self.source.index("async function openCanonicalInstitutionLocation"):
+            self.source.index("function selectCanonicalInstitutionLocation")
+        ]
+        self.assertIn("try {", opening)
+        self.assertIn("catch (error)", opening)
+        self.assertIn('"Could not load institution location"', opening)
+        self.assertIn("error.message", opening)
+        self.assertIn("isActiveCanonicalLocationRequest(requestSequence, identifier)", opening)
+        canonical = self.source[
+            self.source.index("function selectCanonicalInstitutionLocation"):
+            self.source.index("function renderCanonicalLocationContext")
+        ]
+        self.assertIn('elements["location-editor-placeholder"].hidden = true', canonical)
+        self.assertIn("(detail.location_reviews || [])[0] || {}", canonical)
+        self.assertIn("detail.current_location || detail.location || {}", canonical)
 
     def test_switching_institutions_invalidates_stale_geocoding(self):
         search = self.source[self.source.index("async function findInstitutionCoordinates") : self.source.index("function closeGeocodeDialog")]

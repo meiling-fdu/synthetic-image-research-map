@@ -1,4 +1,6 @@
 import json
+import csv
+import tempfile
 import threading
 import unittest
 from http.client import HTTPConnection
@@ -17,6 +19,14 @@ from scripts.admin_geocoding import (
     rank_candidates,
 )
 from scripts.serve_admin import make_handler
+from scripts.curated_schema import (
+    AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+    INSTITUTION_ALIAS_COLUMNS,
+    INSTITUTION_COLUMNS,
+    INSTITUTION_LOCATION_COLUMNS,
+    INSTITUTION_LOCATION_REVIEW_COLUMNS,
+    INSTITUTION_REVIEW_QUEUE_COLUMNS,
+)
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -204,6 +214,36 @@ class EndpointGeocoder:
 class AdminGeocodingEndpointTests(unittest.TestCase):
     institution_id = "institution:a407f4c649ba4c6a"
 
+    @staticmethod
+    def write_csv(path, columns, rows):
+        with path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=columns, lineterminator="\n")
+            writer.writeheader()
+            writer.writerows(rows)
+
+    @staticmethod
+    def row(columns, **values):
+        return {column: values.get(column, "") for column in columns}
+
+    def request_with_handler(self, handler, method, path, payload=None):
+        server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            connection = HTTPConnection("127.0.0.1", server.server_port, timeout=2)
+            headers = {"X-Admin-Token": "token"}
+            body = None
+            if payload is not None:
+                headers["Content-Type"] = "application/json"
+                body = json.dumps(payload)
+            connection.request(method, path, body=body, headers=headers)
+            response = connection.getresponse()
+            return response.status, json.loads(response.read())
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+
     def geocode_payload(self):
         return {
             "institution_id": self.institution_id,
@@ -273,6 +313,67 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
                 status, payload = self.request(EndpointGeocoder(), body)
                 self.assertEqual(status, 400)
                 self.assertIn(message, " ".join(payload["errors"]))
+
+    def test_palermo_detail_and_first_review_do_not_require_queue_rows(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            paths = {
+                "institutions_path": root / "institutions.csv",
+                "institution_locations_path": root / "locations.csv",
+                "institution_aliases_path": root / "aliases.csv",
+                "location_review_path": root / "location_reviews.csv",
+                "institution_review_queue_path": root / "review_queue.csv",
+                "mappings_path": root / "mappings.csv",
+            }
+            self.write_csv(paths["institutions_path"], INSTITUTION_COLUMNS, [self.row(
+                INSTITUTION_COLUMNS, institution_id=self.institution_id,
+                canonical_name="University of Palermo", institution_type="university",
+                institution_status="active", public_display="self",
+            )])
+            self.write_csv(paths["institution_locations_path"], INSTITUTION_LOCATION_COLUMNS, [self.row(
+                INSTITUTION_LOCATION_COLUMNS, location_id="location:a407f4c649ba4c6a",
+                institution_id=self.institution_id, institution="University of Palermo",
+                normalized_institution="university of palermo", city="Palermo",
+                region="Sicily", country="Italy", country_code="IT",
+                lat="38.1157", lon="13.3615", coordinate_status="known",
+            )])
+            self.write_csv(paths["institution_aliases_path"], INSTITUTION_ALIAS_COLUMNS, [])
+            self.write_csv(paths["location_review_path"], INSTITUTION_LOCATION_REVIEW_COLUMNS, [])
+            self.write_csv(paths["institution_review_queue_path"], INSTITUTION_REVIEW_QUEUE_COLUMNS, [])
+            self.write_csv(paths["mappings_path"], AUTHOR_INSTITUTION_MAPPING_COLUMNS, [self.row(
+                AUTHOR_INSTITUTION_MAPPING_COLUMNS, mapping_id="mapping:palermo",
+                institution_id=self.institution_id, institution="University of Palermo",
+                raw_affiliation="Department of Engineering, University of Palermo",
+                mapping_status="active",
+            )])
+            handler = make_handler("token", **paths)
+            status, payload = self.request_with_handler(
+                handler, "GET", f"/api/institution?institution_id={self.institution_id}"
+            )
+            self.assertEqual(status, 200)
+            detail = payload["data"]
+            self.assertEqual(detail["institution"]["institution_id"], self.institution_id)
+            self.assertEqual(detail["editable_institution_id"], self.institution_id)
+            self.assertEqual(detail["current_location"]["city"], "Palermo")
+            self.assertEqual(detail["aliases"], [])
+            self.assertEqual(detail["location_reviews"], [])
+            self.assertEqual(detail["review_queue"], [])
+            self.assertEqual(len(detail["affiliation_evidence"]), 1)
+
+            status, _payload = self.request_with_handler(handler, "POST", "/api/institution/location", {
+                "institution_id": self.institution_id,
+                "loaded_institution_id": self.institution_id,
+                "city": "Palermo", "region": "Sicily", "country": "Italy",
+                "country_code": "IT", "lat": "38.1157", "lon": "13.3615",
+                "coordinate_source": "Fixture source",
+                "coordinate_source_url": "https://example.test/palermo",
+                "coordinate_status": "known", "review_note": "Fixture review.",
+            })
+            self.assertEqual(status, 200)
+            with paths["location_review_path"].open(encoding="utf-8", newline="") as handle:
+                reviews = list(csv.DictReader(handle))
+            self.assertEqual(len(reviews), 1)
+            self.assertEqual(reviews[0]["institution_id"], self.institution_id)
 
 
 if __name__ == "__main__":
