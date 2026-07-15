@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import math
 import re
 import unicodedata
 from collections import defaultdict
@@ -243,7 +244,7 @@ def update_institution_location(
     locations_path: Path = DEFAULT_LOCATIONS_PATH,
     location_reviews_path: Optional[Path] = None,
 ) -> dict[str, str]:
-    """Update location fields only; the stable institution ID cannot be changed."""
+    """Update location fields without manufacturing provenance-free review rows."""
     entities = load_institutions(institutions_path)
     entity = _entity(entities, institution_id)
     identifier = clean(entity.get("institution_id"))
@@ -273,24 +274,66 @@ def update_institution_location(
         if field in draft:
             row[field] = clean(draft.get(field))
     row["updated_at"] = now
-    _write(locations_path, INSTITUTION_LOCATION_COLUMNS, rows)
+    required_location_fields = (
+        "location_id",
+        "institution_id",
+        "institution",
+        "normalized_institution",
+        "country_code",
+        "lat",
+        "lon",
+        "coordinate_status",
+        "review_note",
+        "created_at",
+        "updated_at",
+        "created_by",
+    )
+    for field in required_location_fields:
+        if not clean(row.get(field)):
+            raise CuratedInstitutionError(f"{field} is required for location edits")
+    if not (
+        clean(row.get("coordinate_source"))
+        or clean(row.get("coordinate_source_url"))
+    ):
+        raise CuratedInstitutionError(
+            "coordinate_source or coordinate_source_url is required for location edits"
+        )
+    if not re.fullmatch(r"[A-Z]{2}", clean(row.get("country_code"))):
+        raise CuratedInstitutionError(
+            "country_code must be two uppercase letters"
+        )
+    try:
+        latitude = float(clean(row.get("lat")))
+        longitude = float(clean(row.get("lon")))
+    except ValueError as error:
+        raise CuratedInstitutionError("lat and lon must be numeric") from error
+    if not math.isfinite(latitude) or not -90 <= latitude <= 90:
+        raise CuratedInstitutionError("lat must be between -90 and 90")
+    if not math.isfinite(longitude) or not -180 <= longitude <= 180:
+        raise CuratedInstitutionError("lon must be between -180 and 180")
+    reviews = None
+    review_matches = []
     if location_reviews_path is not None:
         reviews = _read(location_reviews_path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
-        matches = [
+        review_matches = [
             review for review in reviews
             if clean(review.get("institution_id")) == identifier
         ]
-        if not matches:
-            review = {column: "" for column in INSTITUTION_LOCATION_REVIEW_COLUMNS}
-            review.update({
-                "institution": clean(entity.get("canonical_name")),
-                "canonical_institution_name": clean(entity.get("canonical_name")),
-                "institution_id": identifier,
-                "created_at": now,
-            })
-            reviews.append(review)
-            matches = [review]
-        for review in matches:
+        # A direct editor save has no paper/affiliation provenance of its own.
+        # Only synchronize review rows that were created by an evidence-bearing
+        # mapping or review action; the confirmed location row is sufficient
+        # when no such review exists.
+        for review in review_matches:
+            if not (
+                clean(review.get("related_paper_id"))
+                or clean(review.get("doi"))
+                or clean(review.get("openalex_url"))
+                or (clean(review.get("title")) and clean(review.get("year")))
+            ):
+                raise CuratedInstitutionError(
+                    "existing location review row lacks paper provenance"
+                )
+        for review in review_matches:
             previous_note = clean(review.get("review_note"))
             location_note = clean(row.get("review_note"))
             combined_note = previous_note
@@ -307,7 +350,28 @@ def update_institution_location(
                 "review_note": combined_note,
                 "updated_at": now,
             })
-        _write(location_reviews_path, INSTITUTION_LOCATION_REVIEW_COLUMNS, reviews)
+    touched_paths = [locations_path]
+    if location_reviews_path is not None and review_matches:
+        touched_paths.append(location_reviews_path)
+    snapshots = {
+        path: path.read_bytes() if path.exists() else None
+        for path in touched_paths
+    }
+    try:
+        _write(locations_path, INSTITUTION_LOCATION_COLUMNS, rows)
+        if location_reviews_path is not None and review_matches and reviews is not None:
+            _write(
+                location_reviews_path,
+                INSTITUTION_LOCATION_REVIEW_COLUMNS,
+                reviews,
+            )
+    except Exception:
+        for path, content in snapshots.items():
+            if content is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_bytes(content)
+        raise
     return dict(row)
 
 

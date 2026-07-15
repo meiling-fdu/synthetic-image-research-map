@@ -196,6 +196,18 @@ def run_step(
     print(f"\n== {label} ==", flush=True)
     result = runner(command, repository_root)
     if result.returncode != 0:
+        output = result.stdout or ""
+        validation_errors = [
+            line for line in output.splitlines()
+            if line.startswith("ERROR:")
+        ]
+        if validation_errors:
+            print(
+                f"ERROR: {label} reported validation errors:",
+                file=sys.stderr,
+            )
+            for line in validation_errors:
+                print(f"  {line}", file=sys.stderr)
         print(
             f"ERROR: {label} failed with exit code {result.returncode}.",
             file=sys.stderr,

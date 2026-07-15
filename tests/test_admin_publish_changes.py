@@ -99,6 +99,29 @@ class AdminPublishChangesTests(unittest.TestCase):
         self.assertEqual(result, 1)
         self.assertEqual(runner.commands, [first_refresh])
 
+    def test_curated_validator_failure_repeats_precise_errors_in_publish_error(self):
+        validator = ("python3", "scripts/validate_curated_database.py")
+        runner = RecordingRunner({
+            validator: (
+                1,
+                "Curated database validation\n"
+                "ERROR: institution_location_review.csv:295: "
+                "unknown institution_id: [missing]\n",
+            ),
+        })
+        output = io.StringIO()
+
+        with contextlib.redirect_stdout(output), contextlib.redirect_stderr(output):
+            result = self.publish(repository_root=Path("/repo"), runner=runner)
+
+        self.assertEqual(result, 1)
+        log = output.getvalue()
+        self.assertIn("reported validation errors", log)
+        self.assertIn(
+            "institution_location_review.csv:295: unknown institution_id: [missing]",
+            log,
+        )
+
     def test_failed_publish_restores_previous_success_timestamp(self):
         with tempfile.TemporaryDirectory() as directory:
             repository = Path(directory)

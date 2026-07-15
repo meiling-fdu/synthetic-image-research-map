@@ -469,6 +469,10 @@ def _sync_location_review(
 ) -> str:
     if clean(mapping.get("mapping_status")) not in ACTIVE_MAPPING_STATUSES:
         return "not_required"
+    if not clean(mapping.get("institution_id")):
+        raise CuratedMappingError(
+            "location review creation requires a canonical institution_id"
+        )
     if _normalized_text(mapping.get("institution")) in known_location_institutions(
         map_records
     ):

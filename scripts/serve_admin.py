@@ -1088,6 +1088,8 @@ def queue_location_review(
     draft: Mapping[str, Any],
     *,
     path: Path,
+    institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
 ) -> Dict[str, str]:
     institution = clean(draft.get("institution"))
     note = clean(draft.get("review_note"))
@@ -1095,11 +1097,50 @@ def queue_location_review(
         raise AdminDataError("institution is required for location review")
     if not note:
         raise AdminDataError("review note is required")
+    entities = [
+        row for row in load_institutions(institutions_path)
+        if clean(row.get("institution_status")) == "active"
+    ]
+    entities_by_id = {
+        clean(row.get("institution_id")): row for row in entities
+    }
+    requested_id = clean(draft.get("institution_id"))
+    target = entities_by_id.get(requested_id)
+    if target is None:
+        normalized = normalize_institution_name(institution)
+        matching_ids = {
+            clean(row.get("institution_id"))
+            for row in entities
+            if normalize_institution_name(row.get("canonical_name")) == normalized
+        }
+        matching_ids.update(
+            clean(row.get("institution_id"))
+            for row in load_institution_aliases(aliases_path)
+            if clean(row.get("review_status")) == "confirmed"
+            and normalize_institution_name(row.get("alias_name")) == normalized
+            and clean(row.get("institution_id")) in entities_by_id
+        )
+        if len(matching_ids) > 1:
+            raise AdminDataError(
+                "institution identity is ambiguous; choose a canonical institution"
+            )
+        if matching_ids:
+            target = entities_by_id[next(iter(matching_ids))]
+    if target is None:
+        stale = f" ({requested_id})" if requested_id else ""
+        raise AdminDataError(
+            "institution is not registered in the canonical registry"
+            f"{stale}; save the author–institution mapping first"
+        )
+    canonical_id = clean(target.get("institution_id"))
+    canonical_name = clean(target.get("canonical_name"))
+    if not canonical_id or not canonical_name:
+        raise AdminDataError("canonical institution record is incomplete")
     rows = load_location_reviews(path)
     identity = (
         normalized_title(draft.get("title")),
         record_year(draft),
-        institution.casefold(),
+        canonical_id,
     )
     existing = next(
         (
@@ -1108,7 +1149,7 @@ def queue_location_review(
             if (
                 normalized_title(row.get("title")),
                 record_year(row),
-                clean(row.get("institution")).casefold(),
+                clean(row.get("institution_id")),
             )
             == identity
         ),
@@ -1119,6 +1160,8 @@ def queue_location_review(
     )
     row = {
         "institution": institution,
+        "canonical_institution_name": canonical_name,
+        "institution_id": canonical_id,
         "related_paper_id": clean(
             draft.get("paper_id") or draft.get("id")
         ),
@@ -2383,7 +2426,7 @@ def make_handler(
                 try:
                     payload = self.read_json_body()
                     action = institution_actions[request.path]
-                    with CURATED_INSTITUTION_WRITE_LOCK:
+                    with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_INSTITUTION_WRITE_LOCK:
                         if action == "identity":
                             result = update_institution_identity(payload.get("institution_id"), payload, institutions_path=institutions_path)
                         elif action == "location":
@@ -2439,7 +2482,7 @@ def make_handler(
                     return
                 try:
                     payload = self.read_json_body()
-                    with CURATED_LOCATION_WRITE_LOCK:
+                    with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_LOCATION_WRITE_LOCK:
                         action = location_actions[request.path]
                         if action == "confirm":
                             result = create_or_update_confirmed_location(
@@ -2727,9 +2770,12 @@ def make_handler(
                     mapping_result = None
                     exclusion_result = None
                     if action == "send_to_location_review":
-                        with CURATED_LOCATION_WRITE_LOCK:
+                        with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_LOCATION_WRITE_LOCK:
                             location_row = queue_location_review(
-                                payload, path=location_review_path
+                                payload,
+                                path=location_review_path,
+                                institutions_path=institutions_path,
+                                aliases_path=institution_aliases_path,
                             )
                     else:
                         location_row = None

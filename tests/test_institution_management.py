@@ -3,6 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.curated_institutions import (
     CuratedInstitutionError,
@@ -10,6 +11,7 @@ from scripts.curated_institutions import (
     effective_location,
     ignore_institution,
     merge_institutions,
+    set_parent_institution,
     stable_institution_id,
     update_institution_location,
 )
@@ -61,7 +63,24 @@ class InstitutionManagementTests(unittest.TestCase):
             blank(INSTITUTION_COLUMNS, institution_id=self.amazon_id, canonical_name=AMAZON, institution_type="company", institution_status="active", public_display="self"),
         ])
         write_csv(self.locations, INSTITUTION_LOCATION_COLUMNS, [
-            blank(INSTITUTION_LOCATION_COLUMNS, location_id="location:amazon", institution_id=self.amazon_id, institution=AMAZON, normalized_institution="amazon", city="Seattle", country="United States", country_code="US", lat="47", lon="-122", coordinate_status="known"),
+            blank(
+                INSTITUTION_LOCATION_COLUMNS,
+                location_id="location:amazon",
+                institution_id=self.amazon_id,
+                institution=AMAZON,
+                normalized_institution="amazon",
+                city="Seattle",
+                country="United States",
+                country_code="US",
+                lat="47",
+                lon="-122",
+                coordinate_source="Fixture source",
+                coordinate_status="known",
+                review_note="Fixture confirmation.",
+                created_at="2026-01-01T00:00:00Z",
+                updated_at="2026-01-01T00:00:00Z",
+                created_by="test",
+            ),
         ])
         write_csv(self.mappings, AUTHOR_INSTITUTION_MAPPING_COLUMNS, [
             blank(AUTHOR_INSTITUTION_MAPPING_COLUMNS, mapping_id="mapping:certh", paper_id="paper:1", title="AI-Generated Image Detection: Challenges and Recent Advances", institution=CERTH, institution_id=self.certh_id, institution_authors="Symeon Papadopoulos; Vasileios Mezaris", raw_affiliation="Information Technologies Institute, Centre for Research and Technology Hellas (CERTH)", mapping_status="active"),
@@ -90,7 +109,16 @@ class InstitutionManagementTests(unittest.TestCase):
         before = self.mappings.read_bytes()
         update_institution_location(
             self.amazon_id,
-            {"institution_id": self.amazon_id, "city": "Beijing", "lat": "39.9", "lon": "116.4"},
+            {
+                "institution_id": self.amazon_id,
+                "city": "Beijing",
+                "country_code": "US",
+                "lat": "39.9",
+                "lon": "116.4",
+                "coordinate_source": "Fixture source",
+                "coordinate_status": "known",
+                "review_note": "Fixture confirmation.",
+            },
             institutions_path=self.institutions,
             locations_path=self.locations,
         )
@@ -126,6 +154,20 @@ class InstitutionManagementTests(unittest.TestCase):
                 {"institution_id": self.amazon_id, "loaded_institution_id": self.certh_id},
                 institutions_path=self.institutions, locations_path=self.locations,
             )
+        write_csv(self.location_reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [
+            blank(
+                INSTITUTION_LOCATION_REVIEW_COLUMNS,
+                institution=AMAZON,
+                canonical_institution_name=AMAZON,
+                institution_id=self.amazon_id,
+                related_paper_id="paper:1",
+                title="Fixture paper",
+                year="2026",
+                review_status="needs_coordinates",
+                location_status="missing",
+                coordinate_status="missing",
+            ),
+        ])
         updated = update_institution_location(
             self.amazon_id,
             {
@@ -133,7 +175,10 @@ class InstitutionManagementTests(unittest.TestCase):
                 "loaded_institution_id": self.amazon_id,
                 "city": "Seattle", "region": "Washington",
                 "country": "United States", "country_code": "US",
-                "lat": "47.6", "lon": "-122.3", "review_note": "Confirmed manually.",
+                "lat": "47.6", "lon": "-122.3",
+                "coordinate_source": "Fixture source",
+                "coordinate_status": "known",
+                "review_note": "Confirmed manually.",
             },
             institutions_path=self.institutions, locations_path=self.locations,
             location_reviews_path=self.location_reviews,
@@ -145,6 +190,86 @@ class InstitutionManagementTests(unittest.TestCase):
         self.assertEqual(review["review_status"], "confirmed")
         for name, content in before.items():
             self.assertEqual(getattr(self, name).read_bytes(), content)
+
+    def test_direct_location_save_without_review_evidence_creates_no_review_row(self):
+        update_institution_location(
+            self.certh_id,
+            {
+                "institution_id": self.certh_id,
+                "loaded_institution_id": self.certh_id,
+                "city": "Thessaloniki",
+                "country": "Greece",
+                "country_code": "GR",
+                "lat": "40.566",
+                "lon": "22.997",
+                "coordinate_source": "Fixture source",
+                "coordinate_status": "known",
+                "review_note": "Fixture confirmation.",
+            },
+            institutions_path=self.institutions,
+            locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+        )
+        with self.location_reviews.open(encoding="utf-8", newline="") as handle:
+            self.assertEqual(list(csv.DictReader(handle)), [])
+
+    def test_failed_location_review_write_rolls_back_location_file(self):
+        write_csv(self.location_reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [
+            blank(
+                INSTITUTION_LOCATION_REVIEW_COLUMNS,
+                institution=AMAZON,
+                canonical_institution_name=AMAZON,
+                institution_id=self.amazon_id,
+                related_paper_id="paper:1",
+                title="Fixture paper",
+                year="2026",
+            ),
+        ])
+        before = {
+            path: path.read_bytes()
+            for path in (self.locations, self.location_reviews)
+        }
+        real_write = __import__(
+            "scripts.curated_institutions", fromlist=["_write"]
+        )._write
+
+        def fail_review(path, columns, rows):
+            if path == self.location_reviews:
+                raise OSError("fixture review write failure")
+            return real_write(path, columns, rows)
+
+        with patch("scripts.curated_institutions._write", side_effect=fail_review):
+            with self.assertRaisesRegex(OSError, "fixture review write failure"):
+                update_institution_location(
+                    self.amazon_id,
+                    {
+                        "institution_id": self.amazon_id,
+                        "city": "Changed city",
+                        "country_code": "US",
+                        "lat": "47",
+                        "lon": "-122",
+                        "coordinate_source": "Fixture source",
+                        "coordinate_status": "known",
+                        "review_note": "Fixture confirmation.",
+                    },
+                    institutions_path=self.institutions,
+                    locations_path=self.locations,
+                    location_reviews_path=self.location_reviews,
+                )
+        self.assertEqual(
+            {path: path.read_bytes() for path in before},
+            before,
+        )
+
+    def test_invalid_parent_is_rejected_without_modifying_registry(self):
+        before = self.institutions.read_bytes()
+        with self.assertRaisesRegex(CuratedInstitutionError, "identify exactly one"):
+            set_parent_institution(
+                self.certh_id,
+                "institution:stale-parent",
+                institutions_path=self.institutions,
+            )
+        self.assertEqual(self.institutions.read_bytes(), before)
 
     def test_ignoring_institution_removes_it_from_public_export(self):
         ignore_institution(

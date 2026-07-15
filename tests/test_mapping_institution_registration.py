@@ -23,7 +23,7 @@ from scripts.curated_schema import (
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
     INSTITUTION_REVIEW_QUEUE_COLUMNS,
 )
-from scripts.serve_admin import make_handler
+from scripts.serve_admin import AdminDataError, make_handler, queue_location_review
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -176,6 +176,85 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
         self.assertIn("state.institutions", javascript)
         self.assertIn('institution_id: elements["mapping-institution-id"].value', javascript)
         self.assertIn("provisional institution added", (ROOT / "scripts/serve_admin.py").read_text(encoding="utf-8"))
+
+    def test_review_action_resolves_stale_id_and_never_writes_missing_id(self):
+        canonical_id = "institution:zhejiang"
+        self.seed_institutions(row(
+            INSTITUTION_COLUMNS,
+            institution_id=canonical_id,
+            canonical_name="Zhejiang Lab",
+            institution_status="active",
+        ))
+        saved = queue_location_review(
+            {
+                **self.paper,
+                **self.draft,
+                "institution_id": "institution:stale-preview-id",
+            },
+            path=self.reviews,
+            institutions_path=self.institutions,
+            aliases_path=self.aliases,
+        )
+        self.assertEqual(saved["institution_id"], canonical_id)
+        self.assertEqual(saved["canonical_institution_name"], "Zhejiang Lab")
+
+    def test_review_action_rejects_unregistered_institution_without_writing(self):
+        with self.assertRaisesRegex(AdminDataError, "canonical registry"):
+            queue_location_review(
+                {**self.paper, **self.draft},
+                path=self.reviews,
+                institutions_path=self.institutions,
+                aliases_path=self.aliases,
+            )
+        self.assertEqual(load_location_reviews(self.reviews), [])
+
+    def test_real_regression_alias_review_row_receives_active_canonical_id(self):
+        canonical_id = "institution:ict-cas"
+        self.seed_institutions(row(
+            INSTITUTION_COLUMNS,
+            institution_id=canonical_id,
+            canonical_name=(
+                "Institute of Computing Technology, Chinese Academy of Sciences"
+            ),
+            institution_status="active",
+        ))
+        write_csv(self.aliases, INSTITUTION_ALIAS_COLUMNS, [
+            row(
+                INSTITUTION_ALIAS_COLUMNS,
+                alias_id="alias:ict",
+                alias_name="Institute of Computing Technology",
+                institution_id=canonical_id,
+                canonical_institution_name=(
+                    "Institute of Computing Technology, Chinese Academy of Sciences"
+                ),
+                review_status="confirmed",
+            ),
+        ])
+        saved = queue_location_review(
+            {
+                **self.paper,
+                **self.draft,
+                "institution": "Institute of Computing Technology",
+                "raw_affiliation": (
+                    "Institute of Computing Technology, Chinese Academy of "
+                    "Sciences, Beijing, China"
+                ),
+                "institution_id": "",
+            },
+            path=self.reviews,
+            institutions_path=self.institutions,
+            aliases_path=self.aliases,
+        )
+        self.assertEqual(saved["institution_id"], canonical_id)
+        self.assertEqual(
+            saved["canonical_institution_name"],
+            "Institute of Computing Technology, Chinese Academy of Sciences",
+        )
+        self.assertEqual(
+            saved["raw_affiliation"],
+            "Institute of Computing Technology, Chinese Academy of Sciences, "
+            "Beijing, China",
+        )
 
 
 class MappingInstitutionRegistrationEndpointTests(unittest.TestCase):

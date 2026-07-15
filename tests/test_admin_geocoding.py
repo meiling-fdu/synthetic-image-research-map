@@ -335,7 +335,13 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
                 institution_id=self.institution_id, institution="University of Palermo",
                 normalized_institution="university of palermo", city="Palermo",
                 region="Sicily", country="Italy", country_code="IT",
-                lat="38.1157", lon="13.3615", coordinate_status="known",
+                lat="38.1157", lon="13.3615",
+                coordinate_source="Fixture source",
+                coordinate_status="known",
+                review_note="Fixture confirmation.",
+                created_at="2026-01-01T00:00:00Z",
+                updated_at="2026-01-01T00:00:00Z",
+                created_by="test",
             )])
             self.write_csv(paths["institution_aliases_path"], INSTITUTION_ALIAS_COLUMNS, [])
             self.write_csv(paths["location_review_path"], INSTITUTION_LOCATION_REVIEW_COLUMNS, [])
@@ -372,8 +378,7 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             self.assertEqual(status, 200)
             with paths["location_review_path"].open(encoding="utf-8", newline="") as handle:
                 reviews = list(csv.DictReader(handle))
-            self.assertEqual(len(reviews), 1)
-            self.assertEqual(reviews[0]["institution_id"], self.institution_id)
+            self.assertEqual(reviews, [])
 
 
 if __name__ == "__main__":
