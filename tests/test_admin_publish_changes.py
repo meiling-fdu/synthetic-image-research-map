@@ -146,6 +146,21 @@ class AdminPublishChangesTests(unittest.TestCase):
         self.assertFalse(any(command[:2] == ("git", "commit") for command in runner.commands))
         self.assertNotIn(("git", "push"), runner.commands)
 
+    def test_successful_refresh_after_integrity_repair_reaches_publish_status(self):
+        runner = RecordingRunner()
+
+        result = self.publish(
+            repository_root=Path("/repo"),
+            runner=runner,
+        )
+
+        self.assertEqual(result, 0)
+        self.assertIn(
+            ("python3", "scripts/validate_curated_database.py"),
+            runner.commands,
+        )
+        self.assertIn(("git", "status", "--short"), runner.commands)
+
     def test_commit_is_scoped_and_pushes_after_commit(self):
         status_command = ("git", "status", "--short")
         publish_files = (

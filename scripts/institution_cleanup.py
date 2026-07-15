@@ -153,6 +153,7 @@ def apply_cleanup_action(
                 map_records=map_records,
                 mappings_path=mappings_path,
                 location_review_path=location_review_path,
+                institutions_path=institutions_path,
                 institution_audit_path=institution_audit_path,
                 change_source=f"institution_cleanup:{action}",
                 changed_by=resolved_by,

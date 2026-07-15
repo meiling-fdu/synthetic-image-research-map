@@ -18,9 +18,13 @@ from scripts.curated_schema import (
     INSTITUTION_ALIAS_COLUMNS,
     INSTITUTION_AUDIT_COLUMNS,
     INSTITUTION_COLUMNS,
+    INSTITUTION_HIERARCHY_COLUMNS,
     INSTITUTION_LOCATION_COLUMNS,
+    INSTITUTION_LOCATION_REVIEW_COLUMNS,
+    INSTITUTION_REVIEW_QUEUE_COLUMNS,
 )
 from scripts.export_public_preview import exclude_nonpublic_institutions, public_institution_aliases
+from scripts.validate_curated_database import validate_institution_entities
 
 
 CERTH = "Centre for Research and Technology Hellas (CERTH)"
@@ -49,6 +53,9 @@ class InstitutionManagementTests(unittest.TestCase):
         self.mappings = self.root / "mappings.csv"
         self.aliases = self.root / "aliases.csv"
         self.audits = self.root / "audit.csv"
+        self.location_reviews = self.root / "location_reviews.csv"
+        self.hierarchy = self.root / "hierarchy.csv"
+        self.review_queue = self.root / "review_queue.csv"
         write_csv(self.institutions, INSTITUTION_COLUMNS, [
             blank(INSTITUTION_COLUMNS, institution_id=self.certh_id, canonical_name=CERTH, institution_type="institute", institution_status="active", public_display="self"),
             blank(INSTITUTION_COLUMNS, institution_id=self.amazon_id, canonical_name=AMAZON, institution_type="company", institution_status="active", public_display="self"),
@@ -61,6 +68,9 @@ class InstitutionManagementTests(unittest.TestCase):
         ])
         write_csv(self.aliases, INSTITUTION_ALIAS_COLUMNS, [])
         write_csv(self.audits, INSTITUTION_AUDIT_COLUMNS, [])
+        write_csv(self.location_reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [])
+        write_csv(self.hierarchy, INSTITUTION_HIERARCHY_COLUMNS, [])
+        write_csv(self.review_queue, INSTITUTION_REVIEW_QUEUE_COLUMNS, [])
 
     def tearDown(self):
         self.temporary.cleanup()
@@ -136,6 +146,96 @@ class InstitutionManagementTests(unittest.TestCase):
         with self.mappings.open(encoding="utf-8", newline="") as handle:
             mapping = next(csv.DictReader(handle))
         self.assertEqual(mapping["institution_id"], self.certh_id)
+
+    def test_merge_atomically_rebinds_dependent_institution_references(self):
+        write_csv(self.location_reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [
+            blank(
+                INSTITUTION_LOCATION_REVIEW_COLUMNS,
+                institution=CERTH,
+                canonical_institution_name=CERTH,
+                institution_id=self.certh_id,
+                related_paper_id="paper:1",
+                title="AI-Generated Image Detection: Challenges and Recent Advances",
+                year="2026",
+                institution_authors="Symeon Papadopoulos; Vasileios Mezaris",
+                raw_affiliation="Information Technologies Institute, CERTH",
+                review_status="needs_coordinates",
+                location_status="missing",
+                coordinate_status="missing",
+            ),
+        ])
+        write_csv(self.hierarchy, INSTITUTION_HIERARCHY_COLUMNS, [
+            blank(
+                INSTITUTION_HIERARCHY_COLUMNS,
+                parent_institution_id=self.certh_id,
+                child_institution_id="institution:unit",
+                relationship_type="research_unit",
+                review_status="confirmed",
+            ),
+        ])
+        write_csv(self.review_queue, INSTITUTION_REVIEW_QUEUE_COLUMNS, [
+            blank(
+                INSTITUTION_REVIEW_QUEUE_COLUMNS,
+                current_institution=CERTH,
+                current_institution_id=self.certh_id,
+            ),
+        ])
+
+        merge_institutions(
+            self.certh_id,
+            self.amazon_id,
+            confirmation=f"REPLACE {CERTH} WITH {AMAZON} GLOBALLY",
+            review_note="Confirmed stale canonical entity.",
+            institutions_path=self.institutions,
+            mappings_path=self.mappings,
+            aliases_path=self.aliases,
+            locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+            hierarchy_path=self.hierarchy,
+            review_queue_path=self.review_queue,
+            audit_path=self.audits,
+        )
+
+        with self.mappings.open(encoding="utf-8", newline="") as handle:
+            self.assertEqual(next(csv.DictReader(handle))["institution_id"], self.amazon_id)
+        with self.location_reviews.open(encoding="utf-8", newline="") as handle:
+            review = next(csv.DictReader(handle))
+        self.assertEqual(review["institution_id"], self.amazon_id)
+        self.assertEqual(review["canonical_institution_name"], AMAZON)
+        with self.hierarchy.open(encoding="utf-8", newline="") as handle:
+            self.assertEqual(next(csv.DictReader(handle))["parent_institution_id"], self.amazon_id)
+        with self.review_queue.open(encoding="utf-8", newline="") as handle:
+            self.assertEqual(next(csv.DictReader(handle))["current_institution_id"], self.amazon_id)
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            entities = {row["institution_id"]: row for row in csv.DictReader(handle)}
+        self.assertEqual(entities[self.certh_id]["institution_status"], "merged")
+        self.assertIn(self.amazon_id, entities)
+
+    def test_validator_rejects_true_mapping_and_location_review_orphans(self):
+        institutions = [
+            blank(
+                INSTITUTION_COLUMNS,
+                institution_id=self.certh_id,
+                canonical_name=CERTH,
+                institution_type="institute",
+                institution_status="active",
+            )
+        ]
+        orphan_id = "institution:missing"
+        issues = []
+        validate_institution_entities(
+            institutions,
+            [blank(AUTHOR_INSTITUTION_MAPPING_COLUMNS, institution_id=orphan_id)],
+            [],
+            [blank(INSTITUTION_LOCATION_REVIEW_COLUMNS, institution_id=orphan_id)],
+            [],
+            [],
+            issues,
+        )
+        self.assertEqual(
+            [issue.filename for issue in issues if "unknown institution_id" in issue.message],
+            ["author_institution_mappings.csv", "institution_location_review.csv"],
+        )
 
 
 class CerthRepositoryRegressionTests(unittest.TestCase):

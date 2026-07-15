@@ -9,8 +9,10 @@ from scripts.curated_mappings import (
     load_mappings,
     update_mapping,
 )
+from scripts.curated_institutions import stable_institution_id
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+    INSTITUTION_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
 )
 from scripts.validate_curated_database import validate_mapping_evidence
@@ -27,8 +29,10 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         directory = Path(self.temporary_directory.name)
         self.mappings_path = directory / "mappings.csv"
         self.locations_path = directory / "locations.csv"
+        self.institutions_path = directory / "institutions.csv"
         write_empty_csv(self.mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
         write_empty_csv(self.locations_path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
+        write_empty_csv(self.institutions_path, INSTITUTION_COLUMNS)
         self.paper = {
             "paper_id": "curated:test",
             "title": "Test paper",
@@ -44,12 +48,31 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         self.temporary_directory.cleanup()
 
     def create(self, draft):
+        institution = draft.get("institution")
+        if institution:
+            with self.institutions_path.open(encoding="utf-8", newline="") as handle:
+                rows = list(csv.DictReader(handle))
+            institution_id = stable_institution_id(institution)
+            if not any(row["institution_id"] == institution_id for row in rows):
+                rows.append({
+                    **{column: "" for column in INSTITUTION_COLUMNS},
+                    "institution_id": institution_id,
+                    "canonical_name": institution,
+                    "institution_type": "university",
+                    "institution_status": "active",
+                    "public_display": "self",
+                })
+                with self.institutions_path.open("w", encoding="utf-8", newline="") as handle:
+                    writer = csv.DictWriter(handle, fieldnames=INSTITUTION_COLUMNS)
+                    writer.writeheader()
+                    writer.writerows(rows)
         return create_mapping(
             self.paper,
             draft,
             map_records=[],
             mappings_path=self.mappings_path,
             location_review_path=self.locations_path,
+            institutions_path=self.institutions_path,
         )["mapping"]
 
     def update(self, mapping_id, draft):
@@ -60,6 +83,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             map_records=[],
             mappings_path=self.mappings_path,
             location_review_path=self.locations_path,
+            institutions_path=self.institutions_path,
         )["mapping"]
 
     def test_create_accepts_empty_missing_and_null_review_note(self):
@@ -90,6 +114,22 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         for field in ("institution", "institution_authors"):
             with self.subTest(field=field), self.assertRaises(CuratedMappingError):
                 self.create({**self.draft, field: "", "review_note": ""})
+
+    def test_create_rejects_unknown_canonical_institution_without_writing(self):
+        before = self.mappings_path.read_bytes()
+        with self.assertRaisesRegex(CuratedMappingError, "canonical registry"):
+            create_mapping(
+                self.paper,
+                {
+                    **self.draft,
+                    "institution": "Unregistered University",
+                },
+                map_records=[],
+                mappings_path=self.mappings_path,
+                location_review_path=self.locations_path,
+                institutions_path=self.institutions_path,
+            )
+        self.assertEqual(self.mappings_path.read_bytes(), before)
 
     def test_active_mapping_with_empty_review_note_passes_database_validation(self):
         issues = []

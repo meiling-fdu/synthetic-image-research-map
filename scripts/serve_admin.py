@@ -1247,6 +1247,7 @@ def make_handler(
     author_mapping_report_path: Path = AUTHOR_MAPPING_REPORT_PATH,
     institution_consistency_report_path: Path = INSTITUTION_CONSISTENCY_REPORT_PATH,
     institution_review_queue_path: Path = INSTITUTION_REVIEW_QUEUE_PATH,
+    institution_hierarchy_path: Path = INSTITUTION_HIERARCHY_PATH,
     author_mapping_report_generator: Callable[
         [], Mapping[str, Any]
     ] = generate_author_mapping_report,
@@ -2304,7 +2305,7 @@ def make_handler(
                         elif action == "ignore":
                             result = ignore_institution(payload.get("institution_id"), confirmation=payload.get("confirmation") is True, review_note=payload.get("review_note"), institutions_path=institutions_path, mappings_path=mappings_path, audit_path=institution_audit_path)
                         else:
-                            result = merge_institutions(payload.get("source_institution_id"), payload.get("target_institution_id"), confirmation=payload.get("confirmation"), review_note=payload.get("review_note"), institutions_path=institutions_path, mappings_path=mappings_path, aliases_path=institution_aliases_path, audit_path=institution_audit_path)
+                            result = merge_institutions(payload.get("source_institution_id"), payload.get("target_institution_id"), confirmation=payload.get("confirmation"), review_note=payload.get("review_note"), institutions_path=institutions_path, mappings_path=mappings_path, aliases_path=institution_aliases_path, locations_path=institution_locations_path, location_reviews_path=location_review_path, hierarchy_path=institution_hierarchy_path, review_queue_path=institution_review_queue_path, audit_path=institution_audit_path)
                     self.send_json(HTTPStatus.OK, {"data": result, "message": f"Institution {action} action saved."})
                 except CuratedInstitutionError as error:
                     self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
@@ -2712,6 +2713,7 @@ def make_handler(
                                         ),
                                         mappings_path=mappings_path,
                                         location_review_path=location_review_path,
+                                        institutions_path=institutions_path,
                                         institution_audit_path=institution_audit_path,
                                         change_source="admin_review_action",
                                         changed_by="local-admin",
@@ -2725,6 +2727,7 @@ def make_handler(
                                         ),
                                         mappings_path=mappings_path,
                                         location_review_path=location_review_path,
+                                        institutions_path=institutions_path,
                                     )
                         else:
                             action_warnings.append(
@@ -2900,6 +2903,7 @@ def make_handler(
                                 map_records=read_json_records(PUBLIC_MAP_PATH),
                                 mappings_path=mappings_path,
                                 location_review_path=location_review_path,
+                                institutions_path=institutions_path,
                             )
                     except DuplicatePaperError as error:
                         self.send_json(
@@ -2965,6 +2969,7 @@ def make_handler(
                                     map_records=map_records,
                                     mappings_path=mappings_path,
                                     location_review_path=location_review_path,
+                                    institutions_path=institutions_path,
                                 )
                                 response_status = HTTPStatus.CREATED
                                 message = "Curated author–institution mapping saved."
@@ -2976,6 +2981,7 @@ def make_handler(
                                     map_records=map_records,
                                     mappings_path=mappings_path,
                                     location_review_path=location_review_path,
+                                    institutions_path=institutions_path,
                                     institution_audit_path=institution_audit_path,
                                     change_source="admin_mapping_update",
                                     changed_by="local-admin",
@@ -3009,6 +3015,7 @@ def make_handler(
                                     map_records=map_records,
                                     mappings_path=mappings_path,
                                     location_review_path=location_review_path,
+                                    institutions_path=institutions_path,
                                 )
                                 response_status = HTTPStatus.OK
                                 message = (

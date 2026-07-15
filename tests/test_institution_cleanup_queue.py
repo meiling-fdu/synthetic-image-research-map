@@ -207,6 +207,7 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
             map_records=(),
             mappings_path=self.mappings_path,
             location_review_path=self.locations_path,
+            institutions_path=self.institutions_path,
             institution_audit_path=self.audit_path,
             change_source="location_edit",
         )

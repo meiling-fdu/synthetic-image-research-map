@@ -3,9 +3,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from scripts.curated_institutions import stable_institution_id
 from scripts.curated_mappings import create_mapping_candidates, load_mappings
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+    INSTITUTION_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
 )
 from scripts.serve_admin import prepare_mapping_candidates
@@ -102,12 +104,24 @@ class NewPaperMappingCandidateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             mappings_path = Path(directory) / "mappings.csv"
             reviews_path = Path(directory) / "reviews.csv"
+            institutions_path = Path(directory) / "institutions.csv"
             for path, columns in (
                 (mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS),
                 (reviews_path, INSTITUTION_LOCATION_REVIEW_COLUMNS),
             ):
                 with path.open("w", encoding="utf-8", newline="") as handle:
                     csv.DictWriter(handle, fieldnames=columns).writeheader()
+            with institutions_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=INSTITUTION_COLUMNS)
+                writer.writeheader()
+                writer.writerow({
+                    **{column: "" for column in INSTITUTION_COLUMNS},
+                    "institution_id": stable_institution_id("Unresolved Institute"),
+                    "canonical_name": "Unresolved Institute",
+                    "institution_type": "institute",
+                    "institution_status": "active",
+                    "public_display": "self",
+                })
             paper = {
                 "paper_id": "curated:test",
                 "title": "Persist candidate",
@@ -129,6 +143,7 @@ class NewPaperMappingCandidateTests(unittest.TestCase):
                 map_records=[],
                 mappings_path=mappings_path,
                 location_review_path=reviews_path,
+                institutions_path=institutions_path,
             )
 
             self.assertEqual(len(result["mappings"]), 1)

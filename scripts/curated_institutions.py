@@ -21,7 +21,10 @@ try:
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_AUDIT_COLUMNS,
         INSTITUTION_COLUMNS,
+        INSTITUTION_HIERARCHY_COLUMNS,
         INSTITUTION_LOCATION_COLUMNS,
+        INSTITUTION_LOCATION_REVIEW_COLUMNS,
+        INSTITUTION_REVIEW_QUEUE_COLUMNS,
     )
 except ImportError:
     from curated_schema import (
@@ -32,7 +35,10 @@ except ImportError:
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_AUDIT_COLUMNS,
         INSTITUTION_COLUMNS,
+        INSTITUTION_HIERARCHY_COLUMNS,
         INSTITUTION_LOCATION_COLUMNS,
+        INSTITUTION_LOCATION_REVIEW_COLUMNS,
+        INSTITUTION_REVIEW_QUEUE_COLUMNS,
     )
 
 
@@ -41,6 +47,9 @@ DEFAULT_ALIASES_PATH = CURATED_DATA_DIR / "institution_aliases.csv"
 DEFAULT_LOCATIONS_PATH = CURATED_DATA_DIR / "institution_locations.csv"
 DEFAULT_MAPPINGS_PATH = CURATED_DATA_DIR / "author_institution_mappings.csv"
 DEFAULT_AUDIT_PATH = CURATED_DATA_DIR / "institution_audit_log.csv"
+DEFAULT_LOCATION_REVIEWS_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
+DEFAULT_HIERARCHY_PATH = CURATED_DATA_DIR / "institution_hierarchy.csv"
+DEFAULT_REVIEW_QUEUE_PATH = CURATED_DATA_DIR / "institution_review_queue.csv"
 
 
 class CuratedInstitutionError(RuntimeError):
@@ -371,6 +380,10 @@ def merge_institutions(
     source_institution_id: Any, target_institution_id: Any, *, confirmation: Any,
     review_note: Any, institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     mappings_path: Path = DEFAULT_MAPPINGS_PATH, aliases_path: Path = DEFAULT_ALIASES_PATH,
+    locations_path: Path = DEFAULT_LOCATIONS_PATH,
+    location_reviews_path: Path = DEFAULT_LOCATION_REVIEWS_PATH,
+    hierarchy_path: Path = DEFAULT_HIERARCHY_PATH,
+    review_queue_path: Path = DEFAULT_REVIEW_QUEUE_PATH,
     audit_path: Path = DEFAULT_AUDIT_PATH,
 ) -> Dict[str, Any]:
     entities = load_institutions(institutions_path)
@@ -385,18 +398,114 @@ def merge_institutions(
         raise CuratedInstitutionError("review_note is required")
     mappings = _read(mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
     impact = institution_impact(source_institution_id, mappings)
+    source_id = clean(source_institution_id)
+    target_id = clean(target_institution_id)
+    target_name = clean(target.get("canonical_name"))
+    now = _timestamp()
     for mapping in mappings:
-        if clean(mapping.get("institution_id")) == clean(source_institution_id):
-            mapping["institution_id"] = clean(target_institution_id)
-            mapping["institution"] = clean(target.get("canonical_name"))
-            mapping["updated_at"] = _timestamp()
+        if clean(mapping.get("institution_id")) == source_id:
+            mapping["institution_id"] = target_id
+            mapping["institution"] = target_name
+            mapping["updated_at"] = now
+
+    locations = _read(locations_path, INSTITUTION_LOCATION_COLUMNS)
+    source_locations = [
+        row for row in locations if clean(row.get("institution_id")) == source_id
+    ]
+    target_locations = [
+        row for row in locations if clean(row.get("institution_id")) == target_id
+    ]
+    if source_locations and target_locations:
+        raise CuratedInstitutionError(
+            "merge requires manual location resolution when both institutions have confirmed locations"
+        )
+    for location in source_locations:
+        location["institution_id"] = target_id
+        location["institution"] = target_name
+        location["normalized_institution"] = normalize_institution(target_name)
+        location["location_id"] = f"location:{target_id.removeprefix('institution:')}"
+        location["updated_at"] = now
+
+    location_reviews = _read(
+        location_reviews_path, INSTITUTION_LOCATION_REVIEW_COLUMNS
+    )
+    for review in location_reviews:
+        if clean(review.get("institution_id")) == source_id:
+            review["institution_id"] = target_id
+            review["canonical_institution_name"] = target_name
+            review["updated_at"] = now
+
     aliases = _read(aliases_path, INSTITUTION_ALIAS_COLUMNS)
+    for alias in aliases:
+        if clean(alias.get("institution_id")) == source_id:
+            alias["institution_id"] = target_id
+            alias["canonical_institution_name"] = target_name
     if not any(normalize_institution(row.get("alias_name")) == normalize_institution(source.get("canonical_name")) for row in aliases):
-        aliases.append({"alias_id": alias_id_for(source.get("canonical_name")), "alias_name": clean(source.get("canonical_name")), "institution_id": clean(target_institution_id), "canonical_institution_name": clean(target.get("canonical_name")), "alias_language": "", "alias_source": "institution-merge", "review_status": "confirmed", "notes": clean(review_note)})
+        aliases.append({"alias_id": alias_id_for(source.get("canonical_name")), "alias_name": clean(source.get("canonical_name")), "institution_id": target_id, "canonical_institution_name": target_name, "alias_language": "", "alias_source": "institution-merge", "review_status": "confirmed", "notes": clean(review_note)})
+
+    hierarchy = _read(hierarchy_path, INSTITUTION_HIERARCHY_COLUMNS)
+    migrated_hierarchy = []
+    hierarchy_keys = set()
+    for relation in hierarchy:
+        if clean(relation.get("parent_institution_id")) == source_id:
+            relation["parent_institution_id"] = target_id
+        if clean(relation.get("child_institution_id")) == source_id:
+            relation["child_institution_id"] = target_id
+        parent = clean(relation.get("parent_institution_id"))
+        child = clean(relation.get("child_institution_id"))
+        key = (parent, child, clean(relation.get("relationship_type")))
+        if parent == child or key in hierarchy_keys:
+            continue
+        hierarchy_keys.add(key)
+        migrated_hierarchy.append(relation)
+
+    review_queue = _read(review_queue_path, INSTITUTION_REVIEW_QUEUE_COLUMNS)
+    for finding in review_queue:
+        if clean(finding.get("current_institution_id")) == source_id:
+            finding["current_institution_id"] = target_id
+            finding["current_institution"] = target_name
+            finding["updated_at"] = now
+        if clean(finding.get("suggested_institution_id")) == source_id:
+            finding["suggested_institution_id"] = target_id
+            finding["suggested_canonical_institution"] = target_name
+            finding["updated_at"] = now
+
+    source_parent = clean(source.get("parent_institution_id"))
+    for entity in entities:
+        if entity is target and clean(entity.get("parent_institution_id")) == source_id:
+            entity["parent_institution_id"] = source_parent
+        elif entity is not source and clean(entity.get("parent_institution_id")) == source_id:
+            entity["parent_institution_id"] = target_id
     source["institution_status"] = "merged"
-    source["updated_at"] = _timestamp()
-    _write(mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS, mappings)
-    _write(aliases_path, INSTITUTION_ALIAS_COLUMNS, aliases)
-    save_institutions(entities, institutions_path)
-    audit = _append_audit(action="merge", institution_id=clean(target_institution_id), previous_institution_id=clean(source_institution_id), impact=impact, confirmation=phrase, review_note=review_note, created_by="local-admin", audit_path=audit_path)
+    if clean(source.get("parent_institution_id")) == target_id:
+        source["parent_institution_id"] = ""
+    source["updated_at"] = now
+
+    files = (
+        institutions_path, mappings_path, aliases_path, locations_path,
+        location_reviews_path, hierarchy_path, review_queue_path, audit_path,
+    )
+    snapshots = {
+        path: path.read_bytes() if path.exists() else None for path in files
+    }
+    try:
+        _write(mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS, mappings)
+        _write(aliases_path, INSTITUTION_ALIAS_COLUMNS, aliases)
+        _write(locations_path, INSTITUTION_LOCATION_COLUMNS, locations)
+        _write(
+            location_reviews_path,
+            INSTITUTION_LOCATION_REVIEW_COLUMNS,
+            location_reviews,
+        )
+        _write(hierarchy_path, INSTITUTION_HIERARCHY_COLUMNS, migrated_hierarchy)
+        _write(review_queue_path, INSTITUTION_REVIEW_QUEUE_COLUMNS, review_queue)
+        save_institutions(entities, institutions_path)
+        audit = _append_audit(action="merge", institution_id=target_id, previous_institution_id=source_id, impact=impact, confirmation=phrase, review_note=review_note, created_by="local-admin", audit_path=audit_path)
+    except Exception:
+        for path, content in snapshots.items():
+            if content is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_bytes(content)
+        raise
     return {"source": dict(source), "target": dict(target), "impact": impact, "audit": audit}
