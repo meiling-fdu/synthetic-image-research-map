@@ -14,6 +14,7 @@ const state = {
   locationSummary: {},
   confirmedLocations: [],
   institutions: [],
+  institutionManagement: { query: "", page: 1, pageSize: 50 },
   institutionAudit: { records: [], summary: {} },
   institutionCleanupSelection: new Set(),
   pendingInstitutionResolution: null,
@@ -446,7 +447,18 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["institution-management-close"].addEventListener("click", () => {
     elements["institution-management-panel"].hidden = true;
   });
-  elements["institution-management-search"].addEventListener("input", renderInstitutionManagement);
+  elements["institution-management-search"].addEventListener("input", () => {
+    state.institutionManagement.query = elements["institution-management-search"].value;
+    state.institutionManagement.page = 1;
+    renderInstitutionManagement();
+    scrollInstitutionManagementToTop();
+  });
+  document.querySelectorAll(".institution-page-size").forEach((select) => {
+    select.addEventListener("change", changeInstitutionPageSize);
+  });
+  document.querySelectorAll("[data-institution-page-action]").forEach((button) => {
+    button.addEventListener("click", changeInstitutionPage);
+  });
   elements["institution-merge-search"].addEventListener("input", renderInstitutionMergeTargets);
   elements["institution-merge-results"].addEventListener("change", selectInstitutionMergeResult);
   elements["institution-merge-resolve"].addEventListener("click", resolveInstitutionMergeTarget);
@@ -1972,16 +1984,79 @@ function institutionActionButton(label, action, institution) {
   return button;
 }
 
-function renderInstitutionManagement() {
-  if (!elements["institution-management-rows"]) return;
-  const query = normalize(elements["institution-management-search"].value);
-  const records = state.institutions.filter((row) => normalize([
+function filteredInstitutionRecords() {
+  const searchValue = elements["institution-management-search"].value;
+  if (searchValue !== state.institutionManagement.query) {
+    state.institutionManagement.query = searchValue;
+    state.institutionManagement.page = 1;
+  }
+  const query = normalize(state.institutionManagement.query);
+  return state.institutions.filter((row) => normalize([
     row.canonical_name, row.institution_type, row.institution_status,
     ...(row.aliases || []), row.parent_institution_id,
   ].join(" ")).includes(query));
+}
+
+function institutionTotalPages(recordCount) {
+  return Math.ceil(recordCount / state.institutionManagement.pageSize);
+}
+
+function scrollInstitutionManagementToTop() {
+  const list = document.getElementById("institution-management-table-wrap");
+  if (list) list.scrollTop = 0;
+}
+
+function changeInstitutionPage(event) {
+  const totalPages = institutionTotalPages(filteredInstitutionRecords().length);
+  const action = event.currentTarget.dataset.institutionPageAction;
+  const currentPage = state.institutionManagement.page;
+  const targetPages = {
+    first: 1,
+    previous: Math.max(1, currentPage - 1),
+    next: Math.min(totalPages || 1, currentPage + 1),
+    last: totalPages || 1,
+  };
+  state.institutionManagement.page = targetPages[action] || currentPage;
+  renderInstitutionManagement();
+  scrollInstitutionManagementToTop();
+}
+
+function changeInstitutionPageSize(event) {
+  state.institutionManagement.pageSize = Number(event.currentTarget.value);
+  state.institutionManagement.page = 1;
+  renderInstitutionManagement();
+  scrollInstitutionManagementToTop();
+}
+
+function updateInstitutionPagination(recordCount, totalPages) {
+  const { page, pageSize } = state.institutionManagement;
+  document.querySelectorAll(".institution-page-size").forEach((select) => {
+    select.value = String(pageSize);
+  });
+  document.querySelectorAll(".institution-page-status").forEach((status) => {
+    status.textContent = `Page ${recordCount ? page : 0} of ${totalPages} · ${recordCount} institutions`;
+  });
+  document.querySelectorAll("[data-institution-page-action]").forEach((button) => {
+    const action = button.dataset.institutionPageAction;
+    button.disabled = !recordCount
+      || (action === "first" && page === 1)
+      || (action === "previous" && page <= 1)
+      || (action === "next" && page >= totalPages)
+      || (action === "last" && page === totalPages);
+  });
+}
+
+function renderInstitutionManagement() {
+  if (!elements["institution-management-rows"]) return;
+  const records = filteredInstitutionRecords();
+  const { page, pageSize } = state.institutionManagement;
+  const totalPages = institutionTotalPages(records.length);
+  const outOfRange = records.length > 0 && page > totalPages;
+  const pageStart = (page - 1) * pageSize;
+  const pageRecords = outOfRange ? [] : records.slice(pageStart, pageStart + pageSize);
   const body = elements["institution-management-rows"];
   body.replaceChildren();
-  records.forEach((institution) => {
+  pageRecords.forEach((institution) => {
     const row = document.createElement("tr");
     const identity = document.createElement("td");
     identity.append(document.createTextNode(institution.canonical_name), document.createElement("br"), document.createTextNode(institution.institution_id));
@@ -2002,7 +2077,16 @@ function renderInstitutionManagement() {
     row.append(identity, hierarchy, status, usage, actions);
     body.append(row);
   });
-  elements["institution-management-empty"].hidden = records.length !== 0;
+  updateInstitutionPagination(records.length, totalPages);
+  const empty = elements["institution-management-empty"];
+  empty.hidden = pageRecords.length !== 0;
+  if (!records.length) {
+    empty.textContent = state.institutionManagement.query.trim()
+      ? "No institutions match the current search."
+      : "No institutions are available.";
+  } else if (outOfRange) {
+    empty.textContent = `Page ${page} is out of range. Choose First, Previous, or Last.`;
+  }
 }
 
 async function postInstitutionAction(path, body) {

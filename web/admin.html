@@ -305,9 +305,29 @@
           <button class="secondary-button" id="institution-management-close" type="button">Close</button>
         </div>
         <p class="review-scope-help">Location edits never change institution IDs or author mappings. Global replacement uses a canonical target selector and a final source/target confirmation.</p>
-        <label class="search-field"><span>Search institutions</span><input id="institution-management-search" type="search" placeholder="Canonical name, alias, type, status…"></label>
-        <div class="table-wrap"><table><thead><tr><th>Institution identity</th><th>Aliases / parent</th><th>Status / type</th><th>Usage</th><th>Separate actions</th></tr></thead><tbody id="institution-management-rows"></tbody></table></div>
-        <p class="empty-markers" id="institution-management-empty" hidden>No institutions match.</p>
+        <label class="search-field institution-management-search"><span>Search institutions</span><input id="institution-management-search" type="search" placeholder="Canonical name, alias, type, status…"></label>
+        <nav class="institution-pagination" aria-label="Institution pages above table">
+          <label>Rows per page <select class="institution-page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option></select></label>
+          <span class="institution-page-status" role="status" aria-live="polite">Page 1 of 1</span>
+          <div class="institution-page-actions">
+            <button class="secondary-button" data-institution-page-action="first" type="button">First</button>
+            <button class="secondary-button" data-institution-page-action="previous" type="button">Previous</button>
+            <button class="secondary-button" data-institution-page-action="next" type="button">Next</button>
+            <button class="secondary-button" data-institution-page-action="last" type="button">Last</button>
+          </div>
+        </nav>
+        <div class="table-wrap institution-management-table-wrap" id="institution-management-table-wrap"><table><thead><tr><th>Institution identity</th><th>Aliases / parent</th><th>Status / type</th><th>Usage</th><th>Separate actions</th></tr></thead><tbody id="institution-management-rows"></tbody></table></div>
+        <p class="empty-markers" id="institution-management-empty" role="status" hidden>No institutions match.</p>
+        <nav class="institution-pagination" aria-label="Institution pages below table">
+          <label>Rows per page <select class="institution-page-size"><option value="25">25</option><option value="50" selected>50</option><option value="100">100</option></select></label>
+          <span class="institution-page-status" role="status" aria-live="polite">Page 1 of 1</span>
+          <div class="institution-page-actions">
+            <button class="secondary-button" data-institution-page-action="first" type="button">First</button>
+            <button class="secondary-button" data-institution-page-action="previous" type="button">Previous</button>
+            <button class="secondary-button" data-institution-page-action="next" type="button">Next</button>
+            <button class="secondary-button" data-institution-page-action="last" type="button">Last</button>
+          </div>
+        </nav>
       </section>
 
       <section class="location-review-panel" id="location-review-panel" hidden>

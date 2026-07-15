@@ -1975,6 +1975,52 @@ dialog::backdrop {
   border-radius: 9px;
 }
 
+.institution-management-search {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 0.65rem 0;
+  background: var(--panel);
+}
+
+.institution-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  margin: 0.75rem 0;
+}
+
+.institution-pagination label,
+.institution-page-status {
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.institution-pagination select {
+  margin-left: 0.35rem;
+}
+
+.institution-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.institution-management-table-wrap {
+  max-height: 68vh;
+  overflow: auto;
+  scroll-behavior: smooth;
+}
+
+.institution-management-table-wrap thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
 table {
   width: 100%;
   min-width: 52rem;
