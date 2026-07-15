@@ -144,6 +144,8 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "mapping-replace-warning",
     "mapping-fields",
     "mapping-institution",
+    "mapping-institution-id",
+    "mapping-institution-options",
     "mapping-authors",
     "mapping-raw-affiliation",
     "mapping-evidence-source",
@@ -389,6 +391,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   });
   elements["mapping-cancel"].addEventListener("click", closeMappingDialog);
   elements["mapping-form"].addEventListener("submit", submitMapping);
+  elements["mapping-institution"].addEventListener("input", syncMappingInstitutionId);
   [
     ["run-curated-validation", "/api/run-curated-validation", "Curated validation"],
     ["run-export-preview", "/api/export-preview", "Preview export"],
@@ -3942,6 +3945,8 @@ function openMappingDialog(mode, mapping = {}) {
       state.selectedPaper?.year || state.selectedPaper?.publication_year
     ) || "year unknown"})`;
   elements["mapping-institution"].value = text(mapping.institution);
+  elements["mapping-institution-id"].value = text(mapping.institution_id);
+  renderMappingInstitutionOptions();
   elements["mapping-authors"].value = text(mapping.institution_authors);
   elements["mapping-raw-affiliation"].value = text(mapping.raw_affiliation);
   elements["mapping-evidence-source"].value = text(mapping.evidence_source);
@@ -3990,6 +3995,37 @@ function openMappingDialog(mode, mapping = {}) {
   ).focus();
 }
 
+function canonicalInstitutionKey(value) {
+  return text(value).normalize("NFKC").toLocaleLowerCase()
+    .match(/[\p{L}\p{N}_]+/gu)?.join(" ") || "";
+}
+
+function mappingInstitutionMatches(value) {
+  const key = canonicalInstitutionKey(value);
+  return state.institutions.filter((row) => [
+    row.canonical_name,
+    ...(row.aliases || []),
+  ].some((name) => canonicalInstitutionKey(name) === key));
+}
+
+function syncMappingInstitutionId() {
+  const matches = mappingInstitutionMatches(elements["mapping-institution"].value);
+  elements["mapping-institution-id"].value =
+    matches.length === 1 ? text(matches[0].institution_id) : "";
+}
+
+function renderMappingInstitutionOptions() {
+  const options = state.institutions
+    .filter((row) => row.institution_status === "active")
+    .map((row) => {
+      const option = document.createElement("option");
+      option.value = text(row.canonical_name);
+      option.label = `${text(row.canonical_name)} (${text(row.institution_id)})`;
+      return option;
+    });
+  elements["mapping-institution-options"].replaceChildren(...options);
+}
+
 function closeMappingDialog() {
   elements["mapping-dialog"].close();
 }
@@ -3997,8 +4033,9 @@ function closeMappingDialog() {
 function mappingDraft() {
   return {
     institution: elements["mapping-institution"].value.trim(),
+    institution_id: elements["mapping-institution-id"].value,
     institution_authors: elements["mapping-authors"].value.trim(),
-    raw_affiliation: elements["mapping-raw-affiliation"].value.trim(),
+    raw_affiliation: elements["mapping-raw-affiliation"].value,
     evidence_source: elements["mapping-evidence-source"].value.trim(),
     evidence_url: elements["mapping-evidence-url"].value.trim(),
     affiliation_note: elements["mapping-affiliation-note"].value.trim(),
@@ -4055,7 +4092,11 @@ async function submitMapping(event) {
     });
     closeMappingDialog();
     showNotice(result.message);
-    await loadSelectedMappings();
+    await Promise.all([
+      loadSelectedMappings(),
+      refreshInstitutions(),
+      loadLocationReviews(),
+    ]);
   } catch (error) {
     elements["mapping-form-error"].hidden = false;
     elements["mapping-form-error"].textContent =

@@ -15,6 +15,7 @@ try:
     from .curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
+        INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
     )
     from .paper_exclusions import (
@@ -23,21 +24,32 @@ try:
         normalized_title_year_key,
     )
     from .curated_institutions import (
+        DEFAULT_ALIASES_PATH,
         DEFAULT_INSTITUTIONS_PATH,
+        CuratedInstitutionError,
         append_confirmed_mapping_change_audit,
         load_institutions,
+        normalize_institution,
+        save_institutions,
+        stable_institution_id,
     )
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
+        INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
     from curated_institutions import (
+        DEFAULT_ALIASES_PATH,
         DEFAULT_INSTITUTIONS_PATH,
+        CuratedInstitutionError,
         append_confirmed_mapping_change_audit,
         load_institutions,
+        normalize_institution,
+        save_institutions,
+        stable_institution_id,
     )
 
 
@@ -193,7 +205,7 @@ def _mapping_fields(
     institution = clean(draft.get("institution"))
     institution_id = clean(draft.get("institution_id"))
     institution_authors = clean(draft.get("institution_authors"))
-    raw_affiliation = clean(draft.get("raw_affiliation"))
+    raw_affiliation = str(draft.get("raw_affiliation") or "")
     evidence_source = clean(draft.get("evidence_source"))
     evidence_url = clean(draft.get("evidence_url"))
     review_note = clean(draft.get("review_note"))
@@ -208,7 +220,7 @@ def _mapping_fields(
         )
     if not institution_authors:
         raise CuratedMappingError("institution authors are required")
-    if not any((raw_affiliation, evidence_source, evidence_url)):
+    if not any((clean(raw_affiliation), evidence_source, evidence_url)):
         raise CuratedMappingError(
             "raw affiliation or evidence source/evidence URL is required"
         )
@@ -239,27 +251,105 @@ def _mapping_fields(
     }
 
 
-def _validate_canonical_institution(
-    mapping: Mapping[str, Any], institutions_path: Path
-) -> None:
-    """Reject writes that would create an orphan or target a retired entity."""
-    institution_id = clean(mapping.get("institution_id"))
-    entity = next(
-        (
-            row
-            for row in load_institutions(institutions_path)
-            if clean(row.get("institution_id")) == institution_id
-        ),
+def _infer_institution_type(name: Any) -> str:
+    normalized = normalize_institution(name)
+    if any(word in normalized.split() for word in ("company", "corporation", "inc")):
+        return "company"
+    if "department" in normalized:
+        return "department"
+    if "laboratory" in normalized or normalized.endswith(" lab"):
+        return "laboratory"
+    if any(word in normalized.split() for word in ("institute", "academy", "centre", "center")):
+        return "institute"
+    if any(word in normalized.split() for word in ("university", "college")):
+        return "university"
+    return "research_unit"
+
+
+def _resolve_mapping_institution(
+    mapping: Dict[str, str],
+    institutions: List[Dict[str, str]],
+    aliases: Sequence[Mapping[str, Any]],
+) -> str:
+    """Resolve a mapping to one active entity or append a provisional entity."""
+    submitted_id = clean(mapping.get("institution_id"))
+    submitted_name = clean(mapping.get("institution"))
+    active_by_id = {
+        clean(row.get("institution_id")): row
+        for row in institutions
+        if clean(row.get("institution_status")) == "active"
+    }
+    if submitted_id in active_by_id:
+        entity = active_by_id[submitted_id]
+        mapping["institution_id"] = submitted_id
+        mapping["institution"] = clean(entity.get("canonical_name"))
+        return "existing"
+
+    normalized = normalize_institution(submitted_name)
+    matched_ids = {
+        identifier
+        for identifier, row in active_by_id.items()
+        if normalize_institution(row.get("canonical_name")) == normalized
+    }
+    matched_ids.update(
+        clean(alias.get("institution_id"))
+        for alias in aliases
+        if clean(alias.get("review_status")) == "confirmed"
+        and normalize_institution(alias.get("alias_name")) == normalized
+        and clean(alias.get("institution_id")) in active_by_id
+    )
+    if len(matched_ids) > 1:
+        candidates = ", ".join(
+            f"{clean(active_by_id[identifier].get('canonical_name'))} ({identifier})"
+            for identifier in sorted(matched_ids)
+        )
+        raise CuratedMappingError(
+            f"institution name is ambiguous; choose one canonical institution: {candidates}"
+        )
+    if matched_ids:
+        identifier = next(iter(matched_ids))
+        mapping["institution_id"] = identifier
+        mapping["institution"] = clean(active_by_id[identifier].get("canonical_name"))
+        return "existing"
+
+    identifier = stable_institution_id(submitted_name)
+    collision = next(
+        (row for row in institutions if clean(row.get("institution_id")) == identifier),
         None,
     )
-    if entity is None:
+    if collision is not None:
         raise CuratedMappingError(
-            f"institution_id is not in the canonical registry: {institution_id}"
+            f"institution name conflicts with a non-active canonical record: {identifier}"
         )
-    if clean(entity.get("institution_status")) != "active":
-        raise CuratedMappingError(
-            f"institution_id is not active: {institution_id}"
-        )
+    now = _timestamp()
+    institutions.append(
+        {
+            "institution_id": identifier,
+            "canonical_name": submitted_name,
+            "institution_type": _infer_institution_type(submitted_name),
+            "institution_status": "active",
+            "parent_institution_id": "",
+            "public_display": submitted_name,
+            "created_at": now,
+            "updated_at": now,
+            "created_by": "local-admin",
+        }
+    )
+    mapping["institution_id"] = identifier
+    mapping["institution"] = submitted_name
+    return "provisional"
+
+
+def _load_aliases(path: Path) -> List[Dict[str, str]]:
+    return _read_csv(path, INSTITUTION_ALIAS_COLUMNS)
+
+
+def _restore_snapshots(snapshots: Mapping[Path, bytes | None]) -> None:
+    for path, content in snapshots.items():
+        if content is None:
+            path.unlink(missing_ok=True)
+        else:
+            path.write_bytes(content)
 
 
 def _duplicate_mapping(
@@ -377,7 +467,7 @@ def _sync_location_review(
     map_records: Sequence[Mapping[str, Any]],
     location_rows: List[Dict[str, str]],
 ) -> str:
-    if clean(mapping.get("mapping_status")) != "active":
+    if clean(mapping.get("mapping_status")) not in ACTIVE_MAPPING_STATUSES:
         return "not_required"
     if _normalized_text(mapping.get("institution")) in known_location_institutions(
         map_records
@@ -428,10 +518,14 @@ def create_mapping(
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
 ) -> Dict[str, Any]:
     rows = load_mappings(mappings_path)
+    institutions = load_institutions(institutions_path)
     candidate = _mapping_fields(paper, draft)
-    _validate_canonical_institution(candidate, institutions_path)
+    institution_resolution = _resolve_mapping_institution(
+        candidate, institutions, _load_aliases(institution_aliases_path)
+    )
     duplicate = _duplicate_mapping(candidate, rows)
     if duplicate:
         raise DuplicateMappingError(duplicate)
@@ -449,20 +543,24 @@ def create_mapping(
     rows.append(row)
     snapshots = {
         path: path.read_bytes() if path.exists() else None
-        for path in (mappings_path, location_review_path)
+        for path in (institutions_path, mappings_path, location_review_path)
     }
     try:
+        if institution_resolution == "provisional":
+            save_institutions(institutions, institutions_path)
         save_mappings(rows, mappings_path)
         if location_status in {"created", "updated"}:
             save_location_reviews(location_rows, location_review_path)
-    except Exception:
-        for path, content in snapshots.items():
-            if content is None:
-                path.unlink(missing_ok=True)
-            else:
-                path.write_bytes(content)
+    except Exception as error:
+        _restore_snapshots(snapshots)
+        if isinstance(error, CuratedInstitutionError):
+            raise CuratedMappingError(str(error)) from error
         raise
-    return {"mapping": row, "location_review": location_status}
+    return {
+        "mapping": row,
+        "location_review": location_status,
+        "institution_resolution": institution_resolution,
+    }
 
 
 def create_mapping_candidates(
@@ -473,15 +571,19 @@ def create_mapping_candidates(
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
 ) -> Dict[str, Any]:
     """Atomically append all non-duplicate candidates for a newly added paper."""
     rows = load_mappings(mappings_path)
     location_rows = load_location_reviews(location_review_path)
+    institutions = load_institutions(institutions_path)
+    aliases = _load_aliases(institution_aliases_path)
     created: List[Dict[str, str]] = []
     location_results: List[str] = []
+    institution_resolutions: List[str] = []
     for index, draft in enumerate(drafts):
         candidate = _mapping_fields(paper, draft)
-        _validate_canonical_institution(candidate, institutions_path)
+        resolution = _resolve_mapping_institution(candidate, institutions, aliases)
         duplicate = _duplicate_mapping(candidate, [*rows, *created])
         if duplicate:
             continue
@@ -495,6 +597,7 @@ def create_mapping_candidates(
             "updated_at": now,
         }
         created.append(row)
+        institution_resolutions.append(resolution)
         location_results.append(
             _sync_location_review(
                 row, map_records=map_records, location_rows=location_rows
@@ -502,23 +605,24 @@ def create_mapping_candidates(
         )
     snapshots = {
         path: path.read_bytes() if path.exists() else None
-        for path in (mappings_path, location_review_path)
+        for path in (institutions_path, mappings_path, location_review_path)
     }
     try:
+        if "provisional" in institution_resolutions:
+            save_institutions(institutions, institutions_path)
         if created:
             save_mappings([*rows, *created], mappings_path)
         if any(status in {"created", "updated"} for status in location_results):
             save_location_reviews(location_rows, location_review_path)
-    except Exception:
-        for path, content in snapshots.items():
-            if content is None:
-                path.unlink(missing_ok=True)
-            else:
-                path.write_bytes(content)
+    except Exception as error:
+        _restore_snapshots(snapshots)
+        if isinstance(error, CuratedInstitutionError):
+            raise CuratedMappingError(str(error)) from error
         raise
     return {
         "mappings": created,
         "location_reviews": location_results,
+        "institution_resolutions": institution_resolutions,
     }
 
 
@@ -531,6 +635,7 @@ def update_mapping(
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
     institution_audit_path: Path | None = None,
     change_source: str = "admin_mapping_update",
     changed_by: str = "local-admin",
@@ -548,7 +653,10 @@ def update_mapping(
     if "provenance_source" not in candidate_draft:
         candidate_draft["provenance_source"] = row.get("provenance_source")
     candidate = _mapping_fields(paper, candidate_draft)
-    _validate_canonical_institution(candidate, institutions_path)
+    institutions = load_institutions(institutions_path)
+    institution_resolution = _resolve_mapping_institution(
+        candidate, institutions, _load_aliases(institution_aliases_path)
+    )
     duplicate = _duplicate_mapping(
         candidate, rows, ignore_mapping_id=clean(mapping_id)
     )
@@ -565,11 +673,18 @@ def update_mapping(
     )
     snapshots = {
         path: path.read_bytes() if path.exists() else None
-        for path in (mappings_path, location_review_path, institution_audit_path)
+        for path in (
+            institutions_path,
+            mappings_path,
+            location_review_path,
+            institution_audit_path,
+        )
         if path is not None
     }
     audit = None
     try:
+        if institution_resolution == "provisional":
+            save_institutions(institutions, institutions_path)
         save_mappings(rows, mappings_path)
         if location_status in {"created", "updated"}:
             save_location_reviews(location_rows, location_review_path)
@@ -598,14 +713,17 @@ def update_mapping(
                 review_note=row.get("review_note"),
                 audit_path=institution_audit_path,
             )
-    except Exception:
-        for path, content in snapshots.items():
-            if content is None:
-                path.unlink(missing_ok=True)
-            else:
-                path.write_bytes(content)
+    except Exception as error:
+        _restore_snapshots(snapshots)
+        if isinstance(error, CuratedInstitutionError):
+            raise CuratedMappingError(str(error)) from error
         raise
-    return {"mapping": dict(row), "location_review": location_status, "audit": audit}
+    return {
+        "mapping": dict(row),
+        "location_review": location_status,
+        "audit": audit,
+        "institution_resolution": institution_resolution,
+    }
 
 
 def _append_audit_note(existing: Any, action: str, note: str) -> str:
@@ -651,6 +769,7 @@ def replace_all_mappings(
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
 ) -> Dict[str, Any]:
     if confirm_replace_all is not True:
         raise CuratedMappingError("confirm_replace_all=true is required")
@@ -660,6 +779,8 @@ def replace_all_mappings(
         raise CuratedMappingError("at least one replacement mapping is required")
 
     rows = load_mappings(mappings_path)
+    institutions = load_institutions(institutions_path)
+    aliases = _load_aliases(institution_aliases_path)
     replaced = []
     for row in rows:
         if (
@@ -676,11 +797,12 @@ def replace_all_mappings(
     created = []
     location_rows = load_location_reviews(location_review_path)
     location_results = []
+    institution_resolutions = []
     for draft in drafts:
         candidate_draft = dict(draft)
         candidate_draft.setdefault("review_note", review_note)
         candidate = _mapping_fields(paper, candidate_draft)
-        _validate_canonical_institution(candidate, institutions_path)
+        resolution = _resolve_mapping_institution(candidate, institutions, aliases)
         duplicate = _duplicate_mapping(candidate, rows)
         if duplicate:
             raise DuplicateMappingError(duplicate)
@@ -695,6 +817,7 @@ def replace_all_mappings(
         }
         rows.append(row)
         created.append(row)
+        institution_resolutions.append(resolution)
         location_results.append(
             _sync_location_review(
                 row, map_records=map_records, location_rows=location_rows
@@ -703,21 +826,22 @@ def replace_all_mappings(
 
     snapshots = {
         path: path.read_bytes() if path.exists() else None
-        for path in (mappings_path, location_review_path)
+        for path in (institutions_path, mappings_path, location_review_path)
     }
     try:
+        if "provisional" in institution_resolutions:
+            save_institutions(institutions, institutions_path)
         save_mappings(rows, mappings_path)
         if any(status in {"created", "updated"} for status in location_results):
             save_location_reviews(location_rows, location_review_path)
-    except Exception:
-        for path, content in snapshots.items():
-            if content is None:
-                path.unlink(missing_ok=True)
-            else:
-                path.write_bytes(content)
+    except Exception as error:
+        _restore_snapshots(snapshots)
+        if isinstance(error, CuratedInstitutionError):
+            raise CuratedMappingError(str(error)) from error
         raise
     return {
         "replaced_mapping_ids": replaced,
         "mappings": created,
         "location_reviews": location_results,
+        "institution_resolutions": institution_resolutions,
     }

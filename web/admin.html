@@ -802,7 +802,10 @@
         <p class="dialog-warning" id="mapping-replace-warning" hidden>Every active curated mapping for this paper will be marked excluded. The mapping below becomes the first replacement row.</p>
         <div class="mapping-fields" id="mapping-fields">
           <label>Institution
-            <input id="mapping-institution" type="text" required>
+            <input id="mapping-institution" type="text" list="mapping-institution-options" required>
+            <input id="mapping-institution-id" type="hidden">
+            <datalist id="mapping-institution-options"></datalist>
+            <span class="field-help">Choose a canonical institution or enter a new name to add it to Needs Coordinates.</span>
           </label>
           <label>Institution authors
             <input id="mapping-authors" type="text" placeholder="Separate authors with semicolons" required>

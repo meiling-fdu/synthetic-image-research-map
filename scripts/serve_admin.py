@@ -2794,7 +2794,7 @@ def make_handler(
                                 ),
                                 None,
                             )
-                            with CURATED_MAPPING_WRITE_LOCK:
+                            with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_MAPPING_WRITE_LOCK:
                                 if existing and clean(
                                     existing.get("mapping_status")
                                 ) == "active":
@@ -2813,6 +2813,7 @@ def make_handler(
                                         mappings_path=mappings_path,
                                         location_review_path=location_review_path,
                                         institutions_path=institutions_path,
+                                        institution_aliases_path=institution_aliases_path,
                                         institution_audit_path=institution_audit_path,
                                         change_source="admin_review_action",
                                         changed_by="local-admin",
@@ -2827,6 +2828,7 @@ def make_handler(
                                         mappings_path=mappings_path,
                                         location_review_path=location_review_path,
                                         institutions_path=institutions_path,
+                                        institution_aliases_path=institution_aliases_path,
                                     )
                         else:
                             action_warnings.append(
@@ -2989,7 +2991,11 @@ def make_handler(
                         # their existing locks for the coupled create operation.
                         load_mappings(mappings_path)
                         load_location_reviews(location_review_path)
-                        with CURATED_PAPER_WRITE_LOCK, CURATED_MAPPING_WRITE_LOCK:
+                        with (
+                            CURATED_PAPER_WRITE_LOCK,
+                            INSTITUTION_CLEANUP_WRITE_LOCK,
+                            CURATED_MAPPING_WRITE_LOCK,
+                        ):
                             row = create_curated_paper(
                                 payload,
                                 preview_records=preview_records,
@@ -3003,6 +3009,7 @@ def make_handler(
                                 mappings_path=mappings_path,
                                 location_review_path=location_review_path,
                                 institutions_path=institutions_path,
+                                institution_aliases_path=institution_aliases_path,
                             )
                     except DuplicatePaperError as error:
                         self.send_json(
@@ -3069,9 +3076,15 @@ def make_handler(
                                     mappings_path=mappings_path,
                                     location_review_path=location_review_path,
                                     institutions_path=institutions_path,
+                                    institution_aliases_path=institution_aliases_path,
                                 )
                                 response_status = HTTPStatus.CREATED
-                                message = "Curated author–institution mapping saved."
+                                message = (
+                                    "Mapping saved and provisional institution added "
+                                    "to Needs Coordinates."
+                                    if result.get("institution_resolution") == "provisional"
+                                    else "Mapping saved using existing canonical institution."
+                                )
                             elif request.path == "/api/paper/mapping/update":
                                 result = update_mapping(
                                     paper,
@@ -3081,6 +3094,7 @@ def make_handler(
                                     mappings_path=mappings_path,
                                     location_review_path=location_review_path,
                                     institutions_path=institutions_path,
+                                    institution_aliases_path=institution_aliases_path,
                                     institution_audit_path=institution_audit_path,
                                     change_source="admin_mapping_update",
                                     changed_by="local-admin",
@@ -3115,6 +3129,7 @@ def make_handler(
                                     mappings_path=mappings_path,
                                     location_review_path=location_review_path,
                                     institutions_path=institutions_path,
+                                    institution_aliases_path=institution_aliases_path,
                                 )
                                 response_status = HTTPStatus.OK
                                 message = (

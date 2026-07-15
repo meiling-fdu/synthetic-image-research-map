@@ -12,6 +12,7 @@ from scripts.curated_mappings import (
 from scripts.curated_institutions import stable_institution_id
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+    INSTITUTION_ALIAS_COLUMNS,
     INSTITUTION_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
 )
@@ -30,9 +31,11 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         self.mappings_path = directory / "mappings.csv"
         self.locations_path = directory / "locations.csv"
         self.institutions_path = directory / "institutions.csv"
+        self.aliases_path = directory / "aliases.csv"
         write_empty_csv(self.mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
         write_empty_csv(self.locations_path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
         write_empty_csv(self.institutions_path, INSTITUTION_COLUMNS)
+        write_empty_csv(self.aliases_path, INSTITUTION_ALIAS_COLUMNS)
         self.paper = {
             "paper_id": "curated:test",
             "title": "Test paper",
@@ -73,6 +76,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             mappings_path=self.mappings_path,
             location_review_path=self.locations_path,
             institutions_path=self.institutions_path,
+            institution_aliases_path=self.aliases_path,
         )["mapping"]
 
     def update(self, mapping_id, draft):
@@ -84,6 +88,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             mappings_path=self.mappings_path,
             location_review_path=self.locations_path,
             institutions_path=self.institutions_path,
+            institution_aliases_path=self.aliases_path,
         )["mapping"]
 
     def test_create_accepts_empty_missing_and_null_review_note(self):
@@ -115,21 +120,18 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             with self.subTest(field=field), self.assertRaises(CuratedMappingError):
                 self.create({**self.draft, field: "", "review_note": ""})
 
-    def test_create_rejects_unknown_canonical_institution_without_writing(self):
-        before = self.mappings_path.read_bytes()
-        with self.assertRaisesRegex(CuratedMappingError, "canonical registry"):
-            create_mapping(
-                self.paper,
-                {
-                    **self.draft,
-                    "institution": "Unregistered University",
-                },
-                map_records=[],
-                mappings_path=self.mappings_path,
-                location_review_path=self.locations_path,
-                institutions_path=self.institutions_path,
-            )
-        self.assertEqual(self.mappings_path.read_bytes(), before)
+    def test_create_registers_unknown_institution_before_writing_mapping(self):
+        result = create_mapping(
+            self.paper,
+            {**self.draft, "institution": "Unregistered University"},
+            map_records=[],
+            mappings_path=self.mappings_path,
+            location_review_path=self.locations_path,
+            institutions_path=self.institutions_path,
+            institution_aliases_path=self.aliases_path,
+        )
+        self.assertEqual(result["institution_resolution"], "provisional")
+        self.assertEqual(result["mapping"]["institution_id"], stable_institution_id("Unregistered University"))
 
     def test_active_mapping_with_empty_review_note_passes_database_validation(self):
         issues = []
@@ -163,7 +165,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         ).read_text()
         self.assertIn("Review note (optional)", html)
         self.assertIn('id="mapping-review-note" rows="3"></textarea>', html)
-        self.assertIn('id="mapping-institution" type="text" required', html)
+        self.assertIn('id="mapping-institution" type="text" list="mapping-institution-options" required', html)
         self.assertIn(
             'id="mapping-authors" type="text" placeholder="Separate authors with semicolons" required',
             html,
