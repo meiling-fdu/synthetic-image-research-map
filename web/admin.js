@@ -32,6 +32,7 @@ const state = {
   selectedGeocodeCandidate: null,
   locationEditorMode: "review",
   selectedInstitutionLocationId: "",
+  locationSaveRunning: false,
   release: { validation: "required", preview: "required", changedFiles: 0 },
 };
 
@@ -2717,6 +2718,40 @@ function clearLocationEditor() {
   renderLocationReviewList();
 }
 
+const COORDINATE_INPUT_PATTERN = /^[+-]?(?:\d+(?:[.,]\d+)?|[.,]\d+)$/;
+
+function normalizeCoordinateInput(value, label, minimum, maximum) {
+  const input = text(value).trim();
+  if (!COORDINATE_INPUT_PATTERN.test(input)) {
+    throw new Error(
+      `${label} must be a decimal number using either a dot or comma, without thousands separators.`
+    );
+  }
+  let normalized = input.replace(",", ".");
+  normalized = normalized.replace(/^([+-]?)\./, "$10.");
+  const numericValue = Number(normalized);
+  if (!Number.isFinite(numericValue) || numericValue < minimum || numericValue > maximum) {
+    throw new Error(`${label} must be between ${minimum} and ${maximum}.`);
+  }
+  return normalized;
+}
+
+function showLocationFormError(message, field = null) {
+  elements["location-form-error"].textContent = message;
+  elements["location-form-error"].hidden = false;
+  if (field) {
+    field.setAttribute("aria-invalid", "true");
+    field.focus();
+  }
+}
+
+function clearLocationCoordinateErrors() {
+  elements["location-form-error"].hidden = true;
+  elements["location-form-error"].textContent = "";
+  elements["confirmed-lat"].removeAttribute("aria-invalid");
+  elements["confirmed-lon"].removeAttribute("aria-invalid");
+}
+
 function locationDraft() {
   return {
     queue_id: elements["location-queue-id"].value,
@@ -2737,6 +2772,30 @@ function locationDraft() {
     coordinate_review_note:
       elements["coordinate-review-note"].value.trim(),
   };
+}
+
+function validatedLocationDraft() {
+  clearLocationCoordinateErrors();
+  const coordinates = [
+    ["confirmed-lat", "Latitude", -90, 90],
+    ["confirmed-lon", "Longitude", -180, 180],
+  ];
+  for (const [fieldId, label, minimum, maximum] of coordinates) {
+    const field = elements[fieldId];
+    try {
+      field.value = normalizeCoordinateInput(field.value, label, minimum, maximum);
+    } catch (error) {
+      showLocationFormError(error.message, field);
+      return null;
+    }
+  }
+  return locationDraft();
+}
+
+function setLocationSaveRunning(running) {
+  state.locationSaveRunning = running;
+  elements["location-confirm"].disabled = running;
+  elements["location-save-metadata"].disabled = running;
 }
 
 function geocodeAddress() {
@@ -2768,6 +2827,8 @@ function clearLocationFields() {
   ].forEach((id) => {
     elements[id].value = "";
   });
+  elements["confirmed-lat"].removeAttribute("aria-invalid");
+  elements["confirmed-lon"].removeAttribute("aria-invalid");
   state.selectedGeocodeCandidate = null;
 }
 
@@ -2930,20 +2991,18 @@ function confirmGeocodeCandidate() {
 
 async function confirmLocation(event) {
   event.preventDefault();
-  const draft = locationDraft();
+  if (state.locationSaveRunning) return;
+  const draft = validatedLocationDraft();
+  if (!draft) return;
   if (!draft.institution_id || draft.institution_id !== state.selectedInstitutionLocationId) {
-    elements["location-form-error"].hidden = false;
-    elements["location-form-error"].textContent = "The location editor is not bound to the selected canonical institution.";
+    showLocationFormError("The location editor is not bound to the selected canonical institution.");
     return;
   }
-  elements["location-form-error"].hidden = true;
   if (!(draft.coordinate_source || draft.coordinate_source_url)) {
-    elements["location-form-error"].hidden = false;
-    elements["location-form-error"].textContent =
-      "Enter a coordinate source or coordinate source URL.";
+    showLocationFormError("Enter a coordinate source or coordinate source URL.");
     return;
   }
-  elements["location-confirm"].disabled = true;
+  setLocationSaveRunning(true);
   try {
     const canonicalMode = state.locationEditorMode === "canonical";
     const result = await apiFetch(canonicalMode ? "/api/institution/location" : "/api/location-review/confirm", {
@@ -2966,10 +3025,9 @@ async function confirmLocation(event) {
     showNotice(result.message);
     await Promise.all([loadLocationReviews(), refreshInstitutions()]);
   } catch (error) {
-    elements["location-form-error"].hidden = false;
-    elements["location-form-error"].textContent = error.message;
+    showLocationFormError(error.message);
   } finally {
-    elements["location-confirm"].disabled = false;
+    setLocationSaveRunning(false);
   }
 }
 
@@ -3040,20 +3098,25 @@ async function confirmLocationAlias() {
 }
 
 async function saveLocationMetadata() {
+  if (state.locationSaveRunning) return;
   if (state.locationEditorMode === "canonical") {
     elements["location-form"].requestSubmit();
     return;
   }
+  const draft = validatedLocationDraft();
+  if (!draft) return;
+  setLocationSaveRunning(true);
   try {
     const result = await apiFetch("/api/location-review/save-metadata", {
       method: "POST",
-      body: JSON.stringify(locationDraft()),
+      body: JSON.stringify(draft),
     });
     showNotice(result.message);
     await loadLocationReviews();
   } catch (error) {
-    elements["location-form-error"].hidden = false;
-    elements["location-form-error"].textContent = error.message;
+    showLocationFormError(error.message);
+  } finally {
+    setLocationSaveRunning(false);
   }
 }
 

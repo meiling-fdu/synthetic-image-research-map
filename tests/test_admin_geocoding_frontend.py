@@ -52,8 +52,8 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
     def test_empty_errors_and_manual_inputs_remain_supported(self):
         self.assertIn("!result.no_safe_match", self.source)
         self.assertIn("Coordinate search failed:", self.source)
-        self.assertIn('id="confirmed-lat" type="number"', self.html)
-        self.assertIn('id="confirmed-lon" type="number"', self.html)
+        self.assertIn('id="confirmed-lat" type="text" inputmode="decimal"', self.html)
+        self.assertIn('id="confirmed-lon" type="text" inputmode="decimal"', self.html)
         self.assertIn('"/api/location-review/confirm"', self.source)
         self.assertIn('missing.textContent = "Unavailable — manual review required"', self.source)
 

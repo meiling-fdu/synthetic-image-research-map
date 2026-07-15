@@ -396,10 +396,10 @@
                   <input id="confirmed-country-code" type="text" maxlength="2" pattern="[A-Z]{2}" placeholder="US" required>
                 </label>
                 <label>Latitude
-                  <input id="confirmed-lat" type="number" min="-90" max="90" step="any" required>
+                  <input id="confirmed-lat" type="text" inputmode="decimal" autocomplete="off" aria-describedby="location-form-error">
                 </label>
                 <label>Longitude
-                  <input id="confirmed-lon" type="number" min="-180" max="180" step="any" required>
+                  <input id="confirmed-lon" type="text" inputmode="decimal" autocomplete="off" aria-describedby="location-form-error">
                 </label>
                 <div class="full-width geocode-action-row">
                   <button class="secondary-button" id="location-geocode" type="button">Find coordinates</button>
