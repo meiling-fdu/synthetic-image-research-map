@@ -1751,16 +1751,36 @@ dialog::backdrop {
 #scope-form,
 #mapping-form,
 #geocode-form,
-#institution-resolution-form {
+#institution-resolution-form,
+#institution-merge-form,
+#institution-merge-target-step,
+#institution-merge-confirm-step {
   display: grid;
   gap: 0.9rem;
+}
+
+#scope-form,
+#mapping-form,
+#geocode-form,
+#institution-resolution-form,
+#institution-merge-form {
   padding: 1.4rem;
+}
+
+#institution-merge-results {
+  width: 100%;
+}
+
+#institution-merge-target-step[hidden],
+#institution-merge-confirm-step[hidden] {
+  display: none;
 }
 
 #scope-form h2,
 #mapping-form h2,
 #geocode-form h2,
 #institution-resolution-form h2,
+#institution-merge-form h2,
 .institution-evidence-panel h2 {
   margin-bottom: 0;
   font-family: Georgia, "Times New Roman", serif;

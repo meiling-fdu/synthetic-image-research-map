@@ -18,6 +18,7 @@ const state = {
   institutionCleanupSelection: new Set(),
   pendingInstitutionResolution: null,
   institutionEvidenceCase: null,
+  institutionMerge: { source: null, target: null, submitting: false },
   locationStatusFilter: "",
   selectedLocationReviewId: "",
   dashboard: {},
@@ -183,6 +184,24 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "institution-management-search",
     "institution-management-rows",
     "institution-management-empty",
+    "institution-merge-dialog",
+    "institution-merge-form",
+    "institution-merge-target-step",
+    "institution-merge-confirm-step",
+    "institution-merge-source-label",
+    "institution-merge-search",
+    "institution-merge-results",
+    "institution-merge-target-cancel",
+    "institution-merge-resolve",
+    "institution-merge-source-name",
+    "institution-merge-source-id",
+    "institution-merge-target-name",
+    "institution-merge-target-id",
+    "institution-merge-note",
+    "institution-merge-confirmation",
+    "institution-merge-confirm-cancel",
+    "institution-merge-submit",
+    "institution-merge-error",
     "location-review-close",
     "location-summary",
     "location-search",
@@ -430,6 +449,16 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     elements["institution-management-panel"].hidden = true;
   });
   elements["institution-management-search"].addEventListener("input", renderInstitutionManagement);
+  elements["institution-merge-search"].addEventListener("input", renderInstitutionMergeTargets);
+  elements["institution-merge-results"].addEventListener("change", selectInstitutionMergeResult);
+  elements["institution-merge-resolve"].addEventListener("click", resolveInstitutionMergeTarget);
+  elements["institution-merge-target-cancel"].addEventListener("click", closeInstitutionMergeDialog);
+  elements["institution-merge-confirm-cancel"].addEventListener("click", closeInstitutionMergeDialog);
+  elements["institution-merge-confirmation"].addEventListener("input", updateInstitutionMergeSubmitState);
+  elements["institution-merge-form"].addEventListener("submit", submitInstitutionMerge);
+  elements["institution-merge-dialog"].addEventListener("cancel", (event) => {
+    if (state.institutionMerge.submitting) event.preventDefault();
+  });
   elements["location-search"].addEventListener("input", renderLocationReviewList);
   elements["location-form"].addEventListener("submit", confirmLocation);
   elements["location-mark-ambiguous"].addEventListener("click", () => {
@@ -1984,6 +2013,185 @@ async function postInstitutionAction(path, body) {
   await Promise.all([refreshInstitutions(), loadLocationReviews()]);
 }
 
+function shortInstitutionId(value) {
+  return text(value).trim().replace(/^institution:/i, "");
+}
+
+function normalizeInstitutionMergeId(value) {
+  const input = text(value).trim();
+  if (!input) return "";
+  const full = input.match(/^institution:([0-9a-f]{16})$/i);
+  if (full) return `institution:${full[1].toLocaleLowerCase()}`;
+  if (/^[0-9a-f]{16}$/i.test(input)) {
+    return `institution:${input.toLocaleLowerCase()}`;
+  }
+  if (/institution:/i.test(input) || /^[0-9a-f]+$/i.test(input)) {
+    throw new Error("Enter a valid 16-character short institution ID.");
+  }
+  return "";
+}
+
+function institutionMergeSearchText(institution) {
+  return [
+    institution.canonical_name,
+    ...(institution.aliases || []),
+    institution.institution_id,
+    shortInstitutionId(institution.institution_id),
+  ].join(" ").toLocaleLowerCase();
+}
+
+function availableInstitutionMergeTargets() {
+  const sourceId = text(state.institutionMerge.source?.institution_id);
+  return state.institutions.filter((institution) =>
+    institution.institution_id !== sourceId
+    && institution.institution_status === "active"
+  );
+}
+
+function renderInstitutionMergeTargets() {
+  const query = elements["institution-merge-search"].value.trim().toLocaleLowerCase();
+  const matches = availableInstitutionMergeTargets()
+    .filter((institution) => !query || institutionMergeSearchText(institution).includes(query))
+    .slice(0, 100);
+  const options = matches.map((institution) => {
+    const option = document.createElement("option");
+    option.value = institution.institution_id;
+    option.textContent = `${institution.canonical_name} — ${shortInstitutionId(institution.institution_id)}`;
+    return option;
+  });
+  elements["institution-merge-results"].replaceChildren(...options);
+}
+
+function selectInstitutionMergeResult() {
+  const selectedId = elements["institution-merge-results"].value;
+  if (selectedId) elements["institution-merge-search"].value = selectedId;
+  hideInstitutionMergeError();
+}
+
+function showInstitutionMergeError(message) {
+  elements["institution-merge-error"].textContent = message;
+  elements["institution-merge-error"].hidden = false;
+}
+
+function hideInstitutionMergeError() {
+  elements["institution-merge-error"].hidden = true;
+  elements["institution-merge-error"].textContent = "";
+}
+
+function closeInstitutionMergeDialog() {
+  if (state.institutionMerge.submitting) return;
+  elements["institution-merge-dialog"].close();
+  state.institutionMerge = { source: null, target: null, submitting: false };
+}
+
+function openInstitutionMergeDialog(source) {
+  state.institutionMerge = { source, target: null, submitting: false };
+  elements["institution-merge-form"].reset();
+  elements["institution-merge-source-label"].textContent = source.canonical_name;
+  elements["institution-merge-target-step"].hidden = false;
+  elements["institution-merge-confirm-step"].hidden = true;
+  elements["institution-merge-submit"].disabled = true;
+  hideInstitutionMergeError();
+  renderInstitutionMergeTargets();
+  elements["institution-merge-dialog"].showModal();
+  elements["institution-merge-search"].focus();
+}
+
+function resolveInstitutionMergeTarget() {
+  hideInstitutionMergeError();
+  try {
+    const input = elements["institution-merge-search"].value.trim();
+    if (!input) throw new Error("Choose or enter a target institution.");
+    const normalizedId = normalizeInstitutionMergeId(input);
+    let matches = [];
+    if (normalizedId) {
+      matches = state.institutions.filter((row) => row.institution_id === normalizedId);
+      if (!matches.length) throw new Error(`Unknown canonical institution ID: ${normalizedId}`);
+    } else {
+      const key = canonicalInstitutionKey(input);
+      matches = state.institutions.filter((row) => [
+        row.canonical_name,
+        ...(row.aliases || []),
+      ].some((name) => canonicalInstitutionKey(name) === key));
+      if (!matches.length) throw new Error("No canonical institution matches that name or alias.");
+      if (matches.length > 1) throw new Error("That name or alias is ambiguous; select a canonical target from the results.");
+    }
+    const target = matches[0];
+    const source = state.institutionMerge.source;
+    if (target.institution_id === source.institution_id) {
+      throw new Error("Source and target institutions must differ.");
+    }
+    if (target.institution_status !== "active") {
+      throw new Error("The target institution must be active in the canonical registry.");
+    }
+    state.institutionMerge.target = target;
+    elements["institution-merge-source-name"].textContent = source.canonical_name;
+    elements["institution-merge-source-id"].textContent = shortInstitutionId(source.institution_id);
+    elements["institution-merge-target-name"].textContent = target.canonical_name;
+    elements["institution-merge-target-id"].textContent = shortInstitutionId(target.institution_id);
+    elements["institution-merge-target-step"].hidden = true;
+    elements["institution-merge-confirm-step"].hidden = false;
+    elements["institution-merge-confirmation"].focus();
+  } catch (error) {
+    showInstitutionMergeError(error.message);
+  }
+}
+
+function updateInstitutionMergeSubmitState() {
+  elements["institution-merge-submit"].disabled =
+    state.institutionMerge.submitting
+    || elements["institution-merge-confirmation"].value !== "MERGE";
+}
+
+async function submitInstitutionMerge(event) {
+  event.preventDefault();
+  if (state.institutionMerge.submitting) return;
+  hideInstitutionMergeError();
+  const { source, target } = state.institutionMerge;
+  if (!source || !target) {
+    showInstitutionMergeError("Resolve a canonical target before merging.");
+    return;
+  }
+  if (elements["institution-merge-confirmation"].value !== "MERGE") {
+    showInstitutionMergeError('Type "MERGE" exactly to enable this action.');
+    updateInstitutionMergeSubmitState();
+    return;
+  }
+  const note = elements["institution-merge-note"].value.trim();
+  if (!note) {
+    showInstitutionMergeError("A review note is required for the audit trail.");
+    return;
+  }
+  const backendConfirmation =
+    `REPLACE ${source.canonical_name} WITH ${target.canonical_name} GLOBALLY`;
+  state.institutionMerge.submitting = true;
+  elements["institution-merge-submit"].disabled = true;
+  try {
+    await apiFetch("/api/institution/merge", {
+      method: "POST",
+      body: JSON.stringify({
+        source_institution_id: source.institution_id,
+        target_institution_id: target.institution_id,
+        confirmation: backendConfirmation,
+        review_note: note,
+      }),
+    });
+    state.institutionMerge.submitting = false;
+    elements["institution-merge-dialog"].close();
+    state.institutionMerge = { source: null, target: null, submitting: false };
+    showNotice("Institution merge saved.");
+    try {
+      await Promise.all([refreshInstitutions(), loadLocationReviews()]);
+    } catch (refreshError) {
+      showNotice(`Institution merge saved, but refresh failed: ${refreshError.message}`, "error");
+    }
+  } catch (error) {
+    state.institutionMerge.submitting = false;
+    showInstitutionMergeError(`Merge failed: ${error.message}`);
+    updateInstitutionMergeSubmitState();
+  }
+}
+
 async function runInstitutionAction(action, institution) {
   try {
     if (action === "location") {
@@ -2010,17 +2218,8 @@ async function runInstitutionAction(action, institution) {
       if (!note) return;
       await postInstitutionAction("/api/institution/ignore", { institution_id: institution.institution_id, confirmation: true, review_note: note });
     } else if (action === "merge") {
-      const targetId = window.prompt("Target canonical institution ID:");
-      const target = state.institutions.find((row) => row.institution_id === targetId);
-      if (!target) throw new Error("Select an existing target institution ID.");
-      const impact = institution.usage || {};
-      const authors = (impact.authors || []).join(", ") || "none";
-      if (!window.confirm(`Are you replacing this institution globally?\n\nPapers: ${impact.papers || 0}\nAuthor mappings: ${impact.author_mappings || 0}\nMarkers: ${impact.markers || 0}\nAffected authors: ${authors}`)) return;
-      const phrase = `REPLACE ${institution.canonical_name} WITH ${target.canonical_name} GLOBALLY`;
-      if (window.prompt(`Type exactly to confirm:\n${phrase}`) !== phrase) throw new Error("Global replacement confirmation did not match.");
-      const note = window.prompt("Review note for the replacement audit trail:");
-      if (!note) return;
-      await postInstitutionAction("/api/institution/merge", { source_institution_id: institution.institution_id, target_institution_id: target.institution_id, confirmation: phrase, review_note: note });
+      openInstitutionMergeDialog(institution);
+      return;
     }
     showNotice(`Institution ${action} action saved.`);
   } catch (error) {
