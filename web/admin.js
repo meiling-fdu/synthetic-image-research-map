@@ -28,6 +28,8 @@ const state = {
   arxivEnrichment: { records: [], summary: {}, discovery: {} },
   draftMappingCandidates: [],
   selectedGeocodeCandidate: null,
+  locationEditorMode: "review",
+  selectedInstitutionLocationId: "",
   release: { validation: "required", preview: "required", changedFiles: 0 },
 };
 
@@ -36,6 +38,8 @@ let arxivAutofillPollTimer = null;
 let arxivAutofillPolling = false;
 let noticeTimer = null;
 let paperSelectionSequence = 0;
+let institutionLocationSequence = 0;
+let geocodeRequestSequence = 0;
 const workflowCommandIds = [
   "run-curated-validation",
   "run-export-preview",
@@ -1931,7 +1935,11 @@ function institutionActionButton(label, action, institution) {
   button.type = "button";
   button.className = action === "ignore" || action === "merge" ? "danger-button" : "secondary-button";
   button.textContent = label;
-  button.addEventListener("click", () => runInstitutionAction(action, institution));
+  button.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    runInstitutionAction(action, institution);
+  });
   return button;
 }
 
@@ -1976,8 +1984,7 @@ async function postInstitutionAction(path, body) {
 async function runInstitutionAction(action, institution) {
   try {
     if (action === "location") {
-      openLocationReview();
-      showNotice("Select this institution's review row to edit location only; its stable ID and mappings remain unchanged.");
+      await openCanonicalInstitutionLocation(institution);
       return;
     }
     if (action === "identity") {
@@ -2016,6 +2023,88 @@ async function runInstitutionAction(action, institution) {
   } catch (error) {
     showNotice(`Institution action failed: ${error.message}`, "error");
   }
+}
+
+async function openCanonicalInstitutionLocation(institution) {
+  const identifier = text(institution?.institution_id);
+  if (!identifier) throw new Error("The selected canonical institution has no institution_id.");
+  const requestSequence = ++institutionLocationSequence;
+  geocodeRequestSequence += 1;
+  state.locationEditorMode = "canonical";
+  state.selectedInstitutionLocationId = identifier;
+  state.selectedGeocodeCandidate = null;
+  openLocationReview();
+  elements["location-editor-placeholder"].hidden = false;
+  elements["location-editor-placeholder"].querySelector("h3").textContent = "Loading institution location…";
+  elements["location-form"].hidden = true;
+  const payload = await apiFetch(`/api/institution?institution_id=${encodeURIComponent(identifier)}`);
+  if (
+    requestSequence !== institutionLocationSequence ||
+    state.selectedInstitutionLocationId !== identifier
+  ) return;
+  const detail = payload.data || {};
+  if (text(detail.institution?.institution_id) !== identifier) {
+    throw new Error("Loaded institution details do not match the selected institution_id.");
+  }
+  selectCanonicalInstitutionLocation(detail);
+}
+
+function selectCanonicalInstitutionLocation(detail) {
+  const institution = detail.institution || {};
+  const identifier = text(institution.institution_id);
+  const location = detail.location || {};
+  const review = (detail.location_reviews || [])[0] || {};
+  state.locationEditorMode = "canonical";
+  state.selectedInstitutionLocationId = identifier;
+  state.selectedLocationReviewId = "";
+  clearLocationFields();
+  elements["location-editor-placeholder"].hidden = true;
+  elements["location-form"].hidden = false;
+  elements["location-form"].reset();
+  elements["location-queue-id"].value = "";
+  elements["location-institution-id"].value = identifier;
+  elements["confirmed-institution"].value = text(institution.canonical_name);
+  elements["institution-language"].value = text(review.detected_language);
+  elements["institution-review-status"].value = text(review.review_status || "pending_review");
+  const canonicalSelect = elements["canonical-institution"];
+  canonicalSelect.replaceChildren(new Option(institution.canonical_name, institution.canonical_name));
+  canonicalSelect.value = institution.canonical_name;
+  elements["confirmed-city"].value = text(location.city || review.suggested_city);
+  elements["confirmed-region"].value = text(location.region);
+  elements["confirmed-country"].value = text(location.country || review.suggested_country);
+  elements["confirmed-country-code"].value = text(location.country_code).toUpperCase();
+  elements["confirmed-lat"].value = text(location.lat);
+  elements["confirmed-lon"].value = text(location.lon);
+  elements["coordinate-source"].value = text(location.coordinate_source);
+  elements["coordinate-source-url"].value = text(location.coordinate_source_url);
+  elements["coordinate-review-note"].value = text(location.review_note || review.review_note);
+  elements["location-form-error"].hidden = true;
+  renderLocationActions();
+  renderCanonicalLocationContext(detail);
+  elements["confirmed-city"].focus();
+  showNotice(`Editing location for ${institution.canonical_name}; identity and mappings remain unchanged.`);
+}
+
+function renderCanonicalLocationContext(detail) {
+  const institution = detail.institution || {};
+  const location = detail.location || {};
+  const reviews = detail.location_reviews || [];
+  const fields = [
+    ["Canonical institution ID", institution.institution_id],
+    ["Canonical institution name", institution.canonical_name],
+    ["Aliases", (detail.aliases || []).map((row) => row.alias_name).join("; ")],
+    ["Current location", [location.city, location.region, location.country].filter(Boolean).join(", ")],
+    ["Current location review", reviews.map((row) => row.review_status).filter(Boolean).join("; ")],
+    ["Affiliation evidence", (detail.affiliation_evidence || []).map((row) => row.raw_affiliation).filter(Boolean).join("; ")],
+  ];
+  elements["location-context"].replaceChildren();
+  fields.forEach(([label, value]) => {
+    const paragraph = document.createElement("p");
+    const strong = document.createElement("strong");
+    strong.textContent = `${label}: `;
+    paragraph.append(strong, text(value) || "—");
+    elements["location-context"].append(paragraph);
+  });
 }
 
 function openLocationReview() {
@@ -2137,6 +2226,10 @@ function renderLocationReviewList() {
 function selectLocationReview(queueId) {
   const row = state.locationReviews.find((entry) => entry.queue_id === queueId);
   if (!row) return;
+  institutionLocationSequence += 1;
+  geocodeRequestSequence += 1;
+  state.locationEditorMode = "review";
+  state.selectedInstitutionLocationId = text(row.institution_id);
   state.selectedLocationReviewId = queueId;
   renderLocationReviewList();
   elements["location-editor-placeholder"].hidden = true;
@@ -2318,6 +2411,9 @@ function renderLocationContext(row) {
 }
 
 function clearLocationEditor() {
+  institutionLocationSequence += 1;
+  geocodeRequestSequence += 1;
+  state.selectedInstitutionLocationId = "";
   state.selectedLocationReviewId = "";
   elements["location-editor-placeholder"].hidden = false;
   elements["location-form"].hidden = true;
@@ -2400,7 +2496,10 @@ function renderGeocodeCandidates(result) {
   elements["geocode-query"].textContent = `Query: ${text(result.query)}`;
   elements["geocode-candidates"].replaceChildren();
   elements["geocode-candidates"].hidden = candidates.length === 0;
-  elements["geocode-empty"].hidden = candidates.length !== 0;
+  elements["geocode-empty"].hidden = candidates.length !== 0 && !result.no_safe_match;
+  elements["geocode-empty"].textContent = result.no_safe_match
+    ? "No location-consistent candidate was found. Conflicting results cannot be selected; refine the confirmed city, region, or country."
+    : "No location candidates were found. Existing form values are unchanged.";
   elements["geocode-error"].hidden = true;
   elements["geocode-confirm"].disabled = true;
   elements["geocode-replace-warning"].hidden = !(
@@ -2409,10 +2508,12 @@ function renderGeocodeCandidates(result) {
   candidates.forEach((candidate, index) => {
     const label = document.createElement("label");
     label.className = "geocode-candidate";
+    if (candidate.selectable === false) label.classList.add("geocode-candidate-conflict");
     const radio = document.createElement("input");
     radio.type = "radio";
     radio.name = "geocode-candidate";
     radio.value = String(index);
+    radio.disabled = candidate.selectable === false;
     const content = document.createElement("span");
     const title = document.createElement("strong");
     title.textContent = text(candidate.institution_name || candidate.display_name);
@@ -2436,6 +2537,12 @@ function renderGeocodeCandidates(result) {
       candidateDetail("Longitude", candidate.longitude),
       coordinates
     );
+    if ((candidate.conflicts || []).length) {
+      content.append(candidateDetail("Evidence conflict", candidate.conflicts.join("; ")));
+    }
+    if ((candidate.ranking_factors || []).length) {
+      content.append(candidateDetail("Ranking evidence", candidate.ranking_factors.join("; ")));
+    }
     if (safeUrl(candidate.map_url)) {
       const mapLink = linkValue("Open in OpenStreetMap", candidate.map_url);
       content.append(mapLink);
@@ -2457,14 +2564,33 @@ async function findInstitutionCoordinates() {
   button.disabled = true;
   button.textContent = "Searching…";
   elements["location-form-error"].hidden = true;
+  const institutionId = elements["location-institution-id"].value.trim();
+  const loadedInstitutionId = state.selectedInstitutionLocationId;
+  if (!institutionId || institutionId !== loadedInstitutionId) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = "The location editor is not bound to the selected canonical institution.";
+    button.disabled = false;
+    button.textContent = originalLabel;
+    return;
+  }
+  const requestSequence = ++geocodeRequestSequence;
   try {
     const payload = await apiFetch("/api/institution/geocode", {
       method: "POST",
       body: JSON.stringify({
-        institution_name: elements["confirmed-institution"].value.trim(),
-        address: geocodeAddress(),
+        institution_id: institutionId,
+        loaded_institution_id: loadedInstitutionId,
+        city: elements["confirmed-city"].value.trim(),
+        region: elements["confirmed-region"].value.trim(),
+        country: elements["confirmed-country"].value.trim(),
+        country_code: elements["confirmed-country-code"].value.trim().toUpperCase(),
       }),
     });
+    if (
+      requestSequence !== geocodeRequestSequence ||
+      institutionId !== state.selectedInstitutionLocationId ||
+      text(payload.data?.institution_id) !== institutionId
+    ) return;
     renderGeocodeCandidates(payload.data || {});
   } catch (error) {
     elements["location-form-error"].hidden = false;
@@ -2481,7 +2607,11 @@ function closeGeocodeDialog() {
 
 function confirmGeocodeCandidate() {
   const candidate = state.selectedGeocodeCandidate;
-  if (!candidate) return;
+  if (
+    !candidate || candidate.selectable === false ||
+    !state.selectedInstitutionLocationId ||
+    state.selectedInstitutionLocationId !== elements["location-institution-id"].value
+  ) return;
   const hasExisting = elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim();
   if (hasExisting && !window.confirm("Replace the existing latitude and longitude with the selected candidate?")) {
     return;
@@ -2504,6 +2634,11 @@ function confirmGeocodeCandidate() {
 async function confirmLocation(event) {
   event.preventDefault();
   const draft = locationDraft();
+  if (!draft.institution_id || draft.institution_id !== state.selectedInstitutionLocationId) {
+    elements["location-form-error"].hidden = false;
+    elements["location-form-error"].textContent = "The location editor is not bound to the selected canonical institution.";
+    return;
+  }
   elements["location-form-error"].hidden = true;
   if (!(draft.coordinate_source || draft.coordinate_source_url)) {
     elements["location-form-error"].hidden = false;
@@ -2513,12 +2648,26 @@ async function confirmLocation(event) {
   }
   elements["location-confirm"].disabled = true;
   try {
-    const result = await apiFetch("/api/location-review/confirm", {
+    const canonicalMode = state.locationEditorMode === "canonical";
+    const result = await apiFetch(canonicalMode ? "/api/institution/location" : "/api/location-review/confirm", {
       method: "POST",
-      body: JSON.stringify(draft),
+      body: JSON.stringify(canonicalMode ? {
+        institution_id: draft.institution_id,
+        loaded_institution_id: state.selectedInstitutionLocationId,
+        city: draft.confirmed_city,
+        region: draft.confirmed_region,
+        country: draft.confirmed_country,
+        country_code: draft.confirmed_country_code,
+        lat: draft.confirmed_lat,
+        lon: draft.confirmed_lon,
+        coordinate_source: draft.coordinate_source,
+        coordinate_source_url: draft.coordinate_source_url,
+        coordinate_status: "known",
+        review_note: draft.coordinate_review_note,
+      } : draft),
     });
     showNotice(result.message);
-    await loadLocationReviews();
+    await Promise.all([loadLocationReviews(), refreshInstitutions()]);
   } catch (error) {
     elements["location-form-error"].hidden = false;
     elements["location-form-error"].textContent = error.message;
@@ -2594,6 +2743,10 @@ async function confirmLocationAlias() {
 }
 
 async function saveLocationMetadata() {
+  if (state.locationEditorMode === "canonical") {
+    elements["location-form"].requestSubmit();
+    return;
+  }
   try {
     const result = await apiFetch("/api/location-review/save-metadata", {
       method: "POST",

@@ -103,6 +103,49 @@ class InstitutionManagementTests(unittest.TestCase):
                 locations_path=self.locations,
             )
 
+    def test_location_save_requires_bound_known_id_and_updates_matching_review_only(self):
+        before = {
+            "institutions": self.institutions.read_bytes(),
+            "aliases": self.aliases.read_bytes(),
+            "mappings": self.mappings.read_bytes(),
+            "hierarchy": self.hierarchy.read_bytes(),
+        }
+        with self.assertRaisesRegex(CuratedInstitutionError, "institution_id is required"):
+            update_institution_location(
+                self.amazon_id, {"institution_id": "", "city": "Seattle"},
+                institutions_path=self.institutions, locations_path=self.locations,
+            )
+        with self.assertRaisesRegex(CuratedInstitutionError, "identify exactly one"):
+            update_institution_location(
+                "institution:missing", {"institution_id": "institution:missing"},
+                institutions_path=self.institutions, locations_path=self.locations,
+            )
+        with self.assertRaisesRegex(CuratedInstitutionError, "differs from the institution loaded"):
+            update_institution_location(
+                self.amazon_id,
+                {"institution_id": self.amazon_id, "loaded_institution_id": self.certh_id},
+                institutions_path=self.institutions, locations_path=self.locations,
+            )
+        updated = update_institution_location(
+            self.amazon_id,
+            {
+                "institution_id": self.amazon_id,
+                "loaded_institution_id": self.amazon_id,
+                "city": "Seattle", "region": "Washington",
+                "country": "United States", "country_code": "US",
+                "lat": "47.6", "lon": "-122.3", "review_note": "Confirmed manually.",
+            },
+            institutions_path=self.institutions, locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+        )
+        self.assertEqual(updated["institution_id"], self.amazon_id)
+        with self.location_reviews.open(encoding="utf-8", newline="") as handle:
+            review = next(csv.DictReader(handle))
+        self.assertEqual(review["institution_id"], self.amazon_id)
+        self.assertEqual(review["review_status"], "confirmed")
+        for name, content in before.items():
+            self.assertEqual(getattr(self, name).read_bytes(), content)
+
     def test_ignoring_institution_removes_it_from_public_export(self):
         ignore_institution(
             self.certh_id, confirmation=True, review_note="Not public",

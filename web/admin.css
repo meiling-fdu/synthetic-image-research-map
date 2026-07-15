@@ -1860,6 +1860,18 @@ dialog::backdrop {
   background: var(--green-soft);
 }
 
+.geocode-candidate-conflict {
+  border-color: var(--warning-border, #b86b21);
+  opacity: 0.72;
+}
+
+.geocode-candidate-conflict > span::before {
+  content: "Conflicts with known location evidence";
+  display: block;
+  color: var(--danger, #9f2d20);
+  font-weight: 700;
+}
+
 .geocode-candidate > span {
   display: grid;
   gap: 0.25rem;

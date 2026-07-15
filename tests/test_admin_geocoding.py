@@ -14,6 +14,7 @@ from scripts.admin_geocoding import (
     NominatimProvider,
     normalize_nominatim_candidate,
     normalized_query,
+    rank_candidates,
 )
 from scripts.serve_admin import make_handler
 
@@ -47,10 +48,37 @@ class FakeProvider:
 
 
 class AdminGeocodingTests(unittest.TestCase):
+    def test_palermo_location_evidence_outranks_and_blocks_wrong_country(self):
+        candidates = rank_candidates([
+            {
+                "display_name": "University of Palermo, Greifswald, Deutschland",
+                "institution_name": "University of Palermo",
+                "city": "Greifswald", "region": "Mecklenburg-Vorpommern",
+                "country": "Germany", "country_code": "DE",
+                "latitude": 54.0, "longitude": 13.4,
+            },
+            {
+                "display_name": "Università degli Studi di Palermo, Palermo, Italia",
+                "institution_name": "Università degli Studi di Palermo",
+                "city": "Palermo", "region": "Sicilia",
+                "country": "Italy", "country_code": "IT",
+                "latitude": 38.1, "longitude": 13.3,
+            },
+        ], {
+            "names": ["University of Palermo", "Università degli Studi di Palermo"],
+            "city": "Palermo", "region": "Sicily", "country": "Italy",
+            "country_code": "IT",
+        })
+        self.assertEqual(candidates[0]["country_code"], "IT")
+        self.assertTrue(candidates[0]["selectable"])
+        self.assertFalse(candidates[1]["selectable"])
+        self.assertIn("country code conflicts", " ".join(candidates[1]["conflicts"]))
+
     def test_valid_name_and_address_return_normalized_candidate(self):
+        requests = []
         provider = NominatimProvider(
             user_agent="test-agent",
-            opener=lambda *_args, **_kwargs: Response([{
+            opener=lambda request, **_kwargs: (requests.append(request.full_url) or Response([{
                 "place_id": 42,
                 "name": "Example University",
                 "display_name": "Example University, Rome, Italy",
@@ -64,10 +92,10 @@ class AdminGeocodingTests(unittest.TestCase):
                     "country": "Italy",
                     "country_code": "it",
                 },
-            }]),
+            }])),
         )
         result = CachedGeocoder(provider, minimum_interval=0).search(
-            "Example University", "Rome, Italy"
+            "Example University", "Rome, Italy", context={"country_code": "IT"}
         )
         candidate = result["candidates"][0]
         self.assertEqual(result["query"], "Example University, Rome, Italy")
@@ -78,6 +106,7 @@ class AdminGeocodingTests(unittest.TestCase):
         self.assertEqual(candidate["region"], "Lazio")
         self.assertEqual(candidate["country"], "Italy")
         self.assertEqual(candidate["country_code"], "IT")
+        self.assertIn("countrycodes=it", requests[0])
         self.assertNotIn("test-agent", json.dumps(result))
 
     def test_macau_country_code_is_normalized_without_stale_fallback(self):
@@ -151,8 +180,8 @@ class EndpointGeocoder:
         self.error = error
         self.calls = []
 
-    def search(self, institution_name, address):
-        self.calls.append((institution_name, address))
+    def search(self, institution_name, address, *, context=None):
+        self.calls.append((institution_name, address, context))
         if self.error:
             raise self.error
         return {
@@ -173,6 +202,16 @@ class EndpointGeocoder:
 
 
 class AdminGeocodingEndpointTests(unittest.TestCase):
+    institution_id = "institution:a407f4c649ba4c6a"
+
+    def geocode_payload(self):
+        return {
+            "institution_id": self.institution_id,
+            "loaded_institution_id": self.institution_id,
+            "city": "Palermo", "region": "Sicily", "country": "Italy",
+            "country_code": "IT",
+        }
+
     def request(self, geocoder, payload):
         server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler("token", geocoder=geocoder))
         thread = threading.Thread(target=server.serve_forever, daemon=True)
@@ -199,14 +238,14 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
         ]
         before = {path: (path.stat().st_mtime_ns, path.stat().st_size) for path in protected if path.exists()}
         geocoder = EndpointGeocoder()
-        status, payload = self.request(geocoder, {
-            "institution_name": "Example University", "address": "Rome, Italy"
-        })
+        status, payload = self.request(geocoder, self.geocode_payload())
         after = {path: (path.stat().st_mtime_ns, path.stat().st_size) for path in protected if path.exists()}
         self.assertEqual(status, 200)
         self.assertTrue(payload["success"])
         self.assertEqual(payload["data"]["provider"], "fake")
-        self.assertEqual(geocoder.calls, [("Example University", "Rome, Italy")])
+        self.assertEqual(geocoder.calls[0][0], "University of Palermo")
+        self.assertEqual(geocoder.calls[0][1], "Palermo, Sicily, Italy")
+        self.assertEqual(geocoder.calls[0][2]["country_code"], "IT")
         self.assertEqual(before, after)
         self.assertNotIn("credential", json.dumps(payload).casefold())
 
@@ -218,12 +257,22 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
         ]
         for error, expected in cases:
             with self.subTest(error=error):
-                status, payload = self.request(EndpointGeocoder(error), {
-                    "institution_name": "Example", "address": "Rome"
-                })
+                status, payload = self.request(EndpointGeocoder(error), self.geocode_payload())
                 self.assertEqual(status, expected)
                 self.assertFalse(payload["success"])
                 self.assertTrue(payload["errors"])
+
+    def test_missing_unknown_and_mismatched_institution_ids_are_rejected(self):
+        cases = [
+            ({}, "institution_id is required"),
+            ({"institution_id": "institution:missing", "loaded_institution_id": "institution:missing"}, "unknown"),
+            ({"institution_id": self.institution_id, "loaded_institution_id": "institution:other"}, "differs"),
+        ]
+        for body, message in cases:
+            with self.subTest(body=body):
+                status, payload = self.request(EndpointGeocoder(), body)
+                self.assertEqual(status, 400)
+                self.assertIn(message, " ".join(payload["errors"]))
 
 
 if __name__ == "__main__":

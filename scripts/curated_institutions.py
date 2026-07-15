@@ -10,7 +10,7 @@ import unicodedata
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Mapping, Sequence
+from typing import Any, Dict, Mapping, Optional, Sequence
 
 try:
     from .curated_schema import (
@@ -241,13 +241,19 @@ def update_institution_location(
     institution_id: Any, draft: Mapping[str, Any], *,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     locations_path: Path = DEFAULT_LOCATIONS_PATH,
+    location_reviews_path: Optional[Path] = None,
 ) -> dict[str, str]:
     """Update location fields only; the stable institution ID cannot be changed."""
     entities = load_institutions(institutions_path)
     entity = _entity(entities, institution_id)
     identifier = clean(entity.get("institution_id"))
     requested = clean(draft.get("institution_id"))
-    if requested and requested != identifier:
+    loaded = clean(draft.get("loaded_institution_id"))
+    if not requested:
+        raise CuratedInstitutionError("institution_id is required for location edits")
+    if loaded and loaded != requested:
+        raise CuratedInstitutionError("institution_id differs from the institution loaded by the editor")
+    if requested != identifier:
         raise CuratedInstitutionError("location edits cannot change institution_id")
     rows = _read(locations_path, INSTITUTION_LOCATION_COLUMNS)
     matches = [row for row in rows if clean(row.get("institution_id")) == identifier]
@@ -268,6 +274,40 @@ def update_institution_location(
             row[field] = clean(draft.get(field))
     row["updated_at"] = now
     _write(locations_path, INSTITUTION_LOCATION_COLUMNS, rows)
+    if location_reviews_path is not None:
+        reviews = _read(location_reviews_path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
+        matches = [
+            review for review in reviews
+            if clean(review.get("institution_id")) == identifier
+        ]
+        if not matches:
+            review = {column: "" for column in INSTITUTION_LOCATION_REVIEW_COLUMNS}
+            review.update({
+                "institution": clean(entity.get("canonical_name")),
+                "canonical_institution_name": clean(entity.get("canonical_name")),
+                "institution_id": identifier,
+                "created_at": now,
+            })
+            reviews.append(review)
+            matches = [review]
+        for review in matches:
+            previous_note = clean(review.get("review_note"))
+            location_note = clean(row.get("review_note"))
+            combined_note = previous_note
+            if location_note and location_note not in previous_note:
+                combined_note = " | ".join(item for item in (previous_note, location_note) if item)
+            review.update({
+                "institution_id": identifier,
+                "canonical_institution_name": clean(entity.get("canonical_name")),
+                "suggested_city": clean(row.get("city")),
+                "suggested_country": clean(row.get("country")),
+                "review_status": "confirmed",
+                "location_status": "known",
+                "coordinate_status": "known",
+                "review_note": combined_note,
+                "updated_at": now,
+            })
+        _write(location_reviews_path, INSTITUTION_LOCATION_REVIEW_COLUMNS, reviews)
     return dict(row)
 
 

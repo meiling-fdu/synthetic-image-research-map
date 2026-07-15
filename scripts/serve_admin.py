@@ -1659,15 +1659,37 @@ def make_handler(
                     return
                 self.send_json(HTTPStatus.OK, payload)
                 return
-            if request.path in {"/api/institutions", "/api/institution/impact"}:
+            if request.path in {"/api/institutions", "/api/institution", "/api/institution/impact"}:
                 if not self.is_header_authorized() or not self.is_loopback_client():
                     self.send_json(HTTPStatus.FORBIDDEN, {"error": "institution management is restricted to authorized loopback clients"})
                     return
                 try:
                     institutions = load_institutions(institutions_path)
+                    identifier = clean(parse_qs(request.query).get("institution_id", [""])[0])
                     if request.path == "/api/institution/impact":
-                        identifier = parse_qs(request.query).get("institution_id", [""])[0]
                         self.send_json(HTTPStatus.OK, institution_impact(identifier, load_mappings(mappings_path)))
+                    elif request.path == "/api/institution":
+                        matches = [row for row in institutions if clean(row.get("institution_id")) == identifier]
+                        if len(matches) != 1:
+                            raise CuratedInstitutionError("institution_id must identify exactly one institution")
+                        aliases = load_institution_aliases(institution_aliases_path)
+                        locations = load_confirmed_locations(institution_locations_path)
+                        reviews = load_location_reviews(location_review_path)
+                        mappings = load_mappings(mappings_path)
+                        self.send_json(HTTPStatus.OK, {"data": {
+                            "institution": matches[0],
+                            "aliases": [row for row in aliases if clean(row.get("institution_id")) == identifier],
+                            "location": next((row for row in locations if clean(row.get("institution_id")) == identifier), None),
+                            "location_reviews": [row for row in reviews if clean(row.get("institution_id")) == identifier],
+                            "affiliation_evidence": [
+                                {
+                                    "raw_affiliation": clean(row.get("raw_affiliation")),
+                                    "institution": clean(row.get("institution")),
+                                }
+                                for row in mappings
+                                if clean(row.get("institution_id")) == identifier
+                            ],
+                        }})
                     else:
                         aliases = load_institution_aliases(institution_aliases_path)
                         mappings = load_mappings(mappings_path)
@@ -2258,9 +2280,67 @@ def make_handler(
                     return
                 try:
                     payload = self.read_json_body()
-                    result = institution_geocoder.search(
-                        payload.get("institution_name"), payload.get("address")
+                    identifier = clean(payload.get("institution_id"))
+                    loaded_identifier = clean(payload.get("loaded_institution_id"))
+                    if not identifier:
+                        raise GeocodingInputError("institution_id is required")
+                    if loaded_identifier != identifier:
+                        raise GeocodingInputError(
+                            "institution_id differs from the institution loaded by the editor"
+                        )
+                    institutions = load_institutions(institutions_path)
+                    entity = next(
+                        (row for row in institutions if clean(row.get("institution_id")) == identifier),
+                        None,
                     )
+                    if entity is None:
+                        raise GeocodingInputError("institution_id is unknown")
+                    aliases = [
+                        row for row in load_institution_aliases(institution_aliases_path)
+                        if clean(row.get("institution_id")) == identifier
+                        and clean(row.get("review_status")) == "confirmed"
+                    ]
+                    location = next((
+                        row for row in load_confirmed_locations(institution_locations_path)
+                        if clean(row.get("institution_id")) == identifier
+                    ), {})
+                    reviews = [
+                        row for row in load_location_reviews(location_review_path)
+                        if clean(row.get("institution_id")) == identifier
+                    ]
+                    mappings = [
+                        row for row in load_mappings(mappings_path)
+                        if clean(row.get("institution_id")) == identifier
+                    ]
+                    context = {
+                        "institution_name": clean(entity.get("canonical_name")),
+                        "names": [clean(entity.get("canonical_name")), *[
+                            clean(row.get("alias_name")) for row in aliases
+                        ]],
+                        "city": clean(payload.get("city") or location.get("city")),
+                        "region": clean(payload.get("region") or location.get("region")),
+                        "country": clean(payload.get("country") or location.get("country")),
+                        "country_code": clean(payload.get("country_code") or location.get("country_code")).upper(),
+                        "cities": [clean(payload.get("city") or location.get("city")), *[
+                            clean(row.get("suggested_city")) for row in reviews
+                        ], *[clean(row.get("institution_city")) for row in mappings]],
+                        "countries": [clean(payload.get("country") or location.get("country")), *[
+                            clean(row.get("suggested_country")) for row in reviews
+                        ], *[clean(row.get("institution_country")) for row in mappings]],
+                        "affiliation_evidence": [
+                            clean(row.get("raw_affiliation")) for row in mappings
+                            if clean(row.get("raw_affiliation"))
+                        ],
+                    }
+                    address = ", ".join(
+                        item for item in (
+                            context["city"], context["region"], context["country"]
+                        ) if item
+                    )
+                    result = institution_geocoder.search(
+                        entity.get("canonical_name"), address, context=context
+                    )
+                    result["institution_id"] = identifier
                     self.send_json(HTTPStatus.OK, api_payload(data=result))
                 except GeocodingInputError as error:
                     self.send_json(
@@ -2297,7 +2377,16 @@ def make_handler(
                         if action == "identity":
                             result = update_institution_identity(payload.get("institution_id"), payload, institutions_path=institutions_path)
                         elif action == "location":
-                            result = update_institution_location(payload.get("institution_id"), payload, institutions_path=institutions_path, locations_path=institution_locations_path)
+                            if clean(payload.get("loaded_institution_id")) != clean(payload.get("institution_id")):
+                                raise CuratedInstitutionError(
+                                    "institution_id differs from the institution loaded by the editor"
+                                )
+                            result = update_institution_location(
+                                payload.get("institution_id"), payload,
+                                institutions_path=institutions_path,
+                                locations_path=institution_locations_path,
+                                location_reviews_path=location_review_path,
+                            )
                         elif action == "alias":
                             result = add_institution_alias(payload.get("institution_id"), payload.get("alias_name"), note=payload.get("review_note"), institutions_path=institutions_path, aliases_path=institution_aliases_path)
                         elif action == "parent":

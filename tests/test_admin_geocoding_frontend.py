@@ -11,10 +11,12 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         cls.source = (ROOT / "web/admin.js").read_text(encoding="utf-8")
         cls.html = (ROOT / "web/admin.html").read_text(encoding="utf-8")
 
-    def test_button_uses_current_name_and_address_and_blocks_duplicates(self):
+    def test_button_uses_canonical_id_and_location_evidence_and_blocks_duplicates(self):
         self.assertIn('apiFetch("/api/institution/geocode"', self.source)
-        self.assertIn('institution_name: elements["confirmed-institution"].value.trim()', self.source)
-        self.assertIn("address: geocodeAddress()", self.source)
+        self.assertIn("institution_id: institutionId", self.source)
+        self.assertIn("loaded_institution_id: loadedInstitutionId", self.source)
+        for field in ("city", "region", "country", "country_code"):
+            self.assertIn(f"{field}:", self.source)
         self.assertIn("button.disabled = true", self.source)
         self.assertIn('button.textContent = "Searching…"', self.source)
 
@@ -48,12 +50,34 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertIn('window.confirm("Replace the existing latitude and longitude', self.source)
 
     def test_empty_errors_and_manual_inputs_remain_supported(self):
-        self.assertIn('elements["geocode-empty"].hidden = candidates.length !== 0', self.source)
+        self.assertIn("!result.no_safe_match", self.source)
         self.assertIn("Coordinate search failed:", self.source)
         self.assertIn('id="confirmed-lat" type="number"', self.html)
         self.assertIn('id="confirmed-lon" type="number"', self.html)
-        self.assertIn('apiFetch("/api/location-review/confirm"', self.source)
+        self.assertIn('"/api/location-review/confirm"', self.source)
         self.assertIn('missing.textContent = "Unavailable — manual review required"', self.source)
+
+    def test_canonical_edit_location_loads_exact_id_and_survives_action_close(self):
+        action = self.source[self.source.index("function institutionActionButton") : self.source.index("function renderInstitutionManagement")]
+        self.assertIn("event.preventDefault()", action)
+        self.assertIn("event.stopPropagation()", action)
+        opening = self.source[self.source.index("async function openCanonicalInstitutionLocation") : self.source.index("function selectCanonicalInstitutionLocation")]
+        self.assertIn("institution?.institution_id", opening)
+        self.assertIn("/api/institution?institution_id=", opening)
+        self.assertIn("state.selectedInstitutionLocationId !== identifier", opening)
+        self.assertIn("selectCanonicalInstitutionLocation(detail)", opening)
+
+    def test_switching_institutions_invalidates_stale_geocoding(self):
+        search = self.source[self.source.index("async function findInstitutionCoordinates") : self.source.index("function closeGeocodeDialog")]
+        self.assertIn("requestSequence !== geocodeRequestSequence", search)
+        self.assertIn("institutionId !== state.selectedInstitutionLocationId", search)
+        self.assertIn("payload.data?.institution_id", search)
+
+    def test_conflicting_candidates_are_visible_but_not_selectable(self):
+        rendering = self.source[self.source.index("function renderGeocodeCandidates") : self.source.index("async function findInstitutionCoordinates")]
+        self.assertIn("candidate.selectable === false", rendering)
+        self.assertIn("geocode-candidate-conflict", rendering)
+        self.assertIn("No location-consistent candidate", rendering)
 
     def test_switching_or_starting_a_review_clears_stale_location_values(self):
         selection = self.source[self.source.index("function selectLocationReview") : self.source.index("function renderLocationContext")]
