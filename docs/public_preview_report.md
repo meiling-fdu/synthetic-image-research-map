@@ -17,13 +17,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 963 |
+| Map records | 961 |
 | Unique papers | 447 |
-| Unique institutions | 521 |
+| Unique institutions | 518 |
 | Countries | 73 |
-| arXiv/preprint records | 542 |
-| Records with DOI | 943 |
-| Records with venue | 896 |
+| arXiv/preprint records | 538 |
+| Records with DOI | 941 |
+| Records with venue | 894 |
 | Records missing venue | 67 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -34,18 +34,18 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 831 |
-| source_attribution | 85 |
+| detection | 828 |
+| source_attribution | 86 |
 | detection_and_source_attribution | 47 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 463 |
-| synthetic_image_detection | 263 |
+| ai_generated_image_detection | 464 |
+| synthetic_image_detection | 259 |
 | deepfake_image_detection | 105 |
-| generated_image_source_attribution | 52 |
+| generated_image_source_attribution | 53 |
 | detection_and_source_attribution | 47 |
 | source_identification | 33 |
 
@@ -53,15 +53,15 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 155 |
-| 2025 | 302 |
-| 2024 | 230 |
-| 2023 | 122 |
+| 2026 | 157 |
+| 2025 | 300 |
+| 2024 | 229 |
+| 2023 | 123 |
 | 2022 | 60 |
 | 2021 | 38 |
 | 2020 | 28 |
 | 2019 | 21 |
-| 2018 | 6 |
+| 2018 | 4 |
 | 2017 | 1 |
 
 ## Top Venues
@@ -69,13 +69,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Venue | Records |
 | --- | ---: |
 | arXiv (Cornell University) | 91 |
+| Proceedings of the AAAI Conference on Artificial Intelligence | 48 |
 | ArXiv.org | 47 |
-| Proceedings of the AAAI Conference on Artificial Intelligence | 46 |
 | Lecture notes in computer science | 40 |
 | 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 17 |
 | NeurIPS | 17 |
-| IEEE Transactions on Information Forensics and Security | 16 |
 | IEEE Access | 14 |
+| IEEE Transactions on Information Forensics and Security | 14 |
 | International Conference on Machine Learning (ICML) | 14 |
 | Pattern Recognition Letters | 14 |
 
@@ -83,8 +83,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 247 |
-| CN | 141 |
+| China | 256 |
+| CN | 130 |
 | United States | 76 |
 | US | 62 |
 | Italy | 48 |
@@ -107,14 +107,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | University of Science and Technology of China | 11 |
 | Beijing University of Posts and Telecommunications | 10 |
 | City University of Hong Kong | 9 |
-| Centre for Research and Technology Hellas (CERTH) | 8 |
+| Institute of Automation, Chinese Academy of Sciences | 9 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 793 |
-| medium | 170 |
+| high | 792 |
+| medium | 169 |
 
 ## Potential quality issues
 
