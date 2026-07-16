@@ -185,6 +185,54 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertIn("Institute of Computing Technology", index[target_id]["names"])
         self.assertNotIn(source_id, index)
 
+    def test_canonical_institution_types_survive_alias_deduplication(self):
+        canonical_id = "institution:canonical"
+        institutions = [{
+            "institution_id": canonical_id,
+            "canonical_name": "Example Research",
+            "institution_type": "research_unit",
+            "institution_status": "active",
+        }]
+        aliases = [{
+            "alias_name": "Example Lab",
+            "canonical_institution_name": "Example Research",
+            "canonical_institution_id": canonical_id,
+        }]
+        paper = {
+            "title": "Typed paper",
+            "year": 2025,
+            "doi": "10.1000/typed",
+            "affiliations": [
+                {"name": "Example Lab", "institution_id": "institution:merged"},
+                {"name": "Example Research", "institution_id": canonical_id},
+            ],
+        }
+        maps = [
+            {**paper, "institution": "Example Lab", "institution_id": "institution:merged"},
+            {**paper, "institution": "Example Research", "institution_id": canonical_id},
+        ]
+
+        canonical_maps = canonicalize_public_institutions(
+            [paper], maps, aliases, institutions=institutions,
+            id_redirects={"institution:merged": canonical_id},
+        )
+        apply_ordered_paper_location_summaries([paper], canonical_maps)
+        add_public_detail_fields([paper], canonical_maps)
+        search_index = public_canonical_institution_search_index(
+            institutions, aliases,
+        )
+
+        self.assertEqual(len(canonical_maps), 1)
+        self.assertEqual(canonical_maps[0]["institution_type"], "research_unit")
+        self.assertEqual(len(paper["affiliations"]), 1)
+        self.assertEqual(paper["affiliations"][0]["institution_type"], "research_unit")
+        self.assertEqual(
+            paper["author_institution_affiliations"][0]["institution_type"],
+            "research_unit",
+        )
+        self.assertEqual(paper["aggregated_institution_types"], ["research_unit"])
+        self.assertEqual(search_index[canonical_id]["institution_type"], "research_unit")
+
     def test_confirmed_astar_variants_canonicalize_and_dedupe_public_records(self):
         aliases = public_institution_aliases(
             [

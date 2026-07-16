@@ -606,6 +606,7 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
         "name": name,
         "canonical_name": clean_text(value.get("canonical_name")) or name,
         "institution_id": institution_id,
+        "institution_type": clean_text(value.get("institution_type")),
         "country": country,
         "country_code": country_code,
         "region": region,
@@ -774,7 +775,7 @@ def add_public_detail_fields(
                 existing = affiliation
             else:
                 for field in (
-                    "canonical_name", "country", "country_code", "region",
+                    "canonical_name", "institution_type", "country", "country_code", "region",
                     "location_display",
                 ):
                     if not clean_text(existing.get(field)) and clean_text(
@@ -942,6 +943,7 @@ def add_public_detail_fields(
                 "name": affiliation["name"],
                 "canonical_name": affiliation["canonical_name"],
                 "institution_id": affiliation["institution_id"],
+                "institution_type": affiliation["institution_type"],
                 "country": affiliation["country"],
                 "country_code": affiliation["country_code"],
                 "region": affiliation["region"],
@@ -1071,6 +1073,7 @@ def add_public_detail_fields(
                     "index": affiliation["index"],
                     "institution_id": affiliation["institution_id"],
                     "institution": affiliation["name"],
+                    "institution_type": affiliation["institution_type"],
                     "authors": list(affiliation["authors"]),
                     "mapping_source": _author_mapping_source(
                         affiliation.get("mapping_source")
@@ -1497,6 +1500,7 @@ def ordered_paper_location_summary(
         locations.append({
             "institution_name": institution_name(record),
             "institution_id": clean_text(record.get("institution_id")),
+            "institution_type": clean_text(record.get("institution_type")),
             "country": normalized["country"],
             "country_code": normalized["country_code"],
             "region": normalized["region"],
@@ -1518,6 +1522,7 @@ def ordered_paper_location_summary(
     return {
         "aggregated_locations": locations,
         "aggregated_institutions": ordered_unique("institution_name"),
+        "aggregated_institution_types": ordered_unique("institution_type"),
         "aggregated_country_names": ordered_unique("country"),
         "aggregated_country_codes": ordered_unique("country_code"),
         "aggregated_regions": ordered_unique("region"),
@@ -1697,6 +1702,7 @@ def build_paper_preview(
         else:
             record["aggregated_locations"] = []
             record["aggregated_institutions"] = []
+            record["aggregated_institution_types"] = []
             record["aggregated_country_names"] = []
             record["aggregated_country_codes"] = []
             record["aggregated_regions"] = []
@@ -2598,15 +2604,18 @@ def public_canonical_institution_search_index(
     are deliberately omitted so they cannot become separate public results.
     """
     active = {
-        clean_text(row.get("institution_id")): clean_text(row.get("canonical_name"))
+        clean_text(row.get("institution_id")): {
+            "canonical_name": clean_text(row.get("canonical_name")),
+            "institution_type": clean_text(row.get("institution_type")),
+        }
         for row in institutions
         if clean_text(row.get("institution_status")) == "active"
         and clean_text(row.get("institution_id"))
         and clean_text(row.get("canonical_name"))
     }
     names_by_id: Dict[str, List[str]] = {
-        institution_id: [canonical_name]
-        for institution_id, canonical_name in active.items()
+        institution_id: [institution["canonical_name"]]
+        for institution_id, institution in active.items()
     }
     for alias in aliases:
         institution_id = clean_text(alias.get("canonical_institution_id"))
@@ -2622,7 +2631,8 @@ def public_canonical_institution_search_index(
             if normalized:
                 unique_names.setdefault(normalized, name)
         result[institution_id] = {
-            "canonical_name": active[institution_id],
+            "canonical_name": active[institution_id]["canonical_name"],
+            "institution_type": active[institution_id]["institution_type"],
             "names": list(unique_names.values()),
             "normalized_names": list(unique_names),
         }
@@ -2727,6 +2737,7 @@ def canonicalize_public_institutions(
         clean_text(row.get("institution_id")): {
             "name": clean_text(row.get("canonical_name")),
             "id": clean_text(row.get("institution_id")),
+            "type": clean_text(row.get("institution_type")),
         }
         for row in institutions
         if clean_text(row.get("institution_status")) == "active"
@@ -2737,6 +2748,11 @@ def canonicalize_public_institutions(
         canonical = {
             "name": clean_text(alias.get("canonical_institution_name")),
             "id": clean_text(alias.get("canonical_institution_id")),
+            "type": clean_text(
+                canonical_by_id.get(
+                    clean_text(alias.get("canonical_institution_id")), {}
+                ).get("type")
+            ),
         }
         resolver[normalize_institution_lookup(alias.get("alias_name"))] = canonical
         resolver[normalize_institution_lookup(canonical["name"])] = canonical
@@ -2748,6 +2764,7 @@ def canonicalize_public_institutions(
             resolver.setdefault(normalize_institution_lookup(name), {
                 "name": name,
                 "id": stable_institution_id(name),
+                "type": "",
             })
 
     def canonicalize_value(value: Dict[str, Any]) -> None:
@@ -2775,6 +2792,8 @@ def canonicalize_public_institutions(
             canonical = source_canonical
         if not canonical:
             return
+        if canonical.get("type"):
+            value["institution_type"] = canonical["type"]
         if (
             original_name == canonical["name"]
             and (not canonical["id"] or original_id == canonical["id"])

@@ -49,6 +49,12 @@ const ENTRY_TYPE_LABELS = {
   survey: "Survey",
   analysis: "Analysis study",
 };
+const INSTITUTION_TYPE_LABELS = {
+  university: "University",
+  research_unit: "Research unit",
+  company: "Company",
+  unknown: "Unknown",
+};
 const CHINA_REGION_BY_CODE = {
   HK: "Hong Kong",
   MO: "Macau",
@@ -128,6 +134,8 @@ const taskFilter = document.querySelector("#task-filter");
 const entryTypeFilter = document.querySelector("#entry-type-filter");
 const sortControl = document.querySelector("#sort-control");
 const venueFilter = document.querySelector("#venue-filter");
+const countryFilter = document.querySelector("#country-filter");
+const institutionTypeFilter = document.querySelector("#institution-type-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
@@ -269,6 +277,7 @@ const INSTITUTION_CSV_COLUMNS = [
   ["subtask", (record) => record.subtask || ""],
   ["institution_name", (record) => recordInstitution(record)],
   ["institution_id", (record) => String(record.institution_id || "")],
+  ["institution_type", (record) => normalizeInstitutionType(record.institution_type)],
   ["country", (record) => record.country || ""],
   ["country_code", (record) => record.country_code || ""],
   ["region", (record) => record.region || ""],
@@ -292,6 +301,7 @@ const PAPER_CSV_COLUMNS = [
   ["subtask", (record) => record.subtask || ""],
   ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
   ["institution_ids", (record) => canonicalInstitutionIds(record).join("; ")],
+  ["institution_types", (record) => institutionTypesForRecord(record).join("; ")],
   ["locations", (record) => (record.aggregated_locations || [])
     .map((location) => location.location_display || "")
     .filter(Boolean).join("; ")],
@@ -463,6 +473,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
           : recordInstitution(record || {}),
         institution_id: record?.institution_id || "",
         canonical_name: record?.canonical_institution_name || "",
+        institution_type: record?.institution_type || "",
         country: record?.country || "",
         region: record?.region || "",
       };
@@ -507,6 +518,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
         institutionId: String(
           raw.institution_id || raw.canonical_institution_id || "",
         ).trim(),
+        institutionType: normalizeInstitutionType(raw.institution_type || raw.type),
         country: String(raw.country || "").trim(),
         region: String(raw.region || "").trim(),
         location: recordLocation(raw),
@@ -515,6 +527,13 @@ function normalizePaperDetailsRecord(record, context = {}) {
         isCurrent: false,
       };
       affiliationsByIdentity.set(identity, affiliation);
+    } else if (
+      affiliation.institutionType === "unknown"
+      && normalizeInstitutionType(raw.institution_type || raw.type) !== "unknown"
+    ) {
+      affiliation.institutionType = normalizeInstitutionType(
+        raw.institution_type || raw.type,
+      );
     }
     const rawAuthors = Array.isArray(raw.authors) ? raw.authors : [];
     rawAuthors.forEach((author) => {
@@ -560,6 +579,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
         addAffiliation({
           name: institution,
           institution_id: sourceRecord.institution_id,
+          institution_type: sourceRecord.institution_type,
           city: sourceRecord.city,
           region: sourceRecord.region,
           country: sourceRecord.country,
@@ -707,7 +727,7 @@ function institutionFilterButtonHtml(affiliation) {
 function compactAffiliationsHtml(affiliations, limit = 3) {
   const visibleAffiliations = affiliations.slice(0, limit);
   const items = visibleAffiliations.map((affiliation) => (
-    `<span class="result-affiliation-item${affiliation.isCurrent ? " is-current" : ""}"><sup>${affiliation.number}</sup>${institutionFilterButtonHtml(affiliation)}</span>`
+    `<span class="result-affiliation-item${affiliation.isCurrent ? " is-current" : ""}"><sup>${affiliation.number}</sup>${institutionFilterButtonHtml(affiliation)} <span class="affiliation-type">(${escapeHtml(institutionTypeLabel(affiliation.institutionType))})</span></span>`
   ));
   const remaining = affiliations.length - visibleAffiliations.length;
   if (remaining > 0) {
@@ -923,6 +943,146 @@ function normalizeCountryRegionRecord(record) {
   };
 }
 
+function normalizeInstitutionType(value) {
+  const normalized = String(value || "")
+    .normalize("NFKC")
+    .trim()
+    .toLocaleLowerCase()
+    .replace(/[\s-]+/g, "_");
+  const aliases = {
+    university: "university",
+    education: "university",
+    educational: "university",
+    research_unit: "research_unit",
+    research: "research_unit",
+    institute: "research_unit",
+    company: "company",
+    corporate: "company",
+    commercial: "company",
+  };
+  return aliases[normalized] || (normalized || "unknown");
+}
+
+function institutionTypeLabel(value) {
+  const normalized = normalizeInstitutionType(value);
+  return INSTITUTION_TYPE_LABELS[normalized]
+    || normalized.replaceAll("_", " ").replace(/^./, (character) => character.toUpperCase());
+}
+
+function canonicalCountryName(value, countryCode = "") {
+  const candidate = String(value || "").trim();
+  const code = String(countryCode || "").trim().toUpperCase();
+  const candidateCode = /^[A-Za-z]{2}$/.test(candidate) ? candidate.toUpperCase() : "";
+  return COUNTRY_NAME_BY_CODE[candidateCode] || COUNTRY_NAME_BY_CODE[code] || candidate;
+}
+
+function dimensionAffiliations(record) {
+  const values = [
+    ...(Array.isArray(record.affiliations) ? record.affiliations : []),
+    ...(Array.isArray(record.author_institution_affiliations)
+      ? record.author_institution_affiliations
+      : []),
+  ];
+  const unique = new Map();
+  values.forEach((rawValue) => {
+    const value = typeof rawValue === "string" ? { institution: rawValue } : rawValue || {};
+    const identity = institutionIdentity({
+      institution: value.name || value.institution || value.institution_name,
+      institution_id: value.institution_id || value.canonical_institution_id,
+      canonical_institution_name: value.canonical_name,
+    });
+    if (identity !== "name:" && !unique.has(identity)) unique.set(identity, value);
+  });
+  return [...unique.values()];
+}
+
+function countriesForRecord(record, institutionRecord = false) {
+  const values = [];
+  const add = (country, code = "") => {
+    const name = canonicalCountryName(country, code);
+    if (name) values.push(name);
+  };
+  if (institutionRecord) {
+    const normalized = normalizeCountryRegionRecord(record);
+    add(normalized.country, normalized.country_code);
+  } else {
+    (record.aggregated_country_names || []).forEach((country) => add(country));
+    (record.aggregated_country_codes || []).forEach((code) => add("", code));
+    dimensionAffiliations(record).forEach((affiliation) => {
+      const normalized = normalizeCountryRegionRecord(affiliation);
+      add(normalized.country, normalized.country_code);
+    });
+    if (!values.length && recordInstitution(record)) {
+      const normalized = normalizeCountryRegionRecord(record);
+      add(normalized.country, normalized.country_code);
+    }
+  }
+  return uniqueTextValues(values);
+}
+
+function institutionTypesForRecord(record, institutionRecord = false) {
+  const values = [];
+  const add = (value) => values.push(normalizeInstitutionType(value));
+  if (institutionRecord) {
+    add(record.institution_type || record.type);
+  } else {
+    (record.aggregated_institution_types || []).forEach(add);
+    dimensionAffiliations(record).forEach((affiliation) => (
+      add(affiliation.institution_type || affiliation.type)
+    ));
+    if (!values.length && recordInstitution(record)) {
+      add(record.institution_type || record.type);
+    }
+  }
+  return uniqueTextValues(values);
+}
+
+function recordMatchesInstitutionDimensions(
+  record,
+  selectedCountry,
+  selectedInstitutionType,
+  institutionRecord = false,
+  requiredInstitutionIdentities = null,
+) {
+  if (institutionRecord) {
+    const matchesIdentity = !requiredInstitutionIdentities?.size
+      || requiredInstitutionIdentities.has(institutionIdentity(record));
+    const matchesCountry = selectedCountry === "all"
+      || countriesForRecord(record, true).includes(selectedCountry);
+    const matchesInstitutionType = selectedInstitutionType === "all"
+      || institutionTypesForRecord(record, true).includes(selectedInstitutionType);
+    return matchesIdentity && matchesCountry && matchesInstitutionType;
+  }
+
+  const affiliations = dimensionAffiliations(record);
+  if (affiliations.length) {
+    return affiliations.some((affiliation) => {
+      const matchesIdentity = !requiredInstitutionIdentities?.size
+        || requiredInstitutionIdentities.has(institutionIdentity({
+          institution: affiliation.name || affiliation.institution,
+          institution_id: affiliation.institution_id
+            || affiliation.canonical_institution_id,
+          canonical_institution_name: affiliation.canonical_name,
+        }));
+      const matchesCountry = selectedCountry === "all"
+        || countriesForRecord(affiliation, true).includes(selectedCountry);
+      const matchesInstitutionType = selectedInstitutionType === "all"
+        || institutionTypesForRecord(affiliation, true).includes(
+          selectedInstitutionType,
+        );
+      return matchesIdentity && matchesCountry && matchesInstitutionType;
+    });
+  }
+
+  const matchesIdentity = !requiredInstitutionIdentities?.size
+    || recordMatchesInstitutionIdentities(record, requiredInstitutionIdentities, false);
+  const matchesCountry = selectedCountry === "all"
+    || countriesForRecord(record).includes(selectedCountry);
+  const matchesInstitutionType = selectedInstitutionType === "all"
+    || institutionTypesForRecord(record).includes(selectedInstitutionType);
+  return matchesIdentity && matchesCountry && matchesInstitutionType;
+}
+
 function recordLocation(record) {
   const exportedDisplay = String(record.location_display || "").trim();
   if (exportedDisplay) return exportedDisplay;
@@ -1036,6 +1196,7 @@ function orderedPaperLocationSummary(institutionRecords) {
     locations.push({
       institution_name: recordInstitution(record),
       institution_id: String(record.institution_id || "").trim(),
+      institution_type: normalizeInstitutionType(record.institution_type || record.type),
       country: record.country,
       country_code: record.country_code,
       region: record.region,
@@ -1047,6 +1208,7 @@ function orderedPaperLocationSummary(institutionRecords) {
   return {
     aggregated_locations: locations,
     aggregated_institutions: values("institution_name"),
+    aggregated_institution_types: values("institution_type"),
     aggregated_countries: values("country_code"),
     aggregated_country_names: values("country"),
     aggregated_country_codes: values("country_code"),
@@ -1067,6 +1229,7 @@ function aggregateUniquePapers(institutionRecords) {
         // Keep the first list; institution aggregation must not alter it.
         authors: recordAuthors(record),
         aggregated_institutions: [],
+        aggregated_institution_types: [],
         aggregated_locations: [],
         aggregated_countries: [],
         aggregated_country_names: [],
@@ -1104,6 +1267,7 @@ function paperListRecordsForDisplay(sourceRecords) {
   if (paperRecords.length || sourceRecords.length) {
     return sourceRecords.map((record) => ({
       aggregated_institutions: [],
+      aggregated_institution_types: [],
       aggregated_country_names: [],
       aggregated_country_codes: [],
       aggregated_regions: [],
@@ -1231,7 +1395,11 @@ function buildCanonicalInstitutionResolver(aliases, canonicalIndex = {}, idRedir
   const byName = new Map();
   const byId = new Map();
   Object.entries(canonicalIndex || {}).forEach(([id, entry]) => {
-    const canonical = { id: String(id).trim(), name: String(entry?.canonical_name || "").trim() };
+    const canonical = {
+      id: String(id).trim(),
+      name: String(entry?.canonical_name || "").trim(),
+      type: String(entry?.institution_type || "").trim(),
+    };
     if (!canonical.id || !canonical.name) return;
     byId.set(canonical.id, canonical);
     [canonical.name, ...(Array.isArray(entry?.names) ? entry.names : [])].forEach((name) => {
@@ -1242,6 +1410,9 @@ function buildCanonicalInstitutionResolver(aliases, canonicalIndex = {}, idRedir
     const canonical = {
       name: String(alias.canonical_institution_name || "").trim(),
       id: String(alias.canonical_institution_id || "").trim(),
+      type: String(
+        canonicalIndex?.[alias.canonical_institution_id]?.institution_type || "",
+      ).trim(),
     };
     if (!canonical.name) return;
     byName.set(normalizedSearchText(alias.alias_name), canonical);
@@ -1293,6 +1464,7 @@ function canonicalizeInstitutionObject(value, resolver) {
   value.canonical_name = canonical.name;
   value.canonical_institution_name = canonical.name;
   if (canonical.id) value.institution_id = canonical.id;
+  if (canonical.type) value.institution_type = canonical.type;
   return value;
 }
 
@@ -1490,6 +1662,17 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     || recordMatchesInstitutionIdentities(
       record, activeInstitutionIdentities, institutionRecord,
     );
+  const matchesInstitutionDimensions = recordMatchesInstitutionDimensions(
+    record,
+    options.ignoreCountry === true ? "all" : countryFilter.value,
+    options.ignoreInstitutionType === true ? "all" : institutionTypeFilter.value,
+    institutionRecord,
+    activeInstitutionFilter
+      ? activeInstitutionIdentities
+      : resolvedInstitutionIdentities?.size
+        ? resolvedInstitutionIdentities
+        : null,
+  );
   return (
     matchesKeyword &&
     matchesTask &&
@@ -1498,7 +1681,66 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     matchesVersion &&
     matchesMinimumYear &&
     matchesMaximumYear &&
-    matchesInstitution
+    matchesInstitution &&
+    matchesInstitutionDimensions
+  );
+}
+
+function dimensionPaperCounts(papers, valuesForRecord) {
+  const counts = new Map();
+  papers.forEach((paper) => {
+    new Set(valuesForRecord(paper)).forEach((value) => {
+      if (value) counts.set(value, (counts.get(value) || 0) + 1);
+    });
+  });
+  return counts;
+}
+
+function sortedDimensionCounts(counts, labelForValue = (value) => value) {
+  return [...counts.entries()].sort((first, second) => (
+    second[1] - first[1]
+    || compareTextValues(labelForValue(first[0]), labelForValue(second[0]))
+  ));
+}
+
+function replaceCountedFilterOptions(select, defaultLabel, entries, labelForValue) {
+  const selectedValue = select.value || "all";
+  const options = [["all", defaultLabel], ...entries.map(([value, count]) => (
+    [value, `${labelForValue(value)} (${count})`]
+  ))];
+  if (selectedValue !== "all" && !entries.some(([value]) => value === selectedValue)) {
+    options.push([selectedValue, `${labelForValue(selectedValue)} (0)`]);
+  }
+  select.replaceChildren(...options.map(([value, label]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    return option;
+  }));
+  select.value = selectedValue;
+}
+
+function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers) {
+  const countryCounts = dimensionPaperCounts(
+    countryPapers,
+    (paper) => countriesForRecord(paper),
+  );
+  replaceCountedFilterOptions(
+    countryFilter,
+    "All countries",
+    sortedDimensionCounts(countryCounts),
+    (value) => value,
+  );
+
+  const typeCounts = dimensionPaperCounts(
+    institutionTypePapers,
+    (paper) => institutionTypesForRecord(paper),
+  );
+  replaceCountedFilterOptions(
+    institutionTypeFilter,
+    "All institution types",
+    sortedDimensionCounts(typeCounts, institutionTypeLabel),
+    institutionTypeLabel,
   );
 }
 
@@ -1939,6 +2181,7 @@ function paperDetailsHtml(record, relatedEntries) {
     institution: recordInstitution(record),
     institutionId: record.institution_id || record.canonical_institution_id,
     canonicalName: record.canonical_institution_name,
+    institutionType: normalizeInstitutionType(record.institution_type),
   });
   const year = record.publication_year ?? record.year ?? "Unknown";
   const venue = getRecordVenue(record) || "unknown";
@@ -1984,7 +2227,7 @@ function paperDetailsHtml(record, relatedEntries) {
     </section>
   `;
   const affiliationsBlock = affiliations.length
-    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current is-hover-institution"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${institutionFilterButtonHtml(affiliation)}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
+    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current is-hover-institution"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${institutionFilterButtonHtml(affiliation)}</span><span class="affiliation-type"> · ${escapeHtml(institutionTypeLabel(affiliation.institutionType))}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
     : "";
 
   return `
@@ -2435,6 +2678,27 @@ function renderRecords() {
     keywordTerms,
     { resolvedInstitutionIdentities, activeInstitutionIdentities },
   );
+  const dimensionSets = (ignoredDimension) => deriveFilteredRecordSets(
+    records,
+    paperRecords,
+    (record) => recordMatchesActiveFilters(record, keywordTerms, {
+      institutionRecord: true,
+      resolvedInstitutionIdentities,
+      activeInstitutionIdentities,
+      [ignoredDimension]: true,
+    }),
+    (record) => recordMatchesActiveFilters(record, keywordTerms, {
+      resolvedInstitutionIdentities,
+      activeInstitutionIdentities,
+      [ignoredDimension]: true,
+    }),
+  );
+  const countryDimensionSets = dimensionSets("ignoreCountry");
+  const institutionTypeDimensionSets = dimensionSets("ignoreInstitutionType");
+  updateInstitutionDimensionFilters(
+    countryDimensionSets.filteredPapers,
+    institutionTypeDimensionSets.filteredPapers,
+  );
   const filteredSets = deriveFilteredRecordSets(
     records,
     paperRecords,
@@ -2601,6 +2865,8 @@ function enableControls() {
   entryTypeFilter.disabled = false;
   sortControl.disabled = false;
   venueFilter.disabled = false;
+  countryFilter.disabled = false;
+  institutionTypeFilter.disabled = false;
   preprintFilter.disabled = false;
   minYearFilter.disabled = false;
   maxYearFilter.disabled = false;
@@ -2812,6 +3078,7 @@ async function readDataset(name) {
       : { metadata: {}, records: [] };
     normalizedPaperData.records = normalizedPaperData.records.map((record) => ({
       aggregated_institutions: [],
+      aggregated_institution_types: [],
       aggregated_country_names: [],
       aggregated_country_codes: [],
       aggregated_regions: [],
@@ -2912,6 +3179,8 @@ taskFilter.addEventListener("change", renderRecords);
 entryTypeFilter.addEventListener("change", renderRecords);
 sortControl.addEventListener("change", renderRecords);
 venueFilter.addEventListener("change", renderRecords);
+countryFilter.addEventListener("change", renderRecords);
+institutionTypeFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
 minYearFilter.addEventListener("input", renderRecords);
 maxYearFilter.addEventListener("input", renderRecords);
@@ -2955,6 +3224,8 @@ resetButton.addEventListener("click", () => {
   entryTypeFilter.value = "all";
   sortControl.value = "year-desc";
   venueFilter.value = "all";
+  countryFilter.value = "all";
+  institutionTypeFilter.value = "all";
   preprintFilter.value = "all";
   minYearFilter.value = "";
   maxYearFilter.value = "";

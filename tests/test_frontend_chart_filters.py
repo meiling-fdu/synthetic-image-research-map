@@ -130,7 +130,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260713-public-overview', self.html)
-        self.assertIn('app.js?v=20260715-institution-alias-search', self.html)
+        self.assertIn('app.js?v=20260716-country-institution-type-filters', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
