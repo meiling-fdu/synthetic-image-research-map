@@ -26,6 +26,7 @@ try:
         DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
+        enforce_affiliation_source_precedence,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
@@ -87,6 +88,7 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
+        enforce_affiliation_source_precedence,
         integrate_curated_records,
         load_curated_mappings,
         load_curated_papers,
@@ -567,9 +569,15 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
         for author in value.get("authors", [])
         if author_display_name(author)
     ]
-    country = clean_text(value.get("country"))
-    country_code = clean_text(value.get("country_code"))
-    region = clean_text(value.get("region"))
+    location = normalize_country_region(
+        value.get("country"),
+        value.get("country_code"),
+        value.get("region"),
+        value.get("region_code"),
+    )
+    country = location["country"]
+    country_code = location["country_code"]
+    region = location["region"]
     source_names = [
         clean_text(name)
         for name in (
@@ -1449,6 +1457,74 @@ def matching_records(
     return matches
 
 
+def ordered_paper_location_summary(
+    institution_records: Sequence[Dict[str, Any]],
+) -> Dict[str, List[Any]]:
+    """Derive every paper location field from one canonical institution order."""
+    locations: List[Dict[str, str]] = []
+    seen_institutions = set()
+    for record in institution_records:
+        identity = detail_institution_identity(record)
+        if identity in seen_institutions:
+            continue
+        seen_institutions.add(identity)
+        normalized = normalize_country_region(
+            record.get("country"),
+            record.get("country_code"),
+            record.get("region"),
+            record.get("region_code"),
+            record.get("raw_country") if "raw_country" in record else None,
+            record.get("raw_country_code") if "raw_country_code" in record else None,
+        )
+        record.update(normalized)
+        record["location_display"] = public_location_display(
+            normalized["region"], normalized["country"], normalized["country_code"]
+        )
+        locations.append({
+            "institution_name": institution_name(record),
+            "institution_id": clean_text(record.get("institution_id")),
+            "country": normalized["country"],
+            "country_code": normalized["country_code"],
+            "region": normalized["region"],
+            "region_code": normalized["region_code"],
+            "location_display": record["location_display"],
+        })
+
+    def ordered_unique(field: str) -> List[str]:
+        values = []
+        seen = set()
+        for location in locations:
+            value = clean_text(location.get(field))
+            key = value.casefold()
+            if value and key not in seen:
+                values.append(value)
+                seen.add(key)
+        return values
+
+    return {
+        "aggregated_locations": locations,
+        "aggregated_institutions": ordered_unique("institution_name"),
+        "aggregated_country_names": ordered_unique("country"),
+        "aggregated_country_codes": ordered_unique("country_code"),
+        "aggregated_regions": ordered_unique("region"),
+        "aggregated_region_codes": ordered_unique("region_code"),
+    }
+
+
+def apply_ordered_paper_location_summaries(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+) -> None:
+    maps_by_paper: Dict[Tuple[str, Any], List[Dict[str, Any]]] = defaultdict(list)
+    for record in map_records:
+        maps_by_paper[detail_paper_identity(record)].append(record)
+    for paper in paper_records:
+        matches = maps_by_paper.get(detail_paper_identity(paper), [])
+        paper.update(ordered_paper_location_summary(matches))
+        paper["map_record_count"] = len(matches)
+        paper["has_map_location"] = bool(matches)
+
+
 def affiliation_status_by_openalex(
     affiliation_rows: Sequence[Dict[str, str]],
     key_affiliation_rows: Sequence[Dict[str, str]],
@@ -1600,25 +1676,12 @@ def build_paper_preview(
 
         if marker_matches:
             first_marker = marker_matches[0]
-            record["aggregated_institutions"] = sorted(
-                {institution_name(marker) for marker in marker_matches if institution_name(marker)}
-            )
-            record["aggregated_country_names"] = sorted(
-                {clean_text(marker.get("country")) for marker in marker_matches if clean_text(marker.get("country"))}
-            )
-            record["aggregated_country_codes"] = sorted(
-                {clean_text(marker.get("country_code")) for marker in marker_matches if clean_text(marker.get("country_code"))}
-            )
-            record["aggregated_regions"] = sorted(
-                {clean_text(marker.get("region")) for marker in marker_matches if clean_text(marker.get("region"))}
-            )
-            record["aggregated_region_codes"] = sorted(
-                {clean_text(marker.get("region_code")) for marker in marker_matches if clean_text(marker.get("region_code"))}
-            )
+            record.update(ordered_paper_location_summary(marker_matches))
             for field in ("abstract", "abstract_source", "ai_summary"):
                 if not clean_text(record.get(field)) and clean_text(first_marker.get(field)):
                     record[field] = clean_text(first_marker.get(field))
         else:
+            record["aggregated_locations"] = []
             record["aggregated_institutions"] = []
             record["aggregated_country_names"] = []
             record["aggregated_country_codes"] = []
@@ -2350,7 +2413,7 @@ def exclude_stale_curated_mapping_markers(
     """
     targets: Dict[Tuple[Tuple[str, Any], Tuple[str, ...]], set[str]] = defaultdict(set)
     for mapping in mappings:
-        if clean_text(mapping.get("mapping_status")) not in {"active", "needs_review"}:
+        if clean_text(mapping.get("mapping_status")) != "active":
             continue
         authors = tuple(sorted(
             normalized_author_name(author)
@@ -3165,6 +3228,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             integrated_maps,
             read_paper_version_merges(args.paper_version_merges),
         )
+        stale_mapping_markers_excluded += enforce_affiliation_source_precedence(
+            integrated_papers,
+            integrated_maps,
+            curated_mappings,
+            curated_papers,
+        )
         integrated_papers, curated_preprint_papers_excluded = (
             exclude_preprint_versions(integrated_papers)
         )
@@ -3230,6 +3299,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 integrated_maps,
                 institution_rows,
             )
+        )
+        apply_ordered_paper_location_summaries(
+            integrated_papers, integrated_maps
         )
         add_public_detail_fields(integrated_papers, integrated_maps)
         payload["records"] = integrated_maps

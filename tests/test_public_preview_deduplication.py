@@ -6,6 +6,7 @@ from pathlib import Path
 from scripts.curated_export import _ordered_mapping_authors
 from scripts.export_public_preview import (
     add_public_detail_fields,
+    apply_ordered_paper_location_summaries,
     canonicalize_public_institutions,
     exclude_preprint_versions,
     exclude_retracted_records,
@@ -14,6 +15,7 @@ from scripts.export_public_preview import (
     public_institution_aliases,
     synchronize_publication_types,
 )
+from scripts.country_normalization import normalize_country_region
 from scripts.refresh_public_preview import build_steps, parse_args
 from scripts.validate_public_preview import validate_preprint_version_duplicates
 from scripts.validate_public_preview import (
@@ -27,6 +29,88 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_country_codes_are_normalized_to_public_english_names(self):
+        self.assertEqual(normalize_country_region("CN", "")["country"], "China")
+        self.assertEqual(normalize_country_region("", "US")["country"], "United States")
+        self.assertEqual(normalize_country_region("KR", "KR")["country"], "South Korea")
+
+    def test_ordered_location_summary_preserves_pairs_and_is_deterministic(self):
+        paper = {"title": "Ordered locations", "year": 2026, "doi": "10.1/order"}
+        maps = [{
+            **paper,
+            "institution": "Beijing Institute",
+            "institution_id": "institution:beijing",
+            "country": "CN",
+            "country_code": "CN",
+            "region": "Beijing",
+        }, {
+            **paper,
+            "institution": "Jiangsu Institute",
+            "institution_id": "institution:jiangsu",
+            "country": "China",
+            "country_code": "CN",
+            "region": "Jiangsu",
+        }, {
+            **paper,
+            "institution": "US Institute",
+            "institution_id": "institution:us",
+            "country": "US",
+            "country_code": "US",
+            "region": "",
+        }, {
+            **paper,
+            "institution": "Korean Institute",
+            "institution_id": "institution:kr",
+            "country": "KR",
+            "country_code": "KR",
+            "region": "Seoul",
+        }]
+
+        apply_ordered_paper_location_summaries([paper], maps)
+        first = json.dumps(paper, ensure_ascii=False, sort_keys=True)
+        apply_ordered_paper_location_summaries([paper], maps)
+
+        self.assertEqual(json.dumps(paper, ensure_ascii=False, sort_keys=True), first)
+        self.assertEqual(
+            paper["aggregated_country_names"],
+            ["China", "United States", "South Korea"],
+        )
+        self.assertEqual(paper["aggregated_regions"], ["Beijing", "Jiangsu", "Seoul"])
+        self.assertEqual(
+            [location["location_display"] for location in paper["aggregated_locations"]],
+            ["Beijing, China", "Jiangsu, China", "United States", "Seoul, South Korea"],
+        )
+
+    def test_alias_records_collapse_before_ordered_location_aggregation(self):
+        paper = {"title": "Alias locations", "year": 2025, "doi": "10.1/alias"}
+        maps = [{
+            **paper,
+            "institution": "U Example",
+            "institution_id": "institution:alias",
+            "country": "US",
+            "region": "California",
+        }, {
+            **paper,
+            "institution": "University Example",
+            "institution_id": "institution:canonical",
+            "country": "United States",
+            "country_code": "US",
+            "region": "California",
+        }]
+        aliases = [{
+            "alias_name": "U Example",
+            "canonical_institution_name": "University Example",
+            "canonical_institution_id": "institution:canonical",
+        }]
+
+        canonical_maps = canonicalize_public_institutions([paper], maps, aliases)
+        apply_ordered_paper_location_summaries([paper], canonical_maps)
+
+        self.assertEqual(len(canonical_maps), 1)
+        self.assertEqual(paper["aggregated_institutions"], ["University Example"])
+        self.assertEqual(paper["aggregated_country_names"], ["United States"])
+        self.assertEqual(paper["aggregated_regions"], ["California"])
+
     def test_search_index_maps_merged_source_name_to_active_target_only(self):
         target_id = "institution:e278f75918ccf8a7"
         source_id = "institution:dfb3cc816a4476d7"

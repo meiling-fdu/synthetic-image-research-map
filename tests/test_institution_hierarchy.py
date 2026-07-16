@@ -171,7 +171,7 @@ class InstitutionHierarchyTests(unittest.TestCase):
         self.assertIn(CHILD_ID, cas_children)
         self.assertNotIn(PARENT_ID, cas_children)
 
-    def test_public_preview_keeps_parent_and_child_records_separate(self):
+    def test_public_preview_uses_parent_for_search_without_duplicate_marker(self):
         import json
 
         map_payload = json.loads(
@@ -191,6 +191,18 @@ class InstitutionHierarchyTests(unittest.TestCase):
                 and row["canonical_institution_id"] == CHILD_ID
                 for row in payload["institution_aliases"]
             ))
+            self.assertEqual(
+                payload["canonical_institution_search_index"][PARENT_ID][
+                    "canonical_name"
+                ],
+                PARENT_NAME,
+            )
+            self.assertEqual(
+                payload["canonical_institution_search_index"][CHILD_ID][
+                    "canonical_name"
+                ],
+                CHILD_NAME,
+            )
 
         parent_records = [
             row for row in map_payload["records"]
@@ -200,24 +212,17 @@ class InstitutionHierarchyTests(unittest.TestCase):
             row for row in map_payload["records"]
             if row.get("institution_id") == CHILD_ID
         ]
-        self.assertGreater(len(parent_records), 0)
         self.assertGreater(len(child_records), 0)
-        self.assertEqual(
-            {row["institution"] for row in parent_records}, {PARENT_NAME}
-        )
         self.assertEqual(
             {row["institution"] for row in child_records}, {CHILD_NAME}
         )
-        parent_pairs = {
-            (row.get("doi") or row.get("title"), row["institution_id"])
-            for row in parent_records
+        child_papers = {
+            row.get("doi") or row.get("title") for row in child_records
         }
-        child_pairs = {
-            (row.get("doi") or row.get("title"), row["institution_id"])
-            for row in child_records
+        parent_papers = {
+            row.get("doi") or row.get("title") for row in parent_records
         }
-        self.assertEqual(len(parent_pairs), len(parent_records))
-        self.assertEqual(len(child_pairs), len(child_records))
+        self.assertTrue(child_papers.isdisjoint(parent_papers))
 
     def test_public_affiliations_keep_full_cas_institute_without_parent_split(self):
         import json

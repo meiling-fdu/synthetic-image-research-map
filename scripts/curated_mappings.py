@@ -165,6 +165,11 @@ def save_location_reviews(
     rows: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_LOCATION_REVIEW_PATH,
 ) -> None:
+    for row in rows:
+        if not clean(row.get("institution_id")):
+            raise CuratedMappingError(
+                "location review rows require a canonical institution_id"
+            )
     _write_csv(rows, path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
 
 

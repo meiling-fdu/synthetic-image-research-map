@@ -322,6 +322,8 @@ Each record is one paper and may include:
 | `task`, `subtask`, `entry_type`, `publication_type` | Candidate classification and publication metadata. |
 | `has_map_location` | `true` when at least one public preview map marker exists for the paper. |
 | `map_record_count` | Count of public preview marker records tied to the paper. |
+| `aggregated_locations` | Ordered canonical institution/location objects. Each object keeps `institution_name`, `institution_id`, normalized `country`/`country_code`, `region`/`region_code`, and the explicit `location_display` pair together. |
+| `aggregated_institutions`, `aggregated_country_names`, `aggregated_country_codes`, `aggregated_regions`, `aggregated_region_codes` | First-occurrence-deduplicated summaries derived from `aggregated_locations`; these lists are never independently sorted. Blank regions are omitted without changing institution or country order. |
 | `missing_affiliation` | `true` when the paper lacks usable local affiliation records for map export. |
 | `missing_coordinates` | `true` when affiliation evidence exists but usable coordinates are still missing. |
 | `needs_review` | `true` when candidate metadata, affiliation, or coordinates still require review. |

@@ -70,6 +70,21 @@ const CHINA_REGION_CODE_BY_NAME = {
   "taiwan province of china": "TW",
   tw: "TW",
 };
+const COUNTRY_NAME_BY_CODE = {
+  AE: "United Arab Emirates", AT: "Austria", AU: "Australia", BD: "Bangladesh",
+  BE: "Belgium", BG: "Bulgaria", BR: "Brazil", CA: "Canada", CH: "Switzerland",
+  CN: "China", CO: "Colombia", CZ: "Czechia", DE: "Germany", DK: "Denmark",
+  DZ: "Algeria", EG: "Egypt", ES: "Spain", FI: "Finland", FR: "France",
+  GB: "United Kingdom", GR: "Greece", HR: "Croatia", ID: "Indonesia",
+  IE: "Ireland", IL: "Israel", IN: "India", IQ: "Iraq", IR: "Iran",
+  IT: "Italy", JO: "Jordan", JP: "Japan", KR: "South Korea", LB: "Lebanon",
+  ME: "Montenegro", MT: "Malta", MX: "Mexico", MY: "Malaysia",
+  NL: "Netherlands", NO: "Norway", NP: "Nepal", NZ: "New Zealand",
+  PK: "Pakistan", PL: "Poland", PT: "Portugal", RU: "Russia",
+  SA: "Saudi Arabia", SE: "Sweden", SG: "Singapore", SI: "Slovenia",
+  SK: "Slovakia", SY: "Syria", TH: "Thailand", TR: "Türkiye",
+  UA: "Ukraine", US: "United States", VN: "Vietnam", ZA: "South Africa",
+};
 
 function noWrapMinZoomForWidth(width) {
   return Math.max(
@@ -276,6 +291,9 @@ const PAPER_CSV_COLUMNS = [
   ["subtask", (record) => record.subtask || ""],
   ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
   ["institution_ids", (record) => canonicalInstitutionIds(record).join("; ")],
+  ["locations", (record) => (record.aggregated_locations || [])
+    .map((location) => location.location_display || "")
+    .filter(Boolean).join("; ")],
   ["countries", (record) => (record.aggregated_country_names || []).join("; ")],
   ["country_codes", (record) => (record.aggregated_country_codes || []).join("; ")],
   ["regions", (record) => (record.aggregated_regions || []).join("; ")],
@@ -458,9 +476,10 @@ function normalizePaperDetailsRecord(record, context = {}) {
   const sourceIndexIdentities = new Map();
 
   function addAffiliation(rawAffiliation, sourceRecord) {
-    const raw = typeof rawAffiliation === "string"
+    const rawValue = typeof rawAffiliation === "string"
       ? { name: rawAffiliation }
       : rawAffiliation || {};
+    const raw = normalizeCountryRegionRecord(rawValue);
     const institution = String(
       raw.name
       || raw.canonical_name
@@ -888,10 +907,14 @@ function normalizeCountryRegionRecord(record) {
     };
   }
 
+  const countryAsCode = /^[A-Za-z]{2}$/.test(country) ? country.toUpperCase() : "";
+  const normalizedCountryCode = countryCode || countryAsCode;
+
   return {
     ...record,
-    country: country || countryCode,
-    country_code: countryCode,
+    country: COUNTRY_NAME_BY_CODE[countryAsCode] || country
+      || COUNTRY_NAME_BY_CODE[normalizedCountryCode] || "",
+    country_code: normalizedCountryCode,
     region,
     region_code: regionCode,
     raw_country: rawCountry,
@@ -1000,6 +1023,37 @@ function uniqueTextValues(values) {
   return unique;
 }
 
+function orderedPaperLocationSummary(institutionRecords) {
+  const seenInstitutions = new Set();
+  const locations = [];
+  institutionRecords.forEach((sourceRecord) => {
+    const identity = institutionIdentity(sourceRecord);
+    if (seenInstitutions.has(identity)) return;
+    seenInstitutions.add(identity);
+    const record = normalizeCountryRegionRecord(sourceRecord);
+    const locationDisplay = recordLocation(record);
+    locations.push({
+      institution_name: recordInstitution(record),
+      institution_id: String(record.institution_id || "").trim(),
+      country: record.country,
+      country_code: record.country_code,
+      region: record.region,
+      region_code: record.region_code,
+      location_display: locationDisplay,
+    });
+  });
+  const values = (field) => uniqueTextValues(locations.map((location) => location[field]));
+  return {
+    aggregated_locations: locations,
+    aggregated_institutions: values("institution_name"),
+    aggregated_countries: values("country_code"),
+    aggregated_country_names: values("country"),
+    aggregated_country_codes: values("country_code"),
+    aggregated_regions: values("region"),
+    aggregated_region_codes: values("region_code"),
+  };
+}
+
 function aggregateUniquePapers(institutionRecords) {
   const papersByIdentity = new Map();
   institutionRecords.forEach((record) => {
@@ -1012,6 +1066,7 @@ function aggregateUniquePapers(institutionRecords) {
         // Keep the first list; institution aggregation must not alter it.
         authors: recordAuthors(record),
         aggregated_institutions: [],
+        aggregated_locations: [],
         aggregated_countries: [],
         aggregated_country_names: [],
         aggregated_country_codes: [],
@@ -1022,33 +1077,10 @@ function aggregateUniquePapers(institutionRecords) {
       papersByIdentity.set(identity, paper);
     }
 
-    paper.aggregated_institutions = uniqueTextValues([
-      ...paper.aggregated_institutions,
-      recordInstitution(record),
-    ]);
-    paper.aggregated_countries = uniqueTextValues([
-      ...paper.aggregated_countries,
-      recordCountry(record),
-    ]);
-    paper.aggregated_country_names = uniqueTextValues([
-      ...paper.aggregated_country_names,
-      record.country,
-    ]);
-    paper.aggregated_country_codes = uniqueTextValues([
-      ...paper.aggregated_country_codes,
-      record.country_code,
-    ]);
-    paper.aggregated_regions = uniqueTextValues([
-      ...paper.aggregated_regions,
-      record.region,
-    ]);
-    paper.aggregated_region_codes = uniqueTextValues([
-      ...paper.aggregated_region_codes,
-      record.region_code,
-    ]);
     paper._related_records.push(record);
   });
   return [...papersByIdentity.values()].map((paper) => {
+    Object.assign(paper, orderedPaperLocationSummary(paper._related_records));
     const normalized = normalizePaperDetailsRecord(
       {
         ...paper,
@@ -1302,7 +1334,11 @@ function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases) {
     if (!related.length) return;
     paper.map_record_count = related.length;
     paper.has_map_location = true;
-    paper.aggregated_institutions = [...new Set(related.map(recordInstitution))];
+    if (typeof orderedPaperLocationSummary === "function") {
+      Object.assign(paper, orderedPaperLocationSummary(related));
+    } else {
+      paper.aggregated_institutions = [...new Set(related.map(recordInstitution))];
+    }
   });
   return { mapRecords: canonicalMaps, paperRecords: publicPaperRecords };
 }
@@ -1317,6 +1353,10 @@ function recordSearchText(record) {
     record.country_code,
     record.region,
     record.region_code,
+    ...(record.aggregated_country_names || []),
+    ...(record.aggregated_country_codes || []),
+    ...(record.aggregated_regions || []),
+    ...(record.aggregated_region_codes || []),
     record.venue_name,
     record.venue,
     record.coverage_status,
@@ -1758,6 +1798,12 @@ function reviewStatus(record) {
   );
 }
 
+function preliminaryAffiliationBadge(record) {
+  return record?.affiliation_review_state === "unreviewed"
+    ? '<span class="popup-badge confidence-unresolved">Preliminary affiliations</span>'
+    : "";
+}
+
 function booleanValue(value) {
   if (typeof value === "boolean") {
     return value;
@@ -1900,6 +1946,7 @@ function paperDetailsHtml(record, relatedEntries) {
   const confidenceBadge = hasResolution
     ? `<span class="popup-badge confidence-${escapeHtml(confidence)}">${escapeHtml(formatResolutionValue(confidence))} confidence</span>`
     : "";
+  const affiliationBadge = preliminaryAffiliationBadge(record);
   const methodRow = record.resolution_method
     ? `<dt>Resolution</dt><dd>${escapeHtml(formatResolutionValue(record.resolution_method))}</dd>`
     : "";
@@ -1928,6 +1975,7 @@ function paperDetailsHtml(record, relatedEntries) {
       <span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
       ${versionBadge}
       ${confidenceBadge}
+      ${affiliationBadge}
     </div>
     <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
     <dl class="popup-details paper-details-summary">
@@ -1982,6 +2030,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
   const affiliationsRow = affiliationsHtml
     ? `<p class="result-compact-affiliations"><strong>Affiliations:</strong> ${affiliationsHtml}</p>`
     : "";
+  const affiliationBadge = preliminaryAffiliationBadge(record);
   const aggregatedCountryNames = record.aggregated_country_names || [];
   const aggregatedCountryCodes = record.aggregated_country_codes || [];
   const aggregatedRegions = record.aggregated_regions || [];
@@ -2007,6 +2056,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
         <span class="result-task">${escapeHtml(formatTask(record.task))}</span>
         <span class="result-task entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
         ${subtask}
+        ${affiliationBadge}
       </div>
       ${linksRow}
     </article>

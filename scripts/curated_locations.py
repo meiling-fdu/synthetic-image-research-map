@@ -195,6 +195,11 @@ def save_location_review_queue(
     rows: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_LOCATION_REVIEW_PATH,
 ) -> None:
+    for row in rows:
+        if not clean(row.get("institution_id")):
+            raise CuratedLocationError(
+                "location review rows require a canonical institution_id"
+            )
     _write_csv_atomic(rows, path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
 
 
@@ -568,6 +573,7 @@ def confirm_alias(
     else:
         aliases.append(alias_row)
     queue_row["canonical_institution_name"] = clean(target.get("institution"))
+    queue_row["institution_id"] = target_institution_id
     queue_row["matched_institution"] = clean(target.get("institution"))
     queue_row["review_status"] = "alias_of_confirmed"
     queue_row["review_note"] = _append_note(queue_row.get("review_note"), note)

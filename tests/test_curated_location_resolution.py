@@ -2,8 +2,10 @@ import unittest
 import json
 
 from scripts.curated_export import (
+    CuratedExportError,
     _recalculate_paper_details,
     _remove_overridden_markers,
+    _upsert_location_review,
     build_curated_map_records,
     integrate_curated_records,
 )
@@ -11,6 +13,39 @@ from scripts.export_public_preview import add_public_detail_fields
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_export_location_review_sync_preserves_canonical_identity(self):
+        reviews = []
+        mapping = {
+            "paper_id": "openalex:W2903907439",
+            "title": "Cascade learning from adversarial synthetic images",
+            "institution": "Rensselaer Polytechnic Institute",
+            "institution_id": "institution:50c86a6fc102a2c1",
+            "institution_authors": "Qiang Ji",
+        }
+
+        result = _upsert_location_review(
+            reviews, mapping, coordinate_status="missing"
+        )
+
+        self.assertEqual(result, "created")
+        self.assertEqual(
+            reviews[0]["institution_id"], "institution:50c86a6fc102a2c1"
+        )
+        self.assertEqual(
+            reviews[0]["canonical_institution_name"],
+            "Rensselaer Polytechnic Institute",
+        )
+
+    def test_export_location_review_sync_rejects_blank_canonical_id(self):
+        with self.assertRaisesRegex(
+            CuratedExportError, "requires a canonical institution_id"
+        ):
+            _upsert_location_review(
+                [],
+                {"paper_id": "paper:fixture", "institution": "Example Lab"},
+                coordinate_status="missing",
+            )
+
     def test_recalculation_discards_stale_derived_affiliations(self):
         paper = {
             "title": "Corrected derived details",
@@ -66,7 +101,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
         self.assertEqual(removed, 1)
         self.assertEqual(records, [])
 
-    def test_explicit_admin_supplement_survives_curated_supersession(self):
+    def test_curated_mapping_suppresses_explicit_marker_supplements(self):
         paper = {
             "title": "Supplement test",
             "year": 2026,
@@ -89,6 +124,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "year": "2026",
             "doi": paper["doi"],
             "institution": "Primary University",
+            "institution_id": "institution:primary",
             "institution_authors": "Ada Researcher",
             "mapping_status": "active",
         }
@@ -97,9 +133,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             [paper], [supplement], [], [mapping]
         )
 
-        self.assertEqual(
-            [record["institution"] for record in maps], ["Approved Lab"]
-        )
+        self.assertEqual(maps, [])
         self.assertEqual(
             [
                 affiliation["institution"]
@@ -107,7 +141,205 @@ class CuratedLocationResolutionTests(unittest.TestCase):
                     "author_institution_affiliations"
                 ]
             ],
-            ["Primary University", "Approved Lab"],
+            ["Primary University"],
+        )
+
+    def test_unreviewed_paper_uses_preliminary_automatic_fallback(self):
+        paper = {
+            "title": "Unreviewed fallback",
+            "year": 2025,
+            "doi": "10.1000/unreviewed",
+            "authors": ["Ada Researcher"],
+        }
+        automatic = {
+            **paper,
+            "institution": "Automatic University",
+            "institution_authors": ["Ada Researcher"],
+            "source_database": "OpenAlex",
+            "latitude": 1.0,
+            "longitude": 2.0,
+        }
+
+        papers, maps, _reviews, _summary = integrate_curated_records(
+            [paper], [automatic], [], []
+        )
+
+        self.assertEqual(papers[0]["affiliation_review_state"], "unreviewed")
+        self.assertTrue(papers[0]["preliminary_affiliations"])
+        self.assertEqual(maps[0]["institution"], "Automatic University")
+        self.assertEqual(maps[0]["institution_source"], "automatic_fallback")
+        self.assertTrue(maps[0]["preliminary_affiliations"])
+
+    def test_reviewed_empty_suppresses_markers_and_superscripts(self):
+        paper = {
+            "title": "Reviewed empty",
+            "year": 2025,
+            "doi": "10.1000/reviewed-empty",
+            "authors": ["Ada Researcher"],
+        }
+        automatic = {
+            **paper,
+            "institution": "Automatic University",
+            "institution_authors": ["Ada Researcher"],
+            "source_database": "OpenAlex",
+            "latitude": 1.0,
+            "longitude": 2.0,
+        }
+        excluded = {
+            **paper,
+            "mapping_id": "mapping:excluded",
+            "institution": "Rejected University",
+            "institution_authors": "Ada Researcher",
+            "mapping_status": "excluded",
+        }
+
+        papers, maps, _reviews, _summary = integrate_curated_records(
+            [paper], [automatic], [], [excluded]
+        )
+        add_public_detail_fields(papers, maps)
+
+        self.assertEqual(maps, [])
+        self.assertEqual(papers[0]["affiliation_review_state"], "reviewed_empty")
+        self.assertEqual(papers[0]["affiliations"], [])
+        self.assertEqual(papers[0]["authors"][0]["affiliation_indices"], [])
+
+    def test_noise_informed_four_curated_mappings_replace_automatic_records(self):
+        paper = {
+            "title": "Noise-Informed Diffusion-Generated Image Detection With Anomaly Attention",
+            "year": 2025,
+            "publication_year": 2025,
+            "task": "detection",
+            "doi": "10.1109/tifs.2025.3573161",
+            "openalex_url": "https://openalex.org/W4410853187",
+            "authors": [
+                "Weinan Guan", "Wei Wang", "Bo Peng", "Ziwen He",
+                "Jing Dong", "Haonan Cheng",
+            ],
+        }
+        institutions = [
+            ("University of Chinese Academy of Sciences", "Weinan Guan"),
+            (
+                "Institute of Automation, Chinese Academy of Sciences",
+                "Weinan Guan; Wei Wang; Bo Peng; Jing Dong",
+            ),
+            (
+                "Nanjing University of Information Science and Technology",
+                "Ziwen He",
+            ),
+            ("Communication University of China", "Haonan Cheng"),
+        ]
+        mappings = [
+            {
+                **paper,
+                "mapping_id": f"mapping:noise-{index}",
+                "institution": institution,
+                "institution_authors": authors,
+                "mapping_status": "active",
+            }
+            for index, (institution, authors) in enumerate(institutions, start=1)
+        ]
+        locations = [
+            {
+                "location_id": f"location:noise-{index}",
+                "institution": institution,
+                "normalized_institution": institution.casefold(),
+                "city": f"City {index}",
+                "country": "China",
+                "country_code": "CN",
+                "lat": 30.0 + index,
+                "lon": 110.0 + index,
+            }
+            for index, (institution, _authors) in enumerate(institutions, start=1)
+        ]
+        automatic = [
+            {
+                **paper,
+                "id": "automatic-stale",
+                "institution": "Chinese Academy of Sciences",
+                "institution_authors": ["Weinan Guan"],
+                "source_database": "OpenAlex",
+                "latitude": 39.0,
+                "longitude": 116.0,
+            },
+            {
+                **paper,
+                "id": "automatic-overlap",
+                "institution": "Communication University of China",
+                "institution_authors": ["Haonan Cheng"],
+                "source_database": "OpenAlex",
+                "latitude": 39.9,
+                "longitude": 116.4,
+            },
+        ]
+
+        first = integrate_curated_records(
+            [paper], automatic, [], mappings,
+            confirmed_location_records=locations,
+        )
+        second = integrate_curated_records(
+            [paper], automatic, [], mappings,
+            confirmed_location_records=locations,
+        )
+        self.assertEqual(first, second)
+        exported_papers, exported_maps, _reviews, summary = first
+        add_public_detail_fields(exported_papers, exported_maps)
+
+        self.assertEqual(summary["stale_public_markers_suppressed"], 2)
+        self.assertEqual(len(exported_maps), 4)
+        self.assertEqual(
+            [record["institution"] for record in exported_maps],
+            [institution for institution, _authors in institutions],
+        )
+        self.assertEqual(
+            {record["source_database"] for record in exported_maps}, {"curated"}
+        )
+        self.assertEqual(
+            [row["name"] for row in exported_papers[0]["affiliations"]],
+            [institution for institution, _authors in institutions],
+        )
+
+    def test_merged_identity_uses_curated_precedence(self):
+        canonical = {
+            "title": "Published title",
+            "year": 2025,
+            "doi": "10.1000/published",
+            "task": "detection",
+            "authors": ["Ada Researcher"],
+            "merged_versions": [
+                {
+                    "title": "Preprint title",
+                    "year": 2024,
+                    "openalex_url": "https://openalex.org/W123",
+                }
+            ],
+        }
+        automatic = {
+            **canonical,
+            "institution": "Automatic University",
+            "source_database": "OpenAlex",
+            "latitude": 1.0,
+            "longitude": 2.0,
+        }
+        mapping = {
+            "title": "Preprint title",
+            "year": "2024",
+            "openalex_url": "https://openalex.org/W123",
+            "mapping_id": "mapping:merged",
+            "institution": "Curated University",
+            "institution_id": "institution:curated",
+            "institution_authors": "Ada Researcher",
+            "mapping_status": "active",
+        }
+
+        papers, maps, _reviews, _summary = integrate_curated_records(
+            [canonical], [automatic], [], [mapping]
+        )
+
+        self.assertEqual(maps, [])
+        self.assertEqual(papers[0]["affiliation_review_state"], "curated")
+        self.assertEqual(
+            papers[0]["author_institution_affiliations"][0]["institution"],
+            "Curated University",
         )
 
     def test_active_curated_mappings_replace_stale_openalex_affiliations(self):
@@ -257,6 +489,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "mapping_id": "mapping:indices",
             "paper_id": "curated:indices",
             "institution": "Example University",
+            "institution_id": "institution:example",
             "institution_authors": "Ada Researcher",
             "mapping_status": "active",
         }
@@ -318,6 +551,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "year": "2026",
             "doi": paper["doi"],
             "institution": "Fudan University",
+            "institution_id": "institution:fudan",
             "institution_authors": "Researcher",
             "mapping_status": "active",
         }
@@ -397,7 +631,6 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             markers[0]["resolution_method"], "curated_confirmed_location"
         )
         self.assertNotIn("fallback", markers[0]["notes"])
-
 
 if __name__ == "__main__":
     unittest.main()

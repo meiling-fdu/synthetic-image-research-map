@@ -68,6 +68,64 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("renderHeaderStatistics(visibleRecords, visiblePaperRecords)", self.app)
         self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", self.app)
 
+    def test_ordered_country_region_summary_drives_display_filter_and_csv(self):
+        self.assertIn("Object.assign(paper, orderedPaperLocationSummary(related))", self.app)
+        self.assertIn("...(record.aggregated_country_names || [])", self.app)
+        self.assertIn("...(record.aggregated_regions || [])", self.app)
+        self.assertIn('["locations", (record) => (record.aggregated_locations || [])', self.app)
+
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        constants = self.app[
+            self.app.index("const CHINA_REGION_BY_CODE"):
+            self.app.index("\nfunction noWrapMinZoomForWidth")
+        ]
+        normalization = self.app[
+            self.app.index("function normalizedLocationName"):
+            self.app.index("\nfunction recordPaperUrl")
+        ]
+        unique_start = self.app.index("function uniqueTextValues")
+        summary = self.app[
+            unique_start:
+            self.app.index("\nfunction aggregateUniquePapers", unique_start)
+        ]
+        csv_start = self.app.index("function escapeCsvValue")
+        csv = self.app[csv_start:self.app.index("\nfunction exportFilename", csv_start)]
+        script = f"""
+{constants}
+{normalization}
+function institutionIdentity(record) {{ return `id:${{record.institution_id}}`; }}
+function recordInstitution(record) {{ return String(record.institution || '').trim(); }}
+{summary}
+{csv}
+const records = [
+  {{institution: 'Beijing Institute', institution_id: 'beijing', country: 'CN', country_code: 'CN', region: 'Beijing'}},
+  {{institution: 'Jiangsu Institute', institution_id: 'jiangsu', country: 'China', country_code: 'CN', region: 'Jiangsu'}},
+  {{institution: 'US Institute', institution_id: 'us', country: 'US', country_code: 'US', region: ''}},
+];
+const result = orderedPaperLocationSummary(records);
+const csvText = buildCsv([result], [
+  ['countries', row => row.aggregated_country_names.join('; ')],
+  ['regions', row => row.aggregated_regions.join('; ')],
+  ['locations', row => row.aggregated_locations.map(value => value.location_display).join('; ')],
+]);
+process.stdout.write(JSON.stringify({{result, csvText}}));
+"""
+        result = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["result"]["aggregated_country_names"], ["China", "United States"])
+        self.assertEqual(payload["result"]["aggregated_regions"], ["Beijing", "Jiangsu"])
+        self.assertEqual(
+            [row["location_display"] for row in payload["result"]["aggregated_locations"]],
+            ["Beijing, China", "Jiangsu, China", "United States"],
+        )
+        self.assertIn("China; United States", payload["csvText"])
+        self.assertIn("Beijing; Jiangsu", payload["csvText"])
+        self.assertIn("Beijing, China; Jiangsu, China; United States", payload["csvText"])
+
     def test_responsive_dimensions_and_asset_versions_are_preserved(self):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)

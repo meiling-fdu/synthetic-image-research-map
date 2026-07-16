@@ -14,6 +14,7 @@ from scripts.curated_mappings import (
     create_mapping,
     load_location_reviews,
     load_mappings,
+    save_location_reviews,
 )
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -87,6 +88,18 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
 
     def seed_institutions(self, *entities):
         write_csv(self.institutions, INSTITUTION_COLUMNS, entities)
+
+    def test_mapping_review_writer_rejects_blank_canonical_id(self):
+        review = row(
+            INSTITUTION_LOCATION_REVIEW_COLUMNS,
+            institution="Unregistered Lab",
+            related_paper_id=self.paper["paper_id"],
+        )
+
+        with self.assertRaisesRegex(
+            CuratedMappingError, "require a canonical institution_id"
+        ):
+            save_location_reviews([review], self.reviews)
 
     def test_existing_valid_id_is_reused_without_duplicate_entity(self):
         entity = row(

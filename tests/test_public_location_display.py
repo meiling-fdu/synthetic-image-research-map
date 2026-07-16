@@ -34,7 +34,7 @@ class PublicLocationDisplayTests(unittest.TestCase):
             "Singapore",
         )
 
-    def test_curated_records_keep_source_fields_and_add_display(self):
+    def test_curated_records_normalize_country_and_preserve_raw_source(self):
         record = normalize_regional_location({
             "city": "London",
             "region": "England",
@@ -43,8 +43,10 @@ class PublicLocationDisplayTests(unittest.TestCase):
         })
         self.assertEqual(record["location_display"], "England, United Kingdom")
         self.assertEqual(record["city"], "London")
-        self.assertEqual(record["country"], "GB")
+        self.assertEqual(record["country"], "United Kingdom")
         self.assertEqual(record["country_code"], "GB")
+        self.assertEqual(record["raw_country"], "GB")
+        self.assertEqual(record["raw_country_code"], "GB")
 
     def test_new_imports_automatically_use_shared_display_rule(self):
         payload, _summary = build_preview(

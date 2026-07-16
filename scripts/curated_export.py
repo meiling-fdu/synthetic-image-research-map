@@ -73,7 +73,7 @@ DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH = Path(
 )
 DEFAULT_CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 ACTIVE_MAPPING_STATUS = "active"
-VISIBLE_MAPPING_STATUSES = {"active", "needs_review"}
+AFFILIATION_REVIEW_STATES = {"unreviewed", "curated", "reviewed_empty"}
 PUBLIC_PAPER_TASKS = {
     "detection",
     "source_attribution",
@@ -201,6 +201,11 @@ def save_location_review_queue(
     rows: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_LOCATION_REVIEW_PATH,
 ) -> None:
+    for row in rows:
+        if not clean(row.get("institution_id")):
+            raise CuratedExportError(
+                "location review rows require a canonical institution_id"
+            )
     temporary_path = path.with_suffix(path.suffix + ".tmp")
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -227,7 +232,12 @@ def normalize_paper_identity_keys(record: Mapping[str, Any]) -> List[str]:
     ).casefold()
     if paper_id:
         keys.append(f"paper_id:{paper_id}")
-    return keys
+    merged_versions = record.get("merged_versions")
+    if isinstance(merged_versions, list):
+        for version in merged_versions:
+            if isinstance(version, Mapping):
+                keys.extend(all_identity_keys(version))
+    return list(dict.fromkeys(keys))
 
 
 def normalize_institution(value: Any) -> str:
@@ -895,6 +905,122 @@ def _mapping_matches_paper(
     )
 
 
+def affiliation_review_state(
+    paper: Mapping[str, Any],
+    mappings: Sequence[Mapping[str, Any]],
+    curated_papers: Sequence[Mapping[str, Any]] = (),
+) -> str:
+    """Return the paper-level source decision for affiliation evidence.
+
+    Active mappings are accepted curation. Needs-review mappings are still
+    candidates, so automatic evidence remains available until one is accepted.
+    Excluded mapping history or an explicit paper state is durable evidence
+    that an empty affiliation result was reviewed. General paper-metadata
+    review is deliberately not treated as affiliation review.
+    """
+    matching_mappings = [
+        mapping for mapping in mappings if _mapping_matches_paper(mapping, paper)
+    ]
+    statuses = {
+        clean(mapping.get("mapping_status")) for mapping in matching_mappings
+    }
+    if ACTIVE_MAPPING_STATUS in statuses:
+        return "curated"
+    if "needs_review" in statuses:
+        return "unreviewed"
+    if matching_mappings:
+        return "reviewed_empty"
+    explicit_state = clean(paper.get("affiliation_review_state"))
+    if explicit_state in AFFILIATION_REVIEW_STATES:
+        return explicit_state
+    return "unreviewed"
+
+
+def _mark_preliminary_automatic_evidence(
+    record: MutableMapping[str, Any],
+) -> None:
+    record["affiliation_review_state"] = "unreviewed"
+    record["institution_source"] = "automatic_fallback"
+    record["preliminary_affiliations"] = True
+    note = "Preliminary automatic affiliation evidence; not manually reviewed."
+    existing_note = clean(record.get("resolution_notes"))
+    if note not in existing_note:
+        record["resolution_notes"] = (
+            f"{existing_note} | {note}" if existing_note else note
+        )
+    for field in ("affiliations", "author_institution_affiliations"):
+        values = record.get(field)
+        if not isinstance(values, list):
+            continue
+        for value in values:
+            if isinstance(value, MutableMapping):
+                value["mapping_fallback"] = True
+
+
+def enforce_affiliation_source_precedence(
+    paper_records: Sequence[MutableMapping[str, Any]],
+    map_records: List[Dict[str, Any]],
+    mappings: Sequence[Mapping[str, Any]],
+    curated_papers: Sequence[Mapping[str, Any]] = (),
+) -> int:
+    """Apply paper-level manual-first selection and return removed markers."""
+    removed = 0
+    resolved_mapping_ids = {
+        clean(record.get("mapping_id"))
+        for record in map_records
+        if clean(record.get("source_database")).casefold() == "curated"
+        and clean(record.get("mapping_id"))
+    }
+    for paper in paper_records:
+        state = affiliation_review_state(paper, mappings, curated_papers)
+        paper["affiliation_review_state"] = state
+        active_mapping_ids = {
+            clean(mapping.get("mapping_id"))
+            for mapping in mappings
+            if _mapping_matches_paper(mapping, paper)
+            and clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+            and clean(mapping.get("mapping_id"))
+        }
+        matching_marker_ids = {
+            id(marker)
+            for marker in map_records
+            if _mapping_matches_paper(marker, paper)
+        }
+        if state == "unreviewed":
+            _mark_preliminary_automatic_evidence(paper)
+            for marker in map_records:
+                if id(marker) in matching_marker_ids:
+                    _mark_preliminary_automatic_evidence(marker)
+            continue
+
+        kept = []
+        for marker in map_records:
+            if id(marker) not in matching_marker_ids:
+                kept.append(marker)
+                continue
+            if (
+                state == "curated"
+                and clean(marker.get("source_database")).casefold() == "curated"
+                and clean(marker.get("mapping_id")) in active_mapping_ids
+            ):
+                marker["affiliation_review_state"] = "curated"
+                marker["institution_source"] = "curated"
+                marker["preliminary_affiliations"] = False
+                kept.append(marker)
+            else:
+                removed += 1
+        map_records[:] = kept
+        _recalculate_paper_details(
+            paper, map_records, mappings, resolved_mapping_ids
+        )
+        paper["affiliation_review_state"] = state
+        paper["institution_source"] = (
+            "curated" if state == "curated" else "reviewed_empty"
+        )
+        paper["preliminary_affiliations"] = False
+    return removed
+
+
 def _queue_key(record: Mapping[str, Any]) -> Tuple[str, str]:
     paper_id = clean(
         record.get("paper_id")
@@ -926,6 +1052,11 @@ def _upsert_location_review(
     *,
     coordinate_status: str,
 ) -> str:
+    institution_id = clean(mapping.get("institution_id"))
+    if not institution_id:
+        raise CuratedExportError(
+            "location review creation requires a canonical institution_id"
+        )
     now = _timestamp()
     location_status = (
         "needs_coordinate_review"
@@ -935,6 +1066,8 @@ def _upsert_location_review(
     key = _queue_key(mapping)
     values = {
         "institution": clean(mapping.get("institution")),
+        "canonical_institution_name": clean(mapping.get("institution")),
+        "institution_id": institution_id,
         "related_paper_id": clean(mapping.get("paper_id")),
         "title": clean(mapping.get("title")),
         "year": clean(mapping.get("year")),
@@ -1069,6 +1202,9 @@ def build_curated_map_records(
         matched_paper_mappings += 1
         raw_institution_key = normalize_institution(mapping.get("institution"))
         canonical_institution = confirmed_aliases.get(raw_institution_key)
+        institution_key = normalize_institution(
+            canonical_institution or mapping.get("institution")
+        )
         queue_status = (
             "alias_of_confirmed"
             if canonical_institution
@@ -1077,9 +1213,6 @@ def build_curated_map_records(
         if queue_status in non_exportable_statuses:
             skipped_status += 1
             continue
-        institution_key = normalize_institution(
-            canonical_institution or mapping.get("institution")
-        )
         match = (
             locations.get(institution_key, CoordinateMatch("missing", None))
             if institution_key in confirmed_location_keys
@@ -1193,7 +1326,7 @@ def _recalculate_paper_details(
     visible_mappings = [
         mapping
         for mapping in mappings
-        if clean(mapping.get("mapping_status")) in VISIBLE_MAPPING_STATUSES
+        if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
         and _mapping_matches_paper(mapping, paper)
     ]
     has_map_location = bool(markers)
@@ -1391,28 +1524,6 @@ def integrate_curated_records(
     List[Dict[str, str]],
     Dict[str, Any],
 ]:
-    if not curated_papers and not mappings:
-        return (
-            [dict(record) for record in paper_records],
-            [dict(record) for record in map_records],
-            [dict(row) for row in location_review_rows],
-            {
-                "curated_papers_loaded": 0,
-                "curated_papers_eligible": 0,
-                "curated_papers_added": 0,
-                "curated_papers_merged": 0,
-                "curated_mappings_loaded": 0,
-                "curated_markers_created": 0,
-                "curated_markers_replaced": 0,
-                "curated_mappings_matched_papers": 0,
-                "curated_mappings_missing_coordinates": 0,
-                "curated_mappings_ambiguous_coordinates": 0,
-                "location_review_rows_created": 0,
-                "location_review_rows_updated": 0,
-                "location_review_rows_marked_known": 0,
-            },
-        )
-
     papers = [dict(record) for record in paper_records]
     maps = [dict(record) for record in map_records]
     reviews = [dict(row) for row in location_review_rows]
@@ -1423,7 +1534,6 @@ def integrate_curated_records(
     map_index = _paper_index(maps)
     added = 0
     merged = 0
-    affected_papers = []
     for curated in curated_records:
         matches = _matching_papers(curated, paper_index)
         if matches:
@@ -1438,7 +1548,13 @@ def integrate_curated_records(
             added += 1
         for map_record in _matching_papers(curated, map_index):
             _merge_curated_paper(map_record, curated)
-        affected_papers.append(target)
+
+    # Source selection is paper-wide. Remove every automatic marker before
+    # creating replacements so a different institution or missing coordinate
+    # cannot leave stale automatic evidence behind.
+    replaced_markers = enforce_affiliation_source_precedence(
+        papers, maps, mappings, curated_papers
+    )
 
     marker_records, mapping_summary = build_curated_map_records(
         papers,
@@ -1451,36 +1567,18 @@ def integrate_curated_records(
         processed_cache_records,
         institution_aliases,
     )
-    replaced_markers = 0
     for marker in marker_records:
         matching = _matching_papers(marker, paper_index)
         if not matching:
             continue
-        paper = matching[0]
-        replaced_markers += _remove_overridden_markers(
-            maps, paper, marker
-        )
         maps.append(marker)
-        affected_papers.append(paper)
 
-    for mapping in mappings:
-        if clean(mapping.get("mapping_status")) not in VISIBLE_MAPPING_STATUSES:
-            continue
-        matching = _matching_papers(mapping, paper_index)
-        affected_papers.extend(matching)
-
-    seen = set()
-    for paper in affected_papers:
-        marker = id(paper)
-        if marker in seen:
-            continue
-        seen.add(marker)
-        _recalculate_paper_details(
-            paper,
-            maps,
-            mappings,
-            mapping_summary["resolved_mapping_ids"],
-        )
+    # Rebuild every affected paper from the selected source. Running this a
+    # second time is intentional: curated markers now exist and must be the
+    # only marker inputs used for detail affiliations and superscripts.
+    replaced_markers += enforce_affiliation_source_precedence(
+        papers, maps, mappings, curated_papers
+    )
 
     papers.sort(
         key=lambda record: (

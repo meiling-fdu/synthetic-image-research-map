@@ -6,12 +6,15 @@ from pathlib import Path
 from scripts.curated_export import build_curated_map_records
 from scripts.export_public_preview import public_institution_aliases
 from scripts.curated_locations import (
+    CuratedLocationError,
     confirm_alias,
     institution_candidate_evidence,
     load_institution_aliases,
+    load_location_review_queue,
     location_review_payload,
     location_review_report,
     mark_queue_row,
+    save_location_review_queue,
 )
 from scripts.curated_schema import (
     INSTITUTION_ALIAS_COLUMNS,
@@ -39,6 +42,16 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             "lat": 40.449167,
             "lon": -3.728056,
         }
+
+    def test_location_review_writer_rejects_blank_canonical_id(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "reviews.csv"
+            with self.assertRaisesRegex(
+                CuratedLocationError, "require a canonical institution_id"
+            ):
+                save_location_review_queue(
+                    [{"institution": "Unregistered Lab"}], path
+                )
 
     def mapping(self, institution):
         return {
@@ -227,6 +240,7 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             review_row = {column: "" for column in INSTITUTION_LOCATION_REVIEW_COLUMNS}
             review_row.update({
                 "institution": "MIT",
+                "institution_id": "institution:mit-alias",
                 "related_paper_id": "curated:test",
                 "title": "Institution review test",
                 "year": "2026",
@@ -235,6 +249,7 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             location_row = {column: "" for column in INSTITUTION_LOCATION_COLUMNS}
             location_row.update({
                 "location_id": "location:mit",
+                "institution_id": "institution:mit",
                 "institution": "Massachusetts Institute of Technology",
                 "normalized_institution": "massachusetts institute of technology",
                 "country": "United States",
@@ -272,7 +287,18 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             persisted = load_institution_aliases(aliases)
             self.assertEqual(len(persisted), 1)
             self.assertEqual(persisted[0]["alias_name"], "MIT")
+            self.assertEqual(persisted[0]["institution_id"], "institution:mit")
             self.assertEqual(persisted[0]["review_status"], "confirmed")
+            self.assertEqual(
+                load_location_review_queue(reviews)[0]["institution_id"],
+                "institution:mit",
+            )
+            saved_review = location_review_payload(
+                review_path=reviews,
+                locations_path=locations,
+                aliases_path=aliases,
+            )
+            self.assertEqual(saved_review["total_unresolved"], 0)
             self.assertEqual(location_row["institution"], "Massachusetts Institute of Technology")
 
 

@@ -139,8 +139,9 @@ def normalize_country_region(
             "raw_country_code": raw_country_code_text,
         }
 
+    normalized_country = public_country_name(country_text, country_code_text)
     return {
-        "country": country_text or country_code_text,
+        "country": normalized_country,
         "country_code": country_code_text,
         "region": region_text,
         "region_code": region_code_text,
