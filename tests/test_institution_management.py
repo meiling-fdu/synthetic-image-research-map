@@ -26,6 +26,7 @@ from scripts.curated_schema import (
     INSTITUTION_REVIEW_QUEUE_COLUMNS,
 )
 from scripts.export_public_preview import exclude_nonpublic_institutions, public_institution_aliases
+from scripts.serve_admin import institution_hierarchy_details
 from scripts.validate_curated_database import validate_institution_entities
 
 
@@ -270,6 +271,91 @@ class InstitutionManagementTests(unittest.TestCase):
                 institutions_path=self.institutions,
             )
         self.assertEqual(self.institutions.read_bytes(), before)
+
+    def test_parent_assignment_rejects_self_cycles_and_inactive_ids(self):
+        rows = [
+            blank(INSTITUTION_COLUMNS, institution_id="institution:parent", canonical_name="Parent", institution_status="active"),
+            blank(INSTITUTION_COLUMNS, institution_id="institution:child", canonical_name="Child", institution_status="active", parent_institution_id="institution:parent"),
+            blank(INSTITUTION_COLUMNS, institution_id="institution:merged", canonical_name="Merged", institution_status="merged"),
+        ]
+        write_csv(self.institutions, INSTITUTION_COLUMNS, rows)
+        before = self.institutions.read_bytes()
+        with self.assertRaisesRegex(CuratedInstitutionError, "own parent"):
+            set_parent_institution(
+                "institution:parent", "institution:parent",
+                institutions_path=self.institutions, hierarchy_path=self.hierarchy,
+            )
+        with self.assertRaisesRegex(CuratedInstitutionError, "cycle"):
+            set_parent_institution(
+                "institution:parent", "institution:child",
+                institutions_path=self.institutions, hierarchy_path=self.hierarchy,
+            )
+        with self.assertRaisesRegex(CuratedInstitutionError, "active canonical"):
+            set_parent_institution(
+                "institution:child", "institution:merged",
+                institutions_path=self.institutions, hierarchy_path=self.hierarchy,
+            )
+        self.assertEqual(self.institutions.read_bytes(), before)
+
+    def test_parent_assignment_synchronizes_registry_hierarchy_and_admin_details(self):
+        child_id = "institution:iti"
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        rows.append(blank(
+            INSTITUTION_COLUMNS,
+            institution_id=child_id,
+            canonical_name="Information Technologies Institute (ITI)",
+            institution_status="active",
+        ))
+        write_csv(self.institutions, INSTITUTION_COLUMNS, rows)
+        set_parent_institution(
+            child_id, self.certh_id,
+            institutions_path=self.institutions, hierarchy_path=self.hierarchy,
+        )
+        with self.hierarchy.open(encoding="utf-8", newline="") as handle:
+            relationship = next(csv.DictReader(handle))
+        self.assertEqual(relationship["parent_institution_id"], self.certh_id)
+        self.assertEqual(relationship["child_institution_id"], child_id)
+        self.assertEqual(relationship["review_status"], "confirmed")
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            entities = list(csv.DictReader(handle))
+        parent_details = institution_hierarchy_details(entities, self.certh_id)
+        child_details = institution_hierarchy_details(entities, child_id)
+        self.assertEqual(
+            [row["canonical_name"] for row in parent_details["descendants"]],
+            ["Information Technologies Institute (ITI)"],
+        )
+        self.assertEqual(child_details["parent"]["canonical_name"], CERTH)
+
+    def test_merging_child_preserves_parent_linkage_in_both_stores(self):
+        child_id = "institution:old-iti"
+        target_id = "institution:new-iti"
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        rows.extend([
+            blank(INSTITUTION_COLUMNS, institution_id=child_id, canonical_name="Old ITI", institution_status="active", parent_institution_id=self.certh_id),
+            blank(INSTITUTION_COLUMNS, institution_id=target_id, canonical_name="Information Technologies Institute", institution_status="active"),
+        ])
+        write_csv(self.institutions, INSTITUTION_COLUMNS, rows)
+        write_csv(self.hierarchy, INSTITUTION_HIERARCHY_COLUMNS, [
+            blank(INSTITUTION_HIERARCHY_COLUMNS, parent_institution_id=self.certh_id, child_institution_id=child_id, relationship_type="affiliated_institute", review_status="confirmed"),
+        ])
+        merge_institutions(
+            child_id, target_id,
+            confirmation="REPLACE Old ITI WITH Information Technologies Institute GLOBALLY",
+            review_note="Fixture merge.",
+            institutions_path=self.institutions, mappings_path=self.mappings,
+            aliases_path=self.aliases, locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+            hierarchy_path=self.hierarchy, review_queue_path=self.review_queue,
+            audit_path=self.audits,
+        )
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            entities = {row["institution_id"]: row for row in csv.DictReader(handle)}
+        self.assertEqual(entities[target_id]["parent_institution_id"], self.certh_id)
+        with self.hierarchy.open(encoding="utf-8", newline="") as handle:
+            relationship = next(csv.DictReader(handle))
+        self.assertEqual(relationship["child_institution_id"], target_id)
 
     def test_ignoring_institution_removes_it_from_public_export(self):
         ignore_institution(

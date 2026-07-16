@@ -1994,7 +1994,10 @@ function filteredInstitutionRecords() {
   const query = normalize(state.institutionManagement.query);
   return state.institutions.filter((row) => normalize([
     row.canonical_name, row.institution_type, row.institution_status,
-    ...(row.aliases || []), row.parent_institution_id,
+    ...(row.aliases || []), row.parent_institution_id, row.parent?.canonical_name,
+    ...(row.descendants || []).flatMap((descendant) => [
+      descendant.institution_id, descendant.canonical_name,
+    ]),
   ].join(" ")).includes(query));
 }
 
@@ -2062,7 +2065,14 @@ function renderInstitutionManagement() {
     const identity = document.createElement("td");
     identity.append(document.createTextNode(institution.canonical_name), document.createElement("br"), document.createTextNode(institution.institution_id));
     const hierarchy = document.createElement("td");
-    hierarchy.textContent = `${(institution.aliases || []).join(", ") || "No aliases"}${institution.parent_institution_id ? ` · parent ${institution.parent_institution_id}` : ""}`;
+    const aliases = (institution.aliases || []).join(", ") || "No aliases";
+    const parent = institution.parent
+      ? `${institution.parent.canonical_name} (${institution.parent.institution_id})`
+      : "None";
+    const descendants = (institution.descendants || []).map(
+      (descendant) => `${descendant.canonical_name} (${descendant.institution_id})`,
+    ).join(", ") || "None";
+    hierarchy.textContent = `${aliases} · Parent: ${parent} · Descendants: ${descendants}`;
     const status = document.createElement("td");
     status.textContent = `${institution.institution_status} · ${institution.institution_type}`;
     const usage = document.createElement("td");

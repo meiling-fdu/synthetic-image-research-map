@@ -2632,22 +2632,64 @@ def public_canonical_institution_search_index(
 def public_institution_hierarchy(
     relationships: Sequence[Dict[str, Any]],
     confirmed_locations: Sequence[Dict[str, Any]],
+    institutions: Sequence[Dict[str, Any]] = (),
 ) -> List[Dict[str, str]]:
-    """Export only confirmed ID-based relationships with canonical names."""
+    """Export confirmed active canonical relationships without creating markers."""
     names_by_id = {
         (clean_text(row.get("institution_id")) or stable_institution_id(row.get("institution"))): clean_text(row.get("institution"))
         for row in confirmed_locations
         if clean_text(row.get("institution"))
     }
+    active_by_id = {
+        clean_text(row.get("institution_id")): row
+        for row in institutions
+        if clean_text(row.get("institution_status")) == "active"
+        and clean_text(row.get("institution_id"))
+        and clean_text(row.get("canonical_name"))
+    }
+    names_by_id.update({
+        institution_id: clean_text(row.get("canonical_name"))
+        for institution_id, row in active_by_id.items()
+    })
+    candidates = sorted(
+        relationships,
+        key=lambda row: (
+            clean_text(row.get("parent_institution_id")),
+            clean_text(row.get("child_institution_id")),
+            clean_text(row.get("relationship_type")),
+            clean_text(row.get("evidence_source")),
+            clean_text(row.get("evidence_url")),
+        ),
+    )
+    registry_candidates = ({
+        "parent_institution_id": clean_text(row.get("parent_institution_id")),
+        "child_institution_id": institution_id,
+        "relationship_type": "affiliated_institute",
+        "review_status": "confirmed",
+        "evidence_source": "canonical institution registry",
+        "evidence_url": "",
+    } for institution_id, row in active_by_id.items()
+        if clean_text(row.get("parent_institution_id"))
+    )
+    candidates.extend(sorted(
+        registry_candidates,
+        key=lambda row: (
+            row["parent_institution_id"], row["child_institution_id"]
+        ),
+    ))
     exported = []
     seen = set()
-    for row in relationships:
+    for row in candidates:
         parent_id = clean_text(row.get("parent_institution_id"))
         child_id = clean_text(row.get("child_institution_id"))
         key = (parent_id, child_id)
         if (
             clean_text(row.get("review_status")) != "confirmed"
             or clean_text(row.get("relationship_type")) != "affiliated_institute"
+            or (
+                bool(active_by_id)
+                and (parent_id not in active_by_id or child_id not in active_by_id)
+            )
             or parent_id not in names_by_id
             or child_id not in names_by_id
             or parent_id == child_id
@@ -3373,6 +3415,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         exported_hierarchy = public_institution_hierarchy(
             institution_hierarchy_rows,
             confirmed_location_rows,
+            institution_rows,
         )
         integrated_maps = canonicalize_public_institutions(
             integrated_papers,

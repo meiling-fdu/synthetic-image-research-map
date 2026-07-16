@@ -7,6 +7,7 @@ from scripts.export_public_preview import (
     public_institution_aliases,
     public_institution_hierarchy,
 )
+from scripts.validate_curated_database import validate_institution_hierarchy
 
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -67,6 +68,42 @@ class InstitutionHierarchyTests(unittest.TestCase):
         self.assertEqual(exported[0]["child_institution_id"], CHILD_ID)
         self.assertEqual(exported[0]["parent_institution_name"], PARENT_NAME)
         self.assertEqual(exported[0]["child_institution_name"], CHILD_NAME)
+
+    def test_active_registry_hierarchy_exports_without_synthesizing_locations(self):
+        institutions = [
+            {"institution_id": "institution:bits", "canonical_name": "BITS Pilani", "institution_status": "active", "parent_institution_id": ""},
+            {"institution_id": "institution:goa", "canonical_name": "BITS Pilani, Goa", "institution_status": "active", "parent_institution_id": "institution:bits"},
+            {"institution_id": "institution:hyderabad", "canonical_name": "BITS Pilani, Hyderabad", "institution_status": "active", "parent_institution_id": "institution:bits"},
+            {"institution_id": "institution:old", "canonical_name": "Old campus", "institution_status": "merged", "parent_institution_id": "institution:bits"},
+        ]
+        first = public_institution_hierarchy([], [], institutions)
+        second = public_institution_hierarchy([], [], list(reversed(institutions)))
+        self.assertEqual(first, second)
+        self.assertEqual(
+            [(row["parent_institution_name"], row["child_institution_name"]) for row in first],
+            [
+                ("BITS Pilani", "BITS Pilani, Goa"),
+                ("BITS Pilani", "BITS Pilani, Hyderabad"),
+            ],
+        )
+
+    def test_validator_uses_active_registry_and_rejects_store_disagreement(self):
+        institutions = [
+            {"institution_id": "institution:certh", "institution_status": "active", "parent_institution_id": ""},
+            {"institution_id": "institution:iti", "institution_status": "active", "parent_institution_id": "institution:certh"},
+        ]
+        relationship = {
+            "parent_institution_id": "institution:certh",
+            "child_institution_id": "institution:iti",
+            "relationship_type": "affiliated_institute",
+            "review_status": "confirmed",
+        }
+        issues = []
+        validate_institution_hierarchy([relationship], institutions, issues)
+        self.assertEqual(issues, [])
+        institutions[1]["parent_institution_id"] = ""
+        validate_institution_hierarchy([relationship], institutions, issues)
+        self.assertTrue(any("disagrees with institutions.csv" in issue.message for issue in issues))
 
     def test_old_public_consolidation_is_reversed_from_provenance(self):
         maps = [{

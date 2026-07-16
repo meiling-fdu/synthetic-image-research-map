@@ -80,6 +80,12 @@ class InstitutionManagementPaginationFrontendTests(unittest.TestCase):
         self.assertIn(".institution-management-table-wrap thead th", table_css)
         self.assertIn("position: sticky", table_css)
 
+    def test_parent_and_descendants_are_named_and_searchable(self):
+        self.assertIn("Aliases / hierarchy", self.html)
+        self.assertIn("row.parent?.canonical_name", self.pagination)
+        self.assertIn("...(row.descendants || []).flatMap", self.pagination)
+        self.assertIn("Parent: ${parent} · Descendants: ${descendants}", self.pagination)
+
 
 if __name__ == "__main__":
     unittest.main()

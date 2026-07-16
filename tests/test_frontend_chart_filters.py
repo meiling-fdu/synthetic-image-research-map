@@ -280,6 +280,90 @@ process.stdout.write(JSON.stringify({
         self.assertFalse(result["childIncludesParent"])
         self.assertFalse(result["unrelatedIncluded"])
 
+    def test_cas_certh_and_bits_parent_results_dedupe_while_children_stay_exact(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        hierarchy_start = self.app.index("function buildInstitutionHierarchyIndex")
+        hierarchy_end = self.app.index("\nfunction yearFilterValue", hierarchy_start)
+        derive_start = self.app.index("function deriveFilteredRecordSets")
+        derive_end = self.app.index("\nfunction normalizedSetSize", derive_start)
+        script = r'''
+function institutionIdentity(record) {
+  return record.institution_id ? `id:${record.institution_id.toLowerCase()}` : "";
+}
+function recordInstitutionIdentities(record) {
+  const values = record.author_institution_affiliations || [record];
+  return new Set(values.map(institutionIdentity));
+}
+function paperIdentity(record) { return record.id; }
+function aggregateUniquePapers(records) {
+  return [...new Map(records.map(record => [record.id, record])).values()];
+}
+''' + self.app[hierarchy_start:hierarchy_end] + self.app[derive_start:derive_end] + r'''
+const relationships = [
+  ['cas', 'iie'], ['cas', 'ioa'], ['certh', 'iti'],
+  ['bits', 'bits-goa'], ['bits', 'bits-hyderabad'],
+].map(([parent, child]) => ({
+  parent_institution_id: `institution:${parent}`,
+  child_institution_id: `institution:${child}`,
+  review_status: 'confirmed',
+}));
+const maps = [
+  {id: 'cas-direct', institution_id: 'institution:cas'},
+  {id: 'iie-direct', institution_id: 'institution:iie'},
+  {id: 'ioa-direct', institution_id: 'institution:ioa'},
+  {id: 'both', institution_id: 'institution:cas'},
+  {id: 'both', institution_id: 'institution:iie'},
+  {id: 'certh-direct', institution_id: 'institution:certh'},
+  {id: 'iti-direct', institution_id: 'institution:iti'},
+  {id: 'goa-direct', institution_id: 'institution:bits-goa'},
+  {id: 'hyderabad-direct', institution_id: 'institution:bits-hyderabad'},
+];
+const paperIds = [...new Set(maps.map(record => record.id))];
+const papers = paperIds.map(id => ({
+  id,
+  author_institution_affiliations: maps.filter(record => record.id === id),
+}));
+const index = buildInstitutionHierarchyIndex(relationships);
+const resultFor = institutionId => {
+  const identities = institutionIdentityWithDescendants(
+    `id:institution:${institutionId}`, index,
+  );
+  return deriveFilteredRecordSets(
+    maps, papers,
+    record => recordMatchesInstitutionIdentities(record, identities, true),
+    record => recordMatchesInstitutionIdentities(record, identities, false),
+  );
+};
+const cas = resultFor('cas');
+const iie = resultFor('iie');
+const certh = resultFor('certh');
+const iti = resultFor('iti');
+const bits = resultFor('bits');
+process.stdout.write(JSON.stringify({
+  casMaps: cas.filteredRecords.map(record => `${record.id}:${record.institution_id}`).sort(),
+  casPapers: cas.filteredPapers.map(record => record.id).sort(),
+  iiePapers: iie.filteredPapers.map(record => record.id).sort(),
+  certhPapers: certh.filteredPapers.map(record => record.id).sort(),
+  itiPapers: iti.filteredPapers.map(record => record.id).sort(),
+  bitsPapers: bits.filteredPapers.map(record => record.id).sort(),
+  directParentMarkers: maps.filter(record => record.institution_id === 'institution:cas').length,
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["casPapers"], ["both", "cas-direct", "iie-direct", "ioa-direct"])
+        self.assertEqual(result["iiePapers"], ["both", "iie-direct"])
+        self.assertEqual(result["certhPapers"], ["certh-direct", "iti-direct"])
+        self.assertEqual(result["itiPapers"], ["iti-direct"])
+        self.assertEqual(result["bitsPapers"], ["goa-direct", "hyderabad-direct"])
+        self.assertEqual(result["directParentMarkers"], 2)
+        self.assertEqual(result["casMaps"].count("both:institution:cas"), 1)
+        self.assertEqual(result["casMaps"].count("both:institution:iie"), 1)
+
     def test_no_hierarchy_checkbox_or_related_state_is_rendered(self):
         combined = "\n".join((self.app, self.css, self.html))
         for removed in (

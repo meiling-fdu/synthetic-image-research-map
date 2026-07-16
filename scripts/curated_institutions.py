@@ -124,6 +124,17 @@ def _entity(rows: Sequence[Mapping[str, Any]], institution_id: Any) -> dict[str,
     return matches[0]  # type: ignore[return-value]
 
 
+def _active_entity(
+    rows: Sequence[Mapping[str, Any]], institution_id: Any
+) -> dict[str, Any]:
+    entity = _entity(rows, institution_id)
+    if clean(entity.get("institution_status")) != "active":
+        raise CuratedInstitutionError(
+            "institution_id must identify an active canonical institution"
+        )
+    return entity
+
+
 def institution_impact(
     institution_id: Any,
     mappings: Sequence[Mapping[str, Any]],
@@ -422,12 +433,13 @@ def add_institution_alias(
 def set_parent_institution(
     institution_id: Any, parent_institution_id: Any, *,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    hierarchy_path: Path = DEFAULT_HIERARCHY_PATH,
 ) -> dict[str, str]:
     rows = load_institutions(institutions_path)
-    child = _entity(rows, institution_id)
+    child = _active_entity(rows, institution_id)
     parent_id = clean(parent_institution_id)
     if parent_id:
-        _entity(rows, parent_id)
+        _active_entity(rows, parent_id)
     if parent_id == clean(institution_id):
         raise CuratedInstitutionError("an institution cannot be its own parent")
     parents = {clean(row.get("institution_id")): clean(row.get("parent_institution_id")) for row in rows}
@@ -438,7 +450,39 @@ def set_parent_institution(
         cursor = parents.get(cursor, "")
     child["parent_institution_id"] = parent_id
     child["updated_at"] = _timestamp()
-    save_institutions(rows, institutions_path)
+    hierarchy = _read(hierarchy_path, INSTITUTION_HIERARCHY_COLUMNS)
+    hierarchy = [
+        relation for relation in hierarchy
+        if not (
+            clean(relation.get("child_institution_id")) == clean(institution_id)
+            and clean(relation.get("relationship_type")) == "affiliated_institute"
+        )
+    ]
+    if parent_id:
+        hierarchy.append({
+            "parent_institution_id": parent_id,
+            "child_institution_id": clean(institution_id),
+            "relationship_type": "affiliated_institute",
+            "review_status": "confirmed",
+            "evidence_source": "Institution Management",
+            "evidence_url": "",
+            "notes": "Confirmed through the local admin institution manager.",
+        })
+
+    files = (institutions_path, hierarchy_path)
+    snapshots = {
+        path: path.read_bytes() if path.exists() else None for path in files
+    }
+    try:
+        save_institutions(rows, institutions_path)
+        _write(hierarchy_path, INSTITUTION_HIERARCHY_COLUMNS, hierarchy)
+    except Exception:
+        for path, content in snapshots.items():
+            if content is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_bytes(content)
+        raise
     return dict(child)
 
 
@@ -505,6 +549,18 @@ def merge_institutions(
     source_id = clean(source_institution_id)
     target_id = clean(target_institution_id)
     target_name = clean(target.get("canonical_name"))
+    source_parent = clean(source.get("parent_institution_id"))
+    target_parent = clean(target.get("parent_institution_id"))
+    if (
+        source_parent
+        and target_parent
+        and source_parent != target_parent
+        and source_parent != target_id
+        and target_parent != source_id
+    ):
+        raise CuratedInstitutionError(
+            "merge requires manual parent resolution when both institutions have different parents"
+        )
     now = _timestamp()
     for mapping in mappings:
         if clean(mapping.get("institution_id")) == source_id:
@@ -574,10 +630,12 @@ def merge_institutions(
             finding["suggested_canonical_institution"] = target_name
             finding["updated_at"] = now
 
-    source_parent = clean(source.get("parent_institution_id"))
     for entity in entities:
-        if entity is target and clean(entity.get("parent_institution_id")) == source_id:
-            entity["parent_institution_id"] = source_parent
+        if entity is target:
+            if target_parent == source_id:
+                entity["parent_institution_id"] = source_parent
+            elif not target_parent and source_parent != target_id:
+                entity["parent_institution_id"] = source_parent
         elif entity is not source and clean(entity.get("parent_institution_id")) == source_id:
             entity["parent_institution_id"] = target_id
     source["institution_status"] = "merged"

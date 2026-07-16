@@ -465,6 +465,45 @@ def read_csv_rows(path: Path) -> List[Dict[str, str]]:
         raise AdminDataError(f"could not read {path}: {error}") from error
 
 
+def institution_hierarchy_details(
+    institutions: Sequence[Mapping[str, Any]], institution_id: Any
+) -> Dict[str, Any]:
+    """Return readable active parent and transitive descendants for admin UI."""
+    identifier = clean(institution_id)
+    active = {
+        clean(row.get("institution_id")): row
+        for row in institutions
+        if clean(row.get("institution_status")) == "active"
+        and clean(row.get("institution_id"))
+    }
+    current = active.get(identifier, {})
+    parent_id = clean(current.get("parent_institution_id"))
+    parent = active.get(parent_id)
+    children: DefaultDict[str, List[str]] = defaultdict(list)
+    for child_id, row in active.items():
+        candidate_parent = clean(row.get("parent_institution_id"))
+        if candidate_parent in active:
+            children[candidate_parent].append(child_id)
+    descendants = []
+    pending = list(children.get(identifier, ()))
+    seen = set()
+    while pending:
+        child_id = pending.pop()
+        if child_id in seen:
+            continue
+        seen.add(child_id)
+        descendants.append(active[child_id])
+        pending.extend(children.get(child_id, ()))
+    descendants.sort(key=lambda row: (
+        clean(row.get("canonical_name")).casefold(),
+        clean(row.get("institution_id")),
+    ))
+    return {
+        "parent": dict(parent) if parent else None,
+        "descendants": [dict(row) for row in descendants],
+    }
+
+
 def load_author_mapping_coverage(
     path: Path = AUTHOR_MAPPING_REPORT_PATH, *, unresolved_only: bool = False
 ) -> Dict[str, Any]:
@@ -1729,6 +1768,7 @@ def make_handler(
                         self.send_json(HTTPStatus.OK, {"data": {
                             "institution": matches[0],
                             "editable_institution_id": identifier,
+                            **institution_hierarchy_details(institutions, identifier),
                             "aliases": [row for row in aliases if clean(row.get("institution_id")) == identifier],
                             "current_location": current_location,
                             "location": current_location,
@@ -1751,6 +1791,7 @@ def make_handler(
                             identifier = clean(institution.get("institution_id"))
                             records.append({
                                 **institution,
+                                **institution_hierarchy_details(institutions, identifier),
                                 "aliases": [row.get("alias_name") for row in aliases if clean(row.get("institution_id")) == identifier and clean(row.get("review_status")) == "confirmed"],
                                 "usage": institution_impact(identifier, mappings),
                             })
@@ -2443,7 +2484,7 @@ def make_handler(
                         elif action == "alias":
                             result = add_institution_alias(payload.get("institution_id"), payload.get("alias_name"), note=payload.get("review_note"), institutions_path=institutions_path, aliases_path=institution_aliases_path)
                         elif action == "parent":
-                            result = set_parent_institution(payload.get("institution_id"), payload.get("parent_institution_id"), institutions_path=institutions_path)
+                            result = set_parent_institution(payload.get("institution_id"), payload.get("parent_institution_id"), institutions_path=institutions_path, hierarchy_path=institution_hierarchy_path)
                         elif action == "ignore":
                             result = ignore_institution(payload.get("institution_id"), confirmation=payload.get("confirmation") is True, review_note=payload.get("review_note"), institutions_path=institutions_path, mappings_path=mappings_path, audit_path=institution_audit_path)
                         else:

@@ -698,18 +698,20 @@ def validate_institution_aliases(
 
 def validate_institution_hierarchy(
     relationships: Sequence[Mapping[str, str]],
-    confirmed_locations: Sequence[Mapping[str, str]],
+    institutions: Sequence[Mapping[str, str]],
     issues: List[Issue],
 ) -> None:
-    def stable_id(name: object) -> str:
-        normalized = normalize_institution(name)
-        digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
-        return f"institution:{digest}" if normalized else ""
-
     known_ids = {
-        stable_id(row.get("institution"))
-        for row in confirmed_locations
-        if stable_id(row.get("institution"))
+        clean(row.get("institution_id"))
+        for row in institutions
+        if clean(row.get("institution_status")) == "active"
+        and clean(row.get("institution_id"))
+    }
+    registry_parents = {
+        clean(row.get("institution_id")): clean(row.get("parent_institution_id"))
+        for row in institutions
+        if clean(row.get("institution_status")) == "active"
+        and clean(row.get("institution_id"))
     }
     seen = set()
     children: DefaultDict[str, set[str]] = defaultdict(set)
@@ -747,6 +749,15 @@ def validate_institution_hierarchy(
                     f"{field} ID is not a confirmed canonical institution: {institution_id}",
                     row_number,
                 )
+        if child in registry_parents and registry_parents[child] != parent:
+            add_issue(
+                issues, "ERROR", "institution_hierarchy.csv",
+                (
+                    "confirmed hierarchy relationship disagrees with "
+                    f"institutions.csv parent_institution_id for {child}"
+                ),
+                row_number,
+            )
         key = (parent, child)
         if key in seen:
             add_issue(
@@ -1163,7 +1174,7 @@ def main() -> int:
             row.get("normalized_institution")
         )] = row
     validate_institution_aliases(aliases, confirmed_locations, issues, institutions)
-    validate_institution_hierarchy(hierarchy, confirmed_locations, issues)
+    validate_institution_hierarchy(hierarchy, institutions, issues)
     validate_institution_entities(
         institutions, mappings, confirmed_locations, locations, aliases,
         institution_audits, issues,
