@@ -368,6 +368,130 @@ h2 {
   gap: 14px;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.country-combobox-field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.filter-label {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.country-filter-native {
+  display: none;
+}
+
+.country-combobox {
+  min-width: 0;
+}
+
+.country-combobox-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+  padding: 9px 10px;
+  color: var(--ink);
+  font-size: inherit;
+  font-weight: 400;
+  text-align: left;
+}
+
+.country-combobox-button > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.country-combobox-chevron {
+  flex: 0 0 auto;
+  width: 0;
+  height: 0;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+  border-top: 5px solid currentColor;
+}
+
+.country-combobox-button[aria-expanded="true"] .country-combobox-chevron {
+  transform: rotate(180deg);
+}
+
+.country-combobox-panel {
+  position: fixed;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  max-height: min(420px, 60vh);
+  overflow: hidden;
+  border: 1px solid #aebdc5;
+  border-radius: 7px;
+  background: var(--paper);
+  box-shadow: 0 12px 30px rgb(28 48 59 / 20%);
+}
+
+.country-combobox-panel[hidden] {
+  display: none;
+}
+
+.country-combobox-search-label {
+  flex: 0 0 auto;
+  padding: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.country-combobox-search-label input {
+  padding: 8px 9px;
+}
+
+.country-combobox-options {
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 4px;
+  list-style: none;
+  scrollbar-width: thin;
+}
+
+.country-combobox-option {
+  border-radius: 4px;
+  padding: 8px 9px;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.country-combobox-option[hidden] {
+  display: none;
+}
+
+.country-combobox-option.is-active,
+.country-combobox-option:hover {
+  background: #edf4f6;
+}
+
+.country-combobox-option[aria-selected="true"] {
+  color: var(--accent-dark);
+  font-weight: 700;
+}
+
 .active-filter-chip {
   display: inline-flex;
   align-items: center;

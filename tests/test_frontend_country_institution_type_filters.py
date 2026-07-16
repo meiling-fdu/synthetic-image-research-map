@@ -13,6 +13,7 @@ class FrontendCountryInstitutionTypeFilterTests(unittest.TestCase):
     def setUpClass(cls):
         cls.app = (REPOSITORY / "web" / "app.js").read_text()
         cls.html = (REPOSITORY / "web" / "index.html").read_text()
+        cls.css = (REPOSITORY / "web" / "style.css").read_text()
 
     def run_filter_helpers(self):
         node = shutil.which("node")
@@ -116,6 +117,10 @@ process.stdout.write(JSON.stringify({{
     def test_dropdowns_are_compact_defaults_near_institution_filters(self):
         self.assertIn('id="country-filter"', self.html)
         self.assertIn('>All countries</option>', self.html)
+        self.assertIn('id="country-combobox-button"', self.html)
+        self.assertIn('role="combobox"', self.html)
+        self.assertIn('role="listbox"', self.html)
+        self.assertIn('id="country-combobox-search"', self.html)
         self.assertIn('id="institution-type-filter"', self.html)
         self.assertIn('>All institution types</option>', self.html)
         self.assertLess(
@@ -191,6 +196,82 @@ process.stdout.write(JSON.stringify({{
         self.assertIn(
             'institutionTypeFilter.addEventListener("change", renderRecords)', self.app,
         )
+
+    def test_country_panel_height_and_internal_scrolling(self):
+        panel = self.css[
+            self.css.index(".country-combobox-panel {"):
+            self.css.index(".country-combobox-panel[hidden]")
+        ]
+        options = self.css[
+            self.css.index(".country-combobox-options {"):
+            self.css.index(".country-combobox-option {")
+        ]
+        self.assertIn("max-height: min(420px, 60vh)", panel)
+        self.assertIn("overflow: hidden", panel)
+        self.assertIn("overflow-y: auto", options)
+        self.assertIn("overscroll-behavior: contain", options)
+
+    def test_search_keyboard_and_upward_placement_helpers(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        source = self.app[
+            self.app.index("function filterCountryOptionData"):
+            self.app.index("\nfunction countryOptionElements")
+        ]
+        script = f"""
+function normalizedSearchText(value) {{ return String(value || '').trim().toLowerCase(); }}
+{source}
+const options = [
+  {{value: 'all', label: 'All countries', searchLabel: 'All countries'}},
+  {{value: 'China', label: 'China (9)', searchLabel: 'China'}},
+  {{value: 'United States', label: 'United States (7)', searchLabel: 'United States'}},
+  {{value: 'Italy', label: 'Italy (7)', searchLabel: 'Italy'}},
+];
+process.stdout.write(JSON.stringify({{
+  search: filterCountryOptionData(options, 'unit').map(option => option.value),
+  blankOrder: filterCountryOptionData(options, '').map(option => option.value),
+  arrowDown: nextCountryOptionIndex([0, 1, 2], 1, 1),
+  arrowUpWrap: nextCountryOptionIndex([0, 1, 2], 0, -1),
+  upward: countryComboboxPlacement(
+    {{left: 300, top: 730, bottom: 770, width: 220}}, 400, 800, 800,
+  ),
+  narrow: countryComboboxPlacement(
+    {{left: 280, top: 100, bottom: 140, width: 220}}, 300, 320, 700,
+  ),
+}}));
+"""
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["search"], ["United States"])
+        self.assertEqual(
+            result["blankOrder"], ["all", "China", "United States", "Italy"],
+        )
+        self.assertEqual(result["arrowDown"], 2)
+        self.assertEqual(result["arrowUpWrap"], 2)
+        self.assertEqual(result["upward"]["placement"], "up")
+        self.assertLess(result["upward"]["top"], 730)
+        self.assertGreaterEqual(result["narrow"]["left"], 8)
+        self.assertLessEqual(
+            result["narrow"]["left"] + result["narrow"]["width"], 312,
+        )
+
+    def test_selection_escape_and_outside_click_use_shared_filter_state(self):
+        selection = self.app[
+            self.app.index("function selectCountryComboboxValue"):
+            self.app.index("\nfunction updateInstitutionDimensionFilters")
+        ]
+        events = self.app[self.app.index('countryFilter.addEventListener("change"'):]
+        self.assertIn("countryFilter.value = value", selection)
+        self.assertIn('dispatchEvent(new Event("change", { bubbles: true }))', selection)
+        self.assertIn("closeCountryCombobox(true)", selection)
+        self.assertIn('event.key === "Escape"', events)
+        self.assertIn("closeCountryCombobox(true)", events)
+        self.assertIn('document.addEventListener("pointerdown"', events)
+        self.assertIn("!countryCombobox.contains(event.target)", events)
+        self.assertIn("setActiveCountryOption(selectedIndex, true)", self.app)
 
 
 if __name__ == "__main__":

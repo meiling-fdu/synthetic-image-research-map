@@ -135,6 +135,12 @@ const entryTypeFilter = document.querySelector("#entry-type-filter");
 const sortControl = document.querySelector("#sort-control");
 const venueFilter = document.querySelector("#venue-filter");
 const countryFilter = document.querySelector("#country-filter");
+const countryCombobox = document.querySelector("#country-combobox");
+const countryComboboxButton = document.querySelector("#country-combobox-button");
+const countryComboboxValue = document.querySelector("#country-combobox-value");
+const countryComboboxPanel = document.querySelector("#country-combobox-panel");
+const countryComboboxSearch = document.querySelector("#country-combobox-search");
+const countryComboboxOptions = document.querySelector("#country-combobox-options");
 const institutionTypeFilter = document.querySelector("#institution-type-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
@@ -178,6 +184,8 @@ let resultsView = "institutions";
 let visibleMarkerEntries = [];
 let activeInstitutionFilter = null;
 let displayedInstitutionFilter = null;
+let countryComboboxOptionData = [];
+let activeCountryOptionIndex = -1;
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -1720,6 +1728,192 @@ function replaceCountedFilterOptions(select, defaultLabel, entries, labelForValu
   select.value = selectedValue;
 }
 
+function filterCountryOptionData(options, query) {
+  const normalizedQuery = normalizedSearchText(query);
+  if (!normalizedQuery) return [...options];
+  return options.filter((option) => (
+    normalizedSearchText(option.searchLabel || option.label).includes(normalizedQuery)
+  ));
+}
+
+function nextCountryOptionIndex(visibleIndices, currentIndex, direction) {
+  if (!visibleIndices.length) return -1;
+  const currentPosition = visibleIndices.indexOf(currentIndex);
+  if (currentPosition === -1) {
+    return direction < 0
+      ? visibleIndices[visibleIndices.length - 1]
+      : visibleIndices[0];
+  }
+  const nextPosition = (
+    currentPosition + direction + visibleIndices.length
+  ) % visibleIndices.length;
+  return visibleIndices[nextPosition];
+}
+
+function countryComboboxPlacement(
+  triggerRect,
+  panelHeight,
+  viewportWidth,
+  viewportHeight,
+  padding = 8,
+  gap = 4,
+) {
+  const width = Math.min(
+    Math.max(triggerRect.width, 240),
+    Math.max(0, viewportWidth - (padding * 2)),
+  );
+  const left = Math.min(
+    Math.max(triggerRect.left, padding),
+    Math.max(padding, viewportWidth - padding - width),
+  );
+  const availableBelow = viewportHeight - triggerRect.bottom - gap - padding;
+  const availableAbove = triggerRect.top - gap - padding;
+  const placement = availableBelow < panelHeight && availableAbove > availableBelow
+    ? "up"
+    : "down";
+  const preferredTop = placement === "up"
+    ? triggerRect.top - gap - panelHeight
+    : triggerRect.bottom + gap;
+  const top = Math.min(
+    Math.max(preferredTop, padding),
+    Math.max(padding, viewportHeight - padding - panelHeight),
+  );
+  return { left, top, width, placement };
+}
+
+function countryOptionElements() {
+  return [...countryComboboxOptions.querySelectorAll("[role='option']")];
+}
+
+function setActiveCountryOption(index, scroll = false) {
+  activeCountryOptionIndex = index;
+  let activeElement = null;
+  countryOptionElements().forEach((option) => {
+    const isActive = Number(option.dataset.countryOptionIndex) === index;
+    option.classList.toggle("is-active", isActive);
+    if (isActive) activeElement = option;
+  });
+  const activeId = activeElement?.id || "";
+  [countryComboboxButton, countryComboboxSearch].forEach((element) => {
+    if (activeId) element.setAttribute("aria-activedescendant", activeId);
+    else element.removeAttribute("aria-activedescendant");
+  });
+  if (scroll && activeElement) {
+    activeElement.scrollIntoView({ block: "nearest" });
+  }
+}
+
+function visibleCountryOptionIndices() {
+  return countryOptionElements()
+    .filter((option) => !option.hidden)
+    .map((option) => Number(option.dataset.countryOptionIndex));
+}
+
+function moveActiveCountryOption(direction) {
+  setActiveCountryOption(
+    nextCountryOptionIndex(
+      visibleCountryOptionIndices(),
+      activeCountryOptionIndex,
+      direction,
+    ),
+    true,
+  );
+}
+
+function filterCountryComboboxOptions(query) {
+  const visibleValues = new Set(
+    filterCountryOptionData(countryComboboxOptionData, query).map(({ value }) => value),
+  );
+  countryOptionElements().forEach((option) => {
+    option.hidden = !visibleValues.has(option.dataset.countryValue);
+  });
+  const visibleIndices = visibleCountryOptionIndices();
+  if (!visibleIndices.includes(activeCountryOptionIndex)) {
+    const selectedIndex = countryComboboxOptionData.findIndex(
+      ({ value }) => value === countryFilter.value,
+    );
+    setActiveCountryOption(
+      visibleIndices.includes(selectedIndex) ? selectedIndex : (visibleIndices[0] ?? -1),
+    );
+  }
+}
+
+function syncCountryComboboxOptions() {
+  countryComboboxOptionData = [...countryFilter.options].map((option, index) => ({
+    value: option.value,
+    label: option.textContent,
+    searchLabel: option.textContent.replace(/\s+\(\d+\)$/, ""),
+    index,
+  }));
+  countryComboboxOptions.replaceChildren(...countryComboboxOptionData.map((option) => {
+    const element = document.createElement("li");
+    element.id = `country-combobox-option-${option.index}`;
+    element.className = "country-combobox-option";
+    element.dataset.countryOptionIndex = String(option.index);
+    element.dataset.countryValue = option.value;
+    element.setAttribute("role", "option");
+    element.setAttribute("aria-selected", String(option.value === countryFilter.value));
+    element.textContent = option.label;
+    return element;
+  }));
+  const selectedOption = countryComboboxOptionData.find(
+    ({ value }) => value === countryFilter.value,
+  ) || countryComboboxOptionData[0];
+  countryComboboxValue.textContent = selectedOption?.label || "All countries";
+  activeCountryOptionIndex = selectedOption?.index ?? -1;
+  filterCountryComboboxOptions(countryComboboxSearch.value);
+}
+
+function positionCountryComboboxPanel() {
+  if (countryComboboxPanel.hidden) return;
+  const triggerRect = countryComboboxButton.getBoundingClientRect();
+  const panelHeight = Math.min(
+    countryComboboxPanel.scrollHeight,
+    420,
+    window.innerHeight * 0.6,
+  );
+  const placement = countryComboboxPlacement(
+    triggerRect,
+    panelHeight,
+    window.innerWidth,
+    window.innerHeight,
+  );
+  countryComboboxPanel.style.left = `${placement.left}px`;
+  countryComboboxPanel.style.top = `${placement.top}px`;
+  countryComboboxPanel.style.width = `${placement.width}px`;
+  countryComboboxPanel.dataset.placement = placement.placement;
+}
+
+function openCountryCombobox() {
+  if (countryComboboxButton.disabled || !countryComboboxPanel.hidden) return;
+  countryComboboxSearch.value = "";
+  filterCountryComboboxOptions("");
+  countryComboboxPanel.hidden = false;
+  countryComboboxButton.setAttribute("aria-expanded", "true");
+  positionCountryComboboxPanel();
+  countryComboboxSearch.focus();
+  const selectedIndex = countryComboboxOptionData.findIndex(
+    ({ value }) => value === countryFilter.value,
+  );
+  setActiveCountryOption(selectedIndex, true);
+}
+
+function closeCountryCombobox(returnFocus = false) {
+  if (countryComboboxPanel.hidden) return;
+  countryComboboxPanel.hidden = true;
+  countryComboboxButton.setAttribute("aria-expanded", "false");
+  countryComboboxButton.removeAttribute("aria-activedescendant");
+  countryComboboxSearch.removeAttribute("aria-activedescendant");
+  if (returnFocus) countryComboboxButton.focus();
+}
+
+function selectCountryComboboxValue(value) {
+  if (!countryComboboxOptionData.some((option) => option.value === value)) return;
+  countryFilter.value = value;
+  closeCountryCombobox(true);
+  countryFilter.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
 function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers) {
   const countryCounts = dimensionPaperCounts(
     countryPapers,
@@ -1731,6 +1925,7 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
     sortedDimensionCounts(countryCounts),
     (value) => value,
   );
+  syncCountryComboboxOptions();
 
   const typeCounts = dimensionPaperCounts(
     institutionTypePapers,
@@ -2866,6 +3061,7 @@ function enableControls() {
   sortControl.disabled = false;
   venueFilter.disabled = false;
   countryFilter.disabled = false;
+  countryComboboxButton.disabled = false;
   institutionTypeFilter.disabled = false;
   preprintFilter.disabled = false;
   minYearFilter.disabled = false;
@@ -3180,6 +3376,65 @@ entryTypeFilter.addEventListener("change", renderRecords);
 sortControl.addEventListener("change", renderRecords);
 venueFilter.addEventListener("change", renderRecords);
 countryFilter.addEventListener("change", renderRecords);
+countryComboboxButton.addEventListener("click", () => {
+  if (countryComboboxPanel.hidden) openCountryCombobox();
+  else closeCountryCombobox(true);
+});
+countryComboboxButton.addEventListener("keydown", (event) => {
+  if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+    event.preventDefault();
+    if (countryComboboxPanel.hidden) openCountryCombobox();
+    moveActiveCountryOption(event.key === "ArrowDown" ? 1 : -1);
+  } else if (["Enter", " "].includes(event.key) && countryComboboxPanel.hidden) {
+    event.preventDefault();
+    openCountryCombobox();
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    closeCountryCombobox(true);
+  }
+});
+countryComboboxSearch.addEventListener("input", () => {
+  filterCountryComboboxOptions(countryComboboxSearch.value);
+});
+countryComboboxSearch.addEventListener("keydown", (event) => {
+  if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+    event.preventDefault();
+    moveActiveCountryOption(event.key === "ArrowDown" ? 1 : -1);
+  } else if (event.key === "Enter") {
+    event.preventDefault();
+    const option = countryComboboxOptionData[activeCountryOptionIndex];
+    if (option && visibleCountryOptionIndices().includes(activeCountryOptionIndex)) {
+      selectCountryComboboxValue(option.value);
+    }
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    event.stopPropagation();
+    closeCountryCombobox(true);
+  }
+});
+countryComboboxOptions.addEventListener("mousemove", (event) => {
+  const option = event.target.closest("[data-country-option-index]");
+  if (option && !option.hidden) {
+    setActiveCountryOption(Number(option.dataset.countryOptionIndex));
+  }
+});
+countryComboboxOptions.addEventListener("click", (event) => {
+  const option = event.target.closest("[data-country-value]");
+  if (option && !option.hidden) selectCountryComboboxValue(option.dataset.countryValue);
+});
+document.addEventListener("pointerdown", (event) => {
+  if (!countryComboboxPanel.hidden && !countryCombobox.contains(event.target)) {
+    closeCountryCombobox();
+  }
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !countryComboboxPanel.hidden) {
+    event.preventDefault();
+    closeCountryCombobox(true);
+  }
+});
+window.addEventListener("resize", positionCountryComboboxPanel);
+window.addEventListener("scroll", positionCountryComboboxPanel, true);
 institutionTypeFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
 minYearFilter.addEventListener("input", renderRecords);

@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260713-public-overview">
+    <link rel="stylesheet" href="style.css?v=20260716-country-combobox">
   </head>
   <body>
     <header class="site-header">
@@ -118,12 +118,44 @@
               </select>
             </label>
 
-            <label for="country-filter">
-              Country
-              <select id="country-filter" disabled>
+            <div class="country-combobox-field">
+              <span id="country-filter-label" class="filter-label">Country</span>
+              <select id="country-filter" class="country-filter-native" tabindex="-1" aria-hidden="true" disabled>
                 <option value="all">All countries</option>
               </select>
-            </label>
+              <div id="country-combobox" class="country-combobox">
+                <button
+                  id="country-combobox-button"
+                  class="country-combobox-button"
+                  type="button"
+                  role="combobox"
+                  aria-labelledby="country-filter-label country-combobox-value"
+                  aria-controls="country-combobox-options"
+                  aria-expanded="false"
+                  aria-haspopup="listbox"
+                  disabled
+                ><span id="country-combobox-value">All countries</span><span class="country-combobox-chevron" aria-hidden="true"></span></button>
+                <div id="country-combobox-panel" class="country-combobox-panel" hidden>
+                  <label class="country-combobox-search-label" for="country-combobox-search">
+                    <span class="visually-hidden">Search countries</span>
+                    <input
+                      id="country-combobox-search"
+                      type="search"
+                      role="searchbox"
+                      aria-controls="country-combobox-options"
+                      placeholder="Search countries..."
+                      autocomplete="off"
+                    >
+                  </label>
+                  <ul
+                    id="country-combobox-options"
+                    class="country-combobox-options"
+                    role="listbox"
+                    aria-labelledby="country-filter-label"
+                  ></ul>
+                </div>
+              </div>
+            </div>
 
             <label for="institution-type-filter">
               Institution type
@@ -403,6 +435,6 @@
     <script src="paper_link_helpers.js?v=20260714-paper-version-links"></script>
     <script src="marker_size_helpers.js?v=20260706-task-markers"></script>
     <script src="marker_interaction_helpers.js?v=20260712-pinned-state"></script>
-    <script src="app.js?v=20260716-country-institution-type-filters"></script>
+    <script src="app.js?v=20260716-country-combobox"></script>
   </body>
 </html>
