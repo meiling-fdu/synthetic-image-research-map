@@ -337,7 +337,10 @@ process.stdout.write(JSON.stringify({
         ]
         self.assertNotIn("institutionHierarchy", resolver)
         self.assertNotIn("hierarchy.forEach", resolver)
-        self.assertIn("buildCanonicalInstitutionResolver(aliases)", resolver)
+        self.assertIn(
+            "buildCanonicalInstitutionResolver(aliases, canonicalIndex, idRedirects)",
+            resolver,
+        )
 
     def test_institution_alias_search_normalization_and_exact_resolution(self):
         node = shutil.which("node")
@@ -479,6 +482,7 @@ process.stdout.write(JSON.stringify({
             ("function institutionIdentity", "function affiliationIdentity"),
             ("function normalizedIdentityValue", "function recordCountry"),
             ("function normalizedSearchText", "function recordSearchText"),
+            ("function escapeCsvValue", "function exportFilename"),
         ):
             start = self.app.index(start_name)
             end = self.app.index(end_name, start)
@@ -515,6 +519,11 @@ const canonicalIdentity = resolveInstitutionSearch(canonicalName, index);
 const matchingPapers = canonicalized.paperRecords
   .filter(paper => recordInstitutionIdentities(paper).has(aliasIdentity))
   .map(paperIdentity).sort();
+const columns = [
+  ['institution_id', record => record.institution_id],
+  ['institution_name', record => recordInstitution(record)],
+];
+const csv = buildCsv(canonicalized.mapRecords, columns);
 process.stdout.write(JSON.stringify({
   mapCount: canonicalized.mapRecords.length,
   astarMapCount: canonicalized.mapRecords.filter(record => institutionIdentity(record) === aliasIdentity).length,
@@ -525,6 +534,8 @@ process.stdout.write(JSON.stringify({
   aliasIdentity,
   canonicalIdentity,
   matchingPapers,
+  csv,
+  repeatedCsv: buildCsv(canonicalized.mapRecords, columns),
   partial: resolveInstitutionSearch('Agency for Science', index),
 }));
 '''
@@ -541,6 +552,8 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(result["aliasIdentity"], result["canonicalIdentity"])
         self.assertEqual(result["matchingPapers"], ["doi:10.1/alias", "doi:10.1/other"])
         self.assertEqual(result["partial"], result["canonicalIdentity"])
+        self.assertEqual(result["csv"], result["repeatedCsv"])
+        self.assertEqual(result["csv"].count("institution:e81a0314e783d8a4"), 2)
 
     def test_counts_markers_and_csv_use_canonical_identity(self):
         statistics = self.app[

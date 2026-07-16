@@ -17,14 +17,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 961 |
+| Map records | 950 |
 | Unique papers | 447 |
-| Unique institutions | 518 |
-| Countries | 73 |
-| arXiv/preprint records | 538 |
-| Records with DOI | 941 |
-| Records with venue | 894 |
-| Records missing venue | 67 |
+| Unique institutions | 515 |
+| Countries | 52 |
+| arXiv/preprint records | 528 |
+| Records with DOI | 930 |
+| Records with venue | 884 |
+| Records missing venue | 66 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -34,7 +34,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 828 |
+| detection | 817 |
 | source_attribution | 86 |
 | detection_and_source_attribution | 47 |
 
@@ -42,8 +42,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 464 |
-| synthetic_image_detection | 259 |
+| ai_generated_image_detection | 458 |
+| synthetic_image_detection | 254 |
 | deepfake_image_detection | 105 |
 | generated_image_source_attribution | 53 |
 | detection_and_source_attribution | 47 |
@@ -54,14 +54,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Year | Records |
 | --- | ---: |
 | 2026 | 157 |
-| 2025 | 300 |
-| 2024 | 229 |
-| 2023 | 123 |
+| 2025 | 296 |
+| 2024 | 226 |
+| 2023 | 122 |
 | 2022 | 60 |
 | 2021 | 38 |
 | 2020 | 28 |
-| 2019 | 21 |
-| 2018 | 4 |
+| 2019 | 19 |
+| 2018 | 3 |
 | 2017 | 1 |
 
 ## Top Venues
@@ -71,9 +71,9 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | arXiv (Cornell University) | 91 |
 | Proceedings of the AAAI Conference on Artificial Intelligence | 48 |
 | ArXiv.org | 47 |
-| Lecture notes in computer science | 40 |
-| 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 17 |
+| Lecture notes in computer science | 38 |
 | NeurIPS | 17 |
+| 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 14 |
 | IEEE Access | 14 |
 | IEEE Transactions on Information Forensics and Security | 14 |
 | International Conference on Machine Learning (ICML) | 14 |
@@ -83,16 +83,16 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 256 |
-| CN | 130 |
-| United States | 76 |
-| US | 62 |
-| Italy | 48 |
-| IN | 40 |
-| IT | 32 |
-| Germany | 21 |
-| DE | 19 |
-| GB | 18 |
+| China | 386 |
+| United States | 136 |
+| Italy | 80 |
+| India | 51 |
+| Germany | 37 |
+| South Korea | 30 |
+| United Kingdom | 29 |
+| France | 27 |
+| Singapore | 18 |
+| Australia | 13 |
 
 ## Top Institutions
 
@@ -106,21 +106,21 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Fudan University | 12 |
 | University of Science and Technology of China | 11 |
 | Beijing University of Posts and Telecommunications | 10 |
+| Centre for Research and Technology Hellas (CERTH) | 9 |
 | City University of Hong Kong | 9 |
-| Institute of Automation, Chinese Academy of Sciences | 9 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 792 |
-| medium | 169 |
+| high | 783 |
+| medium | 167 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **67**
+Count: **66**
 
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
@@ -160,8 +160,7 @@ Count: **67**
 - CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - Institute of Information Engineering; `openalex-candidate-452f2bb3c9879715`
 - Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Alibaba Group (United States); `openalex-candidate-35b487cf0a750d96`
 - Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University of Technology; `openalex-candidate-eced2038e5ce940f`
-- TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping (2025) - Centre for Research and Technology Hellas; `openalex-candidate-d9a6970b5514e649`
-- Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Centre for Research and Technology Hellas; `openalex-candidate-4a516cc1ca95d8a3`
+- Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4a516cc1ca95d8a3`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-a66244e63c273fee`
 - Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - Institute of Information Engineering, Chinese Academy of Sciences; `curated-map:44229f2cf573ad44149f`
 - FLODA: Harnessing Vision-Language Models for Deepfake Assessment (2025) - Yonsei University, International Campus; `curated-map:26f32abc1c8d21b161be`

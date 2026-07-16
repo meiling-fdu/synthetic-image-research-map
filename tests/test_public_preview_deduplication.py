@@ -1,6 +1,7 @@
 import json
 import subprocess
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 from scripts.curated_export import _ordered_mapping_authors
@@ -13,6 +14,7 @@ from scripts.export_public_preview import (
     paper_is_retracted,
     public_canonical_institution_search_index,
     public_institution_aliases,
+    institution_id_redirects,
     synchronize_publication_types,
 )
 from scripts.country_normalization import normalize_country_region
@@ -29,6 +31,50 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_id_first_canonicalization_covers_alias_merge_authors_and_parent_child(self):
+        parent_id = "institution:parent"
+        child_id = "institution:child"
+        canonical_id = "institution:certh"
+        merged_id = "institution:certh-old"
+        institutions = [
+            {"institution_id": canonical_id, "canonical_name": "Centre for Research and Technology Hellas (CERTH)", "institution_status": "active"},
+            {"institution_id": merged_id, "canonical_name": "Old CERTH", "institution_status": "merged"},
+            {"institution_id": parent_id, "canonical_name": "Parent Academy", "institution_status": "active"},
+            {"institution_id": child_id, "canonical_name": "Confirmed Child Lab", "institution_status": "active"},
+        ]
+        audits = [{"action": "merge", "previous_institution_id": merged_id, "institution_id": canonical_id}]
+        aliases = public_institution_aliases([], (), institutions)
+        redirects = institution_id_redirects(institutions, audits)
+        paper = {"title": "Canonical aggregation", "doi": "10.1/canonical", "year": 2026}
+        maps = [
+            {**paper, "institution": "Centre for Research and Technology Hellas", "institution_id": "institution:legacy-name", "institution_authors": ["One", "Two"]},
+            {**paper, "institution": "Centre for Research and Technology Hellas (CERTH)", "institution_id": canonical_id, "institution_authors": ["Two", "Three"]},
+            {**paper, "institution": "Old CERTH", "institution_id": merged_id, "institution_authors": ["Four"]},
+            {**paper, "institution": "Centre for Research and Technology Hellas", "institution_id": parent_id, "institution_authors": ["Five"]},
+            {**paper, "institution": "Confirmed Child Lab", "institution_id": child_id, "institution_authors": ["Six"]},
+        ]
+
+        first_papers, first_maps = deepcopy([paper]), deepcopy(maps)
+        canonical_maps = canonicalize_public_institutions(
+            first_papers, first_maps, aliases, (), institutions, redirects,
+        )
+        first = json.dumps([first_papers, canonical_maps], ensure_ascii=False, sort_keys=True)
+        second_papers, second_maps = deepcopy([paper]), deepcopy(maps)
+        second_result = canonicalize_public_institutions(
+            second_papers, second_maps, aliases, (), institutions, redirects,
+        )
+
+        self.assertEqual(json.dumps([second_papers, second_result], ensure_ascii=False, sort_keys=True), first)
+        self.assertEqual(len(canonical_maps), 3)
+        canonical = next(row for row in canonical_maps if row["institution_id"] == canonical_id)
+        self.assertEqual(canonical["institution"], "Centre for Research and Technology Hellas (CERTH)")
+        self.assertEqual(set(canonical["institution_authors"]), {"One", "Two", "Three", "Four"})
+        self.assertEqual({row["institution_id"] for row in canonical_maps}, {canonical_id, parent_id, child_id})
+        self.assertEqual(first_papers[0]["map_record_count"], 3)
+        self.assertEqual(first_papers[0]["aggregated_institutions"], [
+            "Centre for Research and Technology Hellas (CERTH)", "Parent Academy", "Confirmed Child Lab",
+        ])
+
     def test_country_codes_are_normalized_to_public_english_names(self):
         self.assertEqual(normalize_country_region("CN", "")["country"], "China")
         self.assertEqual(normalize_country_region("", "US")["country"], "United States")

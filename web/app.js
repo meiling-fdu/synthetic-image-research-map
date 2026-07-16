@@ -162,6 +162,7 @@ let paperRecords = [];
 let institutionAliases = [];
 let institutionHierarchy = [];
 let canonicalInstitutionSearchIndex = {};
+let institutionIdRedirects = {};
 let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
@@ -1226,19 +1227,33 @@ function resolveInstitutionSearch(value, searchIndex) {
   return matches?.size === 1 ? [...matches][0] : "";
 }
 
-function buildCanonicalInstitutionResolver(aliases) {
-  const resolver = new Map();
+function buildCanonicalInstitutionResolver(aliases, canonicalIndex = {}, idRedirects = {}) {
+  const byName = new Map();
+  const byId = new Map();
+  Object.entries(canonicalIndex || {}).forEach(([id, entry]) => {
+    const canonical = { id: String(id).trim(), name: String(entry?.canonical_name || "").trim() };
+    if (!canonical.id || !canonical.name) return;
+    byId.set(canonical.id, canonical);
+    [canonical.name, ...(Array.isArray(entry?.names) ? entry.names : [])].forEach((name) => {
+      byName.set(normalizedSearchText(name), canonical);
+    });
+  });
   aliases.forEach((alias) => {
     const canonical = {
       name: String(alias.canonical_institution_name || "").trim(),
       id: String(alias.canonical_institution_id || "").trim(),
     };
     if (!canonical.name) return;
-    resolver.set(normalizedSearchText(alias.alias_name), canonical);
-    resolver.set(normalizedSearchText(canonical.name), canonical);
+    byName.set(normalizedSearchText(alias.alias_name), canonical);
+    byName.set(normalizedSearchText(canonical.name), canonical);
+    if (canonical.id) byId.set(canonical.id, canonical);
   });
-  resolver.delete("");
-  return resolver;
+  byName.delete("");
+  Object.entries(idRedirects || {}).forEach(([sourceId, targetId]) => {
+    const canonical = byId.get(String(targetId).trim());
+    if (canonical) byId.set(String(sourceId).trim(), canonical);
+  });
+  return { byName, byId };
 }
 
 function canonicalizeInstitutionObject(value, resolver) {
@@ -1251,15 +1266,16 @@ function canonicalizeInstitutionObject(value, resolver) {
       || value.canonical_institution_name
       || "",
   ).trim();
-  const sourceCanonical = resolver.get(normalizedSearchText(value.source_institution));
-  let canonical = resolver.get(normalizedSearchText(originalName));
-  if (sourceCanonical && (!canonical || sourceCanonical.id !== canonical.id)) {
-    canonical = sourceCanonical;
-  }
-  if (!canonical) return value;
   const originalId = String(
     value.institution_id || value.canonical_institution_id || "",
   ).trim();
+  const sourceCanonical = resolver.byName.get(normalizedSearchText(value.source_institution));
+  const idCanonical = resolver.byId.get(originalId);
+  let canonical = idCanonical || resolver.byName.get(normalizedSearchText(originalName));
+  if (!idCanonical && sourceCanonical && (!canonical || sourceCanonical.id !== canonical.id)) {
+    canonical = sourceCanonical;
+  }
+  if (!canonical) return value;
   if (originalName && originalName !== canonical.name) {
     value.source_institution ||= originalName;
     value.source_institution_names = [...new Set([
@@ -1280,8 +1296,10 @@ function canonicalizeInstitutionObject(value, resolver) {
   return value;
 }
 
-function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases) {
-  const resolver = buildCanonicalInstitutionResolver(aliases);
+function canonicalizePublicDataset(
+  mapRecords, publicPaperRecords, aliases, canonicalIndex = {}, idRedirects = {},
+) {
+  const resolver = buildCanonicalInstitutionResolver(aliases, canonicalIndex, idRedirects);
   const canonicalizeRecord = (record) => {
     if (recordInstitution(record)) canonicalizeInstitutionObject(record, resolver);
     ["affiliations", "author_institution_affiliations"].forEach((field) => {
@@ -1295,7 +1313,7 @@ function canonicalizePublicDataset(mapRecords, publicPaperRecords, aliases) {
     if (Array.isArray(record.aggregated_institutions)) {
       record.aggregated_institutions = [...new Set(
         record.aggregated_institutions.map((name) => (
-          resolver.get(normalizedSearchText(name))?.name || name
+          resolver.byName.get(normalizedSearchText(name))?.name || name
         )),
       )];
     }
@@ -2719,6 +2737,12 @@ function normalizeDatasetPayload(payload) {
         && !Array.isArray(payload.canonical_institution_search_index)
           ? payload.canonical_institution_search_index
           : {},
+      institutionIdRedirects:
+        payload.institution_id_redirects
+        && typeof payload.institution_id_redirects === "object"
+        && !Array.isArray(payload.institution_id_redirects)
+          ? payload.institution_id_redirects
+          : {},
       institutionHierarchy: Array.isArray(payload.institution_hierarchy)
         ? payload.institution_hierarchy.filter((relationship) => (
           relationship.review_status === "confirmed"
@@ -2807,10 +2831,13 @@ function displayDataset(normalizedData) {
   institutionAliases = normalizedData.institutionAliases || [];
   institutionHierarchy = normalizedData.institutionHierarchy || [];
   canonicalInstitutionSearchIndex = normalizedData.canonicalInstitutionSearchIndex || {};
+  institutionIdRedirects = normalizedData.institutionIdRedirects || {};
   const canonicalized = canonicalizePublicDataset(
     normalizedData.records,
     normalizedData.paperRecords || [],
     institutionAliases,
+    canonicalInstitutionSearchIndex,
+    institutionIdRedirects,
   );
   records = canonicalized.mapRecords;
   paperRecords = canonicalized.paperRecords;

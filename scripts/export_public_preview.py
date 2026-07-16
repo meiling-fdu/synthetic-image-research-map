@@ -41,7 +41,11 @@ try:
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
     )
-    from .curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
+    from .curated_institutions import (
+        DEFAULT_AUDIT_PATH,
+        DEFAULT_INSTITUTIONS_PATH,
+        load_institutions,
+    )
     from .country_normalization import normalize_country_region, public_location_display
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -103,7 +107,11 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
     )
-    from curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
+    from curated_institutions import (
+        DEFAULT_AUDIT_PATH,
+        DEFAULT_INSTITUTIONS_PATH,
+        load_institutions,
+    )
     from country_normalization import normalize_country_region, public_location_display
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -450,6 +458,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         type=Path,
         default=DEFAULT_INSTITUTIONS_PATH,
         help=f"Canonical institution entities (default: {DEFAULT_INSTITUTIONS_PATH}).",
+    )
+    parser.add_argument(
+        "--institution-audit-log",
+        type=Path,
+        default=DEFAULT_AUDIT_PATH,
+        help=f"Institution merge audit log (default: {DEFAULT_AUDIT_PATH}).",
     )
     parser.add_argument(
         "--institution-resolution-cache",
@@ -2450,11 +2464,48 @@ def normalize_institution_lookup(value: Any) -> str:
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
 
 
+def legacy_canonical_name(value: Any) -> str:
+    """Return the pre-acronym form of a canonical public display name."""
+    name = clean_text(value)
+    match = re.fullmatch(r"(.+?)\s*\(([A-Z][A-Z0-9*.+&-]{1,15})\)", name)
+    return clean_text(match.group(1)) if match else ""
+
+
+def institution_id_redirects(
+    institutions: Sequence[Dict[str, Any]],
+    audit_rows: Sequence[Dict[str, Any]],
+) -> Dict[str, str]:
+    """Return transitive merged-ID redirects whose final target is active."""
+    active_ids = {
+        clean_text(row.get("institution_id"))
+        for row in institutions
+        if clean_text(row.get("institution_status")) == "active"
+    }
+    direct = {
+        clean_text(row.get("previous_institution_id")): clean_text(row.get("institution_id"))
+        for row in audit_rows
+        if clean_text(row.get("action")) == "merge"
+        and clean_text(row.get("previous_institution_id"))
+        and clean_text(row.get("institution_id"))
+    }
+    redirects: Dict[str, str] = {}
+    for source in direct:
+        target = direct[source]
+        visited = {source}
+        while target in direct and target not in visited:
+            visited.add(target)
+            target = direct[target]
+        if target in active_ids and target != source:
+            redirects[source] = target
+    return redirects
+
+
 def public_institution_aliases(
     aliases: Sequence[Dict[str, Any]],
     location_reviews: Sequence[Dict[str, Any]] = (),
+    institutions: Sequence[Dict[str, Any]] = (),
 ) -> List[Dict[str, str]]:
-    """Return unambiguous explicitly confirmed aliases for public lookup."""
+    """Return unambiguous confirmed and exact legacy aliases for public lookup."""
     candidates = []
     for row in aliases:
         alias_name = clean_text(row.get("alias_name"))
@@ -2493,6 +2544,26 @@ def public_institution_aliases(
             "alias_language": clean_text(row.get("detected_language")),
             "alias_source": "institution-location-review",
         })
+    # Older public records predate the canonical display-name suffix. Treat
+    # only an exact, unique trailing-acronym variant as a compatibility alias;
+    # this does not infer parent/child relationships or merge similar names.
+    legacy_targets: Dict[str, List[Dict[str, str]]] = defaultdict(list)
+    for row in institutions:
+        if clean_text(row.get("institution_status")) != "active":
+            continue
+        canonical_name = clean_text(row.get("canonical_name"))
+        alias_name = legacy_canonical_name(canonical_name)
+        if alias_name:
+            legacy_targets[normalize_institution_lookup(alias_name)].append({
+                "alias_name": alias_name,
+                "canonical_institution_name": canonical_name,
+                "canonical_institution_id": clean_text(row.get("institution_id")),
+                "alias_language": "",
+                "alias_source": "legacy-canonical-name",
+            })
+    for rows in legacy_targets.values():
+        if len({row["canonical_institution_id"] for row in rows}) == 1:
+            candidates.append(rows[0])
     targets_by_alias: Dict[str, set[str]] = defaultdict(set)
     for candidate in candidates:
         targets_by_alias[normalize_institution_lookup(candidate["alias_name"])].add(
@@ -2605,9 +2676,21 @@ def canonicalize_public_institutions(
     map_records: Sequence[Dict[str, Any]],
     aliases: Sequence[Dict[str, str]],
     confirmed_locations: Sequence[Dict[str, Any]] = (),
+    institutions: Sequence[Dict[str, Any]] = (),
+    id_redirects: Optional[Dict[str, str]] = None,
 ) -> List[Dict[str, Any]]:
     """Canonicalize public copies and dedupe canonical paper–institution rows."""
     resolver: Dict[str, Dict[str, str]] = {}
+    canonical_by_id: Dict[str, Dict[str, str]] = {
+        clean_text(row.get("institution_id")): {
+            "name": clean_text(row.get("canonical_name")),
+            "id": clean_text(row.get("institution_id")),
+        }
+        for row in institutions
+        if clean_text(row.get("institution_status")) == "active"
+        and clean_text(row.get("institution_id"))
+        and clean_text(row.get("canonical_name"))
+    }
     for alias in aliases:
         canonical = {
             "name": clean_text(alias.get("canonical_institution_name")),
@@ -2615,6 +2698,8 @@ def canonicalize_public_institutions(
         }
         resolver[normalize_institution_lookup(alias.get("alias_name"))] = canonical
         resolver[normalize_institution_lookup(canonical["name"])] = canonical
+        if canonical["id"]:
+            canonical_by_id[canonical["id"]] = canonical
     for row in confirmed_locations:
         name = clean_text(row.get("institution"))
         if name:
@@ -2632,17 +2717,22 @@ def canonicalize_public_institutions(
             or value.get("canonical_institution_name")
         )
         source_name = clean_text(value.get("source_institution"))
+        original_id = clean_text(
+            value.get("institution_id") or value.get("canonical_institution_id")
+        )
+        redirected_id = (id_redirects or {}).get(original_id, original_id)
         source_canonical = resolver.get(normalize_institution_lookup(source_name))
-        canonical = resolver.get(normalize_institution_lookup(original_name))
-        if source_canonical and (
+        id_canonical = canonical_by_id.get(redirected_id)
+        canonical = id_canonical
+        name_canonical = resolver.get(normalize_institution_lookup(original_name))
+        if not canonical:
+            canonical = name_canonical
+        if not id_canonical and source_canonical and (
             not canonical or source_canonical["id"] != canonical["id"]
         ):
             canonical = source_canonical
         if not canonical:
             return
-        original_id = clean_text(
-            value.get("institution_id") or value.get("canonical_institution_id")
-        )
         if (
             original_name == canonical["name"]
             and (not canonical["id"] or original_id == canonical["id"])
@@ -3264,9 +3354,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 "Unresolved publication types require admin review: " + details
             )
         institution_rows = load_institutions(args.institutions)
+        institution_audit_rows = read_csv_rows(args.institution_audit_log)
         exported_aliases = public_institution_aliases(
             institution_alias_rows,
             integrated_location_reviews,
+            institution_rows,
+        )
+        exported_id_redirects = institution_id_redirects(
+            institution_rows,
+            institution_audit_rows,
         )
         canonical_institution_search_index = (
             public_canonical_institution_search_index(
@@ -3283,6 +3379,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             integrated_maps,
             exported_aliases,
             confirmed_location_rows,
+            institution_rows,
+            exported_id_redirects,
         )
         for record in integrated_maps:
             record["institution_id"] = (
@@ -3314,6 +3412,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_payload["canonical_institution_search_index"] = (
             canonical_institution_search_index
         )
+        payload["institution_id_redirects"] = exported_id_redirects
+        paper_payload["institution_id_redirects"] = exported_id_redirects
         payload["institution_hierarchy"] = exported_hierarchy
         paper_payload["institution_hierarchy"] = exported_hierarchy
         summary["preprint_version_records_excluded"] += (
