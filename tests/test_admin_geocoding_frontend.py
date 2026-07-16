@@ -66,6 +66,8 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertIn("/api/institution?institution_id=", opening)
         self.assertIn("isActiveCanonicalLocationRequest(requestSequence, identifier)", opening)
         self.assertIn("selectCanonicalInstitutionLocation(detail)", opening)
+        self.assertIn("detail.editable_institution_id", opening)
+        self.assertNotIn("detail.institution?.institution_id) !== identifier", opening)
 
     def test_direct_mode_is_independent_from_queue_rows_and_filters(self):
         applying = self.source[

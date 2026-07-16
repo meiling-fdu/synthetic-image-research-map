@@ -2326,8 +2326,9 @@ async function openCanonicalInstitutionLocation(institution) {
     const payload = await apiFetch(`/api/institution?institution_id=${encodeURIComponent(identifier)}`);
     if (!isActiveCanonicalLocationRequest(requestSequence, identifier)) return;
     const detail = payload.data || {};
-    if (text(detail.institution?.institution_id) !== identifier) {
-      throw new Error("Loaded institution details do not match the selected institution_id.");
+    const editableIdentifier = text(detail.editable_institution_id);
+    if (!editableIdentifier || text(detail.institution?.institution_id) !== editableIdentifier) {
+      throw new Error("Loaded institution details do not identify one active canonical institution.");
     }
     selectCanonicalInstitutionLocation(detail);
   } catch (error) {

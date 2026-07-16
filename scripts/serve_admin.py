@@ -465,6 +465,46 @@ def read_csv_rows(path: Path) -> List[Dict[str, str]]:
         raise AdminDataError(f"could not read {path}: {error}") from error
 
 
+def resolve_editable_institution_id(
+    requested_id: Any,
+    institutions: Sequence[Mapping[str, Any]],
+    aliases: Sequence[Mapping[str, Any]],
+    audit_rows: Sequence[Mapping[str, Any]],
+) -> str:
+    """Resolve an active, confirmed-alias, or merged legacy ID for editing."""
+    identifier = clean(requested_id)
+    entities = {
+        clean(row.get("institution_id")): row
+        for row in institutions
+        if clean(row.get("institution_id"))
+    }
+    alias_targets = {
+        clean(row.get("alias_id")): clean(row.get("institution_id"))
+        for row in aliases
+        if clean(row.get("review_status")) == "confirmed"
+        and clean(row.get("alias_id"))
+        and clean(row.get("institution_id"))
+    }
+    redirects = {
+        clean(row.get("previous_institution_id")): clean(row.get("institution_id"))
+        for row in audit_rows
+        if clean(row.get("action")) == "merge"
+        and clean(row.get("previous_institution_id"))
+        and clean(row.get("institution_id"))
+    }
+    current = alias_targets.get(identifier, identifier)
+    visited = set()
+    while current in redirects and current not in visited:
+        visited.add(current)
+        current = redirects[current]
+    entity = entities.get(current)
+    if not entity or clean(entity.get("institution_status")) != "active":
+        raise CuratedInstitutionError(
+            "institution_id must resolve to exactly one active canonical institution"
+        )
+    return current
+
+
 def institution_hierarchy_details(
     institutions: Sequence[Mapping[str, Any]], institution_id: Any
 ) -> Dict[str, Any]:
@@ -1751,10 +1791,12 @@ def make_handler(
                     if request.path == "/api/institution/impact":
                         self.send_json(HTTPStatus.OK, institution_impact(identifier, load_mappings(mappings_path)))
                     elif request.path == "/api/institution":
-                        matches = [row for row in institutions if clean(row.get("institution_id")) == identifier]
-                        if len(matches) != 1:
-                            raise CuratedInstitutionError("institution_id must identify exactly one institution")
                         aliases = load_institution_aliases(institution_aliases_path)
+                        resolved_identifier = resolve_editable_institution_id(
+                            identifier, institutions, aliases,
+                            read_csv_rows(institution_audit_path),
+                        )
+                        matches = [row for row in institutions if clean(row.get("institution_id")) == resolved_identifier]
                         locations = load_confirmed_locations(institution_locations_path)
                         reviews = load_location_reviews(location_review_path)
                         mappings = load_mappings(mappings_path)
@@ -1763,24 +1805,25 @@ def make_handler(
                         )
                         current_location = next((
                             row for row in locations
-                            if clean(row.get("institution_id")) == identifier
+                            if clean(row.get("institution_id")) == resolved_identifier
                         ), None)
                         self.send_json(HTTPStatus.OK, {"data": {
                             "institution": matches[0],
-                            "editable_institution_id": identifier,
-                            **institution_hierarchy_details(institutions, identifier),
-                            "aliases": [row for row in aliases if clean(row.get("institution_id")) == identifier],
+                            "requested_institution_id": identifier,
+                            "editable_institution_id": resolved_identifier,
+                            **institution_hierarchy_details(institutions, resolved_identifier),
+                            "aliases": [row for row in aliases if clean(row.get("institution_id")) == resolved_identifier],
                             "current_location": current_location,
                             "location": current_location,
-                            "location_reviews": [row for row in reviews if clean(row.get("institution_id")) == identifier],
-                            "review_queue": [row for row in review_queue if clean(row.get("institution_id")) == identifier],
+                            "location_reviews": [row for row in reviews if clean(row.get("institution_id")) == resolved_identifier],
+                            "review_queue": [row for row in review_queue if clean(row.get("institution_id")) == resolved_identifier],
                             "affiliation_evidence": [
                                 {
                                     "raw_affiliation": clean(row.get("raw_affiliation")),
                                     "institution": clean(row.get("institution")),
                                 }
                                 for row in mappings
-                                if clean(row.get("institution_id")) == identifier
+                                if clean(row.get("institution_id")) == resolved_identifier
                             ],
                         }})
                     else:

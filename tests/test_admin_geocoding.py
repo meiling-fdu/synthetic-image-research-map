@@ -22,6 +22,7 @@ from scripts.serve_admin import make_handler
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     INSTITUTION_ALIAS_COLUMNS,
+    INSTITUTION_AUDIT_COLUMNS,
     INSTITUTION_COLUMNS,
     INSTITUTION_LOCATION_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
@@ -321,6 +322,7 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
                 "institutions_path": root / "institutions.csv",
                 "institution_locations_path": root / "locations.csv",
                 "institution_aliases_path": root / "aliases.csv",
+                "institution_audit_path": root / "audit.csv",
                 "location_review_path": root / "location_reviews.csv",
                 "institution_review_queue_path": root / "review_queue.csv",
                 "mappings_path": root / "mappings.csv",
@@ -344,6 +346,7 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
                 created_by="test",
             )])
             self.write_csv(paths["institution_aliases_path"], INSTITUTION_ALIAS_COLUMNS, [])
+            self.write_csv(paths["institution_audit_path"], INSTITUTION_AUDIT_COLUMNS, [])
             self.write_csv(paths["location_review_path"], INSTITUTION_LOCATION_REVIEW_COLUMNS, [])
             self.write_csv(paths["institution_review_queue_path"], INSTITUTION_REVIEW_QUEUE_COLUMNS, [])
             self.write_csv(paths["mappings_path"], AUTHOR_INSTITUTION_MAPPING_COLUMNS, [self.row(
@@ -379,6 +382,73 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             with paths["location_review_path"].open(encoding="utf-8", newline="") as handle:
                 reviews = list(csv.DictReader(handle))
             self.assertEqual(reviews, [])
+
+    def test_alias_and_merged_ids_resolve_to_the_active_canonical_institution(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            active_id = self.institution_id
+            merged_id = "institution:1111111111111111"
+            alias_id = "alias:2222222222222222"
+            paths = {
+                "institutions_path": root / "institutions.csv",
+                "institution_locations_path": root / "locations.csv",
+                "institution_aliases_path": root / "aliases.csv",
+                "institution_audit_path": root / "audit.csv",
+                "location_review_path": root / "location_reviews.csv",
+                "institution_review_queue_path": root / "review_queue.csv",
+                "mappings_path": root / "mappings.csv",
+            }
+            self.write_csv(paths["institutions_path"], INSTITUTION_COLUMNS, [
+                self.row(
+                    INSTITUTION_COLUMNS, institution_id=active_id,
+                    canonical_name="University of Palermo", institution_type="university",
+                    institution_status="active",
+                ),
+                self.row(
+                    INSTITUTION_COLUMNS, institution_id=merged_id,
+                    canonical_name="Università di Palermo", institution_type="university",
+                    institution_status="merged",
+                ),
+            ])
+            self.write_csv(paths["institution_locations_path"], INSTITUTION_LOCATION_COLUMNS, [
+                self.row(
+                    INSTITUTION_LOCATION_COLUMNS, institution_id=active_id,
+                    institution="University of Palermo", city="Palermo", country="Italy",
+                    country_code="IT", lat="38.1173970", lon="13.3700045",
+                )
+            ])
+            self.write_csv(paths["institution_aliases_path"], INSTITUTION_ALIAS_COLUMNS, [
+                self.row(
+                    INSTITUTION_ALIAS_COLUMNS, alias_id=alias_id,
+                    alias_name="Università degli Studi di Palermo", institution_id=active_id,
+                    canonical_institution_name="University of Palermo", review_status="confirmed",
+                )
+            ])
+            self.write_csv(paths["institution_audit_path"], INSTITUTION_AUDIT_COLUMNS, [
+                self.row(
+                    INSTITUTION_AUDIT_COLUMNS, action="merge", institution_id=active_id,
+                    previous_institution_id=merged_id,
+                )
+            ])
+            for key, columns in (
+                ("location_review_path", INSTITUTION_LOCATION_REVIEW_COLUMNS),
+                ("institution_review_queue_path", INSTITUTION_REVIEW_QUEUE_COLUMNS),
+                ("mappings_path", AUTHOR_INSTITUTION_MAPPING_COLUMNS),
+            ):
+                self.write_csv(paths[key], columns, [])
+            handler = make_handler("token", **paths)
+
+            for requested_id in (alias_id, merged_id):
+                with self.subTest(requested_id=requested_id):
+                    status, payload = self.request_with_handler(
+                        handler, "GET", f"/api/institution?institution_id={requested_id}"
+                    )
+                    self.assertEqual(status, 200)
+                    detail = payload["data"]
+                    self.assertEqual(detail["requested_institution_id"], requested_id)
+                    self.assertEqual(detail["editable_institution_id"], active_id)
+                    self.assertEqual(detail["institution"]["institution_id"], active_id)
+                    self.assertEqual(detail["current_location"]["city"], "Palermo")
 
 
 if __name__ == "__main__":
