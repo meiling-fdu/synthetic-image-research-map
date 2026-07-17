@@ -405,9 +405,11 @@ h2 {
   gap: 10px;
   min-width: 0;
   margin: 0;
+  height: 39px;
+  border-radius: 5px;
   padding: 9px 10px;
   color: var(--ink);
-  font-size: inherit;
+  font-size: 0.8rem;
   font-weight: 400;
   text-align: left;
 }
@@ -695,7 +697,16 @@ button {
 }
 
 select {
-  padding: 9px 10px;
+  height: 39px;
+  appearance: none;
+  border-radius: 5px;
+  padding: 9px 30px 9px 10px;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 14px) 16px, calc(100% - 10px) 16px;
+  background-repeat: no-repeat;
+  background-size: 4px 5px, 4px 5px;
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
 input {

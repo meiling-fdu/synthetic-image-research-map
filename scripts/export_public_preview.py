@@ -3544,6 +3544,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         integrated_maps, retracted_map_records_excluded = (
             exclude_retracted_records(integrated_maps)
         )
+        venue_alias_rows = read_venue_aliases()
+        integrated_papers[:] = [
+            canonicalize_record(record, venue_alias_rows)
+            for record in integrated_papers
+        ]
+        integrated_maps[:] = [
+            canonicalize_record(record, venue_alias_rows)
+            for record in integrated_maps
+        ]
         unresolved_publication_types = synchronize_publication_types(
             integrated_papers, integrated_maps
         )
@@ -3555,15 +3564,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             raise PreviewExportError(
                 "Unresolved publication types require admin review: " + details
             )
-        venue_alias_rows = read_venue_aliases()
-        integrated_papers[:] = [
-            canonicalize_record(record, venue_alias_rows)
-            for record in integrated_papers
-        ]
-        integrated_maps[:] = [
-            canonicalize_record(record, venue_alias_rows)
-            for record in integrated_maps
-        ]
         institution_rows = load_institutions(args.institutions)
         institution_audit_rows = read_csv_rows(args.institution_audit_log)
         exported_aliases = public_institution_aliases(

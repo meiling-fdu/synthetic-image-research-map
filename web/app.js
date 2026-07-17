@@ -793,14 +793,14 @@ function normalizedTitle(value) {
 }
 
 function paperIdentity(record) {
-  const openalexUrl = normalizedIdentityValue(record.openalex_url);
-  if (openalexUrl) {
-    return `openalex:${openalexUrl}`;
-  }
-
   const doi = normalizedDoi(record.doi).toLowerCase();
   if (doi) {
     return `doi:${doi}`;
+  }
+
+  const openalexUrl = normalizedIdentityValue(record.openalex_url);
+  if (openalexUrl) {
+    return `openalex:${openalexUrl}`;
   }
 
   const arxivId = normalizedIdentityValue(record.arxiv_id).replace(/^arxiv:/, "");
@@ -1165,7 +1165,7 @@ function venueDisplayLabel(record) {
 }
 
 function recordVenueType(record) {
-  return String(record.venue_type || record.publication_type || "").trim().toLocaleLowerCase();
+  return String(record.publication_type || record.venue_type || "").trim().toLocaleLowerCase();
 }
 
 function venueDisplayHtml(record) {
@@ -1708,8 +1708,6 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const selectedVersion = preprintFilter.value;
   const matchesVersion =
     selectedVersion === "all" ||
-    (selectedVersion === "preprint-only" && isPreprintOnlyRecord(record)) ||
-    (selectedVersion === "published" && hasPublishedVenue(record)) ||
     (selectedVersion === "has-arxiv" && hasArxivVersion(record)) ||
     (selectedVersion === "no-arxiv" && !hasArxivVersion(record));
   const year = publicationYear(record);
@@ -1930,7 +1928,7 @@ function syncCountryComboboxOptions() {
   const selectedOption = countryComboboxOptionData.find(
     ({ value }) => value === countryFilter.value,
   ) || countryComboboxOptionData[0];
-  countryComboboxValue.textContent = selectedOption?.label || "All Countries";
+  countryComboboxValue.textContent = selectedOption?.label || "All";
   activeCountryOptionIndex = selectedOption?.index ?? -1;
   setActiveCountryOption(activeCountryOptionIndex);
 }
@@ -1988,7 +1986,7 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
   );
   replaceCountedFilterOptions(
     countryFilter,
-    "All Countries",
+    "All",
     sortedDimensionCounts(countryCounts),
     (value) => value,
     false,
@@ -2001,7 +1999,7 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
   );
   replaceCountedFilterOptions(
     institutionTypeFilter,
-    "All Institution Types",
+    "All",
     sortedInstitutionTypeCounts(typeCounts),
     institutionTypeLabel,
     false,
@@ -3201,8 +3199,8 @@ function handleYearRangeKeydown(event, handle) {
 }
 
 function configureVenueFilter() {
-  venueFilter.replaceChildren(new Option("All Venues", "all"));
-  venueTypeFilter.replaceChildren(new Option("All Publication Types", "all"));
+  venueFilter.replaceChildren(new Option("All", "all"));
+  venueTypeFilter.replaceChildren(new Option("All", "all"));
   venueFilter.value = "all";
   venueTypeFilter.value = "all";
 }
@@ -3225,7 +3223,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   );
   replaceCountedFilterOptions(
     venueFilter,
-    "All Venues",
+    "All",
     sortedVenueCounts(venueCounts, metadataByVenue),
     (value) => metadataByVenue.get(value)?.label
       || (value === "__unknown__" ? "Unknown venue/source" : value),
@@ -3233,7 +3231,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   );
   replaceCountedFilterOptions(
     venueTypeFilter,
-    "All Publication Types",
+    "All",
     sortedVenueTypeCounts(venueTypeCounts),
     (value) => value === "__unknown__" ? "Unknown" : formatTask(value),
   );

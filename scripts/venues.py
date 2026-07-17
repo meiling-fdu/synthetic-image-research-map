@@ -15,10 +15,10 @@ from typing import Any, Iterable, Mapping, Sequence
 
 try:
     from .curated_schema import VENUE_TYPE_ORDER
-    from .publication_types import normalize_publication_type
+    from .publication_types import normalize_publication_type, resolve_publication_type
 except ImportError:
     from curated_schema import VENUE_TYPE_ORDER
-    from publication_types import normalize_publication_type
+    from publication_types import normalize_publication_type, resolve_publication_type
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
@@ -515,12 +515,34 @@ def canonicalize_record(record: Mapping[str, Any], aliases: Sequence[Mapping[str
             result["venue"] = canonical["venue_name"]
             result["venue_label"] = display_venue(result)
             result["ambiguity_status"] = "resolved"
+            effective_type, _rule = resolve_publication_type(
+                result.get("publication_type"),
+                venue=result.get("venue_name"),
+                venue_type=result.get("venue_type"),
+                arxiv_id=result.get("arxiv_id"),
+                arxiv_url=result.get("arxiv_url"),
+                doi=result.get("doi"),
+                explicit_override=result.get("publication_type_override") is True,
+            )
+            if effective_type:
+                result["publication_type"] = effective_type
             return result
     source = result.get("raw_venue") or result.get("venue_name") or result.get("venue")
     venue = resolve_venue(source, publication_type=result.get("publication_type"), venue_type=result.get("venue_type"), aliases=resolved_aliases)
     result.update(venue.as_record())
     result["venue"] = venue.venue_name
     result["venue_label"] = display_venue(result)
+    effective_type, _rule = resolve_publication_type(
+        result.get("publication_type"),
+        venue=result.get("venue_name"),
+        venue_type=result.get("venue_type"),
+        arxiv_id=result.get("arxiv_id"),
+        arxiv_url=result.get("arxiv_url"),
+        doi=result.get("doi"),
+        explicit_override=result.get("publication_type_override") is True,
+    )
+    if effective_type:
+        result["publication_type"] = effective_type
     return result
 
 

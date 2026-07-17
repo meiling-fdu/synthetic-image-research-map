@@ -119,14 +119,15 @@ process.stdout.write(JSON.stringify({{
 
     def test_dropdowns_are_compact_defaults_near_institution_filters(self):
         self.assertIn('id="country-filter"', self.html)
-        self.assertIn('>All Countries</option>', self.html)
+        self.assertIn('id="country-filter"', self.html)
         self.assertIn('id="country-combobox-button"', self.html)
         self.assertIn('role="combobox"', self.html)
         self.assertIn('role="listbox"', self.html)
         self.assertNotIn('id="country-combobox-search"', self.html)
         self.assertNotIn('role="searchbox"', self.html)
         self.assertIn('id="institution-type-filter"', self.html)
-        self.assertIn('>All Institution Types</option>', self.html)
+        self.assertNotIn("All Countries", self.html)
+        self.assertNotIn("All Institution Types", self.html)
         self.assertLess(
             self.html.index('id="country-filter"'),
             self.html.index('id="institution-type-filter"'),
@@ -274,13 +275,32 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("setActiveCountryOption(selectedIndex, true)", self.app)
         self.assertNotIn("filterCountryComboboxOptions", self.app)
         self.assertIn(
-            'replaceCountedFilterOptions(\n    countryFilter,\n    "All Countries",',
+            'replaceCountedFilterOptions(\n    countryFilter,\n    "All",',
             self.app,
         )
         self.assertIn(
             'sortedDimensionCounts(countryCounts),\n    (value) => value,\n    false,',
             self.app,
         )
+
+    def test_country_trigger_matches_native_filter_control_geometry_and_states(self):
+        select = self.css[self.css.index("select {"):self.css.index("\ninput {", self.css.index("select {"))]
+        button = self.css[
+            self.css.index(".country-combobox-button {"):
+            self.css.index(".country-combobox-button > span:first-child")
+        ]
+        for declaration in (
+            "height: 39px", "border-radius: 5px", "font-size: 0.8rem",
+            "font-weight: 400",
+        ):
+            self.assertIn(declaration, select)
+            self.assertIn(declaration, button)
+        self.assertIn("background-size: 4px 5px, 4px 5px", select)
+        self.assertIn("border-right: 4px solid transparent", self.css)
+        self.assertIn("button:hover:not(:disabled)", self.css)
+        self.assertIn("button:focus-visible", self.css)
+        self.assertIn("button:disabled,\nselect:disabled", self.css)
+        self.assertIn('.country-combobox-option[aria-selected="true"]', self.css)
 
 
 if __name__ == "__main__":

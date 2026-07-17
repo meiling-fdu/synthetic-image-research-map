@@ -62,15 +62,25 @@ process.stdout.write(JSON.stringify({{
         self.assertIn('id="venue-type-filter"', self.html)
         self.assertIn("Publication Type", self.html)
         self.assertNotIn("Venue Type", self.html)
-        self.assertIn(">All Publication Types</option>", self.html)
+        self.assertNotIn("All Publication Types", self.html)
         self.assertIn('matchesVenue &&\n    matchesVenueType', self.app)
         self.assertIn('venueTypeFilter.addEventListener("change", renderRecords)', self.app)
+        self.assertIn(
+            'String(record.publication_type || record.venue_type || "")',
+            self.app,
+        )
 
     def test_dynamic_counts_use_unique_paper_dimension_sets(self):
         self.assertIn('const venueDimensionSets = dimensionSets("ignoreVenue")', self.app)
         self.assertIn('const venueTypeDimensionSets = dimensionSets("ignoreVenueType")', self.app)
         self.assertIn('dimensionPaperCounts(venuePapers', self.app)
         self.assertIn('dimensionPaperCounts(\n    venueTypePapers', self.app)
+        identity_start = self.app.index("function paperIdentity")
+        identity = self.app[
+            identity_start:
+            self.app.index("function recordCountry", identity_start)
+        ]
+        self.assertLess(identity.index("normalizedDoi(record.doi)"), identity.index("record.openalex_url"))
 
     def test_fixed_type_order_and_alphabetical_venue_order(self):
         result = self.run_order_helpers()
@@ -226,7 +236,7 @@ process.stdout.write(JSON.stringify({{
 
     def test_invalid_venue_selection_is_not_preserved_when_type_changes(self):
         self.assertIn(
-            'replaceCountedFilterOptions(\n    venueFilter,\n    "All Venues",',
+            'replaceCountedFilterOptions(\n    venueFilter,\n    "All",',
             self.app,
         )
         self.assertIn("sortedVenueCounts(venueCounts, metadataByVenue)", self.app)

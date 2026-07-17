@@ -129,6 +129,17 @@ def validate_canonical_venue(index: int, record: Dict[str, Any], issues: List[Is
         add_issue(issues, "ERROR", index, title, "venue_track must use the canonical track taxonomy")
     if venue_id and "raw_venue" not in record:
         add_issue(issues, "ERROR", index, title, "canonical venue requires raw_venue provenance")
+    publication_type = clean_text(record.get("publication_type"))
+    if (
+        venue_id
+        and clean_text(record.get("ambiguity_status")) == "resolved"
+        and venue_type in {"conference", "journal", "book"}
+        and publication_type != venue_type
+    ):
+        add_issue(
+            issues, "ERROR", index, title,
+            "publication_type must match the confirmed canonical venue_type",
+        )
 
 
 class ValidationInputError(RuntimeError):

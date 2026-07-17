@@ -650,6 +650,8 @@ By default, the exporter publishes all eligible records, requires `in_scope=true
 
 The public-preview exporter also reads `data/manual/paper_version_overrides.csv`, the partial `data/manual/paper_arxiv_links.csv`, and `data/manual/publication_overrides.csv` before filtering and field limiting. This keeps known arXiv-version links and formal-publication corrections available when the local map-ready JSON predates those manual inputs. Public-preview `arxiv_id`, `arxiv_url`, `arxiv_year`, and `has_arxiv_version` are "known arXiv version" metadata. Publication overrides change only the formal display fields and leave those arXiv fields plus the OpenAlex URL intact. An arXiv version does not by itself make a formally published record preprint-only.
 
+After integration, public export resolves every record through the canonical venue registry and the shared effective publication-type resolver before paper/marker synchronization. Confirmed Conference and Journal identities therefore override stale Preprint source labels while preserving repository links; confirmed Book series remain Book. Run `python3 scripts/migrate_publication_types.py` without `--apply` for the machine-readable deterministic curated audit at `data/processed/publication_type_migration_audit.csv` and the complete final-public Preprint/Book audit at `data/processed/public_preprint_book_audit.csv`; use `--apply` only for deterministic curated changes, then rerun the dry run to verify idempotence.
+
 Inspect the filtering summary without writing output:
 
 ```bash

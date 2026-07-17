@@ -17,6 +17,8 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         for expected in (
             "Paper Type",
             "Publication Type",
+            "Publication Venue",
+            "Record Version",
             "Institution Type",
             "Publication Year",
             "Filtered Records",
@@ -30,6 +32,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         for removed in (
             "Entry type",
             "Venue Type",
+            "Version Status",
             "Institution type",
             "Publication year",
         ):
@@ -37,6 +40,21 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertNotIn("<h2 id=\"results-heading\">Filtered records</h2>", self.html)
         self.assertNotIn(">Institution records</button>", self.html)
         self.assertNotIn(">Unique papers</button>", self.html)
+        self.assertNotRegex(self.html, r">All (?:Tasks|Paper Types|Publication Types|Venues|Countries|Institution Types|Records)<")
+        self.assertEqual(self.html.count('<option value="all">All</option>'), 7)
+
+    def test_record_version_is_independent_of_publication_type(self):
+        self.assertIn('value="has-arxiv"', self.html)
+        self.assertIn('value="no-arxiv"', self.html)
+        self.assertNotIn('value="preprint-only"', self.html)
+        self.assertNotIn('value="published"', self.html)
+        matching = self.app[
+            self.app.index("const selectedVersion = preprintFilter.value"):
+            self.app.index("const year = publicationYear(record)")
+        ]
+        self.assertIn("hasArxivVersion(record)", matching)
+        self.assertNotIn("isPreprintOnlyRecord(record)", matching)
+        self.assertNotIn("hasPublishedVenue(record)", matching)
 
     def test_filter_order_places_publication_type_immediately_before_venue(self):
         filter_grid = self.html[
@@ -52,6 +70,13 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             ordered_ids.index("venue-type-filter") + 1,
             ordered_ids.index("venue-filter"),
         )
+        expected = [
+            "keyword-filter", "task-filter", "entry-type-filter", "venue-type-filter",
+            "venue-filter", "country-filter", "institution-type-filter", "preprint-filter",
+            "min-year-filter", "max-year-filter",
+        ]
+        positions = [ordered_ids.index(identifier) for identifier in expected]
+        self.assertEqual(positions, sorted(positions))
 
     def test_sort_is_in_filtered_records_header_not_filter_panel(self):
         filter_grid = self.html[

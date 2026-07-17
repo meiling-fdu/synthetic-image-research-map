@@ -1081,6 +1081,17 @@ def main() -> int:
         ))
         if paper_identity != identity:
             add_issue(issues, "ERROR", "papers.csv", f"canonical venue fields conflict with {venue_id!r}", row_number)
+        if (
+            identity[2] in {"conference", "journal", "book"}
+            and clean(paper.get("publication_type")) != identity[2]
+        ):
+            add_issue(
+                issues,
+                "ERROR",
+                "papers.csv",
+                "publication_type must match the confirmed canonical venue_type",
+                row_number,
+            )
     validate_allowed_value(
         exclusions,
         "paper_exclusions.csv",

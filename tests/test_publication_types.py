@@ -4,7 +4,7 @@ from pathlib import Path
 
 from scripts.curated_papers import CuratedPaperError, normalize_paper_draft
 from scripts.publication_types import normalize_publication_type, resolve_publication_type
-from scripts.venues import display_venue, read_venue_aliases, resolve_venue
+from scripts.venues import canonicalize_record, display_venue, read_venue_aliases, resolve_venue
 from scripts.validate_public_preview import validate_record
 
 
@@ -49,6 +49,23 @@ class PublicationTypeTests(unittest.TestCase):
             normalize_publication_type("preprint", venue_type="journal", arxiv_id="2601.00001"),
             "journal",
         )
+
+    def test_canonicalization_applies_effective_type_after_venue_resolution(self):
+        record = canonicalize_record({
+            "title": "Example",
+            "publication_type": "preprint",
+            "raw_venue": "2020 IEEE International Workshop on Information Forensics and Security (WIFS)",
+            "arxiv_id": "2007.12909",
+        })
+        self.assertEqual(record["venue_id"], "venue:wifs:main")
+        self.assertEqual(record["venue_type"], "conference")
+        self.assertEqual(record["publication_type"], "conference")
+
+    def test_explicit_reviewed_override_precedes_canonical_venue_type(self):
+        resolved, rule = resolve_publication_type(
+            "book", venue_type="conference", explicit_override=True,
+        )
+        self.assertEqual((resolved, rule), ("book", "curated_override"))
 
     def test_bibliographic_venue_evidence_resolves_legacy_entry_labels(self):
         self.assertEqual(

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 from collections import Counter
 from pathlib import Path
 from typing import Any, Mapping
@@ -20,9 +21,11 @@ except ImportError:
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT = ROOT / "data" / "curated" / "papers.csv"
 DEFAULT_REPORT = ROOT / "data" / "processed" / "publication_type_migration_audit.csv"
+DEFAULT_PUBLIC_INPUT = ROOT / "web" / "data" / "public_preview_papers.json"
+DEFAULT_PUBLIC_REPORT = ROOT / "data" / "processed" / "public_preprint_book_audit.csv"
 
 AUDIT_COLUMNS = (
-    "paper_id",
+    "canonical_paper_identity",
     "title",
     "previous_publication_type",
     "canonical_venue_id",
@@ -31,6 +34,7 @@ AUDIT_COLUMNS = (
     "arxiv_id",
     "arxiv_url",
     "doi",
+    "repository_identifiers",
     "proposed_publication_type",
     "applied_rule",
     "ambiguity_status",
@@ -145,12 +149,26 @@ def audit_row(row: Mapping[str, Any]) -> dict[str, str]:
     )
     ambiguity_status = "resolved" if proposed else "requires_review"
     previous = clean(row.get("publication_type"))
+    canonical_identity = (
+        clean(row.get("paper_id"))
+        or clean(row.get("doi"))
+        or clean(row.get("openalex_url"))
+        or f"title-year:{clean(row.get('title'))}|{clean(row.get('year'))}"
+    )
+    repository_identifiers = "; ".join(dict.fromkeys(filter(None, (
+        clean(row.get("arxiv_id")),
+        clean(row.get("arxiv_url")),
+        clean(row.get("doi")) if any(
+            token in clean(row.get("doi")).casefold()
+            for token in ("arxiv", "zenodo", "figshare")
+        ) else "",
+    ))))
     if clean(row.get("venue_id")) and clean(row.get("venue_type")) in {"conference", "journal", "book"}:
         ambiguity_status = "resolved"
     elif not proposed:
         ambiguity_status = "requires_review"
     return {
-        "paper_id": clean(row.get("paper_id")),
+        "canonical_paper_identity": canonical_identity,
         "title": clean(row.get("title")),
         "previous_publication_type": previous,
         "canonical_venue_id": clean(row.get("venue_id")),
@@ -159,6 +177,7 @@ def audit_row(row: Mapping[str, Any]) -> dict[str, str]:
         "arxiv_id": clean(row.get("arxiv_id")),
         "arxiv_url": clean(row.get("arxiv_url")),
         "doi": clean(row.get("doi")),
+        "repository_identifiers": repository_identifiers,
         "proposed_publication_type": proposed,
         "applied_rule": rule,
         "ambiguity_status": ambiguity_status,
@@ -195,16 +214,33 @@ def write_audit(path: Path, audit: list[dict[str, str]]) -> None:
         writer.writerows(audit)
 
 
+def audit_public_preprint_book(path: Path) -> list[dict[str, str]]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    records = payload.get("records") if isinstance(payload, dict) else None
+    if not isinstance(records, list):
+        raise ValueError(f"{path} must contain a records list")
+    return [
+        audit_row(row)
+        for row in records
+        if isinstance(row, dict)
+        and clean(row.get("publication_type")) in {"preprint", "book"}
+    ]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
+    parser.add_argument("--public-input", type=Path, default=DEFAULT_PUBLIC_INPUT)
+    parser.add_argument("--public-report", type=Path, default=DEFAULT_PUBLIC_REPORT)
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
 
     rows = read_rows(args.input)
     migrated, audit = migrate(rows)
     write_audit(args.report, audit)
+    public_audit = audit_public_preprint_book(args.public_input)
+    write_audit(args.public_report, public_audit)
     changes = [
         item for item in audit
         if item["previous_publication_type"] != item["proposed_publication_type"]
@@ -223,6 +259,8 @@ def main() -> int:
     print(f"changed_by_type: {dict(sorted(changed_by_type.items()))}")
     print(f"unresolved_conflicts: {len(unresolved)}")
     print(f"report: {args.report}")
+    print(f"public_preprint_book_records_audited: {len(public_audit)}")
+    print(f"public_report: {args.public_report}")
     return 0
 
 
