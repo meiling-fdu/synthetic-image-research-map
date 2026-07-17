@@ -146,6 +146,10 @@ const institutionTypeFilter = document.querySelector("#institution-type-filter")
 const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
+const yearRangeValue = document.querySelector("#year-range-value");
+const yearRangeMinimum = document.querySelector("#year-range-min");
+const yearRangeMaximum = document.querySelector("#year-range-max");
+const yearRangeSlider = document.querySelector(".year-range-slider");
 const resetButton = document.querySelector("#reset-filters");
 const activeInstitutionFilterChip = document.querySelector("#active-institution-filter");
 const mapStatus = document.querySelector("#map-status");
@@ -185,6 +189,7 @@ let resultsView = "institutions";
 let visibleMarkerEntries = [];
 let activeInstitutionFilter = null;
 let displayedInstitutionFilter = null;
+let yearRangeBounds = null;
 let countryComboboxOptionData = [];
 let activeCountryOptionIndex = -1;
 const interactionState = {
@@ -1706,8 +1711,13 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const year = publicationYear(record);
   const minimumYear = yearFilterValue(minYearFilter);
   const maximumYear = yearFilterValue(maxYearFilter);
-  const matchesMinimumYear = minimumYear === null || (year !== null && year >= minimumYear);
-  const matchesMaximumYear = maximumYear === null || (year !== null && year <= maximumYear);
+  const isFullYearRange = yearRangeBounds
+    && minimumYear === yearRangeBounds.minimum
+    && maximumYear === yearRangeBounds.maximum;
+  const matchesMinimumYear = isFullYearRange
+    || minimumYear === null || (year !== null && year >= minimumYear);
+  const matchesMaximumYear = isFullYearRange
+    || maximumYear === null || (year !== null && year <= maximumYear);
   const matchesInstitution = !activeInstitutionFilter
     || recordMatchesInstitutionIdentities(
       record, activeInstitutionIdentities, institutionRecord,
@@ -3054,20 +3064,128 @@ function renderRecords() {
   scheduleMapResize();
 }
 
+function deriveYearBounds(datasetRecords) {
+  const years = datasetRecords
+    .map(publicationYear)
+    .filter((year) => Number.isInteger(year));
+  return years.length
+    ? { minimum: Math.min(...years), maximum: Math.max(...years) }
+    : null;
+}
+
+function clampYear(value, minimum, maximum) {
+  return Math.min(maximum, Math.max(minimum, value));
+}
+
+function resolveYearSelection(bounds, selection = null) {
+  if (!bounds) return null;
+  if (!selection || !Number.isInteger(selection.start) || !Number.isInteger(selection.end)) {
+    return { start: bounds.minimum, end: bounds.maximum };
+  }
+  const start = clampYear(selection.start, bounds.minimum, bounds.maximum);
+  const end = clampYear(selection.end, bounds.minimum, bounds.maximum);
+  return start <= end ? { start, end } : { start: end, end };
+}
+
+function keyboardYearValue(key, currentValue, minimum, maximum, pageStep) {
+  const changes = {
+    ArrowLeft: -1,
+    ArrowDown: -1,
+    ArrowRight: 1,
+    ArrowUp: 1,
+    PageDown: -pageStep,
+    PageUp: pageStep,
+  };
+  if (key === "Home") return minimum;
+  if (key === "End") return maximum;
+  if (!Object.hasOwn(changes, key)) return null;
+  return clampYear(currentValue + changes[key], minimum, maximum);
+}
+
+function currentYearSelection() {
+  const start = yearFilterValue(minYearFilter);
+  const end = yearFilterValue(maxYearFilter);
+  return Number.isInteger(start) && Number.isInteger(end) ? { start, end } : null;
+}
+
+function syncYearRange(changedHandle = null) {
+  if (!yearRangeBounds) return;
+  let start = clampYear(
+    Number(minYearFilter.value), yearRangeBounds.minimum, yearRangeBounds.maximum,
+  );
+  let end = clampYear(
+    Number(maxYearFilter.value), yearRangeBounds.minimum, yearRangeBounds.maximum,
+  );
+  if (start > end) {
+    if (changedHandle === "end") start = end;
+    else end = start;
+  }
+  minYearFilter.value = String(start);
+  maxYearFilter.value = String(end);
+  minYearFilter.setAttribute("aria-valuemax", String(end));
+  maxYearFilter.setAttribute("aria-valuemin", String(start));
+  minYearFilter.setAttribute("aria-valuetext", `Start year ${start}`);
+  maxYearFilter.setAttribute("aria-valuetext", `End year ${end}`);
+  yearRangeValue.value = `${start}\u2013${end}`;
+  yearRangeValue.textContent = `${start}\u2013${end}`;
+
+  const span = yearRangeBounds.maximum - yearRangeBounds.minimum;
+  const startPercent = span ? ((start - yearRangeBounds.minimum) / span) * 100 : 0;
+  const endPercent = span ? ((end - yearRangeBounds.minimum) / span) * 100 : 100;
+  yearRangeSlider.style.setProperty("--range-start", `${startPercent}%`);
+  yearRangeSlider.style.setProperty("--range-end", `${endPercent}%`);
+}
+
 function configureYearRange() {
+  const previousSelection = yearRangeBounds ? currentYearSelection() : null;
   const filterSourceRecords = paperRecords.length ? paperRecords : records;
-  const years = filterSourceRecords.map(publicationYear).filter((year) => year !== null);
-  if (!years.length) {
+  yearRangeBounds = deriveYearBounds(filterSourceRecords);
+  if (!yearRangeBounds) {
+    minYearFilter.value = "";
+    maxYearFilter.value = "";
+    minYearFilter.disabled = true;
+    maxYearFilter.disabled = true;
+    yearRangeValue.value = "\u2014";
+    yearRangeValue.textContent = "\u2014";
+    yearRangeMinimum.textContent = "\u2014";
+    yearRangeMaximum.textContent = "\u2014";
     return;
   }
-  const earliestYear = Math.min(...years);
-  const latestYear = Math.max(...years);
+  const selection = resolveYearSelection(yearRangeBounds, previousSelection);
   [minYearFilter, maxYearFilter].forEach((input) => {
-    input.min = String(earliestYear);
-    input.max = String(latestYear);
+    input.min = String(yearRangeBounds.minimum);
+    input.max = String(yearRangeBounds.maximum);
   });
-  minYearFilter.placeholder = String(earliestYear);
-  maxYearFilter.placeholder = String(latestYear);
+  minYearFilter.value = String(selection.start);
+  maxYearFilter.value = String(selection.end);
+  yearRangeMinimum.textContent = String(yearRangeBounds.minimum);
+  yearRangeMaximum.textContent = String(yearRangeBounds.maximum);
+  syncYearRange();
+}
+
+function handleYearRangeInput(handle) {
+  syncYearRange(handle);
+  renderRecords();
+}
+
+function handleYearRangeKeydown(event, handle) {
+  if (!yearRangeBounds) return;
+  const selection = currentYearSelection();
+  if (!selection) return;
+  const isStart = handle === "start";
+  const minimum = isStart ? yearRangeBounds.minimum : selection.start;
+  const maximum = isStart ? selection.end : yearRangeBounds.maximum;
+  const currentValue = isStart ? selection.start : selection.end;
+  const pageStep = Math.max(1, Math.round(
+    (yearRangeBounds.maximum - yearRangeBounds.minimum) / 10,
+  ));
+  const nextValue = keyboardYearValue(
+    event.key, currentValue, minimum, maximum, pageStep,
+  );
+  if (nextValue === null) return;
+  event.preventDefault();
+  (isStart ? minYearFilter : maxYearFilter).value = String(nextValue);
+  handleYearRangeInput(handle);
 }
 
 function configureVenueFilter() {
@@ -3112,8 +3230,8 @@ function enableControls() {
   countryComboboxButton.disabled = false;
   institutionTypeFilter.disabled = false;
   preprintFilter.disabled = false;
-  minYearFilter.disabled = false;
-  maxYearFilter.disabled = false;
+  minYearFilter.disabled = !yearRangeBounds;
+  maxYearFilter.disabled = !yearRangeBounds;
   resetButton.disabled = false;
 }
 
@@ -3152,6 +3270,7 @@ function showDatasetMessage(message, isError = false) {
   clearPaperInteraction(false);
   records = [];
   paperRecords = [];
+  configureYearRange();
   currentFilteredRecords = [];
   currentFilteredPaperRecords = [];
   currentDisplayedResults = [];
@@ -3486,8 +3605,14 @@ window.addEventListener("resize", positionCountryComboboxPanel);
 window.addEventListener("scroll", positionCountryComboboxPanel, true);
 institutionTypeFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
-minYearFilter.addEventListener("input", renderRecords);
-maxYearFilter.addEventListener("input", renderRecords);
+minYearFilter.addEventListener("input", () => handleYearRangeInput("start"));
+maxYearFilter.addEventListener("input", () => handleYearRangeInput("end"));
+minYearFilter.addEventListener("keydown", (event) => {
+  handleYearRangeKeydown(event, "start");
+});
+maxYearFilter.addEventListener("keydown", (event) => {
+  handleYearRangeKeydown(event, "end");
+});
 [resultsList, paperDetails].forEach((container) => {
   container.addEventListener("click", (event) => {
     const button = event.target.closest("[data-institution-filter]");
@@ -3532,8 +3657,11 @@ resetButton.addEventListener("click", () => {
   countryFilter.value = "all";
   institutionTypeFilter.value = "all";
   preprintFilter.value = "all";
-  minYearFilter.value = "";
-  maxYearFilter.value = "";
+  if (yearRangeBounds) {
+    minYearFilter.value = String(yearRangeBounds.minimum);
+    maxYearFilter.value = String(yearRangeBounds.maximum);
+    syncYearRange();
+  }
   activeInstitutionFilter = null;
   displayedInstitutionFilter = null;
   renderRecords();

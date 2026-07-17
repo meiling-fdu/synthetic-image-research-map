@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260716-country-combobox">
+    <link rel="stylesheet" href="style.css?v=20260717-year-range">
   </head>
   <body>
     <header class="site-header">
@@ -184,14 +184,32 @@
 
             <fieldset class="year-range">
               <legend>Publication year</legend>
-              <label for="min-year-filter">
-                From
-                <input id="min-year-filter" type="number" step="1" disabled>
-              </label>
-              <label for="max-year-filter">
-                To
-                <input id="max-year-filter" type="number" step="1" disabled>
-              </label>
+              <output id="year-range-value" class="year-range-value" aria-live="polite">—</output>
+              <div class="year-range-slider">
+                <div class="year-range-track" aria-hidden="true"></div>
+                <label class="visually-hidden" for="min-year-filter">Start publication year</label>
+                <input
+                  id="min-year-filter"
+                  class="year-range-input year-range-input-start"
+                  type="range"
+                  step="1"
+                  aria-label="Start publication year"
+                  disabled
+                >
+                <label class="visually-hidden" for="max-year-filter">End publication year</label>
+                <input
+                  id="max-year-filter"
+                  class="year-range-input year-range-input-end"
+                  type="range"
+                  step="1"
+                  aria-label="End publication year"
+                  disabled
+                >
+              </div>
+              <div class="year-range-bounds" aria-hidden="true">
+                <span id="year-range-min">—</span>
+                <span id="year-range-max">—</span>
+              </div>
             </fieldset>
 
           </div>
@@ -442,6 +460,6 @@
     <script src="paper_link_helpers.js?v=20260714-paper-version-links"></script>
     <script src="marker_size_helpers.js?v=20260706-task-markers"></script>
     <script src="marker_interaction_helpers.js?v=20260712-pinned-state"></script>
-    <script src="app.js?v=20260716-country-combobox"></script>
+    <script src="app.js?v=20260717-year-range"></script>
   </body>
 </html>

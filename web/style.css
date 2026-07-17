@@ -557,8 +557,7 @@ button.institution-filter-link:focus-visible {
 
 .year-range {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
+  gap: 7px;
   min-width: 0;
   margin: 0;
   border: 0;
@@ -566,17 +565,132 @@ button.institution-filter-link:focus-visible {
 }
 
 .year-range legend {
-  grid-column: 1 / -1;
-  margin-bottom: 6px;
+  margin-bottom: 1px;
   padding: 0;
   color: var(--muted);
   font-size: 0.8rem;
   font-weight: 700;
 }
 
-.year-range label {
-  min-width: 0;
+.year-range-value {
+  color: var(--ink);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.year-range-slider {
+  position: relative;
+  height: 28px;
+  margin: 0 9px;
+}
+
+.year-range-track {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  left: 0;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    #d8e0e4 0 var(--range-start, 0%),
+    var(--accent) var(--range-start, 0%) var(--range-end, 100%),
+    #d8e0e4 var(--range-end, 100%) 100%
+  );
+}
+
+.year-range-input {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  pointer-events: none;
+  appearance: none;
+}
+
+.year-range-input-end {
+  z-index: 3;
+}
+
+.year-range-input:focus-visible {
+  z-index: 5;
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 4px;
+}
+
+.year-range-input::-webkit-slider-runnable-track {
+  height: 4px;
+  background: transparent;
+}
+
+.year-range-input::-moz-range-track {
+  height: 4px;
+  background: transparent;
+}
+
+.year-range-input::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  margin-top: -9px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-dark), 0 2px 4px rgb(18 39 49 / 24%);
+  cursor: grab;
+  pointer-events: auto;
+  appearance: none;
+}
+
+.year-range-input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--paper);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-dark), 0 2px 4px rgb(18 39 49 / 24%);
+  cursor: grab;
+  pointer-events: auto;
+}
+
+.year-range-input-end::-webkit-slider-thumb {
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 3px;
+  background: var(--accent-dark);
+}
+
+.year-range-input-end::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  background: var(--accent-dark);
+}
+
+.year-range-input:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.year-range-input:disabled::-moz-range-thumb {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.year-range-bounds {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
   font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
 }
 
 label {

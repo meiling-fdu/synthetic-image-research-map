@@ -129,8 +129,8 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
     def test_responsive_dimensions_and_asset_versions_are_preserved(self):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
-        self.assertIn('style.css?v=20260716-country-combobox', self.html)
-        self.assertIn('app.js?v=20260716-country-combobox', self.html)
+        self.assertIn('style.css?v=20260717-year-range', self.html)
+        self.assertIn('app.js?v=20260717-year-range', self.html)
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
