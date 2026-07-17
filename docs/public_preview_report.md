@@ -18,14 +18,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 950 |
-| Unique papers | 447 |
-| Unique institutions | 515 |
-| Countries | 52 |
-| arXiv/preprint records | 528 |
-| Records with DOI | 930 |
-| Records with venue | 884 |
-| Records missing venue | 66 |
+| Map records | 995 |
+| Unique papers | 464 |
+| Unique institutions | 528 |
+| Countries | 53 |
+| arXiv/preprint records | 551 |
+| Records with DOI | 950 |
+| Records with venue | 928 |
+| Records missing venue | 67 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -35,7 +35,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 380 |
+| detection | 397 |
 | source_attribution | 43 |
 | detection_and_source_attribution | 24 |
 
@@ -43,9 +43,9 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 214 |
+| ai_generated_image_detection | 230 |
 | synthetic_image_detection | 121 |
-| deepfake_image_detection | 45 |
+| deepfake_image_detection | 46 |
 | generated_image_source_attribution | 26 |
 | detection_and_source_attribution | 24 |
 | source_identification | 17 |
@@ -54,9 +54,9 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 78 |
-| 2025 | 128 |
-| 2024 | 111 |
+| 2026 | 89 |
+| 2025 | 131 |
+| 2024 | 114 |
 | 2023 | 53 |
 | 2022 | 22 |
 | 2021 | 24 |
@@ -69,59 +69,59 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Venue | Records |
 | --- | ---: |
-| Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 30 |
-| Conference · AAAI Conference on Artificial Intelligence (AAAI) | 21 |
-| Conference · IEEE/CVF International Conference on Computer Vision (ICCV) | 12 |
-| Conference · International Conference on Machine Learning (ICML) | 11 |
-| Conference · Advances in Neural Information Processing Systems (NeurIPS) | 8 |
-| Conference · IEEE International Conference on Acoustics Speech and Signal Processing | 7 |
-| Conference · IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
-| Conference · ACM International Conference on Multimedia (ACM MM) | 6 |
-| Conference · IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops | 6 |
-| Conference · ACM International Workshop on Multimedia AI against Disinformation (MAD) · Workshops | 5 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 31 |
+| AAAI Conference on Artificial Intelligence (AAAI) | 22 |
+| International Conference on Machine Learning (ICML) | 16 |
+| IEEE/CVF International Conference on Computer Vision (ICCV) | 12 |
+| IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 9 |
+| Advances in Neural Information Processing Systems (NeurIPS) | 8 |
+| International Conference on Learning Representations (ICLR) | 8 |
+| IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
+| ACM International Conference on Multimedia (ACM MM) | 6 |
+| IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops | 6 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| China | 386 |
+| China | 427 |
 | United States | 136 |
 | Italy | 80 |
-| India | 51 |
-| Germany | 37 |
+| India | 52 |
+| Germany | 38 |
 | South Korea | 30 |
 | United Kingdom | 29 |
 | France | 27 |
 | Singapore | 18 |
-| Australia | 13 |
+| Australia | 14 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
+| Shanghai Jiao Tong University | 18 |
 | University of Naples Federico II | 17 |
-| Shanghai Jiao Tong University | 16 |
 | University of Siena | 15 |
-| University of Chinese Academy of Sciences | 13 |
-| Beijing Jiaotong University | 12 |
+| Beijing Jiaotong University | 14 |
+| University of Chinese Academy of Sciences | 14 |
 | Fudan University | 12 |
+| Institute of Automation, Chinese Academy of Sciences | 12 |
 | University of Science and Technology of China | 11 |
+| Zhejiang University | 11 |
 | Beijing University of Posts and Telecommunications | 10 |
-| Centre for Research and Technology Hellas (CERTH) | 9 |
-| City University of Hong Kong | 9 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 783 |
-| medium | 167 |
+| high | 831 |
+| medium | 164 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **66**
+Count: **67**
 
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
@@ -134,7 +134,6 @@ Count: **66**
 - ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection (2025) - Henan University of Engineering; `openalex-candidate-af86ed74fc84674b`
 - CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - University at Buffalo; `openalex-candidate-348a506b67288d74`
 - ExDA: Towards Universal Detection and Plug-and-Play Attribution of AI-Generated Ex-Regulatory Images (2025) - Shanghai Jiao Tong University; `openalex-candidate-071adf2c66af598a`
-- Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University; `openalex-candidate-3a2726c50ff6a7d0`
 - HFMF: Hierarchical Fusion Meets Multi-Stream Models for Deepfake Detection (2025) - Texas A&M University; `openalex-candidate-2b3de8f25296a245`
 - TextureCrop: Enhancing Synthetic Image Detection Through Texture-Based Cropping (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-6d6cebc338c382bb`
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Aristotle University of Thessaloniki; `openalex-candidate-d451b0dc194a56c5`
@@ -159,8 +158,6 @@ Count: **66**
 - LEGION: Learning to Ground and Explain for Synthetic Image Detection (2025) - Shanghai Artificial Intelligence Laboratory; `openalex-candidate-e0b769e76fa2e1a5`
 - CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - Institute of Information Engineering, Chinese Academy of Sciences; `openalex-candidate-e0b2b9196a6705c5`
 - CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - Institute of Information Engineering; `openalex-candidate-452f2bb3c9879715`
-- Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Alibaba Group (United States); `openalex-candidate-35b487cf0a750d96`
-- Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University of Technology; `openalex-candidate-eced2038e5ce940f`
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4a516cc1ca95d8a3`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-a66244e63c273fee`
 - Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - Institute of Information Engineering, Chinese Academy of Sciences; `curated-map:44229f2cf573ad44149f`
@@ -189,6 +186,10 @@ Count: **66**
 - AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Amsterdam; `curated-map:5c81d0cf1e05f580d116`
 - Representation and Reference Selection in Training-Free Synthetic Image Attribution (2026) - Fudan University; `curated-map:3ee7aaa87f1aa61b9cf4`
 - Representation and Reference Selection in Training-Free Synthetic Image Attribution (2026) - University of Siena; `curated-map:14fde14555ab903cb5b2`
+- Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University; `curated-map:f2b6559883e58eb7cf82`
+- Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Alibaba Group; `curated-map:6567b7127990a7f504e5`
+- Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Zhejiang University of Technology; `curated-map:58871cc8d3dc762d1cc8`
+- Spatial-Temporal Reconstruction Error for AIGC-based Forgery Image Detection (2025) - Hangzhou High-Tech Zone (Binjiang) Institute of Blockchain and Data Security; `curated-map:f876dafa7865b9c43650`
 
 ### Records missing URL
 
