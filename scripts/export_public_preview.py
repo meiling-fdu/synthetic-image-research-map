@@ -47,6 +47,7 @@ try:
         DEFAULT_INSTITUTIONS_PATH,
         load_institutions,
     )
+    from .institution_types import classify_institution_type, resolve_public_institution_type
     from .country_normalization import normalize_country_region, public_location_display
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -114,6 +115,7 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_INSTITUTIONS_PATH,
         load_institutions,
     )
+    from institution_types import classify_institution_type, resolve_public_institution_type
     from country_normalization import normalize_country_region, public_location_display
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -634,7 +636,7 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
         "name": name,
         "canonical_name": clean_text(value.get("canonical_name")) or name,
         "institution_id": institution_id,
-        "institution_type": clean_text(value.get("institution_type")),
+        "institution_type": resolve_public_institution_type(value.get("institution_type")),
         "country": country,
         "country_code": country_code,
         "region": region,
@@ -1528,7 +1530,7 @@ def ordered_paper_location_summary(
         locations.append({
             "institution_name": institution_name(record),
             "institution_id": clean_text(record.get("institution_id")),
-            "institution_type": clean_text(record.get("institution_type")),
+            "institution_type": resolve_public_institution_type(record.get("institution_type")),
             "country": normalized["country"],
             "country_code": normalized["country_code"],
             "region": normalized["region"],
@@ -2679,7 +2681,7 @@ def public_canonical_institution_search_index(
     active = {
         clean_text(row.get("institution_id")): {
             "canonical_name": clean_text(row.get("canonical_name")),
-            "institution_type": clean_text(row.get("institution_type")),
+            "institution_type": resolve_public_institution_type(row.get("institution_type")),
         }
         for row in institutions
         if clean_text(row.get("institution_status")) == "active"
@@ -2810,7 +2812,7 @@ def canonicalize_public_institutions(
         clean_text(row.get("institution_id")): {
             "name": clean_text(row.get("canonical_name")),
             "id": clean_text(row.get("institution_id")),
-            "type": clean_text(row.get("institution_type")),
+            "type": resolve_public_institution_type(row.get("institution_type")),
         }
         for row in institutions
         if clean_text(row.get("institution_status")) == "active"
@@ -2841,6 +2843,9 @@ def canonicalize_public_institutions(
             })
 
     def canonicalize_value(value: Dict[str, Any]) -> None:
+        value["institution_type"] = resolve_public_institution_type(
+            value.get("institution_type") or value.get("type")
+        )
         name_field = "name" if "name" in value else "institution"
         original_name = clean_text(
             value.get(name_field)
@@ -3060,6 +3065,11 @@ def canonicalize_public_institutions(
                 canonical = resolver.get(normalize_institution_lookup(name))
                 canonical_names.append(canonical["name"] if canonical else clean_text(name))
             record["aggregated_institutions"] = list(dict.fromkeys(filter(None, canonical_names)))
+        if isinstance(record.get("aggregated_institution_types"), list):
+            record["aggregated_institution_types"] = list(dict.fromkeys(
+                resolve_public_institution_type(value)
+                for value in record["aggregated_institution_types"]
+            ))
 
     deduplicated: Dict[Tuple[Any, str], Dict[str, Any]] = {}
     order: List[Tuple[Any, str]] = []
@@ -3092,6 +3102,64 @@ def canonicalize_public_institutions(
                 institution_name(record) for record in paper_maps if institution_name(record)
             ))
     return [deduplicated[key] for key in order]
+
+
+def normalize_exported_institution_types(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+    institutions: Sequence[Dict[str, Any]],
+) -> None:
+    """Apply one final canonical type source after detail reconstruction."""
+    canonical_by_id = {
+        clean_text(row.get("institution_id")): resolve_public_institution_type(
+            row.get("institution_type")
+        )
+        for row in institutions
+        if clean_text(row.get("institution_status")) == "active"
+        and clean_text(row.get("institution_id"))
+    }
+
+    def normalize_value(value: Dict[str, Any]) -> str:
+        institution_id = clean_text(
+            value.get("institution_id") or value.get("canonical_institution_id")
+        )
+        if institution_id in canonical_by_id:
+            resolved = canonical_by_id[institution_id]
+        else:
+            name = clean_text(
+                value.get("canonical_name") or value.get("canonical_institution_name")
+                or value.get("name") or value.get("institution")
+                or value.get("institution_name")
+            )
+            resolved = classify_institution_type(
+                name, (), value.get("institution_type") or value.get("type")
+            )[0]
+        value["institution_type"] = resolved
+        return resolved
+
+    for record in [*paper_records, *map_records]:
+        if clean_text(
+            record.get("institution") or record.get("institution_name")
+            or record.get("canonical_name") or record.get("institution_id")
+        ):
+            normalize_value(record)
+        affiliation_types = []
+        for field in ("affiliations", "author_institution_affiliations"):
+            for affiliation in record.get(field) or []:
+                if isinstance(affiliation, dict):
+                    affiliation_types.append(normalize_value(affiliation))
+        current = record.get("current_institution")
+        if isinstance(current, dict):
+            normalize_value(current)
+        if affiliation_types:
+            record["aggregated_institution_types"] = list(dict.fromkeys(
+                affiliation_types
+            ))
+        elif isinstance(record.get("aggregated_institution_types"), list):
+            record["aggregated_institution_types"] = list(dict.fromkeys(
+                resolve_public_institution_type(value)
+                for value in record["aggregated_institution_types"]
+            ))
 
 
 def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
@@ -3546,6 +3614,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             integrated_papers, integrated_maps
         )
         add_public_detail_fields(integrated_papers, integrated_maps)
+        normalize_exported_institution_types(
+            integrated_papers, integrated_maps, institution_rows
+        )
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         payload["institution_aliases"] = exported_aliases

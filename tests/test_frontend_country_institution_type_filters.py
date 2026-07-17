@@ -90,6 +90,9 @@ process.stdout.write(JSON.stringify({{
   hierarchyAffiliations: dimensionAffiliations(papers[4]).map(value => value.institution_id),
   countryCounts,
   typeCounts,
+  orderedTypeCounts: sortedInstitutionTypeCounts(new Map([
+    ['company', 4], ['other', 1], ['university', 2], ['research_unit', 3],
+  ])),
   combined: combined.map(paper => paper.id),
   crossAffiliationMismatch: recordMatchesInstitutionDimensions(
     papers[2], 'South Korea', 'company', false,
@@ -138,7 +141,7 @@ process.stdout.write(JSON.stringify({{
         self.assertEqual(
             result["normalizedTypes"], ["university", "research_unit", "company"],
         )
-        self.assertEqual(result["missingTypes"], ["unknown"])
+        self.assertEqual(result["missingTypes"], ["other"])
         self.assertEqual(
             result["hierarchyAffiliations"],
             ["institution:parent", "institution:child"],
@@ -147,7 +150,10 @@ process.stdout.write(JSON.stringify({{
             ["United States", 3], ["China", 2], ["South Korea", 1],
         ])
         self.assertEqual(result["typeCounts"], [
-            ["company", 2], ["research_unit", 2], ["university", 2], ["unknown", 1],
+            ["company", 2], ["research_unit", 2], ["university", 2], ["other", 1],
+        ])
+        self.assertEqual(result["orderedTypeCounts"], [
+            ["university", 2], ["research_unit", 3], ["company", 4], ["other", 1],
         ])
         self.assertEqual(result["combined"], ["alias-paper"])
         self.assertFalse(result["crossAffiliationMismatch"])
@@ -187,10 +193,16 @@ process.stdout.write(JSON.stringify({{
 
     def test_rendering_and_csv_include_readable_types_deterministically(self):
         self.assertIn('research_unit: "Research unit"', self.app)
+        self.assertIn('other: "Other"', self.app)
+        self.assertIn(
+            'const INSTITUTION_TYPE_ORDER = ["university", "research_unit", "company", "other"]',
+            self.app,
+        )
+        self.assertNotIn('unknown: "Unknown"', self.app)
         self.assertIn('["institution_type",', self.app)
         self.assertIn('["institution_types",', self.app)
         self.assertIn('class="affiliation-type"', self.app)
-        self.assertIn("second[1] - first[1]", self.app)
+        self.assertIn("sortedInstitutionTypeCounts(typeCounts)", self.app)
         self.assertIn("compareTextValues(labelForValue(first[0])", self.app)
         self.assertIn('countryFilter.addEventListener("change", renderRecords)', self.app)
         self.assertIn(

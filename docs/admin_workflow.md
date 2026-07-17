@@ -22,6 +22,11 @@ geocoding evidence. Location writes are bound to the row's stable
 `institution_id`; changing coordinates cannot rename an institution or reassign
 a paper author.
 
+The institution identity editor accepts only `university`, `research_unit`,
+`company`, or `other`. Admin responses resolve legacy values before display and
+show the applicable classification rule/evidence. The API rejects legacy type
+values rather than relying on a browser-only remap.
+
 Global merge displays affected papers, author mappings, markers, and authors,
 then requires the exact `REPLACE … WITH … GLOBALLY` phrase and writes an audit
 row. Ignore confirms that the institution is hidden from public outputs without

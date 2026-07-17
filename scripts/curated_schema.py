@@ -358,11 +358,9 @@ ALLOWED_INSTITUTION_STATUSES = {
 
 ALLOWED_INSTITUTION_TYPES = {
     "university",
-    "department",
-    "institute",
-    "laboratory",
-    "company",
     "research_unit",
+    "company",
+    "other",
 }
 
 ALLOWED_LOCATION_STATUSES = {

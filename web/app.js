@@ -53,8 +53,9 @@ const INSTITUTION_TYPE_LABELS = {
   university: "University",
   research_unit: "Research unit",
   company: "Company",
-  unknown: "Unknown",
+  other: "Other",
 };
+const INSTITUTION_TYPE_ORDER = ["university", "research_unit", "company", "other"];
 const CHINA_REGION_BY_CODE = {
   HK: "Hong Kong",
   MO: "Macau",
@@ -553,8 +554,8 @@ function normalizePaperDetailsRecord(record, context = {}) {
       };
       affiliationsByIdentity.set(identity, affiliation);
     } else if (
-      affiliation.institutionType === "unknown"
-      && normalizeInstitutionType(raw.institution_type || raw.type) !== "unknown"
+      affiliation.institutionType === "other"
+      && normalizeInstitutionType(raw.institution_type || raw.type) !== "other"
     ) {
       affiliation.institutionType = normalizeInstitutionType(
         raw.institution_type || raw.type,
@@ -981,11 +982,17 @@ function normalizeInstitutionType(value) {
     research_unit: "research_unit",
     research: "research_unit",
     institute: "research_unit",
+    laboratory: "research_unit",
+    department: "research_unit",
     company: "company",
     corporate: "company",
     commercial: "company",
+    unknown: "other",
   };
-  return aliases[normalized] || (normalized || "unknown");
+  const resolved = aliases[normalized] || normalized;
+  return ["university", "research_unit", "company", "other"].includes(resolved)
+    ? resolved
+    : "other";
 }
 
 function institutionTypeLabel(value) {
@@ -1765,6 +1772,12 @@ function sortedDimensionCounts(counts, labelForValue = (value) => value) {
   ));
 }
 
+function sortedInstitutionTypeCounts(counts) {
+  return INSTITUTION_TYPE_ORDER
+    .filter((value) => (counts.get(value) || 0) > 0)
+    .map((value) => [value, counts.get(value)]);
+}
+
 function venueTypeRank(value) {
   const index = venueTypeOrder.indexOf(String(value || "").toLocaleLowerCase());
   return index >= 0 ? index : venueTypeOrder.length;
@@ -1800,12 +1813,15 @@ function sortedVenueCounts(counts, metadataByVenue) {
   });
 }
 
-function replaceCountedFilterOptions(select, defaultLabel, entries, labelForValue) {
+function replaceCountedFilterOptions(
+  select, defaultLabel, entries, labelForValue, preserveMissingSelection = true,
+) {
   const selectedValue = select.value || "all";
   const options = [["all", defaultLabel], ...entries.map(([value, count]) => (
     [value, `${labelForValue(value)} (${count})`]
   ))];
-  if (selectedValue !== "all" && !entries.some(([value]) => value === selectedValue)) {
+  const selectedStillAvailable = entries.some(([value]) => value === selectedValue);
+  if (preserveMissingSelection && selectedValue !== "all" && !selectedStillAvailable) {
     options.push([selectedValue, `${labelForValue(selectedValue)} (0)`]);
   }
   select.replaceChildren(...options.map(([value, label]) => {
@@ -1814,7 +1830,9 @@ function replaceCountedFilterOptions(select, defaultLabel, entries, labelForValu
     option.textContent = label;
     return option;
   }));
-  select.value = selectedValue;
+  select.value = selectedValue === "all" || selectedStillAvailable
+    ? selectedValue
+    : "all";
 }
 
 function filterCountryOptionData(options, query) {
@@ -2023,8 +2041,9 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
   replaceCountedFilterOptions(
     institutionTypeFilter,
     "All institution types",
-    sortedDimensionCounts(typeCounts, institutionTypeLabel),
+    sortedInstitutionTypeCounts(typeCounts),
     institutionTypeLabel,
+    false,
   );
 }
 

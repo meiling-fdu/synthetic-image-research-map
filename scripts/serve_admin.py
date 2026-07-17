@@ -91,6 +91,7 @@ try:
         update_institution_identity,
         update_institution_location,
     )
+    from .institution_types import classify_institution_type
     from .openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -207,6 +208,7 @@ except ImportError:
         update_institution_identity,
         update_institution_location,
     )
+    from institution_types import classify_institution_type
     from openalex_paper_search import (
         OpenAlexFetchError,
         OpenAlexSearchInputError,
@@ -1839,8 +1841,23 @@ def make_handler(
                             row for row in locations
                             if clean(row.get("institution_id")) == resolved_identifier
                         ), None)
+                        confirmed_alias_names = [
+                            clean(row.get("alias_name")) for row in aliases
+                            if clean(row.get("institution_id")) == resolved_identifier
+                            and clean(row.get("review_status")) == "confirmed"
+                        ]
+                        resolved_type, type_rule, type_evidence = classify_institution_type(
+                            matches[0].get("canonical_name"), confirmed_alias_names,
+                            matches[0].get("institution_type"),
+                        )
+                        display_institution = {
+                            **matches[0],
+                            "institution_type": resolved_type,
+                            "institution_type_rule": type_rule,
+                            "institution_type_evidence": type_evidence,
+                        }
                         self.send_json(HTTPStatus.OK, {"data": {
-                            "institution": matches[0],
+                            "institution": display_institution,
                             "requested_institution_id": identifier,
                             "editable_institution_id": resolved_identifier,
                             **institution_hierarchy_details(institutions, resolved_identifier),
@@ -1864,8 +1881,20 @@ def make_handler(
                         records = []
                         for institution in institutions:
                             identifier = clean(institution.get("institution_id"))
+                            confirmed_alias_names = [
+                                clean(row.get("alias_name")) for row in aliases
+                                if clean(row.get("institution_id")) == identifier
+                                and clean(row.get("review_status")) == "confirmed"
+                            ]
+                            resolved_type, type_rule, type_evidence = classify_institution_type(
+                                institution.get("canonical_name"), confirmed_alias_names,
+                                institution.get("institution_type"),
+                            )
                             records.append({
                                 **institution,
+                                "institution_type": resolved_type,
+                                "institution_type_rule": type_rule,
+                                "institution_type_evidence": type_evidence,
                                 **institution_hierarchy_details(institutions, identifier),
                                 "aliases": [row.get("alias_name") for row in aliases if clean(row.get("institution_id")) == identifier and clean(row.get("review_status")) == "confirmed"],
                                 "usage": institution_impact(identifier, mappings),

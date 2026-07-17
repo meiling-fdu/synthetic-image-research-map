@@ -2128,6 +2128,11 @@ function renderInstitutionManagement() {
     hierarchy.textContent = `${aliases} · Parent: ${parent} · Descendants: ${descendants}`;
     const status = document.createElement("td");
     status.textContent = `${institution.institution_status} · ${institution.institution_type}`;
+    if (institution.institution_type_rule) {
+      status.append(document.createElement("br"), document.createTextNode(
+        `Type provenance: ${institution.institution_type_rule}${institution.institution_type_evidence ? ` · ${institution.institution_type_evidence}` : ""}`,
+      ));
+    }
     const usage = document.createElement("td");
     const impact = institution.usage || {};
     usage.textContent = `${impact.papers || 0} papers · ${impact.author_mappings || 0} mappings · ${impact.markers || 0} markers · ${(impact.authors || []).length} authors`;
@@ -2333,8 +2338,12 @@ async function runInstitutionAction(action, institution) {
     if (action === "identity") {
       const canonicalName = window.prompt("Canonical name (identity only; this does not reassign mappings):", institution.canonical_name);
       if (!canonicalName) return;
-      const institutionType = window.prompt("Institution type: university, department, institute, laboratory, company, or research_unit", institution.institution_type);
+      const institutionType = window.prompt("Institution type: university, research_unit, company, or other", institution.institution_type);
       if (!institutionType) return;
+      if (!["university", "research_unit", "company", "other"].includes(institutionType)) {
+        showNotice("Institution type must be university, research_unit, company, or other.", "error");
+        return;
+      }
       await postInstitutionAction("/api/institution/identity", { institution_id: institution.institution_id, canonical_name: canonicalName, institution_type: institutionType, institution_status: institution.institution_status });
     } else if (action === "alias") {
       const aliasName = window.prompt("Alias to resolve to this canonical institution:");

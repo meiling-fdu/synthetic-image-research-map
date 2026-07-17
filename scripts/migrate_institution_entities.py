@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from curated_institutions import alias_id_for, normalize_institution, stable_institution_id
+from institution_types import classify_institution_type
 from curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     INSTITUTION_ALIAS_COLUMNS,
@@ -36,18 +37,7 @@ def write_csv(name: str, columns, rows) -> None:
 
 
 def infer_type(name: str) -> str:
-    normalized = normalize_institution(name)
-    if any(word in normalized.split() for word in ("amazon", "adobe", "alibaba", "apple", "google", "huawei", "intel", "meta", "microsoft", "nvidia", "sony", "tencent")):
-        return "company"
-    if "department" in normalized:
-        return "department"
-    if "laboratory" in normalized or normalized.endswith(" lab"):
-        return "laboratory"
-    if "institute" in normalized or "academy" in normalized or "centre" in normalized or "center" in normalized:
-        return "institute"
-    if "university" in normalized or "college" in normalized:
-        return "university"
-    return "research_unit"
+    return classify_institution_type(name, (), "unknown")[0]
 
 
 def main() -> int:

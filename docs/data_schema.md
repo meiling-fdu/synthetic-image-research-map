@@ -8,6 +8,20 @@ optional `parent_institution_id`, and a `public_display` preference. Ignored,
 deprecated, and merged entities remain traceable but are omitted from public
 outputs.
 
+`institution_type` has exactly four canonical values, in public display order:
+`university`, `research_unit`, `company`, and `other`. The shared resolver in
+`scripts/institution_types.py` applies types after canonical/merged-ID
+resolution. A complete case-insensitive `university` word in the canonical
+name or a confirmed alias is deterministic evidence for `university`;
+departments, laboratories, institutes, research centers, academies, councils,
+groups, and units resolve to `research_unit`; confirmed companies and clear
+commercial organizations resolve to `company`; unresolved values use `other`.
+Parent and child entities are typed independently. Legacy `unknown`,
+`laboratory`, `department`, and `institute` values are invalid in curated and
+public data. `data/processed/institution_type_migration_report.csv` preserves
+the migration's previous type, rule, evidence, aliases considered, and affected
+unique-paper count.
+
 `institution_locations.csv` owns location only and references `institution_id`.
 Coordinate edits cannot change that ID. A child without a location may inherit
 the nearest confirmed parent location; its own row overrides inheritance.

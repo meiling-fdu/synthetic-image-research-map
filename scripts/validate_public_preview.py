@@ -94,6 +94,25 @@ AUTHOR_MAPPING_SOURCES = {
 }
 ALLOWED_VENUE_TYPES = {"conference", "journal", "preprint", "book"}
 ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "industry", "demo", "doctoral_consortium", "other"}
+ALLOWED_INSTITUTION_TYPES = {"university", "research_unit", "company", "other"}
+
+
+def validate_institution_types(index: int, record: Dict[str, Any], issues: List[Issue]) -> None:
+    title = record_title(record)
+    values = []
+    for key in ("institution_type", "aggregated_institution_types"):
+        value = record.get(key)
+        values.extend(value if isinstance(value, list) else [value])
+    for key in ("affiliations", "author_institution_affiliations"):
+        for affiliation in record.get(key) or []:
+            if isinstance(affiliation, dict):
+                values.append(affiliation.get("institution_type") or affiliation.get("type"))
+    invalid = sorted({
+        clean_text(value) for value in values
+        if clean_text(value) and clean_text(value) not in ALLOWED_INSTITUTION_TYPES
+    })
+    if invalid:
+        add_issue(issues, "ERROR", index, title, f"non-canonical institution type: {', '.join(invalid)}")
 
 
 def validate_canonical_venue(index: int, record: Dict[str, Any], issues: List[Issue]) -> None:
@@ -855,6 +874,7 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
         return
     validate_paper_detail_schema(index, record, issues, marker_record=True)
     validate_canonical_venue(index, record, issues)
+    validate_institution_types(index, record, issues)
 
     title = record_title(record)
     publication_type = clean_text(record.get("publication_type"))
@@ -1065,6 +1085,7 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
     validate_paper_detail_schema(index, record, issues, marker_record=False)
+    validate_institution_types(index, record, issues)
     validate_canonical_venue(index, record, issues)
 
     title = record_title(record)
