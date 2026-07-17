@@ -1158,10 +1158,9 @@ function venueDisplayLabel(record) {
   if (exported) return exported;
   const name = getRecordVenue(record);
   if (!name) return "Unknown venue/source";
-  const type = recordVenueType(record);
   const acronym = String(record.venue_acronym || "").trim();
   const track = String(record.venue_track || "main").trim();
-  let label = type ? `${formatTask(type)} · ${name}` : name;
+  let label = name;
   if (acronym) label += ` (${acronym})`;
   if (track && track !== "main") label += ` · ${formatTask(track)}`;
   return label;
@@ -1175,9 +1174,7 @@ function venueDisplayHtml(record) {
   const label = venueDisplayLabel(record);
   const type = recordVenueType(record);
   if (!label || !type) return escapeHtml(label);
-  const prefix = `${formatTask(type)} · `;
-  const remainder = label.startsWith(prefix) ? label.slice(prefix.length) : label;
-  return `<span class="venue-type-badge">${escapeHtml(formatTask(type))}</span><span class="venue-label-name"> · ${escapeHtml(remainder)}</span>`;
+  return `<span class="venue-type-badge">${escapeHtml(formatTask(type))}</span><span class="venue-label-name"> · ${escapeHtml(label)}</span>`;
 }
 
 function getRecordYear(record) {
@@ -1798,16 +1795,13 @@ function sortedVenueCounts(counts, metadataByVenue) {
     const secondMetadata = metadataByVenue.get(second[0]) || {
       name: second[0], type: "__unknown__",
     };
-    const firstRank = first[0] === "__unknown__"
-      ? venueTypeOrder.length + 1
-      : venueTypeRank(firstMetadata.type);
-    const secondRank = second[0] === "__unknown__"
-      ? venueTypeOrder.length + 1
-      : venueTypeRank(secondMetadata.type);
+    const firstUnknown = first[0] === "__unknown__";
+    const secondUnknown = second[0] === "__unknown__";
+    if (firstUnknown !== secondUnknown) return firstUnknown ? 1 : -1;
     return (
-      firstRank - secondRank
-      || second[1] - first[1]
-      || compareTextValues(firstMetadata.name, secondMetadata.name)
+      compareTextValues(firstMetadata.name, secondMetadata.name)
+      || compareTextValues(firstMetadata.acronym, secondMetadata.acronym)
+      || compareTextValues(firstMetadata.track, secondMetadata.track)
       || compareTextValues(first[0], second[0])
     );
   });
@@ -3256,6 +3250,8 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
     metadataByVenue.set(venueFilterValue(record), {
       label: venueDisplayLabel(record),
       name: getRecordVenue(record) || "Unknown venue/source",
+      acronym: record.venue_acronym || "",
+      track: record.venue_track || "main",
       type: recordVenueType(record) || "__unknown__",
     });
   });
@@ -3270,6 +3266,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
     sortedVenueCounts(venueCounts, metadataByVenue),
     (value) => metadataByVenue.get(value)?.label
       || (value === "__unknown__" ? "Unknown venue/source" : value),
+    false,
   );
   replaceCountedFilterOptions(
     venueTypeFilter,

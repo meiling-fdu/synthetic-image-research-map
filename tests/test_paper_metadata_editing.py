@@ -260,7 +260,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 chi = next(row for row in venues if row["venue_id"] == "venue:chi:main")
                 self.assertEqual(
                     chi["venue_label"],
-                    "Conference · CHI Conference on Human Factors in Computing Systems (CHI)",
+                    "CHI Conference on Human Factors in Computing Systems (CHI)",
                 )
                 self.assertIn("CHI", chi["search_text"])
                 edit = {**original, **chi_venue_fields(), "id": display_id}

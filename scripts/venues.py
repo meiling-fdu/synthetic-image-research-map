@@ -104,13 +104,12 @@ def venue_type_rank(value: Any) -> int:
 
 
 def display_venue(record: Mapping[str, Any]) -> str:
-    venue_type = clean_text(record.get("venue_type") or record.get("publication_type"))
     name = clean_text(record.get("venue_name") or record.get("venue"))
     acronym = clean_text(record.get("venue_acronym"))
     track = clean_text(record.get("venue_track") or "main")
     if not name:
         return ""
-    label = f"{venue_type.title()} · {name}" if venue_type else name
+    label = name
     if acronym:
         label += f" ({acronym})"
     if track and track != "main":
@@ -206,9 +205,9 @@ def canonical_venue_options(
         ))))
         options.append(option)
     return sorted(options, key=lambda item: (
-        venue_type_rank(item["venue_type"]),
-        -item["paper_count"],
         item["venue_name"].casefold(),
+        item["venue_acronym"].casefold(),
+        item["venue_track"].casefold(),
         item["venue_id"],
     ))
 
@@ -412,6 +411,7 @@ def _catalog_index(rows: Sequence[Mapping[str, Any]]) -> tuple[dict[str, list[di
 def _known_lookup_keys(raw: str) -> list[str]:
     cleaned = _strip_edition_noise(raw)
     candidates = [raw, cleaned]
+    candidates.extend(_icassp_lookup_variants(cleaned))
     # Only remove numeric proceedings volumes for the series where the suffix is
     # known not to be part of the venue identity.
     if re.search(r"Advances in Neural Information Processing Systems\s+\d+\s*$", cleaned, re.I):
@@ -419,6 +419,24 @@ def _known_lookup_keys(raw: str) -> list[str]:
     # ACM MM proceedings commonly encode only the yearly edition in this prefix.
     candidates.append(re.sub(r"^\d+(?:st|nd|rd|th)\s+", "", cleaned, flags=re.I))
     return list(dict.fromkeys(alias_key(candidate) for candidate in candidates if candidate))
+
+
+def _icassp_lookup_variants(value: str) -> list[str]:
+    if not re.search(r"\bICASSP\b|Acoustics,?\s+Speech\s+and\s+Signal\s+Processing", value, re.I):
+        return []
+    base = "IEEE International Conference on Acoustics, Speech and Signal Processing"
+    no_comma = "IEEE International Conference on Acoustics Speech and Signal Processing"
+    variants = [base, no_comma, f"{base} (ICASSP)", f"{no_comma} (ICASSP)"]
+    without_prefix = re.sub(
+        r"^\s*ICASSP\s+(?:19|20)\d{2}\s*[-:]\s*(?:(?:19|20)\d{2}\s+)?",
+        "",
+        value,
+        flags=re.I,
+    )
+    without_year = re.sub(r"^\s*(?:19|20)\d{2}\s+", "", without_prefix)
+    without_acronym_suffix = re.sub(r"\s*\(ICASSP\)\s*$", "", without_year, flags=re.I)
+    variants.extend([without_prefix, without_year, without_acronym_suffix])
+    return [clean_text(variant) for variant in variants if clean_text(variant)]
 
 
 def resolve_venue(

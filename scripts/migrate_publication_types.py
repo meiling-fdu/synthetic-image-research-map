@@ -1,172 +1,228 @@
 #!/usr/bin/env python3
-"""Migrate publication_type CSV fields without rewriting unrelated fields."""
+"""Audit or apply deterministic publication-type normalization."""
 
 from __future__ import annotations
 
 import argparse
 import csv
-import json
 from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Any, Mapping
 
 try:
-    from .publication_types import normalize_publication_type
+    from .curated_schema import PAPERS_COLUMNS
+    from .publication_types import resolve_publication_type
 except ImportError:
-    from publication_types import normalize_publication_type
+    from curated_schema import PAPERS_COLUMNS
+    from publication_types import resolve_publication_type
 
 
 ROOT = Path(__file__).resolve().parent.parent
-SOURCE_ROOTS = (ROOT / "data/curated", ROOT / "data/manual", ROOT / "data/processed")
-CANONICAL_TYPES = {"conference", "journal", "preprint", "book"}
-MIGRATABLE_LEGACY_TYPES = {
-    "article", "article-journal", "journal-article", "journal article",
-    "conference-paper", "conference paper", "proceedings",
-    "proceedings-article", "proceedings article", "inproceedings",
-    "review", "editorial", "letter", "survey", "book-chapter",
-    "book chapter", "chapter", "posted-content", "posted content",
-}
+DEFAULT_INPUT = ROOT / "data" / "curated" / "papers.csv"
+DEFAULT_REPORT = ROOT / "data" / "processed" / "publication_type_migration_audit.csv"
+
+AUDIT_COLUMNS = (
+    "paper_id",
+    "title",
+    "previous_publication_type",
+    "canonical_venue_id",
+    "canonical_venue_name",
+    "canonical_venue_type",
+    "arxiv_id",
+    "arxiv_url",
+    "doi",
+    "proposed_publication_type",
+    "applied_rule",
+    "ambiguity_status",
+)
 
 
-def csv_record_spans(text: str) -> List[Tuple[int, int]]:
-    spans: List[Tuple[int, int]] = []
+def clean(value: Any) -> str:
+    return " ".join(str(value or "").split()).strip()
+
+
+def read_rows(path: Path) -> list[dict[str, str]]:
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if tuple(reader.fieldnames or ()) != PAPERS_COLUMNS:
+            raise ValueError(f"{path} does not have the exact curated paper header")
+        return [dict(row) for row in reader]
+
+
+def migrate_csv(path: Path, *, write: bool = False) -> dict[str, Any]:
+    """Normalize publication_type in any CSV that has that column.
+
+    This compatibility helper is intentionally narrower than the curated-paper
+    audit path: it preserves the original columns and only rewrites the
+    publication_type cell when the shared resolver returns a deterministic
+    normalized value.
+    """
+    original_text = path.read_text(encoding="utf-8-sig")
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        reader = csv.DictReader(handle)
+        fieldnames = list(reader.fieldnames or ())
+        rows = [dict(row) for row in reader]
+    if "publication_type" not in fieldnames:
+        raise ValueError("CSV must include publication_type")
+    changes: Counter[str] = Counter()
+    migrated: list[dict[str, str]] = []
+    for row in rows:
+        previous = row.get("publication_type", "")
+        proposed, _rule = resolve_publication_type(
+            previous,
+            venue=row.get("venue") or row.get("venue_name") or row.get("publication_venue"),
+            venue_type=row.get("venue_type"),
+            arxiv_id=row.get("arxiv_id"),
+            arxiv_url=row.get("arxiv_url"),
+            doi=row.get("doi"),
+        )
+        next_row = dict(row)
+        if proposed and proposed != previous:
+            next_row["publication_type"] = proposed
+            changes[f"{previous} -> {proposed}"] += 1
+        migrated.append(next_row)
+    if write and changes:
+        publication_index = fieldnames.index("publication_type")
+        lines = original_text.splitlines(keepends=True)
+        replacements = [
+            row["publication_type"]
+            for row in migrated
+        ]
+        for index, replacement in enumerate(replacements, start=1):
+            lines[index] = replace_csv_field(lines[index], publication_index, replacement)
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        temporary.write_text("".join(lines), encoding="utf-8")
+        temporary.replace(path)
+    return {"changes": dict(changes), "rows": len(rows)}
+
+
+def replace_csv_field(line: str, field_index: int, replacement: str) -> str:
+    terminator = ""
+    if line.endswith("\r\n"):
+        line, terminator = line[:-2], "\r\n"
+    elif line.endswith("\n"):
+        line, terminator = line[:-1], "\n"
+    fields: list[tuple[int, int, bool]] = []
     start = 0
     quoted = False
+    in_quotes = False
     index = 0
-    while index < len(text):
-        char = text[index]
-        if char == '"':
-            if quoted and index + 1 < len(text) and text[index + 1] == '"':
+    while index < len(line):
+        char = line[index]
+        if index == start and char == '"':
+            quoted = True
+            in_quotes = True
+            index += 1
+            continue
+        if char == '"' and in_quotes:
+            if index + 1 < len(line) and line[index + 1] == '"':
                 index += 2
                 continue
-            quoted = not quoted
-        if char == "\n" and not quoted:
-            spans.append((start, index + 1))
+            in_quotes = False
+        elif char == "," and not in_quotes:
+            fields.append((start, index, quoted))
             start = index + 1
+            quoted = False
         index += 1
-    if start < len(text):
-        spans.append((start, len(text)))
-    return spans
+    fields.append((start, len(line), quoted))
+    if field_index >= len(fields):
+        return line + terminator
+    start, end, quoted = fields[field_index]
+    value = replacement.replace('"', '""') if quoted else replacement
+    if quoted:
+        value = f'"{value}"'
+    return line[:start] + value + line[end:] + terminator
 
 
-def csv_field_spans(record: str) -> List[Tuple[int, int]]:
-    spans: List[Tuple[int, int]] = []
-    start = 0
-    quoted = False
-    index = 0
-    while index < len(record):
-        char = record[index]
-        if char == '"':
-            if quoted and index + 1 < len(record) and record[index + 1] == '"':
-                index += 2
-                continue
-            quoted = not quoted
-        elif char == "," and not quoted:
-            spans.append((start, index))
-            start = index + 1
-        elif char in "\r\n" and not quoted:
-            break
-        index += 1
-    spans.append((start, index))
-    return spans
-
-
-def replacement_field(raw_field: str, value: str) -> str:
-    if raw_field.startswith('"') and raw_field.endswith('"'):
-        return '"' + value.replace('"', '""') + '"'
-    return value
-
-
-def normalize_row(row: Dict[str, str]) -> str:
-    return normalize_publication_type(
+def audit_row(row: Mapping[str, Any]) -> dict[str, str]:
+    proposed, rule = resolve_publication_type(
         row.get("publication_type"),
-        venue=(
-            row.get("venue")
-            or row.get("venue_name")
-            or row.get("publication_venue")
-            or row.get("formal_venue")
-        ),
+        venue=row.get("venue_name") or row.get("venue"),
         venue_type=row.get("venue_type"),
         arxiv_id=row.get("arxiv_id"),
         arxiv_url=row.get("arxiv_url"),
         doi=row.get("doi"),
     )
-
-
-def display_path(path: Path) -> str:
-    try:
-        return str(path.relative_to(ROOT))
-    except ValueError:
-        return str(path)
-
-
-def migrate_csv(path: Path, *, write: bool) -> Dict[str, Any]:
-    with path.open("r", encoding="utf-8-sig", newline="") as handle:
-        text = handle.read()
-    record_spans = csv_record_spans(text)
-    parsed = list(csv.reader(text.splitlines(keepends=True)))
-    if not parsed or "publication_type" not in parsed[0]:
-        return {"path": display_path(path), "changes": {}, "unresolved": []}
-    if len(parsed) != len(record_spans):
-        raise ValueError(f"Could not preserve CSV record boundaries in {path}")
-    fieldnames = parsed[0]
-    type_index = fieldnames.index("publication_type")
-    changes: Counter[str] = Counter()
-    unresolved: List[Dict[str, str]] = []
-    replacements: List[Tuple[int, int, str]] = []
-    for row_number, ((record_start, record_end), values) in enumerate(
-        zip(record_spans[1:], parsed[1:]), start=2
-    ):
-        padded = values + [""] * (len(fieldnames) - len(values))
-        row = dict(zip(fieldnames, padded))
-        old = row.get("publication_type", "").strip()
-        if not old:
-            continue
-        old_key = old.casefold().replace("_", "-")
-        if old_key in CANONICAL_TYPES:
-            if old_key != "journal" or normalize_row(row) != "conference":
-                continue
-        if old_key not in CANONICAL_TYPES and old_key not in MIGRATABLE_LEGACY_TYPES:
-            unresolved.append({"row": str(row_number), "title": row.get("title", ""), "value": old})
-            continue
-        new = normalize_row(row)
-        if not new:
-            unresolved.append({"row": str(row_number), "title": row.get("title", ""), "value": old})
-            continue
-        if new == old:
-            continue
-        field_spans = csv_field_spans(text[record_start:record_end])
-        start, end = field_spans[type_index]
-        raw_field = text[record_start + start : record_start + end]
-        replacements.append(
-            (record_start + start, record_start + end, replacement_field(raw_field, new))
-        )
-        changes[f"{old} -> {new}"] += 1
-    if write and replacements:
-        for start, end, replacement in reversed(replacements):
-            text = text[:start] + replacement + text[end:]
-        with path.open("w", encoding="utf-8", newline="") as handle:
-            handle.write(text)
+    ambiguity_status = "resolved" if proposed else "requires_review"
+    previous = clean(row.get("publication_type"))
+    if clean(row.get("venue_id")) and clean(row.get("venue_type")) in {"conference", "journal", "book"}:
+        ambiguity_status = "resolved"
+    elif not proposed:
+        ambiguity_status = "requires_review"
     return {
-        "path": display_path(path),
-        "changes": dict(sorted(changes.items())),
-        "unresolved": unresolved,
+        "paper_id": clean(row.get("paper_id")),
+        "title": clean(row.get("title")),
+        "previous_publication_type": previous,
+        "canonical_venue_id": clean(row.get("venue_id")),
+        "canonical_venue_name": clean(row.get("venue_name") or row.get("venue")),
+        "canonical_venue_type": clean(row.get("venue_type")),
+        "arxiv_id": clean(row.get("arxiv_id")),
+        "arxiv_url": clean(row.get("arxiv_url")),
+        "doi": clean(row.get("doi")),
+        "proposed_publication_type": proposed,
+        "applied_rule": rule,
+        "ambiguity_status": ambiguity_status,
     }
 
 
-def source_csvs() -> Iterable[Path]:
-    for root in SOURCE_ROOTS:
-        yield from sorted(root.rglob("*.csv"))
+def migrate(rows: list[dict[str, str]]) -> tuple[list[dict[str, str]], list[dict[str, str]]]:
+    migrated: list[dict[str, str]] = []
+    audit: list[dict[str, str]] = []
+    for row in rows:
+        item = audit_row(row)
+        next_row = dict(row)
+        if item["ambiguity_status"] == "resolved" and item["proposed_publication_type"]:
+            next_row["publication_type"] = item["proposed_publication_type"]
+        migrated.append(next_row)
+        audit.append(item)
+    return migrated, audit
 
 
-def main(argv: Optional[Sequence[str]] = None) -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--write", action="store_true", help="Apply field-only CSV updates")
-    parser.add_argument("paths", nargs="*", type=Path)
-    args = parser.parse_args(argv)
-    paths = [path.resolve() for path in args.paths] if args.paths else list(source_csvs())
-    results = [migrate_csv(path, write=args.write) for path in paths]
-    print(json.dumps({"write": args.write, "files": results}, indent=2, ensure_ascii=False))
+def write_rows(path: Path, rows: list[dict[str, str]]) -> None:
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    with temporary.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=PAPERS_COLUMNS, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
+    temporary.replace(path)
+
+
+def write_audit(path: Path, audit: list[dict[str, str]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=AUDIT_COLUMNS, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(audit)
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
+    parser.add_argument("--apply", action="store_true")
+    args = parser.parse_args()
+
+    rows = read_rows(args.input)
+    migrated, audit = migrate(rows)
+    write_audit(args.report, audit)
+    changes = [
+        item for item in audit
+        if item["previous_publication_type"] != item["proposed_publication_type"]
+        and item["ambiguity_status"] == "resolved"
+    ]
+    unresolved = [item for item in audit if item["ambiguity_status"] != "resolved"]
+    if args.apply:
+        write_rows(args.input, migrated)
+    changed_by_type = Counter(
+        (item["previous_publication_type"], item["proposed_publication_type"])
+        for item in changes
+    )
+    print(f"mode: {'apply' if args.apply else 'dry-run'}")
+    print(f"papers: {len(rows)}")
+    print(f"changes: {len(changes)}")
+    print(f"changed_by_type: {dict(sorted(changed_by_type.items()))}")
+    print(f"unresolved_conflicts: {len(unresolved)}")
+    print(f"report: {args.report}")
     return 0
 
 

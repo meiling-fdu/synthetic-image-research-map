@@ -64,14 +64,14 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_display_format(self):
         venue = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops")
-        self.assertEqual(display_venue(venue.as_record()), "Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops")
+        self.assertEqual(display_venue(venue.as_record()), "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops")
         self.assertEqual(
             display_venue(self.resolve("CHI Conference on Human Factors in Computing Systems").as_record()),
-            "Conference · CHI Conference on Human Factors in Computing Systems (CHI)",
+            "CHI Conference on Human Factors in Computing Systems (CHI)",
         )
         self.assertEqual(
             display_venue(self.resolve("Pattern Recognition", publication_type="journal").as_record()),
-            "Journal · Pattern Recognition (PR)",
+            "Pattern Recognition (PR)",
         )
 
     def test_conflicting_alias_is_ambiguous_and_not_merged(self):
@@ -136,9 +136,9 @@ class VenueNormalizationTests(unittest.TestCase):
         for term in ("computer vision", "cvpr", "workshop", "2024 cvpr workshops", "cvprw"):
             self.assertIn(term, searchable)
         self.assertEqual(options, sorted(options, key=lambda option: (
-            venue_type_rank(option["venue_type"]),
-            -option["paper_count"],
             option["venue_name"].casefold(),
+            option["venue_acronym"].casefold(),
+            option["venue_track"].casefold(),
             option["venue_id"],
         )))
         self.assertEqual(VENUE_TYPE_ORDER, ("conference", "journal", "preprint", "book"))

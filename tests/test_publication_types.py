@@ -3,7 +3,8 @@ import unittest
 from pathlib import Path
 
 from scripts.curated_papers import CuratedPaperError, normalize_paper_draft
-from scripts.publication_types import normalize_publication_type
+from scripts.publication_types import normalize_publication_type, resolve_publication_type
+from scripts.venues import display_venue, read_venue_aliases, resolve_venue
 from scripts.validate_public_preview import validate_record
 
 
@@ -36,6 +37,19 @@ class PublicationTypeTests(unittest.TestCase):
             normalize_publication_type("", arxiv_id="2601.00001"), "preprint"
         )
 
+    def test_canonical_venue_type_precedes_arxiv_or_preprint_source(self):
+        resolved, rule = resolve_publication_type(
+            "preprint",
+            venue_type="conference",
+            arxiv_id="2601.00001",
+        )
+        self.assertEqual(resolved, "conference")
+        self.assertEqual(rule, "canonical_venue_type")
+        self.assertEqual(
+            normalize_publication_type("preprint", venue_type="journal", arxiv_id="2601.00001"),
+            "journal",
+        )
+
     def test_bibliographic_venue_evidence_resolves_legacy_entry_labels(self):
         self.assertEqual(
             normalize_publication_type("review", venue_type="journal"), "journal"
@@ -49,6 +63,39 @@ class PublicationTypeTests(unittest.TestCase):
         self.assertEqual(
             normalize_publication_type("", arxiv_id="2601.00001", venue="CVPR"),
             "",
+        )
+
+    def test_true_repository_only_record_remains_preprint(self):
+        self.assertEqual(
+            normalize_publication_type(
+                "",
+                venue="arXiv",
+                venue_type="preprint",
+                arxiv_id="2601.00001",
+            ),
+            "preprint",
+        )
+
+    def test_icassp_variants_resolve_to_one_canonical_main_venue(self):
+        aliases = read_venue_aliases()
+        variants = [
+            "IEEE International Conference on Acoustics Speech and Signal Processing",
+            "IEEE International Conference on Acoustics, Speech and Signal Processing",
+            "2023 IEEE International Conference on Acoustics, Speech and Signal Processing",
+            "ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing",
+            "ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing",
+            "ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+        ]
+        resolved = [resolve_venue(value, venue_type="conference", aliases=aliases) for value in variants]
+        self.assertEqual({venue.venue_id for venue in resolved}, {"venue:icassp:main"})
+        self.assertEqual(
+            {venue.venue_name for venue in resolved},
+            {"IEEE International Conference on Acoustics, Speech and Signal Processing"},
+        )
+        self.assertEqual({venue.venue_acronym for venue in resolved}, {"ICASSP"})
+        self.assertEqual(
+            {display_venue(venue.as_record()) for venue in resolved},
+            {"IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"},
         )
 
     def test_admin_save_rejects_values_outside_vocabulary(self):
