@@ -91,7 +91,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `venue_id` | Stable canonical venue-and-track identifier used for aggregation. |
 | `venue_name` | Canonical full venue name without a duplicated acronym. |
 | `venue_acronym` | Confirmed familiar acronym when one exists; otherwise empty. |
-| `venue_type` | Controlled venue type: `conference`, `journal`, `workshop`, `preprint`, or `book`. This does not encode track. |
+| `venue_type` | Controlled venue type: `conference`, `journal`, `preprint`, or `book`. Workshop venues use `conference`; workshop identity is encoded by `venue_track=workshops`. |
 | `venue_track` | `main`, `workshops`, `findings`, `industry`, `demo`, `doctoral_consortium`, or explicit `other`. |
 | `raw_venue` | Original unmodified source value retained through migration and later exports. |
 | `doi` | Canonical DOI without a resolver URL when available. |
@@ -136,7 +136,7 @@ Published metadata and arXiv-version metadata are kept separate: a paper may hav
 
 `scripts/venues.py` is the single canonical venue resolver used by curated writes, migration, validation, admin metadata, and public export. `data/curated/venue_aliases.csv` is its explicit confirmed alias map, not a parallel paper or venue database. Matching is exact after deterministic Unicode, HTML-entity, whitespace, punctuation, year, proceedings-prefix, yearly-edition, and known proceedings-volume cleanup; fuzzy similarity never merges venues. Tracks remain part of the stable identity. Unknown aliases receive a conservative deterministic identity and `unmapped` audit status, while conflicting confirmed targets are reported as `ambiguous` and are not merged.
 
-`scripts/migrate_venues.py` writes `docs/venue_migration_report.json` before an optional atomic `--apply`. It preserves `raw_venue`, writes the canonical fields into the existing curated paper rows, counts canonical paper identities, and is idempotent. Public JSON also carries `venue_aliases` for search and `venue_label` for the human-readable format `Venue Type · Canonical Full Name (ACRONYM) · Track`; neither is used as canonical identity.
+`scripts/migrate_venues.py` writes `docs/venue_migration_report.json` before an optional atomic `--apply`. It preserves `raw_venue`, writes the canonical fields into the existing curated paper rows, counts canonical paper identities, and is idempotent. Main and non-main tracks retain distinct `venue_id` values. Public JSON also carries `venue_aliases` for search, `venue_label` for the human-readable format `Venue Type · Canonical Full Name (ACRONYM) · Track`, and metadata containing the shared venue-type order `conference`, `journal`, `preprint`, `book`; none of these display fields replaces canonical identity.
 
 `entry_type` is deliberately narrow. Anti-forensics, evasion, adversarial attacks, and robustness describe research topics; challenges, competitions, shared tasks, and challenge tracks describe evaluation or publication contexts. They are not entry types and normally remain `method` unless the title strongly identifies a dataset, benchmark, survey, or analysis contribution. Future secondary fields such as `topic_tags` or `contribution_tags` may represent those details, but they are not part of `entry_type` now.
 

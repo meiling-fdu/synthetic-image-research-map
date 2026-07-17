@@ -1,8 +1,22 @@
+import csv
+import tempfile
 import unittest
+from pathlib import Path
 
 from scripts.migrate_venues import migrate_rows
 from scripts.curated_papers import CuratedPaperError, apply_canonical_venue_selection
-from scripts.venues import canonical_venue_options, display_venue, read_venue_aliases, resolve_venue
+from scripts.report_public_preview import build_report
+from scripts.venues import (
+    VENUE_ALIAS_COLUMNS,
+    VENUE_TYPE_ORDER,
+    VenueRegistryError,
+    canonical_venue_options,
+    create_canonical_venue,
+    display_venue,
+    read_venue_aliases,
+    resolve_venue,
+    venue_type_rank,
+)
 
 
 class VenueNormalizationTests(unittest.TestCase):
@@ -22,7 +36,7 @@ class VenueNormalizationTests(unittest.TestCase):
         findings = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings")
         self.assertEqual({main.venue_track, workshops.venue_track, findings.venue_track}, {"main", "workshops", "findings"})
         self.assertEqual(len({main.venue_id, workshops.venue_id, findings.venue_id}), 3)
-        self.assertEqual(workshops.venue_type, "workshop")
+        self.assertEqual(workshops.venue_type, "conference")
 
     def test_wacv_workshop_is_separate(self):
         main = self.resolve("2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)")
@@ -39,8 +53,8 @@ class VenueNormalizationTests(unittest.TestCase):
         second = self.resolve("Proceedings of the 2026 ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)")
         self.assertEqual(first.venue_id, "venue:ih-mmsec:main")
         self.assertEqual(second.venue_id, first.venue_id)
-        self.assertEqual(first.venue_type, "workshop")
-        self.assertEqual(first.venue_track, "main")
+        self.assertEqual(first.venue_type, "conference")
+        self.assertEqual(first.venue_track, "workshops")
 
     def test_journal_is_stable_and_article_reuses_journal_label(self):
         venue = self.resolve("Pattern Recognition", publication_type="article")
@@ -50,14 +64,14 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_display_format(self):
         venue = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops")
-        self.assertEqual(display_venue(venue.as_record()), "Workshop · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops")
+        self.assertEqual(display_venue(venue.as_record()), "Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops")
         self.assertEqual(
             display_venue(self.resolve("CHI Conference on Human Factors in Computing Systems").as_record()),
             "Conference · CHI Conference on Human Factors in Computing Systems (CHI)",
         )
         self.assertEqual(
             display_venue(self.resolve("Pattern Recognition", publication_type="journal").as_record()),
-            "Journal · Pattern Recognition",
+            "Journal · Pattern Recognition (PR)",
         )
 
     def test_conflicting_alias_is_ambiguous_and_not_merged(self):
@@ -84,6 +98,30 @@ class VenueNormalizationTests(unittest.TestCase):
         self.assertEqual(second_report["records_changed"], 0)
         self.assertEqual(migrated, second)
 
+    def test_workshop_migration_is_idempotent_and_preserves_track_identity(self):
+        rows = [{
+            "paper_id": "workshop-paper",
+            "title": "Workshop paper",
+            "year": "2024",
+            "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+            "venue_id": "venue:cvpr:workshops",
+            "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+            "venue_acronym": "CVPR",
+            "venue_type": "workshop",
+            "venue_track": "workshops",
+            "raw_venue": "2024 CVPR Workshops",
+            "publication_type": "conference",
+        }]
+        migrated, report = migrate_rows(rows)
+        second, second_report = migrate_rows(migrated)
+        self.assertEqual(migrated[0]["venue_id"], "venue:cvpr:workshops")
+        self.assertEqual(migrated[0]["venue_type"], "conference")
+        self.assertEqual(migrated[0]["venue_track"], "workshops")
+        self.assertEqual(report["workshop_records_migrated"], 1)
+        self.assertEqual(second_report["workshop_records_migrated"], 0)
+        self.assertEqual(second_report["records_changed"], 0)
+        self.assertEqual(migrated, second)
+
     def test_admin_options_are_canonical_counted_and_searchable(self):
         aliases = read_venue_aliases()
         papers = [
@@ -97,14 +135,105 @@ class VenueNormalizationTests(unittest.TestCase):
         searchable = workshops["search_text"].casefold()
         for term in ("computer vision", "cvpr", "workshop", "2024 cvpr workshops", "cvprw"):
             self.assertIn(term, searchable)
-        self.assertEqual(options, sorted(options, key=lambda option: (-option["paper_count"], option["venue_label"].casefold(), option["venue_id"])))
+        self.assertEqual(options, sorted(options, key=lambda option: (
+            venue_type_rank(option["venue_type"]),
+            -option["paper_count"],
+            option["venue_name"].casefold(),
+            option["venue_id"],
+        )))
+        self.assertEqual(VENUE_TYPE_ORDER, ("conference", "journal", "preprint", "book"))
+
+    def test_audited_journal_acronyms_display_resolve_and_do_not_collide(self):
+        expected = {
+            "IEEE Transactions on Pattern Analysis and Machine Intelligence": "TPAMI",
+            "IEEE Transactions on Information Forensics and Security": "TIFS",
+            "IEEE Transactions on Multimedia": "TMM",
+            "IEEE Signal Processing Letters": "SPL",
+            "Pattern Recognition": "PR",
+            "Pattern Recognition Letters": "PRL",
+            "ACM Transactions on Multimedia Computing, Communications, and Applications": "TOMM",
+        }
+        for name, acronym in expected.items():
+            with self.subTest(acronym=acronym):
+                venue = self.resolve(name, publication_type="journal")
+                self.assertEqual(venue.venue_acronym, acronym)
+                self.assertEqual(self.resolve(acronym, "journal").venue_id, venue.venue_id)
+                self.assertIn(f"({acronym})", display_venue(venue.as_record()))
+
+        collision_rows = [
+            {
+                "alias": "First Journal", "venue_id": "venue:first:main",
+                "venue_name": "First Journal", "venue_acronym": "DUP",
+                "venue_type": "journal", "venue_track": "main",
+                "review_status": "confirmed", "notes": "",
+            },
+            {
+                "alias": "Second Journal", "venue_id": "venue:second:main",
+                "venue_name": "Second Journal", "venue_acronym": "DUP",
+                "venue_type": "journal", "venue_track": "main",
+                "review_status": "confirmed", "notes": "",
+            },
+        ]
+        with self.assertRaisesRegex(VenueRegistryError, "acronym.*collides"):
+            canonical_venue_options(collision_rows)
+
+    def test_acronym_collision_is_rejected_before_registry_write(self):
+        existing = {
+            "alias": "First Journal", "venue_id": "venue:first:main",
+            "venue_name": "First Journal", "venue_acronym": "DUP",
+            "venue_type": "journal", "venue_track": "main",
+            "review_status": "confirmed", "notes": "",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "venue_aliases.csv"
+            with path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=VENUE_ALIAS_COLUMNS)
+                writer.writeheader()
+                writer.writerow(existing)
+            before = path.read_bytes()
+            with self.assertRaisesRegex(VenueRegistryError, "acronym collides"):
+                create_canonical_venue({
+                    "venue_name": "Second Journal",
+                    "venue_acronym": "DUP",
+                    "venue_type": "journal",
+                    "venue_track": "main",
+                    "raw_alias": "Second Journal",
+                    "confirmed_similar": True,
+                }, path)
+            self.assertEqual(path.read_bytes(), before)
+
+    def test_top_venues_report_uses_shared_type_then_count_order(self):
+        records = [
+            {
+                "id": "conference", "title": "Conference paper", "year": 2024,
+                "venue_label": "Conference · Alpha", "venue_name": "Alpha",
+                "venue_type": "conference", "institution": "One",
+            },
+            *[
+                {
+                    "id": f"journal-{index}", "title": f"Journal {index}", "year": 2024,
+                    "venue_label": "Journal · Popular", "venue_name": "Popular",
+                    "venue_type": "journal", "institution": "Two",
+                }
+                for index in range(3)
+            ],
+            {
+                "id": "preprint", "title": "Preprint paper", "year": 2024,
+                "venue_label": "Preprint · arXiv", "venue_name": "arXiv",
+                "venue_type": "preprint", "institution": "Three",
+            },
+        ]
+        report = build_report(Path("preview.json"), {}, records)
+        top_venues = report.split("## Top Venues", 1)[1].split("## Top Countries", 1)[0]
+        self.assertLess(top_venues.index("Conference · Alpha"), top_venues.index("Journal · Popular"))
+        self.assertLess(top_venues.index("Journal · Popular"), top_venues.index("Preprint · arXiv"))
 
     def test_structured_selection_syncs_type_and_preserves_raw_provenance(self):
         selection = {
             "venue_id": "venue:cvpr:workshops",
             "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
             "venue_acronym": "CVPR",
-            "venue_type": "workshop",
+            "venue_type": "conference",
             "venue_track": "workshops",
             "publication_type": "conference",
         }

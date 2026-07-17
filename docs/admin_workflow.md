@@ -192,9 +192,9 @@ The Admin server checks for the CSV at startup and generates it once when absent
 
 ### Canonical venue metadata
 
-The paper-metadata editor loads `GET /api/venues`, whose count-ordered records are built only from confirmed `data/curated/venue_aliases.csv` identities. Search covers canonical name, acronym, venue type, track, confirmed aliases, and historical `raw_venue` variants. Selecting an option saves `venue_id`, `venue_name`, `venue_acronym`, `venue_type`, and `venue_track`; the combined label is display-only.
+The paper-metadata editor loads `GET /api/venues`, whose records are built only from confirmed `data/curated/venue_aliases.csv` identities. Options use the shared type order (Conference, Journal, Preprint, Book), then unique-paper count descending and canonical name. Search covers canonical name, audited acronym, venue type, track, confirmed aliases, and historical `raw_venue` variants. Selecting an option saves `venue_id`, `venue_name`, `venue_acronym`, `venue_type`, and `venue_track`; the combined label is display-only.
 
-The selected venue synchronizes formal `publication_type` (`workshop` venue types map to the existing `conference` publication type). The control remains disabled until **Override publication type** is chosen, and both the browser and API warn or reject an unconfirmed conflict. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
+The selected venue synchronizes formal `publication_type`. Workshops are canonical Conference venues with `venue_track=workshops`, so their distinct identity remains in the venue ID and track rather than a separate public type. The control remains disabled until **Override publication type** is chosen, and both the browser and API warn or reject an unconfirmed conflict. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
 
 Unknown text is never saved directly. **Create new canonical venue** submits a reviewed canonical name, optional acronym, type, track, raw alias, and note to `POST /api/venues/create`. Exact normalized duplicates are rejected. Similar names, aliases, or acronyms return possible matches and require explicit distinct-venue confirmation before the alias registry is atomically updated. Metadata updates reject nonexistent IDs or structured fields that conflict with their registry identity; legacy venue-only records are resolved through `scripts/venues.py` on load and unresolved or ambiguous values remain review cases.
 
@@ -220,7 +220,11 @@ python3 scripts/report_missing_author_mappings.py
 The pipeline stops at the first failure. The preserve-existing export unions the
 current complete public preview with the local candidate snapshot, so a
 no-search admin refresh cannot silently replace full coverage with a partial
-cache. The final export still reapplies active exclusions and retraction checks
+cache. Counts are also guarded by
+`data/curated/public_export_baseline.json`; an unexpected decrease stops the
+export before either public JSON file is written. Only an explicitly reviewed
+replacement file passed with `--approved-baseline` may authorize lower counts.
+The final export still reapplies active exclusions and retraction checks
 to that union; preserved JSON cannot keep a paper whose current title starts
 with `[Retracted]` or `Retracted:`, whose publication type/flag marks a
 retraction, or whose exclusion metadata marks it retracted. The same rule is

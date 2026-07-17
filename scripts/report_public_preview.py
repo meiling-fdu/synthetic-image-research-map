@@ -18,8 +18,10 @@ from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tupl
 
 try:
     from .country_normalization import normalize_country_region
+    from .venues import venue_type_rank
 except ImportError:  # Direct execution from the scripts directory.
     from country_normalization import normalize_country_region
+    from venues import venue_type_rank
 
 
 DEFAULT_INPUT = Path("web/data/public_preview_map_data.json")
@@ -238,9 +240,12 @@ def counter_table(
     label: str,
     limit: Optional[int] = None,
     year_order: bool = False,
+    item_order: Optional[Callable[[Tuple[str, int]], Tuple[Any, ...]]] = None,
 ) -> List[str]:
     lines = [f"| {label} | Records |", "| --- | ---: |"]
-    if year_order:
+    if item_order is not None:
+        items = sorted(counts.items(), key=item_order)
+    elif year_order:
         items = sorted(
             counts.items(),
             key=lambda item: (
@@ -301,6 +306,14 @@ def build_report(
     venues = count_present_values(
         paper_records, lambda record: first_text(record, "venue_label", "venue_name", "venue")
     )
+    venue_metadata = {
+        first_text(record, "venue_label", "venue_name", "venue"): (
+            first_text(record, "venue_type"),
+            first_text(record, "venue_name", "venue"),
+        )
+        for record in paper_records
+        if first_text(record, "venue_label", "venue_name", "venue")
+    }
     countries = count_present_values(records, normalized_country)
     institutions = count_present_values(
         records, institution_name
@@ -394,7 +407,17 @@ def build_report(
             "",
             "## Top Venues",
             "",
-            *counter_table(venues, "Venue", limit=TOP_LIMIT),
+            *counter_table(
+                venues,
+                "Venue",
+                limit=TOP_LIMIT,
+                item_order=lambda item: (
+                    venue_type_rank(venue_metadata[item[0]][0]),
+                    -item[1],
+                    venue_metadata[item[0]][1].casefold(),
+                    item[0].casefold(),
+                ),
+            ),
             "",
             "## Top Countries",
             "",

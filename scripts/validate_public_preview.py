@@ -17,6 +17,11 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 try:
+    from .curated_schema import VENUE_TYPE_ORDER
+except ImportError:
+    from curated_schema import VENUE_TYPE_ORDER
+
+try:
     from .name_matching import canonical_name_key
 except ImportError:
     from name_matching import canonical_name_key
@@ -87,7 +92,7 @@ AUTHOR_MAPPING_SOURCES = {
     "paper_institution_fallback",
     "unmapped",
 }
-ALLOWED_VENUE_TYPES = {"conference", "journal", "workshop", "preprint", "book"}
+ALLOWED_VENUE_TYPES = {"conference", "journal", "preprint", "book"}
 ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "industry", "demo", "doctoral_consortium", "other"}
 
 
@@ -117,6 +122,64 @@ class Issue:
     index: int
     title: str
     message: str
+
+
+def validate_venue_metadata(metadata: Dict[str, Any], issues: List[Issue]) -> None:
+    if metadata.get("venue_type_order") != list(VENUE_TYPE_ORDER):
+        add_issue(
+            issues,
+            "ERROR",
+            -1,
+            "Dataset metadata",
+            "venue_type_order must match the shared canonical order",
+        )
+
+
+def validate_venue_consistency(records: Sequence[Any], issues: List[Issue]) -> None:
+    metadata_by_id: Dict[str, Tuple[str, str, str, str]] = {}
+    name_by_acronym: Dict[str, Tuple[str, str]] = {}
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            continue
+        venue_id = clean_text(record.get("venue_id"))
+        venue_name = clean_text(record.get("venue_name"))
+        acronym = clean_text(record.get("venue_acronym"))
+        identity = (
+            venue_name,
+            acronym,
+            clean_text(record.get("venue_type")),
+            clean_text(record.get("venue_track")),
+        )
+        if venue_id and venue_id in metadata_by_id and metadata_by_id[venue_id] != identity:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                record_title(record),
+                "venue_id has inconsistent canonical metadata",
+            )
+        elif venue_id:
+            metadata_by_id[venue_id] = identity
+        # Journal acronyms are the audited additions governed by the canonical
+        # registry. Conference series can legitimately reuse one acronym across
+        # separately curated yearly/edition-specific venue records.
+        acronym_key = (
+            normalized_text(acronym)
+            if clean_text(record.get("venue_type")) == "journal"
+            else ""
+        )
+        name_key = normalized_text(venue_name)
+        previous = name_by_acronym.get(acronym_key) if acronym_key else None
+        if previous and previous[1] != name_key:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                record_title(record),
+                f"venue acronym collides with {previous[0]!r}",
+            )
+        elif acronym_key:
+            name_by_acronym[acronym_key] = (venue_id, name_key)
 
 
 def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
@@ -1206,24 +1269,28 @@ def print_summary(
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
-        _metadata, records = read_dataset(args.input)
-        _paper_metadata, paper_records = read_dataset(args.paper_input)
+        metadata, records = read_dataset(args.input)
+        paper_metadata, paper_records = read_dataset(args.paper_input)
         merge_rows = read_paper_version_merges(args.paper_version_merges)
     except (ValidationInputError, PaperVersionMergeError) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 2
 
     issues: List[Issue] = []
+    validate_venue_metadata(metadata, issues)
     for index, record in enumerate(records):
         validate_record(index, record, issues)
     validate_preprint_version_duplicates(records, issues)
+    validate_venue_consistency(records, issues)
     validate_confirmed_version_merges(
         records, merge_rows, issues, paper_level=False
     )
     paper_issues: List[Issue] = []
+    validate_venue_metadata(paper_metadata, paper_issues)
     for index, record in enumerate(paper_records):
         validate_paper_record(index, record, paper_issues)
     validate_preprint_version_duplicates(paper_records, paper_issues)
+    validate_venue_consistency(paper_records, paper_issues)
     validate_confirmed_version_merges(
         paper_records, merge_rows, paper_issues, paper_level=True
     )

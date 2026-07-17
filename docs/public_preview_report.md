@@ -11,6 +11,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
+| venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
 ## Overview
@@ -68,16 +69,16 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Venue | Records |
 | --- | ---: |
-| Preprint · arXiv | 59 |
 | Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 30 |
 | Conference · AAAI Conference on Artificial Intelligence (AAAI) | 21 |
-| Book · Lecture Notes in Computer Science (LNCS) | 14 |
 | Conference · IEEE/CVF International Conference on Computer Vision (ICCV) | 12 |
 | Conference · International Conference on Machine Learning (ICML) | 11 |
 | Conference · Advances in Neural Information Processing Systems (NeurIPS) | 8 |
-| Journal · IEEE Transactions on Information Forensics and Security | 8 |
 | Conference · IEEE International Conference on Acoustics Speech and Signal Processing | 7 |
 | Conference · IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
+| Conference · ACM International Conference on Multimedia (ACM MM) | 6 |
+| Conference · IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops | 6 |
+| Conference · ACM International Workshop on Multimedia AI against Disinformation (MAD) · Workshops | 5 |
 
 ## Top Countries
 

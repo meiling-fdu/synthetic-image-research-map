@@ -43,11 +43,21 @@ def migrate_rows(rows: list[dict[str, str]]) -> tuple[list[dict[str, Any]], dict
     canonical_identities: dict[str, set[tuple[Any, ...]]] = defaultdict(set)
     changes = 0
     ambiguous = 0
+    workshop_record_ids: set[tuple[Any, ...]] = set()
+    workshop_venue_ids: set[str] = set()
+    normalized_workshop_record_ids: set[tuple[Any, ...]] = set()
+    normalized_workshop_venue_ids: set[str] = set()
     audit: dict[tuple[str, str], dict[str, Any]] = {}
     venue_fields = ("venue_id", "venue_name", "venue_acronym", "venue_type", "venue_track", "raw_venue")
     for index, row in enumerate(rows):
         resolved = canonicalize_record(row, aliases)
         identity = paper_identity(row, index)
+        if str(row.get("venue_type", "")).strip().casefold() == "workshop":
+            workshop_record_ids.add(identity)
+            workshop_venue_ids.add(str(row.get("venue_id", "")).strip())
+        if str(resolved.get("venue_track", "")).strip().casefold() == "workshops":
+            normalized_workshop_record_ids.add(identity)
+            normalized_workshop_venue_ids.add(str(resolved.get("venue_id", "")).strip())
         raw = str(row.get("raw_venue") or row.get("venue") or "").strip()
         raw_identities[raw].add(identity)
         canonical_identities[resolved.get("venue_id", "")].add(identity)
@@ -92,6 +102,10 @@ def migrate_rows(rows: list[dict[str, str]]) -> tuple[list[dict[str, Any]], dict
         "canonical_venue_count": sum(bool(key) for key in canonical_identities),
         "records_changed": changes,
         "ambiguous_records": ambiguous,
+        "workshop_records_migrated": len(workshop_record_ids),
+        "workshop_venues_migrated": len(workshop_venue_ids - {""}),
+        "workshop_track_records": len(normalized_workshop_record_ids),
+        "workshop_track_venues": len(normalized_workshop_venue_ids - {""}),
         "audit": sorted(audit.values(), key=lambda item: (item["raw_venue"].casefold(), item["venue_id"])),
         "largest_duplicate_groups_merged": groups,
     }
@@ -120,7 +134,12 @@ def main() -> int:
     args.report.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if args.apply:
         write_rows(args.input, migrated)
-    print(json.dumps({key: report[key] for key in ("mode", "paper_count", "raw_venue_variant_count", "canonical_venue_count", "records_changed", "ambiguous_records")}, indent=2))
+    print(json.dumps({key: report[key] for key in (
+        "mode", "paper_count", "raw_venue_variant_count", "canonical_venue_count",
+        "records_changed", "ambiguous_records", "workshop_records_migrated",
+        "workshop_venues_migrated",
+        "workshop_track_records", "workshop_track_venues",
+    )}, indent=2))
     print(f"Report: {args.report}")
     return 0
 

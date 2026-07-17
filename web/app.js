@@ -190,6 +190,7 @@ let visibleMarkerEntries = [];
 let activeInstitutionFilter = null;
 let displayedInstitutionFilter = null;
 let yearRangeBounds = null;
+let venueTypeOrder = ["conference", "journal", "preprint", "book"];
 let countryComboboxOptionData = [];
 let activeCountryOptionIndex = -1;
 const interactionState = {
@@ -1764,6 +1765,41 @@ function sortedDimensionCounts(counts, labelForValue = (value) => value) {
   ));
 }
 
+function venueTypeRank(value) {
+  const index = venueTypeOrder.indexOf(String(value || "").toLocaleLowerCase());
+  return index >= 0 ? index : venueTypeOrder.length;
+}
+
+function sortedVenueTypeCounts(counts) {
+  return [...counts.entries()].sort((first, second) => (
+    venueTypeRank(first[0]) - venueTypeRank(second[0])
+    || compareTextValues(formatTask(first[0]), formatTask(second[0]))
+  ));
+}
+
+function sortedVenueCounts(counts, metadataByVenue) {
+  return [...counts.entries()].sort((first, second) => {
+    const firstMetadata = metadataByVenue.get(first[0]) || {
+      name: first[0], type: "__unknown__",
+    };
+    const secondMetadata = metadataByVenue.get(second[0]) || {
+      name: second[0], type: "__unknown__",
+    };
+    const firstRank = first[0] === "__unknown__"
+      ? venueTypeOrder.length + 1
+      : venueTypeRank(firstMetadata.type);
+    const secondRank = second[0] === "__unknown__"
+      ? venueTypeOrder.length + 1
+      : venueTypeRank(secondMetadata.type);
+    return (
+      firstRank - secondRank
+      || second[1] - first[1]
+      || compareTextValues(firstMetadata.name, secondMetadata.name)
+      || compareTextValues(first[0], second[0])
+    );
+  });
+}
+
 function replaceCountedFilterOptions(select, defaultLabel, entries, labelForValue) {
   const selectedValue = select.value || "all";
   const options = [["all", defaultLabel], ...entries.map(([value, count]) => (
@@ -3196,9 +3232,13 @@ function configureVenueFilter() {
 }
 
 function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
-  const labelByVenue = new Map();
+  const metadataByVenue = new Map();
   [...venuePapers, ...venueTypePapers].forEach((record) => {
-    labelByVenue.set(venueFilterValue(record), venueDisplayLabel(record));
+    metadataByVenue.set(venueFilterValue(record), {
+      label: venueDisplayLabel(record),
+      name: getRecordVenue(record) || "Unknown venue/source",
+      type: recordVenueType(record) || "__unknown__",
+    });
   });
   const venueCounts = dimensionPaperCounts(venuePapers, (record) => [venueFilterValue(record)]);
   const venueTypeCounts = dimensionPaperCounts(
@@ -3208,13 +3248,14 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   replaceCountedFilterOptions(
     venueFilter,
     "All venues",
-    sortedDimensionCounts(venueCounts, (value) => labelByVenue.get(value) || value),
-    (value) => labelByVenue.get(value) || (value === "__unknown__" ? "Unknown venue/source" : value),
+    sortedVenueCounts(venueCounts, metadataByVenue),
+    (value) => metadataByVenue.get(value)?.label
+      || (value === "__unknown__" ? "Unknown venue/source" : value),
   );
   replaceCountedFilterOptions(
     venueTypeFilter,
     "All venue types",
-    sortedDimensionCounts(venueTypeCounts, (value) => formatTask(value)),
+    sortedVenueTypeCounts(venueTypeCounts),
     (value) => value === "__unknown__" ? "Unknown" : formatTask(value),
   );
 }
@@ -3462,6 +3503,12 @@ function displayDataset(normalizedData) {
   institutionHierarchy = normalizedData.institutionHierarchy || [];
   canonicalInstitutionSearchIndex = normalizedData.canonicalInstitutionSearchIndex || {};
   institutionIdRedirects = normalizedData.institutionIdRedirects || {};
+  if (Array.isArray(normalizedData.metadata?.venue_type_order)) {
+    const exportedOrder = normalizedData.metadata.venue_type_order
+      .map((value) => String(value || "").trim().toLocaleLowerCase())
+      .filter(Boolean);
+    if (exportedOrder.length) venueTypeOrder = exportedOrder;
+  }
   const canonicalized = canonicalizePublicDataset(
     normalizedData.records,
     normalizedData.paperRecords || [],

@@ -365,6 +365,12 @@ python3 scripts/validate_public_preview.py
 python3 scripts/audit_key_paper_coverage.py
 ```
 
+The exporter enforces the reviewed minimum counts in
+`data/curated/public_export_baseline.json` before writing either public JSON
+file. A partial local candidate snapshot therefore fails instead of silently
+shrinking the published dataset. An intentional reduction requires a reviewed
+replacement baseline supplied explicitly with `--approved-baseline`.
+
 Use repeatable or comma-separated `--input` values to select different manual
 CSVs, and `--limit N` for a bounded online run. The importers preserve the
 existing processed CSV headers exactly, skip duplicate OpenAlex IDs and

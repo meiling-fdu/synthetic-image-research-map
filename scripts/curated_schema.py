@@ -291,7 +291,8 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "paper_arxiv_links.csv": CURATED_ARXIV_LINK_COLUMNS,
 }
 
-ALLOWED_VENUE_TYPES = {"conference", "journal", "workshop", "preprint", "book"}
+VENUE_TYPE_ORDER = ("conference", "journal", "preprint", "book")
+ALLOWED_VENUE_TYPES = set(VENUE_TYPE_ORDER)
 ALLOWED_VENUE_TRACKS = {
     "main",
     "workshops",

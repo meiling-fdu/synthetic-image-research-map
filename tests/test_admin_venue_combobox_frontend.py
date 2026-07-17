@@ -34,6 +34,14 @@ class AdminVenueComboboxFrontendTests(unittest.TestCase):
         ):
             self.assertIn(field, body)
 
+    def test_creation_uses_public_taxonomy_without_workshop_type(self):
+        creation = self.html.split('id="venue-create-type"', 1)[1].split("</select>", 1)[0]
+        self.assertNotIn('value="workshop"', creation)
+        for venue_type in ("conference", "journal", "preprint", "book"):
+            self.assertIn(f'value="{venue_type}"', creation)
+        self.assertIn('value="workshops"', self.html)
+        self.assertNotIn('venueType === "workshop"', self.source)
+
     def test_selection_populates_structured_fields_and_type(self):
         body = self.source.split("function selectCanonicalVenue(option", 1)[1].split(
             "\nfunction selectCanonicalVenueById", 1

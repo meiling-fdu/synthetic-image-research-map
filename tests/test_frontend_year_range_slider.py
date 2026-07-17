@@ -131,7 +131,7 @@ process.stdout.write(JSON.stringify({{values, constrainedStartEnd, constrainedEn
 const taskFilter = {{value: 'all'}};
 const entryTypeFilter = {{value: 'all'}};
 const venueFilter = {{value: 'venue:wifs'}};
-const venueTypeFilter = {{value: 'workshop'}};
+const venueTypeFilter = {{value: 'conference'}};
 const preprintFilter = {{value: 'all'}};
 const countryFilter = {{value: 'Italy'}};
 const institutionTypeFilter = {{value: 'university'}};
@@ -156,15 +156,15 @@ function hasPublishedVenue() {{ return true; }}
 function hasArxivVersion() {{ return false; }}
 {matching_source}
 const records = [
-  {{id: 'match', year: 2022, venue: 'venue:wifs', venueType: 'workshop', country: 'Italy', institutionType: 'university'}},
-  {{id: 'year', year: 2019, venue: 'venue:wifs', venueType: 'workshop', country: 'Italy', institutionType: 'university'}},
+  {{id: 'match', year: 2022, venue: 'venue:wifs', venueType: 'conference', country: 'Italy', institutionType: 'university'}},
+  {{id: 'year', year: 2019, venue: 'venue:wifs', venueType: 'conference', country: 'Italy', institutionType: 'university'}},
   {{id: 'venue', year: 2022, venue: 'venue:cvpr', venueType: 'conference', country: 'Italy', institutionType: 'university'}},
-  {{id: 'country', year: 2022, venue: 'venue:wifs', venueType: 'workshop', country: 'France', institutionType: 'university'}},
-  {{id: 'type', year: 2022, venue: 'venue:wifs', venueType: 'workshop', country: 'Italy', institutionType: 'company'}},
+  {{id: 'country', year: 2022, venue: 'venue:wifs', venueType: 'conference', country: 'France', institutionType: 'university'}},
+  {{id: 'type', year: 2022, venue: 'venue:wifs', venueType: 'conference', country: 'Italy', institutionType: 'company'}},
 ];
 const matches = records.filter(record => recordMatchesActiveFilters(record, [])).map(record => record.id);
 yearRangeBounds = {{minimum: 2020, maximum: 2024}};
-const unknownYear = {{year: null, venue: 'venue:wifs', venueType: 'workshop', country: 'Italy', institutionType: 'university'}};
+const unknownYear = {{year: null, venue: 'venue:wifs', venueType: 'conference', country: 'Italy', institutionType: 'university'}};
 const unknownAtFullRange = recordMatchesActiveFilters(unknownYear, []);
 maxYearFilter.value = '2023';
 const unknownAtRestrictedRange = recordMatchesActiveFilters(unknownYear, []);

@@ -1,12 +1,15 @@
 {
-  "mode": "apply",
+  "mode": "dry-run",
   "source": "data/curated/papers.csv",
   "paper_count": 190,
   "raw_venue_variant_count": 89,
   "canonical_venue_count": 70,
-  "records_changed": 190,
+  "records_changed": 0,
   "ambiguous_records": 0,
-  "idempotence_dry_run_records_changed": 0,
+  "workshop_records_migrated": 0,
+  "workshop_venues_migrated": 0,
+  "workshop_track_records": 17,
+  "workshop_track_venues": 8,
   "audit": [
     {
       "raw_venue": "",
@@ -32,11 +35,11 @@
     },
     {
       "raw_venue": "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
-      "proposed_canonical_venue": "Workshop · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
+      "proposed_canonical_venue": "Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
       "venue_id": "venue:cvpr:workshops",
       "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
       "venue_acronym": "CVPR",
-      "venue_type": "workshop",
+      "venue_type": "conference",
       "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "resolved"
@@ -54,12 +57,12 @@
     },
     {
       "raw_venue": "2020 IEEE Security and Privacy Workshops (SPW)",
-      "proposed_canonical_venue": "Conference · IEEE Security and Privacy (SPW)",
-      "venue_id": "venue:ieee-security-and-privacy:main",
+      "proposed_canonical_venue": "Conference · IEEE Security and Privacy (SPW) · Workshops",
+      "venue_id": "venue:ieee-security-and-privacy:workshops",
       "venue_name": "IEEE Security and Privacy",
       "venue_acronym": "SPW",
       "venue_type": "conference",
-      "venue_track": "main",
+      "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "unmapped"
     },
@@ -98,23 +101,23 @@
     },
     {
       "raw_venue": "2024 European Conference on Computer Vision (ECCV) Workshops",
-      "proposed_canonical_venue": "Workshop · European Conference on Computer Vision (ECCV) · Workshops",
+      "proposed_canonical_venue": "Conference · European Conference on Computer Vision (ECCV) · Workshops",
       "venue_id": "venue:eccv:workshops",
       "venue_name": "European Conference on Computer Vision",
       "venue_acronym": "ECCV",
-      "venue_type": "workshop",
+      "venue_type": "conference",
       "venue_track": "workshops",
       "affected_paper_count": 2,
       "ambiguity_status": "resolved"
     },
     {
       "raw_venue": "2024 IEEE International Workshop on Information Forensics and Security (WIFS)",
-      "proposed_canonical_venue": "Workshop · IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "proposed_canonical_venue": "Conference · IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops",
       "venue_id": "venue:wifs:main",
       "venue_name": "IEEE International Workshop on Information Forensics and Security",
       "venue_acronym": "WIFS",
-      "venue_type": "workshop",
-      "venue_track": "main",
+      "venue_type": "conference",
+      "venue_track": "workshops",
       "affected_paper_count": 2,
       "ambiguity_status": "resolved"
     },
@@ -131,11 +134,11 @@
     },
     {
       "raw_venue": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
-      "proposed_canonical_venue": "Workshop · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
+      "proposed_canonical_venue": "Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
       "venue_id": "venue:cvpr:workshops",
       "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
       "venue_acronym": "CVPR",
-      "venue_type": "workshop",
+      "venue_type": "conference",
       "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "resolved"
@@ -197,12 +200,12 @@
     },
     {
       "raw_venue": "2026 ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)",
-      "proposed_canonical_venue": "Workshop · ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)",
+      "proposed_canonical_venue": "Conference · ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec) · Workshops",
       "venue_id": "venue:ih-mmsec:main",
       "venue_name": "ACM Workshop on Information Hiding and Multimedia Security",
       "venue_acronym": "IH&MMSec",
-      "venue_type": "workshop",
-      "venue_track": "main",
+      "venue_type": "conference",
+      "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "resolved"
     },
@@ -230,11 +233,11 @@
     },
     {
       "raw_venue": "2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
-      "proposed_canonical_venue": "Workshop · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
+      "proposed_canonical_venue": "Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
       "venue_id": "venue:cvpr:workshops",
       "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
       "venue_acronym": "CVPR",
-      "venue_type": "workshop",
+      "venue_type": "conference",
       "venue_track": "workshops",
       "affected_paper_count": 3,
       "ambiguity_status": "resolved"
@@ -252,11 +255,11 @@
     },
     {
       "raw_venue": "2026 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) Workshop",
-      "proposed_canonical_venue": "Workshop · IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
+      "proposed_canonical_venue": "Conference · IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
       "venue_id": "venue:wacv:workshops",
       "venue_name": "IEEE/CVF Winter Conference on Applications of Computer Vision",
       "venue_acronym": "WACV",
-      "venue_type": "workshop",
+      "venue_type": "conference",
       "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "resolved"
@@ -439,12 +442,12 @@
     },
     {
       "raw_venue": "IEEE International Workshop on Information Forensics and Security (WIFS)",
-      "proposed_canonical_venue": "Workshop · IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "proposed_canonical_venue": "Conference · IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops",
       "venue_id": "venue:wifs:main",
       "venue_name": "IEEE International Workshop on Information Forensics and Security",
       "venue_acronym": "WIFS",
-      "venue_type": "workshop",
-      "venue_track": "main",
+      "venue_type": "conference",
+      "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "resolved"
     },
@@ -483,14 +486,14 @@
     },
     {
       "raw_venue": "IEEE Signal Processing Letters",
-      "proposed_canonical_venue": "Journal · IEEE Signal Processing Letters",
+      "proposed_canonical_venue": "Journal · IEEE Signal Processing Letters (SPL)",
       "venue_id": "venue:ieee-signal-processing-letters:main",
       "venue_name": "IEEE Signal Processing Letters",
-      "venue_acronym": "",
+      "venue_acronym": "SPL",
       "venue_type": "journal",
       "venue_track": "main",
       "affected_paper_count": 3,
-      "ambiguity_status": "unmapped"
+      "ambiguity_status": "resolved"
     },
     {
       "raw_venue": "IEEE Transactions on Artificial Intelligence",
@@ -538,36 +541,36 @@
     },
     {
       "raw_venue": "IEEE Transactions on Information Forensics and Security",
-      "proposed_canonical_venue": "Journal · IEEE Transactions on Information Forensics and Security",
+      "proposed_canonical_venue": "Journal · IEEE Transactions on Information Forensics and Security (TIFS)",
       "venue_id": "venue:ieee-transactions-on-information-forensics-and-security:main",
       "venue_name": "IEEE Transactions on Information Forensics and Security",
-      "venue_acronym": "",
+      "venue_acronym": "TIFS",
       "venue_type": "journal",
       "venue_track": "main",
       "affected_paper_count": 5,
-      "ambiguity_status": "unmapped"
+      "ambiguity_status": "resolved"
     },
     {
       "raw_venue": "IEEE Transactions on Multimedia",
-      "proposed_canonical_venue": "Journal · IEEE Transactions on Multimedia",
+      "proposed_canonical_venue": "Journal · IEEE Transactions on Multimedia (TMM)",
       "venue_id": "venue:ieee-transactions-on-multimedia:main",
       "venue_name": "IEEE Transactions on Multimedia",
-      "venue_acronym": "",
+      "venue_acronym": "TMM",
       "venue_type": "journal",
       "venue_track": "main",
       "affected_paper_count": 1,
-      "ambiguity_status": "unmapped"
+      "ambiguity_status": "resolved"
     },
     {
       "raw_venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
-      "proposed_canonical_venue": "Journal · IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "proposed_canonical_venue": "Journal · IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)",
       "venue_id": "venue:ieee-transactions-on-pattern-analysis-and-machine-intelligence:main",
       "venue_name": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
-      "venue_acronym": "",
+      "venue_acronym": "TPAMI",
       "venue_type": "journal",
       "venue_track": "main",
       "affected_paper_count": 1,
-      "ambiguity_status": "unmapped"
+      "ambiguity_status": "resolved"
     },
     {
       "raw_venue": "IEEE/CVF International Conference on Computer Vision",
@@ -582,12 +585,12 @@
     },
     {
       "raw_venue": "Image Analysis and Processing - ICIAP 2025 Workshops: 23rd International Conference",
-      "proposed_canonical_venue": "Conference · Image Analysis and Processing - ICIAP 2025 Workshops: 23rd International Conference",
-      "venue_id": "venue:image-analysis-and-processing-iciap-2025-workshops-23rd-international-conference:main",
+      "proposed_canonical_venue": "Conference · Image Analysis and Processing - ICIAP 2025 Workshops: 23rd International Conference · Workshops",
+      "venue_id": "venue:image-analysis-and-processing-iciap-2025-workshops-23rd-international-conference:workshops",
       "venue_name": "Image Analysis and Processing - ICIAP 2025 Workshops: 23rd International Conference",
       "venue_acronym": "",
       "venue_type": "conference",
-      "venue_track": "main",
+      "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "unmapped"
     },
@@ -802,14 +805,14 @@
     },
     {
       "raw_venue": "Pattern Recognition Letters",
-      "proposed_canonical_venue": "Journal · Pattern Recognition Letters",
+      "proposed_canonical_venue": "Journal · Pattern Recognition Letters (PRL)",
       "venue_id": "venue:pattern-recognition-letters:main",
       "venue_name": "Pattern Recognition Letters",
-      "venue_acronym": "",
+      "venue_acronym": "PRL",
       "venue_type": "journal",
       "venue_track": "main",
       "affected_paper_count": 1,
-      "ambiguity_status": "unmapped"
+      "ambiguity_status": "resolved"
     },
     {
       "raw_venue": "Proceedings of the 14th International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics",
@@ -835,12 +838,12 @@
     },
     {
       "raw_venue": "Proceedings of the 2026 ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)",
-      "proposed_canonical_venue": "Workshop · ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)",
+      "proposed_canonical_venue": "Conference · ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec) · Workshops",
       "venue_id": "venue:ih-mmsec:main",
       "venue_name": "ACM Workshop on Information Hiding and Multimedia Security",
       "venue_acronym": "IH&MMSec",
-      "venue_type": "workshop",
-      "venue_track": "main",
+      "venue_type": "conference",
+      "venue_track": "workshops",
       "affected_paper_count": 1,
       "ambiguity_status": "resolved"
     },
@@ -923,12 +926,12 @@
     },
     {
       "raw_venue": "Proceedings of the 5th ACM International Workshop on Multimedia AI against Disinformation (MAD)",
-      "proposed_canonical_venue": "Workshop · ACM International Workshop on Multimedia AI against Disinformation (MAD)",
+      "proposed_canonical_venue": "Conference · ACM International Workshop on Multimedia AI against Disinformation (MAD) · Workshops",
       "venue_id": "venue:mad:main",
       "venue_name": "ACM International Workshop on Multimedia AI against Disinformation",
       "venue_acronym": "MAD",
-      "venue_type": "workshop",
-      "venue_track": "main",
+      "venue_type": "conference",
+      "venue_track": "workshops",
       "affected_paper_count": 2,
       "ambiguity_status": "resolved"
     },
@@ -1058,7 +1061,7 @@
     },
     {
       "venue_id": "venue:cvpr:workshops",
-      "canonical_venue": "Workshop · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
+      "canonical_venue": "Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
       "raw_variant_count": 3,
       "paper_count": 5,
       "raw_variants": [
@@ -1089,7 +1092,7 @@
     },
     {
       "venue_id": "venue:wifs:main",
-      "canonical_venue": "Workshop · IEEE International Workshop on Information Forensics and Security (WIFS)",
+      "canonical_venue": "Conference · IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops",
       "raw_variant_count": 2,
       "paper_count": 3,
       "raw_variants": [
@@ -1109,7 +1112,7 @@
     },
     {
       "venue_id": "venue:ih-mmsec:main",
-      "canonical_venue": "Workshop · ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)",
+      "canonical_venue": "Conference · ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec) · Workshops",
       "raw_variant_count": 2,
       "paper_count": 2,
       "raw_variants": [

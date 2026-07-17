@@ -4090,8 +4090,7 @@ function normalizeVenueSearchText(value) {
 }
 
 function publicationTypeForVenueType(value) {
-  const venueType = text(value).trim().toLocaleLowerCase();
-  return venueType === "workshop" ? "conference" : venueType;
+  return text(value).trim().toLocaleLowerCase();
 }
 
 function venueOptionMatches(option, query) {

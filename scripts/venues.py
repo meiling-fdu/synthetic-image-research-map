@@ -14,8 +14,10 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 try:
+    from .curated_schema import VENUE_TYPE_ORDER
     from .publication_types import normalize_publication_type
 except ImportError:
+    from curated_schema import VENUE_TYPE_ORDER
     from publication_types import normalize_publication_type
 
 
@@ -31,7 +33,7 @@ VENUE_ALIAS_COLUMNS = (
     "review_status",
     "notes",
 )
-ALLOWED_VENUE_TYPES = {"conference", "journal", "workshop", "preprint", "book"}
+ALLOWED_VENUE_TYPES = set(VENUE_TYPE_ORDER)
 ALLOWED_VENUE_TRACKS = {
     "main", "workshops", "findings", "industry", "demo", "doctoral_consortium", "other"
 }
@@ -72,7 +74,7 @@ def alias_key(value: Any) -> str:
 def normalize_venue_type(value: Any, *, publication_type: Any = "", track: str = "main") -> str:
     text = clean_text(value).casefold().replace("_", " ").replace("-", " ")
     if track == "workshops" or text in {"workshop", "workshops"}:
-        return "workshop"
+        return "conference"
     if text in ALLOWED_VENUE_TYPES:
         return text
     if text in {"article", "journal article"}:
@@ -85,13 +87,20 @@ def normalize_venue_type(value: Any, *, publication_type: Any = "", track: str =
     if normalized in {"conference", "journal", "preprint", "book"}:
         return normalized
     if "workshop" in text:
-        return "workshop"
+        return "conference"
     return ""
 
 
 def publication_type_for_venue_type(value: Any) -> str:
-    venue_type = normalize_venue_type(value)
-    return "conference" if venue_type == "workshop" else venue_type
+    return normalize_venue_type(value)
+
+
+def venue_type_rank(value: Any) -> int:
+    normalized = normalize_venue_type(value)
+    try:
+        return VENUE_TYPE_ORDER.index(normalized)
+    except ValueError:
+        return len(VENUE_TYPE_ORDER)
 
 
 def display_venue(record: Mapping[str, Any]) -> str:
@@ -148,6 +157,19 @@ def _canonical_registry(rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str
             )
         if row["alias"] and row["alias"] not in current["aliases"]:
             current["aliases"].append(row["alias"])
+    acronym_names: dict[str, tuple[str, str]] = {}
+    for venue_id, venue in registry.items():
+        acronym = alias_key(venue["venue_acronym"])
+        if not acronym:
+            continue
+        name = alias_key(venue["venue_name"])
+        previous = acronym_names.get(acronym)
+        if previous and previous[1] != name:
+            raise VenueRegistryError(
+                f"venue acronym {venue['venue_acronym']!r} collides between "
+                f"{previous[0]!r} and {venue_id!r}"
+            )
+        acronym_names[acronym] = (venue_id, name)
     return registry
 
 
@@ -184,7 +206,10 @@ def canonical_venue_options(
         ))))
         options.append(option)
     return sorted(options, key=lambda item: (
-        -item["paper_count"], item["venue_label"].casefold(), item["venue_id"]
+        venue_type_rank(item["venue_type"]),
+        -item["paper_count"],
+        item["venue_name"].casefold(),
+        item["venue_id"],
     ))
 
 
@@ -254,6 +279,8 @@ def create_canonical_venue(
     venue_type = normalize_venue_type(draft.get("venue_type"))
     track = clean_text(draft.get("venue_track")) or "main"
     raw_alias = clean_text(draft.get("raw_alias") or draft.get("raw_venue"))
+    if _track_from_text(f"{name} {raw_alias}") == "workshops":
+        track = "workshops"
     review_note = clean_text(draft.get("review_note"))
     if not name:
         raise VenueRegistryError("canonical full name is required")
@@ -284,6 +311,15 @@ def create_canonical_venue(
     if duplicate_alias_id:
         raise VenueRegistryError(
             f"alias duplicates existing venue {duplicate_alias_id!r}"
+        )
+    acronym_collision = next((
+        venue for venue in registry.values()
+        if acronym and alias_key(venue["venue_acronym"]) == alias_key(acronym)
+        and alias_key(venue["venue_name"]) != alias_key(name)
+    ), None)
+    if acronym_collision:
+        raise VenueRegistryError(
+            f"venue acronym collides with existing venue {acronym_collision['venue_id']!r}"
         )
     possible_matches = _possible_registry_matches(name, acronym, raw_alias, registry)
     if possible_matches and draft.get("confirmed_similar") is not True:
@@ -335,7 +371,7 @@ def _strip_edition_noise(value: str) -> str:
 
 def _track_from_text(value: str) -> str:
     lowered = value.casefold()
-    if re.search(r"(?:\)|\bconference\b|\bmeeting\b)\s+workshops?\s*$", lowered):
+    if re.search(r"\bworkshops?\b", lowered):
         return "workshops"
     if re.search(r"\bfindings\b", lowered):
         return "findings"

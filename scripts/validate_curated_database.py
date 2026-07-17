@@ -1003,6 +1003,7 @@ def main() -> int:
     venue_by_id: Dict[str, Tuple[str, str, str, str]] = {}
     venue_id_by_alias: Dict[str, str] = {}
     venue_id_by_name_track: Dict[Tuple[str, str], str] = {}
+    venue_name_by_acronym: Dict[str, Tuple[str, str]] = {}
     for row_number, alias in enumerate(venue_aliases, start=2):
         venue_id = clean(alias.get("venue_id"))
         identity = (
@@ -1017,6 +1018,19 @@ def main() -> int:
         if venue_id in venue_by_id and venue_by_id[venue_id] != identity:
             add_issue(issues, "ERROR", "venue_aliases.csv", f"inconsistent canonical metadata for {venue_id!r}", row_number)
         venue_by_id[venue_id] = identity
+        acronym = normalize_title(identity[1])
+        canonical_name = normalize_title(identity[0])
+        previous_acronym = venue_name_by_acronym.get(acronym) if acronym else None
+        if previous_acronym and previous_acronym[1] != canonical_name:
+            add_issue(
+                issues,
+                "ERROR",
+                "venue_aliases.csv",
+                f"venue acronym collides with {previous_acronym[0]!r}",
+                row_number,
+            )
+        elif acronym:
+            venue_name_by_acronym[acronym] = (venue_id, canonical_name)
         alias_value = normalize_title(alias.get("alias"))
         if alias_value and alias_value in venue_id_by_alias and venue_id_by_alias[alias_value] != venue_id:
             add_issue(issues, "ERROR", "venue_aliases.csv", "normalized alias points to multiple venue IDs", row_number)

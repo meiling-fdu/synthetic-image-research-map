@@ -37,7 +37,7 @@ try:
         stable_institution_id,
     )
     from .publication_types import normalize_publication_type
-    from .venues import canonicalize_record, read_venue_aliases
+    from .venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -104,7 +104,7 @@ except ImportError:  # Direct execution from the scripts directory.
         stable_institution_id,
     )
     from publication_types import normalize_publication_type
-    from venues import canonicalize_record, read_venue_aliases
+    from venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -171,6 +171,7 @@ DEFAULT_REVIEW_DECISIONS = (
 )
 DEFAULT_CURATED_ARXIV_LINKS = Path("data/curated/paper_arxiv_links.csv")
 DEFAULT_INSTITUTION_HIERARCHY = Path("data/curated/institution_hierarchy.csv")
+DEFAULT_EXPORT_BASELINE = Path("data/curated/public_export_baseline.json")
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -247,6 +248,7 @@ PUBLIC_METADATA = {
         "Automatically generated candidate metadata; not a manually curated "
         "bibliography."
     ),
+    "venue_type_order": list(VENUE_TYPE_ORDER),
 }
 PAPER_PUBLIC_METADATA = {
     "dataset_type": "uncurated_public_preview_papers",
@@ -256,6 +258,7 @@ PAPER_PUBLIC_METADATA = {
         "usable institution coordinates are included for coverage/search but do "
         "not produce map markers."
     ),
+    "venue_type_order": list(VENUE_TYPE_ORDER),
 }
 PAPER_VERSION_OVERRIDE_COLUMNS = {
     "published_openalex_url",
@@ -381,6 +384,23 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Union the existing public outputs into a no-search refresh so a "
             "partial local candidate snapshot cannot shrink published coverage."
+        ),
+    )
+    parser.add_argument(
+        "--export-baseline",
+        type=Path,
+        default=DEFAULT_EXPORT_BASELINE,
+        help=(
+            "Approved minimum public record counts used to prevent accidental "
+            f"shrinkage (default: {DEFAULT_EXPORT_BASELINE})."
+        ),
+    )
+    parser.add_argument(
+        "--approved-baseline",
+        type=Path,
+        help=(
+            "Explicitly supplied replacement baseline for an approved shrinkage. "
+            "The supplied file is validated but never created automatically."
         ),
     )
     parser.add_argument(
@@ -2089,6 +2109,51 @@ def read_candidate_records(path: Path) -> List[Dict[str, Any]]:
     return payload["records"]
 
 
+def read_export_baseline(path: Path) -> Dict[str, int]:
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, json.JSONDecodeError) as error:
+        raise PreviewExportError(f"Could not read export baseline {path}: {error}") from error
+    required = ("paper_records", "map_records")
+    if not isinstance(payload, dict) or any(
+        not isinstance(payload.get(field), int) or payload[field] < 0
+        for field in required
+    ):
+        raise PreviewExportError(
+            f"Export baseline {path} must define non-negative integer "
+            "paper_records and map_records"
+        )
+    return {field: payload[field] for field in required}
+
+
+def enforce_export_baseline(
+    paper_count: int,
+    map_count: int,
+    baseline_path: Path,
+    approved_baseline_path: Optional[Path] = None,
+) -> None:
+    effective_path = approved_baseline_path or baseline_path
+    baseline = read_export_baseline(effective_path)
+    shrinkage = []
+    if paper_count < baseline["paper_records"]:
+        shrinkage.append(
+            f"papers {paper_count} < approved {baseline['paper_records']}"
+        )
+    if map_count < baseline["map_records"]:
+        shrinkage.append(
+            f"map records {map_count} < approved {baseline['map_records']}"
+        )
+    if shrinkage:
+        raise PreviewExportError(
+            "Public export shrinkage guard failed: "
+            + "; ".join(shrinkage)
+            + ". Use --preserve-existing to retain published coverage. "
+            "An intentional reduction requires a reviewed baseline file supplied "
+            "with --approved-baseline."
+        )
+
+
 def merge_existing_records(
     existing: Sequence[Dict[str, Any]],
     fresh: Sequence[Dict[str, Any]],
@@ -3599,6 +3664,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         paper_summary["paper_preview_papers_excluded_curated"] += (
             curated_summary.get("curated_papers_skipped_exclusion", 0)
+        )
+        enforce_export_baseline(
+            len(integrated_papers),
+            len(integrated_maps),
+            args.export_baseline,
+            args.approved_baseline,
         )
         if not args.dry_run:
             write_json(args.output, payload)
