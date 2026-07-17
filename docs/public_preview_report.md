@@ -18,13 +18,13 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 995 |
+| Map records | 1001 |
 | Unique papers | 464 |
-| Unique institutions | 528 |
-| Countries | 53 |
-| arXiv/preprint records | 551 |
-| Records with DOI | 950 |
-| Records with venue | 928 |
+| Unique institutions | 529 |
+| Countries | 52 |
+| arXiv/preprint records | 553 |
+| Records with DOI | 954 |
+| Records with venue | 934 |
 | Records missing venue | 67 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -84,11 +84,11 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 427 |
+| China | 431 |
 | United States | 136 |
 | Italy | 80 |
 | India | 52 |
-| Germany | 38 |
+| Germany | 41 |
 | South Korea | 30 |
 | United Kingdom | 29 |
 | France | 27 |
@@ -114,8 +114,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 831 |
-| medium | 164 |
+| high | 838 |
+| medium | 163 |
 
 ## Potential quality issues
 
