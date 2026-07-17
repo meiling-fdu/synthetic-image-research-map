@@ -87,7 +87,13 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `paper_id` | Stable, project-assigned identifier for the paper; primary key. |
 | `title` | Paper title as reported by the preferred source or confirmed manually. |
 | `year` | Four-digit publication year. Leave empty if unresolved. |
-| `venue` | Journal, conference, workshop, or repository venue. |
+| `venue` | Compatibility alias of the canonical `venue_name`; never includes year, edition, proceedings volume, acronym, or display formatting. |
+| `venue_id` | Stable canonical venue-and-track identifier used for aggregation. |
+| `venue_name` | Canonical full venue name without a duplicated acronym. |
+| `venue_acronym` | Confirmed familiar acronym when one exists; otherwise empty. |
+| `venue_type` | Controlled venue type: `conference`, `journal`, `workshop`, `preprint`, or `book`. This does not encode track. |
+| `venue_track` | `main`, `workshops`, `findings`, `industry`, `demo`, `doctoral_consortium`, or explicit `other`. |
+| `raw_venue` | Original unmodified source value retained through migration and later exports. |
 | `doi` | Canonical DOI without a resolver URL when available. |
 | `url` | Preferred public landing-page URL for the paper. |
 | `arxiv_id` | arXiv identifier, including version only when the version matters. |
@@ -125,6 +131,12 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `is_arxiv_preprint` | `true` when an arXiv identifier, arXiv URL, or explicit arXiv source is detected. |
 
 Published metadata and arXiv-version metadata are kept separate: a paper may have a formal DOI and venue while also exposing `arxiv_id`, `arxiv_url`, and `has_arxiv_version=true`. The publication year remains the OpenAlex publication year, not an inferred arXiv submission year. These values remain candidate metadata. A missing venue is left empty and flagged for manual review; venue or conference names must never be guessed from a paper title.
+
+### Canonical venue resolution
+
+`scripts/venues.py` is the single canonical venue resolver used by curated writes, migration, validation, admin metadata, and public export. `data/curated/venue_aliases.csv` is its explicit confirmed alias map, not a parallel paper or venue database. Matching is exact after deterministic Unicode, HTML-entity, whitespace, punctuation, year, proceedings-prefix, yearly-edition, and known proceedings-volume cleanup; fuzzy similarity never merges venues. Tracks remain part of the stable identity. Unknown aliases receive a conservative deterministic identity and `unmapped` audit status, while conflicting confirmed targets are reported as `ambiguous` and are not merged.
+
+`scripts/migrate_venues.py` writes `docs/venue_migration_report.json` before an optional atomic `--apply`. It preserves `raw_venue`, writes the canonical fields into the existing curated paper rows, counts canonical paper identities, and is idempotent. Public JSON also carries `venue_aliases` for search and `venue_label` for the human-readable format `Venue Type · Canonical Full Name (ACRONYM) · Track`; neither is used as canonical identity.
 
 `entry_type` is deliberately narrow. Anti-forensics, evasion, adversarial attacks, and robustness describe research topics; challenges, competitions, shared tasks, and challenge tracks describe evaluation or publication contexts. They are not entry types and normally remain `method` unless the title strongly identifies a dataset, benchmark, survey, or analysis contribution. Future secondary fields such as `topic_tags` or `contribution_tags` may represent those details, but they are not part of `entry_type` now.
 

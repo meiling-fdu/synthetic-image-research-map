@@ -289,13 +289,17 @@ def build_report(
     metadata: Dict[str, Any],
     records: Sequence[Dict[str, Any]],
 ) -> str:
-    tasks = count_values(records, lambda record: first_text(record, "task"))
-    subtasks = count_values(records, lambda record: first_text(record, "subtask"))
+    papers_by_identity: Dict[Tuple[str, ...], Dict[str, Any]] = {}
+    for record in records:
+        papers_by_identity.setdefault(paper_identity(record), record)
+    paper_records = list(papers_by_identity.values())
+    tasks = count_values(paper_records, lambda record: first_text(record, "task"))
+    subtasks = count_values(paper_records, lambda record: first_text(record, "subtask"))
     years = count_values(
-        records, lambda record: first_text(record, "publication_year", "year")
+        paper_records, lambda record: first_text(record, "publication_year", "year")
     )
     venues = count_present_values(
-        records, lambda record: first_text(record, "venue_name", "venue")
+        paper_records, lambda record: first_text(record, "venue_label", "venue_name", "venue")
     )
     countries = count_present_values(records, normalized_country)
     institutions = count_present_values(

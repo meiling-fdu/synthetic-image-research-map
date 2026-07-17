@@ -4,6 +4,7 @@ import json
 import tempfile
 import threading
 import unittest
+import shutil
 import urllib.request
 import urllib.parse
 import urllib.error
@@ -59,6 +60,19 @@ def curated_row(**overrides):
     return row
 
 
+def chi_venue_fields():
+    return {
+        "venue": "CHI Conference on Human Factors in Computing Systems",
+        "venue_id": "venue:chi:main",
+        "venue_name": "CHI Conference on Human Factors in Computing Systems",
+        "venue_acronym": "CHI",
+        "venue_type": "conference",
+        "venue_track": "main",
+        "raw_venue": "Proceedings of the CHI Conference on Human Factors in Computing Systems",
+        "publication_type": "conference",
+    }
+
+
 def write_papers(path, rows):
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=PAPERS_COLUMNS)
@@ -75,14 +89,23 @@ def write_exclusions(path, rows=()):
 
 class PaperMetadataEditingTests(unittest.TestCase):
     @contextlib.contextmanager
-    def metadata_server(self, directory, export_calls, export_success=True):
+    def metadata_server(
+        self, directory, export_calls, export_success=True, original_overrides=None,
+    ):
         directory = Path(directory)
         curated_path = directory / "papers.csv"
         exclusions_path = directory / "paper_exclusions.csv"
         links_path = directory / "paper_arxiv_links.csv"
         public_papers = directory / "public_papers.json"
         public_map = directory / "public_map.json"
-        original = curated_row(arxiv_id="", paper_url="")
+        venue_aliases = directory / "venue_aliases.csv"
+        shutil.copyfile(
+            Path(__file__).resolve().parents[1] / "data" / "curated" / "venue_aliases.csv",
+            venue_aliases,
+        )
+        original = curated_row(
+            arxiv_id="", paper_url="", **(original_overrides or {})
+        )
         write_papers(curated_path, [original])
         write_exclusions(exclusions_path)
         public_papers.write_text("[]", encoding="utf-8")
@@ -103,6 +126,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     "test-token",
                     exclusions_path=exclusions_path,
                     curated_papers_path=curated_path,
+                    venue_aliases_path=venue_aliases,
                     curated_arxiv_links_path=links_path,
                     metadata_export_runner=lambda name: (
                         export_calls.append(name)
@@ -196,8 +220,8 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 before = links_path.read_bytes()
                 unchanged = {
                     **original,
+                    **chi_venue_fields(),
                     "id": display_id,
-                    "venue": "Updated venue only",
                     "arxiv_id": "2501.01234",
                     "arxiv_id_changed": False,
                     "paper_url": "https://arxiv.org/pdf/2501.01234.pdf",
@@ -210,7 +234,6 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 omitted = dict(unchanged)
                 omitted.pop("arxiv_id")
                 omitted.pop("arxiv_id_changed")
-                omitted["venue"] = "Another venue update"
                 self.metadata_request(
                     base_url, "/api/paper/metadata/update", omitted
                 )
@@ -227,6 +250,107 @@ class PaperMetadataEditingTests(unittest.TestCase):
         self.assertIn(
             "draft.arxiv_id_changed =\n    draft.arxiv_id !==", source
         )
+
+    def test_venue_registry_api_and_structured_save_reload(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(directory, []) as (
+                base_url, original, curated_path, _links_path, display_id,
+            ):
+                venues = self.metadata_request(base_url, "/api/venues")["data"]["records"]
+                chi = next(row for row in venues if row["venue_id"] == "venue:chi:main")
+                self.assertEqual(
+                    chi["venue_label"],
+                    "Conference · CHI Conference on Human Factors in Computing Systems (CHI)",
+                )
+                self.assertIn("CHI", chi["search_text"])
+                edit = {**original, **chi_venue_fields(), "id": display_id}
+                updated = self.metadata_request(base_url, "/api/paper/metadata/update", edit)["data"]["paper"]
+                self.assertEqual(updated["venue_id"], "venue:chi:main")
+                self.assertEqual(updated["raw_venue"], chi_venue_fields()["raw_venue"])
+                reloaded = self.metadata_request(
+                    base_url, f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
+                )["data"]["effective_record"]
+                self.assertEqual(reloaded["venue_name"], chi["venue_name"])
+                self.assertEqual(reloaded["venue_acronym"], "CHI")
+                with curated_path.open(encoding="utf-8", newline="") as handle:
+                    saved = next(csv.DictReader(handle))
+                self.assertEqual(saved["venue_track"], "main")
+
+    def test_legacy_venue_resolves_on_metadata_load(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(
+                directory,
+                [],
+                original_overrides={
+                    "venue": "Proceedings of the CHI Conference on Human Factors in Computing Systems",
+                    "publication_type": "conference",
+                },
+            ) as (base_url, _original, _curated_path, _links_path, display_id):
+                effective = self.metadata_request(
+                    base_url, f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
+                )["data"]["effective_record"]
+                self.assertEqual(effective["venue_id"], "venue:chi:main")
+                self.assertEqual(effective["venue_resolution_status"], "resolved")
+                self.assertFalse(effective["venue_review_required"])
+
+    def test_metadata_api_rejects_nonexistent_or_conflicting_venue(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(directory, []) as (
+                base_url, original, _curated_path, _links_path, display_id,
+            ):
+                invalid = {**original, **chi_venue_fields(), "id": display_id, "venue_id": "venue:missing:main"}
+                with self.assertRaises(urllib.error.HTTPError) as caught:
+                    self.metadata_request(base_url, "/api/paper/metadata/update", invalid)
+                self.assertEqual(caught.exception.code, 400)
+                conflicting = {**original, **chi_venue_fields(), "id": display_id, "venue_name": "Wrong name"}
+                with self.assertRaises(urllib.error.HTTPError) as caught:
+                    self.metadata_request(base_url, "/api/paper/metadata/update", conflicting)
+                self.assertEqual(caught.exception.code, 400)
+
+    def test_canonical_venue_creation_api_prevents_duplicates(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(directory, []) as (
+                base_url, _original, _curated_path, _links_path, _display_id,
+            ):
+                draft = {
+                    "venue_name": "International Test Venue",
+                    "venue_acronym": "ITV",
+                    "venue_type": "conference",
+                    "venue_track": "main",
+                    "raw_alias": "Proceedings of International Test Venue",
+                    "review_note": "Confirmed in API regression test.",
+                }
+                created = self.metadata_request(base_url, "/api/venues/create", draft)["data"]["venue"]
+                self.assertEqual(created["venue_acronym"], "ITV")
+                venues = self.metadata_request(base_url, "/api/venues")["data"]["records"]
+                self.assertTrue(any(row["venue_id"] == created["venue_id"] for row in venues))
+                with self.assertRaises(urllib.error.HTTPError) as caught:
+                    self.metadata_request(base_url, "/api/venues/create", draft)
+                self.assertEqual(caught.exception.code, 400)
+
+    def test_similar_venue_creation_requires_explicit_confirmation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(directory, []) as (
+                base_url, _original, _curated_path, _links_path, _display_id,
+            ):
+                draft = {
+                    "venue_name": "CHI Conference on Human Factors in Computer Systems",
+                    "venue_acronym": "CHI-X",
+                    "venue_type": "conference",
+                    "venue_track": "main",
+                    "raw_alias": "CHI-X test alias",
+                }
+                with self.assertRaises(urllib.error.HTTPError) as caught:
+                    self.metadata_request(base_url, "/api/venues/create", draft)
+                self.assertEqual(caught.exception.code, 409)
+                body = json.loads(caught.exception.read())
+                self.assertTrue(body["data"]["possible_matches"])
+                created = self.metadata_request(
+                    base_url,
+                    "/api/venues/create",
+                    {**draft, "confirmed_similar": True},
+                )["data"]["venue"]
+                self.assertEqual(created["venue_acronym"], "CHI-X")
 
     def test_frontend_loads_and_clears_metadata_on_paper_selection(self):
         source = (
@@ -282,8 +406,8 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 links_before = links_path.read_bytes()
                 edit = {
                     **original,
+                    **chi_venue_fields(),
                     "id": display_id,
-                    "venue": "Must roll back",
                     "arxiv_id": "2501.99999",
                     "arxiv_id_changed": True,
                     "paper_url": "https://arxiv.org/pdf/2501.01234.pdf",

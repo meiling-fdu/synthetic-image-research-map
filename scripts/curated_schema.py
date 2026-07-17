@@ -16,6 +16,12 @@ PAPERS_COLUMNS = (
     "year",
     "authors",
     "venue",
+    "venue_id",
+    "venue_name",
+    "venue_acronym",
+    "venue_type",
+    "venue_track",
+    "raw_venue",
     "doi",
     "arxiv_id",
     "openalex_url",
@@ -33,6 +39,17 @@ PAPERS_COLUMNS = (
     "created_at",
     "updated_at",
     "entry_type",
+)
+
+VENUE_ALIAS_COLUMNS = (
+    "alias",
+    "venue_id",
+    "venue_name",
+    "venue_acronym",
+    "venue_type",
+    "venue_track",
+    "review_status",
+    "notes",
 )
 
 AUTHOR_INSTITUTION_MAPPING_COLUMNS = (
@@ -259,6 +276,7 @@ CURATED_ARXIV_LINK_COLUMNS = (
 
 EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "papers.csv": PAPERS_COLUMNS,
+    "venue_aliases.csv": VENUE_ALIAS_COLUMNS,
     "author_institution_mappings.csv": AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     "paper_exclusions.csv": PAPER_EXCLUSION_COLUMNS,
     "institution_location_review.csv": INSTITUTION_LOCATION_REVIEW_COLUMNS,
@@ -271,6 +289,17 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "review_decisions.csv": REVIEW_DECISION_COLUMNS,
     "paper_version_merges.csv": PAPER_VERSION_MERGE_COLUMNS,
     "paper_arxiv_links.csv": CURATED_ARXIV_LINK_COLUMNS,
+}
+
+ALLOWED_VENUE_TYPES = {"conference", "journal", "workshop", "preprint", "book"}
+ALLOWED_VENUE_TRACKS = {
+    "main",
+    "workshops",
+    "findings",
+    "industry",
+    "demo",
+    "doctoral_consortium",
+    "other",
 }
 
 ALLOWED_TASKS = {

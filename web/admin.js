@@ -27,6 +27,11 @@ const state = {
   selectedReviewKeys: {},
   authorMappingCoverage: null,
   paperMetadata: null,
+  venues: [],
+  venuesLoading: false,
+  venuesLoaded: false,
+  selectedVenue: null,
+  publicationTypeOverride: false,
   arxivEnrichment: { records: [], summary: {}, discovery: {} },
   draftMappingCandidates: [],
   selectedGeocodeCandidate: null,
@@ -41,6 +46,7 @@ let arxivAutofillPollTimer = null;
 let arxivAutofillPolling = false;
 let noticeTimer = null;
 let paperSelectionSequence = 0;
+let activeVenueOptionIndex = -1;
 let institutionLocationSequence = 0;
 let geocodeRequestSequence = 0;
 const workflowCommandIds = [
@@ -284,11 +290,31 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-year",
     "metadata-authors",
     "metadata-venue",
+    "metadata-venue-id",
+    "metadata-venue-name",
+    "metadata-venue-acronym",
+    "metadata-venue-type",
+    "metadata-venue-track",
+    "metadata-venue-combobox",
+    "metadata-venue-button",
+    "metadata-venue-value",
+    "metadata-venue-panel",
+    "metadata-venue-search",
+    "metadata-venue-status",
+    "metadata-venue-options",
+    "metadata-venue-create",
+    "metadata-venue-summary",
+    "metadata-venue-error",
+    "metadata-raw-venue",
+    "metadata-raw-venue-display",
+    "metadata-replace-raw-venue",
     "metadata-doi",
     "metadata-arxiv-id",
     "metadata-openalex-url",
     "metadata-paper-url",
     "metadata-publication-type",
+    "metadata-publication-type-override",
+    "metadata-publication-type-warning",
     "metadata-entry-type",
     "metadata-task",
     "metadata-subtask",
@@ -299,6 +325,19 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-review-note",
     "metadata-edit-error",
     "metadata-edit-cancel",
+    "venue-create-dialog",
+    "venue-create-form",
+    "venue-create-name",
+    "venue-create-acronym",
+    "venue-create-type",
+    "venue-create-track",
+    "venue-create-alias",
+    "venue-create-note",
+    "venue-create-matches",
+    "venue-create-confirm-similar",
+    "venue-create-error",
+    "venue-create-cancel",
+    "venue-create-submit",
     "high-risk-review-panel",
     "institution-audit-panel",
     "institution-audit-counts",
@@ -518,6 +557,20 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["metadata-edit-button"].addEventListener("click", openMetadataEditor);
   elements["metadata-edit-cancel"].addEventListener("click", closeMetadataEditor);
   elements["metadata-edit-form"].addEventListener("submit", saveMetadata);
+  elements["metadata-venue-button"].addEventListener("click", toggleVenueCombobox);
+  elements["metadata-venue-button"].addEventListener("keydown", handleVenueButtonKeydown);
+  elements["metadata-venue-search"].addEventListener("input", renderVenueOptions);
+  elements["metadata-venue-search"].addEventListener("keydown", handleVenueSearchKeydown);
+  elements["metadata-venue-options"].addEventListener("click", handleVenueOptionClick);
+  elements["metadata-venue-options"].addEventListener("mousemove", handleVenueOptionHover);
+  elements["metadata-venue-create"].addEventListener("click", openVenueCreationDialog);
+  elements["metadata-publication-type-override"].addEventListener("click", enablePublicationTypeOverride);
+  elements["metadata-publication-type"].addEventListener("change", updatePublicationTypeConflict);
+  elements["venue-create-form"].addEventListener("submit", submitVenueCreation);
+  elements["venue-create-cancel"].addEventListener("click", closeVenueCreationDialog);
+  document.addEventListener("pointerdown", handleVenueOutsidePointerDown);
+  window.addEventListener("resize", positionVenueComboboxPanel);
+  window.addEventListener("scroll", positionVenueComboboxPanel, true);
   document.querySelectorAll(".review-queue-panel").forEach((panel) => {
     panel.querySelectorAll("input, select").forEach((control) => {
       control.addEventListener("input", () => renderReviewQueue(panel.dataset.queue));
@@ -3973,6 +4026,9 @@ async function selectPaper(id) {
 
 function clearPaperMetadata(message, isError = false) {
   state.paperMetadata = null;
+  state.selectedVenue = null;
+  state.publicationTypeOverride = false;
+  closeVenueCombobox();
   elements["metadata-compare"].replaceChildren();
   const status = document.createElement("p");
   status.className = isError ? "form-error" : "muted";
@@ -3984,6 +4040,9 @@ function clearPaperMetadata(message, isError = false) {
   elements["metadata-edit-form"].querySelectorAll("input, textarea, select").forEach((control) => {
     if (control.id !== "metadata-paper-id") control.value = "";
   });
+  elements["metadata-venue-value"].textContent = "Select a canonical venue…";
+  elements["metadata-venue-summary"].hidden = true;
+  elements["metadata-publication-type"].disabled = true;
 }
 
 function renderMetadataComparison() {
@@ -4021,6 +4080,319 @@ function normalizePublicationTypeForForm(value) {
   return normalized;
 }
 
+function normalizeVenueSearchText(value) {
+  return text(value)
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function publicationTypeForVenueType(value) {
+  const venueType = text(value).trim().toLocaleLowerCase();
+  return venueType === "workshop" ? "conference" : venueType;
+}
+
+function venueOptionMatches(option, query) {
+  const terms = normalizeVenueSearchText(query).split(/\s+/).filter(Boolean);
+  const searchable = normalizeVenueSearchText(option.search_text || [
+    option.venue_name,
+    option.venue_acronym,
+    option.venue_type,
+    option.venue_track,
+    ...(option.aliases || []),
+    ...(option.raw_variants || []),
+  ].join(" "));
+  return terms.every((term) => searchable.includes(term));
+}
+
+function visibleVenueOptionElements() {
+  return [...elements["metadata-venue-options"].querySelectorAll("[role='option']")];
+}
+
+function setActiveVenueOption(index, scroll = false) {
+  const options = visibleVenueOptionElements();
+  if (!options.length) {
+    activeVenueOptionIndex = -1;
+    elements["metadata-venue-search"].removeAttribute("aria-activedescendant");
+    return;
+  }
+  activeVenueOptionIndex = Math.max(0, Math.min(index, options.length - 1));
+  options.forEach((option, optionIndex) => {
+    const active = optionIndex === activeVenueOptionIndex;
+    option.classList.toggle("is-active", active);
+    if (active) {
+      elements["metadata-venue-search"].setAttribute("aria-activedescendant", option.id);
+      if (scroll) option.scrollIntoView({ block: "nearest" });
+    }
+  });
+}
+
+function renderVenueOptions() {
+  const query = elements["metadata-venue-search"].value;
+  const matches = state.venues.filter((option) => venueOptionMatches(option, query));
+  const fragment = document.createDocumentFragment();
+  matches.forEach((option, index) => {
+    const item = document.createElement("li");
+    item.id = `metadata-venue-option-${index}`;
+    item.role = "option";
+    item.dataset.venueId = option.venue_id;
+    item.setAttribute("aria-selected", String(option.venue_id === state.selectedVenue?.venue_id));
+    item.textContent = `${option.venue_label}${option.paper_count ? ` · ${option.paper_count} paper${option.paper_count === 1 ? "" : "s"}` : ""}`;
+    fragment.append(item);
+  });
+  elements["metadata-venue-options"].replaceChildren(fragment);
+  const hasQuery = Boolean(query.trim());
+  elements["metadata-venue-create"].hidden = !hasQuery || matches.length !== 0;
+  elements["metadata-venue-status"].textContent = state.venuesLoading
+    ? "Loading canonical venues…"
+    : matches.length
+      ? `${matches.length} canonical venue${matches.length === 1 ? "" : "s"}`
+      : hasQuery
+        ? "No canonical venue matches this search."
+        : "No canonical venues are available.";
+  const selectedIndex = matches.findIndex((option) => option.venue_id === state.selectedVenue?.venue_id);
+  setActiveVenueOption(selectedIndex >= 0 ? selectedIndex : 0, selectedIndex >= 0);
+}
+
+async function loadCanonicalVenues(force = false) {
+  if (state.venuesLoading || (state.venuesLoaded && !force)) return;
+  state.venuesLoading = true;
+  elements["metadata-venue-error"].hidden = true;
+  renderVenueOptions();
+  try {
+    const payload = await apiFetch("/api/venues");
+    state.venues = payload.data?.records || [];
+    state.venuesLoaded = true;
+    const selectedId = state.selectedVenue?.venue_id;
+    if (selectedId) {
+      state.selectedVenue = state.venues.find((option) => option.venue_id === selectedId)
+        || state.selectedVenue;
+    }
+  } catch (error) {
+    state.venuesLoaded = false;
+    elements["metadata-venue-error"].hidden = false;
+    elements["metadata-venue-error"].textContent = `Could not load canonical venues: ${error.message}`;
+  } finally {
+    state.venuesLoading = false;
+    renderVenueOptions();
+  }
+}
+
+function positionVenueComboboxPanel() {
+  const panel = elements["metadata-venue-panel"];
+  if (panel.hidden) return;
+  const buttonRect = elements["metadata-venue-button"].getBoundingClientRect();
+  const padding = 8;
+  const gap = 4;
+  const width = Math.min(Math.max(buttonRect.width, 320), window.innerWidth - padding * 2);
+  panel.style.width = `${width}px`;
+  const panelHeight = Math.min(panel.scrollHeight || 360, window.innerHeight - padding * 2);
+  const below = window.innerHeight - buttonRect.bottom - gap - padding;
+  const above = buttonRect.top - gap - padding;
+  const openAbove = below < Math.min(panelHeight, 260) && above > below;
+  const preferredTop = openAbove ? buttonRect.top - gap - panelHeight : buttonRect.bottom + gap;
+  panel.style.left = `${Math.min(Math.max(buttonRect.left, padding), window.innerWidth - padding - width)}px`;
+  panel.style.top = `${Math.min(Math.max(preferredTop, padding), window.innerHeight - padding - panelHeight)}px`;
+  panel.dataset.placement = openAbove ? "up" : "down";
+}
+
+function openVenueCombobox() {
+  elements["metadata-venue-panel"].hidden = false;
+  elements["metadata-venue-button"].setAttribute("aria-expanded", "true");
+  elements["metadata-venue-search"].value = "";
+  renderVenueOptions();
+  positionVenueComboboxPanel();
+  elements["metadata-venue-search"].focus();
+}
+
+function closeVenueCombobox(restoreFocus = false) {
+  elements["metadata-venue-panel"].hidden = true;
+  elements["metadata-venue-button"].setAttribute("aria-expanded", "false");
+  if (restoreFocus) elements["metadata-venue-button"].focus();
+}
+
+function toggleVenueCombobox() {
+  if (elements["metadata-venue-panel"].hidden) openVenueCombobox();
+  else closeVenueCombobox(true);
+}
+
+function handleVenueButtonKeydown(event) {
+  if (["ArrowDown", "ArrowUp", "Enter", " "].includes(event.key)) {
+    event.preventDefault();
+    openVenueCombobox();
+    if (event.key === "ArrowUp") setActiveVenueOption(visibleVenueOptionElements().length - 1, true);
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    closeVenueCombobox(true);
+  }
+}
+
+function handleVenueSearchKeydown(event) {
+  const options = visibleVenueOptionElements();
+  if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+    event.preventDefault();
+    const direction = event.key === "ArrowDown" ? 1 : -1;
+    const next = options.length
+      ? (activeVenueOptionIndex + direction + options.length) % options.length
+      : -1;
+    setActiveVenueOption(next, true);
+  } else if (event.key === "Enter" && options[activeVenueOptionIndex]) {
+    event.preventDefault();
+    selectCanonicalVenueById(options[activeVenueOptionIndex].dataset.venueId);
+  } else if (event.key === "Escape") {
+    event.preventDefault();
+    closeVenueCombobox(true);
+  }
+}
+
+function handleVenueOptionClick(event) {
+  const option = event.target.closest("[data-venue-id]");
+  if (option) selectCanonicalVenueById(option.dataset.venueId);
+}
+
+function handleVenueOptionHover(event) {
+  const option = event.target.closest("[data-venue-id]");
+  if (option) setActiveVenueOption(visibleVenueOptionElements().indexOf(option));
+}
+
+function handleVenueOutsidePointerDown(event) {
+  if (!elements["metadata-venue-panel"]?.hidden
+      && !elements["metadata-venue-combobox"].contains(event.target)) {
+    closeVenueCombobox();
+  }
+}
+
+function renderSelectedVenueMetadata() {
+  const venue = state.selectedVenue;
+  elements["metadata-venue-summary"].replaceChildren();
+  elements["metadata-venue-summary"].hidden = !venue;
+  if (!venue) return;
+  [["Canonical ID", venue.venue_id], ["Type", venue.venue_type], ["Track", venue.venue_track], ["Acronym", venue.venue_acronym || "None"]]
+    .forEach(([label, value]) => {
+      const term = document.createElement("dt");
+      const description = document.createElement("dd");
+      term.textContent = label;
+      description.textContent = value;
+      elements["metadata-venue-summary"].append(term, description);
+    });
+}
+
+function selectCanonicalVenue(option, restoreFocus = true) {
+  state.selectedVenue = option;
+  elements["metadata-venue-id"].value = option.venue_id;
+  elements["metadata-venue-name"].value = option.venue_name;
+  elements["metadata-venue-acronym"].value = option.venue_acronym || "";
+  elements["metadata-venue-type"].value = option.venue_type;
+  elements["metadata-venue-track"].value = option.venue_track;
+  elements["metadata-venue"].value = option.venue_name;
+  elements["metadata-venue-value"].textContent = option.venue_label;
+  state.publicationTypeOverride = false;
+  elements["metadata-publication-type"].value = publicationTypeForVenueType(option.venue_type);
+  elements["metadata-publication-type"].disabled = true;
+  elements["metadata-publication-type-override"].textContent = "Override publication type";
+  updatePublicationTypeConflict();
+  renderSelectedVenueMetadata();
+  closeVenueCombobox(restoreFocus);
+}
+
+function selectCanonicalVenueById(venueId) {
+  const option = state.venues.find((venue) => venue.venue_id === venueId);
+  if (option) selectCanonicalVenue(option);
+}
+
+function enablePublicationTypeOverride() {
+  if (!state.selectedVenue) return;
+  state.publicationTypeOverride = true;
+  elements["metadata-publication-type"].disabled = false;
+  elements["metadata-publication-type"].focus();
+  elements["metadata-publication-type-override"].textContent = "Canonical type selected automatically";
+  updatePublicationTypeConflict();
+}
+
+function updatePublicationTypeConflict() {
+  const expected = state.selectedVenue
+    ? publicationTypeForVenueType(state.selectedVenue.venue_type)
+    : "";
+  const conflict = Boolean(
+    state.publicationTypeOverride
+    && expected
+    && elements["metadata-publication-type"].value !== expected
+  );
+  elements["metadata-publication-type-warning"].hidden = !conflict;
+  elements["metadata-publication-type-warning"].textContent = conflict
+    ? `Warning: this overrides canonical venue type ${state.selectedVenue.venue_type} (${expected}).`
+    : "";
+  return conflict;
+}
+
+function openVenueCreationDialog() {
+  const rawInput = elements["metadata-venue-search"].value.trim();
+  closeVenueCombobox();
+  elements["venue-create-form"].reset();
+  elements["venue-create-name"].value = rawInput;
+  elements["venue-create-alias"].value = rawInput;
+  elements["venue-create-track"].value = "main";
+  elements["venue-create-matches"].hidden = true;
+  elements["venue-create-error"].hidden = true;
+  elements["venue-create-dialog"].showModal();
+  elements["venue-create-name"].focus();
+}
+
+function closeVenueCreationDialog() {
+  elements["venue-create-dialog"].close();
+  elements["metadata-venue-button"].focus();
+}
+
+function renderVenueCreationMatches(matches) {
+  const section = elements["venue-create-matches"];
+  const list = section.querySelector("ul");
+  list.replaceChildren(...matches.map((match) => {
+    const item = document.createElement("li");
+    item.textContent = `${match.venue_label} · similarity ${Math.round(match.similarity * 100)}%`;
+    return item;
+  }));
+  section.hidden = matches.length === 0;
+}
+
+async function submitVenueCreation(event) {
+  event.preventDefault();
+  const selectionSequence = paperSelectionSequence;
+  const selectedId = state.selectedId;
+  const draft = {
+    venue_name: elements["venue-create-name"].value.trim(),
+    venue_acronym: elements["venue-create-acronym"].value.trim(),
+    venue_type: elements["venue-create-type"].value,
+    venue_track: elements["venue-create-track"].value,
+    raw_alias: elements["venue-create-alias"].value.trim(),
+    review_note: elements["venue-create-note"].value.trim(),
+    confirmed_similar: elements["venue-create-confirm-similar"].checked,
+  };
+  elements["venue-create-submit"].disabled = true;
+  elements["venue-create-error"].hidden = true;
+  try {
+    const payload = await apiFetch("/api/venues/create", {
+      method: "POST",
+      body: JSON.stringify(draft),
+    });
+    if (selectionSequence !== paperSelectionSequence || selectedId !== state.selectedId) return;
+    state.venuesLoaded = false;
+    await loadCanonicalVenues(true);
+    if (selectionSequence !== paperSelectionSequence || selectedId !== state.selectedId) return;
+    selectCanonicalVenueById(payload.data.venue.venue_id);
+    elements["venue-create-dialog"].close();
+  } catch (error) {
+    if (selectionSequence !== paperSelectionSequence || selectedId !== state.selectedId) return;
+    const matches = error.payload?.data?.possible_matches || [];
+    renderVenueCreationMatches(matches);
+    elements["venue-create-error"].hidden = false;
+    elements["venue-create-error"].textContent = error.message;
+  } finally {
+    elements["venue-create-submit"].disabled = false;
+  }
+}
+
 function openMetadataEditor() {
   if (!state.selectedPaper || !state.paperMetadata) {
     showNotice("Select a paper before editing metadata.", "error");
@@ -4045,6 +4417,60 @@ function populateMetadataForm() {
       elements[id].value = field === "publication_type"
         ? normalizePublicationTypeForForm(record?.[field])
         : metadataValue(record, field);
+    }
+  });
+  const venueId = metadataValue(record, "venue_id");
+  const venueName = metadataValue(record, "venue_name") || metadataValue(record, "venue");
+  state.selectedVenue = venueId ? {
+    venue_id: venueId,
+    venue_name: venueName,
+    venue_acronym: metadataValue(record, "venue_acronym"),
+    venue_type: metadataValue(record, "venue_type"),
+    venue_track: metadataValue(record, "venue_track") || "main",
+    venue_label: metadataValue(record, "venue_label") || venueName,
+  } : null;
+  if (state.selectedVenue) {
+    selectCanonicalVenue(state.selectedVenue, false);
+    const expectedType = publicationTypeForVenueType(state.selectedVenue.venue_type);
+    const savedType = normalizePublicationTypeForForm(record?.publication_type);
+    if (savedType && savedType !== expectedType) {
+      state.publicationTypeOverride = true;
+      elements["metadata-publication-type"].value = savedType;
+      elements["metadata-publication-type"].disabled = false;
+      updatePublicationTypeConflict();
+    }
+  } else {
+    elements["metadata-venue-value"].textContent = venueName
+      ? `${venueName} · Needs canonical review`
+      : "Select a canonical venue…";
+    elements["metadata-venue"].value = venueName;
+    elements["metadata-publication-type"].disabled = true;
+    elements["metadata-venue-error"].hidden = !record?.venue_review_required;
+    elements["metadata-venue-error"].textContent = record?.venue_review_required
+      ? "This legacy venue could not be resolved unambiguously. Select an existing canonical venue or create a reviewed one."
+      : "";
+  }
+  const rawVenue = metadataValue(record, "raw_venue");
+  elements["metadata-raw-venue"].value = rawVenue;
+  elements["metadata-raw-venue-display"].textContent = rawVenue || "Not recorded";
+  elements["metadata-replace-raw-venue"].checked = false;
+  const venueLoadSequence = paperSelectionSequence;
+  const venueLoadPaperId = state.selectedId;
+  void loadCanonicalVenues().then(() => {
+    if (venueLoadSequence !== paperSelectionSequence || venueLoadPaperId !== state.selectedId) return;
+    if (state.selectedVenue) {
+      const option = state.venues.find((venue) => venue.venue_id === state.selectedVenue.venue_id);
+      if (option) {
+        selectCanonicalVenue(option, false);
+        const savedType = normalizePublicationTypeForForm(record?.publication_type);
+        const expectedType = publicationTypeForVenueType(option.venue_type);
+        if (savedType && savedType !== expectedType) {
+          state.publicationTypeOverride = true;
+          elements["metadata-publication-type"].value = savedType;
+          elements["metadata-publication-type"].disabled = false;
+          updatePublicationTypeConflict();
+        }
+      }
     }
   });
   elements["metadata-paper-id"].value = state.selectedId;
@@ -4075,7 +4501,7 @@ async function saveMetadata(event) {
     return;
   }
   const fields = [
-    "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
+    "title", "year", "authors", "doi", "arxiv_id", "openalex_url",
     "paper_url", "publication_type", "entry_type", "task", "subtask", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
@@ -4083,6 +4509,28 @@ async function saveMetadata(event) {
   fields.forEach((field) => {
     draft[field] = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
   });
+  if (!state.selectedVenue) {
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent =
+      "Select a canonical venue before saving metadata.";
+    return;
+  }
+  Object.assign(draft, {
+    venue: elements["metadata-venue-name"].value,
+    venue_id: elements["metadata-venue-id"].value,
+    venue_name: elements["metadata-venue-name"].value,
+    venue_acronym: elements["metadata-venue-acronym"].value,
+    venue_type: elements["metadata-venue-type"].value,
+    venue_track: elements["metadata-venue-track"].value,
+    raw_venue: elements["metadata-replace-raw-venue"].checked
+      ? elements["metadata-venue-name"].value
+      : elements["metadata-raw-venue"].value,
+    replace_raw_venue: elements["metadata-replace-raw-venue"].checked,
+    publication_type_override: state.publicationTypeOverride,
+  });
+  if (updatePublicationTypeConflict() && !window.confirm(
+    "Publication type conflicts with the selected canonical venue. Save this explicit override?",
+  )) return;
   draft.arxiv_id_changed =
     draft.arxiv_id !== elements["metadata-arxiv-id"].dataset.originalValue;
   elements["metadata-edit-error"].hidden = true;
@@ -4123,7 +4571,10 @@ function renderPaperDetail(paper) {
     ["Display ID", paper.display_id],
     ["Year", paper.year || paper.publication_year],
     ["Authors", authorListText(paper.authors)],
-    ["Venue", paper.venue || paper.venue_name],
+    ["Venue", paper.venue_label || paper.venue || paper.venue_name],
+    ["Venue ID", paper.venue_id],
+    ["Raw venue", paper.raw_venue],
+    ["Venue track", humanize(paper.venue_track)],
     ["DOI", linkValue(paper.doi, doiUrl(paper.doi))],
     ["OpenAlex", linkValue(paper.openalex_url, paper.openalex_url)],
     ["Paper URL", linkValue(paper.paper_url, paper.paper_url)],

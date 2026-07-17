@@ -28,6 +28,15 @@ try:
         normalized_title_year_key,
     )
     from .publication_types import ALLOWED_PUBLICATION_TYPES, normalize_publication_type
+    from .venues import (
+        VenueRegistryError,
+        canonicalize_record,
+        display_venue,
+        publication_type_for_venue_type,
+        read_venue_aliases,
+        resolve_venue,
+        validate_canonical_venue_fields,
+    )
 except ImportError:
     from curated_schema import (
         ALLOWED_CURATION_STATUSES,
@@ -41,6 +50,15 @@ except ImportError:
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
     from publication_types import ALLOWED_PUBLICATION_TYPES, normalize_publication_type
+    from venues import (
+        VenueRegistryError,
+        canonicalize_record,
+        display_venue,
+        publication_type_for_venue_type,
+        read_venue_aliases,
+        resolve_venue,
+        validate_canonical_venue_fields,
+    )
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -142,6 +160,78 @@ def _timestamp() -> str:
     )
 
 
+def apply_canonical_venue_selection(
+    draft: Mapping[str, Any],
+    *,
+    existing: Mapping[str, Any] | None = None,
+    venue_aliases_path: Path | None = None,
+) -> Dict[str, Any]:
+    """Validate a structured selection and preserve historical raw provenance."""
+    aliases = read_venue_aliases(venue_aliases_path) if venue_aliases_path else read_venue_aliases()
+    venue_id = clean(draft.get("venue_id"))
+    supplied_venue = clean(draft.get("venue_name") or draft.get("venue"))
+    if venue_id:
+        try:
+            canonical = validate_canonical_venue_fields(draft, aliases)
+        except VenueRegistryError as error:
+            raise CuratedPaperError(str(error)) from error
+        for field in ("venue_name", "venue_acronym", "venue_type", "venue_track"):
+            if clean(draft.get(field)) != canonical[field]:
+                raise CuratedPaperError(
+                    f"{field} must match canonical venue_id {canonical['venue_id']!r}"
+                )
+    elif supplied_venue:
+        resolved = resolve_venue(
+            draft.get("raw_venue") or supplied_venue,
+            publication_type=draft.get("publication_type"),
+            venue_type=draft.get("venue_type"),
+            aliases=aliases,
+        )
+        if resolved.ambiguity_status == "ambiguous":
+            raise CuratedPaperError(
+                "venue is ambiguous; leave the canonical venue unchanged and flag it for review"
+            )
+        if resolved.ambiguity_status != "resolved":
+            raise CuratedPaperError(
+                "venue is not in the canonical registry; create it through the reviewed venue workflow"
+            )
+        canonical = validate_canonical_venue_fields(resolved.as_record(), aliases)
+    else:
+        return {
+            "venue": "", "venue_id": "", "venue_name": "", "venue_acronym": "",
+            "venue_type": "", "venue_track": "main", "raw_venue": clean((existing or {}).get("raw_venue")),
+            "venue_aliases": [], "venue_label": "",
+        }
+    expected_publication_type = publication_type_for_venue_type(canonical["venue_type"])
+    requested_publication_type = normalize_publication_type(draft.get("publication_type"))
+    if (
+        requested_publication_type
+        and requested_publication_type != expected_publication_type
+        and draft.get("publication_type_override") is not True
+    ):
+        raise CuratedPaperError(
+            "publication_type conflicts with canonical venue_type; explicit override is required"
+        )
+    replace_provenance = draft.get("replace_raw_venue") is True
+    historical_raw = clean((existing or {}).get("raw_venue"))
+    if not historical_raw:
+        historical_raw = clean((existing or {}).get("venue"))
+    raw_venue = (
+        clean(draft.get("raw_venue") or supplied_venue)
+        if replace_provenance
+        else historical_raw or clean(draft.get("raw_venue") or supplied_venue)
+    )
+    result = {
+        **canonical,
+        "venue": canonical["venue_name"],
+        "raw_venue": raw_venue,
+        "venue_aliases": list(canonical.get("aliases", [])),
+    }
+    result["venue_label"] = display_venue(result)
+    result["publication_type"] = requested_publication_type or expected_publication_type
+    return result
+
+
 def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
@@ -221,6 +311,7 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "review_status": review_status,
         "review_note": clean(draft.get("review_note")),
     }
+    normalized = canonicalize_record(normalized)
     if not all_identity_keys(normalized):
         raise CuratedPaperError(
             "paper requires a DOI, OpenAlex URL, or title + year identity"
@@ -305,6 +396,7 @@ def update_curated_paper(
     *,
     preview_records: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_CURATED_PAPERS_PATH,
+    venue_aliases_path: Path | None = None,
 ) -> Dict[str, str]:
     """Create or update a curated metadata override for one effective paper."""
     title = clean(draft.get("title"))
@@ -414,7 +506,23 @@ def update_curated_paper(
         "curation_status": curation_status,
         "review_status": review_status,
         "review_note": clean(draft.get("review_note")),
+        "venue_id": clean(draft.get("venue_id")),
+        "venue_name": clean(draft.get("venue_name")),
+        "venue_acronym": clean(draft.get("venue_acronym")),
+        "venue_type": clean(draft.get("venue_type")),
+        "venue_track": clean(draft.get("venue_track")),
+        "raw_venue": clean(draft.get("raw_venue")),
+        "publication_type_override": draft.get("publication_type_override") is True,
+        "replace_raw_venue": draft.get("replace_raw_venue") is True,
     }
+    venue_fields = apply_canonical_venue_selection(
+        normalized,
+        existing=existing or current_paper,
+        venue_aliases_path=venue_aliases_path,
+    )
+    normalized.update(venue_fields)
+    normalized.pop("publication_type_override", None)
+    normalized.pop("replace_raw_venue", None)
     if not all_identity_keys(normalized):
         raise CuratedPaperError(
             "paper requires a DOI, OpenAlex URL, or title + year identity"

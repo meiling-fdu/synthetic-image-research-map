@@ -134,6 +134,7 @@ const taskFilter = document.querySelector("#task-filter");
 const entryTypeFilter = document.querySelector("#entry-type-filter");
 const sortControl = document.querySelector("#sort-control");
 const venueFilter = document.querySelector("#venue-filter");
+const venueTypeFilter = document.querySelector("#venue-type-filter");
 const countryFilter = document.querySelector("#country-filter");
 const countryCombobox = document.querySelector("#country-combobox");
 const countryComboboxButton = document.querySelector("#country-combobox-button");
@@ -279,7 +280,12 @@ const INSTITUTION_CSV_COLUMNS = [
   ["authors", (record) => recordAuthors(record).join("; ")],
   ["institution_authors", (record) => recordInstitutionAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
+  ["venue_label", (record) => venueDisplayLabel(record)],
+  ["venue_id", (record) => record.venue_id || ""],
   ["venue_name", (record) => getRecordVenue(record)],
+  ["venue_acronym", (record) => record.venue_acronym || ""],
+  ["venue_type", (record) => recordVenueType(record)],
+  ["venue_track", (record) => record.venue_track || "main"],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
@@ -303,7 +309,12 @@ const PAPER_CSV_COLUMNS = [
   ["title", (record) => recordTitle(record)],
   ["authors", (record) => recordAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
+  ["venue_label", (record) => venueDisplayLabel(record)],
+  ["venue_id", (record) => record.venue_id || ""],
   ["venue_name", (record) => getRecordVenue(record)],
+  ["venue_acronym", (record) => record.venue_acronym || ""],
+  ["venue_type", (record) => recordVenueType(record)],
+  ["venue_track", (record) => record.venue_track || "main"],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
@@ -1124,12 +1135,36 @@ function getRecordVenue(record) {
 }
 
 function venueFilterValue(record) {
-  const venue = getRecordVenue(record);
-  return venue ? venue.toLocaleLowerCase() : "__unknown__";
+  return String(record.venue_id || "").trim() || (getRecordVenue(record)
+    ? getRecordVenue(record).toLocaleLowerCase()
+    : "__unknown__");
 }
 
 function venueDisplayLabel(record) {
-  return getRecordVenue(record) || "Unknown venue/source";
+  const exported = String(record.venue_label || "").trim();
+  if (exported) return exported;
+  const name = getRecordVenue(record);
+  if (!name) return "Unknown venue/source";
+  const type = recordVenueType(record);
+  const acronym = String(record.venue_acronym || "").trim();
+  const track = String(record.venue_track || "main").trim();
+  let label = type ? `${formatTask(type)} · ${name}` : name;
+  if (acronym) label += ` (${acronym})`;
+  if (track && track !== "main") label += ` · ${formatTask(track)}`;
+  return label;
+}
+
+function recordVenueType(record) {
+  return String(record.venue_type || record.publication_type || "").trim().toLocaleLowerCase();
+}
+
+function venueDisplayHtml(record) {
+  const label = venueDisplayLabel(record);
+  const type = recordVenueType(record);
+  if (!label || !type) return escapeHtml(label);
+  const prefix = `${formatTask(type)} · `;
+  const remainder = label.startsWith(prefix) ? label.slice(prefix.length) : label;
+  return `<span class="venue-type-badge">${escapeHtml(formatTask(type))}</span><span class="venue-label-name"> · ${escapeHtml(remainder)}</span>`;
 }
 
 function getRecordYear(record) {
@@ -1557,6 +1592,10 @@ function recordSearchText(record) {
     ...(record.aggregated_region_codes || []),
     record.venue_name,
     record.venue,
+    record.venue_acronym,
+    ...(record.venue_aliases || []),
+    record.venue_type,
+    record.venue_track,
     record.coverage_status,
     record.task,
     record.subtask,
@@ -1653,7 +1692,10 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const matchesEntryType =
     entryTypeFilter.value === "all" || getEntryType(record) === entryTypeFilter.value;
   const matchesVenue =
-    venueFilter.value === "all" || venueFilterValue(record) === venueFilter.value;
+    options.ignoreVenue === true || venueFilter.value === "all"
+    || venueFilterValue(record) === venueFilter.value;
+  const matchesVenueType = options.ignoreVenueType === true || venueTypeFilter.value === "all"
+    || recordVenueType(record) === venueTypeFilter.value;
   const selectedVersion = preprintFilter.value;
   const matchesVersion =
     selectedVersion === "all" ||
@@ -1686,6 +1728,7 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     matchesTask &&
     matchesEntryType &&
     matchesVenue &&
+    matchesVenueType &&
     matchesVersion &&
     matchesMinimumYear &&
     matchesMaximumYear &&
@@ -2379,7 +2422,7 @@ function paperDetailsHtml(record, relatedEntries) {
     institutionType: normalizeInstitutionType(record.institution_type),
   });
   const year = record.publication_year ?? record.year ?? "Unknown";
-  const venue = getRecordVenue(record) || "unknown";
+  const venue = venueDisplayLabel(record) || "unknown";
   const publicationType = record.publication_type || "Unknown";
   const entryType = getEntryType(record);
   const entryTypeLabel = getEntryTypeLabel(entryType);
@@ -2438,7 +2481,7 @@ function paperDetailsHtml(record, relatedEntries) {
       <dt>Authors</dt><dd>${authors}</dd>
       <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value paper-current-institution${currentAffiliation ? " is-active is-hover-institution" : ""}">${currentAffiliationNumber}${currentInstitutionButton || "Unknown"}</dd>
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
-      <dt>Venue</dt><dd>${escapeHtml(venue)}</dd>
+      <dt>Venue</dt><dd>${venueDisplayHtml(record)}</dd>
     </dl>
     ${linksBlock}
     ${affiliationsBlock}
@@ -2464,7 +2507,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
   });
   const title = recordTitle(record);
   const year = publicationYear(record) ?? "Unknown";
-  const venue = getRecordVenue(record);
+  const venue = venueDisplayLabel(record);
   const isPaperView = resultsView === "papers";
   const entryTypeLabel = getEntryTypeLabel(getEntryType(record));
   const affiliations = normalizedRecord.affiliations;
@@ -2472,7 +2515,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
     ? `<span class="result-task result-subtask">${escapeHtml(formatTask(record.subtask))}</span>`
     : "";
   const venueRow = venue
-    ? `<p class="result-venue">${escapeHtml(venue)}</p>`
+    ? `<p class="result-venue">${venueDisplayHtml(record)}</p>`
     : "";
 
   const links = paperExternalLinks(record).join("");
@@ -2890,9 +2933,15 @@ function renderRecords() {
   );
   const countryDimensionSets = dimensionSets("ignoreCountry");
   const institutionTypeDimensionSets = dimensionSets("ignoreInstitutionType");
+  const venueDimensionSets = dimensionSets("ignoreVenue");
+  const venueTypeDimensionSets = dimensionSets("ignoreVenueType");
   updateInstitutionDimensionFilters(
     countryDimensionSets.filteredPapers,
     institutionTypeDimensionSets.filteredPapers,
+  );
+  updateVenueDimensionFilters(
+    venueDimensionSets.filteredPapers,
+    venueTypeDimensionSets.filteredPapers,
   );
   const filteredSets = deriveFilteredRecordSets(
     records,
@@ -3022,36 +3071,34 @@ function configureYearRange() {
 }
 
 function configureVenueFilter() {
-  const venuesByValue = new Map();
-  let hasUnknownVenue = false;
-  const filterSourceRecords = paperRecords.length ? paperRecords : records;
-  filterSourceRecords.forEach((record) => {
-    const value = venueFilterValue(record);
-    if (value === "__unknown__") {
-      hasUnknownVenue = true;
-      return;
-    }
-    if (!venuesByValue.has(value)) {
-      venuesByValue.set(value, venueDisplayLabel(record));
-    }
-  });
-
-  const options = [["all", "All venues/sources"]];
-  [...venuesByValue.entries()]
-    .sort((first, second) => compareTextValues(first[1], second[1]))
-    .forEach(([value, label]) => options.push([value, label]));
-  if (hasUnknownVenue) {
-    options.push(["__unknown__", "Unknown venue/source"]);
-  }
-
-  venueFilter.replaceChildren();
-  options.forEach(([value, label]) => {
-    const option = document.createElement("option");
-    option.value = value;
-    option.textContent = label;
-    venueFilter.append(option);
-  });
+  venueFilter.replaceChildren(new Option("All venues", "all"));
+  venueTypeFilter.replaceChildren(new Option("All venue types", "all"));
   venueFilter.value = "all";
+  venueTypeFilter.value = "all";
+}
+
+function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
+  const labelByVenue = new Map();
+  [...venuePapers, ...venueTypePapers].forEach((record) => {
+    labelByVenue.set(venueFilterValue(record), venueDisplayLabel(record));
+  });
+  const venueCounts = dimensionPaperCounts(venuePapers, (record) => [venueFilterValue(record)]);
+  const venueTypeCounts = dimensionPaperCounts(
+    venueTypePapers,
+    (record) => [recordVenueType(record) || "__unknown__"],
+  );
+  replaceCountedFilterOptions(
+    venueFilter,
+    "All venues",
+    sortedDimensionCounts(venueCounts, (value) => labelByVenue.get(value) || value),
+    (value) => labelByVenue.get(value) || (value === "__unknown__" ? "Unknown venue/source" : value),
+  );
+  replaceCountedFilterOptions(
+    venueTypeFilter,
+    "All venue types",
+    sortedDimensionCounts(venueTypeCounts, (value) => formatTask(value)),
+    (value) => value === "__unknown__" ? "Unknown" : formatTask(value),
+  );
 }
 
 function enableControls() {
@@ -3060,6 +3107,7 @@ function enableControls() {
   entryTypeFilter.disabled = false;
   sortControl.disabled = false;
   venueFilter.disabled = false;
+  venueTypeFilter.disabled = false;
   countryFilter.disabled = false;
   countryComboboxButton.disabled = false;
   institutionTypeFilter.disabled = false;
@@ -3375,6 +3423,7 @@ taskFilter.addEventListener("change", renderRecords);
 entryTypeFilter.addEventListener("change", renderRecords);
 sortControl.addEventListener("change", renderRecords);
 venueFilter.addEventListener("change", renderRecords);
+venueTypeFilter.addEventListener("change", renderRecords);
 countryFilter.addEventListener("change", renderRecords);
 countryComboboxButton.addEventListener("click", () => {
   if (countryComboboxPanel.hidden) openCountryCombobox();
@@ -3479,6 +3528,7 @@ resetButton.addEventListener("click", () => {
   entryTypeFilter.value = "all";
   sortControl.value = "year-desc";
   venueFilter.value = "all";
+  venueTypeFilter.value = "all";
   countryFilter.value = "all";
   institutionTypeFilter.value = "all";
   preprintFilter.value = "all";

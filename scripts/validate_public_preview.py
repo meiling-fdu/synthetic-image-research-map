@@ -87,6 +87,24 @@ AUTHOR_MAPPING_SOURCES = {
     "paper_institution_fallback",
     "unmapped",
 }
+ALLOWED_VENUE_TYPES = {"conference", "journal", "workshop", "preprint", "book"}
+ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "industry", "demo", "doctoral_consortium", "other"}
+
+
+def validate_canonical_venue(index: int, record: Dict[str, Any], issues: List[Issue]) -> None:
+    title = record_title(record)
+    venue_name = clean_text(record.get("venue_name"))
+    venue_id = clean_text(record.get("venue_id"))
+    venue_type = clean_text(record.get("venue_type"))
+    venue_track = clean_text(record.get("venue_track"))
+    if venue_name and not venue_id:
+        add_issue(issues, "ERROR", index, title, "canonical venue_name requires venue_id")
+    if venue_id and venue_type not in ALLOWED_VENUE_TYPES:
+        add_issue(issues, "ERROR", index, title, "venue_type must use the canonical venue taxonomy")
+    if venue_id and venue_track not in ALLOWED_VENUE_TRACKS:
+        add_issue(issues, "ERROR", index, title, "venue_track must use the canonical track taxonomy")
+    if venue_id and "raw_venue" not in record:
+        add_issue(issues, "ERROR", index, title, "canonical venue requires raw_venue provenance")
 
 
 class ValidationInputError(RuntimeError):
@@ -773,6 +791,7 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
     validate_paper_detail_schema(index, record, issues, marker_record=True)
+    validate_canonical_venue(index, record, issues)
 
     title = record_title(record)
     publication_type = clean_text(record.get("publication_type"))
@@ -983,6 +1002,7 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
         add_issue(issues, "ERROR", index, "<non-object>", "record is not a JSON object")
         return
     validate_paper_detail_schema(index, record, issues, marker_record=False)
+    validate_canonical_venue(index, record, issues)
 
     title = record_title(record)
     publication_type = clean_text(record.get("publication_type"))

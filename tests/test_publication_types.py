@@ -109,7 +109,9 @@ class PublicationTypeTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         html = (root / "web/admin.html").read_text(encoding="utf-8")
         javascript = (root / "web/admin.js").read_text(encoding="utf-8")
-        self.assertEqual(html.count('value="journal"'), 2)
+        # Add Paper, metadata override, and canonical venue creation each expose
+        # the same normalized journal taxonomy value.
+        self.assertEqual(html.count('value="journal"'), 3)
         self.assertNotIn('value="article"', html)
         self.assertIn('"article", "article-journal", "journal-article"', javascript)
         self.assertIn('return "journal";', javascript)

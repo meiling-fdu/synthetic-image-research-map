@@ -37,6 +37,7 @@ try:
         stable_institution_id,
     )
     from .publication_types import normalize_publication_type
+    from .venues import canonicalize_record, read_venue_aliases
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -103,6 +104,7 @@ except ImportError:  # Direct execution from the scripts directory.
         stable_institution_id,
     )
     from publication_types import normalize_publication_type
+    from venues import canonicalize_record, read_venue_aliases
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -194,8 +196,14 @@ PUBLIC_FIELDS = (
     "subtask",
     "entry_type",
     "venue",
+    "venue_id",
     "venue_name",
+    "venue_acronym",
     "venue_type",
+    "venue_track",
+    "raw_venue",
+    "venue_aliases",
+    "venue_label",
     "publisher",
     "publication_type",
     "abstract",
@@ -3414,6 +3422,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             raise PreviewExportError(
                 "Unresolved publication types require admin review: " + details
             )
+        venue_alias_rows = read_venue_aliases()
+        integrated_papers[:] = [
+            canonicalize_record(record, venue_alias_rows)
+            for record in integrated_papers
+        ]
+        integrated_maps[:] = [
+            canonicalize_record(record, venue_alias_rows)
+            for record in integrated_maps
+        ]
         institution_rows = load_institutions(args.institutions)
         institution_audit_rows = read_csv_rows(args.institution_audit_log)
         exported_aliases = public_institution_aliases(

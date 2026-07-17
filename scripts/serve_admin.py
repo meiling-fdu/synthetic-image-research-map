@@ -131,6 +131,14 @@ try:
         reconcile_mapping_changes,
     )
     from .institution_cleanup import apply_cleanup_action
+    from .venues import (
+        DEFAULT_VENUE_ALIASES_PATH,
+        VenueRegistryError,
+        canonical_venue_options,
+        canonicalize_record,
+        create_canonical_venue,
+        read_venue_aliases,
+    )
 except ImportError:
     from admin_workflows import (
         AdminWorkflowError,
@@ -239,6 +247,14 @@ except ImportError:
         reconcile_mapping_changes,
     )
     from institution_cleanup import apply_cleanup_action
+    from venues import (
+        DEFAULT_VENUE_ALIASES_PATH,
+        VenueRegistryError,
+        canonical_venue_options,
+        canonicalize_record,
+        create_canonical_venue,
+        read_venue_aliases,
+    )
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = REPOSITORY_ROOT / "web"
@@ -264,6 +280,7 @@ TRUE_VALUES = {"1", "true", "yes", "y"}
 MAX_REQUEST_BYTES = 64 * 1024
 EXCLUSION_WRITE_LOCK = threading.Lock()
 CURATED_PAPER_WRITE_LOCK = threading.Lock()
+VENUE_REGISTRY_WRITE_LOCK = threading.Lock()
 ARXIV_AUTOFILL_LOCK = threading.Lock()
 ARXIV_AUTOFILL_STATE_LOCK = threading.Lock()
 CURATED_ARXIV_LINK_WRITE_LOCK = threading.Lock()
@@ -802,6 +819,14 @@ def merge_curated_fields(
         "year",
         "authors",
         "venue",
+        "venue_id",
+        "venue_name",
+        "venue_acronym",
+        "venue_type",
+        "venue_track",
+        "raw_venue",
+        "venue_aliases",
+        "venue_label",
         "doi",
         "arxiv_id",
         "openalex_url",
@@ -970,6 +995,12 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
         "authors",
         "venue",
         "venue_name",
+        "venue_id",
+        "venue_acronym",
+        "venue_type",
+        "venue_track",
+        "raw_venue",
+        "venue_label",
         "doi",
         "openalex_url",
         "paper_url",
@@ -1359,6 +1390,7 @@ def make_handler(
     token: str,
     exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
     curated_papers_path: Path = CURATED_PAPERS_PATH,
+    venue_aliases_path: Path = DEFAULT_VENUE_ALIASES_PATH,
     mappings_path: Path = CURATED_MAPPINGS_PATH,
     location_review_path: Path = LOCATION_REVIEW_PATH,
     institution_locations_path: Path = INSTITUTION_LOCATIONS_PATH,
@@ -1915,6 +1947,7 @@ def make_handler(
                 "/api/review/manual-import",
                 "/api/dashboard",
                 "/api/paper/metadata",
+                "/api/venues",
                 "/api/admin/papers/autofill-arxiv/status",
             }:
                 if not self.is_header_authorized():
@@ -2001,6 +2034,21 @@ def make_handler(
                             HTTPStatus.OK, api_payload(data=dashboard)
                         )
                         return
+                    if request.path == "/api/venues":
+                        venue_alias_rows = read_venue_aliases(venue_aliases_path)
+                        historical_papers = [
+                            *read_csv_rows(curated_papers_path),
+                            *read_json_records(PUBLIC_PAPERS_PATH),
+                        ]
+                        options = canonical_venue_options(
+                            venue_alias_rows,
+                            historical_papers,
+                        )
+                        self.send_json(
+                            HTTPStatus.OK,
+                            api_payload(data={"count": len(options), "records": options}),
+                        )
+                        return
                     paper_id = next(iter(query.get("id", [])), "")
                     if not paper_id:
                         raise AdminDataError("id query parameter is required")
@@ -2020,6 +2068,20 @@ def make_handler(
                     effective_record = apply_curated_arxiv_metadata(
                         paper, curated_arxiv_links_path
                     )
+                    resolved_effective = canonicalize_record(
+                        effective_record,
+                        read_venue_aliases(venue_aliases_path),
+                    )
+                    if resolved_effective.get("ambiguity_status") == "resolved":
+                        effective_record = resolved_effective
+                        effective_record["venue_resolution_status"] = "resolved"
+                        effective_record["venue_review_required"] = False
+                    else:
+                        effective_record = dict(effective_record)
+                        effective_record["venue_resolution_status"] = resolved_effective.get(
+                            "ambiguity_status", "unresolved"
+                        )
+                        effective_record["venue_review_required"] = True
                     self.send_json(
                         HTTPStatus.OK,
                         api_payload(
@@ -2052,6 +2114,7 @@ def make_handler(
                     AdminReviewQueueError,
                     CuratedLocationError,
                     CuratedMappingError,
+                    VenueRegistryError,
                 ) as error:
                     self.send_json(
                         HTTPStatus.BAD_REQUEST,
@@ -2186,6 +2249,7 @@ def make_handler(
                 "/api/review/manual-import",
                 *AUTHOR_MAPPING_COVERAGE_ENDPOINTS,
                 "/api/paper/metadata",
+                "/api/venues",
                 "/api/admin/papers/arxiv-enrichment",
             }:
                 self.send_method_not_allowed("GET")
@@ -2640,6 +2704,7 @@ def make_handler(
                 "/api/paper/mapping/exclude",
                 "/api/paper/mappings/replace-all",
                 "/api/paper/metadata/update",
+                "/api/venues/create",
                 "/api/review/high-risk-markers/action",
                 "/api/review/marker-blockers/action",
                 "/api/review/key-paper-coverage/action",
@@ -2654,6 +2719,7 @@ def make_handler(
                 payload = self.read_json_body()
                 new_write_paths = {
                     "/api/paper/metadata/update",
+                    "/api/venues/create",
                     "/api/review/high-risk-markers/action",
                     "/api/review/marker-blockers/action",
                     "/api/review/key-paper-coverage/action",
@@ -2683,6 +2749,33 @@ def make_handler(
                             ),
                         )
                         return
+
+                if request.path == "/api/venues/create":
+                    try:
+                        with VENUE_REGISTRY_WRITE_LOCK:
+                            venue = create_canonical_venue(
+                                payload,
+                                path=venue_aliases_path,
+                            )
+                    except VenueRegistryError as error:
+                        possible_matches = getattr(error, "possible_matches", [])
+                        self.send_json(
+                            HTTPStatus.CONFLICT if possible_matches else HTTPStatus.BAD_REQUEST,
+                            api_payload(
+                                success=False,
+                                data={"possible_matches": possible_matches},
+                                errors=(str(error),),
+                            ),
+                        )
+                        return
+                    self.send_json(
+                        HTTPStatus.CREATED,
+                        api_payload(
+                            message="Canonical venue created and added to the reviewed alias registry.",
+                            data={"venue": venue},
+                        ),
+                    )
+                    return
 
                 if request.path == "/api/paper/metadata/update":
                     paper_id = clean(payload.get("id"))
@@ -2754,6 +2847,7 @@ def make_handler(
                                         PUBLIC_PAPERS_PATH
                                     ),
                                     path=curated_papers_path,
+                                    venue_aliases_path=venue_aliases_path,
                                 )
                                 if arxiv_id_changed:
                                     set_curated_arxiv_override(

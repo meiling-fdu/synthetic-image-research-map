@@ -190,6 +190,14 @@ The Dashboard also shows a read-only **Author Mapping Coverage** card with compl
 
 The Admin server checks for the CSV at startup and generates it once when absent. If generation cannot complete, the UI shows **Author mapping report has not been generated.** with a **Generate Report** action. **Reload mapping coverage** bypasses browser caching and rereads only this report. The Admin full-refresh workflow also regenerates both report artifacts.
 
+### Canonical venue metadata
+
+The paper-metadata editor loads `GET /api/venues`, whose count-ordered records are built only from confirmed `data/curated/venue_aliases.csv` identities. Search covers canonical name, acronym, venue type, track, confirmed aliases, and historical `raw_venue` variants. Selecting an option saves `venue_id`, `venue_name`, `venue_acronym`, `venue_type`, and `venue_track`; the combined label is display-only.
+
+The selected venue synchronizes formal `publication_type` (`workshop` venue types map to the existing `conference` publication type). The control remains disabled until **Override publication type** is chosen, and both the browser and API warn or reject an unconfirmed conflict. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
+
+Unknown text is never saved directly. **Create new canonical venue** submits a reviewed canonical name, optional acronym, type, track, raw alias, and note to `POST /api/venues/create`. Exact normalized duplicates are rejected. Similar names, aliases, or acronyms return possible matches and require explicit distinct-venue confirmation before the alias registry is atomically updated. Metadata updates reject nonexistent IDs or structured fields that conflict with their registry identity; legacy venue-only records are resolved through `scripts/venues.py` on load and unresolved or ambiguous values remain review cases.
+
 Use queue actions to open the metadata, scope, mapping, location, or Add Paper editor. Explicit reviewed/no-action, unresolved, marker-confirmation, and candidate outcomes are written to `data/curated/review_decisions.csv`; location-review actions also update `data/curated/institution_location_review.csv`. Confirm-marker actions create or activate a curated mapping only when paper, institution, and institution-author evidence are present. Exclude-wrong-mapping decisions exclude matching curated mappings and suppress matching automatic markers during export. The queue source CSV is never edited as durable state.
 
 For title-match review, compare DOI, OpenAlex URL, normalized title, year, and suggested matches in the selected row. Confirm a match, add the paper, exclude it from scope, or leave an explicit unresolved decision.

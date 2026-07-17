@@ -1224,6 +1224,97 @@ button:focus-visible {
   grid-column: 1 / -1;
 }
 
+.venue-combobox-field {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 750;
+}
+
+.venue-combobox { position: relative; }
+
+.venue-combobox-button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.72rem 0.8rem;
+  border: 1px solid #cbd1ca;
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fff;
+  text-align: left;
+}
+
+.venue-combobox-panel {
+  position: fixed;
+  z-index: 3000;
+  max-height: min(26rem, calc(100vh - 1rem));
+  padding: 0.65rem;
+  border: 1px solid #aebbb4;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 16px 44px rgb(23 38 31 / 20%);
+  overflow: hidden;
+}
+
+.venue-combobox-panel[hidden] { display: none; }
+
+.venue-combobox-status {
+  margin: 0.45rem 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.venue-combobox-options {
+  max-height: min(17rem, 45vh);
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+}
+
+.venue-combobox-options [role="option"] {
+  padding: 0.58rem 0.65rem;
+  border-radius: 7px;
+  color: var(--ink);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+
+.venue-combobox-options [role="option"].is-active,
+.venue-combobox-options [role="option"]:hover { background: var(--blue-soft); }
+.venue-combobox-options [role="option"][aria-selected="true"] { box-shadow: inset 3px 0 var(--blue); }
+
+.venue-create-action { width: 100%; margin-top: 0.5rem; }
+
+.canonical-venue-summary {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.2rem 0.65rem;
+  margin: 0.2rem 0 0;
+  padding: 0.65rem;
+  border-radius: 8px;
+  background: #f3f6f2;
+  font-size: 0.72rem;
+}
+
+.canonical-venue-summary dt { color: var(--muted); }
+.canonical-venue-summary dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+.venue-provenance-audit { font-weight: 500; }
+.venue-provenance-audit p { margin: 0.5rem 0; }
+.field-warning { display: block; margin-top: 0.35rem; color: #8a4e12; font-weight: 700; }
+.venue-create-dialog form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; max-width: 44rem; }
+.venue-create-dialog h3,
+.venue-create-dialog > form > p,
+.venue-create-dialog .dialog-actions,
+.venue-create-matches { grid-column: 1 / -1; }
+.venue-create-matches { padding: 0.75rem; border: 1px solid #d4a66d; border-radius: 8px; background: var(--amber-soft); }
+
 .form-actions,
 .candidate-actions {
   display: flex;

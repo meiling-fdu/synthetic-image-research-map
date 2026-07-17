@@ -34,33 +34,33 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 817 |
-| source_attribution | 86 |
-| detection_and_source_attribution | 47 |
+| detection | 380 |
+| source_attribution | 43 |
+| detection_and_source_attribution | 24 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 458 |
-| synthetic_image_detection | 254 |
-| deepfake_image_detection | 105 |
-| generated_image_source_attribution | 53 |
-| detection_and_source_attribution | 47 |
-| source_identification | 33 |
+| ai_generated_image_detection | 214 |
+| synthetic_image_detection | 121 |
+| deepfake_image_detection | 45 |
+| generated_image_source_attribution | 26 |
+| detection_and_source_attribution | 24 |
+| source_identification | 17 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 157 |
-| 2025 | 296 |
-| 2024 | 226 |
-| 2023 | 122 |
-| 2022 | 60 |
-| 2021 | 38 |
-| 2020 | 28 |
-| 2019 | 19 |
+| 2026 | 78 |
+| 2025 | 128 |
+| 2024 | 111 |
+| 2023 | 53 |
+| 2022 | 22 |
+| 2021 | 24 |
+| 2020 | 15 |
+| 2019 | 12 |
 | 2018 | 3 |
 | 2017 | 1 |
 
@@ -68,16 +68,16 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Venue | Records |
 | --- | ---: |
-| arXiv (Cornell University) | 91 |
-| Proceedings of the AAAI Conference on Artificial Intelligence | 48 |
-| ArXiv.org | 47 |
-| Lecture notes in computer science | 38 |
-| NeurIPS | 17 |
-| 2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 14 |
-| IEEE Access | 14 |
-| IEEE Transactions on Information Forensics and Security | 14 |
-| International Conference on Machine Learning (ICML) | 14 |
-| Pattern Recognition Letters | 14 |
+| Preprint · arXiv | 59 |
+| Conference · IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 30 |
+| Conference · AAAI Conference on Artificial Intelligence (AAAI) | 21 |
+| Book · Lecture Notes in Computer Science (LNCS) | 14 |
+| Conference · IEEE/CVF International Conference on Computer Vision (ICCV) | 12 |
+| Conference · International Conference on Machine Learning (ICML) | 11 |
+| Conference · Advances in Neural Information Processing Systems (NeurIPS) | 8 |
+| Journal · IEEE Transactions on Information Forensics and Security | 8 |
+| Conference · IEEE International Conference on Acoustics Speech and Signal Processing | 7 |
+| Conference · IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
 
 ## Top Countries
 

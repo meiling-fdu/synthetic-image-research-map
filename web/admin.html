@@ -225,6 +225,7 @@
           </label>
           <label>Venue
             <input id="paper-venue" name="venue" type="text">
+            <span class="field-help">Enter the source venue wording; the shared resolver stores its raw value and canonical identity.</span>
           </label>
           <label>DOI
             <input id="paper-doi" name="doi" type="text">
@@ -500,15 +501,43 @@
                 <label>Title<input id="metadata-title" required></label>
                 <label>Year<input id="metadata-year" type="number" min="1000" max="9999" required></label>
                 <label class="full-width">Authors<textarea id="metadata-authors" rows="2"></textarea></label>
-                <label>Venue<input id="metadata-venue"></label>
+                <div class="venue-combobox-field full-width">
+                  <span id="metadata-venue-label" class="field-label">Venue</span>
+                  <input id="metadata-venue" type="hidden">
+                  <input id="metadata-venue-id" type="hidden">
+                  <input id="metadata-venue-name" type="hidden">
+                  <input id="metadata-venue-acronym" type="hidden">
+                  <input id="metadata-venue-type" type="hidden">
+                  <input id="metadata-venue-track" type="hidden">
+                  <div id="metadata-venue-combobox" class="venue-combobox">
+                    <button id="metadata-venue-button" class="venue-combobox-button" type="button" role="combobox" aria-labelledby="metadata-venue-label metadata-venue-value" aria-controls="metadata-venue-options" aria-expanded="false" aria-haspopup="listbox">
+                      <span id="metadata-venue-value">Select a canonical venue…</span><span aria-hidden="true">▾</span>
+                    </button>
+                    <div id="metadata-venue-panel" class="venue-combobox-panel" hidden>
+                      <label class="visually-hidden" for="metadata-venue-search">Search canonical venues</label>
+                      <input id="metadata-venue-search" type="search" role="searchbox" aria-controls="metadata-venue-options" placeholder="Search name, acronym, type, track, or alias…" autocomplete="off">
+                      <p id="metadata-venue-status" class="venue-combobox-status" role="status">Loading canonical venues…</p>
+                      <ul id="metadata-venue-options" class="venue-combobox-options" role="listbox" aria-labelledby="metadata-venue-label"></ul>
+                      <button id="metadata-venue-create" class="secondary-button venue-create-action" type="button" hidden>Create new canonical venue</button>
+                    </div>
+                  </div>
+                  <dl id="metadata-venue-summary" class="canonical-venue-summary" hidden></dl>
+                  <p id="metadata-venue-error" class="form-error" hidden></p>
+                  <details class="venue-provenance-audit">
+                    <summary>Venue provenance</summary>
+                    <p><strong>Historical raw venue:</strong> <span id="metadata-raw-venue-display">Not recorded</span></p>
+                    <input id="metadata-raw-venue" type="hidden">
+                    <label><input id="metadata-replace-raw-venue" type="checkbox"> Replace historical provenance with the selected canonical name</label>
+                  </details>
+                </div>
                 <label>DOI<input id="metadata-doi"></label>
                 <label>arXiv ID<input id="metadata-arxiv-id"></label>
                 <label>OpenAlex URL<input id="metadata-openalex-url" type="url"></label>
                 <label>Paper URL<input id="metadata-paper-url" type="url"></label>
-                <label>Publication type<select id="metadata-publication-type" required>
+                <label>Publication type<select id="metadata-publication-type" required disabled>
                   <option value="conference">conference</option><option value="journal">journal</option>
                   <option value="preprint">preprint</option><option value="book">book</option>
-                </select></label>
+                </select><button id="metadata-publication-type-override" class="text-button" type="button">Override publication type</button><span id="metadata-publication-type-warning" class="field-warning" hidden></span></label>
                 <label>Paper type / category<select id="metadata-entry-type" required>
                   <option value="method">method</option><option value="survey">survey</option>
                   <option value="dataset">dataset</option><option value="benchmark">benchmark</option>
@@ -548,6 +577,21 @@
                   <button class="secondary-button" id="metadata-edit-cancel" type="button">Cancel</button>
                 </div>
               </form>
+              <dialog id="venue-create-dialog" class="review-dialog venue-create-dialog">
+                <form id="venue-create-form" method="dialog">
+                  <h3>Create new canonical venue</h3>
+                  <p class="muted">This writes a reviewed canonical identity and alias to <code>venue_aliases.csv</code>.</p>
+                  <label>Canonical full name<input id="venue-create-name" required></label>
+                  <label>Acronym, optional<input id="venue-create-acronym"></label>
+                  <label>Venue type<select id="venue-create-type" required><option value="conference">conference</option><option value="journal">journal</option><option value="workshop">workshop</option><option value="preprint">preprint</option><option value="book">book</option></select></label>
+                  <label>Venue track<select id="venue-create-track" required><option value="main">main</option><option value="workshops">workshops</option><option value="findings">findings</option><option value="industry">industry</option><option value="demo">demo</option><option value="doctoral_consortium">doctoral_consortium</option><option value="other">other</option></select></label>
+                  <label class="full-width">Raw input or alias<input id="venue-create-alias" required></label>
+                  <label class="full-width">Review note, optional<textarea id="venue-create-note" rows="2"></textarea></label>
+                  <section id="venue-create-matches" class="venue-create-matches" hidden><h4>Possible existing venues</h4><ul></ul><label><input id="venue-create-confirm-similar" type="checkbox"> I reviewed these matches and confirm this is a distinct venue.</label></section>
+                  <p id="venue-create-error" class="form-error" hidden></p>
+                  <div class="dialog-actions"><button id="venue-create-cancel" type="button" class="secondary-button">Cancel</button><button id="venue-create-submit" type="submit" class="primary-button">Create and select venue</button></div>
+                </form>
+              </dialog>
             </section>
             <section class="notes-section">
               <h3>Notes</h3>
