@@ -119,13 +119,14 @@ process.stdout.write(JSON.stringify({{
 
     def test_dropdowns_are_compact_defaults_near_institution_filters(self):
         self.assertIn('id="country-filter"', self.html)
-        self.assertIn('>All countries</option>', self.html)
+        self.assertIn('>All Countries</option>', self.html)
         self.assertIn('id="country-combobox-button"', self.html)
         self.assertIn('role="combobox"', self.html)
         self.assertIn('role="listbox"', self.html)
-        self.assertIn('id="country-combobox-search"', self.html)
+        self.assertNotIn('id="country-combobox-search"', self.html)
+        self.assertNotIn('role="searchbox"', self.html)
         self.assertIn('id="institution-type-filter"', self.html)
-        self.assertIn('>All institution types</option>', self.html)
+        self.assertIn('>All Institution Types</option>', self.html)
         self.assertLess(
             self.html.index('id="country-filter"'),
             self.html.index('id="institution-type-filter"'),
@@ -223,26 +224,17 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("overflow-y: auto", options)
         self.assertIn("overscroll-behavior: contain", options)
 
-    def test_search_keyboard_and_upward_placement_helpers(self):
+    def test_keyboard_and_upward_placement_helpers(self):
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
         source = self.app[
-            self.app.index("function filterCountryOptionData"):
+            self.app.index("function nextCountryOptionIndex"):
             self.app.index("\nfunction countryOptionElements")
         ]
         script = f"""
-function normalizedSearchText(value) {{ return String(value || '').trim().toLowerCase(); }}
 {source}
-const options = [
-  {{value: 'all', label: 'All countries', searchLabel: 'All countries'}},
-  {{value: 'China', label: 'China (9)', searchLabel: 'China'}},
-  {{value: 'United States', label: 'United States (7)', searchLabel: 'United States'}},
-  {{value: 'Italy', label: 'Italy (7)', searchLabel: 'Italy'}},
-];
 process.stdout.write(JSON.stringify({{
-  search: filterCountryOptionData(options, 'unit').map(option => option.value),
-  blankOrder: filterCountryOptionData(options, '').map(option => option.value),
   arrowDown: nextCountryOptionIndex([0, 1, 2], 1, 1),
   arrowUpWrap: nextCountryOptionIndex([0, 1, 2], 0, -1),
   upward: countryComboboxPlacement(
@@ -257,10 +249,6 @@ process.stdout.write(JSON.stringify({{
             [node, "-e", script], check=True, capture_output=True, text=True,
         )
         result = json.loads(completed.stdout)
-        self.assertEqual(result["search"], ["United States"])
-        self.assertEqual(
-            result["blankOrder"], ["all", "China", "United States", "Italy"],
-        )
         self.assertEqual(result["arrowDown"], 2)
         self.assertEqual(result["arrowUpWrap"], 2)
         self.assertEqual(result["upward"]["placement"], "up")
@@ -284,6 +272,15 @@ process.stdout.write(JSON.stringify({{
         self.assertIn('document.addEventListener("pointerdown"', events)
         self.assertIn("!countryCombobox.contains(event.target)", events)
         self.assertIn("setActiveCountryOption(selectedIndex, true)", self.app)
+        self.assertNotIn("filterCountryComboboxOptions", self.app)
+        self.assertIn(
+            'replaceCountedFilterOptions(\n    countryFilter,\n    "All Countries",',
+            self.app,
+        )
+        self.assertIn(
+            'sortedDimensionCounts(countryCounts),\n    (value) => value,\n    false,',
+            self.app,
+        )
 
 
 if __name__ == "__main__":

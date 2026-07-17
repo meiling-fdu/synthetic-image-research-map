@@ -24,27 +24,27 @@
         <nav class="task-legend" aria-label="Task key">
           <ul>
             <li><span class="legend-dot detection"></span>Detection</li>
-            <li><span class="legend-dot source-attribution"></span>Source attribution</li>
-            <li><span class="legend-dot combined-task"></span>Detection + source attribution</li>
+            <li><span class="legend-dot source-attribution"></span>Source Attribution</li>
+            <li><span class="legend-dot combined-task"></span>Detection + Source Attribution</li>
           </ul>
         </nav>
       </div>
 
-      <section class="header-statistics" aria-label="Filtered research statistics">
+      <section class="header-statistics" aria-label="Filtered Research Statistics">
         <article class="header-chart task-chart">
-          <h2>Task distribution</h2>
+          <h2>Task Distribution</h2>
           <div id="task-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
         </article>
         <article class="header-chart institution-chart">
-          <h2>Top institutions</h2>
+          <h2>Top Institutions</h2>
           <div id="institution-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
         </article>
         <article class="header-chart year-chart">
-          <h2>Year distribution</h2>
+          <h2>Year Distribution</h2>
           <div id="year-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
@@ -57,7 +57,7 @@
           href="https://github.com/meiling-fdu/synthetic-image-research-map"
           target="_blank"
           rel="noopener noreferrer"
-        >GitHub repository</a>
+        >GitHub Repository</a>
         <p class="header-maintainer">Maintained by Meiling Li</p>
         <p id="data-updated" class="header-data-updated" hidden></p>
       </div>
@@ -73,7 +73,7 @@
               <input
                 id="keyword-filter"
                 type="search"
-                placeholder="Title, author, institution..."
+                placeholder="Title, Author, Institution..."
                 autocomplete="off"
                 disabled
               >
@@ -82,53 +82,43 @@
             <label for="task-filter">
               Task
               <select id="task-filter" disabled>
-                <option value="all">All tasks</option>
+                <option value="all">All Tasks</option>
                 <option value="detection">Detection</option>
-                <option value="source_attribution">Source attribution</option>
-                <option value="detection_and_source_attribution">Detection and source attribution</option>
+                <option value="source_attribution">Source Attribution</option>
+                <option value="detection_and_source_attribution">Detection and Source Attribution</option>
               </select>
             </label>
 
             <label for="entry-type-filter">
-              Entry type
+              Paper Type
               <select id="entry-type-filter" disabled>
-                <option value="all">All entry types</option>
+                <option value="all">All Paper Types</option>
                 <option value="method">Methods</option>
                 <option value="dataset">Datasets</option>
                 <option value="benchmark">Benchmarks</option>
                 <option value="survey">Surveys</option>
-                <option value="analysis">Analysis studies</option>
-              </select>
-            </label>
-
-            <label for="sort-control">
-              Sort
-              <select id="sort-control" disabled>
-                <option value="year-desc">Year: newest first</option>
-                <option value="year-asc">Year: oldest first</option>
-                <option value="venue-asc">Venue/source: A-Z</option>
-                <option value="title-asc">Title: A-Z</option>
+                <option value="analysis">Analysis Studies</option>
               </select>
             </label>
 
             <label for="venue-type-filter">
-              Venue Type
+              Publication Type
               <select id="venue-type-filter" disabled>
-                <option value="all">All venue types</option>
+                <option value="all">All Publication Types</option>
               </select>
             </label>
 
             <label for="venue-filter">
               Venue
               <select id="venue-filter" disabled>
-                <option value="all">All venues</option>
+                <option value="all">All Venues</option>
               </select>
             </label>
 
             <div class="country-combobox-field">
               <span id="country-filter-label" class="filter-label">Country</span>
               <select id="country-filter" class="country-filter-native" tabindex="-1" aria-hidden="true" disabled>
-                <option value="all">All countries</option>
+                <option value="all">All Countries</option>
               </select>
               <div id="country-combobox" class="country-combobox">
                 <button
@@ -141,19 +131,8 @@
                   aria-expanded="false"
                   aria-haspopup="listbox"
                   disabled
-                ><span id="country-combobox-value">All countries</span><span class="country-combobox-chevron" aria-hidden="true"></span></button>
+                ><span id="country-combobox-value">All Countries</span><span class="country-combobox-chevron" aria-hidden="true"></span></button>
                 <div id="country-combobox-panel" class="country-combobox-panel" hidden>
-                  <label class="country-combobox-search-label" for="country-combobox-search">
-                    <span class="visually-hidden">Search countries</span>
-                    <input
-                      id="country-combobox-search"
-                      type="search"
-                      role="searchbox"
-                      aria-controls="country-combobox-options"
-                      placeholder="Search countries..."
-                      autocomplete="off"
-                    >
-                  </label>
                   <ul
                     id="country-combobox-options"
                     class="country-combobox-options"
@@ -165,44 +144,43 @@
             </div>
 
             <label for="institution-type-filter">
-              Institution type
+              Institution Type
               <select id="institution-type-filter" disabled>
-                <option value="all">All institution types</option>
+                <option value="all">All Institution Types</option>
               </select>
             </label>
 
             <label for="preprint-filter">
-              Version status
+              Version Status
               <select id="preprint-filter" disabled>
-                <option value="all">All records</option>
-                <option value="preprint-only">Preprint-only records</option>
-                <option value="published">Published/venue records</option>
-                <option value="has-arxiv">Records with arXiv version</option>
-                <option value="no-arxiv">Records without arXiv version</option>
+                <option value="all">All Records</option>
+                <option value="preprint-only">Preprint-Only Records</option>
+                <option value="published">Published/Venue Records</option>
+                <option value="has-arxiv">Records With arXiv Version</option>
+                <option value="no-arxiv">Records Without arXiv Version</option>
               </select>
             </label>
 
             <fieldset class="year-range">
-              <legend>Publication year</legend>
-              <output id="year-range-value" class="year-range-value" aria-live="polite">—</output>
+              <legend>Publication Year</legend>
               <div class="year-range-slider">
                 <div class="year-range-track" aria-hidden="true"></div>
-                <label class="visually-hidden" for="min-year-filter">Start publication year</label>
+                <label class="visually-hidden" for="min-year-filter">Start Publication Year</label>
                 <input
                   id="min-year-filter"
                   class="year-range-input year-range-input-start"
                   type="range"
                   step="1"
-                  aria-label="Start publication year"
+                  aria-label="Start Publication Year"
                   disabled
                 >
-                <label class="visually-hidden" for="max-year-filter">End publication year</label>
+                <label class="visually-hidden" for="max-year-filter">End Publication Year</label>
                 <input
                   id="max-year-filter"
                   class="year-range-input year-range-input-end"
                   type="range"
                   step="1"
-                  aria-label="End publication year"
+                  aria-label="End Publication Year"
                   disabled
                 >
               </div>
@@ -214,29 +192,29 @@
 
           </div>
           <div id="active-institution-filter" class="active-filter-chip" hidden></div>
-          <button id="reset-filters" type="button" disabled>Reset filters</button>
+          <button id="reset-filters" type="button" disabled>Reset Filters</button>
         </section>
       </aside>
 
       <div class="map-column">
         <section class="panel dataset-overview" aria-labelledby="dataset-overview-heading">
           <div class="dataset-overview-heading">
-            <h2 id="dataset-overview-heading">Filtered overview</h2>
+            <h2 id="dataset-overview-heading">Filtered Overview</h2>
             <p id="dataset-statistics-note">
               Institution-level records matching the current filters.
             </p>
           </div>
           <dl class="dataset-statistics" aria-live="polite">
             <div>
-              <dt>Map records</dt>
+              <dt>Map Records</dt>
               <dd id="dataset-record-count">0</dd>
             </div>
             <div>
-              <dt>Paper coverage</dt>
+              <dt>Paper Coverage</dt>
               <dd id="dataset-paper-count">0</dd>
             </div>
             <div>
-              <dt>Unique institutions</dt>
+              <dt>Unique Institutions</dt>
               <dd id="dataset-institution-count">0</dd>
             </div>
             <div>
@@ -248,17 +226,17 @@
               <dd id="dataset-detection-count">0</dd>
             </div>
             <div>
-              <dt>Source attribution</dt>
+              <dt>Source Attribution</dt>
               <dd id="dataset-attribution-count">0</dd>
             </div>
             <div>
-              <dt>Detection + source attribution</dt>
+              <dt>Detection + Source Attribution</dt>
               <dd id="dataset-combined-count">0</dd>
             </div>
           </dl>
         </section>
 
-        <section class="map-panel" aria-label="Research locations">
+        <section class="map-panel" aria-label="Research Locations">
           <div class="map-status-row">
             <p class="map-encoding-legend" aria-label="Circle size represents papers in the current view; circle color represents dominant task">
               <span class="map-encoding-item">
@@ -267,7 +245,7 @@
                   <i class="marker-size-example medium"></i>
                   <i class="marker-size-example large"></i>
                 </span>
-                Circle size = papers in current view
+                Circle Size = Papers in Current View
               </span>
               <span class="map-encoding-item">
                 <span class="marker-color-examples" aria-hidden="true">
@@ -275,22 +253,22 @@
                   <i class="marker-color-example source-attribution"></i>
                   <i class="marker-color-example mixed"></i>
                 </span>
-                Circle color = dominant task
+                Circle Color = Dominant Task
               </span>
             </p>
             <p id="map-status" class="map-status" role="status">
-              Loading public preview data...
+              Loading Public Preview Data...
             </p>
           </div>
           <div class="map-workspace">
-            <div id="map" aria-label="World map of synthetic image research records"></div>
+            <div id="map" aria-label="World Map of Synthetic Image Research Records"></div>
             <aside
               id="paper-details"
               class="paper-details"
               aria-labelledby="paper-details-heading"
             >
               <div class="paper-details-heading">
-                <h3 id="paper-details-heading">Paper details</h3>
+                <h3 id="paper-details-heading">Paper Details</h3>
                 <span id="paper-details-pin-status" class="paper-details-pin-status" hidden>
                   <span aria-hidden="true">&#128204;</span> Pinned
                 </span>
@@ -298,12 +276,12 @@
                   id="close-paper-details"
                   class="paper-details-close"
                   type="button"
-                  aria-label="Close paper details"
+                  aria-label="Close Paper Details"
                   disabled
                 >Close</button>
               </div>
               <div id="paper-details-content" class="paper-details-content" aria-live="polite">
-                <p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>
+                <p class="paper-details-placeholder">Select or Hover Over a Marker to View Paper Details.</p>
               </div>
             </aside>
           </div>
@@ -311,44 +289,54 @@
 
         <section class="panel results-panel" aria-labelledby="results-heading">
           <div class="results-heading-row">
-            <h2 id="results-heading">Filtered records</h2>
+            <h2 id="results-heading">Filtered Records</h2>
+            <div class="results-view-toggle" role="group" aria-label="Results View">
+              <span>View:</span>
+              <button
+                type="button"
+                data-results-view="institutions"
+                aria-pressed="true"
+              >Institution Records</button>
+              <button
+                type="button"
+                data-results-view="papers"
+                aria-pressed="false"
+              >Unique Papers</button>
+            </div>
             <div class="results-actions">
               <p id="results-count" role="status" aria-live="polite">
-                Showing 0 records
+                Showing 0 Records
               </p>
+              <label class="sort-control-label" for="sort-control">
+                Sort By
+                <select id="sort-control" disabled>
+                  <option value="year-desc">Year: Newest First</option>
+                  <option value="year-asc">Year: Oldest First</option>
+                  <option value="venue-asc">Venue/Source: A–Z</option>
+                  <option value="title-asc">Title: A–Z</option>
+                  <option value="title-desc">Title: Z–A</option>
+                </select>
+              </label>
               <button id="export-csv" class="export-button" type="button" disabled>
                 Export CSV
               </button>
             </div>
           </div>
-          <div class="results-view-toggle" role="group" aria-label="Results view">
-            <span>View:</span>
-            <button
-              type="button"
-              data-results-view="institutions"
-              aria-pressed="true"
-            >Institution records</button>
-            <button
-              type="button"
-              data-results-view="papers"
-              aria-pressed="false"
-            >Unique papers</button>
-          </div>
           <ol id="results-list" class="results-list"></ol>
           <p id="results-empty" class="results-empty" hidden>
-            No records match the current filters.
+            No Records Match the Current Filters.
           </p>
         </section>
       </div>
 
       <details class="panel methodology-panel">
         <summary>
-          <span>About, methodology, and scope</span>
-          <span class="methodology-hint">How records are selected, mapped, and explored</span>
+          <span>About, Methodology, and Scope</span>
+          <span class="methodology-hint">How Records Are Selected, Mapped, and Explored</span>
         </summary>
         <div class="methodology-grid">
           <section>
-            <h2>Project scope</h2>
+            <h2>Project Scope</h2>
             <p>
               The map covers detection of AI-generated, synthetic, GAN-generated,
               diffusion-generated, fake, and deepfake images, plus source attribution,
@@ -360,7 +348,7 @@
             </p>
           </section>
           <section>
-            <h2>Data and records</h2>
+            <h2>Data and Records</h2>
             <p>
               The public preview combines automatically collected candidate metadata
               with eligible maintainer-confirmed records. It is a research-discovery
@@ -380,7 +368,7 @@
             </p>
           </section>
           <section>
-            <h2>Explore and export</h2>
+            <h2>Explore and Export</h2>
             <p>
               Keyword search, year range, task filters, the results-view toggle, and CSV
               export operate on the currently loaded dataset. Map markers and summary
@@ -388,7 +376,7 @@
             </p>
           </section>
           <section>
-            <h2>Quality control</h2>
+            <h2>Quality Control</h2>
             <p>
               Paper coverage and map coverage are different: a paper can be searchable
               while its affiliation or location still needs review. Map markers require
@@ -401,16 +389,16 @@
       </details>
 
       <section class="panel project-links" aria-labelledby="project-links-heading">
-        <h2 id="project-links-heading">Data notice and credits</h2>
+        <h2 id="project-links-heading">Data Notice and Credits</h2>
         <div class="project-links-content">
-          <nav class="project-link-list" aria-label="Project resources">
-            <a href="data/public_preview_map_data.json">Public preview JSON</a>
-            <a href="data/public_preview_papers.json">Public preview papers JSON</a>
-            <a href="data/sample_map_data.json">Sample dataset JSON</a>
-            <a href="../docs/public_preview_report.md">Quality report</a>
-            <a href="../docs/data_collection.md">Data methodology</a>
+          <nav class="project-link-list" aria-label="Project Resources">
+            <a href="data/public_preview_map_data.json">Public Preview JSON</a>
+            <a href="data/public_preview_papers.json">Public Preview Papers JSON</a>
+            <a href="data/sample_map_data.json">Sample Dataset JSON</a>
+            <a href="../docs/public_preview_report.md">Quality Report</a>
+            <a href="../docs/data_collection.md">Data Methodology</a>
           </nav>
-          <nav class="dataset-switcher" aria-label="Dataset selection"></nav>
+          <nav class="dataset-switcher" aria-label="Dataset Selection"></nav>
           <p id="dataset-status-note" class="dataset-status-badge">
             Uncurated public preview
           </p>

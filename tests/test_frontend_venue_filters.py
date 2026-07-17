@@ -58,8 +58,11 @@ process.stdout.write(JSON.stringify({{
         result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
         return json.loads(result.stdout)
 
-    def test_venue_type_filter_is_public_and_combines_with_venue(self):
+    def test_publication_type_filter_is_public_and_combines_with_venue(self):
         self.assertIn('id="venue-type-filter"', self.html)
+        self.assertIn("Publication Type", self.html)
+        self.assertNotIn("Venue Type", self.html)
+        self.assertIn(">All Publication Types</option>", self.html)
         self.assertIn('matchesVenue &&\n    matchesVenueType', self.app)
         self.assertIn('venueTypeFilter.addEventListener("change", renderRecords)', self.app)
 
@@ -134,6 +137,25 @@ process.stdout.write(JSON.stringify({{
             metadata_by_id[venue_id] = metadata
         self.assertEqual(len(metadata_by_id), len({paper["venue_id"] for paper in self.papers if paper.get("venue_id")}))
 
+    def test_public_options_do_not_duplicate_same_name_by_acronym_variant(self):
+        by_name_track = {}
+        for paper in self.papers:
+            key = (
+                paper.get("venue_name", "").casefold(),
+                paper.get("venue_track", "main"),
+            )
+            by_name_track.setdefault(key, {
+                "ids": set(),
+                "labels": set(),
+            })
+            by_name_track[key]["ids"].add(paper.get("venue_id", ""))
+            by_name_track[key]["labels"].add(paper.get("venue_label", ""))
+        duplicates = {
+            key: value for key, value in by_name_track.items()
+            if len(value["ids"] - {""}) > 1 and len(value["labels"]) > 1
+        }
+        self.assertEqual(duplicates, {})
+
     def test_icassp_collapses_to_one_main_public_option(self):
         icassp = [
             paper for paper in self.papers
@@ -150,6 +172,40 @@ process.stdout.write(JSON.stringify({{
         )
         self.assertFalse(any("ICASSP 2023" in paper.get("venue_label", "") for paper in icassp))
         self.assertFalse(any("ICASSP 2025" in paper.get("venue_label", "") for paper in icassp))
+
+    def test_corrected_public_venue_options_are_unique(self):
+        expected = {
+            "venue:ijcnn:main": "International Joint Conference on Neural Networks (IJCNN)",
+            "venue:icmr:main": "ACM International Conference on Multimedia Retrieval (ICMR)",
+            "venue:wacv:workshops": "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
+        }
+        for venue_id, label in expected.items():
+            with self.subTest(venue_id=venue_id):
+                matching = [paper for paper in self.papers if paper.get("venue_id") == venue_id]
+                self.assertTrue(matching)
+                self.assertEqual({paper.get("venue_label") for paper in matching}, {label})
+
+        labels_by_id = {}
+        for paper in self.papers:
+            venue_id = paper.get("venue_id")
+            if venue_id in expected:
+                labels_by_id.setdefault(venue_id, set()).add(paper.get("venue_label"))
+        self.assertEqual({venue_id: len(labels) for venue_id, labels in labels_by_id.items()}, {
+            "venue:ijcnn:main": 1,
+            "venue:icmr:main": 1,
+            "venue:wacv:workshops": 1,
+        })
+        public_labels = [paper.get("venue_label", "") for paper in self.papers]
+        self.assertNotIn("International Conference on Multimedia Retrieval", set(public_labels))
+        self.assertFalse(any("WACVW" in label for label in public_labels))
+        self.assertFalse(any("Inter national" in label for label in public_labels))
+
+    def test_public_counts_remain_stable_after_venue_corrections(self):
+        map_records = json.loads(
+            (ROOT / "web" / "data" / "public_preview_map_data.json").read_text(encoding="utf-8")
+        )["records"]
+        self.assertEqual(len(self.papers), 488)
+        self.assertEqual(len(map_records), 950)
 
     def test_venue_type_control_precedes_venue_control(self):
         self.assertLess(
@@ -170,7 +226,7 @@ process.stdout.write(JSON.stringify({{
 
     def test_invalid_venue_selection_is_not_preserved_when_type_changes(self):
         self.assertIn(
-            'replaceCountedFilterOptions(\n    venueFilter,\n    "All venues",',
+            'replaceCountedFilterOptions(\n    venueFilter,\n    "All Venues",',
             self.app,
         )
         self.assertIn("sortedVenueCounts(venueCounts, metadataByVenue)", self.app)

@@ -141,13 +141,11 @@ const countryCombobox = document.querySelector("#country-combobox");
 const countryComboboxButton = document.querySelector("#country-combobox-button");
 const countryComboboxValue = document.querySelector("#country-combobox-value");
 const countryComboboxPanel = document.querySelector("#country-combobox-panel");
-const countryComboboxSearch = document.querySelector("#country-combobox-search");
 const countryComboboxOptions = document.querySelector("#country-combobox-options");
 const institutionTypeFilter = document.querySelector("#institution-type-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
-const yearRangeValue = document.querySelector("#year-range-value");
 const yearRangeMinimum = document.querySelector("#year-range-min");
 const yearRangeMaximum = document.querySelector("#year-range-max");
 const yearRangeSlider = document.querySelector(".year-range-slider");
@@ -1220,7 +1218,8 @@ function compareRecordsForSort(first, second, sortMode) {
     return venueOrder || compareTextValues(recordTitle(first), recordTitle(second));
   }
 
-  return compareTextValues(recordTitle(first), recordTitle(second));
+  const titleOrder = compareTextValues(recordTitle(first), recordTitle(second));
+  return sortMode === "title-desc" ? -titleOrder : titleOrder;
 }
 
 function uniqueTextValues(values) {
@@ -1829,14 +1828,6 @@ function replaceCountedFilterOptions(
     : "all";
 }
 
-function filterCountryOptionData(options, query) {
-  const normalizedQuery = normalizedSearchText(query);
-  if (!normalizedQuery) return [...options];
-  return options.filter((option) => (
-    normalizedSearchText(option.searchLabel || option.label).includes(normalizedQuery)
-  ));
-}
-
 function nextCountryOptionIndex(visibleIndices, currentIndex, direction) {
   if (!visibleIndices.length) return -1;
   const currentPosition = visibleIndices.indexOf(currentIndex);
@@ -1895,10 +1886,8 @@ function setActiveCountryOption(index, scroll = false) {
     if (isActive) activeElement = option;
   });
   const activeId = activeElement?.id || "";
-  [countryComboboxButton, countryComboboxSearch].forEach((element) => {
-    if (activeId) element.setAttribute("aria-activedescendant", activeId);
-    else element.removeAttribute("aria-activedescendant");
-  });
+  if (activeId) countryComboboxButton.setAttribute("aria-activedescendant", activeId);
+  else countryComboboxButton.removeAttribute("aria-activedescendant");
   if (scroll && activeElement) {
     activeElement.scrollIntoView({ block: "nearest" });
   }
@@ -1921,29 +1910,10 @@ function moveActiveCountryOption(direction) {
   );
 }
 
-function filterCountryComboboxOptions(query) {
-  const visibleValues = new Set(
-    filterCountryOptionData(countryComboboxOptionData, query).map(({ value }) => value),
-  );
-  countryOptionElements().forEach((option) => {
-    option.hidden = !visibleValues.has(option.dataset.countryValue);
-  });
-  const visibleIndices = visibleCountryOptionIndices();
-  if (!visibleIndices.includes(activeCountryOptionIndex)) {
-    const selectedIndex = countryComboboxOptionData.findIndex(
-      ({ value }) => value === countryFilter.value,
-    );
-    setActiveCountryOption(
-      visibleIndices.includes(selectedIndex) ? selectedIndex : (visibleIndices[0] ?? -1),
-    );
-  }
-}
-
 function syncCountryComboboxOptions() {
   countryComboboxOptionData = [...countryFilter.options].map((option, index) => ({
     value: option.value,
     label: option.textContent,
-    searchLabel: option.textContent.replace(/\s+\(\d+\)$/, ""),
     index,
   }));
   countryComboboxOptions.replaceChildren(...countryComboboxOptionData.map((option) => {
@@ -1960,9 +1930,9 @@ function syncCountryComboboxOptions() {
   const selectedOption = countryComboboxOptionData.find(
     ({ value }) => value === countryFilter.value,
   ) || countryComboboxOptionData[0];
-  countryComboboxValue.textContent = selectedOption?.label || "All countries";
+  countryComboboxValue.textContent = selectedOption?.label || "All Countries";
   activeCountryOptionIndex = selectedOption?.index ?? -1;
-  filterCountryComboboxOptions(countryComboboxSearch.value);
+  setActiveCountryOption(activeCountryOptionIndex);
 }
 
 function positionCountryComboboxPanel() {
@@ -1987,12 +1957,9 @@ function positionCountryComboboxPanel() {
 
 function openCountryCombobox() {
   if (countryComboboxButton.disabled || !countryComboboxPanel.hidden) return;
-  countryComboboxSearch.value = "";
-  filterCountryComboboxOptions("");
   countryComboboxPanel.hidden = false;
   countryComboboxButton.setAttribute("aria-expanded", "true");
   positionCountryComboboxPanel();
-  countryComboboxSearch.focus();
   const selectedIndex = countryComboboxOptionData.findIndex(
     ({ value }) => value === countryFilter.value,
   );
@@ -2004,7 +1971,6 @@ function closeCountryCombobox(returnFocus = false) {
   countryComboboxPanel.hidden = true;
   countryComboboxButton.setAttribute("aria-expanded", "false");
   countryComboboxButton.removeAttribute("aria-activedescendant");
-  countryComboboxSearch.removeAttribute("aria-activedescendant");
   if (returnFocus) countryComboboxButton.focus();
 }
 
@@ -2022,9 +1988,10 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
   );
   replaceCountedFilterOptions(
     countryFilter,
-    "All countries",
+    "All Countries",
     sortedDimensionCounts(countryCounts),
     (value) => value,
+    false,
   );
   syncCountryComboboxOptions();
 
@@ -2034,7 +2001,7 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
   );
   replaceCountedFilterOptions(
     institutionTypeFilter,
-    "All institution types",
+    "All Institution Types",
     sortedInstitutionTypeCounts(typeCounts),
     institutionTypeLabel,
     false,
@@ -2635,8 +2602,8 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
   currentDisplayedResults = displayedResults;
   const count = displayedResults.length;
   resultsCount.textContent = resultsView === "papers"
-    ? `Showing ${count} unique paper${count === 1 ? "" : "s"}`
-    : `Showing ${count} record${count === 1 ? "" : "s"}`;
+    ? `Showing ${count} Unique Paper${count === 1 ? "" : "s"}`
+    : `Showing ${count} Record${count === 1 ? "" : "s"}`;
   exportCsvButton.disabled = count === 0;
   resultsList.replaceChildren();
   resultsEmpty.hidden = count !== 0;
@@ -2681,16 +2648,16 @@ function baseMapStatusText(visibleRecords) {
     : " Tap a marker to pin paper details.";
   return visibleRecords.length
     ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}.${interactionHint}`
-    : "No records match the current filters.";
+    : "No Records Match the Current Filters.";
 }
 
 function resetPaperDetails() {
   paperDetails.classList.remove("has-content");
   paperDetailsContent.innerHTML =
-    '<p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>';
+    '<p class="paper-details-placeholder">Select or Hover Over a Marker to View Paper Details.</p>';
   closePaperDetailsButton.disabled = true;
   closePaperDetailsButton.textContent = "Close";
-  closePaperDetailsButton.setAttribute("aria-label", "Close paper details");
+  closePaperDetailsButton.setAttribute("aria-label", "Close Paper Details");
   paperDetailsPinStatus.hidden = true;
   paperDetails.classList.remove("is-pinned");
 }
@@ -3173,10 +3140,8 @@ function syncYearRange(changedHandle = null) {
   maxYearFilter.value = String(end);
   minYearFilter.setAttribute("aria-valuemax", String(end));
   maxYearFilter.setAttribute("aria-valuemin", String(start));
-  minYearFilter.setAttribute("aria-valuetext", `Start year ${start}`);
-  maxYearFilter.setAttribute("aria-valuetext", `End year ${end}`);
-  yearRangeValue.value = `${start}\u2013${end}`;
-  yearRangeValue.textContent = `${start}\u2013${end}`;
+  minYearFilter.setAttribute("aria-valuetext", `Start Publication Year ${start}`);
+  maxYearFilter.setAttribute("aria-valuetext", `End Publication Year ${end}`);
 
   const span = yearRangeBounds.maximum - yearRangeBounds.minimum;
   const startPercent = span ? ((start - yearRangeBounds.minimum) / span) * 100 : 0;
@@ -3194,8 +3159,6 @@ function configureYearRange() {
     maxYearFilter.value = "";
     minYearFilter.disabled = true;
     maxYearFilter.disabled = true;
-    yearRangeValue.value = "\u2014";
-    yearRangeValue.textContent = "\u2014";
     yearRangeMinimum.textContent = "\u2014";
     yearRangeMaximum.textContent = "\u2014";
     return;
@@ -3238,8 +3201,8 @@ function handleYearRangeKeydown(event, handle) {
 }
 
 function configureVenueFilter() {
-  venueFilter.replaceChildren(new Option("All venues", "all"));
-  venueTypeFilter.replaceChildren(new Option("All venue types", "all"));
+  venueFilter.replaceChildren(new Option("All Venues", "all"));
+  venueTypeFilter.replaceChildren(new Option("All Publication Types", "all"));
   venueFilter.value = "all";
   venueTypeFilter.value = "all";
 }
@@ -3262,7 +3225,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   );
   replaceCountedFilterOptions(
     venueFilter,
-    "All venues",
+    "All Venues",
     sortedVenueCounts(venueCounts, metadataByVenue),
     (value) => metadataByVenue.get(value)?.label
       || (value === "__unknown__" ? "Unknown venue/source" : value),
@@ -3270,7 +3233,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   );
   replaceCountedFilterOptions(
     venueTypeFilter,
-    "All venue types",
+    "All Publication Types",
     sortedVenueTypeCounts(venueTypeCounts),
     (value) => value === "__unknown__" ? "Unknown" : formatTask(value),
   );
@@ -3347,7 +3310,7 @@ function showDatasetMessage(message, isError = false) {
 function updateDatasetLabels() {
   if (datasetName === "sample") {
     datasetStatusNote.textContent =
-      "Fictional sample";
+      "Fictional Sample";
     datasetNoticeCopy.textContent =
       "These fictional records are provided only for interface testing and are not literature data.";
     mapStatus.textContent = "Loading fictional sample data...";
@@ -3355,7 +3318,7 @@ function updateDatasetLabels() {
       "Institution-level records matching the current filters.";
   } else if (datasetName === "preview") {
     datasetStatusNote.textContent =
-      "Uncurated public preview";
+      "Uncurated Public Preview";
     datasetNoticeCopy.textContent =
       "This public preview is generated from OpenAlex candidate metadata and local manual review caches. It includes paper-level coverage even when institution/location data is incomplete; only papers with valid reviewed coordinates appear as map markers.";
     mapStatus.textContent = "Loading public preview data...";
@@ -3363,7 +3326,7 @@ function updateDatasetLabels() {
       "Institution-level records matching the current filters.";
   } else {
     datasetStatusNote.textContent =
-      "Uncurated candidate data";
+      "Uncurated Candidate Data";
     datasetNoticeCopy.textContent =
       "This local view contains automatically extracted OpenAlex candidate metadata for exploratory review. Paper relevance, task labels, institution names, and coordinates may contain errors.";
     mapStatus.textContent = "Loading local OpenAlex candidate data...";
@@ -3380,8 +3343,8 @@ function renderDatasetSwitcher() {
   }
 
   const choices = [
-    ["preview", "Public preview"],
-    ["sample", "Fictional sample"],
+    ["preview", "Public Preview"],
+    ["sample", "Fictional Sample"],
   ];
   const content = document.createElement("small");
   content.append("Dataset: ");
@@ -3616,30 +3579,18 @@ countryComboboxButton.addEventListener("keydown", (event) => {
     event.preventDefault();
     if (countryComboboxPanel.hidden) openCountryCombobox();
     moveActiveCountryOption(event.key === "ArrowDown" ? 1 : -1);
-  } else if (["Enter", " "].includes(event.key) && countryComboboxPanel.hidden) {
+  } else if (["Enter", " "].includes(event.key)) {
     event.preventDefault();
-    openCountryCombobox();
-  } else if (event.key === "Escape") {
-    event.preventDefault();
-    closeCountryCombobox(true);
-  }
-});
-countryComboboxSearch.addEventListener("input", () => {
-  filterCountryComboboxOptions(countryComboboxSearch.value);
-});
-countryComboboxSearch.addEventListener("keydown", (event) => {
-  if (["ArrowDown", "ArrowUp"].includes(event.key)) {
-    event.preventDefault();
-    moveActiveCountryOption(event.key === "ArrowDown" ? 1 : -1);
-  } else if (event.key === "Enter") {
-    event.preventDefault();
-    const option = countryComboboxOptionData[activeCountryOptionIndex];
-    if (option && visibleCountryOptionIndices().includes(activeCountryOptionIndex)) {
-      selectCountryComboboxValue(option.value);
+    if (countryComboboxPanel.hidden) {
+      openCountryCombobox();
+    } else {
+      const option = countryComboboxOptionData[activeCountryOptionIndex];
+      if (option && visibleCountryOptionIndices().includes(activeCountryOptionIndex)) {
+        selectCountryComboboxValue(option.value);
+      }
     }
   } else if (event.key === "Escape") {
     event.preventDefault();
-    event.stopPropagation();
     closeCountryCombobox(true);
   }
 });

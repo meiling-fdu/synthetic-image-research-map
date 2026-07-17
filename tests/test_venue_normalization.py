@@ -44,6 +44,59 @@ class VenueNormalizationTests(unittest.TestCase):
         self.assertEqual(main.venue_id, "venue:wacv:main")
         self.assertEqual(workshop.venue_id, "venue:wacv:workshops")
 
+    def test_ijcnn_variants_resolve_to_one_main_venue(self):
+        variants = [
+            "International Joint Conference on Neural Networks",
+            "International Joint Conference on Neural Networks (IJCNN)",
+            "2025 International Joint Conference on Neural Networks (IJCNN)",
+            "Proceedings of the 2024 International Joint Conference on Neural Networks",
+            "IJCNN - 2025 International Joint Conference on Neural Networks (IJCNN)",
+            "IJCNN: International Joint Conference on Neural Networks",
+        ]
+        venues = [self.resolve(value) for value in variants]
+        self.assertEqual({venue.venue_id for venue in venues}, {"venue:ijcnn:main"})
+        self.assertEqual({venue.venue_name for venue in venues}, {"International Joint Conference on Neural Networks"})
+        self.assertEqual({venue.venue_acronym for venue in venues}, {"IJCNN"})
+        self.assertEqual({venue.venue_track for venue in venues}, {"main"})
+
+    def test_icmr_uses_correct_acm_full_name_and_acronym(self):
+        variants = [
+            "International Conference on Multimedia Retrieval",
+            "International Conference on Multimedia Retrieval (ICMR)",
+            "ACM International Conference on Multimedia Retrieval",
+            "ACM International Conference on Multimedia Retrieval (ICMR)",
+            "Proceedings of the 2026 International Conference on Multimedia Retrieval (ICMR)",
+            "Proceedings of the 2022 ACM International Conference on Multimedia Retrieval",
+        ]
+        venues = [self.resolve(value) for value in variants]
+        self.assertEqual({venue.venue_id for venue in venues}, {"venue:icmr:main"})
+        self.assertEqual({venue.venue_name for venue in venues}, {"ACM International Conference on Multimedia Retrieval"})
+        self.assertEqual({venue.venue_acronym for venue in venues}, {"ICMR"})
+        self.assertEqual(display_venue(venues[0].as_record()), "ACM International Conference on Multimedia Retrieval (ICMR)")
+
+    def test_wacvw_aliases_resolve_to_wacv_workshops(self):
+        variants = [
+            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
+            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACVW) Workshops",
+            "IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
+            "2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
+            "Proceedings of the 2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshop (WACVW)",
+        ]
+        venues = [self.resolve(value) for value in variants]
+        self.assertEqual({venue.venue_id for venue in venues}, {"venue:wacv:workshops"})
+        self.assertEqual({venue.venue_acronym for venue in venues}, {"WACV"})
+        self.assertEqual({venue.venue_track for venue in venues}, {"workshops"})
+        self.assertEqual(
+            display_venue(venues[0].as_record()),
+            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
+        )
+
+    def test_malformed_inter_national_machine_vision_is_reviewed_alias(self):
+        venue = self.resolve("17th Inter national Conference on Machine Vision")
+        self.assertEqual(venue.venue_id, "venue:international-conference-on-machine-vision:main")
+        self.assertEqual(venue.venue_name, "International Conference on Machine Vision")
+        self.assertEqual(venue.raw_venue, "17th Inter national Conference on Machine Vision")
+
     def test_icml_edition_and_neurips_volume(self):
         self.assertEqual(self.resolve("Proceedings of the 42nd International Conference on Machine Learning").venue_id, "venue:icml:main")
         self.assertEqual(self.resolve("Advances in Neural Information Processing Systems 37").venue_id, "venue:neurips:main")
@@ -95,8 +148,66 @@ class VenueNormalizationTests(unittest.TestCase):
         second, second_report = migrate_rows(migrated)
         self.assertEqual(report["canonical_venue_count"], 1)
         self.assertEqual(report["largest_duplicate_groups_merged"][0]["paper_count"], 2)
+        self.assertIn("previous_venue_id", report["audit"][0])
+        self.assertIn("proposed_canonical_venue_id", report["audit"][0])
+        self.assertIn("applied_alias_or_rule", report["audit"][0])
+        self.assertIn("inventory_scan", report)
         self.assertEqual(second_report["records_changed"], 0)
         self.assertEqual(migrated, second)
+
+    def test_targeted_venue_migration_is_idempotent_and_preserves_raw_provenance(self):
+        rows = [
+            {
+                "paper_id": "icmr",
+                "title": "ICMR paper",
+                "year": "2026",
+                "venue": "International Conference on Multimedia Retrieval",
+                "venue_id": "venue:icmr:main",
+                "venue_name": "International Conference on Multimedia Retrieval",
+                "venue_acronym": "ICMR",
+                "venue_type": "conference",
+                "venue_track": "main",
+                "raw_venue": "Proceedings of the 2026 International Conference on Multimedia Retrieval (ICMR)",
+                "publication_type": "conference",
+            },
+            {
+                "paper_id": "wacvw",
+                "title": "WACVW paper",
+                "year": "2025",
+                "venue": "IEEE/CVF Winter Conference on Applications of Computer Vision",
+                "venue_id": "venue:ieee-cvf-winter-conference-on-applications-of-computer-vision:workshops",
+                "venue_name": "IEEE/CVF Winter Conference on Applications of Computer Vision",
+                "venue_acronym": "WACVW",
+                "venue_type": "conference",
+                "venue_track": "workshops",
+                "raw_venue": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
+                "publication_type": "conference",
+            },
+            {
+                "paper_id": "machine-vision",
+                "title": "Machine vision paper",
+                "year": "2024",
+                "venue": "Inter national Conference on Machine Vision",
+                "venue_id": "venue:inter-national-conference-on-machine-vision:main",
+                "venue_name": "Inter national Conference on Machine Vision",
+                "venue_acronym": "",
+                "venue_type": "conference",
+                "venue_track": "main",
+                "raw_venue": "17th Inter national Conference on Machine Vision",
+                "publication_type": "conference",
+            },
+        ]
+        migrated, report = migrate_rows(rows)
+        second, second_report = migrate_rows(migrated)
+        by_paper = {row["paper_id"]: row for row in migrated}
+        self.assertEqual(by_paper["icmr"]["venue_name"], "ACM International Conference on Multimedia Retrieval")
+        self.assertEqual(by_paper["icmr"]["raw_venue"], "Proceedings of the 2026 International Conference on Multimedia Retrieval (ICMR)")
+        self.assertEqual(by_paper["wacvw"]["venue_id"], "venue:wacv:workshops")
+        self.assertEqual(by_paper["wacvw"]["venue_acronym"], "WACV")
+        self.assertEqual(by_paper["machine-vision"]["venue_name"], "International Conference on Machine Vision")
+        self.assertGreaterEqual(report["records_changed"], 3)
+        self.assertEqual(second_report["records_changed"], 0)
+        self.assertEqual(second, migrated)
 
     def test_workshop_migration_is_idempotent_and_preserves_track_identity(self):
         rows = [{

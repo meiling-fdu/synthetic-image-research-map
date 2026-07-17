@@ -32,9 +32,9 @@ class FrontendYearRangeSliderTests(unittest.TestCase):
     def test_accessible_dual_range_markup_and_distinguishable_handles(self):
         self.assertEqual(self.html.count('type="range"'), 2)
         self.assertNotIn('id="min-year-filter" type="number"', self.html)
-        self.assertIn('aria-label="Start publication year"', self.html)
-        self.assertIn('aria-label="End publication year"', self.html)
-        self.assertIn('id="year-range-value"', self.html)
+        self.assertIn('aria-label="Start Publication Year"', self.html)
+        self.assertIn('aria-label="End Publication Year"', self.html)
+        self.assertNotIn('id="year-range-value"', self.html)
         self.assertIn('id="year-range-min"', self.html)
         self.assertIn('id="year-range-max"', self.html)
         self.assertIn(".year-range-input-end::-webkit-slider-thumb", self.css)
@@ -67,7 +67,7 @@ process.stdout.write(JSON.stringify({{firstBounds, defaultSelection, preserved, 
         self.assertEqual(payload["clamped"], {"start": 2020, "end": 2025})
         self.assertIn("const previousSelection = yearRangeBounds ? currentYearSelection() : null", self.app)
 
-    def test_start_end_constraints_and_visible_range_sync(self):
+    def test_start_end_constraints_and_accessible_range_sync(self):
         sync_start = self.app.index("function syncYearRange")
         sync_end = self.app.index("\nfunction configureYearRange", sync_start)
         sync_source = self.app[sync_start:sync_end]
@@ -80,21 +80,40 @@ function input(value) {{
 }}
 const minYearFilter = input(2025);
 const maxYearFilter = input(2023);
-const yearRangeValue = {{value: '', textContent: ''}};
 const sliderStyle = {{values: {{}}, setProperty(name, value) {{ this.values[name] = value; }}}};
 const yearRangeSlider = {{style: sliderStyle}};
 const yearRangeBounds = {{minimum: 2017, maximum: 2026}};
 {sync_source}
 syncYearRange('start');
-const afterStart = {{start: minYearFilter.value, end: maxYearFilter.value, label: yearRangeValue.textContent}};
+const afterStart = {{
+  start: minYearFilter.value,
+  end: maxYearFilter.value,
+  startText: minYearFilter.attributes['aria-valuetext'],
+  endText: maxYearFilter.attributes['aria-valuetext'],
+}};
 minYearFilter.value = '2024';
 maxYearFilter.value = '2020';
 syncYearRange('end');
-const afterEnd = {{start: minYearFilter.value, end: maxYearFilter.value, label: yearRangeValue.textContent}};
+const afterEnd = {{
+  start: minYearFilter.value,
+  end: maxYearFilter.value,
+  startText: minYearFilter.attributes['aria-valuetext'],
+  endText: maxYearFilter.attributes['aria-valuetext'],
+}};
 process.stdout.write(JSON.stringify({{afterStart, afterEnd}}));
 """)
-        self.assertEqual(payload["afterStart"], {"start": "2025", "end": "2025", "label": "2025–2025"})
-        self.assertEqual(payload["afterEnd"], {"start": "2020", "end": "2020", "label": "2020–2020"})
+        self.assertEqual(payload["afterStart"], {
+            "start": "2025",
+            "end": "2025",
+            "startText": "Start Publication Year 2025",
+            "endText": "End Publication Year 2025",
+        })
+        self.assertEqual(payload["afterEnd"], {
+            "start": "2020",
+            "end": "2020",
+            "startText": "Start Publication Year 2020",
+            "endText": "End Publication Year 2020",
+        })
 
     def test_keyboard_arrows_home_end_and_page_keys_respect_constraints(self):
         payload = self.run_node(f"""

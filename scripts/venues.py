@@ -412,6 +412,7 @@ def _known_lookup_keys(raw: str) -> list[str]:
     cleaned = _strip_edition_noise(raw)
     candidates = [raw, cleaned]
     candidates.extend(_icassp_lookup_variants(cleaned))
+    candidates.extend(_acronym_prefixed_lookup_variants(cleaned))
     # Only remove numeric proceedings volumes for the series where the suffix is
     # known not to be part of the venue identity.
     if re.search(r"Advances in Neural Information Processing Systems\s+\d+\s*$", cleaned, re.I):
@@ -419,6 +420,27 @@ def _known_lookup_keys(raw: str) -> list[str]:
     # ACM MM proceedings commonly encode only the yearly edition in this prefix.
     candidates.append(re.sub(r"^\d+(?:st|nd|rd|th)\s+", "", cleaned, flags=re.I))
     return list(dict.fromkeys(alias_key(candidate) for candidate in candidates if candidate))
+
+
+def _acronym_prefixed_lookup_variants(value: str) -> list[str]:
+    match = re.match(
+        r"^\s*([A-Z][A-Z0-9&.-]{1,15})\s*(?:[-:]\s*)"
+        r"(?:(?:19|20)\d{2}\s+)?(.+?)\s*$",
+        value,
+    )
+    if not match:
+        return []
+    acronym = match.group(1)
+    rest = clean_text(match.group(2))
+    if not rest:
+        return []
+    without_suffix = re.sub(
+        rf"\s*\({re.escape(acronym)}\)\s*$",
+        "",
+        rest,
+        flags=re.I,
+    )
+    return [rest, without_suffix, f"{without_suffix} ({acronym})"]
 
 
 def _icassp_lookup_variants(value: str) -> list[str]:

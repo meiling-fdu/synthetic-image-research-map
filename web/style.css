@@ -448,16 +448,6 @@ h2 {
   display: none;
 }
 
-.country-combobox-search-label {
-  flex: 0 0 auto;
-  padding: 8px;
-  border-bottom: 1px solid var(--line);
-}
-
-.country-combobox-search-label input {
-  padding: 8px 9px;
-}
-
 .country-combobox-options {
   min-height: 0;
   margin: 0;
@@ -570,14 +560,6 @@ button.institution-filter-link:focus-visible {
   color: var(--muted);
   font-size: 0.8rem;
   font-weight: 700;
-}
-
-.year-range-value {
-  color: var(--ink);
-  font-size: 1rem;
-  font-variant-numeric: tabular-nums;
-  font-weight: 800;
-  line-height: 1.2;
 }
 
 .year-range-slider {
@@ -900,8 +882,12 @@ input:disabled {
 }
 
 .institution-chart-name {
+  display: block;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .institution-chart-count {
@@ -981,10 +967,10 @@ input:disabled {
 }
 
 .results-heading-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, auto);
+  align-items: center;
+  gap: 10px 16px;
   margin-bottom: 12px;
 }
 
@@ -1002,7 +988,26 @@ input:disabled {
 .results-actions {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 10px;
+  min-width: 0;
+}
+
+.sort-control-label {
+  display: flex;
+  align-items: center;
+  width: auto;
+  gap: 6px;
+  margin: 0;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.sort-control-label select {
+  min-width: 150px;
+  padding: 5px 28px 5px 8px;
+  font-size: 0.78rem;
 }
 
 .export-button {
@@ -1017,7 +1022,8 @@ input:disabled {
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 12px;
+  justify-content: center;
+  margin-bottom: 0;
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 700;
@@ -1287,6 +1293,8 @@ input:disabled {
   min-width: 0;
   height: clamp(320px, 28vw, 420px);
   min-height: 320px;
+  contain: layout paint;
+  overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 5px;
   background: #aad3df;
@@ -1945,6 +1953,15 @@ footer a {
     padding-bottom: 4px;
   }
 
+  .results-heading-row {
+    grid-template-columns: 1fr;
+  }
+
+  .results-view-toggle,
+  .results-actions {
+    justify-content: flex-start;
+  }
+
   .sidebar {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1988,10 +2005,9 @@ footer a {
   .header-statistics {
     grid-column: 1;
     grid-row: 3;
-    grid-template-columns: 160px 270px 210px;
-    overflow-x: auto;
+    grid-template-columns: 1fr;
+    overflow-x: visible;
     padding-bottom: 5px;
-    scrollbar-width: thin;
   }
 
   .methodology-hint {
@@ -2034,8 +2050,21 @@ footer a {
     padding: 12px;
   }
 
+  .dataset-statistics {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
+
+  .dataset-statistics div {
+    flex: 1 1 calc(50% - 7px);
+    min-width: min(100%, 130px);
+  }
+
   .map-status {
+    width: 100%;
     text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .map-status-row {
@@ -2046,13 +2075,22 @@ footer a {
 
   .results-heading-row {
     align-items: flex-start;
-    flex-direction: column;
-    gap: 3px;
+    gap: 8px;
   }
 
   .results-actions {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
+  }
+
+  .sort-control-label {
+    flex: 1 1 190px;
+    white-space: normal;
+  }
+
+  .sort-control-label select {
+    min-width: 0;
+    flex: 1 1 150px;
   }
 
   .results-list {
