@@ -12,16 +12,21 @@ outputs.
 `university`, `research_unit`, `company`, and `other`. The shared resolver in
 `scripts/institution_types.py` owns this enum and applies types after
 canonical/merged-ID resolution; curated and public validators import its
-canonical set. A complete case-insensitive `university` word in the canonical
-name or a confirmed alias is deterministic evidence for `university`;
-departments, laboratories, institutes, research centers, academies, councils,
-groups, and units resolve to `research_unit`; confirmed companies and clear
-commercial organizations resolve to `company`; unresolved values use `other`.
+canonical set. Existing canonical values are preserved; unsupported legacy
+research values can be resolved for backward-compatible reads, but new or
+unverified entities default to `other` for manual review. Names and aliases are
+context, not sufficient classification evidence: in particular, the word
+“Institute” does not imply `research_unit`.
 Parent and child entities are typed independently. Legacy `unknown`,
 `laboratory`, `department`, and `institute` values are invalid in curated and
 public data. `data/processed/institution_type_migration_report.csv` preserves
 the migration's previous type, rule, evidence, aliases considered, and affected
 unique-paper count.
+
+Public and Admin surfaces use `web/institution_type_labels.js` to display
+`research_unit` as **Research Institute**. Public JSON and downloaded CSV retain
+the raw `research_unit` machine value for reproducibility and backward
+compatibility; the display label is not a serialized enum migration.
 
 `institution_locations.csv` owns location only and references `institution_id`.
 Coordinate edits cannot change that ID. A child without a location may inherit

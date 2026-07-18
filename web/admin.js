@@ -2127,7 +2127,7 @@ function renderInstitutionManagement() {
     ).join(", ") || "None";
     hierarchy.textContent = `${aliases} · Parent: ${parent} · Descendants: ${descendants}`;
     const status = document.createElement("td");
-    status.textContent = `${institution.institution_status} · ${institution.institution_type}`;
+    status.textContent = `${institution.institution_status} · ${InstitutionTypeLabels.label(institution.institution_type)}`;
     if (institution.institution_type_rule) {
       status.append(document.createElement("br"), document.createTextNode(
         `Type provenance: ${institution.institution_type_rule}${institution.institution_type_evidence ? ` · ${institution.institution_type_evidence}` : ""}`,
@@ -2338,10 +2338,13 @@ async function runInstitutionAction(action, institution) {
     if (action === "identity") {
       const canonicalName = window.prompt("Canonical name (identity only; this does not reassign mappings):", institution.canonical_name);
       if (!canonicalName) return;
-      const institutionType = window.prompt("Institution type: university, research_unit, company, or other", institution.institution_type);
+      const institutionType = window.prompt(
+        "Institution type machine value: University = university; Research Institute = research_unit; Company = company; Other = other",
+        institution.institution_type,
+      );
       if (!institutionType) return;
       if (!["university", "research_unit", "company", "other"].includes(institutionType)) {
-        showNotice("Institution type must be university, research_unit, company, or other.", "error");
+        showNotice("Choose University, Research Institute, Company, or Other using its listed machine value.", "error");
         return;
       }
       await postInstitutionAction("/api/institution/identity", { institution_id: institution.institution_id, canonical_name: canonicalName, institution_type: institutionType, institution_status: institution.institution_status });

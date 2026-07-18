@@ -11,9 +11,11 @@ from scripts.curated_schema import (
     INSTITUTION_COLUMNS,
 )
 from scripts.institution_types import (
+    INSTITUTION_TYPE_LABELS,
     INSTITUTION_TYPES,
     build_migration_rows,
     classify_institution_type,
+    institution_type_label,
     resolve_public_institution_type,
 )
 from scripts.migrate_institution_types import migrate
@@ -52,7 +54,10 @@ class InstitutionTypeRuleTests(unittest.TestCase):
                 "institution_type", ALLOWED_INSTITUTION_TYPES, issues,
             )
             self.assertEqual(issues, [])
-        for value in ("laboratory", "institute", "school", "unexpected_value"):
+        for value in (
+            "research_institute", "institute", "laboratory", "school",
+            "business_unit", "unexpected_value",
+        ):
             issues = []
             validate_allowed_value(
                 [{"institution_type": value}], "institutions.csv",
@@ -70,20 +75,22 @@ class InstitutionTypeRuleTests(unittest.TestCase):
         self.assertEqual(resolve_public_institution_type("department"), "research_unit")
         self.assertEqual(resolve_public_institution_type("unknown"), "other")
         self.assertEqual(resolve_public_institution_type("unexpected"), "other")
+        self.assertEqual(INSTITUTION_TYPE_LABELS["research_unit"], "Research Institute")
+        self.assertEqual(institution_type_label("research_unit"), "Research Institute")
 
-    def test_complete_case_insensitive_university_word_in_name_and_alias(self):
+    def test_unverified_names_require_review_instead_of_token_inference(self):
         self.assertEqual(
             classify_institution_type("Example UNIVERSITY Center", (), "unknown")[0],
-            "university",
+            "other",
         )
         self.assertEqual(
             classify_institution_type("Example U", ("Example University",), "unknown")[0],
-            "university",
+            "other",
         )
-        self.assertNotEqual(
-            classify_institution_type("Universitylike Labs", (), "unknown")[0],
-            "university",
-        )
+        for name in ("Example Institute", "Example Laboratory", "Example University"):
+            resolved, rule, _ = classify_institution_type(name, (), "unknown")
+            self.assertEqual(resolved, "other")
+            self.assertEqual(rule, "manual_review_required")
 
     def test_legacy_company_corporate_lab_and_unknown_rules(self):
         self.assertEqual(classify_institution_type("Example Lab", (), "laboratory")[0], "research_unit")
@@ -175,7 +182,7 @@ class InstitutionTypeMigrationTests(unittest.TestCase):
         with self.report.open(encoding="utf-8", newline="") as handle:
             report = {row["institution_id"]: row for row in csv.DictReader(handle)}
         self.assertEqual(report["u"]["affected_unique_paper_count"], "1")
-        self.assertEqual(report["u"]["proposed_type"], "university")
+        self.assertEqual(report["u"]["proposed_type"], "other")
 
     def test_admin_accepts_other_and_rejects_unsupported_values(self):
         updated = update_institution_identity(
@@ -183,7 +190,10 @@ class InstitutionTypeMigrationTests(unittest.TestCase):
             institutions_path=self.institutions,
         )
         self.assertEqual(updated["institution_type"], "other")
-        for value in ("laboratory", "institute", "unexpected_value"):
+        for value in (
+            "research_institute", "institute", "laboratory", "school",
+            "business_unit", "unexpected_value",
+        ):
             with self.assertRaisesRegex(
                 CuratedInstitutionError, "unsupported institution_type"
             ):

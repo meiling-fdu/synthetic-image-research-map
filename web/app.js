@@ -49,13 +49,7 @@ const ENTRY_TYPE_LABELS = {
   survey: "Survey",
   analysis: "Analysis study",
 };
-const INSTITUTION_TYPE_LABELS = {
-  university: "University",
-  research_unit: "Research unit",
-  company: "Company",
-  other: "Other",
-};
-const INSTITUTION_TYPE_ORDER = ["university", "research_unit", "company", "other"];
+const INSTITUTION_TYPE_ORDER = InstitutionTypeLabels.values;
 const CHINA_REGION_BY_CODE = {
   HK: "Hong Kong",
   MO: "Macau",
@@ -965,35 +959,11 @@ function normalizeCountryRegionRecord(record) {
 }
 
 function normalizeInstitutionType(value) {
-  const normalized = String(value || "")
-    .normalize("NFKC")
-    .trim()
-    .toLocaleLowerCase()
-    .replace(/[\s-]+/g, "_");
-  const aliases = {
-    university: "university",
-    education: "university",
-    educational: "university",
-    research_unit: "research_unit",
-    research: "research_unit",
-    institute: "research_unit",
-    laboratory: "research_unit",
-    department: "research_unit",
-    company: "company",
-    corporate: "company",
-    commercial: "company",
-    unknown: "other",
-  };
-  const resolved = aliases[normalized] || normalized;
-  return ["university", "research_unit", "company", "other"].includes(resolved)
-    ? resolved
-    : "other";
+  return InstitutionTypeLabels.normalize(value);
 }
 
 function institutionTypeLabel(value) {
-  const normalized = normalizeInstitutionType(value);
-  return INSTITUTION_TYPE_LABELS[normalized]
-    || normalized.replaceAll("_", " ").replace(/^./, (character) => character.toUpperCase());
+  return InstitutionTypeLabels.label(value);
 }
 
 function canonicalCountryName(value, countryCode = "") {

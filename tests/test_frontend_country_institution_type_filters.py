@@ -12,6 +12,9 @@ class FrontendCountryInstitutionTypeFilterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = (REPOSITORY / "web" / "app.js").read_text()
+        cls.type_labels = (
+            REPOSITORY / "web" / "institution_type_labels.js"
+        ).read_text()
         cls.html = (REPOSITORY / "web" / "index.html").read_text()
         cls.css = (REPOSITORY / "web" / "style.css").read_text()
 
@@ -20,7 +23,7 @@ class FrontendCountryInstitutionTypeFilterTests(unittest.TestCase):
         if node is None:
             self.skipTest("Node.js is not on PATH")
         constants = self.app[
-            self.app.index("const INSTITUTION_TYPE_LABELS"):
+            self.app.index("const INSTITUTION_TYPE_ORDER"):
             self.app.index("\nfunction noWrapMinZoomForWidth")
         ]
         helpers = self.app[
@@ -32,6 +35,7 @@ class FrontendCountryInstitutionTypeFilterTests(unittest.TestCase):
             self.app.index("\nfunction deriveFilteredRecordSets")
         ]
         script = f"""
+{self.type_labels}
 {constants}
 function normalizedTitle(value) {{ return String(value || '').toLowerCase(); }}
 function recordInstitution(record) {{ return String(record.institution || record.institution_name || '').trim(); }}
@@ -200,15 +204,29 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("renderInstitutionChart(datasetRecords)", self.app)
 
     def test_rendering_and_csv_include_readable_types_deterministically(self):
-        self.assertIn('research_unit: "Research unit"', self.app)
-        self.assertIn('other: "Other"', self.app)
+        self.assertIn('research_unit: "Research Institute"', self.type_labels)
+        self.assertIn('other: "Other"', self.type_labels)
         self.assertIn(
-            'const INSTITUTION_TYPE_ORDER = ["university", "research_unit", "company", "other"]',
+            "const INSTITUTION_TYPE_ORDER = InstitutionTypeLabels.values",
             self.app,
         )
-        self.assertNotIn('unknown: "Unknown"', self.app)
+        self.assertNotIn('unknown: "Unknown"', self.type_labels)
+        self.assertIn("return InstitutionTypeLabels.label(value)", self.app)
         self.assertIn('["institution_type",', self.app)
         self.assertIn('["institution_types",', self.app)
+        csv_contract = self.app[
+            self.app.index("const INSTITUTION_CSV_COLUMNS"):
+            self.app.index("function escapeHtml")
+        ]
+        self.assertIn(
+            '["institution_type", (record) => normalizeInstitutionType(record.institution_type)]',
+            csv_contract,
+        )
+        self.assertIn(
+            '["institution_types", (record) => institutionTypesForRecord(record).join("; ")]',
+            csv_contract,
+        )
+        self.assertNotIn("institutionTypeLabel(record.institution_type)", csv_contract)
         self.assertIn('class="affiliation-type"', self.app)
         self.assertIn("sortedInstitutionTypeCounts(typeCounts)", self.app)
         self.assertIn("compareTextValues(labelForValue(first[0])", self.app)

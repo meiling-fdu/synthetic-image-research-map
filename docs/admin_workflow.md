@@ -23,9 +23,11 @@ geocoding evidence. Location writes are bound to the row's stable
 a paper author.
 
 The institution identity editor accepts only `university`, `research_unit`,
-`company`, or `other`. Admin responses resolve legacy values before display and
-show the applicable classification rule/evidence. The API rejects legacy type
-values rather than relying on a browser-only remap.
+`company`, or `other`. The Admin display calls `research_unit` **Research
+Institute**, while the editor and API retain the machine value. Admin responses
+resolve legacy values before display and show the applicable classification
+rule/evidence. The API rejects legacy type values rather than relying on a
+browser-only remap.
 
 Global merge displays affected papers, author mappings, markers, and authors,
 then requires the exact `REPLACE … WITH … GLOBALLY` phrase and writes an audit
