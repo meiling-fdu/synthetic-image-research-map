@@ -2,6 +2,7 @@ import csv
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -97,6 +98,145 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
             "recommended_action": "Replace the mapping.",
             "resolution_status": "unresolved",
         }
+
+    def prepare_confirmed_change(self):
+        current = dict(self.mapping)
+        current.update({
+            "institution": "Correct University",
+            "institution_id": "institution:correct",
+            "updated_at": "2026-02-01T00:00:00+00:00",
+            "evidence_url": "https://example.test/evidence",
+        })
+        write_csv(self.mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS, [current])
+        source_audit = {column: "" for column in INSTITUTION_AUDIT_COLUMNS}
+        source_audit.update({
+            "audit_id": "institution-audit:change-1",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:correct",
+            "previous_institution_id": "institution:wrong",
+            "affected_papers": "1",
+            "affected_mappings": "1",
+            "affected_markers": "1",
+            "affected_authors": "Ada Example",
+            "confirmation_text": "mapping_id=mapping:1; paper_id=paper:1; paper_title=Example paper; previous_institution=Wrong Lab; new_institution=Correct University; change_source=admin_mapping_update",
+            "review_note": "Publisher evidence checked.",
+            "created_at": "2026-02-01T00:00:00Z",
+            "created_by": "local-admin",
+        })
+        write_csv(self.audit_path, INSTITUTION_AUDIT_COLUMNS, [source_audit])
+        finding = {
+            **self.finding,
+            "audit_id": source_audit["audit_id"],
+            "current_institution": "Correct University",
+            "current_institution_id": "institution:correct",
+            "suggested_canonical_institution": "",
+            "suggested_institution_id": "",
+            "issue_type": "confirmed_mapping_changed",
+            "reason": "Trusted mapping changed.",
+            "recommended_action": "Confirm or revert the change.",
+        }
+        sync_findings([finding], path=self.queue_path, now="2026-02-01T00:01:00+00:00")
+        queue = load_queue(self.queue_path)[0]
+        expected = {
+            "expected_mapping_id": "mapping:1",
+            "expected_institution_id": "institution:correct",
+            "expected_mapping_updated_at": current["updated_at"],
+            "expected_review_updated_at": queue["updated_at"],
+        }
+        return current, source_audit, queue, expected
+
+    def test_confirm_intentional_change_is_atomic_and_audited(self):
+        current, _, queue, expected = self.prepare_confirmed_change()
+        result = apply_cleanup_action(
+            [queue["queue_id"]], "mapping_change_confirmed", "Intentional and evidence-backed.",
+            confirmed=True, resolved_by="local-admin", queue_path=self.queue_path,
+            mappings_path=self.mappings_path, location_review_path=self.locations_path,
+            institutions_path=self.institutions_path, institution_audit_path=self.audit_path,
+            **expected,
+        )
+        self.assertEqual(load_mappings(self.mappings_path)[0]["institution_id"], "institution:correct")
+        resolved = load_queue(self.queue_path)[0]
+        self.assertEqual(resolved["resolution_action"], "mapping_change_confirmed")
+        self.assertEqual(resolved["resolution_note"], "Intentional and evidence-backed.")
+        self.assertEqual(resolved["is_current"], "false")
+        self.assertEqual(result["audit"]["action"], "mapping_change_confirmed")
+        self.assertIn(f"review_queue_id={queue['queue_id']}", result["audit"]["confirmation_text"])
+        issues = []
+        validate_institution_consistency_audit(issues, load_queue(self.queue_path), [current])
+        self.assertEqual(issues, [])
+
+    def test_revert_mapping_preserves_mapping_id_and_resolves(self):
+        _, _, queue, expected = self.prepare_confirmed_change()
+        result = apply_cleanup_action(
+            [queue["queue_id"]], "mapping_reverted", "The earlier trusted mapping is correct.",
+            confirmed=True, resolved_by="local-admin", queue_path=self.queue_path,
+            mappings_path=self.mappings_path, location_review_path=self.locations_path,
+            institutions_path=self.institutions_path, institution_audit_path=self.audit_path,
+            **expected,
+        )
+        mappings = load_mappings(self.mappings_path)
+        self.assertEqual(len(mappings), 1)
+        self.assertEqual(mappings[0]["mapping_id"], "mapping:1")
+        self.assertEqual(mappings[0]["institution_id"], "institution:wrong")
+        self.assertEqual(load_queue(self.queue_path)[0]["resolution_action"], "mapping_reverted")
+        self.assertEqual(result["audit"]["action"], "mapping_reverted")
+        self.assertEqual(result["reaudit"], "scheduled_for_next_full_refresh")
+
+    def test_mapping_change_resolution_requires_note(self):
+        _, _, queue, expected = self.prepare_confirmed_change()
+        with self.assertRaisesRegex(InstitutionReviewQueueError, "resolution note is required"):
+            apply_cleanup_action(
+                [queue["queue_id"]], "mapping_change_confirmed", "", confirmed=True,
+                queue_path=self.queue_path, mappings_path=self.mappings_path,
+                location_review_path=self.locations_path, institutions_path=self.institutions_path,
+                institution_audit_path=self.audit_path, **expected,
+            )
+
+    def test_stale_mapping_change_resolution_is_rejected(self):
+        _, _, queue, expected = self.prepare_confirmed_change()
+        expected["expected_mapping_updated_at"] = "stale"
+        with self.assertRaisesRegex(InstitutionReviewQueueError, "refresh"):
+            apply_cleanup_action(
+                [queue["queue_id"]], "mapping_change_confirmed", "Checked.", confirmed=True,
+                queue_path=self.queue_path, mappings_path=self.mappings_path,
+                location_review_path=self.locations_path, institutions_path=self.institutions_path,
+                institution_audit_path=self.audit_path, **expected,
+            )
+        self.assertEqual(load_queue(self.queue_path)[0]["finding_status"], "open")
+
+    def test_revert_rolls_back_when_resolution_audit_write_fails(self):
+        current, _, queue, expected = self.prepare_confirmed_change()
+        before = {path: path.read_bytes() for path in (self.queue_path, self.mappings_path, self.audit_path)}
+        with patch(
+            "scripts.institution_cleanup.append_mapping_change_resolution_audit",
+            side_effect=OSError("simulated audit failure"),
+        ):
+            with self.assertRaisesRegex(OSError, "simulated audit failure"):
+                apply_cleanup_action(
+                    [queue["queue_id"]], "mapping_reverted", "Revert after review.", confirmed=True,
+                    queue_path=self.queue_path, mappings_path=self.mappings_path,
+                    location_review_path=self.locations_path, institutions_path=self.institutions_path,
+                    institution_audit_path=self.audit_path, **expected,
+                )
+        for path, content in before.items():
+            self.assertEqual(path.read_bytes(), content)
+        self.assertEqual(load_mappings(self.mappings_path)[0]["institution_id"], current["institution_id"])
+
+    def test_mapping_change_payload_has_structured_transition_and_visibility(self):
+        _, source_audit, _, _ = self.prepare_confirmed_change()
+        payload = queue_payload(
+            load_queue(self.queue_path), load_mappings(self.mappings_path), self.institutions,
+            audits=[source_audit], public_records=[{
+                "paper_id": "paper:1", "institution_id": "institution:correct",
+                "institution": "Correct University",
+            }],
+        )
+        change = payload["records"][0]["mapping_change"]
+        self.assertEqual(change["previous_institution_id"], "institution:wrong")
+        self.assertEqual(change["new_institution_id"], "institution:correct")
+        self.assertEqual(change["change_source"], "admin_mapping_update")
+        self.assertEqual(change["actor"], "local-admin")
+        self.assertTrue(change["publicly_visible"])
 
     def tearDown(self):
         self.temporary.cleanup()

@@ -172,6 +172,41 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
         self.assertEqual(changed["severity"], "high")
         self.assertEqual(changed["is_blocking"], "true")
 
+    def test_confirmed_transition_is_not_reopened_but_later_change_is(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
+            author="Symeon Papadopoulos", provenance="manually_confirmed",
+        )
+        first = {
+            "audit_id": "mapping-change:1",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Symeon Papadopoulos",
+            "confirmation_text": "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; previous_institution=CERTH; new_institution=Amazon; change_source=admin_mapping_update",
+        }
+        resolution = {
+            "audit_id": "mapping-resolution:1",
+            "action": "mapping_change_confirmed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "confirmation_text": "source_audit_id=mapping-change:1; mapping_id=mapping:institution:amazon:Symeon Papadopoulos",
+        }
+        findings = self.audit([current], merge_audits=[first, resolution])
+        self.assertFalse(any(row["issue_type"] == "confirmed_mapping_changed" for row in findings))
+        later = {
+            **first,
+            "audit_id": "mapping-change:2",
+            "institution_id": "institution:naples",
+            "previous_institution_id": "institution:amazon",
+            "confirmation_text": "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; previous_institution=Amazon; new_institution=Naples; change_source=admin_mapping_update",
+        }
+        later_findings = self.audit([current], merge_audits=[first, resolution, later])
+        self.assertTrue(any(
+            row["issue_type"] == "confirmed_mapping_changed" and row["audit_id"] == "mapping-change:2"
+            for row in later_findings
+        ))
+
     def test_explicit_merge_allows_former_name(self):
         old = entity("institution:old", "Old Research Center", status="merged")
         new = entity("institution:new", "New Research Institute")

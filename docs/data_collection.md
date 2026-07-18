@@ -521,6 +521,15 @@ Review the returned candidates, choose **Use this OpenAlex record**, correct or 
 
 For an existing paper, the admin **Paper Metadata** editor writes `task` and the controlled `entry_type` contribution category (`method`, `dataset`, `benchmark`, `survey`, or `analysis`) to the same curated paper row. `entry_type` is independent of the bibliographic `publication_type`. Both Add Paper and Paper Metadata expose `publication_type` as a required dropdown with `conference`, `journal`, `preprint`, and `book`; legacy `article` values normalize to `journal`, while proceedings and conference-venue evidence continues to normalize to `conference`. These values flow through the normal refresh/export/publish process; generated `web/data/` files are never the source of truth.
 
+For a curated `book`, the publication type is authoritative across DOI,
+OpenAlex, arXiv, publisher, and Admin refresh paths. Compatible metadata may be
+updated, but the shared post-merge normalizer removes venue taxonomy and
+`entry_type`; refresh never changes the curated book type merely because an
+external provider supplies a host venue. Run
+`python3 scripts/migrate_book_invariant.py` for a dry audit or add `--apply` to
+clear deterministic historical violations. The report is written to
+`data/processed/book_invariant_audit.csv`.
+
 If no candidate is correct—or OpenAlex is unavailable—choose **Add manually instead**. The same form opens without metadata and saves the record with manual provenance and `curation_status=manually_added`. OpenAlex failures do not write any files and do not disable this manual fallback.
 
 Before saving, the server compares DOI, OpenAlex URL, and normalized title plus year against the current public-preview papers, curated papers, and paper-exclusion history. A match is shown as a duplicate warning and creation is blocked; Step 4 does not merge or override records.

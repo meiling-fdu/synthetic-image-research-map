@@ -502,7 +502,7 @@
                 <label>Title<input id="metadata-title" required></label>
                 <label>Year<input id="metadata-year" type="number" min="1000" max="9999" required></label>
                 <label class="full-width">Authors<textarea id="metadata-authors" rows="2"></textarea></label>
-                <div class="venue-combobox-field full-width">
+                <div id="metadata-venue-field" class="venue-combobox-field full-width">
                   <span id="metadata-venue-label" class="field-label">Venue</span>
                   <input id="metadata-venue" type="hidden">
                   <input id="metadata-venue-id" type="hidden">
@@ -539,7 +539,7 @@
                   <option value="conference">conference</option><option value="journal">journal</option>
                   <option value="preprint">preprint</option><option value="book">book</option>
                 </select><button id="metadata-publication-type-override" class="text-button" type="button">Override publication type</button><span id="metadata-publication-type-warning" class="field-warning" hidden></span></label>
-                <label>Paper type / category<select id="metadata-entry-type" required>
+                <label id="metadata-entry-type-field">Paper type / category<select id="metadata-entry-type" required>
                   <option value="method">method</option><option value="survey">survey</option>
                   <option value="dataset">dataset</option><option value="benchmark">benchmark</option>
                   <option value="analysis">analysis</option>
@@ -822,6 +822,7 @@
           <dt>Issue</dt><dd id="institution-resolution-issue"></dd>
           <dt>Paper</dt><dd id="institution-resolution-paper"></dd>
           <dt>Author</dt><dd id="institution-resolution-author"></dd>
+          <dt>Previous institution</dt><dd id="institution-resolution-previous"></dd>
           <dt>Current institution</dt><dd id="institution-resolution-current"></dd>
           <dt>Resolution action</dt><dd id="institution-resolution-action"></dd>
         </dl>

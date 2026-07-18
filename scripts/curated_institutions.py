@@ -163,10 +163,10 @@ def institution_impact(
 def _append_audit(
     *, action: str, institution_id: str, previous_institution_id: str = "",
     impact: Mapping[str, Any], confirmation: Any = "", review_note: Any,
-    created_by: Any, audit_path: Path,
+    created_by: Any, audit_path: Path, created_at: Any = "",
 ) -> dict[str, str]:
     rows = _read(audit_path, INSTITUTION_AUDIT_COLUMNS)
-    now = _timestamp()
+    now = clean(created_at) or _timestamp()
     seed = "|".join((action, institution_id, previous_institution_id, now, clean(created_by)))
     row = {
         "audit_id": f"institution-audit:{hashlib.sha256(seed.encode()).hexdigest()[:20]}",
@@ -185,6 +185,51 @@ def _append_audit(
     rows.append(row)
     _write(audit_path, INSTITUTION_AUDIT_COLUMNS, rows)
     return row
+
+
+def append_mapping_change_resolution_audit(
+    *, action: str, review_queue_id: Any, source_audit_id: Any,
+    mapping_id: Any, previous_institution_id: Any,
+    previous_institution_name: Any, new_institution_id: Any,
+    new_institution_name: Any, reverted_institution_id: Any = "",
+    reverted_institution_name: Any = "", evidence_source: Any = "",
+    evidence_url: Any = "", review_note: Any, created_by: Any,
+    created_at: Any = "", audit_path: Path = DEFAULT_AUDIT_PATH,
+) -> dict[str, str]:
+    """Append a structured Admin resolution for one exact mapping transition."""
+    if action not in {"mapping_change_confirmed", "mapping_reverted"}:
+        raise CuratedInstitutionError("unsupported mapping change resolution action")
+    old_id = clean(previous_institution_id)
+    new_id = clean(new_institution_id)
+    reverted_id = clean(reverted_institution_id)
+    if not clean(review_queue_id) or not clean(source_audit_id) or not clean(mapping_id):
+        raise CuratedInstitutionError("mapping change resolution requires queue, audit, and mapping IDs")
+    if not old_id or not new_id or old_id == new_id:
+        raise CuratedInstitutionError("mapping change resolution requires an exact old-to-new transition")
+    if action == "mapping_reverted" and reverted_id != old_id:
+        raise CuratedInstitutionError("reverted institution must match the previous trusted institution")
+    metadata = "; ".join((
+        f"review_queue_id={clean(review_queue_id)}",
+        f"source_audit_id={clean(source_audit_id)}",
+        f"mapping_id={clean(mapping_id)}",
+        f"previous_institution={clean(previous_institution_name)}",
+        f"new_institution={clean(new_institution_name)}",
+        f"reverted_institution={clean(reverted_institution_name)}",
+        f"evidence_source={clean(evidence_source)}",
+        f"evidence_url={clean(evidence_url)}",
+    ))
+    target_id = reverted_id if action == "mapping_reverted" else new_id
+    return _append_audit(
+        action=action,
+        institution_id=target_id,
+        previous_institution_id=new_id if action == "mapping_reverted" else old_id,
+        impact={"papers": 1, "author_mappings": 1, "markers": 1, "authors": []},
+        confirmation=metadata,
+        review_note=review_note,
+        created_by=created_by,
+        created_at=created_at,
+        audit_path=audit_path,
+    )
 
 
 def append_confirmed_mapping_change_audit(

@@ -12,9 +12,15 @@ import re
 import unicodedata
 
 try:
-    from .curated_schema import INSTITUTION_REVIEW_QUEUE_COLUMNS
+    from .curated_schema import (
+        ALLOWED_INSTITUTION_REVIEW_RESOLUTION_ACTIONS,
+        INSTITUTION_REVIEW_QUEUE_COLUMNS,
+    )
 except ImportError:
-    from curated_schema import INSTITUTION_REVIEW_QUEUE_COLUMNS
+    from curated_schema import (
+        ALLOWED_INSTITUTION_REVIEW_RESOLUTION_ACTIONS,
+        INSTITUTION_REVIEW_QUEUE_COLUMNS,
+    )
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
@@ -34,6 +40,10 @@ DEFAULT_RESOLUTION_NOTES = {
     "manually_resolved": "Confirmed existing curated institution mapping after manual review.",
     "ignore": "Resolved manually; existing mapping retained.",
     "keep_multiple_affiliations": "Multiple affiliations confirmed after manual review.",
+}
+MAPPING_CHANGE_RESOLUTION_ACTIONS = {
+    "mapping_change_confirmed",
+    "mapping_reverted",
 }
 
 
@@ -68,6 +78,15 @@ def _queue_id(audit_id: str) -> str:
 def _normalized(value: Any) -> str:
     text = unicodedata.normalize("NFKD", clean(value)).casefold()
     return " ".join(re.findall(r"[a-z0-9]+", text))
+
+
+def _audit_metadata(value: Any) -> dict[str, str]:
+    metadata: dict[str, str] = {}
+    for part in clean(value).split(";"):
+        key, separator, item = part.strip().partition("=")
+        if separator and key:
+            metadata[key.strip()] = item.strip()
+    return metadata
 
 
 def _group_id(row: Mapping[str, Any]) -> str:
@@ -492,9 +511,18 @@ def queue_payload(
     aliases: Sequence[Mapping[str, Any]] = (),
     hierarchy: Sequence[Mapping[str, Any]] = (),
     papers: Sequence[Mapping[str, Any]] = (),
+    audits: Sequence[Mapping[str, Any]] = (),
+    public_records: Sequence[Mapping[str, Any]] = (),
 ) -> dict[str, Any]:
     """Return actionable open cases separately from read-only lifecycle history."""
     mapping_by_id = {clean(row.get("mapping_id")): row for row in mappings}
+    audit_by_id = {
+        clean(row.get("audit_id")): row for row in audits if clean(row.get("audit_id"))
+    }
+    institution_by_id = {
+        clean(row.get("institution_id")): row
+        for row in institutions if clean(row.get("institution_id"))
+    }
     all_rows = [dict(row) for row in rows]
     grouped: dict[str, list[dict[str, str]]] = {}
     for row in all_rows:
@@ -546,6 +574,58 @@ def queue_payload(
                 if clean(row.get("current_institution"))
                 and clean(row.get("current_institution_id")) not in active_ids
             }
+            mapping_change = None
+            change_finding = next((
+                row for row in display_findings
+                if clean(row.get("issue_type")) == "confirmed_mapping_changed"
+            ), None)
+            if change_finding is not None:
+                source_audit = audit_by_id.get(clean(change_finding.get("audit_id")), {})
+                metadata = _audit_metadata(source_audit.get("confirmation_text"))
+                mapping = mapping_by_id.get(clean(change_finding.get("mapping_id")), {})
+                old_id = clean(source_audit.get("previous_institution_id"))
+                new_id = clean(source_audit.get("institution_id")) or clean(
+                    change_finding.get("current_institution_id")
+                )
+                old_name = clean(metadata.get("previous_institution")) or clean(
+                    institution_by_id.get(old_id, {}).get("canonical_name")
+                )
+                new_name = clean(metadata.get("new_institution")) or clean(
+                    institution_by_id.get(new_id, {}).get("canonical_name")
+                ) or clean(change_finding.get("current_institution"))
+                visible = any(
+                    _same_paper(change_finding, record)
+                    and (
+                        clean(record.get("institution_id")) == new_id
+                        or _normalized(record.get("institution")) == _normalized(new_name)
+                    )
+                    for record in public_records
+                )
+                provenance = clean(mapping.get("provenance_source")) or "unknown"
+                trust_note = clean(source_audit.get("review_note"))
+                mapping_change = {
+                    "review_queue_id": clean(change_finding.get("queue_id")),
+                    "source_audit_id": clean(source_audit.get("audit_id")),
+                    "mapping_id": clean(change_finding.get("mapping_id")),
+                    "previous_institution_id": old_id,
+                    "previous_institution_name": old_name,
+                    "new_institution_id": new_id,
+                    "new_institution_name": new_name,
+                    "raw_affiliation": clean(change_finding.get("raw_affiliation")) or clean(mapping.get("raw_affiliation")),
+                    "change_source": clean(metadata.get("change_source")) or "unknown",
+                    "actor": clean(source_audit.get("created_by")) or "unknown",
+                    "changed_at": clean(source_audit.get("created_at")),
+                    "trust_reason": " · ".join(filter(None, (
+                        f"Mapping provenance: {provenance}", trust_note,
+                    ))),
+                    "evidence_source": clean(mapping.get("evidence_source")),
+                    "evidence_url": clean(mapping.get("evidence_url")),
+                    "publicly_visible": visible,
+                    "expected_mapping_id": clean(mapping.get("mapping_id")),
+                    "expected_institution_id": clean(mapping.get("institution_id")),
+                    "expected_mapping_updated_at": clean(mapping.get("updated_at")),
+                    "expected_review_updated_at": clean(change_finding.get("updated_at")),
+                }
             return {
                 **first,
                 "review_group_id": group_id,
@@ -589,6 +669,7 @@ def queue_payload(
                     first, findings, mappings, institutions, aliases,
                     hierarchy, papers
                 ),
+                "mapping_change": mapping_change,
             }
 
         if open_findings:
@@ -633,12 +714,8 @@ def resolve_rows(
     path: Path = DEFAULT_QUEUE_PATH,
     now: str | None = None,
 ) -> list[dict[str, str]]:
-    supported_actions = {
-        "accept_suggestion",
-        "replace_mapping",
-        "ignore",
-        "manually_resolved",
-        "keep_multiple_affiliations",
+    supported_actions = ALLOWED_INSTITUTION_REVIEW_RESOLUTION_ACTIONS - {
+        "legacy_review_decision", "resolved_by_reaudit", "mapping_excluded", "mapping_replaced"
     }
     if action not in supported_actions:
         raise InstitutionReviewQueueError("unsupported institution cleanup action")
@@ -662,6 +739,7 @@ def resolve_rows(
             "finding_status": RESOLVED_STATUS,
             "resolution_action": action,
             "resolution_note": resolution_note,
+            "is_current": "false" if action in MAPPING_CHANGE_RESOLUTION_ACTIONS else row.get("is_current", "true"),
             "resolved_at": at,
             "resolved_by": clean(resolved_by) or "admin",
             "updated_at": at,

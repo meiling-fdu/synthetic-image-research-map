@@ -113,6 +113,20 @@ INSTITUTION_REVIEW_QUEUE_COLUMNS = (
     "resolved_by",
 )
 
+ALLOWED_INSTITUTION_REVIEW_RESOLUTION_ACTIONS = {
+    "accept_suggestion",
+    "replace_mapping",
+    "ignore",
+    "manually_resolved",
+    "keep_multiple_affiliations",
+    "legacy_review_decision",
+    "resolved_by_reaudit",
+    "mapping_excluded",
+    "mapping_replaced",
+    "mapping_change_confirmed",
+    "mapping_reverted",
+}
+
 PAPER_EXCLUSION_COLUMNS = (
     "exclusion_id",
     "paper_id",

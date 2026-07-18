@@ -103,6 +103,7 @@ try:
         restore_active_exclusions,
         upsert_active_exclusion,
     )
+    from .publication_types import normalize_book_record
     from .admin_review_queues import (
         AdminReviewQueueError,
         dashboard_data,
@@ -220,6 +221,7 @@ except ImportError:
         restore_active_exclusions,
         upsert_active_exclusion,
     )
+    from publication_types import normalize_book_record
     from admin_review_queues import (
         AdminReviewQueueError,
         dashboard_data,
@@ -727,7 +729,7 @@ def unavailable_author_mapping_coverage(
 
 
 def curated_paper_record(row: Mapping[str, str]) -> Dict[str, Any]:
-    record: Dict[str, Any] = dict(row)
+    record: Dict[str, Any] = normalize_book_record(row)
     record["year"] = parse_year(row.get("year"))
     record["publication_year"] = record["year"]
     record["authors"] = parse_people(row.get("authors"))
@@ -849,6 +851,9 @@ def merge_curated_fields(
             public_record[field] = curated_record[field]
     public_record["publication_year"] = public_record.get("year")
     public_record["notes"] = clean(public_record.get("review_note"))
+    normalized = normalize_book_record(public_record)
+    public_record.clear()
+    public_record.update(normalized)
 
 
 def load_admin_data(
@@ -863,7 +868,7 @@ def load_admin_data(
     papers: List[Dict[str, Any]] = []
     paper_identity_index: DefaultDict[str, List[Mapping[str, Any]]] = defaultdict(list)
     for source_record in public_papers:
-        record = dict(source_record)
+        record = normalize_book_record(source_record)
         record["record_source"] = "public_preview"
         record["is_in_curated_papers"] = False
         record["curated_record"] = None
@@ -1966,6 +1971,8 @@ def make_handler(
                             *read_csv_rows(curated_papers_path),
                             *read_json_records(PUBLIC_PAPERS_PATH),
                         ],
+                        read_csv_rows(institution_audit_path),
+                        read_json_records(PUBLIC_MAP_PATH),
                     )
                 except (InstitutionReviewQueueError, AdminDataError, CuratedLocationError, CuratedInstitutionError) as error:
                     self.send_json(HTTPStatus.BAD_REQUEST, api_payload(success=False, errors=(str(error),)))
@@ -2097,10 +2104,12 @@ def make_handler(
                     effective_record = apply_curated_arxiv_metadata(
                         paper, curated_arxiv_links_path
                     )
+                    effective_record = normalize_book_record(effective_record)
                     resolved_effective = canonicalize_record(
                         effective_record,
                         read_venue_aliases(venue_aliases_path),
                     )
+                    resolved_effective = normalize_book_record(resolved_effective)
                     if resolved_effective.get("ambiguity_status") == "resolved":
                         effective_record = resolved_effective
                         effective_record["venue_resolution_status"] = "resolved"
@@ -2955,11 +2964,24 @@ def make_handler(
                                 institutions_path=institutions_path,
                                 institution_audit_path=institution_audit_path,
                                 map_records=read_json_records(PUBLIC_MAP_PATH),
+                                expected_mapping_id=payload.get("expected_mapping_id"),
+                                expected_institution_id=payload.get("expected_institution_id"),
+                                expected_mapping_updated_at=payload.get("expected_mapping_updated_at"),
+                                expected_review_updated_at=payload.get("expected_review_updated_at"),
+                                resolved_by="local-admin",
                             )
-                    except (InstitutionReviewQueueError, CuratedMappingError, DuplicateMappingError) as error:
+                    except (
+                        InstitutionReviewQueueError,
+                        CuratedInstitutionError,
+                        CuratedMappingError,
+                        DuplicateMappingError,
+                    ) as error:
                         self.send_json(HTTPStatus.BAD_REQUEST, api_payload(success=False, errors=(str(error),)))
                         return
-                    self.send_json(HTTPStatus.OK, api_payload(message="Institution cleanup action saved.", data=result))
+                    message = "Institution cleanup action saved."
+                    if result.get("reaudit"):
+                        message += " The next Full Refresh or Publish Changes run will re-audit the transition."
+                    self.send_json(HTTPStatus.OK, api_payload(message=message, data=result))
                     return
 
                 review_action_paths = {

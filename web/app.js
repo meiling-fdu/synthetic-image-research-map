@@ -276,12 +276,13 @@ const INSTITUTION_CSV_COLUMNS = [
   ["authors", (record) => recordAuthors(record).join("; ")],
   ["institution_authors", (record) => recordInstitutionAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
+  ["publication_type", (record) => record.publication_type || ""],
   ["venue_label", (record) => venueDisplayLabel(record)],
-  ["venue_id", (record) => record.venue_id || ""],
+  ["venue_id", (record) => isBookRecord(record) ? "" : record.venue_id || ""],
   ["venue_name", (record) => getRecordVenue(record)],
-  ["venue_acronym", (record) => record.venue_acronym || ""],
+  ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
-  ["venue_track", (record) => record.venue_track || "main"],
+  ["venue_track", (record) => isBookRecord(record) ? "" : record.venue_track || "main"],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
@@ -305,12 +306,13 @@ const PAPER_CSV_COLUMNS = [
   ["title", (record) => recordTitle(record)],
   ["authors", (record) => recordAuthors(record).join("; ")],
   ["publication_year", (record) => publicationYear(record) ?? ""],
+  ["publication_type", (record) => record.publication_type || ""],
   ["venue_label", (record) => venueDisplayLabel(record)],
-  ["venue_id", (record) => record.venue_id || ""],
+  ["venue_id", (record) => isBookRecord(record) ? "" : record.venue_id || ""],
   ["venue_name", (record) => getRecordVenue(record)],
-  ["venue_acronym", (record) => record.venue_acronym || ""],
+  ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
-  ["venue_track", (record) => record.venue_track || "main"],
+  ["venue_track", (record) => isBookRecord(record) ? "" : record.venue_track || "main"],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
@@ -346,6 +348,7 @@ function formatTask(task) {
 }
 
 function getEntryType(record) {
+  if (isBookRecord(record)) return "";
   const value = String(record.entry_type || "").trim().toLowerCase();
   if (Object.hasOwn(ENTRY_TYPE_LABELS, value)) {
     return value;
@@ -1100,6 +1103,7 @@ function recordPaperUrl(record) {
 }
 
 function getRecordVenue(record) {
+  if (isBookRecord(record)) return "";
   return String(
     record.venue_name ||
     record.venue ||
@@ -1113,12 +1117,14 @@ function getRecordVenue(record) {
 }
 
 function venueFilterValue(record) {
+  if (isBookRecord(record)) return "__not_applicable__";
   return String(record.venue_id || "").trim() || (getRecordVenue(record)
     ? getRecordVenue(record).toLocaleLowerCase()
     : "__unknown__");
 }
 
 function venueDisplayLabel(record) {
+  if (isBookRecord(record)) return "";
   const exported = String(record.venue_label || "").trim();
   if (exported) return exported;
   const name = getRecordVenue(record);
@@ -1132,7 +1138,12 @@ function venueDisplayLabel(record) {
 }
 
 function recordVenueType(record) {
+  if (isBookRecord(record)) return "";
   return String(record.publication_type || record.venue_type || "").trim().toLocaleLowerCase();
+}
+
+function isBookRecord(record) {
+  return String(record?.publication_type || "").trim().toLocaleLowerCase() === "book";
 }
 
 function venueDisplayHtml(record) {
@@ -1651,6 +1662,14 @@ function canonicalizePublicDataset(
 
 function recordSearchText(record) {
   const authors = recordAuthors(record);
+  const venueTerms = isBookRecord(record) ? [] : [
+    record.venue_name,
+    record.venue,
+    record.venue_acronym,
+    ...(record.venue_aliases || []),
+    record.venue_type,
+    record.venue_track,
+  ];
   return normalizedSearchText([
     recordTitle(record),
     ...authors,
@@ -1663,12 +1682,7 @@ function recordSearchText(record) {
     ...(record.aggregated_country_codes || []),
     ...(record.aggregated_regions || []),
     ...(record.aggregated_region_codes || []),
-    record.venue_name,
-    record.venue,
-    record.venue_acronym,
-    ...(record.venue_aliases || []),
-    record.venue_type,
-    record.venue_track,
+    ...venueTerms,
     record.coverage_status,
     record.task,
     record.subtask,
@@ -2520,6 +2534,12 @@ function paperDetailsHtml(record, relatedEntries) {
   const publicationType = record.publication_type || "Unknown";
   const entryType = getEntryType(record);
   const entryTypeLabel = getEntryTypeLabel(entryType);
+  const entryTypeBadge = entryType
+    ? `<span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>`
+    : "";
+  const venueRow = venueDisplayLabel(record)
+    ? `<dt>Venue</dt><dd>${venueDisplayHtml(record)}</dd>`
+    : "";
   const location = recordLocation(record) || "Unknown";
   const subtaskRow = record.subtask
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
@@ -2565,7 +2585,7 @@ function paperDetailsHtml(record, relatedEntries) {
   return `
     <div class="popup-badges">
       <span class="popup-badge popup-task">${escapeHtml(formatTask(record.task))}</span>
-      <span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
+      ${entryTypeBadge}
       ${versionBadge}
       ${confidenceBadge}
       ${affiliationBadge}
@@ -2575,7 +2595,7 @@ function paperDetailsHtml(record, relatedEntries) {
       <dt>Authors</dt><dd>${authors}</dd>
       <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value paper-current-institution${currentAffiliation ? " is-active is-hover-institution" : ""}">${currentAffiliationNumber}${currentInstitutionButton || "Unknown"}</dd>
       <dt>Year</dt><dd>${escapeHtml(year)}</dd>
-      <dt>Venue</dt><dd>${venueDisplayHtml(record)}</dd>
+      ${venueRow}
     </dl>
     ${linksBlock}
     ${affiliationsBlock}
@@ -2604,6 +2624,9 @@ function resultContent(record, relatedEntries = [{ record }]) {
   const venue = venueDisplayLabel(record);
   const isPaperView = resultsView === "papers";
   const entryTypeLabel = getEntryTypeLabel(getEntryType(record));
+  const entryTypeBadge = getEntryType(record)
+    ? `<span class="result-task entry-type-badge">${escapeHtml(entryTypeLabel)}</span>`
+    : "";
   const affiliations = normalizedRecord.affiliations;
   const subtask = record.subtask
     ? `<span class="result-task result-subtask">${escapeHtml(formatTask(record.subtask))}</span>`
@@ -2647,7 +2670,7 @@ function resultContent(record, relatedEntries = [{ record }]) {
       ${regionsRow}
       <div class="result-classification">
         <span class="result-task">${escapeHtml(formatTask(record.task))}</span>
-        <span class="result-task entry-type-badge">${escapeHtml(entryTypeLabel)}</span>
+        ${entryTypeBadge}
         ${subtask}
         ${affiliationBadge}
       </div>
@@ -3277,7 +3300,7 @@ function configureVenueFilter() {
 
 function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   const metadataByVenue = new Map();
-  [...venuePapers, ...venueTypePapers].forEach((record) => {
+  [...venuePapers, ...venueTypePapers].filter((record) => !isBookRecord(record)).forEach((record) => {
     metadataByVenue.set(venueFilterValue(record), {
       label: venueDisplayLabel(record),
       name: getRecordVenue(record) || "Unknown venue/source",
@@ -3286,10 +3309,12 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
       type: recordVenueType(record) || "__unknown__",
     });
   });
-  const venueCounts = dimensionPaperCounts(venuePapers, (record) => [venueFilterValue(record)]);
+  const venueCounts = dimensionPaperCounts(venuePapers,
+    (record) => isBookRecord(record) ? [] : [venueFilterValue(record)],
+  );
   const venueTypeCounts = dimensionPaperCounts(
     venueTypePapers,
-    (record) => [recordVenueType(record) || "__unknown__"],
+    (record) => isBookRecord(record) ? [] : [recordVenueType(record) || "__unknown__"],
   );
   replaceCountedFilterOptions(
     venueFilter,

@@ -82,6 +82,26 @@ before/evidence/after comparison. Resolution shortcuts close the evidence
 dialog and enter the existing protected resolution, mapping, alias, or parent
 workflow; opening the dialog itself never writes curated data.
 
+For an open `confirmed_mapping_changed` finding, the detail panel reconstructs
+the structured transition from the durable institution audit log. It shows the
+paper and mapping identities, previous/current institution IDs and names, raw
+affiliation, change source, actor and timestamp, mapping provenance, evidence,
+and current public-map visibility. **Confirm intentional change** keeps the new
+mapping and records `mapping_change_confirmed`; **Revert mapping** restores the
+previous institution on the same mapping ID and records `mapping_reverted`.
+Both actions require a note and an explicit confirmation. The request includes
+the mapping institution/update timestamp and review update timestamp; Admin
+rejects stale panels and asks the curator to refresh. Mapping, queue, location
+review, and audit-log writes share the existing snapshot rollback boundary, so
+a failed write cannot leave a partial resolution. Revert retains the newer
+institution and evidence in the audit history and mapping review note.
+
+An exact confirmed old-to-new transition is suppressed on later consistency
+audits by its resolution audit record. A subsequent transition has a distinct
+source audit ID and becomes a new finding. Open/current findings remain publish
+blockers; only explicit confirmation, explicit revert, or a re-audit proving
+the finding obsolete clears the gate.
+
 After an author-institution mapping is excluded or retargeted, Admin mapping
 writes immediately reconcile linked cleanup findings. The old queue row is
 marked non-current and retained as historical audit evidence; a later queue
@@ -202,6 +222,14 @@ The Admin server checks for the CSV at startup and generates it once when absent
 The paper-metadata editor loads `GET /api/venues`, whose records are built only from confirmed `data/curated/venue_aliases.csv` identities. Options use the shared type order (Conference, Journal, Preprint, Book), then unique-paper count descending and canonical name. Search covers canonical name, audited acronym, venue type, track, confirmed aliases, and historical `raw_venue` variants. Selecting an option saves `venue_id`, `venue_name`, `venue_acronym`, `venue_type`, and `venue_track`; the combined label is display-only.
 
 The selected venue synchronizes formal `publication_type`. Workshops are canonical Conference venues with `venue_track=workshops`, so their distinct identity remains in the venue ID and track rather than a separate public type. The control remains disabled until **Override publication type** is chosen, and both the browser and API warn or reject an unconfirmed conflict. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
+
+Changing a paper to **Book** is the exception to venue synchronization. The
+editor lists any venue, venue-taxonomy, and paper-category values that will be
+cleared and asks for confirmation. Cancel restores the previous type without
+changing the form. Confirm clears those values immediately; book forms keep the
+controls unavailable, and switching away does not restore them. The API repeats
+the shared normalization defensively, and its existing file snapshots roll the
+whole metadata update back if persistence or preview export fails.
 
 Unknown text is never saved directly. **Create new canonical venue** submits a reviewed canonical name, optional acronym, type, track, raw alias, and note to `POST /api/venues/create`. Exact normalized duplicates are rejected. Similar names, aliases, or acronyms return possible matches and require explicit distinct-venue confirmation before the alias registry is atomically updated. Metadata updates reject nonexistent IDs or structured fields that conflict with their registry identity; legacy venue-only records are resolved through `scripts/venues.py` on load and unresolved or ambiguous values remain review cases.
 

@@ -23,7 +23,7 @@ try:
         PAPERS_COLUMNS,
     )
     from .country_normalization import normalize_country_region, public_location_display
-    from .publication_types import normalize_publication_type
+    from .publication_types import normalize_book_record, normalize_publication_type
     from .export_candidate_map_data import normalize_export_task_labels
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -45,7 +45,7 @@ except ImportError:
         PAPERS_COLUMNS,
     )
     from country_normalization import normalize_country_region, public_location_display
-    from publication_types import normalize_publication_type
+    from publication_types import normalize_book_record, normalize_publication_type
     from export_candidate_map_data import normalize_export_task_labels
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -745,6 +745,9 @@ def _merge_curated_paper(
             if existing_note
             else curated_note
         )
+    normalized = normalize_book_record(existing)
+    existing.clear()
+    existing.update(normalized)
 
 
 def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
@@ -1543,6 +1546,7 @@ def integrate_curated_records(
     added = 0
     merged = 0
     for curated in curated_records:
+        curated = normalize_book_record(curated)
         matches = _matching_papers(curated, paper_index)
         if matches:
             target = matches[0]

@@ -42,6 +42,11 @@ Reassignment is an explicit mapping or confirmed merge action.
 confirmation. A trusted mapping's institution-ID replacement also appends a
 `confirmed_mapping_changed` event with previous/new IDs, source, timestamp,
 and user/action metadata. Location-only changes never create this event.
+Admin resolution appends either `mapping_change_confirmed` or
+`mapping_reverted`, including the queue ID, source audit ID, mapping ID, exact
+old/new (and reverted) IDs and names, actor, note, evidence source/URL, and UTC
+timestamp. The source audit ID makes suppression transition-specific: resolving
+one change does not suppress a later change to the same mapping.
 Parent and alias cycles are invalid.
 
 `data/manual/institution_consistency_audit.csv` is a generated, reporting-only
@@ -67,6 +72,11 @@ corrections use the existing mapping service and are committed atomically with
 queue resolution. The generated report is never edited to record an outcome.
 The Admin API groups these immutable rows by paper and author at read time.
 Resolving or ignoring a case applies the decision to every open child finding.
+Legal resolution actions are `accept_suggestion`, `replace_mapping`, `ignore`,
+`manually_resolved`, `keep_multiple_affiliations`, `mapping_change_confirmed`,
+`mapping_reverted`, and the lifecycle/migration actions
+`legacy_review_decision`, `resolved_by_reaudit`, `mapping_excluded`, and
+`mapping_replaced`.
 Only open findings are returned in the actionable Admin list. Resolved and
 archived findings remain available in the read-only history section.
 Only high `confirmed_mapping_changed` and `suspicious_replacement` findings are
@@ -141,6 +151,21 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `venue_type` | OpenAlex source type, such as journal, conference, or repository, when available. |
 | `publisher` | Publisher or source host-organization name reported by OpenAlex. |
 | `publication_type` | Controlled lowercase bibliographic type: `conference`, `journal`, `preprint`, or `book`. Legacy OpenAlex/Crossref values such as `article`, `journal-article`, and `proceedings-article` are normalized during ingestion and export; conference or proceedings evidence takes precedence over a generic legacy `article` source type. |
+
+### Book metadata invariant
+
+`scripts/publication_types.py` owns the authoritative `BOOK_INCOMPATIBLE_FIELDS`
+list and the shared normalization policy. When `publication_type=book`, venue
+identity/taxonomy fields (`venue`, `venue_id`, `venue_name`, `venue_acronym`,
+`venue_type`, `venue_track`, `raw_venue`, aliases/labels and legacy venue
+variants) and the paper category (`entry_type`, including legacy
+`paper_type`/`category`) must be empty or absent. `publisher` remains a distinct,
+compatible bibliographic field and must never be placed in `venue`.
+
+The Admin UI confirms destructive clearing. Persistence defensively normalizes
+invalid book payloads in the same atomic update, curated validation reports
+historical violations, and curated/public export normalizes again after metadata
+merges. This is deliberately a normalization policy, not payload rejection.
 | `doi` | Canonical DOI without a resolver URL when available. |
 | `arxiv_id` | arXiv identifier detected from source identifiers, a `10.48550/arXiv.*` DOI, or an arXiv location URL. |
 | `arxiv_url` | Canonical `https://arxiv.org/abs/...` URL when an arXiv identifier can be extracted. |

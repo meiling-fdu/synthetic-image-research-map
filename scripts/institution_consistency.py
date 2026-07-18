@@ -517,10 +517,33 @@ def audit_institution_consistency(
     # Protected mapping-change events preserve the before/after institution IDs.
     # Location edits never enter this log and therefore cannot trigger findings.
     mappings_by_id = {clean(row.get("mapping_id")): row for row in mappings}
+    resolved_change_audits: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    for resolution in merge_audits:
+        if clean(resolution.get("action")) not in {
+            "mapping_change_confirmed", "mapping_reverted"
+        }:
+            continue
+        resolution_metadata = _change_metadata(resolution.get("confirmation_text"))
+        source_audit_id = resolution_metadata.get("source_audit_id", "")
+        if not source_audit_id:
+            continue
+        if clean(resolution.get("action")) == "mapping_reverted":
+            old_id = clean(resolution.get("institution_id"))
+            new_id = clean(resolution.get("previous_institution_id"))
+        else:
+            old_id = clean(resolution.get("previous_institution_id"))
+            new_id = clean(resolution.get("institution_id"))
+        resolved_change_audits[source_audit_id].append((old_id, new_id))
     for event in merge_audits:
         if clean(event.get("action")) != "confirmed_mapping_changed":
             continue
         metadata = _change_metadata(event.get("confirmation_text"))
+        transition = (
+            clean(event.get("previous_institution_id")),
+            clean(event.get("institution_id")),
+        )
+        if transition in resolved_change_audits.get(clean(event.get("audit_id")), []):
+            continue
         mapping = mappings_by_id.get(metadata.get("mapping_id", ""), {})
         if not mapping:
             mapping = {
@@ -533,7 +556,10 @@ def audit_institution_consistency(
                 "provenance": "manually_confirmed",
             }
         source = metadata.get("change_source", "unknown")
-        if source in {"institution_cleanup:accept_suggestion"}:
+        if source in {
+            "institution_cleanup:accept_suggestion",
+            "institution_cleanup:mapping_reverted",
+        }:
             continue
         for author in _authors(mapping) or [clean(event.get("affected_authors"))]:
             finding = _finding(

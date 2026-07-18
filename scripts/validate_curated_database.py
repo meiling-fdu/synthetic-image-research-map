@@ -21,6 +21,7 @@ try:
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
+        ALLOWED_INSTITUTION_REVIEW_RESOLUTION_ACTIONS,
         ALLOWED_INSTITUTION_STATUSES,
         ALLOWED_INSTITUTION_TYPES,
         ALLOWED_MAPPING_STATUSES,
@@ -36,6 +37,7 @@ try:
         EXPECTED_COLUMNS,
     )
     from .venues import resolve_venue
+    from .publication_types import book_incompatibilities, is_book_publication
 except ImportError:  # Support direct execution from the repository root.
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
@@ -44,6 +46,7 @@ except ImportError:  # Support direct execution from the repository root.
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
+        ALLOWED_INSTITUTION_REVIEW_RESOLUTION_ACTIONS,
         ALLOWED_INSTITUTION_STATUSES,
         ALLOWED_INSTITUTION_TYPES,
         ALLOWED_MAPPING_STATUSES,
@@ -59,6 +62,7 @@ except ImportError:  # Support direct execution from the repository root.
         EXPECTED_COLUMNS,
     )
     from venues import resolve_venue
+    from publication_types import book_incompatibilities, is_book_publication
 
 
 BOOLEAN_LIKE_VALUES = {"true", "false", "1", "0", "yes", "no", "y", "n"}
@@ -205,6 +209,28 @@ def validate_allowed_value(
                 "ERROR",
                 filename,
                 f"{field} has unsupported value {value!r}",
+                row_number,
+            )
+
+
+def validate_book_invariant(
+    papers: Sequence[Mapping[str, str]], issues: List[Issue]
+) -> None:
+    """Report historical book metadata without silently normalizing it."""
+    for row_number, paper in enumerate(papers, start=2):
+        if not is_book_publication(paper.get("publication_type")):
+            continue
+        paper_id = clean(paper.get("paper_id")) or "(missing paper_id)"
+        title = clean(paper.get("title")) or "(untitled)"
+        for field, value in book_incompatibilities(paper).items():
+            add_issue(
+                issues,
+                "ERROR",
+                "papers.csv",
+                (
+                    f"book record {paper_id!r} / {title!r} has incompatible "
+                    f"{field}={clean(value)!r}"
+                ),
                 row_number,
             )
 
@@ -954,12 +980,16 @@ def main() -> int:
     version_merges = datasets.get("paper_version_merges.csv", [])
     venue_aliases = datasets.get("venue_aliases.csv", [])
 
+    validate_book_invariant(papers, issues)
     validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
     validate_allowed_value(
         papers, "papers.csv", "entry_type", ALLOWED_ENTRY_TYPES, issues
     )
     for row_number, paper in enumerate(papers, start=2):
-        if not clean(paper.get("entry_type")):
+        if (
+            not clean(paper.get("entry_type"))
+            and not is_book_publication(paper.get("publication_type"))
+        ):
             add_issue(
                 issues,
                 "ERROR",
@@ -1181,6 +1211,14 @@ def main() -> int:
                         f"resolved finding requires {field}",
                         row_number,
                     )
+            if clean(row.get("resolution_action")) not in ALLOWED_INSTITUTION_REVIEW_RESOLUTION_ACTIONS:
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "institution_review_queue.csv",
+                    f"unsupported resolution_action: {clean(row.get('resolution_action'))}",
+                    row_number,
+                )
     validate_allowed_value(
         version_merges,
         "paper_version_merges.csv",

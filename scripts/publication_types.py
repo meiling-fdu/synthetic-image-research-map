@@ -1,11 +1,34 @@
-"""Normalize bibliographic publication types to the project's vocabulary."""
+"""Normalize publication types and enforce their cross-layer invariants."""
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Mapping
 
 
 ALLOWED_PUBLICATION_TYPES = ("conference", "journal", "preprint", "book")
+
+# This is the authoritative cross-layer list.  Books may retain publisher and
+# other ordinary bibliographic fields, but never venue taxonomy or the
+# project-specific paper category that is defined for paper-like records.
+BOOK_INCOMPATIBLE_FIELDS = (
+    "venue",
+    "venue_id",
+    "venue_name",
+    "venue_acronym",
+    "venue_type",
+    "venue_track",
+    "raw_venue",
+    "venue_aliases",
+    "venue_label",
+    "publication_venue",
+    "host_venue",
+    "host_venue_name",
+    "entry_type",
+    "paper_type",
+    "category",
+)
+
+_LIST_FIELDS = {"venue_aliases"}
 
 _ALIASES = {
     "conference": "conference",
@@ -35,6 +58,48 @@ _ALIASES = {
 _LEGACY_ARTICLE_ALIASES = {
     "article", "article-journal", "journal-article", "journal article"
 }
+
+
+def is_book_publication(value: Any) -> bool:
+    """Return whether *value* itself denotes a book, ignoring stale venues."""
+    raw = str(value or "").strip().casefold().replace("_", "-")
+    return _ALIASES.get(raw) == "book"
+
+
+def book_incompatibilities(record: Mapping[str, Any]) -> dict[str, Any]:
+    """Return populated fields that violate the book metadata invariant."""
+    if not is_book_publication(record.get("publication_type")):
+        return {}
+    return {
+        field: record[field]
+        for field in BOOK_INCOMPATIBLE_FIELDS
+        if field in record
+        and (
+            bool(record[field])
+            if not isinstance(record[field], str)
+            else bool(record[field].strip())
+        )
+    }
+
+
+def normalize_book_record(
+    record: Mapping[str, Any], *, remove: bool = False
+) -> dict[str, Any]:
+    """Copy *record* and deterministically clear incompatible book metadata.
+
+    Curated CSV callers use empty values so their fixed schema is preserved.
+    Public JSON callers may request field removal instead.
+    """
+    normalized = dict(record)
+    if not is_book_publication(normalized.get("publication_type")):
+        return normalized
+    normalized["publication_type"] = "book"
+    for field in BOOK_INCOMPATIBLE_FIELDS:
+        if remove:
+            normalized.pop(field, None)
+        elif field in normalized:
+            normalized[field] = [] if field in _LIST_FIELDS else ""
+    return normalized
 
 
 def normalize_publication_type(

@@ -27,7 +27,12 @@ try:
         clean,
         normalized_title_year_key,
     )
-    from .publication_types import ALLOWED_PUBLICATION_TYPES, normalize_publication_type
+    from .publication_types import (
+        ALLOWED_PUBLICATION_TYPES,
+        is_book_publication,
+        normalize_book_record,
+        normalize_publication_type,
+    )
     from .venues import (
         VenueRegistryError,
         canonicalize_record,
@@ -49,7 +54,12 @@ except ImportError:
         PAPERS_COLUMNS,
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
-    from publication_types import ALLOWED_PUBLICATION_TYPES, normalize_publication_type
+    from publication_types import (
+        ALLOWED_PUBLICATION_TYPES,
+        is_book_publication,
+        normalize_book_record,
+        normalize_publication_type,
+    )
     from venues import (
         VenueRegistryError,
         canonicalize_record,
@@ -236,11 +246,18 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
-    entry_type = clean(draft.get("entry_type")).casefold() or "method"
+    book = is_book_publication(draft.get("publication_type"))
+    entry_type = clean(draft.get("entry_type")).casefold()
+    if not entry_type and not book:
+        entry_type = "method"
     subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
-    publication_type = normalize_publication_type(
-        draft.get("publication_type"), venue=draft.get("venue")
+    publication_type = (
+        "book"
+        if book
+        else normalize_publication_type(
+            draft.get("publication_type"), venue=draft.get("venue")
+        )
     ) or ("preprint" if clean(draft.get("source_database")).casefold() == "arxiv" else "")
     if not title:
         raise CuratedPaperError("title is required")
@@ -254,7 +271,7 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
         )
-    if entry_type not in ALLOWED_ENTRY_TYPES:
+    if entry_type and entry_type not in ALLOWED_ENTRY_TYPES:
         raise CuratedPaperError(
             "entry_type must be one of "
             + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
@@ -311,7 +328,9 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "review_status": review_status,
         "review_note": clean(draft.get("review_note")),
     }
+    normalized = normalize_book_record(normalized)
     normalized = canonicalize_record(normalized)
+    normalized = normalize_book_record(normalized)
     if not all_identity_keys(normalized):
         raise CuratedPaperError(
             "paper requires a DOI, OpenAlex URL, or title + year identity"
@@ -405,8 +424,12 @@ def update_curated_paper(
     entry_type = clean(draft.get("entry_type")).casefold()
     subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
-    publication_type = normalize_publication_type(
-        draft.get("publication_type"), venue=draft.get("venue")
+    publication_type = (
+        "book"
+        if is_book_publication(draft.get("publication_type"))
+        else normalize_publication_type(
+            draft.get("publication_type"), venue=draft.get("venue")
+        )
     )
     curation_status = (
         clean(draft.get("curation_status")) or "corrected_by_admin"
@@ -424,9 +447,9 @@ def update_curated_paper(
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
         )
-    if not entry_type:
+    if not entry_type and publication_type != "book":
         raise CuratedPaperError("entry_type is required")
-    if entry_type not in ALLOWED_ENTRY_TYPES:
+    if entry_type and entry_type not in ALLOWED_ENTRY_TYPES:
         raise CuratedPaperError(
             "entry_type must be one of "
             + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
@@ -515,12 +538,17 @@ def update_curated_paper(
         "publication_type_override": draft.get("publication_type_override") is True,
         "replace_raw_venue": draft.get("replace_raw_venue") is True,
     }
+    # A book payload is accepted defensively even if a caller supplies stale
+    # venue fields: clear them before canonical validation and once more after
+    # merging so external or existing metadata cannot reintroduce them.
+    normalized = normalize_book_record(normalized)
     venue_fields = apply_canonical_venue_selection(
         normalized,
         existing=existing or current_paper,
         venue_aliases_path=venue_aliases_path,
     )
     normalized.update(venue_fields)
+    normalized = normalize_book_record(normalized)
     normalized.pop("publication_type_override", None)
     normalized.pop("replace_raw_venue", None)
     if not all_identity_keys(normalized):

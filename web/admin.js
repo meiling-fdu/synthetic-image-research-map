@@ -32,6 +32,7 @@ const state = {
   venuesLoaded: false,
   selectedVenue: null,
   publicationTypeOverride: false,
+  previousPublicationType: "",
   arxivEnrichment: { records: [], summary: {}, discovery: {} },
   draftMappingCandidates: [],
   selectedGeocodeCandidate: null,
@@ -296,6 +297,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-venue-type",
     "metadata-venue-track",
     "metadata-venue-combobox",
+    "metadata-venue-field",
     "metadata-venue-button",
     "metadata-venue-value",
     "metadata-venue-panel",
@@ -316,6 +318,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-publication-type-override",
     "metadata-publication-type-warning",
     "metadata-entry-type",
+    "metadata-entry-type-field",
     "metadata-task",
     "metadata-subtask",
     "metadata-scope-status",
@@ -360,6 +363,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "institution-resolution-issue",
     "institution-resolution-paper",
     "institution-resolution-author",
+    "institution-resolution-previous",
     "institution-resolution-current",
     "institution-resolution-action",
     "institution-resolution-preset",
@@ -565,7 +569,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["metadata-venue-options"].addEventListener("mousemove", handleVenueOptionHover);
   elements["metadata-venue-create"].addEventListener("click", openVenueCreationDialog);
   elements["metadata-publication-type-override"].addEventListener("click", enablePublicationTypeOverride);
-  elements["metadata-publication-type"].addEventListener("change", updatePublicationTypeConflict);
+  elements["metadata-publication-type"].addEventListener("change", handlePublicationTypeChange);
   elements["venue-create-form"].addEventListener("submit", submitVenueCreation);
   elements["venue-create-cancel"].addEventListener("click", closeVenueCreationDialog);
   document.addEventListener("pointerdown", handleVenueOutsidePointerDown);
@@ -1382,6 +1386,38 @@ function renderInstitutionAuditDetail(item) {
   evidenceButton.textContent = "View evidence";
   evidenceButton.addEventListener("click", () => openInstitutionEvidence(item));
   actions.append(evidenceButton);
+  if (item.mapping_change) {
+    const confirmChange = document.createElement("button");
+    confirmChange.type = "button";
+    confirmChange.className = "primary-button";
+    confirmChange.textContent = "Confirm intentional change";
+    confirmChange.addEventListener("click", () => resolveInstitutionAudit(item, "mapping_change_confirmed"));
+    const revertChange = document.createElement("button");
+    revertChange.type = "button";
+    revertChange.className = "danger-button";
+    revertChange.textContent = "Revert mapping";
+    revertChange.addEventListener("click", () => resolveInstitutionAudit(item, "mapping_reverted"));
+    actions.append(confirmChange, revertChange);
+    const change = item.mapping_change;
+    detail.append(
+      heading,
+      auditDetailLine("Paper ID", item.paper_id),
+      auditDetailLine("DOI / OpenAlex", [item.doi, item.openalex_url].filter(Boolean).join(" · ")),
+      auditDetailLine("Author", item.author),
+      auditDetailLine("Mapping ID", change.mapping_id),
+      auditDetailLine("Previous institution", `${change.previous_institution_name} (${change.previous_institution_id})`),
+      auditDetailLine("Current institution", `${change.new_institution_name} (${change.new_institution_id})`),
+      auditDetailLine("Raw affiliation", change.raw_affiliation),
+      auditDetailLine("Change source", change.change_source),
+      auditDetailLine("Actor", change.actor),
+      auditDetailLine("Timestamp", change.changed_at),
+      auditDetailLine("Why trusted", change.trust_reason),
+      auditDetailLine("Evidence", [change.evidence_source, change.evidence_url].filter(Boolean).join(" · ")),
+      auditDetailLine("Visible on public map", change.publicly_visible ? "Yes" : "No"),
+      actions,
+    );
+    return;
+  }
   [["Accept suggestion", "accept_suggestion"], ["Keep multiple affiliations", "keep_multiple_affiliations"], ["Ignore finding", "ignore"]].forEach(([label, action]) => {
     const button = document.createElement("button");
     button.type = "button";
@@ -1634,6 +1670,14 @@ function renderInstitutionEvidenceActions(item) {
     closeInstitutionEvidence();
     resolveInstitutionAudit(item, action);
   }, primary);
+  if (item.mapping_change) {
+    actions.append(
+      resolutionAction("Confirm intentional change", "mapping_change_confirmed", true),
+      resolutionAction("Revert mapping", "mapping_reverted"),
+    );
+    actions.lastElementChild.className = "danger-button";
+    return;
+  }
   actions.append(
     resolutionAction("Accept suggestion", "accept_suggestion", true),
     resolutionAction("Keep multiple affiliations", "keep_multiple_affiliations"),
@@ -1678,17 +1722,23 @@ const institutionResolutionLabels = {
   keep_multiple_affiliations: "Keep multiple affiliations",
   ignore: "Ignore review case",
   manually_resolved: "Mark manually resolved",
+  mapping_change_confirmed: "Confirm intentional change",
+  mapping_reverted: "Revert mapping",
 };
 
 function openInstitutionResolutionDialog(item, action, queueIds, batch = false) {
-  const destructive = action === "accept_suggestion" || action === "replace_mapping";
-  state.pendingInstitutionResolution = { item, action, queueIds, batch, destructive };
+  const destructive = action === "accept_suggestion" || action === "replace_mapping" || action === "mapping_reverted";
+  const requiresConfirmation = destructive || action === "mapping_change_confirmed";
+  state.pendingInstitutionResolution = { item, action, queueIds, batch, destructive, requiresConfirmation, restoreFocus: document.activeElement };
   elements["institution-resolution-title"].textContent = batch
     ? `Resolve ${item.batch_count} selected review cases`
     : "Resolve institution review case";
   elements["institution-resolution-issue"].textContent = (item.issue_types || [item.issue_type]).filter(Boolean).join(", ") || "—";
   elements["institution-resolution-paper"].textContent = text(item.paper_title) || "—";
   elements["institution-resolution-author"].textContent = text(item.author) || "—";
+  elements["institution-resolution-previous"].textContent = item.mapping_change
+    ? `${item.mapping_change.previous_institution_name} (${item.mapping_change.previous_institution_id})`
+    : "—";
   elements["institution-resolution-current"].textContent = (item.current_institutions || [item.current_institution]).filter(Boolean).join("; ") || "—";
   elements["institution-resolution-action"].textContent = institutionResolutionLabels[action] || humanize(action);
   const preset = action === "keep_multiple_affiliations"
@@ -1699,10 +1749,16 @@ function openInstitutionResolutionDialog(item, action, queueIds, batch = false) 
         ? "parent"
         : "existing";
   elements["institution-resolution-preset"].value = preset;
-  elements["institution-resolution-note"].required = destructive;
-  elements["institution-resolution-note-optional"].hidden = destructive;
+  elements["institution-resolution-note"].required = requiresConfirmation;
+  elements["institution-resolution-note-optional"].hidden = requiresConfirmation;
+  elements["institution-resolution-submit"].className = action === "mapping_reverted" ? "danger-button" : "primary-button";
+  elements["institution-resolution-submit"].textContent = institutionResolutionLabels[action] || "Save resolution";
   elements["institution-resolution-error"].hidden = true;
   applyInstitutionResolutionPreset();
+  if (action === "mapping_change_confirmed" || action === "mapping_reverted") {
+    elements["institution-resolution-preset"].value = "custom";
+    applyInstitutionResolutionPreset();
+  }
   elements["institution-resolution-dialog"].showModal();
 }
 
@@ -1713,8 +1769,10 @@ function applyInstitutionResolutionPreset() {
 }
 
 function closeInstitutionResolutionDialog() {
+  const restoreFocus = state.pendingInstitutionResolution?.restoreFocus;
   state.pendingInstitutionResolution = null;
   elements["institution-resolution-dialog"].close();
+  if (restoreFocus?.isConnected) restoreFocus.focus();
 }
 
 function openBatchInstitutionResolution() {
@@ -1736,7 +1794,7 @@ async function submitInstitutionResolution(event) {
   const pending = state.pendingInstitutionResolution;
   if (!pending) return;
   let note = elements["institution-resolution-note"].value.trim();
-  if (pending.destructive && !note) {
+  if (pending.requiresConfirmation && !note) {
     elements["institution-resolution-error"].hidden = false;
     elements["institution-resolution-error"].textContent = "A review note is required because this action changes a mapping.";
     return;
@@ -1752,7 +1810,11 @@ async function submitInstitutionResolution(event) {
         queue_ids: pending.queueIds,
         action: pending.action,
         review_note: note,
-        confirmed: pending.destructive,
+        confirmed: pending.requiresConfirmation,
+        expected_mapping_id: pending.item.mapping_change?.expected_mapping_id,
+        expected_institution_id: pending.item.mapping_change?.expected_institution_id,
+        expected_mapping_updated_at: pending.item.mapping_change?.expected_mapping_updated_at,
+        expected_review_updated_at: pending.item.mapping_change?.expected_review_updated_at,
       }),
     });
     const payload = await apiFetch("/api/review/institution-cleanup");
@@ -1760,8 +1822,9 @@ async function submitInstitutionResolution(event) {
     state.institutionCleanupSelection.clear();
     closeInstitutionResolutionDialog();
     renderInstitutionAudit();
-    elements["institution-audit-detail"].textContent = "Select a paper-author review case.";
-    showNotice(pending.action === "accept_suggestion" ? "Institution mapping corrected and cleanup finding resolved." : "Institution cleanup decision saved.");
+    elements["institution-audit-detail"].textContent = "Review resolved. Select another paper-author review case.";
+    elements["institution-audit-search"].focus();
+    showNotice(pending.action === "mapping_reverted" ? "Institution mapping reverted and review resolved. The next Full Refresh or Publish run will re-audit it." : pending.action === "mapping_change_confirmed" ? "Intentional mapping change confirmed and review resolved. The next Full Refresh or Publish run will verify it remains stable." : pending.action === "accept_suggestion" ? "Institution mapping corrected and cleanup finding resolved." : "Institution cleanup decision saved.");
   } catch (error) {
     elements["institution-resolution-error"].hidden = false;
     elements["institution-resolution-error"].textContent = error.message;
@@ -4301,6 +4364,8 @@ function selectCanonicalVenue(option, restoreFocus = true) {
   elements["metadata-venue-value"].textContent = option.venue_label;
   state.publicationTypeOverride = false;
   elements["metadata-publication-type"].value = publicationTypeForVenueType(option.venue_type);
+  state.previousPublicationType = elements["metadata-publication-type"].value;
+  setBookMetadataAvailability(false);
   elements["metadata-publication-type"].disabled = true;
   elements["metadata-publication-type-override"].textContent = "Override publication type";
   updatePublicationTypeConflict();
@@ -4336,6 +4401,73 @@ function updatePublicationTypeConflict() {
     ? `Warning: this overrides canonical venue type ${state.selectedVenue.venue_type} (${expected}).`
     : "";
   return conflict;
+}
+
+const BOOK_INCOMPATIBLE_FORM_FIELDS = [
+  ["Venue", "metadata-venue-name"],
+  ["venue ID", "metadata-venue-id"],
+  ["venue acronym", "metadata-venue-acronym"],
+  ["venue type", "metadata-venue-type"],
+  ["venue track", "metadata-venue-track"],
+  ["raw venue", "metadata-raw-venue"],
+  ["paper type / category", "metadata-entry-type"],
+];
+
+function populatedBookIncompatibleFormFields() {
+  return BOOK_INCOMPATIBLE_FORM_FIELDS
+    .filter(([, id]) => elements[id].value.trim())
+    .map(([label, id]) => `${label}: “${elements[id].value.trim()}”`);
+}
+
+function clearBookIncompatibleFormFields() {
+  state.selectedVenue = null;
+  [
+    "metadata-venue", "metadata-venue-id", "metadata-venue-name",
+    "metadata-venue-acronym", "metadata-venue-type", "metadata-venue-track",
+    "metadata-raw-venue", "metadata-entry-type",
+  ].forEach((id) => { elements[id].value = ""; });
+  elements["metadata-venue-value"].textContent = "Unavailable for books";
+  elements["metadata-raw-venue-display"].textContent = "Not recorded";
+  elements["metadata-replace-raw-venue"].checked = false;
+  renderSelectedVenueMetadata();
+  closeVenueCombobox(false);
+}
+
+function setBookMetadataAvailability(isBook) {
+  elements["metadata-venue-field"].hidden = isBook;
+  elements["metadata-entry-type-field"].hidden = isBook;
+  elements["metadata-venue-button"].disabled = isBook;
+  elements["metadata-entry-type"].disabled = isBook;
+  elements["metadata-entry-type"].required = !isBook;
+  const leavingBook = !isBook && state.previousPublicationType === "book";
+  elements["metadata-publication-type"].disabled = isBook
+    ? false
+    : state.selectedVenue
+      ? !state.publicationTypeOverride
+      : !leavingBook;
+  elements["metadata-publication-type-override"].hidden = isBook || !state.selectedVenue;
+}
+
+function handlePublicationTypeChange() {
+  const select = elements["metadata-publication-type"];
+  const nextType = select.value;
+  const previousType = state.previousPublicationType || nextType;
+  if (nextType === "book" && previousType !== "book") {
+    const incompatible = populatedBookIncompatibleFormFields();
+    if (incompatible.length && !window.confirm(
+      `Changing this record to book will clear these incompatible values:\n\n${incompatible.join("\n")}\n\nContinue?`,
+    )) {
+      select.value = previousType;
+      updatePublicationTypeConflict();
+      return;
+    }
+    clearBookIncompatibleFormFields();
+  }
+  const isBook = nextType === "book";
+  if (isBook) clearBookIncompatibleFormFields();
+  setBookMetadataAvailability(isBook);
+  state.previousPublicationType = nextType;
+  updatePublicationTypeConflict();
 }
 
 function openVenueCreationDialog() {
@@ -4493,6 +4625,10 @@ function populateMetadataForm() {
     metadataValue(record, "scope_status") || "in_scope";
   elements["metadata-arxiv-id"].dataset.originalValue =
     metadataValue(record, "arxiv_id").trim();
+  const isBook = elements["metadata-publication-type"].value === "book";
+  state.previousPublicationType = elements["metadata-publication-type"].value;
+  if (isBook) clearBookIncompatibleFormFields();
+  setBookMetadataAvailability(isBook);
   elements["metadata-edit-error"].hidden = true;
 }
 
@@ -4520,25 +4656,28 @@ async function saveMetadata(event) {
   fields.forEach((field) => {
     draft[field] = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
   });
-  if (!state.selectedVenue) {
+  const isBook = draft.publication_type === "book";
+  if (!state.selectedVenue && !isBook) {
     elements["metadata-edit-error"].hidden = false;
     elements["metadata-edit-error"].textContent =
       "Select a canonical venue before saving metadata.";
     return;
   }
   Object.assign(draft, {
-    venue: elements["metadata-venue-name"].value,
-    venue_id: elements["metadata-venue-id"].value,
-    venue_name: elements["metadata-venue-name"].value,
-    venue_acronym: elements["metadata-venue-acronym"].value,
-    venue_type: elements["metadata-venue-type"].value,
-    venue_track: elements["metadata-venue-track"].value,
-    raw_venue: elements["metadata-replace-raw-venue"].checked
+    venue: isBook ? "" : elements["metadata-venue-name"].value,
+    venue_id: isBook ? "" : elements["metadata-venue-id"].value,
+    venue_name: isBook ? "" : elements["metadata-venue-name"].value,
+    venue_acronym: isBook ? "" : elements["metadata-venue-acronym"].value,
+    venue_type: isBook ? "" : elements["metadata-venue-type"].value,
+    venue_track: isBook ? "" : elements["metadata-venue-track"].value,
+    entry_type: isBook ? "" : draft.entry_type,
+    raw_venue: isBook ? "" : elements["metadata-replace-raw-venue"].checked
       ? elements["metadata-venue-name"].value
       : elements["metadata-raw-venue"].value,
-    replace_raw_venue: elements["metadata-replace-raw-venue"].checked,
+    replace_raw_venue: !isBook && elements["metadata-replace-raw-venue"].checked,
     publication_type_override: state.publicationTypeOverride,
   });
+  if (isBook) draft.publication_type_override = false;
   if (updatePublicationTypeConflict() && !window.confirm(
     "Publication type conflicts with the selected canonical venue. Save this explicit override?",
   )) return;

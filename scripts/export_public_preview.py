@@ -36,7 +36,11 @@ try:
         save_location_review_queue,
         stable_institution_id,
     )
-    from .publication_types import normalize_publication_type
+    from .publication_types import (
+        is_book_publication,
+        normalize_book_record,
+        normalize_publication_type,
+    )
     from .venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -115,7 +119,11 @@ except ImportError:  # Direct execution from the scripts directory.
         save_location_review_queue,
         stable_institution_id,
     )
-    from publication_types import normalize_publication_type
+    from publication_types import (
+        is_book_publication,
+        normalize_book_record,
+        normalize_publication_type,
+    )
     from venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -1504,7 +1512,7 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
             "generated_video_detection records are not eligible for public preview"
         )
     task, subtask = task_labels
-    return {
+    record = {
         "title": clean_text(row.get("title")),
         "in_scope": True,
         "year": year,
@@ -1541,6 +1549,7 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
         "needs_review": parse_bool(row.get("manual_review")),
         "notes": clean_text(row.get("notes")),
     }
+    return normalize_book_record(record, remove=True)
 
 
 def identity_key(record: Dict[str, Any]) -> Tuple[str, Any]:
@@ -2028,6 +2037,8 @@ def synchronize_publication_types(
         record: Dict[str, Any], evidence: Optional[Dict[str, Any]] = None
     ) -> str:
         evidence = evidence or {}
+        if is_book_publication(record.get("publication_type")):
+            return "book"
         return normalize_publication_type(
             record.get("publication_type"),
             venue=record.get("venue") or record.get("venue_name"),
@@ -2044,6 +2055,10 @@ def synchronize_publication_types(
             paper, marker_matches[0] if marker_matches else None
         )
         paper["publication_type"] = normalized
+        if normalized == "book":
+            cleaned = normalize_book_record(paper, remove=True)
+            paper.clear()
+            paper.update(cleaned)
         if not normalized:
             unresolved.setdefault(
                 identity_key(paper),
@@ -2058,10 +2073,18 @@ def synchronize_publication_types(
         matches = matching_records(marker, paper_lookup)
         if matches:
             marker["publication_type"] = clean_text(matches[0].get("publication_type"))
+            if marker["publication_type"] == "book":
+                cleaned = normalize_book_record(marker, remove=True)
+                marker.clear()
+                marker.update(cleaned)
             continue
         raw_publication_type = clean_text(marker.get("publication_type"))
         normalized = normalize_record(marker)
         marker["publication_type"] = normalized
+        if normalized == "book":
+            cleaned = normalize_book_record(marker, remove=True)
+            marker.clear()
+            marker.update(cleaned)
         if not normalized:
             unresolved.setdefault(
                 identity_key(marker),

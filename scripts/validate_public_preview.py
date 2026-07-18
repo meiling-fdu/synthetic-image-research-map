@@ -22,6 +22,11 @@ except ImportError:
     from curated_schema import VENUE_TYPE_ORDER
 
 try:
+    from .publication_types import book_incompatibilities
+except ImportError:
+    from publication_types import book_incompatibilities
+
+try:
     from .institution_types import INSTITUTION_TYPE_SET
 except ImportError:
     from institution_types import INSTITUTION_TYPE_SET
@@ -941,6 +946,11 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
     validate_institution_types(index, record, issues)
 
     title = record_title(record)
+    for field, value in book_incompatibilities(record).items():
+        add_issue(
+            issues, "ERROR", index, title,
+            f"book has incompatible {field}={clean_text(value)!r}",
+        )
     publication_type = clean_text(record.get("publication_type"))
     if publication_type not in {"conference", "journal", "preprint", "book"}:
         add_issue(
@@ -1153,6 +1163,11 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
     validate_canonical_venue(index, record, issues)
 
     title = record_title(record)
+    for field, value in book_incompatibilities(record).items():
+        add_issue(
+            issues, "ERROR", index, title,
+            f"book has incompatible {field}={clean_text(value)!r}",
+        )
     publication_type = clean_text(record.get("publication_type"))
     if publication_type not in {"conference", "journal", "preprint", "book"}:
         add_issue(
