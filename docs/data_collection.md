@@ -696,6 +696,8 @@ python3 scripts/validate_public_preview.py --strict
 
 `scripts/validate_public_preview.py` accepts either a top-level record array or the metadata-plus-records object format. It checks the strict map preview for publication-safe task and subtask labels, required paper and institution metadata, coordinate bounds, publication year, link availability, review status, and institution-resolution confidence. It also validates the paper-level preview for paper metadata, coverage flags, and consistency between `has_map_location` and `map_record_count` without requiring institution coordinates. Errors always return a non-zero status; `--strict` also fails on warnings. The validator only reads the preview JSON files and does not modify generated or manual data.
 
+The exporter owns `metadata.public_preview_generated_at`. It computes one UTC `YYYY-MM-DDTHH:MM:SSZ` value after shrinkage checks, validates both proposed outputs with that same value, and commits the JSON pair transactionally. `--dry-run`, failed validation, failed shrinkage checks, and failed publish workflows preserve the previously successful timestamp. Maintainers must not derive or edit this field from local time, file modification times, or Git commit dates; refresh and publish workflows do not run a separate timestamping step.
+
 Validation also enforces the public regional convention: records identified as Hong Kong, Macau/Macao, or Taiwan must use `country=China`, `country_code=CN`, and the matching `region` and `region_code`. The quality report applies the same normalization when counting countries, so these records contribute to China in the Top Countries table even when reporting on an older preview file.
 
 ### Interactive Curation Console data boundaries

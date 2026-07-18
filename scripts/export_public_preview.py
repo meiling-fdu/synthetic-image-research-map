@@ -67,6 +67,12 @@ try:
         filter_preserved_records,
         format_shrinkage_report,
     )
+    from .public_export_metadata import (
+        add_export_timestamp,
+        atomic_write_json_files,
+        utc_timestamp,
+    )
+    from .public_record_rules import paper_is_retracted
     from .name_matching import (
         canonical_name_key,
         names_match,
@@ -140,6 +146,12 @@ except ImportError:  # Direct execution from the scripts directory.
         filter_preserved_records,
         format_shrinkage_report,
     )
+    from public_export_metadata import (
+        add_export_timestamp,
+        atomic_write_json_files,
+        utc_timestamp,
+    )
+    from public_record_rules import paper_is_retracted
     from name_matching import (
         canonical_name_key,
         names_match,
@@ -1466,24 +1478,6 @@ def read_csv_rows(path: Path) -> List[Dict[str, str]]:
         raise PreviewExportError(f"Could not read {path}: {error}") from error
 
 
-def paper_is_retracted(row: Dict[str, Any]) -> bool:
-    publication_type = clean_text(row.get("publication_type")).casefold()
-    title = clean_text(row.get("title")).casefold()
-    exclusion_reason = clean_text(row.get("exclusion_reason")).casefold()
-    notes = clean_text(row.get("notes")).casefold()
-    return (
-        publication_type in {"retraction", "retracted"}
-        or any(
-            parse_bool(row.get(field))
-            for field in ("is_retracted", "retracted")
-        )
-        or bool(re.match(r"^(?:\[\s*retracted\s*\]|retracted\s*:)", title))
-        or "retracted" in exclusion_reason
-        or "retraction" in exclusion_reason
-        or "retracted" in notes
-    )
-
-
 def exclude_retracted_records(
     records: Sequence[Dict[str, Any]],
 ) -> Tuple[List[Dict[str, Any]], int]:
@@ -2549,18 +2543,6 @@ def build_preview(
     return {"metadata": dict(PUBLIC_METADATA), "records": selected}, summary
 
 
-def write_json(path: Path, payload: Dict[str, Any]) -> None:
-    temporary_path = path.with_suffix(path.suffix + ".tmp")
-    try:
-        path.parent.mkdir(parents=True, exist_ok=True)
-        with temporary_path.open("w", encoding="utf-8") as handle:
-            json.dump(payload, handle, ensure_ascii=False, indent=2)
-            handle.write("\n")
-        temporary_path.replace(path)
-    except OSError as error:
-        raise PreviewExportError(f"Could not write {path}: {error}") from error
-
-
 def exclude_nonpublic_institutions(
     paper_records: Sequence[Dict[str, Any]],
     map_records: Sequence[Dict[str, Any]],
@@ -2612,6 +2594,63 @@ def exclude_nonpublic_institutions(
             paper["author_institution_affiliations"] = filtered
         papers.append(paper)
     return papers, maps, removed
+
+
+def validate_proposed_public_outputs(
+    payload: Dict[str, Any],
+    paper_payload: Dict[str, Any],
+    merge_rows: Sequence[Dict[str, Any]],
+) -> None:
+    """Run the same publication validator before any output replacement."""
+    try:
+        from .validate_public_preview import validate_datasets
+    except ImportError:
+        from validate_public_preview import validate_datasets
+
+    issues, paper_issues = validate_datasets(
+        payload["metadata"],
+        payload["records"],
+        paper_payload["metadata"],
+        paper_payload["records"],
+        merge_rows,
+    )
+    errors = [
+        issue for issue in (*issues, *paper_issues) if issue.level == "ERROR"
+    ]
+    if errors:
+        details = "; ".join(
+            f"{issue.title}: {issue.message}" for issue in errors[:8]
+        )
+        if len(errors) > 8:
+            details += f"; and {len(errors) - 8} more errors"
+        raise PreviewExportError(
+            "Proposed public outputs failed validation: " + details
+        )
+
+
+def commit_public_outputs(
+    output: Path,
+    payload: Dict[str, Any],
+    paper_output: Path,
+    paper_payload: Dict[str, Any],
+    merge_rows: Sequence[Dict[str, Any]],
+    *,
+    dry_run: bool = False,
+    timestamp: Optional[str] = None,
+) -> Optional[str]:
+    """Timestamp, validate, and transactionally commit the public output pair."""
+    if dry_run:
+        return None
+    successful_at = timestamp or utc_timestamp()
+    add_export_timestamp(payload, paper_payload, successful_at)
+    validate_proposed_public_outputs(payload, paper_payload, merge_rows)
+    try:
+        atomic_write_json_files(
+            {output: payload, paper_output: paper_payload}
+        )
+    except OSError as error:
+        raise PreviewExportError(str(error)) from error
+    return successful_at
 
 
 def exclude_stale_curated_mapping_markers(
@@ -3955,14 +3994,52 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 args.export_baseline,
                 args.approved_baseline,
             )
+        previous_output_payloads: Dict[Path, Dict[str, Any]] = {}
+        missing_output_paths = []
+        for output_path in (args.output, args.paper_output):
+            if output_path.exists():
+                try:
+                    with output_path.open(encoding="utf-8") as handle:
+                        existing_payload = json.load(handle)
+                except (OSError, UnicodeError, json.JSONDecodeError) as error:
+                    raise PreviewExportError(
+                        f"Could not snapshot {output_path} before export: {error}"
+                    ) from error
+                if not isinstance(existing_payload, dict):
+                    raise PreviewExportError(
+                        f"Could not snapshot {output_path}: expected a JSON object"
+                    )
+                previous_output_payloads[output_path] = existing_payload
+            else:
+                missing_output_paths.append(output_path)
+
+        commit_public_outputs(
+            args.output,
+            payload,
+            args.paper_output,
+            paper_payload,
+            version_merge_rows,
+            dry_run=args.dry_run,
+        )
         if not args.dry_run:
-            write_json(args.output, payload)
-            write_json(args.paper_output, paper_payload)
-            if integrated_location_reviews != location_review_rows:
-                save_location_review_queue(
-                    integrated_location_reviews,
-                    args.location_review,
-                )
+            try:
+                if integrated_location_reviews != location_review_rows:
+                    save_location_review_queue(
+                        integrated_location_reviews,
+                        args.location_review,
+                    )
+            except CuratedExportError:
+                try:
+                    if previous_output_payloads:
+                        atomic_write_json_files(previous_output_payloads)
+                    for output_path in missing_output_paths:
+                        output_path.unlink(missing_ok=True)
+                except OSError as rollback_error:
+                    raise PreviewExportError(
+                        "Location-review write failed and public-output rollback "
+                        f"also failed: {rollback_error}"
+                    ) from rollback_error
+                raise
         print_summary(summary, args.output, args.dry_run)
         print_paper_summary(paper_summary, args.paper_output, args.dry_run)
     except (

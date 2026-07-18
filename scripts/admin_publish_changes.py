@@ -232,6 +232,12 @@ def publish_changes(
     print("\n== Public preview size before refresh ==", flush=True)
     print_preview_counts("Before", before_counts)
 
+    try:
+        preview_snapshot = snapshot_preview_files(repository_root)
+    except OSError as error:
+        print(f"ERROR: could not preserve the public preview: {error}", file=sys.stderr)
+        return 1
+
     print("\n== Full refresh pipeline ==", flush=True)
     for command in ALLOWED_WORKFLOWS["full_refresh"]:
         if not run_step(
@@ -240,6 +246,7 @@ def publish_changes(
             repository_root,
             runner,
         ):
+            restore_preview_files(repository_root, preview_snapshot)
             print("ERROR: publishing stopped during refresh.", file=sys.stderr)
             return 1
     print("Full refresh pipeline result: succeeded.", flush=True)
@@ -247,6 +254,7 @@ def publish_changes(
     try:
         after_counts = preview_count_reader(repository_root)
     except PublishDataError as error:
+        restore_preview_files(repository_root, preview_snapshot)
         print(
             f"ERROR: publish aborted after refresh: {error}",
             file=sys.stderr,
@@ -265,12 +273,6 @@ def publish_changes(
         )
     print("Identity-level public preview shrinkage guard: passed.", flush=True)
 
-    try:
-        preview_snapshot = snapshot_preview_files(repository_root)
-    except OSError as error:
-        print(f"ERROR: could not preserve the previous preview timestamp: {error}", file=sys.stderr)
-        return 1
-
     if not run_step(
         "Public preview validation",
         PUBLIC_VALIDATION,
@@ -281,15 +283,6 @@ def publish_changes(
         print("ERROR: publishing stopped before Git staging.", file=sys.stderr)
         return 1
     print("Validation result: succeeded.", flush=True)
-
-    if not run_step(
-        "Stamp successful public preview generation",
-        ("python3", "scripts/stamp_public_preview.py"),
-        repository_root,
-        runner,
-    ):
-        print("ERROR: publishing stopped before Git staging.", file=sys.stderr)
-        return 1
 
     print("\n== Changed files after refresh ==", flush=True)
     status_code, status = git_output(

@@ -22,6 +22,7 @@ PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
 QUALITY_REPORT = Path("docs/public_preview_report.md")
 MAPPING_REPORT = Path("docs/missing_author_mappings_report.md")
 MAPPING_REPORT_CSV = Path("data/manual/missing_author_mappings_report.csv")
+PAPER_PREVIEW_JSON = Path("web/data/public_preview_papers.json")
 CONFIDENCE_LEVELS = ("unresolved", "low", "medium", "high")
 
 
@@ -156,6 +157,20 @@ def build_steps(args: argparse.Namespace) -> List[RefreshStep]:
 
 
 def execute_steps(steps: Sequence[RefreshStep]) -> int:
+    preview_paths = tuple(
+        REPOSITORY_ROOT / path for path in (PREVIEW_JSON, PAPER_PREVIEW_JSON)
+    )
+    snapshot = {
+        path: path.read_bytes() for path in preview_paths if path.exists()
+    }
+
+    def restore_preview_snapshot() -> None:
+        for path in preview_paths:
+            if path in snapshot:
+                path.write_bytes(snapshot[path])
+            else:
+                path.unlink(missing_ok=True)
+
     total = len(steps)
     for step in steps:
         prefix = f"[{step.number}/{total}]"
@@ -174,6 +189,7 @@ def execute_steps(steps: Sequence[RefreshStep]) -> int:
             )
             return 1
         if result.returncode != 0:
+            restore_preview_snapshot()
             print(
                 f"{prefix} FAILED: {step.name} exited with code "
                 f"{result.returncode}. Refresh stopped.",
@@ -181,15 +197,6 @@ def execute_steps(steps: Sequence[RefreshStep]) -> int:
             )
             return result.returncode or 1
         print(f"{prefix} COMPLETE: {step.name}", flush=True)
-
-    stamp_result = subprocess.run(
-        script_command("stamp_public_preview.py"),
-        cwd=REPOSITORY_ROOT,
-        check=False,
-    )
-    if stamp_result.returncode != 0:
-        print("FAILED: validated preview timestamp was not updated.", file=sys.stderr)
-        return stamp_result.returncode or 1
 
     print("\nPublic preview refresh complete.")
     print("Inspect these files before committing:")

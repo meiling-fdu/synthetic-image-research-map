@@ -32,9 +32,11 @@ except ImportError:
     from name_matching import canonical_name_key
 
 try:
-    from .export_public_preview import paper_is_retracted
+    from .public_export_metadata import TIMESTAMP_FIELD, is_utc_timestamp
+    from .public_record_rules import paper_is_retracted
 except ImportError:
-    from export_public_preview import paper_is_retracted
+    from public_export_metadata import TIMESTAMP_FIELD, is_utc_timestamp
+    from public_record_rules import paper_is_retracted
 
 try:
     from .country_normalization import (
@@ -167,6 +169,52 @@ def validate_venue_metadata(metadata: Dict[str, Any], issues: List[Issue]) -> No
             -1,
             "Dataset metadata",
             "venue_type_order must match the shared canonical order",
+        )
+
+
+def validate_export_metadata_pair(
+    metadata: Dict[str, Any],
+    paper_metadata: Dict[str, Any],
+    issues: List[Issue],
+    paper_issues: List[Issue],
+) -> None:
+    """Validate the shared successful-export timestamp across both outputs."""
+    map_timestamp = metadata.get(TIMESTAMP_FIELD)
+    paper_timestamp = paper_metadata.get(TIMESTAMP_FIELD)
+    if map_timestamp is None and paper_timestamp is None:
+        # Legacy fixtures and old snapshots remain readable. Every new export
+        # writes the field; a one-sided value is never valid.
+        return
+    if not is_utc_timestamp(map_timestamp):
+        add_issue(
+            issues,
+            "ERROR",
+            -1,
+            "Dataset metadata",
+            f"{TIMESTAMP_FIELD} must be a UTC ISO-8601 timestamp ending in Z",
+        )
+    if not is_utc_timestamp(paper_timestamp):
+        add_issue(
+            paper_issues,
+            "ERROR",
+            -1,
+            "Dataset metadata",
+            f"{TIMESTAMP_FIELD} must be a UTC ISO-8601 timestamp ending in Z",
+        )
+    if map_timestamp != paper_timestamp:
+        add_issue(
+            issues,
+            "ERROR",
+            -1,
+            "Dataset metadata",
+            f"{TIMESTAMP_FIELD} must match the paper preview timestamp",
+        )
+        add_issue(
+            paper_issues,
+            "ERROR",
+            -1,
+            "Dataset metadata",
+            f"{TIMESTAMP_FIELD} must match the map preview timestamp",
         )
 
 
@@ -1303,6 +1351,38 @@ def print_summary(
             )
 
 
+def validate_datasets(
+    metadata: Dict[str, Any],
+    records: Sequence[Any],
+    paper_metadata: Dict[str, Any],
+    paper_records: Sequence[Any],
+    merge_rows: Sequence[Dict[str, Any]],
+) -> Tuple[List[Issue], List[Issue]]:
+    """Validate a proposed map/paper pair without reading or writing files."""
+    issues: List[Issue] = []
+    paper_issues: List[Issue] = []
+    validate_export_metadata_pair(
+        metadata, paper_metadata, issues, paper_issues
+    )
+    validate_venue_metadata(metadata, issues)
+    for index, record in enumerate(records):
+        validate_record(index, record, issues)
+    validate_preprint_version_duplicates(records, issues)
+    validate_venue_consistency(records, issues)
+    validate_confirmed_version_merges(
+        records, merge_rows, issues, paper_level=False
+    )
+    validate_venue_metadata(paper_metadata, paper_issues)
+    for index, record in enumerate(paper_records):
+        validate_paper_record(index, record, paper_issues)
+    validate_preprint_version_duplicates(paper_records, paper_issues)
+    validate_venue_consistency(paper_records, paper_issues)
+    validate_confirmed_version_merges(
+        paper_records, merge_rows, paper_issues, paper_level=True
+    )
+    return issues, paper_issues
+
+
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
@@ -1313,23 +1393,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"Error: {error}", file=sys.stderr)
         return 2
 
-    issues: List[Issue] = []
-    validate_venue_metadata(metadata, issues)
-    for index, record in enumerate(records):
-        validate_record(index, record, issues)
-    validate_preprint_version_duplicates(records, issues)
-    validate_venue_consistency(records, issues)
-    validate_confirmed_version_merges(
-        records, merge_rows, issues, paper_level=False
-    )
-    paper_issues: List[Issue] = []
-    validate_venue_metadata(paper_metadata, paper_issues)
-    for index, record in enumerate(paper_records):
-        validate_paper_record(index, record, paper_issues)
-    validate_preprint_version_duplicates(paper_records, paper_issues)
-    validate_venue_consistency(paper_records, paper_issues)
-    validate_confirmed_version_merges(
-        paper_records, merge_rows, paper_issues, paper_level=True
+    issues, paper_issues = validate_datasets(
+        metadata,
+        records,
+        paper_metadata,
+        paper_records,
+        merge_rows,
     )
 
     print_summary(args.input, records, issues)

@@ -143,7 +143,7 @@ class AdminPublishChangesTests(unittest.TestCase):
             def runner(command, repository_root):
                 if tuple(command) == ("git", "status", "--short"):
                     return subprocess.CompletedProcess(command, 2, stdout="status failed")
-                if tuple(command) == ("python3", "scripts/stamp_public_preview.py"):
+                if "scripts/export_public_preview.py" in command:
                     for relative in original:
                         (repository_root / relative).write_text('{"metadata":{"public_preview_generated_at":"new"},"records":[]}\n')
                 return subprocess.CompletedProcess(command, 0, stdout="")
