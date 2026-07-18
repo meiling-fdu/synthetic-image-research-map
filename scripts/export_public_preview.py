@@ -62,6 +62,11 @@ try:
         apply_confirmed_version_merges,
         read_paper_version_merges,
     )
+    from .public_export_guard import (
+        analyze_shrinkage,
+        filter_preserved_records,
+        format_shrinkage_report,
+    )
     from .name_matching import (
         canonical_name_key,
         names_match,
@@ -129,6 +134,11 @@ except ImportError:  # Direct execution from the scripts directory.
         PaperVersionMergeError,
         apply_confirmed_version_merges,
         read_paper_version_merges,
+    )
+    from public_export_guard import (
+        analyze_shrinkage,
+        filter_preserved_records,
+        format_shrinkage_report,
     )
     from name_matching import (
         canonical_name_key,
@@ -384,8 +394,8 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         "--preserve-existing",
         action="store_true",
         help=(
-            "Union the existing public outputs into a no-search refresh so a "
-            "partial local candidate snapshot cannot shrink published coverage."
+            "Preserve unexplained records from the existing public outputs in a "
+            "no-search refresh, while filtering durable explicit removals."
         ),
     )
     parser.add_argument(
@@ -393,8 +403,8 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         type=Path,
         default=DEFAULT_EXPORT_BASELINE,
         help=(
-            "Approved minimum public record counts used to prevent accidental "
-            f"shrinkage (default: {DEFAULT_EXPORT_BASELINE})."
+            "Bootstrap/disaster count reference used only when previous public "
+            f"outputs are unavailable (default: {DEFAULT_EXPORT_BASELINE})."
         ),
     )
     parser.add_argument(
@@ -2156,6 +2166,20 @@ def enforce_export_baseline(
         )
 
 
+def approved_baseline_allows(
+    paper_count: int,
+    map_count: int,
+    approved_baseline_path: Optional[Path],
+) -> bool:
+    if approved_baseline_path is None:
+        return False
+    baseline = read_export_baseline(approved_baseline_path)
+    return (
+        paper_count >= baseline["paper_records"]
+        and map_count >= baseline["map_records"]
+    )
+
+
 def merge_existing_records(
     existing: Sequence[Dict[str, Any]],
     fresh: Sequence[Dict[str, Any]],
@@ -3413,10 +3437,29 @@ def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) ->
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
+        previous_maps = (
+            read_candidate_records(args.output) if args.output.exists() else []
+        )
+        previous_papers = (
+            read_candidate_records(args.paper_output)
+            if args.paper_output.exists()
+            else []
+        )
+        exclusion_rows = read_exclusion_rows(args.paper_exclusions)
+        version_merge_rows = read_paper_version_merges(
+            args.paper_version_merges
+        )
+        review_decisions = read_csv_rows(args.review_decisions)
         records = read_candidate_records(args.input)
-        if args.preserve_existing and args.output.exists():
+        if args.preserve_existing and previous_maps:
             records = merge_existing_records(
-                read_candidate_records(args.output),
+                filter_preserved_records(
+                    previous_maps,
+                    map_records=True,
+                    exclusion_rows=exclusion_rows,
+                    merge_rows=version_merge_rows,
+                    review_decisions=review_decisions,
+                ),
                 records,
                 map_records=True,
             )
@@ -3431,7 +3474,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         key_papers = read_key_papers()
         institution_record_overrides = load_institution_record_overrides()
         institution_author_overrides = load_institution_author_overrides()
-        exclusion_rows = read_exclusion_rows(args.paper_exclusions)
         payload, summary = build_preview(
             records,
             args.max_records,
@@ -3463,16 +3505,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             read_csv_rows(DEFAULT_EXPORT_DIAGNOSTICS),
             exclusion_rows,
         )
-        if args.preserve_existing and args.paper_output.exists():
-            previous_papers = read_candidate_records(args.paper_output)
-            exclusion_index = build_active_exclusion_index(exclusion_rows)
-            previous_papers = [
-                record
-                for record in previous_papers
-                if not record_is_excluded(record, exclusion_index)
-            ]
+        if args.preserve_existing and previous_papers:
             paper_payload["records"] = merge_existing_records(
-                previous_papers,
+                filter_preserved_records(
+                    previous_papers,
+                    map_records=False,
+                    exclusion_rows=exclusion_rows,
+                    merge_rows=version_merge_rows,
+                ),
                 paper_payload["records"],
                 map_records=False,
             )
@@ -3518,7 +3558,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         ) = apply_confirmed_version_merges(
             integrated_papers,
             integrated_maps,
-            read_paper_version_merges(args.paper_version_merges),
+            version_merge_rows,
         )
         stale_mapping_markers_excluded += enforce_affiliation_source_precedence(
             integrated_papers,
@@ -3532,7 +3572,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         integrated_maps, curated_preprint_map_records_excluded = (
             exclude_preprint_versions(integrated_maps)
         )
-        review_decisions = read_csv_rows(args.review_decisions)
         integrated_maps, review_mapping_exclusions_applied = (
             apply_mapping_exclusion_decisions(
                 integrated_maps, review_decisions
@@ -3736,12 +3775,39 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_summary["paper_preview_papers_excluded_curated"] += (
             curated_summary.get("curated_papers_skipped_exclusion", 0)
         )
-        enforce_export_baseline(
-            len(integrated_papers),
-            len(integrated_maps),
-            args.export_baseline,
-            args.approved_baseline,
-        )
+        if previous_papers or previous_maps:
+            shrinkage_report = analyze_shrinkage(
+                previous_papers,
+                integrated_papers,
+                previous_maps,
+                integrated_maps,
+                exclusion_rows=exclusion_rows,
+                merge_rows=version_merge_rows,
+                review_decisions=review_decisions,
+                curated_mappings=curated_mappings,
+                institution_redirects=exported_id_redirects,
+                approved_by_baseline=approved_baseline_allows(
+                    len(integrated_papers),
+                    len(integrated_maps),
+                    args.approved_baseline,
+                ),
+            )
+            if shrinkage_report.removed_papers or shrinkage_report.removed_maps:
+                print(format_shrinkage_report(shrinkage_report), flush=True)
+            if not shrinkage_report.allowed:
+                raise PreviewExportError(
+                    "Public export shrinkage guard failed: unexplained "
+                    "published identities or map relationships disappeared."
+                )
+        else:
+            # With no prior public output to compare, retain the static count
+            # baseline as a bootstrap/disaster-protection fallback.
+            enforce_export_baseline(
+                len(integrated_papers),
+                len(integrated_maps),
+                args.export_baseline,
+                args.approved_baseline,
+            )
         if not args.dry_run:
             write_json(args.output, payload)
             write_json(args.paper_output, paper_payload)

@@ -35,7 +35,9 @@ the complete baseline. The result contains 488 papers and 950 markers, with no
 missing baseline paper identities or marker IDs and no remaining public
 `venue_type=workshop` values.
 
-The exporter now checks the reviewed counts in
-`data/curated/public_export_baseline.json` before writing. An unexpected
-decrease fails the export; an intentional reduction requires an explicitly
-supplied reviewed baseline.
+The exporter now compares previous and proposed paper identities and canonical
+paper–institution relationships before writing. Durable active exclusions,
+confirmed version merges, and reviewed mapping/institution changes explain
+intentional reductions; unexplained loss fails the export. The static count
+baseline remains only a bootstrap/disaster fallback, and an explicitly supplied
+reviewed baseline remains available for exceptional reductions.

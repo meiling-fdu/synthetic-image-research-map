@@ -67,6 +67,7 @@ const papers = [
   ]}},
   {{id: 'unknown-paper', affiliations: [
     {{name: 'Mystery', institution_id: 'institution:mystery', country: 'CN'}},
+    {{name: 'Mystery Alias', institution_id: 'institution:mystery', country: 'China', institution_type: 'other'}},
   ]}},
   {{id: 'hierarchy-paper', affiliations: [
     {{name: 'Parent University', institution_id: 'institution:parent', country: 'US', institution_type: 'university'}},
@@ -79,6 +80,9 @@ const typeCounts = sortedDimensionCounts(
 );
 const combined = papers.filter(paper => recordMatchesInstitutionDimensions(
   paper, 'China', 'university', false,
+));
+const combinedOther = papers.filter(paper => recordMatchesInstitutionDimensions(
+  paper, 'China', 'other', false,
 ));
 const tieCounts = sortedDimensionCounts(new Map([['China', 2], ['Canada', 2], ['Italy', 3]]));
 process.stdout.write(JSON.stringify({{
@@ -94,6 +98,7 @@ process.stdout.write(JSON.stringify({{
     ['company', 4], ['other', 1], ['university', 2], ['research_unit', 3],
   ])),
   combined: combined.map(paper => paper.id),
+  combinedOther: combinedOther.map(paper => paper.id),
   crossAffiliationMismatch: recordMatchesInstitutionDimensions(
     papers[2], 'South Korea', 'company', false,
   ),
@@ -158,6 +163,7 @@ process.stdout.write(JSON.stringify({{
             ["university", 2], ["research_unit", 3], ["company", 4], ["other", 1],
         ])
         self.assertEqual(result["combined"], ["alias-paper"])
+        self.assertEqual(result["combinedOther"], ["unknown-paper"])
         self.assertFalse(result["crossAffiliationMismatch"])
         self.assertFalse(result["hierarchyEntityMismatch"])
         self.assertTrue(result["markerMatch"])

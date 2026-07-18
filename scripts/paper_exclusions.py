@@ -59,6 +59,17 @@ def normalize_openalex_url(value: Any) -> str:
     return clean(value).casefold().rstrip("/")
 
 
+def normalize_arxiv_id(value: Any) -> str:
+    value = re.sub(
+        r"^https?://(?:www\.)?arxiv\.org/(?:abs|pdf)/",
+        "",
+        clean(value),
+        flags=re.IGNORECASE,
+    )
+    value = value.removeprefix("arxiv:")
+    return re.sub(r"(?:\.pdf)?v\d+$", "", value, flags=re.IGNORECASE).casefold()
+
+
 def normalize_title(value: Any) -> str:
     text = unicodedata.normalize("NFKC", clean(value)).casefold()
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
@@ -79,6 +90,9 @@ def all_identity_keys(record: Mapping[str, Any]) -> List[str]:
     paper_id = clean(record.get("paper_id")).casefold()
     doi = normalize_doi(record.get("doi"))
     openalex_url = normalize_openalex_url(record.get("openalex_url"))
+    arxiv_id = normalize_arxiv_id(
+        record.get("arxiv_id") or record.get("arxiv_url")
+    )
     title_year = normalized_title_year_key(record)
     if paper_id:
         keys.append(f"paper_id:{paper_id}")
@@ -86,6 +100,16 @@ def all_identity_keys(record: Mapping[str, Any]) -> List[str]:
         keys.append(f"doi:{doi}")
     if openalex_url:
         keys.append(f"openalex:{openalex_url}")
+    if arxiv_id:
+        keys.append(f"arxiv:{arxiv_id}")
+    merged_versions = record.get("merged_versions")
+    if isinstance(merged_versions, list):
+        for version in merged_versions:
+            if not isinstance(version, Mapping):
+                continue
+            for key in all_identity_keys(version):
+                if key not in keys and not key.startswith("title_year:"):
+                    keys.append(key)
     if title_year:
         keys.append(f"title_year:{title_year}")
     return keys

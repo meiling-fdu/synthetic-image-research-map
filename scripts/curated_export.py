@@ -864,7 +864,8 @@ def _curated_marker(
         "url": paper_url,
         "authors": _parse_people(paper.get("authors")),
         "institution": clean(mapping.get("institution")),
-        "institution_id": stable_institution_id(mapping.get("institution")),
+        "institution_id": clean(mapping.get("institution_id"))
+        or stable_institution_id(mapping.get("institution")),
         "institution_authors": _parse_people(
             mapping.get("institution_authors")
         ),

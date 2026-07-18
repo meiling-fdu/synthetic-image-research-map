@@ -6,6 +6,11 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Dict, Tuple
 
+try:
+    from .institution_types import INSTITUTION_TYPE_SET
+except ImportError:  # Support direct execution from the scripts directory.
+    from institution_types import INSTITUTION_TYPE_SET
+
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 CURATED_DATA_DIR = REPOSITORY_ROOT / "data" / "curated"
@@ -356,12 +361,7 @@ ALLOWED_INSTITUTION_STATUSES = {
     "deprecated",
 }
 
-ALLOWED_INSTITUTION_TYPES = {
-    "university",
-    "research_unit",
-    "company",
-    "other",
-}
+ALLOWED_INSTITUTION_TYPES = INSTITUTION_TYPE_SET
 
 ALLOWED_LOCATION_STATUSES = {
     "missing",

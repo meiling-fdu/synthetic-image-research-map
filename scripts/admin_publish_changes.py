@@ -41,11 +41,6 @@ FRONTEND_SUFFIXES = (".html", ".css", ".js", ".svg", ".png", ".jpg", ".webp")
 RunCommand = Callable[[Sequence[str], Path], subprocess.CompletedProcess[str]]
 MAP_PREVIEW_PATH = Path("web/data/public_preview_map_data.json")
 PAPER_PREVIEW_PATH = Path("web/data/public_preview_papers.json")
-MAX_SHRINKAGE_RATIO = 0.05
-MIN_MAP_RECORDS = 700
-MIN_PAPER_RECORDS = 350
-
-
 class PublishDataError(RuntimeError):
     """Preview data cannot be measured safely before publication."""
 
@@ -98,40 +93,6 @@ def shrinkage_percentage(before: int, after: int) -> float:
     if before <= 0 or after >= before:
         return 0.0
     return (before - after) / before * 100.0
-
-
-def preview_shrinkage_reasons(
-    before: PreviewCounts,
-    after: PreviewCounts,
-) -> list[str]:
-    reasons = []
-    map_shrinkage = shrinkage_percentage(
-        before.map_records, after.map_records
-    )
-    paper_shrinkage = shrinkage_percentage(
-        before.paper_records, after.paper_records
-    )
-    if map_shrinkage > MAX_SHRINKAGE_RATIO * 100:
-        reasons.append(
-            f"map records decreased by {map_shrinkage:.2f}% "
-            f"(maximum allowed: {MAX_SHRINKAGE_RATIO * 100:.0f}%)"
-        )
-    if paper_shrinkage > MAX_SHRINKAGE_RATIO * 100:
-        reasons.append(
-            f"paper records decreased by {paper_shrinkage:.2f}% "
-            f"(maximum allowed: {MAX_SHRINKAGE_RATIO * 100:.0f}%)"
-        )
-    if after.map_records < MIN_MAP_RECORDS:
-        reasons.append(
-            f"after map records {after.map_records} is below "
-            f"the safety floor {MIN_MAP_RECORDS}"
-        )
-    if after.paper_records < MIN_PAPER_RECORDS:
-        reasons.append(
-            f"after paper records {after.paper_records} is below "
-            f"the safety floor {MIN_PAPER_RECORDS}"
-        )
-    return reasons
 
 
 def print_preview_counts(
@@ -293,31 +254,16 @@ def publish_changes(
         return 1
     print("\n== Public preview shrinkage guard ==", flush=True)
     print_preview_counts("After", after_counts, before=before_counts)
-    shrinkage_reasons = preview_shrinkage_reasons(
-        before_counts, after_counts
-    )
-    if shrinkage_reasons:
-        print(
-            "ERROR: Publish Changes aborted by public preview shrinkage guard.",
-            file=sys.stderr,
-        )
-        for reason in shrinkage_reasons:
-            print(f"  - {reason}", file=sys.stderr)
-        print(
-            "No files were staged, committed, or pushed.",
-            file=sys.stderr,
-        )
-        return 1
     if (
         after_counts.map_records < before_counts.map_records
         or after_counts.paper_records < before_counts.paper_records
     ):
         print(
-            "Small preview decrease accepted; confirmed paper-version merges "
-            "can legitimately remove duplicate papers and markers.",
+            "Preview decrease accepted by the exporter's identity-level guard; "
+            "every removed identity/relationship had durable evidence.",
             flush=True,
         )
-    print("Public preview shrinkage guard: passed.", flush=True)
+    print("Identity-level public preview shrinkage guard: passed.", flush=True)
 
     try:
         preview_snapshot = snapshot_preview_files(repository_root)

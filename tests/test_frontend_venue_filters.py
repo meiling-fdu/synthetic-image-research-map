@@ -58,6 +58,71 @@ process.stdout.write(JSON.stringify({{
         result = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
         return json.loads(result.stdout)
 
+    def run_dynamic_option_fixture(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        count_helpers = self.app[
+            self.app.index("function dimensionPaperCounts"):
+            self.app.index("\nfunction nextCountryOptionIndex")
+        ]
+        script = f"""
+const venueTypeOrder = ['conference', 'journal', 'preprint', 'book'];
+function compareTextValues(first, second) {{
+  return String(first).localeCompare(String(second), undefined, {{sensitivity: 'base'}});
+}}
+function formatTask(value) {{ return String(value); }}
+const document = {{createElement: () => ({{value: '', textContent: ''}})}};
+{count_helpers}
+const metadata = new Map([
+  ['venue:journal', {{name: 'Journal Venue', label: 'Journal Venue'}}],
+  ['venue:preprint', {{name: 'Preprint Venue', label: 'Preprint Venue'}}],
+  ['venue:alpha', {{name: 'Alpha Venue', label: 'Alpha Venue'}}],
+  ['venue:zulu', {{name: 'Zulu Venue', label: 'Zulu Venue'}}],
+  ['__unknown__', {{name: 'Unknown venue/source', label: 'Unknown venue/source'}}],
+]);
+const papers = [
+  {{id: 'j1', region: 'US', venueIds: ['venue:journal', 'venue:journal']}},
+  {{id: 'j2', region: 'US', venueIds: ['venue:journal']}},
+  {{id: 'j3', region: 'EU', venueIds: ['venue:journal']}},
+  {{id: 'p1', region: 'EU', venueIds: ['venue:preprint']}},
+  {{id: 'p2', region: 'EU', venueIds: ['venue:preprint']}},
+  {{id: 'a1', region: 'EU', venueIds: ['venue:alpha']}},
+  {{id: 'z1', region: 'EU', venueIds: ['venue:zulu']}},
+  {{id: 'u1', region: 'EU', venueIds: ['__unknown__']}},
+  {{id: 'u2', region: 'US', venueIds: ['__unknown__']}},
+  {{id: 'u3', region: 'US', venueIds: ['__unknown__']}},
+  {{id: 'u4', region: 'US', venueIds: ['__unknown__']}},
+];
+function optionsFor(records) {{
+  const counts = dimensionPaperCounts(records, paper => paper.venueIds);
+  const select = {{
+    value: 'all',
+    options: [],
+    replaceChildren(...options) {{ this.options = options; }},
+  }};
+  replaceCountedFilterOptions(
+    select, 'All', sortedVenueCounts(counts, metadata),
+    value => metadata.get(value).label, false,
+  );
+  return select.options.map(option => [option.value, option.textContent]);
+}}
+const reversedTies = sortedVenueCounts(
+  new Map([['venue:zulu', 1], ['venue:alpha', 1], ['venue:journal', 1]]),
+  metadata,
+).map(([value]) => value);
+process.stdout.write(JSON.stringify({{
+  runtime: process.version,
+  base: optionsFor(papers),
+  filtered: optionsFor(papers.filter(paper => paper.region === 'EU')),
+  reversedTies,
+}}));
+"""
+        result = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        return json.loads(result.stdout)
+
     def test_publication_type_filter_is_public_and_combines_with_venue(self):
         self.assertIn('id="venue-type-filter"', self.html)
         self.assertIn("Publication Type", self.html)
@@ -82,19 +147,42 @@ process.stdout.write(JSON.stringify({{
         ]
         self.assertLess(identity.index("normalizedDoi(record.doi)"), identity.index("record.openalex_url"))
 
-    def test_fixed_type_order_and_alphabetical_venue_order(self):
+    def test_fixed_type_order_and_dynamic_venue_count_order(self):
         result = self.run_order_helpers()
         self.assertEqual(
             result["types"],
             ["conference", "journal", "preprint", "book", "__unknown__"],
         )
         self.assertEqual(result["venues"], [
-            "conf-alpha", "book", "conf-beta", "journal", "conf-zulu", "preprint", "__unknown__",
+            "journal", "preprint", "book", "conf-beta", "conf-alpha", "conf-zulu", "__unknown__",
         ])
         self.assertEqual(
             self.metadata["venue_type_order"],
             ["conference", "journal", "preprint", "book"],
         )
+
+    def test_dynamic_venue_order_all_deduplication_and_active_filters(self):
+        result = self.run_dynamic_option_fixture()
+        self.assertTrue(result["runtime"].startswith("v"))
+        self.assertEqual(result["base"], [
+            ["all", "All"],
+            ["venue:journal", "Journal Venue (3)"],
+            ["venue:preprint", "Preprint Venue (2)"],
+            ["venue:alpha", "Alpha Venue (1)"],
+            ["venue:zulu", "Zulu Venue (1)"],
+            ["__unknown__", "Unknown venue/source (4)"],
+        ])
+        self.assertEqual(result["filtered"], [
+            ["all", "All"],
+            ["venue:preprint", "Preprint Venue (2)"],
+            ["venue:alpha", "Alpha Venue (1)"],
+            ["venue:journal", "Journal Venue (1)"],
+            ["venue:zulu", "Zulu Venue (1)"],
+            ["__unknown__", "Unknown venue/source (1)"],
+        ])
+        self.assertEqual(result["reversedTies"], [
+            "venue:alpha", "venue:journal", "venue:zulu",
+        ])
 
     def test_workshop_is_track_not_public_type(self):
         self.assertNotIn("workshop", {paper.get("venue_type") for paper in self.papers})
@@ -210,12 +298,17 @@ process.stdout.write(JSON.stringify({{
         self.assertFalse(any("WACVW" in label for label in public_labels))
         self.assertFalse(any("Inter national" in label for label in public_labels))
 
-    def test_public_counts_remain_stable_after_venue_corrections(self):
+    def test_public_counts_meet_disaster_baseline_after_venue_corrections(self):
         map_records = json.loads(
             (ROOT / "web" / "data" / "public_preview_map_data.json").read_text(encoding="utf-8")
         )["records"]
-        self.assertEqual(len(self.papers), 488)
-        self.assertEqual(len(map_records), 950)
+        baseline = json.loads(
+            (ROOT / "data" / "curated" / "public_export_baseline.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertGreaterEqual(len(self.papers), baseline["paper_records"])
+        self.assertGreaterEqual(len(map_records), baseline["map_records"])
 
     def test_venue_type_control_precedes_venue_control(self):
         self.assertLess(

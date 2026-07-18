@@ -330,7 +330,7 @@ class AdminPublishChangesTests(unittest.TestCase):
                 "original",
             )
 
-    def test_shrinkage_guard_aborts_before_staging_commit_and_push(self):
+    def test_publish_relies_on_exporter_identity_guard_not_count_percentage(self):
         counts = iter(
             [
                 admin_publish_changes.PreviewCounts(789, 397),
@@ -347,14 +347,7 @@ class AdminPublishChangesTests(unittest.TestCase):
                 preview_count_reader=lambda _repository: next(counts),
             )
 
-        self.assertEqual(result, 1)
-        self.assertFalse(
-            any(command[:2] == ("git", "add") for command in runner.commands)
-        )
-        self.assertFalse(
-            any(command[:2] == ("git", "commit") for command in runner.commands)
-        )
-        self.assertNotIn(("git", "push"), runner.commands)
+        self.assertEqual(result, 0)
         log = output.getvalue()
         self.assertIn("Before map records: 789", log)
         self.assertIn("After map records: 544", log)
@@ -362,19 +355,9 @@ class AdminPublishChangesTests(unittest.TestCase):
         self.assertIn("After paper records: 281", log)
         self.assertIn("Map records shrinkage: 31.05%", log)
         self.assertIn("Paper records shrinkage: 29.22%", log)
-        self.assertIn("Publish Changes aborted", log)
-        self.assertIn("No files were staged, committed, or pushed.", log)
+        self.assertIn("identity-level guard", log)
 
-    def test_absolute_floor_blocks_small_output_even_without_a_five_percent_drop(self):
-        reasons = admin_publish_changes.preview_shrinkage_reasons(
-            admin_publish_changes.PreviewCounts(544, 281),
-            admin_publish_changes.PreviewCounts(544, 281),
-        )
-
-        self.assertTrue(any("safety floor 700" in reason for reason in reasons))
-        self.assertTrue(any("safety floor 350" in reason for reason in reasons))
-
-    def test_small_confirmed_duplicate_decrease_passes_shrinkage_guard(self):
+    def test_small_decrease_reports_identity_guard_acceptance(self):
         counts = iter(
             [
                 admin_publish_changes.PreviewCounts(788, 397),
@@ -393,7 +376,7 @@ class AdminPublishChangesTests(unittest.TestCase):
 
         self.assertEqual(result, 0)
         self.assertIn(
-            "confirmed paper-version merges can legitimately remove",
+            "every removed identity/relationship had durable evidence",
             output.getvalue(),
         )
 

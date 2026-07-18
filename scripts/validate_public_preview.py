@@ -22,6 +22,11 @@ except ImportError:
     from curated_schema import VENUE_TYPE_ORDER
 
 try:
+    from .institution_types import INSTITUTION_TYPE_SET
+except ImportError:
+    from institution_types import INSTITUTION_TYPE_SET
+
+try:
     from .name_matching import canonical_name_key
 except ImportError:
     from name_matching import canonical_name_key
@@ -94,7 +99,7 @@ AUTHOR_MAPPING_SOURCES = {
 }
 ALLOWED_VENUE_TYPES = {"conference", "journal", "preprint", "book"}
 ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "industry", "demo", "doctoral_consortium", "other"}
-ALLOWED_INSTITUTION_TYPES = {"university", "research_unit", "company", "other"}
+ALLOWED_INSTITUTION_TYPES = INSTITUTION_TYPE_SET
 
 
 def validate_institution_types(index: int, record: Dict[str, Any], issues: List[Issue]) -> None:

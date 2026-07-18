@@ -10,8 +10,9 @@ outputs.
 
 `institution_type` has exactly four canonical values, in public display order:
 `university`, `research_unit`, `company`, and `other`. The shared resolver in
-`scripts/institution_types.py` applies types after canonical/merged-ID
-resolution. A complete case-insensitive `university` word in the canonical
+`scripts/institution_types.py` owns this enum and applies types after
+canonical/merged-ID resolution; curated and public validators import its
+canonical set. A complete case-insensitive `university` word in the canonical
 name or a confirmed alias is deterministic evidence for `university`;
 departments, laboratories, institutes, research centers, academies, councils,
 groups, and units resolve to `research_unit`; confirmed companies and clear

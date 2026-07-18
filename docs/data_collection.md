@@ -365,11 +365,20 @@ python3 scripts/validate_public_preview.py
 python3 scripts/audit_key_paper_coverage.py
 ```
 
-The exporter enforces the reviewed minimum counts in
-`data/curated/public_export_baseline.json` before writing either public JSON
-file. A partial local candidate snapshot therefore fails instead of silently
-shrinking the published dataset. An intentional reduction requires a reviewed
-replacement baseline supplied explicitly with `--approved-baseline`.
+Before writing either public JSON file, the exporter compares the prior and
+proposed paper identities and canonical paper–institution relationships. Active
+durable exclusions, confirmed paper-version merges, reviewed mapping changes,
+and canonical institution redirects explain intentional removals; anything else
+is reported and blocked. With `--preserve-existing`, unexplained gaps from a
+partial local candidate snapshot are retained, while records covered by those
+explicit current decisions are filtered before unioning. Restored/inactive
+exclusions never authorize removal.
+
+`data/curated/public_export_baseline.json` is retained as a bootstrap/disaster
+reference when prior public outputs are unavailable, not as an unconditional
+minimum for ordinary Admin maintenance. It is never lowered automatically. An
+exceptional reviewed reduction that cannot be inferred from durable evidence
+may still use an explicitly supplied `--approved-baseline` file.
 
 Use repeatable or comma-separated `--input` values to select different manual
 CSVs, and `--limit N` for a bounded online run. The importers preserve the
@@ -581,13 +590,14 @@ The server captures bounded stdout/stderr tails, exit status, duration, and any 
 
 Export and full refresh update the local generated files under `web/data/`
 through `scripts/export_public_preview.py --preserve-existing`, then reload the
-paper list and selected-paper details from the refreshed JSON. This unions a
-partial local candidate cache with the current complete preview. The confirmed
-**Publish Changes** workflow additionally aborts before Git staging if map or
-paper coverage shrinks by more than 5%, or falls below the project safety
-floors of 700 map records and 350 papers. **Reload preview data** only rereads
-the current local JSON and does not run an export. The optional Git-status view
-runs only `git status --short`.
+paper list and selected-paper details from the refreshed JSON. This preserves
+unexplained gaps from a partial local candidate cache while filtering durable
+explicit removals. The confirmed **Publish Changes** workflow relies on the
+exporter's identity-level paper and paper–institution audit before Git staging;
+raw size changes remain visible diagnostics rather than an unconditional
+percentage cap or count floor. **Reload preview data** only rereads the current
+local JSON and does not run an export. The optional Git-status view runs only
+`git status --short`.
 
 These actions never stage, commit, push, or publish anything. After a successful export the UI explicitly reports: **Local preview updated. Commit and push manually to update GitHub Pages.** The deployed GitHub Pages site changes only after the maintainer reviews the diff and manually commits and pushes it.
 

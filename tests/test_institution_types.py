@@ -5,6 +5,7 @@ from pathlib import Path
 
 from scripts.curated_institutions import CuratedInstitutionError, update_institution_identity
 from scripts.curated_schema import (
+    ALLOWED_INSTITUTION_TYPES,
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     INSTITUTION_ALIAS_COLUMNS,
     INSTITUTION_COLUMNS,
@@ -17,6 +18,13 @@ from scripts.institution_types import (
 )
 from scripts.migrate_institution_types import migrate
 from scripts.export_public_preview import normalize_exported_institution_types
+from scripts.validate_curated_database import validate_allowed_value
+from scripts.validate_public_preview import (
+    ALLOWED_INSTITUTION_TYPES as PUBLIC_ALLOWED_INSTITUTION_TYPES,
+)
+
+
+REPOSITORY = Path(__file__).resolve().parents[1]
 
 
 def blank(columns, **values):
@@ -31,6 +39,28 @@ def write_csv(path, columns, rows):
 
 
 class InstitutionTypeRuleTests(unittest.TestCase):
+    def test_python_layers_share_one_canonical_enum(self):
+        expected = frozenset({"university", "research_unit", "company", "other"})
+        self.assertEqual(ALLOWED_INSTITUTION_TYPES, expected)
+        self.assertEqual(PUBLIC_ALLOWED_INSTITUTION_TYPES, expected)
+
+    def test_curated_validation_accepts_other_and_rejects_unsupported_values(self):
+        for value in ("other",):
+            issues = []
+            validate_allowed_value(
+                [{"institution_type": value}], "institutions.csv",
+                "institution_type", ALLOWED_INSTITUTION_TYPES, issues,
+            )
+            self.assertEqual(issues, [])
+        for value in ("laboratory", "institute", "school", "unexpected_value"):
+            issues = []
+            validate_allowed_value(
+                [{"institution_type": value}], "institutions.csv",
+                "institution_type", ALLOWED_INSTITUTION_TYPES, issues,
+            )
+            self.assertEqual(len(issues), 1, value)
+            self.assertIn("unsupported value", issues[0].message)
+
     def test_final_taxonomy_and_legacy_resolution(self):
         self.assertEqual(
             INSTITUTION_TYPES,
@@ -98,6 +128,21 @@ class InstitutionTypeRuleTests(unittest.TestCase):
         )
         self.assertEqual(maps[0]["institution_type"], "research_unit")
 
+    def test_public_export_preserves_other(self):
+        institutions = [{
+            "institution_id": "school", "canonical_name": "Example School",
+            "institution_type": "other", "institution_status": "active",
+        }]
+        papers = [{
+            "affiliations": [{"institution_id": "school", "name": "Example School"}],
+            "author_institution_affiliations": [{"institution_id": "school"}],
+        }]
+        maps = [{"institution_id": "school", "institution": "Example School"}]
+        normalize_exported_institution_types(papers, maps, institutions)
+        self.assertEqual(maps[0]["institution_type"], "other")
+        self.assertEqual(papers[0]["aggregated_institution_types"], ["other"])
+        self.assertEqual(papers[0]["affiliations"][0]["institution_type"], "other")
+
 
 class InstitutionTypeMigrationTests(unittest.TestCase):
     def setUp(self):
@@ -132,9 +177,88 @@ class InstitutionTypeMigrationTests(unittest.TestCase):
         self.assertEqual(report["u"]["affected_unique_paper_count"], "1")
         self.assertEqual(report["u"]["proposed_type"], "university")
 
-    def test_admin_rejects_legacy_values(self):
-        with self.assertRaisesRegex(CuratedInstitutionError, "unsupported institution_type"):
-            update_institution_identity(
-                "u", {"institution_type": "laboratory"},
-                institutions_path=self.institutions,
-            )
+    def test_admin_accepts_other_and_rejects_unsupported_values(self):
+        updated = update_institution_identity(
+            "u", {"institution_type": "other"},
+            institutions_path=self.institutions,
+        )
+        self.assertEqual(updated["institution_type"], "other")
+        for value in ("laboratory", "institute", "unexpected_value"):
+            with self.assertRaisesRegex(
+                CuratedInstitutionError, "unsupported institution_type"
+            ):
+                update_institution_identity(
+                    "u", {"institution_type": value},
+                    institutions_path=self.institutions,
+                )
+
+
+class SchoolInstitutionRepositoryTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        curated = REPOSITORY / "data" / "curated"
+        def read(name):
+            with (curated / name).open(encoding="utf-8", newline="") as handle:
+                return list(csv.DictReader(handle))
+        cls.institutions = read("institutions.csv")
+        cls.aliases = read("institution_aliases.csv")
+        cls.mappings = read("author_institution_mappings.csv")
+        cls.locations = read("institution_locations.csv")
+        cls.location_reviews = read("institution_location_review.csv")
+
+    def test_school_records_export_as_other(self):
+        by_name = {row["canonical_name"]: row for row in self.institutions}
+        for name in (
+            "Everest English Boarding Secondary School",
+            "BASIS International School Nanjing",
+        ):
+            institution = by_name[name]
+            maps = [{
+                "institution_id": institution["institution_id"],
+                "institution": name,
+            }]
+            normalize_exported_institution_types([], maps, self.institutions)
+            self.assertEqual(maps[0]["institution_type"], "other")
+
+    def test_basis_spelling_migration_reuses_id_and_preserves_alias_and_references(self):
+        basis_id = "institution:04c73587b47761ee"
+        canonical_rows = [
+            row for row in self.institutions
+            if row["institution_id"] == basis_id
+        ]
+        self.assertEqual(len(canonical_rows), 1)
+        self.assertEqual(
+            canonical_rows[0]["canonical_name"],
+            "BASIS International School Nanjing",
+        )
+        self.assertFalse(any(
+            row["canonical_name"] == "Basis International School Naning"
+            for row in self.institutions
+        ))
+        alias = next(
+            row for row in self.aliases
+            if row["alias_name"] == "Basis International School Naning"
+        )
+        self.assertEqual(alias["institution_id"], basis_id)
+        self.assertEqual(alias["review_status"], "confirmed")
+        self.assertTrue(any(
+            row["institution_id"] == basis_id
+            and row["institution"] == "BASIS International School Nanjing"
+            and row["raw_affiliation"] == "Basis International School Naning"
+            and row["mapping_status"] == "active"
+            and row["created_at"] == "2026-07-17T23:22:28Z"
+            and None not in row
+            for row in self.mappings
+        ))
+        self.assertTrue(any(
+            row["institution_id"] == basis_id
+            and row["institution"] == "BASIS International School Nanjing"
+            for row in self.locations
+        ))
+        self.assertTrue(any(
+            row["institution_id"] == basis_id
+            and row["institution"] == "Basis International School Naning"
+            and row["canonical_institution_name"]
+                == "BASIS International School Nanjing"
+            for row in self.location_reviews
+        ))

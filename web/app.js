@@ -1784,6 +1784,18 @@ function sortedVenueTypeCounts(counts) {
   ));
 }
 
+function compareStableVenueText(first, second) {
+  const normalizedFirst = String(first || "").normalize("NFKC");
+  const normalizedSecond = String(second || "").normalize("NFKC");
+  const foldedFirst = normalizedFirst.toLowerCase();
+  const foldedSecond = normalizedSecond.toLowerCase();
+  if (foldedFirst < foldedSecond) return -1;
+  if (foldedFirst > foldedSecond) return 1;
+  if (normalizedFirst < normalizedSecond) return -1;
+  if (normalizedFirst > normalizedSecond) return 1;
+  return 0;
+}
+
 function sortedVenueCounts(counts, metadataByVenue) {
   return [...counts.entries()].sort((first, second) => {
     const firstMetadata = metadataByVenue.get(first[0]) || {
@@ -1795,11 +1807,14 @@ function sortedVenueCounts(counts, metadataByVenue) {
     const firstUnknown = first[0] === "__unknown__";
     const secondUnknown = second[0] === "__unknown__";
     if (firstUnknown !== secondUnknown) return firstUnknown ? 1 : -1;
+    // Dynamic relevance first; canonical display metadata provides a stable,
+    // locale-independent tie-break. Unknown remains the final fallback option.
     return (
-      compareTextValues(firstMetadata.name, secondMetadata.name)
-      || compareTextValues(firstMetadata.acronym, secondMetadata.acronym)
-      || compareTextValues(firstMetadata.track, secondMetadata.track)
-      || compareTextValues(first[0], second[0])
+      second[1] - first[1]
+      || compareStableVenueText(firstMetadata.name, secondMetadata.name)
+      || compareStableVenueText(firstMetadata.acronym, secondMetadata.acronym)
+      || compareStableVenueText(firstMetadata.track, secondMetadata.track)
+      || compareStableVenueText(first[0], second[0])
     );
   });
 }

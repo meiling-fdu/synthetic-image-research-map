@@ -225,11 +225,27 @@ python3 scripts/report_missing_author_mappings.py
 The pipeline stops at the first failure. The preserve-existing export unions the
 current complete public preview with the local candidate snapshot, so a
 no-search admin refresh cannot silently replace full coverage with a partial
-cache. Counts are also guarded by
-`data/curated/public_export_baseline.json`; an unexpected decrease stops the
-export before either public JSON file is written. Only an explicitly reviewed
-replacement file passed with `--approved-baseline` may authorize lower counts.
-The final export still reapplies active exclusions and retraction checks
+cache. Before that union, it filters old records covered by a current active
+paper exclusion, the duplicate side of an active confirmed paper-version merge,
+or an explicit reviewed marker exclusion. It therefore preserves unexplained
+snapshot gaps without reviving an intentionally removed record.
+
+Before writing, the exporter compares the previous and proposed public outputs
+by canonical paper identities and paper–institution relationships. Curated paper
+IDs, DOI, OpenAlex, normalized arXiv/version identity, confirmed version merges,
+and canonical institution IDs are used; title is not the sole identity. Every
+disappearance must be explained by durable current evidence such as an active
+exclusion, confirmed merge, reviewed mapping exclusion/correction, or canonical
+institution redirect. Inactive exclusions with restoration metadata are history,
+not removal authority. The command prints every removed identity, its evidence,
+all unexplained removals, and a proceed/block decision.
+
+`data/curated/public_export_baseline.json` remains a bootstrap/disaster reference
+when there is no previous public output to compare, but it is not an
+unconditional lower bound for normal Admin maintenance and is never rewritten
+automatically. `--approved-baseline` remains available for an exceptional
+reviewed reduction that durable evidence cannot express. The final export still
+reapplies active exclusions and retraction checks
 to that union; preserved JSON cannot keep a paper whose current title starts
 with `[Retracted]` or `Retracted:`, whose publication type/flag marks a
 retraction, or whose exclusion metadata marks it retracted. The same rule is
@@ -262,16 +278,13 @@ admin workflow is running. It runs
 `python3 scripts/admin_publish_changes.py`, stops immediately on refresh or
 validation failure, shows the final command output, and does not create an
 empty commit. Before refresh and again before Git staging, it counts both
-public-preview datasets and reports their sizes and shrinkage percentages. It
-aborts without staging, committing, or pushing if either dataset shrinks by
-more than 5%, or if the result falls below 700 map records or 350 paper
-records. There is intentionally no override.
-
-Small decreases of at most 5% are accepted because confirmed version merges
-and newly recognized retractions can intentionally remove duplicate or
-ineligible records. The absolute floors and post-export validation remain in
-force, so a partial refresh cannot be published merely because its percentage
-change is small.
+public-preview datasets and reports their sizes and shrinkage percentages as
+diagnostics. The export step is the publication trust boundary: it blocks any
+unexplained removed paper or paper–institution relationship regardless of
+percentage, while allowing any size decrease for which every removal has
+durable reviewed evidence. A partial refresh therefore cannot pass merely
+because its count decrease is small, and an intentional Admin exclusion is not
+blocked merely because it crosses a static count floor.
 
 The publish set is calculated from Git's changed tracked files after refresh. It
 includes the complete durable admin layer under `data/curated/`, review outputs

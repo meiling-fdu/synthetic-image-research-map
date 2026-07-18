@@ -23,6 +23,7 @@ try:
         clean,
         normalized_title_year_key,
     )
+    from .institution_types import classify_institution_type
     from .curated_institutions import (
         DEFAULT_ALIASES_PATH,
         DEFAULT_INSTITUTIONS_PATH,
@@ -41,6 +42,7 @@ except ImportError:
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
+    from institution_types import classify_institution_type
     from curated_institutions import (
         DEFAULT_ALIASES_PATH,
         DEFAULT_INSTITUTIONS_PATH,
@@ -257,18 +259,7 @@ def _mapping_fields(
 
 
 def _infer_institution_type(name: Any) -> str:
-    normalized = normalize_institution(name)
-    if any(word in normalized.split() for word in ("company", "corporation", "inc")):
-        return "company"
-    if "department" in normalized:
-        return "department"
-    if "laboratory" in normalized or normalized.endswith(" lab"):
-        return "laboratory"
-    if any(word in normalized.split() for word in ("institute", "academy", "centre", "center")):
-        return "institute"
-    if any(word in normalized.split() for word in ("university", "college")):
-        return "university"
-    return "research_unit"
+    return classify_institution_type(name, (), "")[0]
 
 
 def _resolve_mapping_institution(

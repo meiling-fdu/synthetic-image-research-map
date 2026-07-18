@@ -149,6 +149,9 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
         self.assertEqual(review["institution_id"], identifier)
         self.assertEqual(review["review_status"], "needs_coordinates")
         self.assertEqual(review["coordinate_status"], "missing")
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            institution = next(csv.DictReader(handle))
+        self.assertEqual(institution["institution_type"], "research_unit")
 
     def test_repeated_new_name_does_not_duplicate_institution(self):
         self.create()

@@ -3,6 +3,7 @@ import json
 
 from scripts.curated_export import (
     CuratedExportError,
+    _curated_marker,
     _recalculate_paper_details,
     _remove_overridden_markers,
     _upsert_location_review,
@@ -13,6 +14,31 @@ from scripts.export_public_preview import add_public_detail_fields
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_curated_marker_preserves_canonical_id_across_name_correction(self):
+        marker = _curated_marker(
+            {
+                "title": "School affiliation",
+                "year": 2024,
+                "task": "detection",
+            },
+            {
+                "mapping_id": "mapping:school",
+                "institution": "BASIS International School Nanjing",
+                "institution_id": "institution:04c73587b47761ee",
+                "institution_authors": "Yuming Chen",
+            },
+            {
+                "institution": "BASIS International School Nanjing",
+                "lat": 32.0821,
+                "lon": 118.91541,
+                "country": "China",
+            },
+        )
+
+        self.assertEqual(
+            marker["institution_id"], "institution:04c73587b47761ee"
+        )
+
     def test_export_location_review_sync_preserves_canonical_identity(self):
         reviews = []
         mapping = {
