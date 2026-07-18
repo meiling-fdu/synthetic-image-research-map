@@ -156,9 +156,6 @@ const datasetRecordCount = document.querySelector("#dataset-record-count");
 const datasetPaperCount = document.querySelector("#dataset-paper-count");
 const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
 const datasetCountryCount = document.querySelector("#dataset-country-count");
-const datasetDetectionCount = document.querySelector("#dataset-detection-count");
-const datasetAttributionCount = document.querySelector("#dataset-attribution-count");
-const datasetCombinedCount = document.querySelector("#dataset-combined-count");
 const datasetStatisticsNote = document.querySelector("#dataset-statistics-note");
 const taskChartContent = document.querySelector("#task-chart-content");
 const institutionChartContent = document.querySelector("#institution-chart-content");
@@ -2197,15 +2194,6 @@ function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
   datasetCountryCount.textContent = normalizedSetSize(
     datasetRecords.map(recordCountry),
   );
-  datasetDetectionCount.textContent = paperCoverageRecords.filter(
-    (record) => record.task === "detection",
-  ).length;
-  datasetAttributionCount.textContent = paperCoverageRecords.filter(
-    (record) => record.task === "source_attribution",
-  ).length;
-  datasetCombinedCount.textContent = paperCoverageRecords.filter(
-    (record) => record.task === "detection_and_source_attribution",
-  ).length;
 }
 
 function renderChartEmpty(container) {

@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260717-year-range">
+    <link rel="stylesheet" href="style.css?v=20260718-compact-filters">
   </head>
   <body>
     <header class="site-header">
@@ -196,12 +196,7 @@
 
       <div class="map-column">
         <section class="panel dataset-overview" aria-labelledby="dataset-overview-heading">
-          <div class="dataset-overview-heading">
-            <h2 id="dataset-overview-heading">Filtered Overview</h2>
-            <p id="dataset-statistics-note">
-              Institution-level records matching the current filters.
-            </p>
-          </div>
+          <h2 id="dataset-overview-heading">Filtered Overview</h2>
           <dl class="dataset-statistics" aria-live="polite">
             <div>
               <dt>Map Records</dt>
@@ -219,19 +214,10 @@
               <dt>Countries</dt>
               <dd id="dataset-country-count">0</dd>
             </div>
-            <div>
-              <dt>Detection</dt>
-              <dd id="dataset-detection-count">0</dd>
-            </div>
-            <div>
-              <dt>Source Attribution</dt>
-              <dd id="dataset-attribution-count">0</dd>
-            </div>
-            <div>
-              <dt>Detection + Source Attribution</dt>
-              <dd id="dataset-combined-count">0</dd>
-            </div>
           </dl>
+          <p id="dataset-statistics-note">
+            Institution-level records matching the current filters.
+          </p>
         </section>
 
         <section class="map-panel" aria-label="Research Locations">
@@ -446,6 +432,6 @@
     <script src="paper_link_helpers.js?v=20260714-paper-version-links"></script>
     <script src="marker_size_helpers.js?v=20260706-task-markers"></script>
     <script src="marker_interaction_helpers.js?v=20260712-pinned-state"></script>
-    <script src="app.js?v=20260717-venue-taxonomy"></script>
+    <script src="app.js?v=20260718-compact-filters"></script>
   </body>
 </html>

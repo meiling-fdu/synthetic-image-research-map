@@ -78,6 +78,62 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         positions = [ordered_ids.index(identifier) for identifier in expected]
         self.assertEqual(positions, sorted(positions))
 
+    def test_all_nine_filter_groups_remain_present(self):
+        filter_grid = self.html[
+            self.html.index('<div class="filter-grid">'):
+            self.html.index('<div id="active-institution-filter"')
+        ]
+        groups = (
+            "keyword-filter", "task-filter", "entry-type-filter",
+            "venue-type-filter", "venue-filter", "country-combobox",
+            "institution-type-filter", "preprint-filter", "year-range",
+        )
+        for group in groups:
+            marker = f'id="{group}"' if group != "year-range" else 'class="year-range"'
+            self.assertIn(marker, filter_grid)
+
+    def test_filtered_overview_has_only_four_non_task_metrics(self):
+        overview = self.html[
+            self.html.index('<section class="panel dataset-overview"'):
+            self.html.index('<section class="map-panel"')
+        ]
+        labels = re.findall(r"<dt>([^<]+)</dt>", overview)
+        self.assertEqual(labels, [
+            "Map Records", "Paper Coverage", "Unique Institutions", "Countries",
+        ])
+        for removed_id in (
+            "dataset-detection-count", "dataset-attribution-count",
+            "dataset-combined-count",
+        ):
+            self.assertNotIn(removed_id, overview)
+            self.assertNotIn(removed_id, self.app)
+        task_chart = self.app[
+            self.app.index("function renderTaskChart"):
+            self.app.index("function renderInstitutionChart")
+        ]
+        for task in (
+            '"detection"', '"source_attribution"',
+            '"detection_and_source_attribution"',
+        ):
+            self.assertIn(task, task_chart)
+
+    def test_compact_filter_geometry_and_overview_responsive_grid(self):
+        self.assertIn(".sidebar .panel {\n  padding: 12px 14px 13px;", self.css)
+        self.assertIn(".filter-grid {\n  display: grid;\n  gap: 9px;", self.css)
+        self.assertIn(".filter-grid label {\n  gap: 3px;", self.css)
+        self.assertIn('.filter-grid input:not([type="range"])', self.css)
+        self.assertIn(".country-combobox-button {\n  display: flex;", self.css)
+        self.assertIn("height: 35px", self.css)
+        self.assertIn(".year-range-slider {\n  position: relative;\n  height: 24px;", self.css)
+        self.assertIn(
+            "grid-template-columns: auto minmax(0, 1fr) minmax(190px, 280px)",
+            self.css,
+        )
+        self.assertIn(".dataset-overview > p {\n  align-self: center;", self.css)
+        self.assertIn("@media (max-width: 1100px)", self.css)
+        self.assertIn("@media (max-width: 820px)", self.css)
+        self.assertNotIn("dataset-overview-heading", self.css)
+
     def test_sort_is_in_filtered_records_header_not_filter_panel(self):
         filter_grid = self.html[
             self.html.index('<div class="filter-grid">'):

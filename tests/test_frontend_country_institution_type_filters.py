@@ -296,7 +296,7 @@ process.stdout.write(JSON.stringify({{
             self.css.index(".country-combobox-button > span:first-child")
         ]
         for declaration in (
-            "height: 39px", "border-radius: 5px", "font-size: 0.8rem",
+            "height: 35px", "border-radius: 5px", "font-size: 0.8rem",
             "font-weight: 400",
         ):
             self.assertIn(declaration, select)
