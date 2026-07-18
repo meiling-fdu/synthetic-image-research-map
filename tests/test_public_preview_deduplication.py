@@ -9,6 +9,7 @@ from scripts.export_public_preview import (
     add_public_detail_fields,
     apply_ordered_paper_location_summaries,
     canonicalize_public_institutions,
+    confirmed_alias_id_redirects,
     exclude_preprint_versions,
     exclude_retracted_records,
     paper_is_retracted,
@@ -31,6 +32,18 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_confirmed_alias_redirects_legacy_name_id_to_canonical_id(self):
+        self.assertEqual(
+            confirmed_alias_id_redirects([{
+                "alias_name": "Institute of Information Engineering",
+                "canonical_institution_id": "institution:cee70184073782c7",
+            }]),
+            {
+                "institution:9aae8d70d2d6eed8":
+                "institution:cee70184073782c7"
+            },
+        )
+
     def test_id_first_canonicalization_covers_alias_merge_authors_and_parent_child(self):
         parent_id = "institution:parent"
         child_id = "institution:child"

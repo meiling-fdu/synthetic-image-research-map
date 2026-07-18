@@ -1521,6 +1521,102 @@ function canonicalizePublicDataset(
   mapRecords, publicPaperRecords, aliases, canonicalIndex = {}, idRedirects = {},
 ) {
   const resolver = buildCanonicalInstitutionResolver(aliases, canonicalIndex, idRedirects);
+  const mergeInstitutionEvidence = (target, source) => {
+    [
+      "authors", "source_institution_names", "raw_affiliation_evidence",
+      "raw_affiliations", "provenance_sources", "review_states",
+    ]
+      .forEach((field) => {
+        if (!Array.isArray(target[field]) && !Array.isArray(source[field])) return;
+        target[field] = [...new Set([
+          ...(Array.isArray(target[field]) ? target[field] : []),
+          ...(Array.isArray(source[field]) ? source[field] : []),
+        ])];
+      });
+    if (source.source_institution) {
+      target.source_institution_names = [...new Set([
+        ...(target.source_institution_names || []),
+        source.source_institution,
+      ])];
+    }
+    target.mapping_fallback = Boolean(target.mapping_fallback || source.mapping_fallback);
+    target.preliminary = Boolean(target.preliminary || source.preliminary);
+  };
+  const deduplicateAffiliations = (record) => {
+    const affiliations = Array.isArray(record.affiliations) ? record.affiliations : [];
+    const oldToNew = new Map();
+    const affiliationByIdentity = new Map();
+    const deduplicated = [];
+    affiliations.forEach((affiliation, offset) => {
+      if (!affiliation || typeof affiliation !== "object") return;
+      const oldIndex = Number(affiliation.index) || offset + 1;
+      const identity = institutionIdentity({
+        institution: affiliation.name || affiliation.institution,
+        canonical_institution_name: affiliation.canonical_name,
+        institution_id: affiliation.institution_id,
+      });
+      let existing = affiliationByIdentity.get(identity);
+      if (!existing) {
+        affiliation.index = deduplicated.length + 1;
+        deduplicated.push(affiliation);
+        affiliationByIdentity.set(identity, affiliation);
+        existing = affiliation;
+      } else {
+        mergeInstitutionEvidence(existing, affiliation);
+      }
+      oldToNew.set(oldIndex, existing.index);
+    });
+    if (affiliations.length) record.affiliations = deduplicated;
+
+    const remap = (values) => [...new Set((Array.isArray(values) ? values : [])
+      .map(Number)
+      .filter((index) => Number.isInteger(index) && index > 0)
+      .map((index) => oldToNew.get(index) || index))].sort((first, second) => first - second);
+    (Array.isArray(record.authors) ? record.authors : []).forEach((author) => {
+      if (author && typeof author === "object") {
+        author.affiliation_indices = remap(author.affiliation_indices);
+      }
+    });
+    [
+      ["author_affiliation_indices", "indices"],
+      ["author_institution_indices", "institution_indices"],
+    ].forEach(([field, indexField]) => {
+      (Array.isArray(record[field]) ? record[field] : []).forEach((mapping) => {
+        if (!mapping || typeof mapping !== "object") return;
+        mapping[indexField] = remap(mapping[indexField]);
+        mapping.institution_ids = mapping[indexField]
+          .map((index) => record.affiliations?.[index - 1]?.institution_id)
+          .filter(Boolean);
+      });
+    });
+
+    if (Array.isArray(record.author_institution_affiliations)) {
+      const byIdentity = new Map();
+      record.author_institution_affiliations = record.author_institution_affiliations
+        .filter((affiliation) => affiliation && typeof affiliation === "object")
+        .reduce((result, affiliation) => {
+          const identity = institutionIdentity(affiliation);
+          const existing = byIdentity.get(identity);
+          if (existing) {
+            mergeInstitutionEvidence(existing, affiliation);
+            return result;
+          }
+          const canonicalIndexForIdentity = deduplicated.findIndex((candidate) => (
+            institutionIdentity(candidate) === identity
+          ));
+          affiliation.index = canonicalIndexForIdentity >= 0
+            ? canonicalIndexForIdentity + 1
+            : result.length + 1;
+          byIdentity.set(identity, affiliation);
+          result.push(affiliation);
+          return result;
+        }, []);
+    }
+    const currentIndex = Number(record.current_institution?.index);
+    if (Number.isInteger(currentIndex) && oldToNew.has(currentIndex)) {
+      record.current_institution.index = oldToNew.get(currentIndex);
+    }
+  };
   const canonicalizeRecord = (record) => {
     if (recordInstitution(record)) canonicalizeInstitutionObject(record, resolver);
     ["affiliations", "author_institution_affiliations"].forEach((field) => {
@@ -1531,6 +1627,7 @@ function canonicalizePublicDataset(
       }
     });
     canonicalizeInstitutionObject(record.current_institution, resolver);
+    deduplicateAffiliations(record);
     if (Array.isArray(record.aggregated_institutions)) {
       record.aggregated_institutions = [...new Set(
         record.aggregated_institutions.map((name) => (

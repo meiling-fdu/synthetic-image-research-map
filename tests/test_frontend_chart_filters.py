@@ -557,6 +557,126 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(result["papers"], [f"paper-{index}" for index in range(1, 7)])
         self.assertEqual(result["institutions"], ["id:institution:e278f75918ccf8a7"])
 
+    def test_information_engineering_alias_and_full_name_share_all_outputs(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        functions = []
+        for start_name, end_name in (
+            ("function normalizedTitle", "function paperIdentity"),
+            ("function recordInstitution(", "function recordCountry"),
+            ("function institutionIdentity", "function affiliationIdentity"),
+            ("function normalizedSearchText", "function recordSearchText"),
+            ("function buildInstitutionHierarchyIndex", "function hierarchyInstitutionLabel"),
+            ("function deriveFilteredRecordSets", "function normalizedSetSize"),
+            ("function escapeCsvValue", "function exportFilename"),
+        ):
+            start = self.app.index(start_name)
+            end = self.app.index(end_name, start)
+            functions.append(self.app[start:end])
+        script = r'''
+function normalizedDoi(value) { return String(value || ''); }
+function recordPaperUrl(record) { return record.paper_url || ''; }
+function recordTitle(record) { return record.title || ''; }
+function paperIdentity(record) { return `doi:${record.doi}`; }
+function recordInstitutionAuthors(record) { return record.institution_authors || []; }
+''' + "\n".join(functions) + r'''
+const childId = 'institution:cee70184073782c7';
+const staleId = 'institution:9aae8d70d2d6eed8';
+const parentId = 'institution:3afb6cc453e0a8d9';
+const siblingId = 'institution:e278f75918ccf8a7';
+const shortName = 'Institute of Information Engineering';
+const fullName = 'Institute of Information Engineering, Chinese Academy of Sciences';
+const aliases = [{alias_name: shortName, canonical_institution_name: fullName, canonical_institution_id: childId}];
+const canonicalIndex = {
+  [childId]: {canonical_name: fullName, names: [fullName, shortName]},
+  [parentId]: {canonical_name: 'Chinese Academy of Sciences', names: ['Chinese Academy of Sciences']},
+  [siblingId]: {canonical_name: 'Institute of Computing Technology, Chinese Academy of Sciences', names: ['Institute of Computing Technology, Chinese Academy of Sciences']},
+};
+const hierarchy = [
+  {parent_institution_id: parentId, parent_institution_name: 'Chinese Academy of Sciences', child_institution_id: childId, child_institution_name: fullName, review_status: 'confirmed'},
+  {parent_institution_id: parentId, parent_institution_name: 'Chinese Academy of Sciences', child_institution_id: siblingId, child_institution_name: 'Institute of Computing Technology, Chinese Academy of Sciences', review_status: 'confirmed'},
+];
+const maps = [
+  {id: 'one', doi: '10.1/one', title: 'One', year: 2024, task: 'detection', institution: shortName, institution_id: staleId, institution_authors: ['Alias Author']},
+  {id: 'one-duplicate', doi: '10.1/one', title: 'One', year: 2024, task: 'detection', institution: fullName, institution_id: childId, institution_authors: ['Canonical Author']},
+  {id: 'two', doi: '10.1/two', title: 'Two', year: 2025, task: 'attribution', institution: fullName, institution_id: childId},
+  {id: 'sibling', doi: '10.1/sibling', title: 'Sibling', year: 2025, task: 'detection', institution: canonicalIndex[siblingId].canonical_name, institution_id: siblingId},
+];
+const papers = [
+  {doi: '10.1/one', title: 'One', year: 2024, task: 'detection', authors: [
+    {name: 'Alias Author', affiliation_indices: [1]},
+    {name: 'Canonical Author', affiliation_indices: [2]},
+  ], affiliations: [
+    {index: 1, name: shortName, institution_id: staleId, raw_affiliations: ['short raw']},
+    {index: 2, name: fullName, institution_id: childId, raw_affiliations: ['full raw']},
+  ], author_institution_affiliations: [
+    {index: 1, institution: shortName, institution_id: staleId, authors: ['Alias Author'], mapping_fallback: true},
+    {index: 2, institution: fullName, institution_id: childId, authors: ['Canonical Author']},
+  ]},
+  {doi: '10.1/two', title: 'Two', year: 2025, task: 'attribution', affiliations: [{index: 1, name: fullName, institution_id: childId}]},
+  {doi: '10.1/sibling', title: 'Sibling', year: 2025, task: 'detection', affiliations: [{index: 1, name: canonicalIndex[siblingId].canonical_name, institution_id: siblingId}]},
+];
+const canonicalized = canonicalizePublicDataset(maps, papers, aliases, canonicalIndex);
+const index = buildInstitutionSearchIndex(canonicalized.mapRecords, canonicalized.paperRecords, aliases, hierarchy, canonicalIndex);
+const hierarchyIndex = buildInstitutionHierarchyIndex(hierarchy);
+const columns = [['title', record => record.title], ['institution_id', record => record.institution_id]];
+function outputs(query) {
+  const direct = resolveInstitutionSearchIdentities(query, index);
+  const expanded = institutionIdentitiesWithDescendants(direct, hierarchyIndex);
+  const mapRows = canonicalized.mapRecords.filter(record => recordMatchesInstitutionIdentities(record, expanded, true));
+  const paperRows = canonicalized.paperRecords.filter(record => recordMatchesInstitutionIdentities(record, expanded, false));
+  const tasks = Object.fromEntries([...new Set(paperRows.map(record => record.task))].sort().map(task => [task, paperRows.filter(record => record.task === task).length]));
+  const years = Object.fromEntries([...new Set(paperRows.map(record => record.year))].sort().map(year => [year, paperRows.filter(record => record.year === year).length]));
+  return {
+    maps: mapRows.map(record => record.doi).sort(),
+    papers: paperRows.map(record => record.doi).sort(),
+    mapCount: mapRows.length,
+    paperCount: paperRows.length,
+    uniqueInstitutions: new Set(mapRows.map(institutionIdentity)).size,
+    tasks,
+    years,
+    topInstitutions: [...new Set(mapRows.map(recordInstitution))],
+    csv: buildCsv(mapRows, columns),
+  };
+}
+process.stdout.write(JSON.stringify({
+  short: outputs(shortName),
+  full: outputs(fullName),
+  parent: outputs('Chinese Academy of Sciences'),
+  duplicateAffiliations: canonicalized.paperRecords[0].affiliations,
+  duplicateAuthors: canonicalized.paperRecords[0].authors,
+  duplicateAuthorAffiliations: canonicalized.paperRecords[0].author_institution_affiliations,
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["short"], result["full"])
+        self.assertEqual(result["short"]["maps"], ["10.1/one", "10.1/two"])
+        self.assertEqual(result["short"]["papers"], ["10.1/one", "10.1/two"])
+        self.assertNotIn("10.1/sibling", result["short"]["papers"])
+        self.assertIn("10.1/sibling", result["parent"]["papers"])
+        self.assertEqual(len(result["duplicateAffiliations"]), 1)
+        self.assertEqual(
+            result["duplicateAffiliations"][0]["name"],
+            "Institute of Information Engineering, Chinese Academy of Sciences",
+        )
+        self.assertEqual(
+            result["duplicateAffiliations"][0]["raw_affiliations"],
+            ["short raw", "full raw"],
+        )
+        self.assertEqual(
+            [author["affiliation_indices"] for author in result["duplicateAuthors"]],
+            [[1], [1]],
+        )
+        self.assertEqual(len(result["duplicateAuthorAffiliations"]), 1)
+        self.assertEqual(
+            result["duplicateAuthorAffiliations"][0]["authors"],
+            ["Alias Author", "Canonical Author"],
+        )
+
     def test_frontend_defensively_consolidates_astar_records_and_papers(self):
         node = shutil.which("node")
         if node is None:

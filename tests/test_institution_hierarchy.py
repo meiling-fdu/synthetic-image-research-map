@@ -3,6 +3,7 @@ import unittest
 from pathlib import Path
 
 from scripts.export_public_preview import (
+    add_public_detail_fields,
     canonicalize_public_institutions,
     public_institution_aliases,
     public_institution_hierarchy,
@@ -15,6 +16,8 @@ PARENT_NAME = "Chinese Academy of Sciences"
 PARENT_ID = "institution:3afb6cc453e0a8d9"
 CHILD_NAME = "Institute of Information Engineering, Chinese Academy of Sciences"
 CHILD_ID = "institution:cee70184073782c7"
+CHILD_ALIAS = "Institute of Information Engineering"
+LEGACY_ALIAS_ID = "institution:9aae8d70d2d6eed8"
 
 
 class InstitutionHierarchyTests(unittest.TestCase):
@@ -31,6 +34,97 @@ class InstitutionHierarchyTests(unittest.TestCase):
         ))
         exported = public_institution_aliases(aliases)
         self.assertFalse(any(row["alias_name"] == PARENT_NAME for row in exported))
+
+    def test_confirmed_short_alias_targets_existing_child_id(self):
+        aliases = self.read_csv("data/curated/institution_aliases.csv")
+        matches = [row for row in aliases if row["alias_name"] == CHILD_ALIAS]
+        self.assertEqual(len(matches), 1)
+        self.assertEqual(matches[0]["institution_id"], CHILD_ID)
+        self.assertEqual(matches[0]["canonical_institution_name"], CHILD_NAME)
+        self.assertEqual(matches[0]["review_status"], "confirmed")
+        institutions = self.read_csv("data/curated/institutions.csv")
+        self.assertFalse(any(
+            row["canonical_name"] == CHILD_ALIAS for row in institutions
+        ))
+
+    def test_short_and_full_same_paper_affiliations_dedupe_by_canonical_id(self):
+        aliases = public_institution_aliases(
+            self.read_csv("data/curated/institution_aliases.csv")
+        )
+        institutions = self.read_csv("data/curated/institutions.csv")
+        paper = {
+            "title": "Alias duplicate evidence",
+            "doi": "10.1/iie-alias",
+            "preliminary_affiliations": True,
+            "authors": [
+                {"name": "Short Author", "affiliation_indices": [1]},
+                {"name": "Full Author", "affiliation_indices": [2]},
+            ],
+            "affiliations": [{
+                "index": 1,
+                "name": CHILD_ALIAS,
+                "institution_id": LEGACY_ALIAS_ID,
+                "raw_affiliation_evidence": ["Short raw evidence"],
+                "provenance_sources": ["OpenAlex"],
+                "preliminary": True,
+            }, {
+                "index": 2,
+                "name": CHILD_NAME,
+                "institution_id": CHILD_ID,
+                "raw_affiliation_evidence": ["Full raw evidence"],
+                "provenance_sources": ["paper PDF"],
+            }],
+            "author_institution_affiliations": [{
+                "index": 1,
+                "institution": CHILD_ALIAS,
+                "institution_id": LEGACY_ALIAS_ID,
+                "authors": ["Short Author"],
+                "mapping_fallback": True,
+            }, {
+                "index": 2,
+                "institution": CHILD_NAME,
+                "institution_id": CHILD_ID,
+                "authors": ["Full Author"],
+            }],
+        }
+        maps = [{
+            "title": paper["title"], "doi": paper["doi"],
+            "institution": CHILD_ALIAS, "institution_id": LEGACY_ALIAS_ID,
+            "institution_authors": ["Short Author"],
+        }, {
+            "title": paper["title"], "doi": paper["doi"],
+            "institution": CHILD_NAME, "institution_id": CHILD_ID,
+            "institution_authors": ["Full Author"],
+        }]
+
+        canonical_maps = canonicalize_public_institutions(
+            [paper], maps, aliases, institutions=institutions,
+        )
+        add_public_detail_fields([paper], canonical_maps)
+
+        self.assertEqual(len(canonical_maps), 1)
+        self.assertEqual(canonical_maps[0]["institution_id"], CHILD_ID)
+        self.assertEqual(canonical_maps[0]["institution"], CHILD_NAME)
+        self.assertEqual(
+            canonical_maps[0]["institution_authors"],
+            ["Short Author", "Full Author"],
+        )
+        self.assertEqual(len(paper["affiliations"]), 1)
+        affiliation = paper["affiliations"][0]
+        self.assertEqual(affiliation["name"], CHILD_NAME)
+        self.assertEqual(affiliation["institution_id"], CHILD_ID)
+        self.assertEqual(
+            affiliation["raw_affiliation_evidence"],
+            ["Short raw evidence", "Full raw evidence"],
+        )
+        self.assertEqual(
+            affiliation["provenance_sources"], ["OpenAlex", "paper PDF"]
+        )
+        self.assertTrue(affiliation["preliminary"])
+        self.assertEqual(
+            [author["affiliation_indices"] for author in paper["authors"]],
+            [[1], [1]],
+        )
 
     def test_explicit_institute_review_stays_with_the_child(self):
         reviews = self.read_csv("data/curated/institution_location_review.csv")
@@ -260,6 +354,45 @@ class InstitutionHierarchyTests(unittest.TestCase):
             row.get("doi") or row.get("title") for row in parent_records
         }
         self.assertTrue(child_papers.isdisjoint(parent_papers))
+
+    def test_information_engineering_public_payload_has_six_unique_child_papers(self):
+        import json
+
+        map_payload = json.loads(
+            (REPOSITORY / "web/data/public_preview_map_data.json").read_text()
+        )
+        paper_payload = json.loads(
+            (REPOSITORY / "web/data/public_preview_papers.json").read_text()
+        )
+        aliases = [
+            row for row in map_payload["institution_aliases"]
+            if row["alias_name"] == CHILD_ALIAS
+        ]
+        self.assertEqual(len(aliases), 1)
+        self.assertEqual(aliases[0]["canonical_institution_id"], CHILD_ID)
+        self.assertEqual(
+            map_payload["institution_id_redirects"][LEGACY_ALIAS_ID], CHILD_ID
+        )
+        child_records = [
+            row for row in map_payload["records"]
+            if row.get("institution_id") == CHILD_ID
+        ]
+        self.assertEqual(len(child_records), 6)
+        self.assertEqual(len({row["title"] for row in child_records}), 6)
+        self.assertFalse(any(
+            row.get("institution_id") == LEGACY_ALIAS_ID
+            for row in map_payload["records"]
+        ))
+        for paper in paper_payload["records"]:
+            matching = [
+                row for row in paper.get("affiliations") or []
+                if row.get("institution_id") == CHILD_ID
+            ]
+            self.assertLessEqual(len(matching), 1)
+            self.assertFalse(any(
+                row.get("institution_id") == LEGACY_ALIAS_ID
+                for row in paper.get("affiliations") or []
+            ))
 
     def test_public_affiliations_keep_full_cas_institute_without_parent_split(self):
         import json

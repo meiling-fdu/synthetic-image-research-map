@@ -641,6 +641,37 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
         )
         if clean_text(name)
     ]
+    raw_evidence_value = (
+        value.get("raw_affiliation_evidence")
+        or value.get("raw_affiliations")
+        or value.get("raw_affiliation")
+        or []
+    )
+    raw_evidence = [
+        clean_text(item)
+        for item in (
+            raw_evidence_value
+            if isinstance(raw_evidence_value, list)
+            else [raw_evidence_value]
+        )
+        if clean_text(item)
+    ]
+    provenance_value = value.get("provenance_sources") or value.get("provenance_source") or []
+    provenance_sources = [
+        clean_text(item)
+        for item in (
+            provenance_value if isinstance(provenance_value, list) else [provenance_value]
+        )
+        if clean_text(item)
+    ]
+    review_value = value.get("review_states") or value.get("review_status") or []
+    review_states = [
+        clean_text(item)
+        for item in (
+            review_value if isinstance(review_value, list) else [review_value]
+        )
+        if clean_text(item)
+    ]
     return {
         "index": parse_year(value.get("index")),
         "name": name,
@@ -657,6 +688,14 @@ def _detail_affiliation(value: Any) -> Optional[Dict[str, Any]]:
         ),
         "mapping_fallback": value.get("mapping_fallback") is True,
         "source_institution_names": source_names,
+        "raw_affiliation_evidence": raw_evidence,
+        "provenance_sources": provenance_sources,
+        "review_states": review_states,
+        "preliminary": bool(
+            value.get("preliminary") is True
+            or value.get("preliminary_affiliations") is True
+            or value.get("mapping_fallback") is True
+        ),
     }
 
 
@@ -834,6 +873,29 @@ def add_public_detail_fields(
                     *existing.get("source_institution_names", []),
                     *affiliation.get("source_institution_names", []),
                 ]))
+                for field in (
+                    "raw_affiliation_evidence", "provenance_sources", "review_states",
+                ):
+                    existing[field] = list(dict.fromkeys([
+                        *existing.get(field, []),
+                        *affiliation.get(field, []),
+                    ]))
+                existing["mapping_fallback"] = bool(
+                    existing.get("mapping_fallback")
+                    or affiliation.get("mapping_fallback")
+                )
+                existing["preliminary"] = bool(
+                    existing.get("preliminary") or affiliation.get("preliminary")
+                )
+                if (
+                    AUTHOR_MAPPING_SOURCE_PRIORITY[_author_mapping_source(
+                        affiliation.get("mapping_source")
+                    )]
+                    < AUTHOR_MAPPING_SOURCE_PRIORITY[_author_mapping_source(
+                        existing.get("mapping_source")
+                    )]
+                ):
+                    existing["mapping_source"] = affiliation["mapping_source"]
             mapping_source = _author_mapping_source(
                 raw_affiliation.get("mapping_source")
                 if isinstance(raw_affiliation, dict)
@@ -993,6 +1055,22 @@ def add_public_detail_fields(
                     if affiliation.get("source_institution_names")
                     else {}
                 ),
+                **(
+                    {"raw_affiliation_evidence": affiliation["raw_affiliation_evidence"]}
+                    if affiliation.get("raw_affiliation_evidence")
+                    else {}
+                ),
+                **(
+                    {"provenance_sources": affiliation["provenance_sources"]}
+                    if affiliation.get("provenance_sources")
+                    else {}
+                ),
+                **(
+                    {"review_states": affiliation["review_states"]}
+                    if affiliation.get("review_states")
+                    else {}
+                ),
+                **({"preliminary": True} if affiliation.get("preliminary") else {}),
             }
             for affiliation in affiliations
         ]
@@ -1126,6 +1204,22 @@ def add_public_detail_fields(
                         if affiliation.get("source_institution_names")
                         else {}
                     ),
+                    **(
+                        {"raw_affiliation_evidence": affiliation["raw_affiliation_evidence"]}
+                        if affiliation.get("raw_affiliation_evidence")
+                        else {}
+                    ),
+                    **(
+                        {"provenance_sources": affiliation["provenance_sources"]}
+                        if affiliation.get("provenance_sources")
+                        else {}
+                    ),
+                    **(
+                        {"review_states": affiliation["review_states"]}
+                        if affiliation.get("review_states")
+                        else {}
+                    ),
+                    **({"preliminary": True} if affiliation.get("preliminary") else {}),
                 }
                 for affiliation in affiliations
             ]
@@ -2605,6 +2699,22 @@ def institution_id_redirects(
     return redirects
 
 
+def confirmed_alias_id_redirects(
+    aliases: Sequence[Dict[str, str]],
+) -> Dict[str, str]:
+    """Map legacy deterministic alias IDs to their confirmed canonical IDs."""
+    redirects: Dict[str, str] = {}
+    for alias in aliases:
+        alias_name = clean_text(alias.get("alias_name"))
+        canonical_id = clean_text(alias.get("canonical_institution_id"))
+        if not alias_name or not canonical_id:
+            continue
+        alias_id = stable_institution_id(alias_name)
+        if alias_id != canonical_id:
+            redirects[alias_id] = canonical_id
+    return redirects
+
+
 def public_institution_aliases(
     aliases: Sequence[Dict[str, Any]],
     location_reviews: Sequence[Dict[str, Any]] = (),
@@ -2989,6 +3099,39 @@ def canonicalize_public_institutions(
             collapsed.append(merged)
         return collapsed
 
+    def merge_affiliation_evidence(
+        existing: Dict[str, Any], incoming: Dict[str, Any]
+    ) -> None:
+        def evidence_values(value: Any) -> List[Any]:
+            if value in (None, ""):
+                return []
+            return value if isinstance(value, list) else [value]
+
+        merged_authors = list(dict.fromkeys([
+            *evidence_values(existing.get("authors")),
+            *evidence_values(incoming.get("authors")),
+        ]))
+        if merged_authors:
+            existing["authors"] = merged_authors
+        for field in (
+            "source_institution_names", "raw_affiliation_evidence",
+            "raw_affiliations", "provenance_sources", "review_states",
+        ):
+            merged_values = list(dict.fromkeys([
+                *evidence_values(existing.get(field)),
+                *evidence_values(incoming.get(field)),
+            ]))
+            if merged_values:
+                existing[field] = merged_values
+        if incoming.get("source_institution"):
+            existing["source_institution_names"] = list(dict.fromkeys([
+                *(existing.get("source_institution_names") or []),
+                incoming["source_institution"],
+            ]))
+        for field in ("mapping_fallback", "preliminary", "preliminary_affiliations"):
+            if incoming.get(field) is True:
+                existing[field] = True
+
     for record in [*paper_records, *map_records]:
         if clean_text(record.get("institution") or record.get("institution_name")):
             canonicalize_value(record)
@@ -3016,10 +3159,7 @@ def canonicalize_public_institutions(
                     by_identity[identity] = affiliation
                     existing = affiliation
                 else:
-                    existing["source_institution_names"] = list(dict.fromkeys([
-                        *(existing.get("source_institution_names") or []),
-                        *(affiliation.get("source_institution_names") or []),
-                    ]))
+                    merge_affiliation_evidence(existing, affiliation)
                 old_to_new[original_index] = existing["index"]
             record["affiliations"] = deduplicated_affiliations
 
@@ -3038,14 +3178,7 @@ def canonicalize_public_institutions(
                     by_identity[identity] = affiliation
                     existing = affiliation
                 else:
-                    existing["authors"] = list(dict.fromkeys([
-                        *(existing.get("authors") or []),
-                        *(affiliation.get("authors") or []),
-                    ]))
-                    existing["source_institution_names"] = list(dict.fromkeys([
-                        *(existing.get("source_institution_names") or []),
-                        *(affiliation.get("source_institution_names") or []),
-                    ]))
+                    merge_affiliation_evidence(existing, affiliation)
             record["author_institution_affiliations"] = deduplicated_author_affiliations
 
         if old_to_new:
@@ -3113,6 +3246,17 @@ def canonicalize_public_institutions(
             *(record.get("source_institution_names") or []),
             *([record.get("source_institution")] if record.get("source_institution") else []),
         ]))
+        for field in (
+            "raw_affiliation_evidence", "raw_affiliations",
+            "provenance_sources", "review_states",
+        ):
+            old_values = existing.get(field) or []
+            new_values = record.get(field) or []
+            old_values = old_values if isinstance(old_values, list) else [old_values]
+            new_values = new_values if isinstance(new_values, list) else [new_values]
+            merged_values = list(dict.fromkeys([*old_values, *new_values]))
+            if merged_values:
+                existing[field] = merged_values
 
     maps_by_paper: Dict[Tuple[str, Any], List[Dict[str, Any]]] = defaultdict(list)
     for record in deduplicated.values():
@@ -3613,6 +3757,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         exported_id_redirects = institution_id_redirects(
             institution_rows,
             institution_audit_rows,
+        )
+        exported_id_redirects.update(
+            confirmed_alias_id_redirects(exported_aliases)
         )
         canonical_institution_search_index = (
             public_canonical_institution_search_index(
