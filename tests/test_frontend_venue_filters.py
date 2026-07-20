@@ -192,6 +192,74 @@ process.stdout.write(JSON.stringify({{
         self.assertTrue(all(not label.startswith("Conference · ") and label.endswith(" · Workshops")
                             for label in (paper.get("venue_label", "") for paper in workshop_papers)))
 
+    def test_book_publication_type_option_uses_deduplicated_paper_count(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        helper_start = self.app.index("function dimensionPaperCounts")
+        helper_end = self.app.index("\nfunction nextCountryOptionIndex", helper_start)
+        helpers = self.app[helper_start:helper_end]
+        type_start = self.app.index("function recordVenueType")
+        type_end = self.app.index("\nfunction venueDisplayHtml", type_start)
+        type_helpers = self.app[type_start:type_end]
+        script = f"""
+const fs = require('fs');
+const papers = JSON.parse(fs.readFileSync('web/data/public_preview_papers.json', 'utf8')).records;
+const mapRecords = JSON.parse(fs.readFileSync('web/data/public_preview_map_data.json', 'utf8')).records;
+const venueTypeOrder = ['conference', 'journal', 'preprint', 'book'];
+const document = {{createElement: () => ({{value: '', textContent: ''}})}};
+function compareTextValues(first, second) {{
+  return String(first).localeCompare(String(second), undefined, {{sensitivity: 'base'}});
+}}
+function formatTask(value) {{
+  return String(value).split('_').map(
+    part => part ? part[0].toUpperCase() + part.slice(1) : part
+  ).join(' ');
+}}
+{type_helpers}
+{helpers}
+const select = {{
+  value: 'all',
+  options: [],
+  replaceChildren(...options) {{ this.options = options; }},
+}};
+const counts = dimensionPaperCounts(
+  papers,
+  record => [recordVenueType(record) || '__unknown__'],
+);
+replaceCountedFilterOptions(
+  select,
+  'All',
+  sortedVenueTypeCounts(counts),
+  value => value === '__unknown__' ? 'Unknown' : formatTask(value),
+);
+select.value = 'book';
+const selectedBooks = papers.filter(record => recordVenueType(record) === select.value);
+process.stdout.write(JSON.stringify({{
+  options: select.options.map(option => [option.value, option.textContent]),
+  selectedIds: selectedBooks.map(record => record.id || record.openalex_url || record.title),
+  bookPaperCount: papers.filter(record => record.publication_type === 'book').length,
+  bookMarkerCount: mapRecords.filter(record => record.publication_type === 'book').length,
+  allBookPapersRetainType: papers
+    .filter(record => recordVenueType(record) === 'book')
+    .every(record => record.publication_type === 'book'),
+}}));
+"""
+        result = subprocess.run(
+            [node, "-e", script],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        output = json.loads(result.stdout)
+        self.assertIn(["book", "Book (21)"], output["options"])
+        self.assertLess(output["bookPaperCount"], output["bookMarkerCount"])
+        self.assertEqual(output["bookPaperCount"], 21)
+        self.assertEqual(len(output["selectedIds"]), 21)
+        self.assertEqual(len(output["selectedIds"]), len(set(output["selectedIds"])))
+        self.assertTrue(output["allBookPapersRetainType"])
+
     def test_filter_uses_canonical_identity_and_searches_all_fields(self):
         self.assertIn('record.venue_id || ""', self.app)
         for field in ("record.venue_acronym", "record.venue_aliases", "record.venue_type", "record.venue_track"):

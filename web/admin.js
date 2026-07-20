@@ -596,9 +596,12 @@ async function apiFetch(path, options = {}) {
   });
   const payload = await response.json().catch(() => ({ error: "Invalid server response" }));
   if (!response.ok) {
+    const serverMessage = payload.error || payload.errors?.join("; ") || "Request failed";
     const error = new Error(
-      payload.error || payload.errors?.join("; ") || `Request failed (${response.status})`
+      `${path} failed with HTTP ${response.status}: ${serverMessage}`
     );
+    error.name = "AdminApiError";
+    error.path = path;
     error.status = response.status;
     error.payload = payload;
     throw error;
@@ -606,11 +609,31 @@ async function apiFetch(path, options = {}) {
   return payload;
 }
 
+function isAuthenticationFailure(error) {
+  return error?.status === 401;
+}
+
+function rejectCurrentToken(message = "That token was not accepted.") {
+  sessionStorage.removeItem("adminToken");
+  state.token = "";
+  requestToken(message);
+}
+
+function reportApplicationLoadFailure(stage, error) {
+  const detail = error?.message || "Unknown error";
+  const path = error?.path ? ` (${error.path})` : "";
+  elements["token-panel"].hidden = true;
+  elements.workspace.hidden = false;
+  setConnection("error", "Connection error");
+  showNotice(`${stage}${path}: ${detail}`, "error");
+}
+
 async function loadApplication(preserveSelection = false) {
   setConnection("loading", "● Local curation loading…");
   elements["token-panel"].hidden = true;
+  let initialData;
   try {
-    const [status, papersPayload, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus, arxivEnrichment] = await Promise.all([
+    initialData = await Promise.all([
       apiFetch("/api/status"),
       apiFetch("/api/papers"),
       apiFetch("/api/latest-validation-status"),
@@ -620,6 +643,17 @@ async function loadApplication(preserveSelection = false) {
       apiFetch("/api/git-status").catch(() => null),
       apiFetch("/api/admin/papers/arxiv-enrichment").catch(() => null),
     ]);
+  } catch (error) {
+    if (isAuthenticationFailure(error)) {
+      rejectCurrentToken();
+      return;
+    }
+    reportApplicationLoadFailure("Could not load admin data", error);
+    return;
+  }
+
+  const [status, papersPayload, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus, arxivEnrichment] = initialData;
+  try {
     state.papers = papersPayload.records.slice().sort((left, right) =>
       text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
     );
@@ -637,20 +671,25 @@ async function loadApplication(preserveSelection = false) {
     renderArxivEnrichment();
     if (autofillStatus.status === "running") scheduleArxivAutofillPoll();
     elements["console-nav"].hidden = false;
+  } catch (error) {
+    reportApplicationLoadFailure("Frontend rendering failed while opening Admin workspace", error);
+    return;
+  }
+
+  try {
     await loadDashboardAndQueues();
+  } catch (error) {
+    reportApplicationLoadFailure("Could not finish loading Admin review queues", error);
+    return;
+  }
+
+  try {
     if (preserveSelection && state.selectedId) {
       const stillPresent = state.papers.some((paper) => paper.display_id === state.selectedId);
       if (stillPresent) await selectPaper(state.selectedId);
     }
   } catch (error) {
-    if (error.status === 401) {
-      sessionStorage.removeItem("adminToken");
-      state.token = "";
-      requestToken("That token was not accepted.");
-      return;
-    }
-    requestToken(`Could not load admin data: ${error.message}`);
-    setConnection("error", "Connection error");
+    reportApplicationLoadFailure("Could not restore the selected paper", error);
   }
 }
 

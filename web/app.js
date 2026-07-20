@@ -1138,7 +1138,6 @@ function venueDisplayLabel(record) {
 }
 
 function recordVenueType(record) {
-  if (isBookRecord(record)) return "";
   return String(record.publication_type || record.venue_type || "").trim().toLocaleLowerCase();
 }
 
@@ -3314,7 +3313,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   );
   const venueTypeCounts = dimensionPaperCounts(
     venueTypePapers,
-    (record) => isBookRecord(record) ? [] : [recordVenueType(record) || "__unknown__"],
+    (record) => [recordVenueType(record) || "__unknown__"],
   );
   replaceCountedFilterOptions(
     venueFilter,
