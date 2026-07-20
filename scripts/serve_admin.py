@@ -10,10 +10,12 @@ import hmac
 import ipaddress
 import json
 import logging
+import os
 import re
 import secrets
 import sys
 import threading
+import time
 import unicodedata
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -340,6 +342,44 @@ STATIC_ROUTES = {
     ),
 }
 LOGGER = logging.getLogger(__name__)
+PERF_LOG_ENABLED = os.environ.get("ADMIN_PERF_LOG", "").lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
+
+
+class PerfTrace:
+    def __init__(self, label: str):
+        self.label = label
+        self.started = time.perf_counter()
+        self.last = self.started
+        self.stages: List[Dict[str, Any]] = []
+
+    def mark(self, name: str) -> None:
+        now = time.perf_counter()
+        self.stages.append(
+            {
+                "stage": name,
+                "seconds": round(now - self.last, 4),
+                "elapsed_seconds": round(now - self.started, 4),
+            }
+        )
+        self.last = now
+
+    def finish(self) -> List[Dict[str, Any]]:
+        self.mark("total")
+        if PERF_LOG_ENABLED:
+            LOGGER.info(
+                "%s timings: %s",
+                self.label,
+                " | ".join(
+                    f"{stage['stage']}={stage['seconds']:.4f}s"
+                    for stage in self.stages
+                ),
+            )
+        return self.stages
 
 
 def snapshot_files(paths: Sequence[Path]) -> Dict[Path, bytes | None]:
@@ -2820,12 +2860,15 @@ def make_handler(
                     return
 
                 if request.path == "/api/paper/metadata/update":
+                    perf = PerfTrace("paper_metadata_update")
                     paper_id = clean(payload.get("id"))
+                    perf.mark("parse_request")
                     if not paper_id:
                         raise AdminDataError("paper id is required")
                     _papers, admin_data = load_admin_data(
                         exclusions_path, curated_papers_path
                     )
+                    perf.mark("load_admin_data")
                     paper = admin_data["papers_by_id"].get(paper_id)
                     if paper is None:
                         self.send_json(
@@ -2870,6 +2913,7 @@ def make_handler(
                             in {auto_pdf_url, existing_override_pdf_url}
                         ):
                             draft["paper_url"] = ""
+                        perf.mark("prepare_draft")
                         with (
                             CURATED_PAPER_WRITE_LOCK,
                             CURATED_ARXIV_LINK_WRITE_LOCK,
@@ -2881,6 +2925,7 @@ def make_handler(
                                 PUBLIC_MAP_PATH,
                                 location_review_path,
                             ))
+                            perf.mark("snapshot_files")
                             try:
                                 row = update_curated_paper(
                                     paper,
@@ -2891,6 +2936,7 @@ def make_handler(
                                     path=curated_papers_path,
                                     venue_aliases_path=venue_aliases_path,
                                 )
+                                perf.mark("update_curated_paper")
                                 if arxiv_id_changed:
                                     set_curated_arxiv_override(
                                         row,
@@ -2898,14 +2944,17 @@ def make_handler(
                                         curated_arxiv_links_path,
                                         match_record=paper,
                                     )
+                                perf.mark("update_arxiv_override")
                                 export_result = dict(
                                     metadata_export_runner("export_preview")
                                 )
+                                perf.mark("export_preview")
                             except Exception:
                                 restore_file_snapshots(snapshots)
                                 raise
                             if not export_result.get("success"):
                                 restore_file_snapshots(snapshots)
+                            perf.mark("rollback_check")
                     except DuplicatePaperError as error:
                         self.send_json(
                             HTTPStatus.CONFLICT,
@@ -2920,6 +2969,26 @@ def make_handler(
                         row if export_result.get("success") else paper,
                         curated_arxiv_links_path,
                     )
+                    perf.mark("apply_arxiv_metadata")
+                    refreshed_summary = None
+                    if export_result.get("success"):
+                        _refreshed_papers, refreshed_admin_data = load_admin_data(
+                            exclusions_path, curated_papers_path
+                        )
+                        refreshed_paper = refreshed_admin_data[
+                            "papers_by_id"
+                        ].get(paper_id)
+                        if refreshed_paper is not None:
+                            refreshed_summary = paper_summary(refreshed_paper)
+                    perf.mark("refresh_saved_summary")
+                    timings = perf.finish()
+                    response_data = {
+                        "paper": effective_row,
+                        "paper_summary": refreshed_summary,
+                        "export": export_result,
+                    }
+                    if PERF_LOG_ENABLED:
+                        response_data["timings"] = timings
                     self.send_json(
                         (
                             HTTPStatus.OK
@@ -2931,10 +3000,7 @@ def make_handler(
                                 "Saved metadata and regenerated public preview."
                             ),
                             success=bool(export_result.get("success")),
-                            data={
-                                "paper": effective_row,
-                                "export": export_result,
-                            },
+                            data=response_data,
                         ),
                     )
                     return

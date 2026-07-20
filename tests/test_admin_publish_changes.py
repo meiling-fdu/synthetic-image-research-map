@@ -171,11 +171,13 @@ class AdminPublishChangesTests(unittest.TestCase):
 
     def test_successful_refresh_after_integrity_repair_reaches_publish_status(self):
         runner = RecordingRunner()
+        output = io.StringIO()
 
-        result = self.publish(
-            repository_root=Path("/repo"),
-            runner=runner,
-        )
+        with contextlib.redirect_stdout(output):
+            result = self.publish(
+                repository_root=Path("/repo"),
+                runner=runner,
+            )
 
         self.assertEqual(result, 0)
         self.assertIn(
@@ -183,6 +185,7 @@ class AdminPublishChangesTests(unittest.TestCase):
             runner.commands,
         )
         self.assertIn(("git", "status", "--short"), runner.commands)
+        self.assertIn(": succeeded in ", output.getvalue())
 
     def test_commit_is_scoped_and_pushes_after_commit(self):
         status_command = ("git", "status", "--short")

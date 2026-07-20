@@ -3443,6 +3443,23 @@ async function runAdminWorkflow(path, label, payload = null) {
   }
 }
 
+async function refreshAfterMetadataSave(selectedId, payload, selectionSequence) {
+  const summary = payload?.data?.paper_summary;
+  if (summary) {
+    const index = state.papers.findIndex((paper) => paper.display_id === selectedId);
+    if (index >= 0) state.papers.splice(index, 1, summary);
+    else state.papers.push(summary);
+    state.papers.sort((left, right) =>
+      text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
+    );
+    populateFilters();
+    applyFilters();
+  }
+  if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+  await selectPaper(selectedId);
+  void loadDashboardAndQueues();
+}
+
 async function autofillArxivIds() {
   const button = elements["autofill-arxiv"];
   if (button.disabled) return;
@@ -4731,10 +4748,7 @@ async function saveMetadata(event) {
     if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
     showNotice(payload.message);
     closeMetadataEditor();
-    await loadApplication(false);
-    if (selectionSequence === paperSelectionSequence && state.selectedId === selectedId) {
-      await selectPaper(selectedId);
-    }
+    await refreshAfterMetadataSave(selectedId, payload, selectionSequence);
   } catch (error) {
     if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
     elements["metadata-edit-error"].hidden = false;

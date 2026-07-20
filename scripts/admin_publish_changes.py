@@ -7,6 +7,7 @@ import json
 import shlex
 import subprocess
 import sys
+import time
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -155,7 +156,9 @@ def run_step(
     runner: RunCommand,
 ) -> bool:
     print(f"\n== {label} ==", flush=True)
+    started = time.perf_counter()
     result = runner(command, repository_root)
+    duration = time.perf_counter() - started
     if result.returncode != 0:
         output = result.stdout or ""
         validation_errors = [
@@ -170,11 +173,14 @@ def run_step(
             for line in validation_errors:
                 print(f"  {line}", file=sys.stderr)
         print(
-            f"ERROR: {label} failed with exit code {result.returncode}.",
+            (
+                f"ERROR: {label} failed with exit code {result.returncode} "
+                f"after {duration:.3f}s."
+            ),
             file=sys.stderr,
         )
         return False
-    print(f"{label}: succeeded.", flush=True)
+    print(f"{label}: succeeded in {duration:.3f}s.", flush=True)
     return True
 
 

@@ -251,7 +251,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
             "draft.arxiv_id_changed =\n    draft.arxiv_id !==", source
         )
 
-    def test_venue_registry_api_and_structured_save_reload(self):
+    def test_venue_registry_api_and_structured_save_summary(self):
         with tempfile.TemporaryDirectory() as directory:
             with self.metadata_server(directory, []) as (
                 base_url, original, curated_path, _links_path, display_id,
@@ -264,9 +264,18 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 )
                 self.assertIn("CHI", chi["search_text"])
                 edit = {**original, **chi_venue_fields(), "id": display_id}
-                updated = self.metadata_request(base_url, "/api/paper/metadata/update", edit)["data"]["paper"]
+                update_payload = self.metadata_request(
+                    base_url, "/api/paper/metadata/update", edit
+                )["data"]
+                updated = update_payload["paper"]
                 self.assertEqual(updated["venue_id"], "venue:chi:main")
                 self.assertEqual(updated["raw_venue"], chi_venue_fields()["raw_venue"])
+                self.assertEqual(
+                    update_payload["paper_summary"]["display_id"], display_id
+                )
+                self.assertEqual(
+                    update_payload["paper_summary"]["venue_id"], "venue:chi:main"
+                )
                 reloaded = self.metadata_request(
                     base_url, f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
                 )["data"]["effective_record"]
@@ -382,6 +391,22 @@ class PaperMetadataEditingTests(unittest.TestCase):
         self.assertIn('elements["metadata-paper-id"].value = "";', source)
         self.assertIn('elements["metadata-edit-button"].disabled = true;', source)
         self.assertIn("Metadata is not loaded for the currently selected paper.", source)
+
+    def test_frontend_metadata_save_uses_targeted_refresh(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "web" / "admin.js"
+        ).read_text()
+        save_body = source.split("async function saveMetadata(event) {", 1)[1].split(
+            "\nfunction renderPaperDetail", 1
+        )[0]
+        refresh_body = source.split("async function refreshAfterMetadataSave", 1)[1].split(
+            "\nasync function autofillArxivIds", 1
+        )[0]
+        self.assertIn("await refreshAfterMetadataSave(", save_body)
+        self.assertNotIn("loadApplication(", save_body)
+        self.assertIn("payload?.data?.paper_summary", refresh_body)
+        self.assertIn("await selectPaper(selectedId)", refresh_body)
+        self.assertIn("void loadDashboardAndQueues()", refresh_body)
 
     def test_frontend_renders_empty_metadata_records_explicitly(self):
         source = (
