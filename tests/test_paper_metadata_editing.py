@@ -441,7 +441,15 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     self.metadata_request(
                         base_url, "/api/paper/metadata/update", edit
                     )
-                self.assertEqual(raised.exception.code, 500)
+                self.assertEqual(raised.exception.code, 409)
+                failure_payload = json.loads(raised.exception.read())
+                self.assertFalse(failure_payload["success"])
+                self.assertIn("rolled back", failure_payload["message"])
+                self.assertEqual(
+                    failure_payload["errors"],
+                    ["public preview export failed"],
+                )
+                self.assertTrue(failure_payload["data"]["rolled_back"])
                 self.assertEqual(curated_path.read_bytes(), curated_before)
                 self.assertEqual(links_path.read_bytes(), links_before)
 

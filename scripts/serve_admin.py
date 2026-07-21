@@ -1076,6 +1076,24 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
     return {field: paper.get(field) for field in fields}
 
 
+def workflow_failure_message(
+    result: Mapping[str, Any],
+    *,
+    fallback: str = "workflow failed",
+) -> str:
+    for field in ("stderr_tail", "stdout_tail"):
+        value = clean(result.get(field))
+        if value:
+            for line in value.splitlines():
+                line = clean(line)
+                if line and not line.startswith("$ "):
+                    return line
+    exit_code = result.get("exit_code")
+    if exit_code not in (None, ""):
+        return f"{fallback} with exit code {exit_code}"
+    return fallback
+
+
 def api_payload(
     *,
     success: bool = True,
@@ -2965,8 +2983,33 @@ def make_handler(
                             ),
                         )
                         return
+                    if not export_result.get("success"):
+                        timings = perf.finish()
+                        response_data = {
+                            "rolled_back": True,
+                            "export": export_result,
+                        }
+                        if PERF_LOG_ENABLED:
+                            response_data["timings"] = timings
+                        export_message = workflow_failure_message(
+                            export_result,
+                            fallback="public preview export failed",
+                        )
+                        self.send_json(
+                            HTTPStatus.CONFLICT,
+                            api_payload(
+                                message=(
+                                    "Metadata save was rolled back because "
+                                    "public preview export failed."
+                                ),
+                                success=False,
+                                data=response_data,
+                                errors=(export_message,),
+                            ),
+                        )
+                        return
                     effective_row = apply_curated_arxiv_metadata(
-                        row if export_result.get("success") else paper,
+                        row,
                         curated_arxiv_links_path,
                     )
                     perf.mark("apply_arxiv_metadata")

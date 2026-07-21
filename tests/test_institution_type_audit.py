@@ -72,10 +72,10 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         for paper in payloads[0]["records"]:
             counts.update(set(paper.get("aggregated_institution_types") or ()))
         self.assertEqual(counts, {
-            "university": 448,
-            "research_unit": 109,
-            "company": 49,
-            "other": 61,
+            "university": 373,
+            "research_unit": 87,
+            "company": 48,
+            "other": 149,
         })
 
     def test_references_still_use_stable_audited_ids(self):

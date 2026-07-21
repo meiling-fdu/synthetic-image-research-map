@@ -193,6 +193,53 @@ class PublicExportShrinkageTests(unittest.TestCase):
         self.assertTrue(report.allowed)
         self.assertIn("reviewed mapping decision", report.removed_maps[0].evidence)
 
+    def test_legion_stale_fallback_requires_reviewed_removal_across_identity_change(self):
+        old = paper(
+            "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
+            paper_id="curated:14272073fa5bc0e301b5",
+            doi="https://doi.org/10.1109/iccv51701.2025.01760",
+            openalex_url="https://openalex.org/W4414903171",
+            year=2025,
+            arxiv_id="2503.15264",
+        )
+        current = {
+            **old,
+            "paper_id": "doi:10.1109/iccv51701.2025.01760",
+        }
+        stale_marker = marker(
+            old,
+            institution_id="institution:985443a2d7239406",
+            institution="Beijing Academy of Artificial Intelligence",
+        )
+        current_marker = marker(
+            current,
+            institution_id="institution:c107a95b6cb53ac5",
+            institution="Shanghai Artificial Intelligence Laboratory",
+        )
+
+        unexplained = analyze_shrinkage(
+            [old], [current], [stale_marker], [current_marker]
+        )
+        self.assertFalse(unexplained.allowed)
+
+        decision = {
+            **old,
+            "decision_id": "review:43632bd5575cb49bb873",
+            "institution": "Beijing Academy of Artificial Intelligence",
+            "action": "exclude_wrong_mapping",
+        }
+        explained = analyze_shrinkage(
+            [old],
+            [current],
+            [stale_marker],
+            [current_marker],
+            review_decisions=[decision],
+        )
+        self.assertTrue(explained.allowed)
+        self.assertEqual(len(explained.removed_papers), 0)
+        self.assertEqual(len(explained.removed_maps), 1)
+        self.assertIn(decision["decision_id"], explained.removed_maps[0].evidence)
+
     def test_active_curated_mapping_replacement_explains_old_relationship(self):
         old = paper()
         old_marker = {

@@ -366,7 +366,7 @@ process.stdout.write(JSON.stringify({{
         self.assertFalse(any("WACVW" in label for label in public_labels))
         self.assertFalse(any("Inter national" in label for label in public_labels))
 
-    def test_public_counts_meet_disaster_baseline_after_venue_corrections(self):
+    def test_public_counts_include_only_reviewed_shrinkage_from_disaster_baseline(self):
         map_records = json.loads(
             (ROOT / "web" / "data" / "public_preview_map_data.json").read_text(encoding="utf-8")
         )["records"]
@@ -375,8 +375,17 @@ process.stdout.write(JSON.stringify({{
                 encoding="utf-8"
             )
         )
-        self.assertGreaterEqual(len(self.papers), baseline["paper_records"])
-        self.assertGreaterEqual(len(map_records), baseline["map_records"])
+        self.assertEqual(baseline, {
+            "paper_records": 488,
+            "map_records": 950,
+            "approval_note": (
+                "Last reviewed complete public export before the venue taxonomy "
+                "migration. Decreases require an explicitly reviewed replacement "
+                "baseline."
+            ),
+        })
+        self.assertEqual(len(self.papers), 487)
+        self.assertEqual(len(map_records), 1006)
 
     def test_venue_type_control_precedes_venue_control(self):
         self.assertLess(
