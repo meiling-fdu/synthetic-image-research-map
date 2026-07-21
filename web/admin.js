@@ -4997,6 +4997,10 @@ function canonicalInstitutionKey(value) {
 
 function mappingInstitutionMatches(value) {
   const key = canonicalInstitutionKey(value);
+  const exactOption = state.institutions.find((row) => (
+    canonicalInstitutionKey(mappingInstitutionOptionValue(row)) === key
+  ));
+  if (exactOption) return [exactOption];
   return state.institutions.filter((row) => [
     row.canonical_name,
     ...(row.aliases || []),
@@ -5009,13 +5013,34 @@ function syncMappingInstitutionId() {
     matches.length === 1 ? text(matches[0].institution_id) : "";
 }
 
+function mappingInstitutionLocationLabel(institution) {
+  const location = institution.location || {};
+  return [
+    text(location.city),
+    text(location.region),
+    text(location.country),
+  ].filter(Boolean).join(", ");
+}
+
+function mappingInstitutionOptionValue(institution) {
+  const name = text(institution.canonical_name);
+  const location = mappingInstitutionLocationLabel(institution);
+  const id = text(institution.institution_id);
+  return `${name}${location ? ` — ${location}` : ""} (${id})`;
+}
+
+function selectedMappingInstitution() {
+  const identifier = elements["mapping-institution-id"].value;
+  return state.institutions.find((row) => text(row.institution_id) === identifier);
+}
+
 function renderMappingInstitutionOptions() {
   const options = state.institutions
     .filter((row) => row.institution_status === "active")
     .map((row) => {
       const option = document.createElement("option");
-      option.value = text(row.canonical_name);
-      option.label = `${text(row.canonical_name)} (${text(row.institution_id)})`;
+      option.value = mappingInstitutionOptionValue(row);
+      option.label = option.value;
       return option;
     });
   elements["mapping-institution-options"].replaceChildren(...options);
@@ -5026,8 +5051,11 @@ function closeMappingDialog() {
 }
 
 function mappingDraft() {
+  const selectedInstitution = selectedMappingInstitution();
   return {
-    institution: elements["mapping-institution"].value.trim(),
+    institution: selectedInstitution
+      ? text(selectedInstitution.canonical_name)
+      : elements["mapping-institution"].value.trim(),
     institution_id: elements["mapping-institution-id"].value,
     institution_authors: elements["mapping-authors"].value.trim(),
     raw_affiliation: elements["mapping-raw-affiliation"].value,
@@ -5052,6 +5080,15 @@ async function submitMapping(event) {
     elements["mapping-form-error"].textContent =
       "Enter a raw affiliation, evidence source, or evidence URL.";
     return;
+  }
+  if (mode !== "exclude" && !draft.institution_id) {
+    const matches = mappingInstitutionMatches(elements["mapping-institution"].value);
+    if (matches.length > 1) {
+      elements["mapping-form-error"].hidden = false;
+      elements["mapping-form-error"].textContent =
+        "Choose one of the canonical institution options; this institution name is ambiguous.";
+      return;
+    }
   }
   if (mode === "replace" && !elements["mapping-confirm-replace"].checked) {
     elements["mapping-form-error"].hidden = false;

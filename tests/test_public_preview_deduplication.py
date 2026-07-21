@@ -4,7 +4,7 @@ import unittest
 from copy import deepcopy
 from pathlib import Path
 
-from scripts.curated_export import _ordered_mapping_authors
+from scripts.curated_export import _ordered_mapping_authors, build_curated_map_records
 from scripts.export_public_preview import (
     add_public_detail_fields,
     apply_ordered_paper_location_summaries,
@@ -245,6 +245,72 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         )
         self.assertEqual(paper["aggregated_institution_types"], ["research_unit"])
         self.assertEqual(search_index[canonical_id]["institution_type"], "research_unit")
+
+    def test_duplicate_institution_names_resolve_coordinates_by_canonical_id(self):
+        paper = {
+            "paper_id": "curated:northeastern",
+            "title": "Northeastern regression",
+            "year": "2026",
+            "task": "detection",
+        }
+        mapping = {
+            "mapping_id": "mapping:neu-us",
+            "paper_id": paper["paper_id"],
+            "title": paper["title"],
+            "year": paper["year"],
+            "institution": "Northeastern University",
+            "institution_id": "institution:neu-us",
+            "institution_authors": "Example Author",
+            "raw_affiliation": "Northeastern University",
+            "mapping_status": "active",
+        }
+        locations = [{
+            "institution": "Northeastern University",
+            "institution_id": "institution:neu-cn",
+            "city": "Shenyang",
+            "region": "Liaoning",
+            "country": "China",
+            "country_code": "CN",
+            "lat": "41.7634632",
+            "lon": "123.4117577",
+        }, {
+            "institution": "Northeastern University",
+            "institution_id": "institution:neu-us",
+            "city": "Boston",
+            "region": "Massachusetts",
+            "country": "United States",
+            "country_code": "US",
+            "lat": "42.3398",
+            "lon": "-71.0892",
+        }]
+
+        markers, summary = build_curated_map_records(
+            [paper], [mapping], [], confirmed_location_records=locations,
+        )
+
+        self.assertEqual(summary["curated_markers_created"], 1)
+        self.assertEqual(markers[0]["institution_id"], "institution:neu-us")
+        self.assertEqual(markers[0]["city"], "Boston")
+        self.assertEqual(markers[0]["country"], "United States")
+
+    def test_duplicate_canonical_names_do_not_canonicalize_name_only_records(self):
+        institutions = [{
+            "institution_id": "institution:neu-cn",
+            "canonical_name": "Northeastern University",
+            "institution_status": "active",
+        }, {
+            "institution_id": "institution:neu-us",
+            "canonical_name": "Northeastern University",
+            "institution_status": "active",
+        }]
+        paper = {"title": "Ambiguous name", "year": 2026, "doi": "10.1/neu"}
+        maps = [{**paper, "institution": "Northeastern University"}]
+
+        canonical_maps = canonicalize_public_institutions(
+            [paper], maps, [], institutions=institutions,
+        )
+
+        self.assertFalse(canonical_maps[0].get("institution_id"))
 
     def test_confirmed_astar_variants_canonicalize_and_dedupe_public_records(self):
         aliases = public_institution_aliases(

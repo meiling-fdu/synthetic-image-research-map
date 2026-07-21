@@ -224,6 +224,50 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("const visibleRecords = filteredSets.filteredRecords", render)
         self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords", render)
 
+    def test_duplicate_canonical_institution_names_keep_distinct_public_identities(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        search_start = self.app.index("function normalizedSearchText")
+        resolver_end = self.app.index("\nfunction canonicalizeInstitutionObject", search_start)
+        source = self.app[search_start:resolver_end]
+        script = f"""
+function institutionIdentity(record) {{
+  return record.institution_id ? `id:${{record.institution_id.toLowerCase()}}` : "";
+}}
+{source}
+const canonicalIndex = {{
+  "institution:neu-cn": {{
+    canonical_name: "Northeastern University",
+    institution_type: "university",
+    names: ["Northeastern University", "Northeastern University, China"],
+  }},
+  "institution:neu-us": {{
+    canonical_name: "Northeastern University",
+    institution_type: "university",
+    names: ["Northeastern University", "Northeastern University, Boston"],
+  }},
+}};
+const searchIndex = buildInstitutionSearchIndex([], [], [], [], canonicalIndex);
+const exact = [...resolveInstitutionSearchIdentities("Northeastern University", searchIndex)].sort();
+const resolver = buildCanonicalInstitutionResolver([], canonicalIndex, {{}});
+process.stdout.write(JSON.stringify({{
+  exact,
+  bare: resolver.byName.has(normalizedSearchText("Northeastern University")),
+  boston: resolver.byName.get(normalizedSearchText("Northeastern University, Boston"))?.id,
+}}));
+"""
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(
+            result["exact"],
+            ["id:institution:neu-cn", "id:institution:neu-us"],
+        )
+        self.assertFalse(result["bare"])
+        self.assertEqual(result["boston"], "institution:neu-us")
+
     def test_confirmed_hierarchy_automatically_expands_top_level_parent(self):
         node = shutil.which("node")
         if node is None:

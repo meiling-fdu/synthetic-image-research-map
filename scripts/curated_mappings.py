@@ -421,9 +421,14 @@ def known_location_institutions(
             latitude = record.get("lat")
         if longitude in (None, ""):
             longitude = record.get("lon")
-        institution = _normalized_text(record.get("institution"))
+        institution_id = clean(record.get("institution_id"))
+        institution = (
+            f"id:{institution_id.casefold()}"
+            if institution_id
+            else f"name:{_normalized_text(record.get('institution'))}"
+        )
         if (
-            institution
+            institution not in {"name:", "id:"}
             and _valid_coordinate(latitude, latitude=True)
             and _valid_coordinate(longitude, latitude=False)
         ):
@@ -437,7 +442,7 @@ def mapping_location_state(
     map_records: Sequence[Mapping[str, Any]],
     location_rows: Sequence[Mapping[str, Any]],
 ) -> str:
-    if _normalized_text(mapping.get("institution")) in known_location_institutions(
+    if _queue_institution_key(mapping) in known_location_institutions(
         map_records
     ):
         return "known"
@@ -452,9 +457,16 @@ def _queue_key(record: Mapping[str, Any]) -> tuple[str, str, str]:
     paper_key = next(iter(paper_identity_keys(record)), "")
     return (
         paper_key,
-        _normalized_text(record.get("institution")),
+        _queue_institution_key(record),
         _normalized_text(record.get("institution_authors")),
     )
+
+
+def _queue_institution_key(record: Mapping[str, Any]) -> str:
+    institution_id = clean(record.get("institution_id"))
+    if institution_id:
+        return f"id:{institution_id.casefold()}"
+    return f"name:{_normalized_text(record.get('institution'))}"
 
 
 def _sync_location_review(
@@ -469,7 +481,7 @@ def _sync_location_review(
         raise CuratedMappingError(
             "location review creation requires a canonical institution_id"
         )
-    if _normalized_text(mapping.get("institution")) in known_location_institutions(
+    if _queue_institution_key(mapping) in known_location_institutions(
         map_records
     ):
         return "known"

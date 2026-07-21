@@ -92,19 +92,39 @@ def _institution_identity(record: Mapping[str, Any]) -> str:
     return f"institution_name:{name.casefold()}"
 
 
+def _canonical_institution_identity(
+    identity: str,
+    institution_redirects: Optional[Mapping[str, str]] = None,
+) -> str:
+    if not identity.startswith("institution_id:"):
+        return identity
+    raw_id = identity.removeprefix("institution_id:")
+    redirects = institution_redirects or {}
+    visited = {raw_id}
+    target = clean(redirects.get(raw_id)).casefold()
+    while target and target not in visited:
+        visited.add(target)
+        next_target = clean(redirects.get(target)).casefold()
+        if not next_target:
+            return f"institution_id:{target}"
+        target = next_target
+    return f"institution_id:{target or raw_id}"
+
+
 def _map_present(
     old: Mapping[str, Any],
     new_maps: Sequence[Mapping[str, Any]],
     institution_redirects: Optional[Mapping[str, str]] = None,
 ) -> bool:
-    institution = _institution_identity(old)
-    if institution.startswith("institution_id:"):
-        raw_id = institution.removeprefix("institution_id:")
-        redirected = clean((institution_redirects or {}).get(raw_id)).casefold()
-        if redirected:
-            institution = f"institution_id:{redirected}"
+    institution = _canonical_institution_identity(
+        _institution_identity(old), institution_redirects
+    )
     return any(
-        _institution_identity(new) == institution and _paper_matches(old, new)
+        _canonical_institution_identity(
+            _institution_identity(new), institution_redirects
+        )
+        == institution
+        and _paper_matches(old, new)
         for new in new_maps
     )
 
@@ -127,6 +147,59 @@ def _active_mapping_decision(
     return None
 
 
+def _author_set(value: Any) -> frozenset[str]:
+    if isinstance(value, str):
+        value = value.split(";")
+    if not isinstance(value, Sequence) or isinstance(value, (bytes, bytearray)):
+        return frozenset()
+    return frozenset(clean(author).casefold() for author in value if clean(author))
+
+
+def _record_author_sets(record: Mapping[str, Any]) -> set[frozenset[str]]:
+    author_sets = set()
+    direct = _author_set(record.get("institution_authors") or [])
+    if direct:
+        author_sets.add(direct)
+    actual_id = clean(record.get("institution_id")).casefold()
+    actual_name = clean(record.get("institution")).casefold()
+    for field in ("author_institution_affiliations", "affiliations"):
+        values = record.get(field)
+        if not isinstance(values, Sequence) or isinstance(values, (str, bytes, bytearray)):
+            continue
+        for value in values:
+            if not isinstance(value, Mapping):
+                continue
+            value_id = clean(value.get("institution_id")).casefold()
+            value_name = clean(
+                value.get("institution")
+                or value.get("canonical_name")
+                or value.get("name")
+            ).casefold()
+            same_institution = bool(
+                (actual_id and value_id and actual_id == value_id)
+                or (actual_name and value_name and actual_name == value_name)
+            )
+            if not same_institution:
+                continue
+            nested = _author_set(value.get("authors") or [])
+            if nested:
+                author_sets.add(nested)
+    return author_sets
+
+
+def _lower_priority_mapping(record: Mapping[str, Any]) -> bool:
+    if clean(record.get("mapping_id")):
+        return False
+    source = clean(record.get("source_database")).casefold()
+    institution_source = clean(record.get("institution_source")).casefold()
+    return bool(
+        record.get("preliminary_affiliations") is True
+        or record.get("mapping_fallback") is True
+        or institution_source in {"automatic_fallback", "raw_affiliation", "openalex"}
+        or source in {"openalex", "raw", "candidate"}
+    )
+
+
 def _curated_mapping_evidence(
     record: Mapping[str, Any],
     mappings: Sequence[Mapping[str, Any]],
@@ -134,21 +207,14 @@ def _curated_mapping_evidence(
 ) -> Mapping[str, Any] | None:
     actual_id = clean(record.get("institution_id")).casefold()
     actual_name = clean(record.get("institution")).casefold()
-    record_authors = record.get("institution_authors") or []
-    if isinstance(record_authors, str):
-        record_authors = record_authors.split(";")
-    authors = {clean(author).casefold() for author in record_authors if clean(author)}
+    author_sets = _record_author_sets(record)
     for row in mappings:
         if not _paper_matches(record, row):
             continue
         row_id = clean(row.get("institution_id")).casefold()
         row_name = clean(row.get("institution")).casefold()
         status = clean(row.get("mapping_status")).casefold()
-        row_authors = {
-            clean(author).casefold()
-            for author in clean(row.get("institution_authors")).split(";")
-            if clean(author)
-        }
+        row_authors = _author_set(row.get("institution_authors") or "")
         same_institution = bool(
             (actual_id and row_id and actual_id == row_id)
             or (not actual_id and actual_name and actual_name == row_name)
@@ -157,8 +223,8 @@ def _curated_mapping_evidence(
             return row
         if (
             status == "active"
-            and authors
-            and row_authors == authors
+            and row_authors
+            and row_authors in author_sets
             and not same_institution
         ):
             replacement_present = any(
@@ -170,7 +236,7 @@ def _curated_mapping_evidence(
                 )
                 for new in new_maps
             )
-            if replacement_present:
+            if replacement_present or _lower_priority_mapping(record):
                 return row
     return None
 
@@ -304,7 +370,10 @@ def analyze_shrinkage(
         elif decision:
             evidence = f"reviewed mapping decision {clean(decision.get('decision_id'))}"
         elif mapping:
-            evidence = f"curated mapping change {clean(mapping.get('mapping_id'))}"
+            evidence = (
+                "curated/manual mapping supersession; reviewed mapping scope: "
+                f"author set; authoritative mapping IDs: {clean(mapping.get('mapping_id'))}"
+            )
         elif follows_paper:
             evidence = "follows explained paper removal"
         else:

@@ -174,6 +174,27 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
             self.create({**self.draft, "institution_id": "institution:stale"})
         self.assertEqual(load_mappings(self.mappings), [])
 
+    def test_ambiguous_duplicate_canonical_name_blocks_name_only_mapping(self):
+        self.seed_institutions(
+            row(INSTITUTION_COLUMNS, institution_id="institution:neu-cn", canonical_name="Northeastern University", institution_status="active"),
+            row(INSTITUTION_COLUMNS, institution_id="institution:neu-us", canonical_name="Northeastern University", institution_status="active"),
+        )
+
+        with self.assertRaisesRegex(CuratedMappingError, "ambiguous.*institution:neu-cn.*institution:neu-us"):
+            self.create({
+                **self.draft,
+                "institution": "Northeastern University",
+                "institution_id": "",
+            })
+
+        result = self.create({
+            **self.draft,
+            "institution": "Northeastern University",
+            "institution_id": "institution:neu-cn",
+        })
+        self.assertEqual(result["mapping"]["institution_id"], "institution:neu-cn")
+        self.assertEqual(result["mapping"]["institution"], "Northeastern University")
+
     def test_write_failure_rolls_back_all_three_curated_files(self):
         before = {path: path.read_bytes() for path in (self.institutions, self.mappings, self.reviews)}
         with patch("scripts.curated_mappings.save_mappings", side_effect=OSError("fixture failure")):

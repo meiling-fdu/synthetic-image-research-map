@@ -3,7 +3,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.export_public_preview import PreviewExportError, enforce_export_baseline
+from scripts.export_public_preview import (
+    PreviewExportError,
+    enforce_export_baseline,
+    exclude_stale_curated_mapping_markers,
+)
 from scripts.public_export_guard import analyze_shrinkage, filter_preserved_records
 
 
@@ -265,7 +269,160 @@ class PublicExportShrinkageTests(unittest.TestCase):
             curated_mappings=[replacement],
         )
         self.assertTrue(report.allowed)
-        self.assertIn("curated mapping change", report.removed_maps[0].evidence)
+        self.assertIn(
+            "curated/manual mapping supersession",
+            report.removed_maps[0].evidence,
+        )
+        self.assertIn("authoritative mapping IDs: mapping-1", report.removed_maps[0].evidence)
+
+    def test_manual_author_mapping_supersedes_old_automatic_fallback_without_exclusion(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:old", institution="Old"),
+            "institution_authors": ["Ada Author"],
+            "source_database": "OpenAlex",
+            "institution_source": "automatic_fallback",
+            "preliminary_affiliations": True,
+        }
+        replacement = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Reviewed",
+            "institution_id": "institution:reviewed",
+            "institution_authors": "Ada Author",
+            "mapping_status": "active",
+        }
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [],
+            curated_mappings=[replacement],
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn("curated/manual mapping supersession", report.removed_maps[0].evidence)
+        self.assertIn("mapping-reviewed", report.removed_maps[0].evidence)
+
+    def test_partial_manual_mapping_does_not_explain_other_author_fallback(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:old", institution="Old"),
+            "institution_authors": ["Unreviewed Author"],
+            "source_database": "OpenAlex",
+            "institution_source": "automatic_fallback",
+            "preliminary_affiliations": True,
+        }
+        reviewed = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Reviewed",
+            "institution_id": "institution:reviewed",
+            "institution_authors": "Reviewed Author",
+            "mapping_status": "active",
+        }
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [],
+            curated_mappings=[reviewed],
+        )
+        self.assertFalse(report.allowed)
+
+    def test_manual_old_relationship_disappearing_without_correction_still_blocks(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:old", institution="Old"),
+            "mapping_id": "mapping-old",
+            "institution_authors": ["Ada Author"],
+            "source_database": "curated",
+            "institution_source": "curated",
+        }
+        replacement = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Reviewed",
+            "institution_id": "institution:reviewed",
+            "institution_authors": "Ada Author",
+            "mapping_status": "active",
+        }
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [],
+            curated_mappings=[replacement],
+        )
+        self.assertFalse(report.allowed)
+
+    def test_nested_affiliation_authors_can_support_supersession_evidence(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:old", institution="Old"),
+            "institution_authors": ["Ada Author"],
+            "source_database": "OpenAlex",
+            "institution_source": "automatic_fallback",
+            "preliminary_affiliations": True,
+            "author_institution_affiliations": [
+                {
+                    "institution_id": "institution:old",
+                    "institution": "Old",
+                    "authors": ["Ada Author", "Grace Author"],
+                }
+            ],
+        }
+        replacement = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Reviewed",
+            "institution_id": "institution:reviewed",
+            "institution_authors": "Ada Author; Grace Author",
+            "mapping_status": "active",
+        }
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [],
+            curated_mappings=[replacement],
+        )
+        self.assertTrue(report.allowed)
+
+    def test_institution_redirects_are_applied_to_old_and_new_map_identities(self):
+        old = paper()
+        old_marker = marker(old, institution_id="institution:canonical", institution="Canonical")
+        new_marker = marker(old, institution_id="institution:alias", institution="Alias")
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [new_marker],
+            institution_redirects={"institution:alias": "institution:canonical"},
+        )
+        self.assertTrue(report.allowed)
+        self.assertEqual(report.removed_maps, ())
+
+    def test_active_curated_marker_is_not_pruned_when_public_id_is_canonicalized(self):
+        old = paper()
+        record = {
+            **marker(old, institution_id="institution:canonical", institution="Canonical"),
+            "mapping_id": "mapping-1",
+            "institution_authors": ["Ada Author"],
+        }
+        mapping_row = {
+            **old,
+            "mapping_id": "mapping-1",
+            "institution": "Alias",
+            "institution_id": "institution:alias",
+            "institution_authors": "Ada Author",
+            "mapping_status": "active",
+        }
+        kept, removed = exclude_stale_curated_mapping_markers(
+            [record],
+            [mapping_row],
+        )
+        self.assertEqual(removed, 0)
+        self.assertEqual(kept, [record])
 
     def test_restored_gan_face_paper_regression_fixture_remains_eligible(self):
         restored = paper(

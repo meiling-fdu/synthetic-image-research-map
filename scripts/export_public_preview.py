@@ -2687,9 +2687,13 @@ def exclude_stale_curated_mapping_markers(
     matching is scoped to the paper and the exact mapped author set.
     """
     targets: Dict[Tuple[Tuple[str, Any], Tuple[str, ...]], set[str]] = defaultdict(set)
+    active_mapping_ids: set[str] = set()
     for mapping in mappings:
         if clean_text(mapping.get("mapping_status")) != "active":
             continue
+        mapping_id = clean_text(mapping.get("mapping_id"))
+        if mapping_id:
+            active_mapping_ids.add(mapping_id)
         authors = tuple(sorted(
             normalized_author_name(author)
             for author in clean_text(mapping.get("institution_authors")).split(";")
@@ -2702,6 +2706,9 @@ def exclude_stale_curated_mapping_markers(
     kept = []
     removed = 0
     for record in map_records:
+        if clean_text(record.get("mapping_id")) in active_mapping_ids:
+            kept.append(record)
+            continue
         record_authors = record.get("institution_authors") or []
         if isinstance(record_authors, str):
             record_authors = record_authors.split(";")
@@ -3003,7 +3010,7 @@ def canonicalize_public_institutions(
     id_redirects: Optional[Dict[str, str]] = None,
 ) -> List[Dict[str, Any]]:
     """Canonicalize public copies and dedupe canonical paper–institution rows."""
-    resolver: Dict[str, Dict[str, str]] = {}
+    resolver_candidates: Dict[str, Dict[str, Dict[str, str]]] = defaultdict(dict)
     canonical_by_id: Dict[str, Dict[str, str]] = {
         clean_text(row.get("institution_id")): {
             "name": clean_text(row.get("canonical_name")),
@@ -3015,6 +3022,15 @@ def canonicalize_public_institutions(
         and clean_text(row.get("institution_id"))
         and clean_text(row.get("canonical_name"))
     }
+
+    def add_resolver_name(name: Any, canonical: Dict[str, str]) -> None:
+        key = normalize_institution_lookup(name)
+        canonical_id = clean_text(canonical.get("id"))
+        if key and canonical_id:
+            resolver_candidates[key][canonical_id] = canonical
+
+    for canonical in canonical_by_id.values():
+        add_resolver_name(canonical["name"], canonical)
     for alias in aliases:
         canonical = {
             "name": clean_text(alias.get("canonical_institution_name")),
@@ -3025,18 +3041,24 @@ def canonicalize_public_institutions(
                 ).get("type")
             ),
         }
-        resolver[normalize_institution_lookup(alias.get("alias_name"))] = canonical
-        resolver[normalize_institution_lookup(canonical["name"])] = canonical
         if canonical["id"]:
             canonical_by_id[canonical["id"]] = canonical
+            add_resolver_name(alias.get("alias_name"), canonical)
+            add_resolver_name(canonical["name"], canonical)
     for row in confirmed_locations:
         name = clean_text(row.get("institution"))
-        if name:
-            resolver.setdefault(normalize_institution_lookup(name), {
+        if name and clean_text(row.get("institution_id")):
+            canonical = {
                 "name": name,
-                "id": stable_institution_id(name),
+                "id": clean_text(row.get("institution_id")),
                 "type": "",
-            })
+            }
+            add_resolver_name(name, canonical)
+    resolver: Dict[str, Dict[str, str]] = {
+        key: next(iter(candidates.values()))
+        for key, candidates in resolver_candidates.items()
+        if len(candidates) == 1
+    }
 
     def canonicalize_value(value: Dict[str, Any]) -> None:
         value["institution_type"] = resolve_public_institution_type(

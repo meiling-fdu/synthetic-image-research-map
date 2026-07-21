@@ -453,6 +453,49 @@ def _candidate_location_is_safe(record: Mapping[str, Any]) -> bool:
     )
 
 
+def _institution_location_keys(record: Mapping[str, Any]) -> List[str]:
+    keys: List[str] = []
+    institution_id = clean(record.get("institution_id"))
+    if institution_id:
+        keys.append(f"id:{institution_id.casefold()}")
+    institution = normalize_institution(
+        record.get("normalized_institution")
+        or record.get("institution")
+    )
+    if institution:
+        keys.append(f"name:{institution}")
+    return keys
+
+
+def _preferred_institution_location_key(record: Mapping[str, Any]) -> str:
+    institution_id = clean(record.get("institution_id"))
+    if institution_id:
+        return f"id:{institution_id.casefold()}"
+    institution = normalize_institution(
+        record.get("normalized_institution")
+        or record.get("institution")
+    )
+    return f"name:{institution}" if institution else ""
+
+
+def _coordinate_match_for_keys(
+    keys: Sequence[str],
+    locations: Mapping[str, CoordinateMatch],
+    confirmed_location_keys: set[str],
+) -> CoordinateMatch:
+    saw_ambiguous = False
+    for key in keys:
+        if key not in confirmed_location_keys:
+            continue
+        match = locations.get(key, CoordinateMatch("missing", None))
+        if match.status == "known" and match.record is not None:
+            return match
+        saw_ambiguous = saw_ambiguous or match.status == "ambiguous"
+    if saw_ambiguous:
+        return CoordinateMatch("ambiguous", None)
+    return CoordinateMatch("missing", None)
+
+
 def _location_groups(
     records: Iterable[Mapping[str, Any]],
     *,
@@ -460,15 +503,12 @@ def _location_groups(
 ) -> Dict[str, List[Dict[str, Any]]]:
     grouped: Dict[str, List[Dict[str, Any]]] = {}
     for record in records:
-        institution = normalize_institution(
-            record.get("normalized_institution")
-            or record.get("institution")
-        )
-        if not institution or not _valid_coordinates(record):
+        if not _institution_location_keys(record) or not _valid_coordinates(record):
             continue
         if require_safe_candidate and not _candidate_location_is_safe(record):
             continue
-        grouped.setdefault(institution, []).append(dict(record))
+        for key in _institution_location_keys(record):
+            grouped.setdefault(key, []).append(dict(record))
     return grouped
 
 
@@ -536,7 +576,7 @@ def _processed_cache_location_groups(
         for name in names:
             institution = normalize_institution(name)
             if institution:
-                grouped.setdefault(institution, []).append(location)
+                grouped.setdefault(f"name:{institution}", []).append(location)
     return grouped
 
 
@@ -1043,7 +1083,7 @@ def _queue_key(record: Mapping[str, Any]) -> Tuple[str, str]:
         if paper_id
         else next(iter(normalize_paper_identity_keys(record)), "")
     )
-    return identity, normalize_institution(record.get("institution"))
+    return identity, _preferred_institution_location_key(record)
 
 
 def _merged_people(left: Any, right: Any) -> str:
@@ -1171,18 +1211,19 @@ def build_curated_map_records(
     matched_paper_mappings = 0
     emitted_marker_keys = set()
     confirmed_aliases = {
-        normalize_institution(row.get("alias_name")):
-        clean(row.get("canonical_institution_name"))
+        normalize_institution(row.get("alias_name")): {
+            "institution": clean(row.get("canonical_institution_name")),
+            "institution_id": clean(row.get("institution_id")),
+        }
         for row in institution_aliases
         if clean(row.get("review_status")) == "confirmed"
         and clean(row.get("alias_name"))
         and clean(row.get("canonical_institution_name"))
     }
     confirmed_location_keys = {
-        normalize_institution(
-            row.get("normalized_institution") or row.get("institution")
-        )
+        key
         for row in confirmed_location_records
+        for key in _institution_location_keys(row)
         if _valid_coordinates(row)
     }
     review_status_by_key = {
@@ -1212,23 +1253,30 @@ def build_curated_map_records(
             continue
         matched_paper_mappings += 1
         raw_institution_key = normalize_institution(mapping.get("institution"))
-        canonical_institution = confirmed_aliases.get(raw_institution_key)
-        institution_key = normalize_institution(
-            canonical_institution or mapping.get("institution")
-        )
+        canonical_alias = confirmed_aliases.get(raw_institution_key) or {}
+        canonical_institution = clean(canonical_alias.get("institution"))
+        canonical_institution_id = clean(canonical_alias.get("institution_id"))
+        lookup_mapping = dict(mapping)
+        if canonical_institution:
+            lookup_mapping["institution"] = canonical_institution
+        if canonical_institution_id:
+            lookup_mapping["institution_id"] = canonical_institution_id
+        institution_keys = _institution_location_keys(lookup_mapping)
+        institution_key = institution_keys[0] if institution_keys else ""
         queue_status = (
             "alias_of_confirmed"
             if canonical_institution
             else review_status_by_key.get(_queue_key(mapping))
         )
-        if queue_status in non_exportable_statuses:
+        if queue_status in {"excluded", "ignore"}:
             skipped_status += 1
             continue
-        match = (
-            locations.get(institution_key, CoordinateMatch("missing", None))
-            if institution_key in confirmed_location_keys
-            else CoordinateMatch("missing", None)
+        match = _coordinate_match_for_keys(
+            institution_keys, locations, confirmed_location_keys
         )
+        if queue_status in non_exportable_statuses and match.status != "known":
+            skipped_status += 1
+            continue
         if match.status != "known" or match.record is None:
             coordinate_status = (
                 "ambiguous" if match.status == "ambiguous" else "missing"
@@ -1249,9 +1297,16 @@ def build_curated_map_records(
         export_mapping = dict(mapping)
         if canonical_institution:
             export_mapping["institution"] = canonical_institution
+        if canonical_institution_id:
+            export_mapping["institution_id"] = canonical_institution_id
+        elif clean(match.record.get("institution_id")):
+            export_mapping["institution_id"] = clean(match.record.get("institution_id"))
+        if not canonical_institution and clean(match.record.get("institution")):
+            export_mapping["institution"] = clean(match.record.get("institution"))
         marker_key = (
             next(iter(normalize_paper_identity_keys(paper)), ""),
-            normalize_institution(export_mapping.get("institution")),
+            clean(export_mapping.get("institution_id")).casefold()
+            or _preferred_institution_location_key(export_mapping),
         )
         if marker_key in emitted_marker_keys:
             continue

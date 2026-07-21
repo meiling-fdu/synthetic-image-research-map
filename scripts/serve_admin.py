@@ -1120,20 +1120,32 @@ def prepare_mapping_candidates(
 ) -> Tuple[List[Dict[str, str]], List[str]]:
     """Normalize imported affiliation evidence and prefill reviewed canonicals."""
     candidates = raw_candidates if isinstance(raw_candidates, list) else []
-    canonical_by_key = {
-        normalize_institution_name(
+    canonical_candidates_by_key: DefaultDict[str, set[Tuple[str, str]]] = defaultdict(set)
+    for row in institution_locations:
+        key = normalize_institution_name(
             row.get("normalized_institution") or row.get("institution")
-        ): clean(row.get("institution"))
-        for row in institution_locations
-        if clean(row.get("institution"))
-    }
+        )
+        canonical = clean(row.get("institution"))
+        if key and canonical:
+            canonical_candidates_by_key[key].add((
+                clean(row.get("institution_id")),
+                canonical,
+            ))
     for alias in institution_aliases:
         if clean(alias.get("review_status")) != "confirmed":
             continue
         alias_key = normalize_institution_name(alias.get("alias_name"))
         canonical = clean(alias.get("canonical_institution_name"))
         if alias_key and canonical:
-            canonical_by_key[alias_key] = canonical
+            canonical_candidates_by_key[alias_key].add((
+                clean(alias.get("institution_id")),
+                canonical,
+            ))
+    canonical_by_key = {
+        key: next(iter(values))[1]
+        for key, values in canonical_candidates_by_key.items()
+        if len(values) == 1
+    }
 
     normalized: List[Dict[str, str]] = []
     warnings: List[str] = []
@@ -1945,6 +1957,11 @@ def make_handler(
                     else:
                         aliases = load_institution_aliases(institution_aliases_path)
                         mappings = load_mappings(mappings_path)
+                        locations = load_confirmed_locations(institution_locations_path)
+                        locations_by_id = {
+                            clean(row.get("institution_id")): row
+                            for row in locations
+                        }
                         records = []
                         for institution in institutions:
                             identifier = clean(institution.get("institution_id"))
@@ -1964,6 +1981,7 @@ def make_handler(
                                 "institution_type_evidence": type_evidence,
                                 **institution_hierarchy_details(institutions, identifier),
                                 "aliases": [row.get("alias_name") for row in aliases if clean(row.get("institution_id")) == identifier and clean(row.get("review_status")) == "confirmed"],
+                                "location": locations_by_id.get(identifier),
                                 "usage": institution_impact(identifier, mappings),
                             })
                         self.send_json(HTTPStatus.OK, {"records": records})

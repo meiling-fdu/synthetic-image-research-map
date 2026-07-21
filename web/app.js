@@ -1342,7 +1342,6 @@ function buildInstitutionSearchIndex(
   const add = (name, identity, authoritative = false) => {
     const key = normalizedSearchText(name);
     if (!key || !identity) return;
-    if (authoritative && identitiesByName.has(key)) identitiesByName.delete(key);
     if (!identitiesByName.has(key)) identitiesByName.set(key, new Set());
     identitiesByName.get(key).add(identity);
   };
@@ -1421,8 +1420,14 @@ function resolveInstitutionSearch(value, searchIndex) {
 }
 
 function buildCanonicalInstitutionResolver(aliases, canonicalIndex = {}, idRedirects = {}) {
-  const byName = new Map();
+  const candidatesByName = new Map();
   const byId = new Map();
+  const addName = (name, canonical) => {
+    const key = normalizedSearchText(name);
+    if (!key || !canonical?.id) return;
+    if (!candidatesByName.has(key)) candidatesByName.set(key, new Map());
+    candidatesByName.get(key).set(canonical.id, canonical);
+  };
   Object.entries(canonicalIndex || {}).forEach(([id, entry]) => {
     const canonical = {
       id: String(id).trim(),
@@ -1432,7 +1437,7 @@ function buildCanonicalInstitutionResolver(aliases, canonicalIndex = {}, idRedir
     if (!canonical.id || !canonical.name) return;
     byId.set(canonical.id, canonical);
     [canonical.name, ...(Array.isArray(entry?.names) ? entry.names : [])].forEach((name) => {
-      byName.set(normalizedSearchText(name), canonical);
+      addName(name, canonical);
     });
   });
   aliases.forEach((alias) => {
@@ -1443,10 +1448,14 @@ function buildCanonicalInstitutionResolver(aliases, canonicalIndex = {}, idRedir
         canonicalIndex?.[alias.canonical_institution_id]?.institution_type || "",
       ).trim(),
     };
-    if (!canonical.name) return;
-    byName.set(normalizedSearchText(alias.alias_name), canonical);
-    byName.set(normalizedSearchText(canonical.name), canonical);
+    if (!canonical.name || !canonical.id) return;
+    addName(alias.alias_name, canonical);
+    addName(canonical.name, canonical);
     if (canonical.id) byId.set(canonical.id, canonical);
+  });
+  const byName = new Map();
+  candidatesByName.forEach((candidates, key) => {
+    if (candidates.size === 1) byName.set(key, [...candidates.values()][0]);
   });
   byName.delete("");
   Object.entries(idRedirects || {}).forEach(([sourceId, targetId]) => {

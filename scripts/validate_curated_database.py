@@ -632,7 +632,6 @@ def validate_confirmed_locations(
             location_id_positions[location_id].append(row_number)
 
     for label, positions in (
-        ("normalized institution", normalized_positions),
         ("location_id", location_id_positions),
     ):
         for value, row_numbers in positions.items():
@@ -644,6 +643,15 @@ def validate_confirmed_locations(
                     f"duplicate {label} across rows "
                     f"{', '.join(map(str, row_numbers))}: {value!r}",
                 )
+    for value, row_numbers in normalized_positions.items():
+        if len(row_numbers) > 1:
+            add_issue(
+                issues,
+                "WARNING",
+                "institution_locations.csv",
+                "duplicate normalized institution name; rows remain distinct "
+                f"by institution_id across rows {', '.join(map(str, row_numbers))}: {value!r}",
+            )
 
 
 def print_summary(
@@ -829,7 +837,7 @@ def validate_institution_entities(
     issues: List[Issue],
 ) -> None:
     ids: Dict[str, Mapping[str, str]] = {}
-    names: Dict[str, str] = {}
+    names: DefaultDict[str, List[str]] = defaultdict(list)
     parents: Dict[str, str] = {}
     for row_number, row in enumerate(institutions, start=2):
         institution_id = clean(row.get("institution_id"))
@@ -840,11 +848,18 @@ def validate_institution_entities(
         if institution_id in ids:
             add_issue(issues, "ERROR", "institutions.csv", f"duplicate institution_id: {institution_id}", row_number)
         normalized = normalize_institution(canonical)
-        if normalized in names and names[normalized] != institution_id:
-            add_issue(issues, "ERROR", "institutions.csv", f"duplicate canonical institution name: {canonical}", row_number)
         ids[institution_id] = row
-        names[normalized] = institution_id
+        names[normalized].append(institution_id)
         parents[institution_id] = clean(row.get("parent_institution_id"))
+    for normalized, institution_ids in names.items():
+        if normalized and len(set(institution_ids)) > 1:
+            add_issue(
+                issues,
+                "WARNING",
+                "institutions.csv",
+                "duplicate canonical institution name; identity must be "
+                f"resolved by institution_id: {normalized!r}",
+            )
     for child, parent in parents.items():
         if parent and parent not in ids:
             add_issue(issues, "ERROR", "institutions.csv", f"unknown parent_institution_id: {parent}")
@@ -870,7 +885,8 @@ def validate_institution_entities(
     # entity, follow that edge and reject cycles of length two or greater.
     alias_edges: Dict[str, str] = {}
     for row in aliases:
-        source = names.get(normalize_institution(row.get("alias_name")))
+        source_ids = names.get(normalize_institution(row.get("alias_name")), [])
+        source = source_ids[0] if len(source_ids) == 1 else ""
         target = clean(row.get("institution_id"))
         if source and source != target:
             alias_edges[source] = target
