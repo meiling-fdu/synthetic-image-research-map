@@ -21,10 +21,10 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         cls.by_name = {row["canonical_name"]: row for row in cls.institutions}
 
     def test_audited_repository_counts_and_unique_ids(self):
-        self.assertEqual(len(self.institutions), 344)
-        self.assertEqual(len({row["institution_id"] for row in self.institutions}), 344)
+        self.assertEqual(len(self.institutions), 345)
+        self.assertEqual(len({row["institution_id"] for row in self.institutions}), 345)
         self.assertEqual(Counter(row["institution_type"] for row in self.institutions), {
-            "university": 244,
+            "university": 245,
             "research_unit": 57,
             "company": 39,
             "other": 4,
@@ -86,7 +86,7 @@ class InstitutionTypeAuditTests(unittest.TestCase):
                 "Alibaba Group", "SenseTime",
             )
         }
-        self.assertEqual(len(read_csv("institution_aliases.csv")), 50)
+        self.assertEqual(len(read_csv("institution_aliases.csv")), 55)
         for filename in ("author_institution_mappings.csv", "institution_locations.csv"):
             referenced = {row.get("institution_id", "") for row in read_csv(filename)}
             for name, institution_id in expected.items():

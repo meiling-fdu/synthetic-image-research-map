@@ -138,12 +138,17 @@ def _active_entity(
 def institution_impact(
     institution_id: Any,
     mappings: Sequence[Mapping[str, Any]],
+    public_map_records: Sequence[Mapping[str, Any]] = (),
 ) -> Dict[str, Any]:
     identifier = clean(institution_id)
     affected = [
         row for row in mappings
         if clean(row.get("institution_id")) == identifier
         and clean(row.get("mapping_status")) in {"active", "needs_review"}
+    ]
+    marker_records = [
+        row for row in public_map_records
+        if clean(row.get("institution_id")) == identifier
     ]
     papers = {clean(row.get("paper_id")) or clean(row.get("title")) for row in affected}
     authors = sorted({
@@ -155,7 +160,7 @@ def institution_impact(
     return {
         "papers": len(papers),
         "author_mappings": len(affected),
-        "markers": len(affected),
+        "markers": len(marker_records) if public_map_records else len(affected),
         "authors": authors,
     }
 

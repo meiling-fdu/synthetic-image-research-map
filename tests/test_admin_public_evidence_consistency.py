@@ -6,10 +6,26 @@ from pathlib import Path
 from unittest.mock import patch
 
 from scripts.curated_schema import PAPER_EXCLUSION_COLUMNS, PAPERS_COLUMNS
-from scripts.serve_admin import load_admin_data, marker_for_api
+from scripts.serve_admin import identity_keys, load_admin_data, marker_for_api
 
 
 class AdminPublicEvidenceConsistencyTests(unittest.TestCase):
+    def test_openalex_paper_id_matches_openalex_url_identity(self):
+        mapping = {
+            "paper_id": "openalex:W4391019749",
+            "doi": "10.1109/access.2024.3356122",
+            "title": "CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images",
+            "year": 2024,
+        }
+        paper = {
+            "openalex_url": "https://openalex.org/W4391019749",
+            "doi": "10.1109/access.2024.3356122",
+            "title": mapping["title"],
+            "year": 2024,
+        }
+
+        self.assertTrue(set(identity_keys(mapping)) & set(identity_keys(paper)))
+
     def test_admin_marker_evidence_is_the_exact_public_map_subset(self):
         paper = {
             "title": "Noise-Informed Diffusion-Generated Image Detection With Anomaly Attention",

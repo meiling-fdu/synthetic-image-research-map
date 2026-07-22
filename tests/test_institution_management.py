@@ -10,6 +10,7 @@ from scripts.curated_institutions import (
     add_institution_alias,
     effective_location,
     ignore_institution,
+    institution_impact,
     merge_institutions,
     set_parent_institution,
     stable_institution_id,
@@ -105,6 +106,39 @@ class InstitutionManagementTests(unittest.TestCase):
         # A canonical institution name is protected even before an alias exists.
         with self.aliases.open(encoding="utf-8", newline="") as handle:
             self.assertEqual(list(csv.DictReader(handle)), [])
+
+    def test_institution_impact_counts_actual_public_markers_when_available(self):
+        mappings = [
+            blank(
+                AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+                mapping_id="mapping:one",
+                paper_id="openalex:W1",
+                institution_id=self.certh_id,
+                institution=CERTH,
+                institution_authors="Ada Author",
+                mapping_status="active",
+            ),
+            blank(
+                AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+                mapping_id="mapping:two",
+                paper_id="openalex:W2",
+                institution_id=self.certh_id,
+                institution=CERTH,
+                institution_authors="Grace Author",
+                mapping_status="active",
+            ),
+        ]
+        public_markers = [{
+            "paper_id": "openalex:W1",
+            "institution_id": self.certh_id,
+            "institution": CERTH,
+        }]
+
+        impact = institution_impact(self.certh_id, mappings, public_markers)
+
+        self.assertEqual(impact["papers"], 2)
+        self.assertEqual(impact["author_mappings"], 2)
+        self.assertEqual(impact["markers"], 1)
 
     def test_editing_amazon_coordinates_does_not_modify_certh_mapping(self):
         before = self.mappings.read_bytes()

@@ -1559,6 +1559,30 @@ def identity_key(record: Dict[str, Any]) -> Tuple[str, Any]:
     return ("title_year", (normalize_title(record.get("title")), parse_year(record.get("year"))))
 
 
+def apply_key_paper_expected_task(
+    candidate: Dict[str, str], key_paper: Dict[str, str]
+) -> Dict[str, str]:
+    """Carry manually reviewed key-paper scope into candidate-derived records."""
+    expected_task = clean_text(key_paper.get("expected_task")).casefold()
+    if expected_task not in ALLOWED_PUBLIC_TASKS:
+        return dict(candidate)
+    record = dict(candidate)
+    record["preliminary_task"] = expected_task
+    record["preliminary_subtask"] = (
+        "synthetic_image_detection"
+        if expected_task == "detection"
+        else "generated_image_source_attribution"
+        if expected_task == "source_attribution"
+        else expected_task
+    )
+    record["in_scope"] = "true"
+    record["manual_review"] = "false"
+    note = "Manual key-paper expected_task applied."
+    existing = clean_text(record.get("notes"))
+    record["notes"] = f"{existing} | {note}" if existing and note not in existing else existing or note
+    return record
+
+
 def apply_mapping_exclusion_decisions(
     records: Sequence[Dict[str, Any]],
     decisions: Sequence[Dict[str, str]],
@@ -1770,6 +1794,8 @@ def build_paper_preview(
             all_candidate_index,
             allow_title_only=True,
         )
+        if candidate is not None:
+            candidate = apply_key_paper_expected_task(candidate, key_paper)
         if (
             candidate is None
             or paper_is_retracted(candidate)
@@ -1781,7 +1807,10 @@ def build_paper_preview(
             excluded_paper_keys.add(identity_key(record))
             continue
         key_papers_matched += 1
-        selected_by_key.setdefault(identity_key(record), candidate)
+        key = identity_key(record)
+        existing = selected_by_key.get(key)
+        if existing is None or normalize_export_task_labels(existing) == ("uncertain", "unknown"):
+            selected_by_key[key] = candidate
 
     paper_records = [paper_record_from_candidate(row) for row in selected_by_key.values()]
     map_lookup = build_identity_lookup(map_records)
@@ -3075,14 +3104,29 @@ def canonicalize_public_institutions(
         original_id = clean_text(
             value.get("institution_id") or value.get("canonical_institution_id")
         )
+        source_id = clean_text(value.get("source_institution_id"))
         redirected_id = (id_redirects or {}).get(original_id, original_id)
         source_canonical = resolver.get(normalize_institution_lookup(source_name))
+        if source_id:
+            source_canonical = canonical_by_id.get(
+                (id_redirects or {}).get(source_id, source_id)
+            ) or source_canonical
+            if source_name and source_canonical is None:
+                source_canonical = {
+                    "name": source_name,
+                    "id": (id_redirects or {}).get(source_id, source_id),
+                    "type": "",
+                }
         id_canonical = canonical_by_id.get(redirected_id)
         canonical = id_canonical
         name_canonical = resolver.get(normalize_institution_lookup(original_name))
         if not canonical:
             canonical = name_canonical
-        if not id_canonical and source_canonical and (
+        if source_canonical and source_id and (
+            not canonical or source_canonical["id"] != canonical["id"]
+        ):
+            canonical = source_canonical
+        elif not id_canonical and source_canonical and (
             not canonical or source_canonical["id"] != canonical["id"]
         ):
             canonical = source_canonical

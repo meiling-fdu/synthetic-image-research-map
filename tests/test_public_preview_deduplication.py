@@ -7,6 +7,7 @@ from pathlib import Path
 from scripts.curated_export import _ordered_mapping_authors, build_curated_map_records
 from scripts.export_public_preview import (
     add_public_detail_fields,
+    apply_key_paper_expected_task,
     apply_ordered_paper_location_summaries,
     canonicalize_public_institutions,
     confirmed_alias_id_redirects,
@@ -32,6 +33,126 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_key_paper_expected_task_makes_cifake_shaped_record_map_eligible(self):
+        candidate = {
+            "title": "CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images",
+            "year": "2024",
+            "publication_year": "2024",
+            "doi": "10.1109/access.2024.3356122",
+            "openalex_url": "https://openalex.org/W4391019749",
+            "preliminary_task": "uncertain",
+            "preliminary_subtask": "unknown",
+            "in_scope": "false",
+            "manual_review": "true",
+        }
+        key_paper = {
+            "title": candidate["title"],
+            "year": "2024",
+            "expected_task": "detection",
+        }
+
+        record = apply_key_paper_expected_task(candidate, key_paper)
+
+        self.assertEqual(record["preliminary_task"], "detection")
+        self.assertEqual(record["preliminary_subtask"], "synthetic_image_detection")
+        self.assertEqual(record["in_scope"], "true")
+
+    def test_active_openalex_mapping_with_valid_coordinates_emits_one_marker(self):
+        paper = {
+            "title": "CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images",
+            "year": 2024,
+            "publication_year": 2024,
+            "task": "detection",
+            "subtask": "synthetic_image_detection",
+            "doi": "10.1109/access.2024.3356122",
+            "openalex_url": "https://openalex.org/W4391019749",
+            "authors": ["Jordan J. Bird", "Ahmad Lotfi"],
+        }
+        mapping = {
+            "mapping_id": "mapping:cifake",
+            "paper_id": "openalex:W4391019749",
+            "title": paper["title"],
+            "year": "2024",
+            "doi": "10.1109/access.2024.3356122",
+            "openalex_url": "https://openalex.org/W4391019749",
+            "institution": "Nottingham Trent University",
+            "institution_id": "institution:c055ca96e505b797",
+            "institution_authors": "Jordan J. Bird; Ahmad Lotfi",
+            "raw_affiliation": "Department of Computer Science, Nottingham Trent University, Nottingham, U.K.",
+            "mapping_status": "active",
+        }
+        location = {
+            "location_id": "location:ntu",
+            "institution": "Nottingham Trent University",
+            "institution_id": "institution:c055ca96e505b797",
+            "lat": "52.9563",
+            "lon": "-1.1514",
+            "city": "Nottingham",
+            "region": "Nottinghamshire",
+            "country": "United Kingdom",
+            "country_code": "GB",
+        }
+
+        markers, summary = build_curated_map_records(
+            [paper],
+            [mapping],
+            [],
+            [],
+            confirmed_location_records=[location],
+        )
+
+        self.assertEqual(summary["curated_markers_created"], 1)
+        self.assertEqual(len(markers), 1)
+        self.assertEqual(markers[0]["institution_id"], "institution:c055ca96e505b797")
+        self.assertEqual(markers[0]["country"], "United Kingdom")
+        self.assertEqual(markers[0]["institution_authors"], ["Jordan J. Bird", "Ahmad Lotfi"])
+        self.assertEqual(summary["active_mapping_marker_diagnostics"], [])
+
+    def test_uncertain_active_mapping_with_coordinates_is_diagnosed_when_unemitted(self):
+        paper = {
+            "title": "Unclassified generated-image paper",
+            "year": 2024,
+            "publication_year": 2024,
+            "task": "uncertain",
+            "subtask": "unknown",
+            "doi": "10.1234/uncertain",
+            "authors": ["Ada Author"],
+        }
+        mapping = {
+            "mapping_id": "mapping:uncertain",
+            "paper_id": "openalex:W1",
+            "title": paper["title"],
+            "year": "2024",
+            "doi": "10.1234/uncertain",
+            "institution": "Known University",
+            "institution_id": "institution:known",
+            "institution_authors": "Ada Author",
+            "mapping_status": "active",
+        }
+        location = {
+            "location_id": "location:known",
+            "institution": "Known University",
+            "institution_id": "institution:known",
+            "lat": "1",
+            "lon": "2",
+            "country": "United Kingdom",
+            "country_code": "GB",
+        }
+
+        markers, summary = build_curated_map_records(
+            [paper],
+            [mapping],
+            [],
+            [],
+            confirmed_location_records=[location],
+        )
+
+        self.assertEqual(markers, [])
+        self.assertEqual(
+            summary["active_mapping_marker_diagnostics"][0]["final_drop_reason"],
+            "non_public_task:uncertain",
+        )
+
     def test_confirmed_alias_redirects_legacy_name_id_to_canonical_id(self):
         self.assertEqual(
             confirmed_alias_id_redirects([{

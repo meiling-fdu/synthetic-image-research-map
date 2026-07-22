@@ -220,6 +220,7 @@ class InstitutionHierarchyTests(unittest.TestCase):
                 "institution": CHILD_NAME,
                 "institution_id": CHILD_ID,
                 "source_institution": PARENT_NAME,
+                "source_institution_id": PARENT_ID,
             }],
         }]
         locations = [

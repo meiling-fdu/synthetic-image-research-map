@@ -451,9 +451,15 @@ def identity_keys(record: Mapping[str, Any]) -> List[str]:
         keys.append(f"doi:{doi}")
     if paper_id:
         keys.append(f"paper_id:{paper_id}")
+        if paper_id.startswith("openalex:"):
+            work_id = paper_id.split(":", 1)[1]
+            if work_id:
+                keys.append(f"openalex:https://openalex.org/{work_id}")
+        elif paper_id.startswith("https://openalex.org/"):
+            keys.append(f"openalex:{paper_id.rstrip('/')}")
     if title_key:
         keys.append(f"title_year:{title_key}")
-    return keys
+    return list(dict.fromkeys(keys))
 
 
 def display_id(record: Mapping[str, Any]) -> str:
@@ -1902,7 +1908,8 @@ def make_handler(
                     institutions = load_institutions(institutions_path)
                     identifier = clean(parse_qs(request.query).get("institution_id", [""])[0])
                     if request.path == "/api/institution/impact":
-                        self.send_json(HTTPStatus.OK, institution_impact(identifier, load_mappings(mappings_path)))
+                        public_markers = read_json_records(PUBLIC_MAP_PATH)
+                        self.send_json(HTTPStatus.OK, institution_impact(identifier, load_mappings(mappings_path), public_markers))
                     elif request.path == "/api/institution":
                         aliases = load_institution_aliases(institution_aliases_path)
                         resolved_identifier = resolve_editable_institution_id(
@@ -1957,6 +1964,7 @@ def make_handler(
                     else:
                         aliases = load_institution_aliases(institution_aliases_path)
                         mappings = load_mappings(mappings_path)
+                        public_markers = read_json_records(PUBLIC_MAP_PATH)
                         locations = load_confirmed_locations(institution_locations_path)
                         locations_by_id = {
                             clean(row.get("institution_id")): row
@@ -1982,7 +1990,7 @@ def make_handler(
                                 **institution_hierarchy_details(institutions, identifier),
                                 "aliases": [row.get("alias_name") for row in aliases if clean(row.get("institution_id")) == identifier and clean(row.get("review_status")) == "confirmed"],
                                 "location": locations_by_id.get(identifier),
-                                "usage": institution_impact(identifier, mappings),
+                                "usage": institution_impact(identifier, mappings, public_markers),
                             })
                         self.send_json(HTTPStatus.OK, {"records": records})
                 except (CuratedInstitutionError, CuratedLocationError) as error:

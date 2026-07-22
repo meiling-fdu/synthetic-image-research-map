@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import os
 import re
@@ -56,6 +57,21 @@ def _json_bytes(payload: Mapping[str, Any]) -> bytes:
     return (
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
     ).encode("utf-8")
+
+
+def stable_public_content(payload: Mapping[str, Any]) -> str:
+    """Return a deterministic export signature excluding only the volatile timestamp."""
+    comparable = copy.deepcopy(dict(payload))
+    metadata = comparable.get("metadata")
+    if isinstance(metadata, dict):
+        metadata.pop(TIMESTAMP_FIELD, None)
+    records = comparable.get("records")
+    if isinstance(records, list):
+        comparable["records"] = sorted(
+            records,
+            key=lambda record: json.dumps(record, ensure_ascii=False, sort_keys=True),
+        )
+    return json.dumps(comparable, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
 def atomic_write_json_files(payloads: Mapping[Path, Mapping[str, Any]]) -> None:
@@ -114,4 +130,3 @@ def atomic_write_json_files(payloads: Mapping[Path, Mapping[str, Any]]) -> None:
     finally:
         for temporary in prepared.values():
             temporary.unlink(missing_ok=True)
-

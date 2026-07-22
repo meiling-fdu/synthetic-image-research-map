@@ -82,6 +82,15 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             institution_aliases=aliases,
         )[0]
 
+    def markers_without_known_coordinates(self, institution, status):
+        return build_curated_map_records(
+            [self.paper],
+            [self.mapping(institution)],
+            [],
+            location_review_rows=[self.review(institution, status)],
+            confirmed_location_records=[],
+        )[0]
+
     def test_confirmed_institution_is_exported(self):
         self.assertEqual(
             len(self.markers_for(
@@ -90,7 +99,7 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             1,
         )
 
-    def test_non_exportable_statuses_are_not_exported(self):
+    def test_non_exportable_statuses_without_known_coordinates_are_not_exported(self):
         for status in (
             "pending_review",
             "needs_coordinates",
@@ -101,9 +110,28 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
         ):
             with self.subTest(status=status):
                 self.assertEqual(
-                    self.markers_for(
+                    self.markers_without_known_coordinates(
                         "Complutense University of Madrid", status
                     ),
+                    [],
+                )
+
+    def test_known_coordinates_override_stale_review_statuses(self):
+        for status in (
+            "pending_review",
+            "needs_coordinates",
+            "ambiguous",
+            "alias_candidate",
+        ):
+            with self.subTest(status=status):
+                self.assertEqual(
+                    len(self.markers_for("Complutense University of Madrid", status)),
+                    1,
+                )
+        for status in ("ignore", "excluded"):
+            with self.subTest(status=status):
+                self.assertEqual(
+                    self.markers_for("Complutense University of Madrid", status),
                     [],
                 )
 

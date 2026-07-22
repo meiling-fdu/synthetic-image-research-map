@@ -13,6 +13,7 @@ from scripts.public_export_metadata import (
     add_export_timestamp,
     atomic_write_json_files,
     is_utc_timestamp,
+    stable_public_content,
     utc_timestamp,
 )
 from scripts.validate_public_preview import validate_export_metadata_pair
@@ -141,6 +142,30 @@ class PublicExportMetadataTests(unittest.TestCase):
         )
         self.assertTrue(issues)
         self.assertTrue(paper_issues)
+
+    def test_stable_content_ignores_only_generated_timestamp_and_record_order(self):
+        first = {
+            "metadata": {"kind": "map", TIMESTAMP_FIELD: "2026-07-18T10:00:00Z"},
+            "records": [{"id": "b", "value": 2}, {"id": "a", "value": 1}],
+        }
+        second = {
+            "metadata": {"kind": "map", TIMESTAMP_FIELD: "2026-07-18T11:00:00Z"},
+            "records": [{"id": "a", "value": 1}, {"id": "b", "value": 2}],
+        }
+        changed_record = copy.deepcopy(second)
+        changed_record["records"][0]["value"] = 3
+        changed_metadata = copy.deepcopy(second)
+        changed_metadata["metadata"]["kind"] = "papers"
+
+        self.assertEqual(stable_public_content(first), stable_public_content(second))
+        self.assertNotEqual(
+            stable_public_content(first),
+            stable_public_content(changed_record),
+        )
+        self.assertNotEqual(
+            stable_public_content(first),
+            stable_public_content(changed_metadata),
+        )
 
     def test_shrinkage_guard_precedes_timestamp_commit_in_exporter(self):
         source = Path(export_public_preview.__file__).read_text(encoding="utf-8")

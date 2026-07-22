@@ -239,6 +239,12 @@ def normalize_paper_identity_keys(record: Mapping[str, Any]) -> List[str]:
     ).casefold()
     if paper_id:
         keys.append(f"paper_id:{paper_id}")
+        if paper_id.startswith("openalex:"):
+            work_id = paper_id.split(":", 1)[1]
+            if work_id:
+                keys.append(f"openalex:https://openalex.org/{work_id}")
+        elif paper_id.startswith("https://openalex.org/"):
+            keys.append(f"openalex:{paper_id.rstrip('/')}")
     merged_versions = record.get("merged_versions")
     if isinstance(merged_versions, list):
         for version in merged_versions:
@@ -1210,6 +1216,7 @@ def build_curated_map_records(
     resolved_mapping_ids = set()
     matched_paper_mappings = 0
     emitted_marker_keys = set()
+    active_mapping_marker_diagnostics: List[Dict[str, Any]] = []
     confirmed_aliases = {
         normalize_institution(row.get("alias_name")): {
             "institution": clean(row.get("canonical_institution_name")),
@@ -1246,10 +1253,36 @@ def build_curated_map_records(
         papers = _matching_papers(mapping, paper_index)
         if not papers:
             skipped_paper += 1
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(mapping)),
+                "title": clean(mapping.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": clean(mapping.get("institution_id")),
+                "canonical_institution_id": clean(mapping.get("institution_id")),
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": "unknown",
+                "coordinates": "",
+                "final_drop_reason": "paper_not_found",
+            })
             continue
         paper = papers[0]
         if record_is_excluded(paper, exclusion_index):
             skipped_paper += 1
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "title": clean(mapping.get("title") or paper.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": clean(mapping.get("institution_id")),
+                "canonical_institution_id": clean(mapping.get("institution_id")),
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": "unknown",
+                "coordinates": "",
+                "final_drop_reason": "paper_excluded",
+            })
             continue
         matched_paper_mappings += 1
         raw_institution_key = normalize_institution(mapping.get("institution"))
@@ -1270,12 +1303,38 @@ def build_curated_map_records(
         )
         if queue_status in {"excluded", "ignore"}:
             skipped_status += 1
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "title": clean(mapping.get("title") or paper.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": clean(mapping.get("institution_id")),
+                "canonical_institution_id": canonical_institution_id or clean(mapping.get("institution_id")),
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": queue_status,
+                "coordinates": "",
+                "final_drop_reason": "location_review_excluded",
+            })
             continue
         match = _coordinate_match_for_keys(
             institution_keys, locations, confirmed_location_keys
         )
         if queue_status in non_exportable_statuses and match.status != "known":
             skipped_status += 1
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "title": clean(mapping.get("title") or paper.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": clean(mapping.get("institution_id")),
+                "canonical_institution_id": canonical_institution_id or clean(mapping.get("institution_id")),
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": queue_status,
+                "coordinates": "",
+                "final_drop_reason": "location_review_not_exportable",
+            })
             continue
         if match.status != "known" or match.record is None:
             coordinate_status = (
@@ -1288,11 +1347,37 @@ def build_curated_map_records(
             queue_updated += int(result == "updated")
             missing += int(coordinate_status == "missing")
             ambiguous += int(coordinate_status == "ambiguous")
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "title": clean(mapping.get("title") or paper.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": clean(mapping.get("institution_id")),
+                "canonical_institution_id": canonical_institution_id or clean(mapping.get("institution_id")),
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": coordinate_status,
+                "coordinates": "",
+                "final_drop_reason": f"{coordinate_status}_coordinates",
+            })
             continue
         queue_known += int(_mark_location_known(review_rows, mapping))
         resolved_mapping_ids.add(clean(mapping.get("mapping_id")))
         if clean(paper.get("task")) not in PUBLIC_MAP_TASKS:
             skipped_task += 1
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "title": clean(mapping.get("title") or paper.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": clean(mapping.get("institution_id")),
+                "canonical_institution_id": canonical_institution_id or clean(mapping.get("institution_id")) or clean(match.record.get("institution_id")),
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": "known",
+                "coordinates": f"{clean(match.record.get('lat') or match.record.get('latitude'))},{clean(match.record.get('lon') or match.record.get('longitude'))}",
+                "final_drop_reason": f"non_public_task:{clean(paper.get('task'))}",
+            })
             continue
         export_mapping = dict(mapping)
         if canonical_institution:
@@ -1309,6 +1394,19 @@ def build_curated_map_records(
             or _preferred_institution_location_key(export_mapping),
         )
         if marker_key in emitted_marker_keys:
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "title": clean(mapping.get("title") or paper.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": clean(mapping.get("institution_id")),
+                "canonical_institution_id": clean(export_mapping.get("institution_id")),
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": "known",
+                "coordinates": f"{clean(match.record.get('lat') or match.record.get('latitude'))},{clean(match.record.get('lon') or match.record.get('longitude'))}",
+                "final_drop_reason": "duplicate_paper_institution_marker",
+            })
             continue
         emitted_marker_keys.add(marker_key)
         markers.append(_curated_marker(paper, export_mapping, match.record))
@@ -1326,6 +1424,7 @@ def build_curated_map_records(
         "location_review_rows_updated": queue_updated,
         "location_review_rows_marked_known": queue_known,
         "resolved_mapping_ids": resolved_mapping_ids,
+        "active_mapping_marker_diagnostics": active_mapping_marker_diagnostics,
     }
 
 
