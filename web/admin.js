@@ -2218,7 +2218,7 @@ function renderInstitutionManagement() {
   pageRecords.forEach((institution) => {
     const row = document.createElement("tr");
     const identity = document.createElement("td");
-    identity.append(document.createTextNode(institution.canonical_name), document.createElement("br"), document.createTextNode(institution.institution_id));
+    identity.append(document.createTextNode(institutionContextLabel(institution)), document.createElement("br"), document.createTextNode(institution.institution_id));
     const hierarchy = document.createElement("td");
     const aliases = (institution.aliases || []).join(", ") || "No aliases";
     const parent = institution.parent
@@ -2308,7 +2308,7 @@ function renderInstitutionMergeTargets() {
   const options = matches.map((institution) => {
     const option = document.createElement("option");
     option.value = institution.institution_id;
-    option.textContent = `${institution.canonical_name} — ${shortInstitutionId(institution.institution_id)}`;
+    option.textContent = `${institutionContextLabel(institution)} — ${shortInstitutionId(institution.institution_id)}`;
     return option;
   });
   elements["institution-merge-results"].replaceChildren(...options);
@@ -5022,11 +5022,16 @@ function mappingInstitutionLocationLabel(institution) {
   ].filter(Boolean).join(", ");
 }
 
-function mappingInstitutionOptionValue(institution) {
+function institutionContextLabel(institution) {
   const name = text(institution.canonical_name);
   const location = mappingInstitutionLocationLabel(institution);
+  return `${name}${location ? ` — ${location}` : ""}`;
+}
+
+function mappingInstitutionOptionValue(institution) {
+  const name = institutionContextLabel(institution);
   const id = text(institution.institution_id);
-  return `${name}${location ? ` — ${location}` : ""} (${id})`;
+  return `${name} (${id})`;
 }
 
 function selectedMappingInstitution() {

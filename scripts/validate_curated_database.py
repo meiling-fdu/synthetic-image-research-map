@@ -704,6 +704,10 @@ def validate_institution_aliases(
     for row_number, row in enumerate(aliases, start=2):
         alias = normalize_institution(row.get("alias_name"))
         canonical = normalize_institution(row.get("canonical_institution_name"))
+        alias_display_key = " ".join(
+            unicodedata.normalize("NFKC", clean(row.get("alias_name"))).casefold().split()
+        )
+        target_id = clean(row.get("institution_id"))
         if not alias or not canonical:
             add_issue(
                 issues, "ERROR", "institution_aliases.csv",
@@ -720,8 +724,8 @@ def validate_institution_aliases(
                 issues, "ERROR", "institution_aliases.csv",
                 "canonical target is not a confirmed institution", row_number
             )
-        alias_targets[alias].add(canonical)
-        alias_rows[(alias, canonical)].append(row_number)
+        alias_targets[alias].add(target_id or canonical)
+        alias_rows[(alias_display_key, target_id or canonical)].append(row_number)
     for (alias, canonical), row_numbers in alias_rows.items():
         if len(row_numbers) > 1:
             add_issue(
@@ -731,7 +735,7 @@ def validate_institution_aliases(
     for alias, targets in alias_targets.items():
         if len(targets) > 1:
             add_issue(
-                issues, "ERROR", "institution_aliases.csv",
+                issues, "WARNING", "institution_aliases.csv",
                 f"ambiguous alias maps to multiple canonical institutions: {alias}"
             )
 

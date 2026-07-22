@@ -179,7 +179,7 @@ class InstitutionTypeAuditTests(unittest.TestCase):
                 "Alibaba Group", "SenseTime",
             )
         }
-        self.assertEqual(len(read_csv("institution_aliases.csv")), 55)
+        self.assertEqual(len(read_csv("institution_aliases.csv")), 67)
         for filename in ("author_institution_mappings.csv", "institution_locations.csv"):
             referenced = {row.get("institution_id", "") for row in read_csv(filename)}
             for name, institution_id in expected.items():
