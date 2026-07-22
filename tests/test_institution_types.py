@@ -78,16 +78,28 @@ class InstitutionTypeRuleTests(unittest.TestCase):
         self.assertEqual(INSTITUTION_TYPE_LABELS["research_unit"], "Research Institute")
         self.assertEqual(institution_type_label("research_unit"), "Research Institute")
 
-    def test_unverified_names_require_review_instead_of_token_inference(self):
+    def test_structural_name_evidence_is_cautious(self):
         self.assertEqual(
             classify_institution_type("Example UNIVERSITY Center", (), "unknown")[0],
             "other",
         )
         self.assertEqual(
-            classify_institution_type("Example U", ("Example University",), "unknown")[0],
-            "other",
+            classify_institution_type("Example University", (), "unknown")[0],
+            "university",
         )
-        for name in ("Example Institute", "Example Laboratory", "Example University"):
+        self.assertEqual(
+            classify_institution_type("Example U", ("Example University",), "unknown")[0],
+            "university",
+        )
+        self.assertEqual(
+            classify_institution_type("Example Laboratory", (), "unknown")[0],
+            "research_unit",
+        )
+        for name in (
+            "Example Institute", "University Hospital",
+            "University Press", "University Laboratory", "University Medical Center",
+            "Department of Example University", "School of Example University",
+        ):
             resolved, rule, _ = classify_institution_type(name, (), "unknown")
             self.assertEqual(resolved, "other")
             self.assertEqual(rule, "manual_review_required")
@@ -182,7 +194,7 @@ class InstitutionTypeMigrationTests(unittest.TestCase):
         with self.report.open(encoding="utf-8", newline="") as handle:
             report = {row["institution_id"]: row for row in csv.DictReader(handle)}
         self.assertEqual(report["u"]["affected_unique_paper_count"], "1")
-        self.assertEqual(report["u"]["proposed_type"], "other")
+        self.assertEqual(report["u"]["proposed_type"], "university")
 
     def test_admin_accepts_other_and_rejects_unsupported_values(self):
         updated = update_institution_identity(
