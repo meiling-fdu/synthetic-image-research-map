@@ -84,7 +84,7 @@ def _applied_alias_or_rule(raw: str, resolved: Mapping[str, Any], alias_lookup: 
 
 def _canonical_key(row: Mapping[str, Any], *, include_acronym: bool = False) -> tuple[str, str]:
     name = alias_key(row.get("venue_name"))
-    track = clean_text(row.get("venue_track") or "main")
+    track = clean_text(row.get("venue_track"))
     if include_acronym:
         return (name, alias_key(row.get("venue_acronym")), track)
     return (name, track)
@@ -116,7 +116,7 @@ def _inventory_scan(rows: list[dict[str, str]], migrated: list[dict[str, Any]], 
             venue_id = clean_text(row.get("venue_id"))
             name = clean_text(row.get("venue_name"))
             acronym = clean_text(row.get("venue_acronym"))
-            track = clean_text(row.get("venue_track") or "main")
+            track = clean_text(row.get("venue_track"))
             if not (venue_id or name):
                 continue
             label_text = display_venue(row)
@@ -238,7 +238,7 @@ def migrate_rows(rows: list[dict[str, str]]) -> tuple[list[dict[str, Any]], dict
             "venue_name": resolved.get("venue_name", ""),
             "venue_acronym": resolved.get("venue_acronym", ""),
             "venue_type": resolved.get("venue_type", ""),
-            "venue_track": resolved.get("venue_track", "main"),
+            "venue_track": resolved.get("venue_track", ""),
             "affected_paper_count": 0,
             "applied_alias_or_rule": _applied_alias_or_rule(raw, resolved, alias_lookup),
             "ambiguity_status": resolved.get("ambiguity_status", "resolved"),

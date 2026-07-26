@@ -10,6 +10,7 @@ from scripts.venues import (
     VENUE_ALIAS_COLUMNS,
     VENUE_TYPE_ORDER,
     VenueRegistryError,
+    canonicalize_record,
     canonical_venue_options,
     create_canonical_venue,
     display_venue,
@@ -20,6 +21,29 @@ from scripts.venues import (
 
 
 class VenueNormalizationTests(unittest.TestCase):
+    def test_blank_nonconference_venues_remain_trackless(self):
+        for venue_type in ("journal", "book", "preprint"):
+            with self.subTest(venue_type=venue_type):
+                venue = resolve_venue("", venue_type=venue_type)
+
+                self.assertEqual(venue.venue_type, venue_type)
+                self.assertEqual(venue.venue_track, "")
+                self.assertEqual(venue.venue_id, "")
+
+    def test_canonicalization_is_idempotent_without_internal_alias_field(self):
+        aliases = read_venue_aliases()
+        first = canonicalize_record(
+            {
+                "venue": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+                "publication_type": "conference",
+            },
+            aliases,
+        )
+        second = canonicalize_record(first, aliases)
+
+        self.assertNotIn("aliases", first)
+        self.assertEqual(second, first)
+
     def resolve(self, raw, publication_type="conference"):
         return resolve_venue(raw, publication_type=publication_type, aliases=read_venue_aliases())
 
@@ -113,7 +137,32 @@ class VenueNormalizationTests(unittest.TestCase):
         venue = self.resolve("Pattern Recognition", publication_type="article")
         self.assertEqual(venue.venue_name, "Pattern Recognition")
         self.assertEqual(venue.venue_type, "journal")
-        self.assertEqual(venue.venue_track, "main")
+        self.assertEqual(venue.venue_track, "")
+        self.assertEqual(venue.venue_id, "venue:pattern-recognition")
+
+    def test_reported_journals_are_trackless_and_tracks_are_canonical(self):
+        cviu = self.resolve(
+            "Computer Vision and Image Understanding",
+            publication_type="journal",
+        )
+        sensors = self.resolve("Sensors", publication_type="journal")
+        self.assertEqual(
+            cviu.venue_id, "venue:computer-vision-and-image-understanding"
+        )
+        self.assertEqual(sensors.venue_id, "venue:sensors")
+        self.assertEqual(cviu.venue_track, "")
+        self.assertEqual(sensors.venue_track, "")
+
+        siggraph = self.resolve(
+            "ACM SIGGRAPH Posters", publication_type="conference"
+        )
+        cvpr = self.resolve(
+            "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings",
+            publication_type="conference",
+        )
+        self.assertEqual(siggraph.venue_id, "venue:siggraph:posters")
+        self.assertEqual(siggraph.venue_track, "posters")
+        self.assertEqual(cvpr.venue_id, "venue:cvpr:findings")
 
     def test_display_format(self):
         venue = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops")
@@ -273,15 +322,15 @@ class VenueNormalizationTests(unittest.TestCase):
 
         collision_rows = [
             {
-                "alias": "First Journal", "venue_id": "venue:first:main",
+                "alias": "First Journal", "venue_id": "venue:first",
                 "venue_name": "First Journal", "venue_acronym": "DUP",
-                "venue_type": "journal", "venue_track": "main",
+                "venue_type": "journal", "venue_track": "",
                 "review_status": "confirmed", "notes": "",
             },
             {
-                "alias": "Second Journal", "venue_id": "venue:second:main",
+                "alias": "Second Journal", "venue_id": "venue:second",
                 "venue_name": "Second Journal", "venue_acronym": "DUP",
-                "venue_type": "journal", "venue_track": "main",
+                "venue_type": "journal", "venue_track": "",
                 "review_status": "confirmed", "notes": "",
             },
         ]
@@ -290,9 +339,9 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_acronym_collision_is_rejected_before_registry_write(self):
         existing = {
-            "alias": "First Journal", "venue_id": "venue:first:main",
+            "alias": "First Journal", "venue_id": "venue:first",
             "venue_name": "First Journal", "venue_acronym": "DUP",
-            "venue_type": "journal", "venue_track": "main",
+            "venue_type": "journal", "venue_track": "",
             "review_status": "confirmed", "notes": "",
         }
         with tempfile.TemporaryDirectory() as directory:
@@ -307,7 +356,7 @@ class VenueNormalizationTests(unittest.TestCase):
                     "venue_name": "Second Journal",
                     "venue_acronym": "DUP",
                     "venue_type": "journal",
-                    "venue_track": "main",
+                    "venue_track": "",
                     "raw_alias": "Second Journal",
                     "confirmed_similar": True,
                 }, path)

@@ -288,6 +288,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-edit-button",
     "metadata-compare",
     "metadata-edit-form",
+    "metadata-edit-submit",
     "metadata-paper-id",
     "metadata-title",
     "metadata-year",
@@ -573,6 +574,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["metadata-publication-type-override"].addEventListener("click", enablePublicationTypeOverride);
   elements["metadata-publication-type"].addEventListener("change", handlePublicationTypeChange);
   elements["venue-create-form"].addEventListener("submit", submitVenueCreation);
+  elements["venue-create-type"].addEventListener("change", updateVenueCreationTrackAvailability);
   elements["venue-create-cancel"].addEventListener("click", closeVenueCreationDialog);
   document.addEventListener("pointerdown", handleVenueOutsidePointerDown);
   window.addEventListener("resize", positionVenueComboboxPanel);
@@ -2925,6 +2927,19 @@ function showLocationFormError(message, field = null) {
   }
 }
 
+function locationApiErrorMessage(error) {
+  const code = error?.payload?.error_code;
+  if (code === "institution_identity_change_not_allowed") {
+    return `Institution identity mismatch: ${error.message}`;
+  }
+  if (error?.payload?.field === "confirmed_lat"
+      || error?.payload?.field === "confirmed_lon"
+      || /latitude|longitude|coordinate/i.test(error?.message || "")) {
+    return `Invalid coordinates: ${error.message}`;
+  }
+  return error.message;
+}
+
 function clearLocationCoordinateErrors() {
   elements["location-form-error"].hidden = true;
   elements["location-form-error"].textContent = "";
@@ -3205,7 +3220,7 @@ async function confirmLocation(event) {
     showNotice(result.message);
     await Promise.all([loadLocationReviews(), refreshInstitutions()]);
   } catch (error) {
-    showLocationFormError(error.message);
+    showLocationFormError(locationApiErrorMessage(error));
   } finally {
     setLocationSaveRunning(false);
   }
@@ -4594,6 +4609,19 @@ function handlePublicationTypeChange() {
     }
     clearBookIncompatibleFormFields();
   }
+  if (
+    nextType !== "conference"
+    && state.selectedVenue?.venue_type === "conference"
+  ) {
+    state.selectedVenue = null;
+    [
+      "metadata-venue", "metadata-venue-id", "metadata-venue-name",
+      "metadata-venue-acronym", "metadata-venue-type", "metadata-venue-track",
+    ].forEach((id) => { elements[id].value = ""; });
+    elements["metadata-venue-value"].textContent =
+      `Select a canonical ${nextType} venue…`;
+    renderSelectedVenueMetadata();
+  }
   const isBook = nextType === "book";
   if (isBook) clearBookIncompatibleFormFields();
   setBookMetadataAvailability(isBook);
@@ -4608,10 +4636,18 @@ function openVenueCreationDialog() {
   elements["venue-create-name"].value = rawInput;
   elements["venue-create-alias"].value = rawInput;
   elements["venue-create-track"].value = "main";
+  updateVenueCreationTrackAvailability();
   elements["venue-create-matches"].hidden = true;
   elements["venue-create-error"].hidden = true;
   elements["venue-create-dialog"].showModal();
   elements["venue-create-name"].focus();
+}
+
+function updateVenueCreationTrackAvailability() {
+  const conference = elements["venue-create-type"].value === "conference";
+  elements["venue-create-track"].disabled = !conference;
+  elements["venue-create-track"].required = conference;
+  if (!conference) elements["venue-create-track"].value = "";
 }
 
 function closeVenueCreationDialog() {
@@ -4783,18 +4819,24 @@ async function saveMetadata(event) {
     "paper_url", "publication_type", "entry_type", "task", "subtask", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
+  const effective = state.paperMetadata.effective_record || state.selectedPaper;
   const draft = { id: elements["metadata-paper-id"].value };
   fields.forEach((field) => {
-    draft[field] = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
+    const value = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
+    if (value !== metadataValue(effective, field).trim()) draft[field] = value;
   });
-  const isBook = draft.publication_type === "book";
+  const publicationType = elements["metadata-publication-type"].value;
+  const isBook = publicationType === "book";
   if (!state.selectedVenue && !isBook) {
     elements["metadata-edit-error"].hidden = false;
     elements["metadata-edit-error"].textContent =
       "Select a canonical venue before saving metadata.";
     return;
   }
-  Object.assign(draft, {
+  const venueChanged = isBook
+    ? Boolean(metadataValue(effective, "venue_id"))
+    : elements["metadata-venue-id"].value !== metadataValue(effective, "venue_id");
+  if (venueChanged || Object.hasOwn(draft, "publication_type")) Object.assign(draft, {
     venue: isBook ? "" : elements["metadata-venue-name"].value,
     venue_id: isBook ? "" : elements["metadata-venue-id"].value,
     venue_name: isBook ? "" : elements["metadata-venue-name"].value,
@@ -4813,21 +4855,28 @@ async function saveMetadata(event) {
     "Publication type conflicts with the selected canonical venue. Save this explicit override?",
   )) return;
   draft.arxiv_id_changed =
-    draft.arxiv_id !== elements["metadata-arxiv-id"].dataset.originalValue;
+    elements["metadata-arxiv-id"].value.trim()
+    !== elements["metadata-arxiv-id"].dataset.originalValue;
   elements["metadata-edit-error"].hidden = true;
+  elements["metadata-edit-submit"].disabled = true;
   try {
     const payload = await apiFetch("/api/paper/metadata/update", {
       method: "POST",
       body: JSON.stringify(draft),
     });
     if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
-    showNotice(payload.message);
+    showNotice(
+      payload.message,
+      payload.preview_refreshed === false ? "warning" : "success",
+    );
     closeMetadataEditor();
     await refreshAfterMetadataSave(selectedId, payload, selectionSequence);
   } catch (error) {
     if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
     elements["metadata-edit-error"].hidden = false;
     elements["metadata-edit-error"].textContent = error.message;
+  } finally {
+    elements["metadata-edit-submit"].disabled = false;
   }
 }
 

@@ -3,6 +3,7 @@ import json
 
 from scripts.curated_export import (
     CuratedExportError,
+    _curated_paper_record,
     _curated_marker,
     _recalculate_paper_details,
     _remove_overridden_markers,
@@ -14,6 +15,78 @@ from scripts.export_public_preview import add_public_detail_fields
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_curated_paper_and_marker_preserve_canonical_venue_track(self):
+        curated = _curated_paper_record(
+            {
+                "title": "Tracked conference paper",
+                "year": "2026",
+                "venue": "ACM SIGGRAPH",
+                "venue_name": "ACM SIGGRAPH",
+                "venue_id": "venue:siggraph:posters",
+                "venue_acronym": "SIGGRAPH",
+                "venue_type": "conference",
+                "venue_track": "posters",
+                "raw_venue": "ACM SIGGRAPH Posters",
+                "publication_type": "conference",
+            },
+            "detection",
+            "synthetic_image_detection",
+        )
+        marker = _curated_marker(
+            curated,
+            {
+                "mapping_id": "mapping:venue",
+                "institution": "Example University",
+                "institution_authors": "Ada Researcher",
+            },
+            {
+                "institution": "Example University",
+                "latitude": 1,
+                "longitude": 2,
+                "country": "Example",
+            },
+        )
+
+        for record in (curated, marker):
+            self.assertEqual(record["venue_id"], "venue:siggraph:posters")
+            self.assertEqual(record["venue_type"], "conference")
+            self.assertEqual(record["venue_track"], "posters")
+
+    def test_reviewed_manually_added_venue_overrides_automatic_candidate(self):
+        curated_paper = {
+            "paper_id": "curated:findings",
+            "title": "Reviewed manual venue",
+            "year": "2026",
+            "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+            "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+            "venue_id": "venue:cvpr:findings",
+            "venue_acronym": "CVPR",
+            "venue_type": "conference",
+            "venue_track": "findings",
+            "raw_venue": "CVPR Findings",
+            "publication_type": "conference",
+            "task": "detection",
+            "scope_status": "in_scope",
+            "curation_status": "manually_added",
+            "review_status": "reviewed",
+        }
+        candidate = {
+            "title": "Reviewed manual venue",
+            "year": 2026,
+            "venue": "Computer Vision and Pattern Recognition",
+            "venue_id": "venue:computer-vision-and-pattern-recognition:main",
+            "venue_type": "conference",
+            "venue_track": "main",
+            "task": "detection",
+        }
+
+        papers, _maps, _reviews, _summary = integrate_curated_records(
+            [candidate], [], [curated_paper], []
+        )
+
+        self.assertEqual(papers[0]["venue_id"], "venue:cvpr:findings")
+        self.assertEqual(papers[0]["venue_track"], "findings")
+
     def test_curated_marker_preserves_canonical_id_across_name_correction(self):
         marker = _curated_marker(
             {

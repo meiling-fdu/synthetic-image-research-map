@@ -105,7 +105,7 @@ AUTHOR_MAPPING_SOURCES = {
     "unmapped",
 }
 ALLOWED_VENUE_TYPES = {"conference", "journal", "preprint", "book"}
-ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "industry", "demo", "doctoral_consortium", "other"}
+ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "posters", "industry", "demo", "doctoral_consortium", "other"}
 ALLOWED_INSTITUTION_TYPES = INSTITUTION_TYPE_SET
 
 
@@ -137,8 +137,10 @@ def validate_canonical_venue(index: int, record: Dict[str, Any], issues: List[Is
         add_issue(issues, "ERROR", index, title, "canonical venue_name requires venue_id")
     if venue_id and venue_type not in ALLOWED_VENUE_TYPES:
         add_issue(issues, "ERROR", index, title, "venue_type must use the canonical venue taxonomy")
-    if venue_id and venue_track not in ALLOWED_VENUE_TRACKS:
+    if venue_id and venue_type == "conference" and venue_track not in ALLOWED_VENUE_TRACKS:
         add_issue(issues, "ERROR", index, title, "venue_track must use the canonical track taxonomy")
+    if venue_type != "conference" and venue_track:
+        add_issue(issues, "ERROR", index, title, "non-conference venue cannot have a conference track")
     if venue_id and "raw_venue" not in record:
         add_issue(issues, "ERROR", index, title, "canonical venue requires raw_venue provenance")
     publication_type = clean_text(record.get("publication_type"))
@@ -507,6 +509,57 @@ def validate_preprint_version_duplicates(
                     "preprint version duplicates a formal publication with the "
                     "same normalized title",
                 )
+
+
+def validate_duplicate_map_relationships(
+    records: Sequence[Any],
+    issues: List[Issue],
+) -> None:
+    """Reject repeated canonical paper/author/institution relationships."""
+    seen: Dict[Tuple[Tuple[str, ...], str, str], int] = {}
+    for index, record in enumerate(records):
+        if not isinstance(record, dict):
+            continue
+        doi = normalized_doi(record.get("doi"))
+        arxiv_id = normalized_text(record.get("arxiv_id"))
+        openalex_url = normalized_text(record.get("openalex_url")).rstrip("/")
+        if doi:
+            paper_key = ("doi", doi)
+        elif arxiv_id:
+            paper_key = ("arxiv", arxiv_id)
+        elif openalex_url:
+            paper_key = ("openalex", openalex_url)
+        else:
+            paper_key = (
+                "title_year",
+                normalized_title(record.get("title")),
+                clean_text(record.get("publication_year") or record.get("year")),
+            )
+        institution_key = normalized_text(
+            record.get("institution_id")
+            or record.get("canonical_institution_id")
+            or institution_name(record)
+        )
+        authors = record.get("institution_authors") or []
+        if isinstance(authors, str):
+            authors = authors.split(";")
+        for author in authors if isinstance(authors, list) else []:
+            author_key = canonical_name_key(author)
+            if not author_key:
+                continue
+            key = (paper_key, author_key, institution_key)
+            previous = seen.get(key)
+            if previous is not None:
+                add_issue(
+                    issues,
+                    "ERROR",
+                    index,
+                    record_title(record),
+                    "duplicate canonical paper/author/institution relationship "
+                    f"(first seen at record[{previous}])",
+                )
+            else:
+                seen[key] = index
 
 
 def validate_confirmed_version_merges(
@@ -1383,6 +1436,7 @@ def validate_datasets(
     for index, record in enumerate(records):
         validate_record(index, record, issues)
     validate_preprint_version_duplicates(records, issues)
+    validate_duplicate_map_relationships(records, issues)
     validate_venue_consistency(records, issues)
     validate_confirmed_version_merges(
         records, merge_rows, issues, paper_level=False

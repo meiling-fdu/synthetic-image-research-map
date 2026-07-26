@@ -187,7 +187,7 @@ class BookFrontendContractTests(unittest.TestCase):
             "if (isBookRecord(record)) return \"\";",
             "(record) => isBookRecord(record) ? [] : [venueFilterValue(record)]",
             "const venueTerms = isBookRecord(record) ? []",
-            "isBookRecord(record) ? \"\" : record.venue_track",
+            "canonicalVenueTrack(record)",
             "const venueRow = venueDisplayLabel(record)",
         ):
             self.assertIn(text, self.app)

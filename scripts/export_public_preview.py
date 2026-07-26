@@ -1621,6 +1621,100 @@ def build_identity_lookup(records: Sequence[Dict[str, Any]]) -> Dict[Tuple[str, 
     return lookup
 
 
+def deduplicate_public_map_relationships(
+    records: Sequence[Dict[str, Any]],
+) -> Tuple[List[Dict[str, Any]], int]:
+    """Collapse exact paper/institution markers and canonicalize their author sets.
+
+    DOI/arXiv/title-year paper identity and canonical institution identity are
+    sufficient for this final export-only collapse. Conflicting reviewed
+    mapping IDs remain an error because choosing between them would require a
+    curator decision.
+    """
+    grouped: Dict[
+        Tuple[Tuple[str, Any], str],
+        List[Dict[str, Any]],
+    ] = defaultdict(list)
+    order: List[Tuple[Tuple[str, Any], str]] = []
+
+    for raw_record in records:
+        record = dict(raw_record)
+        authors = record.get("institution_authors") or []
+        if isinstance(authors, str):
+            authors = authors.split(";")
+        deduplicated_authors = []
+        seen_authors = set()
+        for author in authors if isinstance(authors, list) else []:
+            name = author_display_name(author)
+            key = normalized_author_name(name)
+            if name and key and key not in seen_authors:
+                seen_authors.add(key)
+                deduplicated_authors.append(name)
+        record["institution_authors"] = deduplicated_authors
+
+        key = (
+            detail_paper_identity(record),
+            detail_institution_identity(record),
+        )
+        if key not in grouped:
+            order.append(key)
+        grouped[key].append(record)
+
+    collapsed = []
+    removed = 0
+    for key in order:
+        candidates = grouped[key]
+        mapping_ids = {
+            clean_text(record.get("mapping_id"))
+            for record in candidates
+            if clean_text(record.get("mapping_id"))
+        }
+        if len(mapping_ids) > 1:
+            raise PreviewExportError(
+                "Conflicting curated mapping IDs share one canonical "
+                f"paper/institution relationship: {', '.join(sorted(mapping_ids))}"
+            )
+
+        def quality(record: Dict[str, Any]) -> Tuple[Any, ...]:
+            return (
+                bool(clean_text(record.get("mapping_id"))),
+                record.get("preliminary_affiliations") is not True,
+                CONFIDENCE_RANK.get(
+                    normalize_confidence(record.get("resolution_confidence")),
+                    0,
+                ),
+                len(record.get("institution_authors") or []),
+            )
+
+        target = max(candidates, key=quality)
+        for incoming in candidates:
+            if incoming is target:
+                continue
+            removed += 1
+            existing_author_keys = {
+                normalized_author_name(author)
+                for author in target.get("institution_authors") or []
+            }
+            for author in incoming.get("institution_authors") or []:
+                author_key = normalized_author_name(author)
+                if author_key and author_key not in existing_author_keys:
+                    target.setdefault("institution_authors", []).append(author)
+                    existing_author_keys.add(author_key)
+            for field in (
+                "mapping_id",
+                "evidence_source",
+                "evidence_url",
+                "raw_affiliation",
+                "coordinate_source",
+                "coordinate_source_url",
+            ):
+                if not clean_text(target.get(field)) and clean_text(incoming.get(field)):
+                    target[field] = incoming[field]
+        collapsed.append(target)
+
+    return collapsed, removed
+
+
 def matching_records(
     row: Dict[str, Any],
     lookup: Dict[Tuple[str, Any], List[Dict[str, Any]]],
@@ -3924,6 +4018,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 institution_rows,
             )
         )
+        integrated_maps, exact_map_relationships_deduplicated = (
+            deduplicate_public_map_relationships(integrated_maps)
+        )
         apply_ordered_paper_location_summaries(
             integrated_papers, integrated_maps
         )
@@ -3958,6 +4055,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             retracted_map_records_excluded
         )
         summary["ignored_institution_records_excluded"] = ignored_institution_records
+        summary["exact_map_relationships_deduplicated"] = (
+            exact_map_relationships_deduplicated
+        )
         summary["stale_mapping_markers_excluded"] = stale_mapping_markers_excluded
 
         if (

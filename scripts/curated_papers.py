@@ -78,6 +78,17 @@ YEAR_RE = re.compile(r"\d{4}")
 class CuratedPaperError(RuntimeError):
     """A curated paper validation or write error."""
 
+    def __init__(
+        self,
+        message: str,
+        *,
+        field: str = "",
+        error_code: str = "invalid_metadata",
+    ):
+        self.field = field
+        self.error_code = error_code
+        super().__init__(message)
+
 
 class DuplicatePaperError(CuratedPaperError):
     """A duplicate create request with structured matching records."""
@@ -184,11 +195,15 @@ def apply_canonical_venue_selection(
         try:
             canonical = validate_canonical_venue_fields(draft, aliases)
         except VenueRegistryError as error:
-            raise CuratedPaperError(str(error)) from error
+            raise CuratedPaperError(
+                str(error), field="venue_id", error_code="invalid_venue"
+            ) from error
         for field in ("venue_name", "venue_acronym", "venue_type", "venue_track"):
             if clean(draft.get(field)) != canonical[field]:
                 raise CuratedPaperError(
-                    f"{field} must match canonical venue_id {canonical['venue_id']!r}"
+                    f"{field} must match canonical venue_id {canonical['venue_id']!r}",
+                    field=field,
+                    error_code="venue_field_conflict",
                 )
     elif supplied_venue:
         resolved = resolve_venue(
@@ -417,7 +432,21 @@ def update_curated_paper(
     path: Path = DEFAULT_CURATED_PAPERS_PATH,
     venue_aliases_path: Path | None = None,
 ) -> Dict[str, str]:
-    """Create or update a curated metadata override for one effective paper."""
+    """Create or patch a curated metadata override for one effective paper."""
+    # API callers may send a true patch. Start from the persisted/effective
+    # record so omitted fields are never reconstructed from display labels.
+    aliases = (
+        read_venue_aliases(venue_aliases_path)
+        if venue_aliases_path
+        else read_venue_aliases()
+    )
+    base = canonicalize_record(
+        current_paper.get("curated_record") or current_paper,
+        aliases,
+    )
+    patched = dict(base)
+    patched.update(draft)
+    draft = patched
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))

@@ -699,9 +699,13 @@ def _curated_paper_record(
         "task": task,
         "subtask": subtask,
         "entry_type": entry_type,
-        "venue": clean(row.get("venue")),
-        "venue_name": clean(row.get("venue")),
-        "venue_type": "",
+        "venue": clean(row.get("venue") or row.get("venue_name")),
+        "venue_name": clean(row.get("venue_name") or row.get("venue")),
+        "venue_id": clean(row.get("venue_id")),
+        "venue_acronym": clean(row.get("venue_acronym")),
+        "venue_type": clean(row.get("venue_type")),
+        "venue_track": clean(row.get("venue_track")),
+        "raw_venue": clean(row.get("raw_venue")),
         "publisher": "",
         "publication_type": publication_type,
         "abstract": clean(row.get("abstract")),
@@ -774,8 +778,13 @@ def _merge_curated_paper(
     existing: MutableMapping[str, Any],
     curated: Mapping[str, Any],
 ) -> None:
-    confirmed = clean(curated.get("curation_status")) in (
-        CONFIRMED_CURATION_STATUSES
+    curation_status = clean(curated.get("curation_status"))
+    confirmed = (
+        curation_status in CONFIRMED_CURATION_STATUSES
+        or (
+            curation_status == "manually_added"
+            and clean(curated.get("review_status")) == "reviewed"
+        )
     )
     for field in CURATED_OVERRIDE_FIELDS:
         value = curated.get(field)
@@ -894,6 +903,11 @@ def _curated_marker(
         "entry_type": clean(paper.get("entry_type")) or "method",
         "venue": clean(paper.get("venue") or paper.get("venue_name")),
         "venue_name": clean(paper.get("venue_name") or paper.get("venue")),
+        "venue_id": clean(paper.get("venue_id")),
+        "venue_acronym": clean(paper.get("venue_acronym")),
+        "venue_type": clean(paper.get("venue_type")),
+        "venue_track": clean(paper.get("venue_track")),
+        "raw_venue": clean(paper.get("raw_venue")),
         "publication_type": normalize_publication_type(
             paper.get("publication_type"),
             venue=paper.get("venue") or paper.get("venue_name"),

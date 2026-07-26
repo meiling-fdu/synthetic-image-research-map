@@ -282,7 +282,7 @@ const INSTITUTION_CSV_COLUMNS = [
   ["venue_name", (record) => getRecordVenue(record)],
   ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
-  ["venue_track", (record) => isBookRecord(record) ? "" : record.venue_track || "main"],
+  ["venue_track", (record) => canonicalVenueTrack(record)],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
@@ -312,7 +312,7 @@ const PAPER_CSV_COLUMNS = [
   ["venue_name", (record) => getRecordVenue(record)],
   ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
-  ["venue_track", (record) => isBookRecord(record) ? "" : record.venue_track || "main"],
+  ["venue_track", (record) => canonicalVenueTrack(record)],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
   ["subtask", (record) => record.subtask || ""],
@@ -1116,6 +1116,13 @@ function getRecordVenue(record) {
   ).trim();
 }
 
+function canonicalVenueTrack(record) {
+  if (isBookRecord(record)) return "";
+  return String(record?.venue_type || "").trim().toLowerCase() === "conference"
+    ? String(record?.venue_track || "main").trim()
+    : "";
+}
+
 function venueFilterValue(record) {
   if (isBookRecord(record)) return "__not_applicable__";
   return String(record.venue_id || "").trim() || (getRecordVenue(record)
@@ -1130,7 +1137,7 @@ function venueDisplayLabel(record) {
   const name = getRecordVenue(record);
   if (!name) return "Unknown venue/source";
   const acronym = String(record.venue_acronym || "").trim();
-  const track = String(record.venue_track || "main").trim();
+  const track = canonicalVenueTrack(record);
   let label = name;
   if (acronym) label += ` (${acronym})`;
   if (track && track !== "main") label += ` · ${formatTask(track)}`;
@@ -3313,7 +3320,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
       label: venueDisplayLabel(record),
       name: getRecordVenue(record) || "Unknown venue/source",
       acronym: record.venue_acronym || "",
-      track: record.venue_track || "main",
+      track: canonicalVenueTrack(record),
       type: recordVenueType(record) || "__unknown__",
     });
   });

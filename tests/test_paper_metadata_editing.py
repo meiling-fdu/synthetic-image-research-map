@@ -88,6 +88,43 @@ def write_exclusions(path, rows=()):
 
 
 class PaperMetadataEditingTests(unittest.TestCase):
+    def test_abstract_only_patch_preserves_trackless_journal_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+            papers_path = directory / "papers.csv"
+            aliases_path = directory / "venue_aliases.csv"
+            shutil.copyfile(
+                Path(__file__).resolve().parents[1]
+                / "data"
+                / "curated"
+                / "venue_aliases.csv",
+                aliases_path,
+            )
+            original = curated_row(
+                title="IoT-Oriented Security",
+                publication_type="journal",
+                venue="Sensors",
+                venue_id="venue:sensors",
+                venue_name="Sensors",
+                venue_type="journal",
+                venue_track="",
+                raw_venue="Sensors",
+            )
+            write_papers(papers_path, [original])
+
+            updated = update_curated_paper(
+                original,
+                {"abstract": "Controlled regression fixture abstract."},
+                preview_records=[],
+                path=papers_path,
+                venue_aliases_path=aliases_path,
+            )
+
+            self.assertEqual(updated["abstract"], "Controlled regression fixture abstract.")
+            self.assertEqual(updated["venue_id"], "venue:sensors")
+            self.assertEqual(updated["venue_track"], "")
+            self.assertEqual(updated["publication_type"], "journal")
+
     @contextlib.contextmanager
     def metadata_server(
         self, directory, export_calls, export_success=True, original_overrides=None,
@@ -248,7 +285,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
             'elements["metadata-arxiv-id"].dataset.originalValue', source
         )
         self.assertIn(
-            "draft.arxiv_id_changed =\n    draft.arxiv_id !==", source
+            'elements["metadata-arxiv-id"].value.trim()\n    !==', source
         )
 
     def test_venue_registry_api_and_structured_save_summary(self):
@@ -415,7 +452,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
         self.assertIn('summary.textContent = `${label}${record ? "" : " · none"}`;', source)
         self.assertIn('pre.textContent = record ? JSON.stringify(record, null, 2) : "No record.";', source)
 
-    def test_export_failure_rolls_back_metadata_and_override_files(self):
+    def test_export_failure_preserves_saved_metadata_and_reports_warning(self):
         with tempfile.TemporaryDirectory() as directory:
             exports = []
             with self.metadata_server(
@@ -437,21 +474,18 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     "arxiv_id_changed": True,
                     "paper_url": "https://arxiv.org/pdf/2501.01234.pdf",
                 }
-                with self.assertRaises(urllib.error.HTTPError) as raised:
-                    self.metadata_request(
-                        base_url, "/api/paper/metadata/update", edit
-                    )
-                self.assertEqual(raised.exception.code, 409)
-                failure_payload = json.loads(raised.exception.read())
-                self.assertFalse(failure_payload["success"])
-                self.assertIn("rolled back", failure_payload["message"])
-                self.assertEqual(
-                    failure_payload["errors"],
-                    ["public preview export failed"],
+                payload = self.metadata_request(
+                    base_url, "/api/paper/metadata/update", edit
                 )
-                self.assertTrue(failure_payload["data"]["rolled_back"])
-                self.assertEqual(curated_path.read_bytes(), curated_before)
-                self.assertEqual(links_path.read_bytes(), links_before)
+                self.assertTrue(payload["success"])
+                self.assertTrue(payload["saved"])
+                self.assertFalse(payload["preview_refreshed"])
+                self.assertEqual(payload["stage"], "preview_refresh")
+                self.assertEqual(
+                    payload["warning_code"], "preview_refresh_failed"
+                )
+                self.assertNotEqual(curated_path.read_bytes(), curated_before)
+                self.assertNotEqual(links_path.read_bytes(), links_before)
 
     def test_curated_arxiv_override_matches_public_effective_metadata(self):
         with tempfile.TemporaryDirectory() as temporary_directory:

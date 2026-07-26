@@ -574,7 +574,7 @@
                 <label class="full-width">Review note<textarea id="metadata-review-note" rows="3"></textarea></label>
                 <p class="form-error full-width" id="metadata-edit-error" hidden></p>
                 <div class="form-actions full-width">
-                  <button class="primary-button" type="submit">Save curated override</button>
+                  <button class="primary-button" id="metadata-edit-submit" type="submit">Save curated override</button>
                   <button class="secondary-button" id="metadata-edit-cancel" type="button">Cancel</button>
                 </div>
               </form>
@@ -585,7 +585,7 @@
                   <label>Canonical full name<input id="venue-create-name" required></label>
                   <label>Acronym, optional<input id="venue-create-acronym"></label>
                   <label>Venue type<select id="venue-create-type" required><option value="conference">conference</option><option value="journal">journal</option><option value="preprint">preprint</option><option value="book">book</option></select></label>
-                  <label>Venue track<select id="venue-create-track" required><option value="main">main</option><option value="workshops">workshops</option><option value="findings">findings</option><option value="industry">industry</option><option value="demo">demo</option><option value="doctoral_consortium">doctoral_consortium</option><option value="other">other</option></select></label>
+                  <label>Venue track<select id="venue-create-track"><option value="main">main</option><option value="workshops">workshops</option><option value="findings">findings</option><option value="posters">posters</option><option value="industry">industry</option><option value="demo">demo</option><option value="doctoral_consortium">doctoral_consortium</option><option value="other">other</option></select></label>
                   <label class="full-width">Raw input or alias<input id="venue-create-alias" required></label>
                   <label class="full-width">Review note, optional<textarea id="venue-create-note" rows="2"></textarea></label>
                   <section id="venue-create-matches" class="venue-create-matches" hidden><h4>Possible existing venues</h4><ul></ul><label><input id="venue-create-confirm-similar" type="checkbox"> I reviewed these matches and confirm this is a distinct venue.</label></section>

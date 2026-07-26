@@ -221,7 +221,9 @@ The Admin server checks for the CSV at startup and generates it once when absent
 
 The paper-metadata editor loads `GET /api/venues`, whose records are built only from confirmed `data/curated/venue_aliases.csv` identities. Options use the shared type order (Conference, Journal, Preprint, Book), then unique-paper count descending and canonical name. Search covers canonical name, audited acronym, venue type, track, confirmed aliases, and historical `raw_venue` variants. Selecting an option saves `venue_id`, `venue_name`, `venue_acronym`, `venue_type`, and `venue_track`; the combined label is display-only.
 
-The selected venue synchronizes formal `publication_type`. Workshops are canonical Conference venues with `venue_track=workshops`, so their distinct identity remains in the venue ID and track rather than a separate public type. The control remains disabled until **Override publication type** is chosen, and both the browser and API warn or reject an unconfirmed conflict. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
+The selected venue synchronizes formal `publication_type`. Conference tracks such as Workshops, Findings, and Posters use reviewed canonical child venue IDs. Journal, preprint, and book venues have a blank `venue_track` and never receive a `:main` suffix. Changing away from Conference clears incompatible track state. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
+
+Paper metadata updates use patch semantics: omitted fields retain their effective curated values. A validated curated save is atomic. Public-preview refresh runs afterward as a best-effort local refresh; if it fails, the API reports `saved=true`, `preview_refreshed=false`, and leaves full validation, shrinkage checks, staging, commit, and push to the explicit Publish Changes workflow.
 
 Changing a paper to **Book** is the exception to venue synchronization. The
 editor lists any venue, venue-taxonomy, and paper-category values that will be

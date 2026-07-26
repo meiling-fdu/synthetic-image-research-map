@@ -1049,6 +1049,7 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
         "title",
         "year",
         "publication_year",
+        "publication_type",
         "authors",
         "venue",
         "venue_name",
@@ -1107,13 +1108,16 @@ def api_payload(
     data: Any = None,
     warnings: Sequence[str] = (),
     errors: Sequence[str] = (),
+    **details: Any,
 ) -> Dict[str, Any]:
     return {
         "success": success,
+        "ok": success,
         "message": message,
         "data": data,
         "warnings": list(warnings),
         "errors": list(errors),
+        **details,
     }
 
 
@@ -2808,6 +2812,9 @@ def make_handler(
                                 locations_path=institution_locations_path,
                                 review_path=location_review_path,
                                 institutions_path=institutions_path,
+                                mappings_path=mappings_path,
+                                aliases_path=institution_aliases_path,
+                                institution_audit_path=institution_audit_path,
                             )
                             message = (
                                 "Location saved. Run full refresh pipeline "
@@ -2850,9 +2857,32 @@ def make_handler(
                                 "No coordinates were created."
                             )
                 except (AdminDataError, CuratedLocationError) as error:
-                    self.send_json(
-                        HTTPStatus.BAD_REQUEST, {"error": str(error)}
-                    )
+                    if isinstance(error, CuratedLocationError):
+                        self.send_json(
+                            HTTPStatus.BAD_REQUEST,
+                            api_payload(
+                                success=False,
+                                errors=(str(error),),
+                                stage=(
+                                    "location_identity_validation"
+                                    if error.error_code
+                                    == "institution_identity_change_not_allowed"
+                                    else "location_validation"
+                                ),
+                                field=error.field,
+                                error_code=error.error_code,
+                                submitted_institution_id=(
+                                    error.submitted_institution_id
+                                ),
+                                current_institution_id=(
+                                    error.current_institution_id
+                                ),
+                            ),
+                        )
+                    else:
+                        self.send_json(
+                            HTTPStatus.BAD_REQUEST, {"error": str(error)}
+                        )
                     return
                 self.send_json(
                     (
@@ -3008,9 +3038,6 @@ def make_handler(
                             snapshots = snapshot_files((
                                 curated_papers_path,
                                 curated_arxiv_links_path,
-                                PUBLIC_PAPERS_PATH,
-                                PUBLIC_MAP_PATH,
-                                location_review_path,
                             ))
                             perf.mark("snapshot_files")
                             try:
@@ -3032,16 +3059,15 @@ def make_handler(
                                         match_record=paper,
                                     )
                                 perf.mark("update_arxiv_override")
-                                export_result = dict(
-                                    metadata_export_runner("export_preview")
-                                )
-                                perf.mark("export_preview")
                             except Exception:
                                 restore_file_snapshots(snapshots)
                                 raise
-                            if not export_result.get("success"):
-                                restore_file_snapshots(snapshots)
-                            perf.mark("rollback_check")
+                        # A validated curated save is durable independently of
+                        # the best-effort local preview refresh.
+                        export_result = dict(
+                            metadata_export_runner("export_preview")
+                        )
+                        perf.mark("export_preview")
                     except DuplicatePaperError as error:
                         self.send_json(
                             HTTPStatus.CONFLICT,
@@ -3049,31 +3075,6 @@ def make_handler(
                                 success=False,
                                 data={"duplicate_matches": error.matches},
                                 errors=("paper identity collides with another paper",),
-                            ),
-                        )
-                        return
-                    if not export_result.get("success"):
-                        timings = perf.finish()
-                        response_data = {
-                            "rolled_back": True,
-                            "export": export_result,
-                        }
-                        if PERF_LOG_ENABLED:
-                            response_data["timings"] = timings
-                        export_message = workflow_failure_message(
-                            export_result,
-                            fallback="public preview export failed",
-                        )
-                        self.send_json(
-                            HTTPStatus.CONFLICT,
-                            api_payload(
-                                message=(
-                                    "Metadata save was rolled back because "
-                                    "public preview export failed."
-                                ),
-                                success=False,
-                                data=response_data,
-                                errors=(export_message,),
                             ),
                         )
                         return
@@ -3102,17 +3103,37 @@ def make_handler(
                     if PERF_LOG_ENABLED:
                         response_data["timings"] = timings
                     self.send_json(
-                        (
-                            HTTPStatus.OK
-                            if export_result.get("success")
-                            else HTTPStatus.INTERNAL_SERVER_ERROR
-                        ),
+                        HTTPStatus.OK,
                         api_payload(
                             message=(
                                 "Saved metadata and regenerated public preview."
+                                if export_result.get("success")
+                                else "Metadata saved; public preview refresh failed."
                             ),
-                            success=bool(export_result.get("success")),
+                            success=True,
                             data=response_data,
+                            warnings=(
+                                ()
+                                if export_result.get("success")
+                                else (
+                                    workflow_failure_message(
+                                        export_result,
+                                        fallback="public preview export failed",
+                                    ),
+                                )
+                            ),
+                            saved=True,
+                            preview_refreshed=bool(export_result.get("success")),
+                            stage=(
+                                "complete"
+                                if export_result.get("success")
+                                else "preview_refresh"
+                            ),
+                            warning_code=(
+                                ""
+                                if export_result.get("success")
+                                else "preview_refresh_failed"
+                            ),
                         ),
                     )
                     return
@@ -3680,9 +3701,25 @@ def make_handler(
                     "/api/review/key-paper-coverage/action",
                     "/api/review/manual-import/action",
                 }:
+                    details = {}
+                    if (
+                        request.path == "/api/paper/metadata/update"
+                        and isinstance(error, CuratedPaperError)
+                    ):
+                        details = {
+                            "stage": "metadata_validation",
+                            "field": error.field,
+                            "error_code": error.error_code,
+                            "saved": False,
+                            "preview_refreshed": False,
+                        }
                     self.send_json(
                         HTTPStatus.BAD_REQUEST,
-                        api_payload(success=False, errors=(str(error),)),
+                        api_payload(
+                            success=False,
+                            errors=(str(error),),
+                            **details,
+                        ),
                     )
                 else:
                     self.send_json(

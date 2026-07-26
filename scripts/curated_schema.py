@@ -316,6 +316,7 @@ ALLOWED_VENUE_TRACKS = {
     "main",
     "workshops",
     "findings",
+    "posters",
     "industry",
     "demo",
     "doctoral_consortium",

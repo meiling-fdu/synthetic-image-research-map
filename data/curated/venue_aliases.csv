@@ -3,6 +3,7 @@ IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR),venue:cvpr
 IEEE/CVF Conference on Computer Vision and Pattern Recognition,venue:cvpr:main,IEEE/CVF Conference on Computer Vision and Pattern Recognition,CVPR,conference,main,confirmed,Canonical full-name alias.
 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops,venue:cvpr:workshops,IEEE/CVF Conference on Computer Vision and Pattern Recognition,CVPR,conference,workshops,confirmed,Workshop track remains separate from the main conference.
 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops,venue:cvpr:workshops,IEEE/CVF Conference on Computer Vision and Pattern Recognition,CVPR,conference,workshops,confirmed,Workshop track remains separate from the main conference.
+IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW),venue:cvpr:workshops,IEEE/CVF Conference on Computer Vision and Pattern Recognition,CVPR,conference,workshops,confirmed,CVPRW is a workshop alias; canonical acronym remains CVPR.
 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings,venue:cvpr:findings,IEEE/CVF Conference on Computer Vision and Pattern Recognition,CVPR,conference,findings,confirmed,Findings track remains separate.
 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV),venue:wacv:main,IEEE/CVF Winter Conference on Applications of Computer Vision,WACV,conference,main,confirmed,Year prefix is edition metadata.
 IEEE/CVF Winter Conference on Applications of Computer Vision,venue:wacv:main,IEEE/CVF Winter Conference on Applications of Computer Vision,WACV,conference,main,confirmed,Canonical full-name alias.
@@ -16,14 +17,14 @@ International Conference on Machine Learning,venue:icml:main,International Confe
 International Conference on Machine Learning (ICML),venue:icml:main,International Conference on Machine Learning,ICML,conference,main,confirmed,Acronym-bearing alias.
 Advances in Neural Information Processing Systems,venue:neurips:main,Advances in Neural Information Processing Systems,NeurIPS,conference,main,confirmed,Trailing proceedings volume is not identity.
 NeurIPS,venue:neurips:main,Advances in Neural Information Processing Systems,NeurIPS,conference,main,confirmed,Established short-name alias.
-ArXiv.org,venue:arxiv:main,arXiv,,preprint,main,confirmed,Canonical preprint repository source.
-arXiv (Cornell University),venue:arxiv:main,arXiv,,preprint,main,confirmed,Provider-bearing arXiv alias.
-arXiv,venue:arxiv:main,arXiv,,preprint,main,confirmed,Canonical short-name alias.
-Figshare,venue:figshare:main,Figshare,,preprint,main,confirmed,Repository venue type is normalized to preprint.
-Zenodo (CERN European Organization for Nuclear Research),venue:zenodo:main,Zenodo,,preprint,main,confirmed,Provider-bearing repository alias.
-Zenodo,venue:zenodo:main,Zenodo,,preprint,main,confirmed,Canonical short-name alias.
-SSRN Electronic Journal,venue:ssrn:main,SSRN Electronic Journal,,preprint,main,confirmed,Repository/preprint source.
-Lecture notes in computer science,venue:lncs:main,Lecture Notes in Computer Science,LNCS,book,main,confirmed,Book-series venue.
+ArXiv.org,venue:arxiv,arXiv,,preprint,,confirmed,Canonical preprint repository source.
+arXiv (Cornell University),venue:arxiv,arXiv,,preprint,,confirmed,Provider-bearing arXiv alias.
+arXiv,venue:arxiv,arXiv,,preprint,,confirmed,Canonical short-name alias.
+Figshare,venue:figshare,Figshare,,preprint,,confirmed,Repository venue type is normalized to preprint.
+Zenodo (CERN European Organization for Nuclear Research),venue:zenodo,Zenodo,,preprint,,confirmed,Provider-bearing repository alias.
+Zenodo,venue:zenodo,Zenodo,,preprint,,confirmed,Canonical short-name alias.
+SSRN Electronic Journal,venue:ssrn,SSRN Electronic Journal,,preprint,,confirmed,Repository/preprint source.
+Lecture notes in computer science,venue:lncs,Lecture Notes in Computer Science,LNCS,book,,confirmed,Book-series venue.
 International Conference on Learning Representations,venue:iclr:main,International Conference on Learning Representations,ICLR,conference,main,confirmed,Canonical full-name alias.
 International Conference on Learning Representations (ICLR),venue:iclr:main,International Conference on Learning Representations,ICLR,conference,main,confirmed,Acronym-bearing alias.
 ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec),venue:ih-mmsec:main,ACM Workshop on Information Hiding and Multimedia Security,IH&MMSec,conference,workshops,confirmed,Workshop identity is represented by the canonical workshops track.
@@ -67,25 +68,25 @@ Annual Meeting of the Association for Computational Linguistics,venue:acl:main,A
 Annual Meeting of the Association for Computational Linguistics (ACL),venue:acl:main,Annual Meeting of the Association for Computational Linguistics,ACL,conference,main,confirmed,Acronym-bearing alias.
 Findings of the Association for Computational Linguistics (ACL),venue:acl:findings,Annual Meeting of the Association for Computational Linguistics,ACL,conference,findings,confirmed,Findings remains separate from the main meeting.
 Annual Meeting of the Association for Computational Linguistics (Volume 6: Industry Track),venue:acl:industry,Annual Meeting of the Association for Computational Linguistics,ACL,conference,industry,confirmed,Industry volume and track remain separate.
-IEEE Transactions on Artificial Intelligence,venue:ieee-tai:main,IEEE Transactions on Artificial Intelligence,,journal,main,confirmed,Journal identity overrides stale preprint metadata.
+IEEE Transactions on Artificial Intelligence,venue:ieee-tai,IEEE Transactions on Artificial Intelligence,,journal,,confirmed,Journal identity overrides stale preprint metadata.
 European Conference on Computer Vision (ECCV),venue:eccv:main,European Conference on Computer Vision,ECCV,conference,main,confirmed,Canonical conference series.
 European Conference on Computer Vision,venue:eccv:main,European Conference on Computer Vision,ECCV,conference,main,confirmed,Canonical full-name alias.
 European Conference on Computer Vision (ECCV) Workshops,venue:eccv:workshops,European Conference on Computer Vision,ECCV,conference,workshops,confirmed,Workshop track remains separate from the main conference.
-Frontiers in artificial intelligence and applications,venue:frontiers-aiai:main,Frontiers in Artificial Intelligence and Applications,,book,main,confirmed,Book-series identity overrides stale journal metadata.
-IEEE Transactions on Pattern Analysis and Machine Intelligence,venue:ieee-transactions-on-pattern-analysis-and-machine-intelligence:main,IEEE Transactions on Pattern Analysis and Machine Intelligence,TPAMI,journal,main,confirmed,Audited established journal acronym.
-TPAMI,venue:ieee-transactions-on-pattern-analysis-and-machine-intelligence:main,IEEE Transactions on Pattern Analysis and Machine Intelligence,TPAMI,journal,main,confirmed,Established acronym alias.
-IEEE Transactions on Information Forensics and Security,venue:ieee-transactions-on-information-forensics-and-security:main,IEEE Transactions on Information Forensics and Security,TIFS,journal,main,confirmed,Audited established journal acronym.
-TIFS,venue:ieee-transactions-on-information-forensics-and-security:main,IEEE Transactions on Information Forensics and Security,TIFS,journal,main,confirmed,Established acronym alias.
-IEEE Transactions on Multimedia,venue:ieee-transactions-on-multimedia:main,IEEE Transactions on Multimedia,TMM,journal,main,confirmed,Audited established journal acronym.
-TMM,venue:ieee-transactions-on-multimedia:main,IEEE Transactions on Multimedia,TMM,journal,main,confirmed,Established acronym alias.
-IEEE Signal Processing Letters,venue:ieee-signal-processing-letters:main,IEEE Signal Processing Letters,SPL,journal,main,confirmed,Audited established journal acronym.
-SPL,venue:ieee-signal-processing-letters:main,IEEE Signal Processing Letters,SPL,journal,main,confirmed,Established acronym alias.
-Pattern Recognition,venue:pattern-recognition:main,Pattern Recognition,PR,journal,main,confirmed,Audited established journal acronym.
-PR,venue:pattern-recognition:main,Pattern Recognition,PR,journal,main,confirmed,Established acronym alias.
-Pattern Recognition Letters,venue:pattern-recognition-letters:main,Pattern Recognition Letters,PRL,journal,main,confirmed,Audited established journal acronym.
-PRL,venue:pattern-recognition-letters:main,Pattern Recognition Letters,PRL,journal,main,confirmed,Established acronym alias.
-"ACM Transactions on Multimedia Computing, Communications, and Applications",venue:acm-transactions-on-multimedia-computing-communications-and-applications:main,"ACM Transactions on Multimedia Computing, Communications, and Applications",TOMM,journal,main,confirmed,Audited established journal acronym.
-TOMM,venue:acm-transactions-on-multimedia-computing-communications-and-applications:main,"ACM Transactions on Multimedia Computing, Communications, and Applications",TOMM,journal,main,confirmed,Established acronym alias.
+Frontiers in artificial intelligence and applications,venue:frontiers-aiai,Frontiers in Artificial Intelligence and Applications,,book,,confirmed,Book-series identity overrides stale journal metadata.
+IEEE Transactions on Pattern Analysis and Machine Intelligence,venue:ieee-transactions-on-pattern-analysis-and-machine-intelligence,IEEE Transactions on Pattern Analysis and Machine Intelligence,TPAMI,journal,,confirmed,Audited established journal acronym.
+TPAMI,venue:ieee-transactions-on-pattern-analysis-and-machine-intelligence,IEEE Transactions on Pattern Analysis and Machine Intelligence,TPAMI,journal,,confirmed,Established acronym alias.
+IEEE Transactions on Information Forensics and Security,venue:ieee-transactions-on-information-forensics-and-security,IEEE Transactions on Information Forensics and Security,TIFS,journal,,confirmed,Audited established journal acronym.
+TIFS,venue:ieee-transactions-on-information-forensics-and-security,IEEE Transactions on Information Forensics and Security,TIFS,journal,,confirmed,Established acronym alias.
+IEEE Transactions on Multimedia,venue:ieee-transactions-on-multimedia,IEEE Transactions on Multimedia,TMM,journal,,confirmed,Audited established journal acronym.
+TMM,venue:ieee-transactions-on-multimedia,IEEE Transactions on Multimedia,TMM,journal,,confirmed,Established acronym alias.
+IEEE Signal Processing Letters,venue:ieee-signal-processing-letters,IEEE Signal Processing Letters,SPL,journal,,confirmed,Audited established journal acronym.
+SPL,venue:ieee-signal-processing-letters,IEEE Signal Processing Letters,SPL,journal,,confirmed,Established acronym alias.
+Pattern Recognition,venue:pattern-recognition,Pattern Recognition,PR,journal,,confirmed,Audited established journal acronym.
+PR,venue:pattern-recognition,Pattern Recognition,PR,journal,,confirmed,Established acronym alias.
+Pattern Recognition Letters,venue:pattern-recognition-letters,Pattern Recognition Letters,PRL,journal,,confirmed,Audited established journal acronym.
+PRL,venue:pattern-recognition-letters,Pattern Recognition Letters,PRL,journal,,confirmed,Established acronym alias.
+"ACM Transactions on Multimedia Computing, Communications, and Applications",venue:acm-transactions-on-multimedia-computing-communications-and-applications,"ACM Transactions on Multimedia Computing, Communications, and Applications",TOMM,journal,,confirmed,Audited established journal acronym.
+TOMM,venue:acm-transactions-on-multimedia-computing-communications-and-applications,"ACM Transactions on Multimedia Computing, Communications, and Applications",TOMM,journal,,confirmed,Established acronym alias.
 IEEE International Conference on Multimedia and Expo,venue:ieee-international-conference-on-multimedia-and-expo:main,IEEE International Conference on Multimedia and Expo,ICME,conference,main,confirmed,Canonical full-name alias with established conference acronym.
 IEEE International Conference on Multimedia and Expo (ICME),venue:ieee-international-conference-on-multimedia-and-expo:main,IEEE International Conference on Multimedia and Expo,ICME,conference,main,confirmed,Established acronym alias.
 International Conference on Advanced Intelligent Systems and Informatics,venue:international-conference-on-advanced-intelligent-systems-and-informatics:main,International Conference on Advanced Intelligent Systems and Informatics,AISI,conference,main,confirmed,Confirmed conference-event identity; proceedings book series does not determine publication type.
@@ -103,3 +104,7 @@ IEEE International Black Sea Conference on Communications and Networking,venue:b
 International Conference on Security of Information and Networks,venue:sin:main,International Conference on Security of Information and Networks,SIN,conference,main,confirmed,Canonical full-name conference alias.
 International Joint Conference on Natural Language Processing and the 4th Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics,venue:ijcnlp-aacl:main,International Joint Conference on Natural Language Processing and the Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics,,conference,main,confirmed,Confirmed joint ACL-related conference identity; ordinal is edition metadata.
 International Joint Conference on Natural Language Processing and the Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics,venue:ijcnlp-aacl:main,International Joint Conference on Natural Language Processing and the Conference of the Asia-Pacific Chapter of the Association for Computational Linguistics,,conference,main,confirmed,Canonical full-name alias without edition ordinal.
+Computer Vision and Image Understanding,venue:computer-vision-and-image-understanding,Computer Vision and Image Understanding,CVIU,journal,,confirmed,Canonical journal identity; journals do not have conference tracks.
+Sensors,venue:sensors,Sensors,,journal,,confirmed,Canonical journal identity; journals do not have conference tracks.
+ACM SIGGRAPH Posters,venue:siggraph:posters,ACM SIGGRAPH,SIGGRAPH,conference,posters,confirmed,Reviewed SIGGRAPH Posters track.
+Special Interest Group on Computer Graphics and Interactive Techniques Posters,venue:siggraph:posters,ACM SIGGRAPH,SIGGRAPH,conference,posters,confirmed,Historical full-name alias for the reviewed SIGGRAPH Posters track.

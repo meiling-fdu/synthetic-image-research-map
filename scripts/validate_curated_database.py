@@ -1048,8 +1048,12 @@ def main() -> int:
     for row_number, paper in enumerate(papers, start=2):
         if clean(paper.get("venue_name")) and not clean(paper.get("venue_id")):
             add_issue(issues, "ERROR", "papers.csv", "canonical venue_name requires venue_id", row_number)
-        if clean(paper.get("venue_id")) and clean(paper.get("venue_track")) not in ALLOWED_VENUE_TRACKS:
-            add_issue(issues, "ERROR", "papers.csv", "canonical venue requires a supported venue_track", row_number)
+        venue_type = clean(paper.get("venue_type"))
+        venue_track = clean(paper.get("venue_track"))
+        if clean(paper.get("venue_id")) and venue_type == "conference" and venue_track not in ALLOWED_VENUE_TRACKS:
+            add_issue(issues, "ERROR", "papers.csv", "conference venue requires a supported venue_track", row_number)
+        if venue_type != "conference" and venue_track:
+            add_issue(issues, "ERROR", "papers.csv", "non-conference venue cannot have a conference track", row_number)
     venue_by_id: Dict[str, Tuple[str, str, str, str]] = {}
     venue_id_by_alias: Dict[str, str] = {}
     venue_id_by_name_track: Dict[Tuple[str, str], str] = {}

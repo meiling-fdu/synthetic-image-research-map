@@ -16,6 +16,7 @@ from scripts.export_public_preview import (
     apply_ordered_paper_location_summaries,
     canonicalize_public_institutions,
     confirmed_alias_id_redirects,
+    deduplicate_public_map_relationships,
     exclude_preprint_versions,
     exclude_retracted_records,
     paper_is_retracted,
@@ -30,6 +31,7 @@ from scripts.validate_public_preview import validate_preprint_version_duplicates
 from scripts.validate_public_preview import (
     is_bad_author_candidate,
     normalized_author_name,
+    validate_duplicate_map_relationships,
     validate_paper_detail_schema,
     validate_paper_record,
     validate_record,
@@ -38,6 +40,83 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_exact_map_relationships_and_author_names_are_deduplicated(self):
+        records = [
+            {
+                "id": "formal",
+                "title": "Same paper",
+                "year": 2021,
+                "doi": "10.1000/same",
+                "institution": "Example University",
+                "institution_id": "institution:example",
+                "institution_authors": ["Ada Researcher", "Ada Researcher"],
+                "preliminary_affiliations": True,
+            },
+            {
+                "id": "alternate-version",
+                "title": "Same paper",
+                "year": 2020,
+                "doi": "https://doi.org/10.1000/same",
+                "institution": "Example University",
+                "institution_id": "institution:example",
+                "institution_authors": ["Researcher, Ada", "Ben Researcher"],
+                "preliminary_affiliations": True,
+            },
+        ]
+
+        deduplicated, removed = deduplicate_public_map_relationships(records)
+
+        self.assertEqual(removed, 1)
+        self.assertEqual(len(deduplicated), 1)
+        self.assertEqual(
+            deduplicated[0]["institution_authors"],
+            ["Researcher, Ada", "Ben Researcher"],
+        )
+
+    def test_conflicting_curated_mapping_ids_are_not_merged_implicitly(self):
+        records = [
+            {
+                "title": "Same paper",
+                "year": 2021,
+                "doi": "10.1000/same",
+                "institution": "Example University",
+                "institution_id": "institution:example",
+                "mapping_id": mapping_id,
+            }
+            for mapping_id in ("mapping:one", "mapping:two")
+        ]
+
+        with self.assertRaisesRegex(
+            RuntimeError,
+            "Conflicting curated mapping IDs",
+        ):
+            deduplicate_public_map_relationships(records)
+
+    def test_validator_rejects_duplicate_canonical_author_relationship(self):
+        records = [
+            {
+                "title": "Same paper",
+                "year": 2021,
+                "doi": "10.1000/same",
+                "institution": "Example University",
+                "institution_id": "institution:example",
+                "institution_authors": authors,
+            }
+            for authors in (
+                ["Ada Researcher"],
+                ["Researcher, Ada"],
+            )
+        ]
+        issues = []
+
+        validate_duplicate_map_relationships(records, issues)
+
+        self.assertEqual(len(issues), 1)
+        self.assertIn(
+            "duplicate canonical paper/author/institution relationship",
+            issues[0].message,
+        )
+
     def test_four_current_shrinkage_relationships_have_durable_locations_and_emit(self):
         mapping_ids = {
             "mapping:8bde822b616608f7d149",

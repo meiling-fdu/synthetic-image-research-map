@@ -16,6 +16,8 @@ from typing import Any, Dict, Iterable, List, Mapping, Sequence
 
 try:
     from .curated_schema import (
+        AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+        INSTITUTION_AUDIT_COLUMNS,
         CURATED_DATA_DIR,
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_COLUMNS,
@@ -25,6 +27,8 @@ try:
     from .curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
 except ImportError:
     from curated_schema import (
+        AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+        INSTITUTION_AUDIT_COLUMNS,
         CURATED_DATA_DIR,
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_COLUMNS,
@@ -37,11 +41,30 @@ except ImportError:
 DEFAULT_LOCATION_REVIEW_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
 DEFAULT_INSTITUTION_LOCATIONS_PATH = CURATED_DATA_DIR / "institution_locations.csv"
 DEFAULT_INSTITUTION_ALIASES_PATH = CURATED_DATA_DIR / "institution_aliases.csv"
+DEFAULT_AUTHOR_INSTITUTION_MAPPINGS_PATH = (
+    CURATED_DATA_DIR / "author_institution_mappings.csv"
+)
+DEFAULT_INSTITUTION_AUDIT_PATH = CURATED_DATA_DIR / "institution_audit_log.csv"
 COUNTRY_CODE_PATTERN = re.compile(r"[A-Z]{2}")
 
 
 class CuratedLocationError(RuntimeError):
     """An expected location validation or storage error."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        field: str = "",
+        error_code: str = "invalid_location",
+        submitted_institution_id: str = "",
+        current_institution_id: str = "",
+    ):
+        self.field = field
+        self.error_code = error_code
+        self.submitted_institution_id = submitted_institution_id
+        self.current_institution_id = current_institution_id
+        super().__init__(message)
 
 
 def clean(value: Any) -> str:
@@ -334,6 +357,9 @@ def create_or_update_confirmed_location(
     locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
     review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    mappings_path: Path = DEFAULT_AUTHOR_INSTITUTION_MAPPINGS_PATH,
+    aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
+    institution_audit_path: Path = DEFAULT_INSTITUTION_AUDIT_PATH,
     created_by: str = "local-admin",
 ) -> Dict[str, Any]:
     review_rows = load_location_review_queue(review_path)
@@ -342,22 +368,73 @@ def create_or_update_confirmed_location(
     bound_institution_id = clean(queue_row.get("institution_id"))
     if not bound_institution_id:
         raise CuratedLocationError("location review row is not bound to an institution_id")
+    institutions = load_institutions(institutions_path)
+    aliases = load_institution_aliases(aliases_path)
+    audits = _read_csv(institution_audit_path, INSTITUTION_AUDIT_COLUMNS)
+
+    redirects = {
+        clean(row.get("previous_institution_id")): clean(row.get("institution_id"))
+        for row in audits
+        if clean(row.get("action")) == "merge"
+        and clean(row.get("previous_institution_id"))
+        and clean(row.get("institution_id"))
+    }
+    alias_ids = {
+        clean(row.get("alias_id")): clean(row.get("institution_id"))
+        for row in aliases
+        if clean(row.get("review_status")) == "confirmed"
+        and clean(row.get("alias_id"))
+        and clean(row.get("institution_id"))
+    }
+
+    def canonical_id(value: Any) -> str:
+        identifier = alias_ids.get(clean(value), clean(value))
+        seen = set()
+        while identifier in redirects and identifier not in seen:
+            seen.add(identifier)
+            identifier = redirects[identifier]
+        return identifier
+
+    # Older review rows can retain the pre-normalization institution ID while
+    # their active paper mapping already points at the current canonical
+    # identity. Resolve that relationship before comparing submitted IDs.
+    mapping_rows = _read_csv(mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+    paper_id = clean(queue_row.get("related_paper_id"))
+    mapping_ids = {
+        clean(row.get("institution_id"))
+        for row in mapping_rows
+        if clean(row.get("paper_id")) == paper_id
+        and clean(row.get("mapping_status")) in {"active", "needs_review"}
+        and normalize_institution_name(row.get("institution"))
+        == normalize_institution_name(queue_row.get("institution"))
+        and clean(row.get("institution_id"))
+    }
+    current_institution_id = canonical_id(
+        next(iter(mapping_ids)) if len(mapping_ids) == 1 else bound_institution_id
+    )
     entity = next(
         (
-            row for row in load_institutions(institutions_path)
-            if clean(row.get("institution_id")) == bound_institution_id
+            row for row in institutions
+            if clean(row.get("institution_id")) == current_institution_id
         ),
         None,
     )
     if entity is None:
         raise CuratedLocationError("location review institution_id is unknown")
     requested_id = clean(draft.get("institution_id"))
-    if requested_id and requested_id != bound_institution_id:
-        raise CuratedLocationError("editing coordinates cannot change institution_id")
+    submitted_canonical_id = canonical_id(requested_id)
+    if requested_id and submitted_canonical_id != current_institution_id:
+        raise CuratedLocationError(
+            "location confirmation cannot change institution identity; use the identity-change workflow",
+            field="institution_id",
+            error_code="institution_identity_change_not_allowed",
+            submitted_institution_id=requested_id,
+            current_institution_id=current_institution_id,
+        )
     canonical_name = clean(entity.get("canonical_name"))
     location_draft = {
         **draft,
-        "institution_id": bound_institution_id,
+        "institution_id": current_institution_id,
         "confirmed_institution": canonical_name,
     }
     queue_normalized = normalize_institution_name(canonical_name)
@@ -371,7 +448,7 @@ def create_or_update_confirmed_location(
     matches = [
         index
         for index, row in enumerate(locations)
-        if clean(row.get("institution_id")) == bound_institution_id
+        if clean(row.get("institution_id")) == current_institution_id
     ]
     if len(matches) > 1:
         raise CuratedLocationError(
@@ -404,6 +481,24 @@ def create_or_update_confirmed_location(
         queue_row.get("review_note"), values["review_note"]
     )
     queue_row["updated_at"] = now
+    # Historical refreshes may have produced duplicate review rows for the
+    # same paper/raw institution under an obsolete ID. They represent the same
+    # location decision when the active mapping resolves them to this target.
+    for peer in review_rows:
+        if peer is queue_row:
+            continue
+        if (
+            clean(peer.get("related_paper_id")) == paper_id
+            and normalize_institution_name(peer.get("institution"))
+            == normalize_institution_name(queue_row.get("institution"))
+        ):
+            peer["review_status"] = "confirmed"
+            peer["location_status"] = "known"
+            peer["coordinate_status"] = "known"
+            peer["review_note"] = _append_note(
+                peer.get("review_note"), values["review_note"]
+            )
+            peer["updated_at"] = now
     save_confirmed_locations(locations, locations_path)
     try:
         save_location_review_queue(review_rows, review_path)

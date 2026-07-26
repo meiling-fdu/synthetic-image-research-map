@@ -80,7 +80,7 @@ class InstitutionLocationCoordinateFrontendTests(unittest.TestCase):
     def test_duplicate_submissions_and_backend_errors_are_visible(self):
         for action_source in (self.confirm_source, self.metadata_source):
             self.assertIn("if (state.locationSaveRunning) return", action_source)
-            self.assertIn("showLocationFormError(error.message)", action_source)
+            self.assertIn("showLocationFormError(", action_source)
             self.assertIn("setLocationSaveRunning(false)", action_source)
         self.assertIn('elements["location-confirm"].disabled = running', self.coordinate_source)
         self.assertIn('elements["location-save-metadata"].disabled = running', self.coordinate_source)
