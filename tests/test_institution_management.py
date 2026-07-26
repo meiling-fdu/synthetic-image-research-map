@@ -436,6 +436,29 @@ class InstitutionManagementTests(unittest.TestCase):
         self.assertEqual(mapping["institution_id"], self.certh_id)
 
     def test_merge_atomically_rebinds_dependent_institution_references(self):
+        shared_alias = "Centre for Research and Technology Hellas"
+        write_csv(self.aliases, INSTITUTION_ALIAS_COLUMNS, [
+            blank(
+                INSTITUTION_ALIAS_COLUMNS,
+                alias_id="alias:certh",
+                alias_name=shared_alias,
+                institution_id=self.certh_id,
+                canonical_institution_name=CERTH,
+                alias_source="manual-review",
+                review_status="confirmed",
+                notes="Confirmed from the publisher PDF.",
+            ),
+            blank(
+                INSTITUTION_ALIAS_COLUMNS,
+                alias_id="alias:certh",
+                alias_name=shared_alias,
+                institution_id=self.amazon_id,
+                canonical_institution_name=AMAZON,
+                alias_source="legacy-migration",
+                review_status="confirmed",
+                notes="Retained from the legacy canonical record.",
+            ),
+        ])
         write_csv(self.location_reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [
             blank(
                 INSTITUTION_LOCATION_REVIEW_COLUMNS,
@@ -498,6 +521,43 @@ class InstitutionManagementTests(unittest.TestCase):
             entities = {row["institution_id"]: row for row in csv.DictReader(handle)}
         self.assertEqual(entities[self.certh_id]["institution_status"], "merged")
         self.assertIn(self.amazon_id, entities)
+        with self.aliases.open(encoding="utf-8", newline="") as handle:
+            aliases = [
+                row for row in csv.DictReader(handle)
+                if row["alias_name"] == shared_alias
+            ]
+        self.assertEqual(len(aliases), 1)
+        self.assertEqual(aliases[0]["institution_id"], self.amazon_id)
+        self.assertEqual(
+            aliases[0]["alias_source"],
+            "manual-review | legacy-migration",
+        )
+        self.assertIn("Confirmed from the publisher PDF.", aliases[0]["notes"])
+        self.assertIn("Retained from the legacy canonical record.", aliases[0]["notes"])
+
+    def test_merge_same_display_name_does_not_create_self_alias(self):
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            institutions = list(csv.DictReader(handle))
+        institutions[0]["canonical_name"] = AMAZON
+        write_csv(self.institutions, INSTITUTION_COLUMNS, institutions)
+
+        merge_institutions(
+            self.certh_id,
+            self.amazon_id,
+            confirmation=f"REPLACE {AMAZON} WITH {AMAZON} GLOBALLY",
+            review_note="Merged a legacy duplicate ID with the same display name.",
+            institutions_path=self.institutions,
+            mappings_path=self.mappings,
+            aliases_path=self.aliases,
+            locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+            hierarchy_path=self.hierarchy,
+            review_queue_path=self.review_queue,
+            audit_path=self.audits,
+        )
+
+        with self.aliases.open(encoding="utf-8", newline="") as handle:
+            self.assertEqual(list(csv.DictReader(handle)), [])
 
     def test_validator_rejects_true_mapping_and_location_review_orphans(self):
         institutions = [

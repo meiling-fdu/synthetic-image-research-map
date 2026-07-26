@@ -646,12 +646,54 @@ def merge_institutions(
             review["updated_at"] = now
 
     aliases = _read(aliases_path, INSTITUTION_ALIAS_COLUMNS)
+    migrated_alias_keys: set[tuple[str, str]] = set()
     for alias in aliases:
         if clean(alias.get("institution_id")) == source_id:
             alias["institution_id"] = target_id
             alias["canonical_institution_name"] = target_name
-    if not any(normalize_institution(row.get("alias_name")) == normalize_institution(source.get("canonical_name")) for row in aliases):
+            migrated_alias_keys.add((
+                normalize_institution(alias.get("alias_name")),
+                target_id,
+            ))
+    source_name = clean(source.get("canonical_name"))
+    if (
+        normalize_institution(source_name) != normalize_institution(target_name)
+        and not any(
+            normalize_institution(row.get("alias_name"))
+            == normalize_institution(source_name)
+            for row in aliases
+        )
+    ):
         aliases.append({"alias_id": alias_id_for(source.get("canonical_name")), "alias_name": clean(source.get("canonical_name")), "institution_id": target_id, "canonical_institution_name": target_name, "alias_language": "", "alias_source": "institution-merge", "review_status": "confirmed", "notes": clean(review_note)})
+    consolidated_aliases: list[dict[str, str]] = []
+    aliases_by_key: dict[tuple[str, str], dict[str, str]] = {}
+    for alias in aliases:
+        key = (
+            normalize_institution(alias.get("alias_name")),
+            clean(alias.get("institution_id")),
+        )
+        if key not in migrated_alias_keys:
+            consolidated_aliases.append(dict(alias))
+            continue
+        existing = aliases_by_key.get(key)
+        if existing is None:
+            copied = dict(alias)
+            aliases_by_key[key] = copied
+            consolidated_aliases.append(copied)
+            continue
+        sources = list(dict.fromkeys(filter(None, (
+            *(clean(value) for value in clean(existing.get("alias_source")).split(" | ")),
+            *(clean(value) for value in clean(alias.get("alias_source")).split(" | ")),
+        ))))
+        notes = list(dict.fromkeys(filter(None, (
+            clean(existing.get("notes")),
+            clean(alias.get("notes")),
+        ))))
+        existing["alias_source"] = " | ".join(sources)
+        existing["notes"] = " | ".join(notes)
+        existing["canonical_institution_name"] = target_name
+        existing["review_status"] = "confirmed"
+    aliases = consolidated_aliases
 
     hierarchy = _read(hierarchy_path, INSTITUTION_HIERARCHY_COLUMNS)
     migrated_hierarchy = []
