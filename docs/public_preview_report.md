@@ -11,7 +11,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-20T16:46:57Z |
+| public_preview_generated_at | 2026-07-26T16:29:05Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,14 +19,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1007 |
-| Unique papers | 464 |
-| Unique institutions | 529 |
-| Countries | 52 |
-| arXiv/preprint records | 560 |
-| Records with DOI | 960 |
-| Records with venue | 898 |
-| Records missing venue | 109 |
+| Map records | 1036 |
+| Unique papers | 478 |
+| Unique institutions | 547 |
+| Countries | 53 |
+| arXiv/preprint records | 570 |
+| Records with DOI | 986 |
+| Records with venue | 926 |
+| Records missing venue | 110 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -36,27 +36,27 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 397 |
+| detection | 409 |
 | source_attribution | 43 |
-| detection_and_source_attribution | 24 |
+| detection_and_source_attribution | 26 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 230 |
-| synthetic_image_detection | 121 |
+| ai_generated_image_detection | 238 |
+| synthetic_image_detection | 125 |
 | deepfake_image_detection | 46 |
+| detection_and_source_attribution | 26 |
 | generated_image_source_attribution | 26 |
-| detection_and_source_attribution | 24 |
 | source_identification | 17 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 89 |
-| 2025 | 132 |
+| 2026 | 102 |
+| 2025 | 133 |
 | 2024 | 114 |
 | 2023 | 52 |
 | 2022 | 22 |
@@ -74,8 +74,8 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | AAAI Conference on Artificial Intelligence (AAAI) | 22 |
 | International Conference on Machine Learning (ICML) | 17 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 13 |
+| Advances in Neural Information Processing Systems (NeurIPS) | 9 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 9 |
-| Advances in Neural Information Processing Systems (NeurIPS) | 8 |
 | International Conference on Learning Representations (ICLR) | 8 |
 | IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
 | ACM International Conference on Multimedia (ACM MM) | 6 |
@@ -85,14 +85,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 429 |
-| United States | 141 |
+| China | 446 |
+| United States | 143 |
 | Italy | 80 |
-| India | 52 |
+| India | 54 |
 | Germany | 41 |
-| South Korea | 30 |
+| United Kingdom | 32 |
+| South Korea | 31 |
 | France | 29 |
-| United Kingdom | 29 |
 | Singapore | 19 |
 | Australia | 14 |
 
@@ -102,11 +102,11 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | Shanghai Jiao Tong University | 18 |
 | University of Naples Federico II | 17 |
+| University of Chinese Academy of Sciences | 15 |
 | University of Siena | 15 |
 | Beijing Jiaotong University | 14 |
-| University of Chinese Academy of Sciences | 14 |
-| Fudan University | 12 |
-| Institute of Automation, Chinese Academy of Sciences | 12 |
+| Institute of Automation, Chinese Academy of Sciences | 14 |
+| Fudan University | 13 |
 | University of Science and Technology of China | 11 |
 | Zhejiang University | 11 |
 | Beijing University of Posts and Telecommunications | 10 |
@@ -115,14 +115,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 847 |
-| medium | 160 |
+| high | 883 |
+| medium | 153 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **109**
+Count: **110**
 
 - Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection (2024) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4be0623e58aa0b48`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore University of Technology and Design; `openalex-candidate-f322e509be974b4c`
@@ -152,7 +152,7 @@ Count: **109**
 - Detection of Deepfake Images Created Using Generative Adversarial Networks: A Review (2021) - APJ Abdul Kalam Technological University; `openalex-candidate-34b247a20f8c86d1`
 - Deepfake Image Detection Using Light-Weight Attention Integrated MobileNetV3 Model (2025) - Amrita Vishwa Vidyapeetham; `openalex-candidate-b95f1113154c4bf6`
 - Training Deep Neural Networks for Detecting Drinking Glasses Using Synthetic Images (2017) - University of Newcastle Australia; `openalex-candidate-c6a3aad67947571f`
-- Diffusion Models as a Representation Learner for Deepfake Image Detection (2024) - Computer Research Institute of Montréal; `openalex-candidate-0ea11c8fa9b8246c`
+- Diffusion Models as a Representation Learner for Deepfake Image Detection (2024) - Computer Research Institute of Montreal; `openalex-candidate-0ea11c8fa9b8246c`
 - Deepfake Image Detection Using Convolutional Neural Network (2025) - University of Engineering & Management; `openalex-candidate-c48325391c4c055f`
 - Light2Lie: Detecting Deepfake Images Using Physical Reflectance Laws (2026) - Technische Universität Darmstadt; `openalex-candidate-ffc5d929530a3f5f`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore Institute of Technology; `openalex-candidate-99e15d52b1295c7d`
@@ -165,7 +165,7 @@ Count: **109**
 - Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - Offenburg University of Applied Sciences; `openalex-candidate-65e152459671d4ca`
 - Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - University of Mannheim; `openalex-candidate-e0458c9a0478e873`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Qilu University of Technology; `openalex-candidate-dd5630f5ebd3a43e`
-- DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Polytechnic University of Hauts-de-France; `openalex-candidate-d76663125891041c`
+- DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Université Polytechnique Hauts-de-France; `openalex-candidate-d76663125891041c`
 - DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Khalifa University of Science and Technology; `openalex-candidate-e32a2ff9f0e867e8`
 - DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Sorbonne University Abu Dhabi; `openalex-candidate-4a87d8a09390e966`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Jahangirnagar University; `openalex-candidate-b8c048d2bb06f247`
@@ -193,8 +193,9 @@ Count: **109**
 - Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Centre Borelli; `openalex-candidate-ab5caf38c08b1f42`
 - Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Agence France-Presse; `openalex-candidate-ec4a1e74d34806d1`
 - Level Up the Deepfake Detection: A Method to Effectively Discriminate Images Generated by GAN Architectures and Diffusion Models (2024) - Bank of Italy; `openalex-candidate-b348f1ba71286b2d`
-- EasyDeep: An IoT Friendly Robust Detection Method for GAN Generated Deepfake Images in Social Media (2022) - Ollscoil na Gaillimhe – University of Galway; `openalex-candidate-32122aade684dedc`
+- EasyDeep: An IoT Friendly Robust Detection Method for GAN Generated Deepfake Images in Social Media (2022) - University of Galway; `openalex-candidate-32122aade684dedc`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-a66244e63c273fee`
+- A Survey on Deep-Learning-Based Techniques for Detecting AI-Generated Synthetic Images (2026) - Complutense University of Madrid; `curated-map:af83a7022d551570f56c`
 - Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - University at Buffalo; `curated-map:5c099af144a9f6b6b234`
 - Adaptive Test-Time Semantic Debiasing for AI-Generated Image Detection (2025) - Institute of Information Engineering, Chinese Academy of Sciences; `curated-map:44229f2cf573ad44149f`
 - FLODA: Harnessing Vision-Language Models for Deepfake Assessment (2025) - Yonsei University, International Campus; `curated-map:26f32abc1c8d21b161be`
@@ -204,7 +205,7 @@ Count: **109**
 - LAID: Lightweight AI-Generated Image Detection in Spatial and Spectral Domains (2025) - Queen's University; `curated-map:c9f7d686cfe5fe526a81`
 - Simple Detection of AI-Generated Images based on Noise Correlation (2025) - University of Technology of Troyes; `curated-map:34970fefaf9f848c6bed`
 - Simple Detection of AI-Generated Images based on Noise Correlation (2025) - Center for Data-Driven Science and AI, Tohoku University, Sendai, Japan; `curated-map:08ec4dbffcbfe0af24c2`
-- Simple Detection of AI-Generated Images based on Noise Correlation (2025) - Université de Lille; `curated-map:1253099dae009c03dc59`
+- Simple Detection of AI-Generated Images based on Noise Correlation (2025) - University of Lille; `curated-map:1253099dae009c03dc59`
 - AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error (2024) - Ruhr University Bochum; `curated-map:b7697d9eeef6b1581d40`
 - CLIPping the Deception: Adapting Vision-Language Models for Universal Deepfake Detection (2024) - University of Bergen; `curated-map:f553f48c2bc3f6f9925a`
 - Contrasting Deepfakes Diffusion via Contrastive Learning and Global-Local Similarities (2024) - University of Modena and Reggio Emilia; `curated-map:e78a2dbe2edadc948fc7`

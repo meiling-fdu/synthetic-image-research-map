@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-07-22T00:46:51Z"
+    "public_preview_generated_at": "2026-07-26T16:29:05Z"
   },
   "records": [
     {
@@ -1272,6 +1272,412 @@
           "name": "Zhejiang University of Technology",
           "canonical_name": "Zhejiang University of Technology",
           "institution_id": "institution:9b91aedca1273b56",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:d1195175f50833c90a64",
+      "title": "ADRD: Detecting diffusion-generated images via adversarial perturbation induced reconstruction discrepancy",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "PLoS ONE",
+      "venue_name": "PLoS ONE",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "The rapid advancement of diffusion models has raised concerns about their misuse in generating deceptive visual content, motivating growing interest in AI-generated image detection. Many existing detection methods rely on image semantic features, but modern diffusion models are optimized to closely match the semantic structure of real images, reducing the effectiveness of semantic-based detection. An alternative line of work exploits differences revealed through diffusion reconstruction; however, most existing approaches treat reconstruction error as a static and passive metric, which can be sensitive to generators or post-processing, thereby limiting robustness. In this work, we propose Adversarial Diffusion Reconstruction Distance (ADRD), a detection framework that models diffusion reconstruction as a dynamic response process rather than a fixed descriptor. ADRD actively probes the reconstruction behavior by introducing perturbation in latent space and measuring how reconstruction deviations respond under identical perturbations. We empirically observe that real images typically exhibit larger and more variable reconstruction responses, while diffusion-generated images tend to show more stable reconstruction behavior, reflecting differences in their alignment with the diffusion model's implicit data manifold. By characterizing reconstruction sensitivity instead of absolute reconstruction error, ADRD provides a complementary perspective to existing reconstruction-based detectors. Experimental evaluations on multiple benchmarks suggest that reconstruction response under controlled perturbations constitutes a meaningful signal for diffusion-generated image detection. The code is available at https://github.com/ezell-chou/adrd.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1371/journal.pone.0350655",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1371/journal.pone.0350655",
+      "primary_url": "https://doi.org/10.1371/journal.pone.0350655",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7168285345",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1371/journal.pone.0350655",
+      "authors": [
+        {
+          "name": "Yi Zhou",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xiangwei Hu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jun Tong",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Changting Lin",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Mei Sun",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Shuangxi Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Jiaxing Vocational Technical College",
+        "Jiaxing Municipal Public Security Bureau",
+        "Binjiang Institute of Zhejiang University"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Zhejiang"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:59fdda701b76db9535d9",
+          "institution_id": "institution:d9bedf96789f3033",
+          "institution": "Jiaxing Vocational Technical College",
+          "institution_authors": [
+            "Yi Zhou",
+            "Xiangwei Hu",
+            "Mei Sun",
+            "Shuangxi Chen"
+          ],
+          "raw_affiliation": "School of Internet, Jiaxing Vocational and Technical College, Jiaxing, Zhejiang, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168285345",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:cb2295576afb01c47d6b",
+          "institution_id": "institution:23556881bce23bb9",
+          "institution": "Jiaxing Municipal Public Security Bureau",
+          "institution_authors": [
+            "Jun Tong"
+          ],
+          "raw_affiliation": "Jiaxing Municipal Public Security Bureau, Jiaxing, Zhejiang, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168285345",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:83f6b68902e2a0f856b3",
+          "institution_id": "institution:5d6887482c098264",
+          "institution": "Binjiang Institute of Zhejiang University",
+          "institution_authors": [
+            "Changting Lin"
+          ],
+          "raw_affiliation": "Binjiang Institute of Zhejiang University, Hangzhou, Zhejiang, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168285345",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:d9bedf96789f3033",
+          "institution": "Jiaxing Vocational Technical College",
+          "institution_type": "other",
+          "authors": [
+            "Yi Zhou",
+            "Xiangwei Hu",
+            "Mei Sun",
+            "Shuangxi Chen"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:23556881bce23bb9",
+          "institution": "Jiaxing Municipal Public Security Bureau",
+          "institution_type": "other",
+          "authors": [
+            "Jun Tong"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:5d6887482c098264",
+          "institution": "Binjiang Institute of Zhejiang University",
+          "institution_type": "university",
+          "authors": [
+            "Changting Lin"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yi Zhou",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ]
+        },
+        {
+          "author": "Xiangwei Hu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ]
+        },
+        {
+          "author": "Jun Tong",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:23556881bce23bb9"
+          ]
+        },
+        {
+          "author": "Changting Lin",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:5d6887482c098264"
+          ]
+        },
+        {
+          "author": "Mei Sun",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ]
+        },
+        {
+          "author": "Shuangxi Chen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:plos-one:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "PLoS ONE",
+      "venue_aliases": [
+        "PLoS ONE"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "PLoS ONE",
+      "aggregated_locations": [
+        {
+          "institution_name": "Jiaxing Vocational Technical College",
+          "institution_id": "institution:d9bedf96789f3033",
+          "institution_type": "other",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Zhejiang",
+          "region_code": "",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "institution_name": "Jiaxing Municipal Public Security Bureau",
+          "institution_id": "institution:23556881bce23bb9",
+          "institution_type": "other",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Zhejiang",
+          "region_code": "",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "institution_name": "Binjiang Institute of Zhejiang University",
+          "institution_id": "institution:5d6887482c098264",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Zhejiang",
+          "region_code": "",
+          "location_display": "Zhejiang, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "other",
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Yi Zhou",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiangwei Hu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jun Tong",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:23556881bce23bb9"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Changting Lin",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:5d6887482c098264"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mei Sun",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Shuangxi Chen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d9bedf96789f3033"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Jiaxing Vocational Technical College",
+          "canonical_name": "Jiaxing Vocational Technical College",
+          "institution_id": "institution:d9bedf96789f3033",
+          "institution_type": "other",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "index": 2,
+          "name": "Jiaxing Municipal Public Security Bureau",
+          "canonical_name": "Jiaxing Municipal Public Security Bureau",
+          "institution_id": "institution:23556881bce23bb9",
+          "institution_type": "other",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "index": 3,
+          "name": "Binjiang Institute of Zhejiang University",
+          "canonical_name": "Binjiang Institute of Zhejiang University",
+          "institution_id": "institution:5d6887482c098264",
           "institution_type": "university",
           "country": "China",
           "country_code": "",
@@ -3044,6 +3450,368 @@
       "current_institution": null
     },
     {
+      "paper_id": "curated:2b5013b99aa5e4de2621",
+      "title": "All patches are not equal: Focusing on a single exposed patch for AI-generated image detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "Information Processing & Management",
+      "venue_name": "Information Processing & Management",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "With the rapid advancement of generative models, AI-generated images have become highly photorealistic, rendering authenticity detection challenging. Existing detection methods handle all image patches uniformly, overlooking that low-texture regions exhibit more pronounced artifact signals than complex-textured areas, where high-frequency information of complex texture inherent to the complex content interferes with artifact detection. To address this limitation, we proposed a single exposed patch (SEP) detection framework that strategically identifies and mines one patch per image to capture distinctive cues. Specifically, we developed an exposed patch selector (EPS) that precisely identifies the most discriminative patch region by analyzing pixel-level texture distributions, ensuring that the selected patch is minimally affected by high-frequency noise in the image. To better exploit artifact cues from the selected patch and mitigate the interference from irrelevant high-frequency information, we proposed the spatial artifact perception module (SAPM). The module preserves low-level features and spatial structure and introduces a guided bidirectional cross-spatial attention (GBCSA) mechanism guided by high-frequency cues, reducing reliance on high-frequency inputs and enhancing sensitivity to minor artifacts in flat regions. Building on this, we designed a frequency perception module (FPM) to detect the periodic artifact patterns generated in the frequency domain by generative models (e.g., GANs), thereby enhancing the ability of the model to detect artifacts across different generative mechanisms. Experimental results demonstrate the superior cross-generator generalization capabilities of SEP. We conducted comparisons on two major public datasets (GenImage and AIGCBenchmark). The million-scale GenImage dataset comprises eight different generative models, and the AIGCBenchmark encompasses a broader range of 16 diverse generative models. SEP achieved 97.05% accuracy on GenImage, outperforming recent state-of-the-art methods published in 2025. On AIGCBenchmark, SEP also delivered the best overall performance under the current evaluation protocol. The code is available at https://github.com/1112348/SEP-for-AIGCDetection.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1016/j.ipm.2026.105058",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1016/j.ipm.2026.105058",
+      "primary_url": "https://doi.org/10.1016/j.ipm.2026.105058",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7168427015",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1016/j.ipm.2026.105058",
+      "authors": [
+        {
+          "name": "Liwei Yao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Sen Niu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xiaomei Feng",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Bofeng Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Ruiqi Liu",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Kefeng Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Shanghai Polytechnic University",
+        "Institute of Automation, Chinese Academy of Sciences"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Shanghai",
+        "Beijing"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:789bd1f60cfba26fb43b",
+          "institution_id": "institution:85a4635e28eefe8e",
+          "institution": "Shanghai Polytechnic University",
+          "institution_authors": [
+            "Liwei Yao",
+            "Sen Niu",
+            "Xiaomei Feng",
+            "Bofeng Zhang",
+            "Kefeng Li"
+          ],
+          "raw_affiliation": "The School of Computer and Information Engineering, Institute for Artificial Intelligence, Shanghai Polytechnic University, Shanghai 201209, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168427015",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:f8134e710ec05879fa86",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Ruiqi Liu"
+          ],
+          "raw_affiliation": "Institute of Automation, Chinese Academy of Sciences, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168427015",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:85a4635e28eefe8e",
+          "institution": "Shanghai Polytechnic University",
+          "institution_type": "university",
+          "authors": [
+            "Liwei Yao",
+            "Sen Niu",
+            "Xiaomei Feng",
+            "Bofeng Zhang",
+            "Kefeng Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_type": "research_unit",
+          "authors": [
+            "Ruiqi Liu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Liwei Yao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ]
+        },
+        {
+          "author": "Sen Niu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ]
+        },
+        {
+          "author": "Xiaomei Feng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ]
+        },
+        {
+          "author": "Bofeng Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ]
+        },
+        {
+          "author": "Ruiqi Liu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Kefeng Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:information-processing-management:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Information Processing & Management",
+      "venue_aliases": [
+        "Information Processing & Management"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Information Processing & Management",
+      "aggregated_locations": [
+        {
+          "institution_name": "Shanghai Polytechnic University",
+          "institution_id": "institution:85a4635e28eefe8e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Shanghai",
+          "region_code": "",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "institution_name": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "research_unit"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Liwei Yao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Sen Niu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiaomei Feng",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Bofeng Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Ruiqi Liu",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:966ff12833f90bb0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Kefeng Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Shanghai Polytechnic University",
+          "canonical_name": "Shanghai Polytechnic University",
+          "institution_id": "institution:85a4635e28eefe8e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "index": 2,
+          "name": "Institute of Automation, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
       "paper_id": "curated:386ccd052b812587c286",
       "title": "All Patches Matter, More Patches Better: Enhance AI-Generated Image Detection via Panoptic Patch Learning",
       "in_scope": true,
@@ -4005,6 +4773,259 @@
           "country_code": "",
           "region": "Jiangxi",
           "location_display": "Jiangxi, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:db62aa9b0b1aab0c9f7a",
+      "title": "Artifact-Aware Explainable Deepfake Detection via Fake-Only High-Frequency Alignment Supervision",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "International Conference on Computing, Power, and Communication Technologies",
+      "venue_name": "International Conference on Computing, Power, and Communication Technologies",
+      "venue_type": "conference",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "In recent years, deepfake generation have advanced significantly that has increased the fidelity and accessibility of manipulated AI made content. Although current deepfake detection models achieve near perfect accuracy, but that does not entirely indicate that it attends high-frequency forensic artifacts. And this raise concerns about model's reliability and validity, which limits clarity trustworthiness in real-world deployment. This paper investigates the forensic consciousness of Convolution Neural Networks (CNNs) in deepfake detection. A baseline EfficientNet-B0 model is trained, and Grad-CAM is employed to examine attention visualization. It detects the spatial attention patterns. FFT (Fast Fourier Transform) is used to extract highfrequency artifact maps, and cosine similarity is computed to measure alignment between model attention and artifact regions. The baseline model reveals minimal alignment, with a gap of 0.013 between real and fake samples. To enhance artifact sensitivity, we propose a fake-only high-frequency alignment loss that encourages attention towards forensic artifacts aware learning. Experimental outcomes states that the proposed supervision significantly increases the alignment gap to 0.262 while preserving 99.96% validation accuracy. These findings highlight the need to incorporate artifact aware supervision to improve interpretability without degrading model performance. The extension of the present study will be applying the artifact aware supervision framework to diverse cross-domain datasets and to the detection of AI-generated content in videos.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/ic2pct68894.2026.11584299",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/ic2pct68894.2026.11584299",
+      "primary_url": "https://doi.org/10.1109/ic2pct68894.2026.11584299",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7167698944",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/ic2pct68894.2026.11584299",
+      "authors": [
+        {
+          "name": "Aditya Dev Mishra",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Koushiki Das",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Suman Mahapatra",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Mayank Sisodia",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Bennett University"
+      ],
+      "aggregated_country_names": [
+        "India"
+      ],
+      "aggregated_country_codes": [
+        "IN"
+      ],
+      "aggregated_regions": [
+        "Uttar Pradesh"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:33bd8511c25391637d6b",
+          "institution_id": "institution:bcd623204fe5d659",
+          "institution": "Bennett University",
+          "institution_authors": [
+            "Aditya Dev Mishra",
+            "Koushiki Das",
+            "Suman Mahapatra",
+            "Mayank Sisodia"
+          ],
+          "raw_affiliation": "School of Computer Science Engineering & Technology, Bennett University, Greater Noida, India",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7167698944",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:bcd623204fe5d659",
+          "institution": "Bennett University",
+          "institution_type": "university",
+          "authors": [
+            "Aditya Dev Mishra",
+            "Koushiki Das",
+            "Suman Mahapatra",
+            "Mayank Sisodia"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Aditya Dev Mishra",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ]
+        },
+        {
+          "author": "Koushiki Das",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ]
+        },
+        {
+          "author": "Suman Mahapatra",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ]
+        },
+        {
+          "author": "Mayank Sisodia",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:international-conference-on-computing-power-and-communication-technologies:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "International Conference on Computing, Power, and Communication Technologies",
+      "venue_aliases": [
+        "International Conference on Computing, Power, and Communication Technologies"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "International Conference on Computing, Power, and Communication Technologies",
+      "aggregated_locations": [
+        {
+          "institution_name": "Bennett University",
+          "institution_id": "institution:bcd623204fe5d659",
+          "institution_type": "university",
+          "country": "India",
+          "country_code": "IN",
+          "region": "Uttar Pradesh",
+          "region_code": "",
+          "location_display": "Uttar Pradesh, India"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Aditya Dev Mishra",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Koushiki Das",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Suman Mahapatra",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mayank Sisodia",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:bcd623204fe5d659"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Bennett University",
+          "canonical_name": "Bennett University",
+          "institution_id": "institution:bcd623204fe5d659",
+          "institution_type": "university",
+          "country": "India",
+          "country_code": "",
+          "region": "Uttar Pradesh",
+          "location_display": "Uttar Pradesh, India"
         }
       ],
       "current_institution": null
@@ -5228,6 +6249,132 @@
       "aliases": [
         "AAAI Conference on Artificial Intelligence"
       ]
+    },
+    {
+      "paper_id": "curated:9d722dfb4a3418d86063",
+      "title": "Beyond Resizing: A Distribution-Aligned Framework for Robust AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "International Conference on Intelligent Computing",
+      "venue_name": "International Conference on Intelligent Computing",
+      "venue_type": "conference",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "The rapid proliferation of advanced image generation techniques has made AI-generated image detection a critical yet challenging forensic task. Existing methods rely on destructive pre-processing, such as resizing and cropping, which weakens generative artifacts and distorts intrinsic statistics, degrading discriminative forensic cues. To address this limitation without compromising forensic integrity, we propose a novel distribution-aligned detection network DAD-Net operating at native resolutions to preserve fine-grained generative features. Specifically, DAD-Net introduces a dual-branch architecture to decouple and realign semantic content and generative traces. Unlike conventional methods that process features uniformly, we partition feature representations into hierarchical complexity levels and employ two complementary streams, where the Content Branch aggregates multi-scale semantic context, while the Texture Branch captures statistical correlations via Gram matrix representations and models cross-level artifact-aware attention. To achieve effective feature distribution alignment, we further introduce a Texture-Aware Guidance (TAG) unit that leverages explicit texture priors to dynamically recalibrate content feature aggregation, bridging the gap between semantic representations and forensic traces. Extensive experiments show that DAD-Net achieves state-of-the-art performance on the challenging WildRF benchmark, reaching an ACC of 87.43% and an AP of 94.10%, while demonstrating competitive generalization across diverse generative models and strong robustness under post-processing perturbations.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1007/978-981-92-3420-2_35",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1007/978-981-92-3420-2_35",
+      "primary_url": "https://doi.org/10.1007/978-981-92-3420-2_35",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7168408228",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1007/978-981-92-3420-2_35",
+      "authors": [
+        {
+          "name": "Mingjie Tang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jianian Ding",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Zhiming Song",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xinyu Ou",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_id": "venue:international-conference-on-intelligent-computing:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "International Conference on Intelligent Computing",
+      "venue_aliases": [
+        "International Conference on Intelligent Computing"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "International Conference on Intelligent Computing",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Mingjie Tang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Jianian Ding",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Zhiming Song",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Xinyu Ou",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": []
     },
     {
       "paper_id": "curated:29642e43aa51fece46f7",
@@ -6727,6 +7874,166 @@
           "country_code": "",
           "region": "Shanghai",
           "location_display": "Shanghai, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:a3fb37f39cb20a95e3bf",
+      "title": "Can model attribution bridge AI's accountability gap in safety-critical domains?",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "source_attribution",
+      "subtask": "generated_image_source_attribution",
+      "entry_type": "method",
+      "venue": "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences",
+      "venue_name": "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "The current trend of deploying machine learning models as remote services obscures which specific models users are interacting with, exacerbating an accountability gap that becomes ever more pressing as these technologies make their way into safety-critical domains. In this paper, we examine how model attribution, a recently proposed accountability property, can address this gap. We review recent technical approaches to provide model attribution and identify limitations, such as computational costs, latency overheads and insufficient guarantees, that render them inadequate for many safety-critical applications. We conclude that although model attribution is an important step towards accountability, current technical solutions fall short of the requirements of safety-critical domains. This article is part of the theme issue 'Safe, secure and robust AI for safety-critical systems'.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1098/rsta.2025.0117",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1098/rsta.2025.0117",
+      "primary_url": "https://doi.org/10.1098/rsta.2025.0117",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7169086594",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1098/rsta.2025.0117",
+      "authors": [
+        {
+          "name": "Marc Juárez",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Edinburgh"
+      ],
+      "aggregated_country_names": [
+        "United Kingdom"
+      ],
+      "aggregated_country_codes": [
+        "GB"
+      ],
+      "aggregated_regions": [
+        "Alba / Scotland"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:18e2f89907e0f8c249d9",
+          "institution_id": "institution:9ffc21de60b360ff",
+          "institution": "University of Edinburgh",
+          "institution_authors": [
+            "Marc Juárez"
+          ],
+          "raw_affiliation": "Schoolof Informatics,The UniversityofEdinburgh,Edinburgh, UK",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7169086594",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:9ffc21de60b360ff",
+          "institution": "University of Edinburgh",
+          "institution_type": "university",
+          "authors": [
+            "Marc Juárez"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Marc Juárez",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:9ffc21de60b360ff"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:philosophical-transactions-of-the-royal-society-a-mathematical-physical-and-engineering-sciences:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences",
+      "venue_aliases": [
+        "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Philosophical Transactions of the Royal Society A Mathematical Physical and Engineering Sciences",
+      "aggregated_locations": [
+        {
+          "institution_name": "University of Edinburgh",
+          "institution_id": "institution:9ffc21de60b360ff",
+          "institution_type": "university",
+          "country": "United Kingdom",
+          "country_code": "GB",
+          "region": "Alba / Scotland",
+          "region_code": "",
+          "location_display": "Alba / Scotland, United Kingdom"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Marc Juárez",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:9ffc21de60b360ff"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Edinburgh",
+          "canonical_name": "University of Edinburgh",
+          "institution_id": "institution:9ffc21de60b360ff",
+          "institution_type": "university",
+          "country": "United Kingdom",
+          "country_code": "",
+          "region": "Alba / Scotland",
+          "location_display": "Alba / Scotland, United Kingdom"
         }
       ],
       "current_institution": null
@@ -8712,6 +10019,166 @@
       "current_institution": null
     },
     {
+      "paper_id": "curated:5888bece56862fbbfc43",
+      "title": "DADP: a discrepancy-aware dual-path network for AI-generated image detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "Multimedia Systems",
+      "venue_name": "Multimedia Systems",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "The rapid evolution of image generation techniques has benefited several fields, but it has also given rise to security concerns. As a countermeasure, numerous AI-generated image detectors have been developed successfully. However, existing methods exhibit limited generalization and robustness in handling the continual emergence of new generative models, owing to the inability to capture the intrinsic representational discrepancy of synthetic content. To address these challenges, a novel discrepancy-driven detection framework called Discrepancy-Aware Dual-Path Network (DADP) is proposed for AI-generated image detection. Specifically, the unstable discrepancy between real and synthetic images under controlled perturbations is first formulated as a learnable signal, which is used to modulate attention and feature fusion. Then, a Discrepancy-Aware Attention Mechanism (DA-CBAM) is meticulously engineered for a dual-branch frequency–semantic feature extractor, where the discrepancy signal adjusts channel and spatial attention to localize perturbation-sensitive artifact regions. Finally, a Discrepancy-Guided Evidence Aggregation module is devised to compute discrepancy-based weights and adaptively fuse multi-level frequency and semantic features. Consequently, the proposed DADP framework simultaneously advances the generalization and robustness of AI-generated image detection. Extensive experiments demonstrate that DADP sets a new state-of-the-art, achieving a 1.94% improvement in cross-generator generalization accuracy while exhibiting superior robustness against various image degradations.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1007/s00530-026-02435-2",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1007/s00530-026-02435-2",
+      "primary_url": "https://doi.org/10.1007/s00530-026-02435-2",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7167913394",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1007/s00530-026-02435-2",
+      "authors": [
+        {
+          "name": "L B",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Hui Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Shanghai University of Electric Power"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Shanghai"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:93f3dc614d6a3b32332a",
+          "institution_id": "institution:caec9d0e5ab5010d",
+          "institution": "Shanghai University of Electric Power",
+          "institution_authors": [
+            "Lin Ma",
+            "Hongjiao Li"
+          ],
+          "raw_affiliation": "Faculty of Artificial Intelligence, Shanghai University of Electric Power, Shanghai, 201306, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7167913394",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:caec9d0e5ab5010d",
+          "institution": "Shanghai University of Electric Power",
+          "institution_type": "university",
+          "authors": [
+            "Lin Ma",
+            "Hongjiao Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:multimedia-systems:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Multimedia Systems",
+      "venue_aliases": [
+        "Multimedia Systems"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Multimedia Systems",
+      "aggregated_locations": [
+        {
+          "institution_name": "Shanghai University of Electric Power",
+          "institution_id": "institution:caec9d0e5ab5010d",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Shanghai",
+          "region_code": "",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "L B",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Hui Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Shanghai University of Electric Power",
+          "canonical_name": "Shanghai University of Electric Power",
+          "institution_id": "institution:caec9d0e5ab5010d",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
       "title": "DCNet: Learning Similarity and Spatial Complementary Features for Generalized AI-Generated Image Detection",
       "in_scope": true,
       "year": 2026,
@@ -9820,6 +11287,312 @@
           ]
         }
       ]
+    },
+    {
+      "paper_id": "curated:d973c571c1fafe6fb25f",
+      "title": "Deepfake-Agent: Aggregating Semantic Forgery Clues for Generalizable Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "Computer Vision and Pattern Recognition",
+      "venue_name": "Computer Vision and Pattern Recognition",
+      "venue_type": "conference",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "The forgery spectrum now ranges from low-level artifacts in edited or face-swapped images to diffusion-generated content that achieves pixel-level perfection but can contain semantic implausibilities, posing a significant threat to public trust and media integrity. Consequently, robust detection thus requires identifying both pixel-level artifacts and commonsense violations. However, existing detectors remain fragmented, specializing in narrow domains and lacking generalizable detection capabilities. To address this, we introduce Deepfake-Agent, a unified forgery detector that fuses semantic commonsense and low-level visual cues, leveraging MLLM-based forensic experts within an agentic learning scheme. Our Deepfake-Agent addresses two limitations in prior works: (i) the inability to detect semantic forgeries due to insufficient world knowledge, and (ii) the lack of adaptive fusion mechanisms that combine complementary evidence and resolve conflicts between heterogeneous experts. Specifically, the Deepfake-Agent integrates three specialized MLLM-based detectors for semantic inconsistencies, face-swap artifacts, and image-editing traces, and coordinates them via a reinforcement-learning aggregator. The semantic expert pioneers multiple MLLM collaborations with causal self-verification, while the aggregator coordinates forgery experts through evidence-aware reasoning. Extensive evaluation demonstrates that Deepfake-Agent achieves strong, generalizable performance across diverse manipulation types, significantly advancing unified forgery detection. Our source code and model are available.",
+      "abstract_source": "manual",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Guo_Deepfake-Agent_Aggregating_Semantic_Forgery_Clues_for_Generalizable_Detection_CVPRF_2026_paper.pdf",
+      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Guo_Deepfake-Agent_Aggregating_Semantic_Forgery_Clues_for_Generalizable_Detection_CVPRF_2026_paper.pdf",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": false,
+      "url": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Guo_Deepfake-Agent_Aggregating_Semantic_Forgery_Clues_for_Generalizable_Detection_CVPRF_2026_paper.pdf",
+      "authors": [
+        {
+          "name": "Xiao Guo",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yue Zhang",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Mohit Bansal",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xiaoming Liu",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "manual",
+      "metadata_source": "manual",
+      "curation_status": "manually_added",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Michigan State University",
+        "University of North Carolina at Chapel Hill"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
+      "aggregated_regions": [
+        "Michigan",
+        "North Carolina"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:7e2345355cb5635a3fa5",
+          "institution_id": "institution:cd887bf808040e61",
+          "institution": "Michigan State University",
+          "institution_authors": [
+            "Xiao Guo",
+            "Xiaoming Liu"
+          ],
+          "raw_affiliation": "Michigan State University",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        },
+        {
+          "mapping_id": "mapping:35d2fd60940d9ad6d6cf",
+          "institution_id": "institution:ed6f1120aeb12d5c",
+          "institution": "University of North Carolina at Chapel Hill",
+          "institution_authors": [
+            "Yue Zhang",
+            "Mohit Bansal",
+            "Xiaoming Liu"
+          ],
+          "raw_affiliation": "University of North Carolina at Chapel Hill",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:cd887bf808040e61",
+          "institution": "Michigan State University",
+          "institution_type": "university",
+          "authors": [
+            "Xiao Guo",
+            "Xiaoming Liu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:ed6f1120aeb12d5c",
+          "institution": "University of North Carolina at Chapel Hill",
+          "institution_type": "university",
+          "authors": [
+            "Yue Zhang",
+            "Mohit Bansal",
+            "Xiaoming Liu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Xiao Guo",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:cd887bf808040e61"
+          ]
+        },
+        {
+          "author": "Yue Zhang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:ed6f1120aeb12d5c"
+          ]
+        },
+        {
+          "author": "Mohit Bansal",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:ed6f1120aeb12d5c"
+          ]
+        },
+        {
+          "author": "Xiaoming Liu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:cd887bf808040e61",
+            "institution:ed6f1120aeb12d5c"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:computer-vision-and-pattern-recognition:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "Computer Vision and Pattern Recognition"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Computer Vision and Pattern Recognition",
+      "aggregated_locations": [
+        {
+          "institution_name": "Michigan State University",
+          "institution_id": "institution:cd887bf808040e61",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "US",
+          "region": "Michigan",
+          "region_code": "",
+          "location_display": "Michigan, United States"
+        },
+        {
+          "institution_name": "University of North Carolina at Chapel Hill",
+          "institution_id": "institution:ed6f1120aeb12d5c",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "US",
+          "region": "North Carolina",
+          "region_code": "",
+          "location_display": "North Carolina, United States"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Xiao Guo",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:cd887bf808040e61"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yue Zhang",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:ed6f1120aeb12d5c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mohit Bansal",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:ed6f1120aeb12d5c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiaoming Liu",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:cd887bf808040e61",
+            "institution:ed6f1120aeb12d5c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Michigan State University",
+          "canonical_name": "Michigan State University",
+          "institution_id": "institution:cd887bf808040e61",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "Michigan",
+          "location_display": "Michigan, United States"
+        },
+        {
+          "index": 2,
+          "name": "University of North Carolina at Chapel Hill",
+          "canonical_name": "University of North Carolina at Chapel Hill",
+          "institution_id": "institution:ed6f1120aeb12d5c",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "North Carolina",
+          "location_display": "North Carolina, United States"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:d4a9b3a3cef9bfbd0e32",
@@ -12349,6 +14122,580 @@
       "current_institution": null
     },
     {
+      "paper_id": "curated:aeb3a6e4747e1a1b3181",
+      "title": "Dual-stream framework for real/fake classification and source attribution of AI-generated images using spatial and frequency features",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection_and_source_attribution",
+      "subtask": "detection_and_source_attribution",
+      "entry_type": "method",
+      "venue": "Pattern Analysis and Applications",
+      "venue_name": "Pattern Analysis and Applications",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "The rapid proliferation of advanced image generation models, particularly diffusion models, poses significant threats to digital security. Existing single-domain detection methods often struggle to discern the subtle artifacts introduced by these emerging AI generations. In this study, we propose a specialized dual-stream framework that strategically integrates features from both spatial and frequency domains to disentangle the fingerprints of heterogeneous generators. We address two critical tasks: binary real/fake detection and closed-set source attribution across 10 distinct generative architectures. By conducting extensive experiments with multiple backbones (ResNet-50, EfficientNet-B3, and ViT) on a diverse dataset of 15 classes, we demonstrate that our fusion strategy significantly enhances discriminative power. Empirical results identify EfficientNet-B3 as the optimal backbone, achieving 96.04% accuracy for binary classification and 95.92% for attribution, surpassing single-domain baselines. Finally, we employ XGrad-CAM to demonstrate that the model correctly focuses on technical fingerprints and spectral anomalies rather than semantic content, thereby reinforcing the system’s reliability for practical applications.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1007/s10044-026-01719-7",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1007/s10044-026-01719-7",
+      "primary_url": "https://doi.org/10.1007/s10044-026-01719-7",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7168264311",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1007/s10044-026-01719-7",
+      "authors": [
+        {
+          "name": "Linh Thuy Thi Pham",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Cu Vinh Loc",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Truong Nhat Tran",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Hai Thanh Nguyen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Can Tho University",
+        "Can Tho University of Technology"
+      ],
+      "aggregated_country_names": [
+        "Vietnam"
+      ],
+      "aggregated_country_codes": [
+        "VN"
+      ],
+      "aggregated_regions": [
+        "Can Tho"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:542a8f33f6ab18f587f3",
+          "institution_id": "institution:01f9119bde93e8ef",
+          "institution": "Can Tho University",
+          "institution_authors": [
+            "Linh Thuy Thi Pham",
+            "Cu Vinh Loc",
+            "Hai Thanh Nguyen"
+          ],
+          "raw_affiliation": "College of Information and Communication Technology, Can Tho University, Can Tho, Vietnam",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168264311",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:d82cd669524299b6ebc9",
+          "institution_id": "institution:948d79eac5f4fc81",
+          "institution": "Can Tho University of Technology",
+          "institution_authors": [
+            "Linh Thuy Thi Pham",
+            "Truong Nhat Tran"
+          ],
+          "raw_affiliation": "Faculty of Information Technology, Can Tho University of Technology, Can Tho, Vietnam",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:01f9119bde93e8ef",
+          "institution": "Can Tho University",
+          "institution_type": "university",
+          "authors": [
+            "Linh Thuy Thi Pham",
+            "Cu Vinh Loc",
+            "Hai Thanh Nguyen"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:948d79eac5f4fc81",
+          "institution": "Can Tho University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Linh Thuy Thi Pham",
+            "Truong Nhat Tran"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Linh Thuy Thi Pham",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:01f9119bde93e8ef",
+            "institution:948d79eac5f4fc81"
+          ]
+        },
+        {
+          "author": "Cu Vinh Loc",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:01f9119bde93e8ef"
+          ]
+        },
+        {
+          "author": "Truong Nhat Tran",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:948d79eac5f4fc81"
+          ]
+        },
+        {
+          "author": "Hai Thanh Nguyen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:01f9119bde93e8ef"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:pattern-analysis-and-applications:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Pattern Analysis and Applications",
+      "venue_aliases": [
+        "Pattern Analysis and Applications"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Pattern Analysis and Applications",
+      "aggregated_locations": [
+        {
+          "institution_name": "Can Tho University",
+          "institution_id": "institution:01f9119bde93e8ef",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "VN",
+          "region": "Can Tho",
+          "region_code": "",
+          "location_display": "Can Tho, Vietnam"
+        },
+        {
+          "institution_name": "Can Tho University of Technology",
+          "institution_id": "institution:948d79eac5f4fc81",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "VN",
+          "region": "Can Tho",
+          "region_code": "",
+          "location_display": "Can Tho, Vietnam"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Linh Thuy Thi Pham",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:01f9119bde93e8ef",
+            "institution:948d79eac5f4fc81"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Cu Vinh Loc",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:01f9119bde93e8ef"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Truong Nhat Tran",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:948d79eac5f4fc81"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Hai Thanh Nguyen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:01f9119bde93e8ef"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Can Tho University",
+          "canonical_name": "Can Tho University",
+          "institution_id": "institution:01f9119bde93e8ef",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Can Tho",
+          "location_display": "Can Tho, Vietnam"
+        },
+        {
+          "index": 2,
+          "name": "Can Tho University of Technology",
+          "canonical_name": "Can Tho University of Technology",
+          "institution_id": "institution:948d79eac5f4fc81",
+          "institution_type": "university",
+          "country": "Vietnam",
+          "country_code": "",
+          "region": "Can Tho",
+          "location_display": "Can Tho, Vietnam"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:52edb9369ffaae37bd81",
+      "title": "Dual-Tree Complex Wavelet Driven Hierarchical Spatial-Frequency Fusion Learning for Robust Deepfake Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "IEEE Transactions on Dependable and Secure Computing",
+      "venue_name": "IEEE Transactions on Dependable and Secure Computing",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "Deepfake detection aims to identify synthetic visual content generated by artificial models. With the improvement of generative models, high-fidelity forgeries largely weaken the explicit traces on which traditional methods rely, leaving only potential implicit clues such as subtle frequency-domain artifacts, creating an urgent need to mine robust discriminative features from either fundamental signal patterns or high-level semantic representations. Specifically, we observe that concentrating on the collaborative frequency information from different hierarchies can enhance model robustness. We propose a Hierarchical Spatial-Frequency Fusion (HSFF) module that couples multi scale feature extraction with frequency attention to capture multi-range forgery traces, and adaptively weights frequency domain features across scales to highlight cross-scale anomalies caused by forgeries. While HSFF enhances sensitivity to spatial frequency inconsistencies, it does not explicitly model directional forgery patterns. To complement this, we further introduce a Collaborative Multi-Subband Enhancement (CMSE) mechanism that integrates Dual-Tree Complex Wavelet Transform (DTCWT) with pre-trained visual features, explicitly modeling interactions among six directional subbands and supplying the directional selectivity that HSFF lacks, together forming a joint spatial frequency-direction representation that significantly improves robustness against multi-directional forgeries. The superiority of our approach is verified by extensive comparative experiments and ablation studies on multiple benchmark datasets against numerous state-of-the-art methods. In particular, our method achieves 97.2% and 89.1% cross-dataset AUROC on the challenging Celeb-DFv2 and DFDC respectively.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/tdsc.2026.3712721",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tdsc.2026.3712721",
+      "primary_url": "https://doi.org/10.1109/tdsc.2026.3712721",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7168127486",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/tdsc.2026.3712721",
+      "authors": [
+        {
+          "name": "Rui Sun",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yifan Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xiaolu Yu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Meng Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jun Gao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Hefei University of Technology"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Anhui"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:8fb19d38c0c2301a41af",
+          "institution_id": "institution:f6342fd457763517",
+          "institution": "Hefei University of Technology",
+          "institution_authors": [
+            "Rui Sun",
+            "Yifan Zhang",
+            "Xiaolu Yu",
+            "M Li",
+            "Jun Gao"
+          ],
+          "raw_affiliation": "Key Laboratory of Knowledge Engineering with Big Data (Ministry of Education), School of Computer and Information, Anhui Province Key Laboratory of Industry Safety and Emergency Technology, Hefei University of Technology, Hefei, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168127486",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:f6342fd457763517",
+          "institution": "Hefei University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Rui Sun",
+            "Yifan Zhang",
+            "Xiaolu Yu",
+            "M Li",
+            "Jun Gao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Rui Sun",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ]
+        },
+        {
+          "author": "Yifan Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ]
+        },
+        {
+          "author": "Xiaolu Yu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ]
+        },
+        {
+          "author": "Jun Gao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:ieee-transactions-on-dependable-and-secure-computing:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "IEEE Transactions on Dependable and Secure Computing",
+      "venue_aliases": [
+        "IEEE Transactions on Dependable and Secure Computing"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "IEEE Transactions on Dependable and Secure Computing",
+      "aggregated_locations": [
+        {
+          "institution_name": "Hefei University of Technology",
+          "institution_id": "institution:f6342fd457763517",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Anhui",
+          "region_code": "",
+          "location_display": "Anhui, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Rui Sun",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yifan Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiaolu Yu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Meng Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Jun Gao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f6342fd457763517"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Hefei University of Technology",
+          "canonical_name": "Hefei University of Technology",
+          "institution_id": "institution:f6342fd457763517",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Anhui",
+          "location_display": "Anhui, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
       "paper_id": "curated:6a5bef99dcdc1ad4ba28",
       "title": "DySy-Det: A Synergistic Framework with Dynamic Reconstruction-Path Consistency for AI-Generated Image Detection",
       "in_scope": true,
@@ -13366,6 +15713,228 @@
           "country_code": "",
           "region": "Tokyo",
           "location_display": "Tokyo, Japan"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:41a934ce12ecfd2f17e9",
+      "title": "EXACT: An Explainable Adaptive SemantiC-Trace framework for AI-generated image forensics",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "Computer Vision and Image Understanding",
+      "venue_name": "Computer Vision and Image Understanding",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "AI-generated images have become increasingly photorealistic, making robust and interpretable forensic analysis more challenging under generator shift and post-processing. Existing methods often rely on a single source of evidence, such as high-level semantic cues or low-level artifact patterns, which limits their generalization when image distributions change. In this paper, we present EXACT, a unified dual-evidence framework for AI-generated image forensics that jointly supports detection, source attribution, and pixel-level localization. EXACT combines two complementary branches: a Semantic Branch based on a CLIP encoder to capture content-level inconsistencies, and a Trace Branch that leverages Haar wavelet sub-bands and a Transformer to model low-level artifact traces. To improve robustness across images and generators, we further introduce a lightweight fusion module that predicts adaptive per-image weights to balance the two evidences. In addition, a frozen Large Multimodal Model is used to generate concise natural-language forensic reports from model outputs, improving the interpretability of the analysis. Experiments show that EXACT achieves 99.49% detection accuracy on the in-domain test set and strong cross-dataset generalization. Across the extended cross-dataset evaluation, it obtains an average accuracy of 84.88% and an average precision of 94.18%. EXACT also provides reliable attribution performance and meaningful localization results, demonstrating its effectiveness as a unified and interpretable framework for synthetic image forensics.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1016/j.cviu.2026.104871",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1016/j.cviu.2026.104871",
+      "primary_url": "https://doi.org/10.1016/j.cviu.2026.104871",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7169504023",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1016/j.cviu.2026.104871",
+      "authors": [
+        {
+          "name": "Hui Shi",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Mingyang Liu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Chengcheng Gong",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Liaoning Normal University"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Liaoning"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:885ffbb1c2272d30904b",
+          "institution_id": "institution:a3a1d363318e4d61",
+          "institution": "Liaoning Normal University",
+          "institution_authors": [
+            "Hui Shi",
+            "Mingyang Liu",
+            "Chengcheng Gong"
+          ],
+          "raw_affiliation": "School of Computer Science and Artificial Intelligence, Liaoning Normal University, Dalian 116029, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7169504023",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:a3a1d363318e4d61",
+          "institution": "Liaoning Normal University",
+          "institution_type": "university",
+          "authors": [
+            "Hui Shi",
+            "Mingyang Liu",
+            "Chengcheng Gong"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Hui Shi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a3a1d363318e4d61"
+          ]
+        },
+        {
+          "author": "Mingyang Liu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a3a1d363318e4d61"
+          ]
+        },
+        {
+          "author": "Chengcheng Gong",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a3a1d363318e4d61"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:computer-vision-and-image-understanding:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Computer Vision and Image Understanding",
+      "venue_aliases": [
+        "Computer Vision and Image Understanding"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Computer Vision and Image Understanding",
+      "aggregated_locations": [
+        {
+          "institution_name": "Liaoning Normal University",
+          "institution_id": "institution:a3a1d363318e4d61",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Liaoning",
+          "region_code": "",
+          "location_display": "Liaoning, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Hui Shi",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a3a1d363318e4d61"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Mingyang Liu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a3a1d363318e4d61"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Chengcheng Gong",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:a3a1d363318e4d61"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Liaoning Normal University",
+          "canonical_name": "Liaoning Normal University",
+          "institution_id": "institution:a3a1d363318e4d61",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Liaoning",
+          "location_display": "Liaoning, China"
         }
       ],
       "current_institution": null
@@ -21714,7 +24283,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -21723,7 +24292,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -21732,7 +24301,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -21741,12 +24310,12 @@
             3
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": true,
       "map_record_count": 3,
@@ -21755,7 +24324,7 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Government Sadiq College Women University",
-        "Nanfang Hospital",
+        "Nanfang College Guangzhou",
         "Gachon University"
       ],
       "aggregated_country_names": [
@@ -21768,47 +24337,12 @@
         "CN",
         "KR"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Government Sadiq College Women University",
-          "canonical_name": "Government Sadiq College Women University",
-          "institution_id": "institution:823a09a4580fb39e",
-          "institution_type": "university",
-          "country": "Pakistan",
-          "country_code": "",
-          "region": "",
-          "location_display": "Pakistan",
-          "preliminary": true
-        },
-        {
-          "index": 2,
-          "name": "Nanfang Hospital",
-          "canonical_name": "Nanfang Hospital",
-          "institution_id": "institution:b097d001d1031333",
-          "institution_type": "other",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China",
-          "preliminary": true
-        },
-        {
-          "index": 3,
-          "name": "Gachon University",
-          "canonical_name": "Gachon University",
-          "institution_id": "institution:6beb2f6c52d3f30c",
-          "institution_type": "university",
-          "country": "South Korea",
-          "country_code": "",
-          "region": "",
-          "location_display": "South Korea",
-          "preliminary": true
-        }
+      "aggregated_regions": [
+        "Punjab",
+        "Guangdong",
+        "Gyeonggi-do"
       ],
-      "current_institution": null,
+      "aggregated_region_codes": [],
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -21819,21 +24353,19 @@
             "Nimra Nasir",
             "Syeda Sitara Waseem"
           ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
-          "preliminary": true
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
         },
         {
           "index": 2,
-          "institution_id": "institution:b097d001d1031333",
-          "institution": "Nanfang Hospital",
+          "institution_id": "institution:64aa68d006c72586",
+          "institution": "Nanfang College Guangzhou",
           "institution_type": "other",
           "authors": [
             "Muhammad Bilal"
           ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
-          "preliminary": true
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
         },
         {
           "index": 3,
@@ -21843,9 +24375,8 @@
           "authors": [
             "Syed Rizwan Hassan"
           ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
-          "preliminary": true
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -21873,7 +24404,7 @@
             2
           ],
           "institution_ids": [
-            "institution:b097d001d1031333"
+            "institution:64aa68d006c72586"
           ]
         },
         {
@@ -21895,7 +24426,7 @@
           "institution_ids": [
             "institution:823a09a4580fb39e"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -21906,7 +24437,7 @@
           "institution_ids": [
             "institution:823a09a4580fb39e"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -21915,9 +24446,9 @@
             2
           ],
           "institution_ids": [
-            "institution:b097d001d1031333"
+            "institution:64aa68d006c72586"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -21928,13 +24459,13 @@
           "institution_ids": [
             "institution:6beb2f6c52d3f30c"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [
         {
@@ -21943,19 +24474,19 @@
           "institution_type": "university",
           "country": "Pakistan",
           "country_code": "PK",
-          "region": "",
+          "region": "Punjab",
           "region_code": "",
-          "location_display": "Pakistan"
+          "location_display": "Punjab, Pakistan"
         },
         {
-          "institution_name": "Nanfang Hospital",
-          "institution_id": "institution:b097d001d1031333",
+          "institution_name": "Nanfang College Guangzhou",
+          "institution_id": "institution:64aa68d006c72586",
           "institution_type": "other",
           "country": "China",
           "country_code": "CN",
-          "region": "",
+          "region": "Guangdong",
           "region_code": "",
-          "location_display": "China"
+          "location_display": "Guangdong, China"
         },
         {
           "institution_name": "Gachon University",
@@ -21963,9 +24494,9 @@
           "institution_type": "university",
           "country": "South Korea",
           "country_code": "KR",
-          "region": "",
+          "region": "Gyeonggi-do",
           "region_code": "",
-          "location_display": "South Korea"
+          "location_display": "Gyeonggi-do, South Korea"
         }
       ],
       "aggregated_institution_types": [
@@ -21980,7 +24511,88 @@
         "Sensors"
       ],
       "ambiguity_status": "unmapped",
-      "venue_label": "Sensors"
+      "venue_label": "Sensors",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:8bde822b616608f7d149",
+          "institution_id": "institution:823a09a4580fb39e",
+          "institution": "Government Sadiq College Women University",
+          "institution_authors": [
+            "Nimra Nasir",
+            "Syeda Sitara Waseem"
+          ],
+          "raw_affiliation": "Department of Computer Science & IT, The Govt. Sadiq College Women University, Bahawalpur 63100, Pakistan",
+          "evidence_source": "MDPI publisher article metadata and OpenAlex authorships",
+          "evidence_url": "https://www.mdpi.com/1424-8220/26/4/1172",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        },
+        {
+          "mapping_id": "mapping:e46d8b24b947ebebe00a",
+          "institution_id": "institution:64aa68d006c72586",
+          "institution": "Nanfang College Guangzhou",
+          "institution_authors": [
+            "Muhammad Bilal"
+          ],
+          "raw_affiliation": "School of Engineering, Nanfang College Guangzhou, Guangzhou 510970, China",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        },
+        {
+          "mapping_id": "mapping:1a6971829b3270975cb2",
+          "institution_id": "institution:6beb2f6c52d3f30c",
+          "institution": "Gachon University",
+          "institution_authors": [
+            "Syed Rizwan Hassan"
+          ],
+          "raw_affiliation": "Department of Computer Engineering, Gachon University, Seongnam-si 13120, Republic of Korea",
+          "evidence_source": "MDPI publisher article metadata and OpenAlex authorships",
+          "evidence_url": "https://www.mdpi.com/1424-8220/26/4/1172",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Government Sadiq College Women University",
+          "canonical_name": "Government Sadiq College Women University",
+          "institution_id": "institution:823a09a4580fb39e",
+          "institution_type": "university",
+          "country": "Pakistan",
+          "country_code": "",
+          "region": "Punjab",
+          "location_display": "Punjab, Pakistan"
+        },
+        {
+          "index": 2,
+          "name": "Nanfang College Guangzhou",
+          "canonical_name": "Nanfang College Guangzhou",
+          "institution_id": "institution:64aa68d006c72586",
+          "institution_type": "other",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "index": 3,
+          "name": "Gachon University",
+          "canonical_name": "Gachon University",
+          "institution_id": "institution:6beb2f6c52d3f30c",
+          "institution_type": "university",
+          "country": "South Korea",
+          "country_code": "",
+          "region": "Gyeonggi-do",
+          "location_display": "Gyeonggi-do, South Korea"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection",
@@ -24631,6 +27243,294 @@
           "country_code": "",
           "region": "Zhejiang",
           "location_display": "Zhejiang, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:543d02cab0479b0d19ad",
+      "title": "Multi-Domain Feature Fusion: Leveraging Color, Noise, and Spatial Features for AI-generated Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "IEEE Transactions on Multimedia",
+      "venue_name": "IEEE Transactions on Multimedia",
+      "venue_type": "journal",
+      "publisher": "",
+      "publication_type": "journal",
+      "abstract": "With the rapid advancement of artificial intelligence generated content technologies, such as GANs and diffusion models, the cost of generating an image has decreased significantly. In contrast, the realism of images has increased, making it easier to deceive human eyes. Therefore, there is a high demand for a universal detection model. Existing models can achieve high accuracy on datasets from the same source, but their generalization performance on datasets from different sources is not as good. To tackle this problem, we introduce the Multi-Domain Feature Fusion (MDFF) model. By seamlessly blending early-stage diffusion noise with color and spatial cues, MDFF offers a unified framework that performs robustly across diverse generative models. We also deepen the network structure and add post-processing and masking operations to improve robustness. Experiments show MDFF generalizes well to mainstream GANs and diffusion models, outperforming others and staying accurate after post-processing.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1109/tmm.2026.3712634",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tmm.2026.3712634",
+      "primary_url": "https://doi.org/10.1109/tmm.2026.3712634",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7168163527",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/tmm.2026.3712634",
+      "authors": [
+        {
+          "name": "Jialei Zhu",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Heng Yao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Chuan Qin",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xinpeng Zhang",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Shanghai for Science and Technology",
+        "Fudan University"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Shanghai"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:d290bf6f3ad95f9f9a26",
+          "institution_id": "institution:3391e7c855fa0e6e",
+          "institution": "University of Shanghai for Science and Technology",
+          "institution_authors": [
+            "Jialei Zhu School of Optical-Electrical and Computer Engineering, University of Shanghai for Science and Technology, Shanghai, China",
+            "Heng Yao",
+            "Chuan Qin"
+          ],
+          "raw_affiliation": "School of Optical-Electrical and Computer Engineering, University of Shanghai for Science and Technology, Shanghai, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168163527",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        },
+        {
+          "mapping_id": "mapping:23fa9dd5affcbe35c3d6",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "institution_authors": [
+            "Xinpeng Zhang"
+          ],
+          "raw_affiliation": "School of Computer Science, Fudan University, Shanghai, China",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168163527",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:3391e7c855fa0e6e",
+          "institution": "University of Shanghai for Science and Technology",
+          "institution_type": "university",
+          "authors": [
+            "Jialei Zhu School of Optical-Electrical and Computer Engineering, University of Shanghai for Science and Technology, Shanghai, China",
+            "Heng Yao",
+            "Chuan Qin"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "institution_type": "university",
+          "authors": [
+            "Xinpeng Zhang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Heng Yao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:3391e7c855fa0e6e"
+          ]
+        },
+        {
+          "author": "Chuan Qin",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:3391e7c855fa0e6e"
+          ]
+        },
+        {
+          "author": "Xinpeng Zhang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:ieee-transactions-on-multimedia:main",
+      "venue_acronym": "TMM",
+      "venue_track": "main",
+      "raw_venue": "IEEE Transactions on Multimedia",
+      "venue_aliases": [
+        "IEEE Transactions on Multimedia",
+        "TMM"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_label": "IEEE Transactions on Multimedia (TMM)",
+      "aggregated_locations": [
+        {
+          "institution_name": "University of Shanghai for Science and Technology",
+          "institution_id": "institution:3391e7c855fa0e6e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Shanghai",
+          "region_code": "",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "institution_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Shanghai",
+          "region_code": "",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Jialei Zhu",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Heng Yao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:3391e7c855fa0e6e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Chuan Qin",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:3391e7c855fa0e6e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xinpeng Zhang",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aliases": [
+        "IEEE Transactions on Multimedia",
+        "TMM"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Shanghai for Science and Technology",
+          "canonical_name": "University of Shanghai for Science and Technology",
+          "institution_id": "institution:3391e7c855fa0e6e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "index": 2,
+          "name": "Fudan University",
+          "canonical_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
         }
       ],
       "current_institution": null
@@ -28917,6 +31817,274 @@
           "country_code": "",
           "region": "Beijing",
           "location_display": "Beijing, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:9fdc78cdcf22cdbf4776",
+      "title": "Radial Residual Frequency: A Semantically Aligned Benchmark and Spectral Detector for AI-Generated Images",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection_and_source_attribution",
+      "subtask": "detection_and_source_attribution",
+      "entry_type": "method",
+      "venue": "Special Interest Group on Computer Graphics and Interactive Techniques",
+      "venue_name": "Special Interest Group on Computer Graphics and Interactive Techniques",
+      "venue_type": "conference",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "We study the detection of AI-generated images and contribute toward detectors that are accurate, trustworthy, and honestly evaluated. We first describe a data-generation pipeline that captions real photographs with a vision–language model and regenerates them with modern text-to-image systems, producing semantically aligned real/synthetic pairs that isolate generative artifacts from image content. We then build a lightweight, CPU-deployable spectral detector that fuses an RGB backbone with a radial residual-frequency branch, and show through a controlled ablation that the frequency cue mainly contributes calibration and false-positive control rather than raw ranking. To keep a single saturated score from overstating readiness, we package the detector with a multi-axis evaluation suite and a worst-group summary metric. Finally, we extend the same recipe to a dedicated face-deepfake detector that adds a neighboring-pixel-relationship branch and generalizes well to generators unseen in training. We release the models, the data protocols, and all per-sample scores as a reproducible reference point for synthetic-image forensics.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.1145/3799825.3818777",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1145/3799825.3818777",
+      "primary_url": "https://doi.org/10.1145/3799825.3818777",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W7168404802",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1145/3799825.3818777",
+      "authors": [
+        {
+          "name": "Guang Yang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Qian Zhang",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Fengchen Liu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": false,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 2,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of California, Berkeley",
+        "University of Charleston"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
+      "aggregated_regions": [
+        "California",
+        "West Virginia"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:415f0c49e60d689e4da7",
+          "institution_id": "institution:be74dcf5d0cb77ea",
+          "institution": "University of California, Berkeley",
+          "institution_authors": [
+            "Guang Yang",
+            "Fengchen Liu"
+          ],
+          "raw_affiliation": "University of California, Berkeley, Berkeley, USA",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168404802",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically matched to a confirmed canonical institution; review imported authorship evidence."
+        },
+        {
+          "mapping_id": "mapping:155ed7951faae0197f4d",
+          "institution_id": "institution:481050d20cd6c722",
+          "institution": "University of Charleston",
+          "institution_authors": [
+            "Qian Zhang"
+          ],
+          "raw_affiliation": "University of Charleston, Charleston, USA",
+          "evidence_source": "OpenAlex authorships",
+          "evidence_url": "https://openalex.org/W7168404802",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:be74dcf5d0cb77ea",
+          "institution": "University of California, Berkeley",
+          "institution_type": "university",
+          "authors": [
+            "Guang Yang",
+            "Fengchen Liu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:481050d20cd6c722",
+          "institution": "University of Charleston",
+          "institution_type": "university",
+          "authors": [
+            "Qian Zhang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Guang Yang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:be74dcf5d0cb77ea"
+          ]
+        },
+        {
+          "author": "Qian Zhang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:481050d20cd6c722"
+          ]
+        },
+        {
+          "author": "Fengchen Liu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:be74dcf5d0cb77ea"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:special-interest-group-on-computer-graphics-and-interactive-techniques:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Special Interest Group on Computer Graphics and Interactive Techniques",
+      "venue_aliases": [
+        "Special Interest Group on Computer Graphics and Interactive Techniques"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Special Interest Group on Computer Graphics and Interactive Techniques",
+      "aggregated_locations": [
+        {
+          "institution_name": "University of California, Berkeley",
+          "institution_id": "institution:be74dcf5d0cb77ea",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "US",
+          "region": "California",
+          "region_code": "",
+          "location_display": "California, United States"
+        },
+        {
+          "institution_name": "University of Charleston",
+          "institution_id": "institution:481050d20cd6c722",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "US",
+          "region": "West Virginia",
+          "region_code": "",
+          "location_display": "West Virginia, United States"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Guang Yang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:be74dcf5d0cb77ea"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Qian Zhang",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:481050d20cd6c722"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Fengchen Liu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:be74dcf5d0cb77ea"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of California, Berkeley",
+          "canonical_name": "University of California, Berkeley",
+          "institution_id": "institution:be74dcf5d0cb77ea",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "California",
+          "location_display": "California, United States"
+        },
+        {
+          "index": 2,
+          "name": "University of Charleston",
+          "canonical_name": "University of Charleston",
+          "institution_id": "institution:481050d20cd6c722",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "West Virginia",
+          "location_display": "West Virginia, United States"
         }
       ],
       "current_institution": null
@@ -33937,7 +37105,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -33946,7 +37114,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
@@ -33955,17 +37123,25 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
       "missing_coordinates": false,
-      "coverage_status": "paper_only_review",
-      "aggregated_institutions": [],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Gachon University"
+      ],
+      "aggregated_country_names": [
+        "South Korea"
+      ],
+      "aggregated_country_codes": [
+        "KR"
+      ],
+      "aggregated_regions": [
+        "Gyeonggi-do"
+      ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
@@ -33980,7 +37156,7 @@
           "evidence_source": "OpenAlex authorships",
           "evidence_url": "https://openalex.org/W7128159442",
           "affiliation_note": "",
-          "mapping_status": "needs_review",
+          "mapping_status": "active",
           "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
         }
       ],
@@ -33990,10 +37166,12 @@
           "institution_id": "institution:6beb2f6c52d3f30c",
           "institution": "Gachon University",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
-          "preliminary": true
+          "authors": [
+            "Qiaoyue Man",
+            "Young-Im Cho"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -34025,7 +37203,7 @@
           "institution_ids": [
             "institution:6beb2f6c52d3f30c"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -34036,30 +37214,26 @@
           "institution_ids": [
             "institution:6beb2f6c52d3f30c"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
-      "affiliations": [
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "aggregated_locations": [
         {
-          "index": 1,
-          "name": "Gachon University",
-          "canonical_name": "Gachon University",
+          "institution_name": "Gachon University",
           "institution_id": "institution:6beb2f6c52d3f30c",
           "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "preliminary": true
+          "country": "South Korea",
+          "country_code": "KR",
+          "region": "Gyeonggi-do",
+          "region_code": "",
+          "location_display": "Gyeonggi-do, South Korea"
         }
       ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "aggregated_locations": [],
       "aggregated_institution_types": [
         "university"
       ],
@@ -34071,7 +37245,21 @@
         "Electronics"
       ],
       "ambiguity_status": "unmapped",
-      "venue_label": "Electronics"
+      "venue_label": "Electronics",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Gachon University",
+          "canonical_name": "Gachon University",
+          "institution_id": "institution:6beb2f6c52d3f30c",
+          "institution_type": "university",
+          "country": "South Korea",
+          "country_code": "",
+          "region": "Gyeonggi-do",
+          "location_display": "Gyeonggi-do, South Korea"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:0d918782407e05ade5bd",
@@ -67536,7 +70724,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -67545,7 +70733,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -67554,17 +70742,16 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
           "name": "Guobing Zou",
           "affiliation_indices": [
-            2,
-            3
+            2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -67573,7 +70760,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -67582,15 +70769,15 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
       "source_database": "OpenAlex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -67601,9 +70788,9 @@
           "institution_type": "university",
           "country": "China",
           "country_code": "CN",
-          "region": "",
+          "region": "Shanghai",
           "region_code": "",
-          "location_display": "China"
+          "location_display": "Shanghai, China"
         },
         {
           "institution_name": "Shanghai University",
@@ -67611,25 +70798,14 @@
           "institution_type": "university",
           "country": "China",
           "country_code": "CN",
-          "region": "",
+          "region": "Shanghai",
           "region_code": "",
-          "location_display": "China"
-        },
-        {
-          "institution_name": "Shanghai University of Engineering Science",
-          "institution_id": "institution:07ba242d76aafb0e",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "CN",
-          "region": "",
-          "region_code": "",
-          "location_display": "China"
+          "location_display": "Shanghai, China"
         }
       ],
       "aggregated_institutions": [
         "Shanghai Polytechnic University",
-        "Shanghai University",
-        "Shanghai University of Engineering Science"
+        "Shanghai University"
       ],
       "aggregated_institution_types": [
         "university"
@@ -67640,57 +70816,45 @@
       "aggregated_country_codes": [
         "CN"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "venue_id": "venue:measurement-science-and-technology:main",
-      "venue_acronym": "",
-      "venue_track": "main",
-      "raw_venue": "Measurement Science and Technology",
-      "venue_aliases": [
-        "Measurement Science and Technology"
+      "aggregated_regions": [
+        "Shanghai"
       ],
-      "ambiguity_status": "unmapped",
-      "venue_label": "Measurement Science and Technology",
-      "affiliations": [
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Shanghai Polytechnic University",
-          "canonical_name": "Shanghai Polytechnic University",
+          "mapping_id": "mapping:60686eee3c94769bf712",
           "institution_id": "institution:85a4635e28eefe8e",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China"
+          "institution": "Shanghai Polytechnic University",
+          "institution_authors": [
+            "Liwei Yao",
+            "Sen Niu",
+            "Kaili Liao",
+            "Kefeng Li",
+            "Tengbo Zhao"
+          ],
+          "raw_affiliation": "The School of Computer and Information Engineering, Institute for Artificial Intelligence, Shanghai Polytechnic University, Shanghai 201209, People’s Republic of China",
+          "evidence_source": "Publisher article metadata and OpenAlex authorships",
+          "evidence_url": "https://doi.org/10.1088/1361-6501/ae005c",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
         },
         {
-          "index": 2,
-          "name": "Shanghai University",
-          "canonical_name": "Shanghai University",
+          "mapping_id": "mapping:da0bbb0f296c10e8556f",
           "institution_id": "institution:dbc08517e4f1ed6e",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China"
-        },
-        {
-          "index": 3,
-          "name": "Shanghai University of Engineering Science",
-          "canonical_name": "Shanghai University of Engineering Science",
-          "institution_id": "institution:07ba242d76aafb0e",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China"
+          "institution": "Shanghai University",
+          "institution_authors": [
+            "Guobing Zou"
+          ],
+          "raw_affiliation": "The school of Computer Engineering and Science, Shanghai University, Shanghai 200444, People’s Republic of China",
+          "evidence_source": "Publisher article metadata and OpenAlex authorships",
+          "evidence_url": "https://doi.org/10.1088/1361-6501/ae005c",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -67704,7 +70868,7 @@
             "Kefeng Li",
             "Tengbo Zhao"
           ],
-          "mapping_source": "raw_affiliation",
+          "mapping_source": "curated_admin",
           "mapping_fallback": false
         },
         {
@@ -67715,89 +70879,8 @@
           "authors": [
             "Guobing Zou"
           ],
-          "mapping_source": "raw_affiliation",
+          "mapping_source": "curated_admin",
           "mapping_fallback": false
-        },
-        {
-          "index": 3,
-          "institution_id": "institution:07ba242d76aafb0e",
-          "institution": "Shanghai University of Engineering Science",
-          "institution_type": "university",
-          "authors": [
-            "Guobing Zou"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Liwei Yao",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:85a4635e28eefe8e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Sen Niu",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:85a4635e28eefe8e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Kaili Liao",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:85a4635e28eefe8e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Guobing Zou",
-          "indices": [
-            2,
-            3
-          ],
-          "institution_ids": [
-            "institution:dbc08517e4f1ed6e",
-            "institution:07ba242d76aafb0e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Kefeng Li",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:85a4635e28eefe8e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Tengbo Zhao",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:85a4635e28eefe8e"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
         }
       ],
       "author_institution_indices": [
@@ -67831,12 +70914,10 @@
         {
           "author": "Guobing Zou",
           "institution_indices": [
-            2,
-            3
+            2
           ],
           "institution_ids": [
-            "institution:dbc08517e4f1ed6e",
-            "institution:07ba242d76aafb0e"
+            "institution:dbc08517e4f1ed6e"
           ]
         },
         {
@@ -67856,6 +70937,110 @@
           "institution_ids": [
             "institution:85a4635e28eefe8e"
           ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:measurement-science-and-technology:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Measurement Science and Technology",
+      "venue_aliases": [
+        "Measurement Science and Technology"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Measurement Science and Technology",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Shanghai Polytechnic University",
+          "canonical_name": "Shanghai Polytechnic University",
+          "institution_id": "institution:85a4635e28eefe8e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "index": 2,
+          "name": "Shanghai University",
+          "canonical_name": "Shanghai University",
+          "institution_id": "institution:dbc08517e4f1ed6e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Liwei Yao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Sen Niu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Kaili Liao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Guobing Zou",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:dbc08517e4f1ed6e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Kefeng Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Tengbo Zhao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:85a4635e28eefe8e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
         }
       ]
     },
@@ -78354,7 +81539,7 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 12,
+      "map_record_count": 13,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -78398,6 +81583,16 @@
           "region": "California",
           "region_code": "",
           "location_display": "California, United States"
+        },
+        {
+          "institution_name": "International Institute of Information Technology, Naya Raipur",
+          "institution_id": "institution:118c2f047da4525d",
+          "institution_type": "university",
+          "country": "India",
+          "country_code": "IN",
+          "region": "Chhattisgarh",
+          "region_code": "",
+          "location_display": "Chhattisgarh, India"
         },
         {
           "institution_name": "Texas A&M University",
@@ -78485,6 +81680,7 @@
         "Manipal University Jaipur",
         "BITS Pilani, Hyderabad",
         "Xpectrum AI",
+        "International Institute of Information Technology, Naya Raipur",
         "Texas A&M University",
         "Carnegie Mellon University",
         "Vishwakarma Institute of Information Technology",
@@ -78514,6 +81710,7 @@
         "Rajasthan",
         "Telangana",
         "California",
+        "Chhattisgarh",
         "Texas",
         "Pennsylvania",
         "Maharashtra",
@@ -78588,17 +81785,17 @@
         },
         {
           "mapping_id": "mapping:95192f5f75066b27b440",
-          "institution_id": "institution:33f2056ddfd46aaa",
-          "institution": "International Institute of Information Technology",
+          "institution_id": "institution:118c2f047da4525d",
+          "institution": "International Institute of Information Technology, Naya Raipur",
           "institution_authors": [
             "Sainath Reddy Sankepally"
           ],
-          "raw_affiliation": "International Institute of Information Technology, India",
-          "evidence_source": "",
-          "evidence_url": "",
+          "raw_affiliation": "International Institute of Information Technology, India IIIT-Naya Raipur inferred from the LinkedIn profile of the author",
+          "evidence_source": "ACL Anthology paper PDF and author LinkedIn profile",
+          "evidence_url": "https://in.linkedin.com/in/sainathreddy-sankepally",
           "affiliation_note": "",
           "mapping_status": "active",
-          "review_note": ""
+          "review_note": "The ACL Anthology paper assigns affiliation marker 5 to International Institute of Information Technology, India; the named author's education history identifies IIIT-Naya Raipur (2020–2024), resolving the otherwise ambiguous IIIT identity."
         },
         {
           "mapping_id": "mapping:743a4ede6b6e30ea493c",
@@ -78789,8 +81986,8 @@
         },
         {
           "index": 5,
-          "institution_id": "institution:33f2056ddfd46aaa",
-          "institution": "International Institute of Information Technology",
+          "institution_id": "institution:118c2f047da4525d",
+          "institution": "International Institute of Information Technology, Naya Raipur",
           "institution_type": "university",
           "authors": [
             "Sainath Reddy Sankepally"
@@ -78955,7 +82152,7 @@
             5
           ],
           "institution_ids": [
-            "institution:33f2056ddfd46aaa"
+            "institution:118c2f047da4525d"
           ]
         },
         {
@@ -79101,14 +82298,14 @@
         },
         {
           "index": 5,
-          "name": "International Institute of Information Technology",
-          "canonical_name": "International Institute of Information Technology",
-          "institution_id": "institution:33f2056ddfd46aaa",
+          "name": "International Institute of Information Technology, Naya Raipur",
+          "canonical_name": "International Institute of Information Technology, Naya Raipur",
+          "institution_id": "institution:118c2f047da4525d",
           "institution_type": "university",
-          "country": "",
+          "country": "India",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Chhattisgarh",
+          "location_display": "Chhattisgarh, India"
         },
         {
           "index": 6,
@@ -79276,7 +82473,7 @@
             5
           ],
           "institution_ids": [
-            "institution:33f2056ddfd46aaa"
+            "institution:118c2f047da4525d"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -79847,6 +83044,538 @@
           "country_code": "",
           "region": "Zhejiang",
           "location_display": "Zhejiang, China"
+        }
+      ],
+      "current_institution": null
+    },
+    {
+      "paper_id": "curated:3e707a16418405139945",
+      "title": "Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "subtask": "ai_generated_image_detection",
+      "entry_type": "method",
+      "venue": "Computer Vision and Pattern Recognition",
+      "venue_name": "Computer Vision and Pattern Recognition",
+      "venue_type": "conference",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "In AI-generated image detection, current cutting-edge methods typically adapt pre-trained foundation models through partial-parameter fine-tuning. However, these approaches often struggle to generalize to forgeries from unseen generators, as the fine-tuned models capture only limited patterns from training data and fail to reflect the evolving traits of new ones. To overcome this limitation, we propose Image-Adaptive Prompt Learning (IAPL), a novel paradigm that dynamically adjusts the prompts fed into the encoder according to each testing image, rather than fixing them after training. This design significantly enhances robustness and adaptability to diverse forged images. The dynamic prompts integrate conditional information with test-time adaptive tokens through a lightweight learnable scaling factor. The conditional information is produced by a Conditional Information Learner, which leverages CNN-based feature extractors to model both forgery-specific and general conditions. The test-time adaptive tokens are optimized during inference on a single sample by enforcing prediction consistency across multiple views, ensuring that the parameters align with the current image. For the final decision, the optimal input with the highest prediction confidence is selected. Extensive experiments show that IAPL achieves state-of-the-art performance, with mean accuracies of 95.61% and 96.7% on the widely used UniversalFakeDetect and GenImage datasets, respectively. Codes and weights will be released on https://github.com/liyih/IAPL.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.48550/arxiv.2508.01603",
+      "arxiv_id": "2508.01603",
+      "arxiv_url": "https://arxiv.org/abs/2508.01603",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Towards_Generalizable_AI-Generated_Image_Detection_via_Image-Adaptive_Prompt_Learning_CVPR_2026_paper.pdf",
+      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Towards_Generalizable_AI-Generated_Image_Detection_via_Image-Adaptive_Prompt_Learning_CVPR_2026_paper.pdf",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4415330533",
+      "is_arxiv_preprint": false,
+      "url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Towards_Generalizable_AI-Generated_Image_Detection_via_Image-Adaptive_Prompt_Learning_CVPR_2026_paper.pdf",
+      "authors": [
+        {
+          "name": "Yiheng Li",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Zichang Tan",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Guoqing Xu",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Zhen Lei",
+          "affiliation_indices": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xu Zhou",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yang Yang",
+          "affiliation_indices": [
+            1,
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "review_status": "reviewed",
+      "review_note": "",
+      "needs_review": true,
+      "notes": "",
+      "has_map_location": true,
+      "map_record_count": 4,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "University of Chinese Academy of Sciences",
+        "Institute of Automation, Chinese Academy of Sciences",
+        "HKISI, Chinese Academy of Sciences",
+        "Sangfor Technologies Inc."
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Beijing",
+        "Hong Kong",
+        "Guangdong"
+      ],
+      "aggregated_region_codes": [
+        "HK"
+      ],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:5c8a479164e2e4f156ea",
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "institution_authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Zhen Lei",
+            "Yang Yang"
+          ],
+          "raw_affiliation": "School of Artificial Intelligence, University of Chinese Academy of Sciences",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        },
+        {
+          "mapping_id": "mapping:b49cf175f39fe84071c8",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Zhen Lei",
+            "Yang Yang"
+          ],
+          "raw_affiliation": "MAIS, Institute of Automation, Chinese Academy of Sciences",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        },
+        {
+          "mapping_id": "mapping:5ee3159949d220cd7e61",
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution": "HKISI, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Zhen Lei"
+          ],
+          "raw_affiliation": "CAIR, HKISI, Chinese Academy of Sciences Centre for Artificial Intelligence and Robotics, Hong Kong Institute of Science & Innovation, Chinese Academy of Sciences",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        },
+        {
+          "mapping_id": "mapping:11263b06d9b557326e96",
+          "institution_id": "institution:a86e3c911036d069",
+          "institution": "Sangfor Technologies Inc.",
+          "institution_authors": [
+            "Zichang Tan",
+            "Xu Zhou"
+          ],
+          "raw_affiliation": "Sangfor Technologies Inc.",
+          "evidence_source": "CVF accepted paper PDF",
+          "evidence_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Towards_Generalizable_AI-Generated_Image_Detection_via_Image-Adaptive_Prompt_Learning_CVPR_2026_paper.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "The accepted paper assigns Zichang Tan and Xu Zhou to affiliation 4, Sangfor Technologies Inc.; the temporary qualified-name entity was erroneous and the mapping remains on the established Sangfor canonical ID."
+        },
+        {
+          "mapping_id": "mapping:ae787b01f59386a8984e",
+          "institution_id": "institution:d8d45546142be201",
+          "institution": "Macau University of Science and Technology",
+          "institution_authors": [
+            "Zhen Lei"
+          ],
+          "raw_affiliation": "SCSE, FIE, M.U.S.T.",
+          "evidence_source": "",
+          "evidence_url": "",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": ""
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:69309405e04976ec",
+          "institution": "University of Chinese Academy of Sciences",
+          "institution_type": "university",
+          "authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Zhen Lei",
+            "Yang Yang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_type": "research_unit",
+          "authors": [
+            "Yiheng Li",
+            "Guoqing Xu",
+            "Zhen Lei",
+            "Yang Yang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution": "HKISI, Chinese Academy of Sciences",
+          "institution_type": "research_unit",
+          "authors": [
+            "Zhen Lei"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:a86e3c911036d069",
+          "institution": "Sangfor Technologies Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Zichang Tan",
+            "Xu Zhou"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:d8d45546142be201",
+          "institution": "Macau University of Science and Technology",
+          "institution_type": "university",
+          "authors": [
+            "Zhen Lei"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Yiheng Li",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Zichang Tan",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:a86e3c911036d069"
+          ]
+        },
+        {
+          "author": "Guoqing Xu",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Zhen Lei",
+          "institution_indices": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0",
+            "institution:9dd7b58a09f6962c",
+            "institution:d8d45546142be201"
+          ]
+        },
+        {
+          "author": "Xu Zhou",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:a86e3c911036d069"
+          ]
+        },
+        {
+          "author": "Yang Yang",
+          "institution_indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_id": "venue:computer-vision-and-pattern-recognition:main",
+      "venue_acronym": "",
+      "venue_track": "main",
+      "raw_venue": "Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "Computer Vision and Pattern Recognition"
+      ],
+      "ambiguity_status": "unmapped",
+      "venue_label": "Computer Vision and Pattern Recognition",
+      "aggregated_locations": [
+        {
+          "institution_name": "University of Chinese Academy of Sciences",
+          "institution_id": "institution:69309405e04976ec",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "HKISI, Chinese Academy of Sciences",
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hong Kong",
+          "region_code": "HK",
+          "location_display": "Hong Kong, China"
+        },
+        {
+          "institution_name": "Sangfor Technologies Inc.",
+          "institution_id": "institution:a86e3c911036d069",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Guangdong",
+          "region_code": "",
+          "location_display": "Guangdong, China"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "research_unit",
+        "company"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Yiheng Li",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zichang Tan",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:a86e3c911036d069"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Guoqing Xu",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zhen Lei",
+          "indices": [
+            1,
+            2,
+            3,
+            5
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0",
+            "institution:9dd7b58a09f6962c",
+            "institution:d8d45546142be201"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xu Zhou",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:a86e3c911036d069"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yang Yang",
+          "indices": [
+            1,
+            2
+          ],
+          "institution_ids": [
+            "institution:69309405e04976ec",
+            "institution:966ff12833f90bb0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Chinese Academy of Sciences",
+          "canonical_name": "University of Chinese Academy of Sciences",
+          "institution_id": "institution:69309405e04976ec",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 2,
+          "name": "Institute of Automation, Chinese Academy of Sciences",
+          "canonical_name": "Institute of Automation, Chinese Academy of Sciences",
+          "institution_id": "institution:966ff12833f90bb0",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 3,
+          "name": "HKISI, Chinese Academy of Sciences",
+          "canonical_name": "HKISI, Chinese Academy of Sciences",
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hong Kong",
+          "location_display": "Hong Kong, China"
+        },
+        {
+          "index": 4,
+          "name": "Sangfor Technologies Inc.",
+          "canonical_name": "Sangfor Technologies Inc.",
+          "institution_id": "institution:a86e3c911036d069",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "index": 5,
+          "name": "Macau University of Science and Technology",
+          "canonical_name": "Macau University of Science and Technology",
+          "institution_id": "institution:d8d45546142be201",
+          "institution_type": "university",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
         }
       ],
       "current_institution": null
@@ -155613,6 +159342,13 @@
       "alias_source": "english-name-migration"
     },
     {
+      "alias_name": "Institute of Automation",
+      "canonical_institution_name": "Institute of Automation, Chinese Academy of Sciences",
+      "canonical_institution_id": "institution:966ff12833f90bb0",
+      "alias_language": "",
+      "alias_source": "local-admin"
+    },
+    {
       "alias_name": "Institute of Automation, Chinese Academy of Sciences",
       "canonical_institution_name": "Institute of Automation, Chinese Academy of Sciences",
       "canonical_institution_id": "institution:966ff12833f90bb0",
@@ -157118,10 +160854,12 @@
       "canonical_name": "Institute of Automation, Chinese Academy of Sciences",
       "institution_type": "research_unit",
       "names": [
-        "Institute of Automation, Chinese Academy of Sciences"
+        "Institute of Automation, Chinese Academy of Sciences",
+        "Institute of Automation"
       ],
       "normalized_names": [
-        "institute of automation chinese academy of sciences"
+        "institute of automation chinese academy of sciences",
+        "institute of automation"
       ]
     },
     "institution:e278f75918ccf8a7": {
@@ -161609,6 +165347,206 @@
       "normalized_names": [
         "zhengzhou university of science and technology"
       ]
+    },
+    "institution:a3a1d363318e4d61": {
+      "canonical_name": "Liaoning Normal University",
+      "institution_type": "university",
+      "names": [
+        "Liaoning Normal University"
+      ],
+      "normalized_names": [
+        "liaoning normal university"
+      ]
+    },
+    "institution:052cc551c35dadab": {
+      "canonical_name": "Yunnan University of Finance And Economics",
+      "institution_type": "university",
+      "names": [
+        "Yunnan University of Finance And Economics"
+      ],
+      "normalized_names": [
+        "yunnan university of finance and economics"
+      ]
+    },
+    "institution:1179ac01dd4eef1f": {
+      "canonical_name": "Jiangnan University",
+      "institution_type": "university",
+      "names": [
+        "Jiangnan University"
+      ],
+      "normalized_names": [
+        "jiangnan university"
+      ]
+    },
+    "institution:da7c9e3c3edb12a5": {
+      "canonical_name": "Kunming University of Science and Technology",
+      "institution_type": "university",
+      "names": [
+        "Kunming University of Science and Technology"
+      ],
+      "normalized_names": [
+        "kunming university of science and technology"
+      ]
+    },
+    "institution:481050d20cd6c722": {
+      "canonical_name": "University of Charleston",
+      "institution_type": "university",
+      "names": [
+        "University of Charleston"
+      ],
+      "normalized_names": [
+        "university of charleston"
+      ]
+    },
+    "institution:707f47de3ba40880": {
+      "canonical_name": "Institute of Automation",
+      "institution_type": "other",
+      "names": [
+        "Institute of Automation"
+      ],
+      "normalized_names": [
+        "institute of automation"
+      ]
+    },
+    "institution:9ffc21de60b360ff": {
+      "canonical_name": "University of Edinburgh",
+      "institution_type": "university",
+      "names": [
+        "University of Edinburgh"
+      ],
+      "normalized_names": [
+        "university of edinburgh"
+      ]
+    },
+    "institution:01f9119bde93e8ef": {
+      "canonical_name": "Can Tho University",
+      "institution_type": "university",
+      "names": [
+        "Can Tho University"
+      ],
+      "normalized_names": [
+        "can tho university"
+      ]
+    },
+    "institution:948d79eac5f4fc81": {
+      "canonical_name": "Can Tho University of Technology",
+      "institution_type": "university",
+      "names": [
+        "Can Tho University of Technology"
+      ],
+      "normalized_names": [
+        "can tho university of technology"
+      ]
+    },
+    "institution:caec9d0e5ab5010d": {
+      "canonical_name": "Shanghai University of Electric Power",
+      "institution_type": "university",
+      "names": [
+        "Shanghai University of Electric Power"
+      ],
+      "normalized_names": [
+        "shanghai university of electric power"
+      ]
+    },
+    "institution:64aa68d006c72586": {
+      "canonical_name": "Nanfang College Guangzhou",
+      "institution_type": "other",
+      "names": [
+        "Nanfang College Guangzhou"
+      ],
+      "normalized_names": [
+        "nanfang college guangzhou"
+      ]
+    },
+    "institution:d9bedf96789f3033": {
+      "canonical_name": "Jiaxing Vocational Technical College",
+      "institution_type": "other",
+      "names": [
+        "Jiaxing Vocational Technical College"
+      ],
+      "normalized_names": [
+        "jiaxing vocational technical college"
+      ]
+    },
+    "institution:198d7d8f4558c225": {
+      "canonical_name": "Jiaxing University",
+      "institution_type": "university",
+      "names": [
+        "Jiaxing University"
+      ],
+      "normalized_names": [
+        "jiaxing university"
+      ]
+    },
+    "institution:2c6a3e642dd40a03": {
+      "canonical_name": "Shanghai Public Security Bureau",
+      "institution_type": "other",
+      "names": [
+        "Shanghai Public Security Bureau"
+      ],
+      "normalized_names": [
+        "shanghai public security bureau"
+      ]
+    },
+    "institution:23556881bce23bb9": {
+      "canonical_name": "Jiaxing Municipal Public Security Bureau",
+      "institution_type": "other",
+      "names": [
+        "Jiaxing Municipal Public Security Bureau"
+      ],
+      "normalized_names": [
+        "jiaxing municipal public security bureau"
+      ]
+    },
+    "institution:5d6887482c098264": {
+      "canonical_name": "Binjiang Institute of Zhejiang University",
+      "institution_type": "university",
+      "names": [
+        "Binjiang Institute of Zhejiang University"
+      ],
+      "normalized_names": [
+        "binjiang institute of zhejiang university"
+      ]
+    },
+    "institution:3391e7c855fa0e6e": {
+      "canonical_name": "University of Shanghai for Science and Technology",
+      "institution_type": "university",
+      "names": [
+        "University of Shanghai for Science and Technology"
+      ],
+      "normalized_names": [
+        "university of shanghai for science and technology"
+      ]
+    },
+    "institution:bcd623204fe5d659": {
+      "canonical_name": "Bennett University",
+      "institution_type": "university",
+      "names": [
+        "Bennett University"
+      ],
+      "normalized_names": [
+        "bennett university"
+      ]
+    },
+    "institution:cd887bf808040e61": {
+      "canonical_name": "Michigan State University",
+      "institution_type": "university",
+      "names": [
+        "Michigan State University"
+      ],
+      "normalized_names": [
+        "michigan state university"
+      ]
+    },
+    "institution:ed6f1120aeb12d5c": {
+      "canonical_name": "University of North Carolina at Chapel Hill",
+      "institution_type": "university",
+      "names": [
+        "University of North Carolina at Chapel Hill"
+      ],
+      "normalized_names": [
+        "university of north carolina at chapel hill"
+      ]
     }
   },
   "institution_id_redirects": {
@@ -161627,6 +165565,7 @@
     "institution:fa81ebfa10a39ec3": "institution:329f39cda413f721",
     "institution:aa2be35854d57bb8": "institution:f5c8a9b792d3b901",
     "institution:01fa3864492235a1": "institution:0aed8b5908ebcd25",
+    "institution:707f47de3ba40880": "institution:966ff12833f90bb0",
     "institution:9aae8d70d2d6eed8": "institution:cee70184073782c7",
     "institution:de98c081fba39c9d": "institution:696e90c102571ea3",
     "institution:ea3bd73e2b506e00": "institution:357dc1b545173dd5",
@@ -161709,6 +165648,16 @@
       "relationship_type": "affiliated_institute",
       "review_status": "confirmed",
       "evidence_source": "canonical institution registry",
+      "evidence_url": ""
+    },
+    {
+      "parent_institution_id": "institution:e433baf78e80004b",
+      "parent_institution_name": "Zhejiang University",
+      "child_institution_id": "institution:5d6887482c098264",
+      "child_institution_name": "Binjiang Institute of Zhejiang University",
+      "relationship_type": "affiliated_institute",
+      "review_status": "confirmed",
+      "evidence_source": "Institution Management",
       "evidence_url": ""
     }
   ]
