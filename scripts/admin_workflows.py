@@ -5,10 +5,12 @@ from __future__ import annotations
 
 import os
 import hashlib
+import signal
 import subprocess
+import threading
 import time
 from pathlib import Path
-from typing import Any, Dict, Mapping, Sequence
+from typing import Any, Callable, Dict, Mapping, Sequence
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
@@ -16,6 +18,7 @@ COMMAND_TIMEOUT_SECONDS = 180
 PUBLISH_TIMEOUT_SECONDS = 1_200
 GIT_TIMEOUT_SECONDS = 15
 TAIL_CHARACTER_LIMIT = 16_000
+ProgressCallback = Callable[[Mapping[str, Any]], None]
 ADMIN_EDITABLE_PATHS = (
     Path("data/curated/papers.csv"),
     Path("data/curated/paper_exclusions.csv"),
@@ -134,17 +137,71 @@ def _display_command(command: Sequence[str]) -> str:
     return " ".join(command)
 
 
+def _error_summary(stderr: str, stdout: str) -> str:
+    lines = [
+        line.strip()
+        for line in (stderr or stdout).splitlines()
+        if line.strip() and not line.startswith("$ ")
+    ]
+    errors = [line for line in lines if line.startswith("ERROR:")]
+    generic_fragments = (
+        "reported validation errors",
+        "failed with exit code",
+        "publishing stopped",
+    )
+    specific_errors = [
+        line for line in errors
+        if not any(fragment in line.casefold() for fragment in generic_fragments)
+    ]
+    summary = (
+        specific_errors[-1]
+        if specific_errors
+        else (errors[-1] if errors else (lines[-1] if lines else ""))
+    )
+    return summary.replace(str(REPOSITORY_ROOT), ".")[:1_000]
+
+
+def _safe_output(value: str) -> str:
+    return value.replace(str(REPOSITORY_ROOT), ".")
+
+
 def _run(
     command: Sequence[str],
     *,
     timeout: int,
+    progress: ProgressCallback | None = None,
 ) -> Dict[str, Any]:
     started = time.monotonic()
+    stdout_parts: list[str] = []
+    stderr_parts: list[str] = []
+    last_stage = ""
+    timed_out = False
+
+    def read_stream(stream: Any, parts: list[str], stream_name: str) -> None:
+        nonlocal last_stage
+        for line in iter(stream.readline, ""):
+            parts.append(line)
+            stripped = line.strip()
+            if stripped.startswith("== ") and stripped.endswith(" =="):
+                last_stage = stripped[3:-3].strip()
+            if progress and stripped:
+                progress(
+                    {
+                        "stage": last_stage,
+                        "command": stripped[2:] if stripped.startswith("$ ") else "",
+                        "stream": stream_name,
+                        "line": stripped,
+                        "elapsed_seconds": round(time.monotonic() - started, 3),
+                    }
+                )
+        stream.close()
+
     try:
-        completed = subprocess.run(
+        process = subprocess.Popen(
             list(command),
             cwd=REPOSITORY_ROOT,
-            capture_output=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
             text=True,
             env={
                 **os.environ,
@@ -152,32 +209,59 @@ def _run(
                     "/tmp/synthetic-image-research-map-pycache"
                 ),
             },
-            timeout=timeout,
-            check=False,
+            start_new_session=True,
         )
+        readers = [
+            threading.Thread(
+                target=read_stream,
+                args=(process.stdout, stdout_parts, "stdout"),
+                daemon=True,
+            ),
+            threading.Thread(
+                target=read_stream,
+                args=(process.stderr, stderr_parts, "stderr"),
+                daemon=True,
+            ),
+        ]
+        for reader in readers:
+            reader.start()
+        try:
+            return_code = process.wait(timeout=timeout)
+        except subprocess.TimeoutExpired:
+            timed_out = True
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                pass
+            try:
+                return_code = process.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                return_code = process.wait()
+        for reader in readers:
+            reader.join(timeout=2)
+
+        stdout = "".join(stdout_parts)
+        stderr = "".join(stderr_parts)
+        if timed_out:
+            timeout_message = f"Command timed out after {timeout} seconds."
+            stderr = f"{stderr}\n{timeout_message}".strip()
+            return_code = 124
         return {
-            "success": completed.returncode == 0,
+            "success": return_code == 0,
             "command": _display_command(command),
-            "exit_code": completed.returncode,
-            "stdout_tail": _tail(completed.stdout),
-            "stderr_tail": _tail(completed.stderr),
-            "duration_seconds": round(time.monotonic() - started, 3),
-        }
-    except subprocess.TimeoutExpired as error:
-        stdout = error.stdout or ""
-        stderr = error.stderr or ""
-        if isinstance(stdout, bytes):
-            stdout = stdout.decode("utf-8", errors="replace")
-        if isinstance(stderr, bytes):
-            stderr = stderr.decode("utf-8", errors="replace")
-        timeout_message = f"Command timed out after {timeout} seconds."
-        return {
-            "success": False,
-            "command": _display_command(command),
-            "exit_code": 124,
-            "stdout_tail": _tail(stdout),
-            "stderr_tail": _tail(
-                f"{stderr}\n{timeout_message}".strip()
+            "stage": last_stage or _display_command(command),
+            "exit_code": return_code,
+            "stdout_tail": _tail(_safe_output(stdout)),
+            "stderr_tail": _tail(_safe_output(stderr)),
+            "error_summary": _error_summary(stderr, stdout),
+            "timed_out": timed_out,
+            "failure_kind": (
+                "timeout" if timed_out
+                else ("subprocess_exit" if return_code else "")
             ),
             "duration_seconds": round(time.monotonic() - started, 3),
         }
@@ -185,9 +269,13 @@ def _run(
         return {
             "success": False,
             "command": _display_command(command),
+            "stage": last_stage or _display_command(command),
             "exit_code": 127,
             "stdout_tail": "",
             "stderr_tail": str(error),
+            "error_summary": str(error)[:1_000],
+            "timed_out": False,
+            "failure_kind": "start_failure",
             "duration_seconds": round(time.monotonic() - started, 3),
         }
 
@@ -243,7 +331,11 @@ def _known_output_signatures() -> Dict[str, str]:
     return signatures
 
 
-def run_workflow(name: str) -> Dict[str, Any]:
+def run_workflow(
+    name: str,
+    *,
+    progress: ProgressCallback | None = None,
+) -> Dict[str, Any]:
     commands = ALLOWED_WORKFLOWS.get(name)
     if commands is None:
         raise AdminWorkflowError(f"unsupported admin workflow: {name}")
@@ -258,7 +350,15 @@ def run_workflow(name: str) -> Dict[str, Any]:
             if name == "publish_changes"
             else COMMAND_TIMEOUT_SECONDS
         )
-        result = _run(command, timeout=timeout)
+        if progress:
+            progress(
+                {
+                    "stage": f"Starting {name}",
+                    "command": _display_command(command),
+                    "elapsed_seconds": round(time.monotonic() - started, 3),
+                }
+            )
+        result = _run(command, timeout=timeout, progress=progress)
         steps.append(result)
         if not result["success"]:
             break
@@ -279,10 +379,22 @@ def run_workflow(name: str) -> Dict[str, Any]:
         if step["stderr_tail"]
     ]
     exit_code = steps[-1]["exit_code"] if steps else 1
+    failed_step = next(
+        (step for step in reversed(steps) if not step["success"]),
+        None,
+    )
     return {
         "success": success,
         "command": [_display_command(command) for command in commands],
         "exit_code": exit_code,
+        "failed_stage": failed_step.get("stage", "") if failed_step else "",
+        "error_summary": (
+            failed_step.get("error_summary", "") if failed_step else ""
+        ),
+        "timed_out": bool(failed_step and failed_step.get("timed_out")),
+        "failure_kind": (
+            failed_step.get("failure_kind", "") if failed_step else ""
+        ),
         "stdout_tail": _tail("\n\n".join(stdout_parts)),
         "stderr_tail": _tail("\n\n".join(stderr_parts)),
         "duration_seconds": round(time.monotonic() - started, 3),

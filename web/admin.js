@@ -39,12 +39,14 @@ const state = {
   locationEditorMode: "review",
   selectedInstitutionLocationId: "",
   locationSaveRunning: false,
+  workflowRunning: false,
   release: { validation: "required", preview: "required", changedFiles: 0 },
 };
 
 const elements = {};
 let arxivAutofillPollTimer = null;
 let arxivAutofillPolling = false;
+let workflowStatusPollTimer = null;
 let noticeTimer = null;
 let paperSelectionSequence = 0;
 let activeVenueOptionIndex = -1;
@@ -3352,6 +3354,19 @@ function renderLatestWorkflowStatus(status) {
   }
   if (status.state === "running") {
     setWorkflowRunning(true, humanize(status.workflow));
+    const stage = text(status.current_stage);
+    const elapsed = Number(status.elapsed_seconds || 0).toFixed(1);
+    elements["workflow-state"].textContent = [
+      humanize(status.workflow),
+      stage || "running",
+      `${elapsed}s`,
+    ].join(" · ");
+    elements["workflow-log"].textContent = [
+      `${humanize(status.workflow)} is running…`,
+      stage ? `Stage: ${stage}` : "",
+      status.current_command ? `Command: ${status.current_command}` : "",
+      `Elapsed: ${elapsed}s`,
+    ].filter(Boolean).join("\n");
     return;
   }
   setWorkflowRunning(false);
@@ -3389,6 +3404,9 @@ function renderWorkflowLog(result, heading = "") {
     `Success: ${result.success ? "yes" : "no"}`,
     `Exit code: ${result.exit_code}`,
     `Duration: ${result.duration_seconds}s`,
+    result.failed_stage ? `Failed stage: ${result.failed_stage}` : "",
+    result.failure_kind ? `Failure kind: ${result.failure_kind}` : "",
+    result.error_summary ? `Error summary: ${result.error_summary}` : "",
     "Command(s):",
     command || "—",
     "Changed files:",
@@ -3403,35 +3421,25 @@ function renderWorkflowLog(result, heading = "") {
 }
 
 async function runAdminWorkflow(path, label, payload = null) {
+  if (state.workflowRunning) return;
+  state.workflowRunning = true;
   setWorkflowRunning(true, label);
   elements["workflow-log"].textContent = `${label} is running…`;
+  startWorkflowStatusPolling();
   try {
     const result = await apiFetch(path, {
       method: "POST",
       ...(payload ? { body: JSON.stringify(payload) } : {}),
     });
-    renderWorkflowLog(result, label);
-    elements["workflow-log-panel"].open = true;
-    elements["workflow-state"].dataset.state =
-      result.success ? "success" : "error";
-    elements["workflow-state"].textContent =
-      `${label} ${result.success ? "succeeded" : "failed"} · ${result.duration_seconds}s`;
-    if (!result.success) {
-      showNotice(`${label} failed. Review the command log; preview data was not treated as validated.`, "error");
-      return;
-    }
-    if (path === "/api/publish-changes") {
-      await loadApplication(true);
-      showNotice("Changes committed and pushed. GitHub Pages will update after deployment.");
-    } else if (path === "/api/export-preview" || path === "/api/run-full-refresh") {
-      await loadApplication(true);
-      showNotice(
-        "Local preview updated. Use Publish Changes when you are ready to commit and push."
-      );
-    } else {
-      showNotice(`${label} completed successfully.`);
-    }
+    await finishAdminWorkflow(path, label, result);
   } catch (error) {
+    if (path === "/api/publish-changes") {
+      const recovered = await recoverPublishResult();
+      if (recovered) {
+        await finishAdminWorkflow(path, label, recovered);
+        return;
+      }
+    }
     elements["workflow-state"].dataset.state = "error";
     elements["workflow-state"].textContent = `${label} failed`;
     elements["workflow-log"].textContent =
@@ -3439,8 +3447,75 @@ async function runAdminWorkflow(path, label, payload = null) {
     elements["workflow-log-panel"].open = true;
     showNotice(`${label} failed: ${error.message}`, "error");
   } finally {
+    state.workflowRunning = false;
+    stopWorkflowStatusPolling();
     setWorkflowRunning(false);
   }
+}
+
+async function finishAdminWorkflow(path, label, result) {
+  renderWorkflowLog(result, label);
+  elements["workflow-log-panel"].open = true;
+  elements["workflow-state"].dataset.state =
+    result.success ? "success" : "error";
+  elements["workflow-state"].textContent =
+    `${label} ${result.success ? "succeeded" : "failed"} · ${result.duration_seconds}s`;
+  if (!result.success) {
+    const detail = result.error_summary || result.failed_stage || `exit code ${result.exit_code}`;
+    showNotice(`${label} failed: ${detail}`, "error");
+    return;
+  }
+  if (path === "/api/publish-changes") {
+    await loadApplication(true);
+    showNotice("Changes committed and pushed. GitHub Pages will update after deployment.");
+  } else if (path === "/api/export-preview" || path === "/api/run-full-refresh") {
+    await loadApplication(true);
+    showNotice(
+      "Local preview updated. Use Publish Changes when you are ready to commit and push."
+    );
+  } else {
+    showNotice(`${label} completed successfully.`);
+  }
+}
+
+function startWorkflowStatusPolling() {
+  stopWorkflowStatusPolling();
+  const poll = async () => {
+    if (!state.workflowRunning) return;
+    try {
+      renderLatestWorkflowStatus(await apiFetch("/api/latest-validation-status"));
+    } catch (_error) {
+      // The original POST remains authoritative; polling is diagnostic only.
+    }
+    if (state.workflowRunning) {
+      workflowStatusPollTimer = window.setTimeout(poll, 1000);
+    }
+  };
+  workflowStatusPollTimer = window.setTimeout(poll, 1000);
+}
+
+function stopWorkflowStatusPolling() {
+  if (workflowStatusPollTimer !== null) {
+    window.clearTimeout(workflowStatusPollTimer);
+    workflowStatusPollTimer = null;
+  }
+}
+
+async function recoverPublishResult() {
+  // A proxy or browser may close the long-held POST after the subprocess has
+  // started. Keep the UI locked and recover the authoritative backend result.
+  for (let attempt = 0; attempt < 1200; attempt += 1) {
+    try {
+      const status = await apiFetch("/api/latest-validation-status");
+      renderLatestWorkflowStatus(status);
+      if (status.workflow !== "publish_changes") return null;
+      if (status.state !== "running") return status.result || null;
+    } catch (_error) {
+      // A short status-read failure is not evidence that publishing failed.
+    }
+    await new Promise((resolve) => window.setTimeout(resolve, 1000));
+  }
+  return null;
 }
 
 async function refreshAfterMetadataSave(selectedId, payload, selectionSequence) {

@@ -1497,6 +1497,7 @@ def make_handler(
     ),
     curated_arxiv_links_path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
     metadata_export_runner: Callable[[str], Mapping[str, Any]] = run_workflow,
+    workflow_runner: Callable[..., Mapping[str, Any]] = run_workflow,
     geocoder: Any = None,
 ) -> type[BaseHTTPRequestHandler]:
     institution_geocoder = geocoder or configured_geocoder()
@@ -1507,8 +1508,12 @@ def make_handler(
         "workflow": None,
         "started_at": None,
         "completed_at": None,
+        "current_stage": "",
+        "current_command": "",
+        "elapsed_seconds": 0,
         "result": None,
     }
+    workflow_started_monotonic: Dict[str, float | None] = {"value": None}
 
     class AdminRequestHandler(BaseHTTPRequestHandler):
         server_version = "SyntheticImageResearchMapAdmin/0.1"
@@ -1571,7 +1576,13 @@ def make_handler(
 
         def workflow_status_snapshot(self) -> Dict[str, Any]:
             with workflow_status_lock:
-                return dict(latest_workflow_status)
+                snapshot = dict(latest_workflow_status)
+                started = workflow_started_monotonic["value"]
+                if snapshot["state"] == "running" and started is not None:
+                    snapshot["elapsed_seconds"] = round(
+                        time.monotonic() - started, 3
+                    )
+                return snapshot
 
         def autofill_status_snapshot(self) -> Dict[str, Any]:
             with ARXIV_AUTOFILL_STATE_LOCK:
@@ -1695,6 +1706,7 @@ def make_handler(
                 )
                 return
             started_at = datetime.now(timezone.utc).isoformat()
+            workflow_started_monotonic["value"] = time.monotonic()
             with workflow_status_lock:
                 latest_workflow_status.update(
                     {
@@ -1702,26 +1714,38 @@ def make_handler(
                         "workflow": workflow_name,
                         "started_at": started_at,
                         "completed_at": None,
+                        "current_stage": f"Starting {workflow_name}",
+                        "current_command": "",
+                        "elapsed_seconds": 0,
                         "result": None,
                     }
                 )
-            try:
-                result = run_workflow(workflow_name)
-                completed_at = datetime.now(timezone.utc).isoformat()
+
+            def update_progress(progress: Mapping[str, Any]) -> None:
                 with workflow_status_lock:
-                    latest_workflow_status.update(
-                        {
-                            "state": (
-                                "succeeded" if result["success"] else "failed"
-                            ),
-                            "completed_at": completed_at,
-                            "result": result,
-                        }
+                    if progress.get("stage"):
+                        latest_workflow_status["current_stage"] = clean(
+                            progress["stage"]
+                        )
+                    if progress.get("command"):
+                        latest_workflow_status["current_command"] = clean(
+                            progress["command"]
+                        )
+                    latest_workflow_status["elapsed_seconds"] = float(
+                        progress.get(
+                            "elapsed_seconds",
+                            latest_workflow_status["elapsed_seconds"],
+                        )
                     )
-                self.send_json(HTTPStatus.OK, result)
+
+            response_status = HTTPStatus.OK
+            try:
+                result = dict(
+                    workflow_runner(workflow_name, progress=update_progress)
+                )
             except AdminWorkflowError as error:
-                completed_at = datetime.now(timezone.utc).isoformat()
-                failure = {
+                response_status = HTTPStatus.BAD_REQUEST
+                result = {
                     "success": False,
                     "command": [],
                     "exit_code": 2,
@@ -1729,19 +1753,14 @@ def make_handler(
                     "stderr_tail": str(error),
                     "duration_seconds": 0,
                     "changed_files": [],
+                    "failed_stage": "workflow setup",
+                    "error_summary": str(error),
+                    "failure_kind": "workflow_setup",
+                    "timed_out": False,
                 }
-                with workflow_status_lock:
-                    latest_workflow_status.update(
-                        {
-                            "state": "failed",
-                            "completed_at": completed_at,
-                            "result": failure,
-                        }
-                    )
-                self.send_json(HTTPStatus.BAD_REQUEST, failure)
             except Exception as error:  # Keep workflow state recoverable.
-                completed_at = datetime.now(timezone.utc).isoformat()
-                failure = {
+                response_status = HTTPStatus.INTERNAL_SERVER_ERROR
+                result = {
                     "success": False,
                     "command": [],
                     "exit_code": 1,
@@ -1752,20 +1771,44 @@ def make_handler(
                     ),
                     "duration_seconds": 0,
                     "changed_files": [],
+                    "failed_stage": "workflow execution",
+                    "error_summary": f"{type(error).__name__}: {error}",
+                    "failure_kind": "unexpected_error",
+                    "timed_out": False,
                 }
-                with workflow_status_lock:
-                    latest_workflow_status.update(
-                        {
-                            "state": "failed",
-                            "completed_at": completed_at,
-                            "result": failure,
-                        }
-                    )
-                self.send_json(
-                    HTTPStatus.INTERNAL_SERVER_ERROR, failure
+            completed_at = datetime.now(timezone.utc).isoformat()
+            started = workflow_started_monotonic["value"]
+            elapsed = (
+                round(time.monotonic() - started, 3)
+                if started is not None
+                else result.get("duration_seconds", 0)
+            )
+            with workflow_status_lock:
+                latest_workflow_status.update(
+                    {
+                        "state": (
+                            "succeeded" if result["success"] else "failed"
+                        ),
+                        "completed_at": completed_at,
+                        "current_stage": (
+                            "Completed"
+                            if result["success"]
+                            else clean(result.get("failed_stage")) or "Failed"
+                        ),
+                        "elapsed_seconds": elapsed,
+                        "result": result,
+                    }
                 )
-            finally:
-                workflow_lock.release()
+                workflow_started_monotonic["value"] = None
+            workflow_lock.release()
+            try:
+                self.send_json(response_status, result)
+            except (BrokenPipeError, ConnectionResetError):
+                LOGGER.warning(
+                    "Admin client connection closed after %s finished; "
+                    "the completed result remains available from workflow status.",
+                    workflow_name,
+                )
 
         def serve_static(self, path: Path, content_type: str) -> None:
             try:

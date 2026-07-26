@@ -306,8 +306,13 @@ Admin edit
 **Publish Changes** always asks for confirmation and cannot start while another
 admin workflow is running. It runs
 `python3 scripts/admin_publish_changes.py`, stops immediately on refresh or
-validation failure, shows the final command output, and does not create an
-empty commit. Before refresh and again before Git staging, it counts both
+validation failure, shows the current stage and elapsed time while running,
+and does not create an empty commit. The browser keeps every publish control
+disabled until the authoritative server status is terminal. If the long-held
+HTTP response is closed by the browser or an intermediary, the server retains
+the completed result and the browser recovers it from the status endpoint
+instead of starting a second publish. A client disconnect never changes a
+completed workflow from success to failure. Before refresh and again before Git staging, it counts both
 public-preview datasets and reports their sizes and shrinkage percentages as
 diagnostics. The export step is the publication trust boundary: it blocks any
 unexplained removed paper or paper–institution relationship regardless of

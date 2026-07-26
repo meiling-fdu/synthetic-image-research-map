@@ -86,6 +86,26 @@ class AdminDashboardFrontendTests(unittest.TestCase):
             self.assertIn(control, self.html)
         self.assertIn('"/api/publish-changes"', self.javascript)
 
+    def test_publish_stays_locked_and_recovers_a_closed_post_from_status(self):
+        self.assertIn("if (state.workflowRunning) return;", self.javascript)
+        self.assertIn("state.workflowRunning = true;", self.javascript)
+        self.assertIn("startWorkflowStatusPolling();", self.javascript)
+        self.assertIn("recoverPublishResult()", self.javascript)
+        recovery = self.javascript.split(
+            "async function recoverPublishResult()", 1
+        )[1].split("\n}", 1)[0]
+        self.assertIn('"/api/latest-validation-status"', recovery)
+        self.assertIn('status.state !== "running"', recovery)
+        self.assertIn("status.result || null", recovery)
+
+    def test_publish_failure_ui_includes_stage_exit_diagnostics(self):
+        log_renderer = self.javascript.split(
+            "function renderWorkflowLog", 1
+        )[1].split("\n}", 1)[0]
+        self.assertIn("Failed stage:", log_renderer)
+        self.assertIn("Failure kind:", log_renderer)
+        self.assertIn("Error summary:", log_renderer)
+
     def test_navigation_and_publish_controls_have_keyboard_focus_styles(self):
         css = (ROOT / "web" / "admin.css").read_text(encoding="utf-8")
         self.assertIn(".console-nav :focus-visible", css)
