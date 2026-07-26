@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import unicodedata
+
 from dataclasses import dataclass
 from typing import Any, Mapping, Optional, Sequence
 
@@ -147,12 +149,25 @@ def _active_mapping_decision(
     return None
 
 
+def _normalized_author_name(value: Any) -> str:
+    normalized = unicodedata.normalize("NFKD", clean(value).casefold())
+    return "".join(
+        character
+        for character in normalized
+        if not unicodedata.combining(character)
+    )
+
+
 def _author_set(value: Any) -> frozenset[str]:
     if isinstance(value, str):
         value = value.split(";")
     if not isinstance(value, Sequence) or isinstance(value, (bytes, bytearray)):
         return frozenset()
-    return frozenset(clean(author).casefold() for author in value if clean(author))
+    return frozenset(
+        normalized
+        for author in value
+        if (normalized := _normalized_author_name(author))
+    )
 
 
 def _record_author_sets(record: Mapping[str, Any]) -> set[frozenset[str]]:
@@ -221,12 +236,11 @@ def _curated_mapping_evidence(
         )
         if status == "excluded" and same_institution:
             return row
-        if (
-            status == "active"
-            and row_authors
-            and row_authors in author_sets
-            and not same_institution
-        ):
+        if status != "active":
+            continue
+        if same_institution and _lower_priority_mapping(record):
+            return row
+        if row_authors and row_authors in author_sets and not same_institution:
             replacement_present = any(
                 _paper_matches(row, new)
                 and (

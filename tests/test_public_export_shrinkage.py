@@ -342,6 +342,76 @@ class PublicExportShrinkageTests(unittest.TestCase):
         self.assertIn("curated/manual mapping supersession", report.removed_maps[0].evidence)
         self.assertIn("mapping-reviewed", report.removed_maps[0].evidence)
 
+    def test_manual_mapping_matches_fallback_authors_without_diacritics(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:old", institution="Old"),
+            "institution_authors": ["Mamadou Keïta", "Ada Author"],
+            "source_database": "OpenAlex",
+            "institution_source": "automatic_fallback",
+            "preliminary_affiliations": True,
+        }
+        replacement = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Reviewed",
+            "institution_id": "institution:reviewed",
+            "institution_authors": "Mamadou Keita; Ada Author",
+            "mapping_status": "active",
+        }
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [],
+            curated_mappings=[replacement],
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn(
+            "curated/manual mapping supersession",
+            report.removed_maps[0].evidence,
+        )
+
+    def test_manual_mapping_confirms_same_institution_automatic_fallback(self):
+        old = paper()
+        old_marker = {
+            **marker(
+                old,
+                institution_id="institution:same",
+                institution="Same Institution",
+            ),
+            "institution_authors": [
+                "Ada Author, Grace Author & Linus Author"
+            ],
+            "source_database": "OpenAlex",
+            "institution_source": "automatic_fallback",
+            "preliminary_affiliations": True,
+        }
+        replacement = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Same Institution",
+            "institution_id": "institution:same",
+            "institution_authors": (
+                "Ada Author; Grace Author; Linus Author"
+            ),
+            "mapping_status": "active",
+        }
+
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [],
+            curated_mappings=[replacement],
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn(
+            "curated/manual mapping supersession",
+            report.removed_maps[0].evidence,
+        )
+        self.assertIn("mapping-reviewed", report.removed_maps[0].evidence)
+
     def test_partial_manual_mapping_does_not_explain_other_author_fallback(self):
         old = paper()
         old_marker = {
