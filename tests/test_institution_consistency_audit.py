@@ -222,6 +222,95 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
         self.assertFalse(unresolved_high(findings))
         self.assertFalse(any(row["issue_type"] == "affiliation_mismatch" for row in findings))
 
+    def test_confirmed_mapping_migrated_by_exact_merge_is_not_reopened(self):
+        old = entity("institution:old", "Old Research Center", status="merged")
+        new = entity("institution:new", "New Research Institute")
+        change = {
+            "audit_id": "mapping-change:merge",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:new",
+            "previous_institution_id": "institution:old",
+            "affected_authors": "Example Author",
+            "confirmation_text": (
+                "mapping_id=mapping:institution:new:Example Author; "
+                "previous_institution=Old Research Center; "
+                "new_institution=New Research Institute; "
+                "change_source=global_merge"
+            ),
+        }
+        merge = {
+            "audit_id": "institution-merge:1",
+            "action": "merge",
+            "previous_institution_id": "institution:old",
+            "institution_id": "institution:new",
+        }
+        findings = audit_institution_consistency(
+            [mapping("institution:new", "New Research Institute", "Old Research Center")],
+            [old, new], [], merge_audits=[merge, change],
+        )
+        self.assertFalse(any(
+            row["issue_type"] == "confirmed_mapping_changed" for row in findings
+        ))
+
+    def test_confirmed_mapping_removed_with_exact_review_decision_is_not_reopened(self):
+        current = mapping(
+            "institution:certh", "Centre for Research and Technology Hellas (CERTH)",
+            "Centre for Research and Technology Hellas", provenance="manually_confirmed",
+        )
+        change = {
+            "audit_id": "mapping-change:removed",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Example Author",
+            "confirmation_text": (
+                "mapping_id=mapping:institution:certh:Example Author; "
+                "previous_institution=CERTH; new_institution=Amazon; "
+                "change_source=admin_mapping_update"
+            ),
+        }
+        decision = {
+            "audit_id": "mapping-resolution:removed",
+            "action": "mapping_reverted",
+            "institution_id": "institution:certh",
+            "previous_institution_id": "institution:amazon",
+            "confirmation_text": (
+                "source_audit_id=mapping-change:removed; "
+                "mapping_id=mapping:institution:certh:Example Author; "
+                "evidence_source=Publisher PDF; "
+                "evidence_url=https://example.test/paper.pdf"
+            ),
+            "review_note": "The replacement relationship was intentionally retired.",
+        }
+        findings = self.audit([current], merge_audits=[change, decision])
+        self.assertFalse(any(
+            row["issue_type"] == "confirmed_mapping_changed" for row in findings
+        ))
+
+    def test_confirmed_mapping_change_without_durable_evidence_still_fails(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
+            provenance="manually_confirmed",
+        )
+        change = {
+            "audit_id": "mapping-change:unreviewed",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Example Author",
+            "confirmation_text": (
+                "mapping_id=mapping:institution:amazon:Example Author; "
+                "previous_institution=CERTH; new_institution=Amazon; "
+                "change_source=admin_mapping_update"
+            ),
+        }
+        findings = self.audit([current], merge_audits=[change])
+        changed = next(
+            row for row in findings
+            if row["issue_type"] == "confirmed_mapping_changed"
+        )
+        self.assertEqual(changed["is_blocking"], "true")
+
     def test_review_decision_resolves_without_changing_mapping(self):
         rows = [mapping("institution:amazon", "Amazon", "University Federico II of Naples", author="Luisa Verdoliva")]
         initial = self.audit(rows)

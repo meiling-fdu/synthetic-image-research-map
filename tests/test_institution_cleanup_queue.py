@@ -182,6 +182,40 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
         self.assertEqual(result["audit"]["action"], "mapping_reverted")
         self.assertEqual(result["reaudit"], "scheduled_for_next_full_refresh")
 
+    def test_already_reverted_mapping_can_record_durable_resolution(self):
+        _, _, queue, expected = self.prepare_confirmed_change()
+        reverted = load_mappings(self.mappings_path)[0]
+        reverted.update({
+            "institution": "Wrong Lab",
+            "institution_id": "institution:wrong",
+            "updated_at": "2026-02-02T00:00:00+00:00",
+        })
+        write_csv(
+            self.mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS, [reverted]
+        )
+        expected.update({
+            "expected_institution_id": "institution:wrong",
+            "expected_mapping_updated_at": reverted["updated_at"],
+        })
+        result = apply_cleanup_action(
+            [queue["queue_id"]], "mapping_reverted",
+            "The replacement was already retired after checking publisher evidence.",
+            confirmed=True, resolved_by="local-admin", queue_path=self.queue_path,
+            mappings_path=self.mappings_path, location_review_path=self.locations_path,
+            institutions_path=self.institutions_path, institution_audit_path=self.audit_path,
+            **expected,
+        )
+        self.assertEqual(
+            load_mappings(self.mappings_path)[0]["institution_id"],
+            "institution:wrong",
+        )
+        self.assertEqual(result["mappings"], [])
+        self.assertEqual(result["audit"]["action"], "mapping_reverted")
+        self.assertIn(
+            "evidence_url=https://example.test/evidence",
+            result["audit"]["confirmation_text"],
+        )
+
     def test_mapping_change_resolution_requires_note(self):
         _, _, queue, expected = self.prepare_confirmed_change()
         with self.assertRaisesRegex(InstitutionReviewQueueError, "resolution note is required"):

@@ -182,7 +182,9 @@ def apply_cleanup_action(
         metadata = _metadata(source_audit.get("confirmation_text"))
         old_id = clean(source_audit.get("previous_institution_id"))
         new_id = clean(source_audit.get("institution_id"))
-        if clean(mapping.get("institution_id")) != new_id:
+        current_id = clean(mapping.get("institution_id"))
+        already_reverted = action == "mapping_reverted" and current_id == old_id
+        if current_id != new_id and not already_reverted:
             raise InstitutionReviewQueueError(
                 "the mapping no longer matches this review; refresh and review the new state"
             )
@@ -200,7 +202,7 @@ def apply_cleanup_action(
         snapshots = _snapshot(snapshot_paths)
         changed: list[dict[str, Any]] = []
         try:
-            if action == "mapping_reverted":
+            if action == "mapping_reverted" and not already_reverted:
                 target = institutions[old_id]
                 draft = dict(mapping)
                 prior_note = clean(mapping.get("review_note"))

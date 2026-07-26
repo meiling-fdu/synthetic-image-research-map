@@ -542,6 +542,10 @@ def audit_institution_consistency(
             clean(event.get("previous_institution_id")),
             clean(event.get("institution_id")),
         )
+        # A reviewed global merge is itself durable evidence that mappings
+        # should move from the retired ID to its replacement canonical ID.
+        if transition in resolver.merges:
+            continue
         if transition in resolved_change_audits.get(clean(event.get("audit_id")), []):
             continue
         mapping = mappings_by_id.get(metadata.get("mapping_id", ""), {})

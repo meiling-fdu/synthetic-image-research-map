@@ -197,6 +197,45 @@ class PublicExportShrinkageTests(unittest.TestCase):
         self.assertTrue(report.allowed)
         self.assertIn("reviewed mapping decision", report.removed_maps[0].evidence)
 
+    def test_unrelated_review_decision_does_not_explain_map_loss(self):
+        old = paper()
+        decision = {
+            **old,
+            "decision_id": "review-unrelated",
+            "institution": "Different Institution",
+            "action": "exclude_wrong_mapping",
+        }
+        report = analyze_shrinkage(
+            [old], [old], [marker(old)], [], review_decisions=[decision]
+        )
+        self.assertFalse(report.allowed)
+        self.assertEqual(len(report.unexplained), 1)
+
+    def test_paper_canonical_id_replacement_preserves_relationship_by_doi(self):
+        old = paper(paper_id="openalex:W1")
+        current = paper(paper_id="curated:canonical")
+        report = analyze_shrinkage(
+            [old],
+            [current],
+            [marker(old)],
+            [marker(current)],
+        )
+        self.assertTrue(report.allowed)
+        self.assertEqual(report.removed_papers, ())
+        self.assertEqual(report.removed_maps, ())
+
+    def test_duplicate_map_collapse_does_not_create_false_removal(self):
+        old = paper()
+        duplicate_markers = [marker(old), {**marker(old), "id": "duplicate"}]
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            duplicate_markers,
+            [marker(old)],
+        )
+        self.assertTrue(report.allowed)
+        self.assertEqual(report.removed_maps, ())
+
     def test_legion_stale_fallback_requires_reviewed_removal_across_identity_change(self):
         old = paper(
             "LEGION: Learning to Ground and Explain for Synthetic Image Detection",
@@ -401,6 +440,30 @@ class PublicExportShrinkageTests(unittest.TestCase):
         )
         self.assertTrue(report.allowed)
         self.assertEqual(report.removed_maps, ())
+
+    def test_unrelated_institution_redirect_does_not_explain_transition(self):
+        old = paper()
+        old_marker = marker(
+            old,
+            institution_id="institution:old",
+            institution="Old",
+        )
+        new_marker = marker(
+            old,
+            institution_id="institution:other",
+            institution="Other",
+        )
+        report = analyze_shrinkage(
+            [old],
+            [old],
+            [old_marker],
+            [new_marker],
+            institution_redirects={
+                "institution:unrelated-old": "institution:unrelated-new"
+            },
+        )
+        self.assertFalse(report.allowed)
+        self.assertEqual(len(report.unexplained), 1)
 
     def test_active_curated_marker_is_not_pruned_when_public_id_is_canonicalized(self):
         old = paper()

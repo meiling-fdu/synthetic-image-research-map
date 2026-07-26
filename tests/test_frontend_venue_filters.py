@@ -384,8 +384,8 @@ process.stdout.write(JSON.stringify({{
                 "baseline."
             ),
         })
-        self.assertEqual(len(self.papers), 487)
-        self.assertEqual(len(map_records), 1013)
+        self.assertEqual(len(self.papers), 500)
+        self.assertEqual(len(map_records), 1036)
 
     def test_venue_type_control_precedes_venue_control(self):
         self.assertLess(

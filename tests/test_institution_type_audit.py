@@ -22,13 +22,13 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         cls.by_name = {row["canonical_name"]: row for row in cls.institutions}
 
     def test_audited_repository_counts_and_unique_ids(self):
-        self.assertEqual(len(self.institutions), 562)
-        self.assertEqual(len({row["institution_id"] for row in self.institutions}), 562)
+        self.assertEqual(len(self.institutions), 583)
+        self.assertEqual(len({row["institution_id"] for row in self.institutions}), 583)
         self.assertEqual(Counter(row["institution_type"] for row in self.institutions), {
-            "university": 431,
+            "university": 446,
             "research_unit": 69,
-            "company": 58,
-            "other": 4,
+            "company": 59,
+            "other": 9,
         })
 
     def test_required_universities_and_schools(self):
@@ -102,10 +102,10 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         for paper in payloads[0]["records"]:
             counts.update(set(paper.get("aggregated_institution_types") or ()))
         self.assertEqual(counts, {
-            "university": 457,
-            "research_unit": 96,
-            "company": 70,
-            "other": 39,
+            "university": 469,
+            "research_unit": 98,
+            "company": 71,
+            "other": 40,
         })
 
     def test_university_filter_includes_corrected_records_and_other_excludes_them(self):
@@ -179,7 +179,7 @@ class InstitutionTypeAuditTests(unittest.TestCase):
                 "Alibaba Group", "SenseTime",
             )
         }
-        self.assertEqual(len(read_csv("institution_aliases.csv")), 67)
+        self.assertEqual(len(read_csv("institution_aliases.csv")), 68)
         for filename in ("author_institution_mappings.csv", "institution_locations.csv"):
             referenced = {row.get("institution_id", "") for row in read_csv(filename)}
             for name, institution_id in expected.items():

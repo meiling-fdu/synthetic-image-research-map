@@ -4,7 +4,12 @@ import unittest
 from copy import deepcopy
 from pathlib import Path
 
-from scripts.curated_export import _ordered_mapping_authors, build_curated_map_records
+from scripts.curated_export import (
+    _ordered_mapping_authors,
+    build_curated_map_records,
+    load_curated_mappings,
+)
+from scripts.curated_locations import load_confirmed_locations
 from scripts.export_public_preview import (
     add_public_detail_fields,
     apply_key_paper_expected_task,
@@ -33,6 +38,73 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_four_current_shrinkage_relationships_have_durable_locations_and_emit(self):
+        mapping_ids = {
+            "mapping:8bde822b616608f7d149",
+            "mapping:1a6971829b3270975cb2",
+            "mapping:60686eee3c94769bf712",
+            "mapping:da0bbb0f296c10e8556f",
+        }
+        mappings = [
+            row for row in load_curated_mappings()
+            if row["mapping_id"] in mapping_ids
+        ]
+        self.assertEqual({row["mapping_id"] for row in mappings}, mapping_ids)
+        self.assertTrue(all(row["mapping_status"] == "active" for row in mappings))
+        self.assertTrue(all(row["evidence_source"] for row in mappings))
+        self.assertTrue(all(row["evidence_url"] for row in mappings))
+
+        papers = [
+            {
+                "paper_id": "openalex:W7128586659",
+                "title": "IoT-Oriented Security for Small Sensor Systems Using DnCNN Denoising and Multimodal Feature Fusion for Image Forgery Detection",
+                "year": 2026,
+                "doi": "10.3390/s26041172",
+                "openalex_url": "https://openalex.org/W7128586659",
+                "task": "detection",
+                "authors": [
+                    "Nimra Nasir",
+                    "Syeda Sitara Waseem",
+                    "Muhammad Bilal",
+                    "Syed Rizwan Hassan",
+                ],
+            },
+            {
+                "paper_id": "openalex:W4413783451",
+                "title": "MSAFNet: multi-scale self-adaptive feature fusion network for AI-generated image detection",
+                "year": 2025,
+                "doi": "10.1088/1361-6501/ae005c",
+                "openalex_url": "https://openalex.org/W4413783451",
+                "task": "detection",
+                "authors": [
+                    "Liwei Yao",
+                    "Sen Niu",
+                    "Kaili Liao",
+                    "Guobing Zou",
+                    "Kefeng Li",
+                    "Tengbo Zhao",
+                ],
+            },
+        ]
+        markers, summary = build_curated_map_records(
+            papers,
+            mappings,
+            [],
+            confirmed_location_records=load_confirmed_locations(),
+        )
+
+        self.assertEqual(summary["active_mapping_marker_diagnostics"], [])
+        self.assertEqual({row["mapping_id"] for row in markers}, mapping_ids)
+        self.assertEqual(
+            {row["institution_id"] for row in markers},
+            {
+                "institution:823a09a4580fb39e",
+                "institution:6beb2f6c52d3f30c",
+                "institution:85a4635e28eefe8e",
+                "institution:dbc08517e4f1ed6e",
+            },
+        )
+
     def test_key_paper_expected_task_makes_cifake_shaped_record_map_eligible(self):
         candidate = {
             "title": "CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images",
