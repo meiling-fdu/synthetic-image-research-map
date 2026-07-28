@@ -144,7 +144,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
         self.assertIn('style.css?v=20260728-public-polish', self.html)
-        self.assertIn('app.js?v=20260728-public-polish', self.html)
+        self.assertIn('app.js?v=20260728-paper-details', self.html)
         self.assertIn(
             'assets/synthetic-image-detection-attribution-landscape-logo.png'
             '?v=20260728-public-polish',

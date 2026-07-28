@@ -747,12 +747,17 @@ function visiblePaperAffiliations(currentRecord, relatedEntries) {
   }).affiliations;
 }
 
-function renderPaperAuthors(record, currentAffiliationNumber = null) {
+function renderPaperAuthors(
+  record,
+  currentAffiliationNumber = null,
+  visibleLimit = Infinity,
+) {
   const normalized = normalizePaperDetailsRecord(record);
   return PaperDetailsHelpers.renderPaperAuthors(
     normalized,
     escapeHtml,
     currentAffiliationNumber,
+    visibleLimit,
   );
 }
 
@@ -2473,7 +2478,7 @@ function safeHttpUrl(value) {
 function externalLink(url, label) {
   const safeUrl = safeHttpUrl(url);
   return safeUrl
-    ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`
+    ? `<a href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)} (opens in a new tab)">${escapeHtml(label)}</a>`
     : "";
 }
 
@@ -2491,7 +2496,17 @@ function paperExternalLinks(record) {
   const safeArxivUrl = arxivId
     ? safeHttpUrl(`https://arxiv.org/abs/${arxivId}`)
     : "";
-  return PaperLinkHelpers.paperVersionLinks(record, safeArxivUrl)
+  const versionLinks = PaperLinkHelpers.paperVersionLinks(record, safeArxivUrl)
+    .map((link) => ({
+      ...link,
+      label: link.label === "Preprint" && safeArxivUrl ? "arXiv" : link.label,
+    }));
+  const resourceLinks = [
+    { label: "Project", url: record.project_url || record.project_page_url },
+    { label: "Code", url: record.code_url || record.repository_url },
+    { label: "Dataset", url: record.dataset_url },
+  ];
+  return PaperLinkHelpers.deduplicatePaperLinks([...versionLinks, ...resourceLinks])
     .map((link) => externalLink(link.url, link.label))
     .filter(Boolean);
 }
@@ -2552,6 +2567,7 @@ function paperDetailsHtml(record, relatedEntries) {
     ? renderPaperAuthors(
         normalizedRecord,
         currentAffiliation?.number ?? null,
+        8,
       )
     : "Unknown";
   const institutionAuthors = recordInstitutionAuthors(record);
@@ -2570,14 +2586,18 @@ function paperDetailsHtml(record, relatedEntries) {
   const year = record.publication_year ?? record.year ?? "Unknown";
   const venue = venueDisplayLabel(record) || "unknown";
   const publicationType = record.publication_type || "Unknown";
+  const publicationTypeLabel = formatTask(publicationType);
+  const publicationTypeBadge = publicationType && publicationType !== "Unknown"
+    ? `<span class="popup-badge publication-type-badge">${escapeHtml(publicationTypeLabel)}</span>`
+    : "";
   const entryType = getEntryType(record);
   const entryTypeLabel = getEntryTypeLabel(entryType);
   const entryTypeBadge = entryType
     ? `<span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>`
     : "";
   const venueRow = venueDisplayLabel(record)
-    ? `<dt>Venue</dt><dd>${venueDisplayHtml(record)}</dd>`
-    : "";
+    ? `<span><span class="visually-hidden">Venue: </span>${venueDisplayHtml(record)}</span>`
+    : `<span><span class="visually-hidden">Venue: </span>${escapeHtml(venue)}</span>`;
   const location = recordLocation(record) || "Unknown";
   const subtaskRow = record.subtask
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
@@ -2621,20 +2641,24 @@ function paperDetailsHtml(record, relatedEntries) {
     : "";
 
   return `
+    <h3 class="popup-title paper-details-title">${escapeHtml(recordTitle(record))}</h3>
     <div class="popup-badges">
-      <span class="popup-badge popup-task">${escapeHtml(formatTask(record.task))}</span>
+      <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatTask(record.task))}</span>
+      ${publicationTypeBadge}
       ${entryTypeBadge}
       ${versionBadge}
       ${confidenceBadge}
       ${affiliationBadge}
     </div>
-    <h3 class="popup-title">${escapeHtml(recordTitle(record))}</h3>
-    <dl class="popup-details paper-details-summary">
-      <dt>Authors</dt><dd>${authors}</dd>
-      <dt class="current-institution-label">Current institution</dt><dd class="current-institution-value paper-current-institution${currentAffiliation ? " is-active is-hover-institution" : ""}">${currentAffiliationNumber}${currentInstitutionButton || "Unknown"}</dd>
-      <dt>Year</dt><dd>${escapeHtml(year)}</dd>
+    <section class="paper-details-group paper-details-authors" aria-labelledby="paper-authors-heading">
+      <h4 id="paper-authors-heading">Authors</h4>
+      <p>${authors}</p>
+    </section>
+    <div class="paper-details-venue-row">
+      <span><span class="visually-hidden">Publication type: </span>${escapeHtml(publicationTypeLabel)}</span>
       ${venueRow}
-    </dl>
+      <span><span class="visually-hidden">Year: </span>${escapeHtml(year)}</span>
+    </div>
     ${linksBlock}
     ${affiliationsBlock}
     ${abstractBlock}
@@ -2642,7 +2666,7 @@ function paperDetailsHtml(record, relatedEntries) {
       <summary>More details</summary>
       <dl class="popup-details">
         <dt>Location</dt><dd>${escapeHtml(location)}</dd>
-        <dt>Publication type</dt><dd>${escapeHtml(formatTask(publicationType))}</dd>
+        <dt>Current institution</dt><dd class="paper-current-institution${currentAffiliation ? " is-active is-hover-institution" : ""}">${currentAffiliationNumber}${currentInstitutionButton || "Unknown"}</dd>
         ${institutionAuthorsRow}
         ${subtaskRow}
         ${methodRow}
@@ -2653,66 +2677,163 @@ function paperDetailsHtml(record, relatedEntries) {
   `;
 }
 
-function resultContent(record, relatedEntries = [{ record }]) {
+function resultBadges(record, includeInstitutionType = false) {
+  const taskClass = MarkerSizeHelpers.normalizeTaskLabel(record.task);
+  const publicationType = record.publication_type;
+  const entryType = getEntryType(record);
+  const versionBadge = isPreprintOnlyRecord(record)
+    ? '<span class="popup-badge confidence-unresolved">Preprint-only</span>'
+    : hasArxivVersion(record)
+      ? '<span class="popup-badge confidence-unresolved">arXiv version</span>'
+      : "";
+  const institutionType = normalizeInstitutionType(record.institution_type);
+  const institutionTypeBadge = includeInstitutionType && institutionType !== "other"
+    ? `<span class="popup-badge institution-type-badge">${escapeHtml(institutionTypeLabel(institutionType))}</span>`
+    : "";
+  return `
+    <div class="popup-badges result-badges" aria-label="Paper classifications">
+      <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatTask(record.task))}</span>
+      ${publicationType ? `<span class="popup-badge publication-type-badge">${escapeHtml(formatTask(publicationType))}</span>` : ""}
+      ${entryType ? `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(entryType))}</span>` : ""}
+      ${versionBadge}
+      ${institutionTypeBadge}
+      ${preliminaryAffiliationBadge(record)}
+    </div>
+  `;
+}
+
+function resultVenueYear(record) {
+  const venue = venueDisplayLabel(record);
+  const year = publicationYear(record) ?? "Unknown";
+  return `
+    <p class="result-venue-year">
+      ${venue ? `<span><span class="visually-hidden">Venue: </span>${venueDisplayHtml(record)}</span>` : ""}
+      <span><span class="visually-hidden">Year: </span>${escapeHtml(year)}</span>
+    </p>
+  `;
+}
+
+function resultLinks(record) {
+  const links = paperExternalLinks(record).join("");
+  return links
+    ? `<nav class="paper-details-links result-links" aria-label="Paper links">${links}</nav>`
+    : "";
+}
+
+function resultAuthors(authors, label, visibleLimit = 6) {
+  const normalizedAuthors = authors.map((name) => ({ name }));
+  const authorsHtml = normalizedAuthors.length
+    ? PaperDetailsHelpers.renderPaperAuthors(
+        { authors: normalizedAuthors },
+        escapeHtml,
+        null,
+        visibleLimit,
+      )
+    : "Unknown";
+  return `
+    <section class="result-entity-section result-authors">
+      <h4>${escapeHtml(label)}</h4>
+      <p>${authorsHtml}</p>
+    </section>
+  `;
+}
+
+function institutionResultContent(record, relatedEntries = [{ record }], cardId = "institution-result") {
   const normalizedRecord = normalizePaperDetailsRecord(record, {
     relatedRecords: relatedEntries.map(({ record: relatedRecord }) => relatedRecord),
   });
-  const title = recordTitle(record);
-  const year = publicationYear(record) ?? "Unknown";
-  const venue = venueDisplayLabel(record);
-  const isPaperView = resultsView === "papers";
-  const entryTypeLabel = getEntryTypeLabel(getEntryType(record));
-  const entryTypeBadge = getEntryType(record)
-    ? `<span class="result-task entry-type-badge">${escapeHtml(entryTypeLabel)}</span>`
-    : "";
-  const affiliations = normalizedRecord.affiliations;
-  const subtask = record.subtask
-    ? `<span class="result-task result-subtask">${escapeHtml(formatTask(record.subtask))}</span>`
-    : "";
-  const venueRow = venue
-    ? `<p class="result-venue">${venueDisplayHtml(record)}</p>`
-    : "";
-
-  const links = paperExternalLinks(record).join("");
-  const linksRow = links ? `<div class="result-links">${links}</div>` : "";
-  const authors = recordAuthors(normalizedRecord);
-  const authorsHtml = authors.length
-    ? renderPaperAuthors(normalizedRecord)
-    : "Unknown";
-  const authorsRow = `<p class="result-author-affiliations"><strong>Authors:</strong> ${authorsHtml}</p>`;
-  const affiliationsHtml = compactAffiliationsHtml(affiliations);
-  const affiliationsRow = affiliationsHtml
-    ? `<p class="result-compact-affiliations"><strong>Affiliations:</strong> ${affiliationsHtml}</p>`
-    : "";
-  const affiliationBadge = preliminaryAffiliationBadge(record);
-  const aggregatedCountryNames = record.aggregated_country_names || [];
-  const aggregatedCountryCodes = record.aggregated_country_codes || [];
-  const aggregatedRegions = record.aggregated_regions || [];
-  const countriesRow = isPaperView
-    ? `<p class="result-aggregate"><strong>Map coverage:</strong> ${escapeHtml(record.has_map_location ? `${record.map_record_count || 0} marker${record.map_record_count === 1 ? "" : "s"}` : "No map location yet")}</p><p class="result-aggregate"><strong>Countries:</strong> ${escapeHtml(aggregatedCountryNames.join(", ") || aggregatedCountryCodes.join(", ") || "Unknown")}</p>`
-    : "";
-  const regionsRow = isPaperView && aggregatedRegions.length
-    ? `<p class="result-aggregate"><strong>Regions:</strong> ${escapeHtml(aggregatedRegions.join(", "))}</p>`
-    : "";
+  const institution = normalizedRecord.affiliations.find(
+    (affiliation) => affiliation.isCurrent,
+  ) || normalizedRecord.affiliations.find(
+    (affiliation) => institutionIdentity({
+      institution: affiliation.institution,
+      institution_id: affiliation.institutionId,
+    }) === institutionIdentity(record),
+  );
+  const institutionName = institution?.institution || recordInstitution(record);
+  const location = institution?.location || recordLocation(record);
+  const institutionType = institution?.institutionType
+    || normalizeInstitutionType(record.institution_type);
+  const scopedAuthors = institution?.authors?.length
+    ? institution.authors
+    : recordInstitutionAuthors(record);
+  const authors = scopedAuthors.length ? scopedAuthors : recordAuthors(normalizedRecord);
+  const authorLabel = scopedAuthors.length
+    ? "Authors at this institution"
+    : "Paper authors";
 
   return `
-    <article>
-      <div class="result-title-row">
-        <h3 class="result-title">${escapeHtml(title)}</h3>
-        <span class="result-year">${escapeHtml(year)}</span>
+    <article class="result-card result-card-institution" aria-labelledby="${cardId}">
+      <p class="result-entity-kicker">Institution record</p>
+      <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
+      <section class="result-institution-primary" aria-label="Institution represented by this record">
+        <h4>${institutionFilterButtonHtml(institution || {
+          institution: institutionName,
+          institutionId: record.institution_id,
+          canonicalName: record.canonical_institution_name,
+        }) || escapeHtml(institutionName || "Unknown institution")}</h4>
+        ${location ? `<p>${escapeHtml(location)}</p>` : ""}
+        ${institutionType !== "other" ? `<p>${escapeHtml(institutionTypeLabel(institutionType))}</p>` : ""}
+      </section>
+      ${resultAuthors(authors, authorLabel)}
+      <div class="result-secondary">
+        ${resultVenueYear(record)}
+        ${resultBadges(record, true)}
+        ${resultLinks(record)}
       </div>
-      ${venueRow}
-      ${authorsRow}
-      ${affiliationsRow}
-      ${countriesRow}
-      ${regionsRow}
-      <div class="result-classification">
-        <span class="result-task">${escapeHtml(formatTask(record.task))}</span>
-        ${entryTypeBadge}
-        ${subtask}
-        ${affiliationBadge}
+    </article>
+  `;
+}
+
+function uniquePaperInstitutions(affiliations) {
+  const seen = new Set();
+  return affiliations.filter((affiliation) => {
+    const identity = institutionIdentity({
+      institution: affiliation.institution,
+      institution_id: affiliation.institutionId,
+    });
+    if (seen.has(identity)) return false;
+    seen.add(identity);
+    return true;
+  });
+}
+
+function resultInstitutions(affiliations, visibleLimit = 4) {
+  const uniqueAffiliations = uniquePaperInstitutions(affiliations);
+  if (!uniqueAffiliations.length) return "";
+  const affiliationHtml = (affiliation) => `
+    <li>
+      ${institutionFilterButtonHtml(affiliation)}
+      ${affiliation.location ? `<span class="result-institution-location">${escapeHtml(affiliation.location)}</span>` : ""}
+    </li>
+  `;
+  const visible = uniqueAffiliations.slice(0, visibleLimit).map(affiliationHtml).join("");
+  const overflow = uniqueAffiliations.slice(visibleLimit).map(affiliationHtml).join("");
+  return `
+    <section class="result-entity-section result-paper-institutions">
+      <h4>Institutions <span class="result-section-count">(${uniqueAffiliations.length})</span></h4>
+      <ul>${visible}</ul>
+      ${overflow ? `<ul class="result-institutions-overflow" hidden>${overflow}</ul>` : ""}
+      ${overflow ? '<button type="button" class="result-institutions-toggle" aria-expanded="false">Show all institutions</button>' : ""}
+    </section>
+  `;
+}
+
+function paperResultContent(record, relatedEntries = [], cardId = "paper-result") {
+  const normalizedRecord = normalizePaperDetailsRecord(record, {
+    relatedRecords: relatedEntries.map(({ record: relatedRecord }) => relatedRecord),
+  });
+  return `
+    <article class="result-card result-card-paper" aria-labelledby="${cardId}">
+      <p class="result-entity-kicker">Unique paper</p>
+      <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
+      ${resultAuthors(recordAuthors(normalizedRecord), "Authors")}
+      ${resultInstitutions(normalizedRecord.affiliations)}
+      <div class="result-secondary">
+        ${resultVenueYear(record)}
+        ${resultBadges(record)}
+        ${resultLinks(record)}
       </div>
-      ${linksRow}
     </article>
   `;
 }
@@ -2745,11 +2866,14 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
   }
 
   const fragment = document.createDocumentFragment();
-  displayedResults.forEach((record) => {
+  displayedResults.forEach((record, index) => {
     const item = document.createElement("li");
-    item.className = "result-item";
+    item.className = `result-item result-item-${resultsView === "papers" ? "paper" : "institution"}`;
     const relatedEntries = relatedEntriesByIdentity.get(paperIdentity(record)) || [];
-    item.innerHTML = resultContent(record, relatedEntries);
+    const cardId = `result-card-title-${resultsView}-${index}`;
+    item.innerHTML = resultsView === "papers"
+      ? paperResultContent(record, relatedEntries, cardId)
+      : institutionResultContent(record, relatedEntries, cardId);
     fragment.append(item);
   });
   resultsList.append(fragment);
@@ -2803,7 +2927,7 @@ function showPaperDetails(record, relatedEntries, source) {
   closePaperDetailsButton.textContent = "×";
   closePaperDetailsButton.setAttribute(
     "aria-label",
-    isPinned ? "Unpin and close paper details" : "Close paper details",
+    "Close paper details",
   );
   paperDetails.scrollTop = 0;
 }
@@ -3816,6 +3940,27 @@ maxYearFilter.addEventListener("keydown", (event) => {
 });
 [resultsList, paperDetails].forEach((container) => {
   container.addEventListener("click", (event) => {
+    const authorToggle = event.target.closest(".paper-authors-toggle");
+    if (authorToggle) {
+      const overflow = authorToggle.previousElementSibling;
+      const isExpanded = authorToggle.getAttribute("aria-expanded") === "true";
+      authorToggle.setAttribute("aria-expanded", String(!isExpanded));
+      authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
+      overflow.hidden = isExpanded;
+      return;
+    }
+    const institutionToggle = event.target.closest(".result-institutions-toggle");
+    if (institutionToggle) {
+      const section = institutionToggle.closest(".result-paper-institutions");
+      const overflow = section?.querySelector(".result-institutions-overflow");
+      const isExpanded = institutionToggle.getAttribute("aria-expanded") === "true";
+      institutionToggle.setAttribute("aria-expanded", String(!isExpanded));
+      institutionToggle.textContent = isExpanded
+        ? "Show all institutions"
+        : "Show fewer institutions";
+      if (overflow) overflow.hidden = isExpanded;
+      return;
+    }
     const button = event.target.closest("[data-institution-filter]");
     if (button) {
       applyInstitutionFilter(button.dataset.institutionFilter, button.dataset.institutionLabel);

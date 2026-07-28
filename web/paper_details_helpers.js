@@ -52,9 +52,22 @@
       ));
   }
 
-  function renderPaperAuthors(paper, escapeHtml, currentAffiliationNumber = null) {
+  function renderPaperAuthors(
+    paper,
+    escapeHtml,
+    currentAffiliationNumber = null,
+    visibleLimit = Infinity,
+  ) {
     const authors = Array.isArray(paper?.authors) ? paper.authors : [];
-    return authors.map((author) => {
+    const authorItems = authors.map((author) => {
+      const authorName = String(
+        author && typeof author === "object"
+          ? author.name || author.display_name || author.author || ""
+          : author || "",
+      ).trim();
+      if (!authorName) {
+        return "";
+      }
       const numbers = Array.isArray(author.affiliation_indices)
         ? author.affiliation_indices
         : [];
@@ -65,11 +78,19 @@
         currentAffiliationNumber !== null
         && numbers.includes(currentAffiliationNumber)
       );
-      const authorHtml = `<span class="paper-author${isActive ? " is-active-institution-author is-hover-author" : ""}">${escapeHtml(author.name)}${superscript}</span>`;
+      const authorHtml = `<span class="paper-author${isActive ? " is-active-institution-author is-hover-author" : ""}">${escapeHtml(authorName)}${superscript}</span>`;
       return isActive
         ? `<strong class="current-institution-author">${authorHtml}</strong>`
         : authorHtml;
-    }).join(", ");
+    }).filter(Boolean);
+    if (authorItems.length <= visibleLimit) {
+      return authorItems.join(", ");
+    }
+    return [
+      authorItems.slice(0, visibleLimit).join(", "),
+      `<span class="paper-authors-overflow" hidden>, ${authorItems.slice(visibleLimit).join(", ")}</span>`,
+      `<button type="button" class="paper-authors-toggle" aria-expanded="false">Show all authors</button>`,
+    ].join("");
   }
 
   return { namesMatch, renderPaperAuthors };
