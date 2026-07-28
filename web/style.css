@@ -47,24 +47,33 @@ footer {
 
 .site-header {
   display: grid;
-  grid-template-columns: minmax(420px, 0.9fr) minmax(560px, 1.65fr) auto;
-  align-items: stretch;
-  gap: 16px;
-  padding: 18px 0 14px;
+  grid-template-areas:
+    "hero repository"
+    "statistics statistics";
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px 16px;
+  padding: 12px 0;
 }
 
-.header-title-block {
-  display: flex;
+.header-brand {
+  grid-area: hero;
+  display: grid;
   min-width: 0;
-  flex-direction: column;
+  align-items: center;
 }
 
-.header-title-block h1 span {
+.header-logo {
   display: block;
-  white-space: nowrap;
+  width: min(330px, 100%);
+  height: auto;
+  max-height: 112px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .header-repository-block {
+  grid-area: repository;
   display: flex;
   min-width: max-content;
   flex-direction: column;
@@ -101,6 +110,10 @@ footer {
 
 .header-data-updated {
   white-space: nowrap;
+}
+
+.header-data-updated time {
+  color: inherit;
 }
 
 .header-repository-link:hover,
@@ -289,21 +302,20 @@ h2 {
 }
 
 .dataset-overview {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(190px, 280px);
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   border-bottom: 1px solid var(--line);
-  padding: 2px 2px 10px;
+  padding: 1px 2px 8px;
 }
 
-.dataset-overview > h2,
 .dataset-overview > p {
   margin: 0;
 }
 
 .dataset-overview > p {
-  align-self: center;
+  flex: 0 1 280px;
   color: var(--muted);
   font-size: 0.66rem;
   line-height: 1.35;
@@ -312,25 +324,25 @@ h2 {
 
 .dataset-statistics {
   display: flex;
-  flex-wrap: nowrap;
+  flex: 0 1 auto;
+  flex-wrap: wrap;
   gap: 7px;
   margin: 0;
-  overflow-x: auto;
   padding-bottom: 2px;
-  scrollbar-width: thin;
 }
 
 .dataset-statistics div {
   display: flex;
-  flex: 1 1 0;
+  flex: 0 0 auto;
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
-  min-width: max-content;
-  border: 1px solid #d5e0e4;
+  min-width: 150px;
+  border: 1px solid rgb(36 86 111 / 8%);
   border-radius: 999px;
   padding: 5px 9px;
-  background: #f7fafb;
+  background: #edf4f6;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 45%);
 }
 
 .dataset-statistics dt {
@@ -379,11 +391,12 @@ h2 {
 
 .filter-grid {
   display: grid;
-  gap: 9px;
+  gap: 10px;
 }
 
 .filter-grid label {
-  gap: 3px;
+  gap: 4px;
+  font-weight: 600;
 }
 
 .filter-grid select,
@@ -732,10 +745,23 @@ button {
 }
 
 #reset-filters {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   height: 35px;
   margin-top: 10px;
+  border-color: #b7c7ce;
   padding-top: 7px;
   padding-bottom: 7px;
+  background: #f7fafb;
+}
+
+#reset-filters::before {
+  content: "↶";
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1;
 }
 
 select {
@@ -782,41 +808,11 @@ input:disabled {
   opacity: 0.55;
 }
 
-.task-legend {
-  padding: 0;
-}
-
-.task-legend ul {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 15px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.task-legend li {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--muted);
-  font-size: 0.7rem;
-  line-height: 1.25;
-}
-
-.legend-dot {
-  width: 8px;
-  height: 8px;
-  border: 2px solid white;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px currentColor;
-}
-
 .header-statistics {
+  grid-area: statistics;
   display: grid;
-  grid-template-columns: minmax(150px, 0.8fr) minmax(250px, 1.35fr) minmax(190px, 1fr);
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: stretch;
   gap: 8px;
   min-width: 0;
 }
@@ -833,7 +829,7 @@ input:disabled {
 }
 
 .header-chart h2 {
-  margin: 0 0 7px;
+  margin: 0 0 6px;
   color: var(--accent-dark);
   font-size: 0.66rem;
   letter-spacing: 0.04em;
@@ -869,7 +865,7 @@ input:disabled {
 .task-chart-list {
   display: grid;
   gap: 2px;
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
 .task-chart-item {
@@ -935,6 +931,12 @@ input:disabled {
   line-height: 1;
 }
 
+.institution-chart-row:focus-visible,
+.year-chart-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 .institution-chart-label {
   position: relative;
   min-width: 0;
@@ -985,6 +987,26 @@ input:disabled {
   text-align: center;
 }
 
+.chart-tooltip {
+  position: fixed;
+  z-index: 2000;
+  width: max-content;
+  max-width: min(280px, calc(100vw - 20px));
+  border: 1px solid #aebdc5;
+  border-radius: 5px;
+  padding: 6px 8px;
+  background: var(--ink);
+  box-shadow: 0 6px 18px rgb(18 35 46 / 20%);
+  color: white;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.chart-tooltip[hidden] {
+  display: none;
+}
+
 .year-chart-count,
 .year-chart-label {
   overflow: hidden;
@@ -1010,21 +1032,6 @@ input:disabled {
   background: var(--accent);
 }
 
-.legend-dot.detection {
-  background: var(--detection);
-  color: var(--detection);
-}
-
-.legend-dot.source-attribution {
-  background: var(--attribution);
-  color: var(--attribution);
-}
-
-.legend-dot.combined-task {
-  background: var(--both);
-  color: var(--both);
-}
-
 .map-column {
   display: grid;
   min-width: 0;
@@ -1045,6 +1052,14 @@ input:disabled {
   margin-bottom: 12px;
 }
 
+.results-heading-group {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+}
+
 .results-heading-row h2,
 .results-heading-row p {
   margin-bottom: 0;
@@ -1052,8 +1067,9 @@ input:disabled {
 
 .results-heading-row p {
   flex: none;
-  color: var(--muted);
-  font-size: 0.75rem;
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .results-actions {
@@ -1255,13 +1271,16 @@ input:disabled {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 8px 2px 0;
+  gap: 10px;
+  padding: 6px 2px 0;
 }
 
-@media (min-width: 1101px) {
-  .header-title-block .task-legend {
-    margin-top: auto;
+@media (min-width: 1200px) {
+  .site-header {
+    grid-template-areas: "hero statistics repository";
+    grid-template-columns: minmax(285px, 330px) minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 12px;
   }
 }
 
@@ -1272,7 +1291,7 @@ input:disabled {
   flex-wrap: wrap;
   gap: 5px 12px;
   min-width: 0;
-  margin-bottom: 7px;
+  margin-bottom: 5px;
   color: var(--muted);
   font-size: 0.68rem;
   line-height: 1.25;
@@ -1281,7 +1300,7 @@ input:disabled {
 .map-encoding-item {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
 }
 
 .marker-size-examples {
@@ -1345,7 +1364,7 @@ input:disabled {
 .map-status {
   flex: 1 1 auto;
   min-width: 0;
-  margin-bottom: 7px;
+  margin-bottom: 5px;
   overflow: hidden;
   color: var(--muted);
   font-size: 0.68rem;
@@ -1411,10 +1430,26 @@ input:disabled {
 }
 
 .paper-details-close {
-  width: auto;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
   margin: 0;
-  padding: 5px 9px;
-  font-size: 0.72rem;
+  border-color: transparent;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.paper-details-close:hover:not(:disabled),
+.paper-details-close:focus-visible {
+  border-color: #bfd0d7;
+  background: #edf4f6;
+  color: var(--accent-dark);
 }
 
 .paper-details-placeholder {
@@ -1983,35 +2018,7 @@ footer a {
   pointer-events: none;
 }
 
-@media (max-width: 1280px) {
-  .site-header {
-    grid-template-columns: minmax(420px, 0.9fr) minmax(0, 1.7fr) auto;
-  }
-
-  .header-statistics {
-    grid-template-columns: minmax(135px, 0.75fr) minmax(220px, 1.3fr) minmax(170px, 1fr);
-  }
-}
-
-@media (max-width: 1200px) {
-  .site-header {
-    grid-template-columns: minmax(0, 1fr) auto;
-  }
-
-  .header-statistics {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-
-  .header-title-block h1 span {
-    display: inline;
-    white-space: normal;
-  }
-
-  .header-title-block h1 span + span::before {
-    content: " ";
-  }
-
+@media (max-width: 1250px) {
   .map-workspace {
     grid-template-columns: 1fr;
   }
@@ -2023,11 +2030,12 @@ footer a {
   }
 
   .dataset-overview {
-    grid-template-columns: auto minmax(0, 1fr);
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .dataset-overview > p {
-    grid-column: 2;
+    flex-basis: auto;
     text-align: left;
   }
 }
@@ -2050,11 +2058,11 @@ footer a {
   }
 
   .dataset-overview {
-    grid-template-columns: 1fr;
+    gap: 8px;
   }
 
-  .dataset-overview > p {
-    grid-column: 1;
+  .dataset-statistics {
+    width: 100%;
   }
 
   .results-heading-row {
@@ -2095,11 +2103,21 @@ footer a {
   }
 
   .site-header {
+    grid-template-areas: none;
     grid-template-columns: minmax(0, 1fr);
     padding-top: 24px;
   }
 
+  .header-brand {
+    grid-area: auto;
+  }
+
+  .header-logo {
+    width: min(330px, 100%);
+  }
+
   .header-repository-block {
+    grid-area: auto;
     grid-row: 2;
     align-items: flex-start;
     justify-self: start;
@@ -2107,6 +2125,7 @@ footer a {
   }
 
   .header-statistics {
+    grid-area: auto;
     grid-column: 1;
     grid-row: 3;
     grid-template-columns: 1fr;
@@ -2134,10 +2153,6 @@ footer a {
 
   .sidebar {
     display: flex;
-  }
-
-  .task-legend ul {
-    gap: 7px 16px;
   }
 
   .map-panel {

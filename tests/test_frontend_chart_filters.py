@@ -40,6 +40,20 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("grid-auto-flow: column", self.css)
         self.assertNotIn(".institution-chart-row.is-selected", self.css)
 
+    def test_chart_rows_expose_full_values_to_pointer_and_keyboard_users(self):
+        chart_source = self.app[
+            self.app.index("function renderInstitutionChart"):
+            self.app.index("function renderHeaderStatistics")
+        ]
+        self.assertEqual(chart_source.count('tabindex="0"'), 2)
+        self.assertEqual(chart_source.count('data-chart-tooltip="'), 2)
+        self.assertIn('aria-label="${escapeHtml(entry.name)}:', chart_source)
+        self.assertIn('aria-label="${year}:', chart_source)
+        self.assertIn('className = "chart-tooltip"', self.app)
+        self.assertIn('chartTooltip.setAttribute("role", "tooltip")', self.app)
+        self.assertIn('document.addEventListener("focusin"', self.app)
+        self.assertIn('document.addEventListener("pointerover"', self.app)
+
     def test_exact_institution_filter_is_separate_from_keyword_filter(self):
         matching = self.app[
             self.app.index("function recordMatchesActiveFilters"):
@@ -129,8 +143,13 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
     def test_responsive_dimensions_and_asset_versions_are_preserved(self):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
-        self.assertIn('style.css?v=20260718-compact-filters', self.html)
-        self.assertIn('app.js?v=20260720-book-filter', self.html)
+        self.assertIn('style.css?v=20260728-public-polish', self.html)
+        self.assertIn('app.js?v=20260728-public-polish', self.html)
+        self.assertIn(
+            'assets/synthetic-image-detection-attribution-landscape-logo.png'
+            '?v=20260728-public-polish',
+            self.html,
+        )
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)
@@ -141,15 +160,69 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
             self.app,
         )
 
-    def test_overview_metrics_redistribute_without_responsive_wrapping(self):
+    def test_startup_failure_is_distinct_from_empty_filter_results(self):
+        startup = self.app[
+            self.app.index("function displayStartupFailure"):
+            self.app.index("const DATASET_CONFIG")
+        ]
+        self.assertIn('console.error("Public frontend initialization failed."', startup)
+        self.assertIn('"Unable to load public preview data."', startup)
+        self.assertIn('resultsStatus.textContent = "Data unavailable"', startup)
+        self.assertIn('window.addEventListener("error"', startup)
+        self.assertIn('window.addEventListener("unhandledrejection"', startup)
+        self.assertIn("Unable to load data.", startup)
+        self.assertIn('"No Records Match the Current Filters."', self.app)
+        self.assertIn(
+            'showDatasetMessage(messages[datasetName], true, true)',
+            self.app,
+        )
+
+    def test_loading_state_does_not_render_finalized_zero_statistics(self):
+        header = self.html[
+            self.html.index('<section class="header-statistics"'):
+            self.html.index('<div class="header-repository-block"')
+        ]
+        self.assertEqual(header.count("<p class=\"chart-empty\">Loading…</p>"), 3)
+        self.assertNotIn("task-chart-total", header)
+        self.assertNotIn(">0<", header)
+        self.assertIn(
+            '<p id="results-count" role="status" aria-live="polite">Loading…</p>',
+            self.html,
+        )
+
+    def test_result_count_tracks_active_view_and_empty_state(self):
+        render = self.app[
+            self.app.index("function renderResults("):
+            self.app.index("function configureYearRange(")
+        ]
+        self.assertIn(
+            'const resultNoun = resultsView === "papers" ? "paper" : "record"',
+            render,
+        )
+        self.assertIn('count.toLocaleString("en-US")', render)
+        self.assertIn('`${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`', render)
+        self.assertIn('`No matching ${resultNoun}s`', render)
+        self.assertIn('`No matching ${resultNoun}s.`', render)
+
+    def test_overview_metrics_are_semantic_non_input_pills(self):
+        overview = self.html[
+            self.html.index('<div class="dataset-overview"'):
+            self.html.index('<div class="map-status-row"')
+        ]
+        self.assertIn('<dl class="dataset-statistics"', overview)
+        self.assertNotIn("<input", overview)
+        self.assertIn("background: #edf4f6", self.css)
+
+    def test_overview_metrics_are_compact_and_can_wrap_responsively(self):
         statistics = self.css[
             self.css.index(".dataset-statistics {"):
             self.css.index(".dataset-statistics dt")
         ]
         self.assertIn("display: flex", statistics)
-        self.assertIn("flex-wrap: nowrap", statistics)
-        self.assertIn("flex: 1 1 0", statistics)
-        self.assertIn("overflow-x: auto", statistics)
+        self.assertIn("flex-wrap: wrap", statistics)
+        self.assertIn("flex: 0 0 auto", statistics)
+        self.assertIn("min-width: 150px", statistics)
+        self.assertNotIn("overflow-x: auto", statistics)
 
     def test_keyword_search_text_includes_supported_record_fields(self):
         search = self.app[

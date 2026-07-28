@@ -22,24 +22,31 @@ class PublicHeaderMetadataTests(unittest.TestCase):
         cls.metadata_javascript = (ROOT / "web/public_metadata.js").read_text(encoding="utf-8")
 
     def test_visible_title_and_maintainer_copy(self):
-        self.assertRegex(
-            self.html,
-            r"<h1>\s*<span>Synthetic Image Detection &amp;</span>\s*"
-            r"<span>Attribution Map</span>\s*</h1>",
-        )
+        project_name = "Synthetic Image Detection &amp; Attribution Landscape"
+        self.assertIn(f'<h1 class="visually-hidden">{project_name}</h1>', self.html)
+        self.assertIn(f'alt="{project_name}"', self.html)
+        self.assertNotIn("<h1>\n          <span>", self.html)
         self.assertIn("Maintained by Meiling Li", self.html)
 
     def test_date_is_formatted_from_generated_metadata(self):
         self.assertIn("metadata.public_preview_generated_at", self.javascript)
         self.assertIn('month: "long"', self.metadata_javascript)
         self.assertIn('timeZone: "UTC"', self.metadata_javascript)
-        self.assertIn("`Last updated: ${formattedDate}`", self.javascript)
+        self.assertIn(
+            'Last updated: <time id="data-updated-time"></time>',
+            self.html,
+        )
+        self.assertIn("timeElement.textContent = formattedDate", self.javascript)
+        self.assertIn(
+            'timeElement.dateTime = formattedDate ? timestamp.slice(0, 10) : ""',
+            self.javascript,
+        )
         self.assertNotIn("13 July 2026", self.html)
         self.assertNotIn("13 July 2026", self.javascript)
 
     def test_missing_or_invalid_timestamp_hides_date(self):
         self.assertIn("element.hidden = !formattedDate", self.javascript)
-        self.assertIn('element.textContent = formattedDate ? `Last updated: ${formattedDate}` : ""', self.javascript)
+        self.assertIn('timeElement.textContent = formattedDate', self.javascript)
         self.assertIn('if (!match) return ""', self.metadata_javascript)
 
     def test_responsive_repository_block_keeps_valid_grid_placement(self):

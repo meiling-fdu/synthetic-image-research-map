@@ -96,6 +96,9 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.html.index('<div class="dataset-overview"'):
             self.html.index('<div class="map-status-row"')
         ]
+        self.assertIn('aria-label="Filtered map overview"', overview)
+        self.assertNotIn("Filtered Overview", overview)
+        self.assertNotIn("<h2", overview)
         labels = re.findall(r"<dt>([^<]+)</dt>", overview)
         self.assertEqual(labels, [
             "Map Records", "Unique Institutions", "Countries",
@@ -120,20 +123,64 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
 
     def test_compact_filter_geometry_and_overview_responsive_grid(self):
         self.assertIn(".sidebar .panel {\n  padding: 12px 14px 13px;", self.css)
-        self.assertIn(".filter-grid {\n  display: grid;\n  gap: 9px;", self.css)
-        self.assertIn(".filter-grid label {\n  gap: 3px;", self.css)
+        self.assertIn(".filter-grid {\n  display: grid;\n  gap: 10px;", self.css)
+        self.assertIn(".filter-grid label {\n  gap: 4px;", self.css)
         self.assertIn('.filter-grid input:not([type="range"])', self.css)
         self.assertIn(".country-combobox-button {\n  display: flex;", self.css)
         self.assertIn("height: 35px", self.css)
         self.assertIn(".year-range-slider {\n  position: relative;\n  height: 24px;", self.css)
-        self.assertIn(
-            "grid-template-columns: auto minmax(0, 1fr) minmax(190px, 280px)",
-            self.css,
-        )
-        self.assertIn(".dataset-overview > p {\n  align-self: center;", self.css)
-        self.assertIn("@media (max-width: 1200px)", self.css)
+        self.assertIn("justify-content: space-between", self.css)
+        self.assertIn(".dataset-overview > p {\n  margin: 0;", self.css)
+        self.assertIn("flex: 0 1 280px", self.css)
+        self.assertIn("@media (max-width: 1250px)", self.css)
         self.assertIn("@media (max-width: 820px)", self.css)
         self.assertNotIn("dataset-overview-heading", self.css)
+
+    def test_header_uses_structural_logo_desktop_and_constrained_modes(self):
+        header = self.css[
+            self.css.index(".site-header {"):
+            self.css.index(".header-repository-link {")
+        ]
+        self.assertIn('"hero repository"', header)
+        self.assertIn('"statistics statistics"', header)
+        self.assertIn(".header-brand", header)
+        self.assertIn(".header-logo", header)
+        self.assertIn("grid-area: repository", header)
+        statistics = self.css[
+            self.css.index(".header-statistics {"):
+            self.css.index(".header-chart {")
+        ]
+        self.assertIn("grid-area: statistics", statistics)
+        self.assertIn(
+            "grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr)",
+            statistics,
+        )
+        desktop = self.css.split("@media (min-width: 1200px)", 1)[1].split(
+            "@media (max-width: 1250px)", 1
+        )[0]
+        self.assertIn('grid-template-areas: "hero statistics repository"', desktop)
+        self.assertIn(
+            "grid-template-columns: minmax(285px, 330px) minmax(0, 1fr) auto",
+            desktop,
+        )
+        self.assertNotIn("position: absolute", header)
+
+    def test_logo_replaces_visible_title_and_duplicate_task_legend(self):
+        project_name = "Synthetic Image Detection &amp; Attribution Landscape"
+        logo = (
+            ROOT / "web" / "assets"
+            / "synthetic-image-detection-attribution-landscape-logo.png"
+        )
+        self.assertTrue(logo.is_file())
+        self.assertIn(f'<h1 class="visually-hidden">{project_name}</h1>', self.html)
+        self.assertIn(f'alt="{project_name}"', self.html)
+        self.assertIn('class="header-logo"', self.html)
+        self.assertIn('width="1149"', self.html)
+        self.assertIn('height="393"', self.html)
+        self.assertNotIn('class="task-legend"', self.html)
+        self.assertNotIn(".task-legend", self.css)
+        self.assertNotIn(".legend-dot", self.css)
+        self.assertIn('class="map-encoding-legend"', self.html)
 
     def test_sort_is_in_filtered_records_header_not_filter_panel(self):
         filter_grid = self.html[
@@ -147,10 +194,18 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertNotIn('id="sort-control"', filter_grid)
         self.assertIn('id="sort-control"', results_header)
         self.assertIn("Sort By", results_header)
-        self.assertLess(results_header.index("results-heading"), results_header.index("results-view-toggle"))
-        self.assertLess(results_header.index("results-view-toggle"), results_header.index("results-count"))
+        self.assertLess(results_header.index("results-heading"), results_header.index("results-count"))
+        self.assertLess(results_header.index("results-count"), results_header.index("results-view-toggle"))
         self.assertLess(results_header.index("results-count"), results_header.index("sort-control"))
         self.assertLess(results_header.index("sort-control"), results_header.index("export-csv"))
+
+    def test_polished_controls_and_details_close_are_accessible(self):
+        self.assertIn('aria-label="Close paper details"', self.html)
+        self.assertIn('id="close-paper-details"', self.html)
+        self.assertIn(">&times;</button>", self.html)
+        self.assertIn(".paper-details-close {\n  display: grid;", self.css)
+        self.assertIn("#reset-filters::before", self.css)
+        self.assertIn('content: "↶"', self.css)
 
     def test_sort_option_capitalization_and_behavior_scope(self):
         for expected in (

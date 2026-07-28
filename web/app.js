@@ -1,5 +1,33 @@
 "use strict";
 
+function displayStartupFailure(error) {
+  console.error("Public frontend initialization failed.", error);
+  const status = document.querySelector("#map-status");
+  if (status) {
+    status.textContent = "Unable to load public preview data.";
+    status.classList.add("error");
+  }
+  const resultsStatus = document.querySelector("#results-count");
+  if (resultsStatus) resultsStatus.textContent = "Data unavailable";
+  const emptyState = document.querySelector("#results-empty");
+  if (emptyState) {
+    emptyState.textContent = "Unable to load public preview data.";
+    emptyState.hidden = false;
+  }
+  const results = document.querySelector("#results-list");
+  if (results) results.hidden = true;
+  document.querySelectorAll(".header-chart-content").forEach((container) => {
+    container.innerHTML = '<p class="chart-empty">Unable to load data.</p>';
+  });
+}
+
+window.addEventListener("error", (event) => {
+  if (event.error) displayStartupFailure(event.error);
+});
+window.addEventListener("unhandledrejection", (event) => {
+  displayStartupFailure(event.reason);
+});
+
 const DATASET_CONFIG = {
   sample: {
     url: "data/sample_map_data.json",
@@ -2348,7 +2376,7 @@ function renderInstitutionChart(datasetRecords) {
   const maximum = topInstitutions[0].count;
   institutionChartContent.innerHTML = (
     `<div class="institution-chart-list">${topInstitutions.map((entry) => (
-      `<div class="institution-chart-row" title="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><div class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></div><span class="institution-chart-count">${entry.count}</span></div>`
+      `<div class="institution-chart-row" tabindex="0" data-chart-tooltip="${escapeHtml(entry.name)} — ${entry.count} paper${entry.count === 1 ? "" : "s"}" aria-label="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><div class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></div><span class="institution-chart-count">${entry.count}</span></div>`
     )).join("")}</div>`
   );
 }
@@ -2370,7 +2398,7 @@ function renderYearChart(paperCoverageRecords) {
   const maximum = Math.max(...years.map(([, count]) => count));
   yearChartContent.innerHTML = (
     `<div class="year-chart-bars">${years.map(([year, count]) => (
-      `<div class="year-chart-item" title="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></div>`
+      `<div class="year-chart-item" tabindex="0" data-chart-tooltip="${year} — ${count} paper${count === 1 ? "" : "s"}" aria-label="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></div>`
     )).join("")}</div>`
   );
 }
@@ -2702,9 +2730,11 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
     : visibleRecords;
   currentDisplayedResults = displayedResults;
   const count = displayedResults.length;
-  resultsCount.textContent = resultsView === "papers"
-    ? `Showing ${count} Unique Paper${count === 1 ? "" : "s"}`
-    : `Showing ${count} Record${count === 1 ? "" : "s"}`;
+  const resultNoun = resultsView === "papers" ? "paper" : "record";
+  resultsCount.textContent = count
+    ? `${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`
+    : `No matching ${resultNoun}s`;
+  resultsEmpty.textContent = `No matching ${resultNoun}s.`;
   exportCsvButton.disabled = count === 0;
   resultsList.replaceChildren();
   resultsEmpty.hidden = count !== 0;
@@ -2755,10 +2785,10 @@ function baseMapStatusText(visibleRecords) {
 function resetPaperDetails() {
   paperDetails.classList.remove("has-content");
   paperDetailsContent.innerHTML =
-    '<p class="paper-details-placeholder">Select or Hover Over a Marker to View Paper Details.</p>';
+    '<p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>';
   closePaperDetailsButton.disabled = true;
-  closePaperDetailsButton.textContent = "Close";
-  closePaperDetailsButton.setAttribute("aria-label", "Close Paper Details");
+  closePaperDetailsButton.textContent = "×";
+  closePaperDetailsButton.setAttribute("aria-label", "Close paper details");
   paperDetailsPinStatus.hidden = true;
   paperDetails.classList.remove("is-pinned");
 }
@@ -2770,10 +2800,10 @@ function showPaperDetails(record, relatedEntries, source) {
   const isPinned = source === "pinned";
   paperDetails.classList.toggle("is-pinned", isPinned);
   paperDetailsPinStatus.hidden = !isPinned;
-  closePaperDetailsButton.textContent = isPinned ? "Unpin" : "Close";
+  closePaperDetailsButton.textContent = "×";
   closePaperDetailsButton.setAttribute(
     "aria-label",
-    isPinned ? "Unpin paper details" : "Close paper details",
+    isPinned ? "Unpin and close paper details" : "Close paper details",
   );
   paperDetails.scrollTop = 0;
 }
@@ -3389,7 +3419,7 @@ function validatePaperRecord(record) {
   );
 }
 
-function showDatasetMessage(message, isError = false) {
+function showDatasetMessage(message, isError = false, isLoadFailure = false) {
   clearPaperInteraction(false);
   records = [];
   paperRecords = [];
@@ -3406,6 +3436,13 @@ function showDatasetMessage(message, isError = false) {
   updateDatasetStatistics(records, paperRecords);
   renderHeaderStatistics(records, paperRecords);
   renderResults(records, paperRecords);
+  if (isLoadFailure) {
+    resultsCount.textContent = "Data unavailable";
+    resultsEmpty.textContent = message;
+    document.querySelectorAll(".header-chart-content").forEach((container) => {
+      container.innerHTML = '<p class="chart-empty">Unable to load data.</p>';
+    });
+  }
   mapStatus.textContent = message;
   mapStatus.classList.toggle("error", isError);
 }
@@ -3518,12 +3555,15 @@ function displayMetadataWarning(metadata) {
 
 function displayPublicPreviewDate(metadata) {
   const element = document.querySelector("#data-updated");
-  if (!element) return;
+  const timeElement = document.querySelector("#data-updated-time");
+  if (!element || !timeElement) return;
+  const timestamp = metadata.public_preview_generated_at;
   const formattedDate = PublicExportMetadata.formatPublicPreviewDate(
-    metadata.public_preview_generated_at,
+    timestamp,
   );
   element.hidden = !formattedDate;
-  element.textContent = formattedDate ? `Last updated: ${formattedDate}` : "";
+  timeElement.dateTime = formattedDate ? timestamp.slice(0, 10) : "";
+  timeElement.textContent = formattedDate;
 }
 
 async function readDataset(name) {
@@ -3619,9 +3659,10 @@ async function loadSampleFallback() {
     mapStatus.textContent =
       "Public preview dataset could not be loaded. Showing the fictional sample dataset instead.";
   } catch (error) {
-    console.error(error);
+    console.error("Public preview fallback failed.", error);
     showDatasetMessage(
       "Neither the public preview nor the fictional sample dataset could be loaded.",
+      true,
       true,
     );
   }
@@ -3640,7 +3681,7 @@ async function loadData() {
     }
     displayDataset(normalizedData);
   } catch (error) {
-    console.error(error);
+    console.error("Dataset initialization failed.", error);
     if (datasetName === "preview" && shouldFallbackToSample) {
       await loadSampleFallback();
       return;
@@ -3649,12 +3690,65 @@ async function loadData() {
       openalex:
         "OpenAlex candidate map data could not be loaded. Generate it locally with scripts/export_candidate_map_data.py.",
       preview:
-        "Preview dataset could not be loaded. Check that web/data/public_preview_map_data.json is published.",
+        "Unable to load public preview data.",
       sample: "Fictional sample data could not be loaded. Preview the site through a local server.",
     };
-    showDatasetMessage(messages[datasetName], true);
+    showDatasetMessage(messages[datasetName], true, true);
   }
 }
+
+const chartTooltip = document.createElement("div");
+chartTooltip.className = "chart-tooltip";
+chartTooltip.setAttribute("role", "tooltip");
+chartTooltip.hidden = true;
+document.body.append(chartTooltip);
+
+function positionChartTooltip(target) {
+  const targetBounds = target.getBoundingClientRect();
+  const tooltipBounds = chartTooltip.getBoundingClientRect();
+  const viewportPadding = 10;
+  const preferredLeft = targetBounds.left + (targetBounds.width - tooltipBounds.width) / 2;
+  const left = Math.min(
+    window.innerWidth - tooltipBounds.width - viewportPadding,
+    Math.max(viewportPadding, preferredLeft),
+  );
+  const below = targetBounds.bottom + 7;
+  const top = below + tooltipBounds.height <= window.innerHeight - viewportPadding
+    ? below
+    : Math.max(viewportPadding, targetBounds.top - tooltipBounds.height - 7);
+  chartTooltip.style.left = `${left}px`;
+  chartTooltip.style.top = `${top}px`;
+}
+
+function showChartTooltip(target) {
+  const text = target.dataset.chartTooltip;
+  if (!text) return;
+  chartTooltip.textContent = text;
+  chartTooltip.hidden = false;
+  positionChartTooltip(target);
+}
+
+function hideChartTooltip() {
+  chartTooltip.hidden = true;
+}
+
+document.addEventListener("pointerover", (event) => {
+  const target = event.target.closest("[data-chart-tooltip]");
+  if (target) showChartTooltip(target);
+});
+document.addEventListener("pointerout", (event) => {
+  const target = event.target.closest("[data-chart-tooltip]");
+  if (target && !target.contains(event.relatedTarget)) hideChartTooltip();
+});
+document.addEventListener("focusin", (event) => {
+  const target = event.target.closest("[data-chart-tooltip]");
+  if (target) showChartTooltip(target);
+});
+document.addEventListener("focusout", (event) => {
+  if (event.target.closest("[data-chart-tooltip]")) hideChartTooltip();
+});
+window.addEventListener("resize", hideChartTooltip);
+window.addEventListener("scroll", hideChartTooltip, true);
 
 keywordFilter.addEventListener("input", renderRecords);
 taskFilter.addEventListener("change", renderRecords);
