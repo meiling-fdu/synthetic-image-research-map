@@ -25,7 +25,6 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             "Institution Records",
             "Unique Papers",
             "Map Records",
-            "Paper Coverage",
             "Unique Institutions",
         ):
             self.assertIn(expected, self.html)
@@ -92,15 +91,17 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             marker = f'id="{group}"' if group != "year-range" else 'class="year-range"'
             self.assertIn(marker, filter_grid)
 
-    def test_filtered_overview_has_only_four_non_task_metrics(self):
+    def test_filtered_overview_has_only_three_map_metrics(self):
         overview = self.html[
-            self.html.index('<section class="panel dataset-overview"'):
-            self.html.index('<section class="map-panel"')
+            self.html.index('<div class="dataset-overview"'):
+            self.html.index('<div class="map-status-row"')
         ]
         labels = re.findall(r"<dt>([^<]+)</dt>", overview)
         self.assertEqual(labels, [
-            "Map Records", "Paper Coverage", "Unique Institutions", "Countries",
+            "Map Records", "Unique Institutions", "Countries",
         ])
+        self.assertNotIn("dataset-paper-count", overview)
+        self.assertNotIn("datasetPaperCount", self.app)
         for removed_id in (
             "dataset-detection-count", "dataset-attribution-count",
             "dataset-combined-count",
@@ -130,7 +131,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.css,
         )
         self.assertIn(".dataset-overview > p {\n  align-self: center;", self.css)
-        self.assertIn("@media (max-width: 1100px)", self.css)
+        self.assertIn("@media (max-width: 1200px)", self.css)
         self.assertIn("@media (max-width: 820px)", self.css)
         self.assertNotIn("dataset-overview-heading", self.css)
 

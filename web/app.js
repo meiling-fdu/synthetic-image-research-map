@@ -147,7 +147,6 @@ const resetButton = document.querySelector("#reset-filters");
 const activeInstitutionFilterChip = document.querySelector("#active-institution-filter");
 const mapStatus = document.querySelector("#map-status");
 const datasetRecordCount = document.querySelector("#dataset-record-count");
-const datasetPaperCount = document.querySelector("#dataset-paper-count");
 const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
 const datasetCountryCount = document.querySelector("#dataset-country-count");
 const datasetStatisticsNote = document.querySelector("#dataset-statistics-note");
@@ -2281,9 +2280,7 @@ function isPreprintOnlyRecord(record) {
 }
 
 function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
-  const paperCoverageRecords = paperListRecordsForDisplay(datasetPaperRecords);
   datasetRecordCount.textContent = datasetRecords.length;
-  datasetPaperCount.textContent = paperCoverageRecords.length;
   datasetInstitutionCount.textContent = normalizedSetSize(
     datasetRecords.map(institutionIdentity),
   );
@@ -2307,11 +2304,9 @@ function renderTaskChart(paperCoverageRecords) {
     color: TASK_COLORS[task],
     count: paperCoverageRecords.filter((record) => record.task === task).length,
   }));
-  const total = tasks.reduce((sum, task) => sum + task.count, 0);
-  if (!total) {
-    renderChartEmpty(taskChartContent);
-    return;
-  }
+  // The chart receives a list deduplicated by paper identity, so Total cannot
+  // double-count a paper even if category behavior changes in the future.
+  const total = paperCoverageRecords.length;
   const segments = tasks
     .filter((task) => task.count)
     .map((task) => (
@@ -2324,7 +2319,7 @@ function renderTaskChart(paperCoverageRecords) {
     ))
     .join("");
   taskChartContent.innerHTML = (
-    `<div class="task-chart-bar" aria-label="${total} filtered papers">${segments}</div><div class="task-chart-list">${items}</div>`
+    `<div class="task-chart-bar" aria-label="${total} filtered papers">${segments}</div><div class="task-chart-list" aria-label="Task category counts">${items}</div><div class="task-chart-total" aria-label="Total filtered papers"><span>Total</span><strong>${total}</strong></div>`
   );
 }
 

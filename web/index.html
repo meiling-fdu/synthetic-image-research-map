@@ -20,7 +20,10 @@
   <body>
     <header class="site-header">
       <div class="header-title-block">
-        <h1>Synthetic Image Detection &amp; Attribution Map</h1>
+        <h1>
+          <span>Synthetic Image Detection &amp;</span>
+          <span>Attribution Map</span>
+        </h1>
         <nav class="task-legend" aria-label="Task key">
           <ul>
             <li><span class="legend-dot detection"></span>Detection</li>
@@ -195,32 +198,27 @@
       </aside>
 
       <div class="map-column">
-        <section class="panel dataset-overview" aria-labelledby="dataset-overview-heading">
-          <h2 id="dataset-overview-heading">Filtered Overview</h2>
-          <dl class="dataset-statistics" aria-live="polite">
-            <div>
-              <dt>Map Records</dt>
-              <dd id="dataset-record-count">0</dd>
-            </div>
-            <div>
-              <dt>Paper Coverage</dt>
-              <dd id="dataset-paper-count">0</dd>
-            </div>
-            <div>
-              <dt>Unique Institutions</dt>
-              <dd id="dataset-institution-count">0</dd>
-            </div>
-            <div>
-              <dt>Countries</dt>
-              <dd id="dataset-country-count">0</dd>
-            </div>
-          </dl>
-          <p id="dataset-statistics-note">
-            Institution-level records matching the current filters.
-          </p>
-        </section>
-
         <section class="map-panel" aria-label="Research Locations">
+          <div class="dataset-overview" aria-labelledby="dataset-overview-heading">
+            <h2 id="dataset-overview-heading">Filtered Overview</h2>
+            <dl class="dataset-statistics" aria-live="polite">
+              <div>
+                <dt>Map Records</dt>
+                <dd id="dataset-record-count">0</dd>
+              </div>
+              <div>
+                <dt>Unique Institutions</dt>
+                <dd id="dataset-institution-count">0</dd>
+              </div>
+              <div>
+                <dt>Countries</dt>
+                <dd id="dataset-country-count">0</dd>
+              </div>
+            </dl>
+            <p id="dataset-statistics-note">
+              Institution-level records matching the current filters.
+            </p>
+          </div>
           <div class="map-status-row">
             <p class="map-encoding-legend" aria-label="Circle size represents papers in the current view; circle color represents dominant task">
               <span class="map-encoding-item">

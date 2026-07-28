@@ -47,14 +47,21 @@ footer {
 
 .site-header {
   display: grid;
-  grid-template-columns: minmax(300px, 0.85fr) minmax(560px, 1.65fr) auto;
-  align-items: start;
+  grid-template-columns: minmax(420px, 0.9fr) minmax(560px, 1.65fr) auto;
+  align-items: stretch;
   gap: 16px;
   padding: 18px 0 14px;
 }
 
 .header-title-block {
+  display: flex;
   min-width: 0;
+  flex-direction: column;
+}
+
+.header-title-block h1 span {
+  display: block;
+  white-space: nowrap;
 }
 
 .header-repository-block {
@@ -286,7 +293,8 @@ h2 {
   grid-template-columns: auto minmax(0, 1fr) minmax(190px, 280px);
   align-items: center;
   gap: 12px;
-  padding: 11px 14px 12px;
+  border-bottom: 1px solid var(--line);
+  padding: 2px 2px 10px;
 }
 
 .dataset-overview > h2,
@@ -808,6 +816,7 @@ input:disabled {
 .header-statistics {
   display: grid;
   grid-template-columns: minmax(150px, 0.8fr) minmax(250px, 1.35fr) minmax(190px, 1fr);
+  align-items: end;
   gap: 8px;
   min-width: 0;
 }
@@ -859,8 +868,8 @@ input:disabled {
 
 .task-chart-list {
   display: grid;
-  gap: 3px;
-  margin-top: 8px;
+  gap: 2px;
+  margin-top: 6px;
 }
 
 .task-chart-item {
@@ -888,6 +897,23 @@ input:disabled {
 .task-chart-item strong {
   color: var(--ink);
   font-size: 0.64rem;
+}
+
+.task-chart-total {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 5px;
+  margin-top: 3px;
+  border-top: 1px solid var(--line);
+  padding-top: 3px;
+  color: var(--ink);
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.task-chart-total strong {
+  font-size: 0.68rem;
 }
 
 .institution-chart-list {
@@ -1230,6 +1256,13 @@ input:disabled {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  padding: 8px 2px 0;
+}
+
+@media (min-width: 1101px) {
+  .header-title-block .task-legend {
+    margin-top: auto;
+  }
 }
 
 .map-encoding-legend {
@@ -1952,7 +1985,7 @@ footer a {
 
 @media (max-width: 1280px) {
   .site-header {
-    grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1.7fr) auto;
+    grid-template-columns: minmax(420px, 0.9fr) minmax(0, 1.7fr) auto;
   }
 
   .header-statistics {
@@ -1960,7 +1993,7 @@ footer a {
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .site-header {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -1968,6 +2001,15 @@ footer a {
   .header-statistics {
     grid-column: 1 / -1;
     grid-row: 2;
+  }
+
+  .header-title-block h1 span {
+    display: inline;
+    white-space: normal;
+  }
+
+  .header-title-block h1 span + span::before {
+    content: " ";
   }
 
   .map-workspace {
@@ -2100,6 +2142,10 @@ footer a {
 
   .map-panel {
     padding: 12px;
+  }
+
+  .dataset-overview {
+    padding-inline: 0;
   }
 
   .dataset-statistics {

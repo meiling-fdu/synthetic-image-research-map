@@ -22,7 +22,11 @@ class PublicHeaderMetadataTests(unittest.TestCase):
         cls.metadata_javascript = (ROOT / "web/public_metadata.js").read_text(encoding="utf-8")
 
     def test_visible_title_and_maintainer_copy(self):
-        self.assertIn("<h1>Synthetic Image Detection &amp; Attribution Map</h1>", self.html)
+        self.assertRegex(
+            self.html,
+            r"<h1>\s*<span>Synthetic Image Detection &amp;</span>\s*"
+            r"<span>Attribution Map</span>\s*</h1>",
+        )
         self.assertIn("Maintained by Meiling Li", self.html)
 
     def test_date_is_formatted_from_generated_metadata(self):

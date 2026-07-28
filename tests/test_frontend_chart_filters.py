@@ -841,7 +841,13 @@ process.stdout.write(JSON.stringify({
             self.app.index("function renderRecords()"):
             self.app.index("function configureYearRange()")
         ]
-        self.assertIn("datasetPaperCount.textContent = paperCoverageRecords.length", statistics)
+        self.assertNotIn("datasetPaperCount", statistics)
+        task_chart = self.app[
+            self.app.index("function renderTaskChart"):
+            self.app.index("function renderInstitutionChart")
+        ]
+        self.assertIn("const total = paperCoverageRecords.length", task_chart)
+        self.assertIn('class="task-chart-total"', task_chart)
         self.assertIn("const matchesPublicPaper", render)
         self.assertIn("currentFilteredPaperRecords = visiblePaperRecords", render)
         self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", render)
