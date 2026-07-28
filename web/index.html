@@ -67,9 +67,32 @@
 
     <main class="page-shell">
       <aside class="sidebar" aria-label="Map controls and summary">
-        <section class="panel" aria-labelledby="filters-heading">
-          <h2 id="filters-heading">Filters</h2>
-          <div class="filter-grid">
+        <button
+          id="mobile-filters-trigger"
+          class="mobile-filters-trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls="filters-panel"
+        ><span id="mobile-filters-trigger-label">Filters</span></button>
+        <div id="filters-backdrop" class="filters-backdrop" hidden></div>
+        <section
+          id="filters-panel"
+          class="panel filters-panel"
+          aria-labelledby="filters-heading"
+          aria-modal="true"
+          role="dialog"
+        >
+          <div class="filters-panel-heading">
+            <h2 id="filters-heading" tabindex="-1">Filters</h2>
+            <button
+              id="close-filters"
+              class="close-filters"
+              type="button"
+              aria-label="Close filters"
+            >×</button>
+          </div>
+          <div class="filters-panel-content">
+            <div class="filter-grid">
             <label for="keyword-filter">
               Keyword
               <input
@@ -190,9 +213,13 @@
               </div>
             </fieldset>
 
+            </div>
+            <div id="active-institution-filter" class="active-filter-chip" hidden></div>
           </div>
-          <div id="active-institution-filter" class="active-filter-chip" hidden></div>
-          <button id="reset-filters" type="button" disabled>Reset Filters</button>
+          <div class="filters-panel-actions">
+            <button id="reset-filters" type="button" disabled>Reset Filters</button>
+            <button id="done-filters" class="done-filters" type="button">Done</button>
+          </div>
         </section>
       </aside>
 

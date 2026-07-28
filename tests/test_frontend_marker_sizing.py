@@ -279,11 +279,10 @@ process.stdout.write(JSON.stringify({
         self.assertNotIn("ai_summary", details_body)
         self.assertNotIn("paper-ai-summary", style_source)
 
-        for metadata in (
-            "Authors", "Year", "Venue", "Affiliations", "Abstract",
-            "Location", "Publication type",
-        ):
+        for metadata in ("Authors", "Year", "Affiliations", "Abstract"):
             self.assertIn(metadata, details_body)
+        for internal_metadata in ("Resolution", "Needs review", "Current institution"):
+            self.assertNotIn(internal_metadata, details_body)
         self.assertIn("paperExternalLinks(record)", details_body)
 
     def test_connection_lines_use_visible_slate_style(self):

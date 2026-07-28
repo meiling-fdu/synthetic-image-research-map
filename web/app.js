@@ -173,6 +173,14 @@ const yearRangeMaximum = document.querySelector("#year-range-max");
 const yearRangeSlider = document.querySelector(".year-range-slider");
 const resetButton = document.querySelector("#reset-filters");
 const activeInstitutionFilterChip = document.querySelector("#active-institution-filter");
+const filtersPanel = document.querySelector("#filters-panel");
+const filtersBackdrop = document.querySelector("#filters-backdrop");
+const mobileFiltersTrigger = document.querySelector("#mobile-filters-trigger");
+const mobileFiltersTriggerLabel = document.querySelector("#mobile-filters-trigger-label");
+const closeFiltersButton = document.querySelector("#close-filters");
+const doneFiltersButton = document.querySelector("#done-filters");
+const filtersHeading = document.querySelector("#filters-heading");
+const mobileFiltersMedia = window.matchMedia("(max-width: 820px)");
 const mapStatus = document.querySelector("#map-status");
 const datasetRecordCount = document.querySelector("#dataset-record-count");
 const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
@@ -210,6 +218,7 @@ let yearRangeBounds = null;
 let venueTypeOrder = ["conference", "journal", "preprint", "book"];
 let countryComboboxOptionData = [];
 let activeCountryOptionIndex = -1;
+let filtersDrawerOpen = false;
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -2570,21 +2579,8 @@ function paperDetailsHtml(record, relatedEntries) {
         8,
       )
     : "Unknown";
-  const institutionAuthors = recordInstitutionAuthors(record);
-  const institutionAuthorsRow = !affiliations.length && institutionAuthors.length
-    ? `<dt>Institution authors</dt><dd>${institutionAuthors.map(escapeHtml).join(", ")}</dd>`
-    : "";
-  const currentAffiliationNumber = currentAffiliation
-    ? `<sup class="current-affiliation-number" aria-label="Affiliation ${currentAffiliation.number}">${currentAffiliation.number}</sup>`
-    : "";
-  const currentInstitutionButton = institutionFilterButtonHtml(currentAffiliation || {
-    institution: recordInstitution(record),
-    institutionId: record.institution_id || record.canonical_institution_id,
-    canonicalName: record.canonical_institution_name,
-    institutionType: normalizeInstitutionType(record.institution_type),
-  });
   const year = record.publication_year ?? record.year ?? "Unknown";
-  const venue = venueDisplayLabel(record) || "unknown";
+  const venue = venueDisplayLabel(record) || "Unknown venue/source";
   const publicationType = record.publication_type || "Unknown";
   const publicationTypeLabel = formatTask(publicationType);
   const publicationTypeBadge = publicationType && publicationType !== "Unknown"
@@ -2595,10 +2591,6 @@ function paperDetailsHtml(record, relatedEntries) {
   const entryTypeBadge = entryType
     ? `<span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>`
     : "";
-  const venueRow = venueDisplayLabel(record)
-    ? `<span><span class="visually-hidden">Venue: </span>${venueDisplayHtml(record)}</span>`
-    : `<span><span class="visually-hidden">Venue: </span>${escapeHtml(venue)}</span>`;
-  const location = recordLocation(record) || "Unknown";
   const subtaskRow = record.subtask
     ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
     : "";
@@ -2606,38 +2598,33 @@ function paperDetailsHtml(record, relatedEntries) {
   const linksBlock = detailLinks.length
     ? `<nav class="paper-details-links" aria-label="Paper links">${detailLinks.join("")}</nav>`
     : "";
-  const versionBadge = isPreprintOnlyRecord(record)
-    ? '<span class="popup-badge confidence-unresolved">Preprint-only</span>'
-    : hasArxivVersion(record)
-      ? '<span class="popup-badge confidence-unresolved">arXiv version</span>'
-      : "";
-  const hasResolution = hasResolutionMetadata(record);
-  const confidence = resolutionConfidence(record);
-  const needsReview = reviewStatus(record);
-  const confidenceBadge = hasResolution
-    ? `<span class="popup-badge confidence-${escapeHtml(confidence)}">${escapeHtml(formatResolutionValue(confidence))} confidence</span>`
-    : "";
-  const affiliationBadge = preliminaryAffiliationBadge(record);
-  const methodRow = record.resolution_method
-    ? `<dt>Resolution</dt><dd>${escapeHtml(formatResolutionValue(record.resolution_method))}</dd>`
-    : "";
-  const reviewRow = needsReview !== null
-    ? `<dt>Needs review</dt><dd>${needsReview ? "Yes" : "No"}</dd>`
-    : "";
-  const resolutionNotesRow = record.resolution_notes
-    ? `<dt>Resolution notes</dt><dd class="popup-resolution-notes">${escapeHtml(record.resolution_notes)}</dd>`
+  const moreDetailsRows = [subtaskRow].filter(Boolean).join("");
+  const moreDetailsBlock = moreDetailsRows
+    ? `
+      <section class="paper-details-more">
+        <button
+          type="button"
+          class="paper-details-more-toggle"
+          aria-expanded="false"
+          aria-controls="paper-details-more-content"
+        >More details</button>
+        <div id="paper-details-more-content" class="paper-details-more-content" hidden>
+          <dl class="popup-details">${moreDetailsRows}</dl>
+        </div>
+      </section>
+    `
     : "";
   const abstract = String(record.abstract || "").trim();
   const abstractSource = String(record.abstract_source || "").trim();
   const abstractBlock = `
     <section class="paper-text-section paper-abstract-section">
-      <h4>Abstract</h4>
+      <h4 class="paper-details-section-heading">Abstract</h4>
       <p class="paper-abstract${abstract ? "" : " is-unavailable"}">${escapeHtml(abstract || "No abstract available.")}</p>
       ${abstract && abstractSource ? `<p class="paper-text-source">Source: ${escapeHtml(abstractSource)}</p>` : ""}
     </section>
   `;
   const affiliationsBlock = affiliations.length
-    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current is-hover-institution"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${institutionFilterButtonHtml(affiliation)}</span><span class="affiliation-type"> · ${escapeHtml(institutionTypeLabel(affiliation.institutionType))}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
+    ? `<section class="paper-details-affiliation-section" aria-labelledby="paper-affiliations-heading"><h4 id="paper-affiliations-heading" class="paper-details-section-heading">Affiliations</h4><ol class="paper-details-affiliations">${affiliations.map((affiliation) => `<li${affiliation.isCurrent ? ' class="is-current is-hover-institution"' : ""}><div class="affiliation-heading"><span class="affiliation-institution">${institutionFilterButtonHtml(affiliation)}</span><span class="affiliation-type"> · ${escapeHtml(institutionTypeLabel(affiliation.institutionType))}</span>${affiliation.location ? `<span class="affiliation-location"> · ${escapeHtml(affiliation.location)}</span>` : ""}</div>${affiliation.authors.length ? `<div class="affiliation-authors">${affiliation.authors.map(escapeHtml).join("; ")}</div>` : ""}</li>`).join("")}</ol></section>`
     : "";
 
   return `
@@ -2646,34 +2633,18 @@ function paperDetailsHtml(record, relatedEntries) {
       <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatTask(record.task))}</span>
       ${publicationTypeBadge}
       ${entryTypeBadge}
-      ${versionBadge}
-      ${confidenceBadge}
-      ${affiliationBadge}
     </div>
+    <p class="paper-details-venue-row">
+      <span class="visually-hidden">Publication: </span>${escapeHtml(venue)} <span aria-hidden="true">·</span> <span class="visually-hidden">Year: </span>${escapeHtml(year)}
+    </p>
     <section class="paper-details-group paper-details-authors" aria-labelledby="paper-authors-heading">
-      <h4 id="paper-authors-heading">Authors</h4>
+      <h4 id="paper-authors-heading" class="paper-details-section-heading">Authors</h4>
       <p>${authors}</p>
     </section>
-    <div class="paper-details-venue-row">
-      <span><span class="visually-hidden">Publication type: </span>${escapeHtml(publicationTypeLabel)}</span>
-      ${venueRow}
-      <span><span class="visually-hidden">Year: </span>${escapeHtml(year)}</span>
-    </div>
-    ${linksBlock}
     ${affiliationsBlock}
+    ${linksBlock}
     ${abstractBlock}
-    <details class="paper-details-more">
-      <summary>More details</summary>
-      <dl class="popup-details">
-        <dt>Location</dt><dd>${escapeHtml(location)}</dd>
-        <dt>Current institution</dt><dd class="paper-current-institution${currentAffiliation ? " is-active is-hover-institution" : ""}">${currentAffiliationNumber}${currentInstitutionButton || "Unknown"}</dd>
-        ${institutionAuthorsRow}
-        ${subtaskRow}
-        ${methodRow}
-        ${reviewRow}
-        ${resolutionNotesRow}
-      </dl>
-    </details>
+    ${moreDetailsBlock}
   `;
 }
 
@@ -3187,6 +3158,7 @@ function renderRecords() {
     label: institutionLabel,
     source: activeInstitutionFilter ? "chip" : "keyword",
   } : null;
+  updateMobileFiltersTrigger();
   const matchesInstitutionRecord = (record) => recordMatchesActiveFilters(
     record,
     keywordTerms,
@@ -3333,6 +3305,86 @@ function renderRecords() {
     mapStatus.textContent = baseMapStatusText(visibleRecords);
   }
   scheduleMapResize();
+}
+
+// A category is active when its authoritative value differs from its neutral default.
+// The two year handles form one category, as does an institution selected from a record.
+function activeFilterCategoryCount() {
+  const selection = currentYearSelection();
+  const yearIsActive = Boolean(yearRangeBounds && selection && (
+    selection.start !== yearRangeBounds.minimum || selection.end !== yearRangeBounds.maximum
+  ));
+  return [
+    keywordFilter.value.trim() !== "",
+    taskFilter.value !== "all",
+    entryTypeFilter.value !== "all",
+    venueTypeFilter.value !== "all",
+    venueFilter.value !== "all",
+    countryFilter.value !== "all",
+    institutionTypeFilter.value !== "all",
+    preprintFilter.value !== "all",
+    yearIsActive,
+    Boolean(activeInstitutionFilter),
+  ].filter(Boolean).length;
+}
+
+function updateMobileFiltersTrigger() {
+  const count = activeFilterCategoryCount();
+  const label = count ? `Filters (${count})` : "Filters";
+  mobileFiltersTriggerLabel.textContent = label;
+  mobileFiltersTrigger.setAttribute("aria-label", label);
+}
+
+function drawerFocusableElements() {
+  return [...filtersPanel.querySelectorAll(
+    'button:not([disabled]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+  )].filter((element) => !element.hidden && element.getClientRects().length);
+}
+
+function openFiltersDrawer() {
+  if (!mobileFiltersMedia.matches || filtersDrawerOpen) return;
+  filtersDrawerOpen = true;
+  filtersPanel.classList.add("is-open");
+  filtersBackdrop.hidden = false;
+  document.body.classList.add("filters-drawer-open");
+  mobileFiltersTrigger.setAttribute("aria-expanded", "true");
+  filtersHeading.focus();
+}
+
+function closeFiltersDrawer({ restoreFocus = true } = {}) {
+  if (!filtersDrawerOpen) return;
+  filtersDrawerOpen = false;
+  closeCountryCombobox();
+  filtersPanel.classList.remove("is-open");
+  filtersBackdrop.hidden = true;
+  document.body.classList.remove("filters-drawer-open");
+  mobileFiltersTrigger.setAttribute("aria-expanded", "false");
+  if (restoreFocus && mobileFiltersMedia.matches) mobileFiltersTrigger.focus();
+}
+
+function handleFiltersDrawerKeydown(event) {
+  if (!filtersDrawerOpen) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeFiltersDrawer();
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const focusable = drawerFocusableElements();
+  if (!focusable.length) {
+    event.preventDefault();
+    filtersHeading.focus();
+    return;
+  }
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && (document.activeElement === first || document.activeElement === filtersHeading)) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
+  }
 }
 
 function deriveYearBounds(datasetRecords) {
@@ -3928,6 +3980,19 @@ document.addEventListener("keydown", (event) => {
 });
 window.addEventListener("resize", positionCountryComboboxPanel);
 window.addEventListener("scroll", positionCountryComboboxPanel, true);
+mobileFiltersTrigger.addEventListener("click", openFiltersDrawer);
+closeFiltersButton.addEventListener("click", () => closeFiltersDrawer());
+doneFiltersButton.addEventListener("click", () => closeFiltersDrawer());
+filtersBackdrop.addEventListener("pointerdown", (event) => {
+  event.preventDefault();
+  closeFiltersDrawer();
+});
+document.addEventListener("keydown", handleFiltersDrawerKeydown);
+mobileFiltersMedia.addEventListener("change", (event) => {
+  filtersPanel.toggleAttribute("aria-modal", event.matches);
+  if (!event.matches) closeFiltersDrawer({ restoreFocus: false });
+});
+filtersPanel.toggleAttribute("aria-modal", mobileFiltersMedia.matches);
 institutionTypeFilter.addEventListener("change", renderRecords);
 preprintFilter.addEventListener("change", renderRecords);
 minYearFilter.addEventListener("input", () => handleYearRangeInput("start"));
@@ -3947,6 +4012,14 @@ maxYearFilter.addEventListener("keydown", (event) => {
       authorToggle.setAttribute("aria-expanded", String(!isExpanded));
       authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
       overflow.hidden = isExpanded;
+      return;
+    }
+    const moreDetailsToggle = event.target.closest(".paper-details-more-toggle");
+    if (moreDetailsToggle) {
+      const content = document.getElementById(moreDetailsToggle.getAttribute("aria-controls"));
+      const isExpanded = moreDetailsToggle.getAttribute("aria-expanded") === "true";
+      moreDetailsToggle.setAttribute("aria-expanded", String(!isExpanded));
+      if (content) content.hidden = isExpanded;
       return;
     }
     const institutionToggle = event.target.closest(".result-institutions-toggle");

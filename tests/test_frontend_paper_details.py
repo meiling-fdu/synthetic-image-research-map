@@ -65,6 +65,83 @@ process.stdout.write(JSON.stringify({html}));
             ".paper-details-affiliations", 1
         )[1].split(".result-author-affiliations", 1)[0])
 
+    def test_publication_metadata_and_content_follow_reading_order(self):
+        details = self.app.split(
+            "function paperDetailsHtml(record, relatedEntries) {", 1
+        )[1].split("\nfunction resultBadges", 1)[0]
+        title = details.index("paper-details-title")
+        badges = details.index('class="popup-badges"')
+        venue = details.index('class="paper-details-venue-row"')
+        authors = details.index("paper-details-authors")
+        affiliations = details.index("${affiliationsBlock}")
+        links = details.index("${linksBlock}")
+        self.assertLess(title, badges)
+        self.assertLess(badges, venue)
+        self.assertLess(venue, authors)
+        self.assertLess(authors, affiliations)
+        self.assertLess(affiliations, links)
+        self.assertNotIn("venueDisplayHtml(record)", details)
+        self.assertNotIn("venue-type-badge", details)
+        self.assertNotIn("Publication type:", details)
+
+    def test_only_primary_badges_remain_in_paper_details(self):
+        details = self.app.split(
+            "function paperDetailsHtml(record, relatedEntries) {", 1
+        )[1].split("\nfunction resultBadges", 1)[0]
+        self.assertIn("popup-task", details)
+        self.assertIn("${publicationTypeBadge}", details)
+        self.assertIn("${entryTypeBadge}", details)
+        self.assertNotIn("arXiv version", details)
+        self.assertNotIn("confidenceBadge", details)
+        self.assertNotIn("affiliationBadge", details)
+        self.assertNotIn("Preprint-only", details)
+
+    def test_public_details_exclude_duplicate_and_curation_fields(self):
+        details = self.app.split(
+            "function paperDetailsHtml(record, relatedEntries) {", 1
+        )[1].split("\nfunction resultBadges", 1)[0]
+        for label in (
+            "Location</dt>",
+            "Current institution</dt>",
+            "Resolution</dt>",
+            "Resolution notes</dt>",
+            "Needs review</dt>",
+        ):
+            self.assertNotIn(label, details)
+        self.assertIn("<dt>Subtask</dt>", details)
+        self.assertIn("moreDetailsRows", details)
+        self.assertIn("const moreDetailsBlock = moreDetailsRows\n    ?", details)
+        self.assertIn("${moreDetailsBlock}", details)
+
+    def test_section_typography_title_and_more_details_accessibility(self):
+        details = self.app.split(
+            "function paperDetailsHtml(record, relatedEntries) {", 1
+        )[1].split("\nfunction resultBadges", 1)[0]
+        self.assertEqual(details.count('class="paper-details-section-heading"'), 3)
+        title_css = self.css.split(".paper-details-title {", 1)[1].split("}", 1)[0]
+        self.assertIn("text-align: justify", title_css)
+        self.assertIn("text-align-last: left", title_css)
+        self.assertNotIn("white-space: nowrap", title_css)
+        self.assertNotIn("text-overflow", title_css)
+        self.assertIn('class="paper-details-more-toggle"', details)
+        self.assertIn('aria-expanded="false"', details)
+        self.assertIn('aria-controls="paper-details-more-content"', details)
+        self.assertIn("if (moreDetailsToggle)", self.app)
+        self.assertIn('setAttribute("aria-expanded", String(!isExpanded))', self.app)
+
+    def test_narrow_panel_content_can_wrap_without_horizontal_overflow(self):
+        content_css = self.css.split(".paper-details-content {", 1)[1].split("}", 1)[0]
+        affiliations_css = self.css.split(
+            ".paper-details-affiliations li {", 1
+        )[1].split("}", 1)[0]
+        self.assertIn("min-width: 0", content_css)
+        self.assertIn("overflow-wrap: anywhere", content_css)
+        self.assertIn("min-width: 0", affiliations_css)
+        self.assertIn("overflow-wrap: anywhere", affiliations_css)
+        self.assertIn("flex-wrap: wrap", self.css.split(
+            ".paper-details-links {", 1
+        )[1].split("}", 1)[0])
+
     def test_external_links_require_valid_urls_and_have_safe_labels(self):
         links = self.app.split(
             "function paperExternalLinks(record) {", 1
