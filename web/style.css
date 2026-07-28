@@ -858,14 +858,18 @@ input:disabled {
   background: #e7edef;
 }
 
+.task-chart .header-chart-content {
+  display: grid;
+  grid-template-rows: 9px repeat(4, minmax(0, 1fr));
+  row-gap: 3px;
+}
+
 .task-chart-segment {
   min-width: 2px;
 }
 
 .task-chart-list {
-  display: grid;
-  gap: 2px;
-  margin-top: 5px;
+  display: contents;
 }
 
 .task-chart-item {
@@ -898,10 +902,11 @@ input:disabled {
 .task-chart-total {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
   gap: 5px;
-  margin-top: 3px;
+  margin-top: 0;
   border-top: 1px solid var(--line);
-  padding-top: 3px;
+  padding-top: 2px;
   color: var(--ink);
   font-size: 0.62rem;
   font-weight: 700;
@@ -1279,7 +1284,7 @@ input:disabled {
   .site-header {
     grid-template-areas: "hero statistics repository";
     grid-template-columns: minmax(285px, 330px) minmax(0, 1fr) auto;
-    align-items: center;
+    align-items: start;
     column-gap: 12px;
   }
 }
