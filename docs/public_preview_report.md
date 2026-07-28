@@ -11,7 +11,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-26T16:29:05Z |
+| public_preview_generated_at | 2026-07-28T14:25:23Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,14 +19,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1036 |
-| Unique papers | 478 |
-| Unique institutions | 547 |
+| Map records | 1056 |
+| Unique papers | 488 |
+| Unique institutions | 553 |
 | Countries | 53 |
-| arXiv/preprint records | 570 |
-| Records with DOI | 986 |
-| Records with venue | 926 |
-| Records missing venue | 110 |
+| arXiv/preprint records | 569 |
+| Records with DOI | 1006 |
+| Records with venue | 950 |
+| Records missing venue | 106 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -36,31 +36,31 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Task | Records |
 | --- | ---: |
-| detection | 409 |
-| source_attribution | 43 |
-| detection_and_source_attribution | 26 |
+| detection | 418 |
+| source_attribution | 45 |
+| detection_and_source_attribution | 25 |
 
 ## Records by Subtask
 
 | Subtask | Records |
 | --- | ---: |
-| ai_generated_image_detection | 238 |
+| ai_generated_image_detection | 247 |
 | synthetic_image_detection | 125 |
 | deepfake_image_detection | 46 |
-| detection_and_source_attribution | 26 |
-| generated_image_source_attribution | 26 |
-| source_identification | 17 |
+| generated_image_source_attribution | 27 |
+| detection_and_source_attribution | 25 |
+| source_identification | 18 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 102 |
+| 2026 | 113 |
 | 2025 | 133 |
 | 2024 | 114 |
 | 2023 | 52 |
 | 2022 | 22 |
-| 2021 | 24 |
+| 2021 | 23 |
 | 2020 | 15 |
 | 2019 | 12 |
 | 2018 | 3 |
@@ -70,14 +70,14 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Venue | Records |
 | --- | ---: |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 31 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 27 |
 | AAAI Conference on Artificial Intelligence (AAAI) | 22 |
 | International Conference on Machine Learning (ICML) | 17 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 13 |
-| Advances in Neural Information Processing Systems (NeurIPS) | 9 |
+| Advances in Neural Information Processing Systems (NeurIPS) | 10 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 9 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 9 |
 | International Conference on Learning Representations (ICLR) | 8 |
-| IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
 | ACM International Conference on Multimedia (ACM MM) | 6 |
 | IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops | 6 |
 
@@ -85,16 +85,16 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Country | Records |
 | --- | ---: |
-| China | 446 |
-| United States | 143 |
+| China | 467 |
+| United States | 142 |
 | Italy | 80 |
-| India | 54 |
+| India | 55 |
 | Germany | 41 |
 | United Kingdom | 32 |
 | South Korea | 31 |
-| France | 29 |
+| France | 27 |
 | Singapore | 19 |
-| Australia | 14 |
+| Australia | 15 |
 
 ## Top Institutions
 
@@ -102,11 +102,11 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | ---: |
 | Shanghai Jiao Tong University | 18 |
 | University of Naples Federico II | 17 |
+| Beijing Jiaotong University | 16 |
 | University of Chinese Academy of Sciences | 15 |
 | University of Siena | 15 |
-| Beijing Jiaotong University | 14 |
+| Fudan University | 14 |
 | Institute of Automation, Chinese Academy of Sciences | 14 |
-| Fudan University | 13 |
 | University of Science and Technology of China | 11 |
 | Zhejiang University | 11 |
 | Beijing University of Posts and Telecommunications | 10 |
@@ -115,21 +115,20 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 
 | Confidence | Records |
 | --- | ---: |
-| high | 883 |
+| high | 903 |
 | medium | 153 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **110**
+Count: **106**
 
 - Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection (2024) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4be0623e58aa0b48`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore University of Technology and Design; `openalex-candidate-f322e509be974b4c`
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Naver (South Korea); `openalex-candidate-28c479752f087a8f`
 - Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - Fraunhofer Institute for Industrial Mathematics; `openalex-candidate-3414531128452fdf`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Guangdong University of Technology; `openalex-candidate-c0bb1e92f74d43e7`
-- DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Institut d'électronique de microélectronique et de nanotechnologie; `openalex-candidate-0fd273e9564e8092`
 - Detecting Generated Images by Real Images (2022) - Chongqing University of Posts and Telecommunications; `openalex-candidate-39db27838e50b6bb`
 - Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-36c5c60d14ab8d83`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
@@ -165,9 +164,6 @@ Count: **110**
 - Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - Offenburg University of Applied Sciences; `openalex-candidate-65e152459671d4ca`
 - Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - University of Mannheim; `openalex-candidate-e0458c9a0478e873`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Qilu University of Technology; `openalex-candidate-dd5630f5ebd3a43e`
-- DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Université Polytechnique Hauts-de-France; `openalex-candidate-d76663125891041c`
-- DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Khalifa University of Science and Technology; `openalex-candidate-e32a2ff9f0e867e8`
-- DeeCLIP: A Robust and Generalizable Transformer-Based Framework for Detecting AI-Generated Images (2026) - Sorbonne University Abu Dhabi; `openalex-candidate-4a87d8a09390e966`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Jahangirnagar University; `openalex-candidate-b8c048d2bb06f247`
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - University of Southampton; `openalex-candidate-2e38546bdad915a5`
 - OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Harbin Institute of Technology; `openalex-candidate-b09b2a90b0de5f28`
