@@ -2637,38 +2637,27 @@ function paperDetailsHtml(record, relatedEntries) {
   `;
 }
 
-function resultBadges(record, includeInstitutionType = false) {
+function resultBadges(record) {
   const taskClass = MarkerSizeHelpers.normalizeTaskLabel(record.task);
-  const publicationType = record.publication_type;
   const entryType = getEntryType(record);
-  const versionBadge = isPreprintOnlyRecord(record)
-    ? '<span class="popup-badge confidence-unresolved">Preprint-only</span>'
-    : hasArxivVersion(record)
-      ? '<span class="popup-badge confidence-unresolved">arXiv version</span>'
-      : "";
-  const institutionType = normalizeInstitutionType(record.institution_type);
-  const institutionTypeBadge = includeInstitutionType && institutionType !== "other"
-    ? `<span class="popup-badge institution-type-badge">${escapeHtml(institutionTypeLabel(institutionType))}</span>`
-    : "";
   return `
     <div class="popup-badges result-badges" aria-label="Paper classifications">
       <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatTask(record.task))}</span>
-      ${publicationType ? `<span class="popup-badge publication-type-badge">${escapeHtml(formatTask(publicationType))}</span>` : ""}
       ${entryType ? `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(entryType))}</span>` : ""}
-      ${versionBadge}
-      ${institutionTypeBadge}
-      ${preliminaryAffiliationBadge(record)}
     </div>
   `;
 }
 
 function resultVenueYear(record) {
-  const venue = venueDisplayLabel(record);
-  const year = publicationYear(record) ?? "Unknown";
+  const { typeLabel, venue: rawVenue } = paperDetailsPublication(record);
+  const venue = /^unknown venue\/source$/i.test(rawVenue) ? "" : rawVenue;
+  const year = publicationYear(record);
+  const publication = [typeLabel, venue].filter(Boolean).join(" ");
+  if (!publication && year === null) return "";
   return `
     <p class="result-venue-year">
-      ${venue ? `<span><span class="visually-hidden">Venue: </span>${venueDisplayHtml(record)}</span>` : ""}
-      <span><span class="visually-hidden">Year: </span>${escapeHtml(year)}</span>
+      ${publication ? `<span><span class="visually-hidden">Publication: </span><span class="result-publication-type">${escapeHtml(typeLabel)}</span>${venue ? ` ${escapeHtml(venue)}` : ""}</span>` : ""}
+      ${year !== null ? `<span><span class="visually-hidden">Year: </span>${escapeHtml(year)}</span>` : ""}
     </p>
   `;
 }
@@ -2738,7 +2727,7 @@ function institutionResultContent(record, relatedEntries = [{ record }], cardId 
       ${resultAuthors(authors, authorLabel)}
       <div class="result-secondary">
         ${resultVenueYear(record)}
-        ${resultBadges(record, true)}
+        ${resultBadges(record)}
         ${resultLinks(record)}
       </div>
     </article>

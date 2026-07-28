@@ -74,18 +74,52 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn("Show all institutions", institutions)
         self.assertIn("Show fewer institutions", self.app)
 
-    def test_venue_year_badges_and_links_reuse_detail_styles(self):
+    def test_publication_row_badges_and_links_are_nonduplicative(self):
         venue = self.function("resultVenueYear", "resultLinks")
         badges = self.function("resultBadges", "resultVenueYear")
         links = self.function("resultLinks", "resultAuthors")
-        self.assertIn("venueDisplayHtml(record)", venue)
+        self.assertIn("paperDetailsPublication(record)", venue)
         self.assertIn("publicationYear(record)", venue)
+        self.assertIn('join(" ")', venue)
+        self.assertIn("/^unknown venue\\/source$/i", venue)
+        self.assertIn('year !== null', venue)
+        self.assertNotIn("venueDisplayHtml(record)", venue)
+        self.assertNotIn("venue-type-badge", venue)
         self.assertIn("popup-badges result-badges", badges)
         self.assertIn("popup-badge popup-task task-", badges)
-        self.assertIn("publication-type-badge", badges)
         self.assertIn("entry-type-badge", badges)
+        self.assertNotIn("publication-type-badge", badges)
+        self.assertNotIn("institution-type-badge", badges)
+        self.assertNotIn("arXiv version", badges)
+        self.assertNotIn("Preliminary affiliations", badges)
+        self.assertNotIn("resolutionConfidence", badges)
+        self.assertNotIn("reviewStatus", badges)
         self.assertIn("paperExternalLinks(record)", links)
         self.assertIn("paper-details-links result-links", links)
+
+    def test_institution_type_is_only_in_the_scoped_institution_block(self):
+        institution = self.function(
+            "institutionResultContent", "uniquePaperInstitutions"
+        )
+        self.assertEqual(institution.count("institutionTypeLabel(institutionType)"), 1)
+        self.assertIn("${resultBadges(record)}", institution)
+        self.assertNotIn("resultBadges(record, true)", institution)
+
+    def test_sort_control_uses_compact_sizing_without_changing_options(self):
+        self.assertIn(
+            '<select id="sort-control" class="sort-control-compact" disabled>',
+            self.html,
+        )
+        select_css = self.css.split(".sort-control-label select {", 1)[1].split(
+            "}", 1
+        )[0]
+        self.assertIn("height: 32px", select_css)
+        self.assertIn("min-height: 32px", select_css)
+        self.assertIn("padding: 3px 28px 3px 8px", select_css)
+        sort_options = self.html.split(
+            '<select id="sort-control" class="sort-control-compact" disabled>', 1
+        )[1].split("</select>", 1)[0]
+        self.assertEqual(sort_options.count('<option value="'), 5)
 
     def test_counts_states_list_semantics_and_nested_controls(self):
         render = self.function("renderResults", "selectResultsView")

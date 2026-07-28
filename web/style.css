@@ -1116,8 +1116,11 @@ input:disabled {
 
 .sort-control-label select {
   min-width: 150px;
-  padding: 5px 28px 5px 8px;
+  height: 32px;
+  min-height: 32px;
+  padding: 3px 28px 3px 8px;
   font-size: 0.78rem;
+  line-height: 1.2;
 }
 
 .export-button {
@@ -1167,6 +1170,7 @@ input:disabled {
 
 .result-item {
   min-width: 0;
+  align-self: start;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: #fbfcfc;
@@ -1176,13 +1180,12 @@ input:disabled {
 .result-card {
   display: flex;
   min-width: 0;
-  height: 100%;
   flex-direction: column;
-  padding: 13px 14px;
+  padding: 11px 13px;
 }
 
 .result-title {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1rem;
   font-weight: 600;
@@ -1191,18 +1194,18 @@ input:disabled {
 }
 
 .result-entity-kicker {
-  margin: 0 0 4px;
+  margin: 0 0 3px;
   color: var(--accent-dark);
   font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.065em;
   text-transform: uppercase;
 }
 
 .result-institution-primary {
-  margin: 0 0 9px;
+  margin: 0 0 7px;
   border-left: 3px solid var(--accent);
-  padding: 7px 9px;
+  padding: 6px 8px;
   background: #f0f6f7;
 }
 
@@ -1233,12 +1236,12 @@ input:disabled {
 }
 
 .result-entity-section {
-  margin-bottom: 9px;
+  margin-bottom: 7px;
 }
 
 .result-paper-institutions ul {
   display: grid;
-  gap: 3px;
+  gap: 2px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -1265,9 +1268,8 @@ input:disabled {
 }
 
 .result-secondary {
-  margin-top: auto;
   border-top: 1px solid var(--line);
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .result-venue-year {
@@ -1275,7 +1277,7 @@ input:disabled {
   align-items: baseline;
   flex-wrap: wrap;
   gap: 3px 8px;
-  margin: 0 0 7px;
+  margin: 0 0 5px;
   color: var(--muted);
   font-size: 0.72rem;
   line-height: 1.4;
@@ -1287,16 +1289,9 @@ input:disabled {
   color: #99a8af;
 }
 
-.venue-type-badge {
-  display: inline-block;
-  border: 1px solid #b9cbd2;
-  border-radius: 999px;
-  padding: 1px 6px;
-  background: #edf4f6;
+.result-publication-type {
   color: var(--accent-dark);
-  font-size: 0.68rem;
   font-weight: 700;
-  line-height: 1.35;
 }
 
 .venue-label-name {
@@ -1337,7 +1332,7 @@ input:disabled {
 }
 
 .result-links {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .result-links a,
