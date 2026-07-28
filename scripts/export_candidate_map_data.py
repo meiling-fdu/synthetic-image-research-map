@@ -62,19 +62,7 @@ SUPPORTED_TASKS = {
     "uncertain",
 }
 DETECTION_TASK_LABELS = {"detection", "ai_generated_image_detection"}
-DETECTION_SUBTASK_LABELS = {
-    "synthetic_image_detection",
-    "ai_generated_image_detection",
-    "deepfake_image_detection",
-    "medical_synthetic_image_detection",
-}
 ATTRIBUTION_TASK_LABELS = {"source_attribution", "image_provenance"}
-ATTRIBUTION_SUBTASK_LABELS = {
-    "source_attribution",
-    "generated_image_source_attribution",
-    "source_identification",
-    "source_verification",
-}
 ATTRIBUTION_TITLE_PATTERN = re.compile(
     r"\b(?:attribution|provenance|source identification|source verification)\b",
     re.IGNORECASE,
@@ -91,7 +79,6 @@ PAPER_REQUIRED_COLUMNS = {
     "venue",
     "url",
     "preliminary_task",
-    "preliminary_subtask",
     "source_database",
     "manual_review",
     "notes",
@@ -307,60 +294,33 @@ def parse_bool(value: Any) -> bool:
     return clean_text(value).casefold() in {"1", "true", "yes", "y"}
 
 
-def normalize_export_task_labels(row: Dict[str, Any]) -> Optional[Tuple[str, str]]:
-    """Map preliminary labels to the current public task/subtask vocabulary."""
+def normalize_export_task_labels(row: Dict[str, Any]) -> Optional[str]:
+    """Map the authoritative task to the current public task vocabulary."""
     raw_task = clean_text(row.get("preliminary_task") or row.get("task")).casefold()
-    raw_subtask = clean_text(
-        row.get("preliminary_subtask") or row.get("subtask")
-    ).casefold()
-    if "generated_video_detection" in {raw_task, raw_subtask}:
+    if raw_task == "generated_video_detection":
         return None
 
     title = clean_text(row.get("title"))
     has_detection = (
         raw_task in DETECTION_TASK_LABELS
-        or raw_subtask in DETECTION_SUBTASK_LABELS
         or bool(DETECTION_TITLE_PATTERN.search(title))
     )
     has_attribution = (
         raw_task in ATTRIBUTION_TASK_LABELS
-        or raw_subtask in ATTRIBUTION_SUBTASK_LABELS
-        or raw_subtask == "watermark_or_provenance"
         or bool(ATTRIBUTION_TITLE_PATTERN.search(title))
     )
-    if "detection_and_source_attribution" in {raw_task, raw_subtask}:
+    if raw_task == "detection_and_source_attribution":
         has_detection = True
         has_attribution = True
 
     if has_detection and has_attribution:
-        return "detection_and_source_attribution", "detection_and_source_attribution"
+        return "detection_and_source_attribution"
     if has_attribution:
-        subtask = (
-            raw_subtask
-            if raw_subtask
-            in {
-                "generated_image_source_attribution",
-                "source_identification",
-                "source_verification",
-            }
-            else "generated_image_source_attribution"
-        )
-        return "source_attribution", subtask
+        return "source_attribution"
     if has_detection:
-        subtask = (
-            raw_subtask
-            if raw_subtask
-            in {
-                "synthetic_image_detection",
-                "ai_generated_image_detection",
-                "deepfake_image_detection",
-            }
-            else "synthetic_image_detection"
-        )
-        return "detection", subtask
+        return "detection"
     task = raw_task if raw_task in SUPPORTED_TASKS else "uncertain"
-    subtask = raw_subtask if raw_subtask == "unknown" else "unknown"
-    return task, subtask
+    return task
 
 
 def paper_is_in_scope(row: Dict[str, str]) -> bool:
@@ -1734,7 +1694,7 @@ def group_map_records(
             task_labels = normalize_export_task_labels(paper)
             if task_labels is None:
                 continue
-            task, subtask = task_labels
+            task = task_labels
             publication_year = parse_year(
                 clean_text(paper.get("publication_year")) or paper.get("year")
             )
@@ -1753,7 +1713,6 @@ def group_map_records(
                 "publication_year": publication_year,
                 "publication_date": clean_text(paper.get("publication_date")),
                 "task": task,
-                "subtask": subtask,
                 "entry_type": normalize_entry_type(paper),
                 "venue": venue_name,
                 "venue_name": venue_name,

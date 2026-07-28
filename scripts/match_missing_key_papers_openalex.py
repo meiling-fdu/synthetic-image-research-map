@@ -60,7 +60,6 @@ IMPORT_READY_COLUMNS = (
     "publication_type",
     "primary_url",
     "preliminary_task",
-    "preliminary_subtask",
     "import_status",
     "notes",
 )
@@ -378,13 +377,13 @@ def match_candidate(
     }
 
 
-def preliminary_labels(row: Dict[str, str]) -> Tuple[str, str]:
+def preliminary_labels(row: Dict[str, str]) -> str:
     expected = clean(row.get("expected_task")).casefold()
     if expected == "detection_and_source_attribution":
-        return "detection_and_source_attribution", "detection_and_source_attribution"
+        return "detection_and_source_attribution"
     if expected == "source_attribution":
-        return "source_attribution", "generated_image_source_attribution"
-    return "detection", "ai_generated_image_detection"
+        return "source_attribution"
+    return "detection"
 
 
 def is_generated_video(row: Dict[str, str]) -> bool:
@@ -404,7 +403,7 @@ def import_ready_row(
     candidate: Dict[str, str],
     match: Dict[str, str],
 ) -> Dict[str, str]:
-    task, subtask = preliminary_labels(candidate)
+    task = preliminary_labels(candidate)
     return {
         "title": match["title"],
         "year": match["year"],
@@ -417,7 +416,6 @@ def import_ready_row(
         "publication_type": match["publication_type"],
         "primary_url": match["primary_url"],
         "preliminary_task": task,
-        "preliminary_subtask": subtask,
         "import_status": "ready",
         "notes": (
             "Strong OpenAlex title match; ready for broad paper-level import. "

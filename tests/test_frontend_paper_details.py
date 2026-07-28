@@ -55,7 +55,7 @@ process.stdout.write(JSON.stringify({html}));
             details.index("paper-details-title"),
             details.index('class="popup-badges"'),
         )
-        self.assertIn("publication-type-badge", details)
+        self.assertIn("paper-details-publication-type", details)
         self.assertIn("task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel", details)
         self.assertIn("paper-details-affiliations", details)
         self.assertIn("affiliation.authors.map(escapeHtml).join", details)
@@ -89,7 +89,7 @@ process.stdout.write(JSON.stringify({html}));
             "function paperDetailsHtml(record, relatedEntries) {", 1
         )[1].split("\nfunction resultBadges", 1)[0]
         self.assertIn("popup-task", details)
-        self.assertIn("${publicationTypeBadge}", details)
+        self.assertNotIn("${publicationTypeBadge}", details)
         self.assertIn("${entryTypeBadge}", details)
         self.assertNotIn("arXiv version", details)
         self.assertNotIn("confidenceBadge", details)
@@ -108,12 +108,10 @@ process.stdout.write(JSON.stringify({html}));
             "Needs review</dt>",
         ):
             self.assertNotIn(label, details)
-        self.assertIn("<dt>Subtask</dt>", details)
-        self.assertIn("moreDetailsRows", details)
-        self.assertIn("const moreDetailsBlock = moreDetailsRows\n    ?", details)
-        self.assertIn("${moreDetailsBlock}", details)
+        self.assertNotIn("<dt>Subtask</dt>", details)
+        self.assertNotIn("moreDetails", details)
 
-    def test_section_typography_title_and_more_details_accessibility(self):
+    def test_section_typography_and_removed_more_details(self):
         details = self.app.split(
             "function paperDetailsHtml(record, relatedEntries) {", 1
         )[1].split("\nfunction resultBadges", 1)[0]
@@ -123,11 +121,21 @@ process.stdout.write(JSON.stringify({html}));
         self.assertIn("text-align-last: left", title_css)
         self.assertNotIn("white-space: nowrap", title_css)
         self.assertNotIn("text-overflow", title_css)
-        self.assertIn('class="paper-details-more-toggle"', details)
-        self.assertIn('aria-expanded="false"', details)
-        self.assertIn('aria-controls="paper-details-more-content"', details)
-        self.assertIn("if (moreDetailsToggle)", self.app)
-        self.assertIn('setAttribute("aria-expanded", String(!isExpanded))', self.app)
+        self.assertNotIn('class="paper-details-more-toggle"', details)
+        self.assertNotIn('aria-controls="paper-details-more-content"', details)
+        self.assertNotIn("if (moreDetailsToggle)", self.app)
+
+    def test_publication_row_uses_public_label_before_venue_and_deduplicates(self):
+        helper = self.app.split("function paperDetailsPublication(record) {", 1)[1].split(
+            "\nfunction paperDetailsHtml", 1
+        )[0]
+        for label in ("Conference", "Journal", "Preprint", "Book"):
+            self.assertIn(f'"{label}"', helper)
+        self.assertIn("duplicatePrefix", helper)
+        details = self.app.split("function paperDetailsHtml(record, relatedEntries) {", 1)[1].split(
+            "\nfunction resultBadges", 1
+        )[0]
+        self.assertLess(details.index("publicationTypeLabel"), details.index("${escapeHtml(venue)}"))
 
     def test_narrow_panel_content_can_wrap_without_horizontal_overflow(self):
         content_css = self.css.split(".paper-details-content {", 1)[1].split("}", 1)[0]

@@ -37,7 +37,6 @@ OUTPUT_COLUMNS = (
     "publication_type",
     "primary_url",
     "preliminary_task",
-    "preliminary_subtask",
     "import_status",
     "notes",
 )
@@ -56,7 +55,6 @@ REFERENCE_FIELDS = (
     "publication_type",
     "primary_url",
     "preliminary_task",
-    "preliminary_subtask",
 )
 
 
@@ -119,7 +117,6 @@ def reference_value(row: Dict[str, str], field: str) -> str:
         "publication_venue": ("publication_venue", "venue", "venue_name"),
         "primary_url": ("primary_url", "url", "landing_page_url"),
         "preliminary_task": ("preliminary_task", "task"),
-        "preliminary_subtask": ("preliminary_subtask", "subtask"),
     }
     for name in aliases.get(field, (field,)):
         value = clean(row.get(name))
@@ -144,29 +141,28 @@ def load_reference_rows() -> Dict[str, Dict[str, str]]:
     return references
 
 
-def infer_labels(title: str) -> Tuple[str, str]:
+def infer_labels(title: str) -> str:
     normalized = " ".join(re.sub(r"[^\w]+", " ", title.casefold()).split())
     if re.search(r"\b(?:attribution|source identification)\b", normalized):
-        return "source_attribution", "source_attribution"
+        return "source_attribution"
     if re.search(r"\b(?:provenance|watermark)\b", normalized):
-        return "image_provenance", "watermark_or_provenance"
+        return "image_provenance"
     if re.search(r"\b(?:ct|medical|radiology)\b", normalized):
-        return "detection", "medical_synthetic_image_detection"
+        return "detection"
     if re.search(r"\bdeepfake(?:s)?\b", normalized):
-        return "detection", "deepfake_image_detection"
+        return "detection"
     if re.search(
         r"\b(?:generated|synthetic|fake|forgery|forensic|forensics)\b", normalized
     ):
-        return "detection", "ai_generated_image_detection"
-    return "uncertain", "unknown"
+        return "detection"
+    return "uncertain"
 
 
 def is_generated_video(
     row: Dict[str, str],
     task: str,
-    subtask: str,
 ) -> bool:
-    if "generated_video_detection" in {task.casefold(), subtask.casefold()}:
+    if task.casefold() == "generated_video_detection":
         return True
     title = clean(row.get("title")).casefold()
     has_video = bool(re.search(r"\bvideos?\b", title))
@@ -213,11 +209,10 @@ def prepare_rows(
 
         reference = references.get(work_id, {})
         task = clean(reference.get("preliminary_task"))
-        subtask = clean(reference.get("preliminary_subtask"))
-        if not task or not subtask:
-            task, subtask = infer_labels(clean(row.get("title")))
+        if not task:
+            task = infer_labels(clean(row.get("title")))
 
-        if is_generated_video(row, task, subtask):
+        if is_generated_video(row, task):
             skipped.append(
                 skipped_row(row, "Excluded generated_video_detection record.")
             )
@@ -240,7 +235,6 @@ def prepare_rows(
                 "publication_type": clean(reference.get("publication_type")),
                 "primary_url": primary_url,
                 "preliminary_task": task,
-                "preliminary_subtask": subtask,
                 "import_status": "ready",
                 "notes": (
                     "Prepared from missing_affiliation_rows blocker report using "

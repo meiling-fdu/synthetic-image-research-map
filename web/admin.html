@@ -257,18 +257,6 @@
               <option value="uncertain">uncertain</option>
             </select>
           </label>
-          <label>Subtask
-            <select id="paper-subtask" name="subtask">
-              <option value="">none</option>
-              <option value="ai_generated_image_detection">ai_generated_image_detection</option>
-              <option value="deepfake_image_detection">deepfake_image_detection</option>
-              <option value="detection_and_source_attribution">detection_and_source_attribution</option>
-              <option value="generated_image_source_attribution">generated_image_source_attribution</option>
-              <option value="source_identification">source_identification</option>
-              <option value="synthetic_image_detection">synthetic_image_detection</option>
-              <option value="unknown">unknown</option>
-            </select>
-          </label>
           <label>Scope status
             <select id="paper-scope-status" name="scope_status">
               <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>
@@ -449,7 +437,6 @@
             <div class="filters">
               <label>Year<select id="filter-year"><option value="">All years</option></select></label>
               <label>Task<select id="filter-task"><option value="">All tasks</option></select></label>
-              <label>Subtask<select id="filter-subtask"><option value="">All subtasks</option></select></label>
               <label>Coverage<select id="filter-coverage"><option value="">All coverage</option></select></label>
               <label>Map location
                 <select id="filter-map">
@@ -549,14 +536,6 @@
                   <option value="detection_and_source_attribution">detection_and_source_attribution</option>
                   <option value="source_attribution">source_attribution</option>
                   <option value="uncertain">uncertain</option>
-                </select></label>
-                <label>Subtask<select id="metadata-subtask">
-                  <option value="">none</option><option value="ai_generated_image_detection">ai_generated_image_detection</option>
-                  <option value="deepfake_image_detection">deepfake_image_detection</option>
-                  <option value="detection_and_source_attribution">detection_and_source_attribution</option>
-                  <option value="generated_image_source_attribution">generated_image_source_attribution</option>
-                  <option value="source_identification">source_identification</option>
-                  <option value="synthetic_image_detection">synthetic_image_detection</option><option value="unknown">unknown</option>
                 </select></label>
                 <label>Scope status<select id="metadata-scope-status">
                   <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>

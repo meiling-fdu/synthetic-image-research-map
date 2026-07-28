@@ -67,7 +67,6 @@ def clean(value: object) -> str:
 def is_video(row: Dict[str, str]) -> bool:
     return "generated_video_detection" in {
         clean(row.get("preliminary_task")).casefold(),
-        clean(row.get("preliminary_subtask")).casefold(),
     }
 
 
@@ -126,11 +125,8 @@ def existing_keys(rows: Sequence[Dict[str, str]]) -> Tuple[set[str], set[str]]:
 
 def manual_source_labels(row: Dict[str, str], paper: Dict[str, str]) -> None:
     task = clean(row.get("preliminary_task"))
-    subtask = clean(row.get("preliminary_subtask"))
     if task:
         paper["preliminary_task"] = task
-    if subtask:
-        paper["preliminary_subtask"] = subtask
     paper["in_scope"] = "true"
     paper["relevance_score"] = "2"
     paper["relevance_reason"] = "Manually approved key-paper OpenAlex import."

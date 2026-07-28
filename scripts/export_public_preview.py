@@ -228,7 +228,6 @@ PUBLIC_FIELDS = (
     "publication_year",
     "publication_date",
     "task",
-    "subtask",
     "entry_type",
     "venue",
     "venue_id",
@@ -1513,7 +1512,7 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
         raise PreviewExportError(
             "generated_video_detection records are not eligible for public preview"
         )
-    task, subtask = task_labels
+    task = task_labels
     record = {
         "title": clean_text(row.get("title")),
         "in_scope": True,
@@ -1521,7 +1520,6 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
         "publication_year": year,
         "publication_date": clean_text(row.get("publication_date")),
         "task": task,
-        "subtask": subtask,
         "entry_type": normalize_entry_type(row),
         "venue": clean_text(row.get("venue")),
         "venue_name": clean_text(row.get("venue_name") or row.get("venue")),
@@ -1570,13 +1568,6 @@ def apply_key_paper_expected_task(
         return dict(candidate)
     record = dict(candidate)
     record["preliminary_task"] = expected_task
-    record["preliminary_subtask"] = (
-        "synthetic_image_detection"
-        if expected_task == "detection"
-        else "generated_image_source_attribution"
-        if expected_task == "source_attribution"
-        else expected_task
-    )
     record["in_scope"] = "true"
     record["manual_review"] = "false"
     note = "Manual key-paper expected_task applied."
@@ -2574,7 +2565,7 @@ def build_preview(
         if task_labels is None:
             excluded_task += 1
             continue
-        task, subtask = task_labels
+        task = task_labels
         task_is_allowed = task in ALLOWED_PUBLIC_TASKS
         task_is_debug_uncertain = include_uncertain and task == "uncertain"
         if not task_is_allowed and not task_is_debug_uncertain:
@@ -2607,7 +2598,6 @@ def build_preview(
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
         public_record["task"] = task
-        public_record["subtask"] = subtask
         public_record["entry_type"] = normalize_entry_type(record)
         public_record["institution"] = institution_name(record)
         public_record.update(
@@ -2831,6 +2821,16 @@ def commit_public_outputs(
     except OSError as error:
         raise PreviewExportError(str(error)) from error
     return successful_at
+
+
+def strip_legacy_removed_fields(records: Sequence[Dict[str, Any]]) -> int:
+    """Remove the retired subtask key only from preserved legacy public data."""
+    removed = 0
+    for record in records:
+        if "subtask" in record:
+            record.pop("subtask")
+            removed += 1
+    return removed
 
 
 def exclude_stale_curated_mapping_markers(
@@ -4062,6 +4062,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         normalize_exported_institution_types(
             integrated_papers, integrated_maps, institution_rows
         )
+        legacy_removed = strip_legacy_removed_fields(integrated_papers)
+        legacy_removed += strip_legacy_removed_fields(integrated_maps)
+        if legacy_removed:
+            print(
+                f"Migration warning: removed retired subtask from "
+                f"{legacy_removed} preserved public records.",
+                flush=True,
+            )
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         payload["institution_aliases"] = exported_aliases

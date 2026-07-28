@@ -117,7 +117,6 @@ def map_record(title, openalex_id, **overrides):
         "paper_url": "",
         "in_scope": True,
         "task": "detection",
-        "subtask": "synthetic_image_detection",
         "entry_type": "method",
         "institution": "Example University",
         "latitude": 43.0,

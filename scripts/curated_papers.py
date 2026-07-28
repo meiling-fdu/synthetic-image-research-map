@@ -17,7 +17,6 @@ try:
         ALLOWED_ENTRY_TYPES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_SCOPE_STATUSES,
-        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         PAPERS_COLUMNS,
@@ -48,7 +47,6 @@ except ImportError:
         ALLOWED_ENTRY_TYPES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_SCOPE_STATUSES,
-        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         PAPERS_COLUMNS,
@@ -258,6 +256,12 @@ def apply_canonical_venue_selection(
 
 
 def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
+    if "subtask" in draft:
+        raise CuratedPaperError(
+            "subtask was removed; use the authoritative task field",
+            field="subtask",
+            error_code="removed_field",
+        )
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
@@ -265,7 +269,6 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     entry_type = clean(draft.get("entry_type")).casefold()
     if not entry_type and not book:
         entry_type = "method"
-    subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     publication_type = (
         "book"
@@ -290,11 +293,6 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         raise CuratedPaperError(
             "entry_type must be one of "
             + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
-        )
-    if subtask and subtask not in ALLOWED_SUBTASKS:
-        raise CuratedPaperError(
-            "subtask must be blank or one of "
-            + ", ".join(sorted(ALLOWED_SUBTASKS))
         )
     if scope_status not in ALLOWED_SCOPE_STATUSES:
         raise CuratedPaperError(
@@ -335,7 +333,6 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "abstract": clean(draft.get("abstract")),
         "task": task,
         "entry_type": entry_type,
-        "subtask": subtask,
         "scope_status": scope_status,
         "source_database": source_database,
         "metadata_source": metadata_source,
@@ -445,13 +442,18 @@ def update_curated_paper(
         aliases,
     )
     patched = dict(base)
+    if "subtask" in draft:
+        raise CuratedPaperError(
+            "subtask was removed; use the authoritative task field",
+            field="subtask",
+            error_code="removed_field",
+        )
     patched.update(draft)
     draft = patched
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
     entry_type = clean(draft.get("entry_type")).casefold()
-    subtask = clean(draft.get("subtask"))
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     publication_type = (
         "book"
@@ -482,11 +484,6 @@ def update_curated_paper(
         raise CuratedPaperError(
             "entry_type must be one of "
             + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
-        )
-    if subtask and subtask not in ALLOWED_SUBTASKS:
-        raise CuratedPaperError(
-            "subtask must be blank or one of "
-            + ", ".join(sorted(ALLOWED_SUBTASKS))
         )
     if scope_status not in ALLOWED_SCOPE_STATUSES:
         raise CuratedPaperError(
@@ -546,7 +543,6 @@ def update_curated_paper(
         "abstract": clean(draft.get("abstract")),
         "task": task,
         "entry_type": entry_type,
-        "subtask": subtask,
         "scope_status": scope_status,
         "source_database": source_database,
         "metadata_source": clean(

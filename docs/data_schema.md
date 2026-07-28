@@ -128,8 +128,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `url` | Preferred public landing-page URL for the paper. |
 | `arxiv_id` | arXiv identifier, including version only when the version matters. |
 | `task` | Primary project task label: `detection`, `source_attribution`, `detection_and_source_attribution`, or `uncertain`. |
-| `subtask` | Controlled reviewable label: `synthetic_image_detection`, `ai_generated_image_detection`, `deepfake_image_detection`, `generated_image_source_attribution`, `source_identification`, `source_verification`, `detection_and_source_attribution`, or `unknown`. |
-| `entry_type` | Automatic, reviewable project-specific map-entry category: `method`, `dataset`, `benchmark`, `survey`, or `analysis`. It describes the entry's primary contribution, defaults to `method`, and is independent of `task`, `subtask`, and the formal OpenAlex `publication_type`. |
+| `entry_type` | Automatic, reviewable project-specific map-entry category: `method`, `dataset`, `benchmark`, `survey`, or `analysis`. It describes the entry's primary contribution, defaults to `method`, and is independent of `task` and the formal OpenAlex `publication_type`. |
 | `is_survey` | `true` when the paper is a survey, review, systematic review, or taxonomy rather than a primary research contribution. |
 | `is_deepfake_related` | `true` when the work specifically concerns deepfakes or face manipulation. This flag keeps that related area distinguishable from general synthetic-image research. |
 | `is_image_editing_related` | `true` when an audit candidate concerns image editing or manipulation. Image-editing-only work is outside the scoped map dataset. |
@@ -376,7 +375,7 @@ Each record is one paper and may include:
 | `title`, `year`, `publication_year`, `authors`, `venue`, `doi`, `paper_url`, `openalex_url` | Paper-level bibliographic metadata from local candidate sources and manual override layers. |
 | `arxiv_id`, `arxiv_url`, `arxiv_year`, `has_arxiv_version` | Known arXiv-version metadata when present locally. |
 | `abstract`, `abstract_source` | Original abstract metadata from local/manual caches; empty when unavailable. |
-| `task`, `subtask`, `entry_type`, `publication_type` | Candidate classification and publication metadata. |
+| `task`, `entry_type`, `publication_type` | Candidate classification and publication metadata. |
 | `has_map_location` | `true` when at least one public preview map marker exists for the paper. |
 | `map_record_count` | Count of public preview marker records tied to the paper. |
 | `aggregated_locations` | Ordered canonical institution/location objects. Each object keeps `institution_name`, `institution_id`, normalized `country`/`country_code`, `region`/`region_code`, and the explicit `location_display` pair together. |
@@ -594,7 +593,7 @@ Labels describe scope without collapsing related categories into one field:
 - Set `task=detection` only when the paper primarily detects AI-generated or synthetic images.
 - Set `task=source_attribution` only when the paper attributes an AI-generated or synthetic image to its generation source, identifies that source, verifies it, or studies generated-image provenance/forensic attribution.
 - Set `task=detection_and_source_attribution` when both scoped tasks are substantive, and `task=uncertain` when the automatic rules cannot assign one safely.
-- Use only the documented `subtask` vocabulary from the `papers.csv` table. `model_attribution`, `generator_attribution`, and generic `attribution` are not task or subtask labels.
+- `model_attribution`, `generator_attribution`, and generic `attribution` are not task labels.
 - Set `is_survey=true` for survey, review, systematic review, or taxonomy papers. A survey should still receive the `task` value that best describes its topical coverage.
 - Set `is_deepfake_related=true` for deepfake or face-manipulation research. This flag does not replace `task`.
 - Set `is_image_editing_related=true` for audit candidates centered on edited or manipulated images; this flag does not make them in scope.

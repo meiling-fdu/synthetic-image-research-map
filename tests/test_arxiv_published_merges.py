@@ -132,7 +132,6 @@ class ArxivPublishedMergeTests(unittest.TestCase):
             "openalex_url": "https://openalex.org/W100",
             "authors": [{"name": "Ada Example"}],
             "task": "detection",
-            "subtask": "synthetic_image_detection",
         }
         formal = {
             "title": "A Similar Method for Synthetic Image Detection",
@@ -143,7 +142,6 @@ class ArxivPublishedMergeTests(unittest.TestCase):
             "openalex_url": "https://openalex.org/W200",
             "authors": [{"name": "Ada Example"}],
             "task": "detection",
-            "subtask": "synthetic_image_detection",
         }
 
         report = audit_duplicates(audit_input_records([preprint, formal], []))

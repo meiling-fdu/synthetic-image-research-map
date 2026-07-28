@@ -45,7 +45,6 @@ def curated_row(**overrides):
             "paper_url": "https://doi.org/10.1000/survey",
             "publication_type": "preprint",
             "task": "source_attribution",
-            "subtask": "source_identification",
             "scope_status": "in_scope",
             "source_database": "openalex",
             "metadata_source": "openalex",
@@ -766,7 +765,6 @@ class PaperMetadataEditingTests(unittest.TestCase):
             "doi": "10.1000/survey",
             "paper_url": "https://doi.org/10.1000/survey",
             "task": "source_attribution",
-            "subtask": "source_identification",
             "entry_type": "method",
             "review_status": "reviewed",
         }

@@ -305,7 +305,6 @@ def apply_confirmed_version_merges(
                         "primary_url",
                         "publication_type",
                         "task",
-                        "subtask",
                         "authors",
                     )
                     if canonical.get(field) not in (None, "", [])

@@ -192,7 +192,6 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             "doi": "10.1109/access.2024.3356122",
             "openalex_url": "https://openalex.org/W4391019749",
             "preliminary_task": "uncertain",
-            "preliminary_subtask": "unknown",
             "in_scope": "false",
             "manual_review": "true",
         }
@@ -205,7 +204,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         record = apply_key_paper_expected_task(candidate, key_paper)
 
         self.assertEqual(record["preliminary_task"], "detection")
-        self.assertEqual(record["preliminary_subtask"], "synthetic_image_detection")
+        self.assertNotIn("preliminary_subtask", record)
         self.assertEqual(record["in_scope"], "true")
 
     def test_active_openalex_mapping_with_valid_coordinates_emits_one_marker(self):
@@ -214,7 +213,6 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             "year": 2024,
             "publication_year": 2024,
             "task": "detection",
-            "subtask": "synthetic_image_detection",
             "doi": "10.1109/access.2024.3356122",
             "openalex_url": "https://openalex.org/W4391019749",
             "authors": ["Jordan J. Bird", "Ahmad Lotfi"],
@@ -265,7 +263,6 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             "year": 2024,
             "publication_year": 2024,
             "task": "uncertain",
-            "subtask": "unknown",
             "doi": "10.1234/uncertain",
             "authors": ["Ada Author"],
         }

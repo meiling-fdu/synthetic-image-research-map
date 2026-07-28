@@ -299,7 +299,6 @@ def build_report(
         papers_by_identity.setdefault(paper_identity(record), record)
     paper_records = list(papers_by_identity.values())
     tasks = count_values(paper_records, lambda record: first_text(record, "task"))
-    subtasks = count_values(paper_records, lambda record: first_text(record, "subtask"))
     years = count_values(
         paper_records, lambda record: first_text(record, "publication_year", "year")
     )
@@ -396,10 +395,6 @@ def build_report(
             "## Records by Task",
             "",
             *counter_table(tasks, "Task"),
-            "",
-            "## Records by Subtask",
-            "",
-            *counter_table(subtasks, "Subtask"),
             "",
             "## Records by Year",
             "",

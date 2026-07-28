@@ -109,7 +109,6 @@ CURATED_OVERRIDE_FIELDS = (
     "publication_type",
     "abstract",
     "task",
-    "subtask",
     "entry_type",
     "source_database",
     "metadata_source",
@@ -289,16 +288,13 @@ def normalize_regional_location(
     return normalized
 
 
-def normalize_task_subtask(
-    record: Mapping[str, Any],
-) -> Tuple[str, str] | None:
-    labels = normalize_export_task_labels(dict(record))
-    if labels is None:
+def normalize_task(record: Mapping[str, Any]) -> str | None:
+    task = normalize_export_task_labels(dict(record))
+    if task is None:
         return None
-    task, subtask = labels
     if task not in PUBLIC_PAPER_TASKS:
         return None
-    return task, subtask
+    return task
 
 
 def _parse_year(value: Any) -> int | None:
@@ -655,9 +651,7 @@ def _matching_papers(
     return []
 
 
-def _curated_paper_record(
-    row: Mapping[str, Any], task: str, subtask: str
-) -> Dict[str, Any]:
+def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
     year = _parse_year(row.get("year"))
     arxiv_id = clean(row.get("arxiv_id"))
     paper_url = clean(row.get("paper_url"))
@@ -697,7 +691,6 @@ def _curated_paper_record(
         "publication_year": year,
         "publication_date": "",
         "task": task,
-        "subtask": subtask,
         "entry_type": entry_type,
         "venue": clean(row.get("venue") or row.get("venue_name")),
         "venue_name": clean(row.get("venue_name") or row.get("venue")),
@@ -756,11 +749,11 @@ def build_curated_paper_preview_records(
         if clean(row.get("scope_status")).casefold() == "out_of_scope":
             skipped_scope += 1
             continue
-        labels = normalize_task_subtask(row)
-        if labels is None:
+        task = normalize_task(row)
+        if task is None:
             skipped_task += 1
             continue
-        record = _curated_paper_record(row, *labels)
+        record = _curated_paper_record(row, task)
         if record_is_excluded(record, exclusion_index):
             skipped_exclusion += 1
             continue
@@ -899,7 +892,6 @@ def _curated_marker(
         ),
         "publication_date": clean(paper.get("publication_date")),
         "task": clean(paper.get("task")),
-        "subtask": clean(paper.get("subtask")),
         "entry_type": clean(paper.get("entry_type")) or "method",
         "venue": clean(paper.get("venue") or paper.get("venue_name")),
         "venue_name": clean(paper.get("venue_name") or paper.get("venue")),

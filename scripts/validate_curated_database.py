@@ -29,7 +29,6 @@ try:
         ALLOWED_REVIEW_ACTIONS,
         ALLOWED_REVIEW_QUEUES,
         ALLOWED_SCOPE_STATUSES,
-        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         ALLOWED_VENUE_TRACKS,
         ALLOWED_VENUE_TYPES,
@@ -54,7 +53,6 @@ except ImportError:  # Support direct execution from the repository root.
         ALLOWED_REVIEW_ACTIONS,
         ALLOWED_REVIEW_QUEUES,
         ALLOWED_SCOPE_STATUSES,
-        ALLOWED_SUBTASKS,
         ALLOWED_TASKS,
         ALLOWED_VENUE_TRACKS,
         ALLOWED_VENUE_TYPES,
@@ -1029,9 +1027,6 @@ def main() -> int:
     )
     validate_allowed_value(
         papers, "papers.csv", "scope_status", ALLOWED_SCOPE_STATUSES, issues
-    )
-    validate_allowed_value(
-        papers, "papers.csv", "subtask", ALLOWED_SUBTASKS, issues
     )
     validate_allowed_value(
         papers, "papers.csv", "venue_type", ALLOWED_VENUE_TYPES, issues

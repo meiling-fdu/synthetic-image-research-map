@@ -79,16 +79,6 @@ ALLOWED_TASKS = {
     "source_attribution",
     "detection_and_source_attribution",
 }
-ALLOWED_SUBTASKS = {
-    "synthetic_image_detection",
-    "ai_generated_image_detection",
-    "deepfake_image_detection",
-    "generated_image_source_attribution",
-    "source_identification",
-    "source_verification",
-    "detection_and_source_attribution",
-    "unknown",
-}
 FORBIDDEN_LABELS = {
     "generator_attribution",
     "model_attribution",
@@ -1039,21 +1029,7 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
             f"task must be one of {', '.join(sorted(ALLOWED_TASKS))}",
         )
 
-    subtask = clean_text(record.get("subtask"))
-    if not subtask:
-        add_issue(issues, "WARNING", index, title, "subtask is missing")
-    elif subtask.casefold() in FORBIDDEN_LABELS:
-        add_issue(issues, "ERROR", index, title, f"forbidden subtask label: {subtask}")
-    elif subtask not in ALLOWED_SUBTASKS:
-        add_issue(
-            issues,
-            "ERROR",
-            index,
-            title,
-            f"unsupported subtask label: {subtask}",
-        )
-
-    for field in ("preliminary_task", "preliminary_subtask"):
+    for field in ("preliminary_task",):
         value = normalized_text(record.get(field))
         if value in FORBIDDEN_LABELS:
             add_issue(

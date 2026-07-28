@@ -40,17 +40,6 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | source_attribution | 45 |
 | detection_and_source_attribution | 25 |
 
-## Records by Subtask
-
-| Subtask | Records |
-| --- | ---: |
-| ai_generated_image_detection | 247 |
-| synthetic_image_detection | 125 |
-| deepfake_image_detection | 46 |
-| generated_image_source_attribution | 27 |
-| detection_and_source_attribution | 25 |
-| source_identification | 18 |
-
 ## Records by Year
 
 | Year | Records |

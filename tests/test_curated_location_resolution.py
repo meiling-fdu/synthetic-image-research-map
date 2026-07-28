@@ -30,7 +30,6 @@ class CuratedLocationResolutionTests(unittest.TestCase):
                 "publication_type": "conference",
             },
             "detection",
-            "synthetic_image_detection",
         )
         marker = _curated_marker(
             curated,
@@ -639,7 +638,6 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "year": 2026,
             "publication_year": 2026,
             "task": "detection",
-            "subtask": "general",
             "doi": "10.1234/cache-test",
             "authors": ["Researcher"],
         }

@@ -34,7 +34,6 @@ PAPERS_COLUMNS = (
     "publication_type",
     "abstract",
     "task",
-    "subtask",
     "scope_status",
     "source_database",
     "metadata_source",
@@ -336,16 +335,6 @@ ALLOWED_ENTRY_TYPES = {
     "benchmark",
     "survey",
     "analysis",
-}
-
-ALLOWED_SUBTASKS = {
-    "ai_generated_image_detection",
-    "deepfake_image_detection",
-    "detection_and_source_attribution",
-    "generated_image_source_attribution",
-    "source_identification",
-    "synthetic_image_detection",
-    "unknown",
 }
 
 ALLOWED_CURATION_STATUSES = {

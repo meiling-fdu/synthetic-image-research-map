@@ -54,7 +54,6 @@ PAPER_COLUMNS = (
     "relevance_reason",
     "exclusion_reason",
     "preliminary_task",
-    "preliminary_subtask",
     "entry_type",
     "is_survey",
     "is_deepfake_related",
@@ -469,7 +468,7 @@ def merge_entry_type(left: str, right: str) -> str:
     return "method"
 
 
-def classify_task(text: str) -> Tuple[str, str]:
+def classify_task(text: str) -> str:
     has_detection = matches_any(text, DETECTION_PATTERNS)
     has_generated_image_context = bool(
         matched_relevance_terms(text, GENERATION_RELEVANCE_PATTERNS)
@@ -479,61 +478,37 @@ def classify_task(text: str) -> Tuple[str, str]:
         and matches_any(text, CONDITIONAL_GENERATOR_ATTRIBUTION_PATTERNS)
     )
     if has_detection and has_source_attribution:
-        return "detection_and_source_attribution", "detection_and_source_attribution"
+        return "detection_and_source_attribution"
     if has_detection:
         if matches_any(text, (r"\bdeep[ -]?fake images?\b",)):
-            return "detection", "deepfake_image_detection"
+            return "detection"
         if matches_any(text, (r"\bai[ -]generated images?\b",)):
-            return "detection", "ai_generated_image_detection"
-        return "detection", "synthetic_image_detection"
+            return "detection"
+        return "detection"
     if has_source_attribution:
         if matches_any(text, (r"\bsource verification\b",)):
-            return "source_attribution", "source_verification"
+            return "source_attribution"
         if matches_any(
             text,
             (r"\bsource identification\b", r"\bgenerator (?:source )?identification\b"),
         ):
-            return "source_attribution", "source_identification"
-        return "source_attribution", "generated_image_source_attribution"
-    return "uncertain", "unknown"
+            return "source_attribution"
+        return "source_attribution"
+    return "uncertain"
 
 
-def merge_task(left: str, right: str) -> Tuple[str, str]:
+def merge_task(left: str, right: str) -> str:
     tasks = {left, right} - {"", "uncertain"}
     if (
         "detection_and_source_attribution" in tasks
         or tasks == {"detection", "source_attribution"}
     ):
-        return "detection_and_source_attribution", "detection_and_source_attribution"
+        return "detection_and_source_attribution"
     if "detection" in tasks:
-        return "detection", "synthetic_image_detection"
+        return "detection"
     if "source_attribution" in tasks:
-        return "source_attribution", "generated_image_source_attribution"
-    return "uncertain", "unknown"
-
-
-def merge_subtask(task: str, *subtasks: str) -> str:
-    preferences = {
-        "detection": (
-            "deepfake_image_detection",
-            "ai_generated_image_detection",
-            "synthetic_image_detection",
-        ),
-        "source_attribution": (
-            "source_verification",
-            "source_identification",
-            "generated_image_source_attribution",
-        ),
-        "detection_and_source_attribution": (
-            "detection_and_source_attribution",
-        ),
-        "uncertain": ("unknown",),
-    }
-    available = {subtask for subtask in subtasks if subtask}
-    for preferred in preferences.get(task, ("unknown",)):
-        if preferred in available:
-            return preferred
-    return preferences.get(task, ("unknown",))[0]
+        return "source_attribution"
+    return "uncertain"
 
 
 def normalize_doi(value: Any) -> str:
@@ -747,7 +722,7 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
     title = clean_text(work.get("title"))
     abstract = reconstruct_abstract(work.get("abstract_inverted_index"))
     classification_text = f"{title} {abstract}".strip()
-    task, subtask = classify_task(classification_text)
+    task = classify_task(classification_text)
     entry_type = classify_entry_type(title)
     in_scope, relevance_score, relevance_reason, exclusion_reason = (
         classify_relevance(classification_text)
@@ -812,7 +787,6 @@ def make_paper_row(work: Dict[str, Any], source_query: str) -> Dict[str, str]:
         "relevance_reason": relevance_reason,
         "exclusion_reason": exclusion_reason,
         "preliminary_task": task,
-        "preliminary_subtask": subtask,
         "entry_type": entry_type,
         "is_survey": bool_text(entry_type == "survey"),
         "is_deepfake_related": bool_text(matches_any(classification_text, DEEPFAKE_PATTERNS)),
@@ -833,16 +807,10 @@ def merge_paper_rows(existing: Dict[str, str], incoming: Dict[str, str]) -> None
     ):
         existing["authors_ordered"] = incoming["authors_ordered"]
 
-    existing_task, default_subtask = merge_task(
+    existing_task = merge_task(
         existing["preliminary_task"], incoming["preliminary_task"]
     )
     existing["preliminary_task"] = existing_task
-    existing["preliminary_subtask"] = merge_subtask(
-        existing_task,
-        existing["preliminary_subtask"],
-        incoming["preliminary_subtask"],
-        default_subtask,
-    )
     existing["entry_type"] = merge_entry_type(
         existing["entry_type"], incoming["entry_type"]
     )

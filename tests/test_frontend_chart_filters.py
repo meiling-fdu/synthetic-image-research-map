@@ -231,7 +231,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         ]
         for field in (
             "recordTitle(record)", "...authors", "record.venue_name", "record.venue",
-            "record.task", "record.subtask", "getEntryTypeLabel",
+            "record.task", "getEntryTypeLabel",
             "publicationYear(record)",
         ):
             self.assertIn(field, search)

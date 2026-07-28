@@ -59,7 +59,6 @@ IMPORT_READY_COLUMNS = (
     "publication_type",
     "primary_url",
     "preliminary_task",
-    "preliminary_subtask",
     "import_status",
     "notes",
 )
@@ -435,21 +434,19 @@ def coverage_tasks() -> Dict[Tuple[str, str], str]:
 
 def preliminary_labels(
     candidate: Dict[str, str], tasks: Dict[Tuple[str, str], str]
-) -> Tuple[str, str]:
+) -> str:
     expected = tasks.get(title_year_key(candidate), "")
     if expected == "generated_video_detection":
-        return "detection", "generated_video_detection"
+        return "generated_video_detection"
     if expected == "detection_and_source_attribution":
-        return "detection_and_source_attribution", "detection_and_source_attribution"
+        return "detection_and_source_attribution"
     if expected == "source_attribution":
-        return "source_attribution", "generated_image_source_attribution"
-    return "detection", "ai_generated_image_detection"
+        return "source_attribution"
+    return "detection"
 
 
-def is_generated_video(
-    candidate: Dict[str, str], task: str, subtask: str
-) -> bool:
-    if "generated_video_detection" in {task.casefold(), subtask.casefold()}:
+def is_generated_video(candidate: Dict[str, str], task: str) -> bool:
+    if task.casefold() == "generated_video_detection":
         return True
     normalized = normalize_title(candidate.get("title"))
     has_video = bool(re.search(r"\bvideos?\b", normalized))
@@ -465,8 +462,8 @@ def import_ready_row(
     match: Dict[str, str],
     tasks: Dict[Tuple[str, str], str],
 ) -> Optional[Dict[str, str]]:
-    task, subtask = preliminary_labels(candidate, tasks)
-    if is_generated_video(candidate, task, subtask):
+    task = preliminary_labels(candidate, tasks)
+    if is_generated_video(candidate, task):
         match["notes"] += (
             " Excluded from import-ready output because "
             "generated_video_detection is unsupported."
@@ -484,7 +481,6 @@ def import_ready_row(
         "publication_type": match["publication_type"],
         "primary_url": match["primary_url"],
         "preliminary_task": task,
-        "preliminary_subtask": subtask,
         "import_status": "ready",
         "notes": (
             "Strong OpenAlex match recovered by conservative query-failure retry. "

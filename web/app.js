@@ -321,7 +321,6 @@ const INSTITUTION_CSV_COLUMNS = [
   ["venue_track", (record) => canonicalVenueTrack(record)],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
-  ["subtask", (record) => record.subtask || ""],
   ["institution_name", (record) => recordInstitution(record)],
   ["institution_id", (record) => String(record.institution_id || "")],
   ["institution_type", (record) => normalizeInstitutionType(record.institution_type)],
@@ -351,7 +350,6 @@ const PAPER_CSV_COLUMNS = [
   ["venue_track", (record) => canonicalVenueTrack(record)],
   ["entry_type", (record) => getEntryType(record)],
   ["task", (record) => record.task || ""],
-  ["subtask", (record) => record.subtask || ""],
   ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
   ["institution_ids", (record) => canonicalInstitutionIds(record).join("; ")],
   ["institution_types", (record) => institutionTypesForRecord(record).join("; ")],
@@ -1741,7 +1739,6 @@ function recordSearchText(record) {
     ...venueTerms,
     record.coverage_status,
     record.task,
-    record.subtask,
     getEntryTypeLabel(getEntryType(record)),
   ].filter(Boolean).join(" "));
 }
@@ -2565,6 +2562,24 @@ function formatResolutionValue(value) {
   return formatTask(value || "unresolved");
 }
 
+function paperDetailsPublication(record) {
+  const labels = {
+    conference: "Conference",
+    conference_paper: "Conference",
+    journal: "Journal",
+    journal_article: "Journal",
+    preprint: "Preprint",
+    book: "Book",
+  };
+  const rawType = String(record.publication_type || "").trim();
+  const typeLabel = labels[rawType.toLocaleLowerCase()] || formatTask(rawType);
+  const venueRow = venueDisplayLabel(record);
+  const rawVenue = venueRow || "Unknown venue/source";
+  const duplicatePrefix = new RegExp(`^${typeLabel.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\b[\\s:–—-]*`, "i");
+  const venue = rawVenue.replace(duplicatePrefix, "").trim() || rawVenue;
+  return { typeLabel, venue };
+}
+
 function paperDetailsHtml(record, relatedEntries) {
   const normalizedRecord = normalizePaperDetailsRecord(record, {
     relatedRecords: relatedEntries.map(({ record: relatedRecord }) => relatedRecord),
@@ -2580,39 +2595,15 @@ function paperDetailsHtml(record, relatedEntries) {
       )
     : "Unknown";
   const year = record.publication_year ?? record.year ?? "Unknown";
-  const venue = venueDisplayLabel(record) || "Unknown venue/source";
-  const publicationType = record.publication_type || "Unknown";
-  const publicationTypeLabel = formatTask(publicationType);
-  const publicationTypeBadge = publicationType && publicationType !== "Unknown"
-    ? `<span class="popup-badge publication-type-badge">${escapeHtml(publicationTypeLabel)}</span>`
-    : "";
+  const { typeLabel: publicationTypeLabel, venue } = paperDetailsPublication(record);
   const entryType = getEntryType(record);
   const entryTypeLabel = getEntryTypeLabel(entryType);
   const entryTypeBadge = entryType
     ? `<span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>`
     : "";
-  const subtaskRow = record.subtask
-    ? `<dt>Subtask</dt><dd>${escapeHtml(formatTask(record.subtask))}</dd>`
-    : "";
   const detailLinks = paperExternalLinks(record);
   const linksBlock = detailLinks.length
     ? `<nav class="paper-details-links" aria-label="Paper links">${detailLinks.join("")}</nav>`
-    : "";
-  const moreDetailsRows = [subtaskRow].filter(Boolean).join("");
-  const moreDetailsBlock = moreDetailsRows
-    ? `
-      <section class="paper-details-more">
-        <button
-          type="button"
-          class="paper-details-more-toggle"
-          aria-expanded="false"
-          aria-controls="paper-details-more-content"
-        >More details</button>
-        <div id="paper-details-more-content" class="paper-details-more-content" hidden>
-          <dl class="popup-details">${moreDetailsRows}</dl>
-        </div>
-      </section>
-    `
     : "";
   const abstract = String(record.abstract || "").trim();
   const abstractSource = String(record.abstract_source || "").trim();
@@ -2631,11 +2622,10 @@ function paperDetailsHtml(record, relatedEntries) {
     <h3 class="popup-title paper-details-title">${escapeHtml(recordTitle(record))}</h3>
     <div class="popup-badges">
       <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatTask(record.task))}</span>
-      ${publicationTypeBadge}
       ${entryTypeBadge}
     </div>
     <p class="paper-details-venue-row">
-      <span class="visually-hidden">Publication: </span>${escapeHtml(venue)} <span aria-hidden="true">·</span> <span class="visually-hidden">Year: </span>${escapeHtml(year)}
+      <span class="visually-hidden">Publication: </span><span class="paper-details-publication-type">${escapeHtml(publicationTypeLabel)}</span> ${escapeHtml(venue)} <span aria-hidden="true">·</span> <span class="visually-hidden">Year: </span>${escapeHtml(year)}
     </p>
     <section class="paper-details-group paper-details-authors" aria-labelledby="paper-authors-heading">
       <h4 id="paper-authors-heading" class="paper-details-section-heading">Authors</h4>
@@ -2644,7 +2634,6 @@ function paperDetailsHtml(record, relatedEntries) {
     ${affiliationsBlock}
     ${linksBlock}
     ${abstractBlock}
-    ${moreDetailsBlock}
   `;
 }
 
@@ -4012,14 +4001,6 @@ maxYearFilter.addEventListener("keydown", (event) => {
       authorToggle.setAttribute("aria-expanded", String(!isExpanded));
       authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
       overflow.hidden = isExpanded;
-      return;
-    }
-    const moreDetailsToggle = event.target.closest(".paper-details-more-toggle");
-    if (moreDetailsToggle) {
-      const content = document.getElementById(moreDetailsToggle.getAttribute("aria-controls"));
-      const isExpanded = moreDetailsToggle.getAttribute("aria-expanded") === "true";
-      moreDetailsToggle.setAttribute("aria-expanded", String(!isExpanded));
-      if (content) content.hidden = isExpanded;
       return;
     }
     const institutionToggle = event.target.closest(".result-institutions-toggle");

@@ -57,7 +57,6 @@ READY_COLUMNS = (
     "publication_type",
     "primary_url",
     "preliminary_task",
-    "preliminary_subtask",
     "import_status",
     "notes",
 )

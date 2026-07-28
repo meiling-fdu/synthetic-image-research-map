@@ -86,7 +86,6 @@ def clean(value: Any) -> str:
 def is_video(row: Dict[str, str]) -> bool:
     return "generated_video_detection" in {
         clean(row.get("preliminary_task")).casefold(),
-        clean(row.get("preliminary_subtask")).casefold(),
     }
 
 

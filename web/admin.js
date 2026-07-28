@@ -99,7 +99,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "paper-url",
     "paper-publication-type",
     "paper-task",
-    "paper-subtask",
     "paper-scope-status",
     "paper-review-status",
     "paper-abstract",
@@ -116,7 +115,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "search-input",
     "filter-year",
     "filter-task",
-    "filter-subtask",
     "filter-coverage",
     "filter-map",
     "filter-source",
@@ -323,7 +321,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-entry-type",
     "metadata-entry-type-field",
     "metadata-task",
-    "metadata-subtask",
     "metadata-scope-status",
     "metadata-curation-status",
     "metadata-review-status",
@@ -424,7 +421,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   [
     "filter-year",
     "filter-task",
-    "filter-subtask",
     "filter-coverage",
     "filter-map",
     "filter-source",
@@ -3993,7 +3989,6 @@ function paperDraftPayload() {
     publication_type: elements["paper-publication-type"].value.trim(),
     abstract: elements["paper-abstract"].value.trim(),
     task: elements["paper-task"].value,
-    subtask: elements["paper-subtask"].value.trim(),
     scope_status: elements["paper-scope-status"].value.trim(),
     review_status: elements["paper-review-status"].value,
     review_note: elements["paper-review-note"].value.trim(),
@@ -4069,7 +4064,6 @@ function renderDuplicateWarning(matches) {
 function populateFilters() {
   setOptions("filter-year", uniqueValues("year", true));
   setOptions("filter-task", uniqueValues("task"));
-  setOptions("filter-subtask", uniqueValues("subtask"));
   setOptions("filter-coverage", uniqueValues("coverage_status"));
   setOptions("filter-source", uniqueValues("source_database"));
 }
@@ -4109,7 +4103,6 @@ function applyFilters() {
   const filters = {
     year: elements["filter-year"].value,
     task: elements["filter-task"].value,
-    subtask: elements["filter-subtask"].value,
     coverage_status: elements["filter-coverage"].value,
     source_database: elements["filter-source"].value,
   };
@@ -4163,7 +4156,6 @@ function renderPaperList() {
     classification.textContent = [
       paper.year || paper.publication_year,
       humanize(paper.task),
-      humanize(paper.subtask),
       text(paper.source_database),
       text(paper.metadata_source),
     ].filter(Boolean).join(" · ");
@@ -4718,7 +4710,7 @@ function populateMetadataForm() {
   const record = state.paperMetadata.effective_record || state.selectedPaper;
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "entry_type", "task", "subtask", "scope_status",
+    "paper_url", "publication_type", "entry_type", "task", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
   fields.forEach((field) => {
@@ -4816,7 +4808,7 @@ async function saveMetadata(event) {
   }
   const fields = [
     "title", "year", "authors", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "entry_type", "task", "subtask", "scope_status",
+    "paper_url", "publication_type", "entry_type", "task", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
   const effective = state.paperMetadata.effective_record || state.selectedPaper;
@@ -4907,7 +4899,6 @@ function renderPaperDetail(paper) {
     ["Paper URL", linkValue(paper.paper_url, paper.paper_url)],
     ["Task", humanize(paper.task)],
     ["Paper type", humanize(paper.entry_type)],
-    ["Subtask", humanize(paper.subtask)],
     ["Coverage", humanize(paper.coverage_status)],
     ["Has map location", yesNo(paper.has_map_location)],
     ["Map record count", paper.map_record_count],

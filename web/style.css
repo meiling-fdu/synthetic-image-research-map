@@ -1680,6 +1680,11 @@ input:disabled {
   overflow-wrap: anywhere;
 }
 
+.paper-details-publication-type {
+  color: var(--ink);
+  font-weight: 700;
+}
+
 .paper-details-affiliations {
   display: grid;
   gap: 6px;
@@ -1858,34 +1863,6 @@ input:disabled {
   margin-top: 4px !important;
   color: var(--muted);
   font-size: 0.68rem !important;
-}
-
-.paper-details-more {
-  margin-top: 10px;
-  border-top: 1px solid var(--line);
-  padding-top: 8px;
-}
-
-.paper-details-more-toggle {
-  width: fit-content;
-  border: 0;
-  border-radius: 4px;
-  padding: 2px 3px;
-  background: transparent;
-  color: var(--accent-dark);
-  font-size: 0.76rem;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.paper-details-more-toggle:hover,
-.paper-details-more-toggle:focus-visible {
-  background: #eaf0f2;
-}
-
-.paper-details-more-content .popup-details {
-  margin-top: 7px;
-  gap: 3px 8px;
 }
 
 .paper-details-content .popup-details dd,
