@@ -131,6 +131,14 @@ def upsert_review_decision(
         "updated_at": now,
         "created_by": clean(draft.get("created_by")) or "local_admin",
     }
+    if existing and all(
+        clean(existing.get(field)) == clean(row.get(field))
+        for field in REVIEW_DECISION_COLUMNS
+        if field != "updated_at"
+    ):
+        # Re-submitting an identical Admin resolution is an idempotent success,
+        # not a new decision or timestamp event.
+        return dict(existing)
     if existing:
         rows[rows.index(existing)] = row
     else:

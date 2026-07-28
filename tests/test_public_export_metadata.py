@@ -122,6 +122,29 @@ class PublicExportMetadataTests(unittest.TestCase):
         self.assertEqual(map_payload["metadata"][TIMESTAMP_FIELD], second)
         self.assertEqual(paper_payload["metadata"][TIMESTAMP_FIELD], second)
 
+    def test_semantically_identical_commit_preserves_timestamp_and_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            map_path = Path(directory) / "map.json"
+            paper_path = Path(directory) / "papers.json"
+            first_map = payload("map")
+            first_papers = payload("papers")
+            with mock.patch.object(
+                export_public_preview, "validate_proposed_public_outputs"
+            ):
+                export_public_preview.commit_public_outputs(
+                    map_path, first_map, paper_path, first_papers, [],
+                    timestamp="2026-07-18T10:00:00Z",
+                )
+                before = (map_path.read_bytes(), paper_path.read_bytes())
+                result = export_public_preview.commit_public_outputs(
+                    map_path, payload("map"), paper_path, payload("papers"), [],
+                    timestamp="2026-07-18T11:00:00Z",
+                )
+            self.assertEqual(result, "2026-07-18T10:00:00Z")
+            self.assertEqual(
+                (map_path.read_bytes(), paper_path.read_bytes()), before
+            )
+
     def test_validator_rejects_inconsistent_timestamps(self):
         map_metadata = {TIMESTAMP_FIELD: "2026-07-18T10:00:00Z"}
         paper_metadata = {TIMESTAMP_FIELD: "2026-07-18T10:00:01Z"}

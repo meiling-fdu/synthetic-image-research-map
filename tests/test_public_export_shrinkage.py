@@ -372,6 +372,87 @@ class PublicExportShrinkageTests(unittest.TestCase):
             report.removed_maps[0].evidence,
         )
 
+    def test_composed_decomposed_accents_and_stable_separators_match(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:old", institution="Old"),
+            "institution_authors": ["José-Luís Müller", "Ada Author"],
+            "institution_source": "automatic_fallback",
+        }
+        replacement = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Reviewed",
+            "institution_id": "institution:reviewed",
+            "institution_authors": "Jose\u0301 Lui\u0301s Muller | Ada Author",
+            "mapping_status": "active",
+        }
+        report = analyze_shrinkage(
+            [old], [old], [old_marker], [],
+            curated_mappings=[replacement],
+        )
+        self.assertTrue(report.allowed)
+
+    def test_reordered_partial_author_list_can_prove_reviewed_replacement(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:old", institution="Old"),
+            "institution_authors": ["Ada Author", "Grace Hopper", "Linus Author"],
+            "institution_source": "automatic_fallback",
+        }
+        replacement = {
+            **old,
+            "mapping_id": "mapping-reviewed",
+            "institution": "Reviewed",
+            "institution_id": "institution:reviewed",
+            "institution_authors": "Linus Author; Ada Author",
+            "mapping_status": "active",
+        }
+        report = analyze_shrinkage(
+            [old], [old], [old_marker], [],
+            curated_mappings=[replacement],
+        )
+        self.assertTrue(report.allowed)
+
+    def test_admin_audit_explains_destructive_mapping_replacement(self):
+        old = paper()
+        old_marker = marker(
+            old, institution_id="institution:old", institution="Old"
+        )
+        new_marker = marker(
+            old, institution_id="institution:new", institution="New"
+        )
+        audit = {
+            "audit_id": "institution-audit:1",
+            "action": "confirmed_mapping_changed",
+            "previous_institution_id": "institution:old",
+            "institution_id": "institution:new",
+            "confirmation_text": "mapping_id=mapping-1; paper_id=curated:paper",
+        }
+        report = analyze_shrinkage(
+            [old], [old], [old_marker], [new_marker],
+            institution_audits=[audit],
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn("authoritative Admin mapping audit", report.removed_maps[0].evidence)
+
+    def test_admin_audit_for_different_paper_does_not_explain_replacement(self):
+        old = paper()
+        audit = {
+            "audit_id": "institution-audit:1",
+            "action": "confirmed_mapping_changed",
+            "previous_institution_id": "institution:old",
+            "institution_id": "institution:new",
+            "confirmation_text": "mapping_id=mapping-1; paper_id=curated:other",
+        }
+        report = analyze_shrinkage(
+            [old], [old],
+            [marker(old, "institution:old", "Old")],
+            [marker(old, "institution:new", "New")],
+            institution_audits=[audit],
+        )
+        self.assertFalse(report.allowed)
+
     def test_manual_mapping_confirms_same_institution_automatic_fallback(self):
         old = paper()
         old_marker = {

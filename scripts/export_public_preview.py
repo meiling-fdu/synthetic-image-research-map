@@ -74,6 +74,7 @@ try:
     from .public_export_metadata import (
         add_export_timestamp,
         atomic_write_json_files,
+        stable_public_content,
         utc_timestamp,
     )
     from .public_record_rules import paper_is_retracted
@@ -157,6 +158,7 @@ except ImportError:  # Direct execution from the scripts directory.
     from public_export_metadata import (
         add_export_timestamp,
         atomic_write_json_files,
+        stable_public_content,
         utc_timestamp,
     )
     from public_record_rules import paper_is_retracted
@@ -2788,6 +2790,38 @@ def commit_public_outputs(
     if dry_run:
         return None
     successful_at = timestamp or utc_timestamp()
+    # A repeated export with identical semantic content retains the prior
+    # successful timestamp. This makes the JSON pair byte-stable and prevents a
+    # no-op Publish Changes run from creating a timestamp-only commit.
+    try:
+        if output.exists() and paper_output.exists():
+            with output.open(encoding="utf-8") as handle:
+                prior_map_payload = json.load(handle)
+            with paper_output.open(encoding="utf-8") as handle:
+                prior_paper_payload = json.load(handle)
+            prior_timestamp = clean_text(
+                prior_map_payload.get("metadata", {}).get(
+                    "public_preview_generated_at"
+                )
+            )
+            if (
+                prior_timestamp
+                and prior_timestamp
+                == clean_text(
+                    prior_paper_payload.get("metadata", {}).get(
+                        "public_preview_generated_at"
+                    )
+                )
+                and stable_public_content(prior_map_payload)
+                == stable_public_content(payload)
+                and stable_public_content(prior_paper_payload)
+                == stable_public_content(paper_payload)
+            ):
+                successful_at = prior_timestamp
+    except (OSError, UnicodeError, json.JSONDecodeError, AttributeError):
+        # Normal validation below reports malformed existing outputs. Do not
+        # hide a real export behind the idempotence optimization.
+        pass
     add_export_timestamp(payload, paper_payload, successful_at)
     validate_proposed_public_outputs(payload, paper_payload, merge_rows)
     try:
@@ -4160,6 +4194,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 merge_rows=version_merge_rows,
                 review_decisions=review_decisions,
                 curated_mappings=curated_mappings,
+                institution_audits=institution_audit_rows,
                 institution_redirects=exported_id_redirects,
                 approved_by_baseline=approved_baseline_allows(
                     len(integrated_papers),

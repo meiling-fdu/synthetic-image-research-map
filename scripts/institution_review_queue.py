@@ -334,6 +334,10 @@ def load_queue(path: Path = DEFAULT_QUEUE_PATH) -> list[dict[str, str]]:
 
 
 def save_queue(rows: Iterable[Mapping[str, Any]], path: Path = DEFAULT_QUEUE_PATH) -> None:
+    rows = [dict(row) for row in rows]
+    for row in rows:
+        if clean(row.get("finding_status")) != OPEN_STATUS:
+            row["is_current"] = "false"
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     with temporary.open("w", encoding="utf-8", newline="") as handle:
@@ -424,10 +428,26 @@ def sync_findings(
             created += 1
         else:
             refreshed += 1
+        before_evidence = {
+            field: clean(row.get(field)) for field in evidence_fields
+        }
+        before_current = clean(row.get("is_current"))
         for field in evidence_fields:
             row[field] = clean(finding.get(field))
-        row["is_current"] = "true"
-        row["updated_at"] = at
+        # Historical/resolved rows are durable evidence, not active queue
+        # items. A reciprocal duplicate-name audit can alternate which side is
+        # generated on successive scans; never toggle a resolved row back to
+        # current merely because its historical audit reappears.
+        if clean(row.get("finding_status")) == OPEN_STATUS:
+            row["is_current"] = "true"
+        if (
+            row["is_current"] != before_current
+            or any(
+                clean(row.get(field)) != before_evidence[field]
+                for field in evidence_fields
+            )
+        ):
+            row["updated_at"] = at
 
     for row in rows:
         if clean(row.get("audit_id")) in current_ids:

@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import unicodedata
+import re
 
 from dataclasses import dataclass
 from typing import Any, Mapping, Optional, Sequence
@@ -151,16 +152,21 @@ def _active_mapping_decision(
 
 def _normalized_author_name(value: Any) -> str:
     normalized = unicodedata.normalize("NFKD", clean(value).casefold())
-    return "".join(
+    unaccented = "".join(
         character
         for character in normalized
         if not unicodedata.combining(character)
     )
+    # Treat punctuation, Unicode dashes, and other presentation separators as
+    # whitespace.  Author evidence comes from several metadata sources and the
+    # same person commonly arrives as "J.-P. Müller", "J P Muller", or with a
+    # composed/decomposed accent.
+    return " ".join(re.findall(r"\w+", unaccented, flags=re.UNICODE))
 
 
 def _author_set(value: Any) -> frozenset[str]:
     if isinstance(value, str):
-        value = value.split(";")
+        value = re.split(r"\s*(?:;|\||\n)\s*", value)
     if not isinstance(value, Sequence) or isinstance(value, (bytes, bytearray)):
         return frozenset()
     return frozenset(
@@ -202,6 +208,29 @@ def _record_author_sets(record: Mapping[str, Any]) -> set[frozenset[str]]:
     return author_sets
 
 
+def _authors_continuous(
+    previous_sets: set[frozenset[str]],
+    replacement_authors: frozenset[str],
+) -> bool:
+    """Return conservative continuity for reordered or incomplete snapshots."""
+    if not replacement_authors:
+        return False
+    for previous in previous_sets:
+        if not previous:
+            continue
+        overlap = previous & replacement_authors
+        # Exact equality is useful but not required. A non-empty subset proves
+        # continuity when one source has only the institution-affiliated
+        # authors while another has a fuller list.
+        if overlap and (
+            previous <= replacement_authors
+            or replacement_authors <= previous
+            or len(overlap) >= 2
+        ):
+            return True
+    return False
+
+
 def _lower_priority_mapping(record: Mapping[str, Any]) -> bool:
     if clean(record.get("mapping_id")):
         return False
@@ -240,7 +269,10 @@ def _curated_mapping_evidence(
             continue
         if same_institution and _lower_priority_mapping(record):
             return row
-        if row_authors and row_authors in author_sets and not same_institution:
+        if (
+            not same_institution
+            and _authors_continuous(author_sets, row_authors)
+        ):
             replacement_present = any(
                 _paper_matches(row, new)
                 and (
@@ -252,6 +284,45 @@ def _curated_mapping_evidence(
             )
             if replacement_present or _lower_priority_mapping(record):
                 return row
+    return None
+
+
+def _mapping_audit_evidence(
+    record: Mapping[str, Any],
+    audits: Sequence[Mapping[str, Any]],
+    new_maps: Sequence[Mapping[str, Any]],
+    institution_redirects: Optional[Mapping[str, str]] = None,
+) -> Mapping[str, Any] | None:
+    """Match structured Admin mapping-change evidence to an old relationship."""
+    old_id = clean(record.get("institution_id")).casefold()
+    for audit in audits:
+        if clean(audit.get("action")).casefold() not in {
+            "confirmed_mapping_changed",
+            "mapping_replaced",
+            "mapping_change_confirmed",
+        }:
+            continue
+        previous_id = clean(audit.get("previous_institution_id")).casefold()
+        new_id = clean(audit.get("institution_id")).casefold()
+        if not old_id or previous_id != old_id or not new_id:
+            continue
+        confirmation = clean(audit.get("confirmation_text")).casefold()
+        paper_id = clean(record.get("paper_id")).casefold()
+        # Old audit rows store the stable paper and mapping lineage in the
+        # confirmation field. Require that paper evidence when it is available.
+        if paper_id and f"paper_id={paper_id}" not in confirmation:
+            continue
+        if any(
+            _paper_matches(record, new)
+            and _canonical_institution_identity(
+                _institution_identity(new), institution_redirects
+            )
+            == _canonical_institution_identity(
+                f"institution_id:{new_id}", institution_redirects
+            )
+            for new in new_maps
+        ):
+            return audit
     return None
 
 
@@ -320,6 +391,7 @@ def analyze_shrinkage(
     merge_rows: Sequence[Mapping[str, Any]] = (),
     review_decisions: Sequence[Mapping[str, Any]] = (),
     curated_mappings: Sequence[Mapping[str, Any]] = (),
+    institution_audits: Sequence[Mapping[str, Any]] = (),
     institution_redirects: Optional[Mapping[str, str]] = None,
     approved_by_baseline: bool = False,
 ) -> ShrinkageReport:
@@ -376,6 +448,9 @@ def analyze_shrinkage(
         )
         decision = _active_mapping_decision(old, review_decisions)
         mapping = _curated_mapping_evidence(old, curated_mappings, new_maps)
+        mapping_audit = _mapping_audit_evidence(
+            old, institution_audits, new_maps, institution_redirects
+        )
         follows_paper = any(_keys(old) & keys for keys in explained_paper_keys)
         if exclusion:
             evidence = f"active exclusion {clean(exclusion.get('exclusion_id'))}"
@@ -383,16 +458,24 @@ def analyze_shrinkage(
             evidence = f"confirmed version merge {clean(merge.get('merge_id'))}"
         elif decision:
             evidence = f"reviewed mapping decision {clean(decision.get('decision_id'))}"
+        elif mapping_audit:
+            evidence = (
+                "authoritative Admin mapping audit "
+                f"{clean(mapping_audit.get('audit_id'))}"
+            )
         elif mapping:
             evidence = (
-                "curated/manual mapping supersession; reviewed mapping scope: "
-                f"author set; authoritative mapping IDs: {clean(mapping.get('mapping_id'))}"
+                "curated/manual mapping supersession; reviewed mapping lineage; "
+                "authoritative mapping IDs: "
+                f"{clean(mapping.get('mapping_id'))}"
             )
         elif follows_paper:
             evidence = "follows explained paper removal"
         else:
             evidence = "no durable paper or institution-mapping evidence"
-        explained = bool(exclusion or merge or decision or mapping or follows_paper)
+        explained = bool(
+            exclusion or merge or decision or mapping_audit or mapping or follows_paper
+        )
         identity = f"{_identity_label(old)} + {_institution_identity(old)}"
         map_removals.append(
             Removal("map", identity, clean(old.get("title")), evidence, explained)
