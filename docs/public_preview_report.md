@@ -11,7 +11,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-28T14:25:23Z |
+| public_preview_generated_at | 2026-07-28T14:27:39Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
