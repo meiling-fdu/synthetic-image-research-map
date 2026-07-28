@@ -2669,20 +2669,20 @@ function resultLinks(record) {
     : "";
 }
 
-function resultAuthors(authors, label, visibleLimit = 6) {
-  const normalizedAuthors = authors.map((name) => ({ name }));
-  const authorsHtml = normalizedAuthors.length
-    ? PaperDetailsHelpers.renderPaperAuthors(
-        { authors: normalizedAuthors },
-        escapeHtml,
-        null,
-        visibleLimit,
-      )
+function resultAuthors(authors, label, regionId, visibleLimit = 6) {
+  const authorNames = authors.map((name) => String(name || "").trim()).filter(Boolean);
+  const visibleAuthors = authorNames.slice(0, visibleLimit);
+  const overflowAuthors = authorNames.slice(visibleLimit);
+  const authorsHtml = visibleAuthors.length
+    ? visibleAuthors.map((name) => `<span class="paper-author">${escapeHtml(name)}</span>`).join(", ")
     : "Unknown";
   return `
     <section class="result-entity-section result-authors">
       <h4>${escapeHtml(label)}</h4>
-      <p>${authorsHtml}</p>
+      <div class="result-authors-content" id="${regionId}" aria-label="${escapeHtml(label)}">
+        <p>${authorsHtml}${overflowAuthors.length ? `<span class="paper-authors-overflow" hidden>, ${overflowAuthors.map((name) => `<span class="paper-author">${escapeHtml(name)}</span>`).join(", ")}</span>` : ""}</p>
+      </div>
+      ${overflowAuthors.length ? `<button type="button" class="paper-authors-toggle" aria-expanded="false" aria-controls="${regionId}">Show all authors</button>` : ""}
     </section>
   `;
 }
@@ -2715,16 +2715,18 @@ function institutionResultContent(record, relatedEntries = [{ record }], cardId 
     <article class="result-card result-card-institution" aria-labelledby="${cardId}">
       <p class="result-entity-kicker">Institution record</p>
       <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
-      <section class="result-institution-primary" aria-label="Institution represented by this record">
-        <h4>${institutionFilterButtonHtml(institution || {
-          institution: institutionName,
-          institutionId: record.institution_id,
-          canonicalName: record.canonical_institution_name,
-        }) || escapeHtml(institutionName || "Unknown institution")}</h4>
-        ${location ? `<p>${escapeHtml(location)}</p>` : ""}
-        ${institutionType !== "other" ? `<p>${escapeHtml(institutionTypeLabel(institutionType))}</p>` : ""}
-      </section>
-      ${resultAuthors(authors, authorLabel)}
+      <div class="result-card-adaptive">
+        <section class="result-institution-primary" aria-label="Institution represented by this record">
+          <h4 title="${escapeHtml(institutionName || "Unknown institution")}">${institutionFilterButtonHtml(institution || {
+            institution: institutionName,
+            institutionId: record.institution_id,
+            canonicalName: record.canonical_institution_name,
+          }) || escapeHtml(institutionName || "Unknown institution")}</h4>
+          ${location ? `<p title="${escapeHtml(location)}">${escapeHtml(location)}</p>` : ""}
+          ${institutionType !== "other" ? `<p>${escapeHtml(institutionTypeLabel(institutionType))}</p>` : ""}
+        </section>
+        ${resultAuthors(authors, authorLabel, `${cardId}-authors`)}
+      </div>
       <div class="result-secondary">
         ${resultVenueYear(record)}
         ${resultBadges(record)}
@@ -2747,7 +2749,7 @@ function uniquePaperInstitutions(affiliations) {
   });
 }
 
-function resultInstitutions(affiliations, visibleLimit = 4) {
+function resultInstitutions(affiliations, regionId, visibleLimit = 4) {
   const uniqueAffiliations = uniquePaperInstitutions(affiliations);
   if (!uniqueAffiliations.length) return "";
   const affiliationHtml = (affiliation) => `
@@ -2761,9 +2763,11 @@ function resultInstitutions(affiliations, visibleLimit = 4) {
   return `
     <section class="result-entity-section result-paper-institutions">
       <h4>Institutions <span class="result-section-count">(${uniqueAffiliations.length})</span></h4>
-      <ul>${visible}</ul>
-      ${overflow ? `<ul class="result-institutions-overflow" hidden>${overflow}</ul>` : ""}
-      ${overflow ? '<button type="button" class="result-institutions-toggle" aria-expanded="false">Show all institutions</button>' : ""}
+      <div class="result-institutions-content" id="${regionId}" aria-label="Paper institutions">
+        <ul>${visible}</ul>
+        ${overflow ? `<ul class="result-institutions-overflow" hidden>${overflow}</ul>` : ""}
+      </div>
+      ${overflow ? `<button type="button" class="result-institutions-toggle" aria-expanded="false" aria-controls="${regionId}">Show all institutions</button>` : ""}
     </section>
   `;
 }
@@ -2776,8 +2780,10 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
     <article class="result-card result-card-paper" aria-labelledby="${cardId}">
       <p class="result-entity-kicker">Unique paper</p>
       <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
-      ${resultAuthors(recordAuthors(normalizedRecord), "Authors")}
-      ${resultInstitutions(normalizedRecord.affiliations)}
+      <div class="result-card-adaptive">
+        ${resultAuthors(recordAuthors(normalizedRecord), "Authors", `${cardId}-authors`)}
+        ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`)}
+      </div>
       <div class="result-secondary">
         ${resultVenueYear(record)}
         ${resultBadges(record)}
@@ -2809,6 +2815,8 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
   resultsList.replaceChildren();
   resultsEmpty.hidden = count !== 0;
   resultsList.hidden = count === 0;
+  resultsList.classList.toggle("results-list-institutions", resultsView === "institutions");
+  resultsList.classList.toggle("results-list-papers", resultsView === "papers");
 
   if (!count) {
     return;
@@ -3985,11 +3993,18 @@ maxYearFilter.addEventListener("keydown", (event) => {
   container.addEventListener("click", (event) => {
     const authorToggle = event.target.closest(".paper-authors-toggle");
     if (authorToggle) {
-      const overflow = authorToggle.previousElementSibling;
+      const section = authorToggle.closest(".result-authors");
+      const content = section?.querySelector(".result-authors-content");
+      const overflow = content?.querySelector(".paper-authors-overflow");
       const isExpanded = authorToggle.getAttribute("aria-expanded") === "true";
       authorToggle.setAttribute("aria-expanded", String(!isExpanded));
       authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
-      overflow.hidden = isExpanded;
+      section?.classList.toggle("is-expanded", !isExpanded);
+      if (overflow) overflow.hidden = isExpanded;
+      content?.toggleAttribute(
+        "tabindex",
+        !isExpanded && content.scrollHeight > content.clientHeight,
+      );
       return;
     }
     const institutionToggle = event.target.closest(".result-institutions-toggle");
@@ -4001,7 +4016,13 @@ maxYearFilter.addEventListener("keydown", (event) => {
       institutionToggle.textContent = isExpanded
         ? "Show all institutions"
         : "Show fewer institutions";
+      section?.classList.toggle("is-expanded", !isExpanded);
       if (overflow) overflow.hidden = isExpanded;
+      const content = section?.querySelector(".result-institutions-content");
+      content?.toggleAttribute(
+        "tabindex",
+        !isExpanded && content.scrollHeight > content.clientHeight,
+      );
       return;
     }
     const button = event.target.closest("[data-institution-filter]");

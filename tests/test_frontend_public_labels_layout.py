@@ -160,7 +160,15 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         )[0]
         self.assertIn('grid-template-areas: "hero statistics repository"', desktop)
         self.assertIn(
-            "grid-template-columns: minmax(285px, 330px) minmax(0, 1fr) auto",
+            "grid-template-columns: 406px minmax(0, 1fr) auto",
+            desktop,
+        )
+        self.assertIn("height: 112px", header)
+        self.assertIn("height: 100%", header)
+        self.assertIn("object-fit: contain", header)
+        self.assertIn(
+            "grid-template-columns: minmax(0, 0.9fr) "
+            "minmax(0, 1.25fr) minmax(0, 1fr)",
             desktop,
         )
         self.assertNotIn("position: absolute", header)

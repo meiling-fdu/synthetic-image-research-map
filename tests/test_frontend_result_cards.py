@@ -32,24 +32,27 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn(": visibleRecords", render)
         self.assertIn("paperListRecordsForDisplay(visiblePaperRecords)", render)
 
-    def test_titles_wrap_fully_and_cards_have_accessible_names(self):
+    def test_titles_are_accessibly_named_and_use_a_two_line_preview(self):
         self.assertIn('aria-labelledby="${cardId}"', self.app)
         self.assertIn('id="${cardId}"', self.app)
         self.assertIn("result-card-title-${resultsView}-${index}", self.app)
         result_title = self.css.split(".result-title {", 1)[1].split("}", 1)[0]
         self.assertIn("overflow-wrap: anywhere", result_title)
-        self.assertNotIn("text-overflow", result_title)
-        self.assertNotIn("white-space: nowrap", result_title)
+        self.assertIn("-webkit-line-clamp: 2", result_title)
+        self.assertIn("overflow: hidden", result_title)
 
     def test_author_order_object_safety_and_accessible_expansion(self):
         authors = self.function("resultAuthors", "institutionResultContent")
-        self.assertIn("authors.map((name) => ({ name }))", authors)
-        self.assertIn("PaperDetailsHelpers.renderPaperAuthors", authors)
+        self.assertIn("authors.map((name) => String(name || \"\").trim())", authors)
+        self.assertIn("visibleAuthors", authors)
+        self.assertIn("overflowAuthors", authors)
         self.assertIn("visibleLimit", authors)
         self.assertIn("Authors at this institution", self.app)
         self.assertIn("Paper authors", self.app)
         self.assertIn('closest(".paper-authors-toggle")', self.app)
         self.assertIn('setAttribute("aria-expanded"', self.app)
+        self.assertIn('aria-controls="${regionId}"', authors)
+        self.assertIn("content?.toggleAttribute(", self.app)
         self.assertNotIn("[object Object]", authors)
 
     def test_institution_cards_preserve_scoped_mappings(self):
@@ -73,6 +76,44 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn('aria-expanded="false"', institutions)
         self.assertIn("Show all institutions", institutions)
         self.assertIn("Show fewer institutions", self.app)
+        self.assertIn('aria-label="Paper institutions"', institutions)
+
+    def test_view_specific_fixed_heights_and_stretched_grid_cells(self):
+        self.assertIn("--result-card-height: 372px", self.css)
+        self.assertIn("--result-card-height: 404px", self.css)
+        results_list = self.css.split(".results-list {", 1)[1].split("}", 1)[0]
+        self.assertIn("align-items: stretch", results_list)
+        self.assertIn("grid-auto-rows: var(--result-card-height)", results_list)
+        item = self.css.split(".result-item {", 1)[1].split("}", 1)[0]
+        self.assertIn("height: 100%", item)
+        self.assertIn("align-self: stretch", item)
+        card = self.css.split(".result-card {", 1)[1].split("}", 1)[0]
+        self.assertIn("height: 100%", card)
+        self.assertIn("overflow: hidden", card)
+
+    def test_adaptive_content_is_bounded_and_footer_is_anchored(self):
+        adaptive = self.css.split(".result-card-adaptive {", 1)[1].split("}", 1)[0]
+        self.assertIn("min-height: 0", adaptive)
+        self.assertIn("overflow: hidden", adaptive)
+        secondary = self.css.split(".result-secondary {", 1)[1].split("}", 1)[0]
+        self.assertIn("margin-top: auto", secondary)
+        self.assertIn("flex: 0 0 auto", secondary)
+        self.assertIn("max-height: 2.8em", self.css)
+        self.assertIn("max-height: 78px", self.css)
+        self.assertIn("overflow: auto", self.css)
+
+    def test_view_classes_are_replaced_cleanly_on_every_render(self):
+        render = self.function("renderResults", "selectResultsView")
+        self.assertIn('classList.toggle("results-list-institutions"', render)
+        self.assertIn('classList.toggle("results-list-papers"', render)
+        self.assertIn('resultsView === "institutions"', render)
+        self.assertIn('resultsView === "papers"', render)
+
+    def test_expansion_preserves_outer_height_and_accessibility(self):
+        self.assertIn('classList.toggle("is-expanded"', self.app)
+        self.assertIn("content?.toggleAttribute(", self.app)
+        self.assertIn('aria-controls="${regionId}"', self.app)
+        self.assertNotIn("style.height", self.app)
 
     def test_publication_row_badges_and_links_are_nonduplicative(self):
         venue = self.function("resultVenueYear", "resultLinks")
@@ -139,7 +180,8 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn("min-width: 0", card_css)
         self.assertIn("overflow-wrap: anywhere", card_css)
         self.assertIn("flex-wrap: wrap", card_css)
-        self.assertNotIn("text-overflow: ellipsis", card_css)
+        self.assertIn("text-overflow: ellipsis", card_css)
+        self.assertIn("white-space: nowrap", card_css)
 
 
 if __name__ == "__main__":
