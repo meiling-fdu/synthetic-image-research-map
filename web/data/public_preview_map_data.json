@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-07-29T07:50:40Z"
+    "public_preview_generated_at": "2026-07-29T08:00:30Z"
   },
   "records": [
     {
@@ -265209,6 +265209,1072 @@
       ]
     },
     {
+      "id": "curated-map:74c26aee13f890cf21df",
+      "paper_id": "curated:6f55b599c4d1588c62f7",
+      "title": "DTBF: Combining Local Statistical Artifacts and Concept Alignment for Synthetic Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "entry_type": "method",
+      "venue": "IEEE Signal Processing Letters",
+      "venue_name": "IEEE Signal Processing Letters",
+      "venue_id": "venue:ieee-signal-processing-letters",
+      "venue_acronym": "SPL",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Signal Processing Letters",
+      "publication_type": "journal",
+      "abstract": "In general, the cross-generator generalization and robustness against attacks are two main challenges in AI-generated image detection. To address this, we put forward a synthetic image detector (DTBF), a two-branch architecture followed by a jointly-optimized concatenation (JOC), aiming at capturing low-level artifacts and high-level semantics and dynamically fusing them to enhance the generalization and robustness. In the artifact-extracted branch (AE-branch), the local multi-direction binary-encoding patterns (LMBP) are customized to extract and encode the relationships among pixels within each sliding window, resulting in the LMBP distribution serving as a universal fingerprint to distinguish real/fake images. The dual-alignment guided semantic branch (DAS-branch), working as a supplement to AE-branch, designs global context-unrelated prompts and semantic-enhanced prompts to capture global semantic inconsistency and local patch anomalies, strengthening the generalization and robustness of DTBF. Finally, JOC dynamically fuses the two branches through concatenation to amplify the effectiveness of each branch, achieving better generalization and robustness. With the assistance of two complementary branches and JOC, our proposed DTBF significantly outperforms 12 state-of-the-art detectors on two publicly available datasets in terms of detection accuracy and robustness.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/lsp.2026.3710437",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "formal_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "primary_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "openalex_url": "https://openalex.org/W7167493723",
+      "url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "authors": [
+        {
+          "name": "Shaowei Weng",
+          "affiliation_indices": [
+            1,
+            5
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Rui Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Lifang Yu",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Gaobo Yang",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Pei‐Wei Tsai",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "Fujian University of Technology",
+      "institution_id": "institution:c3227ed71ef6fcd8",
+      "institution_authors": [
+        "Shaowei Weng",
+        "Rui Li"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Fujian",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Fuzhou",
+      "latitude": 26.0383264,
+      "longitude": 119.1910378,
+      "lat": 26.0383264,
+      "lon": 119.1910378,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:40ef105c53ff95a58693",
+      "raw_affiliation": "Fujian Provincial Key Laboratory of Big Data Mining and Applications, Fujian University of Technology, Fuzhou, China | School of Computer Science and Mathematics, Fujian University of Technology, Fuzhou, China",
+      "evidence_source": "OpenAlex authorships",
+      "evidence_url": "https://openalex.org/W7167493723",
+      "coordinate_source": "OpenStreetMap Nominatim",
+      "coordinate_source_url": "https://www.openstreetmap.org/?mlat=26.0383264&mlon=119.1910378#map=16/26.0383264/119.1910378",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Fujian Provincial Key Laboratory of Big Data Mining and Applications, Fujian University of Technology, Fuzhou, China | School of Computer Science and Mathematics, Fujian University of Technology, Fuzhou, China | Evidence source: OpenAlex authorships | Evidence URL: https://openalex.org/W7167493723 | Review note: Automatically imported affiliation candidate; confirm the canonical institution before public export.",
+      "location_display": "Fujian, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:c3227ed71ef6fcd8",
+          "institution": "Fujian University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Shaowei Weng",
+            "Rui Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:9cd15ab643d7131f",
+          "institution": "Beijing Institute of Graphic Communication",
+          "institution_type": "university",
+          "authors": [
+            "Lifang Yu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution": "Hunan University",
+          "institution_type": "university",
+          "authors": [
+            "Gaobo Yang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:3ac6dbcc618a5a6f",
+          "institution": "Swinburne University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Pei‐Wei Tsai"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:f2c797b53862241e",
+          "institution": "Changsha Medical University",
+          "institution_type": "university",
+          "authors": [
+            "Shaowei Weng"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Shaowei Weng",
+          "institution_indices": [
+            1,
+            5
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8",
+            "institution:f2c797b53862241e"
+          ]
+        },
+        {
+          "author": "Rui Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8"
+          ]
+        },
+        {
+          "author": "Lifang Yu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:9cd15ab643d7131f"
+          ]
+        },
+        {
+          "author": "Gaobo Yang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Pei‐Wei Tsai",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:3ac6dbcc618a5a6f"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Signal Processing Letters (SPL)",
+      "venue_aliases": [
+        "IEEE Signal Processing Letters",
+        "SPL"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "university",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Fujian University of Technology",
+          "canonical_name": "Fujian University of Technology",
+          "institution_id": "institution:c3227ed71ef6fcd8",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Fujian",
+          "location_display": "Fujian, China"
+        },
+        {
+          "index": 2,
+          "name": "Beijing Institute of Graphic Communication",
+          "canonical_name": "Beijing Institute of Graphic Communication",
+          "institution_id": "institution:9cd15ab643d7131f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        },
+        {
+          "index": 4,
+          "name": "Swinburne University of Technology",
+          "canonical_name": "Swinburne University of Technology",
+          "institution_id": "institution:3ac6dbcc618a5a6f",
+          "institution_type": "university",
+          "country": "Australia",
+          "country_code": "",
+          "region": "Victoria",
+          "location_display": "Victoria, Australia"
+        },
+        {
+          "index": 5,
+          "name": "Changsha Medical University",
+          "canonical_name": "Changsha Medical University",
+          "institution_id": "institution:f2c797b53862241e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": {
+        "index": 1,
+        "name": "Fujian University of Technology",
+        "canonical_name": "Fujian University of Technology",
+        "institution_id": "institution:c3227ed71ef6fcd8",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Fujian",
+        "location_display": "Fujian, China"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Shaowei Weng",
+          "indices": [
+            1,
+            5
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8",
+            "institution:f2c797b53862241e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Rui Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Lifang Yu",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:9cd15ab643d7131f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Gaobo Yang",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Pei‐Wei Tsai",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:3ac6dbcc618a5a6f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ]
+    },
+    {
+      "id": "curated-map:f6c69888d1e622e9524a",
+      "paper_id": "curated:6f55b599c4d1588c62f7",
+      "title": "DTBF: Combining Local Statistical Artifacts and Concept Alignment for Synthetic Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "entry_type": "method",
+      "venue": "IEEE Signal Processing Letters",
+      "venue_name": "IEEE Signal Processing Letters",
+      "venue_id": "venue:ieee-signal-processing-letters",
+      "venue_acronym": "SPL",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Signal Processing Letters",
+      "publication_type": "journal",
+      "abstract": "In general, the cross-generator generalization and robustness against attacks are two main challenges in AI-generated image detection. To address this, we put forward a synthetic image detector (DTBF), a two-branch architecture followed by a jointly-optimized concatenation (JOC), aiming at capturing low-level artifacts and high-level semantics and dynamically fusing them to enhance the generalization and robustness. In the artifact-extracted branch (AE-branch), the local multi-direction binary-encoding patterns (LMBP) are customized to extract and encode the relationships among pixels within each sliding window, resulting in the LMBP distribution serving as a universal fingerprint to distinguish real/fake images. The dual-alignment guided semantic branch (DAS-branch), working as a supplement to AE-branch, designs global context-unrelated prompts and semantic-enhanced prompts to capture global semantic inconsistency and local patch anomalies, strengthening the generalization and robustness of DTBF. Finally, JOC dynamically fuses the two branches through concatenation to amplify the effectiveness of each branch, achieving better generalization and robustness. With the assistance of two complementary branches and JOC, our proposed DTBF significantly outperforms 12 state-of-the-art detectors on two publicly available datasets in terms of detection accuracy and robustness.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/lsp.2026.3710437",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "formal_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "primary_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "openalex_url": "https://openalex.org/W7167493723",
+      "url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "authors": [
+        {
+          "name": "Shaowei Weng",
+          "affiliation_indices": [
+            1,
+            5
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Rui Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Lifang Yu",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Gaobo Yang",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Pei‐Wei Tsai",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "Beijing Institute of Graphic Communication",
+      "institution_id": "institution:9cd15ab643d7131f",
+      "institution_authors": [
+        "Lifang Yu"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Beijing",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Beijing",
+      "latitude": 39.7433927,
+      "longitude": 116.3232041,
+      "lat": 39.7433927,
+      "lon": 116.3232041,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:cbfbce783e85292f8bbe",
+      "raw_affiliation": "Department of Information Engineering, Beijing Institute of Graphic Communication, Beijing, China",
+      "evidence_source": "OpenAlex authorships",
+      "evidence_url": "https://openalex.org/W7167493723",
+      "coordinate_source": "OpenStreetMap Nominatim",
+      "coordinate_source_url": "https://www.openstreetmap.org/?mlat=39.7433927&mlon=116.3232041#map=16/39.7433927/116.3232041",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Department of Information Engineering, Beijing Institute of Graphic Communication, Beijing, China | Evidence source: OpenAlex authorships | Evidence URL: https://openalex.org/W7167493723 | Review note: Automatically imported affiliation candidate; confirm the canonical institution before public export.",
+      "location_display": "Beijing, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:c3227ed71ef6fcd8",
+          "institution": "Fujian University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Shaowei Weng",
+            "Rui Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:9cd15ab643d7131f",
+          "institution": "Beijing Institute of Graphic Communication",
+          "institution_type": "university",
+          "authors": [
+            "Lifang Yu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution": "Hunan University",
+          "institution_type": "university",
+          "authors": [
+            "Gaobo Yang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:3ac6dbcc618a5a6f",
+          "institution": "Swinburne University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Pei‐Wei Tsai"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:f2c797b53862241e",
+          "institution": "Changsha Medical University",
+          "institution_type": "university",
+          "authors": [
+            "Shaowei Weng"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Shaowei Weng",
+          "institution_indices": [
+            1,
+            5
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8",
+            "institution:f2c797b53862241e"
+          ]
+        },
+        {
+          "author": "Rui Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8"
+          ]
+        },
+        {
+          "author": "Lifang Yu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:9cd15ab643d7131f"
+          ]
+        },
+        {
+          "author": "Gaobo Yang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Pei‐Wei Tsai",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:3ac6dbcc618a5a6f"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Signal Processing Letters (SPL)",
+      "venue_aliases": [
+        "IEEE Signal Processing Letters",
+        "SPL"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "university",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Fujian University of Technology",
+          "canonical_name": "Fujian University of Technology",
+          "institution_id": "institution:c3227ed71ef6fcd8",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Fujian",
+          "location_display": "Fujian, China"
+        },
+        {
+          "index": 2,
+          "name": "Beijing Institute of Graphic Communication",
+          "canonical_name": "Beijing Institute of Graphic Communication",
+          "institution_id": "institution:9cd15ab643d7131f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        },
+        {
+          "index": 4,
+          "name": "Swinburne University of Technology",
+          "canonical_name": "Swinburne University of Technology",
+          "institution_id": "institution:3ac6dbcc618a5a6f",
+          "institution_type": "university",
+          "country": "Australia",
+          "country_code": "",
+          "region": "Victoria",
+          "location_display": "Victoria, Australia"
+        },
+        {
+          "index": 5,
+          "name": "Changsha Medical University",
+          "canonical_name": "Changsha Medical University",
+          "institution_id": "institution:f2c797b53862241e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": {
+        "index": 2,
+        "name": "Beijing Institute of Graphic Communication",
+        "canonical_name": "Beijing Institute of Graphic Communication",
+        "institution_id": "institution:9cd15ab643d7131f",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Beijing",
+        "location_display": "Beijing, China"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Shaowei Weng",
+          "indices": [
+            1,
+            5
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8",
+            "institution:f2c797b53862241e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Rui Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Lifang Yu",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:9cd15ab643d7131f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Gaobo Yang",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Pei‐Wei Tsai",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:3ac6dbcc618a5a6f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ]
+    },
+    {
+      "id": "curated-map:f5223ef9e16ae0efc19b",
+      "paper_id": "curated:6f55b599c4d1588c62f7",
+      "title": "DTBF: Combining Local Statistical Artifacts and Concept Alignment for Synthetic Image Detection",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "entry_type": "method",
+      "venue": "IEEE Signal Processing Letters",
+      "venue_name": "IEEE Signal Processing Letters",
+      "venue_id": "venue:ieee-signal-processing-letters",
+      "venue_acronym": "SPL",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Signal Processing Letters",
+      "publication_type": "journal",
+      "abstract": "In general, the cross-generator generalization and robustness against attacks are two main challenges in AI-generated image detection. To address this, we put forward a synthetic image detector (DTBF), a two-branch architecture followed by a jointly-optimized concatenation (JOC), aiming at capturing low-level artifacts and high-level semantics and dynamically fusing them to enhance the generalization and robustness. In the artifact-extracted branch (AE-branch), the local multi-direction binary-encoding patterns (LMBP) are customized to extract and encode the relationships among pixels within each sliding window, resulting in the LMBP distribution serving as a universal fingerprint to distinguish real/fake images. The dual-alignment guided semantic branch (DAS-branch), working as a supplement to AE-branch, designs global context-unrelated prompts and semantic-enhanced prompts to capture global semantic inconsistency and local patch anomalies, strengthening the generalization and robustness of DTBF. Finally, JOC dynamically fuses the two branches through concatenation to amplify the effectiveness of each branch, achieving better generalization and robustness. With the assistance of two complementary branches and JOC, our proposed DTBF significantly outperforms 12 state-of-the-art detectors on two publicly available datasets in terms of detection accuracy and robustness.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/lsp.2026.3710437",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "formal_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "primary_url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "openalex_url": "https://openalex.org/W7167493723",
+      "url": "https://doi.org/10.1109/lsp.2026.3710437",
+      "authors": [
+        {
+          "name": "Shaowei Weng",
+          "affiliation_indices": [
+            1,
+            5
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Rui Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Lifang Yu",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Gaobo Yang",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Pei‐Wei Tsai",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "Hunan University",
+      "institution_id": "institution:be8fe6da68f67876",
+      "institution_authors": [
+        "Gaobo Yang"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Hunan",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Changsha",
+      "latitude": 28.183548,
+      "longitude": 112.9413466,
+      "lat": 28.183548,
+      "lon": 112.9413466,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "manually_confirmed",
+      "mapping_id": "mapping:21c6265e24d2d37c8341",
+      "raw_affiliation": "School of Computer, Hunan University, Changsha, China",
+      "evidence_source": "OpenAlex authorships",
+      "evidence_url": "https://openalex.org/W7167493723",
+      "coordinate_source": "OpenStreetMap Nominatim",
+      "coordinate_source_url": "https://www.openstreetmap.org/?mlat=28.183548&mlon=112.9413466#map=16/28.183548/112.9413466",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: School of Computer, Hunan University, Changsha, China | Evidence source: OpenAlex authorships | Evidence URL: https://openalex.org/W7167493723 | Review note: Automatically imported affiliation candidate; confirm the canonical institution before public export.",
+      "location_display": "Hunan, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:c3227ed71ef6fcd8",
+          "institution": "Fujian University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Shaowei Weng",
+            "Rui Li"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:9cd15ab643d7131f",
+          "institution": "Beijing Institute of Graphic Communication",
+          "institution_type": "university",
+          "authors": [
+            "Lifang Yu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution": "Hunan University",
+          "institution_type": "university",
+          "authors": [
+            "Gaobo Yang"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:3ac6dbcc618a5a6f",
+          "institution": "Swinburne University of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Pei‐Wei Tsai"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 5,
+          "institution_id": "institution:f2c797b53862241e",
+          "institution": "Changsha Medical University",
+          "institution_type": "university",
+          "authors": [
+            "Shaowei Weng"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Shaowei Weng",
+          "institution_indices": [
+            1,
+            5
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8",
+            "institution:f2c797b53862241e"
+          ]
+        },
+        {
+          "author": "Rui Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8"
+          ]
+        },
+        {
+          "author": "Lifang Yu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:9cd15ab643d7131f"
+          ]
+        },
+        {
+          "author": "Gaobo Yang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ]
+        },
+        {
+          "author": "Pei‐Wei Tsai",
+          "institution_indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:3ac6dbcc618a5a6f"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Signal Processing Letters (SPL)",
+      "venue_aliases": [
+        "IEEE Signal Processing Letters",
+        "SPL"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "university",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Fujian University of Technology",
+          "canonical_name": "Fujian University of Technology",
+          "institution_id": "institution:c3227ed71ef6fcd8",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Fujian",
+          "location_display": "Fujian, China"
+        },
+        {
+          "index": 2,
+          "name": "Beijing Institute of Graphic Communication",
+          "canonical_name": "Beijing Institute of Graphic Communication",
+          "institution_id": "institution:9cd15ab643d7131f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Beijing",
+          "location_display": "Beijing, China"
+        },
+        {
+          "index": 3,
+          "name": "Hunan University",
+          "canonical_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        },
+        {
+          "index": 4,
+          "name": "Swinburne University of Technology",
+          "canonical_name": "Swinburne University of Technology",
+          "institution_id": "institution:3ac6dbcc618a5a6f",
+          "institution_type": "university",
+          "country": "Australia",
+          "country_code": "",
+          "region": "Victoria",
+          "location_display": "Victoria, Australia"
+        },
+        {
+          "index": 5,
+          "name": "Changsha Medical University",
+          "canonical_name": "Changsha Medical University",
+          "institution_id": "institution:f2c797b53862241e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Hunan",
+          "location_display": "Hunan, China"
+        }
+      ],
+      "current_institution": {
+        "index": 3,
+        "name": "Hunan University",
+        "canonical_name": "Hunan University",
+        "institution_id": "institution:be8fe6da68f67876",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Hunan",
+        "location_display": "Hunan, China"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Shaowei Weng",
+          "indices": [
+            1,
+            5
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8",
+            "institution:f2c797b53862241e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Rui Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c3227ed71ef6fcd8"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Lifang Yu",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:9cd15ab643d7131f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Gaobo Yang",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:be8fe6da68f67876"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Pei‐Wei Tsai",
+          "indices": [
+            4
+          ],
+          "institution_ids": [
+            "institution:3ac6dbcc618a5a6f"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ]
+    },
+    {
       "id": "curated-map:8ebb45e886216151c21c",
       "paper_id": "curated:6f55b599c4d1588c62f7",
       "title": "DTBF: Combining Local Statistical Artifacts and Concept Alignment for Synthetic Image Detection",
@@ -265439,10 +266505,10 @@
           "canonical_name": "Fujian University of Technology",
           "institution_id": "institution:c3227ed71ef6fcd8",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Fujian",
+          "location_display": "Fujian, China"
         },
         {
           "index": 2,
@@ -265450,10 +266516,10 @@
           "canonical_name": "Beijing Institute of Graphic Communication",
           "institution_id": "institution:9cd15ab643d7131f",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Beijing",
+          "location_display": "Beijing, China"
         },
         {
           "index": 3,
@@ -265461,10 +266527,10 @@
           "canonical_name": "Hunan University",
           "institution_id": "institution:be8fe6da68f67876",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Hunan",
+          "location_display": "Hunan, China"
         },
         {
           "index": 4,
@@ -357776,10 +358842,10 @@
           "canonical_name": "Fujian University of Technology",
           "institution_id": "institution:c3227ed71ef6fcd8",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Fujian",
+          "location_display": "Fujian, China"
         },
         {
           "index": 2,
@@ -357787,10 +358853,10 @@
           "canonical_name": "Beijing Institute of Graphic Communication",
           "institution_id": "institution:9cd15ab643d7131f",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Beijing",
+          "location_display": "Beijing, China"
         },
         {
           "index": 3,
@@ -357798,10 +358864,10 @@
           "canonical_name": "Hunan University",
           "institution_id": "institution:be8fe6da68f67876",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Hunan",
+          "location_display": "Hunan, China"
         },
         {
           "index": 4,

@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-29T07:34:51Z |
+| public_preview_generated_at | 2026-07-29T08:00:30Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1077 |
+| Map records | 1080 |
 | Unique mapped papers | 496 |
 | Unique institutions | 568 |
 | Countries | 53 |
 | arXiv/preprint records | 572 |
-| Records with DOI | 1027 |
-| Records with venue | 973 |
+| Records with DOI | 1030 |
+| Records with venue | 976 |
 | Records missing venue | 104 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -74,7 +74,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Country | Records |
 | --- | ---: |
-| China | 478 |
+| China | 481 |
 | United States | 144 |
 | Italy | 83 |
 | India | 55 |
@@ -104,7 +104,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 924 |
+| high | 927 |
 | medium | 153 |
 
 ## Potential quality issues
