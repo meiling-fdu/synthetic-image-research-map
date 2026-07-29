@@ -77,6 +77,19 @@ class InstitutionLocationCoordinateFrontendTests(unittest.TestCase):
         self.assertLess(metadata_validation, metadata_request)
         self.assertIn("body: JSON.stringify(draft)", self.metadata_source)
 
+    def test_canonical_confirmation_uses_path_id_and_location_only_body(self):
+        self.assertIn(
+            "/api/admin/institutions/${encodeURIComponent(boundInstitutionId)}/confirm-location",
+            self.confirm_source,
+        )
+        canonical_body = self.confirm_source[
+            self.confirm_source.index("body: JSON.stringify(canonicalMode ? {"):
+            self.confirm_source.index("} : draft)", self.confirm_source.index("body: JSON.stringify(canonicalMode ? {"))
+        ]
+        self.assertNotIn("institution_id:", canonical_body)
+        self.assertNotIn("loaded_institution_id:", canonical_body)
+        self.assertIn("await openCanonicalInstitutionLocation(", self.confirm_source)
+
     def test_duplicate_submissions_and_backend_errors_are_visible(self):
         for action_source in (self.confirm_source, self.metadata_source):
             self.assertIn("if (state.locationSaveRunning) return", action_source)

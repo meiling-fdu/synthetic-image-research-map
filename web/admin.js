@@ -2966,6 +2966,9 @@ function locationApiErrorMessage(error) {
   if (code === "institution_identity_change_not_allowed") {
     return `Institution identity mismatch: ${error.message}`;
   }
+  if (code === "inactive_institution") {
+    return `Inactive institution: ${error.message}`;
+  }
   if (error?.payload?.field === "confirmed_lat"
       || error?.payload?.field === "confirmed_lon"
       || /latitude|longitude|coordinate/i.test(error?.message || "")) {
@@ -3234,11 +3237,12 @@ async function confirmLocation(event) {
   setLocationSaveRunning(true);
   try {
     const canonicalMode = state.locationEditorMode === "canonical";
-    const result = await apiFetch(canonicalMode ? "/api/institution/location" : "/api/location-review/confirm", {
+    const boundInstitutionId = state.selectedInstitutionLocationId;
+    const result = await apiFetch(canonicalMode
+      ? `/api/admin/institutions/${encodeURIComponent(boundInstitutionId)}/confirm-location`
+      : "/api/location-review/confirm", {
       method: "POST",
       body: JSON.stringify(canonicalMode ? {
-        institution_id: draft.institution_id,
-        loaded_institution_id: state.selectedInstitutionLocationId,
         city: draft.confirmed_city,
         region: draft.confirmed_region,
         country: draft.confirmed_country,
@@ -3253,6 +3257,9 @@ async function confirmLocation(event) {
     });
     showNotice(result.message);
     await Promise.all([loadLocationReviews(), refreshInstitutions()]);
+    if (canonicalMode) await openCanonicalInstitutionLocation(
+      { institution_id: boundInstitutionId }
+    );
   } catch (error) {
     showLocationFormError(locationApiErrorMessage(error));
   } finally {

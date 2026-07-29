@@ -23,6 +23,7 @@ from scripts.curated_schema import (
     INSTITUTION_COLUMNS,
     INSTITUTION_HIERARCHY_COLUMNS,
     INSTITUTION_LOCATION_COLUMNS,
+    INSTITUTION_LOCATION_AUDIT_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
     INSTITUTION_REVIEW_QUEUE_COLUMNS,
 )
@@ -33,6 +34,7 @@ from scripts.validate_curated_database import validate_institution_entities
 
 CERTH = "Centre for Research and Technology Hellas (CERTH)"
 AMAZON = "Amazon"
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def write_csv(path, columns, rows):
@@ -58,6 +60,7 @@ class InstitutionManagementTests(unittest.TestCase):
         self.aliases = self.root / "aliases.csv"
         self.audits = self.root / "audit.csv"
         self.location_reviews = self.root / "location_reviews.csv"
+        self.location_audits = self.root / "location_audits.csv"
         self.hierarchy = self.root / "hierarchy.csv"
         self.review_queue = self.root / "review_queue.csv"
         write_csv(self.institutions, INSTITUTION_COLUMNS, [
@@ -90,6 +93,7 @@ class InstitutionManagementTests(unittest.TestCase):
         write_csv(self.aliases, INSTITUTION_ALIAS_COLUMNS, [])
         write_csv(self.audits, INSTITUTION_AUDIT_COLUMNS, [])
         write_csv(self.location_reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [])
+        write_csv(self.location_audits, INSTITUTION_LOCATION_AUDIT_COLUMNS, [])
         write_csv(self.hierarchy, INSTITUTION_HIERARCHY_COLUMNS, [])
         write_csv(self.review_queue, INSTITUTION_REVIEW_QUEUE_COLUMNS, [])
 
@@ -158,7 +162,7 @@ class InstitutionManagementTests(unittest.TestCase):
             locations_path=self.locations,
         )
         self.assertEqual(self.mappings.read_bytes(), before)
-        with self.assertRaisesRegex(CuratedInstitutionError, "cannot change institution_id"):
+        with self.assertRaisesRegex(CuratedInstitutionError, "exactly match"):
             update_institution_location(
                 self.amazon_id,
                 {"institution_id": self.certh_id, "lat": "1", "lon": "2"},
@@ -173,17 +177,12 @@ class InstitutionManagementTests(unittest.TestCase):
             "mappings": self.mappings.read_bytes(),
             "hierarchy": self.hierarchy.read_bytes(),
         }
-        with self.assertRaisesRegex(CuratedInstitutionError, "institution_id is required"):
-            update_institution_location(
-                self.amazon_id, {"institution_id": "", "city": "Seattle"},
-                institutions_path=self.institutions, locations_path=self.locations,
-            )
         with self.assertRaisesRegex(CuratedInstitutionError, "identify exactly one"):
             update_institution_location(
                 "institution:missing", {"institution_id": "institution:missing"},
                 institutions_path=self.institutions, locations_path=self.locations,
             )
-        with self.assertRaisesRegex(CuratedInstitutionError, "differs from the institution loaded"):
+        with self.assertRaisesRegex(CuratedInstitutionError, "exactly match"):
             update_institution_location(
                 self.amazon_id,
                 {"institution_id": self.amazon_id, "loaded_institution_id": self.certh_id},
@@ -225,6 +224,116 @@ class InstitutionManagementTests(unittest.TestCase):
         self.assertEqual(review["review_status"], "confirmed")
         for name, content in before.items():
             self.assertEqual(getattr(self, name).read_bytes(), content)
+
+    def test_location_only_contract_persists_evidence_and_preserves_mappings(self):
+        mappings_before = self.mappings.read_bytes()
+        identity_audit_before = self.audits.read_bytes()
+        result = update_institution_location(
+            self.amazon_id,
+            {
+                "city": "Vancouver", "region": "British Columbia",
+                "country": "Canada", "country_code": "CA",
+                "lat": "49.2606", "lon": "-123.2460",
+                "coordinate_source": "Reviewed institutional address",
+                "coordinate_status": "known",
+                "review_note": "Confirmed by test reviewer.",
+                "created_by": "test-reviewer",
+            },
+            institutions_path=self.institutions,
+            locations_path=self.locations,
+            location_audit_path=self.location_audits,
+        )
+        self.assertEqual(result["institution_id"], self.amazon_id)
+        self.assertEqual(self.mappings.read_bytes(), mappings_before)
+        self.assertEqual(self.audits.read_bytes(), identity_audit_before)
+        with self.location_audits.open(encoding="utf-8", newline="") as handle:
+            evidence = next(csv.DictReader(handle))
+        self.assertEqual(evidence["action"], "location_replaced")
+        self.assertEqual(evidence["institution_id"], self.amazon_id)
+        self.assertEqual(evidence["previous_lat"], "47")
+        self.assertEqual(evidence["confirmed_lat"], "49.2606")
+        self.assertEqual(evidence["created_by"], "test-reviewer")
+
+    def test_location_path_id_is_authoritative_and_identity_fields_are_rejected(self):
+        before = self.locations.read_bytes()
+        with self.assertRaisesRegex(CuratedInstitutionError, "exactly match"):
+            update_institution_location(
+                self.amazon_id,
+                {"institution_id": self.certh_id},
+                institutions_path=self.institutions,
+                locations_path=self.locations,
+            )
+        with self.assertRaisesRegex(CuratedInstitutionError, "unsupported field"):
+            update_institution_location(
+                self.amazon_id,
+                {"canonical_name": CERTH},
+                institutions_path=self.institutions,
+                locations_path=self.locations,
+            )
+        self.assertEqual(self.locations.read_bytes(), before)
+
+    def test_same_name_northeastern_locations_cannot_be_cross_applied(self):
+        china_id = "institution:0008285766dcabc7"
+        us_id = "institution:ff1a1bc95dbe91a8"
+        write_csv(self.institutions, INSTITUTION_COLUMNS, [
+            blank(
+                INSTITUTION_COLUMNS, institution_id=china_id,
+                canonical_name="Northeastern University",
+                institution_type="university", institution_status="active",
+            ),
+            blank(
+                INSTITUTION_COLUMNS, institution_id=us_id,
+                canonical_name="Northeastern University",
+                institution_type="university", institution_status="active",
+            ),
+        ])
+        write_csv(self.locations, INSTITUTION_LOCATION_COLUMNS, [
+            blank(
+                INSTITUTION_LOCATION_COLUMNS, location_id="location:china",
+                institution_id=china_id, institution="Northeastern University",
+                normalized_institution="northeastern university",
+                city="Shenyang", country="China", country_code="CN",
+                lat="41.7634632", lon="123.4117577",
+                coordinate_source="Fixture", coordinate_status="known",
+                review_note="China record.", created_at="2026-01-01T00:00:00Z",
+                updated_at="2026-01-01T00:00:00Z", created_by="test",
+            ),
+            blank(
+                INSTITUTION_LOCATION_COLUMNS, location_id="location:us",
+                institution_id=us_id, institution="Northeastern University",
+                normalized_institution="northeastern university",
+                city="Boston", country="United States", country_code="US",
+                lat="42.3398", lon="-71.0892",
+                coordinate_source="Fixture", coordinate_status="known",
+                review_note="US record.", created_at="2026-01-01T00:00:00Z",
+                updated_at="2026-01-01T00:00:00Z", created_by="test",
+            ),
+        ])
+        update_institution_location(
+            us_id,
+            {
+                "city": "Boston", "country": "United States",
+                "country_code": "US", "lat": "42.35", "lon": "-71.08",
+                "coordinate_source": "Reviewed fixture",
+                "coordinate_status": "known", "review_note": "US update.",
+            },
+            institutions_path=self.institutions,
+            locations_path=self.locations,
+        )
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            by_id = {row["institution_id"]: row for row in csv.DictReader(handle)}
+        self.assertEqual(by_id[china_id]["city"], "Shenyang")
+        self.assertEqual(by_id[china_id]["lat"], "41.7634632")
+        self.assertEqual(by_id[us_id]["lat"], "42.35")
+
+    def test_merged_ubc_id_cannot_receive_a_location_confirmation(self):
+        with self.assertRaisesRegex(CuratedInstitutionError, "active canonical"):
+            update_institution_location(
+                "institution:05b67f44dd9f6846",
+                {},
+                institutions_path=ROOT / "data/curated/institutions.csv",
+                locations_path=self.locations,
+            )
 
     def test_direct_location_save_without_review_evidence_creates_no_review_row(self):
         update_institution_location(

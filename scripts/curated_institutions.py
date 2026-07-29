@@ -24,6 +24,7 @@ try:
         INSTITUTION_COLUMNS,
         INSTITUTION_HIERARCHY_COLUMNS,
         INSTITUTION_LOCATION_COLUMNS,
+        INSTITUTION_LOCATION_AUDIT_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         INSTITUTION_REVIEW_QUEUE_COLUMNS,
     )
@@ -38,6 +39,7 @@ except ImportError:
         INSTITUTION_COLUMNS,
         INSTITUTION_HIERARCHY_COLUMNS,
         INSTITUTION_LOCATION_COLUMNS,
+        INSTITUTION_LOCATION_AUDIT_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         INSTITUTION_REVIEW_QUEUE_COLUMNS,
     )
@@ -49,6 +51,7 @@ DEFAULT_LOCATIONS_PATH = CURATED_DATA_DIR / "institution_locations.csv"
 DEFAULT_MAPPINGS_PATH = CURATED_DATA_DIR / "author_institution_mappings.csv"
 DEFAULT_AUDIT_PATH = CURATED_DATA_DIR / "institution_audit_log.csv"
 DEFAULT_LOCATION_REVIEWS_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
+DEFAULT_LOCATION_AUDIT_PATH = CURATED_DATA_DIR / "institution_location_audit_log.csv"
 DEFAULT_HIERARCHY_PATH = CURATED_DATA_DIR / "institution_hierarchy.csv"
 DEFAULT_REVIEW_QUEUE_PATH = CURATED_DATA_DIR / "institution_review_queue.csv"
 
@@ -304,24 +307,43 @@ def update_institution_location(
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     locations_path: Path = DEFAULT_LOCATIONS_PATH,
     location_reviews_path: Optional[Path] = None,
-) -> dict[str, str]:
-    """Update location fields without manufacturing provenance-free review rows."""
+    location_audit_path: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Confirm one active institution's location without changing its identity."""
     entities = load_institutions(institutions_path)
-    entity = _entity(entities, institution_id)
+    entity = _active_entity(entities, institution_id)
     identifier = clean(entity.get("institution_id"))
     requested = clean(draft.get("institution_id"))
     loaded = clean(draft.get("loaded_institution_id"))
-    if not requested:
-        raise CuratedInstitutionError("institution_id is required for location edits")
-    if loaded and loaded != requested:
-        raise CuratedInstitutionError("institution_id differs from the institution loaded by the editor")
-    if requested != identifier:
-        raise CuratedInstitutionError("location edits cannot change institution_id")
+    if requested and requested != identifier:
+        raise CuratedInstitutionError(
+            "body institution_id must exactly match the path institution_id"
+        )
+    if loaded and loaded != identifier:
+        raise CuratedInstitutionError(
+            "loaded institution_id must exactly match the path institution_id"
+        )
+    allowed_fields = {
+        "institution_id", "loaded_institution_id", "city", "region", "country",
+        "country_code", "lat",
+        "lon", "coordinate_source", "coordinate_source_url",
+        "coordinate_status", "review_note", "created_by",
+    }
+    unexpected = sorted(set(draft) - allowed_fields)
+    if unexpected:
+        raise CuratedInstitutionError(
+            f"location confirmation contains unsupported field: {unexpected[0]}"
+        )
     rows = _read(locations_path, INSTITUTION_LOCATION_COLUMNS)
     matches = [row for row in rows if clean(row.get("institution_id")) == identifier]
     if len(matches) > 1:
         raise CuratedInstitutionError("institution has multiple location rows")
-    row = matches[0] if matches else {column: "" for column in INSTITUTION_LOCATION_COLUMNS}
+    previous = dict(matches[0]) if matches else {
+        column: "" for column in INSTITUTION_LOCATION_COLUMNS
+    }
+    row = matches[0] if matches else {
+        column: "" for column in INSTITUTION_LOCATION_COLUMNS
+    }
     now = _timestamp()
     if not matches:
         rows.append(row)
@@ -414,6 +436,59 @@ def update_institution_location(
     touched_paths = [locations_path]
     if location_reviews_path is not None and review_matches:
         touched_paths.append(location_reviews_path)
+    audit_rows = None
+    audit = None
+    if location_audit_path is not None:
+        if location_audit_path.exists():
+            audit_rows = _read(
+                location_audit_path, INSTITUTION_LOCATION_AUDIT_COLUMNS
+            )
+        else:
+            audit_rows = []
+        action = (
+            "location_confirmed"
+            if not matches or all(
+                clean(previous.get(field)) == clean(row.get(field))
+                for field in ("lat", "lon", "city", "region", "country", "country_code")
+            )
+            else "location_replaced"
+        )
+        seed = "|".join(
+            (
+                identifier,
+                now,
+                clean(row.get("lat")),
+                clean(row.get("lon")),
+                str(len(audit_rows)),
+            )
+        )
+        audit = {
+            "audit_id": (
+                "institution-location-audit:"
+                f"{hashlib.sha256(seed.encode()).hexdigest()[:20]}"
+            ),
+            "action": action,
+            "institution_id": identifier,
+            "previous_lat": clean(previous.get("lat")),
+            "previous_lon": clean(previous.get("lon")),
+            "confirmed_lat": clean(row.get("lat")),
+            "confirmed_lon": clean(row.get("lon")),
+            "previous_city": clean(previous.get("city")),
+            "previous_region": clean(previous.get("region")),
+            "previous_country": clean(previous.get("country")),
+            "previous_country_code": clean(previous.get("country_code")),
+            "confirmed_city": clean(row.get("city")),
+            "confirmed_region": clean(row.get("region")),
+            "confirmed_country": clean(row.get("country")),
+            "confirmed_country_code": clean(row.get("country_code")),
+            "coordinate_source": clean(row.get("coordinate_source")),
+            "coordinate_source_url": clean(row.get("coordinate_source_url")),
+            "review_note": clean(row.get("review_note")),
+            "created_at": now,
+            "created_by": clean(draft.get("created_by")) or "local-admin",
+        }
+        audit_rows.append(audit)
+        touched_paths.append(location_audit_path)
     snapshots = {
         path: path.read_bytes() if path.exists() else None
         for path in touched_paths
@@ -426,6 +501,12 @@ def update_institution_location(
                 INSTITUTION_LOCATION_REVIEW_COLUMNS,
                 reviews,
             )
+        if location_audit_path is not None and audit_rows is not None:
+            _write(
+                location_audit_path,
+                INSTITUTION_LOCATION_AUDIT_COLUMNS,
+                audit_rows,
+            )
     except Exception:
         for path, content in snapshots.items():
             if content is None:
@@ -433,7 +514,7 @@ def update_institution_location(
             else:
                 path.write_bytes(content)
         raise
-    return dict(row)
+    return {**dict(row), "evidence": audit}
 
 
 def add_institution_alias(

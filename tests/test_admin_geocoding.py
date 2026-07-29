@@ -25,6 +25,7 @@ from scripts.curated_schema import (
     INSTITUTION_AUDIT_COLUMNS,
     INSTITUTION_COLUMNS,
     INSTITUTION_LOCATION_COLUMNS,
+    INSTITUTION_LOCATION_AUDIT_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
     INSTITUTION_REVIEW_QUEUE_COLUMNS,
 )
@@ -323,6 +324,7 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
                 "institution_locations_path": root / "locations.csv",
                 "institution_aliases_path": root / "aliases.csv",
                 "institution_audit_path": root / "audit.csv",
+                "institution_location_audit_path": root / "location_audit.csv",
                 "location_review_path": root / "location_reviews.csv",
                 "institution_review_queue_path": root / "review_queue.csv",
                 "mappings_path": root / "mappings.csv",
@@ -347,6 +349,11 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             )])
             self.write_csv(paths["institution_aliases_path"], INSTITUTION_ALIAS_COLUMNS, [])
             self.write_csv(paths["institution_audit_path"], INSTITUTION_AUDIT_COLUMNS, [])
+            self.write_csv(
+                paths["institution_location_audit_path"],
+                INSTITUTION_LOCATION_AUDIT_COLUMNS,
+                [],
+            )
             self.write_csv(paths["location_review_path"], INSTITUTION_LOCATION_REVIEW_COLUMNS, [])
             self.write_csv(paths["institution_review_queue_path"], INSTITUTION_REVIEW_QUEUE_COLUMNS, [])
             self.write_csv(paths["mappings_path"], AUTHOR_INSTITUTION_MAPPING_COLUMNS, [self.row(
@@ -382,6 +389,45 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             with paths["location_review_path"].open(encoding="utf-8", newline="") as handle:
                 reviews = list(csv.DictReader(handle))
             self.assertEqual(reviews, [])
+
+            status, payload = self.request_with_handler(
+                handler,
+                "POST",
+                (
+                    "/api/admin/institutions/"
+                    f"{self.institution_id}/confirm-location"
+                ),
+                {
+                    "city": "Palermo", "region": "Sicily", "country": "Italy",
+                    "country_code": "IT", "lat": "38.1157", "lon": "13.3615",
+                    "coordinate_source": "Fixture source",
+                    "coordinate_status": "known",
+                    "review_note": "Exact 400 regression confirmation.",
+                },
+            )
+            self.assertEqual(status, 200)
+            self.assertEqual(
+                payload["data"]["institution_id"], self.institution_id
+            )
+            with paths["institution_location_audit_path"].open(
+                encoding="utf-8", newline=""
+            ) as handle:
+                evidence = list(csv.DictReader(handle))
+            self.assertEqual(len(evidence), 1)
+            self.assertEqual(evidence[0]["action"], "location_confirmed")
+            self.assertEqual(evidence[0]["institution_id"], self.institution_id)
+
+            status, payload = self.request_with_handler(
+                handler,
+                "POST",
+                (
+                    "/api/admin/institutions/"
+                    f"{self.institution_id}/confirm-location"
+                ),
+                {"institution_id": "institution:other"},
+            )
+            self.assertEqual(status, 400)
+            self.assertIn("exactly match", payload["error"])
 
     def test_alias_and_merged_ids_resolve_to_the_active_canonical_institution(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -449,6 +495,16 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
                     self.assertEqual(detail["editable_institution_id"], active_id)
                     self.assertEqual(detail["institution"]["institution_id"], active_id)
                     self.assertEqual(detail["current_location"]["city"], "Palermo")
+
+            status, payload = self.request_with_handler(
+                handler,
+                "POST",
+                f"/api/admin/institutions/{merged_id}/confirm-location",
+                {},
+            )
+            self.assertEqual(status, 409)
+            self.assertEqual(payload["error_code"], "inactive_institution")
+            self.assertEqual(payload["active_institution_id"], active_id)
 
 
 if __name__ == "__main__":

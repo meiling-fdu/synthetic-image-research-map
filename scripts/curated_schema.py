@@ -246,6 +246,29 @@ INSTITUTION_AUDIT_COLUMNS = (
     "created_by",
 )
 
+INSTITUTION_LOCATION_AUDIT_COLUMNS = (
+    "audit_id",
+    "action",
+    "institution_id",
+    "previous_lat",
+    "previous_lon",
+    "confirmed_lat",
+    "confirmed_lon",
+    "previous_city",
+    "previous_region",
+    "previous_country",
+    "previous_country_code",
+    "confirmed_city",
+    "confirmed_region",
+    "confirmed_country",
+    "confirmed_country_code",
+    "coordinate_source",
+    "coordinate_source_url",
+    "review_note",
+    "created_at",
+    "created_by",
+)
+
 REVIEW_DECISION_COLUMNS = (
     "decision_id",
     "review_queue",
@@ -303,6 +326,7 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "institution_locations.csv": INSTITUTION_LOCATION_COLUMNS,
     "institutions.csv": INSTITUTION_COLUMNS,
     "institution_audit_log.csv": INSTITUTION_AUDIT_COLUMNS,
+    "institution_location_audit_log.csv": INSTITUTION_LOCATION_AUDIT_COLUMNS,
     "institution_review_queue.csv": INSTITUTION_REVIEW_QUEUE_COLUMNS,
     "review_decisions.csv": REVIEW_DECISION_COLUMNS,
     "paper_version_merges.csv": PAPER_VERSION_MERGE_COLUMNS,

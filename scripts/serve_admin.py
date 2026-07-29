@@ -23,7 +23,7 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Callable, DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tuple
-from urllib.parse import parse_qs, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 
 try:
     from .admin_workflows import (
@@ -83,6 +83,7 @@ try:
     from .curated_institutions import (
         DEFAULT_AUDIT_PATH,
         DEFAULT_INSTITUTIONS_PATH,
+        DEFAULT_LOCATION_AUDIT_PATH,
         CuratedInstitutionError,
         add_institution_alias,
         ignore_institution,
@@ -203,6 +204,7 @@ except ImportError:
     from curated_institutions import (
         DEFAULT_AUDIT_PATH,
         DEFAULT_INSTITUTIONS_PATH,
+        DEFAULT_LOCATION_AUDIT_PATH,
         CuratedInstitutionError,
         add_institution_alias,
         ignore_institution,
@@ -1476,6 +1478,15 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default=DEFAULT_AUDIT_PATH,
         help=f"Institution action audit CSV (default: {DEFAULT_AUDIT_PATH}).",
     )
+    parser.add_argument(
+        "--institution-location-audit",
+        type=Path,
+        default=DEFAULT_LOCATION_AUDIT_PATH,
+        help=(
+            "Location-only confirmation audit CSV "
+            f"(default: {DEFAULT_LOCATION_AUDIT_PATH})."
+        ),
+    )
     return parser.parse_args(argv)
 
 
@@ -1490,6 +1501,7 @@ def make_handler(
     institution_aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
     institutions_path: Path = INSTITUTIONS_PATH,
     institution_audit_path: Path = DEFAULT_AUDIT_PATH,
+    institution_location_audit_path: Path = DEFAULT_LOCATION_AUDIT_PATH,
     review_decisions_path: Path = DEFAULT_REVIEW_DECISIONS_PATH,
     author_mapping_report_path: Path = AUTHOR_MAPPING_REPORT_PATH,
     institution_consistency_report_path: Path = INSTITUTION_CONSISTENCY_REPORT_PATH,
@@ -2742,6 +2754,80 @@ def make_handler(
                 "/api/institution/merge": "merge",
                 "/api/institution/ignore": "ignore",
             }
+            location_route = re.fullmatch(
+                r"/api/admin/institutions/([^/]+)/confirm-location",
+                request.path,
+            )
+            if location_route:
+                if not self.is_header_authorized() or not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        {"error": "institution management is restricted to authorized loopback clients"},
+                    )
+                    return
+                identifier = clean(unquote(location_route.group(1)))
+                try:
+                    payload = self.read_json_body()
+                    institutions = load_institutions(institutions_path)
+                    entity = next(
+                        (
+                            row for row in institutions
+                            if clean(row.get("institution_id")) == identifier
+                        ),
+                        None,
+                    )
+                    if entity is None:
+                        raise CuratedInstitutionError(
+                            "path institution_id is unknown"
+                        )
+                    if clean(entity.get("institution_status")) != "active":
+                        redirect = next(
+                            (
+                                clean(row.get("institution_id"))
+                                for row in read_csv_rows(institution_audit_path)
+                                if clean(row.get("action")) == "merge"
+                                and clean(row.get("previous_institution_id")) == identifier
+                            ),
+                            "",
+                        )
+                        self.send_json(
+                            HTTPStatus.CONFLICT,
+                            {
+                                "error": (
+                                    f"institution {identifier} is inactive"
+                                    + (
+                                        f"; reload active canonical institution {redirect}"
+                                        if redirect else ""
+                                    )
+                                ),
+                                "error_code": "inactive_institution",
+                                "institution_id": identifier,
+                                "active_institution_id": redirect,
+                            },
+                        )
+                        return
+                    with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_INSTITUTION_WRITE_LOCK:
+                        result = update_institution_location(
+                            identifier,
+                            payload,
+                            institutions_path=institutions_path,
+                            locations_path=institution_locations_path,
+                            location_reviews_path=location_review_path,
+                            location_audit_path=institution_location_audit_path,
+                        )
+                    self.send_json(
+                        HTTPStatus.OK,
+                        {
+                            "data": result,
+                            "message": (
+                                f"Location confirmed for {identifier}; "
+                                "institution identity and mappings were unchanged."
+                            ),
+                        },
+                    )
+                except CuratedInstitutionError as error:
+                    self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
+                return
             if request.path in institution_actions:
                 if not self.is_header_authorized() or not self.is_loopback_client():
                     self.send_json(HTTPStatus.FORBIDDEN, {"error": "institution management is restricted to authorized loopback clients"})
@@ -3881,6 +3967,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         institution_aliases_path=args.institution_aliases,
         institutions_path=args.institutions,
         institution_audit_path=args.institution_audit,
+        institution_location_audit_path=args.institution_location_audit,
     )
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)
