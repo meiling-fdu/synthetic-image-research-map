@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-29T04:56:15Z |
+| public_preview_generated_at | 2026-07-29T05:40:57Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -45,8 +45,8 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Year | Records |
 | --- | ---: |
 | 2026 | 113 |
-| 2025 | 133 |
-| 2024 | 114 |
+| 2025 | 134 |
+| 2024 | 113 |
 | 2023 | 52 |
 | 2022 | 22 |
 | 2021 | 23 |
@@ -66,7 +66,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Advances in Neural Information Processing Systems (NeurIPS) | 10 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 9 |
 | IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 9 |
-| International Conference on Learning Representations (ICLR) | 8 |
+| International Conference on Learning Representations (ICLR) | 9 |
 | ACM International Conference on Multimedia (ACM MM) | 6 |
 | IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops | 6 |
 

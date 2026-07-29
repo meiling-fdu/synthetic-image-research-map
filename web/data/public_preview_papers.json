@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-07-29T04:56:15Z"
+    "public_preview_generated_at": "2026-07-29T05:40:57Z"
   },
   "records": [
     {
@@ -44234,6 +44234,443 @@
           "institution_ids": [
             "institution:018c503420feda75"
           ]
+        }
+      ]
+    },
+    {
+      "title": "A Sanity Check for AI-generated Image Detection",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "2024-06-27",
+      "task": "detection",
+      "entry_type": "method",
+      "venue": "International Conference on Learning Representations",
+      "venue_name": "International Conference on Learning Representations",
+      "venue_type": "conference",
+      "publisher": "Cornell University",
+      "publication_type": "conference",
+      "abstract": "With the rapid development of generative models, discerning AI-generated content has evoked increasing attention from both industry and academia. In this paper, we conduct a sanity check on \"whether the task of AI-generated image detection has been solved\". To start with, we present Chameleon dataset, consisting AIgenerated images that are genuinely challenging for human perception. To quantify the generalization of existing methods, we evaluate 9 off-the-shelf AI-generated image detectors on Chameleon dataset. Upon analysis, almost all models classify AI-generated images as real ones. Later, we propose AIDE (AI-generated Image DEtector with Hybrid Features), which leverages multiple experts to simultaneously extract visual artifacts and noise patterns. Specifically, to capture the high-level semantics, we utilize CLIP to compute the visual embedding. This effectively enables the model to discern AI-generated images based on semantics or contextual information; Secondly, we select the highest frequency patches and the lowest frequency patches in the image, and compute the low-level patchwise features, aiming to detect AI-generated images by low-level artifacts, for example, noise pattern, anti-aliasing, etc. While evaluating on existing benchmarks, for example, AIGCDetectBenchmark and GenImage, AIDE achieves +3.5% and +4.6% improvements to state-of-the-art methods, and on our proposed challenging Chameleon benchmarks, it also achieves the promising results, despite this problem for detecting AI-generated images is far from being solved.",
+      "abstract_source": "OpenAlex local raw cache",
+      "ai_summary": "",
+      "doi": "10.48550/arxiv.2406.19435",
+      "arxiv_id": "2406.19435",
+      "arxiv_url": "https://arxiv.org/abs/2406.19435",
+      "arxiv_year": 2024,
+      "has_arxiv_version": true,
+      "paper_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
+      "primary_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
+      "landing_page_url": "http://arxiv.org/abs/2406.19435",
+      "openalex_url": "https://openalex.org/W4400222289",
+      "is_arxiv_preprint": true,
+      "url": "http://arxiv.org/abs/2406.19435",
+      "authors": [
+        {
+          "name": "Shilin Yan",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Ouxiang Li",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jiayin Cai",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yanbin Hao",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xiaolong Jiang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yao Hu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Weidi Xie",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "needs_review": false,
+      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
+      "has_map_location": true,
+      "map_record_count": 3,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_locations": [
+        {
+          "institution_name": "xiaohongshu Inc.",
+          "institution_id": "institution:d1012c88e7ee61fd",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Shanghai",
+          "region_code": "",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "institution_name": "University of Science and Technology of China",
+          "institution_id": "institution:e721b03b6f6c172d",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Anhui",
+          "region_code": "",
+          "location_display": "Anhui, China"
+        },
+        {
+          "institution_name": "Shanghai Jiao Tong University",
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Shanghai",
+          "region_code": "",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "aggregated_institutions": [
+        "xiaohongshu Inc.",
+        "University of Science and Technology of China",
+        "Shanghai Jiao Tong University"
+      ],
+      "aggregated_institution_types": [
+        "company",
+        "university"
+      ],
+      "aggregated_country_names": [
+        "China"
+      ],
+      "aggregated_country_codes": [
+        "CN"
+      ],
+      "aggregated_regions": [
+        "Shanghai",
+        "Anhui"
+      ],
+      "aggregated_region_codes": [],
+      "paper_id": "curated:f9eac1aa13a606c6ec88",
+      "venue_id": "venue:iclr:main",
+      "venue_acronym": "ICLR",
+      "venue_track": "main",
+      "raw_venue": "arXiv (Cornell University)",
+      "metadata_source": "openalex",
+      "curation_status": "manually_added",
+      "review_status": "reviewed",
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:45e84d69d444095fda28",
+          "institution_id": "institution:d1012c88e7ee61fd",
+          "institution": "xiaohongshu Inc.",
+          "institution_authors": [
+            "Shilin Yan",
+            "Jiayin Cai",
+            "Xiaolong Jiang",
+            "Yao Hu"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
+          "affiliation_note": "Authors marked with superscript 1 are affiliated with xiaohongshu Inc.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:1e4b6b1fe321142d86ef",
+          "institution_id": "institution:e721b03b6f6c172d",
+          "institution": "University of Science and Technology of China",
+          "institution_authors": [
+            "Ouxiang Li",
+            "Yanbin Hao"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
+          "affiliation_note": "Authors marked with superscript 2 are affiliated with University of Science and Technology of China.",
+          "mapping_status": "active",
+          "review_note": "ML"
+        },
+        {
+          "mapping_id": "mapping:185b20cc0dfe56da444f",
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution": "Shanghai Jiao Tong University",
+          "institution_authors": [
+            "Weidi Xie"
+          ],
+          "raw_affiliation": "",
+          "evidence_source": "PDF",
+          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
+          "affiliation_note": "",
+          "mapping_status": "active",
+          "review_note": "ML"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:d1012c88e7ee61fd",
+          "institution": "xiaohongshu Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Shilin Yan",
+            "Jiayin Cai",
+            "Xiaolong Jiang",
+            "Yao Hu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:e721b03b6f6c172d",
+          "institution": "University of Science and Technology of China",
+          "institution_type": "university",
+          "authors": [
+            "Ouxiang Li",
+            "Yanbin Hao"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution": "Shanghai Jiao Tong University",
+          "institution_type": "university",
+          "authors": [
+            "Weidi Xie"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Shilin Yan",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ]
+        },
+        {
+          "author": "Ouxiang Li",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:e721b03b6f6c172d"
+          ]
+        },
+        {
+          "author": "Jiayin Cai",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ]
+        },
+        {
+          "author": "Yanbin Hao",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:e721b03b6f6c172d"
+          ]
+        },
+        {
+          "author": "Xiaolong Jiang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ]
+        },
+        {
+          "author": "Yao Hu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ]
+        },
+        {
+          "author": "Weidi Xie",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:fccd5d0ac9cc52f9"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "International Conference on Learning Representations (ICLR)",
+      "venue_aliases": [
+        "International Conference on Learning Representations",
+        "International Conference on Learning Representations (ICLR)"
+      ],
+      "ambiguity_status": "resolved",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "xiaohongshu Inc.",
+          "canonical_name": "xiaohongshu Inc.",
+          "institution_id": "institution:d1012c88e7ee61fd",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        },
+        {
+          "index": 2,
+          "name": "University of Science and Technology of China",
+          "canonical_name": "University of Science and Technology of China",
+          "institution_id": "institution:e721b03b6f6c172d",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Anhui",
+          "location_display": "Anhui, China"
+        },
+        {
+          "index": 3,
+          "name": "Shanghai Jiao Tong University",
+          "canonical_name": "Shanghai Jiao Tong University",
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Shilin Yan",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Ouxiang Li",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:e721b03b6f6c172d"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jiayin Cai",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yanbin Hao",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:e721b03b6f6c172d"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xiaolong Jiang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yao Hu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:d1012c88e7ee61fd"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Weidi Xie",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:fccd5d0ac9cc52f9"
+          ],
+          "source": "curated_admin",
+          "fallback": false
         }
       ]
     },
@@ -90727,440 +91164,6 @@
           "institution_ids": [
             "institution:b98073e3070abd17"
           ]
-        }
-      ]
-    },
-    {
-      "title": "A Sanity Check for AI-generated Image Detection",
-      "in_scope": true,
-      "year": 2024,
-      "publication_year": 2024,
-      "publication_date": "2024-06-27",
-      "task": "detection",
-      "entry_type": "method",
-      "venue": "arXiv",
-      "venue_name": "arXiv",
-      "venue_type": "preprint",
-      "publisher": "Cornell University",
-      "publication_type": "preprint",
-      "abstract": "With the rapid development of generative models, discerning AI-generated content has evoked increasing attention from both industry and academia. In this paper, we conduct a sanity check on \"whether the task of AI-generated image detection has been solved\". To start with, we present Chameleon dataset, consisting AIgenerated images that are genuinely challenging for human perception. To quantify the generalization of existing methods, we evaluate 9 off-the-shelf AI-generated image detectors on Chameleon dataset. Upon analysis, almost all models classify AI-generated images as real ones. Later, we propose AIDE (AI-generated Image DEtector with Hybrid Features), which leverages multiple experts to simultaneously extract visual artifacts and noise patterns. Specifically, to capture the high-level semantics, we utilize CLIP to compute the visual embedding. This effectively enables the model to discern AI-generated images based on semantics or contextual information; Secondly, we select the highest frequency patches and the lowest frequency patches in the image, and compute the low-level patchwise features, aiming to detect AI-generated images by low-level artifacts, for example, noise pattern, anti-aliasing, etc. While evaluating on existing benchmarks, for example, AIGCDetectBenchmark and GenImage, AIDE achieves +3.5% and +4.6% improvements to state-of-the-art methods, and on our proposed challenging Chameleon benchmarks, it also achieves the promising results, despite this problem for detecting AI-generated images is far from being solved.",
-      "abstract_source": "OpenAlex local raw cache",
-      "ai_summary": "",
-      "doi": "10.48550/arxiv.2406.19435",
-      "arxiv_id": "2406.19435",
-      "arxiv_url": "https://arxiv.org/abs/2406.19435",
-      "arxiv_year": 2024,
-      "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2406.19435",
-      "primary_url": "http://arxiv.org/abs/2406.19435",
-      "landing_page_url": "http://arxiv.org/abs/2406.19435",
-      "openalex_url": "https://openalex.org/W4400222289",
-      "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2406.19435",
-      "authors": [
-        {
-          "name": "Shilin Yan",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Ouxiang Li",
-          "affiliation_indices": [
-            2
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Jiayin Cai",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Yanbin Hao",
-          "affiliation_indices": [
-            2
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Xiaolong Jiang",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Yao Hu",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Weidi Xie",
-          "affiliation_indices": [
-            3
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        }
-      ],
-      "source_database": "OpenAlex",
-      "needs_review": false,
-      "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 3,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_locations": [
-        {
-          "institution_name": "xiaohongshu Inc.",
-          "institution_id": "institution:d1012c88e7ee61fd",
-          "institution_type": "company",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Shanghai",
-          "region_code": "",
-          "location_display": "Shanghai, China"
-        },
-        {
-          "institution_name": "University of Science and Technology of China",
-          "institution_id": "institution:e721b03b6f6c172d",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Anhui",
-          "region_code": "",
-          "location_display": "Anhui, China"
-        },
-        {
-          "institution_name": "Shanghai Jiao Tong University",
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Shanghai",
-          "region_code": "",
-          "location_display": "Shanghai, China"
-        }
-      ],
-      "aggregated_institutions": [
-        "xiaohongshu Inc.",
-        "University of Science and Technology of China",
-        "Shanghai Jiao Tong University"
-      ],
-      "aggregated_institution_types": [
-        "company",
-        "university"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
-      "aggregated_regions": [
-        "Shanghai",
-        "Anhui"
-      ],
-      "aggregated_region_codes": [],
-      "affiliation_review_state": "curated",
-      "curated_mappings": [
-        {
-          "mapping_id": "mapping:45e84d69d444095fda28",
-          "institution_id": "institution:d1012c88e7ee61fd",
-          "institution": "xiaohongshu Inc.",
-          "institution_authors": [
-            "Shilin Yan",
-            "Jiayin Cai",
-            "Xiaolong Jiang",
-            "Yao Hu"
-          ],
-          "raw_affiliation": "",
-          "evidence_source": "PDF",
-          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
-          "affiliation_note": "Authors marked with superscript 1 are affiliated with xiaohongshu Inc.",
-          "mapping_status": "active",
-          "review_note": "ML"
-        },
-        {
-          "mapping_id": "mapping:1e4b6b1fe321142d86ef",
-          "institution_id": "institution:e721b03b6f6c172d",
-          "institution": "University of Science and Technology of China",
-          "institution_authors": [
-            "Ouxiang Li",
-            "Yanbin Hao"
-          ],
-          "raw_affiliation": "",
-          "evidence_source": "PDF",
-          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
-          "affiliation_note": "Authors marked with superscript 2 are affiliated with University of Science and Technology of China.",
-          "mapping_status": "active",
-          "review_note": "ML"
-        },
-        {
-          "mapping_id": "mapping:185b20cc0dfe56da444f",
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution": "Shanghai Jiao Tong University",
-          "institution_authors": [
-            "Weidi Xie"
-          ],
-          "raw_affiliation": "",
-          "evidence_source": "PDF",
-          "evidence_url": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b0303773962ea1b5394c3a83cc7dd066-Paper-Conference.pdf",
-          "affiliation_note": "",
-          "mapping_status": "active",
-          "review_note": "ML"
-        }
-      ],
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:d1012c88e7ee61fd",
-          "institution": "xiaohongshu Inc.",
-          "institution_type": "company",
-          "authors": [
-            "Shilin Yan",
-            "Jiayin Cai",
-            "Xiaolong Jiang",
-            "Yao Hu"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        },
-        {
-          "index": 2,
-          "institution_id": "institution:e721b03b6f6c172d",
-          "institution": "University of Science and Technology of China",
-          "institution_type": "university",
-          "authors": [
-            "Ouxiang Li",
-            "Yanbin Hao"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        },
-        {
-          "index": 3,
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution": "Shanghai Jiao Tong University",
-          "institution_type": "university",
-          "authors": [
-            "Weidi Xie"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Shilin Yan",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ]
-        },
-        {
-          "author": "Ouxiang Li",
-          "institution_indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:e721b03b6f6c172d"
-          ]
-        },
-        {
-          "author": "Jiayin Cai",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ]
-        },
-        {
-          "author": "Yanbin Hao",
-          "institution_indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:e721b03b6f6c172d"
-          ]
-        },
-        {
-          "author": "Xiaolong Jiang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ]
-        },
-        {
-          "author": "Yao Hu",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ]
-        },
-        {
-          "author": "Weidi Xie",
-          "institution_indices": [
-            3
-          ],
-          "institution_ids": [
-            "institution:fccd5d0ac9cc52f9"
-          ]
-        }
-      ],
-      "institution_source": "curated",
-      "preliminary_affiliations": false,
-      "venue_id": "venue:arxiv",
-      "venue_acronym": "",
-      "venue_track": "",
-      "raw_venue": "arXiv (Cornell University)",
-      "venue_aliases": [
-        "ArXiv.org",
-        "arXiv (Cornell University)",
-        "arXiv"
-      ],
-      "ambiguity_status": "resolved",
-      "venue_label": "arXiv",
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "xiaohongshu Inc.",
-          "canonical_name": "xiaohongshu Inc.",
-          "institution_id": "institution:d1012c88e7ee61fd",
-          "institution_type": "company",
-          "country": "China",
-          "country_code": "",
-          "region": "Shanghai",
-          "location_display": "Shanghai, China"
-        },
-        {
-          "index": 2,
-          "name": "University of Science and Technology of China",
-          "canonical_name": "University of Science and Technology of China",
-          "institution_id": "institution:e721b03b6f6c172d",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Anhui",
-          "location_display": "Anhui, China"
-        },
-        {
-          "index": 3,
-          "name": "Shanghai Jiao Tong University",
-          "canonical_name": "Shanghai Jiao Tong University",
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Shanghai",
-          "location_display": "Shanghai, China"
-        }
-      ],
-      "current_institution": null,
-      "author_affiliation_indices": [
-        {
-          "author": "Shilin Yan",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Ouxiang Li",
-          "indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:e721b03b6f6c172d"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Jiayin Cai",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Yanbin Hao",
-          "indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:e721b03b6f6c172d"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Xiaolong Jiang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Yao Hu",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:d1012c88e7ee61fd"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Weidi Xie",
-          "indices": [
-            3
-          ],
-          "institution_ids": [
-            "institution:fccd5d0ac9cc52f9"
-          ],
-          "source": "curated_admin",
-          "fallback": false
         }
       ]
     },
