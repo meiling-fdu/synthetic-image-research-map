@@ -220,6 +220,12 @@ __marimo__/
 # macOS
 .DS_Store
 
+# Root-level manual visual checks and emergency worktree backups
+/visual-regression-*.png
+/local_diff_before_*.patch
+/local_staged_diff_before_*.patch
+/local_status_before_*.txt
+
 # Automatically retrieved OpenAlex raw data
 data/raw/openalex/*.json
 
