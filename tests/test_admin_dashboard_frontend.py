@@ -158,6 +158,14 @@ class AdminDashboardFrontendTests(unittest.TestCase):
         self.assertIn('id="global-search-results" role="listbox"', self.html)
         self.assertIn("function renderGlobalSearch()", self.javascript)
         self.assertIn("state.papers.filter", self.javascript)
+        self.assertIn("state.institutions", self.javascript)
+        self.assertIn("...(institution.aliases || [])", self.javascript)
+        self.assertIn(
+            "canonicalInstitutionKey(name).includes(institutionQuery)",
+            self.javascript,
+        )
+        self.assertIn('normalize("NFKD")', self.javascript)
+        self.assertIn(r'replace(/\p{M}+/gu, "")', self.javascript)
         self.assertIn('event.key === "/"', self.javascript)
 
     def test_dashboard_queues_are_impact_ordered_and_capped(self):

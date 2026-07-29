@@ -2746,9 +2746,21 @@ def validate_proposed_public_outputs(
         from validate_public_preview import validate_datasets
 
     issues, paper_issues = validate_datasets(
-        payload["metadata"],
+        {
+            **payload["metadata"],
+            "institution_aliases": payload.get("institution_aliases", []),
+            "canonical_institution_search_index": payload.get(
+                "canonical_institution_search_index", []
+            ),
+        },
         payload["records"],
-        paper_payload["metadata"],
+        {
+            **paper_payload["metadata"],
+            "institution_aliases": paper_payload.get("institution_aliases", []),
+            "canonical_institution_search_index": paper_payload.get(
+                "canonical_institution_search_index", []
+            ),
+        },
         paper_payload["records"],
         merge_rows,
     )

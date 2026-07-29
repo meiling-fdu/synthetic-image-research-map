@@ -37,6 +37,12 @@ try:
     )
     from .venues import resolve_venue
     from .publication_types import book_incompatibilities, is_book_publication
+    from .migrate_institution_english_names import (
+        load_overrides as load_english_name_overrides,
+        load_tables as load_english_name_tables,
+        validate_approved as validate_approved_english_names,
+        OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
+    )
 except ImportError:  # Support direct execution from the repository root.
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
@@ -61,6 +67,12 @@ except ImportError:  # Support direct execution from the repository root.
     )
     from venues import resolve_venue
     from publication_types import book_incompatibilities, is_book_publication
+    from migrate_institution_english_names import (
+        load_overrides as load_english_name_overrides,
+        load_tables as load_english_name_tables,
+        validate_approved as validate_approved_english_names,
+        OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
+    )
 
 
 BOOLEAN_LIKE_VALUES = {"true", "false", "1", "0", "yes", "no", "y", "n"}
@@ -1352,6 +1364,13 @@ def main() -> int:
         institutions, mappings, confirmed_locations, locations, aliases,
         institution_audits, issues,
     )
+    for message in validate_approved_english_names(
+        load_english_name_tables(CURATED_DATA_DIR),
+        load_english_name_overrides(ENGLISH_NAME_OVERRIDES_PATH),
+    ):
+        add_issue(
+            issues, "ERROR", "institution_english_name_overrides.csv", message
+        )
     validate_institution_consistency_audit(
         issues, institution_review_queue, mappings
     )

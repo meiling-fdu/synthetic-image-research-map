@@ -179,7 +179,9 @@ class InstitutionTypeAuditTests(unittest.TestCase):
                 "Alibaba Group", "SenseTime",
             )
         }
-        self.assertEqual(len(read_csv("institution_aliases.csv")), 68)
+        # English canonical-name migration retains six former canonical
+        # spellings as confirmed aliases without changing institution IDs.
+        self.assertEqual(len(read_csv("institution_aliases.csv")), 74)
         for filename in ("author_institution_mappings.csv", "institution_locations.csv"):
             referenced = {row.get("institution_id", "") for row in read_csv(filename)}
             for name, institution_id in expected.items():

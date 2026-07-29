@@ -8,6 +8,7 @@ legacy top-level record array or the metadata-plus-records object format.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import math
 import re
@@ -74,6 +75,9 @@ except ImportError:
 
 DEFAULT_INPUT = Path("web/data/public_preview_map_data.json")
 DEFAULT_PAPER_INPUT = Path("web/data/public_preview_papers.json")
+DEFAULT_ENGLISH_NAME_OVERRIDES = Path(
+    "data/manual/institution_english_name_overrides.csv"
+)
 ALLOWED_TASKS = {
     "detection",
     "source_attribution",
@@ -97,6 +101,93 @@ AUTHOR_MAPPING_SOURCES = {
 ALLOWED_VENUE_TYPES = {"conference", "journal", "preprint", "book"}
 ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "posters", "industry", "demo", "doctoral_consortium", "other"}
 ALLOWED_INSTITUTION_TYPES = INSTITUTION_TYPE_SET
+INSTITUTION_DISPLAY_FIELDS = {
+    "institution", "institution_name", "canonical_name",
+    "canonical_institution_name", "current_institution",
+}
+
+
+def approved_english_names() -> list[dict[str, str]]:
+    if not DEFAULT_ENGLISH_NAME_OVERRIDES.exists():
+        return []
+    with DEFAULT_ENGLISH_NAME_OVERRIDES.open(
+        encoding="utf-8-sig", newline=""
+    ) as handle:
+        return [
+            dict(row) for row in csv.DictReader(handle)
+            if str(row.get("status", "")).strip().casefold() == "approved"
+        ]
+
+
+def iter_stale_display_values(
+    value: Any,
+    old_names: set[str],
+    path: str = "$",
+) -> Sequence[Tuple[str, str]]:
+    findings: List[Tuple[str, str]] = []
+    if isinstance(value, dict):
+        for key, child in value.items():
+            child_path = f"{path}.{key}"
+            if key in INSTITUTION_DISPLAY_FIELDS and isinstance(child, str):
+                if child in old_names:
+                    findings.append((child_path, child))
+            elif key == "aggregated_institutions" and isinstance(child, list):
+                findings.extend(
+                    (f"{child_path}[{index}]", item)
+                    for index, item in enumerate(child)
+                    if isinstance(item, str) and item in old_names
+                )
+            elif key not in {
+                "raw_affiliation", "raw_affiliation_evidence",
+                "source_institution_names", "notes", "review_note",
+            }:
+                findings.extend(iter_stale_display_values(child, old_names, child_path))
+    elif isinstance(value, list):
+        for index, child in enumerate(value):
+            findings.extend(iter_stale_display_values(child, old_names, f"{path}[{index}]"))
+    return findings
+
+
+def validate_approved_institution_display_names(
+    metadata: Dict[str, Any],
+    records: Sequence[Dict[str, Any]],
+    issues: List["Issue"],
+) -> None:
+    overrides = approved_english_names()
+    if not overrides:
+        return
+    old_names = {
+        str(row.get("local_name_alias", "")).strip()
+        for row in overrides
+        if str(row.get("local_name_alias", "")).strip()
+    }
+    for path, stale_name in iter_stale_display_values(
+        {"metadata": metadata, "records": list(records)}, old_names
+    ):
+        issues.append(Issue(
+            "ERROR", -1, "institution English-name overrides",
+            f"superseded canonical institution display {stale_name!r} at {path}",
+        ))
+    aliases = metadata.get("institution_aliases", [])
+    for override in overrides:
+        institution_id = str(override.get("institution_id", "")).strip()
+        old_name = str(override.get("local_name_alias", "")).strip()
+        new_name = str(override.get("english_canonical_name", "")).strip()
+        if old_name and not any(
+            (
+                str(row.get("institution_id", "")).strip() == institution_id
+                or str(row.get("canonical_institution_id", "")).strip()
+                == institution_id
+            )
+            and str(row.get("alias_name", "")).strip() == old_name
+            and str(row.get("canonical_institution_name", "")).strip() == new_name
+            for row in aliases
+            if isinstance(row, dict)
+        ):
+            issues.append(Issue(
+                "ERROR", -1, "institution English-name overrides",
+                f"approved former canonical alias missing from public metadata: {old_name!r}",
+            ))
 
 
 def validate_institution_types(index: int, record: Dict[str, Any], issues: List[Issue]) -> None:
@@ -364,7 +455,14 @@ def read_dataset(path: Path) -> Tuple[Dict[str, Any], List[Any]]:
         return {}, payload
     if isinstance(payload, dict) and isinstance(payload.get("records"), list):
         metadata = payload.get("metadata")
-        return metadata if isinstance(metadata, dict) else {}, payload["records"]
+        metadata = dict(metadata) if isinstance(metadata, dict) else {}
+        for key in (
+            "institution_aliases", "canonical_institution_search_index",
+            "institution_id_redirects", "institution_hierarchy",
+        ):
+            if key in payload:
+                metadata[key] = payload[key]
+        return metadata, payload["records"]
     raise ValidationInputError(
         f"{path} must contain an array of records or an object with a records array."
     )
@@ -1414,6 +1512,7 @@ def validate_datasets(
     validate_preprint_version_duplicates(records, issues)
     validate_duplicate_map_relationships(records, issues)
     validate_venue_consistency(records, issues)
+    validate_approved_institution_display_names(metadata, records, issues)
     validate_confirmed_version_merges(
         records, merge_rows, issues, paper_level=False
     )
@@ -1422,6 +1521,9 @@ def validate_datasets(
         validate_paper_record(index, record, paper_issues)
     validate_preprint_version_duplicates(paper_records, paper_issues)
     validate_venue_consistency(paper_records, paper_issues)
+    validate_approved_institution_display_names(
+        paper_metadata, paper_records, paper_issues
+    )
     validate_confirmed_version_merges(
         paper_records, merge_rows, paper_issues, paper_level=True
     )

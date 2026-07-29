@@ -1,0 +1,65 @@
+{
+  "total_canonical_institutions_scanned": 589,
+  "total_candidates_reviewed": 36,
+  "total_approved_renames": 7,
+  "total_names_intentionally_retained": 26,
+  "total_unresolved_manual_review_cases": 3,
+  "total_collision_warnings": 9,
+  "total_aliases_added": 6,
+  "total_affected_papers": 10,
+  "total_affected_relationships": 10,
+  "renamed_institutions": [
+    {
+      "institution_id": "institution:f29a43c08a37e42f",
+      "from": "Technische Universität Darmstadt",
+      "to": "Technical University of Darmstadt"
+    },
+    {
+      "institution_id": "institution:eb0a1398c50d0281",
+      "from": "Université Paris-Est Créteil",
+      "to": "University Paris-Est Créteil"
+    },
+    {
+      "institution_id": "institution:cf2e81e79ecee1b8",
+      "from": "İstanbul Nişantaşı Üniversitesi",
+      "to": "Istanbul Nisantasi University"
+    },
+    {
+      "institution_id": "institution:7aae859eefe8edd1",
+      "from": "Chang’an University",
+      "to": "Chang'an University"
+    },
+    {
+      "institution_id": "institution:afc29be68ac419be",
+      "from": "Xi’an Jiaotong University",
+      "to": "Xi'an Jiaotong University"
+    },
+    {
+      "institution_id": "institution:29645bb566fcd576",
+      "from": "Centre National de la Recherche Scientifique",
+      "to": "French National Centre for Scientific Research"
+    },
+    {
+      "institution_id": "institution:daff50b65ce469a3",
+      "from": "Université Paris Cité",
+      "to": "Paris Cité University"
+    }
+  ],
+  "unresolved_candidates": [
+    {
+      "institution_id": "institution:647c89e2c8a671f8",
+      "canonical_name": "Association Clinique et Thérapeutique Infantile du Val de Marne",
+      "reason": "No sufficiently authoritative official English canonical name found; do not invent a translation."
+    },
+    {
+      "institution_id": "institution:4e4d723f7fa11734",
+      "canonical_name": "Universidad Politécnica de Madrid",
+      "reason": "Official English history page uses Technical University of Madrid but that display name is already held by active institution:2d64a600151c6a44; identity resolution is required before any rename. Same-name canonical IDs: institution:2d64a600151c6a44."
+    },
+    {
+      "institution_id": "institution:541450f1f663948c",
+      "canonical_name": "ISTI-CNR",
+      "reason": "Acronym is an established international display but expansion and English branding require manual confirmation."
+    }
+  ]
+}
