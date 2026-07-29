@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-07-29T07:34:51Z"
+    "public_preview_generated_at": "2026-07-29T07:50:40Z"
   },
   "records": [
     {
@@ -89516,7 +89516,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -89525,7 +89525,7 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
@@ -89539,8 +89539,8 @@
       "has_map_location": false,
       "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "paper_only_review",
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
@@ -89558,7 +89558,7 @@
           "evidence_source": "OpenAlex authorships",
           "evidence_url": "https://openalex.org/W7117628628",
           "affiliation_note": "",
-          "mapping_status": "needs_review",
+          "mapping_status": "active",
           "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
         },
         {
@@ -89572,7 +89572,7 @@
           "evidence_source": "OpenAlex authorships",
           "evidence_url": "https://openalex.org/W7117628628",
           "affiliation_note": "",
-          "mapping_status": "needs_review",
+          "mapping_status": "active",
           "review_note": "Automatically imported affiliation candidate; confirm the canonical institution before public export."
         }
       ],
@@ -89582,20 +89582,22 @@
           "institution_id": "institution:45d2a7ca48493f42",
           "institution": "Jilin Vocational College of Industry and Technology",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
-          "preliminary": true
+          "authors": [
+            "Jiayue Yu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
         },
         {
           "index": 2,
           "institution_id": "institution:ffd387a3478eb9e9",
           "institution": "Birla Institute of Technology, Mesra",
           "institution_type": "university",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": true,
-          "preliminary": true
+          "authors": [
+            "Sudip Kumar Sahana"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -89627,7 +89629,7 @@
           "institution_ids": [
             "institution:45d2a7ca48493f42"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -89638,40 +89640,13 @@
           "institution_ids": [
             "institution:ffd387a3478eb9e9"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Jilin Vocational College of Industry and Technology",
-          "canonical_name": "Jilin Vocational College of Industry and Technology",
-          "institution_id": "institution:45d2a7ca48493f42",
-          "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "preliminary": true
-        },
-        {
-          "index": 2,
-          "name": "Birla Institute of Technology, Mesra",
-          "canonical_name": "Birla Institute of Technology, Mesra",
-          "institution_id": "institution:ffd387a3478eb9e9",
-          "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "preliminary": true
-        }
-      ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [],
       "aggregated_institution_types": [
@@ -89686,7 +89661,32 @@
       ],
       "ambiguity_status": "unmapped",
       "venue_label": "Transactions on Emerging Telecommunications Technologies",
-      "formal_url": "https://doi.org/10.1002/ett.70335"
+      "formal_url": "https://doi.org/10.1002/ett.70335",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Jilin Vocational College of Industry and Technology",
+          "canonical_name": "Jilin Vocational College of Industry and Technology",
+          "institution_id": "institution:45d2a7ca48493f42",
+          "institution_type": "university",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        },
+        {
+          "index": 2,
+          "name": "Birla Institute of Technology, Mesra",
+          "canonical_name": "Birla Institute of Technology, Mesra",
+          "institution_id": "institution:ffd387a3478eb9e9",
+          "institution_type": "university",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:ef5f9b419eef35c5c255",
@@ -163204,6 +163204,13 @@
       "alias_source": "local-admin"
     },
     {
+      "alias_name": "University of British Columbia",
+      "canonical_institution_name": "The University of British Columbia",
+      "canonical_institution_id": "institution:94efe2a875dd4d0e",
+      "alias_language": "en",
+      "alias_source": "admin_mapping_update"
+    },
+    {
       "alias_name": "Tsinghua Shenzhen International Graduate School",
       "canonical_institution_name": "Tsinghua Shenzhen International Graduate School",
       "canonical_institution_id": "institution:230f59b4fb28c236",
@@ -165842,16 +165849,6 @@
       ],
       "normalized_names": [
         "university of bologna"
-      ]
-    },
-    "institution:05b67f44dd9f6846": {
-      "canonical_name": "University of British Columbia",
-      "institution_type": "university",
-      "names": [
-        "University of British Columbia"
-      ],
-      "normalized_names": [
-        "university of british columbia"
       ]
     },
     "institution:be74dcf5d0cb77ea": {
@@ -169246,10 +169243,12 @@
       "canonical_name": "The University of British Columbia",
       "institution_type": "university",
       "names": [
-        "The University of British Columbia"
+        "The University of British Columbia",
+        "University of British Columbia"
       ],
       "normalized_names": [
-        "the university of british columbia"
+        "the university of british columbia",
+        "university of british columbia"
       ]
     },
     "institution:a2c9ccf9659160de": {
@@ -169420,6 +169419,7 @@
     "institution:2e73bb336e7ad920": "institution:6a318a8411b5cf74",
     "institution:dab09d5fa9af8fea": "institution:1e2fe2432a089705",
     "institution:d09040aba5fecf8e": "institution:1e2fe2432a089705",
+    "institution:05b67f44dd9f6846": "institution:94efe2a875dd4d0e",
     "institution:91aeee1163fdce71": "institution:e81a0314e783d8a4",
     "institution:6c7dc4ecc36c32ba": "institution:e81a0314e783d8a4",
     "institution:5b5759334c2dc53e": "institution:6faf58b52bec4e39",

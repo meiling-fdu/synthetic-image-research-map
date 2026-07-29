@@ -585,6 +585,46 @@ class InstitutionManagementTests(unittest.TestCase):
             ["author_institution_mappings.csv", "institution_location_review.csv"],
         )
 
+    def test_validator_rejects_active_mapping_to_merged_institution(self):
+        old_id = "institution:old"
+        new_id = "institution:new"
+        issues = []
+        validate_institution_entities(
+            [
+                blank(
+                    INSTITUTION_COLUMNS,
+                    institution_id=old_id,
+                    canonical_name="Old University",
+                    institution_status="merged",
+                ),
+                blank(
+                    INSTITUTION_COLUMNS,
+                    institution_id=new_id,
+                    canonical_name="The New University",
+                    institution_status="active",
+                ),
+            ],
+            [blank(
+                AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+                institution_id=old_id,
+                mapping_status="active",
+            )],
+            [],
+            [],
+            [],
+            [blank(
+                INSTITUTION_AUDIT_COLUMNS,
+                action="merge",
+                institution_id=new_id,
+                previous_institution_id=old_id,
+            )],
+            issues,
+        )
+        self.assertTrue(any(
+            "active mapping targets a non-active institution" in issue.message
+            for issue in issues
+        ))
+
 
 class CerthRepositoryRegressionTests(unittest.TestCase):
     root = Path(__file__).resolve().parents[1]

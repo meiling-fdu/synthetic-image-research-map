@@ -190,7 +190,11 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
             "action": "mapping_change_confirmed",
             "institution_id": "institution:amazon",
             "previous_institution_id": "institution:certh",
-            "confirmation_text": "source_audit_id=mapping-change:1; mapping_id=mapping:institution:amazon:Symeon Papadopoulos",
+            "confirmation_text": (
+                "source_audit_id=mapping-change:1; "
+                "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; "
+                "paper_id=paper:1; author=Symeon Papadopoulos"
+            ),
         }
         findings = self.audit([current], merge_audits=[first, resolution])
         self.assertFalse(any(row["issue_type"] == "confirmed_mapping_changed" for row in findings))
@@ -277,6 +281,7 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
             "confirmation_text": (
                 "source_audit_id=mapping-change:removed; "
                 "mapping_id=mapping:institution:certh:Example Author; "
+                "paper_id=paper:1; author=Example Author; "
                 "evidence_source=Publisher PDF; "
                 "evidence_url=https://example.test/paper.pdf"
             ),
@@ -310,6 +315,95 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
             if row["issue_type"] == "confirmed_mapping_changed"
         )
         self.assertEqual(changed["is_blocking"], "true")
+
+    def test_same_id_display_name_correction_is_not_identity_change(self):
+        current = mapping(
+            "institution:ubc", "The University of British Columbia",
+            "University of British Columbia", author="Panos Nasiopoulos",
+        )
+        change = {
+            "audit_id": "mapping-change:display",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:ubc",
+            "previous_institution_id": "institution:ubc",
+            "affected_authors": "Panos Nasiopoulos",
+            "confirmation_text": (
+                "mapping_id=mapping:institution:ubc:Panos Nasiopoulos; "
+                "paper_id=paper:1; previous_institution=University of British Columbia; "
+                "new_institution=The University of British Columbia; "
+                "change_source=admin_mapping_update"
+            ),
+        }
+        findings = self.audit([current], merge_audits=[change])
+        self.assertFalse(any(
+            row["issue_type"] == "confirmed_mapping_changed" for row in findings
+        ))
+
+    def test_mapping_confirmation_for_wrong_paper_does_not_resolve(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
+            author="Symeon Papadopoulos", provenance="manually_confirmed",
+        )
+        change = {
+            "audit_id": "mapping-change:wrong-paper",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Symeon Papadopoulos",
+            "confirmation_text": (
+                "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; "
+                "paper_id=paper:1; previous_institution=CERTH; new_institution=Amazon; "
+                "change_source=admin_mapping_update"
+            ),
+        }
+        resolution = {
+            "action": "mapping_change_confirmed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Symeon Papadopoulos",
+            "confirmation_text": (
+                "source_audit_id=mapping-change:wrong-paper; "
+                "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; "
+                "paper_id=paper:other; author=Symeon Papadopoulos"
+            ),
+        }
+        findings = self.audit([current], merge_audits=[change, resolution])
+        self.assertTrue(any(
+            row["issue_type"] == "confirmed_mapping_changed" for row in findings
+        ))
+
+    def test_mapping_confirmation_for_wrong_author_does_not_resolve(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
+            author="Symeon Papadopoulos", provenance="manually_confirmed",
+        )
+        change = {
+            "audit_id": "mapping-change:wrong-author",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Symeon Papadopoulos",
+            "confirmation_text": (
+                "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; "
+                "paper_id=paper:1; previous_institution=CERTH; new_institution=Amazon; "
+                "change_source=admin_mapping_update"
+            ),
+        }
+        resolution = {
+            "action": "mapping_change_confirmed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "affected_authors": "Another Author",
+            "confirmation_text": (
+                "source_audit_id=mapping-change:wrong-author; "
+                "mapping_id=mapping:institution:amazon:Symeon Papadopoulos; "
+                "paper_id=paper:1; author=Another Author"
+            ),
+        }
+        findings = self.audit([current], merge_audits=[change, resolution])
+        self.assertTrue(any(
+            row["issue_type"] == "confirmed_mapping_changed" for row in findings
+        ))
 
     def test_review_decision_resolves_without_changing_mapping(self):
         rows = [mapping("institution:amazon", "Amazon", "University Federico II of Naples", author="Luisa Verdoliva")]

@@ -11,8 +11,8 @@ CURRENT_REPOSITORY_BASELINE = {
     "public_unique_papers": 512,
     "public_map_relationships": 1077,
     "canonical_institution_rows": 595,
-    "active_canonical_institutions": 594,
-    "inactive_or_merged_institutions": 1,
+    "active_canonical_institutions": 593,
+    "inactive_or_merged_institutions": 2,
     "author_institution_mappings": 660,
     "institution_hierarchy_edges": 6,
 }
@@ -25,7 +25,7 @@ CANONICAL_INSTITUTION_TYPE_TOTALS = {
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 452,
+    "university": 451,
     "research_unit": 69,
     "company": 60,
     "other": 13,

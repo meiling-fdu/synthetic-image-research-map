@@ -517,7 +517,9 @@ def audit_institution_consistency(
     # Protected mapping-change events preserve the before/after institution IDs.
     # Location edits never enter this log and therefore cannot trigger findings.
     mappings_by_id = {clean(row.get("mapping_id")): row for row in mappings}
-    resolved_change_audits: dict[str, list[tuple[str, str]]] = defaultdict(list)
+    resolved_change_audits: dict[
+        str, list[tuple[str, str, str, str, str]]
+    ] = defaultdict(list)
     for resolution in merge_audits:
         if clean(resolution.get("action")) not in {
             "mapping_change_confirmed", "mapping_reverted"
@@ -533,7 +535,16 @@ def audit_institution_consistency(
         else:
             old_id = clean(resolution.get("previous_institution_id"))
             new_id = clean(resolution.get("institution_id"))
-        resolved_change_audits[source_audit_id].append((old_id, new_id))
+        resolved_change_audits[source_audit_id].append((
+            old_id,
+            new_id,
+            resolution_metadata.get("mapping_id", ""),
+            resolution_metadata.get("paper_id", ""),
+            normalize_institution(
+                resolution_metadata.get("author")
+                or resolution.get("affected_authors")
+            ),
+        ))
     for event in merge_audits:
         if clean(event.get("action")) != "confirmed_mapping_changed":
             continue
@@ -542,11 +553,13 @@ def audit_institution_consistency(
             clean(event.get("previous_institution_id")),
             clean(event.get("institution_id")),
         )
+        # A canonical display-name correction is not an institution identity
+        # replacement when the stable institution ID did not change.
+        if transition[0] and transition[0] == transition[1]:
+            continue
         # A reviewed global merge is itself durable evidence that mappings
         # should move from the retired ID to its replacement canonical ID.
         if transition in resolver.merges:
-            continue
-        if transition in resolved_change_audits.get(clean(event.get("audit_id")), []):
             continue
         mapping = mappings_by_id.get(metadata.get("mapping_id", ""), {})
         if not mapping:
@@ -565,7 +578,28 @@ def audit_institution_consistency(
             "institution_cleanup:mapping_reverted",
         }:
             continue
-        for author in _authors(mapping) or [clean(event.get("affected_authors"))]:
+        event_authors = _authors(mapping) or [clean(event.get("affected_authors"))]
+        paper_id = metadata.get("paper_id", "") or clean(mapping.get("paper_id"))
+        mapping_id = metadata.get("mapping_id", "") or clean(mapping.get("mapping_id"))
+        resolutions = resolved_change_audits.get(clean(event.get("audit_id")), [])
+        for author in event_authors:
+            normalized_author = normalize_institution(author)
+            exact_resolution = any(
+                old_id == transition[0]
+                and new_id == transition[1]
+                and confirmed_mapping_id == mapping_id
+                and confirmed_paper_id == paper_id
+                and confirmed_author == normalized_author
+                for (
+                    old_id,
+                    new_id,
+                    confirmed_mapping_id,
+                    confirmed_paper_id,
+                    confirmed_author,
+                ) in resolutions
+            )
+            if exact_resolution:
+                continue
             finding = _finding(
                 mapping,
                 author,

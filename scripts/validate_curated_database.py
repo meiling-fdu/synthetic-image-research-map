@@ -890,6 +890,19 @@ def validate_institution_entities(
             institution_id = clean(row.get("institution_id"))
             if not institution_id or institution_id not in ids:
                 add_issue(issues, "ERROR", filename, f"unknown institution_id: {institution_id or '[missing]'}", row_number)
+            if (
+                filename == "author_institution_mappings.csv"
+                and clean(row.get("mapping_status")) in {"active", "needs_review"}
+                and institution_id in ids
+                and clean(ids[institution_id].get("institution_status")) != "active"
+            ):
+                add_issue(
+                    issues,
+                    "ERROR",
+                    filename,
+                    f"active mapping targets a non-active institution: {institution_id}",
+                    row_number,
+                )
     merge_audits = {clean(row.get("previous_institution_id")) for row in audits if clean(row.get("action")) == "merge"}
     for row_number, row in enumerate(institutions, start=2):
         if clean(row.get("institution_status")) == "merged" and clean(row.get("institution_id")) not in merge_audits:
