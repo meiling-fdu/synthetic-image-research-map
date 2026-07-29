@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-07-29T07:50:40Z"
+    "public_preview_generated_at": "2026-07-29T08:04:39Z"
   },
   "records": [
     {
@@ -11976,7 +11976,7 @@
         {
           "institution_name": "Fujian University of Technology",
           "institution_id": "institution:c3227ed71ef6fcd8",
-          "institution_type": "university",
+          "institution_type": "other",
           "country": "China",
           "country_code": "CN",
           "region": "",
@@ -11986,7 +11986,7 @@
         {
           "institution_name": "Beijing Institute of Graphic Communication",
           "institution_id": "institution:9cd15ab643d7131f",
-          "institution_type": "university",
+          "institution_type": "other",
           "country": "China",
           "country_code": "CN",
           "region": "",
@@ -15069,28 +15069,33 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "review_note": "",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 5,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
+        "Fujian University of Technology",
+        "Beijing Institute of Graphic Communication",
+        "Hunan University",
         "Swinburne University of Technology",
         "Changsha Medical University"
       ],
       "aggregated_country_names": [
-        "Australia",
-        "China"
+        "China",
+        "Australia"
       ],
       "aggregated_country_codes": [
-        "AU",
-        "CN"
+        "CN",
+        "AU"
       ],
       "aggregated_regions": [
-        "Victoria",
-        "Hunan"
+        "Fujian",
+        "Beijing",
+        "Hunan",
+        "Victoria"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
@@ -15338,6 +15343,36 @@
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [
         {
+          "institution_name": "Fujian University of Technology",
+          "institution_id": "institution:c3227ed71ef6fcd8",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Fujian",
+          "region_code": "",
+          "location_display": "Fujian, China"
+        },
+        {
+          "institution_name": "Beijing Institute of Graphic Communication",
+          "institution_id": "institution:9cd15ab643d7131f",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Beijing",
+          "region_code": "",
+          "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "Hunan University",
+          "institution_id": "institution:be8fe6da68f67876",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hunan",
+          "region_code": "",
+          "location_display": "Hunan, China"
+        },
+        {
           "institution_name": "Swinburne University of Technology",
           "institution_id": "institution:3ac6dbcc618a5a6f",
           "institution_type": "university",
@@ -15379,10 +15414,10 @@
           "canonical_name": "Fujian University of Technology",
           "institution_id": "institution:c3227ed71ef6fcd8",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Fujian",
+          "location_display": "Fujian, China"
         },
         {
           "index": 2,
@@ -15390,10 +15425,10 @@
           "canonical_name": "Beijing Institute of Graphic Communication",
           "institution_id": "institution:9cd15ab643d7131f",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Beijing",
+          "location_display": "Beijing, China"
         },
         {
           "index": 3,
@@ -15401,10 +15436,10 @@
           "canonical_name": "Hunan University",
           "institution_id": "institution:be8fe6da68f67876",
           "institution_type": "university",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Hunan",
+          "location_display": "Hunan, China"
         },
         {
           "index": 4,
@@ -40555,7 +40590,7 @@
         {
           "institution_name": "Hunan University",
           "institution_id": "institution:be8fe6da68f67876",
-          "institution_type": "university",
+          "institution_type": "other",
           "country": "China",
           "country_code": "CN",
           "region": "",
@@ -40565,7 +40600,7 @@
         {
           "institution_name": "Beijing Institute of Graphic Communication",
           "institution_id": "institution:9cd15ab643d7131f",
-          "institution_type": "university",
+          "institution_type": "other",
           "country": "China",
           "country_code": "CN",
           "region": "",
@@ -40575,7 +40610,7 @@
         {
           "institution_name": "Fujian University of Technology",
           "institution_id": "institution:c3227ed71ef6fcd8",
-          "institution_type": "university",
+          "institution_type": "other",
           "country": "China",
           "country_code": "CN",
           "region": "",
@@ -89582,22 +89617,20 @@
           "institution_id": "institution:45d2a7ca48493f42",
           "institution": "Jilin Vocational College of Industry and Technology",
           "institution_type": "university",
-          "authors": [
-            "Jiayue Yu"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "authors": [],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": true,
+          "preliminary": true
         },
         {
           "index": 2,
           "institution_id": "institution:ffd387a3478eb9e9",
           "institution": "Birla Institute of Technology, Mesra",
           "institution_type": "university",
-          "authors": [
-            "Sudip Kumar Sahana"
-          ],
-          "mapping_source": "curated_admin",
-          "mapping_fallback": false
+          "authors": [],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": true,
+          "preliminary": true
         }
       ],
       "author_institution_indices": [
@@ -89644,9 +89677,9 @@
           "fallback": false
         }
       ],
-      "affiliation_review_state": "curated",
-      "institution_source": "curated",
-      "preliminary_affiliations": false,
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [],
       "aggregated_institution_types": [
@@ -89672,7 +89705,8 @@
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": ""
+          "location_display": "",
+          "preliminary": true
         },
         {
           "index": 2,
@@ -89683,7 +89717,8 @@
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": ""
+          "location_display": "",
+          "preliminary": true
         }
       ],
       "current_institution": null
