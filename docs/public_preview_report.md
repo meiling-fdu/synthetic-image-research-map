@@ -3,7 +3,7 @@
 Source: `web/data/public_preview_map_data.json`
 
 This report describes map records, not a manually curated bibliography. One paper may produce multiple records when collaborators have multiple institutions.
-Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized title and year when stronger identifiers are unavailable.
+Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized title and year when stronger identifiers are unavailable.
 
 ## Dataset Metadata
 
@@ -20,7 +20,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | Metric | Count |
 | --- | ---: |
 | Map records | 1056 |
-| Unique papers | 488 |
+| Unique mapped papers | 488 |
 | Unique institutions | 553 |
 | Countries | 53 |
 | arXiv/preprint records | 569 |

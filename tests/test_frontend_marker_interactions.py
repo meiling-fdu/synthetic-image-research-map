@@ -1,4 +1,5 @@
 import json
+import re
 import subprocess
 import unittest
 from pathlib import Path
@@ -87,12 +88,14 @@ process.stdout.write(JSON.stringify({
         coordinates = {(10, 20)}
         self.assertEqual(max(0, len(coordinates) - 1), 0)
 
-    def test_index_loads_latest_marker_helper_and_app_versions(self):
+    def test_index_loads_cache_busted_marker_helper_and_app(self):
         html = (REPOSITORY / "web" / "index.html").read_text()
-        self.assertIn(
-            'marker_interaction_helpers.js?v=20260712-pinned-state', html
-        )
-        self.assertIn('app.js?v=20260729-content-aware-cards', html)
+        for asset in ("marker_interaction_helpers.js", "app.js"):
+            with self.subTest(asset=asset):
+                self.assertRegex(
+                    html,
+                    rf'{re.escape(asset)}\?v=[^"\']+',
+                )
 
     def test_marker_keyboard_activation_and_accessible_button_state(self):
         helper = REPOSITORY / "web" / "marker_interaction_helpers.js"

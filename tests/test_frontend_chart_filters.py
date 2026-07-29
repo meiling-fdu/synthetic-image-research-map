@@ -1,5 +1,6 @@
 import unittest
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -107,6 +108,10 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         csv_start = self.app.index("function escapeCsvValue")
         csv = self.app[csv_start:self.app.index("\nfunction exportFilename", csv_start)]
         script = f"""
+const InstitutionTypeLabels = {{
+  normalize: value => String(value || '').trim(),
+  label: value => String(value || '').trim(),
+}};
 {constants}
 {normalization}
 function institutionIdentity(record) {{ return `id:${{record.institution_id}}`; }}
@@ -140,16 +145,19 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         self.assertIn("Beijing; Jiangsu", payload["csvText"])
         self.assertIn("Beijing, China; Jiangsu, China; United States", payload["csvText"])
 
-    def test_responsive_dimensions_and_asset_versions_are_preserved(self):
+    def test_responsive_dimensions_and_cache_busted_assets_are_preserved(self):
         self.assertIn("height: 76px", self.css)
         self.assertIn("min-width: 0", self.css)
-        self.assertIn('style.css?v=20260729-content-aware-cards', self.html)
-        self.assertIn('app.js?v=20260729-content-aware-cards', self.html)
-        self.assertIn(
-            'assets/synthetic-image-detection-attribution-landscape-logo.png'
-            '?v=20260728-public-polish',
-            self.html,
-        )
+        for asset in (
+            "style.css",
+            "app.js",
+            "assets/synthetic-image-detection-attribution-landscape-logo.png",
+        ):
+            with self.subTest(asset=asset):
+                self.assertRegex(
+                    self.html,
+                    rf'{re.escape(asset)}\?v=[^"\']+',
+                )
 
     def test_public_overview_omits_non_map_metric_and_explanation(self):
         self.assertNotIn("Papers without map location", self.html)

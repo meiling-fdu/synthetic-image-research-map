@@ -357,7 +357,7 @@ def build_report(
         "",
         "This report describes map records, not a manually curated bibliography. "
         "One paper may produce multiple records when collaborators have multiple institutions.",
-        "Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or "
+        "Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or "
         "normalized title and year when stronger identifiers are unavailable.",
         "",
         "## Dataset Metadata",
@@ -380,7 +380,7 @@ def build_report(
             "| Metric | Count |",
             "| --- | ---: |",
             f"| Map records | {len(records)} |",
-            f"| Unique papers | {len(unique_papers)} |",
+            f"| Unique mapped papers | {len(unique_papers)} |",
             f"| Unique institutions | {len(unique_institutions)} |",
             f"| Countries | {len(unique_countries)} |",
             f"| arXiv/preprint records | {sum(is_arxiv_record(record) for record in records)} |",

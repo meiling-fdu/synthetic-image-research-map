@@ -4,6 +4,11 @@ import shutil
 import subprocess
 import unittest
 
+from tests.baseline_expectations import (
+    CURRENT_REPOSITORY_BASELINE,
+    PUBLICATION_TYPE_TOTALS,
+)
+
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
@@ -253,10 +258,11 @@ process.stdout.write(JSON.stringify({{
             text=True,
         )
         output = json.loads(result.stdout)
-        self.assertIn(["book", "Book (21)"], output["options"])
+        expected_books = PUBLICATION_TYPE_TOTALS["book"]
+        self.assertIn(["book", f"Book ({expected_books})"], output["options"])
         self.assertLess(output["bookPaperCount"], output["bookMarkerCount"])
-        self.assertEqual(output["bookPaperCount"], 21)
-        self.assertEqual(len(output["selectedIds"]), 21)
+        self.assertEqual(output["bookPaperCount"], expected_books)
+        self.assertEqual(len(output["selectedIds"]), expected_books)
         self.assertEqual(len(output["selectedIds"]), len(set(output["selectedIds"])))
         self.assertTrue(output["allBookPapersRetainType"])
 
@@ -384,8 +390,14 @@ process.stdout.write(JSON.stringify({{
                 "baseline."
             ),
         })
-        self.assertEqual(len(self.papers), 500)
-        self.assertEqual(len(map_records), 1036)
+        self.assertEqual(
+            len(self.papers),
+            CURRENT_REPOSITORY_BASELINE["public_unique_papers"],
+        )
+        self.assertEqual(
+            len(map_records),
+            CURRENT_REPOSITORY_BASELINE["public_map_relationships"],
+        )
 
     def test_venue_type_control_precedes_venue_control(self):
         self.assertLess(

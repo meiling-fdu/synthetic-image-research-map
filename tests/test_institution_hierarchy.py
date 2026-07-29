@@ -2,6 +2,8 @@ import csv
 import unittest
 from pathlib import Path
 
+from tests.baseline_expectations import INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS
+
 from scripts.export_public_preview import (
     add_public_detail_fields,
     canonicalize_public_institutions,
@@ -356,7 +358,7 @@ class InstitutionHierarchyTests(unittest.TestCase):
         }
         self.assertTrue(child_papers.isdisjoint(parent_papers))
 
-    def test_information_engineering_public_payload_has_six_unique_child_papers(self):
+    def test_information_engineering_public_payload_has_exact_child_papers(self):
         import json
 
         map_payload = json.loads(
@@ -378,8 +380,14 @@ class InstitutionHierarchyTests(unittest.TestCase):
             row for row in map_payload["records"]
             if row.get("institution_id") == CHILD_ID
         ]
-        self.assertEqual(len(child_records), 6)
-        self.assertEqual(len({row["title"] for row in child_records}), 6)
+        self.assertEqual(
+            {row["id"] for row in child_records},
+            INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS,
+        )
+        self.assertEqual(
+            len({row["title"] for row in child_records}),
+            len(INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS),
+        )
         self.assertFalse(any(
             row.get("institution_id") == LEGACY_ALIAS_ID
             for row in map_payload["records"]

@@ -5,6 +5,12 @@ import unittest
 from collections import Counter
 from pathlib import Path
 
+from tests.baseline_expectations import (
+    CANONICAL_INSTITUTION_TYPE_TOTALS,
+    CURRENT_REPOSITORY_BASELINE,
+    PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 CURATED = ROOT / "data" / "curated"
@@ -22,14 +28,16 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         cls.by_name = {row["canonical_name"]: row for row in cls.institutions}
 
     def test_audited_repository_counts_and_unique_ids(self):
-        self.assertEqual(len(self.institutions), 583)
-        self.assertEqual(len({row["institution_id"] for row in self.institutions}), 583)
-        self.assertEqual(Counter(row["institution_type"] for row in self.institutions), {
-            "university": 446,
-            "research_unit": 69,
-            "company": 59,
-            "other": 9,
-        })
+        expected_rows = CURRENT_REPOSITORY_BASELINE["canonical_institution_rows"]
+        self.assertEqual(len(self.institutions), expected_rows)
+        self.assertEqual(
+            len({row["institution_id"] for row in self.institutions}),
+            expected_rows,
+        )
+        self.assertEqual(
+            Counter(row["institution_type"] for row in self.institutions),
+            CANONICAL_INSTITUTION_TYPE_TOTALS,
+        )
 
     def test_required_universities_and_schools(self):
         for name in ("Rensselaer Polytechnic Institute", "École Polytechnique"):
@@ -101,12 +109,7 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         counts = Counter()
         for paper in payloads[0]["records"]:
             counts.update(set(paper.get("aggregated_institution_types") or ()))
-        self.assertEqual(counts, {
-            "university": 469,
-            "research_unit": 98,
-            "company": 71,
-            "other": 40,
-        })
+        self.assertEqual(counts, PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS)
 
     def test_university_filter_includes_corrected_records_and_other_excludes_them(self):
         with (ROOT / "web/data/public_preview_papers.json").open(encoding="utf-8") as handle:

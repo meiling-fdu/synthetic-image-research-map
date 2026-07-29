@@ -1,0 +1,133 @@
+{
+  "generated_from": [
+    "data/curated/papers.csv",
+    "data/curated/institutions.csv",
+    "data/curated/author_institution_mappings.csv",
+    "data/curated/institution_hierarchy.csv",
+    "web/data/public_preview_papers.json",
+    "web/data/public_preview_map_data.json"
+  ],
+  "counting_semantics": {
+    "canonical_institution_rows": "All canonical rows, including merged and ignored rows.",
+    "active_canonical_institutions": "Rows with institution_status=active; this is the Public canonical search-index population.",
+    "public_unique_papers": "Production-export paper records after canonical paper-identity deduplication.",
+    "public_map_relationships": "Production-export unique canonical paper/institution relationships.",
+    "public_paper_institution_type_totals": "Paper-deduplicated membership per type; a paper may contribute to more than one type.",
+    "publication_type_totals": "Exactly one publication_type per Public paper.",
+    "task_totals": "Exactly one task enum per Public paper; detection_and_source_attribution is one combined enum."
+  },
+  "curated_papers": 221,
+  "public_unique_papers": 511,
+  "public_map_relationships": 1056,
+  "public_map_relationship_resolution_totals": {
+    "active_canonical_institution": 1009,
+    "unreviewed_automatic_fallback": 47
+  },
+  "canonical_institution_rows": 594,
+  "active_canonical_institutions": 589,
+  "institution_status_totals": {
+    "active": 589,
+    "merged": 4,
+    "ignored": 1
+  },
+  "author_institution_mappings": 653,
+  "author_institution_mapping_status_totals": {
+    "active": 563,
+    "needs_review": 74,
+    "excluded": 16
+  },
+  "institution_hierarchy_edges": 6,
+  "canonical_institution_type_totals": {
+    "university": 451,
+    "research_unit": 69,
+    "company": 61,
+    "other": 13
+  },
+  "active_canonical_institution_type_totals": {
+    "university": 449,
+    "research_unit": 68,
+    "company": 60,
+    "other": 12
+  },
+  "public_paper_institution_type_totals": {
+    "university": 481,
+    "research_unit": 99,
+    "company": 73,
+    "other": 39
+  },
+  "publication_type_totals": {
+    "conference": 244,
+    "journal": 183,
+    "preprint": 64,
+    "book": 20
+  },
+  "task_totals": {
+    "detection": 439,
+    "source_attribution": 46,
+    "detection_and_source_attribution": 26
+  },
+  "reviewed_venue_filter_counts": {
+    "venue:arxiv": 56,
+    "venue:cvpr:main": 27,
+    "venue:aaai:main": 23,
+    "__unknown__": 32
+  },
+  "affected_child_record": {
+    "parent_institution_id": "institution:3afb6cc453e0a8d9",
+    "institution_id": "institution:cee70184073782c7",
+    "public_record_ids": [
+      "curated-map:44229f2cf573ad44149f",
+      "curated-map:92126900d9e371dda577",
+      "openalex-candidate-4fc5d76c4c1dde8a",
+      "openalex-candidate-919d3c2bcfbdb403",
+      "openalex-candidate-aa0d52041ecd0c07",
+      "openalex-candidate-e0b2b9196a6705c5",
+      "openalex-candidate-f7888db659be7a0c"
+    ]
+  },
+  "baseline_change_evidence": [
+    {
+      "commit": "53ed227",
+      "reason": "Added reviewed papers and author-institution mappings and corrected canonical institution identity/disambiguation.",
+      "result": "Curated papers 208 to 221; canonical institution rows 583 to 594; mappings 622 to 653."
+    },
+    {
+      "commit": "891e8c0",
+      "reason": "Refreshed the guarded Public export from the reviewed curated changes.",
+      "result": "Public papers 500 to 511; Public map relationships 1036 to 1056."
+    },
+    {
+      "commit": "2750137",
+      "reason": "Normalized approved English institution display names without changing identities.",
+      "result": "No baseline counts changed."
+    }
+  ],
+  "assertion_resolutions": [
+    {
+      "classification": "A. Exact invariant",
+      "scope": "Full Public and canonical repository totals",
+      "resolution": "Centralized reviewed exact totals in tests/baseline_expectations.py."
+    },
+    {
+      "classification": "B. Behavioral assertion",
+      "scope": "Venue option counts and filter composition",
+      "resolution": "Retained paper-deduplicated fixture and production-derived behavior checks; only the full-repository baseline uses shared exact totals."
+    },
+    {
+      "classification": "C. Historical fixture assertion",
+      "scope": "Public export shrinkage incident and isolated shrinkage-guard tests",
+      "resolution": "Retained 488/950 historical values because they describe the reviewed disaster baseline or local synthetic fixtures."
+    },
+    {
+      "classification": "A. Exact identity invariant",
+      "scope": "Institute of Information Engineering Public records",
+      "resolution": "Replaced the stale length-only assertion with the seven exact stable record IDs."
+    }
+  ],
+  "notes": [
+    "The stale six-to-seven assertion concerns Public paper/institution records for a child institution, not seven hierarchy children. The canonical hierarchy still has six total edges, four under the Chinese Academy of Sciences.",
+    "The internal institution type enum remains research_unit; the Public-facing label remains Research Institute.",
+    "Historical audit reports are intentionally not rewritten.",
+    "Forty-seven Public map relationships intentionally retain unreviewed automatic-fallback institution IDs outside the active canonical search index. The integrity test requires that exception state explicitly; all reviewed/canonical relationships resolve to active canonical IDs."
+  ]
+}
