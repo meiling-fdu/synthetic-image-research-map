@@ -1578,15 +1578,15 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(
             json.loads(result.stdout),
             {
-                "publisherPreferred": "https://publisher.example/article/1",
+                "publisherPreferred": "https://doi.org/10.1000/example",
                 "doiResolved": "https://doi.org/10.1000/example",
                 "venueFallback": "https://venue.example/paper/1",
                 "preprintOnly": "",
                 "missing": "",
                 "publishedCard": [
                     {
-                        "label": "Paper",
-                        "url": "https://publisher.example/article/1",
+                        "label": "Publisher",
+                        "url": "https://doi.org/10.1000/example",
                     },
                     {
                         "label": "Preprint",
@@ -1595,7 +1595,7 @@ process.stdout.write(JSON.stringify({
                 ],
                 "doiCard": [
                     {
-                        "label": "Paper",
+                        "label": "Publisher",
                         "url": "https://doi.org/10.1000/example",
                     }
                 ],

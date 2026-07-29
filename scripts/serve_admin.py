@@ -138,10 +138,12 @@ try:
     from .venues import (
         DEFAULT_VENUE_ALIASES_PATH,
         VenueRegistryError,
+        canonical_venue_by_id,
         canonical_venue_options,
         canonicalize_record,
         create_canonical_venue,
         read_venue_aliases,
+        resolve_or_create_canonical_venue,
     )
 except ImportError:
     from admin_workflows import (
@@ -256,10 +258,12 @@ except ImportError:
     from venues import (
         DEFAULT_VENUE_ALIASES_PATH,
         VenueRegistryError,
+        canonical_venue_by_id,
         canonical_venue_options,
         canonicalize_record,
         create_canonical_venue,
         read_venue_aliases,
+        resolve_or_create_canonical_venue,
     )
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
@@ -3029,16 +3033,103 @@ def make_handler(
                         ):
                             draft["paper_url"] = ""
                         perf.mark("prepare_draft")
+                        venue_resolution = None
                         with (
                             CURATED_PAPER_WRITE_LOCK,
                             CURATED_ARXIV_LINK_WRITE_LOCK,
+                            VENUE_REGISTRY_WRITE_LOCK,
                         ):
                             snapshots = snapshot_files((
                                 curated_papers_path,
                                 curated_arxiv_links_path,
+                                venue_aliases_path,
                             ))
                             perf.mark("snapshot_files")
                             try:
+                                venue_proposal = payload.get("venue_proposal")
+                                if venue_proposal is not None and not isinstance(
+                                    venue_proposal, dict
+                                ):
+                                    raise VenueRegistryError(
+                                        "venue_proposal must be an object"
+                                    )
+                                if venue_proposal is None:
+                                    existing_venue_id = clean(
+                                        base_record.get("venue_id")
+                                    )
+                                    if existing_venue_id:
+                                        try:
+                                            canonical_venue_by_id(
+                                                existing_venue_id,
+                                                read_venue_aliases(
+                                                    venue_aliases_path
+                                                ),
+                                            )
+                                        except VenueRegistryError:
+                                            # Deterministically repair a
+                                            # legitimate legacy dangling
+                                            # reference during an otherwise
+                                            # unrelated metadata edit.
+                                            venue_proposal = {
+                                                "venue_name": clean(
+                                                    base_record.get("venue_name")
+                                                    or base_record.get("venue")
+                                                ),
+                                                "venue_acronym": clean(
+                                                    base_record.get(
+                                                        "venue_acronym"
+                                                    )
+                                                ),
+                                                "venue_type": clean(
+                                                    base_record.get("venue_type")
+                                                    or base_record.get(
+                                                        "publication_type"
+                                                    )
+                                                ),
+                                                "venue_track": clean(
+                                                    base_record.get(
+                                                        "venue_track"
+                                                    )
+                                                ),
+                                                "raw_alias": clean(
+                                                    base_record.get("raw_venue")
+                                                    or base_record.get(
+                                                        "venue_name"
+                                                    )
+                                                    or base_record.get("venue")
+                                                ),
+                                                "create_if_missing": True,
+                                                "review_note": (
+                                                    "Deterministically repaired "
+                                                    "legacy dangling venue "
+                                                    "reference during Admin "
+                                                    "metadata update."
+                                                ),
+                                            }
+                                if venue_proposal is not None:
+                                    venue_resolution = (
+                                        resolve_or_create_canonical_venue(
+                                            venue_proposal,
+                                            path=venue_aliases_path,
+                                        )
+                                    )
+                                    draft.update({
+                                        "venue": venue_resolution["venue_name"],
+                                        "venue_id": venue_resolution["venue_id"],
+                                        "venue_name": venue_resolution["venue_name"],
+                                        "venue_acronym": venue_resolution["venue_acronym"],
+                                        "venue_type": venue_resolution["venue_type"],
+                                        "venue_track": venue_resolution["venue_track"],
+                                        "raw_venue": clean(
+                                            venue_proposal.get("raw_alias")
+                                            or venue_proposal.get("raw_venue")
+                                            or venue_resolution["venue_name"]
+                                        ),
+                                        "publication_type": (
+                                            draft.get("publication_type")
+                                            or venue_resolution["venue_type"]
+                                        ),
+                                    })
                                 row = update_curated_paper(
                                     paper,
                                     draft,
@@ -3066,6 +3157,22 @@ def make_handler(
                             metadata_export_runner("export_preview")
                         )
                         perf.mark("export_preview")
+                    except VenueRegistryError as error:
+                        possible_matches = getattr(error, "possible_matches", [])
+                        self.send_json(
+                            HTTPStatus.CONFLICT
+                            if possible_matches
+                            else HTTPStatus.BAD_REQUEST,
+                            api_payload(
+                                success=False,
+                                data={"possible_matches": possible_matches},
+                                errors=(str(error),),
+                                stage="venue_resolution",
+                                saved=False,
+                                preview_refreshed=False,
+                            ),
+                        )
+                        return
                     except DuplicatePaperError as error:
                         self.send_json(
                             HTTPStatus.CONFLICT,
@@ -3097,6 +3204,7 @@ def make_handler(
                         "paper": effective_row,
                         "paper_summary": refreshed_summary,
                         "export": export_result,
+                        "venue": venue_resolution,
                     }
                     if PERF_LOG_ENABLED:
                         response_data["timings"] = timings

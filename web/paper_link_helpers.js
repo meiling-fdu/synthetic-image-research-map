@@ -136,7 +136,15 @@
   }
 
   function publishedVersionUrl(record) {
+    for (const value of [record.doi, record.doi_url]) {
+      const doi = normalizedDoi(value);
+      if (doi && !doi.toLocaleLowerCase().startsWith("10.48550/arxiv.")) {
+        return safeHttpUrl(`https://doi.org/${doi}`);
+      }
+    }
+
     const publisherUrl = firstOfficialUrl([
+      record.formal_url,
       record.publisher_url,
       record.published_url,
       record.official_publication_url,
@@ -144,13 +152,6 @@
     ]);
     if (publisherUrl) {
       return publisherUrl;
-    }
-
-    for (const value of [record.doi, record.doi_url]) {
-      const doi = normalizedDoi(value);
-      if (doi && !doi.toLocaleLowerCase().startsWith("10.48550/arxiv.")) {
-        return safeHttpUrl(`https://doi.org/${doi}`);
-      }
     }
 
     return firstOfficialUrl([
@@ -167,7 +168,7 @@
       arxivUrl || record.preprint_url || record.arxiv_url,
     );
     return deduplicatePaperLinks([
-      { label: "Paper", url: publishedVersionUrl(record) },
+      { label: "Publisher", url: publishedVersionUrl(record) },
       { label: "Preprint", url: preprintUrl },
     ]);
   }

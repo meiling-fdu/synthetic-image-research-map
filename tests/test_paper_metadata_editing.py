@@ -31,6 +31,10 @@ from scripts.paper_exclusions import (
     upsert_active_exclusion,
 )
 from scripts.serve_admin import load_admin_data, make_handler
+from scripts.venues import (
+    VenueRegistryError,
+    resolve_or_create_canonical_venue,
+)
 
 
 def curated_row(**overrides):
@@ -87,6 +91,77 @@ def write_exclusions(path, rows=()):
 
 
 class PaperMetadataEditingTests(unittest.TestCase):
+    def test_resolve_or_create_reuses_alias_and_creates_trackless_journal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            aliases_path = Path(directory) / "venues.csv"
+            shutil.copyfile(
+                Path(__file__).resolve().parents[1]
+                / "data"
+                / "curated"
+                / "venue_aliases.csv",
+                aliases_path,
+            )
+            existing = resolve_or_create_canonical_venue(
+                {
+                    "venue_name": "sensors",
+                    "venue_type": "journal",
+                    "venue_track": "",
+                    "raw_alias": "SENSORS",
+                    "create_if_missing": True,
+                },
+                aliases_path,
+            )
+            self.assertEqual(existing["venue_id"], "venue:sensors")
+            self.assertFalse(existing["created"])
+            before = aliases_path.read_bytes()
+            created = resolve_or_create_canonical_venue(
+                {
+                    "venue_name": "Journal of Transaction Safety",
+                    "venue_type": "journal",
+                    "venue_track": "",
+                    "raw_alias": "Journal of Transaction Safety",
+                    "create_if_missing": True,
+                },
+                aliases_path,
+            )
+            self.assertTrue(created["created"])
+            self.assertEqual(created["venue_track"], "")
+            self.assertNotEqual(before, aliases_path.read_bytes())
+            reused = resolve_or_create_canonical_venue(
+                {
+                    "venue_name": "JOURNAL OF TRANSACTION SAFETY",
+                    "venue_type": "journal",
+                    "raw_alias": "Journal-of-Transaction Safety",
+                    "create_if_missing": True,
+                },
+                aliases_path,
+            )
+            self.assertEqual(reused["venue_id"], created["venue_id"])
+            self.assertFalse(reused["created"])
+
+    def test_resolve_or_create_requires_explicit_creation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            aliases_path = Path(directory) / "venues.csv"
+            shutil.copyfile(
+                Path(__file__).resolve().parents[1]
+                / "data"
+                / "curated"
+                / "venue_aliases.csv",
+                aliases_path,
+            )
+            before = aliases_path.read_bytes()
+            with self.assertRaises(VenueRegistryError):
+                resolve_or_create_canonical_venue(
+                    {
+                        "venue_name": "Unregistered Venue",
+                        "venue_type": "journal",
+                        "raw_alias": "Unregistered Venue",
+                        "create_if_missing": False,
+                    },
+                    aliases_path,
+                )
+            self.assertEqual(aliases_path.read_bytes(), before)
+
     def test_abstract_only_patch_preserves_trackless_journal_identity(self):
         with tempfile.TemporaryDirectory() as directory:
             directory = Path(directory)
@@ -397,6 +472,66 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 )["data"]["venue"]
                 self.assertEqual(created["venue_acronym"], "CHI-X")
 
+    def test_metadata_update_atomically_creates_new_journal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(directory, []) as (
+                base_url, _original, curated_path, _links_path, display_id,
+            ):
+                proposal = {
+                    "venue_name": "Journal of Atomic Venue Updates",
+                    "venue_acronym": "JAVU",
+                    "venue_type": "journal",
+                    "venue_track": "",
+                    "raw_alias": "Journal of Atomic Venue Updates",
+                    "create_if_missing": True,
+                }
+                payload = self.metadata_request(
+                    base_url,
+                    "/api/paper/metadata/update",
+                    {
+                        "id": display_id,
+                        "authors": "Correct Author",
+                        "venue_proposal": proposal,
+                    },
+                )
+                venue = payload["data"]["venue"]
+                self.assertTrue(venue["created"])
+                self.assertEqual(venue["venue_track"], "")
+                saved = list(csv.DictReader(curated_path.open()))[0]
+                self.assertEqual(saved["venue_id"], venue["venue_id"])
+                venues = self.metadata_request(base_url, "/api/venues")["data"]["records"]
+                self.assertEqual(
+                    sum(row["venue_id"] == venue["venue_id"] for row in venues), 1
+                )
+
+    def test_authors_only_update_repairs_dangling_journal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(
+                directory,
+                [],
+                original_overrides={
+                    "authors": "Bad Delimiter",
+                    "venue": "Legacy Transaction Journal",
+                    "venue_id": "venue:legacy-transaction-journal",
+                    "venue_name": "Legacy Transaction Journal",
+                    "venue_type": "journal",
+                    "venue_track": "",
+                    "raw_venue": "Legacy Transaction Journal",
+                    "publication_type": "journal",
+                },
+            ) as (base_url, _original, curated_path, _links_path, display_id):
+                payload = self.metadata_request(
+                    base_url,
+                    "/api/paper/metadata/update",
+                    {"id": display_id, "authors": "Author One; Author Two"},
+                )
+                self.assertEqual(
+                    payload["data"]["venue"]["venue_id"],
+                    "venue:legacy-transaction-journal",
+                )
+                saved = list(csv.DictReader(curated_path.open()))[0]
+                self.assertEqual(saved["authors"], "Author One; Author Two")
+
     def test_frontend_loads_and_clears_metadata_on_paper_selection(self):
         source = (
             Path(__file__).resolve().parents[1] / "web" / "admin.js"
@@ -441,8 +576,45 @@ class PaperMetadataEditingTests(unittest.TestCase):
         self.assertIn("await refreshAfterMetadataSave(", save_body)
         self.assertNotIn("loadApplication(", save_body)
         self.assertIn("payload?.data?.paper_summary", refresh_body)
-        self.assertIn("await selectPaper(selectedId)", refresh_body)
+        self.assertIn("effective_record: savedPaper", refresh_body)
+        self.assertIn("populateMetadataForm();", refresh_body)
         self.assertIn("void loadDashboardAndQueues()", refresh_body)
+
+    def test_frontend_metadata_editor_has_accessible_explicit_save_states(self):
+        root = Path(__file__).resolve().parents[1]
+        source = (root / "web" / "admin.js").read_text()
+        html = (root / "web" / "admin.html").read_text()
+        save_body = source.split("async function saveMetadata(event) {", 1)[1].split(
+            "\nfunction renderPaperDetail", 1
+        )[0]
+        self.assertIn('id="metadata-save-status"', html)
+        self.assertIn('role="status" aria-live="polite"', html)
+        self.assertIn('id="metadata-edit-error" role="alert" tabindex="-1"', html)
+        for state_name in ("clean", "dirty", "saving", "success", "error"):
+            self.assertIn(f"{state_name}:", source)
+        self.assertIn("state.metadataSave.inFlight || !metadataFormIsDirty()", save_body)
+        self.assertIn('renderMetadataSaveStatus("saving")', save_body)
+        self.assertIn('"Curated override saved successfully."', save_body)
+        self.assertIn('renderMetadataSaveStatus("error")', save_body)
+        self.assertIn('elements["metadata-edit-error"].focus()', save_body)
+
+    def test_frontend_metadata_save_applies_authoritative_response_and_new_baseline(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "web" / "admin.js"
+        ).read_text()
+        save_body = source.split("async function saveMetadata(event) {", 1)[1].split(
+            "\nfunction renderPaperDetail", 1
+        )[0]
+        refresh_body = source.split("async function refreshAfterMetadataSave", 1)[1].split(
+            "\nasync function autofillArxivIds", 1
+        )[0]
+        self.assertIn("payload.success !== true || payload.saved !== true", save_body)
+        self.assertIn("payload.data?.paper", save_body)
+        self.assertIn("effective_record: savedPaper", refresh_body)
+        self.assertIn("curated_record: savedPaper", refresh_body)
+        self.assertIn("populateMetadataForm();", refresh_body)
+        self.assertNotIn("await selectPaper(selectedId)", refresh_body)
+        self.assertIn("state.metadataSave.baseline = metadataFormSnapshot();", source)
 
     def test_frontend_renders_empty_metadata_records_explicitly(self):
         source = (

@@ -551,7 +551,11 @@
                 </select></label>
                 <label class="full-width">Abstract<textarea id="metadata-abstract" rows="5"></textarea></label>
                 <label class="full-width">Review note<textarea id="metadata-review-note" rows="3"></textarea></label>
-                <p class="form-error full-width" id="metadata-edit-error" hidden></p>
+                <div class="metadata-save-status full-width" id="metadata-save-status" data-state="clean" role="status" aria-live="polite" aria-atomic="true">
+                  <span class="metadata-save-status-icon" aria-hidden="true"></span>
+                  <span id="metadata-save-status-text">No unsaved changes.</span>
+                </div>
+                <p class="form-error full-width" id="metadata-edit-error" role="alert" tabindex="-1" hidden></p>
                 <div class="form-actions full-width">
                   <button class="primary-button" id="metadata-edit-submit" type="submit">Save curated override</button>
                   <button class="secondary-button" id="metadata-edit-cancel" type="button">Cancel</button>

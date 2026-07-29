@@ -356,8 +356,19 @@ def create_canonical_venue(
         raise error
     venue_id = _stable_id(name, track)
     if venue_id in registry:
-        suffix = hashlib.sha256(f"{name}|{venue_type}|{track}".encode("utf-8")).hexdigest()[:8]
-        venue_id = f"{venue_id}-{suffix}"
+        base_id = venue_id
+        digest = hashlib.sha256(
+            f"{name}|{venue_type}|{track}".encode("utf-8")
+        ).hexdigest()
+        for offset in range(0, len(digest), 8):
+            candidate = f"{base_id}-{digest[offset:offset + 8]}"
+            if candidate not in registry:
+                venue_id = candidate
+                break
+        else:
+            raise VenueRegistryError(
+                f"canonical ID collision could not be resolved for {base_id!r}"
+            )
     aliases_to_add = list(dict.fromkeys([name, raw_alias]))
     new_rows = [
         {
@@ -380,6 +391,89 @@ def create_canonical_venue(
     temporary.replace(path)
     venue = canonical_venue_by_id(venue_id, [*rows, *new_rows])
     return {**venue, "aliases": aliases_to_add, "possible_matches": possible_matches}
+
+
+def resolve_or_create_canonical_venue(
+    draft: Mapping[str, Any],
+    path: Path = DEFAULT_VENUE_ALIASES_PATH,
+) -> dict[str, Any]:
+    """Resolve an exact canonical identity or explicitly create it.
+
+    Exact matching is deliberately punctuation/case/whitespace insensitive and
+    covers canonical names, acronyms, and reviewed aliases. Near matches remain
+    reviewable and are never merged automatically.
+    """
+    name = clean_text(draft.get("venue_name"))
+    acronym = clean_text(draft.get("venue_acronym"))
+    raw_alias = clean_text(draft.get("raw_alias") or draft.get("raw_venue") or name)
+    if not name:
+        raise VenueRegistryError("venue_name is required")
+    rows = read_venue_aliases(path)
+    registry = _canonical_registry(rows)
+    requested_type, requested_track = validate_venue_type_track(
+        draft.get("venue_type"),
+        draft.get("venue_track")
+        or ("main" if normalize_venue_type(draft.get("venue_type")) == "conference" else ""),
+    )
+    query_keys = {
+        alias_key(value) for value in (name, acronym, raw_alias) if alias_key(value)
+    }
+    exact_ids = {
+        venue["venue_id"]
+        for venue in registry.values()
+        if query_keys
+        & {
+            alias_key(value)
+            for value in (
+                venue["venue_name"],
+                venue["venue_acronym"],
+                *venue.get("aliases", []),
+            )
+            if alias_key(value)
+        }
+    }
+    if len(exact_ids) > 1:
+        error = VenueRegistryError("venue proposal matches multiple canonical venues")
+        error.possible_matches = [  # type: ignore[attr-defined]
+            {**registry[venue_id], "venue_label": display_venue(registry[venue_id])}
+            for venue_id in sorted(exact_ids)
+        ]
+        raise error
+    if exact_ids:
+        venue = dict(registry[next(iter(exact_ids))])
+        if (
+            venue["venue_type"] != requested_type
+            or venue["venue_track"] != requested_track
+        ):
+            raise VenueRegistryError(
+                "existing venue match conflicts with the proposed venue type or track"
+            )
+        return {
+            **venue,
+            "venue_label": display_venue(venue),
+            "resolution_action": "resolved_to_existing",
+            "created": False,
+        }
+    if draft.get("create_if_missing") is not True:
+        raise VenueRegistryError(
+            "venue is unresolved; set create_if_missing=true after explicit review"
+        )
+    venue = create_canonical_venue(
+        {
+            **draft,
+            "venue_name": name,
+            "venue_acronym": acronym,
+            "venue_type": requested_type,
+            "venue_track": requested_track,
+            "raw_alias": raw_alias,
+        },
+        path=path,
+    )
+    return {
+        **venue,
+        "resolution_action": "created_missing_canonical_venue",
+        "created": True,
+    }
 
 
 def _strip_edition_noise(value: str) -> str:

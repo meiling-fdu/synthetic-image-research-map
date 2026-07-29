@@ -11,8 +11,10 @@ from typing import Any, Dict, Mapping, MutableMapping, Sequence, Tuple
 
 try:
     from .curated_schema import PAPER_VERSION_MERGE_COLUMNS, CURATED_DATA_DIR
+    from .paper_links import is_arxiv_doi, resolve_public_links
 except ImportError:
     from curated_schema import PAPER_VERSION_MERGE_COLUMNS, CURATED_DATA_DIR
+    from paper_links import is_arxiv_doi, resolve_public_links
 
 
 DEFAULT_PAPER_VERSION_MERGES_PATH = (
@@ -170,6 +172,13 @@ def _merge_arxiv_metadata(
         ) or row.get("duplicate_year")
     for field in ("abstract", "abstract_source"):
         _copy_missing(canonical, duplicate, field)
+    if is_arxiv_doi(canonical.get("doi")) and not is_arxiv_doi(duplicate.get("doi")):
+        canonical["doi"] = duplicate["doi"]
+    links = resolve_public_links(canonical)
+    canonical["paper_url"] = links["formal_url"]
+    canonical["formal_url"] = links["formal_url"]
+    canonical["primary_url"] = links["primary_url"]
+    canonical["url"] = links["primary_url"]
     merged_version = {
         "title": clean(
             row.get("duplicate_title") or duplicate.get("title")

@@ -55,9 +55,11 @@ class AdminVenueComboboxFrontendTests(unittest.TestCase):
         self.assertIn("publication_type_override: state.publicationTypeOverride", self.source)
         self.assertIn("Publication type conflicts with the selected canonical venue", self.source)
         self.assertIn("replace_raw_venue", self.source)
-        self.assertIn('apiFetch("/api/venues/create"', self.source)
+        self.assertIn("draft.venue_proposal = state.pendingVenueProposal", self.source)
+        self.assertIn("Assigned by the backend when saved", self.source)
+        self.assertNotIn('apiFetch("/api/venues/create"', self.source)
         self.assertIn("possible_matches", self.source)
-        self.assertIn("selectionSequence !== paperSelectionSequence || selectedId !== state.selectedId", self.source)
+        self.assertIn("selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId", self.source)
         self.assertIn("venueLoadSequence !== paperSelectionSequence || venueLoadPaperId !== state.selectedId", self.source)
 
 

@@ -36,6 +36,7 @@ try:
     )
     from .name_matching import canonical_name_key, names_match
     from .curated_papers import normalize_author_names
+    from .paper_links import resolve_public_links
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -58,6 +59,7 @@ except ImportError:
     )
     from name_matching import canonical_name_key, names_match
     from curated_papers import normalize_author_names
+    from paper_links import resolve_public_links
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -653,21 +655,11 @@ def _matching_papers(
 
 def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
     year = _parse_year(row.get("year"))
-    arxiv_id = clean(row.get("arxiv_id"))
-    paper_url = clean(row.get("paper_url"))
-    openalex_url = clean(row.get("openalex_url"))
     doi = clean(row.get("doi"))
-    if not paper_url:
-        if doi:
-            paper_url = (
-                doi
-                if doi.casefold().startswith(("http://", "https://"))
-                else f"https://doi.org/{doi}"
-            )
-        elif arxiv_id:
-            paper_url = f"https://arxiv.org/abs/{arxiv_id}"
-        else:
-            paper_url = openalex_url
+    links = resolve_public_links(row)
+    arxiv_id = links["arxiv_id"]
+    paper_url = links["formal_url"]
+    openalex_url = links["openalex_url"]
     review_status = clean(row.get("review_status"))
     note = clean(row.get("review_note"))
     publication_type = normalize_publication_type(
@@ -706,15 +698,16 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         "ai_summary": "",
         "doi": doi,
         "arxiv_id": arxiv_id,
-        "arxiv_url": f"https://arxiv.org/abs/{arxiv_id}" if arxiv_id else "",
+        "arxiv_url": links["arxiv_url"],
         "arxiv_year": None,
         "has_arxiv_version": bool(arxiv_id),
         "paper_url": paper_url,
-        "primary_url": paper_url,
+        "formal_url": paper_url,
+        "primary_url": links["primary_url"],
         "landing_page_url": "",
         "openalex_url": openalex_url,
         "is_arxiv_preprint": bool(arxiv_id and not doi),
-        "url": paper_url,
+        "url": links["primary_url"],
         "authors": _parse_curated_authors(row.get("authors")),
         "source_database": clean(row.get("source_database")) or "curated",
         "metadata_source": clean(row.get("metadata_source")),
@@ -796,6 +789,14 @@ def _merge_curated_paper(
     normalized = normalize_book_record(existing)
     existing.clear()
     existing.update(normalized)
+    links = resolve_public_links(existing)
+    existing["arxiv_id"] = links["arxiv_id"]
+    existing["arxiv_url"] = links["arxiv_url"]
+    existing["has_arxiv_version"] = bool(links["arxiv_id"])
+    existing["paper_url"] = links["formal_url"]
+    existing["formal_url"] = links["formal_url"]
+    existing["primary_url"] = links["primary_url"]
+    existing["url"] = links["primary_url"]
 
 
 def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
@@ -863,11 +864,8 @@ def _curated_marker(
         latitude = location.get("lat")
     if longitude in (None, ""):
         longitude = location.get("lon")
-    paper_url = clean(
-        paper.get("paper_url")
-        or paper.get("primary_url")
-        or paper.get("openalex_url")
-    )
+    links = resolve_public_links(paper)
+    paper_url = links["formal_url"]
     cache_fallback = (
         clean(location.get("_location_resolution_source"))
         == "processed_cache_fallback"
@@ -908,15 +906,16 @@ def _curated_marker(
         "abstract": clean(paper.get("abstract")),
         "abstract_source": clean(paper.get("abstract_source")),
         "doi": clean(paper.get("doi")),
-        "arxiv_id": clean(paper.get("arxiv_id")),
-        "arxiv_url": clean(paper.get("arxiv_url")),
+        "arxiv_id": links["arxiv_id"],
+        "arxiv_url": links["arxiv_url"],
         "has_arxiv_version": bool(
             clean(paper.get("arxiv_id")) or clean(paper.get("arxiv_url"))
         ),
         "paper_url": paper_url,
-        "primary_url": paper_url,
-        "openalex_url": clean(paper.get("openalex_url")),
-        "url": paper_url,
+        "formal_url": paper_url,
+        "primary_url": links["primary_url"],
+        "openalex_url": links["openalex_url"],
+        "url": links["primary_url"],
         "authors": _parse_people(paper.get("authors")),
         "institution": clean(mapping.get("institution")),
         "institution_id": clean(mapping.get("institution_id"))

@@ -32,6 +32,7 @@ try:
         normalize_book_record,
         normalize_publication_type,
     )
+    from .paper_links import resolve_public_links
     from .venues import (
         VenueRegistryError,
         canonicalize_record,
@@ -58,6 +59,7 @@ except ImportError:
         normalize_book_record,
         normalize_publication_type,
     )
+    from paper_links import resolve_public_links
     from venues import (
         VenueRegistryError,
         canonicalize_record,
@@ -340,6 +342,10 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "review_status": review_status,
         "review_note": clean(draft.get("review_note")),
     }
+    links = resolve_public_links(normalized)
+    normalized["doi"] = links["formal_doi"]
+    normalized["arxiv_id"] = links["arxiv_id"]
+    normalized["paper_url"] = links["formal_url"]
     normalized = normalize_book_record(normalized)
     normalized = canonicalize_record(normalized)
     normalized = normalize_book_record(normalized)

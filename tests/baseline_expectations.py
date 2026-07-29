@@ -7,7 +7,7 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "curated_papers": 221,
+    "curated_papers": 222,
     "public_unique_papers": 511,
     "public_map_relationships": 1056,
     "canonical_institution_rows": 594,
@@ -39,9 +39,9 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
 }
 
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 244,
+    "conference": 245,
     "journal": 183,
-    "preprint": 64,
+    "preprint": 63,
     "book": 20,
 }
 
