@@ -932,6 +932,9 @@ function closeGlobalSearch() {
 
 function renderGlobalSearch() {
   const query = normalize(elements["global-search-input"].value);
+  const institutionQuery = canonicalInstitutionKey(
+    elements["global-search-input"].value
+  );
   const results = elements["global-search-results"];
   results.replaceChildren();
   if (query.length < 2) { closeGlobalSearch(); return; }
@@ -957,7 +960,36 @@ function renderGlobalSearch() {
     });
     results.append(button);
   });
-  if (!matches.length) results.textContent = "No matching local records.";
+  const institutionMatches = institutionQuery.length < 2 ? [] : state.institutions
+    .filter((institution) => [
+      institution.canonical_name,
+      ...(institution.aliases || []),
+    ].some((name) => canonicalInstitutionKey(name).includes(institutionQuery)))
+    .slice(0, Math.max(0, 8 - matches.length));
+  institutionMatches.forEach((institution) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "global-search-result";
+    button.setAttribute("role", "option");
+    const title = document.createElement("strong");
+    title.textContent = text(institution.canonical_name) || institution.institution_id;
+    const meta = document.createElement("small");
+    meta.textContent = `Institution · ${humanize(institution.institution_type)}`;
+    button.append(title, meta);
+    button.addEventListener("click", () => {
+      navigateConsole("institutions");
+      elements["institution-management-search"].value =
+        text(institution.canonical_name);
+      state.institutionManagement.query = text(institution.canonical_name);
+      state.institutionManagement.page = 1;
+      openInstitutionManagement();
+      closeGlobalSearch();
+    });
+    results.append(button);
+  });
+  if (!matches.length && !institutionMatches.length) {
+    results.textContent = "No matching local records.";
+  }
   results.hidden = false;
   elements["global-search-input"].setAttribute("aria-expanded", "true");
 }
@@ -5106,7 +5138,8 @@ function openMappingDialog(mode, mapping = {}) {
 }
 
 function canonicalInstitutionKey(value) {
-  return text(value).normalize("NFKC").toLocaleLowerCase()
+  return text(value).normalize("NFKD").replace(/\p{M}+/gu, "")
+    .toLocaleLowerCase()
     .match(/[\p{L}\p{N}_]+/gu)?.join(" ") || "";
 }
 

@@ -11,7 +11,7 @@ Unique papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized 
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-28T14:27:39Z |
+| public_preview_generated_at | 2026-07-29T04:56:15Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -122,7 +122,7 @@ Count: **106**
 - Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-36c5c60d14ab8d83`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
-- OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Xi’an Jiaotong University; `openalex-candidate-20ef2bae71c5cf78`
+- OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Xi'an Jiaotong University; `openalex-candidate-20ef2bae71c5cf78`
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025) - Tencent (China); `openalex-candidate-6162788b83db1bc7`
 - CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025) - Purdue University West Lafayette; `openalex-candidate-000ae598a83c4cc6`
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - University of Hong Kong; `openalex-candidate-3e36acb7cecb0f1d`
@@ -142,7 +142,7 @@ Count: **106**
 - Training Deep Neural Networks for Detecting Drinking Glasses Using Synthetic Images (2017) - University of Newcastle Australia; `openalex-candidate-c6a3aad67947571f`
 - Diffusion Models as a Representation Learner for Deepfake Image Detection (2024) - Computer Research Institute of Montreal; `openalex-candidate-0ea11c8fa9b8246c`
 - Deepfake Image Detection Using Convolutional Neural Network (2025) - University of Engineering & Management; `openalex-candidate-c48325391c4c055f`
-- Light2Lie: Detecting Deepfake Images Using Physical Reflectance Laws (2026) - Technische Universität Darmstadt; `openalex-candidate-ffc5d929530a3f5f`
+- Light2Lie: Detecting Deepfake Images Using Physical Reflectance Laws (2026) - Technical University of Darmstadt; `openalex-candidate-ffc5d929530a3f5f`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore Institute of Technology; `openalex-candidate-99e15d52b1295c7d`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - University of Oslo; `openalex-candidate-fbde6235f0aade1e`
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - University of Seoul; `openalex-candidate-c12aedb83c12d14b`
@@ -173,7 +173,7 @@ Count: **106**
 - Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Shandong Academy of Sciences; `openalex-candidate-c6b33fd930b71a45`
 - Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Wuhan Institute of Technology; `openalex-candidate-d58759107c8e4179`
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4a516cc1ca95d8a3`
-- Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Centre National de la Recherche Scientifique; `openalex-candidate-946b2b9eadfa8d46`
+- Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - French National Centre for Scientific Research; `openalex-candidate-946b2b9eadfa8d46`
 - Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Université Paris-Saclay; `openalex-candidate-f130bd2750a3091a`
 - Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Centre Borelli; `openalex-candidate-ab5caf38c08b1f42`
 - Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Agence France-Presse; `openalex-candidate-ec4a1e74d34806d1`
