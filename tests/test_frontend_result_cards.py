@@ -52,7 +52,6 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn('closest(".paper-authors-toggle")', self.app)
         self.assertIn('setAttribute("aria-expanded"', self.app)
         self.assertIn('aria-controls="${regionId}"', authors)
-        self.assertIn("content?.toggleAttribute(", self.app)
         self.assertNotIn("[object Object]", authors)
 
     def test_institution_cards_preserve_scoped_mappings(self):
@@ -78,42 +77,41 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn("Show fewer institutions", self.app)
         self.assertIn('aria-label="Paper institutions"', institutions)
 
-    def test_view_specific_fixed_heights_and_stretched_grid_cells(self):
-        self.assertIn("--result-card-height: 372px", self.css)
-        self.assertIn("--result-card-height: 404px", self.css)
+    def test_grid_uses_content_sized_rows_and_stretched_row_local_cards(self):
         results_list = self.css.split(".results-list {", 1)[1].split("}", 1)[0]
         self.assertIn("align-items: stretch", results_list)
-        self.assertIn("grid-auto-rows: var(--result-card-height)", results_list)
+        self.assertNotIn("grid-auto-rows", results_list)
         item = self.css.split(".result-item {", 1)[1].split("}", 1)[0]
-        self.assertIn("height: 100%", item)
         self.assertIn("align-self: stretch", item)
+        self.assertNotIn("height:", item)
         card = self.css.split(".result-card {", 1)[1].split("}", 1)[0]
-        self.assertIn("height: 100%", card)
-        self.assertIn("overflow: hidden", card)
+        self.assertNotIn("height:", card)
+        self.assertNotIn("overflow: hidden", card)
+        self.assertNotIn("--result-card-height", self.css)
 
-    def test_adaptive_content_is_bounded_and_footer_is_anchored(self):
+    def test_adaptive_content_and_metadata_follow_natural_flow(self):
         adaptive = self.css.split(".result-card-adaptive {", 1)[1].split("}", 1)[0]
-        self.assertIn("min-height: 0", adaptive)
-        self.assertIn("overflow: hidden", adaptive)
+        self.assertIn("min-width: 0", adaptive)
+        self.assertNotIn("flex:", adaptive)
+        self.assertNotIn("overflow:", adaptive)
         secondary = self.css.split(".result-secondary {", 1)[1].split("}", 1)[0]
-        self.assertIn("margin-top: auto", secondary)
-        self.assertIn("flex: 0 0 auto", secondary)
-        self.assertIn("max-height: 2.8em", self.css)
-        self.assertIn("max-height: 78px", self.css)
-        self.assertIn("overflow: auto", self.css)
+        self.assertNotIn("margin-top: auto", secondary)
+        self.assertNotIn("flex:", secondary)
+        self.assertNotIn("max-height: 78px", self.css)
+        self.assertNotIn(".result-authors.is-expanded", self.css)
+        self.assertNotIn(".result-paper-institutions.is-expanded", self.css)
 
-    def test_view_classes_are_replaced_cleanly_on_every_render(self):
+    def test_render_does_not_apply_stale_fixed_height_view_classes(self):
         render = self.function("renderResults", "selectResultsView")
-        self.assertIn('classList.toggle("results-list-institutions"', render)
-        self.assertIn('classList.toggle("results-list-papers"', render)
-        self.assertIn('resultsView === "institutions"', render)
-        self.assertIn('resultsView === "papers"', render)
+        self.assertNotIn("results-list-institutions", render)
+        self.assertNotIn("results-list-papers", render)
+        self.assertNotIn("result-card-height", self.app)
 
-    def test_expansion_preserves_outer_height_and_accessibility(self):
-        self.assertIn('classList.toggle("is-expanded"', self.app)
-        self.assertIn("content?.toggleAttribute(", self.app)
+    def test_expansion_uses_natural_growth_and_accessible_controls(self):
+        self.assertIn("overflow.hidden = isExpanded", self.app)
         self.assertIn('aria-controls="${regionId}"', self.app)
         self.assertNotIn("style.height", self.app)
+        self.assertNotIn('toggleAttribute("tabindex"', self.app)
 
     def test_publication_row_badges_and_links_are_nonduplicative(self):
         venue = self.function("resultVenueYear", "resultLinks")

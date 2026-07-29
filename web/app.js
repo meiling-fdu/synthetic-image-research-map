@@ -2815,8 +2815,6 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
   resultsList.replaceChildren();
   resultsEmpty.hidden = count !== 0;
   resultsList.hidden = count === 0;
-  resultsList.classList.toggle("results-list-institutions", resultsView === "institutions");
-  resultsList.classList.toggle("results-list-papers", resultsView === "papers");
 
   if (!count) {
     return;
@@ -3999,12 +3997,7 @@ maxYearFilter.addEventListener("keydown", (event) => {
       const isExpanded = authorToggle.getAttribute("aria-expanded") === "true";
       authorToggle.setAttribute("aria-expanded", String(!isExpanded));
       authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
-      section?.classList.toggle("is-expanded", !isExpanded);
       if (overflow) overflow.hidden = isExpanded;
-      content?.toggleAttribute(
-        "tabindex",
-        !isExpanded && content.scrollHeight > content.clientHeight,
-      );
       return;
     }
     const institutionToggle = event.target.closest(".result-institutions-toggle");
@@ -4016,13 +4009,7 @@ maxYearFilter.addEventListener("keydown", (event) => {
       institutionToggle.textContent = isExpanded
         ? "Show all institutions"
         : "Show fewer institutions";
-      section?.classList.toggle("is-expanded", !isExpanded);
       if (overflow) overflow.hidden = isExpanded;
-      const content = section?.querySelector(".result-institutions-content");
-      content?.toggleAttribute(
-        "tabindex",
-        !isExpanded && content.scrollHeight > content.clientHeight,
-      );
       return;
     }
     const button = event.target.closest("[data-institution-filter]");
