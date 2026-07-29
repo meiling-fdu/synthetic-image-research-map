@@ -68,6 +68,31 @@ def merge_row(canonical, duplicate):
 
 
 class PublicExportShrinkageTests(unittest.TestCase):
+    def test_orphan_cleanup_evidence_explains_only_matching_marker(self):
+        old_paper = paper()
+        old_marker = marker(old_paper, "institution:orphan", "Orphan")
+        report = analyze_shrinkage(
+            [old_paper], [old_paper], [old_marker], [],
+            orphan_cleanup_audits=[{
+                "institution_id": "institution:orphan",
+                "decision": "deleted_orphan",
+                "deleted_from_registry": "true",
+                "run_id": "cleanup:1",
+            }],
+        )
+        self.assertTrue(report.allowed)
+        unrelated = analyze_shrinkage(
+            [old_paper], [old_paper],
+            [marker(old_paper, "institution:other", "Other")], [],
+            orphan_cleanup_audits=[{
+                "institution_id": "institution:orphan",
+                "decision": "deleted_orphan",
+                "deleted_from_registry": "true",
+                "run_id": "cleanup:1",
+            }],
+        )
+        self.assertFalse(unrelated.allowed)
+
     def write_baseline(
         self, directory: str, papers: int, maps: int, name: str = "baseline.json"
     ) -> Path:

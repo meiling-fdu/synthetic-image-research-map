@@ -206,6 +206,9 @@ DEFAULT_REVIEW_DECISIONS = (
 DEFAULT_CURATED_ARXIV_LINKS = Path("data/curated/paper_arxiv_links.csv")
 DEFAULT_INSTITUTION_HIERARCHY = Path("data/curated/institution_hierarchy.csv")
 DEFAULT_EXPORT_BASELINE = Path("data/curated/public_export_baseline.json")
+DEFAULT_ORPHAN_CLEANUP_AUDIT = Path(
+    "data/processed/orphan_institution_cleanup_audit.csv"
+)
 DEFAULT_MIN_CONFIDENCE = "medium"
 ALLOWED_PUBLIC_TASKS = {
     "detection",
@@ -4017,6 +4020,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             )
         institution_rows = load_institutions(args.institutions)
         institution_audit_rows = read_csv_rows(args.institution_audit_log)
+        orphan_cleanup_audit_rows = read_csv_rows(DEFAULT_ORPHAN_CLEANUP_AUDIT)
         exported_aliases = public_institution_aliases(
             institution_alias_rows,
             integrated_location_reviews,
@@ -4215,6 +4219,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 review_decisions=review_decisions,
                 curated_mappings=curated_mappings,
                 institution_audits=institution_audit_rows,
+                orphan_cleanup_audits=orphan_cleanup_audit_rows,
                 institution_redirects=exported_id_redirects,
                 approved_by_baseline=approved_baseline_allows(
                     len(integrated_papers),

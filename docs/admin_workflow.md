@@ -272,6 +272,39 @@ institution redirect. Inactive exclusions with restoration metadata are history,
 not removal authority. The command prints every removed identity, its evidence,
 all unexplained removals, and a proceed/block decision.
 
+### Orphan institution cleanup
+
+The full refresh runs `scripts/orphan_institution_cleanup.py --authoritative`
+after institution consistency and review resolution, and before curated
+validation and public export. It proves source completeness by requiring every
+retained public paper identity to occur in the same authoritative source layers
+used by export: candidate map data, both processed candidate-paper tables,
+curated papers, key-paper/enrichment inputs, reviewed OpenAlex intake, or
+explicit version/override evidence. `scripts/full_source_completeness.py` runs
+immediately before cleanup and writes the original narrow-union failures to
+`data/processed/full_source_completeness_audit.csv`. Override-only or
+preserved-public-only records remain blockers unless a curator records an active
+exception in `data/curated/full_source_completeness_exceptions.csv`. If any
+retained identity remains blocked, cleanup runs report-only: no registry, alias,
+hierarchy, or location file is changed.
+
+On a proven-complete graph, cleanup marks institutions reached by active or
+reviewable author–institution mappings, confirmed aliases, confirmed hierarchy
+ancestors, reviewed location evidence, merge/replacement targets, durable audit
+relationships, any historical mapping/review/override reference, or explicit
+protection. A location marker alone is not a root; a marker attached to a
+retained paper is a retained paper–institution relationship and is a root.
+Only unreachable canonical rows are swept. Reviewed replacements and exact
+normalized names with matching city/country may preserve the old display name
+as an alias; fuzzy similarity only produces `ambiguous_duplicate`. Registry,
+exclusive-location, owned-alias, and hierarchy edits are committed with
+rollback as a unit. Every decision is recorded in
+`data/processed/orphan_institution_cleanup_audit.csv`.
+
+The public shrinkage guard accepts a confirmed cleanup record only for a removed
+map relationship with that exact institution ID. It does not explain unrelated
+paper or marker removal.
+
 `data/curated/public_export_baseline.json` remains a bootstrap/disaster reference
 when there is no previous public output to compare, but it is not an
 unconditional lower bound for normal Admin maintenance and is never rewritten

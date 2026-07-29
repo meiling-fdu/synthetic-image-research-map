@@ -392,6 +392,7 @@ def analyze_shrinkage(
     review_decisions: Sequence[Mapping[str, Any]] = (),
     curated_mappings: Sequence[Mapping[str, Any]] = (),
     institution_audits: Sequence[Mapping[str, Any]] = (),
+    orphan_cleanup_audits: Sequence[Mapping[str, Any]] = (),
     institution_redirects: Optional[Mapping[str, str]] = None,
     approved_by_baseline: bool = False,
 ) -> ShrinkageReport:
@@ -451,6 +452,21 @@ def analyze_shrinkage(
         mapping_audit = _mapping_audit_evidence(
             old, institution_audits, new_maps, institution_redirects
         )
+        institution_id = clean(
+            old.get("institution_id") or old.get("canonical_institution_id")
+        )
+        orphan_cleanup = next(
+            (
+                row for row in orphan_cleanup_audits
+                if clean(row.get("institution_id")) == institution_id
+                and clean(row.get("decision")) in {
+                    "deleted_orphan", "merged_then_deleted",
+                    "alias_preserved_then_deleted",
+                }
+                and clean(row.get("deleted_from_registry")).casefold() == "true"
+            ),
+            None,
+        )
         follows_paper = any(_keys(old) & keys for keys in explained_paper_keys)
         if exclusion:
             evidence = f"active exclusion {clean(exclusion.get('exclusion_id'))}"
@@ -469,12 +485,18 @@ def analyze_shrinkage(
                 "authoritative mapping IDs: "
                 f"{clean(mapping.get('mapping_id'))}"
             )
+        elif orphan_cleanup:
+            evidence = (
+                "authoritative orphan-institution cleanup "
+                f"{clean(orphan_cleanup.get('run_id'))}"
+            )
         elif follows_paper:
             evidence = "follows explained paper removal"
         else:
             evidence = "no durable paper or institution-mapping evidence"
         explained = bool(
-            exclusion or merge or decision or mapping_audit or mapping or follows_paper
+            exclusion or merge or decision or mapping_audit or mapping
+            or orphan_cleanup or follows_paper
         )
         identity = f"{_identity_label(old)} + {_institution_identity(old)}"
         map_removals.append(

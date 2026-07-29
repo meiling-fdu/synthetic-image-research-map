@@ -117,7 +117,7 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
 
     def test_status_and_type_totals_reconcile_their_declared_populations(self):
         statuses = Counter(row["institution_status"] for row in self.institutions)
-        self.assertEqual(statuses, {"active": 589, "merged": 4, "ignored": 1})
+        self.assertEqual(statuses, {"active": 594, "ignored": 1})
         self.assertEqual(
             Counter(row["institution_type"] for row in self.institutions),
             CANONICAL_INSTITUTION_TYPE_TOTALS,

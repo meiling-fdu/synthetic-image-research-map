@@ -7,40 +7,40 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "curated_papers": 222,
-    "public_unique_papers": 511,
-    "public_map_relationships": 1056,
-    "canonical_institution_rows": 594,
-    "active_canonical_institutions": 589,
-    "inactive_or_merged_institutions": 5,
-    "author_institution_mappings": 653,
+    "curated_papers": 224,
+    "public_unique_papers": 512,
+    "public_map_relationships": 1077,
+    "canonical_institution_rows": 595,
+    "active_canonical_institutions": 594,
+    "inactive_or_merged_institutions": 1,
+    "author_institution_mappings": 660,
     "institution_hierarchy_edges": 6,
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 451,
+    "university": 452,
     "research_unit": 69,
     "company": 61,
     "other": 13,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 449,
-    "research_unit": 68,
+    "university": 452,
+    "research_unit": 69,
     "company": 60,
-    "other": 12,
+    "other": 13,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    "university": 481,
+    "university": 482,
     "research_unit": 99,
     "company": 73,
     "other": 39,
 }
 
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 245,
-    "journal": 183,
+    "conference": 247,
+    "journal": 182,
     "preprint": 63,
     "book": 20,
 }
@@ -48,7 +48,7 @@ PUBLICATION_TYPE_TOTALS = {
 TASK_TOTALS = {
     "detection": 439,
     "source_attribution": 46,
-    "detection_and_source_attribution": 26,
+    "detection_and_source_attribution": 27,
 }
 
 INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {

@@ -2,6 +2,22 @@
 
 ## Canonical institution entities
 
+`data/processed/orphan_institution_cleanup_audit.csv` is the durable decision
+log produced during every full refresh. It records reachability counts,
+hierarchy and replacement targets, the full-source/report-only decision,
+location deletion, any alias preserved on a retained target, and deterministic
+run metadata. A marker count is diagnostic support data and never independently
+keeps a canonical institution alive.
+
+`data/processed/full_source_completeness_audit.csv` records each paper that the
+legacy candidate-map-plus-curated check could not account for, its matches
+across authoritative exporter inputs and override layers, its resolution
+status, root cause, proposed action, and durable evidence path. The generated
+report cannot authorize its own exceptions. Any intentional preservation
+exception must be curator-maintained in
+`data/curated/full_source_completeness_exceptions.csv`; absent or inactive
+exception files authorize nothing.
+
 `data/curated/institutions.csv` owns institution identity. Each row has a stable
 `institution_id`, `canonical_name`, `institution_type`, `institution_status`, an
 optional `parent_institution_id`, and a `public_display` preference. Ignored,

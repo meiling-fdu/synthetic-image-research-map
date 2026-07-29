@@ -46,6 +46,8 @@ KNOWN_WORKFLOW_OUTPUTS = (
     Path("data/manual/missing_author_mappings_report.csv"),
     Path("data/manual/institution_consistency_audit.csv"),
     Path("data/curated/institution_review_queue.csv"),
+    Path("data/processed/orphan_institution_cleanup_audit.csv"),
+    Path("data/processed/full_source_completeness_audit.csv"),
     Path("docs/missing_author_mappings_report.md"),
     Path("docs/public_preview_report.md"),
 )
@@ -61,6 +63,15 @@ INSTITUTION_CONSISTENCY_REPORT = (
 INSTITUTION_REVIEW_QUEUE_SYNC = (
     "python3",
     "scripts/sync_institution_review_queue.py",
+)
+ORPHAN_INSTITUTION_CLEANUP = (
+    "python3",
+    "scripts/orphan_institution_cleanup.py",
+    "--authoritative",
+)
+FULL_SOURCE_COMPLETENESS_AUDIT = (
+    "python3",
+    "scripts/full_source_completeness.py",
 )
 PAPER_EXCLUSION_VALIDATION = (
     "python3",
@@ -109,6 +120,8 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
     "full_refresh": (
         INSTITUTION_CONSISTENCY_REPORT,
         INSTITUTION_REVIEW_QUEUE_SYNC,
+        FULL_SOURCE_COMPLETENESS_AUDIT,
+        ORPHAN_INSTITUTION_CLEANUP,
         CURATED_VALIDATION,
         PAPER_EXCLUSION_VALIDATION,
         EXPORT_PREVIEW,
