@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-29T08:04:39Z |
+| public_preview_generated_at | 2026-07-30T19:12:32Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,14 +19,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1080 |
-| Unique mapped papers | 496 |
-| Unique institutions | 568 |
+| Map records | 1078 |
+| Unique mapped papers | 495 |
+| Unique institutions | 566 |
 | Countries | 53 |
-| arXiv/preprint records | 572 |
-| Records with DOI | 1030 |
-| Records with venue | 976 |
-| Records missing venue | 104 |
+| arXiv/preprint records | 567 |
+| Records with DOI | 1028 |
+| Records with venue | 985 |
+| Records missing venue | 93 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 424 |
+| detection | 423 |
 | source_attribution | 45 |
 | detection_and_source_attribution | 27 |
 
@@ -45,9 +45,9 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Year | Records |
 | --- | ---: |
 | 2026 | 119 |
-| 2025 | 135 |
-| 2024 | 114 |
-| 2023 | 52 |
+| 2025 | 136 |
+| 2024 | 111 |
+| 2023 | 53 |
 | 2022 | 22 |
 | 2021 | 23 |
 | 2020 | 15 |
@@ -59,14 +59,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Venue | Records |
 | --- | ---: |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 27 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 28 |
 | AAAI Conference on Artificial Intelligence (AAAI) | 23 |
 | International Conference on Machine Learning (ICML) | 17 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 13 |
-| Advances in Neural Information Processing Systems (NeurIPS) | 10 |
+| Advances in Neural Information Processing Systems (NeurIPS) | 11 |
+| International Conference on Learning Representations (ICLR) | 10 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 9 |
 | IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 9 |
-| International Conference on Learning Representations (ICLR) | 9 |
 | ACM International Conference on Multimedia (ACM MM) | 6 |
 | IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops | 6 |
 
@@ -76,7 +76,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | ---: |
 | China | 481 |
 | United States | 144 |
-| Italy | 83 |
+| Italy | 82 |
 | India | 55 |
 | Germany | 41 |
 | United Kingdom | 32 |
@@ -104,14 +104,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 927 |
-| medium | 153 |
+| high | 928 |
+| medium | 150 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **104**
+Count: **93**
 
 - Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection (2024) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4be0623e58aa0b48`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore University of Technology and Design; `openalex-candidate-f322e509be974b4c`
@@ -119,10 +119,8 @@ Count: **104**
 - Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - Fraunhofer Institute for Industrial Mathematics; `openalex-candidate-3414531128452fdf`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Guangdong University of Technology; `openalex-candidate-c0bb1e92f74d43e7`
 - Detecting Generated Images by Real Images (2022) - Chongqing University of Posts and Telecommunications; `openalex-candidate-39db27838e50b6bb`
-- Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-36c5c60d14ab8d83`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Comilla University; `openalex-candidate-ebe60fc6abbab654`
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
-- OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Xi'an Jiaotong University; `openalex-candidate-20ef2bae71c5cf78`
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025) - Tencent (China); `openalex-candidate-6162788b83db1bc7`
 - CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025) - Purdue University West Lafayette; `openalex-candidate-000ae598a83c4cc6`
 - Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - University of Hong Kong; `openalex-candidate-3e36acb7cecb0f1d`
@@ -153,8 +151,6 @@ Count: **104**
 - Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - University of Mannheim; `openalex-candidate-e0458c9a0478e873`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Qilu University of Technology; `openalex-candidate-dd5630f5ebd3a43e`
 - Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles (2026) - Jahangirnagar University; `openalex-candidate-b8c048d2bb06f247`
-- OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - University of Southampton; `openalex-candidate-2e38546bdad915a5`
-- OpenSDI: Spotting Diffusion-Generated Images in the Open World (2025) - Harbin Institute of Technology; `openalex-candidate-b09b2a90b0de5f28`
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025) - Peking University; `openalex-candidate-c7a9ed2c288b1391`
 - CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025) - Sony Corporation (United States); `openalex-candidate-aa2022c6d0caa8a2`
 - CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025) - Rutgers Sexual and Reproductive Health and Rights; `openalex-candidate-6ba2d3f176bf7300`
@@ -172,10 +168,6 @@ Count: **104**
 - Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Shandong Academy of Sciences; `openalex-candidate-c6b33fd930b71a45`
 - Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Wuhan Institute of Technology; `openalex-candidate-d58759107c8e4179`
 - Composite Data Augmentations for Synthetic Image Detection Against Real-World Perturbations (2025) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4a516cc1ca95d8a3`
-- Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - French National Centre for Scientific Research; `openalex-candidate-946b2b9eadfa8d46`
-- Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Université Paris-Saclay; `openalex-candidate-f130bd2750a3091a`
-- Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Centre Borelli; `openalex-candidate-ab5caf38c08b1f42`
-- Evolution of Detection Performance Throughout the Online Lifespan of Synthetic Images (2025) - Agence France-Presse; `openalex-candidate-ec4a1e74d34806d1`
 - Level Up the Deepfake Detection: A Method to Effectively Discriminate Images Generated by GAN Architectures and Diffusion Models (2024) - Bank of Italy; `openalex-candidate-b348f1ba71286b2d`
 - EasyDeep: An IoT Friendly Robust Detection Method for GAN Generated Deepfake Images in Social Media (2022) - University of Galway; `openalex-candidate-32122aade684dedc`
 - Wavelet-Packet Powered Deepfake Image Detection. (2021) - University of Bonn; `openalex-candidate-a66244e63c273fee`
@@ -191,9 +183,6 @@ Count: **104**
 - Simple Detection of AI-Generated Images based on Noise Correlation (2025) - University of Lille; `curated-map:1253099dae009c03dc59`
 - AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error (2024) - Ruhr University Bochum; `curated-map:b7697d9eeef6b1581d40`
 - CLIPping the Deception: Adapting Vision-Language Models for Universal Deepfake Detection (2024) - University of Bergen; `curated-map:f553f48c2bc3f6f9925a`
-- Contrasting Deepfakes Diffusion via Contrastive Learning and Global-Local Similarities (2024) - University of Modena and Reggio Emilia; `curated-map:e78a2dbe2edadc948fc7`
-- Contrasting Deepfakes Diffusion via Contrastive Learning and Global-Local Similarities (2024) - University of Pisa; `curated-map:f9085c88cc508ad5edb7`
-- Contrasting Deepfakes Diffusion via Contrastive Learning and Global-Local Similarities (2024) - Leonardo S.p.A.; `curated-map:a23a89e51c4cdf62f09a`
 - D4: Detection of Adversarial Diffusion Deepfakes Using Disjoint Ensembles (2024) - University of Wisconsin-Madison; `curated-map:b020bec112abfdc7f845`
 - D4: Detection of Adversarial Diffusion Deepfakes Using Disjoint Ensembles (2024) - University of Michigan; `curated-map:c0f651d6e27ca965e3ec`
 - Did You Note My Palette? Unveiling Synthetic Images Through Color Statistics (2024) - Friedrich-Alexander-Universität Erlangen-Nürnberg; `curated-map:ca27e713b4099020e422`
