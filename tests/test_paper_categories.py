@@ -53,7 +53,7 @@ class PaperCategoriesTests(unittest.TestCase):
         admin = (root / "web" / "admin.js").read_text(encoding="utf-8")
         public = (root / "web" / "app.js").read_text(encoding="utf-8")
         for category in ("method", "dataset", "benchmark", "survey", "analysis"):
-            self.assertIn(f'type="checkbox" value="{category}"', html)
+            self.assertIn(f'name="paper_categories" value="{category}"', html)
         self.assertIn('draft.paper_categories = paperCategories', admin)
         self.assertIn('selectedEntryTypes.some((value) => getPaperCategories(record).includes(value))', public)
         self.assertIn('getPaperCategories(record).join(";")', public)

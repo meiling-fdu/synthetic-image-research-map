@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>Local Paper Curator · Synthetic Image Research Map</title>
-    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="/admin.css?v=20260801-paper-categories">
     <script src="/institution_type_labels.js?v=20260718-research-institute" defer></script>
-    <script src="/admin.js?v=20260718-research-institute" defer></script>
+    <script src="/admin.js?v=20260801-paper-categories" defer></script>
   </head>
   <body>
     <header class="masthead">
@@ -538,16 +538,16 @@
                   <option value="conference">conference</option><option value="journal">journal</option>
                   <option value="preprint">preprint</option><option value="book">book</option>
                 </select><button id="metadata-publication-type-override" class="text-button" type="button">Override publication type</button><span id="metadata-publication-type-warning" class="field-warning" hidden></span></label>
-                <fieldset id="metadata-entry-type-field" aria-describedby="metadata-paper-categories-error">
+                <fieldset id="metadata-entry-type-field" class="paper-category-field full-width" aria-describedby="metadata-paper-categories-error">
                   <legend>Paper Categories</legend>
-                  <div id="metadata-paper-categories" class="checkbox-group">
-                    <label><input type="checkbox" value="method"> Method</label>
-                    <label><input type="checkbox" value="dataset"> Dataset</label>
-                    <label><input type="checkbox" value="benchmark"> Benchmark</label>
-                    <label><input type="checkbox" value="survey"> Survey</label>
-                    <label><input type="checkbox" value="analysis"> Analysis</label>
+                  <div id="metadata-paper-categories" class="paper-category-options">
+                    <label class="paper-category-option" for="paper-category-method"><input class="paper-category-input" id="paper-category-method" type="checkbox" name="paper_categories" value="method"><span>Method</span></label>
+                    <label class="paper-category-option" for="paper-category-dataset"><input class="paper-category-input" id="paper-category-dataset" type="checkbox" name="paper_categories" value="dataset"><span>Dataset</span></label>
+                    <label class="paper-category-option" for="paper-category-benchmark"><input class="paper-category-input" id="paper-category-benchmark" type="checkbox" name="paper_categories" value="benchmark"><span>Benchmark</span></label>
+                    <label class="paper-category-option" for="paper-category-survey"><input class="paper-category-input" id="paper-category-survey" type="checkbox" name="paper_categories" value="survey"><span>Survey</span></label>
+                    <label class="paper-category-option" for="paper-category-analysis"><input class="paper-category-input" id="paper-category-analysis" type="checkbox" name="paper_categories" value="analysis"><span>Analysis</span></label>
                   </div>
-                  <p id="metadata-paper-categories-error" class="form-error" hidden></p>
+                  <p id="metadata-paper-categories-error" class="form-error" role="alert" hidden></p>
                 </fieldset>
                 <label>Task / research direction<select id="metadata-task" required>
                   <option value="detection">detection</option>

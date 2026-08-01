@@ -4309,7 +4309,12 @@ function clearPaperMetadata(message, isError = false) {
   elements["metadata-edit-form"].hidden = true;
   elements["metadata-paper-id"].value = "";
   elements["metadata-edit-form"].querySelectorAll("input, textarea, select").forEach((control) => {
-    if (control.id !== "metadata-paper-id") control.value = "";
+    if (control.id === "metadata-paper-id") return;
+    if (control instanceof HTMLInputElement && ["checkbox", "radio"].includes(control.type)) {
+      control.checked = false;
+    } else {
+      control.value = "";
+    }
   });
   elements["metadata-venue-value"].textContent = "Select a canonical venue…";
   elements["metadata-venue-summary"].hidden = true;
@@ -4689,6 +4694,7 @@ function handlePublicationTypeChange() {
   const isBook = nextType === "book";
   if (isBook) clearBookIncompatibleFormFields();
   setBookMetadataAvailability(isBook);
+  validatePaperCategories();
   state.previousPublicationType = nextType;
   updatePublicationTypeConflict();
 }
@@ -4791,7 +4797,9 @@ const METADATA_SNAPSHOT_FIELDS = [
 const PAPER_CATEGORY_ORDER = ["method", "dataset", "benchmark", "survey", "analysis"];
 
 function paperCategoryCheckboxes() {
-  return [...elements["metadata-paper-categories"].querySelectorAll('input[type="checkbox"]')];
+  return [...elements["metadata-paper-categories"].querySelectorAll(
+    'input.paper-category-input[type="checkbox"][name="paper_categories"]'
+  )];
 }
 
 function normalizePaperCategories(value) {
@@ -4802,9 +4810,52 @@ function normalizePaperCategories(value) {
   return PAPER_CATEGORY_ORDER.filter((item) => selected.has(item));
 }
 
-function selectedPaperCategories() {
-  return PAPER_CATEGORY_ORDER.filter((category) =>
-    paperCategoryCheckboxes().some((input) => input.value === category && input.checked));
+function getSelectedPaperCategories() {
+  return normalizePaperCategories(
+    paperCategoryCheckboxes().filter((input) => input.checked).map((input) => input.value)
+  );
+}
+
+function setPaperCategoriesError(message = "") {
+  const fieldset = elements["metadata-entry-type-field"];
+  const error = elements["metadata-paper-categories-error"];
+  error.hidden = !message;
+  error.textContent = message;
+  if (message) fieldset.setAttribute("aria-invalid", "true");
+  else fieldset.removeAttribute("aria-invalid");
+}
+
+function validatePaperCategories({ focus = false } = {}) {
+  let selected;
+  try {
+    selected = getSelectedPaperCategories();
+  } catch (error) {
+    setPaperCategoriesError(error.message);
+    if (focus) paperCategoryCheckboxes()[0]?.focus();
+    return null;
+  }
+  if (elements["metadata-publication-type"].value !== "book" && selected.length === 0) {
+    setPaperCategoriesError("Select at least one paper category.");
+    if (focus) paperCategoryCheckboxes()[0]?.focus();
+    return null;
+  }
+  setPaperCategoriesError();
+  return selected;
+}
+
+function hydratePaperCategories(value) {
+  paperCategoryCheckboxes().forEach((input) => { input.checked = false; });
+  try {
+    const categories = normalizePaperCategories(value);
+    paperCategoryCheckboxes().forEach((input) => {
+      input.checked = categories.includes(input.value);
+    });
+    setPaperCategoriesError();
+    return true;
+  } catch (error) {
+    setPaperCategoriesError(error.message);
+    return false;
+  }
 }
 
 function metadataFormSnapshot() {
@@ -4813,7 +4864,7 @@ function metadataFormSnapshot() {
     return [field, control ? control.value.trim() : ""];
   }));
   values.replace_raw_venue = elements["metadata-replace-raw-venue"].checked;
-  values.paper_categories = selectedPaperCategories();
+  values.paper_categories = getSelectedPaperCategories();
   values.publication_type_override = state.publicationTypeOverride;
   values.pending_venue_proposal = state.pendingVenueProposal;
   return JSON.stringify(values);
@@ -4857,9 +4908,12 @@ function renderMetadataSaveStatus(status, message = "") {
   elements["metadata-edit-submit"].textContent = saving ? "Saving…" : "Save curated override";
 }
 
-function handleMetadataFormChange() {
+function handleMetadataFormChange(event) {
   if (state.metadataSave.inFlight) return;
   elements["metadata-edit-error"].hidden = true;
+  if (event?.target?.matches?.(".paper-category-input")) {
+    validatePaperCategories();
+  }
   renderMetadataSaveStatus(metadataFormIsDirty() ? "dirty" : "clean");
 }
 
@@ -4880,17 +4934,9 @@ function populateMetadataForm() {
         : metadataValue(record, field);
     }
   });
-  let categories = [];
-  try {
-    categories = normalizePaperCategories(record?.paper_categories ?? record?.entry_type);
-    elements["metadata-paper-categories-error"].hidden = true;
-    elements["metadata-paper-categories"].removeAttribute("aria-invalid");
-  } catch (error) {
-    elements["metadata-paper-categories-error"].hidden = false;
-    elements["metadata-paper-categories-error"].textContent = error.message;
-    elements["metadata-paper-categories"].setAttribute("aria-invalid", "true");
-  }
-  paperCategoryCheckboxes().forEach((input) => { input.checked = categories.includes(input.value); });
+  const categoriesHydrated = hydratePaperCategories(
+    record?.paper_categories ?? record?.entry_type
+  );
   const venueId = metadataValue(record, "venue_id");
   const venueName = metadataValue(record, "venue_name") || metadataValue(record, "venue");
   state.selectedVenue = venueId ? {
@@ -4958,6 +5004,7 @@ function populateMetadataForm() {
   state.previousPublicationType = elements["metadata-publication-type"].value;
   if (isBook) clearBookIncompatibleFormFields();
   setBookMetadataAvailability(isBook);
+  if (categoriesHydrated) validatePaperCategories();
   elements["metadata-edit-error"].hidden = true;
   state.metadataSave.baseline = metadataFormSnapshot();
   state.metadataSave.inFlight = false;
@@ -4993,18 +5040,9 @@ async function saveMetadata(event) {
     const value = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
     if (value !== metadataValue(effective, field).trim()) draft[field] = value;
   });
-  const paperCategories = selectedPaperCategories();
-  const effectiveCategories = normalizePaperCategories(effective.paper_categories ?? effective.entry_type);
-  if (elements["metadata-publication-type"].value !== "book" && paperCategories.length === 0) {
-    elements["metadata-paper-categories-error"].hidden = false;
-    elements["metadata-paper-categories-error"].textContent = "Select at least one paper category.";
-    paperCategoryCheckboxes()[0].focus();
-    return;
-  }
-  elements["metadata-paper-categories-error"].hidden = true;
-  if (JSON.stringify(paperCategories) !== JSON.stringify(effectiveCategories)) {
-    draft.paper_categories = paperCategories;
-  }
+  const paperCategories = validatePaperCategories({ focus: true });
+  if (paperCategories === null) return;
+  draft.paper_categories = paperCategories;
   // Submitting this form is an explicit human review action.
   draft.curation_status = "confirmed";
   const publicationType = elements["metadata-publication-type"].value;
