@@ -62,6 +62,22 @@ class AdminVenueComboboxFrontendTests(unittest.TestCase):
         self.assertIn("selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId", self.source)
         self.assertIn("venueLoadSequence !== paperSelectionSequence || venueLoadPaperId !== state.selectedId", self.source)
 
+    def test_paper_track_is_an_editable_control_independent_of_venue(self):
+        track = self.html.split('id="metadata-venue-track"', 1)[1].split("</select>", 1)[0]
+        for value, label in (
+            ("main", "Main"), ("workshops", "Workshop"),
+            ("findings", "Findings"), ("posters", "Poster"),
+            ("industry", "Industry"), ("demo", "Demo"),
+            ("doctoral_consortium", "Doctoral consortium"), ("other", "Other"),
+        ):
+            self.assertIn(f'value="{value}">{label}', track)
+        selection = self.source.split("function selectCanonicalVenue(option", 1)[1].split(
+            "\nfunction selectCanonicalVenueById", 1
+        )[0]
+        self.assertIn("Selecting a canonical venue must preserve it", selection)
+        self.assertNotIn('value = option.venue_track', selection)
+        self.assertIn("trackChanged", self.source)
+
 
 if __name__ == "__main__":
     unittest.main()

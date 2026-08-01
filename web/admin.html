@@ -496,7 +496,6 @@
                   <input id="metadata-venue-name" type="hidden">
                   <input id="metadata-venue-acronym" type="hidden">
                   <input id="metadata-venue-type" type="hidden">
-                  <input id="metadata-venue-track" type="hidden">
                   <div id="metadata-venue-combobox" class="venue-combobox">
                     <button id="metadata-venue-button" class="venue-combobox-button" type="button" role="combobox" aria-labelledby="metadata-venue-label metadata-venue-value" aria-controls="metadata-venue-options" aria-expanded="false" aria-haspopup="listbox">
                       <span id="metadata-venue-value">Select a canonical venue…</span><span aria-hidden="true">▾</span>
@@ -518,6 +517,19 @@
                     <label><input id="metadata-replace-raw-venue" type="checkbox"> Replace historical provenance with the selected canonical name</label>
                   </details>
                 </div>
+                <label>Venue track
+                  <select id="metadata-venue-track" required>
+                    <option value="main">Main</option>
+                    <option value="workshops">Workshop</option>
+                    <option value="findings">Findings</option>
+                    <option value="posters">Poster</option>
+                    <option value="industry">Industry</option>
+                    <option value="demo">Demo</option>
+                    <option value="doctoral_consortium">Doctoral consortium</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <span id="metadata-venue-track-error" class="field-warning" hidden></span>
+                </label>
                 <label>DOI<input id="metadata-doi"></label>
                 <label>arXiv ID<input id="metadata-arxiv-id"></label>
                 <label>OpenAlex URL<input id="metadata-openalex-url" type="url"></label>
@@ -573,7 +585,7 @@
                   <label>Canonical full name<input id="venue-create-name" required></label>
                   <label>Acronym, optional<input id="venue-create-acronym"></label>
                   <label>Venue type<select id="venue-create-type" required><option value="conference">conference</option><option value="journal">journal</option><option value="preprint">preprint</option><option value="book">book</option></select></label>
-                  <label>Venue track<select id="venue-create-track"><option value="main">main</option><option value="workshops">workshops</option><option value="findings">findings</option><option value="posters">posters</option><option value="industry">industry</option><option value="demo">demo</option><option value="doctoral_consortium">doctoral_consortium</option><option value="other">other</option></select></label>
+                  <label>Paper venue track<select id="venue-create-track"><option value="main">Main</option><option value="workshops">Workshop</option><option value="findings">Findings</option><option value="posters">Poster</option><option value="industry">Industry</option><option value="demo">Demo</option><option value="doctoral_consortium">Doctoral consortium</option><option value="other">Other</option></select></label>
                   <label class="full-width">Raw input or alias<input id="venue-create-alias" required></label>
                   <label class="full-width">Review note, optional<textarea id="venue-create-note" rows="2"></textarea></label>
                   <section id="venue-create-matches" class="venue-create-matches" hidden><h4>Possible existing venues</h4><ul></ul><label><input id="venue-create-confirm-similar" type="checkbox"> I reviewed these matches and confirm this is a distinct venue.</label></section>

@@ -1182,7 +1182,10 @@ function venueDisplayLabel(record) {
   const track = canonicalVenueTrack(record);
   let label = name;
   if (acronym) label += ` (${acronym})`;
-  if (track && track !== "main") label += ` · ${formatTask(track)}`;
+  const trackLabel = formatTask(track);
+  const alreadyNamed = trackLabel && new RegExp(`\\b${trackLabel.replace(/s$/i, "")}s?\\b`, "i")
+    .test(`${name} ${acronym}`);
+  if (track && track !== "main" && !alreadyNamed) label += ` · ${trackLabel}`;
   return label;
 }
 

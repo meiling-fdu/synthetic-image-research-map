@@ -66,7 +66,7 @@ def curated_row(**overrides):
 def chi_venue_fields():
     return {
         "venue": "CHI Conference on Human Factors in Computing Systems",
-        "venue_id": "venue:chi:main",
+        "venue_id": "venue:chi",
         "venue_name": "CHI Conference on Human Factors in Computing Systems",
         "venue_acronym": "CHI",
         "venue_type": "conference",
@@ -366,11 +366,13 @@ class PaperMetadataEditingTests(unittest.TestCase):
 
     def test_venue_registry_api_and_structured_save_summary(self):
         with tempfile.TemporaryDirectory() as directory:
-            with self.metadata_server(directory, []) as (
+            with self.metadata_server(
+                directory, [], original_overrides=chi_venue_fields()
+            ) as (
                 base_url, original, curated_path, _links_path, display_id,
             ):
                 venues = self.metadata_request(base_url, "/api/venues")["data"]["records"]
-                chi = next(row for row in venues if row["venue_id"] == "venue:chi:main")
+                chi = next(row for row in venues if row["venue_id"] == "venue:chi")
                 self.assertEqual(
                     chi["venue_label"],
                     "CHI Conference on Human Factors in Computing Systems (CHI)",
@@ -381,13 +383,13 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     base_url, "/api/paper/metadata/update", edit
                 )["data"]
                 updated = update_payload["paper"]
-                self.assertEqual(updated["venue_id"], "venue:chi:main")
+                self.assertEqual(updated["venue_id"], "venue:chi")
                 self.assertEqual(updated["raw_venue"], chi_venue_fields()["raw_venue"])
                 self.assertEqual(
                     update_payload["paper_summary"]["display_id"], display_id
                 )
                 self.assertEqual(
-                    update_payload["paper_summary"]["venue_id"], "venue:chi:main"
+                    update_payload["paper_summary"]["venue_id"], "venue:chi"
                 )
                 reloaded = self.metadata_request(
                     base_url, f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
@@ -411,9 +413,36 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 effective = self.metadata_request(
                     base_url, f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
                 )["data"]["effective_record"]
-                self.assertEqual(effective["venue_id"], "venue:chi:main")
+                self.assertEqual(effective["venue_id"], "venue:chi")
                 self.assertEqual(effective["venue_resolution_status"], "resolved")
                 self.assertFalse(effective["venue_review_required"])
+
+    def test_track_only_update_preserves_canonical_venue_identity(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(
+                directory, [], original_overrides=chi_venue_fields()
+            ) as (
+                base_url, original, curated_path, _links_path, display_id,
+            ):
+                saved = self.metadata_request(
+                    base_url,
+                    "/api/paper/metadata/update",
+                    {"id": display_id, "venue_track": "workshops"},
+                )["data"]["paper"]
+                self.assertEqual(saved["venue_track"], "workshops")
+                self.assertEqual(saved["venue_id"], original["venue_id"])
+                self.assertEqual(saved["venue_name"], original["venue_name"])
+                self.assertEqual(saved["venue_acronym"], original["venue_acronym"])
+                with curated_path.open(encoding="utf-8", newline="") as handle:
+                    persisted = next(csv.DictReader(handle))
+                self.assertEqual(persisted["venue_track"], "workshops")
+                with self.assertRaises(urllib.error.HTTPError) as caught:
+                    self.metadata_request(
+                        base_url,
+                        "/api/paper/metadata/update",
+                        {"id": display_id, "venue_track": "arbitrary"},
+                    )
+                self.assertEqual(caught.exception.code, 400)
 
     def test_metadata_api_rejects_nonexistent_or_conflicting_venue(self):
         with tempfile.TemporaryDirectory() as directory:

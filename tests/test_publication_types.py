@@ -57,7 +57,7 @@ class PublicationTypeTests(unittest.TestCase):
             "raw_venue": "2020 IEEE International Workshop on Information Forensics and Security (WIFS)",
             "arxiv_id": "2007.12909",
         })
-        self.assertEqual(record["venue_id"], "venue:wifs:main")
+        self.assertEqual(record["venue_id"], "venue:wifs")
         self.assertEqual(record["venue_type"], "conference")
         self.assertEqual(record["publication_type"], "conference")
 
@@ -104,7 +104,7 @@ class PublicationTypeTests(unittest.TestCase):
             "ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
         ]
         resolved = [resolve_venue(value, venue_type="conference", aliases=aliases) for value in variants]
-        self.assertEqual({venue.venue_id for venue in resolved}, {"venue:icassp:main"})
+        self.assertEqual({venue.venue_id for venue in resolved}, {"venue:icassp"})
         self.assertEqual(
             {venue.venue_name for venue in resolved},
             {"IEEE International Conference on Acoustics, Speech and Signal Processing"},

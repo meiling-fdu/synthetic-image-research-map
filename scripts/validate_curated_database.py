@@ -1066,6 +1066,7 @@ def main() -> int:
     validate_allowed_value(
         venue_aliases, "venue_aliases.csv", "venue_type", ALLOWED_VENUE_TYPES, issues
     )
+    # Alias-level track is an optional legacy resolution hint, never canonical identity.
     validate_allowed_value(
         venue_aliases, "venue_aliases.csv", "venue_track", ALLOWED_VENUE_TRACKS, issues
     )
@@ -1078,9 +1079,9 @@ def main() -> int:
             add_issue(issues, "ERROR", "papers.csv", "conference venue requires a supported venue_track", row_number)
         if venue_type != "conference" and venue_track:
             add_issue(issues, "ERROR", "papers.csv", "non-conference venue cannot have a conference track", row_number)
-    venue_by_id: Dict[str, Tuple[str, str, str, str]] = {}
+    venue_by_id: Dict[str, Tuple[str, str, str]] = {}
     venue_id_by_alias: Dict[str, str] = {}
-    venue_id_by_name_track: Dict[Tuple[str, str], str] = {}
+    venue_id_by_name: Dict[str, str] = {}
     venue_name_by_acronym: Dict[str, Tuple[str, str]] = {}
     for row_number, alias in enumerate(venue_aliases, start=2):
         venue_id = clean(alias.get("venue_id"))
@@ -1088,8 +1089,10 @@ def main() -> int:
             clean(alias.get("venue_name")),
             clean(alias.get("venue_acronym")),
             clean(alias.get("venue_type")),
-            clean(alias.get("venue_track")),
         )
+        alias_track = clean(alias.get("venue_track"))
+        if alias_track and identity[2] != "conference":
+            add_issue(issues, "ERROR", "venue_aliases.csv", "only conference aliases may carry a track hint", row_number)
         if not venue_id or not identity[0]:
             add_issue(issues, "ERROR", "venue_aliases.csv", "venue_id and venue_name are required", row_number)
             continue
@@ -1114,10 +1117,10 @@ def main() -> int:
             add_issue(issues, "ERROR", "venue_aliases.csv", "normalized alias points to multiple venue IDs", row_number)
         if alias_value:
             venue_id_by_alias[alias_value] = venue_id
-        name_track = (normalize_title(identity[0]), identity[3])
-        if name_track in venue_id_by_name_track and venue_id_by_name_track[name_track] != venue_id:
-            add_issue(issues, "ERROR", "venue_aliases.csv", "duplicate canonical venue name and track", row_number)
-        venue_id_by_name_track[name_track] = venue_id
+        canonical_name_key = normalize_title(identity[0])
+        if canonical_name_key in venue_id_by_name and venue_id_by_name[canonical_name_key] != venue_id:
+            add_issue(issues, "ERROR", "venue_aliases.csv", "duplicate canonical venue name", row_number)
+        venue_id_by_name[canonical_name_key] = venue_id
     for row_number, paper in enumerate(papers, start=2):
         venue_id = clean(paper.get("venue_id"))
         if not venue_id:
@@ -1131,13 +1134,12 @@ def main() -> int:
                 aliases=venue_aliases,
             )
             paper_identity = tuple(clean(paper.get(field)) for field in (
-                "venue_name", "venue_acronym", "venue_type", "venue_track",
+                "venue_name", "venue_acronym", "venue_type",
             ))
             legacy_identity = (
                 legacy.venue_name,
                 legacy.venue_acronym,
                 legacy.venue_type,
-                legacy.venue_track,
             )
             if (
                 legacy.ambiguity_status in {"unmapped", "ambiguous"}
@@ -1155,7 +1157,7 @@ def main() -> int:
                 add_issue(issues, "ERROR", "papers.csv", f"venue_id does not exist in venue_aliases.csv: {venue_id!r}", row_number)
             continue
         paper_identity = tuple(clean(paper.get(field)) for field in (
-            "venue_name", "venue_acronym", "venue_type", "venue_track",
+            "venue_name", "venue_acronym", "venue_type",
         ))
         if paper_identity != identity:
             add_issue(issues, "ERROR", "papers.csv", f"canonical venue fields conflict with {venue_id!r}", row_number)

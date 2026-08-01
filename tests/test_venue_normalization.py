@@ -49,24 +49,25 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_year_proceedings_ordinal_and_acronym_normalize(self):
         venue = self.resolve("2026 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)")
-        self.assertEqual(venue.venue_id, "venue:cvpr:main")
+        self.assertEqual(venue.venue_id, "venue:cvpr")
         self.assertEqual(venue.venue_name, "IEEE/CVF Conference on Computer Vision and Pattern Recognition")
         self.assertEqual(venue.venue_acronym, "CVPR")
         self.assertEqual(venue.raw_venue, "2026 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)")
 
-    def test_tracks_are_distinct(self):
+    def test_tracks_share_canonical_identity(self):
         main = self.resolve("2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)")
         workshops = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops")
         findings = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings")
         self.assertEqual({main.venue_track, workshops.venue_track, findings.venue_track}, {"main", "workshops", "findings"})
-        self.assertEqual(len({main.venue_id, workshops.venue_id, findings.venue_id}), 3)
+        self.assertEqual({main.venue_id, workshops.venue_id, findings.venue_id}, {"venue:cvpr"})
         self.assertEqual(workshops.venue_type, "conference")
 
-    def test_wacv_workshop_is_separate(self):
+    def test_wacv_workshop_shares_canonical_identity(self):
         main = self.resolve("2025 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)")
         workshop = self.resolve("2026 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) Workshop")
-        self.assertEqual(main.venue_id, "venue:wacv:main")
-        self.assertEqual(workshop.venue_id, "venue:wacv:workshops")
+        self.assertEqual(main.venue_id, "venue:wacv")
+        self.assertEqual(workshop.venue_id, "venue:wacv")
+        self.assertEqual((main.venue_track, workshop.venue_track), ("main", "workshops"))
 
     def test_ijcnn_variants_resolve_to_one_main_venue(self):
         variants = [
@@ -78,7 +79,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "IJCNN: International Joint Conference on Neural Networks",
         ]
         venues = [self.resolve(value) for value in variants]
-        self.assertEqual({venue.venue_id for venue in venues}, {"venue:ijcnn:main"})
+        self.assertEqual({venue.venue_id for venue in venues}, {"venue:ijcnn"})
         self.assertEqual({venue.venue_name for venue in venues}, {"International Joint Conference on Neural Networks"})
         self.assertEqual({venue.venue_acronym for venue in venues}, {"IJCNN"})
         self.assertEqual({venue.venue_track for venue in venues}, {"main"})
@@ -93,7 +94,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "Proceedings of the 2022 ACM International Conference on Multimedia Retrieval",
         ]
         venues = [self.resolve(value) for value in variants]
-        self.assertEqual({venue.venue_id for venue in venues}, {"venue:icmr:main"})
+        self.assertEqual({venue.venue_id for venue in venues}, {"venue:icmr"})
         self.assertEqual({venue.venue_name for venue in venues}, {"ACM International Conference on Multimedia Retrieval"})
         self.assertEqual({venue.venue_acronym for venue in venues}, {"ICMR"})
         self.assertEqual(display_venue(venues[0].as_record()), "ACM International Conference on Multimedia Retrieval (ICMR)")
@@ -107,7 +108,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "Proceedings of the 2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshop (WACVW)",
         ]
         venues = [self.resolve(value) for value in variants]
-        self.assertEqual({venue.venue_id for venue in venues}, {"venue:wacv:workshops"})
+        self.assertEqual({venue.venue_id for venue in venues}, {"venue:wacv"})
         self.assertEqual({venue.venue_acronym for venue in venues}, {"WACV"})
         self.assertEqual({venue.venue_track for venue in venues}, {"workshops"})
         self.assertEqual(
@@ -117,18 +118,18 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_malformed_inter_national_machine_vision_is_reviewed_alias(self):
         venue = self.resolve("17th Inter national Conference on Machine Vision")
-        self.assertEqual(venue.venue_id, "venue:international-conference-on-machine-vision:main")
+        self.assertEqual(venue.venue_id, "venue:international-conference-on-machine-vision")
         self.assertEqual(venue.venue_name, "International Conference on Machine Vision")
         self.assertEqual(venue.raw_venue, "17th Inter national Conference on Machine Vision")
 
     def test_icml_edition_and_neurips_volume(self):
-        self.assertEqual(self.resolve("Proceedings of the 42nd International Conference on Machine Learning").venue_id, "venue:icml:main")
-        self.assertEqual(self.resolve("Advances in Neural Information Processing Systems 37").venue_id, "venue:neurips:main")
+        self.assertEqual(self.resolve("Proceedings of the 42nd International Conference on Machine Learning").venue_id, "venue:icml")
+        self.assertEqual(self.resolve("Advances in Neural Information Processing Systems 37").venue_id, "venue:neurips")
 
     def test_ih_mmsec_year_and_proceedings(self):
         first = self.resolve("2026 ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)")
         second = self.resolve("Proceedings of the 2026 ACM Workshop on Information Hiding and Multimedia Security (IH&MMSec)")
-        self.assertEqual(first.venue_id, "venue:ih-mmsec:main")
+        self.assertEqual(first.venue_id, "venue:ih-mmsec")
         self.assertEqual(second.venue_id, first.venue_id)
         self.assertEqual(first.venue_type, "conference")
         self.assertEqual(first.venue_track, "workshops")
@@ -162,7 +163,7 @@ class VenueNormalizationTests(unittest.TestCase):
         )
         self.assertEqual(siggraph.venue_id, "venue:siggraph:posters")
         self.assertEqual(siggraph.venue_track, "posters")
-        self.assertEqual(cvpr.venue_id, "venue:cvpr:findings")
+        self.assertEqual(cvpr.venue_id, "venue:cvpr")
 
     def test_display_format(self):
         venue = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops")
@@ -251,7 +252,7 @@ class VenueNormalizationTests(unittest.TestCase):
         by_paper = {row["paper_id"]: row for row in migrated}
         self.assertEqual(by_paper["icmr"]["venue_name"], "ACM International Conference on Multimedia Retrieval")
         self.assertEqual(by_paper["icmr"]["raw_venue"], "Proceedings of the 2026 International Conference on Multimedia Retrieval (ICMR)")
-        self.assertEqual(by_paper["wacvw"]["venue_id"], "venue:wacv:workshops")
+        self.assertEqual(by_paper["wacvw"]["venue_id"], "venue:wacv")
         self.assertEqual(by_paper["wacvw"]["venue_acronym"], "WACV")
         self.assertEqual(by_paper["machine-vision"]["venue_name"], "International Conference on Machine Vision")
         self.assertGreaterEqual(report["records_changed"], 3)
@@ -264,7 +265,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "title": "Workshop paper",
             "year": "2024",
             "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
-            "venue_id": "venue:cvpr:workshops",
+            "venue_id": "venue:cvpr",
             "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
             "venue_acronym": "CVPR",
             "venue_type": "workshop",
@@ -274,7 +275,7 @@ class VenueNormalizationTests(unittest.TestCase):
         }]
         migrated, report = migrate_rows(rows)
         second, second_report = migrate_rows(migrated)
-        self.assertEqual(migrated[0]["venue_id"], "venue:cvpr:workshops")
+        self.assertEqual(migrated[0]["venue_id"], "venue:cvpr")
         self.assertEqual(migrated[0]["venue_type"], "conference")
         self.assertEqual(migrated[0]["venue_track"], "workshops")
         self.assertEqual(report["workshop_records_migrated"], 1)
@@ -285,13 +286,13 @@ class VenueNormalizationTests(unittest.TestCase):
     def test_admin_options_are_canonical_counted_and_searchable(self):
         aliases = read_venue_aliases()
         papers = [
-            {"paper_id": "one", "venue_id": "venue:cvpr:workshops", "raw_venue": "2024 CVPR Workshops"},
-            {"paper_id": "two", "venue_id": "venue:cvpr:workshops", "raw_venue": "CVPRW"},
+            {"paper_id": "one", "venue_id": "venue:cvpr", "raw_venue": "2024 CVPR Workshops"},
+            {"paper_id": "two", "venue_id": "venue:cvpr", "raw_venue": "CVPRW"},
         ]
         options = canonical_venue_options(aliases, papers)
-        workshops = next(option for option in options if option["venue_id"] == "venue:cvpr:workshops")
+        workshops = next(option for option in options if option["venue_id"] == "venue:cvpr")
         self.assertEqual(workshops["paper_count"], 2)
-        self.assertEqual(workshops["venue_track"], "workshops")
+        self.assertEqual(workshops["venue_track"], "")
         searchable = workshops["search_text"].casefold()
         for term in ("computer vision", "cvpr", "workshop", "2024 cvpr workshops", "cvprw"):
             self.assertIn(term, searchable)
@@ -390,7 +391,7 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_structured_selection_syncs_type_and_preserves_raw_provenance(self):
         selection = {
-            "venue_id": "venue:cvpr:workshops",
+            "venue_id": "venue:cvpr",
             "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
             "venue_acronym": "CVPR",
             "venue_type": "conference",
@@ -403,7 +404,7 @@ class VenueNormalizationTests(unittest.TestCase):
         )
         self.assertEqual(result["publication_type"], "conference")
         self.assertEqual(result["raw_venue"], "2024 IEEE/CVF CVPR Workshops")
-        self.assertEqual(result["venue_id"], "venue:cvpr:workshops")
+        self.assertEqual(result["venue_id"], "venue:cvpr")
         replaced = apply_canonical_venue_selection(
             {**selection, "raw_venue": "Reviewed replacement", "replace_raw_venue": True},
             existing={"raw_venue": "Historical source"},
@@ -413,7 +414,7 @@ class VenueNormalizationTests(unittest.TestCase):
     def test_structured_selection_requires_consistent_complete_metadata(self):
         with self.assertRaisesRegex(CuratedPaperError, "venue_acronym must match"):
             apply_canonical_venue_selection({
-                "venue_id": "venue:chi:main",
+                "venue_id": "venue:chi",
                 "venue_name": "CHI Conference on Human Factors in Computing Systems",
                 "venue_type": "conference",
                 "venue_track": "main",
@@ -422,7 +423,7 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_publication_type_conflict_requires_explicit_override(self):
         selection = {
-            "venue_id": "venue:chi:main",
+            "venue_id": "venue:chi",
             "venue_name": "CHI Conference on Human Factors in Computing Systems",
             "venue_acronym": "CHI",
             "venue_type": "conference",

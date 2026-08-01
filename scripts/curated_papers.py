@@ -36,6 +36,7 @@ try:
     from .paper_links import resolve_public_links
     from .paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from .venues import (
+        ALLOWED_VENUE_TRACKS,
         VenueRegistryError,
         canonicalize_record,
         display_venue,
@@ -65,6 +66,7 @@ except ImportError:
     from paper_links import resolve_public_links
     from paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from venues import (
+        ALLOWED_VENUE_TRACKS,
         VenueRegistryError,
         canonicalize_record,
         display_venue,
@@ -217,7 +219,7 @@ def apply_canonical_venue_selection(
             raise CuratedPaperError(
                 str(error), field="venue_id", error_code="invalid_venue"
             ) from error
-        for field in ("venue_name", "venue_acronym", "venue_type", "venue_track"):
+        for field in ("venue_name", "venue_acronym", "venue_type"):
             if clean(draft.get(field)) != canonical[field]:
                 raise CuratedPaperError(
                     f"{field} must match canonical venue_id {canonical['venue_id']!r}",
@@ -246,6 +248,18 @@ def apply_canonical_venue_selection(
             "venue_type": "", "venue_track": "main", "raw_venue": clean((existing or {}).get("raw_venue")),
             "venue_aliases": [], "venue_label": "",
         }
+    requested_track = clean(draft.get("venue_track")) or (
+        clean((existing or {}).get("venue_track"))
+        or ("main" if canonical["venue_type"] == "conference" else "")
+    )
+    if canonical["venue_type"] == "conference":
+        if requested_track not in ALLOWED_VENUE_TRACKS:
+            raise CuratedPaperError("venue_track is invalid", field="venue_track")
+    elif requested_track:
+        raise CuratedPaperError(
+            f"{canonical['venue_type']} venues cannot have conference tracks",
+            field="venue_track",
+        )
     expected_publication_type = publication_type_for_venue_type(canonical["venue_type"])
     requested_publication_type = normalize_publication_type(draft.get("publication_type"))
     if (
@@ -267,6 +281,7 @@ def apply_canonical_venue_selection(
     )
     result = {
         **canonical,
+        "venue_track": requested_track,
         "venue": canonical["venue_name"],
         "raw_venue": raw_venue,
         "venue_aliases": list(canonical.get("aliases", [])),

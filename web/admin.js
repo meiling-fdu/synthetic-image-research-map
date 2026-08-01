@@ -4545,7 +4545,6 @@ function renderSelectedVenueMetadata() {
     ["Status", state.pendingVenueProposal ? "Proposed new venue · not yet created" : "Existing canonical venue"],
     ["Canonical ID", venue.venue_id || "Assigned by the backend when saved"],
     ["Type", venue.venue_type],
-    ["Track", venue.venue_track || "None"],
     ["Acronym", venue.venue_acronym || "None"],
   ]
     .forEach(([label, value]) => {
@@ -4564,7 +4563,10 @@ function selectCanonicalVenue(option, restoreFocus = true) {
   elements["metadata-venue-name"].value = option.venue_name;
   elements["metadata-venue-acronym"].value = option.venue_acronym || "";
   elements["metadata-venue-type"].value = option.venue_type;
-  elements["metadata-venue-track"].value = option.venue_track;
+  // Track belongs to the paper. Selecting a canonical venue must preserve it.
+  if (!elements["metadata-venue-track"].value) {
+    elements["metadata-venue-track"].value = option.venue_type === "conference" ? "main" : "";
+  }
   elements["metadata-venue"].value = option.venue_name;
   elements["metadata-venue-value"].textContent = option.venue_label;
   state.publicationTypeOverride = false;
@@ -4645,6 +4647,7 @@ function setBookMetadataAvailability(isBook) {
   elements["metadata-venue-field"].hidden = isBook;
   elements["metadata-entry-type-field"].hidden = isBook;
   elements["metadata-venue-button"].disabled = isBook;
+  elements["metadata-venue-track"].disabled = isBook || state.selectedVenue?.venue_type !== "conference";
   paperCategoryCheckboxes().forEach((input) => { input.disabled = isBook; });
   const leavingBook = !isBook && state.previousPublicationType === "book";
   elements["metadata-publication-type"].disabled = isBook
@@ -5017,7 +5020,9 @@ async function saveMetadata(event) {
   const venueChanged = isBook
     ? Boolean(metadataValue(effective, "venue_id"))
     : elements["metadata-venue-id"].value !== metadataValue(effective, "venue_id");
-  if (venueChanged || Object.hasOwn(draft, "publication_type")) Object.assign(draft, {
+  const trackChanged = elements["metadata-venue-track"].value
+    !== (metadataValue(effective, "venue_track") || (elements["metadata-venue-type"].value === "conference" ? "main" : ""));
+  if (venueChanged || trackChanged || Object.hasOwn(draft, "publication_type")) Object.assign(draft, {
     venue: isBook ? "" : elements["metadata-venue-name"].value,
     venue_id: isBook ? "" : elements["metadata-venue-id"].value,
     venue_name: isBook ? "" : elements["metadata-venue-name"].value,

@@ -3223,7 +3223,12 @@ def make_handler(
                                         "venue_name": venue_resolution["venue_name"],
                                         "venue_acronym": venue_resolution["venue_acronym"],
                                         "venue_type": venue_resolution["venue_type"],
-                                        "venue_track": venue_resolution["venue_track"],
+                                        "venue_track": clean(
+                                            venue_resolution.get("paper_venue_track")
+                                            or payload.get("venue_track")
+                                            or base_record.get("venue_track")
+                                            or ("main" if venue_resolution["venue_type"] == "conference" else "")
+                                        ),
                                         "raw_venue": clean(
                                             venue_proposal.get("raw_alias")
                                             or venue_proposal.get("raw_venue")

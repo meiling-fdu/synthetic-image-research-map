@@ -114,8 +114,12 @@ def display_venue(record: Mapping[str, Any]) -> str:
     label = name
     if acronym:
         label += f" ({acronym})"
-    if track and track != "main":
-        label += f" · {track.replace('_', ' ').title()}"
+    track_words = track.replace("_", " ").title()
+    already_named = bool(track_words and re.search(
+        rf"\b{re.escape(track_words.rstrip('s'))}s?\b", f"{name} {acronym}", re.I
+    ))
+    if track and track != "main" and not already_named:
+        label += f" · {track_words}"
     return label
 
 
@@ -137,12 +141,11 @@ def _canonical_registry(rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str
         if not venue_id:
             raise VenueRegistryError(f"venue alias row {index} is missing venue_id")
         identity = tuple(row[field] for field in (
-            "venue_name", "venue_acronym", "venue_type", "venue_track",
+            "venue_name", "venue_acronym", "venue_type",
         ))
-        valid_track = (
-            identity[3] in ALLOWED_VENUE_TRACKS
-            if identity[2] == "conference"
-            else not identity[3]
+        alias_track = row["venue_track"]
+        valid_track = not alias_track or (
+            identity[2] == "conference" and alias_track in ALLOWED_VENUE_TRACKS
         )
         if not identity[0] or identity[2] not in ALLOWED_VENUE_TYPES or not valid_track:
             raise VenueRegistryError(f"venue alias row {index} has invalid canonical metadata")
@@ -155,11 +158,13 @@ def _canonical_registry(rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str
             "venue_name": identity[0],
             "venue_acronym": identity[1],
             "venue_type": identity[2],
-            "venue_track": identity[3],
+            # Track is paper metadata. Alias rows may retain a track hint for
+            # deterministic legacy resolution, but it is not canonical identity.
+            "venue_track": "",
             "aliases": [],
         })
         current_identity = tuple(current[field] for field in (
-            "venue_name", "venue_acronym", "venue_type", "venue_track",
+            "venue_name", "venue_acronym", "venue_type",
         ))
         if current_identity != identity:
             raise VenueRegistryError(
@@ -241,8 +246,10 @@ def validate_canonical_venue_fields(
     aliases: Sequence[Mapping[str, Any]],
 ) -> dict[str, Any]:
     venue = canonical_venue_by_id(record.get("venue_id"), aliases)
-    for field in ("venue_name", "venue_acronym", "venue_type", "venue_track"):
+    for field in ("venue_name", "venue_acronym", "venue_type"):
         supplied = clean_text(record.get(field))
+        if field == "venue_type" and supplied in {"workshop", "workshops"}:
+            supplied = "conference"
         if supplied and supplied != venue[field]:
             raise VenueRegistryError(
                 f"{field} conflicts with canonical venue_id {venue['venue_id']!r}"
@@ -329,11 +336,10 @@ def create_canonical_venue(
     duplicate_name = next((
         venue for venue in registry.values()
         if alias_key(venue["venue_name"]) == alias_key(name)
-        and venue["venue_track"] == track
     ), None)
     if duplicate_name:
         raise VenueRegistryError(
-            f"canonical name and track duplicate existing venue {duplicate_name['venue_id']!r}"
+            f"canonical name duplicates existing venue {duplicate_name['venue_id']!r}"
         )
     duplicate_alias_id = exact_values.get(alias_key(raw_alias))
     if duplicate_alias_id:
@@ -354,11 +360,11 @@ def create_canonical_venue(
         error = VenueRegistryError("possible canonical venue matches require explicit confirmation")
         error.possible_matches = possible_matches  # type: ignore[attr-defined]
         raise error
-    venue_id = _stable_id(name, track)
+    venue_id = _stable_id(name, "")
     if venue_id in registry:
         base_id = venue_id
         digest = hashlib.sha256(
-            f"{name}|{venue_type}|{track}".encode("utf-8")
+            f"{name}|{venue_type}".encode("utf-8")
         ).hexdigest()
         for offset in range(0, len(digest), 8):
             candidate = f"{base_id}-{digest[offset:offset + 8]}"
@@ -377,7 +383,7 @@ def create_canonical_venue(
             "venue_name": name,
             "venue_acronym": acronym,
             "venue_type": venue_type,
-            "venue_track": track,
+            "venue_track": "",
             "review_status": "confirmed",
             "notes": review_note or "Created through reviewed Admin canonical venue workflow.",
         }
@@ -390,7 +396,7 @@ def create_canonical_venue(
         writer.writerows([*rows, *new_rows])
     temporary.replace(path)
     venue = canonical_venue_by_id(venue_id, [*rows, *new_rows])
-    return {**venue, "aliases": aliases_to_add, "possible_matches": possible_matches}
+    return {**venue, "paper_venue_track": track, "aliases": aliases_to_add, "possible_matches": possible_matches}
 
 
 def resolve_or_create_canonical_venue(
@@ -441,15 +447,13 @@ def resolve_or_create_canonical_venue(
         raise error
     if exact_ids:
         venue = dict(registry[next(iter(exact_ids))])
-        if (
-            venue["venue_type"] != requested_type
-            or venue["venue_track"] != requested_track
-        ):
+        if venue["venue_type"] != requested_type:
             raise VenueRegistryError(
-                "existing venue match conflicts with the proposed venue type or track"
+                "existing venue match conflicts with the proposed venue type"
             )
         return {
             **venue,
+            "paper_venue_track": requested_track,
             "venue_label": display_venue(venue),
             "resolution_action": "resolved_to_existing",
             "created": False,
@@ -471,6 +475,7 @@ def resolve_or_create_canonical_venue(
     )
     return {
         **venue,
+        "paper_venue_track": requested_track,
         "resolution_action": "created_missing_canonical_venue",
         "created": True,
     }
@@ -656,7 +661,11 @@ def canonicalize_record(record: Mapping[str, Any], aliases: Sequence[Mapping[str
             canonical = None
         if canonical is not None:
             raw = clean_text(result.get("raw_venue"))
+            paper_track = clean_text(result.get("venue_track")) or (
+                "main" if canonical["venue_type"] == "conference" else ""
+            )
             result.update(canonical)
+            result["venue_track"] = paper_track
             result.pop("aliases", None)
             result["raw_venue"] = raw
             result["venue_aliases"] = list(canonical.get("aliases", []))
