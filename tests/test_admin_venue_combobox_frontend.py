@@ -50,6 +50,37 @@ class AdminVenueComboboxFrontendTests(unittest.TestCase):
             self.assertIn(f'metadata-{field}', body)
         self.assertIn("publicationTypeForVenueType(option.venue_type)", body)
         self.assertIn('elements["metadata-publication-type"].disabled = true', body)
+        self.assertIn("state.venueSelectionConfirmed = explicitSelection", body)
+
+    def test_explicit_selection_confirmation_survives_form_edits_and_is_submitted(self):
+        snapshot = self.source.split("function metadataFormSnapshot()", 1)[1].split(
+            "\nfunction metadataFormIsDirty", 1
+        )[0]
+        save = self.source.split("async function saveMetadata(event)", 1)[1].split(
+            "\nasync function refreshAfterMetadataSave", 1
+        )[0]
+        self.assertIn("values.venue_selection_confirmed = state.venueSelectionConfirmed", snapshot)
+        self.assertIn("state.venueSelectionConfirmed", save)
+        self.assertIn("venue_selection_confirmed: state.venueSelectionConfirmed", save)
+        self.assertNotIn("venueSelectionConfirmed = false", "\n".join(
+            line for line in self.source.splitlines()
+            if "handleMetadataFormChange" in line
+        ))
+
+    def test_hydration_and_cancel_clear_unsaved_selection_confirmation(self):
+        populate = self.source.split("function populateMetadataForm()", 1)[1].split(
+            "\nfunction closeMetadataEditor", 1
+        )[0]
+        close = self.source.split("function closeMetadataEditor()", 1)[1].split(
+            "\nasync function saveMetadata", 1
+        )[0]
+        clear = self.source.split("function clearPaperMetadata", 1)[1].split(
+            "\nfunction renderMetadataComparison", 1
+        )[0]
+        self.assertIn("state.venueSelectionConfirmed = false", populate)
+        self.assertIn("selectCanonicalVenue(state.selectedVenue, false, false)", populate)
+        self.assertIn("populateMetadataForm()", close)
+        self.assertIn("state.venueSelectionConfirmed = false", clear)
 
     def test_override_provenance_creation_and_stale_guards(self):
         self.assertIn("publication_type_override: state.publicationTypeOverride", self.source)

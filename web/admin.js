@@ -31,6 +31,7 @@ const state = {
   venuesLoading: false,
   venuesLoaded: false,
   selectedVenue: null,
+  venueSelectionConfirmed: false,
   pendingVenueProposal: null,
   publicationTypeOverride: false,
   previousPublicationType: "",
@@ -4298,6 +4299,7 @@ async function selectPaper(id) {
 function clearPaperMetadata(message, isError = false) {
   state.paperMetadata = null;
   state.selectedVenue = null;
+  state.venueSelectionConfirmed = false;
   state.publicationTypeOverride = false;
   closeVenueCombobox();
   elements["metadata-compare"].replaceChildren();
@@ -4561,9 +4563,10 @@ function renderSelectedVenueMetadata() {
     });
 }
 
-function selectCanonicalVenue(option, restoreFocus = true) {
+function selectCanonicalVenue(option, restoreFocus = true, explicitSelection = true) {
   state.pendingVenueProposal = null;
   state.selectedVenue = option;
+  state.venueSelectionConfirmed = explicitSelection;
   elements["metadata-venue-id"].value = option.venue_id;
   elements["metadata-venue-name"].value = option.venue_name;
   elements["metadata-venue-acronym"].value = option.venue_acronym || "";
@@ -4634,6 +4637,7 @@ function populatedBookIncompatibleFormFields() {
 
 function clearBookIncompatibleFormFields() {
   state.selectedVenue = null;
+  state.venueSelectionConfirmed = false;
   state.pendingVenueProposal = null;
   [
     "metadata-venue", "metadata-venue-id", "metadata-venue-name",
@@ -4683,6 +4687,7 @@ function handlePublicationTypeChange() {
     && state.selectedVenue?.venue_type === "conference"
   ) {
     state.selectedVenue = null;
+    state.venueSelectionConfirmed = false;
     [
       "metadata-venue", "metadata-venue-id", "metadata-venue-name",
       "metadata-venue-acronym", "metadata-venue-type", "metadata-venue-track",
@@ -4750,6 +4755,7 @@ function submitVenueCreation(event) {
   };
   elements["venue-create-error"].hidden = true;
   state.pendingVenueProposal = draft;
+  state.venueSelectionConfirmed = false;
   state.selectedVenue = {
     venue_id: "",
     venue_name: draft.venue_name,
@@ -4866,6 +4872,7 @@ function metadataFormSnapshot() {
   values.replace_raw_venue = elements["metadata-replace-raw-venue"].checked;
   values.paper_categories = getSelectedPaperCategories();
   values.publication_type_override = state.publicationTypeOverride;
+  values.venue_selection_confirmed = state.venueSelectionConfirmed;
   values.pending_venue_proposal = state.pendingVenueProposal;
   return JSON.stringify(values);
 }
@@ -4921,6 +4928,7 @@ function populateMetadataForm() {
   if (!state.selectedPaper || !state.paperMetadata) return;
   const record = state.paperMetadata.effective_record || state.selectedPaper;
   state.pendingVenueProposal = null;
+  state.venueSelectionConfirmed = false;
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
     "paper_url", "publication_type", "task", "scope_status",
@@ -4948,7 +4956,7 @@ function populateMetadataForm() {
     venue_label: metadataValue(record, "venue_label") || venueName,
   } : null;
   if (state.selectedVenue) {
-    selectCanonicalVenue(state.selectedVenue, false);
+    selectCanonicalVenue(state.selectedVenue, false, false);
     const expectedType = publicationTypeForVenueType(state.selectedVenue.venue_type);
     const savedType = normalizePublicationTypeForForm(record?.publication_type);
     if (savedType && savedType !== expectedType) {
@@ -4979,7 +4987,7 @@ function populateMetadataForm() {
     if (state.selectedVenue) {
       const option = state.venues.find((venue) => venue.venue_id === state.selectedVenue.venue_id);
       if (option) {
-        selectCanonicalVenue(option, false);
+        selectCanonicalVenue(option, false, false);
         const savedType = normalizePublicationTypeForForm(record?.publication_type);
         const expectedType = publicationTypeForVenueType(option.venue_type);
         if (savedType && savedType !== expectedType) {
@@ -5012,6 +5020,7 @@ function populateMetadataForm() {
 }
 
 function closeMetadataEditor() {
+  populateMetadataForm();
   elements["metadata-edit-form"].hidden = true;
 }
 
@@ -5060,7 +5069,8 @@ async function saveMetadata(event) {
     : elements["metadata-venue-id"].value !== metadataValue(effective, "venue_id");
   const trackChanged = elements["metadata-venue-track"].value
     !== (metadataValue(effective, "venue_track") || (elements["metadata-venue-type"].value === "conference" ? "main" : ""));
-  if (venueChanged || trackChanged || Object.hasOwn(draft, "publication_type")) Object.assign(draft, {
+  if (venueChanged || trackChanged || state.venueSelectionConfirmed
+      || Object.hasOwn(draft, "publication_type")) Object.assign(draft, {
     venue: isBook ? "" : elements["metadata-venue-name"].value,
     venue_id: isBook ? "" : elements["metadata-venue-id"].value,
     venue_name: isBook ? "" : elements["metadata-venue-name"].value,
@@ -5073,6 +5083,7 @@ async function saveMetadata(event) {
       : elements["metadata-raw-venue"].value,
     replace_raw_venue: !isBook && elements["metadata-replace-raw-venue"].checked,
     publication_type_override: state.publicationTypeOverride,
+    venue_selection_confirmed: state.venueSelectionConfirmed,
   });
   if (state.pendingVenueProposal) {
     draft.venue_proposal = state.pendingVenueProposal;

@@ -76,6 +76,22 @@ def chi_venue_fields():
     }
 
 
+def kdd_venue_fields():
+    return {
+        "venue": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+        "venue_id": "venue:kdd",
+        "venue_name": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+        "venue_acronym": "KDD",
+        "venue_type": "conference",
+        "venue_track": "main",
+        "raw_venue": (
+            "Proceedings of the 31st ACM SIGKDD Conference on Knowledge "
+            "Discovery and Data Mining V.1"
+        ),
+        "publication_type": "conference",
+    }
+
+
 def write_papers(path, rows):
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=PAPERS_COLUMNS)
@@ -338,6 +354,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     "arxiv_id": "2501.01234",
                     "arxiv_id_changed": False,
                     "paper_url": "https://arxiv.org/pdf/2501.01234.pdf",
+                    "venue_selection_confirmed": True,
                 }
                 self.metadata_request(
                     base_url, "/api/paper/metadata/update", unchanged
@@ -400,6 +417,97 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     saved = next(csv.DictReader(handle))
                 self.assertEqual(saved["venue_track"], "main")
 
+    def test_explicit_kdd_selection_replaces_dangling_identity_without_duplicate(self):
+        stale_kdd = {
+            **kdd_venue_fields(),
+            "venue": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.1",
+            "venue_id": "venue:acm-sigkdd-conference-on-knowledge-discovery-and-data-mining-v-1:main",
+            "venue_name": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.1",
+            "venue_acronym": "",
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(
+                directory, [], original_overrides=stale_kdd
+            ) as (base_url, _original, curated_path, _links_path, display_id):
+                before = self.metadata_request(base_url, "/api/venues")["data"]["records"]
+                payload = self.metadata_request(
+                    base_url,
+                    "/api/paper/metadata/update",
+                    {
+                        "id": display_id,
+                        **kdd_venue_fields(),
+                        "venue_selection_confirmed": True,
+                        "review_note": "Selected the existing reviewed KDD venue.",
+                    },
+                )
+                self.assertTrue(payload["success"])
+                self.assertTrue(payload["saved"])
+                self.assertEqual(payload["data"]["paper"]["venue_id"], "venue:kdd")
+                with curated_path.open(encoding="utf-8", newline="") as handle:
+                    saved = next(csv.DictReader(handle))
+                self.assertEqual(saved["venue_id"], "venue:kdd")
+                self.assertEqual(saved["venue_track"], "main")
+                reloaded = self.metadata_request(
+                    base_url,
+                    f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
+                )["data"]["effective_record"]
+                self.assertEqual(reloaded["venue_id"], "venue:kdd")
+                self.assertEqual(reloaded["venue_acronym"], "KDD")
+                after = self.metadata_request(base_url, "/api/venues")["data"]["records"]
+                self.assertEqual(
+                    sum(row["venue_id"] == "venue:kdd" for row in before), 1
+                )
+                self.assertEqual(
+                    sum(row["venue_id"] == "venue:kdd" for row in after), 1
+                )
+                self.assertEqual(len(before), len(after))
+
+    def test_kdd_replacement_requires_confirmation_but_same_id_patch_does_not(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(directory, []) as (
+                base_url, _original, _curated_path, _links_path, display_id,
+            ):
+                with self.assertRaises(urllib.error.HTTPError) as caught:
+                    self.metadata_request(
+                        base_url,
+                        "/api/paper/metadata/update",
+                        {"id": display_id, **kdd_venue_fields()},
+                    )
+                self.assertEqual(caught.exception.code, 409)
+                body = json.loads(caught.exception.read())
+                self.assertIn("explicit selection confirmation", body["errors"][0])
+
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(
+                directory, [], original_overrides=kdd_venue_fields()
+            ) as (base_url, _original, _curated_path, _links_path, display_id):
+                saved = self.metadata_request(
+                    base_url,
+                    "/api/paper/metadata/update",
+                    {"id": display_id, "abstract": "Unrelated reviewed edit."},
+                )["data"]["paper"]
+                self.assertEqual(saved["venue_id"], "venue:kdd")
+                self.assertEqual(saved["venue_name"], kdd_venue_fields()["venue_name"])
+
+    def test_raw_kdd_text_without_selected_id_remains_guarded(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with self.metadata_server(directory, []) as (
+                base_url, _original, _curated_path, _links_path, display_id,
+            ):
+                for field, value in (
+                    ("venue", "KDD"),
+                    ("venue_name", kdd_venue_fields()["venue_name"]),
+                ):
+                    with self.subTest(field=field), self.assertRaises(
+                        urllib.error.HTTPError
+                    ) as caught:
+                        self.metadata_request(
+                            base_url,
+                            "/api/paper/metadata/update",
+                            {"id": display_id, field: value},
+                        )
+                    self.assertEqual(caught.exception.code, 409)
+
     def test_legacy_venue_resolves_on_metadata_load(self):
         with tempfile.TemporaryDirectory() as directory:
             with self.metadata_server(
@@ -456,6 +564,16 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 conflicting = {**original, **chi_venue_fields(), "id": display_id, "venue_name": "Wrong name"}
                 with self.assertRaises(urllib.error.HTTPError) as caught:
                     self.metadata_request(base_url, "/api/paper/metadata/update", conflicting)
+                self.assertEqual(caught.exception.code, 400)
+                inactive = {
+                    **original,
+                    **chi_venue_fields(),
+                    "id": display_id,
+                    "venue_id": "venue:inactive",
+                    "venue_selection_confirmed": True,
+                }
+                with self.assertRaises(urllib.error.HTTPError) as caught:
+                    self.metadata_request(base_url, "/api/paper/metadata/update", inactive)
                 self.assertEqual(caught.exception.code, 400)
 
     def test_canonical_venue_creation_api_prevents_duplicates(self):
@@ -675,6 +793,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     "arxiv_id": "2501.99999",
                     "arxiv_id_changed": True,
                     "paper_url": "https://arxiv.org/pdf/2501.01234.pdf",
+                    "venue_selection_confirmed": True,
                 }
                 payload = self.metadata_request(
                     base_url, "/api/paper/metadata/update", edit

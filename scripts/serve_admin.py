@@ -3157,17 +3157,90 @@ def make_handler(
                                     raise VenueRegistryError(
                                         "venue_proposal must be an object"
                                     )
-                                if venue_proposal is None:
-                                    existing_venue_id = clean(
-                                        base_record.get("venue_id")
+                                existing_venue_id = clean(
+                                    base_record.get("venue_id")
+                                )
+                                submitted_venue_id = clean(payload.get("venue_id"))
+                                selection_confirmed = payload.get(
+                                    "venue_selection_confirmed"
+                                ) is True
+                                if (
+                                    "venue_selection_confirmed" in payload
+                                    and not isinstance(
+                                        payload.get("venue_selection_confirmed"),
+                                        bool,
                                     )
+                                ):
+                                    raise VenueRegistryError(
+                                        "venue_selection_confirmed must be a boolean"
+                                    )
+                                venue_alias_rows = read_venue_aliases(
+                                    venue_aliases_path
+                                )
+                                submitted_canonical = None
+                                if submitted_venue_id:
+                                    submitted_canonical = canonical_venue_by_id(
+                                        submitted_venue_id,
+                                        venue_alias_rows,
+                                    )
+                                    for field in (
+                                        "venue_name",
+                                        "venue_acronym",
+                                        "venue_type",
+                                    ):
+                                        if (
+                                            field not in payload
+                                            or clean(payload.get(field))
+                                            != submitted_canonical[field]
+                                        ):
+                                            raise VenueRegistryError(
+                                                f"{field} must match canonical venue_id "
+                                                f"{submitted_venue_id!r}"
+                                            )
+                                    if (
+                                        submitted_venue_id != existing_venue_id
+                                        and not selection_confirmed
+                                    ):
+                                        error = VenueRegistryError(
+                                            "canonical venue identity replacement "
+                                            "requires explicit selection confirmation"
+                                        )
+                                        error.confirmation_required = True  # type: ignore[attr-defined]
+                                        error.possible_matches = [  # type: ignore[attr-defined]
+                                            submitted_canonical
+                                        ]
+                                        raise error
+                                elif selection_confirmed:
+                                    raise VenueRegistryError(
+                                        "explicit venue selection confirmation "
+                                        "requires a canonical venue_id"
+                                    )
+                                elif (
+                                    venue_proposal is None
+                                    and any(
+                                        clean(payload.get(field))
+                                        for field in (
+                                            "venue", "venue_name", "venue_acronym"
+                                        )
+                                    )
+                                    and clean(payload.get("publication_type"))
+                                    != "book"
+                                ):
+                                    error = VenueRegistryError(
+                                        "canonical venue text requires an explicit "
+                                        "canonical venue selection"
+                                    )
+                                    error.confirmation_required = True  # type: ignore[attr-defined]
+                                    raise error
+                                if (
+                                    venue_proposal is None
+                                    and submitted_canonical is None
+                                ):
                                     if existing_venue_id:
                                         try:
                                             canonical_venue_by_id(
                                                 existing_venue_id,
-                                                read_venue_aliases(
-                                                    venue_aliases_path
-                                                ),
+                                                venue_alias_rows,
                                             )
                                         except VenueRegistryError:
                                             # Deterministically repair a
@@ -3271,6 +3344,7 @@ def make_handler(
                         self.send_json(
                             HTTPStatus.CONFLICT
                             if possible_matches
+                            or getattr(error, "confirmation_required", False)
                             else HTTPStatus.BAD_REQUEST,
                             api_payload(
                                 success=False,
