@@ -17,6 +17,9 @@ class CategoryMarkupParser(HTMLParser):
         self.legend_count = 0
         self.inputs = []
         self.labels = []
+        self.labels_in_grid = 0
+        self.inputs_in_option = 0
+        self.in_option = False
         self.error_inside_grid = False
 
     def handle_starttag(self, tag, attrs):
@@ -32,13 +35,18 @@ class CategoryMarkupParser(HTMLParser):
             self.in_grid = True
         elif tag == "label" and "paper-category-option" in attributes.get("class", "").split():
             self.labels.append(attributes)
+            self.labels_in_grid += int(self.in_grid)
+            self.in_option = True
         elif tag == "input" and attributes.get("type") == "checkbox":
             self.inputs.append(attributes)
+            self.inputs_in_option += int(self.in_option)
         elif tag == "p" and attributes.get("id") == "metadata-paper-categories-error":
             self.error_inside_grid = self.in_grid
 
     def handle_endtag(self, tag):
-        if tag == "div" and self.in_grid:
+        if tag == "label" and self.in_option:
+            self.in_option = False
+        elif tag == "div" and self.in_grid:
             self.in_grid = False
         elif tag == "fieldset" and self.in_fieldset:
             self.in_fieldset = False
@@ -61,6 +69,8 @@ class AdminPaperCategoriesFrontendTests(unittest.TestCase):
         self.assertEqual(self.parser.legend_count, 1)
         self.assertEqual(len(self.parser.inputs), 5)
         self.assertEqual(len(self.parser.labels), 5)
+        self.assertEqual(self.parser.labels_in_grid, 5)
+        self.assertEqual(self.parser.inputs_in_option, 5)
         self.assertEqual(
             self.parser.fieldset_attrs.get("aria-describedby"),
             "metadata-paper-categories-error",
@@ -155,14 +165,21 @@ class AdminPaperCategoriesFrontendTests(unittest.TestCase):
         self.assertNotIn("draft.entry_type", save)
         self.assertIn("paper_categories: isBook ? [] :", save)
 
-    def test_layout_is_scoped_two_column_and_responsive(self):
+    def test_layout_is_scoped_five_column_and_responsive(self):
         grid = self.css.split(".paper-category-options {", 1)[1].split("}", 1)[0]
         option = self.css.split(".paper-draft-form .paper-category-option {", 1)[1].split("}", 1)[0]
         self.assertIn("display: grid", grid)
-        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr))", grid)
+        self.assertIn("grid-template-columns: repeat(5, minmax(0, 1fr))", grid)
         self.assertIn("display: flex", option)
         self.assertIn("align-items: center", option)
         self.assertIn("gap:", option)
+        medium = self.css.split("@media (max-width: 980px) {", 1)[1].split(
+            "@media (max-width: 620px) {", 1
+        )[0]
+        self.assertRegex(
+            medium,
+            r"\.paper-category-options\s*\{\s*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\);",
+        )
         narrow = self.css.split("@media (max-width: 620px) {", 1)[1]
         self.assertRegex(
             narrow,
@@ -175,7 +192,7 @@ class AdminPaperCategoriesFrontendTests(unittest.TestCase):
         css_version = re.search(r'/admin\.css\?v=([^"\s]+)', self.html).group(1)
         js_version = re.search(r'/admin\.js\?v=([^"\s]+)', self.html).group(1)
         self.assertEqual(css_version, js_version)
-        self.assertEqual(css_version, "20260801-paper-categories")
+        self.assertEqual(css_version, "20260801-paper-category-row")
         self.assertIn("20260718-research-institute", self.html)
 
 
