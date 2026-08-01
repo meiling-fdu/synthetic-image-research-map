@@ -115,10 +115,11 @@ process.stdout.write(JSON.stringify({
             self.assertIn(marker, rendered["detailsHtml"])
 
     def test_mapping_assets_share_a_current_cache_key(self):
-        version = "v=20260801-author-institution-mappings"
-        self.assertIn(f'style.css?{version}', self.html)
-        self.assertIn(f'paper_details_helpers.js?{version}', self.html)
-        self.assertIn(f'app.js?{version}', self.html)
+        versions = {
+            asset: self.html.split(f'{asset}?v=', 1)[1].split('"', 1)[0]
+            for asset in ("style.css", "paper_details_helpers.js", "app.js")
+        }
+        self.assertEqual(len(set(versions.values())), 1)
 
     def test_shared_author_items_preserve_mappings_across_visibility_slices(self):
         helper = ROOT / "web" / "paper_details_helpers.js"

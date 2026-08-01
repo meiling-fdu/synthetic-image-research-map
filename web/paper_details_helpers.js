@@ -52,6 +52,50 @@
       ));
   }
 
+  const PUBLICATION_TYPE_LABELS = {
+    journal: "Journal",
+    journal_article: "Journal",
+    conference: "Conference",
+    conference_paper: "Conference",
+    workshop: "Workshop",
+    workshop_paper: "Workshop",
+    preprint: "Preprint",
+    book: "Book",
+    book_chapter: "Book Chapter",
+    chapter: "Book Chapter",
+    thesis: "Thesis",
+    report: "Report",
+    position_paper: "Position Paper",
+    dataset_paper: "Dataset Paper",
+  };
+
+  function publicationTypeLabel(value) {
+    const rawValue = String(value || "").trim();
+    if (!rawValue) return "";
+    const normalized = rawValue.toLocaleLowerCase().replace(/[\s-]+/g, "_");
+    return PUBLICATION_TYPE_LABELS[normalized] || normalized
+      .split("_")
+      .filter(Boolean)
+      .map((part) => part[0].toLocaleUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  function publicationMetadata(record, venueValue, yearValue) {
+    const typeLabel = publicationTypeLabel(record?.publication_type);
+    const rawVenue = String(venueValue || "").trim();
+    // Only strip an explicitly delimited duplicate label. A venue beginning
+    // with "Journal" or "Conference" may legitimately contain that word.
+    const escapedType = typeLabel.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const duplicatePrefix = typeLabel
+      ? new RegExp(`^${escapedType}\\s*(?:[:|–—-])\\s*`, "i")
+      : null;
+    const venue = duplicatePrefix ? rawVenue.replace(duplicatePrefix, "").trim() : rawVenue;
+    const year = yearValue === null || yearValue === undefined
+      ? ""
+      : String(yearValue).trim();
+    return { typeLabel, venue, year };
+  }
+
   function renderPaperAuthorItems(
     paper,
     escapeHtml,
@@ -105,5 +149,11 @@
     ].join("");
   }
 
-  return { namesMatch, renderPaperAuthorItems, renderPaperAuthors };
+  return {
+    namesMatch,
+    publicationMetadata,
+    publicationTypeLabel,
+    renderPaperAuthorItems,
+    renderPaperAuthors,
+  };
 }));

@@ -1729,6 +1729,14 @@ input:disabled {
   font-weight: 700;
 }
 
+.paper-details-metadata-separator {
+  color: #99a8af;
+}
+
+.paper-details-type-venue-separator {
+  margin-inline: 1px;
+}
+
 .paper-details-affiliations {
   display: grid;
   gap: 8px;

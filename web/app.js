@@ -2568,21 +2568,39 @@ function formatResolutionValue(value) {
 }
 
 function paperDetailsPublication(record) {
-  const labels = {
-    conference: "Conference",
-    conference_paper: "Conference",
-    journal: "Journal",
-    journal_article: "Journal",
-    preprint: "Preprint",
-    book: "Book",
-  };
-  const rawType = String(record.publication_type || "").trim();
-  const typeLabel = labels[rawType.toLocaleLowerCase()] || formatTask(rawType);
-  const venueRow = venueDisplayLabel(record);
-  const rawVenue = venueRow || "Unknown venue/source";
-  const duplicatePrefix = new RegExp(`^${typeLabel.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}\\b[\\s:–—-]*`, "i");
-  const venue = rawVenue.replace(duplicatePrefix, "").trim() || rawVenue;
-  return { typeLabel, venue };
+  return PaperDetailsHelpers.publicationMetadata(
+    record,
+    venueDisplayLabel(record),
+    null,
+  );
+}
+
+function paperDetailsPublicationHtml(record) {
+  const metadata = PaperDetailsHelpers.publicationMetadata(
+    record,
+    venueDisplayLabel(record),
+    record.publication_year ?? record.year,
+  );
+  const publication = [
+    metadata.typeLabel
+      ? `<span class="paper-details-publication-type"><span class="visually-hidden">Publication type: </span>${escapeHtml(metadata.typeLabel)}</span>`
+      : "",
+    metadata.typeLabel && metadata.venue
+      ? '<span class="paper-details-metadata-separator paper-details-type-venue-separator" aria-hidden="true">|</span>'
+      : "",
+    metadata.venue
+      ? `<span class="paper-details-publication-venue"><span class="visually-hidden">Venue: </span>${escapeHtml(metadata.venue)}</span>`
+      : "",
+    metadata.year && (metadata.typeLabel || metadata.venue)
+      ? '<span class="paper-details-metadata-separator" aria-hidden="true">·</span>'
+      : "",
+    metadata.year
+      ? `<span class="paper-details-publication-year"><span class="visually-hidden">Year: </span>${escapeHtml(metadata.year)}</span>`
+      : "",
+  ].filter(Boolean).join(" ");
+  return publication
+    ? `<p class="paper-details-venue-row">${publication}</p>`
+    : "";
 }
 
 function paperDetailsHtml(record, relatedEntries) {
@@ -2599,8 +2617,7 @@ function paperDetailsHtml(record, relatedEntries) {
         8,
       )
     : "Unknown";
-  const year = record.publication_year ?? record.year ?? "Unknown";
-  const { typeLabel: publicationTypeLabel, venue } = paperDetailsPublication(record);
+  const publicationMetadataBlock = paperDetailsPublicationHtml(record);
   const entryType = getEntryType(record);
   const entryTypeLabel = getEntryTypeLabel(entryType);
   const entryTypeBadge = entryType
@@ -2629,9 +2646,7 @@ function paperDetailsHtml(record, relatedEntries) {
       <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatTask(record.task))}</span>
       ${entryTypeBadge}
     </div>
-    <p class="paper-details-venue-row">
-      <span class="visually-hidden">Publication: </span><span class="paper-details-publication-type">${escapeHtml(publicationTypeLabel)}</span> ${escapeHtml(venue)} <span aria-hidden="true">·</span> <span class="visually-hidden">Year: </span>${escapeHtml(year)}
-    </p>
+    ${publicationMetadataBlock}
     <section class="paper-details-group paper-details-authors" aria-labelledby="paper-authors-heading">
       <h4 id="paper-authors-heading" class="paper-details-section-heading">Authors</h4>
       <p>${authors}</p>

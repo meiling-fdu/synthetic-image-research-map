@@ -1,4 +1,5 @@
 import json
+import re
 import subprocess
 import unittest
 from pathlib import Path
@@ -55,7 +56,8 @@ process.stdout.write(JSON.stringify({html}));
             details.index("paper-details-title"),
             details.index('class="popup-badges"'),
         )
-        self.assertIn("paper-details-publication-type", details)
+        self.assertIn("${publicationMetadataBlock}", details)
+        self.assertIn("paper-details-publication-type", self.app)
         self.assertIn("task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel", details)
         self.assertIn("paper-details-affiliations", details)
         self.assertIn("affiliation.authors.map(escapeHtml).join", details)
@@ -71,7 +73,7 @@ process.stdout.write(JSON.stringify({html}));
         )[1].split("\nfunction resultBadges", 1)[0]
         title = details.index("paper-details-title")
         badges = details.index('class="popup-badges"')
-        venue = details.index('class="paper-details-venue-row"')
+        venue = details.index("${publicationMetadataBlock}")
         authors = details.index("paper-details-authors")
         affiliations = details.index("${affiliationsBlock}")
         links = details.index("${linksBlock}")
@@ -82,7 +84,7 @@ process.stdout.write(JSON.stringify({html}));
         self.assertLess(affiliations, links)
         self.assertNotIn("venueDisplayHtml(record)", details)
         self.assertNotIn("venue-type-badge", details)
-        self.assertNotIn("Publication type:", details)
+        self.assertIn("Publication type:", self.app)
 
     def test_only_primary_badges_remain_in_paper_details(self):
         details = self.app.split(
@@ -126,16 +128,84 @@ process.stdout.write(JSON.stringify({html}));
         self.assertNotIn("if (moreDetailsToggle)", self.app)
 
     def test_publication_row_uses_public_label_before_venue_and_deduplicates(self):
-        helper = self.app.split("function paperDetailsPublication(record) {", 1)[1].split(
+        helper_source = (
+            REPOSITORY / "web" / "paper_details_helpers.js"
+        ).read_text(encoding="utf-8")
+        for label in (
+            "Conference", "Journal", "Workshop", "Preprint", "Book",
+            "Book Chapter", "Thesis", "Report", "Position Paper",
+            "Dataset Paper",
+        ):
+            self.assertIn(f'"{label}"', helper_source)
+        self.assertIn("duplicatePrefix", helper_source)
+        renderer = self.app.split("function paperDetailsPublicationHtml(record) {", 1)[1].split(
             "\nfunction paperDetailsHtml", 1
         )[0]
-        for label in ("Conference", "Journal", "Preprint", "Book"):
-            self.assertIn(f'"{label}"', helper)
-        self.assertIn("duplicatePrefix", helper)
-        details = self.app.split("function paperDetailsHtml(record, relatedEntries) {", 1)[1].split(
-            "\nfunction resultBadges", 1
-        )[0]
-        self.assertLess(details.index("publicationTypeLabel"), details.index("${escapeHtml(venue)}"))
+        self.assertLess(renderer.index("metadata.typeLabel"), renderer.index("metadata.venue"))
+        self.assertLess(renderer.index("metadata.venue"), renderer.index("metadata.year"))
+
+    def test_publication_metadata_all_missing_value_combinations(self):
+        helper = REPOSITORY / "web" / "paper_details_helpers.js"
+        app_path = REPOSITORY / "web" / "app.js"
+        script = r"""
+const fs = require("fs");
+global.PaperDetailsHelpers = require(process.argv[1]);
+global.venueDisplayLabel = (record) => record.venue || "";
+global.escapeHtml = (value) => String(value)
+  .replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+const app = fs.readFileSync(process.argv[2], "utf8");
+const start = app.indexOf("function paperDetailsPublication(record) {");
+const end = app.indexOf("\nfunction paperDetailsHtml", start);
+eval(app.slice(start, end));
+const cases = [
+  {key: "journal", record: {publication_type: "journal", venue: "Journal of Image and Graphics", year: 2026}},
+  {key: "conference", record: {publication_type: "conference_paper", venue: "IEEE/CVF Conference on Computer Vision and Pattern Recognition", year: 2025}},
+  {key: "bookChapter", record: {publication_type: "book_chapter", venue: "Artificial Intelligence and Society", year: 2024}},
+  {key: "typeVenue", record: {publication_type: "journal", venue: "Venue"}},
+  {key: "typeYear", record: {publication_type: "journal", year: 2026}},
+  {key: "venueYear", record: {venue: "Venue", year: 2026}},
+  {key: "typeOnly", record: {publication_type: "journal"}},
+  {key: "venueOnly", record: {venue: "Venue"}},
+  {key: "yearOnly", record: {year: 2026}},
+  {key: "none", record: {}},
+];
+process.stdout.write(JSON.stringify(Object.fromEntries(
+  cases.map(({key, record}) => [key, paperDetailsPublicationHtml(record)]),
+)));
+"""
+        result = subprocess.run(
+            [str(NODE), "-e", script, str(helper), str(app_path)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        rendered = json.loads(result.stdout)
+
+        def visible_text(markup):
+            without_hidden = re.sub(
+                r'<span class="visually-hidden">.*?</span>', "", markup
+            )
+            return " ".join(re.sub(r"<[^>]+>", "", without_hidden).split())
+
+        expected = {
+            "journal": "Journal | Journal of Image and Graphics · 2026",
+            "conference": "Conference | IEEE/CVF Conference on Computer Vision and Pattern Recognition · 2025",
+            "bookChapter": "Book Chapter | Artificial Intelligence and Society · 2024",
+            "typeVenue": "Journal | Venue",
+            "typeYear": "Journal · 2026",
+            "venueYear": "Venue · 2026",
+            "typeOnly": "Journal",
+            "venueOnly": "Venue",
+            "yearOnly": "2026",
+            "none": "",
+        }
+        self.assertEqual(
+            {key: visible_text(value) for key, value in rendered.items()},
+            expected,
+        )
+        for markup in rendered.values():
+            self.assertNotIn("| |", visible_text(markup))
+            self.assertNotIn("· ·", visible_text(markup))
 
     def test_narrow_panel_content_can_wrap_without_horizontal_overflow(self):
         content_css = self.css.split(".paper-details-content {", 1)[1].split("}", 1)[0]
