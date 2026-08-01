@@ -4801,6 +4801,18 @@ function metadataFormIsDirty() {
     && metadataFormSnapshot() !== state.metadataSave.baseline;
 }
 
+function normalizeCurationStatus(value) {
+  const status = String(value || "").trim().toLowerCase();
+  if (["confirmed", "corrected_by_admin", "manually_confirmed", "manually_added"].includes(status)) {
+    return "confirmed";
+  }
+  if (!status || status === "needs_review" || status === "auto_imported") {
+    return "needs_review";
+  }
+  console.warn(`Unknown curation_status ${JSON.stringify(status)}; treating it as needing review.`);
+  return "needs_review";
+}
+
 function renderMetadataSaveStatus(status, message = "") {
   state.metadataSave.status = status;
   const statusElement = elements["metadata-save-status"];
@@ -4901,7 +4913,7 @@ function populateMetadataForm() {
   });
   elements["metadata-paper-id"].value = state.selectedId;
   elements["metadata-curation-status"].value =
-    metadataValue(record, "curation_status") || "corrected_by_admin";
+    normalizeCurationStatus(metadataValue(record, "curation_status"));
   elements["metadata-review-status"].value =
     metadataValue(record, "review_status") || "reviewed";
   elements["metadata-scope-status"].value =
@@ -4947,6 +4959,8 @@ async function saveMetadata(event) {
     const value = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
     if (value !== metadataValue(effective, field).trim()) draft[field] = value;
   });
+  // Submitting this form is an explicit human review action.
+  draft.curation_status = "confirmed";
   const publicationType = elements["metadata-publication-type"].value;
   const isBook = publicationType === "book";
   if (!state.selectedVenue && !isBook) {

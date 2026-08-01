@@ -21,6 +21,7 @@ try:
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
+        normalize_curation_status,
     )
     from .country_normalization import normalize_country_region, public_location_display
     from .publication_types import normalize_book_record, normalize_publication_type
@@ -44,6 +45,7 @@ except ImportError:
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
         PAPERS_COLUMNS,
+        normalize_curation_status,
     )
     from country_normalization import normalize_country_region, public_location_display
     from publication_types import normalize_book_record, normalize_publication_type
@@ -83,10 +85,7 @@ PUBLIC_PAPER_TASKS = {
     "uncertain",
 }
 PUBLIC_MAP_TASKS = PUBLIC_PAPER_TASKS - {"uncertain"}
-CONFIRMED_CURATION_STATUSES = {
-    "manually_confirmed",
-    "corrected_by_admin",
-}
+CONFIRMED_CURATION_STATUSES = {"confirmed"}
 CURATED_OVERRIDE_FIELDS = (
     "paper_id",
     "title",
@@ -711,7 +710,7 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         "authors": _parse_curated_authors(row.get("authors")),
         "source_database": clean(row.get("source_database")) or "curated",
         "metadata_source": clean(row.get("metadata_source")),
-        "curation_status": clean(row.get("curation_status")),
+        "curation_status": normalize_curation_status(row.get("curation_status")),
         "review_status": review_status,
         "review_note": note,
         "needs_review": review_status != "reviewed",
@@ -764,14 +763,8 @@ def _merge_curated_paper(
     existing: MutableMapping[str, Any],
     curated: Mapping[str, Any],
 ) -> None:
-    curation_status = clean(curated.get("curation_status"))
-    confirmed = (
-        curation_status in CONFIRMED_CURATION_STATUSES
-        or (
-            curation_status == "manually_added"
-            and clean(curated.get("review_status")) == "reviewed"
-        )
-    )
+    curation_status = normalize_curation_status(curated.get("curation_status"))
+    confirmed = curation_status in CONFIRMED_CURATION_STATUSES
     for field in CURATED_OVERRIDE_FIELDS:
         value = curated.get(field)
         if value in (None, "", []):
@@ -936,7 +929,7 @@ def _curated_marker(
         "lon": float(longitude),
         "source_database": "curated",
         "metadata_source": clean(paper.get("metadata_source")),
-        "curation_status": clean(paper.get("curation_status")),
+        "curation_status": normalize_curation_status(paper.get("curation_status")),
         "mapping_id": clean(mapping.get("mapping_id")),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
         "evidence_source": clean(mapping.get("evidence_source")),

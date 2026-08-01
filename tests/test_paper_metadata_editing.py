@@ -52,7 +52,7 @@ def curated_row(**overrides):
             "scope_status": "in_scope",
             "source_database": "openalex",
             "metadata_source": "openalex",
-            "curation_status": "corrected_by_admin",
+            "curation_status": "confirmed",
             "review_status": "reviewed",
             "created_at": "2026-01-01T00:00:00Z",
             "updated_at": "2026-01-01T00:00:00Z",

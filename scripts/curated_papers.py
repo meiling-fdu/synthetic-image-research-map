@@ -20,6 +20,7 @@ try:
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         PAPERS_COLUMNS,
+        normalize_curation_status,
     )
     from .paper_exclusions import (
         all_identity_keys,
@@ -51,6 +52,7 @@ except ImportError:
         ALLOWED_TASKS,
         CURATED_DATA_DIR,
         PAPERS_COLUMNS,
+        normalize_curation_status,
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
     from publication_types import (
@@ -108,7 +110,19 @@ def read_curated_papers(
                 raise CuratedPaperError(
                     f"{path} does not have the exact curated paper header"
                 )
-            return [dict(row) for row in reader]
+            rows = []
+            for row_number, row in enumerate(reader, start=2):
+                record = dict(row)
+                try:
+                    record["curation_status"] = normalize_curation_status(
+                        record.get("curation_status")
+                    )
+                except ValueError as error:
+                    raise CuratedPaperError(
+                        f"{path}:{row_number}: {error}", field="curation_status"
+                    ) from error
+                rows.append(record)
+            return rows
     except OSError as error:
         raise CuratedPaperError(f"could not read {path}: {error}") from error
     except (UnicodeError, csv.Error) as error:
@@ -308,11 +322,9 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
             "source_database must be openalex, arxiv, or manual"
         )
     metadata_source = source_database
-    curation_status = (
-        "manually_confirmed"
-        if source_database in {"openalex", "arxiv"}
-        else "manually_added"
-    )
+    # This path follows an explicit maintainer selection/save. Source
+    # provenance remains in source_database and metadata_source.
+    curation_status = "confirmed"
     if curation_status not in ALLOWED_CURATION_STATUSES:
         raise CuratedPaperError("unsupported curation status")
     review_status = clean(draft.get("review_status")) or "pending"
@@ -436,6 +448,15 @@ def update_curated_paper(
     venue_aliases_path: Path | None = None,
 ) -> Dict[str, str]:
     """Create or patch a curated metadata override for one effective paper."""
+    submitted_curation_status = clean(draft.get("curation_status"))
+    if (
+        submitted_curation_status
+        and submitted_curation_status not in ALLOWED_CURATION_STATUSES
+    ):
+        raise CuratedPaperError(
+            "curation_status must be confirmed or needs_review",
+            field="curation_status",
+        )
     # API callers may send a true patch. Start from the persisted/effective
     # record so omitted fields are never reconstructed from display labels.
     aliases = (
@@ -468,9 +489,8 @@ def update_curated_paper(
             draft.get("publication_type"), venue=draft.get("venue")
         )
     )
-    curation_status = (
-        clean(draft.get("curation_status")) or "corrected_by_admin"
-    )
+    # Reaching this write is an explicit human save.
+    curation_status = "confirmed"
     review_status = clean(draft.get("review_status")) or "reviewed"
     if not title:
         raise CuratedPaperError("title is required")

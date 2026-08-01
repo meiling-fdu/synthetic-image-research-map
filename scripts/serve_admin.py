@@ -31,7 +31,7 @@ try:
         git_status_result,
         run_workflow,
     )
-    from .curated_schema import ALLOWED_EXCLUSION_REASONS
+    from .curated_schema import ALLOWED_EXCLUSION_REASONS, normalize_curation_status
     from .arxiv_autofill import (
         DEFAULT_CURATED_ARXIV_LINKS_PATH,
         ArxivLookupError,
@@ -152,7 +152,7 @@ except ImportError:
         git_status_result,
         run_workflow,
     )
-    from curated_schema import ALLOWED_EXCLUSION_REASONS
+    from curated_schema import ALLOWED_EXCLUSION_REASONS, normalize_curation_status
     from arxiv_autofill import (
         DEFAULT_CURATED_ARXIV_LINKS_PATH,
         ArxivLookupError,
@@ -918,6 +918,14 @@ def load_admin_data(
     public_papers = read_json_records(PUBLIC_PAPERS_PATH)
     map_records = read_json_records(PUBLIC_MAP_PATH)
     curated_rows = read_csv_rows(curated_papers_path)
+    for record in (*public_papers, *map_records, *curated_rows):
+        if "curation_status" in record:
+            try:
+                record["curation_status"] = normalize_curation_status(
+                    record.get("curation_status")
+                )
+            except ValueError as error:
+                raise AdminDataError(str(error)) from error
     exclusion_rows = read_csv_rows(exclusions_path)
 
     papers: List[Dict[str, Any]] = []

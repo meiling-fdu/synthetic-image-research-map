@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
 
 try:
     from .institution_types import INSTITUTION_TYPE_SET
@@ -361,13 +361,27 @@ ALLOWED_ENTRY_TYPES = {
     "analysis",
 }
 
-ALLOWED_CURATION_STATUSES = {
-    "auto_imported",
-    "manually_added",
-    "manually_confirmed",
-    "corrected_by_admin",
-    "needs_review",
+ALLOWED_CURATION_STATUSES = {"confirmed", "needs_review"}
+
+LEGACY_CURATION_STATUS_MAP = {
+    "corrected_by_admin": "confirmed",
+    "manually_confirmed": "confirmed",
+    "manually_added": "confirmed",
+    "auto_imported": "needs_review",
 }
+
+
+def normalize_curation_status(value: Any, *, reject_unknown: bool = True) -> str:
+    """Return the canonical two-state review meaning of a status value."""
+    status = " ".join(str(value or "").split()).casefold()
+    if not status:
+        return "needs_review"
+    normalized = LEGACY_CURATION_STATUS_MAP.get(status, status)
+    if normalized in ALLOWED_CURATION_STATUSES:
+        return normalized
+    if reject_unknown:
+        raise ValueError(f"unsupported curation_status: {status!r}")
+    return "needs_review"
 
 ALLOWED_REVIEW_STATUSES = {
     "pending",

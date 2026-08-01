@@ -9,9 +9,9 @@ from collections import Counter
 from typing import Dict, List
 
 try:
-    from .curated_schema import CURATED_DATA_DIR, EXPECTED_COLUMNS
+    from .curated_schema import CURATED_DATA_DIR, EXPECTED_COLUMNS, normalize_curation_status
 except ImportError:  # Support direct execution from the repository root.
-    from curated_schema import CURATED_DATA_DIR, EXPECTED_COLUMNS
+    from curated_schema import CURATED_DATA_DIR, EXPECTED_COLUMNS, normalize_curation_status
 
 
 TRUE_VALUES = {"true", "1", "yes", "y"}
@@ -85,7 +85,7 @@ def main() -> int:
     )
     print_breakdown(
         "Papers by curation_status",
-        Counter(clean(row.get("curation_status")) for row in papers),
+        Counter(normalize_curation_status(row.get("curation_status")) for row in papers),
     )
     print_breakdown(
         "Exclusions by reason",

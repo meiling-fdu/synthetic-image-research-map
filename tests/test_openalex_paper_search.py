@@ -83,7 +83,7 @@ class OpenAlexPaperSearchTests(unittest.TestCase):
 
         self.assertEqual(normalized["source_database"], "arxiv")
         self.assertEqual(normalized["metadata_source"], "arxiv")
-        self.assertEqual(normalized["curation_status"], "manually_confirmed")
+        self.assertEqual(normalized["curation_status"], "confirmed")
 
     @patch("scripts.openalex_paper_search._fetch_arxiv_metadata", return_value={})
     @patch("scripts.openalex_paper_search._search_works")
