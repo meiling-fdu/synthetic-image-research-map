@@ -1,8 +1,14 @@
+import json
+import subprocess
 import unittest
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+NODE = Path(
+    "/Users/meilinger/.cache/codex-runtimes/"
+    "codex-primary-runtime/dependencies/node/bin/node"
+)
 
 
 class FrontendResultCardTests(unittest.TestCase):
@@ -43,7 +49,7 @@ class FrontendResultCardTests(unittest.TestCase):
 
     def test_author_order_object_safety_and_accessible_expansion(self):
         authors = self.function("resultAuthors", "institutionResultContent")
-        self.assertIn("authors.map((name) => String(name || \"\").trim())", authors)
+        self.assertIn("PaperDetailsHelpers.renderPaperAuthorItems", authors)
         self.assertIn("visibleAuthors", authors)
         self.assertIn("overflowAuthors", authors)
         self.assertIn("visibleLimit", authors)
@@ -53,6 +59,47 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn('setAttribute("aria-expanded"', self.app)
         self.assertIn('aria-controls="${regionId}"', authors)
         self.assertNotIn("[object Object]", authors)
+
+    def test_unique_paper_cards_reuse_author_affiliation_numbers(self):
+        paper = self.function("paperResultContent", "renderResults")
+        authors = self.function("resultAuthors", "institutionResultContent")
+        self.assertIn("resultAuthors(normalizedRecord.authors", paper)
+        self.assertIn("renderPaperAuthorItems", authors)
+        self.assertIn("author-affiliation-numbers", (
+            ROOT / "web" / "paper_details_helpers.js"
+        ).read_text(encoding="utf-8"))
+
+    def test_shared_author_items_preserve_mappings_across_visibility_slices(self):
+        helper = ROOT / "web" / "paper_details_helpers.js"
+        script = r"""
+const helpers = require(process.argv[1]);
+const escapeHtml = (value) => String(value);
+const authors = [
+  {name: "One", affiliation_indices: [1]},
+  {name: "Shared", affiliation_indices: [1, 2, 2]},
+  {name: "Unmapped", affiliation_indices: []},
+  {name: "Overflow", affiliation_indices: [10]},
+];
+const items = helpers.renderPaperAuthorItems({authors}, escapeHtml);
+process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expanded: items}));
+"""
+        result = subprocess.run(
+            [str(NODE), "-e", script, str(helper)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        rendered = json.loads(result.stdout)
+        self.assertEqual(rendered["collapsed"], rendered["expanded"][:2])
+        self.assertIn(">1,2</sup>", rendered["items"][1])
+        self.assertNotIn("<sup", rendered["items"][2])
+        self.assertIn(">10</sup>", rendered["items"][3])
+
+    def test_institution_record_renderer_does_not_add_numbering(self):
+        institution = self.function(
+            "institutionResultContent", "uniquePaperInstitutions"
+        )
+        self.assertNotIn("result-institution-number", institution)
 
     def test_institution_cards_preserve_scoped_mappings(self):
         institution = self.function(
@@ -76,6 +123,8 @@ class FrontendResultCardTests(unittest.TestCase):
         self.assertIn("Show all institutions", institutions)
         self.assertIn("Show fewer institutions", self.app)
         self.assertIn('aria-label="Paper institutions"', institutions)
+        self.assertIn("affiliation.number", institutions)
+        self.assertIn('aria-label="Institution ${escapeHtml(affiliation.number)}"', institutions)
 
     def test_grid_uses_content_sized_rows_and_stretched_row_local_cards(self):
         results_list = self.css.split(".results-list {", 1)[1].split("}", 1)[0]

@@ -1238,6 +1238,19 @@ input:disabled {
   line-height: 1.4;
 }
 
+.result-institution-number {
+  position: relative;
+  top: -0.25em;
+  flex: 0 0 auto;
+  min-width: 1.25em;
+  color: var(--accent-dark);
+  font-size: 0.78em;
+  font-weight: 850;
+  line-height: 1;
+  text-align: right;
+  vertical-align: super;
+}
+
 .result-institution-primary p + p {
   margin-top: 2px;
 }

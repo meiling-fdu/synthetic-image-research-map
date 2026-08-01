@@ -710,9 +710,14 @@ function normalizePaperDetailsRecord(record, context = {}) {
     const raw = rawAuthor && typeof rawAuthor === "object" ? rawAuthor : {};
     const name = String(raw.name || raw.display_name || raw.author || (typeof rawAuthor === "object" ? "" : rawAuthor) || "").trim();
     const authorKey = normalizedAuthorName(name);
-    const explicitIndices = Array.isArray(raw.affiliation_indices)
-      ? raw.affiliation_indices.map(Number).filter((index) => Number.isInteger(index) && index > 0)
-      : [];
+    const explicitIndexSet = new Set(
+      Array.isArray(raw.affiliation_indices)
+        ? raw.affiliation_indices.map(Number).filter((index) => Number.isInteger(index) && index > 0)
+        : [],
+    );
+    const explicitIndices = affiliations
+      .map((affiliation) => affiliation.number)
+      .filter((number) => explicitIndexSet.has(number));
     const affiliationIndices = explicitIndices.length
       ? explicitIndices
       : matchingAuthorMapValue(name, affiliationNumbersByAuthor) || [];
@@ -2670,17 +2675,20 @@ function resultLinks(record) {
 }
 
 function resultAuthors(authors, label, regionId, visibleLimit = 6) {
-  const authorNames = authors.map((name) => String(name || "").trim()).filter(Boolean);
-  const visibleAuthors = authorNames.slice(0, visibleLimit);
-  const overflowAuthors = authorNames.slice(visibleLimit);
+  const authorItems = PaperDetailsHelpers.renderPaperAuthorItems(
+    { authors },
+    escapeHtml,
+  );
+  const visibleAuthors = authorItems.slice(0, visibleLimit);
+  const overflowAuthors = authorItems.slice(visibleLimit);
   const authorsHtml = visibleAuthors.length
-    ? visibleAuthors.map((name) => `<span class="paper-author">${escapeHtml(name)}</span>`).join(", ")
+    ? visibleAuthors.join(", ")
     : "Unknown";
   return `
     <section class="result-entity-section result-authors">
       <h4>${escapeHtml(label)}</h4>
       <div class="result-authors-content" id="${regionId}" aria-label="${escapeHtml(label)}">
-        <p>${authorsHtml}${overflowAuthors.length ? `<span class="paper-authors-overflow" hidden>, ${overflowAuthors.map((name) => `<span class="paper-author">${escapeHtml(name)}</span>`).join(", ")}</span>` : ""}</p>
+        <p>${authorsHtml}${overflowAuthors.length ? `<span class="paper-authors-overflow" hidden>, ${overflowAuthors.join(", ")}</span>` : ""}</p>
       </div>
       ${overflowAuthors.length ? `<button type="button" class="paper-authors-toggle" aria-expanded="false" aria-controls="${regionId}">Show all authors</button>` : ""}
     </section>
@@ -2754,6 +2762,7 @@ function resultInstitutions(affiliations, regionId, visibleLimit = 4) {
   if (!uniqueAffiliations.length) return "";
   const affiliationHtml = (affiliation) => `
     <li>
+      <sup class="result-institution-number" aria-label="Institution ${escapeHtml(affiliation.number)}">${escapeHtml(affiliation.number)}</sup>
       ${institutionFilterButtonHtml(affiliation)}
       ${affiliation.location ? `<span class="result-institution-location">${escapeHtml(affiliation.location)}</span>` : ""}
     </li>
@@ -2781,7 +2790,7 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
       <p class="result-entity-kicker">Unique paper</p>
       <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
       <div class="result-card-adaptive">
-        ${resultAuthors(recordAuthors(normalizedRecord), "Authors", `${cardId}-authors`)}
+        ${resultAuthors(normalizedRecord.authors, "Authors", `${cardId}-authors`)}
         ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`)}
       </div>
       <div class="result-secondary">

@@ -52,14 +52,13 @@
       ));
   }
 
-  function renderPaperAuthors(
+  function renderPaperAuthorItems(
     paper,
     escapeHtml,
     currentAffiliationNumber = null,
-    visibleLimit = Infinity,
   ) {
     const authors = Array.isArray(paper?.authors) ? paper.authors : [];
-    const authorItems = authors.map((author) => {
+    return authors.map((author) => {
       const authorName = String(
         author && typeof author === "object"
           ? author.name || author.display_name || author.author || ""
@@ -69,7 +68,7 @@
         return "";
       }
       const numbers = Array.isArray(author.affiliation_indices)
-        ? author.affiliation_indices
+        ? [...new Set(author.affiliation_indices)]
         : [];
       const superscript = numbers.length
         ? `<sup class="author-affiliation-numbers" aria-label="Affiliations ${numbers.join(", ")}">${numbers.join(",")}</sup>`
@@ -83,6 +82,19 @@
         ? `<strong class="current-institution-author">${authorHtml}</strong>`
         : authorHtml;
     }).filter(Boolean);
+  }
+
+  function renderPaperAuthors(
+    paper,
+    escapeHtml,
+    currentAffiliationNumber = null,
+    visibleLimit = Infinity,
+  ) {
+    const authorItems = renderPaperAuthorItems(
+      paper,
+      escapeHtml,
+      currentAffiliationNumber,
+    );
     if (authorItems.length <= visibleLimit) {
       return authorItems.join(", ");
     }
@@ -93,5 +105,5 @@
     ].join("");
   }
 
-  return { namesMatch, renderPaperAuthors };
+  return { namesMatch, renderPaperAuthorItems, renderPaperAuthors };
 }));
