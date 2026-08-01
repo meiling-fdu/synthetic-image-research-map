@@ -322,7 +322,8 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-publication-type",
     "metadata-publication-type-override",
     "metadata-publication-type-warning",
-    "metadata-entry-type",
+    "metadata-paper-categories",
+    "metadata-paper-categories-error",
     "metadata-entry-type-field",
     "metadata-task",
     "metadata-scope-status",
@@ -4616,7 +4617,6 @@ const BOOK_INCOMPATIBLE_FORM_FIELDS = [
   ["venue type", "metadata-venue-type"],
   ["venue track", "metadata-venue-track"],
   ["raw venue", "metadata-raw-venue"],
-  ["paper type / category", "metadata-entry-type"],
 ];
 
 function populatedBookIncompatibleFormFields() {
@@ -4631,8 +4631,9 @@ function clearBookIncompatibleFormFields() {
   [
     "metadata-venue", "metadata-venue-id", "metadata-venue-name",
     "metadata-venue-acronym", "metadata-venue-type", "metadata-venue-track",
-    "metadata-raw-venue", "metadata-entry-type",
+    "metadata-raw-venue",
   ].forEach((id) => { elements[id].value = ""; });
+  paperCategoryCheckboxes().forEach((input) => { input.checked = false; });
   elements["metadata-venue-value"].textContent = "Unavailable for books";
   elements["metadata-raw-venue-display"].textContent = "Not recorded";
   elements["metadata-replace-raw-venue"].checked = false;
@@ -4644,8 +4645,7 @@ function setBookMetadataAvailability(isBook) {
   elements["metadata-venue-field"].hidden = isBook;
   elements["metadata-entry-type-field"].hidden = isBook;
   elements["metadata-venue-button"].disabled = isBook;
-  elements["metadata-entry-type"].disabled = isBook;
-  elements["metadata-entry-type"].required = !isBook;
+  paperCategoryCheckboxes().forEach((input) => { input.disabled = isBook; });
   const leavingBook = !isBook && state.previousPublicationType === "book";
   elements["metadata-publication-type"].disabled = isBook
     ? false
@@ -4781,9 +4781,28 @@ function openMetadataEditor() {
 const METADATA_SNAPSHOT_FIELDS = [
   "title", "year", "authors", "venue", "venue-id", "venue-name", "venue-acronym",
   "venue-type", "venue-track", "raw-venue", "doi", "arxiv-id", "openalex-url",
-  "paper-url", "publication-type", "entry-type", "task", "scope-status",
+  "paper-url", "publication-type", "task", "scope-status",
   "curation-status", "review-status", "abstract", "review-note",
 ];
+
+const PAPER_CATEGORY_ORDER = ["method", "dataset", "benchmark", "survey", "analysis"];
+
+function paperCategoryCheckboxes() {
+  return [...elements["metadata-paper-categories"].querySelectorAll('input[type="checkbox"]')];
+}
+
+function normalizePaperCategories(value) {
+  const values = Array.isArray(value) ? value : String(value || "").split(";");
+  const selected = new Set(values.map((item) => String(item).trim().toLowerCase()).filter(Boolean));
+  const unknown = [...selected].filter((item) => !PAPER_CATEGORY_ORDER.includes(item));
+  if (unknown.length) throw new Error(`Unknown paper categories: ${unknown.join(", ")}`);
+  return PAPER_CATEGORY_ORDER.filter((item) => selected.has(item));
+}
+
+function selectedPaperCategories() {
+  return PAPER_CATEGORY_ORDER.filter((category) =>
+    paperCategoryCheckboxes().some((input) => input.value === category && input.checked));
+}
 
 function metadataFormSnapshot() {
   const values = Object.fromEntries(METADATA_SNAPSHOT_FIELDS.map((field) => {
@@ -4791,6 +4810,7 @@ function metadataFormSnapshot() {
     return [field, control ? control.value.trim() : ""];
   }));
   values.replace_raw_venue = elements["metadata-replace-raw-venue"].checked;
+  values.paper_categories = selectedPaperCategories();
   values.publication_type_override = state.publicationTypeOverride;
   values.pending_venue_proposal = state.pendingVenueProposal;
   return JSON.stringify(values);
@@ -4846,7 +4866,7 @@ function populateMetadataForm() {
   state.pendingVenueProposal = null;
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "entry_type", "task", "scope_status",
+    "paper_url", "publication_type", "task", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
   fields.forEach((field) => {
@@ -4857,6 +4877,17 @@ function populateMetadataForm() {
         : metadataValue(record, field);
     }
   });
+  let categories = [];
+  try {
+    categories = normalizePaperCategories(record?.paper_categories ?? record?.entry_type);
+    elements["metadata-paper-categories-error"].hidden = true;
+    elements["metadata-paper-categories"].removeAttribute("aria-invalid");
+  } catch (error) {
+    elements["metadata-paper-categories-error"].hidden = false;
+    elements["metadata-paper-categories-error"].textContent = error.message;
+    elements["metadata-paper-categories"].setAttribute("aria-invalid", "true");
+  }
+  paperCategoryCheckboxes().forEach((input) => { input.checked = categories.includes(input.value); });
   const venueId = metadataValue(record, "venue_id");
   const venueName = metadataValue(record, "venue_name") || metadataValue(record, "venue");
   state.selectedVenue = venueId ? {
@@ -4950,7 +4981,7 @@ async function saveMetadata(event) {
   }
   const fields = [
     "title", "year", "authors", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "entry_type", "task", "scope_status",
+    "paper_url", "publication_type", "task", "scope_status",
     "curation_status", "review_status", "abstract", "review_note",
   ];
   const effective = state.paperMetadata.effective_record || state.selectedPaper;
@@ -4959,6 +4990,18 @@ async function saveMetadata(event) {
     const value = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
     if (value !== metadataValue(effective, field).trim()) draft[field] = value;
   });
+  const paperCategories = selectedPaperCategories();
+  const effectiveCategories = normalizePaperCategories(effective.paper_categories ?? effective.entry_type);
+  if (elements["metadata-publication-type"].value !== "book" && paperCategories.length === 0) {
+    elements["metadata-paper-categories-error"].hidden = false;
+    elements["metadata-paper-categories-error"].textContent = "Select at least one paper category.";
+    paperCategoryCheckboxes()[0].focus();
+    return;
+  }
+  elements["metadata-paper-categories-error"].hidden = true;
+  if (JSON.stringify(paperCategories) !== JSON.stringify(effectiveCategories)) {
+    draft.paper_categories = paperCategories;
+  }
   // Submitting this form is an explicit human review action.
   draft.curation_status = "confirmed";
   const publicationType = elements["metadata-publication-type"].value;
@@ -4981,7 +5024,7 @@ async function saveMetadata(event) {
     venue_acronym: isBook ? "" : elements["metadata-venue-acronym"].value,
     venue_type: isBook ? "" : elements["metadata-venue-type"].value,
     venue_track: isBook ? "" : elements["metadata-venue-track"].value,
-    entry_type: isBook ? "" : draft.entry_type,
+    paper_categories: isBook ? [] : (draft.paper_categories || paperCategories),
     raw_venue: isBook ? "" : elements["metadata-replace-raw-venue"].checked
       ? elements["metadata-venue-name"].value
       : elements["metadata-raw-venue"].value,
@@ -5085,7 +5128,7 @@ function renderPaperDetail(paper) {
     ["OpenAlex", linkValue(paper.openalex_url, paper.openalex_url)],
     ["Paper URL", linkValue(paper.paper_url, paper.paper_url)],
     ["Task", humanize(paper.task)],
-    ["Paper type", humanize(paper.entry_type)],
+    ["Paper categories", normalizePaperCategories(paper.paper_categories ?? paper.entry_type).map(humanize).join(", ")],
     ["Coverage", humanize(paper.coverage_status)],
     ["Has map location", yesNo(paper.has_map_location)],
     ["Map record count", paper.map_record_count],

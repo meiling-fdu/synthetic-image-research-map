@@ -144,7 +144,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `url` | Preferred public landing-page URL for the paper. |
 | `arxiv_id` | arXiv identifier, including version only when the version matters. |
 | `task` | Primary project task label: `detection`, `source_attribution`, `detection_and_source_attribution`, or `uncertain`. |
-| `entry_type` | Automatic, reviewable project-specific map-entry category: `method`, `dataset`, `benchmark`, `survey`, or `analysis`. It describes the entry's primary contribution, defaults to `method`, and is independent of `task` and the formal OpenAlex `publication_type`. |
+| `paper_categories` | Reviewable substantive contributions chosen from `method`, `dataset`, `benchmark`, `survey`, and `analysis`. The curated CSV stores multiple values with `;`; JSON/API records use arrays. Values are unique and ordered method, dataset, benchmark, survey, analysis. This is independent of `task` and bibliographic `publication_type`. |
 | `is_survey` | `true` when the paper is a survey, review, systematic review, or taxonomy rather than a primary research contribution. |
 | `is_deepfake_related` | `true` when the work specifically concerns deepfakes or face manipulation. This flag keeps that related area distinguishable from general synthetic-image research. |
 | `is_image_editing_related` | `true` when an audit candidate concerns image editing or manipulation. Image-editing-only work is outside the scoped map dataset. |
@@ -173,7 +173,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 list and the shared normalization policy. When `publication_type=book`, venue
 identity/taxonomy fields (`venue`, `venue_id`, `venue_name`, `venue_acronym`,
 `venue_type`, `venue_track`, `raw_venue`, aliases/labels and legacy venue
-variants) and the paper category (`entry_type`, including legacy
+variants) and the paper categories (`paper_categories`, including legacy `entry_type`
 `paper_type`/`category`) must be empty or absent. `publisher` remains a distinct,
 compatible bibliographic field and must never be placed in `venue`.
 
@@ -198,7 +198,7 @@ Published metadata and arXiv-version metadata are kept separate: a paper may hav
 
 `scripts/migrate_venues.py` writes `docs/venue_migration_report.json` before an optional atomic `--apply`. It preserves `raw_venue`, writes the canonical fields into the existing curated paper rows, counts canonical paper identities, and is idempotent. Conference main and non-main tracks retain distinct reviewed `venue_id` values. Journal, preprint, and book venues are trackless. Public JSON also carries `venue_aliases` for search, `venue_label` for the human-readable format `Canonical Full Name (ACRONYM) · Track`, and metadata containing the shared publication-type order `conference`, `journal`, `preprint`, `book`; none of these display fields replaces canonical identity.
 
-`entry_type` is deliberately narrow. Anti-forensics, evasion, adversarial attacks, and robustness describe research topics; challenges, competitions, shared tasks, and challenge tracks describe evaluation or publication contexts. They are not entry types and normally remain `method` unless the title strongly identifies a dataset, benchmark, survey, or analysis contribution. Future secondary fields such as `topic_tags` or `contribution_tags` may represent those details, but they are not part of `entry_type` now.
+`paper_categories` is deliberately narrow. Anti-forensics, evasion, adversarial attacks, and robustness describe research topics; challenges, competitions, shared tasks, and challenge tracks describe evaluation or publication contexts. They are not paper categories. Papers may select multiple substantive contributions, while topic details belong in separate future fields.
 
 ## `paper_arxiv_links.csv`
 
@@ -391,7 +391,7 @@ Each record is one paper and may include:
 | `title`, `year`, `publication_year`, `authors`, `venue`, `doi`, `paper_url`, `openalex_url` | Paper-level bibliographic metadata from local candidate sources and manual override layers. |
 | `arxiv_id`, `arxiv_url`, `arxiv_year`, `has_arxiv_version` | Known arXiv-version metadata when present locally. |
 | `abstract`, `abstract_source` | Original abstract metadata from local/manual caches; empty when unavailable. |
-| `task`, `entry_type`, `publication_type` | Candidate classification and publication metadata. |
+| `task`, `paper_categories`, `publication_type` | Candidate classification and publication metadata. |
 | `has_map_location` | `true` when at least one public preview map marker exists for the paper. |
 | `map_record_count` | Count of public preview marker records tied to the paper. |
 | `aggregated_locations` | Ordered canonical institution/location objects. Each object keeps `institution_name`, `institution_id`, normalized `country`/`country_code`, `region`/`region_code`, and the explicit `location_display` pair together. |

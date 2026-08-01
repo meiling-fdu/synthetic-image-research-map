@@ -42,7 +42,7 @@ PAPERS_COLUMNS = (
     "review_note",
     "created_at",
     "updated_at",
-    "entry_type",
+    "paper_categories",
 )
 
 VENUE_ALIAS_COLUMNS = (
@@ -353,13 +353,12 @@ ALLOWED_TASKS = {
     "uncertain",
 }
 
-ALLOWED_ENTRY_TYPES = {
-    "method",
-    "dataset",
-    "benchmark",
-    "survey",
-    "analysis",
-}
+try:
+    from .paper_categories import PAPER_CATEGORY_SET
+except ImportError:
+    from paper_categories import PAPER_CATEGORY_SET
+
+ALLOWED_ENTRY_TYPES = PAPER_CATEGORY_SET  # Backward-compatible import alias.
 
 ALLOWED_CURATION_STATUSES = {"confirmed", "needs_review"}
 

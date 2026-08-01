@@ -34,6 +34,7 @@ try:
         normalize_publication_type,
     )
     from .paper_links import resolve_public_links
+    from .paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from .venues import (
         VenueRegistryError,
         canonicalize_record,
@@ -62,6 +63,7 @@ except ImportError:
         normalize_publication_type,
     )
     from paper_links import resolve_public_links
+    from paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from venues import (
         VenueRegistryError,
         canonicalize_record,
@@ -106,13 +108,16 @@ def read_curated_papers(
     try:
         with path.open("r", encoding="utf-8-sig", newline="") as handle:
             reader = csv.DictReader(handle)
-            if tuple(reader.fieldnames or ()) != PAPERS_COLUMNS:
+            legacy_columns = tuple("entry_type" if c == "paper_categories" else c for c in PAPERS_COLUMNS)
+            if tuple(reader.fieldnames or ()) not in {PAPERS_COLUMNS, legacy_columns}:
                 raise CuratedPaperError(
                     f"{path} does not have the exact curated paper header"
                 )
             rows = []
             for row_number, row in enumerate(reader, start=2):
                 record = dict(row)
+                record["paper_categories"] = serialize_paper_categories(categories_from_record(record))
+                record.pop("entry_type", None)
                 try:
                     record["curation_status"] = normalize_curation_status(
                         record.get("curation_status")
@@ -282,9 +287,15 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
     book = is_book_publication(draft.get("publication_type"))
-    entry_type = clean(draft.get("entry_type")).casefold()
-    if not entry_type and not book:
-        entry_type = "method"
+    try:
+        paper_categories = normalize_paper_categories(
+            draft.get("paper_categories", draft.get("entry_type")),
+            compatibility=True,
+        )
+    except PaperCategoriesError as error:
+        raise CuratedPaperError(str(error), field="paper_categories") from error
+    if not paper_categories and not book:
+        paper_categories = ["method"]
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     publication_type = (
         "book"
@@ -304,11 +315,6 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
     if task not in ALLOWED_TASKS:
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
-        )
-    if entry_type and entry_type not in ALLOWED_ENTRY_TYPES:
-        raise CuratedPaperError(
-            "entry_type must be one of "
-            + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
         )
     if scope_status not in ALLOWED_SCOPE_STATUSES:
         raise CuratedPaperError(
@@ -346,7 +352,7 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "publication_type": publication_type,
         "abstract": clean(draft.get("abstract")),
         "task": task,
-        "entry_type": entry_type,
+        "paper_categories": serialize_paper_categories(paper_categories),
         "scope_status": scope_status,
         "source_database": source_database,
         "metadata_source": metadata_source,
@@ -480,7 +486,13 @@ def update_curated_paper(
     title = clean(draft.get("title"))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
-    entry_type = clean(draft.get("entry_type")).casefold()
+    try:
+        paper_categories = normalize_paper_categories(
+            draft.get("paper_categories", draft.get("entry_type")),
+            compatibility=True,
+        )
+    except PaperCategoriesError as error:
+        raise CuratedPaperError(str(error), field="paper_categories") from error
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     publication_type = (
         "book"
@@ -504,13 +516,8 @@ def update_curated_paper(
         raise CuratedPaperError(
             "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
         )
-    if not entry_type and publication_type != "book":
-        raise CuratedPaperError("entry_type is required")
-    if entry_type and entry_type not in ALLOWED_ENTRY_TYPES:
-        raise CuratedPaperError(
-            "entry_type must be one of "
-            + ", ".join(sorted(ALLOWED_ENTRY_TYPES))
-        )
+    if not paper_categories and publication_type != "book":
+        raise CuratedPaperError("paper_categories requires at least one category")
     if scope_status not in ALLOWED_SCOPE_STATUSES:
         raise CuratedPaperError(
             "scope_status must be one of "
@@ -568,7 +575,7 @@ def update_curated_paper(
         "publication_type": publication_type,
         "abstract": clean(draft.get("abstract")),
         "task": task,
-        "entry_type": entry_type,
+        "paper_categories": serialize_paper_categories(paper_categories),
         "scope_status": scope_status,
         "source_database": source_database,
         "metadata_source": clean(

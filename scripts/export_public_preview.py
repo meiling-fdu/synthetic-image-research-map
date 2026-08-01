@@ -41,6 +41,7 @@ try:
         normalize_book_record,
         normalize_publication_type,
     )
+    from .paper_categories import categories_from_record
     from .venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -125,6 +126,7 @@ except ImportError:  # Direct execution from the scripts directory.
         normalize_book_record,
         normalize_publication_type,
     )
+    from paper_categories import categories_from_record
     from venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -231,7 +233,7 @@ PUBLIC_FIELDS = (
     "publication_year",
     "publication_date",
     "task",
-    "entry_type",
+    "paper_categories",
     "venue",
     "venue_id",
     "venue_name",
@@ -1251,17 +1253,22 @@ def add_public_detail_fields(
             record["author_institution_indices"] = legacy_indices
 
 
-def normalize_entry_type(record: Dict[str, Any]) -> str:
-    """Return the current entry type, translating legacy material labels."""
-    value = clean_text(record.get("entry_type")).casefold()
-    if value in {"method", "dataset", "benchmark", "survey", "analysis"}:
-        return value
+def normalize_paper_categories(record: Dict[str, Any]) -> List[str]:
+    """Return canonical categories, translating legacy material labels."""
+    if record.get("paper_categories") not in (None, "") or record.get("entry_type") not in (None, ""):
+        return categories_from_record(record)
     legacy = clean_text(record.get("material_type")).casefold()
-    return {
+    return [{
         "dataset": "dataset",
         "benchmark": "benchmark",
         "survey": "survey",
-    }.get(legacy, "method")
+    }.get(legacy, "method")]
+
+
+def normalize_entry_type(record: Dict[str, Any]) -> str:
+    """Deprecated scalar compatibility helper for legacy callers only."""
+    categories = normalize_paper_categories(record)
+    return categories[0] if categories else ""
 
 
 def normalize_identifier_url(value: Any) -> str:
@@ -1523,7 +1530,7 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
         "publication_year": year,
         "publication_date": clean_text(row.get("publication_date")),
         "task": task,
-        "entry_type": normalize_entry_type(row),
+        "paper_categories": normalize_paper_categories(row),
         "venue": clean_text(row.get("venue")),
         "venue_name": clean_text(row.get("venue_name") or row.get("venue")),
         "venue_type": clean_text(row.get("venue_type")),
@@ -2601,7 +2608,7 @@ def build_preview(
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
         public_record["task"] = task
-        public_record["entry_type"] = normalize_entry_type(record)
+        public_record["paper_categories"] = normalize_paper_categories(record)
         public_record["institution"] = institution_name(record)
         public_record.update(
             normalize_country_region(
@@ -2846,6 +2853,21 @@ def strip_legacy_removed_fields(records: Sequence[Dict[str, Any]]) -> int:
             record.pop("subtask")
             removed += 1
     return removed
+
+
+def preserve_existing_curation_status(
+    records: Sequence[Dict[str, Any]], previous: Sequence[Mapping[str, Any]]
+) -> None:
+    """Avoid changing unrelated public provenance during a schema-only refresh."""
+    prior_by_id = {
+        clean_text(record.get("id") or record.get("paper_id") or identity_key(record)): record
+        for record in previous
+    }
+    for record in records:
+        key = clean_text(record.get("id") or record.get("paper_id") or identity_key(record))
+        prior = prior_by_id.get(key)
+        if prior and "curation_status" in prior:
+            record["curation_status"] = prior["curation_status"]
 
 
 def exclude_stale_curated_mapping_markers(
@@ -4078,6 +4100,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         normalize_exported_institution_types(
             integrated_papers, integrated_maps, institution_rows
         )
+        preserve_existing_curation_status(integrated_papers, previous_papers)
+        preserve_existing_curation_status(integrated_maps, previous_maps)
+        for record in [*integrated_papers, *integrated_maps]:
+            record["paper_categories"] = (
+                [] if is_book_publication(record.get("publication_type"))
+                else normalize_paper_categories(record)
+            )
+            record.pop("entry_type", None)
         legacy_removed = strip_legacy_removed_fields(integrated_papers)
         legacy_removed += strip_legacy_removed_fields(integrated_maps)
         if legacy_removed:

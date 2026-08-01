@@ -37,6 +37,7 @@ try:
     )
     from .venues import resolve_venue
     from .publication_types import book_incompatibilities, is_book_publication
+    from .paper_categories import normalize_paper_categories, serialize_paper_categories
     from .migrate_institution_english_names import (
         load_overrides as load_english_name_overrides,
         load_tables as load_english_name_tables,
@@ -67,6 +68,7 @@ except ImportError:  # Support direct execution from the repository root.
     )
     from venues import resolve_venue
     from publication_types import book_incompatibilities, is_book_publication
+    from paper_categories import normalize_paper_categories, serialize_paper_categories
     from migrate_institution_english_names import (
         load_overrides as load_english_name_overrides,
         load_tables as load_english_name_tables,
@@ -1025,19 +1027,21 @@ def main() -> int:
 
     validate_book_invariant(papers, issues)
     validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
-    validate_allowed_value(
-        papers, "papers.csv", "entry_type", ALLOWED_ENTRY_TYPES, issues
-    )
     for row_number, paper in enumerate(papers, start=2):
-        if (
-            not clean(paper.get("entry_type"))
-            and not is_book_publication(paper.get("publication_type"))
-        ):
+        raw_categories = paper.get("paper_categories", "")
+        try:
+            normalized_categories = normalize_paper_categories(raw_categories, compatibility=True)
+            if serialize_paper_categories(normalized_categories) != raw_categories:
+                raise ValueError("paper_categories must be unique and in canonical order")
+        except ValueError as error:
+            add_issue(issues, "ERROR", "papers.csv", str(error), row_number)
+            normalized_categories = []
+        if not normalized_categories and not is_book_publication(paper.get("publication_type")):
             add_issue(
                 issues,
                 "ERROR",
                 "papers.csv",
-                "entry_type is required",
+                "paper_categories requires at least one category",
                 row_number,
             )
     validate_allowed_value(

@@ -24,11 +24,12 @@ BOOK_INCOMPATIBLE_FIELDS = (
     "host_venue",
     "host_venue_name",
     "entry_type",
+    "paper_categories",
     "paper_type",
     "category",
 )
 
-_LIST_FIELDS = {"venue_aliases"}
+_LIST_FIELDS = {"venue_aliases", "paper_categories"}
 
 _ALIASES = {
     "conference": "conference",

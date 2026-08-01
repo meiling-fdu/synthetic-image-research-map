@@ -107,6 +107,7 @@ try:
         upsert_active_exclusion,
     )
     from .publication_types import normalize_book_record
+    from .paper_categories import categories_from_record
     from .admin_review_queues import (
         AdminReviewQueueError,
         dashboard_data,
@@ -228,6 +229,7 @@ except ImportError:
         upsert_active_exclusion,
     )
     from publication_types import normalize_book_record
+    from paper_categories import categories_from_record
     from admin_review_queues import (
         AdminReviewQueueError,
         dashboard_data,
@@ -786,6 +788,8 @@ def unavailable_author_mapping_coverage(
 
 def curated_paper_record(row: Mapping[str, str]) -> Dict[str, Any]:
     record: Dict[str, Any] = normalize_book_record(row)
+    record["paper_categories"] = categories_from_record(dict(row))
+    record.pop("entry_type", None)
     record["year"] = parse_year(row.get("year"))
     record["publication_year"] = record["year"]
     record["authors"] = parse_people(row.get("authors"))
@@ -894,7 +898,7 @@ def merge_curated_fields(
         "publication_type",
         "abstract",
         "task",
-        "entry_type",
+        "paper_categories",
         "scope_status",
         "source_database",
         "metadata_source",
@@ -919,6 +923,8 @@ def load_admin_data(
     map_records = read_json_records(PUBLIC_MAP_PATH)
     curated_rows = read_csv_rows(curated_papers_path)
     for record in (*public_papers, *map_records, *curated_rows):
+        record["paper_categories"] = categories_from_record(record)
+        record.pop("entry_type", None)
         if "curation_status" in record:
             try:
                 record["curation_status"] = normalize_curation_status(
@@ -1076,7 +1082,7 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
         "openalex_url",
         "paper_url",
         "task",
-        "entry_type",
+        "paper_categories",
         "coverage_status",
         "has_map_location",
         "map_record_count",
@@ -3074,6 +3080,10 @@ def make_handler(
 
                 if request.path == "/api/paper/metadata/update":
                     perf = PerfTrace("paper_metadata_update")
+                    if "paper_categories" in payload and not isinstance(payload["paper_categories"], list):
+                        raise AdminDataError("paper_categories must be an array")
+                    if "entry_type" in payload:
+                        raise AdminDataError("entry_type is legacy read-only; write paper_categories")
                     paper_id = clean(payload.get("id"))
                     perf.mark("parse_request")
                     if not paper_id:
@@ -3639,6 +3649,10 @@ def make_handler(
                     return
 
                 if request.path == "/api/paper/create":
+                    if "paper_categories" in payload and not isinstance(payload["paper_categories"], list):
+                        raise AdminDataError("paper_categories must be an array")
+                    if "entry_type" in payload:
+                        raise AdminDataError("entry_type is legacy read-only; write paper_categories")
                     preview_records = read_json_records(PUBLIC_PAPERS_PATH)
                     exclusion_records = read_csv_rows(exclusions_path)
                     candidate_drafts, mapping_warnings = prepare_mapping_candidates(

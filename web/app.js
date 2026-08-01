@@ -319,7 +319,7 @@ const INSTITUTION_CSV_COLUMNS = [
   ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
   ["venue_track", (record) => canonicalVenueTrack(record)],
-  ["entry_type", (record) => getEntryType(record)],
+  ["paper_categories", (record) => getPaperCategories(record).join(";")],
   ["task", (record) => record.task || ""],
   ["institution_name", (record) => recordInstitution(record)],
   ["institution_id", (record) => String(record.institution_id || "")],
@@ -348,7 +348,7 @@ const PAPER_CSV_COLUMNS = [
   ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
   ["venue_track", (record) => canonicalVenueTrack(record)],
-  ["entry_type", (record) => getEntryType(record)],
+  ["paper_categories", (record) => getPaperCategories(record).join(";")],
   ["task", (record) => record.task || ""],
   ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
   ["institution_ids", (record) => canonicalInstitutionIds(record).join("; ")],
@@ -381,16 +381,14 @@ function formatTask(task) {
   return readableTask.charAt(0).toUpperCase() + readableTask.slice(1);
 }
 
-function getEntryType(record) {
-  if (isBookRecord(record)) return "";
-  const value = String(record.entry_type || "").trim().toLowerCase();
-  if (Object.hasOwn(ENTRY_TYPE_LABELS, value)) {
-    return value;
-  }
-  const legacyValue = String(record.material_type || "").trim().toLowerCase();
-  return ["dataset", "benchmark", "survey"].includes(legacyValue)
-    ? legacyValue
-    : "method";
+function getPaperCategories(record) {
+  if (isBookRecord(record)) return [];
+  const raw = record.paper_categories ?? record.entry_type ?? record.material_type ?? "";
+  const values = Array.isArray(raw) ? raw : String(raw).split(";");
+  const selected = new Set(values.map((value) => String(value).trim().toLowerCase()).filter(Boolean));
+  const unknown = [...selected].filter((value) => !Object.hasOwn(ENTRY_TYPE_LABELS, value));
+  if (unknown.length) throw new Error(`Unknown paper categories: ${unknown.join(", ")}`);
+  return Object.keys(ENTRY_TYPE_LABELS).filter((value) => selected.has(value));
 }
 
 function getEntryTypeLabel(value) {
@@ -1744,7 +1742,7 @@ function recordSearchText(record) {
     ...venueTerms,
     record.coverage_status,
     record.task,
-    getEntryTypeLabel(getEntryType(record)),
+    ...getPaperCategories(record).map(getEntryTypeLabel),
   ].filter(Boolean).join(" "));
 }
 
@@ -1834,8 +1832,10 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const matchesKeyword = matchesInstitutionKeyword
     || searchTextMatchesTerms(recordSearchText(record), keywordTerms);
   const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
-  const matchesEntryType =
-    entryTypeFilter.value === "all" || getEntryType(record) === entryTypeFilter.value;
+  const selectedEntryTypes = [...entryTypeFilter.selectedOptions]
+    .map((option) => option.value).filter((value) => value !== "all");
+  const matchesEntryType = selectedEntryTypes.length === 0
+    || selectedEntryTypes.some((value) => getPaperCategories(record).includes(value));
   const matchesVenue =
     options.ignoreVenue === true || venueFilter.value === "all"
     || venueFilterValue(record) === venueFilter.value;
@@ -2618,11 +2618,9 @@ function paperDetailsHtml(record, relatedEntries) {
       )
     : "Unknown";
   const publicationMetadataBlock = paperDetailsPublicationHtml(record);
-  const entryType = getEntryType(record);
-  const entryTypeLabel = getEntryTypeLabel(entryType);
-  const entryTypeBadge = entryType
-    ? `<span class="popup-badge entry-type-badge">${escapeHtml(entryTypeLabel)}</span>`
-    : "";
+  const entryTypeBadge = getPaperCategories(record)
+    .map((category) => `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(category))}</span>`)
+    .join("");
   const detailLinks = paperExternalLinks(record);
   const linksBlock = detailLinks.length
     ? `<nav class="paper-details-links" aria-label="Paper links">${detailLinks.join("")}</nav>`
@@ -2659,11 +2657,11 @@ function paperDetailsHtml(record, relatedEntries) {
 
 function resultBadges(record) {
   const taskClass = MarkerSizeHelpers.normalizeTaskLabel(record.task);
-  const entryType = getEntryType(record);
+  const entryTypes = getPaperCategories(record);
   return `
     <div class="popup-badges result-badges" aria-label="Paper classifications">
       <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatTask(record.task))}</span>
-      ${entryType ? `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(entryType))}</span>` : ""}
+      ${entryTypes.map((category) => `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(category))}</span>`).join("")}
     </div>
   `;
 }

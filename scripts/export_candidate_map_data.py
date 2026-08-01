@@ -23,9 +23,11 @@ from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 try:
     from .country_normalization import normalize_country_region
     from .publication_types import normalize_publication_type
+    from .paper_categories import categories_from_record
 except ImportError:  # Direct execution from the scripts directory.
     from country_normalization import normalize_country_region
     from publication_types import normalize_publication_type
+    from paper_categories import categories_from_record
 
 
 DEFAULT_PAPERS_CSV = Path(
@@ -246,17 +248,15 @@ def clean_text(value: Any) -> str:
     return " ".join(str(value).split())
 
 
-def normalize_entry_type(record: Dict[str, Any]) -> str:
-    """Return the current entry type, translating legacy material labels."""
-    value = clean_text(record.get("entry_type")).casefold()
-    if value in {"method", "dataset", "benchmark", "survey", "analysis"}:
-        return value
+def normalize_paper_categories(record: Dict[str, Any]) -> List[str]:
+    if record.get("paper_categories") not in (None, "") or record.get("entry_type") not in (None, ""):
+        return categories_from_record(record)
     legacy = clean_text(record.get("material_type")).casefold()
-    return {
+    return [{
         "dataset": "dataset",
         "benchmark": "benchmark",
         "survey": "survey",
-    }.get(legacy, "method")
+    }.get(legacy, "method")]
 
 
 def normalize_identifier_url(value: Any) -> str:
@@ -1713,7 +1713,7 @@ def group_map_records(
                 "publication_year": publication_year,
                 "publication_date": clean_text(paper.get("publication_date")),
                 "task": task,
-                "entry_type": normalize_entry_type(paper),
+                "paper_categories": normalize_paper_categories(paper),
                 "venue": venue_name,
                 "venue_name": venue_name,
                 "venue_type": clean_text(paper.get("venue_type")),

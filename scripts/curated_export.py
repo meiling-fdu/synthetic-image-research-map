@@ -25,6 +25,7 @@ try:
     )
     from .country_normalization import normalize_country_region, public_location_display
     from .publication_types import normalize_book_record, normalize_publication_type
+    from .paper_categories import categories_from_record
     from .export_candidate_map_data import normalize_export_task_labels
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -49,6 +50,7 @@ except ImportError:
     )
     from country_normalization import normalize_country_region, public_location_display
     from publication_types import normalize_book_record, normalize_publication_type
+    from paper_categories import categories_from_record
     from export_candidate_map_data import normalize_export_task_labels
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
@@ -110,7 +112,7 @@ CURATED_OVERRIDE_FIELDS = (
     "publication_type",
     "abstract",
     "task",
-    "entry_type",
+    "paper_categories",
     "source_database",
     "metadata_source",
     "curation_status",
@@ -665,7 +667,7 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         row.get("publication_type"), venue=row.get("venue"), venue_type=row.get("venue_type")
     )
     normalized_type = publication_type.casefold()
-    entry_type = clean(row.get("entry_type")).casefold() or (
+    paper_categories = categories_from_record(dict(row)) or ([
         "survey"
         if normalized_type in {"survey", "review", "systematic review"}
         else "dataset"
@@ -673,7 +675,7 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         else "benchmark"
         if normalized_type == "benchmark"
         else "method"
-    )
+    ] if normalized_type != "book" else [])
     return {
         "paper_id": clean(row.get("paper_id")),
         "title": clean(row.get("title")),
@@ -682,7 +684,7 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         "publication_year": year,
         "publication_date": "",
         "task": task,
-        "entry_type": entry_type,
+        "paper_categories": paper_categories,
         "venue": clean(row.get("venue") or row.get("venue_name")),
         "venue_name": clean(row.get("venue_name") or row.get("venue")),
         "venue_id": clean(row.get("venue_id")),
@@ -883,7 +885,7 @@ def _curated_marker(
         ),
         "publication_date": clean(paper.get("publication_date")),
         "task": clean(paper.get("task")),
-        "entry_type": clean(paper.get("entry_type")) or "method",
+        "paper_categories": categories_from_record(dict(paper)) or ["method"],
         "venue": clean(paper.get("venue") or paper.get("venue_name")),
         "venue_name": clean(paper.get("venue_name") or paper.get("venue")),
         "venue_id": clean(paper.get("venue_id")),

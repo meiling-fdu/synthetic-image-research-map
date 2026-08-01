@@ -40,7 +40,7 @@ def public_record():
         "arxiv_id": "",
         "in_scope": True,
         "task": "detection",
-        "entry_type": "method",
+        "paper_categories": "method",
         "institution": "Example University",
         "latitude": 43.0,
         "longitude": 11.0,

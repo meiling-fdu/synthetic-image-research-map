@@ -56,7 +56,7 @@ def curated_row(**overrides):
             "review_status": "reviewed",
             "created_at": "2026-01-01T00:00:00Z",
             "updated_at": "2026-01-01T00:00:00Z",
-            "entry_type": "method",
+            "paper_categories": "method",
         }
     )
     row.update(overrides)
@@ -261,6 +261,8 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 thread.join(timeout=2)
 
     def metadata_request(self, base_url, path, payload=None):
+        if payload is not None and isinstance(payload.get("paper_categories"), str):
+            payload = {**payload, "paper_categories": payload["paper_categories"].split(";")}
         request = urllib.request.Request(
             base_url + path,
             data=(json.dumps(payload).encode("utf-8") if payload is not None else None),
@@ -891,7 +893,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
             self.assertTrue(record_is_excluded(preprint, index))
             self.assertFalse(record_is_excluded(published, index))
 
-    def test_admin_update_persists_normalized_entry_type_to_curated_source(self):
+    def test_admin_update_persists_normalized_paper_categories_to_curated_source(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "papers.csv"
             original = curated_row()
@@ -899,30 +901,30 @@ class PaperMetadataEditingTests(unittest.TestCase):
 
             updated = update_curated_paper(
                 original,
-                {**original, "entry_type": "  SuRvEy  "},
+                {**original, "paper_categories": ["survey", "method", "survey"]},
                 preview_records=[],
                 path=path,
             )
 
             with path.open(encoding="utf-8", newline="") as handle:
                 saved = next(csv.DictReader(handle))
-            self.assertEqual(updated["entry_type"], "survey")
-            self.assertEqual(saved["entry_type"], "survey")
+            self.assertEqual(updated["paper_categories"], "method;survey")
+            self.assertEqual(saved["paper_categories"], "method;survey")
             self.assertEqual(saved["authors"], original["authors"])
             self.assertEqual(saved["paper_url"], original["paper_url"])
 
-    def test_admin_update_rejects_empty_or_unknown_entry_type(self):
+    def test_admin_update_rejects_empty_or_unknown_paper_categories(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "papers.csv"
             original = curated_row()
             write_papers(path, [original])
 
-            for invalid in ("", "tutorial"):
-                with self.subTest(entry_type=invalid):
+            for invalid in ([], ["tutorial"]):
+                with self.subTest(paper_categories=invalid):
                     with self.assertRaises(CuratedPaperError):
                         update_curated_paper(
                             original,
-                            {**original, "entry_type": invalid},
+                            {**original, "paper_categories": invalid},
                             preview_records=[],
                             path=path,
                         )
@@ -952,14 +954,14 @@ class PaperMetadataEditingTests(unittest.TestCase):
         papers, markers, _reviews, _summary = integrate_curated_records(
             [public_paper],
             [public_marker],
-            [curated_row(entry_type="survey")],
+            [curated_row(paper_categories="method;survey")],
             [],
         )
 
         self.assertEqual(len(papers), 1)
         self.assertEqual(len(markers), 1)
-        self.assertEqual(papers[0]["entry_type"], "survey")
-        self.assertEqual(markers[0]["entry_type"], "survey")
+        self.assertEqual(papers[0]["paper_categories"], ["method", "survey"])
+        self.assertEqual(markers[0]["paper_categories"], ["method", "survey"])
         self.assertEqual(
             (markers[0]["latitude"], markers[0]["longitude"]),
             (43.3188, 11.3308),
@@ -968,10 +970,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
             markers[0]["institution_authors"],
             ["Author One", "Author Two"],
         )
-        self.assertEqual(
-            normalize_entry_type(papers[0]),
-            "survey",
-        )
+        self.assertEqual(normalize_entry_type(papers[0]), "method")
 
 
 if __name__ == "__main__":
