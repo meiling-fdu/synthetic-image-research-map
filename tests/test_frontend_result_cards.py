@@ -69,6 +69,57 @@ class FrontendResultCardTests(unittest.TestCase):
             ROOT / "web" / "paper_details_helpers.js"
         ).read_text(encoding="utf-8"))
 
+    def test_current_public_preview_record_matches_details_and_card_markers(self):
+        preview = json.loads((
+            ROOT / "web" / "data" / "public_preview_papers.json"
+        ).read_text(encoding="utf-8"))
+        title = (
+            '"That\'s another doom I haven\'t thought about": A User Study on '
+            "AI Labels as a Safeguard Against Image-Based Misinformation"
+        )
+        record = next(
+            item for item in preview["records"] if item["title"] == title
+        )
+        helper = ROOT / "web" / "paper_details_helpers.js"
+        script = r"""
+const helpers = require(process.argv[1]);
+const record = JSON.parse(process.argv[2]);
+const escapeHtml = (value) => String(value);
+process.stdout.write(JSON.stringify({
+  cardItems: helpers.renderPaperAuthorItems(record, escapeHtml),
+  detailsHtml: helpers.renderPaperAuthors(record, escapeHtml),
+}));
+"""
+        result = subprocess.run(
+            [str(NODE), "-e", script, str(helper), json.dumps(record)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        rendered = json.loads(result.stdout)
+
+        self.assertEqual(
+            [affiliation["index"] for affiliation in record["affiliations"]],
+            [1, 2, 3, 4, 5],
+        )
+        expected = {
+            author["name"]: ",".join(map(str, author["affiliation_indices"]))
+            for author in record["authors"]
+        }
+        for author_name, numbers in expected.items():
+            marker = f'>{numbers}</sup>'
+            self.assertTrue(
+                any(author_name in item and marker in item for item in rendered["cardItems"])
+            )
+            self.assertIn(author_name, rendered["detailsHtml"])
+            self.assertIn(marker, rendered["detailsHtml"])
+
+    def test_mapping_assets_share_a_current_cache_key(self):
+        version = "v=20260801-author-institution-mappings"
+        self.assertIn(f'style.css?{version}', self.html)
+        self.assertIn(f'paper_details_helpers.js?{version}', self.html)
+        self.assertIn(f'app.js?{version}', self.html)
+
     def test_shared_author_items_preserve_mappings_across_visibility_slices(self):
         helper = ROOT / "web" / "paper_details_helpers.js"
         script = r"""
