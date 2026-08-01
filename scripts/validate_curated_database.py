@@ -551,6 +551,7 @@ def validate_confirmed_locations(
     issues: List[Issue],
 ) -> None:
     normalized_positions: DefaultDict[str, List[int]] = defaultdict(list)
+    normalized_institution_ids: DefaultDict[str, set[str]] = defaultdict(set)
     location_id_positions: DefaultDict[str, List[int]] = defaultdict(list)
     required = (
         "location_id",
@@ -639,6 +640,9 @@ def validate_confirmed_locations(
             )
         if normalized:
             normalized_positions[normalized].append(row_number)
+            normalized_institution_ids[normalized].add(
+                clean(row.get("institution_id")).casefold()
+            )
         location_id = clean(row.get("location_id")).casefold()
         if location_id:
             location_id_positions[location_id].append(row_number)
@@ -656,7 +660,7 @@ def validate_confirmed_locations(
                     f"{', '.join(map(str, row_numbers))}: {value!r}",
                 )
     for value, row_numbers in normalized_positions.items():
-        if len(row_numbers) > 1:
+        if len(normalized_institution_ids[value]) > 1:
             add_issue(
                 issues,
                 "WARNING",

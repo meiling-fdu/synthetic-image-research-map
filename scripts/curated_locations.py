@@ -250,9 +250,23 @@ def validate_country_code(value: Any) -> str:
     return country_code
 
 
-def location_id_for(institution: Any) -> str:
-    normalized = normalize_institution_name(institution)
-    digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:20]
+def location_id_for(
+    institution: Any,
+    *,
+    institution_id: Any = "",
+    city: Any = "",
+    region: Any = "",
+    country: Any = "",
+) -> str:
+    """Return a stable ID for one institution-location relationship."""
+    identity = "|".join((
+        clean(institution_id).casefold()
+        or normalize_institution_name(institution),
+        clean(city).casefold(),
+        clean(region).casefold(),
+        clean(country).casefold(),
+    ))
+    digest = hashlib.sha256(identity.encode("utf-8")).hexdigest()[:20]
     return f"location:{digest}"
 
 
@@ -332,7 +346,13 @@ def _confirmed_location_fields(
             "confirmed city and country are required"
         )
     return {
-        "location_id": location_id_for(normalized),
+        "location_id": location_id_for(
+            institution,
+            institution_id=draft.get("institution_id"),
+            city=city,
+            region=draft.get("confirmed_region") or draft.get("region"),
+            country=country,
+        ),
         "institution_id": clean(draft.get("institution_id")),
         "institution": institution,
         "normalized_institution": normalized,
@@ -449,11 +469,19 @@ def create_or_update_confirmed_location(
         index
         for index, row in enumerate(locations)
         if clean(row.get("institution_id")) == current_institution_id
+        and (
+            clean(row.get("location_id")) == values["location_id"]
+            or (
+                clean(row.get("city")).casefold() == values["city"].casefold()
+                and clean(row.get("region")).casefold()
+                == values["region"].casefold()
+                and clean(row.get("country")).casefold()
+                == values["country"].casefold()
+            )
+        )
     ]
     if len(matches) > 1:
-        raise CuratedLocationError(
-            "multiple confirmed locations already exist for this institution"
-        )
+        raise CuratedLocationError("duplicate confirmed location rows exist")
     now = _timestamp()
     action = "updated" if matches else "created"
     if matches:

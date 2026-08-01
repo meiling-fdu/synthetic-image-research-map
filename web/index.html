@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260801-publication-metadata">
+    <link rel="stylesheet" href="style.css?v=20260801-sticky-map-layout">
   </head>
   <body>
     <header class="site-header">
@@ -225,47 +225,49 @@
 
       <div class="map-column">
         <section class="map-panel" aria-label="Research Locations">
-          <div class="dataset-overview" aria-label="Filtered map overview">
-            <dl class="dataset-statistics" aria-live="polite">
-              <div>
-                <dt>Map Records</dt>
-                <dd id="dataset-record-count">0</dd>
-              </div>
-              <div>
-                <dt>Unique Institutions</dt>
-                <dd id="dataset-institution-count">0</dd>
-              </div>
-              <div>
-                <dt>Countries</dt>
-                <dd id="dataset-country-count">0</dd>
-              </div>
-            </dl>
-            <p id="dataset-statistics-note">
-              Institution-level records matching the current filters.
-            </p>
-          </div>
-          <div class="map-status-row">
-            <p class="map-encoding-legend" aria-label="Circle size represents papers in the current view; circle color represents dominant task">
-              <span class="map-encoding-item">
-                <span class="marker-size-examples" aria-hidden="true">
-                  <i class="marker-size-example small"></i>
-                  <i class="marker-size-example medium"></i>
-                  <i class="marker-size-example large"></i>
+          <div class="map-summary">
+            <div class="dataset-overview" aria-label="Filtered map overview">
+              <dl class="dataset-statistics" aria-live="polite">
+                <div>
+                  <dt>Map Records</dt>
+                  <dd id="dataset-record-count">0</dd>
+                </div>
+                <div>
+                  <dt>Unique Institutions</dt>
+                  <dd id="dataset-institution-count">0</dd>
+                </div>
+                <div>
+                  <dt>Countries</dt>
+                  <dd id="dataset-country-count">0</dd>
+                </div>
+              </dl>
+              <p id="dataset-statistics-note">
+                Institution-level records matching the current filters.
+              </p>
+            </div>
+            <div class="map-status-row">
+              <p class="map-encoding-legend" aria-label="Circle size represents papers in the current view; circle color represents dominant task">
+                <span class="map-encoding-item">
+                  <span class="marker-size-examples" aria-hidden="true">
+                    <i class="marker-size-example small"></i>
+                    <i class="marker-size-example medium"></i>
+                    <i class="marker-size-example large"></i>
+                  </span>
+                  Circle Size = Papers in Current View
                 </span>
-                Circle Size = Papers in Current View
-              </span>
-              <span class="map-encoding-item">
-                <span class="marker-color-examples" aria-hidden="true">
-                  <i class="marker-color-example detection"></i>
-                  <i class="marker-color-example source-attribution"></i>
-                  <i class="marker-color-example mixed"></i>
+                <span class="map-encoding-item">
+                  <span class="marker-color-examples" aria-hidden="true">
+                    <i class="marker-color-example detection"></i>
+                    <i class="marker-color-example source-attribution"></i>
+                    <i class="marker-color-example mixed"></i>
+                  </span>
+                  Circle Color = Dominant Task
                 </span>
-                Circle Color = Dominant Task
-              </span>
-            </p>
-            <p id="map-status" class="map-status" role="status">
-              Loading Public Preview Data...
-            </p>
+              </p>
+              <p id="map-status" class="map-status" role="status">
+                Loading Public Preview Data...
+              </p>
+            </div>
           </div>
           <div class="map-workspace">
             <div id="map" aria-label="World Map of Synthetic Image Research Records"></div>
@@ -452,12 +454,12 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="paper_details_helpers.js?v=20260801-publication-metadata"></script>
+    <script src="paper_details_helpers.js?v=20260801-sticky-map-layout"></script>
     <script src="paper_link_helpers.js?v=20260729-formal-publication-links"></script>
     <script src="marker_size_helpers.js?v=20260706-task-markers"></script>
     <script src="marker_interaction_helpers.js?v=20260712-pinned-state"></script>
     <script src="public_metadata.js?v=20260718-export-date"></script>
     <script src="institution_type_labels.js?v=20260718-research-institute"></script>
-    <script src="app.js?v=20260801-publication-metadata"></script>
+    <script src="app.js?v=20260801-sticky-map-layout"></script>
   </body>
 </html>

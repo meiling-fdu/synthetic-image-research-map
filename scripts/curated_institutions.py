@@ -324,7 +324,8 @@ def update_institution_location(
             "loaded institution_id must exactly match the path institution_id"
         )
     allowed_fields = {
-        "institution_id", "loaded_institution_id", "city", "region", "country",
+        "institution_id", "loaded_institution_id", "location_id",
+        "create_new_location", "city", "region", "country",
         "country_code", "lat",
         "lon", "coordinate_source", "coordinate_source_url",
         "coordinate_status", "review_note", "created_by",
@@ -335,9 +336,44 @@ def update_institution_location(
             f"location confirmation contains unsupported field: {unexpected[0]}"
         )
     rows = _read(locations_path, INSTITUTION_LOCATION_COLUMNS)
-    matches = [row for row in rows if clean(row.get("institution_id")) == identifier]
-    if len(matches) > 1:
-        raise CuratedInstitutionError("institution has multiple location rows")
+    institution_rows = [
+        row for row in rows if clean(row.get("institution_id")) == identifier
+    ]
+    requested_location_id = clean(draft.get("location_id"))
+    create_new = draft.get("create_new_location") is True
+    if requested_location_id and create_new:
+        raise CuratedInstitutionError(
+            "location_id and create_new_location cannot be combined"
+        )
+    if requested_location_id:
+        matches = [
+            row for row in institution_rows
+            if clean(row.get("location_id")) == requested_location_id
+        ]
+        if len(matches) != 1:
+            raise CuratedInstitutionError(
+                "location_id must identify one location for this institution"
+            )
+    elif create_new:
+        location_key = tuple(
+            clean(draft.get(field)).casefold()
+            for field in ("city", "region", "country")
+        )
+        matches = [
+            row for row in institution_rows
+            if tuple(
+                clean(row.get(field)).casefold()
+                for field in ("city", "region", "country")
+            ) == location_key
+        ]
+        if len(matches) > 1:
+            raise CuratedInstitutionError("duplicate institution location rows exist")
+    else:
+        matches = institution_rows
+        if len(matches) > 1:
+            raise CuratedInstitutionError(
+                "location_id is required when an institution has multiple locations"
+            )
     previous = dict(matches[0]) if matches else {
         column: "" for column in INSTITUTION_LOCATION_COLUMNS
     }
@@ -347,7 +383,16 @@ def update_institution_location(
     now = _timestamp()
     if not matches:
         rows.append(row)
-        row["location_id"] = f"location:{identifier.removeprefix('institution:')}"
+        location_identity = "|".join((
+            identifier.casefold(),
+            clean(draft.get("city")).casefold(),
+            clean(draft.get("region")).casefold(),
+            clean(draft.get("country")).casefold(),
+        ))
+        row["location_id"] = (
+            "location:"
+            f"{hashlib.sha256(location_identity.encode()).hexdigest()[:20]}"
+        )
         row["created_at"] = now
         row["created_by"] = clean(draft.get("created_by")) or "local-admin"
     row["institution_id"] = identifier
@@ -401,7 +446,7 @@ def update_institution_location(
         review_matches = [
             review for review in reviews
             if clean(review.get("institution_id")) == identifier
-        ]
+        ] if not create_new else []
         # A direct editor save has no paper/affiliation provenance of its own.
         # Only synchronize review rows that were created by an evidence-bearing
         # mapping or review action; the confirmed location row is sufficient
@@ -714,7 +759,16 @@ def merge_institutions(
         location["institution_id"] = target_id
         location["institution"] = target_name
         location["normalized_institution"] = normalize_institution(target_name)
-        location["location_id"] = f"location:{target_id.removeprefix('institution:')}"
+        location_identity = "|".join((
+            target_id.casefold(),
+            clean(location.get("city")).casefold(),
+            clean(location.get("region")).casefold(),
+            clean(location.get("country")).casefold(),
+        ))
+        location["location_id"] = (
+            "location:"
+            f"{hashlib.sha256(location_identity.encode()).hexdigest()[:20]}"
+        )
         location["updated_at"] = now
 
     location_reviews = _read(

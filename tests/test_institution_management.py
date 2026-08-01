@@ -254,6 +254,56 @@ class InstitutionManagementTests(unittest.TestCase):
         self.assertEqual(evidence["confirmed_lat"], "49.2606")
         self.assertEqual(evidence["created_by"], "test-reviewer")
 
+    def test_explicit_new_location_preserves_existing_location_and_identity(self):
+        institutions_before = self.institutions.read_bytes()
+        mappings_before = self.mappings.read_bytes()
+        result = update_institution_location(
+            self.amazon_id,
+            {
+                "create_new_location": True,
+                "city": "Vancouver", "region": "British Columbia",
+                "country": "Canada", "country_code": "CA",
+                "lat": "49.2606", "lon": "-123.2460",
+                "coordinate_source": "Fixture source",
+                "coordinate_status": "known",
+                "review_note": "Second confirmed office.",
+            },
+            institutions_path=self.institutions,
+            locations_path=self.locations,
+        )
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            saved = list(csv.DictReader(handle))
+        self.assertEqual(len(saved), 2)
+        self.assertEqual({row["city"] for row in saved}, {"Seattle", "Vancouver"})
+        self.assertEqual(result["institution_id"], self.amazon_id)
+        self.assertEqual(self.institutions.read_bytes(), institutions_before)
+        self.assertEqual(self.mappings.read_bytes(), mappings_before)
+
+    def test_merge_preserves_multiple_source_locations_with_unique_ids(self):
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            existing = next(csv.DictReader(handle))
+        second = dict(existing)
+        second.update({
+            "location_id": "location:amazon-vancouver", "city": "Vancouver",
+            "region": "British Columbia", "country": "Canada", "country_code": "CA",
+            "lat": "49.2606", "lon": "-123.2460",
+        })
+        write_csv(self.locations, INSTITUTION_LOCATION_COLUMNS, [existing, second])
+        merge_institutions(
+            self.amazon_id, self.certh_id,
+            confirmation=f"REPLACE {AMAZON} WITH {CERTH} GLOBALLY",
+            review_note="Fixture merge.", institutions_path=self.institutions,
+            mappings_path=self.mappings, aliases_path=self.aliases,
+            locations_path=self.locations, location_reviews_path=self.location_reviews,
+            hierarchy_path=self.hierarchy, review_queue_path=self.review_queue,
+            audit_path=self.audits,
+        )
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            saved = list(csv.DictReader(handle))
+        self.assertEqual(len(saved), 2)
+        self.assertEqual({row["institution_id"] for row in saved}, {self.certh_id})
+        self.assertEqual(len({row["location_id"] for row in saved}), 2)
+
     def test_location_path_id_is_authoritative_and_identity_fields_are_rejected(self):
         before = self.locations.read_bytes()
         with self.assertRaisesRegex(CuratedInstitutionError, "exactly match"):

@@ -141,3 +141,34 @@ class LocationConfirmationIdentityTests(unittest.TestCase):
                 "institution_identity_change_not_allowed",
             )
             self.assertEqual(locations.read_bytes(), before)
+
+    def test_location_confirmation_appends_and_reuses_a_second_location(self):
+        with tempfile.TemporaryDirectory() as directory:
+            paths = self.fixture(directory)
+            institutions, reviews, locations, mappings, canonical_id, _other_id = paths
+            existing = {column: "" for column in INSTITUTION_LOCATION_COLUMNS}
+            existing.update({
+                "location_id": "location:existing",
+                "institution_id": canonical_id,
+                "institution": "Canonical Institute",
+                "normalized_institution": "canonical institute",
+                "city": "Mumbai", "region": "Maharashtra", "country": "India",
+                "country_code": "IN", "lat": "19.076", "lon": "72.8777",
+                "coordinate_source": "Fixture", "coordinate_status": "known",
+                "review_note": "Existing office.", "created_at": "2026-01-01T00:00:00Z",
+                "updated_at": "2026-01-01T00:00:00Z", "created_by": "test",
+            })
+            write_csv(locations, INSTITUTION_LOCATION_COLUMNS, [existing])
+            from scripts.curated_locations import load_location_review_queue, queue_row_id
+            queue_id = queue_row_id(load_location_review_queue(reviews)[0])
+            draft = self.draft(queue_id, canonical_id)
+            for _ in range(2):
+                create_or_update_confirmed_location(
+                    queue_id, draft, institutions_path=institutions,
+                    review_path=reviews, locations_path=locations,
+                    mappings_path=mappings,
+                )
+            with locations.open(encoding="utf-8", newline="") as handle:
+                saved = list(csv.DictReader(handle))
+            self.assertEqual(len(saved), 2)
+            self.assertEqual({row["city"] for row in saved}, {"Mumbai", "New Delhi"})

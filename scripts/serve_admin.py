@@ -1998,10 +1998,11 @@ def make_handler(
                         review_queue = load_institution_review_queue(
                             institution_review_queue_path
                         )
-                        current_location = next((
+                        institution_locations = [
                             row for row in locations
                             if clean(row.get("institution_id")) == resolved_identifier
-                        ), None)
+                        ]
+                        current_location = institution_locations[0] if institution_locations else None
                         confirmed_alias_names = [
                             clean(row.get("alias_name")) for row in aliases
                             if clean(row.get("institution_id")) == resolved_identifier
@@ -2025,6 +2026,7 @@ def make_handler(
                             "aliases": [row for row in aliases if clean(row.get("institution_id")) == resolved_identifier],
                             "current_location": current_location,
                             "location": current_location,
+                            "locations": institution_locations,
                             "location_reviews": [row for row in reviews if clean(row.get("institution_id")) == resolved_identifier],
                             "review_queue": [row for row in review_queue if clean(row.get("institution_id")) == resolved_identifier],
                             "affiliation_evidence": [
@@ -2041,10 +2043,9 @@ def make_handler(
                         mappings = load_mappings(mappings_path)
                         public_markers = read_json_records(PUBLIC_MAP_PATH)
                         locations = load_confirmed_locations(institution_locations_path)
-                        locations_by_id = {
-                            clean(row.get("institution_id")): row
-                            for row in locations
-                        }
+                        locations_by_id = defaultdict(list)
+                        for row in locations:
+                            locations_by_id[clean(row.get("institution_id"))].append(row)
                         records = []
                         for institution in institutions:
                             identifier = clean(institution.get("institution_id"))
@@ -2064,7 +2065,8 @@ def make_handler(
                                 "institution_type_evidence": type_evidence,
                                 **institution_hierarchy_details(institutions, identifier),
                                 "aliases": [row.get("alias_name") for row in aliases if clean(row.get("institution_id")) == identifier and clean(row.get("review_status")) == "confirmed"],
-                                "location": locations_by_id.get(identifier),
+                                "location": (locations_by_id.get(identifier) or [None])[0],
+                                "locations": locations_by_id.get(identifier, []),
                                 "usage": institution_impact(identifier, mappings, public_markers),
                             })
                         self.send_json(HTTPStatus.OK, {"records": records})

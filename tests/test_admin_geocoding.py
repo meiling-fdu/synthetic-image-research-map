@@ -371,6 +371,9 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             self.assertEqual(detail["institution"]["institution_id"], self.institution_id)
             self.assertEqual(detail["editable_institution_id"], self.institution_id)
             self.assertEqual(detail["current_location"]["city"], "Palermo")
+            self.assertEqual(
+                [row["city"] for row in detail["locations"]], ["Palermo"]
+            )
             self.assertEqual(detail["aliases"], [])
             self.assertEqual(detail["location_reviews"], [])
             self.assertEqual(detail["review_queue"], [])

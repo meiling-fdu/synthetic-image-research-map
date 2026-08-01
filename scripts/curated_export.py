@@ -461,26 +461,32 @@ def _candidate_location_is_safe(record: Mapping[str, Any]) -> bool:
 def _institution_location_keys(record: Mapping[str, Any]) -> List[str]:
     keys: List[str] = []
     institution_id = clean(record.get("institution_id"))
+    city = clean(record.get("city") or record.get("institution_city")).casefold()
+    country = clean(
+        record.get("country")
+        or record.get("institution_country")
+        or record.get("country_code")
+    ).casefold()
     if institution_id:
+        if city and country:
+            keys.append(
+                f"id:{institution_id.casefold()}|city:{city}|country:{country}"
+            )
         keys.append(f"id:{institution_id.casefold()}")
     institution = normalize_institution(
         record.get("normalized_institution")
         or record.get("institution")
     )
     if institution:
+        if city and country:
+            keys.append(f"name:{institution}|city:{city}|country:{country}")
         keys.append(f"name:{institution}")
     return keys
 
 
 def _preferred_institution_location_key(record: Mapping[str, Any]) -> str:
-    institution_id = clean(record.get("institution_id"))
-    if institution_id:
-        return f"id:{institution_id.casefold()}"
-    institution = normalize_institution(
-        record.get("normalized_institution")
-        or record.get("institution")
-    )
-    return f"name:{institution}" if institution else ""
+    keys = _institution_location_keys(record)
+    return keys[0] if keys else ""
 
 
 def _coordinate_match_for_keys(
@@ -1390,8 +1396,7 @@ def build_curated_map_records(
             export_mapping["institution"] = clean(match.record.get("institution"))
         marker_key = (
             next(iter(normalize_paper_identity_keys(paper)), ""),
-            clean(export_mapping.get("institution_id")).casefold()
-            or _preferred_institution_location_key(export_mapping),
+            _preferred_institution_location_key(export_mapping),
         )
         if marker_key in emitted_marker_keys:
             active_mapping_marker_diagnostics.append({

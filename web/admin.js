@@ -41,6 +41,7 @@ const state = {
   selectedGeocodeCandidate: null,
   locationEditorMode: "review",
   selectedInstitutionLocationId: "",
+  selectedInstitutionLocations: [],
   locationSaveRunning: false,
   workflowRunning: false,
   release: { validation: "required", preview: "required", changedFiles: 0 },
@@ -228,6 +229,8 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "institution-language",
     "institution-review-status",
     "canonical-institution",
+    "confirmed-location-record-label",
+    "confirmed-location-record",
     "confirmed-city",
     "confirmed-region",
     "confirmed-country",
@@ -530,6 +533,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["location-confirm-alias"].addEventListener("click", confirmLocationAlias);
   elements["location-save-metadata"].addEventListener("click", saveLocationMetadata);
   elements["canonical-institution"].addEventListener("change", renderLocationActions);
+  elements["confirmed-location-record"].addEventListener("change", selectConfirmedLocationRecord);
   elements["location-geocode"].addEventListener("click", findInstitutionCoordinates);
   elements["geocode-cancel"].addEventListener("click", closeGeocodeDialog);
   elements["geocode-confirm"].addEventListener("click", confirmGeocodeCandidate);
@@ -2564,11 +2568,13 @@ function showLocationEditorPlaceholder(title, message) {
 function selectCanonicalInstitutionLocation(detail) {
   const institution = detail.institution || {};
   const identifier = text(institution.institution_id);
+  const locations = detail.locations || [];
   const location = detail.current_location || detail.location || {};
   const review = (detail.location_reviews || [])[0] || {};
   state.locationEditorMode = "canonical";
   state.selectedInstitutionLocationId = identifier;
   state.selectedLocationReviewId = "";
+  state.selectedInstitutionLocations = locations;
   clearLocationFields();
   elements["location-editor-placeholder"].hidden = true;
   elements["location-form"].hidden = false;
@@ -2581,6 +2587,15 @@ function selectCanonicalInstitutionLocation(detail) {
   const canonicalSelect = elements["canonical-institution"];
   canonicalSelect.replaceChildren(new Option(institution.canonical_name, institution.canonical_name));
   canonicalSelect.value = institution.canonical_name;
+  const locationSelect = elements["confirmed-location-record"];
+  elements["confirmed-location-record-label"].hidden = false;
+  locationSelect.replaceChildren();
+  locations.forEach((record) => locationSelect.add(new Option(
+    [record.city, record.region, record.country].filter(Boolean).join(", "),
+    record.location_id
+  )));
+  locationSelect.add(new Option("Add another confirmed location…", ""));
+  locationSelect.value = text(location.location_id);
   elements["confirmed-city"].value = text(location.city || review.suggested_city);
   elements["confirmed-region"].value = text(location.region);
   elements["confirmed-country"].value = text(location.country || review.suggested_country);
@@ -2595,6 +2610,25 @@ function selectCanonicalInstitutionLocation(detail) {
   renderCanonicalLocationContext(detail);
   elements["confirmed-city"].focus();
   showNotice(`Editing location for ${institution.canonical_name}; identity and mappings remain unchanged.`);
+}
+
+function selectConfirmedLocationRecord() {
+  if (state.locationEditorMode !== "canonical") return;
+  const locationId = elements["confirmed-location-record"].value;
+  const location = state.selectedInstitutionLocations.find(
+    (record) => text(record.location_id) === locationId
+  ) || {};
+  for (const [elementId, field] of [
+    ["confirmed-city", "city"], ["confirmed-region", "region"],
+    ["confirmed-country", "country"], ["confirmed-country-code", "country_code"],
+    ["confirmed-lat", "lat"], ["confirmed-lon", "lon"],
+    ["coordinate-source", "coordinate_source"],
+    ["coordinate-source-url", "coordinate_source_url"],
+    ["coordinate-review-note", "review_note"],
+  ]) {
+    elements[elementId].value = text(location[field]);
+  }
+  elements["confirmed-city"].focus();
 }
 
 function renderCanonicalLocationContext(detail) {
@@ -2743,10 +2777,12 @@ function selectLocationReview(queueId) {
   state.locationEditorMode = "review";
   state.selectedInstitutionLocationId = text(row.institution_id);
   state.selectedLocationReviewId = queueId;
+  state.selectedInstitutionLocations = [];
   renderLocationReviewList();
   elements["location-editor-placeholder"].hidden = true;
   elements["location-form"].hidden = false;
   elements["location-form"].reset();
+  elements["confirmed-location-record-label"].hidden = true;
   clearLocationFields();
   elements["location-queue-id"].value = queueId;
   elements["location-institution-id"].value = text(row.institution_id);
@@ -2927,6 +2963,7 @@ function clearLocationEditor() {
   geocodeRequestSequence += 1;
   state.selectedInstitutionLocationId = "";
   state.selectedLocationReviewId = "";
+  state.selectedInstitutionLocations = [];
   state.locationEditorMode = "review";
   showLocationEditorPlaceholder(
     "Select a queued institution",
@@ -3245,6 +3282,8 @@ async function confirmLocation(event) {
       : "/api/location-review/confirm", {
       method: "POST",
       body: JSON.stringify(canonicalMode ? {
+        location_id: elements["confirmed-location-record"].value,
+        create_new_location: !elements["confirmed-location-record"].value,
         city: draft.confirmed_city,
         region: draft.confirmed_region,
         country: draft.confirmed_country,
