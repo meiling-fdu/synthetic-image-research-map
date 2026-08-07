@@ -14,6 +14,7 @@ from scripts.venues import (
     canonical_venue_options,
     create_canonical_venue,
     display_venue,
+    materialize_canonical_venue_metadata,
     read_venue_aliases,
     resolve_venue,
     venue_type_rank,
@@ -411,15 +412,49 @@ class VenueNormalizationTests(unittest.TestCase):
         )
         self.assertEqual(replaced["raw_venue"], "Reviewed replacement")
 
-    def test_structured_selection_requires_consistent_complete_metadata(self):
-        with self.assertRaisesRegex(CuratedPaperError, "venue_acronym must match"):
-            apply_canonical_venue_selection({
-                "venue_id": "venue:chi",
-                "venue_name": "CHI Conference on Human Factors in Computing Systems",
-                "venue_type": "conference",
-                "venue_track": "main",
-                "publication_type": "conference",
-            })
+    def test_structured_selection_materializes_stale_same_id_metadata(self):
+        result = apply_canonical_venue_selection({
+            "venue_id": "venue:chi",
+            "venue_name": "Old Name",
+            "venue_acronym": "OLD",
+            "venue_type": "workshop",
+            "venue_track": "workshops",
+            "publication_type": "conference",
+        })
+        self.assertEqual(
+            result["venue_name"],
+            "CHI Conference on Human Factors in Computing Systems",
+        )
+        self.assertEqual(result["venue_acronym"], "CHI")
+        self.assertEqual(result["venue_type"], "conference")
+        self.assertEqual(result["venue_track"], "workshops")
+
+    def test_same_id_materialization_is_idempotent_and_normalizes_tracks(self):
+        aliases = read_venue_aliases()
+        stale = {
+            "venue_id": "venue:chi",
+            "venue_name": " Old Name ",
+            "venue_acronym": "OLD",
+            "venue_type": "workshop",
+            "venue_track": " ",
+            "unrelated": "preserved",
+        }
+        first = materialize_canonical_venue_metadata(stale, aliases)
+        second = materialize_canonical_venue_metadata(first, aliases)
+        self.assertEqual(second, first)
+        self.assertEqual(first["venue_track"], "main")
+        self.assertEqual(first["unrelated"], "preserved")
+        journal = materialize_canonical_venue_metadata({
+            "venue_id": "venue:ieee-transactions-on-multimedia",
+            "venue_track": "main",
+        }, aliases)
+        self.assertEqual(journal["venue_track"], "")
+
+    def test_same_id_materialization_rejects_dangling_id(self):
+        with self.assertRaisesRegex(VenueRegistryError, "does not exist"):
+            materialize_canonical_venue_metadata(
+                {"venue_id": "venue:missing"}, read_venue_aliases()
+            )
 
     def test_publication_type_conflict_requires_explicit_override(self):
         selection = {

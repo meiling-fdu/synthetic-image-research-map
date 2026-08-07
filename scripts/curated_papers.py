@@ -40,6 +40,7 @@ try:
         VenueRegistryError,
         canonicalize_record,
         display_venue,
+        materialize_canonical_venue_metadata,
         publication_type_for_venue_type,
         read_venue_aliases,
         resolve_venue,
@@ -70,6 +71,7 @@ except ImportError:
         VenueRegistryError,
         canonicalize_record,
         display_venue,
+        materialize_canonical_venue_metadata,
         publication_type_for_venue_type,
         read_venue_aliases,
         resolve_venue,
@@ -214,18 +216,12 @@ def apply_canonical_venue_selection(
     supplied_venue = clean(draft.get("venue_name") or draft.get("venue"))
     if venue_id:
         try:
-            canonical = validate_canonical_venue_fields(draft, aliases)
+            selected = materialize_canonical_venue_metadata(draft, aliases)
         except VenueRegistryError as error:
             raise CuratedPaperError(
                 str(error), field="venue_id", error_code="invalid_venue"
             ) from error
-        for field in ("venue_name", "venue_acronym", "venue_type"):
-            if clean(draft.get(field)) != canonical[field]:
-                raise CuratedPaperError(
-                    f"{field} must match canonical venue_id {canonical['venue_id']!r}",
-                    field=field,
-                    error_code="venue_field_conflict",
-                )
+        canonical = selected
     elif supplied_venue:
         resolved = resolve_venue(
             draft.get("raw_venue") or supplied_venue,
@@ -248,7 +244,9 @@ def apply_canonical_venue_selection(
             "venue_type": "", "venue_track": "main", "raw_venue": clean((existing or {}).get("raw_venue")),
             "venue_aliases": [], "venue_label": "",
         }
-    requested_track = clean(draft.get("venue_track")) or (
+    requested_track = clean(
+        selected.get("venue_track") if venue_id else draft.get("venue_track")
+    ) or (
         clean((existing or {}).get("venue_track"))
         or ("main" if canonical["venue_type"] == "conference" else "")
     )

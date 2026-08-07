@@ -42,7 +42,7 @@ try:
         normalize_publication_type,
     )
     from .paper_categories import categories_from_record
-    from .venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
+    from .venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -127,7 +127,7 @@ except ImportError:  # Direct execution from the scripts directory.
         normalize_publication_type,
     )
     from paper_categories import categories_from_record
-    from venues import VENUE_TYPE_ORDER, canonicalize_record, read_venue_aliases
+    from venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -4021,14 +4021,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             exclude_retracted_records(integrated_maps)
         )
         venue_alias_rows = read_venue_aliases()
-        integrated_papers[:] = [
-            canonicalize_record(record, venue_alias_rows)
-            for record in integrated_papers
-        ]
-        integrated_maps[:] = [
-            canonicalize_record(record, venue_alias_rows)
-            for record in integrated_maps
-        ]
+        integrated_papers[:] = canonicalize_records(
+            integrated_papers, venue_alias_rows
+        )
+        integrated_maps[:] = canonicalize_records(
+            integrated_maps, venue_alias_rows
+        )
         unresolved_publication_types = synchronize_publication_types(
             integrated_papers, integrated_maps
         )

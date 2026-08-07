@@ -223,6 +223,18 @@ The paper-metadata editor loads `GET /api/venues`, whose records are built only 
 
 The selected venue synchronizes formal `publication_type`. Conference track is independent paper metadata: main, workshop, findings, poster, and other supported tracks reuse the same canonical venue ID. Alias rows may retain a track hint for deterministic legacy resolution, but track is not part of canonical identity. Journal, preprint, and book papers have a blank `venue_track`. Historical `raw_venue` is retained unless the reviewer explicitly selects the provenance-replacement checkbox.
 
+Confirmed rows in `data/curated/venue_aliases.csv` are authoritative for a
+venue ID's canonical name, acronym, and type. Admin saves and public export
+materialize those fields from the registry before enforcing consistency, so
+stale paper-local text for the same ID cannot override the registry and does
+not require an identity-change confirmation. Missing conference tracks become
+`main`; valid paper-level tracks are preserved; non-conference tracks become
+blank. A missing/inactive ID and an old-ID to new-ID replacement remain errors
+unless they pass the existing reviewed venue workflow. Run
+`python3 scripts/synchronize_venue_metadata.py` for a read-only grouped audit,
+or add `--write --report data/processed/venue_metadata_sync_audit.json` to
+apply the deterministic same-ID migration and save its report.
+
 Paper metadata updates use patch semantics: omitted fields retain their effective curated values. A validated curated save is atomic. Public-preview refresh runs afterward as a best-effort local refresh; if it fails, the API reports `saved=true`, `preview_refreshed=false`, and leaves full validation, shrinkage checks, staging, commit, and push to the explicit Publish Changes workflow.
 
 Changing a paper to **Book** is the exception to venue synchronization. The

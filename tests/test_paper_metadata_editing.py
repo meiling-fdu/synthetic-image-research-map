@@ -437,6 +437,12 @@ class PaperMetadataEditingTests(unittest.TestCase):
                         "id": display_id,
                         **kdd_venue_fields(),
                         "venue_selection_confirmed": True,
+                        "venue_proposal": {
+                            "venue_name": "Stale Legacy Proposal",
+                            "venue_type": "conference",
+                            "venue_track": "main",
+                            "create_if_missing": True,
+                        },
                         "review_note": "Selected the existing reviewed KDD venue.",
                     },
                 )
@@ -552,7 +558,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     )
                 self.assertEqual(caught.exception.code, 400)
 
-    def test_metadata_api_rejects_nonexistent_or_conflicting_venue(self):
+    def test_metadata_api_rejects_nonexistent_and_materializes_selected_venue(self):
         with tempfile.TemporaryDirectory() as directory:
             with self.metadata_server(directory, []) as (
                 base_url, original, _curated_path, _links_path, display_id,
@@ -561,10 +567,21 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 with self.assertRaises(urllib.error.HTTPError) as caught:
                     self.metadata_request(base_url, "/api/paper/metadata/update", invalid)
                 self.assertEqual(caught.exception.code, 400)
-                conflicting = {**original, **chi_venue_fields(), "id": display_id, "venue_name": "Wrong name"}
-                with self.assertRaises(urllib.error.HTTPError) as caught:
-                    self.metadata_request(base_url, "/api/paper/metadata/update", conflicting)
-                self.assertEqual(caught.exception.code, 400)
+                stale = {
+                    **original,
+                    **chi_venue_fields(),
+                    "id": display_id,
+                    "venue_name": "Wrong name",
+                    "venue_acronym": "OLD",
+                    "venue_type": "workshop",
+                    "venue_selection_confirmed": True,
+                }
+                saved = self.metadata_request(
+                    base_url, "/api/paper/metadata/update", stale
+                )["data"]["paper"]
+                self.assertEqual(saved["venue_name"], chi_venue_fields()["venue_name"])
+                self.assertEqual(saved["venue_acronym"], "CHI")
+                self.assertEqual(saved["venue_type"], "conference")
                 inactive = {
                     **original,
                     **chi_venue_fields(),

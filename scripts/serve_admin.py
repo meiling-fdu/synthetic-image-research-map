@@ -144,6 +144,7 @@ try:
         canonical_venue_options,
         canonicalize_record,
         create_canonical_venue,
+        materialize_canonical_venue_metadata,
         read_venue_aliases,
         resolve_or_create_canonical_venue,
     )
@@ -266,6 +267,7 @@ except ImportError:
         canonical_venue_options,
         canonicalize_record,
         create_canonical_venue,
+        materialize_canonical_venue_metadata,
         read_venue_aliases,
         resolve_or_create_canonical_venue,
     )
@@ -3185,20 +3187,6 @@ def make_handler(
                                         submitted_venue_id,
                                         venue_alias_rows,
                                     )
-                                    for field in (
-                                        "venue_name",
-                                        "venue_acronym",
-                                        "venue_type",
-                                    ):
-                                        if (
-                                            field not in payload
-                                            or clean(payload.get(field))
-                                            != submitted_canonical[field]
-                                        ):
-                                            raise VenueRegistryError(
-                                                f"{field} must match canonical venue_id "
-                                                f"{submitted_venue_id!r}"
-                                            )
                                     if (
                                         submitted_venue_id != existing_venue_id
                                         and not selection_confirmed
@@ -3212,6 +3200,18 @@ def make_handler(
                                             submitted_canonical
                                         ]
                                         raise error
+                                    draft.update(materialize_canonical_venue_metadata(
+                                        {
+                                            **base_record,
+                                            **draft,
+                                            "venue_id": submitted_venue_id,
+                                        },
+                                        venue_alias_rows,
+                                    ))
+                                    # An explicit canonical selection is
+                                    # authoritative over stale legacy repair
+                                    # proposals included in the same request.
+                                    venue_proposal = None
                                 elif selection_confirmed:
                                     raise VenueRegistryError(
                                         "explicit venue selection confirmation "

@@ -15,7 +15,7 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 try:
     from .curated_schema import VENUE_TYPE_ORDER
@@ -26,6 +26,11 @@ try:
     from .publication_types import book_incompatibilities
 except ImportError:
     from publication_types import book_incompatibilities
+
+try:
+    from .venues import canonical_venue_registry, read_venue_aliases
+except ImportError:
+    from venues import canonical_venue_registry, read_venue_aliases
 
 try:
     from .institution_types import INSTITUTION_TYPE_SET
@@ -306,8 +311,17 @@ def validate_export_metadata_pair(
         )
 
 
-def validate_venue_consistency(records: Sequence[Any], issues: List[Issue]) -> None:
-    metadata_by_id: Dict[str, Tuple[str, str, str, str]] = {}
+def validate_venue_consistency(
+    records: Sequence[Any],
+    issues: List[Issue],
+    registry: Mapping[str, Mapping[str, Any]] | None = None,
+) -> None:
+    confirmed_registry = (
+        registry
+        if registry is not None
+        else canonical_venue_registry(read_venue_aliases())
+    )
+    metadata_by_id: Dict[str, Tuple[str, str, str]] = {}
     name_by_acronym: Dict[str, Tuple[str, str]] = {}
     for index, record in enumerate(records):
         if not isinstance(record, dict):
@@ -319,7 +333,6 @@ def validate_venue_consistency(records: Sequence[Any], issues: List[Issue]) -> N
             venue_name,
             acronym,
             clean_text(record.get("venue_type")),
-            clean_text(record.get("venue_track")),
         )
         if venue_id and venue_id in metadata_by_id and metadata_by_id[venue_id] != identity:
             add_issue(
@@ -331,6 +344,36 @@ def validate_venue_consistency(records: Sequence[Any], issues: List[Issue]) -> N
             )
         elif venue_id:
             metadata_by_id[venue_id] = identity
+        canonical = confirmed_registry.get(venue_id)
+        if canonical is not None and identity != tuple(
+            clean_text(canonical.get(field))
+            for field in ("venue_name", "venue_acronym", "venue_type")
+        ):
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                record_title(record),
+                "venue_id conflicts with the confirmed canonical registry",
+            )
+        venue_type = identity[2]
+        venue_track = clean_text(record.get("venue_track"))
+        if venue_type == "conference" and venue_track not in ALLOWED_VENUE_TRACKS:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                record_title(record),
+                "conference venue requires a supported paper-level venue_track",
+            )
+        elif venue_type != "conference" and venue_track:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                record_title(record),
+                "non-conference venue cannot carry a paper-level venue_track",
+            )
         # Journal acronyms are the audited additions governed by the canonical
         # registry. Conference series can legitimately reuse one acronym across
         # separately curated yearly/edition-specific venue records.

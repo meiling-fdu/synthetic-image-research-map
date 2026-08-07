@@ -194,8 +194,11 @@ process.stdout.write(JSON.stringify({{
         workshop_papers = [paper for paper in self.papers if paper.get("venue_track") == "workshops"]
         self.assertTrue(workshop_papers)
         self.assertEqual({paper.get("venue_type") for paper in workshop_papers}, {"conference"})
-        self.assertTrue(all(not label.startswith("Conference · ") and label.endswith(" · Workshops")
-                            for label in (paper.get("venue_label", "") for paper in workshop_papers)))
+        self.assertTrue(all(
+            not label.startswith("Conference · ")
+            and ("workshop" in label.casefold() or label.endswith(" · Workshops"))
+            for label in (paper.get("venue_label", "") for paper in workshop_papers)
+        ))
 
     def test_book_publication_type_option_uses_deduplicated_paper_count(self):
         node = shutil.which("node")
@@ -302,7 +305,7 @@ process.stdout.write(JSON.stringify({{
             if not venue_id:
                 continue
             metadata = tuple(paper.get(field, "") for field in (
-                "venue_name", "venue_acronym", "venue_type", "venue_track", "venue_label",
+                "venue_name", "venue_acronym", "venue_type",
             ))
             if venue_id in metadata_by_id:
                 self.assertEqual(metadata_by_id[venue_id], metadata)
@@ -331,13 +334,13 @@ process.stdout.write(JSON.stringify({{
     def test_icassp_collapses_to_one_main_public_option(self):
         icassp = [
             paper for paper in self.papers
-            if paper.get("venue_id") == "venue:icassp:main"
+            if paper.get("venue_id") == "venue:icassp"
             or "ICASSP" in " ".join(str(paper.get(field, "")) for field in (
                 "venue_label", "venue_name", "raw_venue",
             ))
         ]
         self.assertTrue(icassp)
-        self.assertEqual({paper.get("venue_id") for paper in icassp}, {"venue:icassp:main"})
+        self.assertEqual({paper.get("venue_id") for paper in icassp}, {"venue:icassp"})
         self.assertEqual(
             {paper.get("venue_label") for paper in icassp},
             {"IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"},
@@ -347,9 +350,8 @@ process.stdout.write(JSON.stringify({{
 
     def test_corrected_public_venue_options_are_unique(self):
         expected = {
-            "venue:ijcnn:main": "International Joint Conference on Neural Networks (IJCNN)",
-            "venue:icmr:main": "ACM International Conference on Multimedia Retrieval (ICMR)",
-            "venue:wacv:workshops": "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
+            "venue:ijcnn": "International Joint Conference on Neural Networks (IJCNN)",
+            "venue:icmr": "ACM International Conference on Multimedia Retrieval (ICMR)",
         }
         for venue_id, label in expected.items():
             with self.subTest(venue_id=venue_id):
@@ -363,10 +365,18 @@ process.stdout.write(JSON.stringify({{
             if venue_id in expected:
                 labels_by_id.setdefault(venue_id, set()).add(paper.get("venue_label"))
         self.assertEqual({venue_id: len(labels) for venue_id, labels in labels_by_id.items()}, {
-            "venue:ijcnn:main": 1,
-            "venue:icmr:main": 1,
-            "venue:wacv:workshops": 1,
+            "venue:ijcnn": 1,
+            "venue:icmr": 1,
         })
+        wacv_workshops = [paper for paper in self.papers if (
+            paper.get("venue_id") == "venue:wacv"
+            and paper.get("venue_track") == "workshops"
+        )]
+        self.assertTrue(wacv_workshops)
+        self.assertEqual(
+            {paper.get("venue_label") for paper in wacv_workshops},
+            {"IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops"},
+        )
         public_labels = [paper.get("venue_label", "") for paper in self.papers]
         self.assertNotIn("International Conference on Multimedia Retrieval", set(public_labels))
         self.assertFalse(any("WACVW" in label for label in public_labels))
@@ -426,7 +436,7 @@ process.stdout.write(JSON.stringify({{
 
     def test_combined_venue_type_and_year_filter_uses_unique_papers(self):
         matching = [paper for paper in self.papers if (
-            paper.get("venue_id") == "venue:wifs:main"
+            paper.get("venue_id") == "venue:wifs"
             and paper.get("venue_type") == "conference"
             and paper.get("venue_track") == "workshops"
             and paper.get("year") == 2024

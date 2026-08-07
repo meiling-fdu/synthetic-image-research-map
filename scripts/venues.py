@@ -188,6 +188,13 @@ def _canonical_registry(rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str
     return registry
 
 
+def canonical_venue_registry(
+    rows: Sequence[Mapping[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Return the validated confirmed registry keyed by canonical venue ID."""
+    return _canonical_registry(rows)
+
+
 def canonical_venue_options(
     aliases: Sequence[Mapping[str, Any]],
     papers: Sequence[Mapping[str, Any]] = (),
@@ -255,6 +262,46 @@ def validate_canonical_venue_fields(
                 f"{field} conflicts with canonical venue_id {venue['venue_id']!r}"
             )
     return venue
+
+
+def materialize_canonical_venue_metadata(
+    record: Mapping[str, Any],
+    aliases: Sequence[Mapping[str, Any]],
+    *,
+    registry: Mapping[str, Mapping[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Synchronize redundant metadata for an existing confirmed venue ID.
+
+    Venue identity is never inferred here: the supplied ID must already exist in
+    the confirmed registry. Conference track is intentionally paper-level
+    metadata, while the registry remains authoritative for name, acronym, and
+    type. Missing conference tracks normalize to ``main``; trackless venue types
+    always materialize an empty track.
+    """
+    result = dict(record)
+    identifier = clean_text(result.get("venue_id"))
+    confirmed_registry = registry or canonical_venue_registry(aliases)
+    stored = confirmed_registry.get(identifier)
+    if stored is None:
+        raise VenueRegistryError(f"venue_id does not exist: {identifier!r}")
+    venue = dict(stored)
+    venue["venue_label"] = display_venue(venue)
+    if venue["venue_type"] == "conference":
+        _venue_type, paper_track = validate_venue_type_track(
+            venue["venue_type"], clean_text(result.get("venue_track")) or "main"
+        )
+    else:
+        paper_track = ""
+    raw_venue = clean_text(result.get("raw_venue"))
+    result.update(venue)
+    result["venue_track"] = paper_track
+    result.pop("aliases", None)
+    result["raw_venue"] = raw_venue
+    result["venue_aliases"] = list(venue.get("aliases", []))
+    result["venue"] = venue["venue_name"]
+    result["venue_label"] = display_venue(result)
+    result["ambiguity_status"] = "resolved"
+    return result
 
 
 def validate_venue_type_track(venue_type: Any, track: Any) -> tuple[str, str]:
@@ -650,40 +697,32 @@ def resolve_venue(
     return CanonicalVenue(_stable_id(name, detected_track), name, acronym, resolved_type, detected_track, raw, (raw,), "unmapped")
 
 
-def canonicalize_record(record: Mapping[str, Any], aliases: Sequence[Mapping[str, Any]] | None = None) -> dict[str, Any]:
+def canonicalize_record(
+    record: Mapping[str, Any],
+    aliases: Sequence[Mapping[str, Any]] | None = None,
+    *,
+    registry: Mapping[str, Mapping[str, Any]] | None = None,
+) -> dict[str, Any]:
     result = dict(record)
     resolved_aliases = list(aliases) if aliases is not None else read_venue_aliases()
     existing_id = clean_text(result.get("venue_id"))
-    if existing_id:
-        try:
-            canonical = validate_canonical_venue_fields(result, resolved_aliases)
-        except VenueRegistryError:
-            canonical = None
-        if canonical is not None:
-            raw = clean_text(result.get("raw_venue"))
-            paper_track = clean_text(result.get("venue_track")) or (
-                "main" if canonical["venue_type"] == "conference" else ""
-            )
-            result.update(canonical)
-            result["venue_track"] = paper_track
-            result.pop("aliases", None)
-            result["raw_venue"] = raw
-            result["venue_aliases"] = list(canonical.get("aliases", []))
-            result["venue"] = canonical["venue_name"]
-            result["venue_label"] = display_venue(result)
-            result["ambiguity_status"] = "resolved"
-            effective_type, _rule = resolve_publication_type(
-                result.get("publication_type"),
-                venue=result.get("venue_name"),
-                venue_type=result.get("venue_type"),
-                arxiv_id=result.get("arxiv_id"),
-                arxiv_url=result.get("arxiv_url"),
-                doi=result.get("doi"),
-                explicit_override=result.get("publication_type_override") is True,
-            )
-            if effective_type:
-                result["publication_type"] = effective_type
-            return result
+    confirmed_registry = registry or canonical_venue_registry(resolved_aliases)
+    if existing_id in confirmed_registry:
+        result = materialize_canonical_venue_metadata(
+            result, resolved_aliases, registry=confirmed_registry
+        )
+        effective_type, _rule = resolve_publication_type(
+            result.get("publication_type"),
+            venue=result.get("venue_name"),
+            venue_type=result.get("venue_type"),
+            arxiv_id=result.get("arxiv_id"),
+            arxiv_url=result.get("arxiv_url"),
+            doi=result.get("doi"),
+            explicit_override=result.get("publication_type_override") is True,
+        )
+        if effective_type:
+            result["publication_type"] = effective_type
+        return result
     source = result.get("raw_venue") or result.get("venue_name") or result.get("venue")
     venue = resolve_venue(source, publication_type=result.get("publication_type"), venue_type=result.get("venue_type"), aliases=resolved_aliases)
     result.update(venue.as_record())
@@ -706,4 +745,8 @@ def canonicalize_record(record: Mapping[str, Any], aliases: Sequence[Mapping[str
 
 def canonicalize_records(records: Iterable[Mapping[str, Any]], aliases: Sequence[Mapping[str, Any]] | None = None) -> list[dict[str, Any]]:
     resolved_aliases = list(aliases) if aliases is not None else read_venue_aliases()
-    return [canonicalize_record(record, resolved_aliases) for record in records]
+    registry = canonical_venue_registry(resolved_aliases)
+    return [
+        canonicalize_record(record, resolved_aliases, registry=registry)
+        for record in records
+    ]
