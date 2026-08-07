@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-07-30T19:12:32Z |
+| public_preview_generated_at | 2026-08-07T08:37:30Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1078 |
-| Unique mapped papers | 495 |
-| Unique institutions | 566 |
+| Map records | 1098 |
+| Unique mapped papers | 501 |
+| Unique institutions | 570 |
 | Countries | 53 |
-| arXiv/preprint records | 567 |
-| Records with DOI | 1028 |
-| Records with venue | 985 |
+| arXiv/preprint records | 571 |
+| Records with DOI | 1048 |
+| Records with venue | 1005 |
 | Records missing venue | 93 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 423 |
+| detection | 429 |
 | source_attribution | 45 |
 | detection_and_source_attribution | 27 |
 
@@ -44,10 +44,10 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 119 |
-| 2025 | 136 |
-| 2024 | 111 |
-| 2023 | 53 |
+| 2026 | 124 |
+| 2025 | 139 |
+| 2024 | 110 |
+| 2023 | 52 |
 | 2022 | 22 |
 | 2021 | 23 |
 | 2020 | 15 |
@@ -64,34 +64,34 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | International Conference on Machine Learning (ICML) | 17 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 13 |
 | Advances in Neural Information Processing Systems (NeurIPS) | 11 |
-| International Conference on Learning Representations (ICLR) | 10 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 9 |
 | IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 9 |
+| International Conference on Learning Representations (ICLR) | 9 |
 | ACM International Conference on Multimedia (ACM MM) | 6 |
-| IEEE International Workshop on Information Forensics and Security (WIFS) · Workshops | 6 |
+| IEEE International Workshop on Information Forensics and Security (WIFS) | 6 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| China | 481 |
-| United States | 144 |
+| China | 495 |
+| United States | 145 |
 | Italy | 82 |
 | India | 55 |
 | Germany | 41 |
 | United Kingdom | 32 |
 | South Korea | 31 |
 | France | 27 |
-| Singapore | 19 |
-| Australia | 16 |
+| Singapore | 22 |
+| Australia | 17 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
-| Shanghai Jiao Tong University | 18 |
+| Shanghai Jiao Tong University | 20 |
+| Beijing Jiaotong University | 17 |
 | University of Naples Federico II | 17 |
-| Beijing Jiaotong University | 16 |
 | University of Chinese Academy of Sciences | 15 |
 | University of Siena | 15 |
 | Fudan University | 14 |
@@ -104,7 +104,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 928 |
+| high | 948 |
 | medium | 150 |
 
 ## Potential quality issues
@@ -123,7 +123,7 @@ Count: **93**
 - FIRE: Robust Detection of Diffusion-Generated Images via Frequency-Guided Reconstruction Error (2025) - Beijing University of Posts and Telecommunications; `openalex-candidate-9fc14b2a0f7696ba`
 - Secret Lies in Color: Enhancing AI-Generated Images Detection with Color Distribution Analysis (2025) - Tencent (China); `openalex-candidate-6162788b83db1bc7`
 - CO-SPY: Combining Semantic and Pixel Features to Detect Synthetic Images by AI (2025) - Purdue University West Lafayette; `openalex-candidate-000ae598a83c4cc6`
-- Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - University of Hong Kong; `openalex-candidate-3e36acb7cecb0f1d`
+- Forensics-Bench: A Comprehensive Forgery Detection Benchmark Suite for Large Vision Language Models (2025) - The University of Hong Kong; `openalex-candidate-3e36acb7cecb0f1d`
 - Semantic Discrepancy-Aware Detector for Image Forgery Identification (2025) - Nanjing University of Science and Technology; `openalex-candidate-caad465d68fa7710`
 - ForgeLens: Data-Efficient Forgery Focus for Generalizable Forgery Image Detection (2025) - Henan University of Engineering; `openalex-candidate-af86ed74fc84674b`
 - CatAID: Category-Guided AI-Generated Image Detection via Vision-Language Model Adaptation (2025) - University at Buffalo; `openalex-candidate-348a506b67288d74`
