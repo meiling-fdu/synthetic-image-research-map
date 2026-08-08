@@ -29,6 +29,7 @@ try:
         DEFAULT_INSTITUTIONS_PATH,
         CuratedInstitutionError,
         append_confirmed_mapping_change_audit,
+        append_confirmed_mapping_removal_audit,
         load_institutions,
         normalize_institution,
         save_institutions,
@@ -48,6 +49,7 @@ except ImportError:
         DEFAULT_INSTITUTIONS_PATH,
         CuratedInstitutionError,
         append_confirmed_mapping_change_audit,
+        append_confirmed_mapping_removal_audit,
         load_institutions,
         normalize_institution,
         save_institutions,
@@ -211,6 +213,7 @@ def _mapping_fields(
 ) -> Dict[str, str]:
     institution = clean(draft.get("institution"))
     institution_id = clean(draft.get("institution_id"))
+    location_id = clean(draft.get("location_id"))
     institution_authors = clean(draft.get("institution_authors"))
     raw_affiliation = str(draft.get("raw_affiliation") or "")
     evidence_source = clean(draft.get("evidence_source"))
@@ -239,6 +242,7 @@ def _mapping_fields(
         **_paper_fields(paper),
         "institution": institution,
         "institution_id": institution_id,
+        "location_id": location_id,
         "institution_authors": institution_authors,
         "author_order": clean(draft.get("author_order")),
         "raw_affiliation": raw_affiliation,
@@ -664,6 +668,8 @@ def update_mapping(
         candidate_draft["review_note"] = row.get("review_note")
     if "provenance_source" not in candidate_draft:
         candidate_draft["provenance_source"] = row.get("provenance_source")
+    if "location_id" not in candidate_draft:
+        candidate_draft["location_id"] = row.get("location_id")
     candidate = _mapping_fields(paper, candidate_draft)
     institutions = load_institutions(institutions_path)
     institution_resolution = _resolve_mapping_institution(
@@ -712,10 +718,16 @@ def update_mapping(
                 and clean(previous.get("mapping_status")) == "active"
             )
         )
+        identity_changed = (
+            clean(previous.get("institution_id")) != clean(row.get("institution_id"))
+            or clean(previous.get("location_id")) != clean(row.get("location_id"))
+            or _normalized_text(previous.get("institution_authors"))
+            != _normalized_text(row.get("institution_authors"))
+        )
         if (
             institution_audit_path is not None
             and trusted
-            and clean(previous.get("institution_id")) != clean(row.get("institution_id"))
+            and identity_changed
         ):
             audit = append_confirmed_mapping_change_audit(
                 previous,
@@ -750,6 +762,8 @@ def exclude_mapping(
     review_note: str,
     *,
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
+    institution_audit_path: Path | None = None,
+    changed_by: str = "local-admin",
 ) -> Dict[str, str]:
     if not clean(review_note):
         raise CuratedMappingError("review note is required")
@@ -762,12 +776,29 @@ def exclude_mapping(
         raise CuratedMappingError("mapping not found for selected paper")
     if clean(row.get("mapping_status")) == "excluded":
         raise CuratedMappingError("mapping is already excluded")
+    previous = dict(row)
     row["mapping_status"] = "excluded"
     row["review_note"] = _append_audit_note(
         row.get("review_note"), "Excluded", review_note
     )
     row["updated_at"] = _timestamp()
-    save_mappings(rows, mappings_path)
+    snapshots = {
+        path: path.read_bytes() if path.exists() else None
+        for path in (mappings_path, institution_audit_path)
+        if path is not None
+    }
+    try:
+        save_mappings(rows, mappings_path)
+        if institution_audit_path is not None:
+            append_confirmed_mapping_removal_audit(
+                previous,
+                created_by=changed_by,
+                review_note=review_note,
+                audit_path=institution_audit_path,
+            )
+    except Exception:
+        _restore_snapshots(snapshots)
+        raise
     return dict(row)
 
 
@@ -782,6 +813,8 @@ def replace_all_mappings(
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
+    institution_audit_path: Path | None = None,
+    changed_by: str = "local-admin",
 ) -> Dict[str, Any]:
     if confirm_replace_all is not True:
         raise CuratedMappingError("confirm_replace_all=true is required")
@@ -793,18 +826,18 @@ def replace_all_mappings(
     rows = load_mappings(mappings_path)
     institutions = load_institutions(institutions_path)
     aliases = _load_aliases(institution_aliases_path)
-    replaced = []
+    replaced_rows = []
     for row in rows:
         if (
             records_share_paper_identity(paper, row)
             and clean(row.get("mapping_status")) in ACTIVE_MAPPING_STATUSES
         ):
+            replaced_rows.append(dict(row))
             row["mapping_status"] = "excluded"
             row["review_note"] = _append_audit_note(
                 row.get("review_note"), "Replaced", review_note
             )
             row["updated_at"] = _timestamp()
-            replaced.append(clean(row.get("mapping_id")))
 
     created = []
     location_rows = load_location_reviews(location_review_path)
@@ -838,7 +871,10 @@ def replace_all_mappings(
 
     snapshots = {
         path: path.read_bytes() if path.exists() else None
-        for path in (institutions_path, mappings_path, location_review_path)
+        for path in (
+            institutions_path, mappings_path, location_review_path,
+            institution_audit_path,
+        ) if path is not None
     }
     try:
         if "provisional" in institution_resolutions:
@@ -846,13 +882,62 @@ def replace_all_mappings(
         save_mappings(rows, mappings_path)
         if any(status in {"created", "updated"} for status in location_results):
             save_location_reviews(location_rows, location_review_path)
+        if institution_audit_path is not None:
+            for previous in replaced_rows:
+                previous_authors = [
+                    value.strip()
+                    for value in clean(previous.get("institution_authors")).split(";")
+                    if value.strip()
+                ]
+                covered: set[str] = set()
+                for author in previous_authors:
+                    normalized = _normalized_text(author)
+                    replacement = next((
+                        candidate for candidate in created
+                        if normalized in {
+                            _normalized_text(value)
+                            for value in clean(
+                                candidate.get("institution_authors")
+                            ).split(";") if value.strip()
+                        }
+                    ), None)
+                    if replacement is None:
+                        continue
+                    covered.add(normalized)
+                    same_identity = (
+                        clean(previous.get("institution_id"))
+                        == clean(replacement.get("institution_id"))
+                        and clean(previous.get("location_id"))
+                        == clean(replacement.get("location_id"))
+                    )
+                    if same_identity:
+                        continue
+                    append_confirmed_mapping_change_audit(
+                        {**previous, "institution_authors": author},
+                        {**replacement, "institution_authors": author},
+                        change_source="admin_replace_all_mappings",
+                        created_by=changed_by,
+                        review_note=review_note,
+                        audit_path=institution_audit_path,
+                    )
+                for author in previous_authors:
+                    if _normalized_text(author) in covered:
+                        continue
+                    append_confirmed_mapping_removal_audit(
+                        {**previous, "institution_authors": author},
+                        created_by=changed_by,
+                        review_note=review_note,
+                        audit_path=institution_audit_path,
+                    )
     except Exception as error:
         _restore_snapshots(snapshots)
         if isinstance(error, CuratedInstitutionError):
             raise CuratedMappingError(str(error)) from error
         raise
     return {
-        "replaced_mapping_ids": replaced,
+        "replaced_mapping_ids": [
+            clean(row.get("mapping_id")) for row in replaced_rows
+        ],
         "mappings": created,
         "location_reviews": location_results,
         "institution_resolutions": institution_resolutions,

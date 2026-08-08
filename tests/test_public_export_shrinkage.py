@@ -67,6 +67,36 @@ def merge_row(canonical, duplicate):
     }
 
 
+def relationship_audit(
+    old_record,
+    *,
+    new_institution_id,
+    old_location_id="",
+    new_location_id="",
+    authors="",
+    paper_id="",
+    previous_institution_id="",
+    mapping_id="",
+    action="confirmed_mapping_changed",
+):
+    return {
+        "audit_id": "institution-audit:transition",
+        "action": action,
+        "paper_id": paper_id or old_record.get("paper_id", ""),
+        "previous_mapping_id": mapping_id or old_record.get("mapping_id", ""),
+        "mapping_id": mapping_id or old_record.get("mapping_id", ""),
+        "previous_institution_id": (
+            previous_institution_id or old_record.get("institution_id", "")
+        ),
+        "institution_id": new_institution_id,
+        "previous_location_id": old_location_id,
+        "location_id": new_location_id,
+        "previous_authors": authors,
+        "new_authors": authors,
+        "affected_authors": authors,
+    }
+
+
 class PublicExportShrinkageTests(unittest.TestCase):
     def test_orphan_cleanup_evidence_explains_only_matching_marker(self):
         old_paper = paper()
@@ -214,6 +244,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             **old,
             "decision_id": "review-1",
             "institution": "One",
+            "institution_id": "institution:one",
             "action": "exclude_wrong_mapping",
         }
         report = analyze_shrinkage(
@@ -294,6 +325,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             **old,
             "decision_id": "review:43632bd5575cb49bb873",
             "institution": "Beijing Academy of Artificial Intelligence",
+            "institution_id": "institution:985443a2d7239406",
             "action": "exclude_wrong_mapping",
         }
         explained = analyze_shrinkage(
@@ -332,12 +364,8 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [replacement_marker],
             curated_mappings=[replacement],
         )
-        self.assertTrue(report.allowed)
-        self.assertIn(
-            "curated/manual mapping supersession",
-            report.removed_maps[0].evidence,
-        )
-        self.assertIn("authoritative mapping IDs: mapping-1", report.removed_maps[0].evidence)
+        self.assertFalse(report.allowed)
+        self.assertIn("exact durable", report.removed_maps[0].evidence)
 
     def test_manual_author_mapping_supersedes_old_automatic_fallback_without_exclusion(self):
         old = paper()
@@ -363,9 +391,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertTrue(report.allowed)
-        self.assertIn("curated/manual mapping supersession", report.removed_maps[0].evidence)
-        self.assertIn("mapping-reviewed", report.removed_maps[0].evidence)
+        self.assertFalse(report.allowed)
 
     def test_manual_mapping_matches_fallback_authors_without_diacritics(self):
         old = paper()
@@ -391,11 +417,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertTrue(report.allowed)
-        self.assertIn(
-            "curated/manual mapping supersession",
-            report.removed_maps[0].evidence,
-        )
+        self.assertFalse(report.allowed)
 
     def test_composed_decomposed_accents_and_stable_separators_match(self):
         old = paper()
@@ -416,7 +438,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [old], [old], [old_marker], [],
             curated_mappings=[replacement],
         )
-        self.assertTrue(report.allowed)
+        self.assertFalse(report.allowed)
 
     def test_reordered_partial_author_list_can_prove_reviewed_replacement(self):
         old = paper()
@@ -437,7 +459,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [old], [old], [old_marker], [],
             curated_mappings=[replacement],
         )
-        self.assertTrue(report.allowed)
+        self.assertFalse(report.allowed)
 
     def test_admin_audit_explains_destructive_mapping_replacement(self):
         old = paper()
@@ -459,7 +481,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             institution_audits=[audit],
         )
         self.assertTrue(report.allowed)
-        self.assertIn("authoritative Admin mapping audit", report.removed_maps[0].evidence)
+        self.assertIn("reviewed_mapping_replacement", report.removed_maps[0].evidence)
 
     def test_admin_audit_for_different_paper_does_not_explain_replacement(self):
         old = paper()
@@ -511,12 +533,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertTrue(report.allowed)
-        self.assertIn(
-            "curated/manual mapping supersession",
-            report.removed_maps[0].evidence,
-        )
-        self.assertIn("mapping-reviewed", report.removed_maps[0].evidence)
+        self.assertFalse(report.allowed)
 
     def test_partial_manual_mapping_does_not_explain_other_author_fallback(self):
         old = paper()
@@ -601,7 +618,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertTrue(report.allowed)
+        self.assertFalse(report.allowed)
 
     def test_institution_redirects_are_applied_to_old_and_new_map_identities(self):
         old = paper()
@@ -615,7 +632,8 @@ class PublicExportShrinkageTests(unittest.TestCase):
             institution_redirects={"institution:alias": "institution:canonical"},
         )
         self.assertTrue(report.allowed)
-        self.assertEqual(report.removed_maps, ())
+        self.assertEqual(len(report.removed_maps), 1)
+        self.assertIn("alias/canonical", report.removed_maps[0].evidence)
 
     def test_unrelated_institution_redirect_does_not_explain_transition(self):
         old = paper()
@@ -682,6 +700,220 @@ class PublicExportShrinkageTests(unittest.TestCase):
                 [restored], [restored], [], [], exclusion_rows=history
             ).allowed
         )
+
+    def test_exact_canonical_merge_is_explained_only_when_target_exists(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "institution_authors": ["Ada Author"]}
+        new = {**marker(paper(), "institution:new", "New"),
+               "institution_authors": ["Ada Author"]}
+        registry = [
+            {"institution_id": "institution:old", "institution_status": "merged"},
+            {"institution_id": "institution:new", "institution_status": "active"},
+        ]
+        audits = [{
+            "audit_id": "institution-audit:merge", "action": "merge",
+            "previous_institution_id": "institution:old",
+            "institution_id": "institution:new",
+        }]
+        explained = analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_rows=registry,
+            institution_audits=audits,
+        )
+        self.assertTrue(explained.allowed)
+        self.assertIn("canonical_merge", explained.removed_maps[0].evidence)
+        missing = analyze_shrinkage(
+            [paper()], [paper()], [old], [], institution_rows=registry,
+            institution_audits=audits,
+        )
+        self.assertFalse(missing.allowed)
+        self.assertIn("no matching", missing.removed_maps[0].evidence)
+
+    def test_multihop_merge_resolves_and_cycle_or_dangling_target_fails(self):
+        old = marker(paper(), "institution:a", "A")
+        new = marker(paper(), "institution:c", "C")
+        registry = [
+            {"institution_id": "institution:a", "institution_status": "merged"},
+            {"institution_id": "institution:b", "institution_status": "merged"},
+            {"institution_id": "institution:c", "institution_status": "active"},
+        ]
+        audits = [
+            {"audit_id": "merge:a", "action": "merge",
+             "previous_institution_id": "institution:a", "institution_id": "institution:b"},
+            {"audit_id": "merge:b", "action": "merge",
+             "previous_institution_id": "institution:b", "institution_id": "institution:c"},
+        ]
+        self.assertTrue(analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_rows=registry,
+            institution_audits=audits,
+        ).allowed)
+        cycle = [audits[0], {**audits[1], "institution_id": "institution:a"}]
+        cycle_report = analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_rows=registry,
+            institution_audits=cycle,
+        )
+        self.assertFalse(cycle_report.allowed)
+        self.assertIn("cycle", cycle_report.removed_maps[0].evidence)
+        dangling = [{**audits[0], "institution_id": "institution:missing"}]
+        dangling_report = analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_rows=registry,
+            institution_audits=dangling,
+        )
+        self.assertFalse(dangling_report.allowed)
+        self.assertIn("dangling", dangling_report.removed_maps[0].evidence)
+
+    def test_ignored_institution_does_not_explain_removal(self):
+        old = marker(paper(), "institution:old", "Old")
+        report = analyze_shrinkage(
+            [paper()], [paper()], [old], [],
+            institution_rows=[{
+                "institution_id": "institution:old",
+                "institution_status": "ignored",
+            }],
+        )
+        self.assertFalse(report.allowed)
+
+    def test_exact_reviewed_mapping_replacement_and_scope_mismatches(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "mapping_id": "mapping:one",
+               "institution_authors": ["Ada Author"]}
+        new = {**marker(paper(), "institution:new", "New"),
+               "mapping_id": "mapping:one",
+               "institution_authors": ["Ada Author"]}
+        audit = relationship_audit(
+            old, new_institution_id="institution:new",
+            authors="Ada Author",
+        )
+        self.assertTrue(analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[audit]
+        ).allowed)
+        for changed in (
+            {"paper_id": "curated:other"},
+            {"previous_institution_id": "institution:other"},
+            {"previous_authors": "Grace Author"},
+            {"previous_mapping_id": "mapping:other"},
+        ):
+            bad = {**audit, **changed}
+            self.assertFalse(analyze_shrinkage(
+                [paper()], [paper()], [old], [new], institution_audits=[bad]
+            ).allowed)
+
+    def test_exact_multi_author_mapping_replacement_uses_whole_set_evidence(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "mapping_id": "mapping:one",
+               "institution_authors": ["Ada Author", "Grace Author"]}
+        new = {**marker(paper(), "institution:new", "New"),
+               "mapping_id": "mapping:one",
+               "institution_authors": ["Ada Author", "Grace Author"]}
+        audit = relationship_audit(
+            old, new_institution_id="institution:new",
+            authors="Ada Author; Grace Author",
+        )
+        report = analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[audit]
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn("reviewed_mapping_replacement", report.removed_maps[0].evidence)
+
+    def test_mapping_specific_location_replacement_is_exact(self):
+        old = {**marker(paper(), "institution:one", "One"),
+               "mapping_id": "mapping:one", "location_id": "location:shanghai",
+               "institution_authors": ["Ada Author"]}
+        new = {**old, "location_id": "location:beijing"}
+        audit = relationship_audit(
+            old, new_institution_id="institution:one",
+            old_location_id="location:shanghai",
+            new_location_id="location:beijing", authors="Ada Author",
+        )
+        report = analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[audit]
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn("reviewed_location_replacement", report.removed_maps[0].evidence)
+        bad = {**audit, "previous_location_id": "location:wrong"}
+        self.assertFalse(analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[bad]
+        ).allowed)
+
+    def test_institution_and_location_replacement_requires_exact_target(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "mapping_id": "mapping:one", "location_id": "location:old",
+               "institution_authors": ["Ada Author"]}
+        new = {**marker(paper(), "institution:new", "New"),
+               "mapping_id": "mapping:one", "location_id": "location:new",
+               "institution_authors": ["Ada Author"]}
+        audit = relationship_audit(
+            old, new_institution_id="institution:new",
+            old_location_id="location:old", new_location_id="location:new",
+            authors="Ada Author",
+        )
+        self.assertTrue(analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[audit]
+        ).allowed)
+        self.assertFalse(analyze_shrinkage(
+            [paper()], [paper()], [old], [], institution_audits=[audit]
+        ).allowed)
+
+    def test_multi_location_same_institution_is_not_collapsed(self):
+        shanghai = {**marker(paper()), "location_id": "location:shanghai"}
+        beijing = {**marker(paper()), "location_id": "location:beijing"}
+        report = analyze_shrinkage(
+            [paper()], [paper()], [shanghai, beijing], [shanghai, beijing]
+        )
+        self.assertTrue(report.allowed)
+        self.assertEqual(report.removed_maps, ())
+
+    def test_author_set_scoped_supersession_protects_unreviewed_authors(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "mapping_id": "mapping:one",
+               "institution_authors": ["Ada Author", "Grace Author"]}
+        kept = {**old, "institution_authors": ["Grace Author"]}
+        replacement = {**marker(paper(), "institution:new", "New"),
+                       "mapping_id": "mapping:one",
+                       "institution_authors": ["Ada Author"]}
+        audit = relationship_audit(
+            old, new_institution_id="institution:new", authors="Ada Author",
+        )
+        report = analyze_shrinkage(
+            [paper()], [paper()], [old], [kept, replacement],
+            institution_audits=[audit],
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn("author_set_scoped", report.removed_maps[0].evidence)
+        self.assertFalse(analyze_shrinkage(
+            [paper()], [paper()], [old], [replacement],
+            institution_audits=[audit],
+        ).allowed)
+
+    def test_explicit_true_removal_is_exact(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "mapping_id": "mapping:one",
+               "institution_authors": ["Ada Author"]}
+        audit = relationship_audit(
+            old, new_institution_id="", authors="Ada Author",
+            action="mapping_removed",
+        )
+        self.assertTrue(analyze_shrinkage(
+            [paper()], [paper()], [old], [], institution_audits=[audit]
+        ).allowed)
+        wrong = {**audit, "previous_authors": "Grace Author"}
+        self.assertFalse(analyze_shrinkage(
+            [paper()], [paper()], [old], [], institution_audits=[wrong]
+        ).allowed)
+
+    def test_ubc_style_reviewed_replacement_fixture(self):
+        old = {**marker(paper(), "institution:05b67f44dd9f6846", "UBC"),
+               "mapping_id": "mapping:ubc",
+               "institution_authors": ["Panos Nasiopoulos"]}
+        new = {**marker(paper(), "institution:94efe2a875dd4d0e", "The UBC"),
+               "mapping_id": "mapping:ubc",
+               "institution_authors": ["Panos Nasiopoulos"]}
+        audit = relationship_audit(
+            old, new_institution_id="institution:94efe2a875dd4d0e",
+            authors="Panos Nasiopoulos",
+        )
+        self.assertTrue(analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[audit]
+        ).allowed)
 
 
 if __name__ == "__main__":

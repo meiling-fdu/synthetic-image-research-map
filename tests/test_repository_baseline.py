@@ -77,12 +77,16 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         paper_identities = [identity_key(row) for row in self.public_papers]
         self.assertEqual(len(paper_identities), len(set(paper_identities)))
         map_relationships = [
-            (identity_key(row), row["institution_id"])
+            (
+                identity_key(row),
+                row["institution_id"],
+                row.get("location_id") or "",
+            )
             for row in self.map_records
         ]
         self.assertEqual(len(map_relationships), len(set(map_relationships)))
         self.assertTrue(
-            {paper_identity for paper_identity, _ in map_relationships}
+            {paper_identity for paper_identity, _, _ in map_relationships}
             <= set(paper_identities)
         )
 

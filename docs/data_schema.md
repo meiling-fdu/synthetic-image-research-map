@@ -50,20 +50,38 @@ the nearest confirmed parent location; its own row overrides inheritance.
 
 `institution_aliases.csv` maps a reviewed alias to one canonical ID.
 `author_institution_mappings.csv` stores the stable ID plus raw affiliation
-evidence. Its existing `provenance_source` is normalized by the audit into
+evidence. Its optional `location_id` selects one stable row from
+`institution_locations.csv`; this is required to disambiguate a reviewed
+paper/author mapping when one institution has multiple locations. The exporter
+does not replace an explicit mapping location with the institution-level
+fallback. Its existing `provenance_source` is normalized by the audit into
 `manually_confirmed`, `admin_accepted`, `curated_import`, `automatic_import`,
 or `unresolved`; legacy values remain valid and no data migration is required.
 Reassignment is an explicit mapping or confirmed merge action.
 `institution_audit_log.csv` records ignore and global merge impact and
-confirmation. A trusted mapping's institution-ID replacement also appends a
-`confirmed_mapping_changed` event with previous/new IDs, source, timestamp,
-and user/action metadata. Location-only changes never create this event.
+confirmation. A trusted mapping identity change appends a
+`confirmed_mapping_changed` event with explicit paper ID, previous/current
+mapping IDs, previous/new institution IDs, previous/new location IDs,
+previous/new author sets, evidence source/URL, reviewer, reason, and timestamp.
+This includes reviewed location-only and author-scope changes; display-name
+edits that preserve institution, location, and authors create no transition.
 Admin resolution appends either `mapping_change_confirmed` or
 `mapping_reverted`, including the queue ID, source audit ID, mapping ID, exact
 old/new (and reverted) IDs and names, actor, note, evidence source/URL, and UTC
 timestamp. The source audit ID makes suppression transition-specific: resolving
 one change does not suppress a later change to the same mapping.
 Parent and alias cycles are invalid.
+
+The public shrinkage relationship is identified by stable paper identity,
+canonical institution ID, stable location ID when present, and the normalized
+institution-author set. `mapping_id` scopes review lineage but is not by itself
+the public relationship identity. Replacement evidence must match the removed
+paper, old mapping (when present), old institution, old location (when
+present), and affected authors, and its exact new target must exist. A merged
+institution resolves only through acyclic `merge` audits to an active registry
+target. Ignored/inactive institutions do not authorize removals. Exact
+`mapping_removed` evidence is the separate mechanism for an intentional removal
+without a replacement.
 
 `data/manual/institution_consistency_audit.csv` is a generated, reporting-only
 second-layer audit. It compares explicit mappings with raw affiliation

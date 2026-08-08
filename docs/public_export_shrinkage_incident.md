@@ -35,9 +35,23 @@ the complete baseline. The result contains 488 papers and 950 markers, with no
 missing baseline paper identities or marker IDs and no remaining public
 `venue_type=workshop` values.
 
-The exporter now compares previous and proposed paper identities and canonical
-paper–institution relationships before writing. Durable active exclusions,
-confirmed version merges, and reviewed mapping/institution changes explain
-intentional reductions; unexplained loss fails the export. The static count
+The exporter now compares previous and proposed paper identities and exact
+paper–author–institution–location relationships before writing. A reusable
+transition resolver distinguishes preservation, canonical merge,
+alias/canonical consolidation, reviewed mapping replacement, reviewed location
+replacement, combined institution/location replacement, author-set-scoped
+supersession, explicit removal, and unexplained loss. Evidence must match the
+old relationship and a replacement target must actually exist; merge chains
+must be acyclic, non-dangling, and end at an active institution. Durable active
+exclusions and confirmed paper-version merges remain separate explanations.
+Unexplained loss fails the export. The static count
 baseline remains only a bootstrap/disaster fallback, and an explicitly supplied
 reviewed baseline remains available for exceptional reductions.
+
+Admin mapping updates now write structured transition fields into
+`institution_audit_log.csv` whenever institution ID, mapping-specific location,
+or author scope changes. `scripts/normalize_relationship_transition_evidence.py`
+materializes equivalent explicit fields for legacy reviewed audit rows and is
+idempotent. It also assigns a multi-location mapping only when its existing
+reviewed city/country or raw-affiliation evidence identifies exactly one stable
+location.

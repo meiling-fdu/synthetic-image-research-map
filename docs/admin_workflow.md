@@ -317,6 +317,15 @@ The public shrinkage guard accepts a confirmed cleanup record only for a removed
 map relationship with that exact institution ID. It does not explain unrelated
 paper or marker removal.
 
+Identity-affecting mapping saves automatically append exact durable shrinkage
+evidence. The evidence is scoped to paper, mapping lineage, old/new institution,
+old/new mapping-specific location, and old/new author sets. Cosmetic canonical
+name edits create no evidence. Replacement evidence is accepted only when the
+corresponding new public relationship exists; intentional removal without a
+replacement creates its own exact `mapping_removed` record. Replace-all writes
+one transition per affected author (and an explicit removal for any author with
+no replacement), so it cannot authorize unrelated authors from the old set.
+
 `data/curated/public_export_baseline.json` remains a bootstrap/disaster reference
 when there is no previous public output to compare, but it is not an
 unconditional lower bound for normal Admin maintenance and is never rewritten

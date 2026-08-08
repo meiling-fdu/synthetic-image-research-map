@@ -909,10 +909,131 @@ def validate_institution_entities(
                     f"active mapping targets a non-active institution: {institution_id}",
                     row_number,
                 )
+    location_by_id = {
+        clean(row.get("location_id")): row
+        for row in locations if clean(row.get("location_id"))
+    }
+    for row_number, row in enumerate(mappings, start=2):
+        location_id = clean(row.get("location_id"))
+        if not location_id:
+            continue
+        location = location_by_id.get(location_id)
+        if location is None:
+            add_issue(
+                issues, "ERROR", "author_institution_mappings.csv",
+                f"unknown mapping-specific location_id: {location_id}", row_number,
+            )
+        elif clean(location.get("institution_id")) != clean(row.get("institution_id")):
+            add_issue(
+                issues, "ERROR", "author_institution_mappings.csv",
+                "mapping-specific location_id belongs to a different institution",
+                row_number,
+            )
     merge_audits = {clean(row.get("previous_institution_id")) for row in audits if clean(row.get("action")) == "merge"}
     for row_number, row in enumerate(institutions, start=2):
         if clean(row.get("institution_status")) == "merged" and clean(row.get("institution_id")) not in merge_audits:
             add_issue(issues, "ERROR", "institutions.csv", "merged institution has no replacement audit trail", row_number)
+    direct_merges = {
+        clean(row.get("previous_institution_id")): clean(row.get("institution_id"))
+        for row in audits if clean(row.get("action")) == "merge"
+    }
+    for source in direct_merges:
+        if source not in ids:
+            add_issue(
+                issues, "WARNING", "institution_audit_log.csv",
+                f"historical merge source is no longer in registry: {source}",
+            )
+            continue
+        seen = {source}
+        target = direct_merges[source]
+        while target in direct_merges:
+            if target in seen:
+                add_issue(
+                    issues, "ERROR", "institution_audit_log.csv",
+                    f"institution merge cycle involving {source}",
+                )
+                target = ""
+                break
+            seen.add(target)
+            target = direct_merges[target]
+        if not target:
+            continue
+        if target not in ids:
+            add_issue(
+                issues, "ERROR", "institution_audit_log.csv",
+                f"dangling institution merge target: {source} -> {target}",
+            )
+        elif clean(ids[target].get("institution_status")) != "active":
+            add_issue(
+                issues, "ERROR", "institution_audit_log.csv",
+                f"institution merge target is not active: {source} -> {target}",
+            )
+
+    mapping_by_id = {
+        clean(row.get("mapping_id")): row
+        for row in mappings if clean(row.get("mapping_id"))
+    }
+    seen_transitions: set[tuple[str, ...]] = set()
+    for row_number, audit in enumerate(audits, start=2):
+        if clean(audit.get("action")) not in {
+            "confirmed_mapping_changed", "mapping_replaced",
+            "mapping_change_confirmed", "mapping_removed",
+        }:
+            continue
+        paper_id = clean(audit.get("paper_id"))
+        mapping_id = clean(audit.get("mapping_id"))
+        previous_mapping_id = clean(audit.get("previous_mapping_id"))
+        old_id = clean(audit.get("previous_institution_id"))
+        new_id = clean(audit.get("institution_id"))
+        if not paper_id or not (previous_mapping_id or mapping_id) or not old_id:
+            add_issue(
+                issues, "WARNING", "institution_audit_log.csv",
+                "legacy/over-broad relationship transition lacks explicit "
+                "paper, mapping, or old-institution scope",
+                row_number,
+            )
+            continue
+        if old_id not in ids:
+            add_issue(
+                issues, "WARNING", "institution_audit_log.csv",
+                f"relationship transition references missing old institution: {old_id}",
+                row_number,
+            )
+        if clean(audit.get("action")) != "mapping_removed" and new_id not in ids:
+            add_issue(
+                issues, "WARNING", "institution_audit_log.csv",
+                f"relationship transition references missing new institution: {new_id}",
+                row_number,
+            )
+        current_mapping = mapping_by_id.get(mapping_id)
+        if current_mapping is None and clean(audit.get("action")) != "mapping_removed":
+            add_issue(
+                issues, "WARNING", "institution_audit_log.csv",
+                f"relationship transition references missing mapping_id: {mapping_id}",
+                row_number,
+            )
+        old_location = clean(audit.get("previous_location_id"))
+        new_location = clean(audit.get("location_id"))
+        for field, value in (
+            ("previous_location_id", old_location), ("location_id", new_location)
+        ):
+            if value and value not in location_by_id:
+                add_issue(
+                    issues, "WARNING", "institution_audit_log.csv",
+                    f"relationship transition has invalid {field}: {value}",
+                    row_number,
+                )
+        key = (
+            paper_id, previous_mapping_id or mapping_id, mapping_id,
+            old_id, new_id, old_location, new_location,
+            clean(audit.get("previous_authors")), clean(audit.get("new_authors")),
+        )
+        if key in seen_transitions:
+            add_issue(
+                issues, "WARNING", "institution_audit_log.csv",
+                "duplicate relationship transition evidence", row_number,
+            )
+        seen_transitions.add(key)
 
     # An alias can point only one way. If an alias is itself another canonical
     # entity, follow that edge and reject cycles of length two or greater.

@@ -605,7 +605,12 @@ def detail_institution_identity(value: Dict[str, Any]) -> str:
         value.get("institution_id") or value.get("canonical_institution_id")
     )
     if institution_id:
-        return f"id:{institution_id.casefold()}"
+        identity = f"id:{institution_id.casefold()}"
+        location_id = clean_text(value.get("location_id"))
+        return (
+            f"{identity}|location:{location_id.casefold()}"
+            if location_id else identity
+        )
     name = clean_text(
         value.get("canonical_name")
         or value.get("canonical_institution_name")
@@ -2938,10 +2943,11 @@ def institution_id_redirects(
     audit_rows: Sequence[Dict[str, Any]],
 ) -> Dict[str, str]:
     """Return transitive merged-ID redirects whose final target is active."""
-    active_ids = {
-        clean_text(row.get("institution_id"))
-        for row in institutions
-        if clean_text(row.get("institution_status")) == "active"
+    status_by_id = {
+        clean_text(row.get("institution_id")): clean_text(
+            row.get("institution_status")
+        )
+        for row in institutions if clean_text(row.get("institution_id"))
     }
     direct = {
         clean_text(row.get("previous_institution_id")): clean_text(row.get("institution_id"))
@@ -2952,13 +2958,34 @@ def institution_id_redirects(
     }
     redirects: Dict[str, str] = {}
     for source in direct:
+        # Historical cleanup may retain a merge audit after deleting the old
+        # registry row. Keep that audit history, but never use it as an active
+        # identity redirect.
+        if source not in status_by_id:
+            continue
+        if status_by_id.get(source) != "merged":
+            raise PreviewExportError(
+                f"Institution merge audit source is not merged: {source}"
+            )
         target = direct[source]
         visited = {source}
-        while target in direct and target not in visited:
+        while target in direct:
+            if target in visited:
+                raise PreviewExportError(
+                    f"Institution merge cycle involving {source}"
+                )
             visited.add(target)
             target = direct[target]
-        if target in active_ids and target != source:
-            redirects[source] = target
+        if target not in status_by_id:
+            raise PreviewExportError(
+                f"Institution merge target is missing: {source} -> {target}"
+            )
+        if status_by_id[target] != "active":
+            raise PreviewExportError(
+                "Institution merge target is not active: "
+                f"{source} -> {target} ({status_by_id[target]})"
+            )
+        redirects[source] = target
     return redirects
 
 
@@ -4247,6 +4274,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 review_decisions=review_decisions,
                 curated_mappings=curated_mappings,
                 institution_audits=institution_audit_rows,
+                institution_rows=institution_rows,
                 orphan_cleanup_audits=orphan_cleanup_audit_rows,
                 institution_redirects=exported_id_redirects,
                 approved_by_baseline=approved_baseline_allows(

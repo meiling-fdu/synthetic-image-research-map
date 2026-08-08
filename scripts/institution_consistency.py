@@ -13,10 +13,10 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 try:
-    from .curated_institutions import stable_institution_id
+    from .curated_institutions import normalized_author_set, stable_institution_id
     from .review_decisions import read_review_decisions
 except ImportError:
-    from curated_institutions import stable_institution_id
+    from curated_institutions import normalized_author_set, stable_institution_id
     from review_decisions import read_review_decisions
 
 
@@ -538,11 +538,14 @@ def audit_institution_consistency(
         resolved_change_audits[source_audit_id].append((
             old_id,
             new_id,
-            resolution_metadata.get("mapping_id", ""),
-            resolution_metadata.get("paper_id", ""),
-            normalize_institution(
-                resolution_metadata.get("author")
+            clean(resolution.get("mapping_id"))
+            or resolution_metadata.get("mapping_id", ""),
+            clean(resolution.get("paper_id"))
+            or resolution_metadata.get("paper_id", ""),
+            normalized_author_set(
+                resolution.get("new_authors")
                 or resolution.get("affected_authors")
+                or resolution_metadata.get("author")
             ),
         ))
     for event in merge_audits:
@@ -579,25 +582,28 @@ def audit_institution_consistency(
         }:
             continue
         event_authors = _authors(mapping) or [clean(event.get("affected_authors"))]
+        current_author_set = normalized_author_set(
+            mapping.get("institution_authors") or event.get("new_authors")
+            or event.get("affected_authors")
+        )
         paper_id = metadata.get("paper_id", "") or clean(mapping.get("paper_id"))
         mapping_id = metadata.get("mapping_id", "") or clean(mapping.get("mapping_id"))
         resolutions = resolved_change_audits.get(clean(event.get("audit_id")), [])
+        exact_resolution = any(
+            old_id == transition[0]
+            and new_id == transition[1]
+            and confirmed_mapping_id == mapping_id
+            and confirmed_paper_id == paper_id
+            and confirmed_author_set == current_author_set
+            for (
+                old_id,
+                new_id,
+                confirmed_mapping_id,
+                confirmed_paper_id,
+                confirmed_author_set,
+            ) in resolutions
+        )
         for author in event_authors:
-            normalized_author = normalize_institution(author)
-            exact_resolution = any(
-                old_id == transition[0]
-                and new_id == transition[1]
-                and confirmed_mapping_id == mapping_id
-                and confirmed_paper_id == paper_id
-                and confirmed_author == normalized_author
-                for (
-                    old_id,
-                    new_id,
-                    confirmed_mapping_id,
-                    confirmed_paper_id,
-                    confirmed_author,
-                ) in resolutions
-            )
             if exact_resolution:
                 continue
             finding = _finding(

@@ -6,7 +6,9 @@ from pathlib import Path
 from scripts.curated_mappings import (
     CuratedMappingError,
     create_mapping,
+    exclude_mapping,
     load_mappings,
+    replace_all_mappings,
     update_mapping,
 )
 from scripts.curated_institutions import stable_institution_id
@@ -151,6 +153,86 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         self.assertEqual(updated["institution"], canonical)
         with self.audits_path.open(encoding="utf-8", newline="") as handle:
             self.assertEqual(list(csv.DictReader(handle)), [])
+
+    def test_location_only_mapping_change_writes_exact_transition_evidence(self):
+        mapping = self.create({
+            **self.draft,
+            "location_id": "location:shanghai",
+            "provenance_source": "manually_confirmed",
+        })
+        self.update(mapping["mapping_id"], {
+            **self.draft,
+            "location_id": "location:beijing",
+            "provenance_source": "manually_confirmed",
+        })
+        with self.audits_path.open(encoding="utf-8", newline="") as handle:
+            audits = list(csv.DictReader(handle))
+        self.assertEqual(len(audits), 1)
+        audit = audits[0]
+        self.assertEqual(audit["paper_id"], "curated:test")
+        self.assertEqual(audit["previous_mapping_id"], mapping["mapping_id"])
+        self.assertEqual(audit["mapping_id"], mapping["mapping_id"])
+        self.assertEqual(audit["previous_location_id"], "location:shanghai")
+        self.assertEqual(audit["location_id"], "location:beijing")
+        self.assertEqual(audit["previous_authors"], "Researcher One")
+        self.assertEqual(audit["new_authors"], "Researcher One")
+
+    def test_explicit_mapping_exclusion_writes_exact_removal_evidence(self):
+        mapping = self.create({
+            **self.draft, "provenance_source": "manually_confirmed"
+        })
+        exclude_mapping(
+            self.paper, mapping["mapping_id"], "Reviewed true removal.",
+            mappings_path=self.mappings_path,
+            institution_audit_path=self.audits_path,
+        )
+        with self.audits_path.open(encoding="utf-8", newline="") as handle:
+            audit = next(csv.DictReader(handle))
+        self.assertEqual(audit["action"], "mapping_removed")
+        self.assertEqual(audit["paper_id"], "curated:test")
+        self.assertEqual(audit["previous_mapping_id"], mapping["mapping_id"])
+        self.assertEqual(audit["previous_institution_id"], mapping["institution_id"])
+        self.assertEqual(audit["previous_authors"], "Researcher One")
+
+    def test_replace_all_writes_author_scoped_replacement_evidence(self):
+        mapping = self.create({
+            **self.draft,
+            "location_id": "location:old",
+            "institution_authors": "Researcher One; Researcher Two",
+            "provenance_source": "manually_confirmed",
+        })
+        result = replace_all_mappings(
+            self.paper,
+            [{
+                **self.draft,
+                "institution_id": mapping["institution_id"],
+                "location_id": "location:new",
+                "institution_authors": "Researcher One; Researcher Two",
+                "provenance_source": "manually_confirmed",
+            }],
+            "Reviewed location replacement.",
+            confirm_replace_all=True,
+            map_records=[],
+            mappings_path=self.mappings_path,
+            location_review_path=self.locations_path,
+            institutions_path=self.institutions_path,
+            institution_aliases_path=self.aliases_path,
+            institution_audit_path=self.audits_path,
+        )
+        with self.audits_path.open(encoding="utf-8", newline="") as handle:
+            audits = list(csv.DictReader(handle))
+        self.assertEqual(len(audits), 2)
+        self.assertEqual(
+            {row["previous_authors"] for row in audits},
+            {"Researcher One", "Researcher Two"},
+        )
+        self.assertTrue(all(
+            row["previous_mapping_id"] == mapping["mapping_id"]
+            and row["mapping_id"] == result["mappings"][0]["mapping_id"]
+            and row["previous_location_id"] == "location:old"
+            and row["location_id"] == "location:new"
+            for row in audits
+        ))
 
     def test_other_required_fields_remain_required(self):
         for field in ("institution", "institution_authors"):

@@ -12,6 +12,7 @@ try:
         DEFAULT_INSTITUTIONS_PATH,
         append_mapping_change_resolution_audit,
         load_institutions,
+        normalized_author_set,
     )
     from .curated_mappings import (
         DEFAULT_LOCATION_REVIEW_PATH,
@@ -34,6 +35,7 @@ except ImportError:
         DEFAULT_INSTITUTIONS_PATH,
         append_mapping_change_resolution_audit,
         load_institutions,
+        normalized_author_set,
     )
     from curated_mappings import (
         DEFAULT_LOCATION_REVIEW_PATH,
@@ -183,6 +185,34 @@ def apply_cleanup_action(
         old_id = clean(source_audit.get("previous_institution_id"))
         new_id = clean(source_audit.get("institution_id"))
         current_id = clean(mapping.get("institution_id"))
+        source_mapping_id = clean(source_audit.get("mapping_id")) or clean(
+            metadata.get("mapping_id")
+        )
+        source_paper_id = clean(source_audit.get("paper_id")) or clean(
+            metadata.get("paper_id")
+        )
+        source_authors = normalized_author_set(
+            source_audit.get("new_authors")
+            or source_audit.get("affected_authors")
+        )
+        current_authors = normalized_author_set(mapping.get("institution_authors"))
+        finding_author = normalized_author_set(finding.get("author"))
+        if (
+            source_mapping_id != mapping_id
+            or not source_paper_id
+            or source_paper_id != clean(mapping.get("paper_id"))
+            or clean(finding.get("paper_id")) != source_paper_id
+            or clean(finding.get("current_institution_id")) != new_id
+            or not source_authors
+            or source_authors != current_authors
+            or not finding_author
+            or not set(finding_author.split("; ")).issubset(
+                set(current_authors.split("; "))
+            )
+        ):
+            raise InstitutionReviewQueueError(
+                "the persisted finding no longer matches the current mapping transition"
+            )
         already_reverted = action == "mapping_reverted" and current_id == old_id
         if current_id != new_id and not already_reverted:
             raise InstitutionReviewQueueError(
@@ -240,6 +270,10 @@ def apply_cleanup_action(
                 reverted_institution_name=old_name if action == "mapping_reverted" else "",
                 evidence_source=mapping.get("evidence_source"),
                 evidence_url=mapping.get("evidence_url"),
+                paper_id=mapping.get("paper_id"),
+                previous_location_id=source_audit.get("previous_location_id"),
+                location_id=mapping.get("location_id"),
+                institution_authors=mapping.get("institution_authors"),
                 review_note=note,
                 created_by=resolved_by,
                 created_at=at,

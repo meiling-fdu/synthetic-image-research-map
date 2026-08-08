@@ -1775,5 +1775,47 @@ process.stdout.write(JSON.stringify({
         self.assertIn("duplicates a formal publication", issues[0].message)
 
 
+class MappingSpecificLocationExportTests(unittest.TestCase):
+    def test_same_institution_can_emit_two_mapping_specific_locations(self):
+        paper = {
+            "paper_id": "curated:multi", "title": "Multi-location paper",
+            "year": 2026, "publication_year": 2026, "task": "detection",
+            "doi": "10.1000/multi", "authors": ["Ada", "Grace"],
+        }
+        mappings = [
+            {
+                "mapping_id": "mapping:shanghai", **paper,
+                "institution": "Example Labs", "institution_id": "institution:labs",
+                "location_id": "location:shanghai", "institution_authors": "Ada",
+                "raw_affiliation": "Example Labs, Shanghai", "mapping_status": "active",
+            },
+            {
+                "mapping_id": "mapping:beijing", **paper,
+                "institution": "Example Labs", "institution_id": "institution:labs",
+                "location_id": "location:beijing", "institution_authors": "Grace",
+                "raw_affiliation": "Example Labs, Beijing", "mapping_status": "active",
+            },
+        ]
+        locations = [
+            {"location_id": "location:shanghai", "institution_id": "institution:labs",
+             "institution": "Example Labs", "city": "Shanghai", "country": "China",
+             "country_code": "CN", "lat": "31.2", "lon": "121.5"},
+            {"location_id": "location:beijing", "institution_id": "institution:labs",
+             "institution": "Example Labs", "city": "Beijing", "country": "China",
+             "country_code": "CN", "lat": "39.9", "lon": "116.4"},
+        ]
+        markers, _summary = build_curated_map_records(
+            [paper], mappings, [], confirmed_location_records=locations
+        )
+        self.assertEqual(len(markers), 2)
+        self.assertEqual(
+            {marker["location_id"] for marker in markers},
+            {"location:shanghai", "location:beijing"},
+        )
+        deduplicated, removed = deduplicate_public_map_relationships(markers)
+        self.assertEqual(len(deduplicated), 2)
+        self.assertEqual(removed, 0)
+
+
 if __name__ == "__main__":
     unittest.main()

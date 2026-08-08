@@ -1,18 +1,25 @@
 import csv
+import json
 import tempfile
+import threading
 import unittest
+from http.client import HTTPConnection
+from http.server import ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
 
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     INSTITUTION_AUDIT_COLUMNS,
+    INSTITUTION_ALIAS_COLUMNS,
     INSTITUTION_COLUMNS,
+    INSTITUTION_HIERARCHY_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
     INSTITUTION_REVIEW_QUEUE_COLUMNS,
 )
 from scripts.curated_mappings import load_mappings, update_mapping
 from scripts.institution_cleanup import apply_cleanup_action
+from scripts.institution_consistency import audit_institution_consistency
 from scripts.institution_review_queue import (
     InstitutionReviewQueueError,
     load_queue,
@@ -21,6 +28,7 @@ from scripts.institution_review_queue import (
     sync_findings,
 )
 from scripts.validate_curated_database import validate_institution_consistency_audit
+from scripts.serve_admin import make_handler
 
 
 def write_csv(path, columns, rows=()):
@@ -104,6 +112,7 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
         current.update({
             "institution": "Correct University",
             "institution_id": "institution:correct",
+            "institution_authors": "Ada Example, Bob Reviewer",
             "updated_at": "2026-02-01T00:00:00+00:00",
             "evidence_url": "https://example.test/evidence",
         })
@@ -117,7 +126,7 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
             "affected_papers": "1",
             "affected_mappings": "1",
             "affected_markers": "1",
-            "affected_authors": "Ada Example",
+            "affected_authors": "Ada Example, Bob Reviewer",
             "confirmation_text": "mapping_id=mapping:1; paper_id=paper:1; paper_title=Example paper; previous_institution=Wrong Lab; new_institution=Correct University; change_source=admin_mapping_update",
             "review_note": "Publisher evidence checked.",
             "created_at": "2026-02-01T00:00:00Z",
@@ -161,9 +170,88 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
         self.assertEqual(resolved["is_current"], "false")
         self.assertEqual(result["audit"]["action"], "mapping_change_confirmed")
         self.assertIn(f"review_queue_id={queue['queue_id']}", result["audit"]["confirmation_text"])
+        self.assertEqual(result["audit"]["paper_id"], "paper:1")
+        self.assertEqual(result["audit"]["mapping_id"], "mapping:1")
+        self.assertEqual(result["audit"]["previous_institution_id"], "institution:wrong")
+        self.assertEqual(result["audit"]["institution_id"], "institution:correct")
+        self.assertEqual(result["audit"]["previous_authors"], "ada example; bob reviewer")
+        self.assertEqual(result["audit"]["new_authors"], "ada example; bob reviewer")
+        self.assertEqual(result["audit"]["created_by"], "local-admin")
+        self.assertTrue(result["audit"]["created_at"])
+        self.assertEqual(result["audit"]["review_note"], "Intentional and evidence-backed.")
         issues = []
         validate_institution_consistency_audit(issues, load_queue(self.queue_path), [current])
         self.assertEqual(issues, [])
+
+        findings = audit_institution_consistency(
+            [current], self.institutions, [],
+            merge_audits=[source for source in self._read_audits()],
+        )
+        self.assertFalse(any(
+            row["issue_type"] == "confirmed_mapping_changed" for row in findings
+        ))
+
+    def _read_audits(self):
+        with self.audit_path.open(encoding="utf-8", newline="") as handle:
+            return list(csv.DictReader(handle))
+
+    def test_visible_open_confirmed_change_resolves_through_admin_http(self):
+        current, _, queue, _ = self.prepare_confirmed_change()
+        root = Path(self.temporary.name)
+        aliases_path = root / "aliases.csv"
+        hierarchy_path = root / "hierarchy.csv"
+        papers_path = root / "papers.csv"
+        write_csv(aliases_path, INSTITUTION_ALIAS_COLUMNS)
+        write_csv(hierarchy_path, INSTITUTION_HIERARCHY_COLUMNS)
+        papers_path.write_text("paper_id,title\npaper:1,Example paper\n", encoding="utf-8")
+        handler = make_handler(
+            "token", curated_papers_path=papers_path,
+            mappings_path=self.mappings_path,
+            location_review_path=self.locations_path,
+            institution_aliases_path=aliases_path,
+            institutions_path=self.institutions_path,
+            institution_audit_path=self.audit_path,
+            institution_review_queue_path=self.queue_path,
+            institution_hierarchy_path=hierarchy_path,
+            geocoder=object(),
+        )
+        server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            connection = HTTPConnection("127.0.0.1", server.server_port, timeout=2)
+            connection.request("GET", "/api/review/institution-cleanup", headers={"X-Admin-Token": "token"})
+            response = connection.getresponse()
+            payload = json.loads(response.read())
+            self.assertEqual(response.status, 200)
+            visible = payload["data"]["records"][0]
+            self.assertEqual(visible["queue_ids"], [queue["queue_id"]])
+            change = visible["mapping_change"]
+
+            connection = HTTPConnection("127.0.0.1", server.server_port, timeout=2)
+            body = json.dumps({
+                "queue_ids": visible["queue_ids"],
+                "action": "mapping_change_confirmed",
+                "review_note": "HTTP lifecycle evidence checked.",
+                "confirmed": True,
+                "expected_mapping_id": change["expected_mapping_id"],
+                "expected_institution_id": change["expected_institution_id"],
+                "expected_mapping_updated_at": change["expected_mapping_updated_at"],
+                "expected_review_updated_at": change["expected_review_updated_at"],
+            })
+            connection.request(
+                "POST", "/api/review/institution-cleanup/action", body=body,
+                headers={"X-Admin-Token": "token", "Content-Type": "application/json"},
+            )
+            response = connection.getresponse()
+            result = json.loads(response.read())
+            self.assertEqual((response.status, result["success"]), (200, True))
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
+        self.assertEqual(load_mappings(self.mappings_path)[0]["institution_id"], current["institution_id"])
+        self.assertEqual(load_queue(self.queue_path)[0]["finding_status"], "resolved")
 
     def test_revert_mapping_preserves_mapping_id_and_resolves(self):
         _, _, queue, expected = self.prepare_confirmed_change()
@@ -237,6 +325,43 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
                 institution_audit_path=self.audit_path, **expected,
             )
         self.assertEqual(load_queue(self.queue_path)[0]["finding_status"], "open")
+
+    def test_mapping_change_resolution_rejects_mismatched_transition_identity(self):
+        _, _, queue, expected = self.prepare_confirmed_change()
+        changed = load_mappings(self.mappings_path)[0]
+        changed["institution_authors"] = "Different Reviewer Target"
+        write_csv(self.mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS, [changed])
+        with self.assertRaisesRegex(InstitutionReviewQueueError, "no longer matches"):
+            apply_cleanup_action(
+                [queue["queue_id"]], "mapping_change_confirmed", "Checked.",
+                confirmed=True, queue_path=self.queue_path,
+                mappings_path=self.mappings_path,
+                location_review_path=self.locations_path,
+                institutions_path=self.institutions_path,
+                institution_audit_path=self.audit_path, **expected,
+            )
+        self.assertEqual(load_queue(self.queue_path)[0]["finding_status"], "open")
+
+    def test_last_blocker_resolution_unblocks_publish_validation(self):
+        _, _, queue, expected = self.prepare_confirmed_change()
+        issues = []
+        validate_institution_consistency_audit(
+            issues, load_queue(self.queue_path), load_mappings(self.mappings_path)
+        )
+        self.assertEqual([issue.level for issue in issues], ["ERROR"])
+        apply_cleanup_action(
+            [queue["queue_id"]], "mapping_change_confirmed", "Final blocker reviewed.",
+            confirmed=True, queue_path=self.queue_path,
+            mappings_path=self.mappings_path,
+            location_review_path=self.locations_path,
+            institutions_path=self.institutions_path,
+            institution_audit_path=self.audit_path, **expected,
+        )
+        issues = []
+        validate_institution_consistency_audit(
+            issues, load_queue(self.queue_path), load_mappings(self.mappings_path)
+        )
+        self.assertEqual(issues, [])
 
     def test_revert_rolls_back_when_resolution_audit_write_fails(self):
         current, _, queue, expected = self.prepare_confirmed_change()

@@ -172,15 +172,34 @@ def _append_audit(
     *, action: str, institution_id: str, previous_institution_id: str = "",
     impact: Mapping[str, Any], confirmation: Any = "", review_note: Any,
     created_by: Any, audit_path: Path, created_at: Any = "",
+    relationship_evidence: Mapping[str, Any] | None = None,
 ) -> dict[str, str]:
     rows = _read(audit_path, INSTITUTION_AUDIT_COLUMNS)
     now = clean(created_at) or _timestamp()
     seed = "|".join((action, institution_id, previous_institution_id, now, clean(created_by)))
+    relationship_evidence = relationship_evidence or {}
     row = {
         "audit_id": f"institution-audit:{hashlib.sha256(seed.encode()).hexdigest()[:20]}",
         "action": action,
         "institution_id": institution_id,
         "previous_institution_id": previous_institution_id,
+        "paper_id": clean(relationship_evidence.get("paper_id")),
+        "previous_mapping_id": clean(
+            relationship_evidence.get("previous_mapping_id")
+        ),
+        "mapping_id": clean(relationship_evidence.get("mapping_id")),
+        "previous_location_id": clean(
+            relationship_evidence.get("previous_location_id")
+        ),
+        "location_id": clean(relationship_evidence.get("location_id")),
+        "previous_authors": clean(
+            relationship_evidence.get("previous_authors")
+        ),
+        "new_authors": clean(relationship_evidence.get("new_authors")),
+        "evidence_source": clean(
+            relationship_evidence.get("evidence_source")
+        ),
+        "evidence_url": clean(relationship_evidence.get("evidence_url")),
         "affected_papers": str(impact.get("papers", 0)),
         "affected_mappings": str(impact.get("author_mappings", 0)),
         "affected_markers": str(impact.get("markers", 0)),
@@ -195,13 +214,38 @@ def _append_audit(
     return row
 
 
+def normalized_author_set(value: Any) -> str:
+    """Return a stable, order-independent author set for transition evidence."""
+    text = clean(value)
+    if not text:
+        return ""
+    if ";" in text:
+        parts = text.split(";")
+    else:
+        comma_parts = [part.strip() for part in text.split(",")]
+        # Legacy rows sometimes used commas between full names. Preserve a
+        # single conventional "Surname, Given" name as one identity.
+        parts = (
+            comma_parts
+            if len(comma_parts) > 1 and all(" " in part for part in comma_parts)
+            else [text]
+        )
+    normalized = {
+        " ".join(re.findall(r"[a-z0-9]+", unicodedata.normalize("NFKD", part).casefold()))
+        for part in parts
+    }
+    return "; ".join(sorted(part for part in normalized if part))
+
+
 def append_mapping_change_resolution_audit(
     *, action: str, review_queue_id: Any, source_audit_id: Any,
     mapping_id: Any, previous_institution_id: Any,
     previous_institution_name: Any, new_institution_id: Any,
     new_institution_name: Any, reverted_institution_id: Any = "",
     reverted_institution_name: Any = "", evidence_source: Any = "",
-    evidence_url: Any = "", review_note: Any, created_by: Any,
+    evidence_url: Any = "", paper_id: Any = "", previous_location_id: Any = "",
+    location_id: Any = "",
+    institution_authors: Any = "", review_note: Any, created_by: Any,
     created_at: Any = "", audit_path: Path = DEFAULT_AUDIT_PATH,
 ) -> dict[str, str]:
     """Append a structured Admin resolution for one exact mapping transition."""
@@ -216,10 +260,16 @@ def append_mapping_change_resolution_audit(
         raise CuratedInstitutionError("mapping change resolution requires an exact old-to-new transition")
     if action == "mapping_reverted" and reverted_id != old_id:
         raise CuratedInstitutionError("reverted institution must match the previous trusted institution")
+    normalized_authors = normalized_author_set(institution_authors)
+    if not clean(paper_id) or not normalized_authors:
+        raise CuratedInstitutionError(
+            "mapping change resolution requires paper identity and authors"
+        )
     metadata = "; ".join((
         f"review_queue_id={clean(review_queue_id)}",
         f"source_audit_id={clean(source_audit_id)}",
         f"mapping_id={clean(mapping_id)}",
+        f"paper_id={clean(paper_id)}",
         f"previous_institution={clean(previous_institution_name)}",
         f"new_institution={clean(new_institution_name)}",
         f"reverted_institution={clean(reverted_institution_name)}",
@@ -231,12 +281,28 @@ def append_mapping_change_resolution_audit(
         action=action,
         institution_id=target_id,
         previous_institution_id=new_id if action == "mapping_reverted" else old_id,
-        impact={"papers": 1, "author_mappings": 1, "markers": 1, "authors": []},
+        impact={
+            "papers": 1,
+            "author_mappings": 1,
+            "markers": 1,
+            "authors": normalized_authors.split("; "),
+        },
         confirmation=metadata,
         review_note=review_note,
         created_by=created_by,
         created_at=created_at,
         audit_path=audit_path,
+        relationship_evidence={
+            "paper_id": paper_id,
+            "previous_mapping_id": mapping_id,
+            "mapping_id": mapping_id,
+            "previous_location_id": previous_location_id,
+            "location_id": location_id,
+            "previous_authors": normalized_authors,
+            "new_authors": normalized_authors,
+            "evidence_source": evidence_source,
+            "evidence_url": evidence_url,
+        },
     )
 
 
@@ -248,8 +314,20 @@ def append_confirmed_mapping_change_audit(
     """Record an institution-ID replacement on a trusted mapping."""
     previous_id = clean(previous.get("institution_id"))
     updated_id = clean(updated.get("institution_id"))
-    if not previous_id or not updated_id or previous_id == updated_id:
-        raise CuratedInstitutionError("mapping change audit requires two distinct institution IDs")
+    previous_location_id = clean(previous.get("location_id"))
+    updated_location_id = clean(updated.get("location_id"))
+    previous_authors = clean(previous.get("institution_authors"))
+    updated_authors = clean(updated.get("institution_authors"))
+    if not previous_id or not updated_id:
+        raise CuratedInstitutionError("mapping change audit requires institution IDs")
+    if (
+        previous_id == updated_id
+        and previous_location_id == updated_location_id
+        and previous_authors == updated_authors
+    ):
+        raise CuratedInstitutionError(
+            "mapping change audit requires a relationship identity change"
+        )
     metadata = "; ".join((
         f"mapping_id={clean(updated.get('mapping_id'))}",
         f"paper_id={clean(updated.get('paper_id'))}",
@@ -271,6 +349,52 @@ def append_confirmed_mapping_change_audit(
         review_note=review_note,
         created_by=created_by,
         audit_path=audit_path,
+        relationship_evidence={
+            "paper_id": updated.get("paper_id"),
+            "previous_mapping_id": previous.get("mapping_id"),
+            "mapping_id": updated.get("mapping_id"),
+            "previous_location_id": previous_location_id,
+            "location_id": updated_location_id,
+            "previous_authors": previous_authors,
+            "new_authors": updated_authors,
+            "evidence_source": updated.get("evidence_source") or change_source,
+            "evidence_url": updated.get("evidence_url"),
+        },
+    )
+
+
+def append_confirmed_mapping_removal_audit(
+    previous: Mapping[str, Any], *, created_by: Any, review_note: Any,
+    audit_path: Path = DEFAULT_AUDIT_PATH,
+) -> dict[str, str]:
+    """Record one exact reviewed relationship removal without a replacement."""
+    institution_id = clean(previous.get("institution_id"))
+    mapping_id = clean(previous.get("mapping_id"))
+    paper_id = clean(previous.get("paper_id"))
+    authors = clean(previous.get("institution_authors"))
+    if not institution_id or not mapping_id or not paper_id or not authors:
+        raise CuratedInstitutionError(
+            "mapping removal audit requires paper, mapping, institution, and authors"
+        )
+    return _append_audit(
+        action="mapping_removed",
+        institution_id="",
+        previous_institution_id=institution_id,
+        impact={"papers": 1, "author_mappings": 1, "markers": 1,
+                "authors": [value.strip() for value in authors.split(";") if value.strip()]},
+        confirmation=f"mapping_id={mapping_id}; paper_id={paper_id}",
+        review_note=review_note,
+        created_by=created_by,
+        audit_path=audit_path,
+        relationship_evidence={
+            "paper_id": paper_id,
+            "previous_mapping_id": mapping_id,
+            "mapping_id": mapping_id,
+            "previous_location_id": previous.get("location_id"),
+            "previous_authors": authors,
+            "evidence_source": previous.get("evidence_source"),
+            "evidence_url": previous.get("evidence_url"),
+        },
     )
 
 

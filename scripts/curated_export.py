@@ -460,6 +460,9 @@ def _candidate_location_is_safe(record: Mapping[str, Any]) -> bool:
 
 def _institution_location_keys(record: Mapping[str, Any]) -> List[str]:
     keys: List[str] = []
+    location_id = clean(record.get("location_id"))
+    if location_id:
+        keys.append(f"location_id:{location_id.casefold()}")
     institution_id = clean(record.get("institution_id"))
     city = clean(record.get("city") or record.get("institution_city")).casefold()
     country = clean(
@@ -805,6 +808,7 @@ def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
         "mapping_id": clean(mapping.get("mapping_id")),
         "institution_id": clean(mapping.get("institution_id"))
         or stable_institution_id(mapping.get("institution")),
+        "location_id": clean(mapping.get("location_id")),
         "institution": clean(mapping.get("institution")),
         "institution_authors": _parse_people(
             mapping.get("institution_authors")
@@ -921,6 +925,7 @@ def _curated_marker(
         "institution": clean(mapping.get("institution")),
         "institution_id": clean(mapping.get("institution_id"))
         or stable_institution_id(mapping.get("institution")),
+        "location_id": clean(location.get("location_id")),
         "institution_authors": _parse_people(
             mapping.get("institution_authors")
         ),

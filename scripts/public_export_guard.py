@@ -67,6 +67,15 @@ class ShrinkageReport:
         return not self.unexplained or self.approved_by_baseline
 
 
+@dataclass(frozen=True)
+class RelationshipExplanation:
+    """One conservative, auditable explanation for an old map relationship."""
+
+    reason: str
+    evidence: str
+    explained: bool
+
+
 def _keys(record: Mapping[str, Any]) -> set[str]:
     return set(all_identity_keys(record))
 
@@ -95,6 +104,11 @@ def _institution_identity(record: Mapping[str, Any]) -> str:
     return f"institution_name:{name.casefold()}"
 
 
+def _location_identity(record: Mapping[str, Any]) -> str:
+    location_id = clean(record.get("location_id"))
+    return location_id.casefold()
+
+
 def _canonical_institution_identity(
     identity: str,
     institution_redirects: Optional[Mapping[str, str]] = None,
@@ -117,33 +131,334 @@ def _canonical_institution_identity(
 def _map_present(
     old: Mapping[str, Any],
     new_maps: Sequence[Mapping[str, Any]],
-    institution_redirects: Optional[Mapping[str, str]] = None,
 ) -> bool:
-    institution = _canonical_institution_identity(
-        _institution_identity(old), institution_redirects
-    )
+    institution = _institution_identity(old)
+    location = _location_identity(old)
+    authors = _relationship_author_set(old)
     return any(
-        _canonical_institution_identity(
-            _institution_identity(new), institution_redirects
+        _institution_identity(new) == institution
+        and (not location or _location_identity(new) == location)
+        and (
+            not authors
+            or _relationship_author_set(new) == authors
         )
-        == institution
         and _paper_matches(old, new)
         for new in new_maps
+    )
+
+
+def _confirmation_fields(record: Mapping[str, Any]) -> dict[str, str]:
+    fields: dict[str, str] = {}
+    for part in clean(record.get("confirmation_text")).split(";"):
+        key, separator, value = part.partition("=")
+        if separator and clean(key):
+            fields[clean(key).casefold()] = clean(value)
+    return fields
+
+
+def _audit_value(record: Mapping[str, Any], field: str) -> str:
+    return clean(record.get(field)) or _confirmation_fields(record).get(field, "")
+
+
+def _single_author_set(value: Any) -> frozenset[str]:
+    return _author_set(value)
+
+
+def _relationship_target(
+    old: Mapping[str, Any],
+    new_maps: Sequence[Mapping[str, Any]],
+    *,
+    institution_id: str,
+    location_id: str,
+    authors: frozenset[str],
+) -> Mapping[str, Any] | None:
+    expected_institution = f"institution_id:{institution_id.casefold()}"
+    for candidate in new_maps:
+        if not _paper_matches(old, candidate):
+            continue
+        if _institution_identity(candidate) != expected_institution:
+            continue
+        if location_id and _location_identity(candidate) != location_id.casefold():
+            continue
+        candidate_sets = _record_author_sets(candidate)
+        if authors and not any(authors <= candidate for candidate in candidate_sets):
+            continue
+        if not authors and candidate_sets:
+            continue
+        return candidate
+    return None
+
+
+def _merge_target(
+    institution_id: str,
+    institution_rows: Sequence[Mapping[str, Any]],
+    audit_rows: Sequence[Mapping[str, Any]],
+) -> tuple[str, str]:
+    """Return final active merge target and a diagnostic code."""
+    registry = {
+        clean(row.get("institution_id")).casefold(): clean(
+            row.get("institution_status")
+        ).casefold()
+        for row in institution_rows
+        if clean(row.get("institution_id"))
+    }
+    direct = {
+        clean(row.get("previous_institution_id")).casefold(): clean(
+            row.get("institution_id")
+        ).casefold()
+        for row in audit_rows
+        if clean(row.get("action")).casefold() == "merge"
+        and clean(row.get("previous_institution_id"))
+        and clean(row.get("institution_id"))
+    }
+    source = institution_id.casefold()
+    if registry.get(source) != "merged" or source not in direct:
+        return "", "not_a_reviewed_merge"
+    visited = {source}
+    target = direct[source]
+    while target in direct:
+        if target in visited:
+            return "", "institution_merge_cycle"
+        visited.add(target)
+        target = direct[target]
+    if target not in registry:
+        return "", "dangling_institution_merge"
+    if registry[target] != "active":
+        return "", "merge_target_not_active"
+    return target, "canonical_merge"
+
+
+def _exact_reviewed_transition(
+    old: Mapping[str, Any],
+    new_maps: Sequence[Mapping[str, Any]],
+    audits: Sequence[Mapping[str, Any]],
+) -> RelationshipExplanation | None:
+    old_id = clean(old.get("institution_id")).casefold()
+    old_location = _location_identity(old)
+    old_mapping = clean(old.get("mapping_id")).casefold()
+    old_paper = clean(old.get("paper_id")).casefold()
+    old_authors = _relationship_author_set(old)
+    closest_failure = ""
+    for audit in audits:
+        action = clean(audit.get("action")).casefold()
+        if action not in {
+            "confirmed_mapping_changed", "mapping_replaced",
+            "mapping_change_confirmed", "mapping_removed",
+        }:
+            continue
+        if clean(audit.get("previous_institution_id")).casefold() != old_id:
+            continue
+        evidence_paper = _audit_value(audit, "paper_id").casefold()
+        if not evidence_paper or (old_paper and evidence_paper != old_paper):
+            closest_failure = "paper_scope_mismatch"
+            continue
+        evidence_mapping = (
+            _audit_value(audit, "previous_mapping_id")
+            or _audit_value(audit, "mapping_id")
+        ).casefold()
+        if old_mapping and evidence_mapping != old_mapping:
+            closest_failure = "mapping_scope_mismatch"
+            continue
+        evidence_authors = _single_author_set(
+            audit.get("previous_authors") or audit.get("affected_authors")
+        )
+        if old_authors and evidence_authors != old_authors:
+            closest_failure = "author_scope_mismatch"
+            continue
+        evidence_old_location = clean(audit.get("previous_location_id")).casefold()
+        if old_location and evidence_old_location != old_location:
+            closest_failure = "old_location_mismatch"
+            continue
+        audit_id = clean(audit.get("audit_id")) or "[missing audit_id]"
+        if action == "mapping_removed":
+            return RelationshipExplanation(
+                "explicit_removal", f"explicit reviewed removal {audit_id}", True
+            )
+        new_id = clean(audit.get("institution_id")).casefold()
+        new_location = clean(audit.get("location_id")).casefold()
+        new_authors = _single_author_set(
+            audit.get("new_authors") or audit.get("affected_authors")
+        )
+        if not new_id:
+            closest_failure = "invalid_replacement_evidence"
+            continue
+        if _relationship_target(
+            old, new_maps, institution_id=new_id,
+            location_id=new_location, authors=new_authors,
+        ) is None:
+            closest_failure = "replacement_target_missing"
+            continue
+        reason = (
+            "reviewed_location_replacement"
+            if new_id == old_id and new_location != old_location
+            else "reviewed_institution_location_replacement"
+            if new_location != old_location
+            else "reviewed_mapping_replacement"
+        )
+        return RelationshipExplanation(
+            reason, f"{reason} via {audit_id}", True
+        )
+    if closest_failure:
+        return RelationshipExplanation(
+            closest_failure, f"invalid replacement evidence: {closest_failure}", False
+        )
+    return None
+
+
+def explain_removed_relationship(
+    old: Mapping[str, Any],
+    new_maps: Sequence[Mapping[str, Any]],
+    *,
+    institution_rows: Sequence[Mapping[str, Any]] = (),
+    institution_audits: Sequence[Mapping[str, Any]] = (),
+    institution_redirects: Optional[Mapping[str, str]] = None,
+) -> RelationshipExplanation:
+    """Explain identity preservation/replacement without authorizing data loss."""
+    if _map_present(old, new_maps):
+        return RelationshipExplanation("preserved", "relationship preserved", True)
+    old_id = clean(old.get("institution_id")).casefold()
+    old_location = _location_identity(old)
+    authors = _relationship_author_set(old)
+    if old_id and institution_rows:
+        target, merge_reason = _merge_target(
+            old_id, institution_rows, institution_audits
+        )
+        if target:
+            candidates = [
+                candidate for candidate in new_maps
+                if _paper_matches(old, candidate)
+                and _institution_identity(candidate)
+                == f"institution_id:{target}"
+                and (
+                    not authors
+                    or any(
+                        authors <= candidate_authors
+                        for candidate_authors in _record_author_sets(candidate)
+                    )
+                )
+            ]
+            if candidates:
+                audit = next(
+                    row for row in institution_audits
+                    if clean(row.get("action")).casefold() == "merge"
+                    and clean(row.get("previous_institution_id")).casefold() == old_id
+                )
+                return RelationshipExplanation(
+                    "canonical_merge",
+                    "canonical_merge via "
+                    f"{clean(audit.get('audit_id'))}; target={target}",
+                    True,
+                )
+            return RelationshipExplanation(
+                "replacement_target_missing",
+                f"canonical merge target {target} has no matching paper/author relationship",
+                False,
+            )
+        if merge_reason not in {"not_a_reviewed_merge"}:
+            return RelationshipExplanation(merge_reason, merge_reason, False)
+    reviewed = _exact_reviewed_transition(old, new_maps, institution_audits)
+    if reviewed is not None and reviewed.explained:
+        return reviewed
+    canonical_old = _canonical_institution_identity(
+        _institution_identity(old), institution_redirects
+    )
+    for candidate in new_maps:
+        if not _paper_matches(old, candidate):
+            continue
+        if _canonical_institution_identity(
+            _institution_identity(candidate), institution_redirects
+        ) != canonical_old:
+            continue
+        if old_location and _location_identity(candidate) != old_location:
+            continue
+        if authors and not any(
+            authors <= candidate_authors
+            for candidate_authors in _record_author_sets(candidate)
+        ):
+            continue
+        return RelationshipExplanation(
+            "alias_canonical_consolidation",
+            "confirmed alias/canonical registry identity preservation",
+            True,
+        )
+    redirect = clean((institution_redirects or {}).get(old_id)).casefold()
+    if redirect and _relationship_target(
+        old, new_maps, institution_id=redirect,
+        location_id=old_location, authors=authors,
+    ) is not None:
+        return RelationshipExplanation(
+            "alias_canonical_consolidation",
+            f"confirmed canonical identity redirect {old_id} -> {redirect}",
+            True,
+        )
+    if len(authors) > 1:
+        explanations = []
+        for author in sorted(authors):
+            atom = dict(old)
+            atom["institution_authors"] = [author]
+            preserved = any(
+                _paper_matches(atom, candidate)
+                and _institution_identity(atom) == _institution_identity(candidate)
+                and (
+                    not old_location
+                    or _location_identity(candidate) == old_location
+                )
+                and any(
+                    author in candidate_authors
+                    for candidate_authors in _record_author_sets(candidate)
+                )
+                for candidate in new_maps
+            )
+            explanation = (
+                RelationshipExplanation("preserved", "author relationship preserved", True)
+                if preserved
+                else explain_removed_relationship(
+                    atom,
+                    new_maps,
+                    institution_rows=institution_rows,
+                    institution_audits=institution_audits,
+                    institution_redirects=institution_redirects,
+                )
+            )
+            explanations.append((author, explanation))
+        failures = [item for item in explanations if not item[1].explained]
+        if failures:
+            author, failure = failures[0]
+            return RelationshipExplanation(
+                failure.reason,
+                f"author scope mismatch for {author}: {failure.evidence}",
+                False,
+            )
+        return RelationshipExplanation(
+            "author_set_scoped_supersession",
+            "author_set_scoped_supersession: " + "; ".join(
+                f"{author}={explanation.reason}"
+                for author, explanation in explanations
+            ),
+            True,
+        )
+    if reviewed is not None:
+        return reviewed
+    return RelationshipExplanation(
+        "unexplained_removal", "no exact durable relationship-transition evidence", False
     )
 
 
 def _active_mapping_decision(
     record: Mapping[str, Any], decisions: Sequence[Mapping[str, Any]]
 ) -> Mapping[str, Any] | None:
-    institution = clean(
-        record.get("canonical_institution_name")
-        or record.get("institution_name")
-        or record.get("institution")
-    ).casefold()
+    institution_id = clean(record.get("institution_id")).casefold()
+    mapping_id = clean(record.get("mapping_id")).casefold()
+    author_set = _relationship_author_set(record)
     for row in decisions:
         if clean(row.get("action")) != "exclude_wrong_mapping":
             continue
-        if clean(row.get("institution")).casefold() != institution:
+        if not institution_id or clean(row.get("institution_id")).casefold() != institution_id:
+            continue
+        if mapping_id and clean(row.get("mapping_id")).casefold() != mapping_id:
+            continue
+        decision_authors = _author_set(row.get("institution_authors") or "")
+        if author_set and decision_authors != author_set:
             continue
         if _paper_matches(record, row):
             return row
@@ -208,122 +523,13 @@ def _record_author_sets(record: Mapping[str, Any]) -> set[frozenset[str]]:
     return author_sets
 
 
-def _authors_continuous(
-    previous_sets: set[frozenset[str]],
-    replacement_authors: frozenset[str],
-) -> bool:
-    """Return conservative continuity for reordered or incomplete snapshots."""
-    if not replacement_authors:
-        return False
-    for previous in previous_sets:
-        if not previous:
-            continue
-        overlap = previous & replacement_authors
-        # Exact equality is useful but not required. A non-empty subset proves
-        # continuity when one source has only the institution-affiliated
-        # authors while another has a fuller list.
-        if overlap and (
-            previous <= replacement_authors
-            or replacement_authors <= previous
-            or len(overlap) >= 2
-        ):
-            return True
-    return False
-
-
-def _lower_priority_mapping(record: Mapping[str, Any]) -> bool:
-    if clean(record.get("mapping_id")):
-        return False
-    source = clean(record.get("source_database")).casefold()
-    institution_source = clean(record.get("institution_source")).casefold()
-    return bool(
-        record.get("preliminary_affiliations") is True
-        or record.get("mapping_fallback") is True
-        or institution_source in {"automatic_fallback", "raw_affiliation", "openalex"}
-        or source in {"openalex", "raw", "candidate"}
-    )
-
-
-def _curated_mapping_evidence(
-    record: Mapping[str, Any],
-    mappings: Sequence[Mapping[str, Any]],
-    new_maps: Sequence[Mapping[str, Any]],
-) -> Mapping[str, Any] | None:
-    actual_id = clean(record.get("institution_id")).casefold()
-    actual_name = clean(record.get("institution")).casefold()
-    author_sets = _record_author_sets(record)
-    for row in mappings:
-        if not _paper_matches(record, row):
-            continue
-        row_id = clean(row.get("institution_id")).casefold()
-        row_name = clean(row.get("institution")).casefold()
-        status = clean(row.get("mapping_status")).casefold()
-        row_authors = _author_set(row.get("institution_authors") or "")
-        same_institution = bool(
-            (actual_id and row_id and actual_id == row_id)
-            or (not actual_id and actual_name and actual_name == row_name)
-        )
-        if status == "excluded" and same_institution:
-            return row
-        if status != "active":
-            continue
-        if same_institution and _lower_priority_mapping(record):
-            return row
-        if (
-            not same_institution
-            and _authors_continuous(author_sets, row_authors)
-        ):
-            replacement_present = any(
-                _paper_matches(row, new)
-                and (
-                    clean(new.get("institution_id")).casefold() == row_id
-                    if row_id
-                    else clean(new.get("institution")).casefold() == row_name
-                )
-                for new in new_maps
-            )
-            if replacement_present or _lower_priority_mapping(record):
-                return row
-    return None
-
-
-def _mapping_audit_evidence(
-    record: Mapping[str, Any],
-    audits: Sequence[Mapping[str, Any]],
-    new_maps: Sequence[Mapping[str, Any]],
-    institution_redirects: Optional[Mapping[str, str]] = None,
-) -> Mapping[str, Any] | None:
-    """Match structured Admin mapping-change evidence to an old relationship."""
-    old_id = clean(record.get("institution_id")).casefold()
-    for audit in audits:
-        if clean(audit.get("action")).casefold() not in {
-            "confirmed_mapping_changed",
-            "mapping_replaced",
-            "mapping_change_confirmed",
-        }:
-            continue
-        previous_id = clean(audit.get("previous_institution_id")).casefold()
-        new_id = clean(audit.get("institution_id")).casefold()
-        if not old_id or previous_id != old_id or not new_id:
-            continue
-        confirmation = clean(audit.get("confirmation_text")).casefold()
-        paper_id = clean(record.get("paper_id")).casefold()
-        # Old audit rows store the stable paper and mapping lineage in the
-        # confirmation field. Require that paper evidence when it is available.
-        if paper_id and f"paper_id={paper_id}" not in confirmation:
-            continue
-        if any(
-            _paper_matches(record, new)
-            and _canonical_institution_identity(
-                _institution_identity(new), institution_redirects
-            )
-            == _canonical_institution_identity(
-                f"institution_id:{new_id}", institution_redirects
-            )
-            for new in new_maps
-        ):
-            return audit
-    return None
+def _relationship_author_set(record: Mapping[str, Any]) -> frozenset[str]:
+    """Return the map row's primary author scope, preferring its direct field."""
+    direct = _author_set(record.get("institution_authors") or [])
+    if direct:
+        return direct
+    nested = _record_author_sets(record)
+    return next(iter(nested), frozenset()) if len(nested) == 1 else frozenset()
 
 
 def _merge_evidence(
@@ -392,6 +598,7 @@ def analyze_shrinkage(
     review_decisions: Sequence[Mapping[str, Any]] = (),
     curated_mappings: Sequence[Mapping[str, Any]] = (),
     institution_audits: Sequence[Mapping[str, Any]] = (),
+    institution_rows: Sequence[Mapping[str, Any]] = (),
     orphan_cleanup_audits: Sequence[Mapping[str, Any]] = (),
     institution_redirects: Optional[Mapping[str, str]] = None,
     approved_by_baseline: bool = False,
@@ -431,7 +638,7 @@ def analyze_shrinkage(
 
     map_removals = []
     for old in previous_maps:
-        if _map_present(old, new_maps, institution_redirects):
+        if _map_present(old, new_maps):
             continue
         exclusion = _exclusion_evidence(old, exclusion_index)
         merge = next(
@@ -448,9 +655,12 @@ def analyze_shrinkage(
             None,
         )
         decision = _active_mapping_decision(old, review_decisions)
-        mapping = _curated_mapping_evidence(old, curated_mappings, new_maps)
-        mapping_audit = _mapping_audit_evidence(
-            old, institution_audits, new_maps, institution_redirects
+        transition = explain_removed_relationship(
+            old,
+            new_maps,
+            institution_rows=institution_rows,
+            institution_audits=institution_audits,
+            institution_redirects=institution_redirects,
         )
         institution_id = clean(
             old.get("institution_id") or old.get("canonical_institution_id")
@@ -474,17 +684,6 @@ def analyze_shrinkage(
             evidence = f"confirmed version merge {clean(merge.get('merge_id'))}"
         elif decision:
             evidence = f"reviewed mapping decision {clean(decision.get('decision_id'))}"
-        elif mapping_audit:
-            evidence = (
-                "authoritative Admin mapping audit "
-                f"{clean(mapping_audit.get('audit_id'))}"
-            )
-        elif mapping:
-            evidence = (
-                "curated/manual mapping supersession; reviewed mapping lineage; "
-                "authoritative mapping IDs: "
-                f"{clean(mapping.get('mapping_id'))}"
-            )
         elif orphan_cleanup:
             evidence = (
                 "authoritative orphan-institution cleanup "
@@ -492,13 +691,23 @@ def analyze_shrinkage(
             )
         elif follows_paper:
             evidence = "follows explained paper removal"
+        elif transition.explained:
+            evidence = transition.evidence
         else:
-            evidence = "no durable paper or institution-mapping evidence"
+            evidence = transition.evidence
         explained = bool(
-            exclusion or merge or decision or mapping_audit or mapping
-            or orphan_cleanup or follows_paper
+            exclusion or merge or decision
+            or orphan_cleanup or follows_paper or transition.explained
         )
-        identity = f"{_identity_label(old)} + {_institution_identity(old)}"
+        location = _location_identity(old)
+        mapping_id = clean(old.get("mapping_id"))
+        authors = sorted(_relationship_author_set(old))
+        identity = (
+            f"{_identity_label(old)} + {_institution_identity(old)}"
+            f" + location_id:{location or '[none]'}"
+            f" + mapping_id:{mapping_id or '[none]'}"
+            f" + authors:{'; '.join(authors) or '[none]'}"
+        )
         map_removals.append(
             Removal("map", identity, clean(old.get("title")), evidence, explained)
         )

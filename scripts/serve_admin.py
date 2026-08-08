@@ -3644,6 +3644,7 @@ def make_handler(
                                             clean(mapping.get("mapping_id")),
                                             note,
                                             mappings_path=mappings_path,
+                                            institution_audit_path=institution_audit_path,
                                         )
                                     )
                             mapping_result = {
@@ -3881,6 +3882,7 @@ def make_handler(
                                         clean(payload.get("mapping_id")),
                                         clean(payload.get("review_note")),
                                         mappings_path=mappings_path,
+                                        institution_audit_path=institution_audit_path,
                                     )
                                 }
                                 response_status = HTTPStatus.OK
@@ -3903,6 +3905,7 @@ def make_handler(
                                     location_review_path=location_review_path,
                                     institutions_path=institutions_path,
                                     institution_aliases_path=institution_aliases_path,
+                                    institution_audit_path=institution_audit_path,
                                 )
                                 response_status = HTTPStatus.OK
                                 message = (

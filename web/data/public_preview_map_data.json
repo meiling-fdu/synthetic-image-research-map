@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-07T08:37:30Z"
+    "public_preview_generated_at": "2026-08-07T08:48:05Z"
   },
   "records": [
     {
@@ -28672,20 +28672,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -28736,13 +28744,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
+          "name": "Huadong Li",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -28798,16 +28803,22 @@
       "location_display": "Hong Kong, China",
       "latitude": 22.26861,
       "longitude": 114.12924,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "university",
       "canonical_name": "The University of Hong Kong",
       "canonical_institution_name": "The University of Hong Kong",
@@ -29101,16 +29112,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -29195,17 +29200,6 @@
           ],
           "institution_ids": [
             "institution:cc0b303e1e182195"
-          ]
-        },
-        {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
           ]
         },
         {
@@ -88803,20 +88797,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -88867,13 +88869,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
+          "name": "Huadong Li",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -88928,16 +88927,22 @@
       "location_display": "Germany",
       "latitude": 52.491519927978516,
       "longitude": 13.276505470275879,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "other",
       "institution_id": "institution:abb12d6634e39767",
       "affiliations": [
@@ -89226,16 +89231,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -89323,17 +89322,6 @@
           ]
         },
         {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ]
-        },
-        {
           "author": "Kelu Yao",
           "institution_indices": [
             7
@@ -89388,20 +89376,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -89452,13 +89448,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
+          "name": "Huadong Li",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -89513,16 +89506,22 @@
       "location_display": "China",
       "latitude": 30.29365,
       "longitude": 120.16142,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "university",
       "canonical_name": "Zhejiang University",
       "canonical_institution_name": "Zhejiang University",
@@ -89813,16 +89812,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -89910,17 +89903,6 @@
           ]
         },
         {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ]
-        },
-        {
           "author": "Kelu Yao",
           "institution_indices": [
             7
@@ -89975,20 +89957,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -90039,13 +90029,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
+          "name": "Huadong Li",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -90100,16 +90087,22 @@
       "location_display": "China",
       "latitude": 30.29365,
       "longitude": 120.16142,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "company",
       "canonical_name": "Alibaba Group (China)",
       "canonical_institution_name": "Alibaba Group (China)",
@@ -90400,16 +90393,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -90497,17 +90484,6 @@
           ]
         },
         {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ]
-        },
-        {
           "author": "Kelu Yao",
           "institution_indices": [
             7
@@ -90562,20 +90538,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -90626,13 +90610,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
-          "is_current_marker_author": true,
-          "affiliation_source": "canonical_author_mapping",
+          "name": "Huadong Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -90687,16 +90668,22 @@
       "location_display": "United States",
       "latitude": 32.95664596557617,
       "longitude": -96.71497344970703,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "other",
       "institution_id": "institution:14759ade48411164",
       "affiliations": [
@@ -90985,16 +90972,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -91082,17 +91063,6 @@
           ]
         },
         {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ]
-        },
-        {
           "author": "Kelu Yao",
           "institution_indices": [
             7
@@ -91147,20 +91117,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -91211,13 +91189,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
-          "is_current_marker_author": true,
-          "affiliation_source": "canonical_author_mapping",
+          "name": "Huadong Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -91272,16 +91247,22 @@
       "location_display": "China",
       "latitude": 39.907501220703125,
       "longitude": 116.39723205566406,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "company",
       "canonical_name": "Megvii (China)",
       "canonical_institution_name": "Megvii (China)",
@@ -91572,16 +91553,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -91669,17 +91644,6 @@
           ]
         },
         {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ]
-        },
-        {
           "author": "Kelu Yao",
           "institution_indices": [
             7
@@ -91734,20 +91698,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -91798,13 +91770,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
+          "name": "Huadong Li",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -91860,16 +91829,22 @@
       "location_display": "China",
       "latitude": 30.271240234375,
       "longitude": 119.96514892578125,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "research_unit",
       "canonical_name": "Zhejiang Lab",
       "canonical_institution_name": "Zhejiang Lab",
@@ -92160,16 +92135,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -92257,17 +92226,6 @@
           ]
         },
         {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ]
-        },
-        {
           "author": "Kelu Yao",
           "institution_indices": [
             7
@@ -92322,20 +92280,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -92386,13 +92352,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
+          "name": "Huadong Li",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -92447,16 +92410,22 @@
       "location_display": "China",
       "latitude": 31.211912155151367,
       "longitude": 121.48272705078125,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "other",
       "institution_id": "institution:04e9c5bce6738166",
       "affiliations": [
@@ -92745,16 +92714,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -92842,17 +92805,6 @@
           ]
         },
         {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ]
-        },
-        {
           "author": "Kelu Yao",
           "institution_indices": [
             7
@@ -92907,20 +92859,28 @@
       "publication_date": "2025-06-10",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset",
+        "benchmark"
       ],
-      "venue": "",
-      "venue_id": "",
-      "venue_name": "",
-      "venue_acronym": "",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "",
-      "venue_aliases": [],
-      "venue_label": "",
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "publisher": "",
-      "publication_type": "journal",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "Recently, the rapid development of AIGC has significantly boosted the diversities of fake media spread in the Internet, posing unprecedented threats to social security, politics, law, and etc.To detect the ever-increasingly **diverse** malicious fake media in the new era of AIGC, recent studies have proposed to exploit Large Vision Language Models (LVLMs) to design **robust** forgery detectors due to their impressive performance on a **wide** range of multimodal tasks.However, it still lacks a comprehensive benchmark designed to comprehensively assess LVLMs' discerning capabilities on forgery media.To fill this gap, we present Forensics-Bench, a new forgery detection evaluation benchmark suite to assess LVLMs across massive forgery detection tasks, requiring comprehensive recognition, location and reasoning capabilities on diverse forgeries.Forensics-Bench comprises 63,292 meticulously curated multi-choicevisual questions, covering 112 unique forgery detection types from 5 perspectives: forgery semantics, forgery modalities, forgery tasks, forgery types and forgery models.We conduct thorough evaluations on 22 open-sourced LVLMs and 3 proprietary models GPT-4o, Gemini 1.5 Pro, and Claude 3.5 Sonnet, highlighting the significant challenges of comprehensive forgery detection posed by Forensics-Bench.We anticipate that Forensics-Bench will motivate the community to advance the frontier of LVLMs, striving for all-around forgery detectors in the era of AIGC.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1109/cvpr52734.2025.00400",
@@ -92971,13 +92931,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "H. Li",
-          "affiliation_indices": [
-            5,
-            6
-          ],
+          "name": "Huadong Li",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -93032,16 +92989,22 @@
       "location_display": "China",
       "latitude": 31.222219467163086,
       "longitude": 121.45806121826172,
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "resolution_method": "openalex_institution_geo",
       "resolution_confidence": "medium",
       "needs_review": false,
       "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
+      "paper_id": "curated:762982679d91cd198a41",
+      "paper_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/cvpr52734.2025.00400",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "institution_type": "research_unit",
       "canonical_name": "Shanghai Artificial Intelligence Laboratory",
       "canonical_institution_name": "Shanghai Artificial Intelligence Laboratory",
@@ -93332,16 +93295,10 @@
           "fallback": false
         },
         {
-          "author": "H. Li",
-          "indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
-          ],
-          "source": "canonical_author_mapping",
+          "author": "Huadong Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -93426,17 +93383,6 @@
           ],
           "institution_ids": [
             "institution:cc0b303e1e182195"
-          ]
-        },
-        {
-          "author": "H. Li",
-          "institution_indices": [
-            5,
-            6
-          ],
-          "institution_ids": [
-            "institution:14759ade48411164",
-            "institution:5e1b887e28ecec3a"
           ]
         },
         {
