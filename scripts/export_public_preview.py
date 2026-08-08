@@ -2850,13 +2850,18 @@ def commit_public_outputs(
     return successful_at
 
 
-def strip_legacy_removed_fields(records: Sequence[Dict[str, Any]]) -> int:
-    """Remove the retired subtask key only from preserved legacy public data."""
+def strip_retired_paper_fields(records: Sequence[Dict[str, Any]]) -> int:
+    """Remove retired paper-level keys from preserved legacy public data.
+
+    This is intentionally shallow: nested mapping, institution, and location
+    review notes are protected audit evidence and remain serialized.
+    """
     removed = 0
     for record in records:
-        if "subtask" in record:
-            record.pop("subtask")
-            removed += 1
+        for field in ("subtask", "review_note"):
+            if field in record:
+                record.pop(field)
+                removed += 1
     return removed
 
 
@@ -4133,12 +4138,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 else normalize_paper_categories(record)
             )
             record.pop("entry_type", None)
-        legacy_removed = strip_legacy_removed_fields(integrated_papers)
-        legacy_removed += strip_legacy_removed_fields(integrated_maps)
-        if legacy_removed:
+        retired_fields_removed = strip_retired_paper_fields(integrated_papers)
+        retired_fields_removed += strip_retired_paper_fields(integrated_maps)
+        if retired_fields_removed:
             print(
-                f"Migration warning: removed retired subtask from "
-                f"{legacy_removed} preserved public records.",
+                "Migration warning: removed retired paper-level fields from "
+                f"{retired_fields_removed} preserved public records.",
                 flush=True,
             )
         payload["records"] = integrated_maps

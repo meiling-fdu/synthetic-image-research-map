@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>Local Paper Curator · Synthetic Image Research Map</title>
-    <link rel="stylesheet" href="/admin.css?v=20260801-venue-selection-confirmation">
+    <link rel="stylesheet" href="/admin.css?v=20260808-metadata-propagation">
     <script src="/institution_type_labels.js?v=20260718-research-institute" defer></script>
-    <script src="/admin.js?v=20260801-venue-selection-confirmation" defer></script>
+    <script src="/admin.js?v=20260808-metadata-propagation" defer></script>
   </head>
   <body>
     <header class="masthead">
@@ -271,9 +271,6 @@
           </label>
           <label class="full-width">Abstract
             <textarea id="paper-abstract" name="abstract" rows="6"></textarea>
-          </label>
-          <label class="full-width">Review note
-            <textarea id="paper-review-note" name="review_note" rows="3"></textarea>
           </label>
           <div class="duplicate-warning full-width" id="paper-duplicate-warning" hidden></div>
           <div class="duplicate-warning full-width" id="paper-mapping-warning" hidden>
@@ -570,7 +567,6 @@
                   <option value="reviewed">reviewed</option><option value="pending">pending</option><option value="needs_check">needs_check</option>
                 </select></label>
                 <label class="full-width">Abstract<textarea id="metadata-abstract" rows="5"></textarea></label>
-                <label class="full-width">Review note<textarea id="metadata-review-note" rows="3"></textarea></label>
                 <div class="metadata-save-status full-width" id="metadata-save-status" data-state="clean" role="status" aria-live="polite" aria-atomic="true">
                   <span class="metadata-save-status-icon" aria-hidden="true"></span>
                   <span id="metadata-save-status-text">No unsaved changes.</span>

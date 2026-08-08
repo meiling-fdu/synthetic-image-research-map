@@ -106,7 +106,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "paper-scope-status",
     "paper-review-status",
     "paper-abstract",
-    "paper-review-note",
     "paper-duplicate-warning",
     "paper-mapping-warning",
     "paper-acknowledge-missing-mappings",
@@ -334,7 +333,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-curation-status",
     "metadata-review-status",
     "metadata-abstract",
-    "metadata-review-note",
     "metadata-edit-error",
     "metadata-edit-cancel",
     "venue-create-dialog",
@@ -4089,7 +4087,6 @@ function paperDraftPayload() {
     task: elements["paper-task"].value,
     scope_status: elements["paper-scope-status"].value.trim(),
     review_status: elements["paper-review-status"].value,
-    review_note: elements["paper-review-note"].value.trim(),
     mapping_candidates: [
       ...state.draftMappingCandidates,
       ...manualCandidates,
@@ -4971,7 +4968,7 @@ function populateMetadataForm() {
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
     "paper_url", "publication_type", "task", "scope_status",
-    "curation_status", "review_status", "abstract", "review_note",
+    "curation_status", "review_status", "abstract",
   ];
   fields.forEach((field) => {
     const id = `metadata-${field.replaceAll("_", "-")}`;
@@ -5080,7 +5077,7 @@ async function saveMetadata(event) {
   const fields = [
     "title", "year", "authors", "doi", "arxiv_id", "openalex_url",
     "paper_url", "publication_type", "task", "scope_status",
-    "curation_status", "review_status", "abstract", "review_note",
+    "curation_status", "review_status", "abstract",
   ];
   const effective = state.paperMetadata.effective_record || state.selectedPaper;
   const draft = { id: elements["metadata-paper-id"].value };
@@ -5242,7 +5239,7 @@ function renderPaperDetail(paper) {
     grid.append(dt, dd);
   });
 
-  elements["detail-notes"].textContent = text(paper.notes || paper.review_note) || "No notes.";
+  elements["detail-notes"].textContent = text(paper.notes) || "No notes.";
   elements["detail-exclude-button"].hidden = Boolean(paper.has_active_exclusion);
   elements["detail-restore-button"].hidden = !paper.has_active_exclusion;
   renderMarkers(paper.marker_records || []);

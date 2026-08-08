@@ -192,7 +192,7 @@ class AdminPaperCategoriesFrontendTests(unittest.TestCase):
         css_version = re.search(r'/admin\.css\?v=([^"\s]+)', self.html).group(1)
         js_version = re.search(r'/admin\.js\?v=([^"\s]+)', self.html).group(1)
         self.assertEqual(css_version, js_version)
-        self.assertEqual(css_version, "20260801-venue-selection-confirmation")
+        self.assertEqual(css_version, "20260808-metadata-propagation")
         self.assertIn("20260718-research-institute", self.html)
 
 

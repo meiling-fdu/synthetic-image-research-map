@@ -117,8 +117,19 @@ CURATED_OVERRIDE_FIELDS = (
     "metadata_source",
     "curation_status",
     "review_status",
-    "review_note",
 )
+CURATED_AUTHORITATIVE_PUBLIC_FIELDS = {
+    "venue",
+    "venue_name",
+    "venue_id",
+    "venue_acronym",
+    "venue_type",
+    "venue_track",
+    "venue_aliases",
+    "venue_label",
+    "publication_type",
+    "paper_categories",
+}
 
 
 class CuratedExportError(RuntimeError):
@@ -671,7 +682,6 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
     paper_url = links["formal_url"]
     openalex_url = links["openalex_url"]
     review_status = clean(row.get("review_status"))
-    note = clean(row.get("review_note"))
     publication_type = normalize_publication_type(
         row.get("publication_type"), venue=row.get("venue"), venue_type=row.get("venue_type")
     )
@@ -723,9 +733,7 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         "metadata_source": clean(row.get("metadata_source")),
         "curation_status": normalize_curation_status(row.get("curation_status")),
         "review_status": review_status,
-        "review_note": note,
         "needs_review": review_status != "reviewed",
-        "notes": note,
         "has_map_location": False,
         "map_record_count": 0,
         "missing_affiliation": True,
@@ -777,19 +785,15 @@ def _merge_curated_paper(
     curation_status = normalize_curation_status(curated.get("curation_status"))
     confirmed = curation_status in CONFIRMED_CURATION_STATUSES
     for field in CURATED_OVERRIDE_FIELDS:
-        value = curated.get(field)
-        if value in (None, "", []):
+        if field not in curated:
             continue
-        if confirmed or existing.get(field) in (None, "", []):
+        value = curated.get(field)
+        if confirmed and field in CURATED_AUTHORITATIVE_PUBLIC_FIELDS:
             existing[field] = value
-    curated_note = clean(curated.get("notes"))
-    existing_note = clean(existing.get("notes"))
-    if curated_note and curated_note not in existing_note.split(" | "):
-        existing["notes"] = (
-            f"{existing_note} | {curated_note}"
-            if existing_note
-            else curated_note
-        )
+        elif value not in (None, "", []) and (
+            confirmed or existing.get(field) in (None, "", [])
+        ):
+            existing[field] = value
     normalized = normalize_book_record(existing)
     existing.clear()
     existing.update(normalized)

@@ -158,6 +158,8 @@ The paper record is written to `data/curated/papers.csv`, and candidates are wri
 
 Select a paper, open **Paper Metadata**, and compare its effective record, original public-preview record, and curated override. Editing a preview-only paper creates a row in `data/curated/papers.csv`; editing an existing curated or manually added paper updates that row, preserves `created_at`, and advances `updated_at`. Identity collisions are rejected. Saving does not edit public JSON.
 
+Paper metadata does not store a free-text review note. Review and audit notes remain available only in the separate workflows that require durable evidence, including exclusions, author–institution mappings, institution cleanup, and location confirmation.
+
 ## Delete / Scope Review
 
 1. Select the paper and choose **Delete / Exclude from site**.

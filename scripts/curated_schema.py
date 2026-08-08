@@ -39,7 +39,6 @@ PAPERS_COLUMNS = (
     "metadata_source",
     "curation_status",
     "review_status",
-    "review_note",
     "created_at",
     "updated_at",
     "paper_categories",

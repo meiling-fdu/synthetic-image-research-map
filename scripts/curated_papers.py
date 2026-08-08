@@ -371,7 +371,6 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "metadata_source": metadata_source,
         "curation_status": curation_status,
         "review_status": review_status,
-        "review_note": clean(draft.get("review_note")),
     }
     links = resolve_public_links(normalized)
     normalized["doi"] = links["formal_doi"]
@@ -599,7 +598,6 @@ def update_curated_paper(
         ),
         "curation_status": curation_status,
         "review_status": review_status,
-        "review_note": clean(draft.get("review_note")),
         "venue_id": clean(draft.get("venue_id")),
         "venue_name": clean(draft.get("venue_name")),
         "venue_acronym": clean(draft.get("venue_acronym")),

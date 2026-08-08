@@ -800,7 +800,6 @@ def curated_paper_record(row: Mapping[str, str]) -> Dict[str, Any]:
     record["map_record_count"] = 0
     record["missing_affiliation"] = True
     record["missing_coordinates"] = False
-    record["notes"] = clean(row.get("review_note"))
     record["record_source"] = "curated_only"
     return record
 
@@ -906,12 +905,10 @@ def merge_curated_fields(
         "metadata_source",
         "curation_status",
         "review_status",
-        "review_note",
     ):
         if field in curated_record:
             public_record[field] = curated_record[field]
     public_record["publication_year"] = public_record.get("year")
-    public_record["notes"] = clean(public_record.get("review_note"))
     normalized = normalize_book_record(public_record)
     public_record.clear()
     public_record.update(normalized)

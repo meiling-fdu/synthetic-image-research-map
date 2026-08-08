@@ -18,13 +18,18 @@ from scripts.curated_papers import (
     normalize_author_names,
     update_curated_paper,
 )
-from scripts.curated_schema import PAPERS_COLUMNS, PAPER_EXCLUSION_COLUMNS
+from scripts.curated_schema import (
+    AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+    INSTITUTION_LOCATION_REVIEW_COLUMNS,
+    PAPERS_COLUMNS,
+    PAPER_EXCLUSION_COLUMNS,
+)
 from scripts.arxiv_autofill import (
     apply_curated_arxiv_metadata,
     read_curated_arxiv_links,
     set_curated_arxiv_override,
 )
-from scripts.export_public_preview import normalize_entry_type
+from scripts.export_public_preview import normalize_entry_type, strip_retired_paper_fields
 from scripts.paper_exclusions import (
     build_active_exclusion_index,
     record_is_excluded,
@@ -1078,6 +1083,47 @@ class PaperMetadataEditingTests(unittest.TestCase):
             self.assertEqual(saved["authors"], original["authors"])
             self.assertEqual(saved["paper_url"], original["paper_url"])
 
+    def test_paper_review_note_is_not_in_ui_schema_or_persisted(self):
+        root = Path(__file__).resolve().parents[1]
+        html = (root / "web" / "admin.html").read_text(encoding="utf-8")
+        javascript = (root / "web" / "admin.js").read_text(encoding="utf-8")
+        self.assertNotIn("paper-review-note", html)
+        self.assertNotIn("metadata-review-note", html)
+        self.assertNotIn('elements["paper-review-note"]', javascript)
+        self.assertNotIn('elements["metadata-review-note"]', javascript)
+        self.assertNotIn("review_note", PAPERS_COLUMNS)
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            path = Path(temporary_directory) / "papers.csv"
+            original = curated_row()
+            write_papers(path, [original])
+            updated = update_curated_paper(
+                original,
+                {"abstract": "Saved without a paper note.", "review_note": "discard me"},
+                preview_records=[],
+                path=path,
+            )
+            with path.open(encoding="utf-8", newline="") as handle:
+                reader = csv.DictReader(handle)
+                saved = next(reader)
+                self.assertNotIn("review_note", reader.fieldnames)
+            self.assertNotIn("review_note", updated)
+            self.assertNotIn("review_note", saved)
+
+    def test_protected_mapping_and_location_review_notes_remain_in_schema(self):
+        self.assertIn("review_note", AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+        self.assertIn("review_note", INSTITUTION_LOCATION_REVIEW_COLUMNS)
+        records = [{
+            "review_note": "retired paper note",
+            "aggregated_institutions": [{"review_note": "protected mapping audit"}],
+        }]
+        self.assertEqual(strip_retired_paper_fields(records), 1)
+        self.assertNotIn("review_note", records[0])
+        self.assertEqual(
+            records[0]["aggregated_institutions"][0]["review_note"],
+            "protected mapping audit",
+        )
+
     def test_admin_update_rejects_empty_or_unknown_paper_categories(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "papers.csv"
@@ -1094,7 +1140,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                             path=path,
                         )
 
-    def test_export_propagates_entry_type_without_changing_coverage(self):
+    def test_export_propagates_confirmed_venue_and_categories_without_stale_fallback(self):
         public_paper = {
             "paper_id": "openalex:W1",
             "title": "A Principled Survey",
@@ -1104,6 +1150,13 @@ class PaperMetadataEditingTests(unittest.TestCase):
             "doi": "10.1000/survey",
             "paper_url": "https://doi.org/10.1000/survey",
             "task": "source_attribution",
+            "venue": "",
+            "venue_id": "",
+            "venue_name": "",
+            "venue_type": "journal",
+            "venue_track": "",
+            "raw_venue": "Stale imported journal source",
+            "publication_type": "journal",
             "entry_type": "method",
             "review_status": "reviewed",
         }
@@ -1119,14 +1172,36 @@ class PaperMetadataEditingTests(unittest.TestCase):
         papers, markers, _reviews, _summary = integrate_curated_records(
             [public_paper],
             [public_marker],
-            [curated_row(paper_categories="method;survey")],
+            [curated_row(
+                venue="ACM International Conference on Multimedia",
+                venue_id="venue:acm-mm",
+                venue_name="ACM International Conference on Multimedia",
+                venue_acronym="ACM MM",
+                venue_type="conference",
+                venue_track="main",
+                raw_venue="ACM International Conference on Multimedia",
+                publication_type="conference",
+                paper_categories="method;dataset",
+            )],
             [],
         )
 
         self.assertEqual(len(papers), 1)
         self.assertEqual(len(markers), 1)
-        self.assertEqual(papers[0]["paper_categories"], ["method", "survey"])
-        self.assertEqual(markers[0]["paper_categories"], ["method", "survey"])
+        for record in (papers[0], markers[0]):
+            self.assertEqual(record["venue_id"], "venue:acm-mm")
+            self.assertEqual(
+                record["venue_name"],
+                "ACM International Conference on Multimedia",
+            )
+            self.assertEqual(record["venue_type"], "conference")
+            self.assertEqual(record["venue_track"], "main")
+            self.assertEqual(record["publication_type"], "conference")
+            self.assertEqual(record["paper_categories"], ["method", "dataset"])
+            frontend_venue_key = record.get("venue_id") or (
+                record.get("venue_name") or record.get("venue") or "__unknown__"
+            )
+            self.assertNotEqual(frontend_venue_key, "__unknown__")
         self.assertEqual(
             (markers[0]["latitude"], markers[0]["longitude"]),
             (43.3188, 11.3308),

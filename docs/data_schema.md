@@ -169,7 +169,6 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | `source_query` | Query, search phrase, import batch, or other discovery context that produced the record. |
 | `source_database` | Originating metadata source, such as `openalex`, `semantic_scholar`, `crossref`, `arxiv`, or `manual`. |
 | `manual_review` | `true` when a human must verify the record, classification, deduplication, or metadata; otherwise `false`. |
-| `notes` | Free-text comments for decisions, uncertainty, corrections, or follow-up work. |
 
 ### Processed OpenAlex Publication Metadata
 
