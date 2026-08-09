@@ -437,21 +437,6 @@ def validate_mapping_evidence(
                     f"{field} is required for an active mapping",
                     row_number,
                 )
-        if not any(
-            clean(row.get(field))
-            for field in ("raw_affiliation", "evidence_source", "evidence_url")
-        ):
-            add_issue(
-                issues,
-                "ERROR",
-                "author_institution_mappings.csv",
-                (
-                    "active mapping requires raw_affiliation, evidence_source, "
-                    "or evidence_url"
-                ),
-                row_number,
-            )
-
     for position, (left_number, left) in enumerate(active_rows):
         left_keys = {
             value

@@ -542,7 +542,7 @@ python3 scripts/validate_curated_database.py
 
 ### Paper-level author–institution mapping editor
 
-Select a paper in the local admin browser and use **Author–Institution Mappings** to add, edit, exclude, or replace its curated affiliation records. Each row records the canonical institution, the authors associated with that institution, raw affiliation or supporting evidence, mapping status, and a required review note. The records are saved to `data/curated/author_institution_mappings.csv`.
+Select a paper in the local admin browser and use **Author–Institution Mappings** to add, edit, exclude, or replace its curated affiliation records. Each row records the canonical institution and location, the authors associated with that institution, the raw affiliation, mapping status, stable identity, and timestamps. Paper-level source links provide provenance. Exclude and replace justifications are retained in the dedicated institution audit log rather than duplicated on mapping rows. The records are saved to `data/curated/author_institution_mappings.csv`.
 
 Mappings are paper-level curation objects; map markers are derived outputs. The editor therefore does not request latitude or longitude. Current exported/public marker records appear in a separate evidence table for comparison and are never edited by this workflow.
 

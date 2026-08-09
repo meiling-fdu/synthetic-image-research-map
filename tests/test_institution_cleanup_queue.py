@@ -59,7 +59,6 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
             "institution_id": "institution:wrong",
             "institution_authors": "Ada Example",
             "raw_affiliation": "Ada Example, Correct University",
-            "evidence_source": "publisher",
             "provenance_source": "manually_confirmed",
             "mapping_status": "active",
             "created_at": "2026-01-01T00:00:00+00:00",
@@ -114,7 +113,6 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
             "institution_id": "institution:correct",
             "institution_authors": "Ada Example, Bob Reviewer",
             "updated_at": "2026-02-01T00:00:00+00:00",
-            "evidence_url": "https://example.test/evidence",
         })
         write_csv(self.mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS, [current])
         source_audit = {column: "" for column in INSTITUTION_AUDIT_COLUMNS}
@@ -123,10 +121,14 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
             "action": "confirmed_mapping_changed",
             "institution_id": "institution:correct",
             "previous_institution_id": "institution:wrong",
+            "previous_location_id": "location:old",
+            "location_id": "location:new",
             "affected_papers": "1",
             "affected_mappings": "1",
             "affected_markers": "1",
             "affected_authors": "Ada Example, Bob Reviewer",
+            "evidence_source": "publisher",
+            "evidence_url": "https://example.test/evidence",
             "confirmation_text": "mapping_id=mapping:1; paper_id=paper:1; paper_title=Example paper; previous_institution=Wrong Lab; new_institution=Correct University; change_source=admin_mapping_update",
             "review_note": "Publisher evidence checked.",
             "created_at": "2026-02-01T00:00:00Z",
@@ -174,6 +176,8 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
         self.assertEqual(result["audit"]["mapping_id"], "mapping:1")
         self.assertEqual(result["audit"]["previous_institution_id"], "institution:wrong")
         self.assertEqual(result["audit"]["institution_id"], "institution:correct")
+        self.assertEqual(result["audit"]["previous_location_id"], "location:old")
+        self.assertEqual(result["audit"]["location_id"], "location:new")
         self.assertEqual(result["audit"]["previous_authors"], "ada example; bob reviewer")
         self.assertEqual(result["audit"]["new_authors"], "ada example; bob reviewer")
         self.assertEqual(result["audit"]["created_by"], "local-admin")
@@ -190,6 +194,64 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
         self.assertFalse(any(
             row["issue_type"] == "confirmed_mapping_changed" for row in findings
         ))
+
+    def test_confirmed_change_queue_uses_source_audit_author_scope(self):
+        current = dict(self.mapping)
+        current.update({
+            "institution": "Correct University",
+            "institution_id": "institution:correct",
+            "institution_authors": "Ada Example; Bob Reviewer",
+        })
+        source = {column: "" for column in INSTITUTION_AUDIT_COLUMNS}
+        source.update({
+            "audit_id": "institution-audit:author-scope",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:correct",
+            "previous_institution_id": "institution:wrong",
+            "previous_mapping_id": "mapping:1",
+            "mapping_id": "mapping:1",
+            "paper_id": "paper:1",
+            "previous_authors": "Ada Example",
+            "new_authors": "Ada Example",
+            "affected_authors": "Ada Example",
+        })
+        findings = audit_institution_consistency(
+            [current], self.institutions, [], merge_audits=[source]
+        )
+        transition = next(
+            row for row in findings
+            if row["audit_id"] == "institution-audit:author-scope"
+        )
+        self.assertEqual(transition["author"], "Ada Example")
+        sync_findings([transition], mappings=[current], path=self.queue_path)
+        self.assertEqual(load_queue(self.queue_path)[0]["author"], "Ada Example")
+        stale = dict(transition)
+        stale["author"] = "Bob Reviewer"
+        sync_findings([stale], mappings=[current], path=self.queue_path)
+        self.assertEqual(load_queue(self.queue_path)[0]["author"], "Bob Reviewer")
+        sync_findings(
+            [], mappings=[current], source_audits=[source], path=self.queue_path,
+            now="2026-02-02T00:00:00+00:00",
+        )
+        corrected = load_queue(self.queue_path)[0]
+        self.assertEqual(corrected["author"], "Ada Example")
+        self.assertEqual(corrected["finding_status"], "archived")
+
+    def test_confirm_change_allows_retired_source_entity_absent_from_registry(self):
+        _, _, queue, expected = self.prepare_confirmed_change()
+        write_csv(
+            self.institutions_path, INSTITUTION_COLUMNS,
+            [row for row in self.institutions if row["institution_id"] != "institution:wrong"],
+        )
+        result = apply_cleanup_action(
+            [queue["queue_id"]], "mapping_change_confirmed",
+            "Source transition remains exact after retiring the old entity.",
+            confirmed=True, resolved_by="local-admin", queue_path=self.queue_path,
+            mappings_path=self.mappings_path, location_review_path=self.locations_path,
+            institutions_path=self.institutions_path,
+            institution_audit_path=self.audit_path, **expected,
+        )
+        self.assertEqual(result["audit"]["previous_institution_id"], "institution:wrong")
 
     def _read_audits(self):
         with self.audit_path.open(encoding="utf-8", newline="") as handle:
@@ -424,7 +486,7 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
         mapping = load_mappings(self.mappings_path)[0]
         self.assertEqual(mapping["institution_id"], "institution:correct")
         self.assertEqual(mapping["institution"], "Correct University")
-        self.assertIn("Institution cleanup", mapping["review_note"])
+        self.assertNotIn("review_note", mapping)
         row = load_queue(self.queue_path)[0]
         self.assertEqual(row["finding_status"], "resolved")
         self.assertEqual(row["resolution_action"], "accept_suggestion")
@@ -713,7 +775,6 @@ class InstitutionCleanupQueueTests(unittest.TestCase):
             "institution_id": "institution:changsha",
             "institution_authors": "Gaobo Yang",
             "mapping_status": "excluded",
-            "review_note": "[2026-07-14T10:00:00+00:00] Replaced: corrected affiliation",
         }
         stale_finding = {
             **self.finding,

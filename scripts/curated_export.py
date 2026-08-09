@@ -17,6 +17,7 @@ from typing import Any, Dict, Iterable, List, Mapping, MutableMapping, Sequence,
 try:
     from .curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+        OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
@@ -42,6 +43,7 @@ try:
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+        OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
         INSTITUTION_ALIAS_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
@@ -152,11 +154,25 @@ def _read_csv(path: Path, columns: Sequence[str]) -> List[Dict[str, str]]:
     try:
         with path.open("r", encoding="utf-8-sig", newline="") as handle:
             reader = csv.DictReader(handle)
-            if tuple(reader.fieldnames or ()) != tuple(columns):
+            actual_columns = tuple(reader.fieldnames or ())
+            projected_columns = tuple(
+                column for column in actual_columns
+                if column not in OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
+            )
+            legacy_mapping_header = (
+                tuple(columns) == tuple(AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+                and projected_columns == tuple(columns)
+                and set(actual_columns) - set(columns)
+                <= OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
+            )
+            if actual_columns != tuple(columns) and not legacy_mapping_header:
                 raise CuratedExportError(
                     f"{path} does not have the exact curated CSV header"
                 )
-            return [dict(row) for row in reader]
+            return [
+                {column: clean(row.get(column)) for column in columns}
+                for row in reader
+            ]
     except OSError as error:
         raise CuratedExportError(f"could not read {path}: {error}") from error
     except (UnicodeError, csv.Error) as error:
@@ -503,6 +519,14 @@ def _preferred_institution_location_key(record: Mapping[str, Any]) -> str:
     return keys[0] if keys else ""
 
 
+def _mapping_location_lookup_keys(record: Mapping[str, Any]) -> List[str]:
+    """Honor an explicit mapping location without trying another office."""
+    location_id = clean(record.get("location_id"))
+    if location_id:
+        return [f"location_id:{location_id.casefold()}"]
+    return _institution_location_keys(record)
+
+
 def _coordinate_match_for_keys(
     keys: Sequence[str],
     locations: Mapping[str, CoordinateMatch],
@@ -818,11 +842,7 @@ def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
             mapping.get("institution_authors")
         ),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
-        "evidence_source": clean(mapping.get("evidence_source")),
-        "evidence_url": clean(mapping.get("evidence_url")),
-        "affiliation_note": clean(mapping.get("affiliation_note")),
         "mapping_status": clean(mapping.get("mapping_status")),
-        "review_note": clean(mapping.get("review_note")),
     }
 
 
@@ -848,18 +868,8 @@ def _marker_id(
 
 
 def _mapping_note(mapping: Mapping[str, Any]) -> str:
-    values = []
-    for label, field in (
-        ("Raw affiliation", "raw_affiliation"),
-        ("Evidence source", "evidence_source"),
-        ("Evidence URL", "evidence_url"),
-        ("Affiliation note", "affiliation_note"),
-        ("Review note", "review_note"),
-    ):
-        value = clean(mapping.get(field))
-        if value:
-            values.append(f"{label}: {value}")
-    return " | ".join(values)
+    raw_affiliation = clean(mapping.get("raw_affiliation"))
+    return f"Raw affiliation: {raw_affiliation}" if raw_affiliation else ""
 
 
 def _curated_marker(
@@ -949,8 +959,6 @@ def _curated_marker(
         "curation_status": normalize_curation_status(paper.get("curation_status")),
         "mapping_id": clean(mapping.get("mapping_id")),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
-        "evidence_source": clean(mapping.get("evidence_source")),
-        "evidence_url": clean(mapping.get("evidence_url")),
         "coordinate_source": clean(location.get("coordinate_source")),
         "coordinate_source_url": clean(
             location.get("coordinate_source_url")
@@ -1147,8 +1155,8 @@ def _upsert_location_review(
         "openalex_url": clean(mapping.get("openalex_url")),
         "institution_authors": clean(mapping.get("institution_authors")),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
-        "evidence_source": clean(mapping.get("evidence_source")),
-        "evidence_url": clean(mapping.get("evidence_url")),
+        "evidence_source": "",
+        "evidence_url": "",
         "suggested_city": "",
         "suggested_country": "",
         "review_status": (
@@ -1158,7 +1166,7 @@ def _upsert_location_review(
         ),
         "location_status": location_status,
         "coordinate_status": coordinate_status,
-        "review_note": clean(mapping.get("review_note")),
+        "review_note": "",
         "updated_at": now,
     }
     for row in rows:
@@ -1309,7 +1317,7 @@ def build_curated_map_records(
             lookup_mapping["institution"] = canonical_institution
         if canonical_institution_id:
             lookup_mapping["institution_id"] = canonical_institution_id
-        institution_keys = _institution_location_keys(lookup_mapping)
+        institution_keys = _mapping_location_lookup_keys(lookup_mapping)
         institution_key = institution_keys[0] if institution_keys else ""
         queue_status = (
             "alias_of_confirmed"

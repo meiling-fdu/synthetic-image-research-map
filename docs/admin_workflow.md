@@ -175,7 +175,7 @@ This creates or updates an auditable decision in `data/curated/paper_exclusions.
 3. Record the canonical institution name, every author associated with it, the raw affiliation or evidence, mapping status, and a review note.
 4. Use **Replace all mappings** only when intentionally superseding all active mappings; prior rows remain in the audit history.
 
-Mappings are written to `data/curated/author_institution_mappings.csv`. Do not assign the whole paper to the first author's institution. Missing or ambiguous institution coordinates are handled in the separate location-review queue.
+Mappings are written to `data/curated/author_institution_mappings.csv`. The compact form stores the institution, optional confirmed location, institution-author set, raw affiliation, and mapping status; paper-level links provide source provenance. Do not assign the whole paper to the first author's institution. Missing or ambiguous institution coordinates are handled in the separate location-review queue, and destructive transition evidence remains in dedicated audit logs.
 
 ## Institution Location Review
 

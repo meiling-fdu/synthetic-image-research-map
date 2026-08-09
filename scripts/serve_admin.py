@@ -1243,25 +1243,7 @@ def prepare_mapping_candidates(
                 "institution_latitude": clean(latitude),
                 "institution_longitude": clean(longitude),
                 "provenance_source": source,
-                "evidence_source": source,
-                "evidence_url": clean(
-                    candidate.get("evidence_url")
-                    or paper.get("openalex_url")
-                    or paper.get("paper_url")
-                ),
-                "affiliation_note": (
-                    f"Raw institution: {raw_institution}"
-                    if canonical and canonical != raw_institution
-                    else ""
-                ),
                 "mapping_status": "active" if canonical else "needs_review",
-                "review_note": (
-                    "Automatically matched to a confirmed canonical institution; "
-                    "review imported authorship evidence."
-                    if canonical
-                    else "Automatically imported affiliation candidate; confirm "
-                    "the canonical institution before public export."
-                ),
             }
         )
     grouped: Dict[str, Dict[str, str]] = {}
@@ -3531,21 +3513,8 @@ def make_handler(
                                     or payload.get("resolution_notes")
                                     or institution
                                 ),
-                                "evidence_source": clean(
-                                    payload.get("evidence_source")
-                                    or payload.get("resolution_method")
-                                    or "Admin marker review"
-                                ),
-                                "evidence_url": clean(
-                                    payload.get("evidence_url")
-                                    or payload.get("paper_url")
-                                    or payload.get("openalex_url")
-                                ),
-                                "affiliation_note": (
-                                    "Confirmed from the high-risk marker review queue."
-                                ),
+                                "provenance_source": "admin_marker_review",
                                 "mapping_status": "active",
-                                "review_note": note,
                             }
                             existing = next(
                                 (
@@ -3781,6 +3750,7 @@ def make_handler(
                                 location_review_path=location_review_path,
                                 institutions_path=institutions_path,
                                 institution_aliases_path=institution_aliases_path,
+                                institution_locations_path=institution_locations_path,
                             )
                     except DuplicatePaperError as error:
                         self.send_json(
@@ -3848,6 +3818,7 @@ def make_handler(
                                     location_review_path=location_review_path,
                                     institutions_path=institutions_path,
                                     institution_aliases_path=institution_aliases_path,
+                                    institution_locations_path=institution_locations_path,
                                 )
                                 response_status = HTTPStatus.CREATED
                                 message = (
@@ -3866,6 +3837,7 @@ def make_handler(
                                     location_review_path=location_review_path,
                                     institutions_path=institutions_path,
                                     institution_aliases_path=institution_aliases_path,
+                                    institution_locations_path=institution_locations_path,
                                     institution_audit_path=institution_audit_path,
                                     change_source="admin_mapping_update",
                                     changed_by="local-admin",
@@ -3877,7 +3849,7 @@ def make_handler(
                                     "mapping": exclude_mapping(
                                         paper,
                                         clean(payload.get("mapping_id")),
-                                        clean(payload.get("review_note")),
+                                        clean(payload.get("transition_note")),
                                         mappings_path=mappings_path,
                                         institution_audit_path=institution_audit_path,
                                     )
@@ -3893,7 +3865,7 @@ def make_handler(
                                 result = replace_all_mappings(
                                     paper,
                                     drafts,
-                                    clean(payload.get("review_note")),
+                                    clean(payload.get("transition_note")),
                                     confirm_replace_all=(
                                         payload.get("confirm_replace_all") is True
                                     ),
@@ -3902,6 +3874,7 @@ def make_handler(
                                     location_review_path=location_review_path,
                                     institutions_path=institutions_path,
                                     institution_aliases_path=institution_aliases_path,
+                                    institution_locations_path=institution_locations_path,
                                     institution_audit_path=institution_audit_path,
                                 )
                                 response_status = HTTPStatus.OK

@@ -518,8 +518,11 @@ def audit_institution_consistency(
     # Location edits never enter this log and therefore cannot trigger findings.
     mappings_by_id = {clean(row.get("mapping_id")): row for row in mappings}
     resolved_change_audits: dict[
-        str, list[tuple[str, str, str, str, str]]
+        str, list[tuple[str, str, str, str, str, str]]
     ] = defaultdict(list)
+    confirmed_mapping_transitions: list[
+        tuple[str, str, str, str, str, str]
+    ] = []
     for resolution in merge_audits:
         if clean(resolution.get("action")) not in {
             "mapping_change_confirmed", "mapping_reverted"
@@ -535,11 +538,19 @@ def audit_institution_consistency(
         else:
             old_id = clean(resolution.get("previous_institution_id"))
             new_id = clean(resolution.get("institution_id"))
-        resolved_change_audits[source_audit_id].append((
+        resolution_mapping_id = (
+            clean(resolution.get("mapping_id"))
+            or resolution_metadata.get("mapping_id", "")
+        )
+        resolution_previous_mapping_id = (
+            clean(resolution.get("previous_mapping_id"))
+            or resolution_mapping_id
+        )
+        resolution_record = (
             old_id,
             new_id,
-            clean(resolution.get("mapping_id"))
-            or resolution_metadata.get("mapping_id", ""),
+            resolution_previous_mapping_id,
+            resolution_mapping_id,
             clean(resolution.get("paper_id"))
             or resolution_metadata.get("paper_id", ""),
             normalized_author_set(
@@ -547,7 +558,13 @@ def audit_institution_consistency(
                 or resolution.get("affected_authors")
                 or resolution_metadata.get("author")
             ),
-        ))
+        )
+        resolved_change_audits[source_audit_id].append(resolution_record)
+        # A confirmed mapping-wide transition remains durable if a later audit
+        # source is regenerated. Reversions remain source-specific because they
+        # represent the opposite lifecycle outcome.
+        if clean(resolution.get("action")) == "mapping_change_confirmed":
+            confirmed_mapping_transitions.append(resolution_record)
     for event in merge_audits:
         if clean(event.get("action")) != "confirmed_mapping_changed":
             continue
@@ -564,11 +581,14 @@ def audit_institution_consistency(
         # should move from the retired ID to its replacement canonical ID.
         if transition in resolver.merges:
             continue
-        mapping = mappings_by_id.get(metadata.get("mapping_id", ""), {})
+        event_mapping_id = clean(event.get("mapping_id")) or metadata.get(
+            "mapping_id", ""
+        )
+        mapping = mappings_by_id.get(event_mapping_id, {})
         if not mapping:
             mapping = {
-                "mapping_id": metadata.get("mapping_id", ""),
-                "paper_id": metadata.get("paper_id", ""),
+                "mapping_id": event_mapping_id,
+                "paper_id": clean(event.get("paper_id")) or metadata.get("paper_id", ""),
                 "title": metadata.get("paper_title", ""),
                 "institution_id": clean(event.get("institution_id")),
                 "institution": metadata.get("new_institution", ""),
@@ -581,48 +601,71 @@ def audit_institution_consistency(
             "institution_cleanup:mapping_reverted",
         }:
             continue
-        event_authors = _authors(mapping) or [clean(event.get("affected_authors"))]
+        event_author_scope = clean(
+            event.get("new_authors") or event.get("affected_authors")
+        ) or "; ".join(_authors(mapping))
         current_author_set = normalized_author_set(
             mapping.get("institution_authors") or event.get("new_authors")
             or event.get("affected_authors")
         )
-        paper_id = metadata.get("paper_id", "") or clean(mapping.get("paper_id"))
-        mapping_id = metadata.get("mapping_id", "") or clean(mapping.get("mapping_id"))
+        paper_id = (
+            clean(event.get("paper_id")) or metadata.get("paper_id", "")
+            or clean(mapping.get("paper_id"))
+        )
+        mapping_id = event_mapping_id or clean(mapping.get("mapping_id"))
+        previous_mapping_id = clean(event.get("previous_mapping_id")) or mapping_id
         resolutions = resolved_change_audits.get(clean(event.get("audit_id")), [])
-        exact_resolution = any(
+        exact_source_resolution = any(
             old_id == transition[0]
             and new_id == transition[1]
+            and confirmed_previous_mapping_id == previous_mapping_id
             and confirmed_mapping_id == mapping_id
             and confirmed_paper_id == paper_id
             and confirmed_author_set == current_author_set
             for (
                 old_id,
                 new_id,
+                confirmed_previous_mapping_id,
                 confirmed_mapping_id,
                 confirmed_paper_id,
                 confirmed_author_set,
             ) in resolutions
         )
-        for author in event_authors:
-            if exact_resolution:
-                continue
-            finding = _finding(
-                mapping,
-                author,
-                severity="high",
-                issue_type="confirmed_mapping_changed",
-                reason=(
-                    "Why flagged: a trusted mapping changed from "
-                    f"{metadata.get('previous_institution') or clean(event.get('previous_institution_id'))!r} "
-                    f"to {metadata.get('new_institution') or clean(event.get('institution_id'))!r}; "
-                    f"change source={source}, user/action={clean(event.get('created_by')) or 'unknown'}, "
-                    f"timestamp={clean(event.get('created_at')) or 'unknown'}."
-                ),
-                recommended_action="Confirm that this institution replacement was intentional and evidence-backed.",
-                resolver=resolver,
-            )
-            finding["audit_id"] = clean(event.get("audit_id")) or finding["audit_id"]
-            findings.append(finding)
+        exact_prior_confirmation = any(
+            old_id == transition[0]
+            and new_id == transition[1]
+            and confirmed_previous_mapping_id == previous_mapping_id
+            and confirmed_mapping_id == mapping_id
+            and confirmed_paper_id == paper_id
+            and confirmed_author_set == current_author_set
+            for (
+                old_id,
+                new_id,
+                confirmed_previous_mapping_id,
+                confirmed_mapping_id,
+                confirmed_paper_id,
+                confirmed_author_set,
+            ) in confirmed_mapping_transitions
+        )
+        if exact_source_resolution or exact_prior_confirmation:
+            continue
+        finding = _finding(
+            mapping,
+            event_author_scope,
+            severity="high",
+            issue_type="confirmed_mapping_changed",
+            reason=(
+                "Why flagged: a trusted mapping changed from "
+                f"{metadata.get('previous_institution') or clean(event.get('previous_institution_id'))!r} "
+                f"to {metadata.get('new_institution') or clean(event.get('institution_id'))!r}; "
+                f"change source={source}, user/action={clean(event.get('created_by')) or 'unknown'}, "
+                f"timestamp={clean(event.get('created_at')) or 'unknown'}."
+            ),
+            recommended_action="Confirm that this institution replacement was intentional and evidence-backed.",
+            resolver=resolver,
+        )
+        finding["audit_id"] = clean(event.get("audit_id")) or finding["audit_id"]
+        findings.append(finding)
 
     resolved_targets = {
         clean(row.get("target_type"))

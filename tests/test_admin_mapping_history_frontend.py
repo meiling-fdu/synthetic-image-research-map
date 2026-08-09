@@ -30,7 +30,6 @@ class AdminMappingHistoryFrontendTests(unittest.TestCase):
     def test_audit_rows_are_unambiguously_non_current(self):
         for label in (
             "Excluded",
-            "Replaced",
             "Retained for audit history",
             "Audit record — not a current affiliation",
         ):

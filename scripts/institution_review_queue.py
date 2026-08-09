@@ -249,10 +249,6 @@ def _case_evidence(
         "mapping_status": clean(row.get("mapping_status")),
         "review_status": "needs review" if clean(row.get("mapping_status")) == "needs_review" else "confirmed",
         "raw_affiliation": clean(row.get("raw_affiliation")),
-        "evidence_source": clean(row.get("evidence_source")),
-        "evidence_url": clean(row.get("evidence_url")),
-        "affiliation_note": clean(row.get("affiliation_note")),
-        "review_note": clean(row.get("review_note")),
         "created_at": clean(row.get("created_at")),
         "updated_at": clean(row.get("updated_at")),
         }
@@ -270,7 +266,7 @@ def _case_evidence(
     })
     sources = sorted({
         clean(value) for row in case_mappings
-        for value in (row.get("evidence_source"), row.get("provenance_source"))
+        for value in (row.get("provenance_source"),)
         if clean(value)
     })
     reasons = [clean(row.get("reason")) for row in findings if clean(row.get("reason"))]
@@ -356,6 +352,7 @@ def sync_findings(
     findings: Sequence[Mapping[str, Any]],
     *,
     mappings: Sequence[Mapping[str, Any]] | None = None,
+    source_audits: Sequence[Mapping[str, Any]] | None = None,
     path: Path = DEFAULT_QUEUE_PATH,
     now: str | None = None,
 ) -> dict[str, Any]:
@@ -377,11 +374,28 @@ def sync_findings(
         ]
     rows = load_queue(path)
     by_audit = {clean(row.get("audit_id")): row for row in rows}
+    at = now or timestamp()
+    if source_audits is not None:
+        source_by_id = {
+            clean(row.get("audit_id")): row for row in source_audits
+            if clean(row.get("action")) == "confirmed_mapping_changed"
+        }
+        for row in rows:
+            if clean(row.get("issue_type")) != "confirmed_mapping_changed":
+                continue
+            source = source_by_id.get(clean(row.get("audit_id")))
+            if source is None:
+                continue
+            source_scope = clean(
+                source.get("new_authors") or source.get("affected_authors")
+            )
+            if source_scope and source_scope != clean(row.get("author")):
+                row["author"] = source_scope
+                row["updated_at"] = at
     current_ids: set[str] = set()
     created = 0
     refreshed = 0
     archived_by_reaudit = 0
-    at = now or timestamp()
     evidence_fields = (
         "mapping_id", "paper_id", "paper_title", "year", "doi",
         "openalex_url", "author", "current_institution",
@@ -638,8 +652,8 @@ def queue_payload(
                     "trust_reason": " · ".join(filter(None, (
                         f"Mapping provenance: {provenance}", trust_note,
                     ))),
-                    "evidence_source": clean(mapping.get("evidence_source")),
-                    "evidence_url": clean(mapping.get("evidence_url")),
+                    "evidence_source": clean(source_audit.get("evidence_source")),
+                    "evidence_url": clean(source_audit.get("evidence_url")),
                     "publicly_visible": visible,
                     "expected_mapping_id": clean(mapping.get("mapping_id")),
                     "expected_institution_id": clean(mapping.get("institution_id")),

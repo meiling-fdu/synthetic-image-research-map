@@ -1110,19 +1110,21 @@ class PaperMetadataEditingTests(unittest.TestCase):
             self.assertNotIn("review_note", updated)
             self.assertNotIn("review_note", saved)
 
-    def test_protected_mapping_and_location_review_notes_remain_in_schema(self):
-        self.assertIn("review_note", AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+    def test_mapping_note_is_removed_but_dedicated_review_note_remains(self):
+        self.assertNotIn("review_note", AUTHOR_INSTITUTION_MAPPING_COLUMNS)
         self.assertIn("review_note", INSTITUTION_LOCATION_REVIEW_COLUMNS)
         records = [{
             "review_note": "retired paper note",
-            "aggregated_institutions": [{"review_note": "protected mapping audit"}],
+            "curated_mappings": [{
+                "mapping_id": "mapping:1",
+                "review_note": "retired mapping note",
+            }],
+            "location_review": {"review_note": "protected location audit"},
         }]
-        self.assertEqual(strip_retired_paper_fields(records), 1)
+        self.assertEqual(strip_retired_paper_fields(records), 2)
         self.assertNotIn("review_note", records[0])
-        self.assertEqual(
-            records[0]["aggregated_institutions"][0]["review_note"],
-            "protected mapping audit",
-        )
+        self.assertNotIn("review_note", records[0]["curated_mappings"][0])
+        self.assertEqual(records[0]["location_review"]["review_note"], "protected location audit")
 
     def test_admin_update_rejects_empty_or_unknown_paper_categories(self):
         with tempfile.TemporaryDirectory() as temporary_directory:

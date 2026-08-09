@@ -211,6 +211,102 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
             for row in later_findings
         ))
 
+    def test_identical_regenerated_transition_uses_prior_mapping_wide_confirmation(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
+            author="Ada Example; Bob Reviewer", provenance="manually_confirmed",
+        )
+        original = {
+            "audit_id": "mapping-change:original",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "previous_mapping_id": current["mapping_id"],
+            "mapping_id": current["mapping_id"],
+            "paper_id": "paper:1",
+            "new_authors": "Ada Example; Bob Reviewer",
+        }
+        resolution = {
+            "audit_id": "mapping-resolution:original",
+            "action": "mapping_change_confirmed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "previous_mapping_id": current["mapping_id"],
+            "mapping_id": current["mapping_id"],
+            "paper_id": "paper:1",
+            "new_authors": "Ada Example; Bob Reviewer",
+            "confirmation_text": "source_audit_id=mapping-change:original",
+        }
+        regenerated = {
+            **original,
+            "audit_id": "mapping-change:regenerated",
+            "new_authors": "Ada Example",
+            "affected_authors": "Ada Example",
+        }
+        findings = self.audit(
+            [current], merge_audits=[original, resolution, regenerated]
+        )
+        self.assertFalse(any(
+            row["issue_type"] == "confirmed_mapping_changed"
+            and row["audit_id"] == "mapping-change:regenerated"
+            for row in findings
+        ))
+
+    def test_prior_confirmation_does_not_cross_stable_transition_dimensions(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
+            author="Ada Example; Bob Reviewer", provenance="manually_confirmed",
+        )
+        mapping_id = current["mapping_id"]
+        resolution = {
+            "audit_id": "mapping-resolution:prior",
+            "action": "mapping_change_confirmed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "previous_mapping_id": mapping_id,
+            "mapping_id": mapping_id,
+            "paper_id": "paper:1",
+            "new_authors": "Ada Example; Bob Reviewer",
+            "confirmation_text": "source_audit_id=mapping-change:prior",
+        }
+        base = {
+            "audit_id": "mapping-change:regenerated",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "previous_mapping_id": mapping_id,
+            "mapping_id": mapping_id,
+            "paper_id": "paper:1",
+            "new_authors": "Ada Example; Bob Reviewer",
+        }
+        variants = {
+            "old institution": {"previous_institution_id": "institution:naples"},
+            "new institution": {"institution_id": "institution:prime"},
+            "paper": {"paper_id": "paper:other"},
+            "mapping": {
+                "mapping_id": "mapping:other",
+                "previous_mapping_id": "mapping:other",
+            },
+            "mapping lineage": {"previous_mapping_id": "mapping:other"},
+        }
+        for label, changes in variants.items():
+            with self.subTest(label=label):
+                regenerated = {**base, **changes, "audit_id": f"mapping-change:{label}"}
+                findings = self.audit([current], merge_audits=[resolution, regenerated])
+                self.assertTrue(any(
+                    row["issue_type"] == "confirmed_mapping_changed"
+                    and row["audit_id"] == regenerated["audit_id"]
+                    for row in findings
+                ))
+
+        wrong_authors = {**resolution, "new_authors": "Ada Example"}
+        findings = self.audit([current], merge_audits=[wrong_authors, base])
+        self.assertTrue(any(
+            row["issue_type"] == "confirmed_mapping_changed"
+            and row["audit_id"] == base["audit_id"]
+            for row in findings
+        ))
+
     def test_explicit_merge_allows_former_name(self):
         old = entity("institution:old", "Old Research Center", status="merged")
         new = entity("institution:new", "New Research Institute")
@@ -308,6 +404,8 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
                 "previous_institution=CERTH; new_institution=Amazon; "
                 "change_source=admin_mapping_update"
             ),
+            "evidence_source": "Publisher PDF",
+            "review_note": "Exact reviewed replacement described in prose.",
         }
         findings = self.audit([current], merge_audits=[change])
         changed = next(

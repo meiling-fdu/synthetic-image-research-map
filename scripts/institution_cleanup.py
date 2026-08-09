@@ -225,7 +225,7 @@ def apply_cleanup_action(
             institutions.get(old_id, {}).get("canonical_name")
         )
         new_name = clean(metadata.get("new_institution")) or clean(mapping.get("institution"))
-        if old_id not in institutions:
+        if action == "mapping_reverted" and old_id not in institutions:
             raise InstitutionReviewQueueError("previous trusted institution no longer exists")
         at = timestamp()
         snapshot_paths = [mappings_path, location_review_path, queue_path, institution_audit_path]
@@ -235,8 +235,6 @@ def apply_cleanup_action(
             if action == "mapping_reverted" and not already_reverted:
                 target = institutions[old_id]
                 draft = dict(mapping)
-                prior_note = clean(mapping.get("review_note"))
-                audit_note = f"[{at}] Reverted confirmed mapping change: {note}"
                 draft.update({
                     "institution": clean(target.get("canonical_name")) or old_name,
                     "institution_id": old_id,
@@ -245,7 +243,6 @@ def apply_cleanup_action(
                     "institution_country": "",
                     "institution_latitude": "",
                     "institution_longitude": "",
-                    "review_note": f"{prior_note} | {audit_note}" if prior_note else audit_note,
                 })
                 changed.append(update_mapping(
                     mapping, mapping_id, draft,
@@ -268,11 +265,13 @@ def apply_cleanup_action(
                 new_institution_name=new_name,
                 reverted_institution_id=old_id if action == "mapping_reverted" else "",
                 reverted_institution_name=old_name if action == "mapping_reverted" else "",
-                evidence_source=mapping.get("evidence_source"),
-                evidence_url=mapping.get("evidence_url"),
+                evidence_source=source_audit.get("evidence_source"),
+                evidence_url=source_audit.get("evidence_url"),
                 paper_id=mapping.get("paper_id"),
                 previous_location_id=source_audit.get("previous_location_id"),
-                location_id=mapping.get("location_id"),
+                location_id=(
+                    mapping.get("location_id") or source_audit.get("location_id")
+                ),
                 institution_authors=mapping.get("institution_authors"),
                 review_note=note,
                 created_by=resolved_by,
@@ -335,8 +334,6 @@ def apply_cleanup_action(
         for mapping_id, institution_id in fixes.items():
             mapping = mappings[mapping_id]
             target = institutions[institution_id]
-            prior_note = clean(mapping.get("review_note"))
-            audit_note = f"[{timestamp()}] Institution cleanup: {note}"
             draft = dict(mapping)
             draft.update({
                 "institution": clean(target.get("canonical_name")),
@@ -347,7 +344,6 @@ def apply_cleanup_action(
                 "institution_latitude": "",
                 "institution_longitude": "",
                 "provenance_source": "admin_accepted",
-                "review_note": f"{prior_note} | {audit_note}" if prior_note else audit_note,
             })
             result = update_mapping(
                 mapping,

@@ -4,14 +4,17 @@
 from __future__ import annotations
 
 import argparse
+import csv
 from pathlib import Path
 
 try:
     from .curated_mappings import DEFAULT_MAPPINGS_PATH, load_mappings
+    from .curated_institutions import DEFAULT_AUDIT_PATH
     from .institution_consistency import DEFAULT_REPORT_PATH, read_audit_report
     from .institution_review_queue import DEFAULT_QUEUE_PATH, sync_findings, unresolved
 except ImportError:
     from curated_mappings import DEFAULT_MAPPINGS_PATH, load_mappings
+    from curated_institutions import DEFAULT_AUDIT_PATH
     from institution_consistency import DEFAULT_REPORT_PATH, read_audit_report
     from institution_review_queue import DEFAULT_QUEUE_PATH, sync_findings, unresolved
 
@@ -21,10 +24,14 @@ def main(argv=None) -> int:
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT_PATH)
     parser.add_argument("--queue", type=Path, default=DEFAULT_QUEUE_PATH)
     parser.add_argument("--mappings", type=Path, default=DEFAULT_MAPPINGS_PATH)
+    parser.add_argument("--audit-log", type=Path, default=DEFAULT_AUDIT_PATH)
     args = parser.parse_args(argv)
+    with args.audit_log.open(encoding="utf-8", newline="") as handle:
+        source_audits = list(csv.DictReader(handle))
     result = sync_findings(
         read_audit_report(args.report),
         mappings=load_mappings(args.mappings),
+        source_audits=source_audits,
         path=args.queue,
     )
     open_rows = unresolved(result["rows"])

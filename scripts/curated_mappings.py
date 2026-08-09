@@ -16,7 +16,9 @@ try:
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
         INSTITUTION_ALIAS_COLUMNS,
+        INSTITUTION_LOCATION_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
+        OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     )
     from .paper_exclusions import (
         all_identity_keys,
@@ -40,7 +42,9 @@ except ImportError:
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
         CURATED_DATA_DIR,
         INSTITUTION_ALIAS_COLUMNS,
+        INSTITUTION_LOCATION_COLUMNS,
         INSTITUTION_LOCATION_REVIEW_COLUMNS,
+        OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     )
     from paper_exclusions import all_identity_keys, clean, normalized_title_year_key
     from institution_types import classify_institution_type
@@ -59,6 +63,7 @@ except ImportError:
 
 DEFAULT_MAPPINGS_PATH = CURATED_DATA_DIR / "author_institution_mappings.csv"
 DEFAULT_LOCATION_REVIEW_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
+DEFAULT_INSTITUTION_LOCATIONS_PATH = CURATED_DATA_DIR / "institution_locations.csv"
 ACTIVE_MAPPING_STATUSES = {"active", "needs_review"}
 ALLOWED_MAPPING_STATUSES = ACTIVE_MAPPING_STATUSES | {"excluded"}
 
@@ -113,11 +118,25 @@ def _read_csv(
     try:
         with path.open("r", encoding="utf-8-sig", newline="") as handle:
             reader = csv.DictReader(handle)
-            if tuple(reader.fieldnames or ()) != tuple(expected_columns):
+            actual_columns = tuple(reader.fieldnames or ())
+            projected_columns = tuple(
+                column for column in actual_columns
+                if column not in OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
+            )
+            legacy_mapping_header = (
+                tuple(expected_columns) == tuple(AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+                and projected_columns == tuple(expected_columns)
+                and set(actual_columns) - set(expected_columns)
+                <= OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
+            )
+            if actual_columns != tuple(expected_columns) and not legacy_mapping_header:
                 raise CuratedMappingError(
                     f"{path} does not have the exact curated CSV header"
                 )
-            return [dict(row) for row in reader]
+            return [
+                {column: clean(row.get(column)) for column in expected_columns}
+                for row in reader
+            ]
     except OSError as error:
         raise CuratedMappingError(f"could not read {path}: {error}") from error
     except (UnicodeError, csv.Error) as error:
@@ -216,9 +235,6 @@ def _mapping_fields(
     location_id = clean(draft.get("location_id"))
     institution_authors = clean(draft.get("institution_authors"))
     raw_affiliation = str(draft.get("raw_affiliation") or "")
-    evidence_source = clean(draft.get("evidence_source"))
-    evidence_url = clean(draft.get("evidence_url"))
-    review_note = clean(draft.get("review_note"))
     mapping_status = clean(draft.get("mapping_status")) or "active"
     if not institution:
         raise CuratedMappingError("institution is required")
@@ -230,10 +246,6 @@ def _mapping_fields(
         )
     if not institution_authors:
         raise CuratedMappingError("institution authors are required")
-    if not any((clean(raw_affiliation), evidence_source, evidence_url)):
-        raise CuratedMappingError(
-            "raw affiliation or evidence source/evidence URL is required"
-        )
     if mapping_status not in ACTIVE_MAPPING_STATUSES:
         raise CuratedMappingError(
             "mapping_status must be active or needs_review"
@@ -254,11 +266,7 @@ def _mapping_fields(
         "institution_latitude": clean(draft.get("institution_latitude")),
         "institution_longitude": clean(draft.get("institution_longitude")),
         "provenance_source": clean(draft.get("provenance_source")),
-        "evidence_source": evidence_source,
-        "evidence_url": evidence_url,
-        "affiliation_note": clean(draft.get("affiliation_note")),
         "mapping_status": mapping_status,
-        "review_note": review_note,
     }
 
 
@@ -338,6 +346,43 @@ def _resolve_mapping_institution(
     mapping["institution_id"] = identifier
     mapping["institution"] = submitted_name
     return "provisional"
+
+
+def _resolve_mapping_location(
+    mapping: Dict[str, str],
+    locations_path: Path,
+) -> None:
+    """Validate and denormalize an explicitly selected confirmed location."""
+    location_id = clean(mapping.get("location_id"))
+    if not location_id:
+        return
+    locations = _read_csv(locations_path, INSTITUTION_LOCATION_COLUMNS)
+    location = next(
+        (
+            row for row in locations
+            if clean(row.get("location_id")) == location_id
+        ),
+        None,
+    )
+    if location is None:
+        raise CuratedMappingError(
+            f"selected location_id is not a confirmed location: {location_id}"
+        )
+    if clean(location.get("institution_id")) != clean(mapping.get("institution_id")):
+        raise CuratedMappingError(
+            "selected location_id belongs to a different institution"
+        )
+    if clean(location.get("coordinate_status")) != "known" or not (
+        _valid_coordinate(location.get("lat"), latitude=True)
+        and _valid_coordinate(location.get("lon"), latitude=False)
+    ):
+        raise CuratedMappingError(
+            f"selected location_id is not an active confirmed location: {location_id}"
+        )
+    mapping["institution_city"] = clean(location.get("city"))
+    mapping["institution_country"] = clean(location.get("country"))
+    mapping["institution_latitude"] = clean(location.get("lat"))
+    mapping["institution_longitude"] = clean(location.get("lon"))
 
 
 def _load_aliases(path: Path) -> List[Dict[str, str]]:
@@ -502,8 +547,6 @@ def _sync_location_review(
         "openalex_url": clean(mapping.get("openalex_url")),
         "institution_authors": clean(mapping.get("institution_authors")),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
-        "evidence_source": clean(mapping.get("evidence_source")),
-        "evidence_url": clean(mapping.get("evidence_url")),
         "suggested_city": clean(mapping.get("institution_city")),
         "suggested_country": clean(mapping.get("institution_country")),
         "openalex_institution_id": clean(
@@ -512,7 +555,6 @@ def _sync_location_review(
         "review_status": "needs_coordinates",
         "location_status": "missing",
         "coordinate_status": "missing",
-        "review_note": clean(mapping.get("review_note")),
         "updated_at": now,
     }
     key = _queue_key(mapping)
@@ -535,6 +577,7 @@ def create_mapping(
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
+    institution_locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
 ) -> Dict[str, Any]:
     rows = load_mappings(mappings_path)
     institutions = load_institutions(institutions_path)
@@ -542,6 +585,7 @@ def create_mapping(
     institution_resolution = _resolve_mapping_institution(
         candidate, institutions, _load_aliases(institution_aliases_path)
     )
+    _resolve_mapping_location(candidate, institution_locations_path)
     duplicate = _duplicate_mapping(candidate, rows)
     if duplicate:
         raise DuplicateMappingError(duplicate)
@@ -588,6 +632,7 @@ def create_mapping_candidates(
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
+    institution_locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
 ) -> Dict[str, Any]:
     """Atomically append all non-duplicate candidates for a newly added paper."""
     rows = load_mappings(mappings_path)
@@ -600,6 +645,7 @@ def create_mapping_candidates(
     for index, draft in enumerate(drafts):
         candidate = _mapping_fields(paper, draft)
         resolution = _resolve_mapping_institution(candidate, institutions, aliases)
+        _resolve_mapping_location(candidate, institution_locations_path)
         duplicate = _duplicate_mapping(candidate, [*rows, *created])
         if duplicate:
             continue
@@ -652,6 +698,7 @@ def update_mapping(
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
+    institution_locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
     institution_audit_path: Path | None = None,
     change_source: str = "admin_mapping_update",
     changed_by: str = "local-admin",
@@ -664,8 +711,6 @@ def update_mapping(
     if row is None or not records_share_paper_identity(paper, row):
         raise CuratedMappingError("mapping not found for selected paper")
     candidate_draft = dict(draft)
-    if "review_note" not in candidate_draft:
-        candidate_draft["review_note"] = row.get("review_note")
     if "provenance_source" not in candidate_draft:
         candidate_draft["provenance_source"] = row.get("provenance_source")
     if "location_id" not in candidate_draft:
@@ -675,6 +720,7 @@ def update_mapping(
     institution_resolution = _resolve_mapping_institution(
         candidate, institutions, _load_aliases(institution_aliases_path)
     )
+    _resolve_mapping_location(candidate, institution_locations_path)
     duplicate = _duplicate_mapping(
         candidate, rows, ignore_mapping_id=clean(mapping_id)
     )
@@ -734,7 +780,7 @@ def update_mapping(
                 row,
                 change_source=change_source,
                 created_by=changed_by,
-                review_note=row.get("review_note"),
+                review_note="",
                 audit_path=institution_audit_path,
             )
     except Exception as error:
@@ -750,23 +796,17 @@ def update_mapping(
     }
 
 
-def _append_audit_note(existing: Any, action: str, note: str) -> str:
-    prior = clean(existing)
-    entry = f"[{_timestamp()}] {action}: {clean(note)}"
-    return f"{prior} | {entry}" if prior else entry
-
-
 def exclude_mapping(
     paper: Mapping[str, Any],
     mapping_id: str,
-    review_note: str,
+    transition_note: str,
     *,
     mappings_path: Path = DEFAULT_MAPPINGS_PATH,
     institution_audit_path: Path | None = None,
     changed_by: str = "local-admin",
 ) -> Dict[str, str]:
-    if not clean(review_note):
-        raise CuratedMappingError("review note is required")
+    if not clean(transition_note):
+        raise CuratedMappingError("transition note is required")
     rows = load_mappings(mappings_path)
     row = next(
         (row for row in rows if clean(row.get("mapping_id")) == clean(mapping_id)),
@@ -778,9 +818,6 @@ def exclude_mapping(
         raise CuratedMappingError("mapping is already excluded")
     previous = dict(row)
     row["mapping_status"] = "excluded"
-    row["review_note"] = _append_audit_note(
-        row.get("review_note"), "Excluded", review_note
-    )
     row["updated_at"] = _timestamp()
     snapshots = {
         path: path.read_bytes() if path.exists() else None
@@ -793,7 +830,7 @@ def exclude_mapping(
             append_confirmed_mapping_removal_audit(
                 previous,
                 created_by=changed_by,
-                review_note=review_note,
+                review_note=transition_note,
                 audit_path=institution_audit_path,
             )
     except Exception:
@@ -805,7 +842,7 @@ def exclude_mapping(
 def replace_all_mappings(
     paper: Mapping[str, Any],
     drafts: Sequence[Mapping[str, Any]],
-    review_note: str,
+    transition_note: str,
     *,
     confirm_replace_all: bool,
     map_records: Sequence[Mapping[str, Any]],
@@ -813,13 +850,14 @@ def replace_all_mappings(
     location_review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
     institution_aliases_path: Path = DEFAULT_ALIASES_PATH,
+    institution_locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
     institution_audit_path: Path | None = None,
     changed_by: str = "local-admin",
 ) -> Dict[str, Any]:
     if confirm_replace_all is not True:
         raise CuratedMappingError("confirm_replace_all=true is required")
-    if not clean(review_note):
-        raise CuratedMappingError("review note is required")
+    if not clean(transition_note):
+        raise CuratedMappingError("transition note is required")
     if not isinstance(drafts, list) or not drafts:
         raise CuratedMappingError("at least one replacement mapping is required")
 
@@ -834,9 +872,6 @@ def replace_all_mappings(
         ):
             replaced_rows.append(dict(row))
             row["mapping_status"] = "excluded"
-            row["review_note"] = _append_audit_note(
-                row.get("review_note"), "Replaced", review_note
-            )
             row["updated_at"] = _timestamp()
 
     created = []
@@ -845,9 +880,9 @@ def replace_all_mappings(
     institution_resolutions = []
     for draft in drafts:
         candidate_draft = dict(draft)
-        candidate_draft.setdefault("review_note", review_note)
         candidate = _mapping_fields(paper, candidate_draft)
         resolution = _resolve_mapping_institution(candidate, institutions, aliases)
+        _resolve_mapping_location(candidate, institution_locations_path)
         duplicate = _duplicate_mapping(candidate, rows)
         if duplicate:
             raise DuplicateMappingError(duplicate)
@@ -917,7 +952,7 @@ def replace_all_mappings(
                         {**replacement, "institution_authors": author},
                         change_source="admin_replace_all_mappings",
                         created_by=changed_by,
-                        review_note=review_note,
+                        review_note=transition_note,
                         audit_path=institution_audit_path,
                     )
                 for author in previous_authors:
@@ -926,7 +961,7 @@ def replace_all_mappings(
                     append_confirmed_mapping_removal_audit(
                         {**previous, "institution_authors": author},
                         created_by=changed_by,
-                        review_note=review_note,
+                        review_note=transition_note,
                         audit_path=institution_audit_path,
                     )
     except Exception as error:

@@ -23,6 +23,7 @@ from scripts.export_public_preview import (
     public_canonical_institution_search_index,
     public_institution_aliases,
     institution_id_redirects,
+    preserve_map_relationships_after_integration,
     synchronize_publication_types,
 )
 from scripts.country_normalization import normalize_country_region
@@ -40,6 +41,51 @@ from scripts.validate_public_preview import (
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_preserve_existing_reapplies_after_curated_precedence(self):
+        previous = [{
+            "id": "legacy:1",
+            "paper_id": "paper:1",
+            "institution_id": "institution:1",
+            "institution_authors": ["Ada Example"],
+        }]
+        integrated = [{
+            "id": "curated:1",
+            "paper_id": "paper:1",
+            "institution_id": "institution:1",
+            "mapping_id": "mapping:1",
+            "institution_authors": ["Ada E. Example"],
+        }]
+        records = preserve_map_relationships_after_integration(
+            previous,
+            integrated,
+            exclusion_rows=[],
+            merge_rows=[],
+            review_decisions=[],
+        )
+        self.assertEqual([row["id"] for row in records], ["legacy:1", "curated:1"])
+
+    def test_public_mapping_exports_omit_obsolete_mapping_fields(self):
+        obsolete = {
+            "evidence_source", "evidence_url", "affiliation_note", "review_note"
+        }
+        root = Path(__file__).resolve().parents[1]
+        for filename in (
+            "public_preview_papers.json", "public_preview_map_data.json"
+        ):
+            payload = json.loads((root / "web/data" / filename).read_text())
+            mapping_records = [
+                record for record in payload["records"]
+                if record.get("mapping_id")
+            ]
+            mapping_records.extend(
+                mapping
+                for record in payload["records"]
+                for mapping in record.get("curated_mappings", [])
+                if isinstance(mapping, dict)
+            )
+            self.assertTrue(mapping_records)
+            self.assertTrue(all(set(mapping).isdisjoint(obsolete) for mapping in mapping_records))
+
     def test_exact_map_relationships_and_author_names_are_deduplicated(self):
         records = [
             {
@@ -130,8 +176,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         ]
         self.assertEqual({row["mapping_id"] for row in mappings}, mapping_ids)
         self.assertTrue(all(row["mapping_status"] == "active" for row in mappings))
-        self.assertTrue(all(row["evidence_source"] for row in mappings))
-        self.assertTrue(all(row["evidence_url"] for row in mappings))
+        self.assertTrue(all(row["raw_affiliation"] for row in mappings))
 
         papers = [
             {

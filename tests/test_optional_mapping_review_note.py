@@ -17,6 +17,7 @@ from scripts.curated_schema import (
     INSTITUTION_ALIAS_COLUMNS,
     INSTITUTION_AUDIT_COLUMNS,
     INSTITUTION_COLUMNS,
+    INSTITUTION_LOCATION_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
 )
 from scripts.validate_curated_database import validate_mapping_evidence
@@ -27,17 +28,39 @@ def write_empty_csv(path, columns):
         csv.DictWriter(handle, fieldnames=columns).writeheader()
 
 
-class OptionalMappingReviewNoteTests(unittest.TestCase):
+class SimplifiedMappingSchemaTests(unittest.TestCase):
     def setUp(self):
         self.temporary_directory = tempfile.TemporaryDirectory()
         directory = Path(self.temporary_directory.name)
         self.mappings_path = directory / "mappings.csv"
         self.locations_path = directory / "locations.csv"
+        self.confirmed_locations_path = directory / "confirmed_locations.csv"
         self.institutions_path = directory / "institutions.csv"
         self.aliases_path = directory / "aliases.csv"
         self.audits_path = directory / "audits.csv"
         write_empty_csv(self.mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
         write_empty_csv(self.locations_path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
+        institution_id = stable_institution_id("Example University")
+        with self.confirmed_locations_path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=INSTITUTION_LOCATION_COLUMNS)
+            writer.writeheader()
+            for location_id, city, lat, lon in (
+                ("location:shanghai", "Shanghai", "31.2304", "121.4737"),
+                ("location:beijing", "Beijing", "39.9042", "116.4074"),
+                ("location:old", "Old City", "10", "20"),
+                ("location:new", "New City", "11", "21"),
+            ):
+                writer.writerow({
+                    **{column: "" for column in INSTITUTION_LOCATION_COLUMNS},
+                    "location_id": location_id,
+                    "institution_id": institution_id,
+                    "institution": "Example University",
+                    "city": city,
+                    "country": "Example Country",
+                    "lat": lat,
+                    "lon": lon,
+                    "coordinate_status": "known",
+                })
         write_empty_csv(self.institutions_path, INSTITUTION_COLUMNS)
         write_empty_csv(self.aliases_path, INSTITUTION_ALIAS_COLUMNS)
         write_empty_csv(self.audits_path, INSTITUTION_AUDIT_COLUMNS)
@@ -49,7 +72,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         self.draft = {
             "institution": "Example University",
             "institution_authors": "Researcher One",
-            "evidence_source": "Publisher PDF",
+            "raw_affiliation": "Department of Vision, Example University",
         }
 
     def tearDown(self):
@@ -82,6 +105,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             location_review_path=self.locations_path,
             institutions_path=self.institutions_path,
             institution_aliases_path=self.aliases_path,
+            institution_locations_path=self.confirmed_locations_path,
         )["mapping"]
 
     def update(self, mapping_id, draft):
@@ -94,32 +118,60 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             location_review_path=self.locations_path,
             institutions_path=self.institutions_path,
             institution_aliases_path=self.aliases_path,
+            institution_locations_path=self.confirmed_locations_path,
             institution_audit_path=self.audits_path,
         )["mapping"]
 
-    def test_create_accepts_empty_missing_and_null_review_note(self):
-        for index, note in enumerate(("", None, "missing")):
-            draft = {
-                **self.draft,
-                "institution": f"Example University {index}",
-            }
-            if note != "missing":
-                draft["review_note"] = note
-            self.assertEqual(self.create(draft)["review_note"], "")
+    def test_create_and_update_drop_obsolete_payload_fields(self):
+        obsolete = {
+            "evidence_source": "Publisher PDF",
+            "evidence_url": "https://example.test/paper.pdf",
+            "affiliation_note": "Legacy duplicate note",
+            "review_note": "Legacy mapping note",
+        }
+        mapping = self.create({**self.draft, **obsolete})
+        self.assertTrue(set(mapping).isdisjoint(obsolete))
+        updated = self.update(mapping["mapping_id"], {**self.draft, **obsolete})
+        self.assertEqual(updated["mapping_id"], mapping["mapping_id"])
+        self.assertTrue(set(load_mappings(self.mappings_path)[0]).isdisjoint(obsolete))
 
-    def test_update_can_clear_review_note(self):
-        mapping = self.create({**self.draft, "review_note": "Confirmed in PDF"})
-        updated = self.update(mapping["mapping_id"], {**self.draft, "review_note": ""})
-        self.assertEqual(updated["review_note"], "")
+    def test_legacy_csv_header_is_loaded_and_migrated_without_losing_rows(self):
+        obsolete = ["evidence_source", "evidence_url", "affiliation_note", "review_note"]
+        legacy_columns = list(AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+        insertion = legacy_columns.index("mapping_status")
+        legacy_columns[insertion:insertion] = obsolete
+        legacy = {
+            **{column: "" for column in legacy_columns},
+            "mapping_id": "mapping:legacy",
+            "paper_id": self.paper["paper_id"],
+            "title": self.paper["title"],
+            "year": self.paper["year"],
+            "institution": "Example University",
+            "institution_id": stable_institution_id("Example University"),
+            "institution_authors": "Researcher One",
+            "raw_affiliation": self.draft["raw_affiliation"],
+            "mapping_status": "active",
+            "created_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-01T00:00:00Z",
+            "evidence_source": "legacy source",
+            "evidence_url": "https://example.test/legacy",
+            "affiliation_note": "legacy affiliation note",
+            "review_note": "legacy review note",
+        }
+        with self.mappings_path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=legacy_columns)
+            writer.writeheader()
+            writer.writerow(legacy)
 
-    def test_update_preserves_note_when_field_is_omitted(self):
-        mapping = self.create({**self.draft, "review_note": "Confirmed in PDF"})
-        updated = self.update(
-            mapping["mapping_id"],
-            {**self.draft, "evidence_source": "Author page"},
-        )
-        self.assertEqual(updated["review_note"], "Confirmed in PDF")
-        self.assertEqual(load_mappings(self.mappings_path)[0]["review_note"], "Confirmed in PDF")
+        loaded = load_mappings(self.mappings_path)
+        self.assertEqual([row["mapping_id"] for row in loaded], ["mapping:legacy"])
+        from scripts.curated_mappings import save_mappings
+        save_mappings(loaded, self.mappings_path)
+        with self.mappings_path.open(encoding="utf-8", newline="") as handle:
+            reader = csv.DictReader(handle)
+            rows = list(reader)
+        self.assertEqual(tuple(reader.fieldnames), AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+        self.assertEqual([row["mapping_id"] for row in rows], ["mapping:legacy"])
 
     def test_alias_only_edit_keeps_canonical_identity_without_change_audit(self):
         canonical = "Polytechnic University of Hauts-de-France"
@@ -149,6 +201,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             "provenance_source": "manually_confirmed",
         })
 
+        self.assertEqual(updated["mapping_id"], mapping["mapping_id"])
         self.assertEqual(updated["institution_id"], mapping["institution_id"])
         self.assertEqual(updated["institution"], canonical)
         with self.audits_path.open(encoding="utf-8", newline="") as handle:
@@ -193,6 +246,29 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         self.assertEqual(audit["previous_mapping_id"], mapping["mapping_id"])
         self.assertEqual(audit["previous_institution_id"], mapping["institution_id"])
         self.assertEqual(audit["previous_authors"], "Researcher One")
+        self.assertEqual(audit["review_note"], "Reviewed true removal.")
+
+    def test_mapping_update_preserves_dedicated_location_review_evidence(self):
+        mapping = self.create(self.draft)
+        with self.locations_path.open(encoding="utf-8", newline="") as handle:
+            review = next(csv.DictReader(handle))
+        review.update({
+            "evidence_source": "Dedicated location source",
+            "evidence_url": "https://example.test/location",
+            "review_note": "Protected coordinate review evidence.",
+        })
+        with self.locations_path.open("w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=INSTITUTION_LOCATION_REVIEW_COLUMNS)
+            writer.writeheader()
+            writer.writerow(review)
+
+        self.update(mapping["mapping_id"], self.draft)
+
+        with self.locations_path.open(encoding="utf-8", newline="") as handle:
+            saved = next(csv.DictReader(handle))
+        self.assertEqual(saved["evidence_source"], "Dedicated location source")
+        self.assertEqual(saved["evidence_url"], "https://example.test/location")
+        self.assertEqual(saved["review_note"], "Protected coordinate review evidence.")
 
     def test_replace_all_writes_author_scoped_replacement_evidence(self):
         mapping = self.create({
@@ -217,6 +293,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             location_review_path=self.locations_path,
             institutions_path=self.institutions_path,
             institution_aliases_path=self.aliases_path,
+            institution_locations_path=self.confirmed_locations_path,
             institution_audit_path=self.audits_path,
         )
         with self.audits_path.open(encoding="utf-8", newline="") as handle:
@@ -233,11 +310,15 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
             and row["location_id"] == "location:new"
             for row in audits
         ))
+        self.assertTrue(all(
+            row["review_note"] == "Reviewed location replacement."
+            for row in audits
+        ))
 
     def test_other_required_fields_remain_required(self):
         for field in ("institution", "institution_authors"):
             with self.subTest(field=field), self.assertRaises(CuratedMappingError):
-                self.create({**self.draft, field: "", "review_note": ""})
+                self.create({**self.draft, field: ""})
 
     def test_create_registers_unknown_institution_before_writing_mapping(self):
         result = create_mapping(
@@ -252,17 +333,17 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
         self.assertEqual(result["institution_resolution"], "provisional")
         self.assertEqual(result["mapping"]["institution_id"], stable_institution_id("Unregistered University"))
 
-    def test_active_mapping_with_empty_review_note_passes_database_validation(self):
+    def test_active_mapping_with_raw_affiliation_passes_database_validation(self):
         issues = []
 
         validate_mapping_evidence(
-            [{**self.draft, "mapping_status": "active", "review_note": ""}],
+            [{**self.draft, "mapping_status": "active"}],
             issues,
         )
 
         self.assertEqual(issues, [])
 
-    def test_active_mapping_with_review_note_passes_database_validation(self):
+    def test_active_mapping_without_raw_affiliation_uses_paper_level_provenance(self):
         issues = []
 
         validate_mapping_evidence(
@@ -270,7 +351,7 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
                 {
                     **self.draft,
                     "mapping_status": "active",
-                    "review_note": "Confirmed in publisher PDF",
+                    "raw_affiliation": "",
                 }
             ],
             issues,
@@ -278,17 +359,25 @@ class OptionalMappingReviewNoteTests(unittest.TestCase):
 
         self.assertEqual(issues, [])
 
-    def test_frontend_marks_only_review_note_optional(self):
-        html = (
-            Path(__file__).resolve().parents[1] / "web" / "admin.html"
-        ).read_text()
-        self.assertIn("Review note (optional)", html)
-        self.assertIn('id="mapping-review-note" rows="3"></textarea>', html)
+    def test_frontend_uses_compact_mapping_fields_and_no_obsolete_payload_keys(self):
+        root = Path(__file__).resolve().parents[1]
+        html = (root / "web" / "admin.html").read_text()
+        javascript = (root / "web" / "admin.js").read_text()
+        for field in ("evidence-source", "evidence-url", "affiliation-note", "review-note"):
+            self.assertNotIn(f"mapping-{field}", html)
+            self.assertNotIn(f"mapping-{field}", javascript)
+        mapping_draft = javascript.split("function mappingDraft()", 1)[1].split(
+            "async function submitMapping", 1
+        )[0]
+        for key in ("evidence_source", "evidence_url", "affiliation_note", "review_note"):
+            self.assertNotIn(key, mapping_draft)
         self.assertIn('id="mapping-institution" type="text" list="mapping-institution-options" required', html)
+        self.assertIn('id="mapping-location-id" disabled', html)
         self.assertIn(
             'id="mapping-authors" type="text" placeholder="Separate authors with semicolons" required',
             html,
         )
+        self.assertIn('id="mapping-raw-affiliation" rows="2"', html)
 
 
 if __name__ == "__main__":

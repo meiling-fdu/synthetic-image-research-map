@@ -65,11 +65,8 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
                 "Research Institute of Intelligent Computing, Zhejiang Lab, "
                 "Hangzhou, China"
             ),
-            "evidence_source": "Publisher PDF",
-            "evidence_url": "https://example.test/paper.pdf",
-            "affiliation_note": "Authors list Zhejiang Lab.",
             "mapping_status": "needs_review",
-            "review_note": "Optional confirmation note.",
+            "review_note": "Location review fixture evidence.",
         }
 
     def tearDown(self):
@@ -142,9 +139,10 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
         mapping = load_mappings(self.mappings)[0]
         self.assertEqual(mapping["institution_authors"], self.draft["institution_authors"])
         self.assertEqual(mapping["raw_affiliation"], self.draft["raw_affiliation"])
-        self.assertEqual(mapping["evidence_url"], self.draft["evidence_url"])
         self.assertEqual(mapping["mapping_status"], "needs_review")
-        self.assertEqual(mapping["review_note"], self.draft["review_note"])
+        self.assertTrue(set(mapping).isdisjoint({
+            "evidence_source", "evidence_url", "affiliation_note", "review_note"
+        }))
         review = load_location_reviews(self.reviews)[0]
         self.assertEqual(review["institution_id"], identifier)
         self.assertEqual(review["review_status"], "needs_coordinates")

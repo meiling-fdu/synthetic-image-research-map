@@ -1710,8 +1710,6 @@ def deduplicate_public_map_relationships(
                     existing_author_keys.add(author_key)
             for field in (
                 "mapping_id",
-                "evidence_source",
-                "evidence_url",
                 "raw_affiliation",
                 "coordinate_source",
                 "coordinate_source_url",
@@ -2447,6 +2445,30 @@ def merge_existing_records(
     return [merged[key] for key in order]
 
 
+def preserve_map_relationships_after_integration(
+    previous: Sequence[Dict[str, Any]],
+    integrated: Sequence[Dict[str, Any]],
+    *,
+    exclusion_rows: Sequence[Mapping[str, Any]],
+    merge_rows: Sequence[Mapping[str, Any]],
+    review_decisions: Sequence[Mapping[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Retain unexplained published relationships after curated precedence.
+
+    The initial no-search merge happens before curated mappings are integrated.
+    Reapply the same durable-removal filters afterward so precedence cannot
+    silently discard a still-protected published relationship.
+    """
+    preserved = filter_preserved_records(
+        previous,
+        map_records=True,
+        exclusion_rows=exclusion_rows,
+        merge_rows=merge_rows,
+        review_decisions=review_decisions,
+    )
+    return merge_existing_records(preserved, integrated, map_records=True)
+
+
 def has_resolved_coordinate_metadata(record: Dict[str, Any]) -> bool:
     """Return whether coordinates came through a resolution/manual layer."""
     method = clean_text(record.get("resolution_method")).casefold()
@@ -2851,17 +2873,31 @@ def commit_public_outputs(
 
 
 def strip_retired_paper_fields(records: Sequence[Dict[str, Any]]) -> int:
-    """Remove retired paper-level keys from preserved legacy public data.
-
-    This is intentionally shallow: nested mapping, institution, and location
-    review notes are protected audit evidence and remain serialized.
-    """
+    """Remove retired paper and paper-mapping keys from public records."""
     removed = 0
     for record in records:
         for field in ("subtask", "review_note"):
             if field in record:
                 record.pop(field)
                 removed += 1
+        mapping_records = []
+        if clean_text(record.get("mapping_id")):
+            mapping_records.append(record)
+        if isinstance(record.get("curated_mappings"), list):
+            mapping_records.extend(
+                mapping for mapping in record["curated_mappings"]
+                if isinstance(mapping, dict)
+            )
+        for mapping in mapping_records:
+            for field in (
+                "evidence_source",
+                "evidence_url",
+                "affiliation_note",
+                "review_note",
+            ):
+                if field in mapping:
+                    mapping.pop(field)
+                    removed += 1
     return removed
 
 
@@ -4123,6 +4159,24 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         integrated_maps, exact_map_relationships_deduplicated = (
             deduplicate_public_map_relationships(integrated_maps)
         )
+        if args.preserve_existing and previous_maps:
+            integrated_maps = preserve_map_relationships_after_integration(
+                previous_maps,
+                integrated_maps,
+                exclusion_rows=exclusion_rows,
+                merge_rows=version_merge_rows,
+                review_decisions=review_decisions,
+            )
+            (
+                integrated_papers,
+                integrated_maps,
+                post_integration_ignored_records,
+            ) = exclude_nonpublic_institutions(
+                integrated_papers,
+                integrated_maps,
+                institution_rows,
+            )
+            ignored_institution_records += post_integration_ignored_records
         apply_ordered_paper_location_summaries(
             integrated_papers, integrated_maps
         )

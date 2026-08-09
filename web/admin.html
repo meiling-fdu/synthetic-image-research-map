@@ -626,10 +626,9 @@
                     <tr>
                       <th>Institution</th>
                       <th>Institution authors</th>
-                      <th>Evidence</th>
+                      <th>Raw affiliation</th>
                       <th>Status</th>
                       <th>Location</th>
-                      <th>Review note</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -646,10 +645,9 @@
                       <tr>
                         <th>Institution</th>
                         <th>Institution authors</th>
-                        <th>Evidence</th>
+                        <th>Raw affiliation</th>
                         <th>Historical status</th>
                         <th>Location</th>
-                        <th>Audit note</th>
                         <th>Availability</th>
                       </tr>
                     </thead>
@@ -903,20 +901,17 @@
             <datalist id="mapping-institution-options"></datalist>
             <span class="field-help">Choose a canonical institution or enter a new name to add it to Needs Coordinates.</span>
           </label>
+          <label>Location
+            <select id="mapping-location-id" disabled>
+              <option value="">Select an institution first</option>
+            </select>
+            <span class="field-help" id="mapping-location-help">Locations are confirmed offices belonging to the selected institution.</span>
+          </label>
           <label>Institution authors
             <input id="mapping-authors" type="text" placeholder="Separate authors with semicolons" required>
           </label>
           <label class="full-width">Raw affiliation
-            <textarea id="mapping-raw-affiliation" rows="3"></textarea>
-          </label>
-          <label>Evidence source
-            <input id="mapping-evidence-source" type="text" placeholder="Publisher PDF, author page, OpenAlex…">
-          </label>
-          <label>Evidence URL
-            <input id="mapping-evidence-url" type="url" placeholder="https://…">
-          </label>
-          <label class="full-width">Affiliation note
-            <textarea id="mapping-affiliation-note" rows="2"></textarea>
+            <textarea id="mapping-raw-affiliation" rows="2"></textarea>
           </label>
           <label>Mapping status
             <select id="mapping-status">
@@ -925,8 +920,8 @@
             </select>
           </label>
         </div>
-        <label><span id="mapping-review-note-label">Review note (optional)</span>
-          <textarea id="mapping-review-note" rows="3"></textarea>
+        <label id="mapping-transition-note-field" hidden>Transition justification
+          <textarea id="mapping-transition-note" rows="2"></textarea>
         </label>
         <label class="replace-confirmation" id="mapping-replace-confirmation" hidden>
           <input id="mapping-confirm-replace" type="checkbox">

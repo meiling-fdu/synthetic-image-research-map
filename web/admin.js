@@ -159,14 +159,13 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "mapping-institution",
     "mapping-institution-id",
     "mapping-institution-options",
+    "mapping-location-id",
+    "mapping-location-help",
     "mapping-authors",
     "mapping-raw-affiliation",
-    "mapping-evidence-source",
-    "mapping-evidence-url",
-    "mapping-affiliation-note",
     "mapping-status",
-    "mapping-review-note",
-    "mapping-review-note-label",
+    "mapping-transition-note-field",
+    "mapping-transition-note",
     "mapping-replace-confirmation",
     "mapping-confirm-replace",
     "mapping-form-error",
@@ -459,7 +458,10 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   });
   elements["mapping-cancel"].addEventListener("click", closeMappingDialog);
   elements["mapping-form"].addEventListener("submit", submitMapping);
-  elements["mapping-institution"].addEventListener("input", syncMappingInstitutionId);
+  elements["mapping-institution"].addEventListener("input", () => {
+    syncMappingInstitutionId();
+    renderMappingLocationOptions();
+  });
   [
     ["run-curated-validation", "/api/run-curated-validation", "Curated validation"],
     ["run-export-preview", "/api/export-preview", "Preview export"],
@@ -1638,9 +1640,7 @@ function openInstitutionEvidence(item) {
       ["Provenance source", mapping.provenance_source || mapping.provenance],
       ["Mapping status", mapping.mapping_status],
       ["Review status", mapping.review_status],
-      ["Evidence source", mapping.evidence_source],
-      ["Evidence link", evidenceLink("Open evidence", mapping.evidence_url)],
-      ["Review history", mapping.review_note],
+      ["Raw affiliation", mapping.raw_affiliation],
     ]);
   });
   if (!(evidence.current_mappings || []).length) mappingsSection.append(evidenceList([]));
@@ -1655,7 +1655,6 @@ function openInstitutionEvidence(item) {
       ["Mapping status", mapping.mapping_status],
       ["Provenance source", mapping.provenance_source || mapping.provenance],
       ["Raw affiliation", mapping.raw_affiliation],
-      ["Audit history", mapping.review_note],
     ]);
   });
   if (!(evidence.historical_mappings || []).length) historicalSection.append(evidenceList([]));
@@ -4015,7 +4014,6 @@ function startPaperDraft(candidate, source) {
       provenance_source: text(
         candidate.evidence_source || "Manual import review",
       ),
-      evidence_url: text(candidate.evidence_url || candidate.paper_url),
     }];
   }
   elements["paper-draft-form"].reset();
@@ -5272,23 +5270,12 @@ function renderMappings(payload) {
   body.replaceChildren();
   currentMappings.forEach((mapping) => {
     const row = document.createElement("tr");
-    const evidence = [
-      mapping.raw_affiliation,
-      mapping.openalex_institution_id,
-      [mapping.institution_city, mapping.institution_country].filter(Boolean).join(", "),
-      [mapping.institution_latitude, mapping.institution_longitude].filter(Boolean).join(", "),
-      mapping.provenance_source,
-      mapping.evidence_source,
-      mapping.evidence_url,
-      mapping.affiliation_note,
-    ].filter(Boolean).join(" · ");
     [
       mapping.institution,
       mapping.institution_authors,
-      evidence,
+      mapping.raw_affiliation,
       humanize(mapping.mapping_status),
       humanize(mapping.location_status),
-      mapping.review_note,
     ].forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent = text(value) || "—";
@@ -5317,17 +5304,7 @@ function renderMappings(payload) {
   historicalMappings.forEach((mapping) => {
     const row = document.createElement("tr");
     row.className = "historical-mapping-row";
-    const evidence = [
-      mapping.raw_affiliation,
-      mapping.openalex_institution_id,
-      [mapping.institution_city, mapping.institution_country].filter(Boolean).join(", "),
-      [mapping.institution_latitude, mapping.institution_longitude].filter(Boolean).join(", "),
-      mapping.provenance_source,
-      mapping.evidence_source,
-      mapping.evidence_url,
-      mapping.affiliation_note,
-    ].filter(Boolean).join(" · ");
-    [mapping.institution, mapping.institution_authors, evidence].forEach((value) => {
+    [mapping.institution, mapping.institution_authors, mapping.raw_affiliation].forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent = text(value) || "—";
       row.append(cell);
@@ -5336,7 +5313,6 @@ function renderMappings(payload) {
     const status = document.createElement("td");
     status.className = "historical-mapping-labels";
     const labels = ["Excluded"];
-    if (/\bReplaced:/i.test(text(mapping.review_note))) labels.push("Replaced");
     labels.push("Retained for audit history");
     labels.forEach((label) => {
       const badge = document.createElement("span");
@@ -5346,11 +5322,9 @@ function renderMappings(payload) {
     });
     row.append(status);
 
-    [humanize(mapping.location_status), mapping.review_note].forEach((value) => {
-      const cell = document.createElement("td");
-      cell.textContent = text(value) || "—";
-      row.append(cell);
-    });
+    const location = document.createElement("td");
+    location.textContent = humanize(mapping.location_status) || "—";
+    row.append(location);
     const availability = document.createElement("td");
     availability.className = "historical-mapping-availability";
     availability.textContent = "Audit record — not a current affiliation";
@@ -5377,19 +5351,12 @@ function openMappingDialog(mode, mapping = {}) {
   elements["mapping-institution"].value = text(mapping.institution);
   elements["mapping-institution-id"].value = text(mapping.institution_id);
   renderMappingInstitutionOptions();
+  renderMappingLocationOptions(text(mapping.location_id));
   elements["mapping-authors"].value = text(mapping.institution_authors);
   elements["mapping-raw-affiliation"].value = text(mapping.raw_affiliation);
-  elements["mapping-evidence-source"].value = text(mapping.evidence_source);
-  elements["mapping-evidence-url"].value = text(mapping.evidence_url);
-  elements["mapping-affiliation-note"].value = text(mapping.affiliation_note);
   elements["mapping-status"].value =
     mapping.mapping_status === "needs_review" ? "needs_review" : "active";
-  elements["mapping-review-note"].value =
-    mode === "update" ? text(mapping.review_note) : "";
-  elements["mapping-review-note"].required = mode === "replace";
-  elements["mapping-review-note-label"].textContent = mode === "replace"
-    ? "Review note (required for replacement)"
-    : "Review note (optional)";
+  elements["mapping-transition-note"].value = "";
   elements["mapping-form-error"].hidden = true;
 
   const excluding = mode === "exclude";
@@ -5399,6 +5366,8 @@ function openMappingDialog(mode, mapping = {}) {
   elements["mapping-authors"].required = !excluding;
   elements["mapping-exclude-warning"].hidden = !excluding;
   elements["mapping-replace-warning"].hidden = !replacing;
+  elements["mapping-transition-note-field"].hidden = !(excluding || replacing);
+  elements["mapping-transition-note"].required = excluding || replacing;
   elements["mapping-replace-confirmation"].hidden = !replacing;
   elements["mapping-confirm-replace"].required = replacing;
 
@@ -5420,7 +5389,7 @@ function openMappingDialog(mode, mapping = {}) {
     mode === "exclude" ? "danger-button" : "primary-button";
   elements["mapping-dialog"].showModal();
   (excluding
-    ? elements["mapping-review-note"]
+    ? elements["mapping-transition-note"]
     : elements["mapping-institution"]
   ).focus();
 }
@@ -5449,6 +5418,51 @@ function syncMappingInstitutionId() {
     matches.length === 1 ? text(matches[0].institution_id) : "";
 }
 
+function mappingLocationLabel(location) {
+  return [location.city, location.region, location.country]
+    .map(text).filter(Boolean).join(", ");
+}
+
+function validMappingLocations(institution) {
+  return (institution?.locations || []).filter((location) => (
+    text(location.coordinate_status) === "known"
+    && text(location.location_id)
+    && Number.isFinite(Number(location.lat))
+    && Number.isFinite(Number(location.lon))
+  ));
+}
+
+function renderMappingLocationOptions(selectedLocationId = "") {
+  const institution = selectedMappingInstitution();
+  const locations = validMappingLocations(institution);
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = !institution
+    ? "Select an institution first"
+    : locations.length
+      ? "Select a confirmed location"
+      : "No confirmed locations available";
+  const options = locations.map((location) => {
+    const option = document.createElement("option");
+    option.value = text(location.location_id);
+    option.textContent = mappingLocationLabel(location) || option.value;
+    return option;
+  });
+  elements["mapping-location-id"].replaceChildren(placeholder, ...options);
+  elements["mapping-location-id"].disabled = !institution || locations.length === 0;
+  const requested = text(selectedLocationId);
+  if (requested && locations.some((row) => text(row.location_id) === requested)) {
+    elements["mapping-location-id"].value = requested;
+  } else if (locations.length === 1) {
+    elements["mapping-location-id"].value = text(locations[0].location_id);
+  } else {
+    elements["mapping-location-id"].value = "";
+  }
+  elements["mapping-location-help"].textContent = locations.length > 1
+    ? "Multiple confirmed locations exist; choose the office supported by this paper."
+    : "Locations are confirmed offices belonging to the selected institution.";
+}
+
 function mappingInstitutionLocationLabel(institution) {
   const location = institution.location || {};
   return [
@@ -5459,9 +5473,7 @@ function mappingInstitutionLocationLabel(institution) {
 }
 
 function institutionContextLabel(institution) {
-  const name = text(institution.canonical_name);
-  const location = mappingInstitutionLocationLabel(institution);
-  return `${name}${location ? ` — ${location}` : ""}`;
+  return text(institution.canonical_name);
 }
 
 function mappingInstitutionOptionValue(institution) {
@@ -5498,14 +5510,11 @@ function mappingDraft() {
       ? text(selectedInstitution.canonical_name)
       : elements["mapping-institution"].value.trim(),
     institution_id: elements["mapping-institution-id"].value,
+    location_id: elements["mapping-location-id"].value,
     institution_authors: elements["mapping-authors"].value.trim(),
     raw_affiliation: elements["mapping-raw-affiliation"].value,
-    evidence_source: elements["mapping-evidence-source"].value.trim(),
-    evidence_url: elements["mapping-evidence-url"].value.trim(),
-    affiliation_note: elements["mapping-affiliation-note"].value.trim(),
     provenance_source: "manually_confirmed",
     mapping_status: elements["mapping-status"].value,
-    review_note: elements["mapping-review-note"].value.trim(),
   };
 }
 
@@ -5514,14 +5523,6 @@ async function submitMapping(event) {
   const mode = elements["mapping-mode"].value;
   const draft = mappingDraft();
   elements["mapping-form-error"].hidden = true;
-  if (mode !== "exclude" && !(
-    draft.raw_affiliation || draft.evidence_source || draft.evidence_url
-  )) {
-    elements["mapping-form-error"].hidden = false;
-    elements["mapping-form-error"].textContent =
-      "Enter a raw affiliation, evidence source, or evidence URL.";
-    return;
-  }
   if (mode !== "exclude" && !draft.institution_id) {
     const matches = mappingInstitutionMatches(elements["mapping-institution"].value);
     if (matches.length > 1) {
@@ -5549,11 +5550,18 @@ async function submitMapping(event) {
     mapping_id: elements["mapping-id"].value,
     ...draft,
   };
+  if (mode === "exclude") {
+    body = {
+      id: state.selectedId,
+      mapping_id: elements["mapping-id"].value,
+      transition_note: elements["mapping-transition-note"].value.trim(),
+    };
+  }
   if (mode === "replace") {
     body = {
       id: state.selectedId,
       confirm_replace_all: true,
-      review_note: draft.review_note,
+      transition_note: elements["mapping-transition-note"].value.trim(),
       mappings: [draft],
     };
   }

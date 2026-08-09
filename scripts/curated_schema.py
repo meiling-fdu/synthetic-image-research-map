@@ -55,6 +55,13 @@ VENUE_ALIAS_COLUMNS = (
     "notes",
 )
 
+OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS = frozenset({
+    "evidence_source",
+    "evidence_url",
+    "affiliation_note",
+    "review_note",
+})
+
 AUTHOR_INSTITUTION_MAPPING_COLUMNS = (
     "mapping_id",
     "paper_id",
@@ -74,11 +81,7 @@ AUTHOR_INSTITUTION_MAPPING_COLUMNS = (
     "institution_latitude",
     "institution_longitude",
     "provenance_source",
-    "evidence_source",
-    "evidence_url",
-    "affiliation_note",
     "mapping_status",
-    "review_note",
     "created_at",
     "updated_at",
 )

@@ -7,6 +7,7 @@ from pathlib import Path
 from scripts.export_public_preview import identity_key
 from tests.baseline_expectations import (
     ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS,
+    CANONICAL_INSTITUTION_STATUS_TOTALS,
     CANONICAL_INSTITUTION_TYPE_TOTALS,
     CURRENT_REPOSITORY_BASELINE,
     INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS,
@@ -121,7 +122,7 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
 
     def test_status_and_type_totals_reconcile_their_declared_populations(self):
         statuses = Counter(row["institution_status"] for row in self.institutions)
-        self.assertEqual(statuses, {"active": 593, "merged": 1, "ignored": 1})
+        self.assertEqual(statuses, CANONICAL_INSTITUTION_STATUS_TOTALS)
         self.assertEqual(
             Counter(row["institution_type"] for row in self.institutions),
             CANONICAL_INSTITUTION_TYPE_TOTALS,

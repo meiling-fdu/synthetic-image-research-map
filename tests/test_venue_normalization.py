@@ -70,6 +70,26 @@ class VenueNormalizationTests(unittest.TestCase):
         self.assertEqual(workshop.venue_id, "venue:wacv")
         self.assertEqual((main.venue_track, workshop.venue_track), ("main", "workshops"))
 
+    def test_iccv_workshops_and_icip_editions_reuse_canonical_ids(self):
+        iccv_workshop = self.resolve(
+            "2023 IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)"
+        )
+        icip = self.resolve(
+            "2024 IEEE International Conference on Image Processing (ICIP)"
+        )
+        self.assertEqual(iccv_workshop.venue_id, "venue:iccv")
+        self.assertEqual(iccv_workshop.venue_acronym, "ICCV")
+        self.assertEqual(iccv_workshop.venue_track, "workshops")
+        self.assertEqual(
+            icip.venue_id,
+            "venue:ieee-international-conference-on-image-processing",
+        )
+        self.assertEqual(
+            icip.venue_name,
+            "IEEE International Conference on Image Processing",
+        )
+        self.assertEqual(icip.venue_track, "main")
+
     def test_ijcnn_variants_resolve_to_one_main_venue(self):
         variants = [
             "International Joint Conference on Neural Networks",
