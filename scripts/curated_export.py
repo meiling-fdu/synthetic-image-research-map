@@ -387,6 +387,59 @@ def _ordered_mapping_authors(
                 seen_mapping_keys.add(key)
         return ordered_mapping_authors
 
+    # Curated legacy rows sometimes mix comma-delimited rosters with
+    # ``Family, Given`` names, or retain two mapped authors in one comma-joined
+    # field. Reconstruct a boundary only when the active mapping author set
+    # proves one unique interpretation; otherwise preserve the source text.
+    reconciled_authors = []
+    index = 0
+    while index < len(paper_authors):
+        author = paper_authors[index]
+        whole_matches = [
+            candidate for candidate in mapping_authors
+            if names_match(author, candidate)
+        ]
+        if len(whole_matches) == 1:
+            reconciled_authors.append(author)
+            index += 1
+            continue
+
+        comma_parts = [clean(part) for part in author.split(",") if clean(part)]
+        part_matches = [
+            [
+                candidate for candidate in mapping_authors
+                if names_match(part, candidate)
+            ]
+            for part in comma_parts
+        ]
+        if (
+            len(comma_parts) > 1
+            and all(len(matches) == 1 for matches in part_matches)
+            and len({matches[0] for matches in part_matches}) == len(part_matches)
+        ):
+            reconciled_authors.extend(matches[0] for matches in part_matches)
+            index += 1
+            continue
+
+        if (
+            index + 1 < len(paper_authors)
+            and len(canonical_name_key(author).split()) == 1
+            and len(canonical_name_key(paper_authors[index + 1]).split()) == 1
+        ):
+            combined = f"{author} {paper_authors[index + 1]}"
+            combined_matches = [
+                candidate for candidate in mapping_authors
+                if names_match(combined, candidate)
+            ]
+            if len(combined_matches) == 1:
+                reconciled_authors.append(combined_matches[0])
+                index += 2
+                continue
+
+        reconciled_authors.append(author)
+        index += 1
+
+    paper_authors = reconciled_authors
     ordered = []
     seen = set()
     ambiguous_author_line = (

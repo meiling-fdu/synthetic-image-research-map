@@ -23,6 +23,17 @@ class NameMatchingTests(unittest.TestCase):
         self.assertTrue(names_match("Jordan J Bird", "Jordan James Bird"))
         self.assertTrue(names_match("Bird J Jordan", "Jordan James Bird"))
 
+    def test_supports_unique_two_token_initial_matching(self):
+        self.assertTrue(names_match("Y. Liu", "Yang Liu"))
+        self.assertTrue(names_match("M Li", "Meng Li"))
+        self.assertIsNone(
+            unique_matching_name("Y. Liu", ["Yang Liu", "Yi Liu"])
+        )
+
+    def test_does_not_drop_unmatched_middle_initials(self):
+        self.assertFalse(names_match("J C Li", "Jiaye Li"))
+        self.assertFalse(names_match("D.A. Forsyth", "David Forsyth"))
+
     def test_does_not_match_on_one_shared_token(self):
         self.assertFalse(names_match("Li Wei", "Wei Zhang"))
         self.assertFalse(names_match("Meiling Li", "Meiling Zhang"))

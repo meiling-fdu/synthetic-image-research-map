@@ -53,9 +53,9 @@ class PublicHeaderMetadataTests(unittest.TestCase):
         self.assertIn(".header-repository-block {", self.css)
         mobile = self.css.split("@media (max-width: 540px)", 1)[1]
         self.assertIn(".header-repository-block", mobile)
-        self.assertIn("grid-row: 2", mobile)
+        self.assertIn('"hero repository"', mobile)
         self.assertIn(".header-statistics", mobile)
-        self.assertIn("grid-row: 3", mobile)
+        self.assertIn('"statistics statistics"', mobile)
 
     def test_date_rendering_is_deterministic_across_timezones(self):
         node = Path(

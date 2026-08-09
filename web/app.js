@@ -2749,7 +2749,7 @@ function institutionResultContent(record, relatedEntries = [{ record }], cardId 
           ${location ? `<p title="${escapeHtml(location)}">${escapeHtml(location)}</p>` : ""}
           ${institutionType !== "other" ? `<p>${escapeHtml(institutionTypeLabel(institutionType))}</p>` : ""}
         </section>
-        ${resultAuthors(authors, authorLabel, `${cardId}-authors`)}
+        ${resultAuthors(authors, authorLabel, `${cardId}-authors`, 4)}
       </div>
       <div class="result-secondary">
         ${resultVenueYear(record)}
@@ -2806,8 +2806,8 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
       <p class="result-entity-kicker">Unique paper</p>
       <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
       <div class="result-card-adaptive">
-        ${resultAuthors(normalizedRecord.authors, "Authors", `${cardId}-authors`)}
-        ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`)}
+        ${resultAuthors(normalizedRecord.authors, "Authors", `${cardId}-authors`, 4)}
+        ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`, 3)}
       </div>
       <div class="result-secondary">
         ${resultVenueYear(record)}

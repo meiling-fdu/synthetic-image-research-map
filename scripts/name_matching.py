@@ -74,7 +74,11 @@ def names_match(left: Any, right: Any) -> bool:
         return True
 
     if len(left_tokens) == 2 and len(right_tokens) == 2:
-        return Counter(left_tokens) == Counter(right_tokens)
+        return (
+            Counter(left_tokens) == Counter(right_tokens)
+            or _ordered_tokens_match(left_tokens, right_tokens)
+            or _ordered_tokens_match(left_tokens, tuple(reversed(right_tokens)))
+        )
 
     if len(left_tokens) != len(right_tokens):
         return False

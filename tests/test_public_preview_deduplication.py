@@ -1139,6 +1139,29 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             [[1], [1]],
         )
 
+    def test_mapping_authors_repair_only_proven_legacy_name_boundaries(self):
+        self.assertEqual(
+            _ordered_mapping_authors(
+                ["First Author", "Hong", "Yan", "Last Author"],
+                ["First Author", "Yan Hong", "Last Author"],
+            ),
+            ["First Author", "Yan Hong", "Last Author"],
+        )
+        self.assertEqual(
+            _ordered_mapping_authors(
+                ["Hadeel Alsolai, Shahid Mumtaz"],
+                ["Hadeel Alsolai", "Shahid Mumtaz"],
+            ),
+            ["Hadeel Alsolai", "Shahid Mumtaz"],
+        )
+        self.assertEqual(
+            _ordered_mapping_authors(
+                ["Unproven", "Fragments"],
+                ["Different Author"],
+            ),
+            ["Unproven", "Fragments"],
+        )
+
     def test_legacy_detail_fields_migrate_without_fabricated_indices(self):
         paper = {
             "title": "Legacy schema migration",

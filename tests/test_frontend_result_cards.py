@@ -163,6 +163,7 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn("institutionFilterButtonHtml", institution)
         self.assertIn("recordLocation(record)", institution)
         self.assertIn("institutionTypeLabel(institutionType)", institution)
+        self.assertIn('`${cardId}-authors`, 4', institution)
 
     def test_unique_papers_group_all_canonical_institutions(self):
         institutions = self.function("resultInstitutions", "paperResultContent")
@@ -177,13 +178,18 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn('aria-label="Paper institutions"', institutions)
         self.assertIn("affiliation.number", institutions)
         self.assertIn('aria-label="Institution ${escapeHtml(affiliation.number)}"', institutions)
+        paper = self.function("paperResultContent", "renderResults")
+        self.assertIn('`${cardId}-authors`, 4', paper)
+        self.assertIn('`${cardId}-institutions`, 3', paper)
 
-    def test_grid_uses_content_sized_rows_and_stretched_row_local_cards(self):
+    def test_grid_uses_content_sized_rows_without_stretching_shorter_cards(self):
         results_list = self.css.split(".results-list {", 1)[1].split("}", 1)[0]
-        self.assertIn("align-items: stretch", results_list)
+        self.assertIn("align-items: start", results_list)
+        self.assertNotIn("align-items: stretch", results_list)
         self.assertNotIn("grid-auto-rows", results_list)
         item = self.css.split(".result-item {", 1)[1].split("}", 1)[0]
-        self.assertIn("align-self: stretch", item)
+        self.assertIn("align-self: start", item)
+        self.assertNotIn("align-self: stretch", item)
         self.assertNotIn("height:", item)
         card = self.css.split(".result-card {", 1)[1].split("}", 1)[0]
         self.assertNotIn("height:", card)
@@ -202,6 +208,15 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertNotIn(".result-authors.is-expanded", self.css)
         self.assertNotIn(".result-paper-institutions.is-expanded", self.css)
 
+    def test_mobile_keeps_natural_cards_in_a_single_column(self):
+        mobile = self.css.split("@media (max-width: 540px) {", 1)[1]
+        self.assertIn(
+            ".results-list {\n    grid-template-columns: 1fr;\n  }",
+            mobile,
+        )
+        self.assertNotIn("grid-auto-rows", mobile)
+        self.assertNotIn("result-card-height", mobile)
+
     def test_render_does_not_apply_stale_fixed_height_view_classes(self):
         render = self.function("renderResults", "selectResultsView")
         self.assertNotIn("results-list-institutions", render)
@@ -213,6 +228,13 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn('aria-controls="${regionId}"', self.app)
         self.assertNotIn("style.height", self.app)
         self.assertNotIn('toggleAttribute("tabindex"', self.app)
+
+    def test_collapsed_overflow_content_is_not_forced_visible_by_card_css(self):
+        hidden_overflow = self.css.split(
+            ".result-institutions-overflow[hidden],", 1
+        )[1].split("}", 1)[0]
+        self.assertIn(".paper-authors-overflow[hidden]", hidden_overflow)
+        self.assertIn("display: none", hidden_overflow)
 
     def test_publication_row_badges_and_links_are_nonduplicative(self):
         venue = self.function("resultVenueYear", "resultLinks")

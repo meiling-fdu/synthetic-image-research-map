@@ -141,8 +141,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.css.index(".site-header {"):
             self.css.index(".header-repository-link {")
         ]
-        self.assertIn('"hero repository"', header)
-        self.assertIn('"statistics statistics"', header)
+        self.assertIn('grid-template-areas: "hero statistics repository"', header)
         self.assertIn(".header-brand", header)
         self.assertIn(".header-logo", header)
         self.assertIn("grid-area: repository", header)
@@ -163,9 +162,10 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             "grid-template-columns: 406px minmax(0, 1fr) auto",
             desktop,
         )
-        self.assertIn("height: 112px", header)
+        self.assertIn("height: 96px", header)
         self.assertIn("height: 100%", header)
         self.assertIn("object-fit: contain", header)
+        self.assertIn("height: 112px", desktop)
         self.assertIn(
             "grid-template-columns: minmax(0, 0.9fr) "
             "minmax(0, 1.25fr) minmax(0, 1fr)",

@@ -16,6 +16,7 @@ from scripts.migrate_institution_english_names import (
     normalized_key,
     validate_approved,
 )
+from scripts.serve_admin import prepare_mapping_candidates
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,6 +54,35 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
         self.assertTrue(any(
             row["institution_id"] == PARIS_ID and row["alias_name"] == PARIS_OLD
             for row in aliases
+        ))
+
+    def test_audit_covers_every_current_active_canonical_institution(self):
+        audited_ids = {
+            row["institution_id"]
+            for row in rows(
+                ROOT / "data" / "processed" / "institution_english_name_audit.csv"
+            )
+        }
+        active_ids = {
+            row["institution_id"]
+            for row in rows(CURATED / "institutions.csv")
+            if row["institution_status"] == "active"
+        }
+        self.assertEqual(audited_ids, active_ids)
+
+    def test_rename_does_not_create_a_duplicate_canonical_institution(self):
+        institutions = rows(CURATED / "institutions.csv")
+        self.assertEqual(
+            [row["institution_id"] for row in institutions if row["institution_id"] == PARIS_ID],
+            [PARIS_ID],
+        )
+        self.assertEqual(
+            [row["institution_id"] for row in institutions if row["canonical_name"] == PARIS_NEW],
+            [PARIS_ID],
+        )
+        self.assertFalse(any(
+            row["institution_status"] == "active" and row["canonical_name"] == PARIS_OLD
+            for row in institutions
         ))
 
     def test_audit_has_required_schema_and_keeps_legitimate_non_ascii_names(self):
@@ -100,6 +130,51 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
     def test_accented_and_unaccented_alias_keys_match_without_becoming_identity(self):
         self.assertEqual(normalized_key(PARIS_OLD), normalized_key("Universite Paris Cite"))
         self.assertNotEqual(PARIS_ID, normalized_key(PARIS_OLD))
+
+    def test_admin_alias_lookup_prefills_the_english_canonical_name(self):
+        candidates, warnings = prepare_mapping_candidates(
+            {"source_database": "manual"},
+            [{
+                "institution": PARIS_OLD,
+                "institution_authors": ["Serguei Barannikov"],
+                "raw_affiliation": PARIS_OLD,
+            }],
+            institution_locations=rows(CURATED / "institution_locations.csv"),
+            institution_aliases=rows(CURATED / "institution_aliases.csv"),
+        )
+        self.assertEqual(warnings, [])
+        self.assertEqual(candidates[0]["institution"], PARIS_NEW)
+        self.assertEqual(candidates[0]["mapping_status"], "active")
+
+    def test_public_search_uses_english_display_and_retains_local_alias(self):
+        payload = json.loads(
+            (ROOT / "web" / "data" / "public_preview_papers.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        search_record = payload["canonical_institution_search_index"][PARIS_ID]
+        self.assertEqual(search_record["canonical_name"], PARIS_NEW)
+        self.assertIn(PARIS_OLD, search_record["names"])
+        public_alias = next(
+            row for row in payload["institution_aliases"]
+            if row["alias_name"] == PARIS_OLD
+        )
+        self.assertEqual(public_alias["canonical_institution_id"], PARIS_ID)
+        self.assertEqual(public_alias["canonical_institution_name"], PARIS_NEW)
+
+    def test_admin_selectors_search_aliases_but_submit_canonical_display(self):
+        source = (ROOT / "web" / "admin.js").read_text(encoding="utf-8")
+        selector = source[
+            source.index("function mappingInstitutionMatches"):
+            source.index("function syncMappingInstitutionId")
+        ]
+        draft = source[
+            source.index("function mappingDraft"):
+            source.index("async function submitMapping")
+        ]
+        self.assertIn("...(row.aliases || [])", selector)
+        self.assertIn("matches.length === 1", source)
+        self.assertIn("selectedInstitution.canonical_name", draft)
 
     def test_cross_country_northeastern_homonyms_remain_distinct(self):
         institutions = rows(CURATED / "institutions.csv")
