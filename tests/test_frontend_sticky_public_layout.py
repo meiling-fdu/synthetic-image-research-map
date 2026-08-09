@@ -75,19 +75,25 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
     def test_desktop_filter_clears_header_and_map_summary_does_not_stack(self):
         desktop = self.css.split("@media (max-width: 820px)", 1)[0]
         sticky_desktop = desktop.split(
-            "@media (min-width: 821px) and (min-height: 860px)", 1
+            "@media (min-width: 821px)", 1
         )[1].split("}", 1)[0]
         summary = desktop[
             desktop.index(".map-summary {"):desktop.index(".map-workspace {")
         ]
         self.assertIn("position: sticky", sticky_desktop)
         self.assertIn("top: var(--sticky-summary-offset)", sticky_desktop)
+        self.assertIn(
+            "max-height: calc(100dvh - var(--sticky-summary-offset) - 12px)",
+            sticky_desktop,
+        )
+        self.assertIn("overflow-y: auto", sticky_desktop)
+        self.assertIn("overscroll-behavior: contain", sticky_desktop)
+        self.assertIn("scrollbar-gutter: stable", sticky_desktop)
         base_filter = desktop[
             desktop.index(".sidebar .filters-panel {"):
-            desktop.index("@media (min-width: 821px) and (min-height: 860px)")
+            desktop.index("@media (min-width: 821px)")
         ]
         self.assertNotIn("position: sticky", base_filter)
-        self.assertNotIn("overflow-y", sticky_desktop)
         self.assertNotIn("position: sticky", summary)
         self.assertIn("background: var(--paper)", summary)
 

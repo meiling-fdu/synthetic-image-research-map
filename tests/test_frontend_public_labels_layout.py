@@ -122,8 +122,8 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.assertIn(task, task_chart)
 
     def test_compact_filter_geometry_and_overview_responsive_grid(self):
-        self.assertIn(".sidebar .panel {\n  padding: 12px 14px 13px;", self.css)
-        self.assertIn(".filter-grid {\n  display: grid;\n  gap: 10px;", self.css)
+        self.assertIn(".sidebar .panel {\n  padding: 12px;", self.css)
+        self.assertIn(".filter-grid {\n  display: grid;\n  gap: 8px;", self.css)
         self.assertIn(".filter-grid label {\n  gap: 4px;", self.css)
         self.assertIn('.filter-grid input:not([type="range"])', self.css)
         self.assertIn(".country-combobox-button {\n  display: flex;", self.css)
@@ -172,6 +172,31 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             desktop,
         )
         self.assertNotIn("position: absolute", header)
+
+    def test_public_controls_and_cards_use_consistent_spacing_rhythm(self):
+        filter_grid = self.css[
+            self.css.index(".filter-grid {"):self.css.index(".visually-hidden {")
+        ]
+        self.assertIn("gap: 8px", filter_grid)
+
+        results_heading = self.css[
+            self.css.index(".results-heading-row {"):
+            self.css.index(".results-heading-group {")
+        ]
+        self.assertIn("gap: 8px 12px", results_heading)
+        self.assertIn("margin-bottom: 8px", results_heading)
+
+        result_card = self.css[
+            self.css.index(".result-card {"):self.css.index(".result-title {")
+        ]
+        self.assertIn("padding: 12px", result_card)
+
+        legend = self.css[
+            self.css.index(".map-encoding-legend {"):
+            self.css.index(".marker-size-examples {")
+        ]
+        self.assertIn("gap: 4px 16px", legend)
+        self.assertIn("white-space: nowrap", legend)
 
     def test_logo_replaces_visible_title_and_duplicate_task_legend(self):
         project_name = "Synthetic Image Detection &amp; Attribution Landscape"
