@@ -850,7 +850,8 @@ function renderDashboard() {
     manual_import_queue: { title: "Manual imports", priority: 7, impact: "Imported records still need cleanup or confirmation." },
   };
   const queue = metrics.filter((metric) =>
-    wanted[metric.key] && metric.available !== false && Number(metric.value) > 0
+    wanted[metric.key] && metric.target
+      && metric.available !== false && Number(metric.value) > 0
   ).sort((left, right) => wanted[left.key].priority - wanted[right.key].priority);
   elements["dashboard-grid"].replaceChildren();
   elements["action-queue-empty"].hidden = queue.length !== 0;
@@ -1000,6 +1001,10 @@ function handleGlobalSearchKeydown(event) {
 
 function navigateProjectHealthMetric(metric) {
   const navigation = metric.navigation || {};
+  if (metric.target === "papers" && navigation.paper_filter === "missing_affiliations") {
+    elements["filter-map"].value = "missing_affiliations";
+    applyFilters();
+  }
   if (metric.target === "author-mapping-coverage") {
     elements["mapping-coverage-status"].value = navigation.mapping_status || "";
     elements["mapping-coverage-sort"].value = navigation.mapping_sort || "rank-asc";
@@ -4133,7 +4138,8 @@ function applyFilters() {
     if (Object.entries(filters).some(([field, expected]) =>
       expected && text(paper[field]) !== expected
     )) return false;
-    if (mapFilter && String(Boolean(paper.has_map_location)) !== mapFilter) return false;
+    if (mapFilter === "missing_affiliations" && !paper.missing_affiliation) return false;
+    if (["true", "false"].includes(mapFilter) && String(Boolean(paper.has_map_location)) !== mapFilter) return false;
     if (exclusionFilter && exclusionStatus(paper) !== exclusionFilter) return false;
     return true;
   });
