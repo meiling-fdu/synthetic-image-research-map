@@ -356,16 +356,7 @@
                   <input id="institution-language" type="text" placeholder="en, es, zh…">
                 </label>
                 <label>Current review status
-                  <select id="institution-review-status">
-                    <option value="pending_review">Pending Review</option>
-                    <option value="needs_coordinates">Needs Coordinates</option>
-                    <option value="ambiguous">Ambiguous</option>
-                    <option value="alias_candidate">Alias Candidate</option>
-                    <option value="confirmed">Confirmed</option>
-                    <option value="alias_of_confirmed">Alias of Confirmed</option>
-                    <option value="ignore">Ignore</option>
-                    <option value="excluded">Excluded</option>
-                  </select>
+                  <output id="institution-review-status" class="status-output">Pending review</output>
                 </label>
                 <label class="full-width">Canonical institution
                   <select id="canonical-institution"><option value="">Select confirmed institution…</option></select>
@@ -395,24 +386,12 @@
                   <button class="secondary-button" id="location-geocode" type="button">Find coordinates</button>
                   <span>Uses the canonical ID, aliases, affiliation evidence, and current city, region, and country. Nothing changes until you select and confirm a consistent result.</span>
                 </div>
-                <label>Coordinate source
-                  <input id="coordinate-source" type="text" placeholder="Official institution page, Wikidata…">
-                </label>
-                <label>Coordinate source URL
-                  <input id="coordinate-source-url" type="url" placeholder="https://…">
-                </label>
-                <label class="full-width">Coordinate review note
-                  <textarea id="coordinate-review-note" rows="3" required placeholder="Explain how these coordinates were confirmed."></textarea>
-                </label>
               </div>
-              <p class="workflow-note">Provide a coordinate source or source URL, plus a non-blank review note. Saving does not run the exporter.</p>
+              <p class="workflow-note">Confirm a usable location, or use More actions for exceptional review outcomes. Saving does not run the exporter.</p>
               <p class="form-error" id="location-form-error" role="alert" hidden></p>
               <div class="location-form-actions">
                 <button class="primary-button" id="location-confirm" type="submit">Confirm location</button>
-                <button class="secondary-button" id="location-save-metadata" type="button">Save edited metadata</button>
-                <button class="secondary-button" id="location-needs-coordinates" type="button">Needs coordinate review</button>
                 <button class="secondary-button" id="location-confirm-alias" type="button" hidden>Confirm as alias of selected institution</button>
-                <button class="secondary-button" id="location-create-new" type="button" hidden>Identity changes are separate</button>
                 <details class="overflow-menu location-more-actions" id="location-more-actions">
                   <summary>More actions <span aria-hidden="true">⋯</span></summary>
                   <div class="overflow-menu-items" id="location-more-actions-menu">
@@ -907,13 +886,13 @@
             </select>
             <span class="field-help" id="mapping-location-help">Locations are confirmed offices belonging to the selected institution.</span>
           </label>
-          <label>Institution authors
+          <label class="full-width">Institution authors
             <input id="mapping-authors" type="text" placeholder="Separate authors with semicolons" required>
           </label>
           <label class="full-width">Raw affiliation
             <textarea id="mapping-raw-affiliation" rows="2"></textarea>
           </label>
-          <label>Mapping status
+          <label class="full-width">Mapping status
             <select id="mapping-status">
               <option value="active">active</option>
               <option value="needs_review">needs_review</option>

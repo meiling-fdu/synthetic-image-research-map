@@ -552,7 +552,7 @@ def _sync_location_review(
         "openalex_institution_id": clean(
             mapping.get("openalex_institution_id")
         ),
-        "review_status": "needs_coordinates",
+        "review_status": "pending_review",
         "location_status": "missing",
         "coordinate_status": "missing",
         "updated_at": now,

@@ -174,12 +174,12 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
             self.app.index("const DATASET_CONFIG")
         ]
         self.assertIn('console.error("Public frontend initialization failed."', startup)
-        self.assertIn('"Unable to load public preview data."', startup)
+        self.assertIn('"Unable to load research map data."', startup)
         self.assertIn('resultsStatus.textContent = "Data unavailable"', startup)
         self.assertIn('window.addEventListener("error"', startup)
         self.assertIn('window.addEventListener("unhandledrejection"', startup)
         self.assertIn("Unable to load data.", startup)
-        self.assertIn('"No Records Match the Current Filters."', self.app)
+        self.assertIn('"No records match the current filters."', self.app)
         self.assertIn(
             'showDatasetMessage(messages[datasetName], true, true)',
             self.app,
@@ -204,7 +204,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
             self.app.index("function configureYearRange(")
         ]
         self.assertIn(
-            'const resultNoun = resultsView === "papers" ? "paper" : "record"',
+            'const resultNoun = resultsView === "papers" ? "paper" : "institution record"',
             render,
         )
         self.assertIn('count.toLocaleString("en-US")', render)

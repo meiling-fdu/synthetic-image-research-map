@@ -68,10 +68,9 @@ def main() -> int:
         ):
             row["canonical_institution_name"] = "Centre for Research and Technology Hellas (CERTH)"
             row["matched_institution"] = ""
-            row["review_status"] = "needs_coordinates"
+            row["review_status"] = "pending_review"
             row["location_status"] = "missing"
             row["coordinate_status"] = "missing"
-            row["review_note"] = "Restored from raw affiliation evidence after an unrelated Amazon location edit corrupted the canonical link."
             row["updated_at"] = now
 
     canonical_names: dict[str, str] = {}

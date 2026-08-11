@@ -29,8 +29,10 @@ except ImportError:
 
 try:
     from .venues import canonical_venue_registry, read_venue_aliases
+    from .public_relationships import public_relationship_key
 except ImportError:
     from venues import canonical_venue_registry, read_venue_aliases
+    from public_relationships import public_relationship_key
 
 try:
     from .institution_types import INSTITUTION_TYPE_SET
@@ -646,51 +648,24 @@ def validate_duplicate_map_relationships(
     records: Sequence[Any],
     issues: List[Issue],
 ) -> None:
-    """Reject repeated canonical paper/author/institution relationships."""
-    seen: Dict[Tuple[Tuple[str, ...], str, str], int] = {}
+    """Reject repeated canonical public relationship identities."""
+    seen: Dict[Tuple[Any, ...], int] = {}
     for index, record in enumerate(records):
         if not isinstance(record, dict):
             continue
-        doi = normalized_doi(record.get("doi"))
-        arxiv_id = normalized_text(record.get("arxiv_id"))
-        openalex_url = normalized_text(record.get("openalex_url")).rstrip("/")
-        if doi:
-            paper_key = ("doi", doi)
-        elif arxiv_id:
-            paper_key = ("arxiv", arxiv_id)
-        elif openalex_url:
-            paper_key = ("openalex", openalex_url)
-        else:
-            paper_key = (
-                "title_year",
-                normalized_title(record.get("title")),
-                clean_text(record.get("publication_year") or record.get("year")),
+        key = public_relationship_key(record)
+        previous = seen.get(key)
+        if previous is not None:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                record_title(record),
+                "duplicate canonical paper/author/institution relationship "
+                f"(first seen at record[{previous}])",
             )
-        institution_key = normalized_text(
-            record.get("institution_id")
-            or record.get("canonical_institution_id")
-            or institution_name(record)
-        )
-        authors = record.get("institution_authors") or []
-        if isinstance(authors, str):
-            authors = authors.split(";")
-        for author in authors if isinstance(authors, list) else []:
-            author_key = canonical_name_key(author)
-            if not author_key:
-                continue
-            key = (paper_key, author_key, institution_key)
-            previous = seen.get(key)
-            if previous is not None:
-                add_issue(
-                    issues,
-                    "ERROR",
-                    index,
-                    record_title(record),
-                    "duplicate canonical paper/author/institution relationship "
-                    f"(first seen at record[{previous}])",
-                )
-            else:
-                seen[key] = index
+        else:
+            seen[key] = index
 
 
 def validate_confirmed_version_merges(

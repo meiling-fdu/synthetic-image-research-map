@@ -17,9 +17,6 @@ class InstitutionLocationCoordinateFrontendTests(unittest.TestCase):
         confirm_start = cls.source.index("async function confirmLocation")
         confirm_end = cls.source.index("async function markLocationReview", confirm_start)
         cls.confirm_source = cls.source[confirm_start:confirm_end]
-        metadata_start = cls.source.index("async function saveLocationMetadata")
-        metadata_end = cls.source.index("function requestToken", metadata_start)
-        cls.metadata_source = cls.source[metadata_start:metadata_end]
 
     def test_dot_decimal_coordinates_are_preserved(self):
         self.assertIn('let normalized = input.replace(",", ".")', self.coordinate_source)
@@ -59,12 +56,9 @@ class InstitutionLocationCoordinateFrontendTests(unittest.TestCase):
         self.assertIn("showLocationFormError(error.message, field)", self.coordinate_source)
         self.assertIn('id="location-form-error" role="alert"', self.html)
 
-    def test_both_save_buttons_use_the_shared_validated_draft(self):
+    def test_confirmation_uses_the_validated_draft(self):
         self.assertIn("const draft = validatedLocationDraft()", self.confirm_source)
         self.assertIn("if (!draft) return", self.confirm_source)
-        self.assertIn("const draft = validatedLocationDraft()", self.metadata_source)
-        self.assertIn("if (!draft) return", self.metadata_source)
-        self.assertIn('elements["location-form"].requestSubmit()', self.metadata_source)
 
     def test_api_submission_uses_the_normalized_draft(self):
         validation = self.confirm_source.index("const draft = validatedLocationDraft()")
@@ -72,10 +66,6 @@ class InstitutionLocationCoordinateFrontendTests(unittest.TestCase):
         self.assertLess(validation, request)
         self.assertIn("lat: draft.confirmed_lat", self.confirm_source)
         self.assertIn("lon: draft.confirmed_lon", self.confirm_source)
-        metadata_validation = self.metadata_source.index("const draft = validatedLocationDraft()")
-        metadata_request = self.metadata_source.index('apiFetch("/api/location-review/save-metadata"')
-        self.assertLess(metadata_validation, metadata_request)
-        self.assertIn("body: JSON.stringify(draft)", self.metadata_source)
 
     def test_canonical_confirmation_uses_path_id_and_location_only_body(self):
         self.assertIn(
@@ -91,12 +81,18 @@ class InstitutionLocationCoordinateFrontendTests(unittest.TestCase):
         self.assertIn("await openCanonicalInstitutionLocation(", self.confirm_source)
 
     def test_duplicate_submissions_and_backend_errors_are_visible(self):
-        for action_source in (self.confirm_source, self.metadata_source):
-            self.assertIn("if (state.locationSaveRunning) return", action_source)
-            self.assertIn("showLocationFormError(", action_source)
-            self.assertIn("setLocationSaveRunning(false)", action_source)
+        self.assertIn("if (state.locationSaveRunning) return", self.confirm_source)
+        self.assertIn("showLocationFormError(", self.confirm_source)
+        self.assertIn("setLocationSaveRunning(false)", self.confirm_source)
         self.assertIn('elements["location-confirm"].disabled = running', self.coordinate_source)
-        self.assertIn('elements["location-save-metadata"].disabled = running', self.coordinate_source)
+
+    def test_removed_provenance_fields_and_redundant_action_are_absent(self):
+        for obsolete in (
+            "coordinate-source", "coordinate-source-url", "coordinate-review-note",
+            "location-save-metadata", "location-needs-coordinates",
+        ):
+            self.assertNotIn(obsolete, self.html)
+            self.assertNotIn(obsolete, self.source)
 
 
 if __name__ == "__main__":

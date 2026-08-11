@@ -157,6 +157,37 @@ class AdminPublishChangesTests(unittest.TestCase):
             for relative, content in original.items():
                 self.assertEqual((repository / relative).read_bytes(), content)
 
+    def test_failed_refresh_restores_curated_and_all_public_outputs(self):
+        with tempfile.TemporaryDirectory() as directory:
+            repository = Path(directory)
+            curated = repository / "data/curated/papers.csv"
+            curated.parent.mkdir(parents=True)
+            curated.write_text("original curated\n")
+            for relative in (
+                admin_publish_changes.MAP_PREVIEW_PATH,
+                admin_publish_changes.PAPER_PREVIEW_PATH,
+            ):
+                path = repository / relative
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text('{"records":[]}\n')
+            first, second = admin_publish_changes.ALLOWED_WORKFLOWS["full_refresh"][:2]
+
+            def runner(command, repository_root):
+                if tuple(command) == tuple(first):
+                    curated.write_text("partially mutated\n")
+                    return subprocess.CompletedProcess(command, 0, stdout="")
+                if tuple(command) == tuple(second):
+                    return subprocess.CompletedProcess(command, 1, stdout="controlled failure")
+                return subprocess.CompletedProcess(command, 0, stdout="")
+
+            result = admin_publish_changes.publish_changes(
+                repository_root=repository,
+                runner=runner,
+                preview_count_reader=lambda _repository: self.stable_counts,
+            )
+            self.assertEqual(result, 1)
+            self.assertEqual(curated.read_text(), "original curated\n")
+
     def test_no_eligible_staged_files_does_not_commit_or_push(self):
         runner = RecordingRunner()
 

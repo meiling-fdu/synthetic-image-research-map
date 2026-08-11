@@ -379,20 +379,6 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             self.assertEqual(detail["review_queue"], [])
             self.assertEqual(len(detail["affiliation_evidence"]), 1)
 
-            status, _payload = self.request_with_handler(handler, "POST", "/api/institution/location", {
-                "institution_id": self.institution_id,
-                "loaded_institution_id": self.institution_id,
-                "city": "Palermo", "region": "Sicily", "country": "Italy",
-                "country_code": "IT", "lat": "38.1157", "lon": "13.3615",
-                "coordinate_source": "Fixture source",
-                "coordinate_source_url": "https://example.test/palermo",
-                "coordinate_status": "known", "review_note": "Fixture review.",
-            })
-            self.assertEqual(status, 200)
-            with paths["location_review_path"].open(encoding="utf-8", newline="") as handle:
-                reviews = list(csv.DictReader(handle))
-            self.assertEqual(reviews, [])
-
             status, payload = self.request_with_handler(
                 handler,
                 "POST",
@@ -403,9 +389,7 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
                 {
                     "city": "Palermo", "region": "Sicily", "country": "Italy",
                     "country_code": "IT", "lat": "38.1157", "lon": "13.3615",
-                    "coordinate_source": "Fixture source",
                     "coordinate_status": "known",
-                    "review_note": "Exact 400 regression confirmation.",
                 },
             )
             self.assertEqual(status, 200)

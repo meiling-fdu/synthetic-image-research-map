@@ -102,9 +102,7 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
     def test_non_exportable_statuses_without_known_coordinates_are_not_exported(self):
         for status in (
             "pending_review",
-            "needs_coordinates",
             "ambiguous",
-            "alias_candidate",
             "ignore",
             "excluded",
         ):
@@ -119,9 +117,7 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
     def test_known_coordinates_override_stale_review_statuses(self):
         for status in (
             "pending_review",
-            "needs_coordinates",
             "ambiguous",
-            "alias_candidate",
         ):
             with self.subTest(status=status):
                 self.assertEqual(
@@ -187,12 +183,12 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             {"review_status": "confirmed"},
             {"review_status": "pending_review"},
             {"review_status": "pending_review"},
-            {"review_status": "alias_candidate"},
+            {"review_status": "ambiguous"},
         ]
         summary = location_review_report(rows, [])
         self.assertEqual(summary["confirmed"], 1)
         self.assertEqual(summary["pending_review"], 2)
-        self.assertEqual(summary["alias_candidate"], 1)
+        self.assertEqual(summary["ambiguous"], 1)
 
     def test_duplicate_and_conflicting_aliases_are_detected(self):
         aliases = [
@@ -272,7 +268,7 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
                 "related_paper_id": "curated:test",
                 "title": "Institution review test",
                 "year": "2026",
-                "review_status": "alias_candidate",
+                "review_status": "pending_review",
             })
             location_row = {column: "" for column in INSTITUTION_LOCATION_COLUMNS}
             location_row.update({

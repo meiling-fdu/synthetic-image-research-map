@@ -43,6 +43,8 @@ try:
     )
     from .paper_categories import categories_from_record
     from .venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
+    from .public_relationships import public_relationship_key
+    from .curated_schema_migrations import migrate_obsolete_location_schema
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -128,6 +130,8 @@ except ImportError:  # Direct execution from the scripts directory.
     )
     from paper_categories import categories_from_record
     from venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
+    from public_relationships import public_relationship_key
+    from curated_schema_migrations import migrate_obsolete_location_schema
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
@@ -1632,18 +1636,9 @@ def build_identity_lookup(records: Sequence[Dict[str, Any]]) -> Dict[Tuple[str, 
 def deduplicate_public_map_relationships(
     records: Sequence[Dict[str, Any]],
 ) -> Tuple[List[Dict[str, Any]], int]:
-    """Collapse exact paper/institution markers and canonicalize their author sets.
-
-    DOI/arXiv/title-year paper identity and canonical institution identity are
-    sufficient for this final export-only collapse. Conflicting reviewed
-    mapping IDs remain an error because choosing between them would require a
-    curator decision.
-    """
-    grouped: Dict[
-        Tuple[Tuple[str, Any], str],
-        List[Dict[str, Any]],
-    ] = defaultdict(list)
-    order: List[Tuple[Tuple[str, Any], str]] = []
+    """Deterministically coalesce only semantically identical relationships."""
+    grouped: Dict[Tuple[Any, ...], List[Dict[str, Any]]] = defaultdict(list)
+    order: List[Tuple[Any, ...]] = []
 
     for raw_record in records:
         record = dict(raw_record)
@@ -1660,10 +1655,7 @@ def deduplicate_public_map_relationships(
                 deduplicated_authors.append(name)
         record["institution_authors"] = deduplicated_authors
 
-        key = (
-            detail_paper_identity(record),
-            detail_institution_identity(record),
-        )
+        key = public_relationship_key(record)
         if key not in grouped:
             order.append(key)
         grouped[key].append(record)
@@ -1672,20 +1664,11 @@ def deduplicate_public_map_relationships(
     removed = 0
     for key in order:
         candidates = grouped[key]
-        mapping_ids = {
-            clean_text(record.get("mapping_id"))
-            for record in candidates
-            if clean_text(record.get("mapping_id"))
-        }
-        if len(mapping_ids) > 1:
-            raise PreviewExportError(
-                "Conflicting curated mapping IDs share one canonical "
-                f"paper/institution relationship: {', '.join(sorted(mapping_ids))}"
-            )
-
         def quality(record: Dict[str, Any]) -> Tuple[Any, ...]:
             return (
                 bool(clean_text(record.get("mapping_id"))),
+                clean_text(record.get("mapping_status")) == "active",
+                clean_text(record.get("curation_status")) in {"confirmed", "reviewed"},
                 record.get("preliminary_affiliations") is not True,
                 CONFIDENCE_RANK.get(
                     normalize_confidence(record.get("resolution_confidence")),
@@ -1695,24 +1678,20 @@ def deduplicate_public_map_relationships(
             )
 
         target = max(candidates, key=quality)
+        lineage = sorted({
+            clean_text(record.get("mapping_id"))
+            for record in candidates
+            if clean_text(record.get("mapping_id"))
+        })
+        if lineage:
+            target["mapping_lineage_ids"] = lineage
         for incoming in candidates:
             if incoming is target:
                 continue
             removed += 1
-            existing_author_keys = {
-                normalized_author_name(author)
-                for author in target.get("institution_authors") or []
-            }
-            for author in incoming.get("institution_authors") or []:
-                author_key = normalized_author_name(author)
-                if author_key and author_key not in existing_author_keys:
-                    target.setdefault("institution_authors", []).append(author)
-                    existing_author_keys.add(author_key)
             for field in (
                 "mapping_id",
                 "raw_affiliation",
-                "coordinate_source",
-                "coordinate_source_url",
             ):
                 if not clean_text(target.get(field)) and clean_text(incoming.get(field)):
                     target[field] = incoming[field]
@@ -2876,7 +2855,10 @@ def strip_retired_paper_fields(records: Sequence[Dict[str, Any]]) -> int:
     """Remove retired paper and paper-mapping keys from public records."""
     removed = 0
     for record in records:
-        for field in ("subtask", "review_note"):
+        for field in (
+            "subtask", "review_note", "coordinate_source",
+            "coordinate_source_url", "coordinate_review_note",
+        ):
             if field in record:
                 record.pop(field)
                 removed += 1
@@ -3942,6 +3924,7 @@ def print_paper_summary(summary: Dict[str, Any], output: Path, dry_run: bool) ->
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
+        migrate_obsolete_location_schema(args.institution_locations.parent)
         previous_maps = (
             read_candidate_records(args.output) if args.output.exists() else []
         )
@@ -4177,6 +4160,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 institution_rows,
             )
             ignored_institution_records += post_integration_ignored_records
+            integrated_papers[:] = canonicalize_records(
+                integrated_papers, venue_alias_rows
+            )
+            integrated_maps[:] = canonicalize_records(
+                integrated_maps, venue_alias_rows
+            )
+            integrated_maps, preserved_relationships_deduplicated = (
+                deduplicate_public_map_relationships(integrated_maps)
+            )
+            exact_map_relationships_deduplicated += preserved_relationships_deduplicated
         apply_ordered_paper_location_summaries(
             integrated_papers, integrated_maps
         )
@@ -4186,6 +4179,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         preserve_existing_curation_status(integrated_papers, previous_papers)
         preserve_existing_curation_status(integrated_maps, previous_maps)
+        integrated_papers[:] = [
+            normalize_book_record(record, remove=True)
+            for record in integrated_papers
+        ]
+        integrated_maps[:] = [
+            normalize_book_record(record, remove=True)
+            for record in integrated_maps
+        ]
         for record in [*integrated_papers, *integrated_maps]:
             record["paper_categories"] = (
                 [] if is_book_publication(record.get("publication_type"))

@@ -145,7 +145,7 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
         }))
         review = load_location_reviews(self.reviews)[0]
         self.assertEqual(review["institution_id"], identifier)
-        self.assertEqual(review["review_status"], "needs_coordinates")
+        self.assertEqual(review["review_status"], "pending_review")
         self.assertEqual(review["coordinate_status"], "missing")
         with self.institutions.open(encoding="utf-8", newline="") as handle:
             institution = next(csv.DictReader(handle))

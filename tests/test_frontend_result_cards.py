@@ -243,7 +243,7 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn("paperDetailsPublication(record)", venue)
         self.assertIn("publicationYear(record)", venue)
         self.assertIn('join(" ")', venue)
-        self.assertIn("/^unknown venue\\/source$/i", venue)
+        self.assertIn("/^unknown publication venue$/i", venue)
         self.assertIn('year !== null', venue)
         self.assertNotIn("venueDisplayHtml(record)", venue)
         self.assertNotIn("venue-type-badge", venue)
@@ -285,7 +285,10 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
 
     def test_counts_states_list_semantics_and_nested_controls(self):
         render = self.function("renderResults", "selectResultsView")
-        self.assertIn('resultNoun = resultsView === "papers" ? "paper" : "record"', render)
+        self.assertIn(
+            'resultNoun = resultsView === "papers" ? "paper" : "institution record"',
+            render,
+        )
         self.assertIn("displayedResults.length", render)
         self.assertIn("No matching ${resultNoun}s", render)
         self.assertIn('<ol id="results-list"', self.html)

@@ -50,7 +50,7 @@ def migrate(
             status = "confirmed"
             row["canonical_institution_name"] = row.get("institution", "")
         elif coordinate_status in {"missing", "needs_coordinate_review"}:
-            status = "needs_coordinates"
+            status = "pending_review"
         else:
             status = "pending_review"
         row["review_status"] = status

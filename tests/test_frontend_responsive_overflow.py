@@ -10,31 +10,30 @@ class FrontendResponsiveOverflowTests(unittest.TestCase):
     def setUpClass(cls):
         cls.css = (ROOT / "web" / "style.css").read_text(encoding="utf-8")
 
-    def test_project_links_grid_can_shrink_inside_the_page_shell(self):
-        project_links = self.css[
-            self.css.index(".project-links {"):
-            self.css.index(".project-links h2,")
+    def test_site_information_can_shrink_inside_the_page_shell(self):
+        site_information = self.css[
+            self.css.index(".site-information {"):
+            self.css.index(".site-information h2,")
         ]
-        self.assertIn("grid-template-columns: auto minmax(0, 1fr)", project_links)
-        self.assertIn("min-width: 0", project_links)
+        self.assertIn("min-width: 0", site_information)
+        self.assertIn("minmax(0, 1fr)", site_information)
 
-    def test_project_links_content_and_links_do_not_force_intrinsic_width(self):
-        content = self.css[
-            self.css.index(".project-links-content {"):
-            self.css.index(".project-link-list a,")
+    def test_information_grid_and_links_do_not_force_intrinsic_width(self):
+        self.assertIn(".site-information-grid section {\n  min-width: 0;", self.css)
+        links = self.css[
+            self.css.index(".project-link-list {"):
+            self.css.index(".dataset-overview {")
         ]
-        self.assertIn(".project-links-content {", content)
-        self.assertIn("min-width: 0", content)
-        self.assertIn(".project-link-list {", content)
-        self.assertIn("flex-wrap: wrap", content)
+        self.assertIn("flex-wrap: wrap", links)
+        self.assertIn("overflow-wrap: anywhere", links)
 
-    def test_mobile_layout_keeps_project_links_in_one_container_track(self):
+    def test_mobile_layout_keeps_information_in_one_container_track(self):
         mobile = self.css.split("@media (max-width: 540px)", 1)[1]
-        project_links = mobile[
-            mobile.index(".project-links {"):
-            mobile.index(".project-links h2 {")
-        ]
-        self.assertIn("grid-template-columns: 1fr", project_links)
+        self.assertIn(
+            ".site-information-header,\n  .site-information-grid {\n"
+            "    grid-template-columns: 1fr;",
+            mobile,
+        )
 
     def test_fix_does_not_mask_document_overflow(self):
         normalized = " ".join(self.css.split())

@@ -659,10 +659,6 @@ def _processed_cache_location_groups(
             ),
             "latitude": record.get("resolved_latitude"),
             "longitude": record.get("resolved_longitude"),
-            "coordinate_source": (
-                "data/processed/institution_resolution_cache.json"
-            ),
-            "coordinate_source_url": clean(record.get("source_url")),
             "_location_resolution_source": "processed_cache_fallback",
         }
         if not _valid_coordinates(location):
@@ -1012,10 +1008,6 @@ def _curated_marker(
         "curation_status": normalize_curation_status(paper.get("curation_status")),
         "mapping_id": clean(mapping.get("mapping_id")),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
-        "coordinate_source": clean(location.get("coordinate_source")),
-        "coordinate_source_url": clean(
-            location.get("coordinate_source_url")
-        ),
         "resolution_method": (
             "curated_confirmed_location"
             if clean(location.get("location_id"))
@@ -1215,11 +1207,10 @@ def _upsert_location_review(
         "review_status": (
             "ambiguous"
             if coordinate_status == "ambiguous"
-            else "needs_coordinates"
+            else "pending_review"
         ),
         "location_status": location_status,
         "coordinate_status": coordinate_status,
-        "review_note": "",
         "updated_at": now,
     }
     for row in rows:
@@ -1315,9 +1306,7 @@ def build_curated_map_records(
     }
     non_exportable_statuses = {
         "pending_review",
-        "needs_coordinates",
         "ambiguous",
-        "alias_candidate",
         "ignore",
         "excluded",
     }

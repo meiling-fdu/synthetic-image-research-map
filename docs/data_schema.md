@@ -466,7 +466,7 @@ One row represents one institution or organizational unit used for affiliation a
 
 ### Curated institution review and aliases
 
-`data/curated/institution_location_review.csv` keeps raw institution evidence and an authoritative `review_status`: `confirmed`, `pending_review`, `needs_coordinates`, `ambiguous`, `alias_candidate`, `alias_of_confirmed`, `ignore`, or `excluded`. Legacy location/coordinate diagnostics remain secondary fields.
+`data/curated/institution_location_review.csv` keeps raw institution evidence and an authoritative `review_status`: `confirmed`, `pending_review`, `ambiguous`, `alias_of_confirmed`, `ignore`, or `excluded`. “Needs coordinates” is derived from pending state plus the absence of a usable confirmed location. Coordinate source, coordinate source URL, and coordinate review note are not part of the canonical location model.
 
 `data/curated/institution_aliases.csv` has `alias_name`, `canonical_institution_name`, `alias_language`, `alias_source`, `review_status`, and `notes`. Alias targets must exist in `institution_locations.csv`. Duplicate mappings are invalid, and one normalized alias pointing to multiple canonical institutions is ambiguous. Confirmed aliases resolve to the canonical public name and coordinates; no alias is exported as a separate node.
 

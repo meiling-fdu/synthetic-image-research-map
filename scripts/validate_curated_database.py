@@ -44,6 +44,7 @@ try:
         validate_approved as validate_approved_english_names,
         OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
     )
+    from .curated_schema_migrations import migrate_obsolete_location_schema
 except ImportError:  # Support direct execution from the repository root.
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
@@ -75,6 +76,7 @@ except ImportError:  # Support direct execution from the repository root.
         validate_approved as validate_approved_english_names,
         OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
     )
+    from curated_schema_migrations import migrate_obsolete_location_schema
 
 
 BOOLEAN_LIKE_VALUES = {"true", "false", "1", "0", "yes", "no", "y", "n"}
@@ -546,7 +548,6 @@ def validate_confirmed_locations(
         "lat",
         "lon",
         "coordinate_status",
-        "review_note",
         "created_at",
         "updated_at",
         "created_by",
@@ -561,17 +562,6 @@ def validate_confirmed_locations(
                     f"{field} is required",
                     row_number,
                 )
-        if not (
-            clean(row.get("coordinate_source"))
-            or clean(row.get("coordinate_source_url"))
-        ):
-            add_issue(
-                issues,
-                "ERROR",
-                "institution_locations.csv",
-                "coordinate_source or coordinate_source_url is required",
-                row_number,
-            )
         country_code = clean(row.get("country_code"))
         if country_code and not COUNTRY_CODE_PATTERN.fullmatch(country_code):
             add_issue(
@@ -1117,6 +1107,11 @@ def validate_institution_consistency_audit(
 
 
 def main() -> int:
+    try:
+        migrate_obsolete_location_schema(CURATED_DATA_DIR)
+    except (OSError, ValueError) as error:
+        print(f"ERROR: curated schema migration failed: {error}")
+        return 1
     issues: List[Issue] = []
     datasets, row_counts = read_curated_files(issues)
     validate_years(datasets, issues)
@@ -1266,11 +1261,9 @@ def main() -> int:
             else:
                 add_issue(issues, "ERROR", "papers.csv", f"venue_id does not exist in venue_aliases.csv: {venue_id!r}", row_number)
             continue
-        paper_identity = tuple(clean(paper.get(field)) for field in (
-            "venue_name", "venue_acronym", "venue_type",
-        ))
-        if paper_identity != identity:
-            add_issue(issues, "ERROR", "papers.csv", f"canonical venue fields conflict with {venue_id!r}", row_number)
+        # Redundant paper-level venue fields are materialized from this
+        # authoritative registry during Admin save and publish normalization.
+        # Their staleness is repairable and must not disagree across paths.
         if (
             identity[2] in {"conference", "journal", "book"}
             and clean(paper.get("publication_type")) != identity[2]

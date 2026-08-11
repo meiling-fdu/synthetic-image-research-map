@@ -451,8 +451,7 @@ def update_institution_location(
         "institution_id", "loaded_institution_id", "location_id",
         "create_new_location", "city", "region", "country",
         "country_code", "lat",
-        "lon", "coordinate_source", "coordinate_source_url",
-        "coordinate_status", "review_note", "created_by",
+        "lon", "coordinate_status", "created_by",
     }
     unexpected = sorted(set(draft) - allowed_fields)
     if unexpected:
@@ -522,7 +521,7 @@ def update_institution_location(
     row["institution_id"] = identifier
     row["institution"] = clean(entity.get("canonical_name"))
     row["normalized_institution"] = normalize_institution(entity.get("canonical_name"))
-    for field in ("city", "region", "country", "country_code", "lat", "lon", "coordinate_source", "coordinate_source_url", "coordinate_status", "review_note"):
+    for field in ("city", "region", "country", "country_code", "lat", "lon", "coordinate_status"):
         if field in draft:
             row[field] = clean(draft.get(field))
     row["updated_at"] = now
@@ -535,7 +534,6 @@ def update_institution_location(
         "lat",
         "lon",
         "coordinate_status",
-        "review_note",
         "created_at",
         "updated_at",
         "created_by",
@@ -543,13 +541,6 @@ def update_institution_location(
     for field in required_location_fields:
         if not clean(row.get(field)):
             raise CuratedInstitutionError(f"{field} is required for location edits")
-    if not (
-        clean(row.get("coordinate_source"))
-        or clean(row.get("coordinate_source_url"))
-    ):
-        raise CuratedInstitutionError(
-            "coordinate_source or coordinate_source_url is required for location edits"
-        )
     if not re.fullmatch(r"[A-Z]{2}", clean(row.get("country_code"))):
         raise CuratedInstitutionError(
             "country_code must be two uppercase letters"
@@ -586,11 +577,6 @@ def update_institution_location(
                     "existing location review row lacks paper provenance"
                 )
         for review in review_matches:
-            previous_note = clean(review.get("review_note"))
-            location_note = clean(row.get("review_note"))
-            combined_note = previous_note
-            if location_note and location_note not in previous_note:
-                combined_note = " | ".join(item for item in (previous_note, location_note) if item)
             review.update({
                 "institution_id": identifier,
                 "canonical_institution_name": clean(entity.get("canonical_name")),
@@ -599,7 +585,6 @@ def update_institution_location(
                 "review_status": "confirmed",
                 "location_status": "known",
                 "coordinate_status": "known",
-                "review_note": combined_note,
                 "updated_at": now,
             })
     touched_paths = [locations_path]
@@ -650,9 +635,6 @@ def update_institution_location(
             "confirmed_region": clean(row.get("region")),
             "confirmed_country": clean(row.get("country")),
             "confirmed_country_code": clean(row.get("country_code")),
-            "coordinate_source": clean(row.get("coordinate_source")),
-            "coordinate_source_url": clean(row.get("coordinate_source_url")),
-            "review_note": clean(row.get("review_note")),
             "created_at": now,
             "created_by": clean(draft.get("created_by")) or "local-admin",
         }

@@ -181,21 +181,21 @@ Mappings are written to `data/curated/author_institution_mappings.csv`. The comp
 
 1. Choose **Institution Location Review** and select a queued institution.
 2. Verify the institution and coordinates against a reliable source.
-3. Enter the location labels, uppercase two-letter country code, latitude, longitude, source or source URL, and a review note.
-4. Confirm the location, or mark the row **ambiguous** or **unresolved** when the evidence is insufficient.
+3. Enter the location labels, uppercase two-letter country code, latitude, and longitude.
+4. Confirm the location, or use **More actions** to mark an exceptional outcome.
 
 Confirmed coordinates are written to `data/curated/institution_locations.csv`, and the corresponding row in `data/curated/institution_location_review.csv` is updated. Never guess coordinates or resolve ambiguity merely to create a marker.
 
 ### Institution review statuses and aliases
 
-Use the status chips to separate `pending_review`, `needs_coordinates`, `ambiguous`, `alias_candidate`, `confirmed`, `ignore`, and `excluded` rows. `alias_of_confirmed` rows are included with confirmed work in the summary and resolve through their selected canonical institution.
+Persistent statuses are `pending_review`, `ambiguous`, `confirmed`, `alias_of_confirmed`, `ignore`, and `excluded`. **Needs Coordinates** is derived for a pending valid institution without a usable confirmed location; it is not a separate transition.
 
 - **Confirm location** only after verifying the canonical name, city, country, latitude, and longitude.
 - **Confirm as alias** when the raw name is another language, acronym, or historical name for a selected confirmed institution. This writes `data/curated/institution_aliases.csv`; it does not create another location.
-- **Mark ambiguous** when identity or location is uncertain. Use **Needs coordinate review** for a valid institution whose coordinates still need verification.
+- **Mark ambiguous** when identity or location is uncertain.
 - **Ignore** parsed non-institutions. Use **Exclude** for valid records that must not appear publicly.
 
-Only `confirmed` and `alias_of_confirmed` are exportable, and aliases use the canonical institution's verified coordinates. Fuzzy or translation-only suggestions remain `alias_candidate` or `ambiguous` until a reviewer decides. Raw multilingual affiliation text remains evidence even after canonicalization.
+Only `confirmed` and `alias_of_confirmed` are exportable, and aliases use the canonical institution's verified coordinates. Fuzzy or translation-only suggestions remain pending or ambiguous until a reviewer decides. Raw multilingual affiliation text remains evidence even after canonicalization.
 
 ## Diagnostic review queues and mapping coverage
 

@@ -1,8 +1,5 @@
 "use strict";
 
-const NOMINATIM_REVIEW_NOTE =
-  "Coordinates selected from an OpenStreetMap Nominatim result and confirmed by the reviewer.";
-
 const state = {
   token: "",
   papers: [],
@@ -235,16 +232,10 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "confirmed-country-code",
     "confirmed-lat",
     "confirmed-lon",
-    "coordinate-source",
-    "coordinate-source-url",
-    "coordinate-review-note",
     "location-form-error",
     "location-confirm",
     "location-confirm-alias",
-    "location-save-metadata",
     "location-geocode",
-    "location-create-new",
-    "location-needs-coordinates",
     "location-mark-ambiguous",
     "location-ignore",
     "location-exclude",
@@ -525,13 +516,9 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["location-mark-ambiguous"].addEventListener("click", () => {
     markLocationReview("ambiguous");
   });
-  elements["location-needs-coordinates"].addEventListener("click", () => {
-    markLocationReview("needs_coordinates");
-  });
   elements["location-ignore"].addEventListener("click", () => markLocationReview("ignore"));
   elements["location-exclude"].addEventListener("click", () => markLocationReview("excluded"));
   elements["location-confirm-alias"].addEventListener("click", confirmLocationAlias);
-  elements["location-save-metadata"].addEventListener("click", saveLocationMetadata);
   elements["canonical-institution"].addEventListener("change", renderLocationActions);
   elements["confirmed-location-record"].addEventListener("change", selectConfirmedLocationRecord);
   elements["location-geocode"].addEventListener("click", findInstitutionCoordinates);
@@ -540,7 +527,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["geocode-dialog"].addEventListener("close", () => {
     state.selectedGeocodeCandidate = null;
   });
-  elements["location-create-new"].addEventListener("click", openInstitutionManagement);
   initializeLocationMoreActions();
   document.querySelectorAll("[data-console-target]").forEach((button) => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
@@ -2580,7 +2566,7 @@ function selectCanonicalInstitutionLocation(detail) {
   elements["location-institution-id"].value = identifier;
   elements["confirmed-institution"].value = text(institution.canonical_name);
   elements["institution-language"].value = text(review.detected_language);
-  elements["institution-review-status"].value = text(review.review_status || "pending_review");
+  elements["institution-review-status"].textContent = locationReviewStatusLabel(review, location);
   const canonicalSelect = elements["canonical-institution"];
   canonicalSelect.replaceChildren(new Option(institution.canonical_name, institution.canonical_name));
   canonicalSelect.value = institution.canonical_name;
@@ -2599,9 +2585,6 @@ function selectCanonicalInstitutionLocation(detail) {
   elements["confirmed-country-code"].value = text(location.country_code).toUpperCase();
   elements["confirmed-lat"].value = text(location.lat);
   elements["confirmed-lon"].value = text(location.lon);
-  elements["coordinate-source"].value = text(location.coordinate_source);
-  elements["coordinate-source-url"].value = text(location.coordinate_source_url);
-  elements["coordinate-review-note"].value = text(location.review_note || review.review_note);
   elements["location-form-error"].hidden = true;
   renderLocationActions();
   renderCanonicalLocationContext(detail);
@@ -2619,9 +2602,6 @@ function selectConfirmedLocationRecord() {
     ["confirmed-city", "city"], ["confirmed-region", "region"],
     ["confirmed-country", "country"], ["confirmed-country-code", "country_code"],
     ["confirmed-lat", "lat"], ["confirmed-lon", "lon"],
-    ["coordinate-source", "coordinate_source"],
-    ["coordinate-source-url", "coordinate_source_url"],
-    ["coordinate-review-note", "review_note"],
   ]) {
     elements[elementId].value = text(location[field]);
   }
@@ -2669,7 +2649,6 @@ function renderLocationSummary() {
     ["Pending Review", summary.pending_review],
     ["Needs Coordinates", summary.needs_coordinates],
     ["Ambiguous", summary.ambiguous],
-    ["Alias Candidates", summary.alias_candidate],
     ["Confirmed", summary.confirmed],
     ["Aliases", summary.alias_of_confirmed],
     ["Ignored", summary.ignore],
@@ -2686,10 +2665,8 @@ function renderLocationSummary() {
   });
   const filters = [
     ["", "All", summary.total_queue_rows],
-    ["pending_review", "Pending Review", summary.pending_review],
     ["needs_coordinates", "Needs Coordinates", summary.needs_coordinates],
     ["ambiguous", "Ambiguous", summary.ambiguous],
-    ["alias_candidate", "Alias Candidates", summary.alias_candidate],
     [
       "confirmed",
       "Confirmed",
@@ -2721,7 +2698,9 @@ function renderLocationReviewList() {
       !(
         state.locationStatusFilter === "confirmed"
           ? ["confirmed", "alias_of_confirmed"].includes(row.review_status)
-          : row.review_status === state.locationStatusFilter
+          : state.locationStatusFilter === "needs_coordinates"
+            ? locationReviewStatusLabel(row, row.confirmed_location) === "Needs coordinates"
+            : row.review_status === state.locationStatusFilter
       )
     ) return false;
     if (!query) return true;
@@ -2787,7 +2766,7 @@ function selectLocationReview(queueId) {
   elements["confirmed-institution"].value =
     text(confirmed.institution || row.canonical_institution_name || row.institution);
   elements["institution-language"].value = text(row.detected_language);
-  elements["institution-review-status"].value = text(row.review_status || "pending_review");
+  elements["institution-review-status"].textContent = locationReviewStatusLabel(row, confirmed);
   const canonicalSelect = elements["canonical-institution"];
   canonicalSelect.replaceChildren(new Option("Select confirmed institution…", ""));
   state.confirmedLocations
@@ -2804,10 +2783,6 @@ function selectLocationReview(queueId) {
     text(confirmed.country_code).toUpperCase();
   elements["confirmed-lat"].value = text(confirmed.lat);
   elements["confirmed-lon"].value = text(confirmed.lon);
-  elements["coordinate-source"].value = text(confirmed.coordinate_source);
-  elements["coordinate-source-url"].value =
-    text(confirmed.coordinate_source_url);
-  elements["coordinate-review-note"].value = text(confirmed.review_note);
   elements["location-form-error"].hidden = true;
   renderLocationActions();
   renderLocationContext(row);
@@ -2818,7 +2793,13 @@ function renderLocationActions() {
     elements["canonical-institution"].value.trim()
   );
   elements["location-confirm-alias"].hidden = !hasCanonicalInstitution;
-  elements["location-create-new"].hidden = hasCanonicalInstitution;
+}
+
+function locationReviewStatusLabel(review, location = {}) {
+  const status = text(review?.review_status || "pending_review");
+  const hasUsableLocation = Boolean(text(location?.lat) && text(location?.lon));
+  if (status === "pending_review" && !hasUsableLocation) return "Needs coordinates";
+  return humanize(status);
 }
 
 function positionLocationMoreActions() {
@@ -2892,7 +2873,7 @@ function renderLocationContext(row) {
     ["Evidence source", row.evidence_source],
     ["Evidence URL", row.evidence_url],
     ["Suggested location", [row.suggested_city, row.suggested_country].filter(Boolean).join(", ")],
-    ["Current review status", humanize(row.review_status)],
+    ["Current review status", locationReviewStatusLabel(row, row.confirmed_location)],
     ["Existing matched institution", row.matched_institution],
     ["Suggested canonical institution", row.suggested_canonical_institution],
     ["Match diagnostics", [row.match_method, row.similarity_score, row.confidence].filter(Boolean).join(" · ")],
@@ -2901,7 +2882,6 @@ function renderLocationContext(row) {
     ["Affected papers", (row.affected_papers || []).map((paper) => [paper.title, paper.year].filter(Boolean).join(" · ")).join("; ")],
     ["Affected mappings", (row.affected_mappings || []).map((mapping) => [mapping.mapping_id, mapping.institution, mapping.mapping_status].filter(Boolean).join(" · ")).join("; ")],
     ["Legacy diagnostics", [row.location_status, row.coordinate_status].filter(Boolean).map(humanize).join(" · ")],
-    ["Review note", row.review_note],
   ];
   elements["location-context"].replaceChildren();
   fields.forEach(([label, value]) => {
@@ -3027,7 +3007,6 @@ function locationDraft() {
     confirmed_institution: elements["confirmed-institution"].value.trim(),
     canonical_institution_name: elements["canonical-institution"].value,
     detected_language: elements["institution-language"].value.trim(),
-    review_status: elements["institution-review-status"].value,
     confirmed_city: elements["confirmed-city"].value.trim(),
     confirmed_region: elements["confirmed-region"].value.trim(),
     confirmed_country: elements["confirmed-country"].value.trim(),
@@ -3035,10 +3014,6 @@ function locationDraft() {
       elements["confirmed-country-code"].value.trim().toUpperCase(),
     confirmed_lat: elements["confirmed-lat"].value.trim(),
     confirmed_lon: elements["confirmed-lon"].value.trim(),
-    coordinate_source: elements["coordinate-source"].value.trim(),
-    coordinate_source_url: elements["coordinate-source-url"].value.trim(),
-    coordinate_review_note:
-      elements["coordinate-review-note"].value.trim(),
   };
 }
 
@@ -3063,7 +3038,6 @@ function validatedLocationDraft() {
 function setLocationSaveRunning(running) {
   state.locationSaveRunning = running;
   elements["location-confirm"].disabled = running;
-  elements["location-save-metadata"].disabled = running;
 }
 
 function geocodeAddress() {
@@ -3089,9 +3063,6 @@ function clearLocationFields() {
     "confirmed-country-code",
     "confirmed-lat",
     "confirmed-lon",
-    "coordinate-source",
-    "coordinate-source-url",
-    "coordinate-review-note",
   ].forEach((id) => {
     elements[id].value = "";
   });
@@ -3248,12 +3219,6 @@ function confirmGeocodeCandidate() {
   elements["confirmed-region"].value = text(candidate.region);
   elements["confirmed-country"].value = text(candidate.country);
   elements["confirmed-country-code"].value = text(candidate.country_code).toUpperCase();
-  elements["coordinate-source"].value = "OpenStreetMap Nominatim";
-  elements["coordinate-source-url"].value = safeUrl(candidate.map_url) ? candidate.map_url : "";
-  const reviewNote = elements["coordinate-review-note"];
-  if (!reviewNote.value.trim() || reviewNote.value.trim() === NOMINATIM_REVIEW_NOTE) {
-    reviewNote.value = NOMINATIM_REVIEW_NOTE;
-  }
   closeGeocodeDialog();
 }
 
@@ -3264,10 +3229,6 @@ async function confirmLocation(event) {
   if (!draft) return;
   if (!draft.institution_id || draft.institution_id !== state.selectedInstitutionLocationId) {
     showLocationFormError("The location editor is not bound to the selected canonical institution.");
-    return;
-  }
-  if (!(draft.coordinate_source || draft.coordinate_source_url)) {
-    showLocationFormError("Enter a coordinate source or coordinate source URL.");
     return;
   }
   setLocationSaveRunning(true);
@@ -3287,10 +3248,7 @@ async function confirmLocation(event) {
         country_code: draft.confirmed_country_code,
         lat: draft.confirmed_lat,
         lon: draft.confirmed_lon,
-        coordinate_source: draft.coordinate_source,
-        coordinate_source_url: draft.coordinate_source_url,
         coordinate_status: "known",
-        review_note: draft.coordinate_review_note,
       } : draft),
     });
     showNotice(result.message);
@@ -3306,17 +3264,9 @@ async function confirmLocation(event) {
 }
 
 async function markLocationReview(status) {
-  const note = elements["coordinate-review-note"].value.trim();
   elements["location-form-error"].hidden = true;
-  if (!note) {
-    elements["location-form-error"].hidden = false;
-    elements["location-form-error"].textContent =
-      "Enter a coordinate review note before changing the status.";
-    return;
-  }
   const buttonIds = {
     ambiguous: "location-mark-ambiguous",
-    needs_coordinates: "location-needs-coordinates",
     ignore: "location-ignore",
     excluded: "location-exclude",
   };
@@ -3329,7 +3279,6 @@ async function markLocationReview(status) {
         method: "POST",
         body: JSON.stringify({
           queue_id: elements["location-queue-id"].value,
-          coordinate_review_note: note,
         }),
       }
     );
@@ -3368,29 +3317,6 @@ async function confirmLocationAlias() {
   } catch (error) {
     elements["location-form-error"].hidden = false;
     elements["location-form-error"].textContent = error.message;
-  }
-}
-
-async function saveLocationMetadata() {
-  if (state.locationSaveRunning) return;
-  if (state.locationEditorMode === "canonical") {
-    elements["location-form"].requestSubmit();
-    return;
-  }
-  const draft = validatedLocationDraft();
-  if (!draft) return;
-  setLocationSaveRunning(true);
-  try {
-    const result = await apiFetch("/api/location-review/save-metadata", {
-      method: "POST",
-      body: JSON.stringify(draft),
-    });
-    showNotice(result.message);
-    await loadLocationReviews();
-  } catch (error) {
-    showLocationFormError(error.message);
-  } finally {
-    setLocationSaveRunning(false);
   }
 }
 

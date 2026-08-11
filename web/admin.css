@@ -1181,6 +1181,18 @@ button:focus-visible {
   margin-top: 0.3rem;
 }
 
+.status-output {
+  display: flex;
+  align-items: center;
+  min-height: 2.55rem;
+  margin-top: 0.3rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-soft);
+  color: var(--ink);
+}
+
 .location-form-actions {
   display: flex;
   flex-wrap: wrap;

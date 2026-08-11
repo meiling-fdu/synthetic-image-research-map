@@ -157,7 +157,7 @@ process.stdout.write(JSON.stringify({
             app_source,
         )
 
-    def test_preview_status_omits_long_paper_titles(self):
+    def test_selection_status_omits_long_paper_titles(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
         style_source = (REPOSITORY / "web/style.css").read_text()
         interaction_body = app_source.split(
@@ -165,7 +165,7 @@ process.stdout.write(JSON.stringify({
         )[1].split("\nfunction renderActiveSelection()", 1)[0]
 
         self.assertIn(
-            "`Previewing ${visibleCount} visible institution record",
+            "`Showing ${visibleCount} visible institution record",
             interaction_body,
         )
         self.assertIn('lineCount ? " · Connections shown." : "."', interaction_body)

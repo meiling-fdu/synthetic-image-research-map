@@ -297,22 +297,20 @@ def _find_queue_row(
     raise CuratedLocationError("location review row was not found")
 
 
-def _append_note(existing: Any, note: Any) -> str:
-    old = clean(existing)
-    new = clean(note)
-    if not old:
-        return new
-    if not new or new in old.split(" | "):
-        return old
-    return f"{old} | {new}"
-
-
 def _confirmed_location_fields(
     draft: Mapping[str, Any],
     *,
     created_by: str,
     normalized_institution: str,
 ) -> Dict[str, str]:
+    obsolete = {
+        "coordinate_source", "coordinate_source_url",
+        "coordinate_review_note", "review_note",
+    } & set(draft)
+    if obsolete:
+        raise CuratedLocationError(
+            f"unsupported location field: {sorted(obsolete)[0]}"
+        )
     institution = clean(
         draft.get("confirmed_institution") or draft.get("institution")
     )
@@ -328,17 +326,6 @@ def _confirmed_location_fields(
         draft.get("confirmed_lat") if "confirmed_lat" in draft else draft.get("lat"),
         draft.get("confirmed_lon") if "confirmed_lon" in draft else draft.get("lon"),
     )
-    coordinate_source = clean(draft.get("coordinate_source"))
-    coordinate_source_url = clean(draft.get("coordinate_source_url"))
-    review_note = clean(
-        draft.get("coordinate_review_note") or draft.get("review_note")
-    )
-    if not coordinate_source and not coordinate_source_url:
-        raise CuratedLocationError(
-            "coordinate_source or coordinate_source_url is required"
-        )
-    if not review_note:
-        raise CuratedLocationError("coordinate_review_note is required")
     city = clean(draft.get("confirmed_city") or draft.get("city"))
     country = clean(draft.get("confirmed_country") or draft.get("country"))
     if not city or not country:
@@ -362,10 +349,7 @@ def _confirmed_location_fields(
         "country_code": country_code,
         "lat": latitude,
         "lon": longitude,
-        "coordinate_source": coordinate_source,
-        "coordinate_source_url": coordinate_source_url,
         "coordinate_status": "known",
-        "review_note": review_note,
         "created_by": clean(created_by) or "local-admin",
     }
 
@@ -505,9 +489,6 @@ def create_or_update_confirmed_location(
     queue_row["review_status"] = "confirmed"
     queue_row["location_status"] = "known"
     queue_row["coordinate_status"] = "known"
-    queue_row["review_note"] = _append_note(
-        queue_row.get("review_note"), values["review_note"]
-    )
     queue_row["updated_at"] = now
     # Historical refreshes may have produced duplicate review rows for the
     # same paper/raw institution under an obsolete ID. They represent the same
@@ -523,9 +504,6 @@ def create_or_update_confirmed_location(
             peer["review_status"] = "confirmed"
             peer["location_status"] = "known"
             peer["coordinate_status"] = "known"
-            peer["review_note"] = _append_note(
-                peer.get("review_note"), values["review_note"]
-            )
             peer["updated_at"] = now
     save_confirmed_locations(locations, locations_path)
     try:
@@ -552,14 +530,9 @@ def mark_queue_row(
     *,
     review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
 ) -> Dict[str, Any]:
-    review_note = clean(note)
-    if not review_note:
-        raise CuratedLocationError("review_note is required")
     status_values = {
         "pending_review": ("missing", "missing"),
-        "needs_coordinates": ("needs_coordinate_review", "missing"),
         "ambiguous": ("ambiguous", "needs_coordinate_review"),
-        "alias_candidate": ("ambiguous", "missing"),
         "ignore": ("missing", "missing"),
         "excluded": ("missing", "missing"),
     }
@@ -570,49 +543,6 @@ def mark_queue_row(
     row = rows[index]
     row["review_status"] = status
     row["location_status"], row["coordinate_status"] = status_values[status]
-    row["review_note"] = _append_note(row.get("review_note"), review_note)
-    row["updated_at"] = _timestamp()
-    save_location_review_queue(rows, review_path)
-    return {**row, "queue_id": queue_row_id(row)}
-
-
-def save_queue_metadata(
-    queue_id: Any,
-    draft: Mapping[str, Any],
-    *,
-    review_path: Path = DEFAULT_LOCATION_REVIEW_PATH,
-) -> Dict[str, Any]:
-    rows = load_location_review_queue(review_path)
-    index = _find_queue_row(rows, queue_id)
-    row = rows[index]
-    editable = (
-        "detected_language",
-        "suggested_city",
-        "suggested_country",
-        "suggested_canonical_institution",
-        "match_method",
-        "similarity_score",
-        "confidence",
-        "openalex_institution_id",
-        "ror_id",
-        "wikidata_id",
-        "review_note",
-    )
-    for field in editable:
-        if field in draft:
-            row[field] = clean(draft.get(field))
-    requested_status = clean(draft.get("review_status"))
-    if requested_status:
-        if requested_status not in ALLOWED_INSTITUTION_REVIEW_STATUSES:
-            raise CuratedLocationError("unsupported institution review status")
-        if (
-            requested_status in {"confirmed", "alias_of_confirmed"}
-            and requested_status != clean(row.get("review_status"))
-        ):
-            raise CuratedLocationError(
-                "use Confirm location or Confirm as alias for this status"
-            )
-        row["review_status"] = requested_status
     row["updated_at"] = _timestamp()
     save_location_review_queue(rows, review_path)
     return {**row, "queue_id": queue_row_id(row)}
@@ -699,7 +629,6 @@ def confirm_alias(
     queue_row["institution_id"] = target_institution_id
     queue_row["matched_institution"] = clean(target.get("institution"))
     queue_row["review_status"] = "alias_of_confirmed"
-    queue_row["review_note"] = _append_note(queue_row.get("review_note"), note)
     queue_row["updated_at"] = _timestamp()
     save_institution_aliases(aliases, aliases_path)
     try:
@@ -737,6 +666,12 @@ def location_review_report(
         )
         if normalized:
             candidates[normalized].append(dict(row))
+    confirmed_ids = {clean(row.get("institution_id")) for row in confirmed}
+    needs_coordinates = sum(
+        clean(row.get("review_status")) == "pending_review"
+        and clean(row.get("institution_id")) not in confirmed_ids
+        for row in reviews
+    )
     return {
         "total_queue_rows": len(reviews),
         **{
@@ -744,6 +679,7 @@ def location_review_report(
             for status in sorted(ALLOWED_INSTITUTION_REVIEW_STATUSES)
         },
         "ambiguous": statuses["ambiguous"],
+        "needs_coordinates": needs_coordinates,
         "needs_coordinate_review": coordinate_statuses[
             "needs_coordinate_review"
         ],

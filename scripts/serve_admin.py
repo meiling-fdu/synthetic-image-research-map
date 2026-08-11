@@ -78,7 +78,6 @@ try:
         load_institution_aliases,
         normalize_institution_name,
         mark_queue_row,
-        save_queue_metadata,
     )
     from .curated_institutions import (
         DEFAULT_AUDIT_PATH,
@@ -201,7 +200,6 @@ except ImportError:
         load_institution_aliases,
         normalize_institution_name,
         mark_queue_row,
-        save_queue_metadata,
     )
     from curated_institutions import (
         DEFAULT_AUDIT_PATH,
@@ -1375,10 +1373,9 @@ def queue_location_review(
         "evidence_url": clean(draft.get("evidence_url")),
         "suggested_city": clean(draft.get("city")),
         "suggested_country": clean(draft.get("country")),
-        "review_status": "needs_coordinates",
+        "review_status": "pending_review",
         "location_status": "needs_location_review",
         "coordinate_status": "missing",
-        "review_note": note,
         "created_at": clean((existing or {}).get("created_at")) or now,
         "updated_at": now,
     }
@@ -2745,7 +2742,6 @@ def make_handler(
                 return
             institution_actions = {
                 "/api/institution/identity": "identity",
-                "/api/institution/location": "location",
                 "/api/institution/alias": "alias",
                 "/api/institution/parent": "parent",
                 "/api/institution/merge": "merge",
@@ -2835,17 +2831,6 @@ def make_handler(
                     with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_INSTITUTION_WRITE_LOCK:
                         if action == "identity":
                             result = update_institution_identity(payload.get("institution_id"), payload, institutions_path=institutions_path)
-                        elif action == "location":
-                            if clean(payload.get("loaded_institution_id")) != clean(payload.get("institution_id")):
-                                raise CuratedInstitutionError(
-                                    "institution_id differs from the institution loaded by the editor"
-                                )
-                            result = update_institution_location(
-                                payload.get("institution_id"), payload,
-                                institutions_path=institutions_path,
-                                locations_path=institution_locations_path,
-                                location_reviews_path=location_review_path,
-                            )
                         elif action == "alias":
                             result = add_institution_alias(payload.get("institution_id"), payload.get("alias_name"), note=payload.get("review_note"), institutions_path=institutions_path, aliases_path=institution_aliases_path)
                         elif action == "parent":
@@ -2861,13 +2846,9 @@ def make_handler(
             location_actions = {
                 "/api/location-review/confirm": "confirm",
                 "/api/location-review/mark-ambiguous": "ambiguous",
-                "/api/location-review/mark-needs-coordinates": "needs_coordinates",
-                "/api/location-review/mark-pending-review": "pending_review",
-                "/api/location-review/mark-alias-candidate": "alias_candidate",
                 "/api/location-review/mark-ignore": "ignore",
                 "/api/location-review/mark-excluded": "excluded",
                 "/api/location-review/confirm-alias": "confirm_alias",
-                "/api/location-review/save-metadata": "save_metadata",
             }
             if request.path in location_actions:
                 if not self.is_header_authorized():
@@ -2911,29 +2892,18 @@ def make_handler(
                                 payload.get("canonical_institution_name"),
                                 alias_language=payload.get("detected_language"),
                                 alias_source=payload.get("alias_source"),
-                                note=payload.get("coordinate_review_note")
-                                or payload.get("review_note"),
+                                note="",
                                 review_path=location_review_path,
                                 locations_path=institution_locations_path,
                                 aliases_path=institution_aliases_path,
                             )
                             message = "Alias confirmed against the canonical institution."
-                        elif action == "save_metadata":
-                            result = {
-                                "queue_row": save_queue_metadata(
-                                    payload.get("queue_id"),
-                                    payload,
-                                    review_path=location_review_path,
-                                )
-                            }
-                            message = "Institution metadata saved."
                         else:
                             result = {
                                 "queue_row": mark_queue_row(
                                     payload.get("queue_id"),
                                     action,
-                                    payload.get("coordinate_review_note")
-                                    or payload.get("review_note"),
+                                    "",
                                     review_path=location_review_path,
                                 )
                             }

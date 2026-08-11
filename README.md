@@ -249,10 +249,9 @@ Candidate OpenAlex map records may include institution resolution method, confid
 
 ### Public preview export
 
-The website supports three dataset modes. Opening `/web/` without a dataset parameter tries the public preview first and clearly falls back to the fictional sample if the preview file is unavailable:
+The website supports the published dataset and a local candidate-data mode:
 
-- The **public preview dataset** is the public default, generated as strict map markers at `web/data/public_preview_map_data.json` plus a broader searchable paper list at `web/data/public_preview_papers.json`, and can be opened explicitly with `?dataset=preview`.
-- The **fictional sample dataset** is committed toy data for demonstrating the interface and can be opened with `?dataset=sample`.
+- The **public dataset** is the default, generated as validated map markers at `web/data/public_preview_map_data.json` plus a broader searchable paper list at `web/data/public_preview_papers.json`.
 - The **local OpenAlex candidate dataset** is generated at `web/data/openalex_candidate_map_data.json`, opened with `?dataset=openalex`, and ignored by Git. This mode is intended only for local generated data.
 
 Preview the default filtering without writing a file:
@@ -273,7 +272,7 @@ For a capped high-confidence-only preview:
 python3 scripts/export_public_preview.py --max-map-records 50 --min-confidence high
 ```
 
-The public preview contains provenance-labeled OpenAlex candidate metadata plus any eligible maintainer-confirmed curated records; it is not a uniformly curated final bibliography. The map marker export includes all eligible `detection`, `source_attribution`, and `detection_and_source_attribution` records with usable institution coordinates by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate marker records are excluded. Use `--max-map-records` (or the legacy `--max-records` alias) for limited test or performance-fallback exports. The paper-level preview list can include in-scope/key/candidate/curated papers that still need affiliation or coordinate review, and marks them with coverage flags rather than inventing locations. Use `--include-missing-location` only for local debugging of otherwise unmappable automatic marker records.
+The public outputs preserve source provenance and maintained manual review. The map marker export includes eligible `detection`, `source_attribution`, and `detection_and_source_attribution` records with usable institution coordinates by default; uncertain, out-of-scope, low-confidence, review-flagged, missing-institution, and missing-coordinate marker records are excluded. Use `--max-map-records` (or the legacy `--max-records` alias) for limited test or performance exports. The paper-level list can include in-scope papers that still need affiliation or coordinate review and marks those coverage gaps rather than inventing locations. Use `--include-missing-location` only for local debugging of otherwise unmappable automatic marker records.
 
 Generate a Markdown quality summary for the currently published preview:
 
@@ -331,15 +330,15 @@ The pipeline searches and extracts all candidates for audit, then sends only in-
 
 ## Local Preview
 
-The prototype loads its JSON data with `fetch`, so preview it through a local HTTP server rather than opening `web/index.html` directly:
+The site loads its JSON data with `fetch`, so preview it through a local HTTP server rather than opening `web/index.html` directly:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Then open [http://localhost:8000/web/](http://localhost:8000/web/) for the preview-first default, or [http://localhost:8000/web/?dataset=sample](http://localhost:8000/web/?dataset=sample) for the fictional sample.
+Then open [http://localhost:8000/web/](http://localhost:8000/web/) for the published dataset.
 
-The public preview remains primarily automatically generated candidate metadata, with provenance-labeled curated records included when available; it is not a uniformly manually curated bibliography. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during preview.
+The public data is assembled from source metadata and maintained review files, then validated before publication. Leaflet and OpenStreetMap map resources are loaded from public CDNs, so the map tiles require an internet connection during local preview.
 
 ## GitHub Pages Deployment
 
@@ -352,12 +351,12 @@ The public preview remains primarily automatically generated candidate metadata,
 
 The GitHub Pages URL redirects to `/web/?dataset=preview`, so visitors see the committed public preview by default. The public site only shows committed files; locally generated candidate data is not published unless it is explicitly committed.
 
-Open `/web/?dataset=sample` to view the fictional sample manually. The `?dataset=openalex` mode is reserved for local generated data and normally will not be available on GitHub Pages.
+The `?dataset=openalex` mode is reserved for local generated data and normally will not be available on GitHub Pages.
 
 ## Current Limitations
 
-The online preview is an automatically generated candidate view based on OpenAlex metadata, not a manually curated bibliography. Paper relevance, task labels, institution names, and coordinates may contain errors, so the map should be used for exploratory visualization rather than authoritative bibliographic analysis. Future versions will add more manual validation and broader bibliographic sources.
+The public map is a maintained research-discovery resource rather than an exhaustive bibliography. Coverage may still evolve as paper metadata, affiliations, and institution locations are reviewed and corrected.
 
 ## Current Status
 
-**Early prototype.** A minimal static Leaflet.js map demonstrates markers, paper popups, filters, and visible-record summaries using an uncurated public candidate preview and a separate fictional sample dataset.
+A static Leaflet.js research map provides curated paper discovery, institution markers, filters, paper details, and CSV export.

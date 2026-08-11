@@ -318,7 +318,6 @@ def identity_snapshot(
             clean(row.get("location_id")), clean(row.get("institution_id")),
             clean(row.get("city")), clean(row.get("region")), clean(row.get("country")),
             clean(row.get("country_code")), clean(row.get("lat")), clean(row.get("lon")),
-            clean(row.get("coordinate_source")), clean(row.get("coordinate_source_url")),
             clean(row.get("coordinate_status")),
         ) for row in locations),
     }

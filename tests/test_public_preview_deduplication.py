@@ -38,9 +38,24 @@ from scripts.validate_public_preview import (
     validate_record,
     validate_curated_affiliation_supersession,
 )
+from scripts.public_relationships import public_relationship_key
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_regression_papers_have_unique_public_relationships(self):
+        root = Path(__file__).resolve().parents[1]
+        records = json.loads(
+            (root / "web/data/public_preview_map_data.json").read_text()
+        )["records"]
+        titles = {
+            "Forensic Invariant Learning for Synthetic Image Detection: Bridging Benford's Law and Topological Analysis with Machine Learning Ensembles",
+            "No One Can Escape: A General Approach to Detect Tampered and Generated Image",
+        }
+        selected = [row for row in records if row.get("title") in titles]
+        self.assertTrue(selected)
+        keys = [public_relationship_key(row) for row in selected]
+        self.assertEqual(len(keys), len(set(keys)))
+
     def test_preserve_existing_reapplies_after_curated_precedence(self):
         previous = [{
             "id": "legacy:1",
@@ -95,7 +110,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 "doi": "10.1000/same",
                 "institution": "Example University",
                 "institution_id": "institution:example",
-                "institution_authors": ["Ada Researcher", "Ada Researcher"],
+                "institution_authors": ["Ada Researcher", "Ben Researcher", "Ada Researcher"],
                 "preliminary_affiliations": True,
             },
             {
@@ -116,10 +131,10 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertEqual(len(deduplicated), 1)
         self.assertEqual(
             deduplicated[0]["institution_authors"],
-            ["Researcher, Ada", "Ben Researcher"],
+            ["Ada Researcher", "Ben Researcher"],
         )
 
-    def test_conflicting_curated_mapping_ids_are_not_merged_implicitly(self):
+    def test_mapping_ids_preserve_lineage_without_creating_duplicates(self):
         records = [
             {
                 "title": "Same paper",
@@ -128,15 +143,18 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 "institution": "Example University",
                 "institution_id": "institution:example",
                 "mapping_id": mapping_id,
+                "institution_authors": ["Ada Researcher"],
             }
             for mapping_id in ("mapping:one", "mapping:two")
         ]
 
-        with self.assertRaisesRegex(
-            RuntimeError,
-            "Conflicting curated mapping IDs",
-        ):
-            deduplicate_public_map_relationships(records)
+        deduplicated, removed = deduplicate_public_map_relationships(records)
+        self.assertEqual(removed, 1)
+        self.assertEqual(len(deduplicated), 1)
+        self.assertEqual(
+            deduplicated[0]["mapping_lineage_ids"],
+            ["mapping:one", "mapping:two"],
+        )
 
     def test_validator_rejects_duplicate_canonical_author_relationship(self):
         records = [
@@ -162,6 +180,18 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             "duplicate canonical paper/author/institution relationship",
             issues[0].message,
         )
+
+    def test_different_author_sets_remain_distinct(self):
+        common = {
+            "title": "Same paper", "year": 2021, "doi": "10.1000/same",
+            "institution_id": "institution:example", "location_id": "location:one",
+        }
+        records = [
+            {**common, "institution_authors": ["Ada Researcher"]},
+            {**common, "institution_authors": ["Ada Researcher", "Ben Researcher"]},
+        ]
+        deduplicated, removed = deduplicate_public_map_relationships(records)
+        self.assertEqual((len(deduplicated), removed), (2, 0))
 
     def test_four_current_shrinkage_relationships_have_durable_locations_and_emit(self):
         mapping_ids = {

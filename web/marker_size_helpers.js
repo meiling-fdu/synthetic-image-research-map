@@ -10,8 +10,8 @@
   const MARKER_RADIUS_SCALE = 3;
   const TASK_LABELS = {
     detection: "Detection",
-    source_attribution: "Source attribution",
-    detection_and_source_attribution: "Detection + source attribution",
+    source_attribution: "Source Attribution",
+    detection_and_source_attribution: "Detection + Source Attribution",
     unknown: "Unknown",
   };
 

@@ -17,7 +17,7 @@ try:
         VenueRegistryError,
         canonical_venue_registry,
         clean_text,
-        materialize_canonical_venue_metadata,
+        materialize_existing_venue_id,
         read_venue_aliases,
     )
 except ImportError:
@@ -28,7 +28,7 @@ except ImportError:
         VenueRegistryError,
         canonical_venue_registry,
         clean_text,
-        materialize_canonical_venue_metadata,
+        materialize_existing_venue_id,
         read_venue_aliases,
     )
 
@@ -61,6 +61,8 @@ def audit_and_synchronize(
     synchronized: list[dict[str, str]] = []
     groups: dict[str, dict[str, Any]] = {}
     dangling: list[dict[str, str]] = []
+    legacy_ids_removed = 0
+    canonical_ids_replaced = 0
     changed_records = 0
 
     for paper in papers:
@@ -69,7 +71,11 @@ def audit_and_synchronize(
         if not venue_id:
             synchronized.append(row)
             continue
-        if venue_id not in registry:
+        try:
+            materialized = materialize_existing_venue_id(
+                row, alias_rows, registry=registry
+            )
+        except VenueRegistryError:
             dangling.append({
                 "paper_id": clean_text(row.get("paper_id")),
                 "title": clean_text(row.get("title")),
@@ -77,9 +83,19 @@ def audit_and_synchronize(
             })
             synchronized.append(row)
             continue
-        materialized = materialize_canonical_venue_metadata(
-            row, alias_rows, registry=registry
-        )
+        materialized_id = clean_text(materialized.get("venue_id"))
+        if not materialized_id:
+            legacy_ids_removed += 1
+            changed_records += 1
+            for field in SYNC_FIELDS:
+                row[field] = clean_text(materialized.get(field))
+            row["venue_id"] = ""
+            synchronized.append(row)
+            continue
+        if materialized_id != venue_id:
+            canonical_ids_replaced += 1
+            row["venue_id"] = materialized_id
+        venue_id = materialized_id
         differences = [
             field for field in SYNC_FIELDS
             if clean_text(row.get(field)) != clean_text(materialized.get(field))
@@ -124,6 +140,8 @@ def audit_and_synchronize(
         "papers_with_confirmed_venue_id": sum(row["paper_count"] for row in group_rows),
         "inconsistent_records": changed_records,
         "repaired_records": changed_records,
+        "legacy_placeholder_ids_removed": legacy_ids_removed,
+        "canonical_ids_replaced": canonical_ids_replaced,
         "dangling_records_not_modified": len(dangling),
         "dangling_records": sorted(
             dangling, key=lambda item: (item["venue_id"], item["paper_id"], item["title"])
@@ -165,6 +183,13 @@ def main() -> int:
         synchronized, report = audit_and_synchronize(papers, aliases)
     except (OSError, ValueError, VenueRegistryError) as error:
         print(f"ERROR: {error}")
+        return 1
+    if report["dangling_records_not_modified"]:
+        for row in report["dangling_records"]:
+            print(
+                "ERROR: dangling venue_id "
+                f"{row['venue_id']!r} for {row['title']!r}"
+            )
         return 1
     if args.write:
         write_papers(args.papers, synchronized)

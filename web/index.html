@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta
       name="description"
-      content="A static prototype for exploring AI-generated image detection and source attribution research on a world map."
+      content="An interactive research map of AI-generated image detection and source attribution papers, researchers, and institutions."
     >
     <title>Synthetic Image Detection &amp; Attribution Landscape</title>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260809-public-visual-rhythm">
+    <link rel="stylesheet" href="style.css?v=20260811-public-copy">
   </head>
   <body>
     <header class="site-header">
@@ -110,7 +110,7 @@
                 <option value="all">All</option>
                 <option value="detection">Detection</option>
                 <option value="source_attribution">Source Attribution</option>
-                <option value="detection_and_source_attribution">Detection and Source Attribution</option>
+                <option value="detection_and_source_attribution">Detection + Source Attribution</option>
               </select>
             </label>
 
@@ -224,7 +224,7 @@
       </aside>
 
       <div class="map-column">
-        <section class="map-panel" aria-label="Research Locations">
+        <section class="map-panel" aria-label="Research Map">
           <div class="map-summary">
             <div class="dataset-overview" aria-label="Filtered map overview">
               <dl class="dataset-statistics" aria-live="polite">
@@ -242,7 +242,7 @@
                 </div>
               </dl>
               <p id="dataset-statistics-note">
-                Institution-level records matching the current filters.
+                Institution records matching the current filters.
               </p>
             </div>
             <div class="map-status-row">
@@ -265,12 +265,12 @@
                 </span>
               </p>
               <p id="map-status" class="map-status" role="status">
-                Loading Public Preview Data...
+                Loading research map data...
               </p>
             </div>
           </div>
           <div class="map-workspace">
-            <div id="map" aria-label="World Map of Synthetic Image Research Records"></div>
+            <div id="map" aria-label="World map of synthetic-image research institutions"></div>
             <aside
               id="paper-details"
               class="paper-details"
@@ -322,7 +322,7 @@
                 <select id="sort-control" class="sort-control-compact" disabled>
                   <option value="year-desc">Year: Newest First</option>
                   <option value="year-asc">Year: Oldest First</option>
-                  <option value="venue-asc">Venue/Source: A–Z</option>
+                  <option value="venue-asc">Publication Venue: A–Z</option>
                   <option value="title-asc">Title: A–Z</option>
                   <option value="title-desc">Title: Z–A</option>
                 </select>
@@ -339,114 +339,81 @@
         </section>
       </div>
 
-      <details class="panel methodology-panel">
-        <summary>
-          <span>About, Methodology, and Scope</span>
-          <span class="methodology-hint">How Records Are Selected, Mapped, and Explored</span>
-        </summary>
-        <div class="methodology-grid">
+      <section class="panel site-information" aria-labelledby="site-information-heading">
+        <header class="site-information-header">
+          <h2 id="site-information-heading">About, Methodology, and Scope</h2>
+          <p>
+            An academic map of synthetic-image detection and source-attribution
+            research, curated from source metadata and manual review.
+          </p>
+        </header>
+        <div class="site-information-grid">
           <section>
-            <h2>Project Scope</h2>
+            <h3>Scope</h3>
             <p>
-              The map covers detection of AI-generated, synthetic, GAN-generated,
-              diffusion-generated, fake, and deepfake images, plus source attribution,
-              identification, and verification for generated images.
-            </p>
-            <p>
-              It excludes broad model, feature, authorship, camera-model, and sensor
-              attribution, as well as work that only uses synthetic data for downstream tasks.
+              The dataset covers detection and attribution of AI-generated images,
+              including separately labeled deepfake, image-editing, and survey work.
             </p>
           </section>
           <section>
-            <h2>Data and Records</h2>
+            <h3>Records and Mapping</h3>
             <p>
-              The public preview combines automatically collected candidate metadata
-              with eligible maintainer-confirmed records. It is a research-discovery
-              aid, not a complete or uniformly curated bibliography.
-            </p>
-            <p>
-              The map is institution-record based, so one paper may appear at several
-              institutions. Affiliations are preserved per author and are not inferred
-              from the first author. Unique papers view deduplicates records for
-              bibliography-style browsing.
-            </p>
-            <p>
-              <code>data/manual/key_papers.csv</code> is a coverage checklist for
-              auditing only. Adding a paper there does not publish it to the map;
-              <code>not_covered_by_pipeline</code> means the automatic pipeline did
-              not cover that paper.
+              Author affiliations are preserved per paper. Only institutions with valid
+              mapped locations appear as markers, so one paper may appear at multiple
+              institutions or remain available only in the paper list.
             </p>
           </section>
           <section>
-            <h2>Explore and Export</h2>
+            <h3>Explore and Report</h3>
             <p>
-              Keyword search, year range, task filters, the results-view toggle, and CSV
-              export operate on the currently loaded dataset. Map markers and summary
-              statistics remain institution based.
-            </p>
-          </section>
-          <section>
-            <h2>Quality Control</h2>
-            <p>
-              Paper coverage and map coverage are different: a paper can be searchable
-              while its affiliation or location still needs review. Map markers require
-              a supported institution relationship and usable coordinates; uncertain,
-              out-of-scope, low-confidence, and review-flagged marker records are
-              excluded.
+              Filters and <strong>Export CSV</strong> apply to the current results.
+              Report missing papers or metadata problems through
+              <a
+                href="https://github.com/meiling-fdu/synthetic-image-research-map/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+              >GitHub Issues</a>.
             </p>
           </section>
         </div>
-      </details>
-
-      <section class="panel project-links" aria-labelledby="project-links-heading">
-        <h2 id="project-links-heading">Data Notice and Credits</h2>
-        <div class="project-links-content">
-          <nav class="project-link-list" aria-label="Project Resources">
-            <a href="data/public_preview_map_data.json">Public Preview JSON</a>
-            <a href="data/public_preview_papers.json">Public Preview Papers JSON</a>
-            <a href="data/sample_map_data.json">Sample Dataset JSON</a>
-            <a href="../docs/public_preview_report.md">Quality Report</a>
-            <a href="../docs/data_collection.md">Data Methodology</a>
-          </nav>
-          <nav class="dataset-switcher" aria-label="Dataset Selection"></nav>
-          <p id="dataset-status-note" class="dataset-status-badge">
-            Uncurated public preview
-          </p>
-          <p>
-            Coverage is evolving. Metadata, scope labels, affiliations, and coordinates
-            may be incomplete or incorrect; follow the linked source records and quality
-            report before relying on an entry.
-          </p>
-          <p id="dataset-notice-copy">
-            This public preview combines OpenAlex candidate metadata with eligible
-            maintainer-confirmed records. Searchable papers may lack map markers; markers
-            require supported affiliations and usable institution coordinates.
-          </p>
-          <p>
-            Use <strong>Export CSV</strong> to download the currently filtered records.
-            Report metadata errors or missing papers through
-            <a
-              href="https://github.com/meiling-fdu/synthetic-image-research-map/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-            >GitHub Issues</a>.
-          </p>
-        </div>
+        <nav class="project-link-list" aria-label="Public data and documentation">
+          <a href="data/public_preview_map_data.json">Map Data JSON</a>
+          <a href="data/public_preview_papers.json">Paper Data JSON</a>
+          <a href="../docs/public_preview_report.md">Quality Report</a>
+          <a href="../docs/data_collection.md">Data Methodology</a>
+        </nav>
       </section>
     </main>
 
-    <footer>
-      Metadata source:
-      <a href="https://openalex.org/" target="_blank" rel="noopener noreferrer">OpenAlex</a>
-      · Map:
-      <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a>
-      /
-      <a
-        href="https://www.openstreetmap.org/copyright"
-        target="_blank"
-        rel="noopener noreferrer"
-      >© OpenStreetMap contributors</a>
-      · Development assistance: Codex
+    <footer aria-label="Site credits">
+      <span class="footer-credit-group">
+        Metadata source:
+        <a href="https://openalex.org/" target="_blank" rel="noopener noreferrer">OpenAlex</a>
+      </span>
+      <span class="footer-credit-group">
+        Map:
+        <a href="https://leafletjs.com/" target="_blank" rel="noopener noreferrer">Leaflet</a>
+        /
+        <a
+          href="https://www.openstreetmap.org/copyright"
+          target="_blank"
+          rel="noopener noreferrer"
+        >© OpenStreetMap contributors</a>
+      </span>
+      <span class="footer-credit-group">
+        Development assistance:
+        <a
+          href="https://developers.openai.com/codex/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Codex</a>
+        ·
+        <a
+          href="https://learn.chatgpt.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >ChatGPT</a>
+      </span>
     </footer>
 
     <script
@@ -454,12 +421,12 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="paper_details_helpers.js?v=20260809-public-visual-rhythm"></script>
+    <script src="paper_details_helpers.js?v=20260811-public-copy"></script>
     <script src="paper_link_helpers.js?v=20260729-formal-publication-links"></script>
-    <script src="marker_size_helpers.js?v=20260706-task-markers"></script>
+    <script src="marker_size_helpers.js?v=20260811-public-copy"></script>
     <script src="marker_interaction_helpers.js?v=20260712-pinned-state"></script>
     <script src="public_metadata.js?v=20260718-export-date"></script>
     <script src="institution_type_labels.js?v=20260718-research-institute"></script>
-    <script src="app.js?v=20260809-public-visual-rhythm"></script>
+    <script src="app.js?v=20260811-public-copy"></script>
   </body>
 </html>

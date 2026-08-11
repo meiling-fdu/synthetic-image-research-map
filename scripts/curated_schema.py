@@ -176,7 +176,6 @@ INSTITUTION_LOCATION_REVIEW_COLUMNS = (
     "review_status",
     "location_status",
     "coordinate_status",
-    "review_note",
     "created_at",
     "updated_at",
 )
@@ -213,10 +212,7 @@ INSTITUTION_LOCATION_COLUMNS = (
     "country_code",
     "lat",
     "lon",
-    "coordinate_source",
-    "coordinate_source_url",
     "coordinate_status",
-    "review_note",
     "created_at",
     "updated_at",
     "created_by",
@@ -274,9 +270,6 @@ INSTITUTION_LOCATION_AUDIT_COLUMNS = (
     "confirmed_region",
     "confirmed_country",
     "confirmed_country_code",
-    "coordinate_source",
-    "coordinate_source_url",
-    "review_note",
     "created_at",
     "created_by",
 )
@@ -427,9 +420,7 @@ ALLOWED_LOCATION_STATUSES = {
 ALLOWED_INSTITUTION_REVIEW_STATUSES = {
     "confirmed",
     "pending_review",
-    "needs_coordinates",
     "ambiguous",
-    "alias_candidate",
     "alias_of_confirmed",
     "ignore",
     "excluded",

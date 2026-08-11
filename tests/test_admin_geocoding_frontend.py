@@ -42,7 +42,7 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertIn('elements["confirmed-lon"].value = candidate.longitude', self.source[confirmation:])
         for field in ("city", "region", "country", "country_code"):
             self.assertIn(f'candidate.{field}', self.source[confirmation:])
-        self.assertIn('elements["coordinate-source"].value = "OpenStreetMap Nominatim"', self.source[confirmation:])
+        self.assertNotIn('elements["coordinate-source"]', self.source[confirmation:])
 
     def test_cancel_preserves_values_and_existing_coordinates_require_confirmation(self):
         close_body = self.source[self.source.index("function closeGeocodeDialog()") : self.source.index("function confirmGeocodeCandidate()")]
@@ -122,32 +122,30 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
     def test_switching_or_starting_a_review_clears_stale_location_values(self):
         selection = self.source[self.source.index("function selectLocationReview") : self.source.index("function renderLocationContext")]
         self.assertIn("clearLocationFields();", selection)
-        self.assertIn('elements["location-create-new"].addEventListener', self.source)
         self.assertIn('"confirmed-country-code",', self.source[self.source.index("function clearLocationFields") :])
 
-    def test_confirming_candidate_sets_note_without_overwriting_manual_text(self):
-        expected = "Coordinates selected from an OpenStreetMap Nominatim result and confirmed by the reviewer."
-        self.assertIn(f'"{expected}"', self.source)
+    def test_confirming_candidate_sets_only_location_fields(self):
         confirmation = self.source[self.source.index("function confirmGeocodeCandidate()") : self.source.index("async function confirmLocation")]
-        self.assertIn('if (!reviewNote.value.trim() || reviewNote.value.trim() === NOMINATIM_REVIEW_NOTE)', confirmation)
-        self.assertIn("reviewNote.value = NOMINATIM_REVIEW_NOTE", confirmation)
-        self.assertNotIn("else", confirmation)
+        self.assertNotIn("reviewNote", confirmation)
+        self.assertNotIn("coordinate-source", confirmation)
 
-    def test_auto_note_is_cleared_between_reviews_and_remains_required(self):
+    def test_removed_coordinate_provenance_fields_stay_absent(self):
         clear_fields = self.source[self.source.index("function clearLocationFields") : self.source.index("function candidateDetail")]
-        self.assertIn('"coordinate-review-note",', clear_fields)
-        self.assertIn('id="coordinate-review-note" rows="3" required', self.html)
+        self.assertNotIn('"coordinate-review-note",', clear_fields)
+        self.assertNotIn('id="coordinate-review-note"', self.html)
+        self.assertNotIn('id="coordinate-source"', self.html)
 
     def test_location_actions_are_simplified_and_contextual(self):
         actions = self.html[self.html.index('<div class="location-form-actions">') : self.html.index("</form>", self.html.index('<div class="location-form-actions">'))]
-        for action in ("Confirm location", "Save edited metadata", "Needs coordinate review"):
+        for action in ("Confirm location",):
             self.assertIn(action, actions)
+        for removed in ("Save edited metadata", "Needs coordinate review"):
+            self.assertNotIn(removed, actions)
         self.assertIn("More actions", actions)
         for action in ("Mark ambiguous", "Ignore this institution", "Exclude from public map"):
             self.assertIn(action, actions)
         rendering = self.source[self.source.index("function renderLocationActions") : self.source.index("function renderLocationContext")]
         self.assertIn('elements["location-confirm-alias"].hidden = !hasCanonicalInstitution', rendering)
-        self.assertIn('elements["location-create-new"].hidden = hasCanonicalInstitution', rendering)
         self.assertIn('elements["canonical-institution"].addEventListener("change", renderLocationActions)', self.source)
 
     def test_alias_candidates_show_evidence_and_require_confirmation(self):
@@ -158,7 +156,7 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
             self.assertIn(field, self.source)
         confirmation = self.source[
             self.source.index("async function confirmLocationAlias"):
-            self.source.index("async function saveLocationMetadata")
+            self.source.index("function requestToken")
         ]
         self.assertIn("window.confirm(", confirmation)
         self.assertIn("does not merge canonical institutions or reassign mappings", confirmation)

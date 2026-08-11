@@ -89,7 +89,17 @@ class BookInvariantTests(unittest.TestCase):
     def test_write_failure_does_not_partially_change_curated_row(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "papers.csv"
-            existing = paper_row(publication_type="conference", paper_categories="method")
+            existing = paper_row(
+                publication_type="conference",
+                paper_categories="method",
+                venue="",
+                venue_id="",
+                venue_name="",
+                venue_acronym="",
+                venue_type="",
+                venue_track="",
+                raw_venue="",
+            )
             write_curated_papers([existing], path)
             before = path.read_bytes()
             with mock.patch(
@@ -98,7 +108,7 @@ class BookInvariantTests(unittest.TestCase):
             ):
                 with self.assertRaises(OSError):
                     update_curated_paper(
-                        existing, paper_row(), preview_records=[], path=path
+                        existing, {}, preview_records=[], path=path
                     )
             self.assertEqual(path.read_bytes(), before)
 

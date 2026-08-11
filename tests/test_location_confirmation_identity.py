@@ -60,7 +60,7 @@ class LocationConfirmationIdentityTests(unittest.TestCase):
             "related_paper_id": "paper:one",
             "title": "Paper",
             "year": "2026",
-            "review_status": "needs_coordinates",
+            "review_status": "pending_review",
             "location_status": "missing",
             "coordinate_status": "missing",
         })
@@ -94,8 +94,6 @@ class LocationConfirmationIdentityTests(unittest.TestCase):
             "confirmed_country_code": "IN",
             "confirmed_lat": "28.546326",
             "confirmed_lon": "77.2732571",
-            "coordinate_source": "OpenStreetMap Nominatim",
-            "coordinate_review_note": "Confirmed in regression test.",
         }
 
     def test_stale_review_id_resolves_through_active_mapping(self):
@@ -154,8 +152,7 @@ class LocationConfirmationIdentityTests(unittest.TestCase):
                 "normalized_institution": "canonical institute",
                 "city": "Mumbai", "region": "Maharashtra", "country": "India",
                 "country_code": "IN", "lat": "19.076", "lon": "72.8777",
-                "coordinate_source": "Fixture", "coordinate_status": "known",
-                "review_note": "Existing office.", "created_at": "2026-01-01T00:00:00Z",
+                "coordinate_status": "known", "created_at": "2026-01-01T00:00:00Z",
                 "updated_at": "2026-01-01T00:00:00Z", "created_by": "test",
             })
             write_csv(locations, INSTITUTION_LOCATION_COLUMNS, [existing])

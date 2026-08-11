@@ -12,6 +12,9 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         cls.html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
         cls.app = (ROOT / "web" / "app.js").read_text(encoding="utf-8")
         cls.css = (ROOT / "web" / "style.css").read_text(encoding="utf-8")
+        cls.marker_helpers = (
+            ROOT / "web" / "marker_size_helpers.js"
+        ).read_text(encoding="utf-8")
 
     def test_renamed_public_filter_labels_and_title_case(self):
         for expected in (
@@ -266,6 +269,113 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertIn("@media (max-width: 820px)", self.css)
         self.assertIn(".results-heading-row {\n    grid-template-columns: 1fr;", self.css)
         self.assertIn(".sort-control-label {\n    flex: 1 1 190px;", self.css)
+
+    def test_public_copy_uses_production_research_map_wording(self):
+        for removed in (
+            "static prototype",
+            "Loading Public Preview Data",
+            "Public Preview JSON",
+            "Public Preview Papers JSON",
+            "Data Notice and Credits",
+        ):
+            self.assertNotIn(removed, self.html)
+        for removed in (
+            "Unable to load public preview data.",
+            "OpenAlex candidate",
+            "Previewing ${visibleCount}",
+            "preview paper details",
+            "Unknown venue/source",
+        ):
+            self.assertNotIn(removed, self.app)
+        self.assertIn("curated from source metadata and manual review", self.html)
+        self.assertIn("Preliminary affiliations", self.app)
+
+    def test_task_and_publication_labels_are_canonical(self):
+        task_filter = self.html[
+            self.html.index('<select id="task-filter"'):
+            self.html.index("</select>", self.html.index('<select id="task-filter"'))
+        ]
+        for label in (
+            "Detection",
+            "Source Attribution",
+            "Detection + Source Attribution",
+        ):
+            self.assertIn(label, task_filter)
+            self.assertIn(f'"{label}"', self.app)
+            self.assertIn(f'"{label}"', self.marker_helpers)
+        self.assertNotIn("Detection and Source Attribution", task_filter)
+        self.assertNotIn("Detection + attribution", self.app)
+        self.assertIn("Publication Venue", self.html)
+        self.assertIn("Publication Venue: A–Z", self.html)
+        self.assertNotIn("Venue/Source: A–Z", self.html)
+        self.assertIn("Unknown publication venue", self.app)
+        self.assertIn('aria-label="Paper categories"', self.app)
+
+    def test_map_and_result_count_labels_use_record_scope_consistently(self):
+        self.assertIn("Institution records matching the current filters.", self.html)
+        self.assertIn('resultsView === "papers" ? "paper" : "institution record"', self.app)
+        self.assertIn('recordLabel: "public map record"', self.app)
+        self.assertIn("No records match the current filters.", self.app)
+        self.assertIn('aria-label="Research Map"', self.html)
+
+    def test_bottom_information_is_one_compact_production_panel(self):
+        self.assertEqual(self.html.count('class="panel site-information"'), 1)
+        self.assertIn("About, Methodology, and Scope", self.html)
+        self.assertIn("Records and Mapping", self.html)
+        self.assertIn("Explore and Report", self.html)
+        self.assertNotIn("Data Notice and Credits", self.html)
+        self.assertNotIn("methodology-panel", self.html)
+        self.assertNotIn("project-links-content", self.html)
+        self.assertNotIn("dataset-status-note", self.html)
+        self.assertNotIn("dataset-switcher", self.html)
+
+        for label, href in (
+            ("Map Data JSON", "data/public_preview_map_data.json"),
+            ("Paper Data JSON", "data/public_preview_papers.json"),
+            ("Quality Report", "../docs/public_preview_report.md"),
+            ("Data Methodology", "../docs/data_collection.md"),
+        ):
+            self.assertIn(f'href="{href}">{label}</a>', self.html)
+
+    def test_obsolete_sample_and_preview_status_paths_are_removed(self):
+        self.assertFalse((ROOT / "web" / "data" / "sample_map_data.json").exists())
+        for removed in (
+            "sample_map_data.json",
+            "Fictional Sample",
+            "fictional sample",
+            "Uncurated Public Preview",
+            "uncurated public preview record",
+            "loadSampleFallback",
+            "renderDatasetSwitcher",
+        ):
+            self.assertNotIn(removed, self.html)
+            self.assertNotIn(removed, self.app)
+        self.assertIn('requestedName === "openalex"', self.app)
+
+    def test_footer_credits_link_all_named_sources_consistently(self):
+        footer = self.html.split('<footer aria-label="Site credits">', 1)[1].split(
+            "</footer>", 1
+        )[0]
+        links = re.findall(r'href="([^"]+)"[^>]*>([^<]+)</a>', footer)
+        self.assertEqual(
+            links,
+            [
+                ("https://openalex.org/", "OpenAlex"),
+                ("https://leafletjs.com/", "Leaflet"),
+                (
+                    "https://www.openstreetmap.org/copyright",
+                    "© OpenStreetMap contributors",
+                ),
+                ("https://developers.openai.com/codex/", "Codex"),
+                ("https://learn.chatgpt.com/", "ChatGPT"),
+            ],
+        )
+        footer_css = self.css[
+            self.css.index("footer {"):self.css.index("/* Core Leaflet layout")
+        ]
+        self.assertIn("flex-wrap: wrap", footer_css)
+        self.assertIn("text-decoration: underline", footer_css)
+        self.assertIn("overflow-wrap: anywhere", footer_css)
 
 
 if __name__ == "__main__":

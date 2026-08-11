@@ -119,8 +119,8 @@ process.stdout.write(JSON.stringify({html}));
         )[1].split("\nfunction resultBadges", 1)[0]
         self.assertEqual(details.count('class="paper-details-section-heading"'), 3)
         title_css = self.css.split(".paper-details-title {", 1)[1].split("}", 1)[0]
-        self.assertIn("text-align: justify", title_css)
-        self.assertIn("text-align-last: left", title_css)
+        self.assertIn("text-align: left", title_css)
+        self.assertNotIn("text-align: justify", title_css)
         self.assertNotIn("white-space: nowrap", title_css)
         self.assertNotIn("text-overflow", title_css)
         self.assertNotIn('class="paper-details-more-toggle"', details)

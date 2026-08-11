@@ -4,14 +4,14 @@ function displayStartupFailure(error) {
   console.error("Public frontend initialization failed.", error);
   const status = document.querySelector("#map-status");
   if (status) {
-    status.textContent = "Unable to load public preview data.";
+    status.textContent = "Unable to load research map data.";
     status.classList.add("error");
   }
   const resultsStatus = document.querySelector("#results-count");
   if (resultsStatus) resultsStatus.textContent = "Data unavailable";
   const emptyState = document.querySelector("#results-empty");
   if (emptyState) {
-    emptyState.textContent = "Unable to load public preview data.";
+    emptyState.textContent = "Unable to load research map data.";
     emptyState.hidden = false;
   }
   const results = document.querySelector("#results-list");
@@ -29,36 +29,27 @@ window.addEventListener("unhandledrejection", (event) => {
 });
 
 const DATASET_CONFIG = {
-  sample: {
-    url: "data/sample_map_data.json",
-    recordLabel: "fictional record",
-    emptyMessage: "The fictional sample dataset contains no map records.",
-  },
   openalex: {
     url: "data/openalex_candidate_map_data.json",
-    recordLabel: "uncurated OpenAlex candidate",
+    recordLabel: "OpenAlex record",
     emptyMessage:
-      "The OpenAlex candidate dataset contains no records with valid coordinates. Run the local export after adding reviewed coordinates to the processed affiliation data.",
+      "The local OpenAlex dataset contains no records with valid mapped locations.",
   },
   preview: {
     url: "data/public_preview_map_data.json",
     paperUrl: "data/public_preview_papers.json",
-    recordLabel: "uncurated public preview record",
-    emptyMessage: "The public preview dataset contains no eligible map records.",
+    recordLabel: "public map record",
+    emptyMessage: "The public dataset contains no eligible map records.",
   },
 };
 
 function resolveDatasetName(requestedName) {
-  if (requestedName === "sample" || requestedName === "openalex") {
-    return requestedName;
-  }
-  return "preview";
+  return requestedName === "openalex" ? "openalex" : "preview";
 }
 
 const requestedDataset = new URLSearchParams(window.location.search).get("dataset");
-const shouldFallbackToSample = requestedDataset === null;
-let datasetName = resolveDatasetName(requestedDataset);
-let datasetConfig = DATASET_CONFIG[datasetName];
+const datasetName = resolveDatasetName(requestedDataset);
+const datasetConfig = DATASET_CONFIG[datasetName];
 const TILE_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
 const DISPLAY_BOUNDS = L.latLngBounds([[-50, -170], [72, 180]]);
 const BASE_MIN_ZOOM = 1;
@@ -69,6 +60,12 @@ const TASK_COLORS = {
   source_attribution: "#b66a37",
   detection_and_source_attribution: "#76589b",
   uncertain: "#68747d",
+};
+const PUBLIC_TASK_LABELS = {
+  detection: "Detection",
+  source_attribution: "Source Attribution",
+  detection_and_source_attribution: "Detection + Source Attribution",
+  uncertain: "Unknown",
 };
 const ENTRY_TYPE_LABELS = {
   method: "Method",
@@ -198,8 +195,6 @@ const paperDetails = document.querySelector("#paper-details");
 const paperDetailsContent = document.querySelector("#paper-details-content");
 const closePaperDetailsButton = document.querySelector("#close-paper-details");
 const paperDetailsPinStatus = document.querySelector("#paper-details-pin-status");
-const datasetStatusNote = document.querySelector("#dataset-status-note");
-const datasetNoticeCopy = document.querySelector("#dataset-notice-copy");
 
 let records = [];
 let paperRecords = [];
@@ -379,6 +374,11 @@ function escapeHtml(value) {
 function formatTask(task) {
   const readableTask = String(task || "uncertain").replaceAll("_", " ");
   return readableTask.charAt(0).toUpperCase() + readableTask.slice(1);
+}
+
+function formatPublicTask(task) {
+  const normalized = MarkerSizeHelpers.normalizeTaskLabel(task);
+  return PUBLIC_TASK_LABELS[normalized] || PUBLIC_TASK_LABELS.uncertain;
 }
 
 function getPaperCategories(record) {
@@ -1177,7 +1177,7 @@ function venueDisplayLabel(record) {
   const exported = String(record.venue_label || "").trim();
   if (exported) return exported;
   const name = getRecordVenue(record);
-  if (!name) return "Unknown venue/source";
+  if (!name) return "Unknown publication venue";
   const acronym = String(record.venue_acronym || "").trim();
   const track = canonicalVenueTrack(record);
   let label = name;
@@ -2343,8 +2343,8 @@ function renderChartEmpty(container) {
 function renderTaskChart(paperCoverageRecords) {
   const tasks = [
     ["detection", "Detection"],
-    ["source_attribution", "Source attribution"],
-    ["detection_and_source_attribution", "Detection + attribution"],
+    ["source_attribution", "Source Attribution"],
+    ["detection_and_source_attribution", "Detection + Source Attribution"],
   ].map(([task, label]) => ({
     task,
     label,
@@ -2446,7 +2446,7 @@ function resolutionConfidence(record) {
   if (hasResolutionMetadata(record)) {
     return "unresolved";
   }
-  return datasetName === "sample" ? "" : "unresolved";
+  return "unresolved";
 }
 
 function reviewStatus(record) {
@@ -2592,7 +2592,7 @@ function paperDetailsPublicationHtml(record) {
       ? '<span class="paper-details-metadata-separator paper-details-type-venue-separator" aria-hidden="true">|</span>'
       : "",
     metadata.venue
-      ? `<span class="paper-details-publication-venue"><span class="visually-hidden">Venue: </span>${escapeHtml(metadata.venue)}</span>`
+      ? `<span class="paper-details-publication-venue"><span class="visually-hidden">Publication venue: </span>${escapeHtml(metadata.venue)}</span>`
       : "",
     metadata.year && (metadata.typeLabel || metadata.venue)
       ? '<span class="paper-details-metadata-separator" aria-hidden="true">·</span>'
@@ -2644,7 +2644,7 @@ function paperDetailsHtml(record, relatedEntries) {
   return `
     <h3 class="popup-title paper-details-title">${escapeHtml(recordTitle(record))}</h3>
     <div class="popup-badges">
-      <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatTask(record.task))}</span>
+      <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatPublicTask(record.task))}</span>
       ${entryTypeBadge}
     </div>
     ${publicationMetadataBlock}
@@ -2662,8 +2662,8 @@ function resultBadges(record) {
   const taskClass = MarkerSizeHelpers.normalizeTaskLabel(record.task);
   const entryTypes = getPaperCategories(record);
   return `
-    <div class="popup-badges result-badges" aria-label="Paper classifications">
-      <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatTask(record.task))}</span>
+    <div class="popup-badges result-badges" aria-label="Paper categories">
+      <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatPublicTask(record.task))}</span>
       ${entryTypes.map((category) => `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(category))}</span>`).join("")}
     </div>
   `;
@@ -2671,7 +2671,7 @@ function resultBadges(record) {
 
 function resultVenueYear(record) {
   const { typeLabel, venue: rawVenue } = paperDetailsPublication(record);
-  const venue = /^unknown venue\/source$/i.test(rawVenue) ? "" : rawVenue;
+  const venue = /^unknown publication venue$/i.test(rawVenue) ? "" : rawVenue;
   const year = publicationYear(record);
   const publication = [typeLabel, venue].filter(Boolean).join(" ");
   if (!publication && year === null) return "";
@@ -2831,7 +2831,7 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
     : visibleRecords;
   currentDisplayedResults = displayedResults;
   const count = displayedResults.length;
-  const resultNoun = resultsView === "papers" ? "paper" : "record";
+  const resultNoun = resultsView === "papers" ? "paper" : "institution record";
   resultsCount.textContent = count
     ? `${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`
     : `No matching ${resultNoun}s`;
@@ -2875,15 +2875,13 @@ function selectResultsView(view) {
 }
 
 function baseMapStatusText(visibleRecords) {
-  const recordLabel = datasetName === "preview"
-    ? "public preview record"
-    : datasetConfig.recordLabel;
+  const recordLabel = datasetConfig.recordLabel;
   const interactionHint = supportsMarkerHover
-    ? " Hover over a marker to preview paper details; click to pin."
+    ? " Hover over a marker to view paper details; click to pin."
     : " Tap a marker to pin paper details.";
   return visibleRecords.length
     ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}.${interactionHint}`
-    : "No Records Match the Current Filters.";
+    : "No records match the current filters.";
 }
 
 function resetPaperDetails() {
@@ -3042,7 +3040,7 @@ function showPaperInteraction(detailSelection, connectionSelection) {
   mapStatus.classList.toggle("paper-highlight-active", true);
   const connectionText = lineCount ? " · Connections shown." : ".";
   mapStatus.textContent =
-    `Previewing ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"}${connectionText}`;
+    `Showing ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"}${connectionText}`;
 }
 
 function renderActiveSelection() {
@@ -3528,7 +3526,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   [...venuePapers, ...venueTypePapers].filter((record) => !isBookRecord(record)).forEach((record) => {
     metadataByVenue.set(venueFilterValue(record), {
       label: venueDisplayLabel(record),
-      name: getRecordVenue(record) || "Unknown venue/source",
+      name: getRecordVenue(record) || "Unknown publication venue",
       acronym: record.venue_acronym || "",
       track: canonicalVenueTrack(record),
       type: recordVenueType(record) || "__unknown__",
@@ -3546,7 +3544,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
     "All",
     sortedVenueCounts(venueCounts, metadataByVenue),
     (value) => metadataByVenue.get(value)?.label
-      || (value === "__unknown__" ? "Unknown venue/source" : value),
+      || (value === "__unknown__" ? "Unknown publication venue" : value),
     false,
   );
   replaceCountedFilterOptions(
@@ -3633,59 +3631,11 @@ function showDatasetMessage(message, isError = false, isLoadFailure = false) {
 }
 
 function updateDatasetLabels() {
-  if (datasetName === "sample") {
-    datasetStatusNote.textContent =
-      "Fictional Sample";
-    datasetNoticeCopy.textContent =
-      "These fictional records are provided only for interface testing and are not literature data.";
-    mapStatus.textContent = "Loading fictional sample data...";
-    datasetStatisticsNote.textContent =
-      "Institution-level records matching the current filters.";
-  } else if (datasetName === "preview") {
-    datasetStatusNote.textContent =
-      "Uncurated Public Preview";
-    datasetNoticeCopy.textContent =
-      "This public preview is generated from OpenAlex candidate metadata and local manual review caches. It includes paper-level coverage even when institution/location data is incomplete; only papers with valid reviewed coordinates appear as map markers.";
-    mapStatus.textContent = "Loading public preview data...";
-    datasetStatisticsNote.textContent =
-      "Institution-level records matching the current filters.";
-  } else {
-    datasetStatusNote.textContent =
-      "Uncurated Candidate Data";
-    datasetNoticeCopy.textContent =
-      "This local view contains automatically extracted OpenAlex candidate metadata for exploratory review. Paper relevance, task labels, institution names, and coordinates may contain errors.";
-    mapStatus.textContent = "Loading local OpenAlex candidate data...";
-    datasetStatisticsNote.textContent =
-      "Institution-level records matching the current filters.";
-  }
-  renderDatasetSwitcher();
-}
-
-function renderDatasetSwitcher() {
-  let switcher = document.querySelector(".dataset-switcher");
-  if (!switcher) {
-    return;
-  }
-
-  const choices = [
-    ["preview", "Public Preview"],
-    ["sample", "Fictional Sample"],
-  ];
-  const content = document.createElement("small");
-  content.append("Dataset: ");
-  choices.forEach(([name, label], index) => {
-    if (index > 0) {
-      content.append(" · ");
-    }
-    const link = document.createElement("a");
-    link.href = `?dataset=${name}`;
-    link.textContent = label;
-    if (datasetName === name) {
-      link.setAttribute("aria-current", "page");
-    }
-    content.append(link);
-  });
-  switcher.replaceChildren(content);
+  mapStatus.textContent = datasetName === "preview"
+    ? "Loading research map data..."
+    : "Loading local OpenAlex data...";
+  datasetStatisticsNote.textContent =
+    "Institution records matching the current filters.";
 }
 
 function normalizeDatasetPayload(payload) {
@@ -3725,17 +3675,6 @@ function normalizeDatasetPayload(payload) {
     };
   }
   throw new Error(`${datasetName} data does not contain a records array`);
-}
-
-function displayMetadataWarning(metadata) {
-  const warning =
-    typeof metadata.warning === "string" ? metadata.warning.trim() : "";
-  const repeatsDatasetNotice =
-    /automatically generated candidate metadata/i.test(warning) ||
-    /not a manually curated bibliography/i.test(warning);
-  if (warning && !repeatsDatasetNotice) {
-    datasetNoticeCopy.textContent = `${datasetNoticeCopy.textContent} ${warning}`;
-  }
 }
 
 function displayPublicPreviewDate(metadata) {
@@ -3815,11 +3754,7 @@ function displayDataset(normalizedData) {
   );
   records = canonicalized.mapRecords;
   paperRecords = canonicalized.paperRecords;
-  displayMetadataWarning(normalizedData.metadata);
   displayPublicPreviewDate(normalizedData.metadata);
-  if (normalizedData.paperMetadata) {
-    displayMetadataWarning(normalizedData.paperMetadata);
-  }
   configureYearRange();
   configureVenueFilter();
   enableControls();
@@ -3827,56 +3762,21 @@ function displayDataset(normalizedData) {
   scheduleMapResize(true);
 }
 
-function selectDataset(name) {
-  datasetName = name;
-  datasetConfig = DATASET_CONFIG[name];
-  updateDatasetLabels();
-}
-
-async function loadSampleFallback() {
-  selectDataset("sample");
-  try {
-    const sampleData = await readDataset("sample");
-    if (sampleData.records.length === 0) {
-      throw new Error("sample data contains no records");
-    }
-    displayDataset(sampleData);
-    mapStatus.textContent =
-      "Public preview dataset could not be loaded. Showing the fictional sample dataset instead.";
-  } catch (error) {
-    console.error("Public preview fallback failed.", error);
-    showDatasetMessage(
-      "Neither the public preview nor the fictional sample dataset could be loaded.",
-      true,
-      true,
-    );
-  }
-}
-
 async function loadData() {
   try {
     const normalizedData = await readDataset(datasetName);
     if (normalizedData.records.length === 0) {
-      if (datasetName === "preview" && shouldFallbackToSample) {
-        await loadSampleFallback();
-        return;
-      }
-      showDatasetMessage(datasetConfig.emptyMessage, datasetName !== "sample");
+      showDatasetMessage(datasetConfig.emptyMessage, true);
       return;
     }
     displayDataset(normalizedData);
   } catch (error) {
     console.error("Dataset initialization failed.", error);
-    if (datasetName === "preview" && shouldFallbackToSample) {
-      await loadSampleFallback();
-      return;
-    }
     const messages = {
       openalex:
-        "OpenAlex candidate map data could not be loaded. Generate it locally with scripts/export_candidate_map_data.py.",
+        "Local OpenAlex data could not be loaded.",
       preview:
-        "Unable to load public preview data.",
-      sample: "Fictional sample data could not be loaded. Preview the site through a local server.",
+        "Unable to load public data.",
     };
     showDatasetMessage(messages[datasetName], true, true);
   }

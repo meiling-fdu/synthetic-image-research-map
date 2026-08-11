@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-09T09:48:15Z |
+| public_preview_generated_at | 2026-08-11T09:53:12Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,14 +19,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1098 |
-| Unique mapped papers | 501 |
-| Unique institutions | 566 |
+| Map records | 1109 |
+| Unique mapped papers | 504 |
+| Unique institutions | 571 |
 | Countries | 53 |
-| arXiv/preprint records | 550 |
-| Records with DOI | 1052 |
-| Records with venue | 1062 |
-| Records missing venue | 36 |
+| arXiv/preprint records | 551 |
+| Records with DOI | 1063 |
+| Records with venue | 1077 |
+| Records missing venue | 32 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -36,20 +36,20 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 430 |
-| source_attribution | 45 |
-| detection_and_source_attribution | 26 |
+| detection | 431 |
+| source_attribution | 46 |
+| detection_and_source_attribution | 27 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 126 |
+| 2026 | 129 |
 | 2025 | 141 |
 | 2024 | 109 |
-| 2023 | 51 |
+| 2023 | 50 |
 | 2022 | 22 |
-| 2021 | 22 |
+| 2021 | 23 |
 | 2020 | 15 |
 | 2019 | 11 |
 | 2018 | 3 |
@@ -63,21 +63,21 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | AAAI Conference on Artificial Intelligence (AAAI) | 23 |
 | International Conference on Machine Learning (ICML) | 18 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 14 |
-| Advances in Neural Information Processing Systems (NeurIPS) | 11 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 11 |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 9 |
 | International Conference on Learning Representations (ICLR) | 9 |
 | ACM International Conference on Multimedia (ACM MM) | 8 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 8 |
 | IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
+| IEEE International Workshop on Information Forensics and Security (WIFS) | 6 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| China | 496 |
+| China | 502 |
 | United States | 149 |
 | Italy | 84 |
-| India | 56 |
+| India | 57 |
 | Germany | 38 |
 | United Kingdom | 32 |
 | South Korea | 31 |
@@ -89,7 +89,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Institution | Records |
 | --- | ---: |
-| Shanghai Jiao Tong University | 20 |
+| Shanghai Jiao Tong University | 21 |
 | Beijing Jiaotong University | 17 |
 | University of Naples Federico II | 16 |
 | University of Chinese Academy of Sciences | 15 |
@@ -104,19 +104,18 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 972 |
+| high | 983 |
 | medium | 126 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **36**
+Count: **32**
 
 - Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection (2024) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4be0623e58aa0b48`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore University of Technology and Design; `openalex-candidate-f322e509be974b4c`
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Naver (South Korea); `openalex-candidate-28c479752f087a8f`
-- Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - Fraunhofer Institute for Industrial Mathematics; `openalex-candidate-3414531128452fdf`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Guangdong University of Technology; `openalex-candidate-c0bb1e92f74d43e7`
 - Detecting Generated Images by Real Images (2022) - Chongqing University of Posts and Telecommunications; `openalex-candidate-39db27838e50b6bb`
 - Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - City University of Macau; `openalex-candidate-14d8de2dca116799`
@@ -133,9 +132,6 @@ Count: **36**
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Samsung (South Korea); `openalex-candidate-056f38b65f9480dc`
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Samsung Pharm (South Korea); `openalex-candidate-c0799b0dc0132d95`
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Chung-Ang University; `openalex-candidate-f14f0331980a259f`
-- Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - Supply Chain Competence Center (Germany); `openalex-candidate-eac766be8a7ec808`
-- Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - Offenburg University of Applied Sciences; `openalex-candidate-65e152459671d4ca`
-- Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets (2025) - University of Mannheim; `openalex-candidate-e0458c9a0478e873`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Qilu University of Technology; `openalex-candidate-dd5630f5ebd3a43e`
 - Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Torrens University Australia; `openalex-candidate-69b6cc25d8a5670e`
 - Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Qilu University of Technology; `openalex-candidate-4509b84439624582`

@@ -304,6 +304,53 @@ def materialize_canonical_venue_metadata(
     return result
 
 
+def materialize_existing_venue_id(
+    record: Mapping[str, Any],
+    aliases: Sequence[Mapping[str, Any]],
+    *,
+    registry: Mapping[str, Mapping[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Materialize a confirmed ID or migrate an exact legacy placeholder.
+
+    Arbitrary dangling and ambiguous IDs remain hard errors. The only removable
+    legacy ID is the old deterministic resolver ID reproduced exactly from the
+    row's own raw venue while still classified as unconfirmed/unmapped.
+    """
+    result = dict(record)
+    identifier = clean_text(result.get("venue_id"))
+    if not identifier:
+        return result
+    confirmed = registry or canonical_venue_registry(aliases)
+    if identifier in confirmed:
+        return materialize_canonical_venue_metadata(
+            result, aliases, registry=confirmed
+        )
+    resolved = resolve_venue(
+        result.get("raw_venue") or result.get("venue_name") or result.get("venue"),
+        publication_type=result.get("publication_type"),
+        venue_type=result.get("venue_type"),
+        aliases=aliases,
+    )
+    if resolved.venue_id in confirmed and resolved.ambiguity_status == "resolved":
+        result["venue_id"] = resolved.venue_id
+        return materialize_canonical_venue_metadata(
+            result, aliases, registry=confirmed
+        )
+    if (
+        resolved.venue_id == identifier
+        and resolved.ambiguity_status == "unmapped"
+        and clean_text(result.get("raw_venue") or result.get("venue"))
+    ):
+        for field in (
+            "venue_id", "venue_name", "venue_acronym", "venue_type",
+            "venue_track", "venue_aliases", "venue_label",
+        ):
+            result.pop(field, None)
+        result["venue"] = clean_text(result.get("raw_venue") or result.get("venue"))
+        return result
+    raise VenueRegistryError(f"venue_id does not exist: {identifier!r}")
+
+
 def validate_venue_type_track(venue_type: Any, track: Any) -> tuple[str, str]:
     """Return a compatible canonical type/track pair."""
     normalized_type = normalize_venue_type(venue_type)
@@ -707,8 +754,8 @@ def canonicalize_record(
     resolved_aliases = list(aliases) if aliases is not None else read_venue_aliases()
     existing_id = clean_text(result.get("venue_id"))
     confirmed_registry = registry or canonical_venue_registry(resolved_aliases)
-    if existing_id in confirmed_registry:
-        result = materialize_canonical_venue_metadata(
+    if existing_id:
+        result = materialize_existing_venue_id(
             result, resolved_aliases, registry=confirmed_registry
         )
         effective_type, _rule = resolve_publication_type(

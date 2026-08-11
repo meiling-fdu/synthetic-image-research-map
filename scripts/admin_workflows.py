@@ -73,6 +73,19 @@ FULL_SOURCE_COMPLETENESS_AUDIT = (
     "python3",
     "scripts/full_source_completeness.py",
 )
+VENUE_CANONICALIZATION_PREFLIGHT = (
+    "python3",
+    "scripts/synchronize_venue_metadata.py",
+)
+CURATED_SCHEMA_MIGRATION = (
+    "python3",
+    "scripts/curated_schema_migrations.py",
+)
+VENUE_CANONICALIZATION = (
+    "python3",
+    "scripts/synchronize_venue_metadata.py",
+    "--write",
+)
 PAPER_EXCLUSION_VALIDATION = (
     "python3",
     "scripts/validate_paper_exclusions.py",
@@ -118,6 +131,9 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
     "author_mapping_report": (AUTHOR_MAPPING_REPORT,),
     "institution_consistency_audit": (INSTITUTION_CONSISTENCY_REPORT,),
     "full_refresh": (
+        VENUE_CANONICALIZATION_PREFLIGHT,
+        CURATED_SCHEMA_MIGRATION,
+        VENUE_CANONICALIZATION,
         INSTITUTION_CONSISTENCY_REPORT,
         INSTITUTION_REVIEW_QUEUE_SYNC,
         FULL_SOURCE_COMPLETENESS_AUDIT,
