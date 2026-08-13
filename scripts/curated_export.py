@@ -1220,12 +1220,10 @@ def _upsert_location_review(
             row.get("institution_authors"), values["institution_authors"]
         )
         for field, value in values.items():
-            if field in {"institution_authors", "review_note"}:
+            if field == "institution_authors":
                 continue
             if value:
                 row[field] = value
-        if not clean(row.get("review_note")):
-            row["review_note"] = values["review_note"]
         row["created_at"] = clean(row.get("created_at")) or now
         row["updated_at"] = now
         return "updated"

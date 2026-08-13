@@ -5,12 +5,14 @@ from pathlib import Path
 
 from scripts.curated_mappings import (
     CuratedMappingError,
+    canonical_institution_authors,
     create_mapping,
     exclude_mapping,
     load_mappings,
     replace_all_mappings,
     update_mapping,
 )
+from scripts.curated_locations import location_review_report
 from scripts.curated_institutions import stable_institution_id
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -248,14 +250,13 @@ class SimplifiedMappingSchemaTests(unittest.TestCase):
         self.assertEqual(audit["previous_authors"], "Researcher One")
         self.assertEqual(audit["review_note"], "Reviewed true removal.")
 
-    def test_mapping_update_preserves_dedicated_location_review_evidence(self):
+    def test_mapping_update_preserves_current_location_evidence_and_derives_need(self):
         mapping = self.create(self.draft)
         with self.locations_path.open(encoding="utf-8", newline="") as handle:
             review = next(csv.DictReader(handle))
         review.update({
             "evidence_source": "Dedicated location source",
             "evidence_url": "https://example.test/location",
-            "review_note": "Protected coordinate review evidence.",
         })
         with self.locations_path.open("w", encoding="utf-8", newline="") as handle:
             writer = csv.DictWriter(handle, fieldnames=INSTITUTION_LOCATION_REVIEW_COLUMNS)
@@ -268,7 +269,26 @@ class SimplifiedMappingSchemaTests(unittest.TestCase):
             saved = next(csv.DictReader(handle))
         self.assertEqual(saved["evidence_source"], "Dedicated location source")
         self.assertEqual(saved["evidence_url"], "https://example.test/location")
-        self.assertEqual(saved["review_note"], "Protected coordinate review evidence.")
+        self.assertNotIn("review_note", saved)
+        self.assertEqual(location_review_report([saved], [])["needs_coordinates"], 1)
+        with self.confirmed_locations_path.open(
+            encoding="utf-8", newline=""
+        ) as handle:
+            confirmed = list(csv.DictReader(handle))
+        self.assertEqual(
+            location_review_report([saved], confirmed)["needs_coordinates"], 0
+        )
+
+    def test_mapping_authors_are_serialized_with_semicolon_delimiters(self):
+        value = "Researcher One, Researcher Two, Researcher Three"
+        mapping = self.create({**self.draft, "institution_authors": value})
+        self.assertEqual(
+            mapping["institution_authors"],
+            "Researcher One; Researcher Two; Researcher Three",
+        )
+        self.assertEqual(
+            canonical_institution_authors("Family, Given"), "Family, Given"
+        )
 
     def test_replace_all_writes_author_scoped_replacement_evidence(self):
         mapping = self.create({

@@ -350,24 +350,33 @@ process.stdout.write(JSON.stringify({{
 
     def test_corrected_public_venue_options_are_unique(self):
         expected = {
-            "venue:ijcnn": "International Joint Conference on Neural Networks (IJCNN)",
+            "venue:ijcnn": {
+                "main": "International Joint Conference on Neural Networks (IJCNN)",
+                "workshops": "International Joint Conference on Neural Networks (IJCNN) · Workshops",
+            },
             "venue:icmr": "ACM International Conference on Multimedia Retrieval (ICMR)",
         }
-        for venue_id, label in expected.items():
+        for venue_id, expected_labels in expected.items():
             with self.subTest(venue_id=venue_id):
                 matching = [paper for paper in self.papers if paper.get("venue_id") == venue_id]
                 self.assertTrue(matching)
-                self.assertEqual({paper.get("venue_label") for paper in matching}, {label})
-
-        labels_by_id = {}
-        for paper in self.papers:
-            venue_id = paper.get("venue_id")
-            if venue_id in expected:
-                labels_by_id.setdefault(venue_id, set()).add(paper.get("venue_label"))
-        self.assertEqual({venue_id: len(labels) for venue_id, labels in labels_by_id.items()}, {
-            "venue:ijcnn": 1,
-            "venue:icmr": 1,
-        })
+                if isinstance(expected_labels, str):
+                    self.assertEqual(
+                        {paper.get("venue_label") for paper in matching},
+                        {expected_labels},
+                    )
+                    continue
+                labels_by_track = {
+                    track: {
+                        paper.get("venue_label") for paper in matching
+                        if paper.get("venue_track") == track
+                    }
+                    for track in expected_labels
+                }
+                self.assertEqual(
+                    labels_by_track,
+                    {track: {label} for track, label in expected_labels.items()},
+                )
         wacv_workshops = [paper for paper in self.papers if (
             paper.get("venue_id") == "venue:wacv"
             and paper.get("venue_track") == "workshops"

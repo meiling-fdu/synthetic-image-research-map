@@ -603,6 +603,8 @@ def project_health_data(
                     "missing_affiliations",
                     "Missing affiliations",
                     counts.get("papers_missing_affiliations", 0),
+                    target="papers",
+                    navigation={"paper_filter": "missing_affiliations"},
                 ),
                 metric(
                     "missing_coordinates",

@@ -45,6 +45,7 @@ try:
         OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
     )
     from .curated_schema_migrations import migrate_obsolete_location_schema
+    from .curated_mappings import canonical_institution_authors
 except ImportError:  # Support direct execution from the repository root.
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
@@ -77,6 +78,7 @@ except ImportError:  # Support direct execution from the repository root.
         OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
     )
     from curated_schema_migrations import migrate_obsolete_location_schema
+    from curated_mappings import canonical_institution_authors
 
 
 BOOLEAN_LIKE_VALUES = {"true", "false", "1", "0", "yes", "no", "y", "n"}
@@ -439,6 +441,15 @@ def validate_mapping_evidence(
                     f"{field} is required for an active mapping",
                     row_number,
                 )
+        authors = clean(row.get("institution_authors"))
+        if authors and authors != canonical_institution_authors(authors):
+            add_issue(
+                issues,
+                "ERROR",
+                "author_institution_mappings.csv",
+                "institution_authors must use semicolons between authors",
+                row_number,
+            )
     for position, (left_number, left) in enumerate(active_rows):
         left_keys = {
             value

@@ -43,7 +43,11 @@ try:
     )
     from .paper_categories import categories_from_record
     from .venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
-    from .public_relationships import public_relationship_key
+    from .public_relationships import (
+        ReviewedRelationshipResolver,
+        canonical_author_names,
+        public_relationship_key,
+    )
     from .curated_schema_migrations import migrate_obsolete_location_schema
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -81,6 +85,7 @@ try:
         utc_timestamp,
     )
     from .public_record_rules import paper_is_retracted
+    from .title_normalization import normalize_record_titles
     from .name_matching import (
         canonical_name_key,
         names_match,
@@ -130,7 +135,11 @@ except ImportError:  # Direct execution from the scripts directory.
     )
     from paper_categories import categories_from_record
     from venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
-    from public_relationships import public_relationship_key
+    from public_relationships import (
+        ReviewedRelationshipResolver,
+        canonical_author_names,
+        public_relationship_key,
+    )
     from curated_schema_migrations import migrate_obsolete_location_schema
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
@@ -168,6 +177,7 @@ except ImportError:  # Direct execution from the scripts directory.
         utc_timestamp,
     )
     from public_record_rules import paper_is_retracted
+    from title_normalization import normalize_record_titles
     from name_matching import (
         canonical_name_key,
         names_match,
@@ -1642,12 +1652,9 @@ def deduplicate_public_map_relationships(
 
     for raw_record in records:
         record = dict(raw_record)
-        authors = record.get("institution_authors") or []
-        if isinstance(authors, str):
-            authors = authors.split(";")
         deduplicated_authors = []
         seen_authors = set()
-        for author in authors if isinstance(authors, list) else []:
+        for author in canonical_author_names(record.get("institution_authors")):
             name = author_display_name(author)
             key = normalized_author_name(name)
             if name and key and key not in seen_authors:
@@ -2431,6 +2438,8 @@ def preserve_map_relationships_after_integration(
     exclusion_rows: Sequence[Mapping[str, Any]],
     merge_rows: Sequence[Mapping[str, Any]],
     review_decisions: Sequence[Mapping[str, Any]],
+    curated_mappings: Sequence[Mapping[str, Any]] = (),
+    institution_audits: Sequence[Mapping[str, Any]] = (),
 ) -> List[Dict[str, Any]]:
     """Retain unexplained published relationships after curated precedence.
 
@@ -2445,6 +2454,9 @@ def preserve_map_relationships_after_integration(
         merge_rows=merge_rows,
         review_decisions=review_decisions,
     )
+    preserved, _removed = ReviewedRelationshipResolver(
+        curated_mappings, institution_audits
+    ).filter_superseded(preserved)
     return merge_existing_records(preserved, integrated, map_records=True)
 
 
@@ -2901,6 +2913,7 @@ def preserve_existing_curation_status(
 def exclude_stale_curated_mapping_markers(
     map_records: Sequence[Dict[str, Any]],
     mappings: Sequence[Dict[str, Any]],
+    institution_audits: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[List[Dict[str, Any]], int]:
     """Drop preserved markers that contradict an active explicit mapping.
 
@@ -2908,44 +2921,9 @@ def exclude_stale_curated_mapping_markers(
     generated before the repair. Multiple affiliations remain valid because
     matching is scoped to the paper and the exact mapped author set.
     """
-    targets: Dict[Tuple[Tuple[str, Any], Tuple[str, ...]], set[str]] = defaultdict(set)
-    active_mapping_ids: set[str] = set()
-    for mapping in mappings:
-        if clean_text(mapping.get("mapping_status")) != "active":
-            continue
-        mapping_id = clean_text(mapping.get("mapping_id"))
-        if mapping_id:
-            active_mapping_ids.add(mapping_id)
-        authors = tuple(sorted(
-            normalized_author_name(author)
-            for author in clean_text(mapping.get("institution_authors")).split(";")
-            if normalized_author_name(author)
-        ))
-        if not authors:
-            continue
-        institution_id = clean_text(mapping.get("institution_id")) or stable_institution_id(mapping.get("institution"))
-        targets[(detail_paper_identity(mapping), authors)].add(institution_id)
-    kept = []
-    removed = 0
-    for record in map_records:
-        if clean_text(record.get("mapping_id")) in active_mapping_ids:
-            kept.append(record)
-            continue
-        record_authors = record.get("institution_authors") or []
-        if isinstance(record_authors, str):
-            record_authors = record_authors.split(";")
-        authors = tuple(sorted(
-            normalized_author_name(author)
-            for author in record_authors
-            if normalized_author_name(author)
-        ))
-        expected = targets.get((detail_paper_identity(record), authors))
-        actual = clean_text(record.get("institution_id")) or stable_institution_id(record.get("institution"))
-        if expected and actual not in expected:
-            removed += 1
-            continue
-        kept.append(record)
-    return kept, removed
+    return ReviewedRelationshipResolver(
+        mappings, institution_audits
+    ).filter_superseded(map_records)
 
 
 def normalize_institution_lookup(value: Any) -> str:
@@ -3938,11 +3916,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.paper_version_merges
         )
         review_decisions = read_csv_rows(args.review_decisions)
+        curated_mappings = load_curated_mappings(args.curated_mappings)
+        institution_audit_rows = read_csv_rows(args.institution_audit_log)
         records = read_candidate_records(args.input)
         if args.preserve_existing and previous_maps:
+            current_previous_maps, _ = ReviewedRelationshipResolver(
+                curated_mappings, institution_audit_rows
+            ).filter_superseded(previous_maps)
             records = merge_existing_records(
                 filter_preserved_records(
-                    previous_maps,
+                    current_previous_maps,
                     map_records=True,
                     exclusion_rows=exclusion_rows,
                     merge_rows=version_merge_rows,
@@ -4005,7 +3988,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 map_records=False,
             )
         curated_papers = load_curated_papers(args.curated_papers)
-        curated_mappings = load_curated_mappings(args.curated_mappings)
         location_review_rows = load_location_review_queue(
             args.location_review
         )
@@ -4037,7 +4019,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             institution_alias_rows,
         )
         integrated_maps, stale_mapping_markers_excluded = (
-            exclude_stale_curated_mapping_markers(integrated_maps, curated_mappings)
+            exclude_stale_curated_mapping_markers(
+                integrated_maps, curated_mappings, institution_audit_rows
+            )
         )
         (
             integrated_papers,
@@ -4090,7 +4074,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 "Unresolved publication types require admin review: " + details
             )
         institution_rows = load_institutions(args.institutions)
-        institution_audit_rows = read_csv_rows(args.institution_audit_log)
         orphan_cleanup_audit_rows = read_csv_rows(DEFAULT_ORPHAN_CLEANUP_AUDIT)
         exported_aliases = public_institution_aliases(
             institution_alias_rows,
@@ -4149,6 +4132,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 exclusion_rows=exclusion_rows,
                 merge_rows=version_merge_rows,
                 review_decisions=review_decisions,
+                curated_mappings=curated_mappings,
+                institution_audits=institution_audit_rows,
             )
             (
                 integrated_papers,
@@ -4173,6 +4158,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         apply_ordered_paper_location_summaries(
             integrated_papers, integrated_maps
         )
+        add_public_detail_fields(integrated_papers, integrated_maps)
+        # Detail enrichment can supply author identities that were absent on a
+        # raw candidate marker. Reapply curated precedence at that final shape
+        # so a reviewed mapping cannot coexist with its automatic predecessor.
+        integrated_maps, final_stale_markers_excluded = (
+            exclude_stale_curated_mapping_markers(
+                integrated_maps, curated_mappings, institution_audit_rows
+            )
+        )
+        stale_mapping_markers_excluded += final_stale_markers_excluded
+        integrated_maps, final_relationships_deduplicated = (
+            deduplicate_public_map_relationships(integrated_maps)
+        )
+        exact_map_relationships_deduplicated += final_relationships_deduplicated
+        apply_ordered_paper_location_summaries(integrated_papers, integrated_maps)
         add_public_detail_fields(integrated_papers, integrated_maps)
         normalize_exported_institution_types(
             integrated_papers, integrated_maps, institution_rows
@@ -4199,6 +4199,14 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             print(
                 "Migration warning: removed retired paper-level fields from "
                 f"{retired_fields_removed} preserved public records.",
+                flush=True,
+            )
+        normalized_public_titles = normalize_record_titles(integrated_papers)
+        normalized_public_titles += normalize_record_titles(integrated_maps)
+        if normalized_public_titles:
+            print(
+                "Normalized paper title capitalization in "
+                f"{normalized_public_titles} public records.",
                 flush=True,
             )
         payload["records"] = integrated_maps

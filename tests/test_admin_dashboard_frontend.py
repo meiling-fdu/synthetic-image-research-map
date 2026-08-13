@@ -42,19 +42,32 @@ class AdminDashboardFrontendTests(unittest.TestCase):
         self.assertNotIn("Institution cleanup", review)
         self.assertIn('data-console-target="validation"', validation)
         self.assertIn(">Curated validation</button>", validation)
-        self.assertIn('href="/"', validation)
-        self.assertIn(">Public preview</a>", validation)
+        self.assertNotIn('href="/"', validation)
+        self.assertNotIn("Public preview", validation)
         self.assertNotIn("Paper metadata", nav)
         self.assertNotIn("Public preview", papers)
         self.assertIn('data-console-target="arxiv-enrichment"', papers)
         self.assertNotIn("arXiv enrichment", validation)
+
+    def test_every_visible_navigation_target_has_a_client_destination(self):
+        nav = self.html.split('<nav class="console-nav"', 1)[1].split("</nav>", 1)[0]
+        targets = set(re.findall(r'data-console-target="([^"]+)"', nav))
+        destination_block = self.javascript.split("const targets = {", 1)[1].split(
+            "\n  };", 1
+        )[0]
+        for target in targets:
+            with self.subTest(target=target):
+                self.assertRegex(
+                    destination_block,
+                    rf'(?:"{re.escape(target)}"|\b{re.escape(target)}):',
+                )
 
     def test_reorganized_navigation_keeps_existing_routes(self):
         self.assertIn('"institution-audit": elements["institution-audit-panel"]', self.javascript)
         self.assertIn('"institution-audit": "/api/review/institution-cleanup"', self.javascript)
         self.assertIn('validation: elements["workflow-panel"]', self.javascript)
         self.assertIn('"arxiv-enrichment": elements["arxiv-enrichment-panel"]', self.javascript)
-        self.assertIn('href="/" target="_blank" rel="noreferrer">Public preview</a>', self.html)
+        self.assertNotIn('href="/" target="_blank" rel="noreferrer">Public preview</a>', self.html)
         self.assertIn("function openMetadataEditor()", self.javascript)
         self.assertNotIn('"metadata-editor": elements["paper-metadata-section"]', self.javascript)
 
@@ -135,6 +148,21 @@ class AdminDashboardFrontendTests(unittest.TestCase):
         self.assertIn('row.className = "action-queue-row"', body)
         self.assertIn('row.setAttribute("aria-label"', body)
         self.assertIn('row.addEventListener("click"', body)
+
+    def test_missing_affiliations_uses_the_paper_filter_for_its_count(self):
+        self.assertIn('<option value="missing_affiliations">Missing affiliations</option>', self.html)
+        health = (ROOT / "scripts" / "admin_review_queues.py").read_text(encoding="utf-8")
+        self.assertIn('navigation={"paper_filter": "missing_affiliations"}', health)
+        self.assertIn('navigation.paper_filter === "missing_affiliations"', self.javascript)
+        self.assertIn('mapFilter === "missing_affiliations" && !paper.missing_affiliation', self.javascript)
+
+    def test_every_dashboard_action_metric_has_a_destination(self):
+        body = self.javascript.split("function renderDashboard()", 1)[1].split(
+            "\nfunction initializeNavigationMenus", 1
+        )[0]
+        self.assertIn("wanted[metric.key]", body)
+        self.assertIn("&& metric.target", body)
+        self.assertIn("navigateProjectHealthMetric(metric)", body)
 
     def test_priority_table_is_compact_and_limited(self):
         dashboard = self.html.split('id="dashboard-panel"', 1)[1].split(

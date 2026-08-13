@@ -7,55 +7,55 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "curated_papers": 255,
-    "public_unique_papers": 516,
-    "public_map_relationships": 1098,
-    "canonical_institution_rows": 604,
-    "active_canonical_institutions": 601,
+    "curated_papers": 273,
+    "public_unique_papers": 522,
+    "public_map_relationships": 1120,
+    "canonical_institution_rows": 622,
+    "active_canonical_institutions": 619,
     "inactive_or_merged_institutions": 3,
-    "author_institution_mappings": 715,
+    "author_institution_mappings": 762,
     "institution_hierarchy_edges": 7,
     "institution_aliases": 81,
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 601,
+    "active": 619,
     "merged": 1,
     "ignored": 2,
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 455,
-    "research_unit": 70,
-    "company": 59,
-    "other": 20,
+    "university": 462,
+    "research_unit": 72,
+    "company": 61,
+    "other": 27,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 454,
-    "research_unit": 70,
-    "company": 57,
-    "other": 20,
+    "university": 461,
+    "research_unit": 72,
+    "company": 59,
+    "other": 27,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    "university": 484,
-    "research_unit": 99,
-    "company": 75,
-    "other": 40,
+    "university": 490,
+    "research_unit": 100,
+    "company": 76,
+    "other": 42,
 }
 
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 277,
-    "journal": 164,
-    "preprint": 57,
-    "book": 18,
+    "conference": 280,
+    "journal": 163,
+    "preprint": 62,
+    "book": 17,
 }
 
 TASK_TOTALS = {
-    "detection": 444,
-    "source_attribution": 46,
-    "detection_and_source_attribution": 26,
+    "detection": 447,
+    "source_attribution": 47,
+    "detection_and_source_attribution": 28,
 }
 
 INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {

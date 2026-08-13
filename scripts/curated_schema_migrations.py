@@ -20,7 +20,8 @@ except ImportError:
 
 
 LEGACY_LOCATION_FIELDS = frozenset({
-    "coordinate_source", "coordinate_source_url", "review_note"
+    "coordinate_source", "coordinate_source_url", "coordinate_review_note",
+    "review_note",
 })
 LEGACY_REVIEW_STATUS = {
     "needs_coordinates": "pending_review",

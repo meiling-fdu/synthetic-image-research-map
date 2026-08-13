@@ -268,7 +268,7 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
             .read_text(encoding="utf-8")
         )
         self.assertEqual(summary["total_approved_renames"], 7)
-        self.assertEqual(summary["total_unresolved_manual_review_cases"], 3)
+        self.assertEqual(summary["total_unresolved_manual_review_cases"], 5)
         self.assertIn(PARIS_ID, {
             row["institution_id"] for row in summary["renamed_institutions"]
         })

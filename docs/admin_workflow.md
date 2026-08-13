@@ -273,8 +273,12 @@ current complete public preview with the local candidate snapshot, so a
 no-search admin refresh cannot silently replace full coverage with a partial
 cache. Before that union, it filters old records covered by a current active
 paper exclusion, the duplicate side of an active confirmed paper-version merge,
-or an explicit reviewed marker exclusion. It therefore preserves unexplained
-snapshot gaps without reviving an intentionally removed record.
+an explicit reviewed marker exclusion, or an active curated mapping that
+supersedes the same paper and normalized institution-author scope. Institution
+and location replacements use the shared public relationship identity while
+the mapping ID remains separate lineage. The exporter therefore preserves
+unexplained snapshot gaps without reviving an intentionally removed or replaced
+relationship.
 
 Before writing, the exporter compares the previous and proposed public outputs
 by canonical paper identities and paper–institution relationships. Curated paper

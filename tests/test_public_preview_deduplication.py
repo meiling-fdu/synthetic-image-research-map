@@ -38,10 +38,134 @@ from scripts.validate_public_preview import (
     validate_record,
     validate_curated_affiliation_supersession,
 )
-from scripts.public_relationships import public_relationship_key
+from scripts.public_relationships import (
+    ReviewedRelationshipResolver,
+    public_relationship_key,
+)
+from scripts.public_export_guard import analyze_shrinkage
 
 
 class PublicPreviewDeduplicationTests(unittest.TestCase):
+    def test_reviewed_institution_replacement_supersedes_stale_relationship(self):
+        previous = [{
+            "paper_id": "paper:1", "institution_id": "institution:old",
+            "location_id": "location:old", "institution_authors": ["Ada Example"],
+        }]
+        current = [{
+            "paper_id": "paper:1", "institution_id": "institution:new",
+            "location_id": "location:new", "institution_authors": ["Ada Example"],
+        }]
+        mappings = [{
+            **current[0], "mapping_id": "mapping:1", "mapping_status": "active",
+            "institution_authors": "Ada Example",
+        }]
+        records = preserve_map_relationships_after_integration(
+            previous, current, exclusion_rows=[], merge_rows=[],
+            review_decisions=[], curated_mappings=mappings,
+        )
+        self.assertEqual(records, current)
+
+    def test_legacy_comma_joined_author_list_matches_canonical_mapping(self):
+        mapping = {
+            "doi": "10.1000/example",
+            "institution_id": "institution:one",
+            "location_id": "location:one",
+            "institution_authors": "Ada Example; Grace Example",
+            "mapping_id": "mapping:1",
+            "mapping_status": "active",
+        }
+        legacy_fallback = {
+            "doi": "10.1000/example",
+            "institution_id": "institution:one",
+            "institution_authors": ["Ada Example, Grace Example"],
+        }
+        kept, removed = ReviewedRelationshipResolver([mapping]).filter_superseded(
+            [legacy_fallback]
+        )
+        self.assertEqual(kept, [])
+        self.assertEqual(removed, 1)
+
+    def test_reviewed_location_replacement_supersedes_stale_location(self):
+        previous = [{
+            "paper_id": "paper:1", "institution_id": "institution:one",
+            "location_id": "location:old", "institution_authors": ["Ada Example"],
+        }]
+        current = [{**previous[0], "location_id": "location:new"}]
+        mappings = [{
+            **current[0], "mapping_id": "mapping:1", "mapping_status": "active",
+            "institution_authors": "Ada Example",
+        }]
+        records = preserve_map_relationships_after_integration(
+            previous, current, exclusion_rows=[], merge_rows=[],
+            review_decisions=[], curated_mappings=mappings,
+        )
+        self.assertEqual(records, current)
+
+    def test_audited_same_mapping_institution_replacement_supersedes_stale_row(self):
+        previous = [{
+            "paper_id": "paper:1", "doi": "10.1000/example",
+            "institution_id": "institution:old", "mapping_id": "mapping:1",
+            "institution_authors": ["Ada Example"],
+        }]
+        current = [{
+            **previous[0], "institution_id": "institution:new",
+        }]
+        mappings = [{
+            **current[0], "mapping_status": "active",
+            "institution_authors": "Ada Example",
+        }]
+        audits = [{
+            "action": "confirmed_mapping_changed", "paper_id": "paper:1",
+            "previous_mapping_id": "mapping:1", "mapping_id": "mapping:1",
+            "previous_institution_id": "institution:old",
+            "institution_id": "institution:new",
+            "previous_authors": "Ada Example", "new_authors": "Ada Example",
+        }]
+        records = preserve_map_relationships_after_integration(
+            previous, current, exclusion_rows=[], merge_rows=[],
+            review_decisions=[], curated_mappings=mappings,
+            institution_audits=audits,
+        )
+        self.assertEqual(records, current)
+
+    def test_unrelated_old_relationship_is_still_preserved(self):
+        previous = [{
+            "paper_id": "paper:other", "institution_id": "institution:old",
+            "institution_authors": ["Other Author"],
+        }]
+        current = [{
+            "paper_id": "paper:1", "institution_id": "institution:new",
+            "institution_authors": ["Ada Example"],
+        }]
+        mappings = [{
+            **current[0], "mapping_id": "mapping:1", "mapping_status": "active",
+            "institution_authors": "Ada Example",
+        }]
+        records = preserve_map_relationships_after_integration(
+            previous, current, exclusion_rows=[], merge_rows=[],
+            review_decisions=[], curated_mappings=mappings,
+        )
+        self.assertEqual(len(records), 2)
+
+    def test_shrinkage_guard_uses_reviewed_curated_supersession(self):
+        previous = [{
+            "paper_id": "paper:1", "institution_id": "institution:old",
+            "institution_authors": ["Ada Example"],
+        }]
+        mappings = [{
+            "paper_id": "paper:1", "institution_id": "institution:new",
+            "institution_authors": "Ada Example", "mapping_id": "mapping:1",
+            "mapping_status": "active",
+        }]
+        report = analyze_shrinkage(
+            [], [], previous, [], curated_mappings=mappings,
+        )
+        self.assertTrue(report.allowed)
+        self.assertEqual(
+            report.removed_maps[0].evidence,
+            "active curated mapping supersession via mapping:1",
+        )
+
     def test_regression_papers_have_unique_public_relationships(self):
         root = Path(__file__).resolve().parents[1]
         records = json.loads(
@@ -1381,7 +1505,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
 
     def test_source_attribution_survey_author_order_regression(self):
         repository = Path(__file__).resolve().parents[1]
-        title = "Source Attribution of AI-Generated Images: a Principled Survey"
+        title = "Source Attribution of AI-Generated Images: A Principled Survey"
         expected_names = [
             "Meiling Li",
             "Benedetta Tondi",
@@ -1454,7 +1578,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
     def test_evoguard_curated_author_mapping_regression(self):
         repository = Path(__file__).resolve().parents[1]
         title = (
-            "EvoGuard: An Extensible Agentic RL-based Framework for Practical "
+            "EvoGuard: An Extensible Agentic RL-Based Framework for Practical "
             "and Evolving AI-Generated Image Detection"
         )
         expected = {
@@ -1485,6 +1609,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                     expected,
                     filename,
                 )
+
                 self.assertEqual(
                     {
                         mapping["source"]

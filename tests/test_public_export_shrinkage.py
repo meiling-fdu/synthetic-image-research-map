@@ -364,8 +364,11 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [replacement_marker],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
-        self.assertIn("exact durable", report.removed_maps[0].evidence)
+        self.assertTrue(report.allowed)
+        self.assertEqual(
+            report.removed_maps[0].evidence,
+            "active curated mapping supersession via mapping-1",
+        )
 
     def test_manual_author_mapping_supersedes_old_automatic_fallback_without_exclusion(self):
         old = paper()
@@ -391,7 +394,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
 
     def test_manual_mapping_matches_fallback_authors_without_diacritics(self):
         old = paper()
@@ -851,6 +854,25 @@ class PublicExportShrinkageTests(unittest.TestCase):
         ).allowed)
         self.assertFalse(analyze_shrinkage(
             [paper()], [paper()], [old], [], institution_audits=[audit]
+        ).allowed)
+
+    def test_institution_replacement_allows_legacy_blank_previous_location(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "mapping_id": "mapping:one", "location_id": "location:inferred",
+               "institution_authors": ["Ada Author"]}
+        new = {**marker(paper(), "institution:new", "New"),
+               "mapping_id": "mapping:one", "location_id": "location:new",
+               "institution_authors": ["Ada Author"]}
+        audit = relationship_audit(
+            old, new_institution_id="institution:new",
+            new_location_id="location:new", authors="Ada Author",
+        )
+        self.assertTrue(analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[audit]
+        ).allowed)
+        bad = {**audit, "previous_location_id": "location:wrong"}
+        self.assertFalse(analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_audits=[bad]
         ).allowed)
 
     def test_multi_location_same_institution_is_not_collapsed(self):

@@ -74,7 +74,7 @@ class FrontendResultCardTests(unittest.TestCase):
             ROOT / "web" / "data" / "public_preview_papers.json"
         ).read_text(encoding="utf-8"))
         title = (
-            '"That\'s another doom I haven\'t thought about": A User Study on '
+            '"That\'s Another Doom I Haven\'t Thought About": A User Study on '
             "AI Labels as a Safeguard Against Image-Based Misinformation"
         )
         record = next(

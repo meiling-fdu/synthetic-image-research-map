@@ -371,8 +371,10 @@ durable exclusions, confirmed paper-version merges, reviewed mapping changes,
 and canonical institution redirects explain intentional removals; anything else
 is reported and blocked. With `--preserve-existing`, unexplained gaps from a
 partial local candidate snapshot are retained, while records covered by those
-explicit current decisions are filtered before unioning. Restored/inactive
-exclusions never authorize removal.
+explicit current decisions are filtered before unioning. An active explicit
+curated mapping also supersedes an older institution or location relationship
+for the same paper and normalized author set; unrelated published relationships
+remain preserved. Restored/inactive exclusions never authorize removal.
 
 `data/curated/public_export_baseline.json` is retained as a bootstrap/disaster
 reference when prior public outputs are unavailable, not as an unconditional

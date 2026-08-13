@@ -21,6 +21,10 @@ try:
         active_confirmed_merges,
         record_matches_merge_side,
     )
+    from .public_relationships import (
+        ReviewedRelationshipResolver,
+        canonical_author_names,
+    )
 except ImportError:
     from paper_exclusions import (
         all_identity_keys,
@@ -32,6 +36,10 @@ except ImportError:
     from paper_version_merges import (
         active_confirmed_merges,
         record_matches_merge_side,
+    )
+    from public_relationships import (
+        ReviewedRelationshipResolver,
+        canonical_author_names,
     )
 
 
@@ -266,7 +274,16 @@ def _exact_reviewed_transition(
             closest_failure = "author_scope_mismatch"
             continue
         evidence_old_location = clean(audit.get("previous_location_id")).casefold()
-        if old_location and evidence_old_location != old_location:
+        new_id = clean(audit.get("institution_id")).casefold()
+        if (
+            old_location
+            and evidence_old_location != old_location
+            and not (
+                not evidence_old_location
+                and new_id
+                and new_id != old_id
+            )
+        ):
             closest_failure = "old_location_mismatch"
             continue
         audit_id = clean(audit.get("audit_id")) or "[missing audit_id]"
@@ -274,7 +291,6 @@ def _exact_reviewed_transition(
             return RelationshipExplanation(
                 "explicit_removal", f"explicit reviewed removal {audit_id}", True
             )
-        new_id = clean(audit.get("institution_id")).casefold()
         new_location = clean(audit.get("location_id")).casefold()
         new_authors = _single_author_set(
             audit.get("new_authors") or audit.get("affected_authors")
@@ -480,13 +496,9 @@ def _normalized_author_name(value: Any) -> str:
 
 
 def _author_set(value: Any) -> frozenset[str]:
-    if isinstance(value, str):
-        value = re.split(r"\s*(?:;|\||\n)\s*", value)
-    if not isinstance(value, Sequence) or isinstance(value, (bytes, bytearray)):
-        return frozenset()
     return frozenset(
         normalized
-        for author in value
+        for author in canonical_author_names(value)
         if (normalized := _normalized_author_name(author))
     )
 
@@ -604,6 +616,9 @@ def analyze_shrinkage(
     approved_by_baseline: bool = False,
 ) -> ShrinkageReport:
     exclusion_index = build_active_exclusion_index(exclusion_rows)
+    relationship_resolver = ReviewedRelationshipResolver(
+        curated_mappings, institution_audits
+    )
     removed_paper_records = [
         old
         for old in previous_papers
@@ -655,12 +670,22 @@ def analyze_shrinkage(
             None,
         )
         decision = _active_mapping_decision(old, review_decisions)
-        transition = explain_removed_relationship(
-            old,
-            new_maps,
-            institution_rows=institution_rows,
-            institution_audits=institution_audits,
-            institution_redirects=institution_redirects,
+        superseding_mapping_ids = relationship_resolver.superseding_mapping_ids(old)
+        transition = (
+            RelationshipExplanation(
+                "reviewed_curated_supersession",
+                "active curated mapping supersession via "
+                + ", ".join(superseding_mapping_ids),
+                True,
+            )
+            if superseding_mapping_ids
+            else explain_removed_relationship(
+                old,
+                new_maps,
+                institution_rows=institution_rows,
+                institution_audits=institution_audits,
+                institution_redirects=institution_redirects,
+            )
         )
         institution_id = clean(
             old.get("institution_id") or old.get("canonical_institution_id")

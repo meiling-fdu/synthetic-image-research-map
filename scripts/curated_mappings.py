@@ -82,6 +82,33 @@ class DuplicateMappingError(CuratedMappingError):
         )
 
 
+def canonical_institution_authors(value: Any) -> str:
+    """Serialize mapping authors with the canonical semicolon delimiter."""
+    if isinstance(value, Sequence) and not isinstance(value, (str, bytes)):
+        parts = [clean(author) for author in value]
+    else:
+        text = clean(value)
+        if ";" in text:
+            parts = [clean(author) for author in text.split(";")]
+        else:
+            comma_parts = [clean(author) for author in text.split(",")]
+            # Historical Admin payloads sometimes joined full names with commas.
+            # Keep a conventional single "Surname, Given" name intact.
+            parts = (
+                comma_parts
+                if len(comma_parts) > 1 and all(" " in author for author in comma_parts)
+                else [text]
+            )
+    unique: list[str] = []
+    seen: set[str] = set()
+    for author in parts:
+        key = author.casefold()
+        if author and key not in seen:
+            seen.add(key)
+            unique.append(author)
+    return "; ".join(unique)
+
+
 def _timestamp() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace(
         "+00:00", "Z"
@@ -233,7 +260,9 @@ def _mapping_fields(
     institution = clean(draft.get("institution"))
     institution_id = clean(draft.get("institution_id"))
     location_id = clean(draft.get("location_id"))
-    institution_authors = clean(draft.get("institution_authors"))
+    institution_authors = canonical_institution_authors(
+        draft.get("institution_authors")
+    )
     raw_affiliation = str(draft.get("raw_affiliation") or "")
     mapping_status = clean(draft.get("mapping_status")) or "active"
     if not institution:

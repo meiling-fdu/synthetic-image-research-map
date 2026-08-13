@@ -14,9 +14,11 @@ from typing import Any, Iterable, Mapping, Sequence
 
 try:
     from .curated_institutions import normalized_author_set, stable_institution_id
+    from .public_relationships import ReviewedRelationshipResolver
     from .review_decisions import read_review_decisions
 except ImportError:
     from curated_institutions import normalized_author_set, stable_institution_id
+    from public_relationships import ReviewedRelationshipResolver
     from review_decisions import read_review_decisions
 
 
@@ -504,13 +506,18 @@ def audit_institution_consistency(
     mapping_targets: dict[tuple[str, tuple[str, ...]], set[str]] = defaultdict(set)
     for mapping in active:
         mapping_targets[(_paper_key(mapping), tuple(sorted(normalize_institution(a) for a in _authors(mapping))))].add(clean(mapping.get("institution_id")))
+    relationship_resolver = ReviewedRelationshipResolver(active, merge_audits)
     for record in public_records:
         if not clean(record.get("institution")) or not record.get("institution_authors"):
             continue
         authors = tuple(sorted(normalize_institution(a) for a in _authors(record)))
         expected = mapping_targets.get((_paper_key(record), authors))
         actual = clean(record.get("institution_id")) or stable_institution_id(record.get("institution"))
-        if expected and all(not resolver.related_ids(actual, target) for target in expected):
+        if (
+            expected
+            and not relationship_resolver.supersedes(record)
+            and all(not resolver.related_ids(actual, target) for target in expected)
+        ):
             for author in _authors(record):
                 findings.append(_finding(record, author, severity="high", issue_type="suspicious_replacement", reason="Why flagged: public export institution contradicts the explicit curated mapping for the same paper and authors; no compatible alias or parent relationship exists.", recommended_action="Regenerate the public export and inspect institution resolution.", suggested_id=sorted(expected)[0], resolver=resolver))
 

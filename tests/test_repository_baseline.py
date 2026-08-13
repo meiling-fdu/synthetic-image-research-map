@@ -5,6 +5,8 @@ from collections import Counter
 from pathlib import Path
 
 from scripts.export_public_preview import identity_key
+from scripts.paper_exclusions import records_share_any_identity
+from scripts.public_relationships import public_relationship_key
 from tests.baseline_expectations import (
     ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS,
     CANONICAL_INSTITUTION_STATUS_TOTALS,
@@ -77,18 +79,16 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
     def test_public_paper_and_map_relationship_identities_are_unique(self):
         paper_identities = [identity_key(row) for row in self.public_papers]
         self.assertEqual(len(paper_identities), len(set(paper_identities)))
-        map_relationships = [
-            (
-                identity_key(row),
-                row["institution_id"],
-                row.get("location_id") or "",
-            )
-            for row in self.map_records
-        ]
+        map_relationships = [public_relationship_key(row) for row in self.map_records]
         self.assertEqual(len(map_relationships), len(set(map_relationships)))
         self.assertTrue(
-            {paper_identity for paper_identity, _, _ in map_relationships}
-            <= set(paper_identities)
+            all(
+                any(
+                    records_share_any_identity(map_record, paper)
+                    for paper in self.public_papers
+                )
+                for map_record in self.map_records
+            )
         )
 
     def test_public_institutions_are_exactly_active_canonicals(self):

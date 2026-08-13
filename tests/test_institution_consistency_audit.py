@@ -153,6 +153,22 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
         )])
         self.assertFalse(unresolved_high(findings))
 
+    def test_explicit_curated_replacement_makes_stale_public_row_nonblocking(self):
+        current = mapping(
+            "institution:naples", "University of Naples Federico II",
+            "University Federico II of Naples", provenance="manually_confirmed",
+        )
+        stale = {
+            **current, "institution": "Amazon", "institution_id": "institution:amazon",
+            "institution_authors": ["Example Author"], "mapping_id": "",
+        }
+        findings = self.audit([current], public_records=[stale])
+        self.assertFalse(any(
+            row["issue_type"] == "suspicious_replacement"
+            and row["reason"].startswith("Why flagged: public export")
+            for row in findings
+        ))
+
     def test_confirmed_mapping_change_event_is_high(self):
         current = mapping(
             "institution:amazon", "Amazon", "Centre for Research and Technology Hellas",
@@ -518,6 +534,21 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
 
 class InstitutionConsistencyIntegrationTests(unittest.TestCase):
     root = Path(__file__).resolve().parents[1]
+
+    def test_current_admin_mapping_replacements_are_not_stale_preview_blockers(self):
+        from scripts.institution_consistency import run_repository_audit
+
+        regression_titles = {
+            "Fake or JPEG? Revealing Common Biases in Generated Image Detection Datasets",
+            "WILD: a new in-the-Wild Image Linkage Dataset for synthetic image attribution",
+        }
+        stale_preview_findings = [
+            row for row in run_repository_audit()
+            if row["paper_title"] in regression_titles
+            and row["issue_type"] == "suspicious_replacement"
+            and row["reason"].startswith("Why flagged: public export")
+        ]
+        self.assertEqual(stale_preview_findings, [])
 
     def test_admin_exposes_review_only_institution_audit_actions(self):
         html = (self.root / "web/admin.html").read_text(encoding="utf-8")

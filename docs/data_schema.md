@@ -149,7 +149,7 @@ One row represents one paper. This table stores bibliographic metadata, scope la
 | Column | Definition |
 | --- | --- |
 | `paper_id` | Stable, project-assigned identifier for the paper; primary key. |
-| `title` | Paper title as reported by the preferred source or confirmed manually. |
+| `title` | Canonical paper title derived from the preferred source or confirmed manually. Canonical writes and public exports apply the shared conservative Title Case rule: standard stop words remain lowercase, while author-styled technical tokens, acronyms, punctuation, and Unicode are preserved. |
 | `year` | Four-digit publication year. Leave empty if unresolved. |
 | `venue` | Compatibility alias of the canonical `venue_name`; never includes year, edition, proceedings volume, acronym, or display formatting. |
 | `venue_id` | Stable canonical venue identifier. Conference track variants have reviewed child IDs; journal, preprint, and book IDs never carry a conference-track suffix. |

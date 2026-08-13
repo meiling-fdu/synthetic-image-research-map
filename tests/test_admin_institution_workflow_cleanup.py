@@ -12,7 +12,12 @@ from scripts.curated_schema_migrations import migrate_obsolete_location_schema
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OBSOLETE = ("coordinate_source", "coordinate_source_url", "review_note")
+OBSOLETE = (
+    "coordinate_source",
+    "coordinate_source_url",
+    "coordinate_review_note",
+    "review_note",
+)
 
 
 def write_legacy(path, columns, row):
@@ -49,7 +54,7 @@ class AdminInstitutionWorkflowCleanupTests(unittest.TestCase):
             write_legacy(root / "institution_locations.csv", INSTITUTION_LOCATION_COLUMNS, {
                 "location_id": "location:stable", "institution_id": "institution:stable",
                 "coordinate_source": "old", "coordinate_source_url": "https://old.test",
-                "review_note": "old note",
+                "coordinate_review_note": "old coordinate note", "review_note": "old note",
             })
             write_legacy(root / "institution_location_review.csv", INSTITUTION_LOCATION_REVIEW_COLUMNS, {
                 "institution_id": "institution:stable", "review_status": "needs_coordinates",

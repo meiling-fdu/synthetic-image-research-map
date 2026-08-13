@@ -34,6 +34,7 @@ try:
         normalize_publication_type,
     )
     from .paper_links import resolve_public_links
+    from .title_normalization import canonical_paper_title
     from .paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from .venues import (
         ALLOWED_VENUE_TRACKS,
@@ -65,6 +66,7 @@ except ImportError:
         normalize_publication_type,
     )
     from paper_links import resolve_public_links
+    from title_normalization import canonical_paper_title
     from paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from venues import (
         ALLOWED_VENUE_TRACKS,
@@ -296,7 +298,7 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
             field="subtask",
             error_code="removed_field",
         )
-    title = clean(draft.get("title"))
+    title = canonical_paper_title(clean(draft.get("title")))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
     book = is_book_publication(draft.get("publication_type"))
@@ -495,7 +497,7 @@ def update_curated_paper(
         )
     patched.update(draft)
     draft = patched
-    title = clean(draft.get("title"))
+    title = canonical_paper_title(clean(draft.get("title")))
     year = clean(draft.get("year"))
     task = clean(draft.get("task"))
     try:
