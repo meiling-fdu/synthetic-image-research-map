@@ -128,6 +128,62 @@ process.stdout.write(JSON.stringify({{
         )
         return json.loads(result.stdout)
 
+    def run_track_aggregated_venue_fixture(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        venue_helpers = self.app[
+            self.app.index("function getRecordVenue"):
+            self.app.index("\nfunction venueDisplayHtml")
+        ]
+        count_helpers = self.app[
+            self.app.index("function dimensionPaperCounts"):
+            self.app.index("\nfunction nextCountryOptionIndex")
+        ]
+        update_start = self.app.index("function updateVenueDimensionFilters")
+        update_helper = self.app[
+            update_start:self.app.index("\nfunction enableControls", update_start)
+        ]
+        script = f"""
+const fs = require('fs');
+const papers = JSON.parse(fs.readFileSync('web/data/public_preview_papers.json', 'utf8')).records;
+const venueTypeOrder = ['conference', 'journal', 'preprint', 'book'];
+const document = {{createElement: () => ({{value: '', textContent: ''}})}};
+const venueFilter = {{
+  value: 'all', options: [],
+  replaceChildren(...options) {{ this.options = options; }},
+}};
+const venueTypeFilter = {{
+  value: 'all', options: [],
+  replaceChildren(...options) {{ this.options = options; }},
+}};
+function compareTextValues(first, second) {{
+  return String(first).localeCompare(String(second), undefined, {{sensitivity: 'base'}});
+}}
+function formatTask(value) {{
+  return String(value).split('_').map(
+    part => part ? part[0].toUpperCase() + part.slice(1) : part
+  ).join(' ');
+}}
+{venue_helpers}
+{count_helpers}
+{update_helper}
+updateVenueDimensionFilters(papers, papers);
+process.stdout.write(JSON.stringify({{
+  options: Object.fromEntries(venueFilter.options.map(option => [option.value, option.textContent])),
+  cvprPaperLabels: papers
+    .filter(paper => paper.venue_id === 'venue:cvpr')
+    .map(paper => venueDisplayLabel(paper)),
+  wacvPaperLabels: papers
+    .filter(paper => paper.venue_id === 'venue:wacv')
+    .map(paper => venueDisplayLabel(paper)),
+}}));
+"""
+        result = subprocess.run(
+            [node, "-e", script], cwd=ROOT, check=True, capture_output=True, text=True,
+        )
+        return json.loads(result.stdout)
+
     def test_publication_type_filter_is_public_and_combines_with_venue(self):
         self.assertIn('id="venue-type-filter"', self.html)
         self.assertIn("Publication Type", self.html)
@@ -199,6 +255,57 @@ process.stdout.write(JSON.stringify({{
             and ("workshop" in label.casefold() or label.endswith(" · Workshops"))
             for label in (paper.get("venue_label", "") for paper in workshop_papers)
         ))
+
+    def test_multi_track_venue_options_use_all_tracks_without_changing_paper_labels(self):
+        result = self.run_track_aggregated_venue_fixture()
+        tracks_by_venue = {}
+        metadata_by_venue = {}
+        counts_by_venue = {}
+        for paper in self.papers:
+            venue_id = paper.get("venue_id")
+            if not venue_id:
+                continue
+            track = paper.get("venue_track", "")
+            if track:
+                tracks_by_venue.setdefault(venue_id, set()).add(track)
+            metadata_by_venue[venue_id] = (
+                paper.get("venue_name", ""), paper.get("venue_acronym", ""),
+            )
+            counts_by_venue[venue_id] = counts_by_venue.get(venue_id, 0) + 1
+
+        multi_track_venues = {
+            venue_id for venue_id, tracks in tracks_by_venue.items() if len(tracks) > 1
+        }
+        self.assertGreater(len(multi_track_venues), 2)
+        for venue_id in multi_track_venues:
+            with self.subTest(venue_id=venue_id):
+                name, acronym = metadata_by_venue[venue_id]
+                base_label = f"{name} ({acronym})" if acronym else name
+                self.assertEqual(
+                    result["options"][venue_id],
+                    f"{base_label} — All Tracks ({counts_by_venue[venue_id]})",
+                )
+
+        self.assertEqual(
+            result["options"]["venue:cvpr"],
+            "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) "
+            f"— All Tracks ({counts_by_venue['venue:cvpr']})",
+        )
+        self.assertEqual(
+            result["options"]["venue:wacv"],
+            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) "
+            f"— All Tracks ({counts_by_venue['venue:wacv']})",
+        )
+        self.assertEqual(
+            set(result["cvprPaperLabels"]),
+            {paper.get("venue_label", "") for paper in self.papers
+             if paper.get("venue_id") == "venue:cvpr"},
+        )
+        self.assertEqual(
+            set(result["wacvPaperLabels"]),
+            {paper.get("venue_label", "") for paper in self.papers
+             if paper.get("venue_id") == "venue:wacv"},
+        )
 
     def test_book_publication_type_option_uses_deduplicated_paper_count(self):
         node = shutil.which("node")

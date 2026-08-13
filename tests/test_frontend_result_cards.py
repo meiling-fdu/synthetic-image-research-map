@@ -182,19 +182,65 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn('`${cardId}-authors`, 4', paper)
         self.assertIn('`${cardId}-institutions`, 3', paper)
 
-    def test_grid_uses_content_sized_rows_without_stretching_shorter_cards(self):
+    def test_desktop_uses_two_independent_content_sized_columns(self):
         results_list = self.css.split(".results-list {", 1)[1].split("}", 1)[0]
-        self.assertIn("align-items: start", results_list)
-        self.assertNotIn("align-items: stretch", results_list)
-        self.assertNotIn("grid-auto-rows", results_list)
+        self.assertIn("display: grid", results_list)
+        self.assertIn("grid-template-columns: repeat(2, minmax(0, 1fr))", results_list)
+        self.assertIn("grid-auto-rows: auto", results_list)
+        self.assertIn("gap: var(--masonry-gap)", results_list)
+        ready = self.css.split(
+            ".results-list.is-masonry-ready {", 1
+        )[1].split("}", 1)[0]
+        self.assertIn("grid-auto-rows: var(--masonry-row)", ready)
+        root = self.css.split(":root {", 1)[1].split("}", 1)[0]
+        self.assertIn("--masonry-gap: 11px", root)
+        self.assertIn("--masonry-row: 1px", root)
         item = self.css.split(".result-item {", 1)[1].split("}", 1)[0]
-        self.assertIn("align-self: start", item)
-        self.assertNotIn("align-self: stretch", item)
+        self.assertIn("display: flow-root", item)
+        self.assertIn("width: 100%", item)
+        self.assertNotIn("margin", item)
         self.assertNotIn("height:", item)
         card = self.css.split(".result-card {", 1)[1].split("}", 1)[0]
+        self.assertIn("display: flow-root", card)
+        self.assertNotIn("flex-direction", card)
         self.assertNotIn("height:", card)
         self.assertNotIn("overflow: hidden", card)
         self.assertNotIn("--result-card-height", self.css)
+
+    def test_masonry_preserves_list_semantics_and_dom_render_order(self):
+        self.assertIn('<ol id="results-list" class="results-list"></ol>', self.html)
+        render = self.function("renderResults", "selectResultsView")
+        self.assertIn("displayedResults.forEach((record, index)", render)
+        self.assertIn('document.createElement("li")', render)
+        self.assertIn("fragment.append(item)", render)
+        self.assertIn("resultsList.append(fragment)", render)
+        self.assertNotIn("style.order", render)
+        self.assertNotIn("appendToColumn", render)
+        masonry = self.function("updateResultsMasonryLayout", "scheduleResultsMasonryLayout")
+        self.assertIn('style.gridRowEnd = `span ${span}`', masonry)
+        self.assertIn('classList.remove("is-masonry-ready")', masonry)
+        self.assertIn('classList.add("is-masonry-ready")', masonry)
+        self.assertIn("card.scrollHeight", masonry)
+        self.assertIn('card.querySelector(".result-card")', masonry)
+        self.assertIn("renderedCard?.getBoundingClientRect()", masonry)
+        self.assertIn("renderedRect?.height", masonry)
+        self.assertIn("renderedCard?.scrollHeight", masonry)
+        self.assertIn("renderedCard?.lastElementChild", masonry)
+        self.assertIn("finalChild?.getBoundingClientRect().bottom", masonry)
+        self.assertIn("paddingBottom", masonry)
+        self.assertIn("descendantHeight", masonry)
+        self.assertIn("borderTopWidth", masonry)
+        self.assertIn("borderBottomWidth", masonry)
+        self.assertIn("listStyles.rowGap", masonry)
+        self.assertIn('getPropertyValue("--masonry-gap")', masonry)
+        self.assertIn('getPropertyValue("--masonry-row")', masonry)
+        self.assertIn("mobileFiltersMedia.matches", masonry)
+        self.assertNotIn("gridTemplateColumns.split", masonry)
+        self.assertNotIn("const rowGap = 11", masonry)
+
+        scheduler = self.function("scheduleResultsMasonryLayout", "renderResults")
+        self.assertEqual(scheduler.count("requestAnimationFrame"), 2)
+        self.assertIn("requestAnimationFrame(updateResultsMasonryLayout)", scheduler)
 
     def test_adaptive_content_and_metadata_follow_natural_flow(self):
         adaptive = self.css.split(".result-card-adaptive {", 1)[1].split("}", 1)[0]
@@ -208,14 +254,45 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertNotIn(".result-authors.is-expanded", self.css)
         self.assertNotIn(".result-paper-institutions.is-expanded", self.css)
 
-    def test_mobile_keeps_natural_cards_in_a_single_column(self):
-        mobile = self.css.split("@media (max-width: 540px) {", 1)[1]
-        self.assertIn(
-            ".results-list {\n    grid-template-columns: 1fr;\n  }",
-            mobile,
+    def test_narrow_layout_keeps_natural_cards_in_a_single_column(self):
+        narrow = self.css.split("@media (max-width: 820px) {", 1)[1].split(
+            "@media (max-width: 820px) and", 1
+        )[0]
+        results_list = narrow.split(".results-list {", 1)[1].split("}", 1)[0]
+        self.assertIn("grid-template-columns: 1fr", results_list)
+        self.assertIn("grid-auto-rows: auto", results_list)
+        self.assertNotIn("result-card-height", narrow)
+
+    def test_both_card_types_share_the_compact_vertical_rhythm(self):
+        institution = self.function(
+            "institutionResultContent", "uniquePaperInstitutions"
         )
-        self.assertNotIn("grid-auto-rows", mobile)
-        self.assertNotIn("result-card-height", mobile)
+        paper = self.function("paperResultContent", "renderResults")
+        self.assertIn("result-card result-card-institution", institution)
+        self.assertIn("result-card result-card-paper", paper)
+
+        card = self.css.split(".result-card {", 1)[1].split("}", 1)[0]
+        title = self.css.split(".result-title {", 1)[1].split("}", 1)[0]
+        institution_block = self.css.split(
+            ".result-institution-primary {", 1
+        )[1].split("}", 1)[0]
+        entity = self.css.split(".result-entity-section {", 1)[1].split("}", 1)[0]
+        secondary = self.css.split(".result-secondary {", 1)[1].split("}", 1)[0]
+        self.assertIn("padding: 12px", card)
+        self.assertIn("margin: 0 0 6px", title)
+        self.assertIn("margin: 0 0 6px", institution_block)
+        self.assertIn("padding: 7px 8px", institution_block)
+        self.assertIn("margin-bottom: 6px", entity)
+        self.assertIn("padding-top: 7px", secondary)
+
+    def test_result_cards_stay_white_and_institution_blocks_use_subtle_surface(self):
+        item = self.css.split(".result-item {", 1)[1].split("}", 1)[0]
+        institution = self.css.split(
+            ".result-institution-primary {", 1
+        )[1].split("}", 1)[0]
+        self.assertIn("background: var(--paper)", item)
+        self.assertIn("background: var(--institution-surface)", institution)
+        self.assertNotIn("background: var(--secondary-surface)", institution)
 
     def test_render_does_not_apply_stale_fixed_height_view_classes(self):
         render = self.function("renderResults", "selectResultsView")
@@ -228,6 +305,11 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn('aria-controls="${regionId}"', self.app)
         self.assertNotIn("style.height", self.app)
         self.assertNotIn('toggleAttribute("tabindex"', self.app)
+        self.assertIn('window.addEventListener("resize", scheduleResultsMasonryLayout)', self.app)
+        self.assertIn("document.fonts?.ready.then(scheduleResultsMasonryLayout)", self.app)
+        self.assertGreaterEqual(self.app.count("scheduleResultsMasonryLayout();"), 3)
+        render = self.function("renderResults", "selectResultsView")
+        self.assertIn("scheduleResultsMasonryLayout()", render)
 
     def test_collapsed_overflow_content_is_not_forced_visible_by_card_css(self):
         hidden_overflow = self.css.split(
@@ -258,6 +340,74 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertNotIn("reviewStatus", badges)
         self.assertIn("paperExternalLinks(record)", links)
         self.assertIn("paper-details-links result-links", links)
+
+    def test_dfbench_badges_use_the_canonical_paper_record_in_both_views(self):
+        map_data = json.loads((
+            ROOT / "web" / "data" / "public_preview_map_data.json"
+        ).read_text(encoding="utf-8"))
+        paper_data = json.loads((
+            ROOT / "web" / "data" / "public_preview_papers.json"
+        ).read_text(encoding="utf-8"))
+        title = (
+            "DFBench: Benchmarking Deepfake Image Detection Capability of "
+            "Large Multimodal Models"
+        )
+        institution_record = next(
+            record for record in map_data["records"]
+            if record["title"] == title and record["paper_categories"] == ["benchmark"]
+        )
+        paper_record = next(
+            record for record in paper_data["records"] if record["title"] == title
+        )
+        self.assertNotEqual(
+            institution_record["paper_categories"], paper_record["paper_categories"]
+        )
+
+        sources = [
+            "const ENTRY_TYPE_LABELS = {method: 'Method', dataset: 'Dataset', "
+            "benchmark: 'Benchmark', survey: 'Survey', analysis: 'Analysis study'};",
+            "const PUBLIC_TASK_LABELS = {detection: 'Detection', uncertain: 'Unknown'};",
+            "const MarkerSizeHelpers = {normalizeTaskLabel: (value) => value || 'uncertain'};",
+            "const escapeHtml = (value) => String(value);",
+            "const isBookRecord = () => false;",
+            "const paperIdentity = (record) => `doi:${String(record.doi).toLowerCase()}`;",
+            "let canonicalPaperRecordsByIdentity = new Map();",
+            "function formatPublicTask" + self.function(
+                "formatPublicTask", "canonicalPaperRecord"
+            ),
+            "function canonicalPaperRecord" + self.function(
+                "canonicalPaperRecord", "getPaperCategories"
+            ),
+            "function getPaperCategories" + self.function(
+                "getPaperCategories", "getEntryTypeLabel"
+            ),
+            "function getEntryTypeLabel" + self.function(
+                "getEntryTypeLabel", "recordTitle"
+            ),
+            "function resultBadges" + self.function(
+                "resultBadges", "resultVenueYear"
+            ),
+            "const institutionRecord = JSON.parse(process.argv[1]);",
+            "const paperRecord = JSON.parse(process.argv[2]);",
+            "canonicalPaperRecordsByIdentity.set(paperIdentity(paperRecord), paperRecord);",
+            "process.stdout.write(JSON.stringify({institution: resultBadges(institutionRecord), "
+            "paper: resultBadges(paperRecord)}));",
+        ]
+        result = subprocess.run(
+            [
+                str(NODE), "-e", "\n".join(sources),
+                json.dumps(institution_record), json.dumps(paper_record),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        rendered = json.loads(result.stdout)
+        self.assertEqual(rendered["institution"], rendered["paper"])
+        badges = rendered["paper"]
+        self.assertLess(badges.index("Detection"), badges.index("Method"))
+        self.assertLess(badges.index("Method"), badges.index("Dataset"))
+        self.assertLess(badges.index("Dataset"), badges.index("Benchmark"))
 
     def test_institution_type_is_only_in_the_scoped_institution_block(self):
         institution = self.function(

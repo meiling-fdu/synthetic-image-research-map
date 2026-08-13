@@ -198,6 +198,7 @@ const paperDetailsPinStatus = document.querySelector("#paper-details-pin-status"
 
 let records = [];
 let paperRecords = [];
+let canonicalPaperRecordsByIdentity = new Map();
 let institutionAliases = [];
 let institutionHierarchy = [];
 let canonicalInstitutionSearchIndex = {};
@@ -214,6 +215,7 @@ let venueTypeOrder = ["conference", "journal", "preprint", "book"];
 let countryComboboxOptionData = [];
 let activeCountryOptionIndex = -1;
 let filtersDrawerOpen = false;
+let resultsMasonryFrame = null;
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -379,6 +381,10 @@ function formatTask(task) {
 function formatPublicTask(task) {
   const normalized = MarkerSizeHelpers.normalizeTaskLabel(task);
   return PUBLIC_TASK_LABELS[normalized] || PUBLIC_TASK_LABELS.uncertain;
+}
+
+function canonicalPaperRecord(record) {
+  return canonicalPaperRecordsByIdentity.get(paperIdentity(record)) || record;
 }
 
 function getPaperCategories(record) {
@@ -1170,6 +1176,13 @@ function venueFilterValue(record) {
   return String(record.venue_id || "").trim() || (getRecordVenue(record)
     ? getRecordVenue(record).toLocaleLowerCase()
     : "__unknown__");
+}
+
+function venueBaseDisplayLabel(record) {
+  const name = getRecordVenue(record);
+  if (!name) return "Unknown publication venue";
+  const acronym = String(record.venue_acronym || "").trim();
+  return acronym ? `${name} (${acronym})` : name;
 }
 
 function venueDisplayLabel(record) {
@@ -2659,11 +2672,12 @@ function paperDetailsHtml(record, relatedEntries) {
 }
 
 function resultBadges(record) {
-  const taskClass = MarkerSizeHelpers.normalizeTaskLabel(record.task);
-  const entryTypes = getPaperCategories(record);
+  const canonicalRecord = canonicalPaperRecord(record);
+  const taskClass = MarkerSizeHelpers.normalizeTaskLabel(canonicalRecord.task);
+  const entryTypes = getPaperCategories(canonicalRecord);
   return `
     <div class="popup-badges result-badges" aria-label="Paper categories">
-      <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatPublicTask(record.task))}</span>
+      <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatPublicTask(canonicalRecord.task))}</span>
       ${entryTypes.map((category) => `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(category))}</span>`).join("")}
     </div>
   `;
@@ -2818,6 +2832,65 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
   `;
 }
 
+function updateResultsMasonryLayout() {
+  resultsMasonryFrame = null;
+  const listStyles = getComputedStyle(resultsList);
+  const cards = resultsList.querySelectorAll(".result-item");
+
+  resultsList.classList.remove("is-masonry-ready");
+  cards.forEach((card) => card.style.removeProperty("grid-row-end"));
+  if (mobileFiltersMedia.matches) return;
+
+  const documentStyles = getComputedStyle(document.documentElement);
+  const rowHeight = Number.parseFloat(
+    documentStyles.getPropertyValue("--masonry-row"),
+  );
+  const tokenGap = Number.parseFloat(
+    documentStyles.getPropertyValue("--masonry-gap"),
+  );
+  const computedGap = Number.parseFloat(listStyles.rowGap);
+  const rowGap = Number.isFinite(computedGap) ? computedGap : tokenGap;
+  if (!Number.isFinite(rowHeight) || !Number.isFinite(rowGap)) return;
+
+  cards.forEach((card) => {
+    const cardStyles = getComputedStyle(card);
+    const borderHeight = Number.parseFloat(cardStyles.borderTopWidth)
+      + Number.parseFloat(cardStyles.borderBottomWidth);
+    const renderedCard = card.querySelector(".result-card");
+    const renderedRect = renderedCard?.getBoundingClientRect();
+    const renderedHeight = renderedRect?.height || 0;
+    const contentHeight = renderedCard?.scrollHeight || 0;
+    const finalChild = renderedCard?.lastElementChild;
+    const finalChildBottom = finalChild?.getBoundingClientRect().bottom || 0;
+    const cardPaddingBottom = Number.parseFloat(
+      renderedCard ? getComputedStyle(renderedCard).paddingBottom : "0",
+    );
+    const descendantHeight = renderedRect
+      ? finalChildBottom - renderedRect.top + cardPaddingBottom
+      : 0;
+    const cardHeight = Math.ceil(
+      Math.max(
+        card.scrollHeight,
+        renderedHeight,
+        contentHeight,
+        descendantHeight,
+      ) + borderHeight,
+    );
+    const span = Math.ceil((cardHeight + rowGap) / (rowHeight + rowGap));
+    card.style.gridRowEnd = `span ${span}`;
+  });
+  resultsList.classList.add("is-masonry-ready");
+}
+
+function scheduleResultsMasonryLayout() {
+  if (resultsMasonryFrame !== null) {
+    cancelAnimationFrame(resultsMasonryFrame);
+  }
+  resultsMasonryFrame = requestAnimationFrame(() => {
+    resultsMasonryFrame = requestAnimationFrame(updateResultsMasonryLayout);
+  });
+}
+
 function renderResults(visibleRecords, visiblePaperRecords = []) {
   const relatedEntriesByIdentity = new Map();
   visibleRecords.forEach((record) => {
@@ -2857,6 +2930,7 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
     fragment.append(item);
   });
   resultsList.append(fragment);
+  scheduleResultsMasonryLayout();
 }
 
 function selectResultsView(view) {
@@ -3524,13 +3598,28 @@ function configureVenueFilter() {
 function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
   const metadataByVenue = new Map();
   [...venuePapers, ...venueTypePapers].filter((record) => !isBookRecord(record)).forEach((record) => {
-    metadataByVenue.set(venueFilterValue(record), {
+    const value = venueFilterValue(record);
+    const existing = metadataByVenue.get(value);
+    const track = canonicalVenueTrack(record);
+    if (existing) {
+      if (track) existing.tracks.add(track);
+      return;
+    }
+    metadataByVenue.set(value, {
       label: venueDisplayLabel(record),
+      baseLabel: venueBaseDisplayLabel(record),
       name: getRecordVenue(record) || "Unknown publication venue",
       acronym: record.venue_acronym || "",
-      track: canonicalVenueTrack(record),
+      track,
+      tracks: new Set(track ? [track] : []),
       type: recordVenueType(record) || "__unknown__",
     });
+  });
+  metadataByVenue.forEach((metadata) => {
+    if (metadata.tracks.size > 1) {
+      metadata.label = `${metadata.baseLabel} — All Tracks`;
+      metadata.track = "";
+    }
   });
   const venueCounts = dimensionPaperCounts(venuePapers,
     (record) => isBookRecord(record) ? [] : [venueFilterValue(record)],
@@ -3754,6 +3843,9 @@ function displayDataset(normalizedData) {
   );
   records = canonicalized.mapRecords;
   paperRecords = canonicalized.paperRecords;
+  canonicalPaperRecordsByIdentity = new Map(
+    paperRecords.map((record) => [paperIdentity(record), record]),
+  );
   displayPublicPreviewDate(normalizedData.metadata);
   configureYearRange();
   configureVenueFilter();
@@ -3923,6 +4015,7 @@ maxYearFilter.addEventListener("keydown", (event) => {
       authorToggle.setAttribute("aria-expanded", String(!isExpanded));
       authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
       if (overflow) overflow.hidden = isExpanded;
+      scheduleResultsMasonryLayout();
       return;
     }
     const institutionToggle = event.target.closest(".result-institutions-toggle");
@@ -3935,6 +4028,7 @@ maxYearFilter.addEventListener("keydown", (event) => {
         ? "Show all institutions"
         : "Show fewer institutions";
       if (overflow) overflow.hidden = isExpanded;
+      scheduleResultsMasonryLayout();
       return;
     }
     const button = event.target.closest("[data-institution-filter]");
@@ -3949,6 +4043,8 @@ activeInstitutionFilterChip.addEventListener("click", (event) => {
   }
 });
 window.addEventListener("resize", () => scheduleMapResize());
+window.addEventListener("resize", scheduleResultsMasonryLayout);
+document.fonts?.ready.then(scheduleResultsMasonryLayout);
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
   if (interactionState.pinned) {

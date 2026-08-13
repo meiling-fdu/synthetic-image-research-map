@@ -57,11 +57,10 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
         ))
 
     def test_audit_covers_every_current_active_canonical_institution(self):
+        audit = build_audit(load_tables(CURATED), load_overrides(OVERRIDES))
         audited_ids = {
             row["institution_id"]
-            for row in rows(
-                ROOT / "data" / "processed" / "institution_english_name_audit.csv"
-            )
+            for row in audit
         }
         active_ids = {
             row["institution_id"]
@@ -86,11 +85,9 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
         ))
 
     def test_audit_has_required_schema_and_keeps_legitimate_non_ascii_names(self):
-        audit_path = ROOT / "data" / "processed" / "institution_english_name_audit.csv"
-        with audit_path.open(encoding="utf-8", newline="") as handle:
-            reader = csv.DictReader(handle)
-            audit = list(reader)
-            self.assertEqual(tuple(reader.fieldnames or ()), AUDIT_COLUMNS)
+        audit = build_audit(load_tables(CURATED), load_overrides(OVERRIDES))
+        self.assertTrue(audit)
+        self.assertEqual(tuple(audit[0]), AUDIT_COLUMNS)
         by_name = {row["current_canonical_name"]: row for row in audit}
         self.assertEqual(by_name["École Polytechnique"]["decision"], "keep")
         self.assertEqual(by_name["University of Žilina"]["decision"], "keep")
