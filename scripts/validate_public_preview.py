@@ -504,6 +504,7 @@ def read_dataset(path: Path) -> Tuple[Dict[str, Any], List[Any]]:
         for key in (
             "institution_aliases", "canonical_institution_search_index",
             "institution_id_redirects", "institution_hierarchy",
+            "institution_search_relationships",
         ):
             if key in payload:
                 metadata[key] = payload[key]

@@ -67,6 +67,20 @@ class OrphanInstitutionCleanupTests(unittest.TestCase):
         self.assertEqual(decisions["parent"], "retained_as_parent")
         self.assertNotIn("parent", result.deleted_ids)
 
+    def test_confirmed_search_relationship_retains_both_canonical_endpoints(self):
+        relationship = {
+            "root_institution_id": "root",
+            "related_institution_id": "related",
+            "relationship_type": "search_family",
+            "review_status": "confirmed",
+        }
+        result = self.analyze(
+            [institution("root"), institution("related")],
+            search_relationships=[relationship],
+        )
+        self.assertFalse(result.deleted_ids)
+        self.assertEqual(result.search_relationships, [relationship])
+
     def test_alias_and_merge_targets_remain(self):
         result = self.analyze(
             [institution("alias-target"), institution("merge-target")],

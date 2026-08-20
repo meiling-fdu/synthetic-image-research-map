@@ -267,7 +267,7 @@ class AffiliationOrderReproductionTests(unittest.TestCase):
             "University of Science and Technology of China",
             "Zhejiang University",
             "Hebei Institute of Communications",
-            "Hong Kong University of Science and Technology",
+            "The Hong Kong University of Science and Technology",
             "Harbin Institute of Technology, Shenzhen",
         ])
         indices = {row["author"]: row["institution_indices"]

@@ -290,6 +290,9 @@ LOCATION_REVIEW_PATH = DEFAULT_LOCATION_REVIEW_PATH
 INSTITUTION_LOCATIONS_PATH = DEFAULT_INSTITUTION_LOCATIONS_PATH
 INSTITUTIONS_PATH = DEFAULT_INSTITUTIONS_PATH
 INSTITUTION_HIERARCHY_PATH = REPOSITORY_ROOT / "data" / "curated" / "institution_hierarchy.csv"
+INSTITUTION_SEARCH_RELATIONSHIPS_PATH = (
+    REPOSITORY_ROOT / "data" / "curated" / "institution_search_relationships.csv"
+)
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
 LOOPBACK_HOSTS = {"127.0.0.1", "localhost", "::1"}
@@ -1564,6 +1567,7 @@ def make_handler(
     institution_consistency_report_path: Path = INSTITUTION_CONSISTENCY_REPORT_PATH,
     institution_review_queue_path: Path = INSTITUTION_REVIEW_QUEUE_PATH,
     institution_hierarchy_path: Path = INSTITUTION_HIERARCHY_PATH,
+    institution_search_relationships_path: Path = INSTITUTION_SEARCH_RELATIONSHIPS_PATH,
     author_mapping_report_generator: Callable[
         [], Mapping[str, Any]
     ] = generate_author_mapping_report,
@@ -2903,7 +2907,7 @@ def make_handler(
                         elif action == "ignore":
                             result = ignore_institution(payload.get("institution_id"), confirmation=payload.get("confirmation") is True, review_note=payload.get("review_note"), institutions_path=institutions_path, mappings_path=mappings_path, audit_path=institution_audit_path)
                         else:
-                            result = merge_institutions(payload.get("source_institution_id"), payload.get("target_institution_id"), confirmation=payload.get("confirmation"), review_note="Merged through Institution Management.", institutions_path=institutions_path, mappings_path=mappings_path, aliases_path=institution_aliases_path, locations_path=institution_locations_path, location_reviews_path=location_review_path, hierarchy_path=institution_hierarchy_path, review_queue_path=institution_review_queue_path, audit_path=institution_audit_path)
+                            result = merge_institutions(payload.get("source_institution_id"), payload.get("target_institution_id"), confirmation=payload.get("confirmation"), review_note="Merged through Institution Management.", location_resolution=payload.get("location_resolution"), institutions_path=institutions_path, mappings_path=mappings_path, aliases_path=institution_aliases_path, locations_path=institution_locations_path, location_reviews_path=location_review_path, location_audit_path=institution_location_audit_path, hierarchy_path=institution_hierarchy_path, search_relationships_path=institution_search_relationships_path, review_queue_path=institution_review_queue_path, audit_path=institution_audit_path)
                     self.send_json(HTTPStatus.OK, {"data": result, "message": f"Institution {action} action saved."})
                 except CuratedInstitutionError as error:
                     self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})

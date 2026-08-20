@@ -854,6 +854,83 @@ def validate_institution_hierarchy(
             )
 
 
+def validate_institution_search_relationships(
+    relationships: Sequence[Mapping[str, str]],
+    institutions: Sequence[Mapping[str, str]],
+    issues: List[Issue],
+) -> None:
+    """Validate directed search expansion without implying shared identity."""
+    filename = "institution_search_relationships.csv"
+    active_ids = {
+        clean(row.get("institution_id"))
+        for row in institutions
+        if clean(row.get("institution_status")) == "active"
+        and clean(row.get("institution_id"))
+    }
+    related_by_root: DefaultDict[str, set[str]] = defaultdict(set)
+    seen: set[Tuple[str, str]] = set()
+    for row_number, row in enumerate(relationships, start=2):
+        root = clean(row.get("root_institution_id"))
+        related = clean(row.get("related_institution_id"))
+        if not root or not related:
+            add_issue(
+                issues, "ERROR", filename,
+                "root_institution_id and related_institution_id are required",
+                row_number,
+            )
+            continue
+        if clean(row.get("relationship_type")) != "search_family":
+            add_issue(
+                issues, "ERROR", filename,
+                "relationship_type must be search_family", row_number,
+            )
+        if clean(row.get("review_status")) != "confirmed":
+            add_issue(
+                issues, "ERROR", filename,
+                "curated search relationships must have review_status=confirmed",
+                row_number,
+            )
+        if root == related:
+            add_issue(
+                issues, "ERROR", filename,
+                "an institution cannot be search-related to itself", row_number,
+            )
+        for field, institution_id in (("root", root), ("related", related)):
+            if institution_id not in active_ids:
+                add_issue(
+                    issues, "ERROR", filename,
+                    f"{field} ID is not an active canonical institution: {institution_id}",
+                    row_number,
+                )
+        key = (root, related)
+        if key in seen:
+            add_issue(
+                issues, "ERROR", filename,
+                f"duplicate confirmed search relationship: {root} -> {related}",
+                row_number,
+            )
+        seen.add(key)
+        related_by_root[root].add(related)
+
+    def reaches(start: str, target: str, visited: set[str]) -> bool:
+        if start == target:
+            return True
+        if start in visited:
+            return False
+        visited.add(start)
+        return any(
+            reaches(related, target, visited)
+            for related in related_by_root.get(start, set())
+        )
+
+    for root, related_ids in related_by_root.items():
+        if any(reaches(related, root, set()) for related in related_ids):
+            add_issue(
+                issues, "ERROR", filename,
+                f"confirmed search relationships contain a cycle involving {root}",
+            )
+
+
 def validate_institution_entities(
     institutions: Sequence[Mapping[str, str]],
     mappings: Sequence[Mapping[str, str]],
@@ -1155,6 +1232,7 @@ def main() -> int:
     confirmed_locations = datasets.get("institution_locations.csv", [])
     aliases = datasets.get("institution_aliases.csv", [])
     hierarchy = datasets.get("institution_hierarchy.csv", [])
+    search_relationships = datasets.get("institution_search_relationships.csv", [])
     institutions = datasets.get("institutions.csv", [])
     institution_audits = datasets.get("institution_audit_log.csv", [])
     institution_review_queue = datasets.get("institution_review_queue.csv", [])
@@ -1514,6 +1592,9 @@ def main() -> int:
         )] = row
     validate_institution_aliases(aliases, confirmed_locations, issues, institutions)
     validate_institution_hierarchy(hierarchy, institutions, issues)
+    validate_institution_search_relationships(
+        search_relationships, institutions, issues
+    )
     validate_institution_entities(
         institutions, mappings, confirmed_locations, locations, aliases,
         institution_audits, issues,

@@ -16,7 +16,7 @@ import sys
 import unicodedata
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 try:
     from .curated_export import (
@@ -33,6 +33,7 @@ try:
         load_institution_resolution_cache,
         load_institution_aliases,
         load_location_review_queue,
+        normalize_paper_identity_keys,
         save_location_review_queue,
         stable_institution_id,
     )
@@ -126,6 +127,7 @@ except ImportError:  # Direct execution from the scripts directory.
         load_institution_resolution_cache,
         load_institution_aliases,
         load_location_review_queue,
+        normalize_paper_identity_keys,
         save_location_review_queue,
         stable_institution_id,
     )
@@ -223,6 +225,9 @@ DEFAULT_REVIEW_DECISIONS = (
 )
 DEFAULT_CURATED_ARXIV_LINKS = Path("data/curated/paper_arxiv_links.csv")
 DEFAULT_INSTITUTION_HIERARCHY = Path("data/curated/institution_hierarchy.csv")
+DEFAULT_INSTITUTION_SEARCH_RELATIONSHIPS = Path(
+    "data/curated/institution_search_relationships.csv"
+)
 DEFAULT_EXPORT_BASELINE = Path("data/curated/public_export_baseline.json")
 DEFAULT_ORPHAN_CLEANUP_AUDIT = Path(
     "data/processed/orphan_institution_cleanup_audit.csv"
@@ -533,6 +538,15 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         help=(
             "Curated confirmed institution parent/child relationships "
             f"(default: {DEFAULT_INSTITUTION_HIERARCHY})."
+        ),
+    )
+    parser.add_argument(
+        "--institution-search-relationships",
+        type=Path,
+        default=DEFAULT_INSTITUTION_SEARCH_RELATIONSHIPS,
+        help=(
+            "Curated directed institution search-family relationships "
+            f"(default: {DEFAULT_INSTITUTION_SEARCH_RELATIONSHIPS})."
         ),
     )
     parser.add_argument(
@@ -3269,6 +3283,85 @@ def public_institution_hierarchy(
     ))
 
 
+def public_institution_search_relationships(
+    relationships: Sequence[Dict[str, Any]],
+    institutions: Sequence[Dict[str, Any]],
+) -> List[Dict[str, str]]:
+    """Export directed search expansion without changing identity or hierarchy."""
+    active_names = {
+        clean_text(row.get("institution_id")): clean_text(row.get("canonical_name"))
+        for row in institutions
+        if clean_text(row.get("institution_status")) == "active"
+        and clean_text(row.get("institution_id"))
+        and clean_text(row.get("canonical_name"))
+    }
+    exported: List[Dict[str, str]] = []
+    seen: set[Tuple[str, str]] = set()
+    for row in relationships:
+        root_id = clean_text(row.get("root_institution_id"))
+        related_id = clean_text(row.get("related_institution_id"))
+        key = (root_id, related_id)
+        if (
+            clean_text(row.get("review_status")) != "confirmed"
+            or clean_text(row.get("relationship_type")) != "search_family"
+            or root_id not in active_names
+            or related_id not in active_names
+            or root_id == related_id
+            or key in seen
+        ):
+            continue
+        seen.add(key)
+        exported.append({
+            "root_institution_id": root_id,
+            "root_institution_name": active_names[root_id],
+            "related_institution_id": related_id,
+            "related_institution_name": active_names[related_id],
+            "relationship_type": "search_family",
+            "review_status": "confirmed",
+            "evidence_source": clean_text(row.get("evidence_source")),
+            "evidence_url": clean_text(row.get("evidence_url")),
+        })
+    return sorted(exported, key=lambda row: (
+        normalize_institution_lookup(row["root_institution_name"]),
+        normalize_institution_lookup(row["related_institution_name"]),
+    ))
+
+
+def add_paper_institution_search_ids(
+    paper_records: Sequence[Dict[str, Any]],
+    mappings: Sequence[Mapping[str, Any]],
+    id_redirects: Mapping[str, str] | None = None,
+) -> int:
+    """Add search-only institution IDs without asserting public affiliation."""
+    redirects = id_redirects or {}
+    searchable_mappings = [
+        mapping for mapping in mappings
+        if clean_text(mapping.get("mapping_status")) in {"active", "needs_review"}
+        and clean_text(mapping.get("institution_id"))
+    ]
+    annotated = 0
+    for paper in paper_records:
+        paper_keys = set(normalize_paper_identity_keys(paper))
+        search_ids = list(dict.fromkeys(
+            clean_text(value)
+            for value in paper.get("search_institution_ids", [])
+            if clean_text(value)
+        ))
+        for mapping in searchable_mappings:
+            if not paper_keys.intersection(normalize_paper_identity_keys(mapping)):
+                continue
+            institution_id = clean_text(mapping.get("institution_id"))
+            institution_id = redirects.get(institution_id, institution_id)
+            if institution_id and institution_id not in search_ids:
+                search_ids.append(institution_id)
+        if search_ids:
+            paper["search_institution_ids"] = search_ids
+            annotated += 1
+        else:
+            paper.pop("search_institution_ids", None)
+    return annotated
+
+
 def canonicalize_public_institutions(
     paper_records: Sequence[Dict[str, Any]],
     map_records: Sequence[Dict[str, Any]],
@@ -4096,6 +4189,9 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             args.institution_aliases
         )
         institution_hierarchy_rows = read_csv_rows(args.institution_hierarchy)
+        institution_search_relationship_rows = read_csv_rows(
+            args.institution_search_relationships
+        )
         processed_cache_rows = load_institution_resolution_cache(
             args.institution_resolution_cache
         )
@@ -4183,6 +4279,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         exported_hierarchy = public_institution_hierarchy(
             institution_hierarchy_rows,
             confirmed_location_rows,
+            institution_rows,
+        )
+        exported_search_relationships = public_institution_search_relationships(
+            institution_search_relationship_rows,
             institution_rows,
         )
         integrated_maps = canonicalize_public_institutions(
@@ -4317,6 +4417,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             )
         reconstruct_publication_links(integrated_papers)
         reconstruct_publication_links(integrated_maps)
+        add_paper_institution_search_ids(
+            integrated_papers,
+            curated_mappings,
+            exported_id_redirects,
+        )
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         payload["institution_aliases"] = exported_aliases
@@ -4331,6 +4436,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         paper_payload["institution_id_redirects"] = exported_id_redirects
         payload["institution_hierarchy"] = exported_hierarchy
         paper_payload["institution_hierarchy"] = exported_hierarchy
+        payload["institution_search_relationships"] = (
+            exported_search_relationships
+        )
+        paper_payload["institution_search_relationships"] = (
+            exported_search_relationships
+        )
         summary["preprint_version_records_excluded"] += (
             curated_preprint_map_records_excluded
         )

@@ -405,6 +405,113 @@ process.stdout.write(JSON.stringify({
         self.assertFalse(result["childIncludesParent"])
         self.assertFalse(result["unrelatedIncluded"])
 
+    def test_registry_search_expands_roots_descendants_and_directed_related_institutions(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        search_start = self.app.index("function normalizedSearchText")
+        search_end = self.app.index("\nfunction buildCanonicalInstitutionResolver", search_start)
+        expansion_start = self.app.index("function buildInstitutionHierarchyIndex")
+        expansion_end = self.app.index("\nfunction hierarchyInstitutionLabel", expansion_start)
+        script = r'''
+function recordInstitution(record) { return record.institution || ""; }
+function institutionIdentity(record) {
+  return record.institution_id ? `id:${record.institution_id.toLowerCase()}` : "";
+}
+function recordInstitutionIdentities(record) {
+  const values = record.author_institution_affiliations || [record];
+  return new Set([
+    ...values.map(institutionIdentity),
+    ...(record.search_institution_ids || []).map(
+      institution_id => institutionIdentity({institution_id}),
+    ),
+  ]);
+}
+''' + self.app[search_start:search_end] + self.app[expansion_start:expansion_end] + r'''
+const rootId = 'institution:hkust';
+const childId = 'institution:true-campus';
+const relatedId = 'institution:hkust-guangzhou';
+const aliases = [
+  {alias_name: 'Hong Kong University of Science and Technology', canonical_institution_name: 'The Hong Kong University of Science and Technology', canonical_institution_id: rootId},
+  {alias_name: 'HKUST Guangzhou', canonical_institution_name: 'The Hong Kong University of Science and Technology (Guangzhou)', canonical_institution_id: relatedId},
+  {alias_name: 'HKUST(GZ)', canonical_institution_name: 'The Hong Kong University of Science and Technology (Guangzhou)', canonical_institution_id: relatedId},
+];
+const canonicalIndex = {
+  [rootId]: {canonical_name: 'The Hong Kong University of Science and Technology', names: ['The Hong Kong University of Science and Technology', 'Hong Kong University of Science and Technology']},
+  [childId]: {canonical_name: 'HKUST True Campus', names: ['HKUST True Campus']},
+  [relatedId]: {canonical_name: 'The Hong Kong University of Science and Technology (Guangzhou)', names: ['The Hong Kong University of Science and Technology (Guangzhou)', 'HKUST Guangzhou', 'HKUST(GZ)']},
+};
+const hierarchy = [{
+  parent_institution_id: rootId,
+  child_institution_id: childId,
+  review_status: 'confirmed',
+}];
+const searchRelationships = [{
+  root_institution_id: rootId,
+  related_institution_id: relatedId,
+  relationship_type: 'search_family',
+  review_status: 'confirmed',
+}];
+const maps = [
+  {id: 'root-paper', institution_id: rootId, institution: canonicalIndex[rootId].canonical_name},
+  {id: 'campus-paper', institution_id: childId, institution: canonicalIndex[childId].canonical_name},
+  {id: 'guangzhou-paper', institution_id: relatedId, institution: canonicalIndex[relatedId].canonical_name},
+];
+const papers = maps.map(record => ({id: record.id, author_institution_affiliations: [record]})).concat([{
+  id: 'guangzhou-review-paper',
+  search_institution_ids: [relatedId],
+}]);
+const before = JSON.stringify({maps, papers, hierarchy, searchRelationships});
+const searchIndex = buildInstitutionSearchIndex(maps, papers, aliases, hierarchy, canonicalIndex);
+const hierarchyIndex = buildInstitutionHierarchyIndex(hierarchy);
+const relationshipIndex = buildInstitutionSearchRelationshipIndex(searchRelationships);
+function matches(query) {
+  const direct = resolveInstitutionSearchIdentities(query, searchIndex);
+  const expanded = institutionIdentitiesWithSearchExpansion(direct, hierarchyIndex, relationshipIndex);
+  return {
+    identities: [...expanded].sort(),
+    maps: maps.filter(record => recordMatchesInstitutionIdentities(record, expanded, true)).map(record => record.id).sort(),
+    papers: papers.filter(record => recordMatchesInstitutionIdentities(record, expanded, false)).map(record => record.id).sort(),
+  };
+}
+process.stdout.write(JSON.stringify({
+  canonicalRoot: matches('The Hong Kong University of Science and Technology'),
+  aliasRoot: matches('Hong Kong University of Science and Technology'),
+  branchName: matches('HKUST Guangzhou'),
+  branchAcronym: matches('HKUST(GZ)'),
+  unchanged: before === JSON.stringify({maps, papers, hierarchy, searchRelationships}),
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        family_ids = [
+            "id:institution:hkust",
+            "id:institution:hkust-guangzhou",
+            "id:institution:true-campus",
+        ]
+        family_maps = ["campus-paper", "guangzhou-paper", "root-paper"]
+        family_papers = [
+            "campus-paper", "guangzhou-paper", "guangzhou-review-paper",
+            "root-paper",
+        ]
+        for key in ("canonicalRoot", "aliasRoot"):
+            self.assertEqual(result[key]["identities"], family_ids)
+            self.assertEqual(result[key]["maps"], family_maps)
+            self.assertEqual(result[key]["papers"], family_papers)
+        for key in ("branchName", "branchAcronym"):
+            self.assertEqual(
+                result[key]["identities"],
+                ["id:institution:hkust-guangzhou"],
+            )
+            self.assertEqual(result[key]["maps"], ["guangzhou-paper"])
+            self.assertEqual(
+                result[key]["papers"],
+                ["guangzhou-paper", "guangzhou-review-paper"],
+            )
+        self.assertTrue(result["unchanged"])
+
     def test_cas_certh_and_bits_parent_results_dedupe_while_children_stay_exact(self):
         node = shutil.which("node")
         if node is None:

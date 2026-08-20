@@ -45,14 +45,28 @@ class InstitutionMergeFrontendTests(unittest.TestCase):
         self.assertIn("institution.institution_id !== sourceId", self.merge_source)
         self.assertIn('institution.institution_status === "active"', self.merge_source)
 
-    def test_valid_target_immediately_enables_destructive_button(self):
+    def test_valid_target_requires_location_choice_only_for_confirmed_conflict(self):
         self.assertIn('id="institution-merge-submit" type="submit" disabled', self.html)
         resolved = self.merge_source[
             self.merge_source.index("function resolveInstitutionMergeTarget"):
             self.merge_source.index("async function submitInstitutionMerge")
         ]
-        self.assertIn('elements["institution-merge-submit"].disabled = false', resolved)
+        self.assertIn("institutionMergeHasLocationConflict()", self.merge_source)
+        self.assertIn("requiresLocationChoice && !locationChoice", self.merge_source)
+        self.assertIn("updateInstitutionMergeSubmitState()", resolved)
         self.assertIn('elements["institution-merge-submit"].disabled = true', resolved)
+
+    def test_location_conflict_shows_both_locations_without_a_default_choice(self):
+        self.assertIn('id="institution-merge-location-resolution" hidden', self.html)
+        self.assertIn('value="keep_target"', self.html)
+        self.assertIn('value="use_source"', self.html)
+        self.assertNotIn('value="keep_target" checked', self.html)
+        self.assertNotIn('value="use_source" checked', self.html)
+        self.assertIn('id="institution-merge-target-location"', self.html)
+        self.assertIn('id="institution-merge-source-location"', self.html)
+        self.assertIn("institutionMergeLocationText(target)", self.merge_source)
+        self.assertIn("institutionMergeLocationText(source)", self.merge_source)
+        self.assertIn("Choose which confirmed location to keep.", self.merge_source)
 
     def test_merge_dialog_has_no_note_or_typed_confirmation_fields(self):
         self.assertNotIn('id="institution-merge-note"', self.html)
@@ -110,6 +124,8 @@ class InstitutionMergeFrontendTests(unittest.TestCase):
             self.merge_source,
         )
         self.assertIn("confirmation: backendConfirmation", self.merge_source)
+        self.assertIn('location_resolution: locationChoice?.value || ""', self.merge_source)
+        self.assertIn('location_resolution=payload.get("location_resolution")', self.server_source)
         self.assertNotIn("Global replacement confirmation did not match", self.source)
 
 

@@ -251,6 +251,14 @@ Unknown text is never saved directly. **Create new canonical venue** submits a r
 
 Use queue actions to open the metadata, scope, mapping, location, or Add Paper editor. Explicit reviewed/no-action, unresolved, marker-confirmation, and candidate outcomes are written to `data/curated/review_decisions.csv`; location-review actions also update `data/curated/institution_location_review.csv`. Confirm-marker actions create or activate a curated mapping only when paper, institution, and institution-author evidence are present. Exclude-wrong-mapping decisions exclude matching curated mappings and suppress matching automatic markers during export. The queue source CSV is never edited as durable state.
 
+Institution merges always preserve the selected target identity and reassign the
+source institution's curated references. If both source and target have
+confirmed locations, the merge review shows both and requires an explicit
+**Keep target location** or **Use source location** choice; neither choice is
+preselected. The unselected location rows are removed in the same rollback
+boundary as mappings, aliases, location reviews and audits, hierarchy links,
+review-queue references, institution status, and the merge audit entry.
+
 For title-match review, compare DOI, OpenAlex URL, normalized title, year, and suggested matches in the selected row. Confirm a match, add the paper, exclude it from scope, or leave an explicit unresolved decision.
 
 ## Run the full refresh pipeline

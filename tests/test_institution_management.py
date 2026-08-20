@@ -26,6 +26,7 @@ from scripts.curated_schema import (
     INSTITUTION_LOCATION_AUDIT_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
     INSTITUTION_REVIEW_QUEUE_COLUMNS,
+    INSTITUTION_SEARCH_RELATIONSHIP_COLUMNS,
 )
 from scripts.export_public_preview import exclude_nonpublic_institutions, public_institution_aliases
 from scripts.serve_admin import institution_hierarchy_details
@@ -63,6 +64,7 @@ class InstitutionManagementTests(unittest.TestCase):
         self.location_audits = self.root / "location_audits.csv"
         self.hierarchy = self.root / "hierarchy.csv"
         self.review_queue = self.root / "review_queue.csv"
+        self.search_relationships = self.root / "search_relationships.csv"
         write_csv(self.institutions, INSTITUTION_COLUMNS, [
             blank(INSTITUTION_COLUMNS, institution_id=self.certh_id, canonical_name=CERTH, institution_type="institute", institution_status="active", public_display="self"),
             blank(INSTITUTION_COLUMNS, institution_id=self.amazon_id, canonical_name=AMAZON, institution_type="company", institution_status="active", public_display="self"),
@@ -94,6 +96,11 @@ class InstitutionManagementTests(unittest.TestCase):
         write_csv(self.location_audits, INSTITUTION_LOCATION_AUDIT_COLUMNS, [])
         write_csv(self.hierarchy, INSTITUTION_HIERARCHY_COLUMNS, [])
         write_csv(self.review_queue, INSTITUTION_REVIEW_QUEUE_COLUMNS, [])
+        write_csv(
+            self.search_relationships,
+            INSTITUTION_SEARCH_RELATIONSHIP_COLUMNS,
+            [],
+        )
 
     def tearDown(self):
         self.temporary.cleanup()
@@ -285,7 +292,10 @@ class InstitutionManagementTests(unittest.TestCase):
             review_note="Fixture merge.", institutions_path=self.institutions,
             mappings_path=self.mappings, aliases_path=self.aliases,
             locations_path=self.locations, location_reviews_path=self.location_reviews,
-            hierarchy_path=self.hierarchy, review_queue_path=self.review_queue,
+            location_audit_path=self.location_audits,
+            hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
+            review_queue_path=self.review_queue,
             audit_path=self.audits,
         )
         with self.locations.open(encoding="utf-8", newline="") as handle:
@@ -523,7 +533,10 @@ class InstitutionManagementTests(unittest.TestCase):
             institutions_path=self.institutions, mappings_path=self.mappings,
             aliases_path=self.aliases, locations_path=self.locations,
             location_reviews_path=self.location_reviews,
-            hierarchy_path=self.hierarchy, review_queue_path=self.review_queue,
+            location_audit_path=self.location_audits,
+            hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
+            review_queue_path=self.review_queue,
             audit_path=self.audits,
         )
         with self.institutions.open(encoding="utf-8", newline="") as handle:
@@ -571,11 +584,179 @@ class InstitutionManagementTests(unittest.TestCase):
             merge_institutions(
                 self.certh_id, self.amazon_id, confirmation=True, review_note="Wrong",
                 institutions_path=self.institutions, mappings_path=self.mappings,
-                aliases_path=self.aliases, audit_path=self.audits,
+                aliases_path=self.aliases, location_audit_path=self.location_audits,
+                search_relationships_path=self.search_relationships,
+                audit_path=self.audits,
             )
         with self.mappings.open(encoding="utf-8", newline="") as handle:
             mapping = next(csv.DictReader(handle))
         self.assertEqual(mapping["institution_id"], self.certh_id)
+
+    def test_merge_requires_location_resolution_and_keeps_selected_target_location(self):
+        guangzhou_id = "institution:hkust-guangzhou"
+        unit_id = "institution:research-unit"
+        parent_id = "institution:parent"
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            institutions = list(csv.DictReader(handle))
+        institutions.extend([
+            blank(
+                INSTITUTION_COLUMNS,
+                institution_id=guangzhou_id,
+                canonical_name="The Hong Kong University of Science and Technology (Guangzhou)",
+                institution_status="active",
+                parent_institution_id=self.amazon_id,
+            ),
+            blank(INSTITUTION_COLUMNS, institution_id=unit_id, canonical_name="Research Unit", institution_status="active"),
+            blank(INSTITUTION_COLUMNS, institution_id=parent_id, canonical_name="Parent", institution_status="active"),
+        ])
+        write_csv(self.institutions, INSTITUTION_COLUMNS, institutions)
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            target_location = next(csv.DictReader(handle))
+        source_location = blank(
+            INSTITUTION_LOCATION_COLUMNS,
+            location_id="location:certh",
+            institution_id=self.certh_id,
+            institution=CERTH,
+            normalized_institution="centre for research and technology hellas certh",
+            city="Thessaloniki",
+            country="Greece",
+            country_code="GR",
+            lat="40.6401",
+            lon="22.9444",
+            coordinate_status="known",
+        )
+        write_csv(self.locations, INSTITUTION_LOCATION_COLUMNS, [target_location, source_location])
+        with self.mappings.open(encoding="utf-8", newline="") as handle:
+            source_mapping = next(csv.DictReader(handle))
+        source_mapping["location_id"] = source_location["location_id"]
+        guangzhou_mapping = blank(
+            AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+            mapping_id="mapping:guangzhou",
+            paper_id="paper:guangzhou",
+            institution="The Hong Kong University of Science and Technology (Guangzhou)",
+            institution_id=guangzhou_id,
+            mapping_status="active",
+        )
+        write_csv(self.mappings, AUTHOR_INSTITUTION_MAPPING_COLUMNS, [source_mapping, guangzhou_mapping])
+        write_csv(self.location_reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS, [
+            blank(
+                INSTITUTION_LOCATION_REVIEW_COLUMNS,
+                institution=CERTH,
+                canonical_institution_name=CERTH,
+                institution_id=self.certh_id,
+                related_paper_id="paper:1",
+            ),
+        ])
+        write_csv(self.location_audits, INSTITUTION_LOCATION_AUDIT_COLUMNS, [
+            blank(INSTITUTION_LOCATION_AUDIT_COLUMNS, audit_id="location-audit:1", institution_id=self.certh_id),
+        ])
+        write_csv(self.hierarchy, INSTITUTION_HIERARCHY_COLUMNS, [
+            blank(INSTITUTION_HIERARCHY_COLUMNS, parent_institution_id=self.certh_id, child_institution_id=unit_id, relationship_type="unit"),
+            blank(INSTITUTION_HIERARCHY_COLUMNS, parent_institution_id=parent_id, child_institution_id=self.certh_id, relationship_type="member"),
+        ])
+        write_csv(self.review_queue, INSTITUTION_REVIEW_QUEUE_COLUMNS, [
+            blank(INSTITUTION_REVIEW_QUEUE_COLUMNS, current_institution=CERTH, current_institution_id=self.certh_id),
+            blank(INSTITUTION_REVIEW_QUEUE_COLUMNS, suggested_canonical_institution=CERTH, suggested_institution_id=self.certh_id),
+        ])
+        tracked_paths = (
+            self.institutions, self.locations, self.mappings, self.aliases,
+            self.location_reviews, self.location_audits, self.hierarchy,
+            self.search_relationships, self.review_queue, self.audits,
+        )
+        before = {path: path.read_bytes() for path in tracked_paths}
+
+        with self.assertRaisesRegex(CuratedInstitutionError, "explicitly"):
+            merge_institutions(
+                self.certh_id, self.amazon_id,
+                confirmation=f"REPLACE {CERTH} WITH {AMAZON} GLOBALLY",
+                review_note="Confirmed duplicate.",
+                institutions_path=self.institutions, mappings_path=self.mappings,
+                aliases_path=self.aliases, locations_path=self.locations,
+                location_reviews_path=self.location_reviews,
+                location_audit_path=self.location_audits,
+                hierarchy_path=self.hierarchy,
+                search_relationships_path=self.search_relationships,
+                review_queue_path=self.review_queue,
+                audit_path=self.audits,
+            )
+        self.assertEqual(
+            {path: path.read_bytes() for path in tracked_paths},
+            before,
+        )
+
+        merge_institutions(
+            self.certh_id, self.amazon_id,
+            confirmation=f"REPLACE {CERTH} WITH {AMAZON} GLOBALLY",
+            review_note="Confirmed duplicate.", location_resolution="keep_target",
+            institutions_path=self.institutions, mappings_path=self.mappings,
+            aliases_path=self.aliases, locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+            location_audit_path=self.location_audits,
+            hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
+            review_queue_path=self.review_queue,
+            audit_path=self.audits,
+        )
+
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            locations = list(csv.DictReader(handle))
+        self.assertEqual(locations, [target_location])
+        with self.mappings.open(encoding="utf-8", newline="") as handle:
+            mappings = {row["mapping_id"]: row for row in csv.DictReader(handle)}
+        self.assertEqual(mappings["mapping:certh"]["institution_id"], self.amazon_id)
+        self.assertEqual(mappings["mapping:certh"]["institution"], AMAZON)
+        self.assertEqual(mappings["mapping:certh"]["location_id"], "location:amazon")
+        self.assertEqual(mappings["mapping:guangzhou"], guangzhou_mapping)
+        with self.aliases.open(encoding="utf-8", newline="") as handle:
+            aliases = list(csv.DictReader(handle))
+        self.assertTrue(any(row["alias_name"] == CERTH and row["institution_id"] == self.amazon_id for row in aliases))
+        with self.location_reviews.open(encoding="utf-8", newline="") as handle:
+            self.assertEqual(next(csv.DictReader(handle))["institution_id"], self.amazon_id)
+        with self.location_audits.open(encoding="utf-8", newline="") as handle:
+            self.assertEqual(next(csv.DictReader(handle))["institution_id"], self.amazon_id)
+        with self.hierarchy.open(encoding="utf-8", newline="") as handle:
+            hierarchy = list(csv.DictReader(handle))
+        self.assertFalse(any(self.certh_id in (row["parent_institution_id"], row["child_institution_id"]) for row in hierarchy))
+        with self.review_queue.open(encoding="utf-8", newline="") as handle:
+            reviews = list(csv.DictReader(handle))
+        self.assertFalse(any(self.certh_id in (row["current_institution_id"], row["suggested_institution_id"]) for row in reviews))
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            saved_institutions = {row["institution_id"]: row for row in csv.DictReader(handle)}
+        self.assertEqual(saved_institutions[self.certh_id]["institution_status"], "merged")
+        self.assertEqual(saved_institutions[self.amazon_id]["institution_status"], "active")
+        self.assertEqual(saved_institutions[guangzhou_id], institutions[2])
+
+    def test_merge_can_explicitly_use_source_location(self):
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            target_location = next(csv.DictReader(handle))
+        source_location = dict(target_location)
+        source_location.update({
+            "location_id": "location:certh", "institution_id": self.certh_id,
+            "institution": CERTH, "city": "Thessaloniki", "country": "Greece",
+            "country_code": "GR", "lat": "40.6401", "lon": "22.9444",
+        })
+        write_csv(self.locations, INSTITUTION_LOCATION_COLUMNS, [target_location, source_location])
+
+        result = merge_institutions(
+            self.certh_id, self.amazon_id,
+            confirmation=f"REPLACE {CERTH} WITH {AMAZON} GLOBALLY",
+            review_note="Confirmed duplicate.", location_resolution="use_source",
+            institutions_path=self.institutions, mappings_path=self.mappings,
+            aliases_path=self.aliases, locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+            location_audit_path=self.location_audits,
+            hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
+            review_queue_path=self.review_queue,
+            audit_path=self.audits,
+        )
+
+        with self.locations.open(encoding="utf-8", newline="") as handle:
+            kept = next(csv.DictReader(handle))
+        self.assertEqual(kept["institution_id"], self.amazon_id)
+        self.assertEqual(kept["institution"], AMAZON)
+        self.assertEqual(kept["city"], "Thessaloniki")
+        self.assertEqual(result["location_resolution"], "use_source")
 
     def test_merge_atomically_rebinds_dependent_institution_references(self):
         shared_alias = "Centre for Research and Technology Hellas"
@@ -644,7 +825,9 @@ class InstitutionManagementTests(unittest.TestCase):
             aliases_path=self.aliases,
             locations_path=self.locations,
             location_reviews_path=self.location_reviews,
+            location_audit_path=self.location_audits,
             hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
             review_queue_path=self.review_queue,
             audit_path=self.audits,
         )
@@ -693,7 +876,9 @@ class InstitutionManagementTests(unittest.TestCase):
             aliases_path=self.aliases,
             locations_path=self.locations,
             location_reviews_path=self.location_reviews,
+            location_audit_path=self.location_audits,
             hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
             review_queue_path=self.review_queue,
             audit_path=self.audits,
         )

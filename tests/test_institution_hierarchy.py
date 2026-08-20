@@ -6,11 +6,16 @@ from tests.baseline_expectations import INFORMATION_ENGINEERING_PUBLIC_RECORD_ID
 
 from scripts.export_public_preview import (
     add_public_detail_fields,
+    add_paper_institution_search_ids,
     canonicalize_public_institutions,
     public_institution_aliases,
     public_institution_hierarchy,
+    public_institution_search_relationships,
 )
-from scripts.validate_curated_database import validate_institution_hierarchy
+from scripts.validate_curated_database import (
+    validate_institution_hierarchy,
+    validate_institution_search_relationships,
+)
 
 
 REPOSITORY = Path(__file__).resolve().parents[1]
@@ -200,6 +205,135 @@ class InstitutionHierarchyTests(unittest.TestCase):
         institutions[1]["parent_institution_id"] = ""
         validate_institution_hierarchy([relationship], institutions, issues)
         self.assertTrue(any("disagrees with institutions.csv" in issue.message for issue in issues))
+
+    def test_search_relationships_export_separately_from_hierarchy(self):
+        institutions = [
+            {"institution_id": "institution:root", "canonical_name": "Root University", "institution_status": "active"},
+            {"institution_id": "institution:related", "canonical_name": "Related University", "institution_status": "active"},
+        ]
+        relationships = [{
+            "root_institution_id": "institution:root",
+            "related_institution_id": "institution:related",
+            "relationship_type": "search_family",
+            "review_status": "confirmed",
+            "evidence_source": "manual review",
+        }]
+        before = [dict(row) for row in relationships]
+
+        exported = public_institution_search_relationships(
+            relationships, institutions
+        )
+        issues = []
+        validate_institution_search_relationships(
+            relationships, institutions, issues
+        )
+
+        self.assertEqual(issues, [])
+        self.assertEqual(relationships, before)
+        self.assertEqual(exported, [{
+            "root_institution_id": "institution:root",
+            "root_institution_name": "Root University",
+            "related_institution_id": "institution:related",
+            "related_institution_name": "Related University",
+            "relationship_type": "search_family",
+            "review_status": "confirmed",
+            "evidence_source": "manual review",
+            "evidence_url": "",
+        }])
+        self.assertEqual(public_institution_hierarchy([], [], institutions), [])
+
+    def test_paper_search_ids_include_reviewable_mappings_without_mutating_them(self):
+        papers = [{"paper_id": "paper:one", "title": "One", "year": 2026}]
+        mappings = [{
+            "paper_id": "paper:one",
+            "institution_id": "institution:active",
+            "mapping_status": "active",
+        }, {
+            "paper_id": "paper:one",
+            "institution_id": "institution:reviewable",
+            "mapping_status": "needs_review",
+        }, {
+            "paper_id": "paper:one",
+            "institution_id": "institution:excluded",
+            "mapping_status": "excluded",
+        }]
+        before = [dict(row) for row in mappings]
+
+        count = add_paper_institution_search_ids(papers, mappings)
+
+        self.assertEqual(count, 1)
+        self.assertEqual(mappings, before)
+        self.assertEqual(
+            papers[0]["search_institution_ids"],
+            ["institution:active", "institution:reviewable"],
+        )
+
+    def test_hkust_search_family_keeps_registry_mappings_and_locations_separate(self):
+        root_id = "institution:fa80d3c071c298e1"
+        guangzhou_id = "institution:942667142da716c5"
+        institutions = self.read_csv("data/curated/institutions.csv")
+        relationships = self.read_csv(
+            "data/curated/institution_search_relationships.csv"
+        )
+        hierarchy = self.read_csv("data/curated/institution_hierarchy.csv")
+        mappings = self.read_csv("data/curated/author_institution_mappings.csv")
+        locations = self.read_csv("data/curated/institution_locations.csv")
+        by_id = {row["institution_id"]: row for row in institutions}
+
+        self.assertEqual(by_id[root_id]["institution_status"], "active")
+        self.assertEqual(by_id[guangzhou_id]["institution_status"], "active")
+        self.assertEqual(by_id[guangzhou_id]["parent_institution_id"], "")
+        self.assertTrue(any(
+            row["root_institution_id"] == root_id
+            and row["related_institution_id"] == guangzhou_id
+            for row in relationships
+        ))
+        self.assertFalse(any(
+            row["parent_institution_id"] == root_id
+            and row["child_institution_id"] == guangzhou_id
+            for row in hierarchy
+        ))
+        self.assertTrue(any(row["institution_id"] == root_id for row in mappings))
+        self.assertTrue(any(row["institution_id"] == guangzhou_id for row in mappings))
+        self.assertTrue(any(row["institution_id"] == root_id for row in locations))
+        self.assertFalse(any(row["institution_id"] == guangzhou_id for row in locations))
+
+    def test_public_hkust_search_metadata_covers_root_alias_and_specific_branch(self):
+        import json
+
+        root_id = "institution:fa80d3c071c298e1"
+        guangzhou_id = "institution:942667142da716c5"
+        payload = json.loads(
+            (REPOSITORY / "web/data/public_preview_papers.json").read_text()
+        )
+        self.assertTrue(any(
+            row["root_institution_id"] == root_id
+            and row["related_institution_id"] == guangzhou_id
+            for row in payload["institution_search_relationships"]
+        ))
+        self.assertIn(
+            "Hong Kong University of Science and Technology",
+            payload["canonical_institution_search_index"][root_id]["names"],
+        )
+        self.assertIn(
+            "HKUST Guangzhou",
+            payload["canonical_institution_search_index"][guangzhou_id]["names"],
+        )
+        self.assertIn(
+            "HKUST(GZ)",
+            payload["canonical_institution_search_index"][guangzhou_id]["names"],
+        )
+        guangzhou_papers = [
+            row for row in payload["records"]
+            if guangzhou_id in row.get("search_institution_ids", [])
+        ]
+        self.assertEqual(
+            [row["title"] for row in guangzhou_papers],
+            [
+                "RealNet: Efficient and Unsupervised Detection of "
+                "AI-Generated Images via Real-Only Representation Learning"
+            ],
+        )
 
     def test_old_public_consolidation_is_reversed_from_provenance(self):
         maps = [{

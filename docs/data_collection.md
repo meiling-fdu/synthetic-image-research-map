@@ -697,6 +697,15 @@ The confidence threshold can be tightened with `--min-confidence high`, and `--m
 
 Confirmed institution parent/child relationships are curated independently in `data/curated/institution_hierarchy.csv`. The exporter publishes only confirmed ID-based links and never uses hierarchy to rewrite source affiliations, infer a child institute from a parent name, or create an alias. The static frontend automatically expands an exact top-level parent selection to confirmed descendants; exact child selections remain child-only.
 
+Institutional-family search relationships that are not organizational
+parent/child links belong in
+`data/curated/institution_search_relationships.csv`. These reviewed directed
+links broaden an exact root canonical-name or alias search to the configured
+related canonical IDs. They do not merge records or alter mappings, locations,
+hierarchy, or branch-specific reverse searches. Result counts, map markers,
+paper lists, charts, and institution dimension filters all consume the same
+expanded ID set.
+
 Only the filtered public preview JSON files should be considered for publication. Raw OpenAlex responses, processed candidate archives, institution-resolution and geocoding caches, the full local candidate map JSON, low-confidence marker records, and records needing review remain local and ignored by Git. Paper-level preview records may still need affiliation or coordinate review; they are included to make coverage gaps visible, not to claim complete institution metadata. The preview is a provenance-labeled mixture of automatic candidates and any maintainer-confirmed curated rows, not a uniformly curated final bibliography.
 
 ### Public Preview Quality Report

@@ -480,6 +480,23 @@ The public alias array combines confirmed rows from `institution_aliases.csv` wi
 
 `data/curated/institution_hierarchy.csv` stores reviewed parent/child relationships separately from aliases. Each row uses stable `parent_institution_id` and `child_institution_id`, `relationship_type=affiliated_institute`, `review_status=confirmed`, and evidence fields. Both IDs must refer to confirmed canonical locations; self-links, duplicates, cycles, and unconfirmed rows are invalid. Public-preview JSON exposes the confirmed subset as additive `institution_hierarchy` metadata with canonical display names. Exact selection of a top-level confirmed parent automatically expands filtering to all confirmed descendants, while selection of a specific child remains exact. Hierarchy affects only the filter set: it never changes canonical identities, affiliation content or numbering, or default institution aggregations.
 
+`data/curated/institution_search_relationships.csv` stores reviewed, directed
+search-family expansion separately from canonical identity and organizational
+hierarchy. A confirmed `root_institution_id → related_institution_id` row uses
+`relationship_type=search_family` to make the related canonical institution
+discoverable when the root name or one of its aliases is searched. The reverse
+direction is not implied, so a branch-specific query remains specific. Both IDs
+must be active canonical institutions; self-links, duplicates, cycles, and
+unconfirmed rows are invalid. Public JSON exposes these rows as
+`institution_search_relationships`; they never rewrite affiliations, mappings,
+locations, aliases, or parent IDs.
+
+Paper-preview records may also contain `search_institution_ids`, a derived list
+of canonical IDs from active or reviewable curated mappings. The frontend uses
+this field only when matching institution searches and filters, allowing a
+paper without a map-ready location to remain discoverable. It does not add an
+affiliation, confirm a reviewable mapping, or create a marker.
+
 The local admin institution queue computes conservative alias/duplicate suggestions from queued evidence and confirmed canonical rows. It shows candidate location/coordinates, existing aliases, affected mappings and papers, name-match evidence, and country conflicts. Suggestions are read-only until the reviewer confirms an alias. Rejecting/ignoring a suggestion changes no alias or canonical row, and the queue never merges canonical institutions or reassigns mappings automatically.
 
 | Column | Definition |

@@ -99,6 +99,7 @@ class CleanupResult:
     locations: list[dict[str, str]]
     aliases: list[dict[str, str]]
     hierarchy: list[dict[str, str]]
+    search_relationships: list[dict[str, str]]
 
     @property
     def deleted_ids(self) -> set[str]:
@@ -118,6 +119,7 @@ def analyze(
     locations: Sequence[Mapping[str, Any]] = (),
     aliases: Sequence[Mapping[str, Any]] = (),
     hierarchy: Sequence[Mapping[str, Any]] = (),
+    search_relationships: Sequence[Mapping[str, Any]] = (),
     mappings: Sequence[Mapping[str, Any]] = (),
     location_review: Sequence[Mapping[str, Any]] = (),
     audit_log: Sequence[Mapping[str, Any]] = (),
@@ -162,6 +164,16 @@ def analyze(
         child = clean(row.get("child_institution_id"))
         children[parent].add(child)
         parents[child].add(parent)
+    active_search_relationships = [
+        dict(row) for row in search_relationships
+        if clean(row.get("review_status")).casefold() in {"", "confirmed"}
+    ]
+    search_relationship_refs = {
+        clean(row.get(field))
+        for row in active_search_relationships
+        for field in ("root_institution_id", "related_institution_id")
+        if clean(row.get(field))
+    }
 
     target_ids = {
         clean(row.get("institution_id"))
@@ -225,7 +237,7 @@ def analyze(
         | all_mapping_refs
         | retained_public_relationships
         | target_ids | audit_required | reviewed_location_refs | protected
-        | durable_review_refs
+        | durable_review_refs | search_relationship_refs
     )
     # A retained child makes every confirmed ancestor structurally reachable.
     changed = True
@@ -375,6 +387,11 @@ def analyze(
             if clean(row.get("parent_institution_id")) not in delete_ids
             and clean(row.get("child_institution_id")) not in delete_ids
         ],
+        [
+            row for row in active_search_relationships
+            if clean(row.get("root_institution_id")) not in delete_ids
+            and clean(row.get("related_institution_id")) not in delete_ids
+        ],
     )
 
 
@@ -498,6 +515,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         "locations": Path("data/curated/institution_locations.csv"),
         "aliases": Path("data/curated/institution_aliases.csv"),
         "hierarchy": Path("data/curated/institution_hierarchy.csv"),
+        "search_relationships": Path(
+            "data/curated/institution_search_relationships.csv"
+        ),
         "mappings": Path("data/curated/author_institution_mappings.csv"),
         "location_review": Path("data/curated/institution_location_review.csv"),
         "audit_log": Path("data/curated/institution_audit_log.csv"),
@@ -525,6 +545,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         locations=read_csv(paths["locations"]),
         aliases=read_csv(paths["aliases"]),
         hierarchy=read_csv(paths["hierarchy"]),
+        search_relationships=read_csv(paths["search_relationships"]),
         mappings=read_csv(paths["mappings"]),
         location_review=read_csv(paths["location_review"]),
         audit_log=read_csv(paths["audit_log"]),
@@ -544,6 +565,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         for key, rows in (
             ("institutions", result.institutions), ("locations", result.locations),
             ("aliases", result.aliases), ("hierarchy", result.hierarchy),
+            ("search_relationships", result.search_relationships),
         ):
             outputs.append((paths[key], rows, fields_for(paths[key], ())))
     atomic_write_csvs(outputs)

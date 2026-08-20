@@ -29,7 +29,7 @@ class FrontendYearRangeSliderTests(unittest.TestCase):
         end = self.app.index("\nfunction currentYearSelection", start)
         return self.app[start:end]
 
-    def test_accessible_dual_range_markup_and_distinguishable_handles(self):
+    def test_accessible_dual_range_markup_and_symmetric_directional_handles(self):
         self.assertEqual(self.html.count('type="range"'), 2)
         self.assertNotIn('id="min-year-filter" type="number"', self.html)
         self.assertIn('aria-label="Start Publication Year"', self.html)
@@ -38,7 +38,10 @@ class FrontendYearRangeSliderTests(unittest.TestCase):
         self.assertIn('id="year-range-min"', self.html)
         self.assertIn('id="year-range-max"', self.html)
         self.assertIn(".year-range-input-end::-webkit-slider-thumb", self.css)
-        self.assertIn("border-radius: 3px", self.css)
+        self.assertEqual(self.css.count("width: 28px;"), 2)
+        self.assertEqual(self.css.count("height: 28px;"), 2)
+        self.assertIn("clip-path: polygon(0 0, 100% 50%, 0 100%)", self.css)
+        self.assertIn("clip-path: polygon(100% 0, 0 50%, 100% 100%)", self.css)
         self.assertIn(".year-range-input:focus-visible", self.css)
 
     def test_dynamic_bounds_default_full_range_and_refresh_preservation(self):
