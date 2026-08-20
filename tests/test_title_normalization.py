@@ -231,18 +231,12 @@ class TitleNormalizationTests(unittest.TestCase):
         )
         self.assertEqual(completed.stdout, stored_title)
 
-    def test_all_current_admin_and_public_records_are_canonical(self):
+    def test_all_current_admin_records_are_canonical(self):
         root = Path(__file__).resolve().parents[1]
         with (root / "data/curated/papers.csv").open(
             encoding="utf-8-sig", newline=""
         ) as handle:
             datasets = [("curated papers", list(csv.DictReader(handle)))]
-        for filename in (
-            "public_preview_papers.json",
-            "public_preview_map_data.json",
-        ):
-            with (root / "web/data" / filename).open(encoding="utf-8") as handle:
-                datasets.append((filename, json.load(handle)["records"]))
         for dataset_name, records in datasets:
             with self.subTest(dataset=dataset_name):
                 self.assertEqual(

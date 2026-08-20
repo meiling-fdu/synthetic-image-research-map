@@ -274,6 +274,7 @@ REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 WEB_DIR = REPOSITORY_ROOT / "web"
 PUBLIC_PAPERS_PATH = WEB_DIR / "data" / "public_preview_papers.json"
 PUBLIC_MAP_PATH = WEB_DIR / "data" / "public_preview_map_data.json"
+CANONICAL_CANDIDATE_MAP_PATH = WEB_DIR / "data" / "openalex_candidate_map_data.json"
 AUTHOR_MAPPING_REPORT_PATH = (
     REPOSITORY_ROOT / "data" / "manual" / "missing_author_mappings_report.csv"
 )
@@ -915,6 +916,8 @@ def merge_curated_fields(
 def load_admin_data(
     exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
     curated_papers_path: Path = CURATED_PAPERS_PATH,
+    curated_mappings_path: Path = CURATED_MAPPINGS_PATH,
+    canonical_candidate_map_path: Path = CANONICAL_CANDIDATE_MAP_PATH,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     public_papers = read_json_records(PUBLIC_PAPERS_PATH)
     map_records = read_json_records(PUBLIC_MAP_PATH)
@@ -930,6 +933,12 @@ def load_admin_data(
             except ValueError as error:
                 raise AdminDataError(str(error)) from error
     exclusion_rows = read_csv_rows(exclusions_path)
+    curated_mapping_rows = read_csv_rows(curated_mappings_path)
+    canonical_candidate_maps = (
+        read_json_records(canonical_candidate_map_path)
+        if canonical_candidate_map_path.exists()
+        else []
+    )
 
     papers: List[Dict[str, Any]] = []
     paper_identity_index: DefaultDict[str, List[Mapping[str, Any]]] = defaultdict(list)
@@ -974,12 +983,31 @@ def load_admin_data(
 
     marker_index = index_by_identity(map_records)
     exclusion_index = index_by_identity(exclusion_rows)
+    canonical_mapping_index = index_by_identity(curated_mapping_rows)
+    canonical_candidate_map_index = index_by_identity(canonical_candidate_maps)
     for paper in papers:
-        markers = [
+        public_markers = [
             marker_for_api(record)
             for record in strongest_matching_records(paper, marker_index)
         ]
         exclusions = strongest_matching_records(paper, exclusion_index)
+        active_exclusion = any(
+            parse_boolean(exclusion.get("is_active")) for exclusion in exclusions
+        )
+        canonical_mappings = [
+            mapping
+            for mapping in strongest_matching_records(
+                paper, canonical_mapping_index
+            )
+            if clean(mapping.get("mapping_status")).casefold() == "active"
+        ]
+        canonical_candidate_markers = strongest_matching_records(
+            paper, canonical_candidate_map_index
+        )
+        # An active exclusion is authoritative for current public state even
+        # before the next publish removes stale JSON. Retain explicit stale
+        # counts so Admin can explain what Publish Changes still must clean.
+        markers = [] if active_exclusion else public_markers
         aggregated_institutions = parse_people(
             paper.get("aggregated_institutions")
         )
@@ -1001,14 +1029,42 @@ def load_admin_data(
         paper["normalized_title_year_key"] = title_year_key(paper)
         paper["marker_records"] = markers
         paper["institutions"] = institutions
-        paper["has_map_location"] = bool(markers) or parse_boolean(
-            paper.get("has_map_location")
+        paper["has_map_location"] = bool(markers) or (
+            not active_exclusion
+            and parse_boolean(paper.get("has_map_location"))
         )
         paper["map_record_count"] = len(markers)
-        paper["is_in_curated_exclusions"] = bool(exclusions)
-        paper["has_active_exclusion"] = any(
-            parse_boolean(exclusion.get("is_active")) for exclusion in exclusions
+        paper["is_currently_published"] = (
+            paper.get("record_source") == "public_preview"
+            and not active_exclusion
         )
+        paper["stale_public_paper_record"] = (
+            paper.get("record_source") == "public_preview"
+            and active_exclusion
+        )
+        paper["stale_public_map_record_count"] = (
+            len(public_markers) if active_exclusion else 0
+        )
+        canonical_institutions = {
+            clean(record.get("institution")).casefold()
+            or clean(record.get("institution_id")).casefold()
+            for record in (*canonical_mappings, *canonical_candidate_markers)
+            if clean(record.get("institution")) or clean(record.get("institution_id"))
+        }
+        paper["canonical_mapping_count"] = len(canonical_institutions)
+        paper["canonical_map_record_count"] = len(canonical_candidate_markers)
+        paper["canonical_has_map_location"] = any(
+            record.get("latitude") not in (None, "")
+            and record.get("longitude") not in (None, "")
+            for record in canonical_candidate_markers
+        )
+        paper["has_canonical_mapping_data"] = bool(
+            canonical_mappings or canonical_candidate_markers
+        )
+        paper["is_in_curated_exclusions"] = bool(exclusions)
+        paper["has_active_exclusion"] = active_exclusion
+        if active_exclusion:
+            paper["coverage_status"] = "excluded"
         paper["exclusion_reasons"] = sorted(
             {
                 clean(exclusion.get("reason"))
@@ -1083,6 +1139,13 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
         "coverage_status",
         "has_map_location",
         "map_record_count",
+        "is_currently_published",
+        "stale_public_paper_record",
+        "stale_public_map_record_count",
+        "has_canonical_mapping_data",
+        "canonical_mapping_count",
+        "canonical_has_map_location",
+        "canonical_map_record_count",
         "missing_affiliation",
         "missing_coordinates",
         "source_database",

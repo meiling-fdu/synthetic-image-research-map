@@ -186,6 +186,48 @@ def record_is_excluded(
     return any(key in active_index for key in (strong_keys or keys))
 
 
+def filter_public_output_pair(
+    paper_records: Sequence[Mapping[str, Any]],
+    map_records: Sequence[Mapping[str, Any]],
+    exclusion_rows: Sequence[Mapping[str, Any]],
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], Dict[str, int]]:
+    """Apply the durable paper exclusion rule to both public output layers.
+
+    This is the publication-boundary gate. Keeping paper and map filtering in
+    one helper prevents incremental merges or later integration from reviving
+    one public representation without the other.
+    """
+    exclusion_index = build_active_exclusion_index(exclusion_rows)
+    kept_papers, removed_papers = filter_active_exclusions(
+        paper_records, active_index=exclusion_index
+    )
+    kept_maps, removed_maps = filter_active_exclusions(
+        map_records, active_index=exclusion_index
+    )
+    return kept_papers, kept_maps, {
+        "active_exclusion_public_papers_removed": removed_papers,
+        "active_exclusion_map_records_removed": removed_maps,
+    }
+
+
+def filter_active_exclusions(
+    records: Sequence[Mapping[str, Any]],
+    exclusion_rows: Sequence[Mapping[str, Any]] = (),
+    *,
+    active_index: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+) -> Tuple[List[Dict[str, Any]], int]:
+    """Return records not covered by a durable active paper exclusion."""
+    index = (
+        active_index
+        if active_index is not None
+        else build_active_exclusion_index(exclusion_rows)
+    )
+    kept = [
+        dict(record) for record in records if not record_is_excluded(record, index)
+    ]
+    return kept, len(records) - len(kept)
+
+
 def records_share_any_identity(
     left: Mapping[str, Any],
     right: Mapping[str, Any],

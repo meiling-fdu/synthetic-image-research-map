@@ -430,6 +430,62 @@ class InstitutionConsistencyAuditTests(unittest.TestCase):
         )
         self.assertEqual(changed["is_blocking"], "true")
 
+    def test_exact_confirmed_admin_mapping_update_establishes_trusted_state(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Amazon, Seattle, USA",
+            provenance="manually_confirmed",
+        )
+        change = {
+            "audit_id": "mapping-change:admin-confirmed",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "paper_id": "paper:1",
+            "mapping_id": current["mapping_id"],
+            "previous_mapping_id": current["mapping_id"],
+            "new_authors": "Example Author",
+            "affected_authors": "Example Author",
+            "confirmation_text": (
+                f"mapping_id={current['mapping_id']}; paper_id=paper:1; "
+                "previous_institution=CERTH; new_institution=Amazon; "
+                "change_source=admin_mapping_update"
+            ),
+            "created_by": "local-admin",
+        }
+        findings = self.audit([current], merge_audits=[change])
+        self.assertFalse(any(
+            row["issue_type"] == "confirmed_mapping_changed" for row in findings
+        ))
+
+    def test_admin_event_that_does_not_match_current_trusted_state_still_fails(self):
+        current = mapping(
+            "institution:amazon", "Amazon", "Amazon, Seattle, USA",
+            provenance="manually_confirmed",
+        )
+        change = {
+            "audit_id": "mapping-change:admin-mismatch",
+            "action": "confirmed_mapping_changed",
+            "institution_id": "institution:amazon",
+            "previous_institution_id": "institution:certh",
+            "paper_id": "paper:1",
+            "mapping_id": current["mapping_id"],
+            "previous_mapping_id": current["mapping_id"],
+            "new_authors": "Unreviewed Author",
+            "affected_authors": "Unreviewed Author",
+            "confirmation_text": (
+                f"mapping_id={current['mapping_id']}; paper_id=paper:1; "
+                "previous_institution=CERTH; new_institution=Amazon; "
+                "change_source=admin_mapping_update"
+            ),
+            "created_by": "local-admin",
+        }
+        findings = self.audit([current], merge_audits=[change])
+        changed = next(
+            row for row in findings
+            if row["issue_type"] == "confirmed_mapping_changed"
+        )
+        self.assertEqual(changed["is_blocking"], "true")
+
     def test_same_id_display_name_correction_is_not_identity_change(self):
         current = mapping(
             "institution:ubc", "The University of British Columbia",

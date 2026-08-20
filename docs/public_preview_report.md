@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-11T11:51:51Z |
+| public_preview_generated_at | 2026-08-20T09:53:00Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,14 +19,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1110 |
-| Unique mapped papers | 504 |
-| Unique institutions | 572 |
-| Countries | 53 |
-| arXiv/preprint records | 552 |
-| Records with DOI | 1064 |
-| Records with venue | 1078 |
-| Records missing venue | 32 |
+| Map records | 1167 |
+| Unique mapped papers | 520 |
+| Unique institutions | 598 |
+| Countries | 54 |
+| arXiv/preprint records | 575 |
+| Records with DOI | 1093 |
+| Records with venue | 1146 |
+| Records missing venue | 21 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
 | Records missing coordinates | 0 |
@@ -36,115 +36,103 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 431 |
-| source_attribution | 46 |
-| detection_and_source_attribution | 27 |
+| detection | 445 |
+| source_attribution | 45 |
+| detection_and_source_attribution | 30 |
 
 ## Records by Year
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 129 |
-| 2025 | 141 |
-| 2024 | 109 |
-| 2023 | 50 |
+| 2026 | 143 |
+| 2025 | 140 |
+| 2024 | 112 |
+| 2023 | 51 |
 | 2022 | 22 |
 | 2021 | 23 |
 | 2020 | 15 |
 | 2019 | 11 |
 | 2018 | 3 |
-| 2017 | 1 |
 
 ## Top Venues
 
 | Venue | Records |
 | --- | ---: |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 34 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 35 |
 | AAAI Conference on Artificial Intelligence (AAAI) | 23 |
 | International Conference on Machine Learning (ICML) | 18 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 14 |
+| Advances in Neural Information Processing Systems (NeurIPS) | 12 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 11 |
-| International Conference on Learning Representations (ICLR) | 9 |
+| International Conference on Learning Representations (ICLR) | 10 |
+| European Conference on Computer Vision (ECCV) | 9 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 9 |
 | ACM International Conference on Multimedia (ACM MM) | 8 |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 8 |
-| IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) | 7 |
-| IEEE International Workshop on Information Forensics and Security (WIFS) | 6 |
 
 ## Top Countries
 
 | Country | Records |
 | --- | ---: |
-| China | 502 |
-| United States | 149 |
-| Italy | 85 |
-| India | 57 |
-| Germany | 37 |
+| China | 529 |
+| United States | 156 |
+| Italy | 88 |
+| India | 59 |
+| Germany | 39 |
+| South Korea | 32 |
 | United Kingdom | 32 |
-| South Korea | 31 |
-| France | 25 |
-| Singapore | 22 |
-| Australia | 17 |
+| France | 29 |
+| Singapore | 23 |
+| Australia | 18 |
 
 ## Top Institutions
 
 | Institution | Records |
 | --- | ---: |
 | Shanghai Jiao Tong University | 21 |
+| University of Naples Federico II | 18 |
 | Beijing Jiaotong University | 17 |
-| University of Naples Federico II | 16 |
-| University of Chinese Academy of Sciences | 15 |
+| University of Chinese Academy of Sciences | 17 |
+| Institute of Automation, Chinese Academy of Sciences | 15 |
 | University of Siena | 15 |
 | Fudan University | 14 |
-| Institute of Automation, Chinese Academy of Sciences | 14 |
-| University of Science and Technology of China | 11 |
-| Zhejiang University | 11 |
+| University of Science and Technology of China | 14 |
+| Zhejiang University | 12 |
 | Beijing University of Posts and Telecommunications | 10 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 984 |
-| medium | 126 |
+| high | 1054 |
+| medium | 113 |
 
 ## Potential quality issues
 
 ### Records missing venue
 
-Count: **32**
+Count: **21**
 
-- Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection (2024) - Centre for Research and Technology Hellas (CERTH); `openalex-candidate-4be0623e58aa0b48`
-- Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore University of Technology and Design; `openalex-candidate-f322e509be974b4c`
-- FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Naver (South Korea); `openalex-candidate-28c479752f087a8f`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Guangdong University of Technology; `openalex-candidate-c0bb1e92f74d43e7`
-- Detecting Generated Images by Real Images (2022) - Chongqing University of Posts and Telecommunications; `openalex-candidate-39db27838e50b6bb`
-- Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - City University of Macau; `openalex-candidate-14d8de2dca116799`
+- Robust AI-Synthesized Image Detection via Multi-Feature Frequency-Aware Learning (2025) - City University of Macau; `openalex-candidate-14d8de2dca116799`
 - Level Up the Deepfake Detection: A Method to Effectively Discriminate Images Generated by GAN Architectures and Diffusion Models (2024) - University of Catania; `openalex-candidate-b8f14ac612fe1840`
 - EasyDeep: An IoT Friendly Robust Detection Method for GAN Generated Deepfake Images in Social Media (2022) - University of North Texas; `openalex-candidate-8f1f64353b10e2c1`
 - Detection of Deepfake Images Created Using Generative Adversarial Networks: A Review (2021) - APJ Abdul Kalam Technological University; `openalex-candidate-34b247a20f8c86d1`
 - Deepfake Image Detection Using Light-Weight Attention Integrated MobileNetV3 Model (2025) - Amrita Vishwa Vidyapeetham; `openalex-candidate-b95f1113154c4bf6`
-- Training Deep Neural Networks for Detecting Drinking Glasses Using Synthetic Images (2017) - University of Newcastle Australia; `openalex-candidate-c6a3aad67947571f`
 - Diffusion Models as a Representation Learner for Deepfake Image Detection (2024) - Computer Research Institute of Montreal; `openalex-candidate-0ea11c8fa9b8246c`
-- Deepfake Image Detection Using Convolutional Neural Network (2025) - University of Engineering & Management; `openalex-candidate-c48325391c4c055f`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - Singapore Institute of Technology; `openalex-candidate-99e15d52b1295c7d`
 - Discovering Transferable Forensic Features for CNN-Generated Images Detection (2022) - University of Oslo; `openalex-candidate-fbde6235f0aade1e`
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - University of Seoul; `openalex-candidate-c12aedb83c12d14b`
-- FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Samsung (South Korea); `openalex-candidate-056f38b65f9480dc`
-- FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Samsung Pharm (South Korea); `openalex-candidate-c0799b0dc0132d95`
 - FingerprintNet: Synthesized Fingerprints for Generated Image Detection (2022) - Chung-Ang University; `openalex-candidate-f14f0331980a259f`
 - Multi-Perspective Frequency Domain Learning for Generalizable AI-Generated Image Detection (2025) - Qilu University of Technology; `openalex-candidate-dd5630f5ebd3a43e`
-- Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Torrens University Australia; `openalex-candidate-69b6cc25d8a5670e`
-- Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Qilu University of Technology; `openalex-candidate-4509b84439624582`
-- Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Shandong Academy of Sciences; `openalex-candidate-c6b33fd930b71a45`
-- Robust AI-Synthesized Image Detection via Multi-feature Frequency-Aware Learning (2025) - Wuhan Institute of Technology; `openalex-candidate-d58759107c8e4179`
+- Robust AI-Synthesized Image Detection via Multi-Feature Frequency-Aware Learning (2025) - Torrens University Australia; `openalex-candidate-69b6cc25d8a5670e`
+- Robust AI-Synthesized Image Detection via Multi-Feature Frequency-Aware Learning (2025) - Qilu University of Technology; `openalex-candidate-4509b84439624582`
+- Robust AI-Synthesized Image Detection via Multi-Feature Frequency-Aware Learning (2025) - Shandong Academy of Sciences; `openalex-candidate-c6b33fd930b71a45`
+- Robust AI-Synthesized Image Detection via Multi-Feature Frequency-Aware Learning (2025) - Wuhan Institute of Technology; `openalex-candidate-d58759107c8e4179`
 - Level Up the Deepfake Detection: A Method to Effectively Discriminate Images Generated by GAN Architectures and Diffusion Models (2024) - Bank of Italy; `openalex-candidate-b348f1ba71286b2d`
-- EasyDeep: An IoT Friendly Robust Detection Method for GAN Generated Deepfake Images in Social Media (2022) - University of Galway; `openalex-candidate-32122aade684dedc`
-- Which Model Generated This Image? A Model-Agnostic Approach for Origin Attribution (2024) - University of Oxford; `curated-map:fffea904e9dfd8f6a855`
-- Which Model Generated This Image? A Model-Agnostic Approach for Origin Attribution (2024) - Nanyang Technological University; `curated-map:c6cf8cb3274cd2fee313`
-- Zero-Shot Detection of AI-Generated Images (2024) - University of Naples Federico II; `curated-map:078429e217110a8fc170`
-- Zero-Shot Detection of AI-Generated Images (2024) - Technical University of Munich; `curated-map:42193cc907031d3f56b8`
-- AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Sheffield; `curated-map:dde274193da1c0814177`
-- AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Amsterdam; `curated-map:5c81d0cf1e05f580d116`
+- AI-Generated Image Detection: Challenges and Recent Advances (2026) - University of Naples Federico II; `curated-map:dde274193da1c0814177`
+- AI-Generated Image Detection: Challenges and Recent Advances (2026) - Swiss federal Institute of Technology in Lausanne; `curated-map:5c81d0cf1e05f580d116`
+- AI-Generated Image Detection: Challenges and Recent Advances (2026) - Centre for Research and Technology Hellas (CERTH); `curated-map:974352335e3aeee1efcb`
+- AI-Generated Image Detection: Challenges and Recent Advances (2026) - Télécom Paris; `curated-map:8c8ae50d70107c3bb13d`
 
 ### Records missing URL
 

@@ -275,9 +275,14 @@ def _exact_reviewed_transition(
             continue
         evidence_old_location = clean(audit.get("previous_location_id")).casefold()
         new_id = clean(audit.get("institution_id")).casefold()
+        new_location = clean(audit.get("location_id")).casefold()
         if (
             old_location
             and evidence_old_location != old_location
+            # The stale export may already contain the reviewed destination
+            # location while still carrying the pre-review author scope.  The
+            # exact author transition remains valid for that hybrid row.
+            and new_location != old_location
             and not (
                 not evidence_old_location
                 and new_id
@@ -291,7 +296,6 @@ def _exact_reviewed_transition(
             return RelationshipExplanation(
                 "explicit_removal", f"explicit reviewed removal {audit_id}", True
             )
-        new_location = clean(audit.get("location_id")).casefold()
         new_authors = _single_author_set(
             audit.get("new_authors") or audit.get("affected_authors")
         )

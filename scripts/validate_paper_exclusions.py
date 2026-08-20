@@ -111,23 +111,36 @@ def main() -> int:
             + ", ".join(map(str, sorted(set(row_numbers))))
         )
 
-    matched = 0
-    unmatched = 0
+    active_stale = 0
+    active_absent = 0
+    restored_present = 0
+    restored_absent = 0
     for row_number, row in enumerate(rows, start=2):
-        if matching_exclusion_rows(row, preview_records):
-            matched += 1
+        present = bool(matching_exclusion_rows(row, preview_records))
+        active = parse_boolean(row.get("is_active"))
+        if active and present:
+            active_stale += 1
+            errors.append(
+                f"row {row_number}: active exclusion still has a public paper or map record"
+            )
+        elif active:
+            active_absent += 1
+        elif present:
+            restored_present += 1
         else:
-            unmatched += 1
+            restored_absent += 1
             warnings.append(
-                f"row {row_number}: exclusion is not currently present in public preview"
+                f"row {row_number}: restored exclusion is not currently present in public preview"
             )
 
     print("Paper exclusion validation")
     print(f"Header columns: {len(PAPER_EXCLUSION_COLUMNS)}")
     print(f"Rows: {len(rows)}")
     print(f"Active exclusions: {sum(parse_boolean(row.get('is_active')) for row in rows)}")
-    print(f"Matched against current preview: {matched}")
-    print(f"Not currently present: {unmatched}")
+    print(f"Active exclusions absent from public outputs: {active_absent}")
+    print(f"Active exclusions with stale public records: {active_stale}")
+    print(f"Restored exclusions present in public outputs: {restored_present}")
+    print(f"Restored exclusions not currently present: {restored_absent}")
     print(f"Errors: {len(errors)}")
     print(f"Warnings: {len(warnings)}")
     for error in errors:

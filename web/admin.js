@@ -4187,8 +4187,9 @@ function renderPaperList() {
     const coverage = document.createElement("span");
     coverage.textContent = [
       humanize(paper.coverage_status),
-      paper.has_map_location ? "has map location" : "no map location",
-      `${formatNumber(paper.map_record_count)} map record${paper.map_record_count === 1 ? "" : "s"}`,
+      paper.has_map_location ? "published on map" : "not published on map",
+      `${formatNumber(paper.map_record_count)} published map record${paper.map_record_count === 1 ? "" : "s"}`,
+      `${formatNumber(paper.canonical_mapping_count)} retained canonical mapping${paper.canonical_mapping_count === 1 ? "" : "s"}`,
       `exclusion: ${exclusionStatus(paper)}`,
     ].join(" · ");
     selectButton.append(title, authors, venue, identifiers, classification, coverage);
@@ -4197,7 +4198,7 @@ function renderPaperList() {
     footer.className = "paper-card-footer";
     const badges = document.createElement("span");
     badges.className = "card-badges";
-    if (paper.has_map_location) badges.append(makeBadge("Mapped", "map"));
+    if (paper.has_map_location) badges.append(makeBadge("Published on map", "map"));
     if (paper.is_in_curated_papers) badges.append(makeBadge("Curated", "curated"));
     if (paper.has_active_exclusion) badges.append(makeBadge("Actively excluded", "excluded"));
     else if (paper.is_in_curated_exclusions) badges.append(makeBadge("Restored", "restored"));
@@ -5131,7 +5132,7 @@ function renderPaperDetail(paper) {
   elements["detail-source"].textContent = sourceLabels[paper.record_source] || "Admin record";
   elements["detail-title"].textContent = text(paper.title) || "Untitled paper";
   elements["detail-badges"].replaceChildren();
-  if (paper.has_map_location) elements["detail-badges"].append(makeBadge("Mapped", "map"));
+  if (paper.has_map_location) elements["detail-badges"].append(makeBadge("Published on map", "map"));
   if (paper.is_in_curated_papers) elements["detail-badges"].append(makeBadge("Curated", "curated"));
   if (paper.has_active_exclusion) elements["detail-badges"].append(makeBadge("Actively excluded", "excluded"));
   else if (paper.is_in_curated_exclusions) elements["detail-badges"].append(makeBadge("Restored exclusion", "restored"));
@@ -5150,8 +5151,15 @@ function renderPaperDetail(paper) {
     ["Task", humanize(paper.task)],
     ["Paper categories", normalizePaperCategories(paper.paper_categories ?? paper.entry_type).map(humanize).join(", ")],
     ["Coverage", humanize(paper.coverage_status)],
-    ["Has map location", yesNo(paper.has_map_location)],
-    ["Map record count", paper.map_record_count],
+    ["Currently published paper", yesNo(paper.is_currently_published)],
+    ["Published on public map", yesNo(paper.has_map_location)],
+    ["Published map record count", paper.map_record_count],
+    ["Canonical mapping data retained", yesNo(paper.has_canonical_mapping_data)],
+    ["Canonical mapping count", paper.canonical_mapping_count],
+    ["Canonical location data retained", yesNo(paper.canonical_has_map_location)],
+    ["Canonical candidate map record count", paper.canonical_map_record_count],
+    ["Stale public paper pending removal", yesNo(paper.stale_public_paper_record)],
+    ["Stale map records pending removal", paper.stale_public_map_record_count],
     ["Source database", paper.source_database],
     ["Metadata source", paper.metadata_source],
     ["Exclusion status", exclusionStatus(paper)],

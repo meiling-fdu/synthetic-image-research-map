@@ -503,6 +503,33 @@ class PublicExportShrinkageTests(unittest.TestCase):
         )
         self.assertFalse(report.allowed)
 
+    def test_reviewed_author_change_accepts_stale_row_at_destination_location(self):
+        old = paper()
+        old_marker = {
+            **marker(old, institution_id="institution:same", institution="Same"),
+            "mapping_id": "mapping-1",
+            "location_id": "location:reviewed",
+            "institution_authors": ["Old Author"],
+        }
+        new_marker = {
+            **old_marker,
+            "institution_authors": ["Current Author"],
+        }
+        audit = relationship_audit(
+            old_marker,
+            new_institution_id="institution:same",
+            old_location_id="",
+            new_location_id="location:reviewed",
+            authors="Old Author",
+        )
+        audit["new_authors"] = "Current Author"
+        report = analyze_shrinkage(
+            [old], [old], [old_marker], [new_marker],
+            institution_audits=[audit],
+        )
+        self.assertTrue(report.allowed)
+        self.assertIn("reviewed_mapping_replacement", report.removed_maps[0].evidence)
+
     def test_manual_mapping_confirms_same_institution_automatic_fallback(self):
         old = paper()
         old_marker = {

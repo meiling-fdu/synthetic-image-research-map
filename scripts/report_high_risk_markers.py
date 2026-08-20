@@ -9,6 +9,19 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, Iterable, Mapping
 
+try:
+    from .paper_exclusions import (
+        PaperExclusionError,
+        filter_active_exclusions,
+        read_exclusion_rows,
+    )
+except ImportError:
+    from paper_exclusions import (
+        PaperExclusionError,
+        filter_active_exclusions,
+        read_exclusion_rows,
+    )
+
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 OUTPUT_PATH = REPOSITORY_ROOT / "data" / "manual" / "high_risk_marker_review.csv"
@@ -212,7 +225,11 @@ def identity(row: Mapping[str, Any]) -> tuple[str, ...]:
 
 def build_rows() -> list[Dict[str, str]]:
     rows: Dict[tuple[str, ...], Dict[str, str]] = {}
-    for row in (*public_rows(), *candidate_rows(), *blocker_rows(), *key_rows()):
+    candidates, _excluded = filter_active_exclusions(
+        [*public_rows(), *candidate_rows(), *blocker_rows(), *key_rows()],
+        read_exclusion_rows(),
+    )
+    for row in candidates:
         rows.setdefault(identity(row), {column: clean(row.get(column)) for column in COLUMNS})
     return sorted(
         rows.values(),
@@ -236,7 +253,13 @@ def main() -> int:
             writer.writeheader()
             writer.writerows(rows)
         temporary.replace(OUTPUT_PATH)
-    except (OSError, UnicodeError, csv.Error, json.JSONDecodeError) as error:
+    except (
+        OSError,
+        UnicodeError,
+        csv.Error,
+        json.JSONDecodeError,
+        PaperExclusionError,
+    ) as error:
         print(f"ERROR: could not build high-risk marker report: {error}", file=sys.stderr)
         return 1
     priorities = {priority: sum(row["priority"] == priority for row in rows) for priority in ("P0", "P1", "P2")}

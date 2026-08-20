@@ -15,6 +15,7 @@ from tests.baseline_expectations import (
     INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS,
     PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS,
     PUBLICATION_TYPE_TOTALS,
+    PUBLIC_PAPERS_WITHOUT_MAP,
     TASK_TOTALS,
 )
 
@@ -90,6 +91,36 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
                 for map_record in self.map_records
             )
         )
+
+    def test_public_paper_map_coverage_matches_reviewed_blockers(self):
+        map_source_papers = {identity_key(row) for row in self.map_records}
+        papers_with_map = [
+            paper for paper in self.public_papers
+            if any(
+                records_share_any_identity(paper, marker)
+                for marker in self.map_records
+            )
+        ]
+        papers_without_map = [
+            paper for paper in self.public_papers
+            if paper not in papers_with_map
+        ]
+        self.assert_current("public_map_source_papers", len(map_source_papers))
+        self.assert_current("public_papers_with_map", len(papers_with_map))
+        self.assert_current("public_papers_without_map", len(papers_without_map))
+        self.assertEqual(
+            {paper["title"] for paper in papers_without_map},
+            set(PUBLIC_PAPERS_WITHOUT_MAP),
+        )
+        with (ROOT / "data/manual/paper_marker_blocker_report.csv").open(
+            encoding="utf-8-sig", newline=""
+        ) as handle:
+            blockers = {
+                row["title"]: row["blocker_type"]
+                for row in csv.DictReader(handle)
+                if row["title"] in PUBLIC_PAPERS_WITHOUT_MAP
+            }
+        self.assertEqual(blockers, PUBLIC_PAPERS_WITHOUT_MAP)
 
     def test_public_institutions_are_exactly_active_canonicals(self):
         institution_ids = [row["institution_id"] for row in self.institutions]

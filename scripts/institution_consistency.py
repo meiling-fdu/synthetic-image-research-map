@@ -81,6 +81,35 @@ def clean(value: Any) -> str:
     return " ".join(str(value or "").split())
 
 
+def _is_current_confirmed_admin_transition(
+    event: Mapping[str, Any],
+    metadata: Mapping[str, str],
+    mapping: Mapping[str, Any],
+) -> bool:
+    """Return whether an exact Admin edit established the current trusted state."""
+    provenance = clean(mapping.get("provenance_source")).casefold().replace(" ", "_")
+    if (
+        metadata.get("change_source") != "admin_mapping_update"
+        or clean(event.get("created_by")) != "local-admin"
+        or provenance not in {"manually_confirmed", "admin_accepted"}
+        or clean(mapping.get("mapping_status")) not in {"active", "needs_review"}
+    ):
+        return False
+    event_mapping_id = clean(event.get("mapping_id")) or metadata.get("mapping_id", "")
+    event_paper_id = clean(event.get("paper_id")) or metadata.get("paper_id", "")
+    return (
+        bool(event_mapping_id and event_paper_id)
+        and event_mapping_id == clean(mapping.get("mapping_id"))
+        and clean(event.get("previous_mapping_id")) in {"", event_mapping_id}
+        and event_paper_id == clean(mapping.get("paper_id"))
+        and clean(event.get("institution_id")) == clean(mapping.get("institution_id"))
+        and clean(event.get("location_id")) == clean(mapping.get("location_id"))
+        and normalized_author_set(
+            event.get("new_authors") or event.get("affected_authors")
+        ) == normalized_author_set(mapping.get("institution_authors"))
+    )
+
+
 def normalize_institution(value: Any) -> str:
     text = unicodedata.normalize("NFKD", clean(value)).casefold()
     text = "".join(character for character in text if not unicodedata.combining(character))
@@ -654,7 +683,19 @@ def audit_institution_consistency(
                 confirmed_author_set,
             ) in confirmed_mapping_transitions
         )
-        if exact_source_resolution or exact_prior_confirmation:
+        # Saving through the Admin mapping editor is itself the explicit review
+        # action: it records the local Admin actor and promotes the edited row
+        # to manually_confirmed. Treat that event as durable confirmation only
+        # while every relationship field still matches the current mapping.
+        # Imported or hand-edited transitions therefore continue to block.
+        exact_admin_confirmation = _is_current_confirmed_admin_transition(
+            event, metadata, mapping
+        )
+        if (
+            exact_source_resolution
+            or exact_prior_confirmation
+            or exact_admin_confirmation
+        ):
             continue
         finding = _finding(
             mapping,

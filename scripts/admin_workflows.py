@@ -90,6 +90,10 @@ PAPER_EXCLUSION_VALIDATION = (
     "python3",
     "scripts/validate_paper_exclusions.py",
 )
+ACTIVE_EXCLUSION_PUBLIC_MIGRATION = (
+    "python3",
+    "scripts/migrate_active_exclusions_from_public_outputs.py",
+)
 EXPORT_PREVIEW = (
     "python3",
     "scripts/export_public_preview.py",
@@ -139,6 +143,7 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         FULL_SOURCE_COMPLETENESS_AUDIT,
         ORPHAN_INSTITUTION_CLEANUP,
         CURATED_VALIDATION,
+        ACTIVE_EXCLUSION_PUBLIC_MIGRATION,
         PAPER_EXCLUSION_VALIDATION,
         EXPORT_PREVIEW,
         PUBLIC_PREVIEW_REPORT,

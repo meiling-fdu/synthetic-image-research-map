@@ -32,7 +32,10 @@ from scripts.arxiv_autofill import (
 from scripts.export_public_preview import normalize_entry_type, strip_retired_paper_fields
 from scripts.paper_exclusions import (
     build_active_exclusion_index,
+    filter_public_output_pair,
+    read_exclusion_rows,
     record_is_excluded,
+    restore_active_exclusions,
     upsert_active_exclusion,
 )
 from scripts.serve_admin import load_admin_data, make_handler
@@ -112,6 +115,127 @@ def write_exclusions(path, rows=()):
 
 
 class PaperMetadataEditingTests(unittest.TestCase):
+    def test_drinking_glasses_exclusion_publish_restore_cycle(self):
+        paper = {
+            "paper_id": "openalex:W2766065312",
+            "title": (
+                "Training Deep Neural Networks for Detecting Drinking Glasses "
+                "Using Synthetic Images"
+            ),
+            "year": 2017,
+            "doi": "10.1007/978-3-319-70096-0_37",
+            "openalex_url": "https://openalex.org/W2766065312",
+            "has_map_location": True,
+            "map_record_count": 1,
+        }
+        marker = {
+            **paper,
+            "id": "openalex-candidate:test",
+            "institution": "University of Newcastle Australia",
+            "latitude": -32.92953,
+            "longitude": 151.7801,
+        }
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            exclusions_path = root / "paper_exclusions.csv"
+            curated_papers_path = root / "papers.csv"
+            curated_mappings_path = root / "author_institution_mappings.csv"
+            public_papers_path = root / "public_preview_papers.json"
+            public_map_path = root / "public_preview_map_data.json"
+            canonical_map_path = root / "openalex_candidate_map_data.json"
+            write_exclusions(exclusions_path)
+            write_papers(
+                curated_papers_path,
+                [curated_row(
+                    paper_id=paper["paper_id"],
+                    title=paper["title"],
+                    year=str(paper["year"]),
+                    doi=paper["doi"],
+                    openalex_url=paper["openalex_url"],
+                    scope_status="in_scope",
+                )],
+            )
+            mapping = {column: "" for column in AUTHOR_INSTITUTION_MAPPING_COLUMNS}
+            mapping.update({
+                "paper_id": paper["paper_id"],
+                "title": paper["title"],
+                "year": str(paper["year"]),
+                "doi": paper["doi"],
+                "openalex_url": paper["openalex_url"],
+                "mapping_id": "mapping:drinking-glasses",
+                "institution": marker["institution"],
+                "mapping_status": "active",
+            })
+            with curated_mappings_path.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(
+                    handle, fieldnames=AUTHOR_INSTITUTION_MAPPING_COLUMNS
+                )
+                writer.writeheader()
+                writer.writerow(mapping)
+            public_papers_path.write_text(
+                json.dumps({"records": [paper]}), encoding="utf-8"
+            )
+            public_map_path.write_text(
+                json.dumps({"records": [marker]}), encoding="utf-8"
+            )
+            canonical_map_path.write_text(
+                json.dumps({"records": [marker]}), encoding="utf-8"
+            )
+
+            included_papers, included_maps, _summary = filter_public_output_pair(
+                [paper], [marker], read_exclusion_rows(exclusions_path)
+            )
+            self.assertEqual((len(included_papers), len(included_maps)), (1, 1))
+
+            upsert_active_exclusion(
+                paper, "out_of_scope", "Regression exclusion", exclusions_path
+            )
+            excluded_papers, excluded_maps, summary = filter_public_output_pair(
+                [paper], [marker], read_exclusion_rows(exclusions_path)
+            )
+            self.assertEqual(excluded_papers, [])
+            self.assertEqual(excluded_maps, [])
+            self.assertEqual(summary, {
+                "active_exclusion_public_papers_removed": 1,
+                "active_exclusion_map_records_removed": 1,
+            })
+            # Public search and counters are record-derived, so the filtered
+            # pair leaves no title, marker, or count entry behind.
+            self.assertNotIn(paper["title"], {row["title"] for row in excluded_papers})
+            self.assertEqual(sum(1 for _row in excluded_papers), 0)
+            self.assertEqual(sum(1 for _row in excluded_maps), 0)
+
+            with (
+                patch("scripts.serve_admin.PUBLIC_PAPERS_PATH", public_papers_path),
+                patch("scripts.serve_admin.PUBLIC_MAP_PATH", public_map_path),
+            ):
+                admin_papers, _admin_data = load_admin_data(
+                    exclusions_path,
+                    curated_papers_path,
+                    curated_mappings_path,
+                    canonical_map_path,
+                )
+            self.assertEqual(len(admin_papers), 1)
+            admin_paper = admin_papers[0]
+            self.assertTrue(admin_paper["has_active_exclusion"])
+            self.assertFalse(admin_paper["is_currently_published"])
+            self.assertFalse(admin_paper["has_map_location"])
+            self.assertEqual(admin_paper["map_record_count"], 0)
+            self.assertTrue(admin_paper["has_canonical_mapping_data"])
+            self.assertEqual(admin_paper["canonical_mapping_count"], 1)
+            self.assertTrue(admin_paper["canonical_has_map_location"])
+            self.assertEqual(admin_paper["canonical_map_record_count"], 1)
+            self.assertTrue(admin_paper["stale_public_paper_record"])
+            self.assertEqual(admin_paper["stale_public_map_record_count"], 1)
+
+            restore_active_exclusions(
+                paper, "Regression restore", exclusions_path
+            )
+            restored_papers, restored_maps, _summary = filter_public_output_pair(
+                [paper], [marker], read_exclusion_rows(exclusions_path)
+            )
+            self.assertEqual((len(restored_papers), len(restored_maps)), (1, 1))
+
     def test_resolve_or_create_reuses_alias_and_creates_trackless_journal(self):
         with tempfile.TemporaryDirectory() as directory:
             aliases_path = Path(directory) / "venues.csv"

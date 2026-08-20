@@ -633,6 +633,14 @@ Allowed reason values are:
 
 The exporter reads active exclusions and matches DOI first, OpenAlex URL second, and normalized title plus year otherwise. It removes matches from both public-preview JSON files. Excluded checklist papers are also omitted from the normal key-paper coverage audit; the marker-blocker report reads the already-filtered paper preview and therefore excludes them naturally.
 
+Paper and map records pass through one shared active-exclusion gate after all
+fresh-record, curated-record, and `--preserve-existing` integration. Admin's
+full refresh first runs `migrate_active_exclusions_from_public_outputs.py` to
+remove stale records from the committed JSON pair atomically, then validates
+that no active exclusion remains public. Canonical papers and mappings are not
+deleted; restoring an exclusion allows the regular exporter to regenerate both
+public layers.
+
 Retractions are also excluded defensively even without a matching curated
 exclusion row. The final export removes them from both public-preview files
 after candidate, preserved-preview, and curated records have been combined.

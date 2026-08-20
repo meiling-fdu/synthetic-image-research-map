@@ -64,6 +64,7 @@ try:
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
         build_active_exclusion_index,
+        filter_public_output_pair,
         read_exclusion_rows,
         record_is_excluded,
     )
@@ -155,6 +156,7 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_EXCLUSIONS_PATH,
         PaperExclusionError,
         build_active_exclusion_index,
+        filter_public_output_pair,
         read_exclusion_rows,
         record_is_excluded,
     )
@@ -4060,17 +4062,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         integrated_maps[:] = canonicalize_records(
             integrated_maps, venue_alias_rows
         )
-        unresolved_publication_types = synchronize_publication_types(
-            integrated_papers, integrated_maps
-        )
-        if unresolved_publication_types:
-            details = "; ".join(
-                f"{row['title']!r} ({row['publication_type'] or 'missing'})"
-                for row in unresolved_publication_types
-            )
-            raise PreviewExportError(
-                "Unresolved publication types require admin review: " + details
-            )
         institution_rows = load_institutions(args.institutions)
         orphan_cleanup_audit_rows = read_csv_rows(DEFAULT_ORPHAN_CLEANUP_AUDIT)
         exported_aliases = public_institution_aliases(
@@ -4153,6 +4144,33 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 deduplicate_public_map_relationships(integrated_maps)
             )
             exact_map_relationships_deduplicated += preserved_relationships_deduplicated
+
+        # Preservation can reintroduce older fallback markers after the first
+        # integration pass. Synchronize at the final merged shape so those
+        # relationships inherit the canonical paper's reviewed type instead
+        # of retaining stale source metadata such as ``book``.
+        unresolved_publication_types = synchronize_publication_types(
+            integrated_papers, integrated_maps
+        )
+        if unresolved_publication_types:
+            details = "; ".join(
+                f"{row['title']!r} ({row['publication_type'] or 'missing'})"
+                for row in unresolved_publication_types
+            )
+            raise PreviewExportError(
+                "Unresolved publication types require admin review: " + details
+            )
+
+        # Publication-boundary exclusion gate. This intentionally runs after
+        # every fresh/incremental merge and curated integration step so an old
+        # public paper or marker cannot survive an active exclusion.
+        integrated_papers, integrated_maps, exclusion_filter_summary = (
+            filter_public_output_pair(
+                integrated_papers,
+                integrated_maps,
+                exclusion_rows,
+            )
+        )
         apply_ordered_paper_location_summaries(
             integrated_papers, integrated_maps
         )
@@ -4230,6 +4248,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             exact_map_relationships_deduplicated
         )
         summary["stale_mapping_markers_excluded"] = stale_mapping_markers_excluded
+        summary.update(exclusion_filter_summary)
 
         if (
             curated_summary.get("curated_markers_created", 0)
