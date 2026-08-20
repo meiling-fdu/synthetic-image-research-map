@@ -217,8 +217,16 @@ let venueTypeOrder = ["conference", "journal", "preprint", "book"];
 let countryComboboxOptionData = [];
 let activeCountryOptionIndex = -1;
 let filtersDrawerOpen = false;
-let resultsMasonryFrame = null;
-let resultsLayoutGeneration = 0;
+const resultsMasonryFrames = new Set();
+let resultsRenderGeneration = 0;
+let resultsObserver = null;
+let resultsKeywordTimeout = null;
+let resultsResizeTimeout = null;
+let resultsPipeline = null;
+const RESULTS_KEYWORD_DEBOUNCE_MS = 140;
+const RESULTS_RESIZE_DEBOUNCE_MS = 100;
+const RESULTS_INITIAL_VIEWPORTS = 2.25;
+const RESULTS_OBSERVER_MARGIN = "125% 0px";
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -2882,30 +2890,53 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
   `;
 }
 
-function setResultsLayoutPending(isPending) {
-  resultsList.classList.toggle("is-layout-pending", isPending);
+function setResultsLayoutPending(isPending, showSkeleton = false) {
   resultsList.setAttribute("aria-busy", String(isPending));
-  resultsLoading.hidden = !isPending;
+  resultsList.classList.toggle("is-updating", isPending && !showSkeleton);
+  resultsLoading.hidden = !(isPending && showSkeleton);
 }
 
-function finishResultsMasonryLayout(generation) {
-  if (generation !== resultsLayoutGeneration) return;
-  setResultsLayoutPending(false);
+function invalidateResultsRenderPipeline() {
+  resultsRenderGeneration += 1;
+  resultsMasonryFrames.forEach((frame) => cancelAnimationFrame(frame));
+  resultsMasonryFrames.clear();
+  if (resultsObserver) resultsObserver.disconnect();
+  resultsObserver = null;
+  document.querySelector(".results-list-staging")?.remove();
+  resultsPipeline = null;
+  return resultsRenderGeneration;
 }
 
-function updateResultsMasonryLayout(generation) {
-  if (generation !== resultsLayoutGeneration) return;
-  resultsMasonryFrame = null;
-  const listStyles = getComputedStyle(resultsList);
-  const cards = resultsList.querySelectorAll(".result-item");
+function requestResultsAnimationFrame(callback) {
+  const frame = requestAnimationFrame(() => {
+    resultsMasonryFrames.delete(frame);
+    callback();
+  });
+  resultsMasonryFrames.add(frame);
+  return frame;
+}
 
-  resultsList.classList.remove("is-masonry-ready");
-  cards.forEach((card) => card.style.removeProperty("grid-row-end"));
+function resultsColumnCount(list = resultsList) {
+  if (mobileFiltersMedia.matches) return 1;
+  const columns = getComputedStyle(list).gridTemplateColumns
+    .split(" ")
+    .filter(Boolean).length;
+  return Math.max(columns, 1);
+}
+
+function resultsLayoutSignature(list = resultsList) {
+  return `${Math.round(list.getBoundingClientRect().width)}:${resultsColumnCount(list)}`;
+}
+
+function measureMasonryItems(list, cards, generation) {
+  if (generation !== resultsRenderGeneration) return false;
   if (mobileFiltersMedia.matches) {
-    finishResultsMasonryLayout(generation);
-    return;
+    cards.forEach((card) => card.style.removeProperty("grid-row-end"));
+    list.classList.remove("is-masonry-ready");
+    return true;
   }
 
+  const listStyles = getComputedStyle(list);
   const documentStyles = getComputedStyle(document.documentElement);
   const rowHeight = Number.parseFloat(
     documentStyles.getPropertyValue("--masonry-row"),
@@ -2916,11 +2947,11 @@ function updateResultsMasonryLayout(generation) {
   const computedGap = Number.parseFloat(listStyles.rowGap);
   const rowGap = Number.isFinite(computedGap) ? computedGap : tokenGap;
   if (!Number.isFinite(rowHeight) || !Number.isFinite(rowGap)) {
-    finishResultsMasonryLayout(generation);
-    return;
+    return false;
   }
 
   cards.forEach((card) => {
+    if (generation !== resultsRenderGeneration) return;
     const cardStyles = getComputedStyle(card);
     const borderHeight = Number.parseFloat(cardStyles.borderTopWidth)
       + Number.parseFloat(cardStyles.borderBottomWidth);
@@ -2947,24 +2978,167 @@ function updateResultsMasonryLayout(generation) {
     const span = Math.ceil((cardHeight + rowGap) / (rowHeight + rowGap));
     card.style.gridRowEnd = `span ${span}`;
   });
-  resultsList.classList.add("is-masonry-ready");
-  finishResultsMasonryLayout(generation);
+  if (generation !== resultsRenderGeneration) return false;
+  list.classList.add("is-masonry-ready");
+  return true;
 }
 
-function scheduleResultsMasonryLayout() {
-  if (resultsMasonryFrame !== null) {
-    cancelAnimationFrame(resultsMasonryFrame);
-  }
-  const generation = ++resultsLayoutGeneration;
-  resultsMasonryFrame = requestAnimationFrame(() => {
-    if (generation !== resultsLayoutGeneration) return;
-    resultsMasonryFrame = requestAnimationFrame(() => {
-      updateResultsMasonryLayout(generation);
+function scheduleMasonryMeasurement(list, cards, generation, onComplete) {
+  if (generation !== resultsRenderGeneration) return;
+  requestResultsAnimationFrame(() => {
+    if (generation !== resultsRenderGeneration) return;
+    requestResultsAnimationFrame(() => {
+      if (generation !== resultsRenderGeneration) return;
+      if (!measureMasonryItems(list, cards, generation)) return;
+      if (generation !== resultsRenderGeneration) return;
+      cards.forEach((card) => card.classList.remove("is-masonry-pending"));
+      onComplete?.();
     });
   });
 }
 
-function renderResults(visibleRecords, visiblePaperRecords = []) {
+function resultSentinelNeedsMoreCards() {
+  const sentinel = document.querySelector("#results-sentinel");
+  if (!sentinel) return false;
+  return sentinel.getBoundingClientRect().top <= window.innerHeight * RESULTS_INITIAL_VIEWPORTS;
+}
+
+function createResultItem(record, index, pipeline) {
+  const item = document.createElement("li");
+  item.className = `result-item result-item-${pipeline.view === "papers" ? "paper" : "institution"} is-masonry-pending`;
+  item.dataset.resultIndex = String(index);
+  const relatedEntries = pipeline.relatedEntriesByIdentity.get(paperIdentity(record)) || [];
+  const cardId = `result-card-title-${pipeline.view}-${index}`;
+  item.innerHTML = pipeline.view === "papers"
+    ? paperResultContent(record, relatedEntries, cardId)
+    : institutionResultContent(record, relatedEntries, cardId);
+  return item;
+}
+
+function initialResultChunkSize(pipeline) {
+  const columns = resultsColumnCount(resultsList);
+  return Math.min(
+    pipeline.displayedResults.length,
+    Math.max(columns * 4, Math.ceil(
+      (window.innerHeight * RESULTS_INITIAL_VIEWPORTS / pipeline.estimatedCardHeight) * columns,
+    )),
+  );
+}
+
+function nextResultChunkSize(pipeline) {
+  const columns = resultsColumnCount(resultsList);
+  return Math.max(
+    columns * 2,
+    Math.ceil((window.innerHeight / pipeline.estimatedCardHeight) * columns),
+  );
+}
+
+function updateEstimatedCardHeight(pipeline, cards, generation) {
+  if (generation !== resultsRenderGeneration || !cards.length) return;
+  const total = cards.reduce((sum, card) => (
+    sum + Math.max(card.getBoundingClientRect().height, card.scrollHeight)
+  ), 0);
+  const measuredAverage = total / cards.length;
+  if (Number.isFinite(measuredAverage) && measuredAverage > 0) {
+    pipeline.estimatedCardHeight = measuredAverage;
+  }
+}
+
+function appendResultChunk(generation, requestedCount = null) {
+  const pipeline = resultsPipeline;
+  if (!pipeline || generation !== resultsRenderGeneration || pipeline.isAppending) return;
+  if (pipeline.renderedCount >= pipeline.displayedResults.length) {
+    resultsObserver?.disconnect();
+    return;
+  }
+  pipeline.isAppending = true;
+  const start = pipeline.renderedCount;
+  const end = Math.min(
+    pipeline.displayedResults.length,
+    start + (requestedCount || nextResultChunkSize(pipeline)),
+  );
+  const fragment = document.createDocumentFragment();
+  const newCards = pipeline.displayedResults
+    .slice(start, end)
+    .map((record, offset) => createResultItem(record, start + offset, pipeline));
+  newCards.forEach((card) => fragment.append(card));
+  if (generation !== resultsRenderGeneration) return;
+  resultsList.append(fragment);
+  scheduleMasonryMeasurement(resultsList, newCards, generation, () => {
+    if (generation !== resultsRenderGeneration || resultsPipeline !== pipeline) return;
+    updateEstimatedCardHeight(pipeline, newCards, generation);
+    pipeline.renderedCount = end;
+    pipeline.isAppending = false;
+    pipeline.layoutSignature = resultsLayoutSignature();
+    if (end >= pipeline.displayedResults.length) {
+      resultsObserver?.disconnect();
+    } else if (resultSentinelNeedsMoreCards()) {
+      appendResultChunk(generation);
+    }
+  });
+}
+
+function observeResultSentinel(generation) {
+  if (generation !== resultsRenderGeneration || !resultsPipeline) return;
+  if (resultsObserver) resultsObserver.disconnect();
+  const sentinel = document.querySelector("#results-sentinel");
+  if (!sentinel || typeof IntersectionObserver === "undefined") {
+    appendResultChunk(generation);
+    return;
+  }
+  resultsObserver = new IntersectionObserver((entries) => {
+    if (generation !== resultsRenderGeneration || resultsPipeline?.generation !== generation) return;
+    if (entries.some((entry) => entry.isIntersecting)) appendResultChunk(generation);
+  }, { rootMargin: RESULTS_OBSERVER_MARGIN });
+  if (generation !== resultsRenderGeneration) return;
+  resultsObserver.observe(sentinel);
+  if (resultSentinelNeedsMoreCards()) appendResultChunk(generation);
+}
+
+function prepareFirstResultViewport(generation) {
+  const pipeline = resultsPipeline;
+  if (!pipeline || generation !== resultsRenderGeneration) return;
+  const stagingList = document.createElement("ol");
+  stagingList.className = "results-list results-list-staging";
+  stagingList.setAttribute("aria-hidden", "true");
+  const firstEnd = initialResultChunkSize(pipeline);
+  const firstCards = pipeline.displayedResults
+    .slice(0, firstEnd)
+    .map((record, index) => createResultItem(record, index, pipeline));
+  firstCards.forEach((card) => stagingList.append(card));
+  resultsList.after(stagingList);
+  scheduleMasonryMeasurement(stagingList, firstCards, generation, () => {
+    if (generation !== resultsRenderGeneration || resultsPipeline !== pipeline) return;
+    updateEstimatedCardHeight(pipeline, firstCards, generation);
+    const masonryReady = stagingList.classList.contains("is-masonry-ready");
+    const preparedCards = [...stagingList.children];
+    stagingList.remove();
+    if (generation !== resultsRenderGeneration) return;
+    resultsList.replaceChildren(...preparedCards);
+    resultsList.classList.toggle("is-masonry-ready", masonryReady);
+    resultsList.hidden = false;
+    pipeline.renderedCount = firstEnd;
+    pipeline.layoutSignature = resultsLayoutSignature();
+    setResultsLayoutPending(false);
+    observeResultSentinel(generation);
+  });
+}
+
+function scheduleResultsMasonryLayout(cards = null) {
+  const pipeline = resultsPipeline;
+  const generation = resultsRenderGeneration;
+  if (!pipeline || pipeline.generation !== generation) return;
+  const items = cards ? [...cards] : [...resultsList.querySelectorAll(".result-item")];
+  if (!items.length) return;
+  scheduleMasonryMeasurement(resultsList, items, generation, () => {
+    if (generation !== resultsRenderGeneration || resultsPipeline !== pipeline) return;
+    pipeline.layoutSignature = resultsLayoutSignature();
+  });
+}
+
+function renderResults(visibleRecords, visiblePaperRecords = [], generation = null) {
+  const activeGeneration = generation ?? invalidateResultsRenderPipeline();
+  if (activeGeneration !== resultsRenderGeneration) return;
   const relatedEntriesByIdentity = new Map();
   visibleRecords.forEach((record) => {
     const identity = paperIdentity(record);
@@ -2983,39 +3157,35 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
     : `No matching ${resultNoun}s`;
   resultsEmpty.textContent = `No matching ${resultNoun}s.`;
   exportCsvButton.disabled = count === 0;
-  resultsList.replaceChildren();
   resultsEmpty.hidden = count !== 0;
-  resultsList.hidden = count === 0;
 
   if (!count) {
-    if (resultsMasonryFrame !== null) cancelAnimationFrame(resultsMasonryFrame);
-    resultsMasonryFrame = null;
-    resultsLayoutGeneration += 1;
+    resultsList.replaceChildren();
+    resultsList.hidden = true;
     resultsList.classList.remove("is-masonry-ready");
     setResultsLayoutPending(false);
     return;
   }
-
-  const fragment = document.createDocumentFragment();
-  displayedResults.forEach((record, index) => {
-    const item = document.createElement("li");
-    item.className = `result-item result-item-${resultsView === "papers" ? "paper" : "institution"}`;
-    const relatedEntries = relatedEntriesByIdentity.get(paperIdentity(record)) || [];
-    const cardId = `result-card-title-${resultsView}-${index}`;
-    item.innerHTML = resultsView === "papers"
-      ? paperResultContent(record, relatedEntries, cardId)
-      : institutionResultContent(record, relatedEntries, cardId);
-    fragment.append(item);
-  });
-  resultsList.append(fragment);
-  setResultsLayoutPending(true);
-  scheduleResultsMasonryLayout();
+  const hasCurrentCards = resultsList.querySelector(".result-item") !== null;
+  resultsPipeline = {
+    generation: activeGeneration,
+    displayedResults,
+    relatedEntriesByIdentity,
+    view: resultsView,
+    renderedCount: 0,
+    estimatedCardHeight: 260,
+    isAppending: false,
+    layoutSignature: "",
+  };
+  setResultsLayoutPending(true, !hasCurrentCards);
+  prepareFirstResultViewport(activeGeneration);
 }
 
 function selectResultsView(view) {
   if (!["institutions", "papers"].includes(view)) {
     return;
   }
+  const generation = invalidateResultsRenderPipeline();
   resultsView = view;
   clearPaperInteraction();
   resultsViewButtons.forEach((button) => {
@@ -3024,7 +3194,7 @@ function selectResultsView(view) {
       String(button.dataset.resultsView === resultsView),
     );
   });
-  renderResults(currentFilteredRecords, currentFilteredPaperRecords);
+  renderRecordsForGeneration({ generation });
 }
 
 function baseMapStatusText(visibleRecords) {
@@ -3276,6 +3446,16 @@ function pinPaper(record, identity, institutionKey) {
 }
 
 function renderRecords() {
+  return renderRecordsForGeneration();
+}
+
+function renderRecordsForGeneration({ generation = null } = {}) {
+  if (resultsKeywordTimeout !== null) {
+    clearTimeout(resultsKeywordTimeout);
+    resultsKeywordTimeout = null;
+  }
+  const activeGeneration = generation ?? invalidateResultsRenderPipeline();
+  if (activeGeneration !== resultsRenderGeneration) return;
   const previousPin = interactionState.pinned;
   closeActiveInstitutionTooltip();
   interactionState.hovered = null;
@@ -3462,7 +3642,7 @@ function renderRecords() {
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
   renderActiveInstitutionFilter();
   renderHeaderStatistics(visibleRecords, visiblePaperRecords);
-  renderResults(visibleRecords, visiblePaperRecords);
+  renderResults(visibleRecords, visiblePaperRecords, activeGeneration);
   mapStatus.classList.toggle("error", false);
   if (interactionState.pinned) {
     renderActiveSelection();
@@ -4022,7 +4202,16 @@ document.addEventListener("focusout", (event) => {
 window.addEventListener("resize", hideChartTooltip);
 window.addEventListener("scroll", hideChartTooltip, true);
 
-keywordFilter.addEventListener("input", renderRecords);
+keywordFilter.addEventListener("input", () => {
+  const generation = invalidateResultsRenderPipeline();
+  if (resultsKeywordTimeout !== null) clearTimeout(resultsKeywordTimeout);
+  setResultsLayoutPending(true, resultsList.querySelector(".result-item") === null);
+  resultsKeywordTimeout = setTimeout(() => {
+    if (generation !== resultsRenderGeneration) return;
+    resultsKeywordTimeout = null;
+    renderRecordsForGeneration({ generation });
+  }, RESULTS_KEYWORD_DEBOUNCE_MS);
+});
 taskFilter.addEventListener("change", renderRecords);
 entryTypeFilter.addEventListener("change", renderRecords);
 sortControl.addEventListener("change", renderRecords);
@@ -4110,7 +4299,7 @@ maxYearFilter.addEventListener("keydown", (event) => {
       authorToggle.setAttribute("aria-expanded", String(!isExpanded));
       authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
       if (overflow) overflow.hidden = isExpanded;
-      scheduleResultsMasonryLayout();
+      scheduleResultsMasonryLayout([authorToggle.closest(".result-item")].filter(Boolean));
       return;
     }
     const institutionToggle = event.target.closest(".result-institutions-toggle");
@@ -4123,7 +4312,7 @@ maxYearFilter.addEventListener("keydown", (event) => {
         ? "Show all institutions"
         : "Show fewer institutions";
       if (overflow) overflow.hidden = isExpanded;
-      scheduleResultsMasonryLayout();
+      scheduleResultsMasonryLayout([institutionToggle.closest(".result-item")].filter(Boolean));
       return;
     }
     const button = event.target.closest("[data-institution-filter]");
@@ -4138,8 +4327,25 @@ activeInstitutionFilterChip.addEventListener("click", (event) => {
   }
 });
 window.addEventListener("resize", () => scheduleMapResize());
-window.addEventListener("resize", scheduleResultsMasonryLayout);
-document.fonts?.ready.then(scheduleResultsMasonryLayout);
+window.addEventListener("resize", () => {
+  if (resultsResizeTimeout !== null) clearTimeout(resultsResizeTimeout);
+  const generation = resultsRenderGeneration;
+  resultsResizeTimeout = setTimeout(() => {
+    if (generation !== resultsRenderGeneration || !resultsPipeline?.renderedCount) return;
+    resultsResizeTimeout = null;
+    if (resultsLayoutSignature() !== resultsPipeline.layoutSignature) {
+      scheduleResultsMasonryLayout();
+    }
+  }, RESULTS_RESIZE_DEBOUNCE_MS);
+});
+const fontLayoutGeneration = resultsRenderGeneration;
+document.fonts?.ready.then(() => {
+  const generation = fontLayoutGeneration;
+  if (generation !== resultsRenderGeneration || !resultsPipeline?.renderedCount) return;
+  if (resultsLayoutSignature() !== resultsPipeline.layoutSignature) {
+    scheduleResultsMasonryLayout();
+  }
+});
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
   if (interactionState.pinned) {

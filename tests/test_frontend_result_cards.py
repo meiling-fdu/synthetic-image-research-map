@@ -29,19 +29,20 @@ class FrontendResultCardTests(unittest.TestCase):
         )
         paper = self.function("paperResultContent", "renderResults")
         render = self.function("renderResults", "selectResultsView")
+        create = self.function("createResultItem", "initialResultChunkSize")
         self.assertIn("result-card-institution", institution)
         self.assertIn("Institution record", institution)
         self.assertIn("result-card-paper", paper)
         self.assertIn("Unique paper", paper)
-        self.assertIn("institutionResultContent(record, relatedEntries, cardId)", render)
-        self.assertIn("paperResultContent(record, relatedEntries, cardId)", render)
+        self.assertIn("institutionResultContent(record, relatedEntries, cardId)", create)
+        self.assertIn("paperResultContent(record, relatedEntries, cardId)", create)
         self.assertIn(": visibleRecords", render)
         self.assertIn("paperListRecordsForDisplay(visiblePaperRecords)", render)
 
     def test_titles_are_accessibly_named_and_use_a_two_line_preview(self):
         self.assertIn('aria-labelledby="${cardId}"', self.app)
         self.assertIn('id="${cardId}"', self.app)
-        self.assertIn("result-card-title-${resultsView}-${index}", self.app)
+        self.assertIn("result-card-title-${pipeline.view}-${index}", self.app)
         result_title = self.css.split(".result-title {", 1)[1].split("}", 1)[0]
         self.assertIn("overflow-wrap: anywhere", result_title)
         self.assertIn("-webkit-line-clamp: 2", result_title)
@@ -209,18 +210,15 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
 
     def test_masonry_preserves_list_semantics_and_dom_render_order(self):
         self.assertIn('<ol id="results-list" class="results-list"></ol>', self.html)
-        render = self.function("renderResults", "selectResultsView")
-        self.assertIn("displayedResults.forEach((record, index)", render)
-        self.assertIn('document.createElement("li")', render)
-        self.assertIn("fragment.append(item)", render)
-        self.assertIn("resultsList.append(fragment)", render)
-        self.assertIn("setResultsLayoutPending(true)", render)
-        self.assertIn("scheduleResultsMasonryLayout()", render)
-        self.assertNotIn("style.order", render)
-        self.assertNotIn("appendToColumn", render)
-        masonry = self.function("updateResultsMasonryLayout", "scheduleResultsMasonryLayout")
+        create = self.function("createResultItem", "initialResultChunkSize")
+        append = self.function("appendResultChunk", "observeResultSentinel")
+        self.assertIn('document.createElement("li")', create)
+        self.assertIn("fragment.append(card)", append)
+        self.assertIn("resultsList.append(fragment)", append)
+        self.assertNotIn("style.order", create + append)
+        self.assertNotIn("appendToColumn", create + append)
+        masonry = self.function("measureMasonryItems", "scheduleMasonryMeasurement")
         self.assertIn('style.gridRowEnd = `span ${span}`', masonry)
-        self.assertIn('classList.remove("is-masonry-ready")', masonry)
         self.assertIn('classList.add("is-masonry-ready")', masonry)
         self.assertIn("card.scrollHeight", masonry)
         self.assertIn('card.querySelector(".result-card")', masonry)
@@ -237,18 +235,17 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn('getPropertyValue("--masonry-gap")', masonry)
         self.assertIn('getPropertyValue("--masonry-row")', masonry)
         self.assertIn("mobileFiltersMedia.matches", masonry)
-        self.assertNotIn("gridTemplateColumns.split", masonry)
         self.assertNotIn("const rowGap = 11", masonry)
 
-        scheduler = self.function("scheduleResultsMasonryLayout", "renderResults")
-        self.assertEqual(scheduler.count("requestAnimationFrame"), 2)
-        self.assertIn("updateResultsMasonryLayout(generation)", scheduler)
+        scheduler = self.function("scheduleMasonryMeasurement", "createResultItem")
+        self.assertEqual(scheduler.count("requestResultsAnimationFrame"), 2)
+        self.assertIn("measureMasonryItems(list, cards, generation)", scheduler)
 
-    def test_cards_stay_hidden_behind_records_only_skeleton_until_layout_finishes(self):
+    def test_initial_skeleton_and_incremental_cards_are_revealed_after_measurement(self):
         self.assertIn('<div class="results-records-area">', self.html)
         self.assertIn('id="results-loading"', self.html)
         pending = self.css.split(
-            ".results-list.is-layout-pending .result-item {", 1
+            ".result-item.is-masonry-pending {", 1
         )[1].split("}", 1)[0]
         self.assertIn("visibility: hidden", pending)
         loading = self.css.split(".results-loading {", 1)[1].split("}", 1)[0]
@@ -256,19 +253,46 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn("pointer-events: none", loading)
 
         layout = self.function(
-            "setResultsLayoutPending", "finishResultsMasonryLayout"
+            "setResultsLayoutPending", "invalidateResultsRenderPipeline"
         )
-        self.assertIn('classList.toggle("is-layout-pending", isPending)', layout)
         self.assertIn('setAttribute("aria-busy", String(isPending))', layout)
-        self.assertIn("resultsLoading.hidden = !isPending", layout)
+        self.assertIn("showSkeleton", layout)
 
-        masonry = self.function(
-            "updateResultsMasonryLayout", "scheduleResultsMasonryLayout"
+        scheduler = self.function(
+            "scheduleMasonryMeasurement", "createResultItem"
         )
-        ready_position = masonry.index('classList.add("is-masonry-ready")')
-        reveal_position = masonry.index("finishResultsMasonryLayout(generation)", ready_position)
-        self.assertGreater(reveal_position, ready_position)
-        self.assertIn("generation !== resultsLayoutGeneration", masonry)
+        measure_position = scheduler.index("measureMasonryItems(list, cards, generation)")
+        reveal_position = scheduler.index('classList.remove("is-masonry-pending")')
+        self.assertGreater(reveal_position, measure_position)
+        self.assertIn("generation !== resultsRenderGeneration", scheduler)
+
+    def test_progressive_rendering_keeps_full_results_but_appends_viewport_chunks(self):
+        render = self.function("renderResults", "selectResultsView")
+        append = self.function("appendResultChunk", "observeResultSentinel")
+        observe = self.function("observeResultSentinel", "prepareFirstResultViewport")
+        prepare = self.function("prepareFirstResultViewport", "scheduleResultsMasonryLayout")
+        self.assertIn("currentDisplayedResults = displayedResults", render)
+        self.assertNotIn("displayedResults.forEach", render)
+        self.assertIn("initialResultChunkSize(pipeline)", prepare)
+        self.assertIn("resultsList.replaceChildren(...preparedCards)", prepare)
+        self.assertIn("resultsList.append(fragment)", append)
+        self.assertIn("nextResultChunkSize(pipeline)", append)
+        self.assertIn("new IntersectionObserver", observe)
+        self.assertIn("rootMargin: RESULTS_OBSERVER_MARGIN", observe)
+        self.assertIn('id="results-sentinel"', self.html)
+
+    def test_render_generation_guards_async_work_and_debounces_input_and_resize(self):
+        invalidation = self.function(
+            "invalidateResultsRenderPipeline", "resultsColumnCount"
+        )
+        self.assertIn("resultsRenderGeneration += 1", invalidation)
+        self.assertIn("cancelAnimationFrame", invalidation)
+        self.assertIn("resultsObserver.disconnect()", invalidation)
+        self.assertGreaterEqual(self.app.count("generation !== resultsRenderGeneration"), 12)
+        self.assertIn("const RESULTS_KEYWORD_DEBOUNCE_MS = 140", self.app)
+        self.assertIn("const RESULTS_RESIZE_DEBOUNCE_MS = 100", self.app)
+        self.assertIn("setTimeout(() =>", self.app)
+        self.assertIn("resultsLayoutSignature() !== resultsPipeline.layoutSignature", self.app)
 
     def test_adaptive_content_and_metadata_follow_natural_flow(self):
         adaptive = self.css.split(".result-card-adaptive {", 1)[1].split("}", 1)[0]
@@ -333,11 +357,10 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn('aria-controls="${regionId}"', self.app)
         self.assertNotIn("style.height", self.app)
         self.assertNotIn('toggleAttribute("tabindex"', self.app)
-        self.assertIn('window.addEventListener("resize", scheduleResultsMasonryLayout)', self.app)
-        self.assertIn("document.fonts?.ready.then(scheduleResultsMasonryLayout)", self.app)
-        self.assertGreaterEqual(self.app.count("scheduleResultsMasonryLayout();"), 3)
-        render = self.function("renderResults", "selectResultsView")
-        self.assertIn("scheduleResultsMasonryLayout()", render)
+        self.assertIn('window.addEventListener("resize", () => {', self.app)
+        self.assertIn("document.fonts?.ready.then(() =>", self.app)
+        self.assertGreaterEqual(self.app.count("scheduleResultsMasonryLayout();"), 2)
+        self.assertIn('closest(".result-item")', self.app)
 
     def test_collapsed_overflow_content_is_not_forced_visible_by_card_css(self):
         hidden_overflow = self.css.split(

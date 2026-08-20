@@ -40,8 +40,9 @@ class FrontendYearRangeSliderTests(unittest.TestCase):
         self.assertIn(".year-range-input-end::-webkit-slider-thumb", self.css)
         self.assertEqual(self.css.count("width: 28px;"), 2)
         self.assertEqual(self.css.count("height: 28px;"), 2)
-        self.assertIn("clip-path: polygon(0 0, 100% 50%, 0 100%)", self.css)
-        self.assertIn("clip-path: polygon(100% 0, 0 50%, 100% 100%)", self.css)
+        self.assertEqual(self.css.count("center / 16px 16px no-repeat;"), 8)
+        self.assertIn("d='M0 0L16 8L0 16Z'", self.css)
+        self.assertIn("d='M16 0L0 8L16 16Z'", self.css)
         self.assertIn(".year-range-input:focus-visible", self.css)
 
     def test_dynamic_bounds_default_full_range_and_refresh_preservation(self):
@@ -227,7 +228,10 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("buildCsv(currentDisplayedResults, columns)", self.app)
         self.assertIn("updateDatasetStatistics(visibleRecords, visiblePaperRecords)", self.app)
         self.assertIn("renderHeaderStatistics(visibleRecords, visiblePaperRecords)", self.app)
-        self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", self.app)
+        self.assertIn(
+            "renderResults(visibleRecords, visiblePaperRecords, activeGeneration)",
+            self.app,
+        )
 
 
 if __name__ == "__main__":

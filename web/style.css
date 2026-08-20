@@ -669,7 +669,8 @@ button.institution-filter-link:focus-visible {
   border: 0;
   border-radius: 0;
   background: var(--accent);
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0L16 8L0 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0L16 8L0 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
   filter: drop-shadow(0 0 1px var(--paper)) drop-shadow(0 2px 2px rgb(18 39 49 / 38%));
   cursor: grab;
   pointer-events: auto;
@@ -682,7 +683,8 @@ button.institution-filter-link:focus-visible {
   border: 0;
   border-radius: 0;
   background: var(--accent);
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0L16 8L0 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M0 0L16 8L0 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
   filter: drop-shadow(0 0 1px var(--paper)) drop-shadow(0 2px 2px rgb(18 39 49 / 38%));
   cursor: grab;
   pointer-events: auto;
@@ -690,12 +692,14 @@ button.institution-filter-link:focus-visible {
 
 .year-range-input-end::-webkit-slider-thumb {
   background: var(--accent-dark);
-  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M16 0L0 8L16 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M16 0L0 8L16 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
 }
 
 .year-range-input-end::-moz-range-thumb {
   background: var(--accent-dark);
-  clip-path: polygon(100% 0, 0 50%, 100% 100%);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M16 0L0 8L16 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M16 0L0 8L16 16Z'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
 }
 
 .year-range-input:disabled::-webkit-slider-thumb {
@@ -1181,6 +1185,25 @@ input:disabled {
   margin: 0;
   padding: 0;
   list-style: none;
+  transition: opacity 120ms ease;
+}
+
+.results-list.is-updating {
+  opacity: 0.78;
+}
+
+.results-list-staging {
+  position: absolute;
+  inset: 0 0 auto;
+  width: 100%;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.results-sentinel {
+  width: 100%;
+  height: 1px;
+  pointer-events: none;
 }
 
 .results-records-area {
@@ -1242,7 +1265,7 @@ input:disabled {
   overflow-wrap: anywhere;
 }
 
-.results-list.is-layout-pending .result-item {
+.result-item.is-masonry-pending {
   visibility: hidden;
 }
 

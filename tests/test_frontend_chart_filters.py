@@ -81,7 +81,10 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertIn("matchesInstitutionRecord,\n    matchesPublicPaper", self.app)
         self.assertIn("updateDatasetStatistics(visibleRecords, visiblePaperRecords)", self.app)
         self.assertIn("renderHeaderStatistics(visibleRecords, visiblePaperRecords)", self.app)
-        self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", self.app)
+        self.assertIn(
+            "renderResults(visibleRecords, visiblePaperRecords, activeGeneration)",
+            self.app,
+        )
 
     def test_ordered_country_region_summary_drives_display_filter_and_csv(self):
         self.assertIn("Object.assign(paper, orderedPaperLocationSummary(related))", self.app)
@@ -616,7 +619,7 @@ process.stdout.write(JSON.stringify({
         for consumer in (
             "updateDatasetStatistics(visibleRecords, visiblePaperRecords)",
             "renderHeaderStatistics(visibleRecords, visiblePaperRecords)",
-            "renderResults(visibleRecords, visiblePaperRecords)",
+            "renderResults(visibleRecords, visiblePaperRecords, activeGeneration)",
             "MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords",
         ):
             self.assertIn(consumer, render)
@@ -1015,7 +1018,7 @@ process.stdout.write(JSON.stringify({
             self.app.index("function downloadFilteredCsv"):
             self.app.index("function formatResolutionValue")
         ]
-        self.assertIn("renderResults(currentFilteredRecords, currentFilteredPaperRecords)", toggle)
+        self.assertIn("renderRecordsForGeneration({ generation })", toggle)
         self.assertIn("buildCsv(currentDisplayedResults, columns)", export)
         self.assertNotIn("recordMatchesActiveFilters", toggle)
 
@@ -1038,7 +1041,10 @@ process.stdout.write(JSON.stringify({
         self.assertIn('class="task-chart-total"', task_chart)
         self.assertIn("const matchesPublicPaper", render)
         self.assertIn("currentFilteredPaperRecords = visiblePaperRecords", render)
-        self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", render)
+        self.assertIn(
+            "renderResults(visibleRecords, visiblePaperRecords, activeGeneration)",
+            render,
+        )
         self.assertIn('resultsView === "papers"\n    ? PAPER_CSV_COLUMNS', self.app)
 
         node = shutil.which("node")
