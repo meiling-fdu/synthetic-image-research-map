@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-20T10:48:33Z |
+| public_preview_generated_at | 2026-08-20T13:44:58Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1167 |
+| Map records | 1175 |
 | Unique mapped papers | 520 |
-| Unique institutions | 598 |
+| Unique institutions | 597 |
 | Countries | 54 |
-| arXiv/preprint records | 559 |
-| Records with DOI | 1093 |
-| Records with venue | 1146 |
+| arXiv/preprint records | 562 |
+| Records with DOI | 1100 |
+| Records with venue | 1154 |
 | Records missing venue | 21 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -62,7 +62,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | AAAI Conference on Artificial Intelligence (AAAI) | 23 |
 | International Conference on Machine Learning (ICML) | 18 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 14 |
-| Advances in Neural Information Processing Systems (NeurIPS) | 12 |
+| Advances in Neural Information Processing Systems (NeurIPS) | 13 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 11 |
 | International Conference on Learning Representations (ICLR) | 10 |
 | European Conference on Computer Vision (ECCV) | 9 |
@@ -74,14 +74,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Country | Records |
 | --- | ---: |
 | China | 529 |
-| United States | 156 |
+| United States | 157 |
 | Italy | 88 |
 | India | 59 |
 | Germany | 39 |
-| South Korea | 32 |
-| United Kingdom | 32 |
+| South Korea | 34 |
+| United Kingdom | 33 |
 | France | 29 |
-| Singapore | 23 |
+| Singapore | 24 |
 | Australia | 18 |
 
 ## Top Institutions
@@ -103,7 +103,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1054 |
+| high | 1062 |
 | medium | 113 |
 
 ## Potential quality issues

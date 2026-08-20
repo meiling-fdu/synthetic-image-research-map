@@ -855,6 +855,14 @@
             <dt>Source</dt><dd><strong id="institution-merge-source-name"></strong><br><code id="institution-merge-source-id"></code></dd>
             <dt>Target</dt><dd><strong id="institution-merge-target-name"></strong><br><code id="institution-merge-target-id"></code></dd>
           </dl>
+          <fieldset id="institution-merge-location-resolution" hidden>
+            <legend>Resolve confirmed location conflict</legend>
+            <p>Both institutions have confirmed locations. Review both and choose which location the surviving institution should use.</p>
+            <label><input id="institution-merge-keep-target-location" type="radio" name="institution-merge-location-choice" value="keep_target"> Keep target location</label>
+            <div class="field-help" id="institution-merge-target-location"></div>
+            <label><input id="institution-merge-use-source-location" type="radio" name="institution-merge-location-choice" value="use_source"> Use source location</label>
+            <div class="field-help" id="institution-merge-source-location"></div>
+          </fieldset>
           <p class="dialog-warning">This action replaces the source institution with the target institution across mappings, aliases, locations, review records, and other institution references.</p>
           <div class="dialog-actions">
             <button class="secondary-button" id="institution-merge-confirm-cancel" type="button">Cancel</button>

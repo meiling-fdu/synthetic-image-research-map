@@ -205,6 +205,11 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "institution-merge-source-id",
     "institution-merge-target-name",
     "institution-merge-target-id",
+    "institution-merge-location-resolution",
+    "institution-merge-keep-target-location",
+    "institution-merge-use-source-location",
+    "institution-merge-target-location",
+    "institution-merge-source-location",
     "institution-merge-confirm-cancel",
     "institution-merge-submit",
     "institution-merge-error",
@@ -505,6 +510,8 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["institution-merge-search"].addEventListener("input", renderInstitutionMergeTargets);
   elements["institution-merge-results"].addEventListener("change", selectInstitutionMergeResult);
   elements["institution-merge-resolve"].addEventListener("click", resolveInstitutionMergeTarget);
+  elements["institution-merge-keep-target-location"].addEventListener("change", updateInstitutionMergeSubmitState);
+  elements["institution-merge-use-source-location"].addEventListener("change", updateInstitutionMergeSubmitState);
   elements["institution-merge-target-cancel"].addEventListener("click", closeInstitutionMergeDialog);
   elements["institution-merge-confirm-cancel"].addEventListener("click", closeInstitutionMergeDialog);
   elements["institution-merge-form"].addEventListener("submit", submitInstitutionMerge);
@@ -2381,6 +2388,33 @@ function openInstitutionMergeDialog(source) {
   elements["institution-merge-search"].focus();
 }
 
+function institutionMergeLocationText(institution) {
+  return (institution.locations || [])
+    .map((location) => [
+      location.city,
+      location.region,
+      location.country,
+      location.country_code,
+      location.lat && location.lon ? `${location.lat}, ${location.lon}` : "",
+    ].filter(Boolean).join(", "))
+    .join("; ");
+}
+
+function institutionMergeHasLocationConflict() {
+  const { source, target } = state.institutionMerge;
+  return Boolean(source?.locations?.length && target?.locations?.length);
+}
+
+function updateInstitutionMergeSubmitState() {
+  const requiresLocationChoice = institutionMergeHasLocationConflict();
+  const locationChoice = document.querySelector(
+    'input[name="institution-merge-location-choice"]:checked',
+  );
+  elements["institution-merge-submit"].disabled = Boolean(
+    !state.institutionMerge.target || (requiresLocationChoice && !locationChoice),
+  );
+}
+
 function resolveInstitutionMergeTarget() {
   hideInstitutionMergeError();
   try {
@@ -2413,10 +2447,14 @@ function resolveInstitutionMergeTarget() {
     elements["institution-merge-source-id"].textContent = shortInstitutionId(source.institution_id);
     elements["institution-merge-target-name"].textContent = target.canonical_name;
     elements["institution-merge-target-id"].textContent = shortInstitutionId(target.institution_id);
+    const locationConflict = institutionMergeHasLocationConflict();
+    elements["institution-merge-location-resolution"].hidden = !locationConflict;
+    elements["institution-merge-target-location"].textContent = institutionMergeLocationText(target);
+    elements["institution-merge-source-location"].textContent = institutionMergeLocationText(source);
     elements["institution-merge-target-step"].hidden = true;
     elements["institution-merge-confirm-step"].hidden = false;
-    elements["institution-merge-submit"].disabled = false;
-    elements["institution-merge-submit"].focus();
+    updateInstitutionMergeSubmitState();
+    if (!locationConflict) elements["institution-merge-submit"].focus();
   } catch (error) {
     state.institutionMerge.target = null;
     elements["institution-merge-submit"].disabled = true;
@@ -2436,6 +2474,14 @@ async function submitInstitutionMerge(event) {
   }
   const backendConfirmation =
     `REPLACE ${source.canonical_name} WITH ${target.canonical_name} GLOBALLY`;
+  const locationChoice = document.querySelector(
+    'input[name="institution-merge-location-choice"]:checked',
+  );
+  if (institutionMergeHasLocationConflict() && !locationChoice) {
+    showInstitutionMergeError("Choose which confirmed location to keep.");
+    updateInstitutionMergeSubmitState();
+    return;
+  }
   state.institutionMerge.submitting = true;
   elements["institution-merge-submit"].disabled = true;
   try {
@@ -2445,6 +2491,7 @@ async function submitInstitutionMerge(event) {
         source_institution_id: source.institution_id,
         target_institution_id: target.institution_id,
         confirmation: backendConfirmation,
+        location_resolution: locationChoice?.value || "",
       }),
     });
     state.institutionMerge.submitting = false;
@@ -2459,7 +2506,7 @@ async function submitInstitutionMerge(event) {
   } catch (error) {
     state.institutionMerge.submitting = false;
     showInstitutionMergeError(`Merge failed: ${error.message}`);
-    elements["institution-merge-submit"].disabled = false;
+    updateInstitutionMergeSubmitState();
   }
 }
 

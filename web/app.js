@@ -202,6 +202,7 @@ let paperRecords = [];
 let canonicalPaperRecordsByIdentity = new Map();
 let institutionAliases = [];
 let institutionHierarchy = [];
+let institutionSearchRelationships = [];
 let canonicalInstitutionSearchIndex = {};
 let institutionIdRedirects = {};
 let currentFilteredRecords = [];
@@ -1785,6 +1786,24 @@ function buildInstitutionHierarchyIndex(relationships) {
   return childrenByParent;
 }
 
+function buildInstitutionSearchRelationshipIndex(relationships) {
+  const relatedByRoot = new Map();
+  relationships.forEach((relationship) => {
+    if (relationship.review_status !== "confirmed"
+        || relationship.relationship_type !== "search_family") return;
+    const root = institutionIdentity({
+      institution_id: relationship.root_institution_id,
+    });
+    const related = institutionIdentity({
+      institution_id: relationship.related_institution_id,
+    });
+    if (!root || !related || root === related) return;
+    if (!relatedByRoot.has(root)) relatedByRoot.set(root, new Set());
+    relatedByRoot.get(root).add(related);
+  });
+  return relatedByRoot;
+}
+
 function institutionIdentityWithDescendants(identity, hierarchyIndex) {
   const identities = new Set(identity ? [identity] : []);
   if (!identity) return identities;
@@ -1812,10 +1831,39 @@ function institutionIdentitiesWithDescendants(identities, hierarchyIndex) {
   return expanded;
 }
 
+function institutionIdentitiesWithSearchExpansion(
+  identities,
+  hierarchyIndex,
+  searchRelationshipIndex,
+) {
+  const expanded = institutionIdentitiesWithDescendants(
+    identities,
+    hierarchyIndex,
+  );
+  const pending = [...expanded];
+  while (pending.length) {
+    const root = pending.pop();
+    (searchRelationshipIndex.get(root) || []).forEach((related) => {
+      institutionIdentityWithDescendants(related, hierarchyIndex).forEach(
+        (candidate) => {
+          if (expanded.has(candidate)) return;
+          expanded.add(candidate);
+          pending.push(candidate);
+        },
+      );
+    });
+  }
+  return expanded;
+}
+
 function recordMatchesInstitutionIdentities(record, identities, institutionRecord) {
   if (!identities?.size) return true;
   if (institutionRecord) return identities.has(institutionIdentity(record));
   const recordIdentities = recordInstitutionIdentities(record);
+  (Array.isArray(record.search_institution_ids)
+    ? record.search_institution_ids : []).forEach((institutionId) => {
+    recordIdentities.add(institutionIdentity({ institution_id: institutionId }));
+  });
   return [...identities].some((identity) => recordIdentities.has(identity));
 }
 
@@ -3253,14 +3301,21 @@ function renderRecords() {
     .split(/\s+/)
     .filter(Boolean);
   const hierarchyIndex = buildInstitutionHierarchyIndex(institutionHierarchy);
+  const searchRelationshipIndex = buildInstitutionSearchRelationshipIndex(
+    institutionSearchRelationships,
+  );
   const selectedIdentity = activeInstitutionFilter?.identity || resolvedInstitutionIdentity;
-  const resolvedInstitutionIdentities = institutionIdentitiesWithDescendants(
+  const resolvedInstitutionIdentities = institutionIdentitiesWithSearchExpansion(
     directlyResolvedInstitutionIdentities,
     hierarchyIndex,
+    searchRelationshipIndex,
   );
-  const activeInstitutionIdentities = institutionIdentityWithDescendants(
-    activeInstitutionFilter?.identity || "",
+  const activeInstitutionIdentities = institutionIdentitiesWithSearchExpansion(
+    activeInstitutionFilter?.identity
+      ? new Set([activeInstitutionFilter.identity])
+      : new Set(),
     hierarchyIndex,
+    searchRelationshipIndex,
   );
   const institutionLabel = activeInstitutionFilter?.label
     || hierarchyInstitutionLabel(selectedIdentity, institutionHierarchy)
@@ -3792,6 +3847,14 @@ function normalizeDatasetPayload(payload) {
           relationship.review_status === "confirmed"
         ))
         : [],
+      institutionSearchRelationships: Array.isArray(
+        payload.institution_search_relationships
+      )
+        ? payload.institution_search_relationships.filter((relationship) => (
+          relationship.review_status === "confirmed"
+          && relationship.relationship_type === "search_family"
+        ))
+        : [],
     };
   }
   throw new Error(`${datasetName} data does not contain a records array`);
@@ -3857,6 +3920,7 @@ async function readDataset(name) {
 function displayDataset(normalizedData) {
   institutionAliases = normalizedData.institutionAliases || [];
   institutionHierarchy = normalizedData.institutionHierarchy || [];
+  institutionSearchRelationships = normalizedData.institutionSearchRelationships || [];
   canonicalInstitutionSearchIndex = normalizedData.canonicalInstitutionSearchIndex || {};
   institutionIdRedirects = normalizedData.institutionIdRedirects || {};
   if (Array.isArray(normalizedData.metadata?.venue_type_order)) {

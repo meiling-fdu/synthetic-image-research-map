@@ -663,42 +663,39 @@ button.institution-filter-link:focus-visible {
 }
 
 .year-range-input::-webkit-slider-thumb {
-  width: 22px;
-  height: 22px;
-  margin-top: -9px;
-  border: 2px solid var(--paper);
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  margin-top: -12px;
+  border: 0;
+  border-radius: 0;
   background: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent-dark), 0 2px 4px rgb(18 39 49 / 24%);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  filter: drop-shadow(0 0 1px var(--paper)) drop-shadow(0 2px 2px rgb(18 39 49 / 38%));
   cursor: grab;
   pointer-events: auto;
   appearance: none;
 }
 
 .year-range-input::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border: 2px solid var(--paper);
-  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 0;
   background: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent-dark), 0 2px 4px rgb(18 39 49 / 24%);
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  filter: drop-shadow(0 0 1px var(--paper)) drop-shadow(0 2px 2px rgb(18 39 49 / 38%));
   cursor: grab;
   pointer-events: auto;
 }
 
 .year-range-input-end::-webkit-slider-thumb {
-  width: 14px;
-  height: 14px;
-  margin-top: -5px;
-  border-radius: 3px;
   background: var(--accent-dark);
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
 }
 
 .year-range-input-end::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
   background: var(--accent-dark);
+  clip-path: polygon(100% 0, 0 50%, 100% 100%);
 }
 
 .year-range-input:disabled::-webkit-slider-thumb {
