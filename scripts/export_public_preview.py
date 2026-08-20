@@ -85,7 +85,6 @@ try:
         utc_timestamp,
     )
     from .public_record_rules import paper_is_retracted
-    from .title_normalization import normalize_record_titles
     from .name_matching import (
         canonical_name_key,
         names_match,
@@ -177,7 +176,6 @@ except ImportError:  # Direct execution from the scripts directory.
         utc_timestamp,
     )
     from public_record_rules import paper_is_retracted
-    from title_normalization import normalize_record_titles
     from name_matching import (
         canonical_name_key,
         names_match,
@@ -4199,14 +4197,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             print(
                 "Migration warning: removed retired paper-level fields from "
                 f"{retired_fields_removed} preserved public records.",
-                flush=True,
-            )
-        normalized_public_titles = normalize_record_titles(integrated_papers)
-        normalized_public_titles += normalize_record_titles(integrated_maps)
-        if normalized_public_titles:
-            print(
-                "Normalized paper title capitalization in "
-                f"{normalized_public_titles} public records.",
                 flush=True,
             )
         payload["records"] = integrated_maps

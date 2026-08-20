@@ -4,7 +4,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any, Dict, Iterable, List, MutableMapping
+from typing import Any, Dict, List
 
 
 # These are lowercase only when they are not the first or last word of a title
@@ -160,19 +160,3 @@ def canonical_paper_title(value: Any) -> str:
         cursor = match.end()
     pieces.append(title[cursor:])
     return "".join(pieces)
-
-
-def normalize_record_titles(
-    records: Iterable[MutableMapping[str, Any]],
-) -> int:
-    """Normalize record titles in place and return the number changed."""
-    changed = 0
-    for record in records:
-        if "title" not in record:
-            continue
-        original = record.get("title")
-        normalized = canonical_paper_title(original)
-        if normalized != original:
-            record["title"] = normalized
-            changed += 1
-    return changed

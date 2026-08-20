@@ -1,5 +1,7 @@
 import csv
 import json
+import shutil
+import subprocess
 import tempfile
 import unittest
 from pathlib import Path
@@ -13,7 +15,14 @@ from scripts.curated_schema import PAPERS_COLUMNS
 from scripts.migrate_paper_titles import migrate_titles
 from scripts.title_normalization import (
     canonical_paper_title,
-    normalize_record_titles,
+)
+
+
+NODE = shutil.which("node") or str(
+    Path(
+        "/Users/meilinger/.cache/codex-runtimes/"
+        "codex-primary-runtime/dependencies/node/bin/node"
+    )
 )
 
 
@@ -75,14 +84,6 @@ class TitleNormalizationTests(unittest.TestCase):
             canonical_paper_title("automated in-the-wild detection"),
             "Automated In-the-Wild Detection",
         )
-
-    def test_public_record_normalization_updates_papers_and_markers(self):
-        records = [
-            {"title": "a detector for AI-generated images"},
-            {"title": "Already Correct"},
-        ]
-        self.assertEqual(normalize_record_titles(records), 1)
-        self.assertEqual(records[0]["title"], "A Detector for AI-Generated Images")
 
     def test_explicit_title_migration_is_idempotent(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -154,6 +155,81 @@ class TitleNormalizationTests(unittest.TestCase):
             self.assertEqual(
                 updated["title"], "Detection with CLIP: A Practical Guide"
             )
+
+    def test_admin_metadata_update_normalizes_existing_title_before_saving(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "papers.csv"
+            current = normalize_paper_draft(
+                {
+                    "title": "Temporary Canonical Title",
+                    "year": "2025",
+                    "authors": "Ada Author",
+                    "venue": "Pattern Recognition",
+                    "doi": "10.1000/metadata-update",
+                    "publication_type": "journal",
+                    "task": "detection",
+                    "paper_categories": ["method"],
+                    "source_database": "manual",
+                    "scope_status": "in_scope",
+                }
+            )
+            current.update(
+                {
+                    "paper_id": "curated:metadata-update",
+                    "title": "AI-generated image detection with GenImage",
+                    "created_at": "",
+                    "updated_at": "",
+                }
+            )
+            write_curated_papers([current], path)
+
+            updated = update_curated_paper(
+                current,
+                {"abstract": "Updated without resubmitting the title."},
+                preview_records=[],
+                path=path,
+            )
+
+            with path.open(encoding="utf-8", newline="") as handle:
+                stored = next(csv.DictReader(handle))
+            self.assertEqual(updated["title"], stored["title"])
+            self.assertEqual(
+                stored["title"],
+                "AI-Generated Image Detection with GenImage",
+            )
+
+    def test_public_frontend_renders_the_stored_title_without_recasing(self):
+        root = Path(__file__).resolve().parents[1]
+        app_source = (root / "web/app.js").read_text(encoding="utf-8")
+        export_source = (root / "scripts/export_public_preview.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertNotIn("canonical_paper_title", export_source)
+        self.assertNotIn("normalize_record_titles", export_source)
+        start = app_source.index("function recordTitle(record)")
+        end = app_source.index("\n}\n", start) + 2
+        record_title_source = app_source[start:end]
+        self.assertIn(
+            "${escapeHtml(recordTitle(record))}",
+            app_source,
+        )
+        stored_title = "A deliberately Lowercase Token with AI"
+        script = "\n".join(
+            (
+                record_title_source,
+                f"const record = {json.dumps({'title': stored_title})};",
+                "process.stdout.write(recordTitle(record));",
+            )
+        )
+
+        completed = subprocess.run(
+            [NODE, "-e", script],
+            cwd=root,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(completed.stdout, stored_title)
 
     def test_all_current_admin_and_public_records_are_canonical(self):
         root = Path(__file__).resolve().parents[1]
