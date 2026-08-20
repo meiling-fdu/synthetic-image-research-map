@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-13T09:03:59Z"
+    "public_preview_generated_at": "2026-08-16T13:40:56Z"
   },
   "records": [
     {
@@ -11183,7 +11183,7 @@
       "venue_type": "preprint",
       "publisher": "",
       "publication_type": "preprint",
-      "abstract": "",
+      "abstract": "Recent advances in generative AI have made synthetic Computed Tomography (CT) images increasingly realistic, enabling promising applications in medical data augmentation while raising serious concerns about clinical safety and data trustworthiness. Detecting AI-generated CT images remains challenging for two key reasons: existing benchmarks cover only limited generation sources, and many detectors are adapted from natural-image forensics without explicitly modeling CT-specific imaging properties. In this paper, we introduce CTForensics, a dataset for detecting AI-generated CT images. CTForensics contains 75,990 2D CT images, including a dedicated test benchmark of 29,990 balanced authentic and generated samples from ten representative CT generative models spanning GAN-based and diffusion-based paradigms. We further propose the Enhanced Spatial-Frequency CT Forgery Detector (ESF-CTFD), a CT-oriented CNN framework built around a Wavelet-Enhanced Central Stem, Multi-Scale Spatial Aggregation, and a Frequency-Aware Prediction Block. The Wavelet-Enhanced Central Stem enhances local intensity correlations and high-frequency residuals, Multi-Scale Spatial Aggregation aligns anatomical features across resolutions with lightweight residual units, and the Frequency-Aware Prediction Block models global spectral artifacts. Extensive experiments on CTForensics show that ESF-CTFD achieves 96.01% mAcc and 99.96% mAP, outperforming existing methods and maintaining strong robustness under realistic perturbations with only a 0.99% average drop. Codes will be available at https://github.com/liyih/CTForensics.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "",
@@ -11191,12 +11191,12 @@
       "arxiv_url": "https://arxiv.org/abs/2603.01878",
       "arxiv_year": null,
       "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2603.01878",
-      "primary_url": "http://arxiv.org/abs/2603.01878",
+      "paper_url": "",
+      "primary_url": "https://openalex.org/W7133363592",
       "landing_page_url": "http://arxiv.org/abs/2603.01878",
       "openalex_url": "https://openalex.org/W7133363592",
       "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2603.01878",
+      "url": "https://openalex.org/W7133363592",
       "authors": [
         {
           "name": "Yiheng Li",
@@ -11228,13 +11228,10 @@
           "affiliation_fallback": false
         },
         {
-          "name": "Yijun Ye",
-          "affiliation_indices": [
-            1,
-            2
-          ],
+          "name": "Yichun Yeh",
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
@@ -11257,18 +11254,9 @@
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
           "affiliation_fallback": false
-        },
-        {
-          "name": "Zicang Tan",
-          "affiliation_indices": [
-            4
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": false,
       "notes": "Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later.",
       "has_map_location": true,
@@ -11437,17 +11425,6 @@
           ]
         },
         {
-          "author": "Yijun Ye",
-          "institution_indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:69309405e04976ec",
-            "institution:966ff12833f90bb0"
-          ]
-        },
-        {
           "author": "Yang Yang",
           "institution_indices": [
             1,
@@ -11469,15 +11446,6 @@
             "institution:69309405e04976ec",
             "institution:966ff12833f90bb0",
             "institution:9dd7b58a09f6962c"
-          ]
-        },
-        {
-          "author": "Zicang Tan",
-          "institution_indices": [
-            4
-          ],
-          "institution_ids": [
-            "institution:a86e3c911036d069"
           ]
         }
       ],
@@ -11520,16 +11488,10 @@
           "fallback": false
         },
         {
-          "author": "Yijun Ye",
-          "indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:69309405e04976ec",
-            "institution:966ff12833f90bb0"
-          ],
-          "source": "curated_admin",
+          "author": "Yichun Yeh",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
@@ -11556,17 +11518,6 @@
             "institution:69309405e04976ec",
             "institution:966ff12833f90bb0",
             "institution:9dd7b58a09f6962c"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Zicang Tan",
-          "indices": [
-            4
-          ],
-          "institution_ids": [
-            "institution:a86e3c911036d069"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -11634,8 +11585,14 @@
       "ambiguity_status": "resolved",
       "venue_label": "arXiv",
       "paper_categories": [
-        "method"
+        "method",
+        "dataset"
       ],
+      "paper_id": "curated:a05de778283ed84d3f90",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "",
       "affiliations": [
         {
           "index": 1,
@@ -51554,11 +51511,20 @@
         "university"
       ],
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "ambiguity_status": "resolved",
       "formal_url": "https://doi.org/10.1109/access.2025.3534829",
       "paper_categories": [
         "method"
       ],
+      "venue_name": "IEEE Access",
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_type": "journal",
+      "venue_track": "",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -51832,21 +51798,22 @@
       ],
       "venue_id": "venue:iclr",
       "venue_acronym": "ICLR",
-      "venue_track": "workshops",
+      "venue_track": "main",
       "raw_venue": "arXiv (Cornell University)",
       "venue_aliases": [
         "International Conference on Learning Representations",
         "International Conference on Learning Representations (ICLR)"
       ],
       "ambiguity_status": "resolved",
-      "venue_label": "International Conference on Learning Representations (ICLR) · Workshops",
+      "venue_label": "International Conference on Learning Representations (ICLR)",
       "paper_id": "curated:718ce9e82d185c331bdf",
       "metadata_source": "openalex",
       "curation_status": "corrected_by_admin",
       "review_status": "reviewed",
       "formal_url": "https://openreview.net/pdf?id=TvSkPlDTVw",
       "paper_categories": [
-        "method"
+        "method",
+        "dataset"
       ],
       "affiliations": [
         {
@@ -53918,19 +53885,19 @@
         "university"
       ],
       "raw_venue": "Proceedings of the 4th Workshop on Security Implications of Deepfakes and Cheapfakes",
-      "ambiguity_status": "unmapped",
+      "ambiguity_status": "resolved",
       "paper_categories": [
         "method"
       ],
-      "venue_id": "venue:workshop-on-security-implications-of-deepfakes-and-cheapfakes:workshops",
+      "venue_id": "venue:workshop-on-security-implications-of-deepfakes-and-cheapfakes",
       "venue_name": "Workshop on Security Implications of Deepfakes and Cheapfakes",
-      "venue_acronym": "",
+      "venue_acronym": "WDC",
       "venue_type": "conference",
       "venue_track": "workshops",
       "venue_aliases": [
-        "Proceedings of the 4th Workshop on Security Implications of Deepfakes and Cheapfakes"
+        "Workshop on Security Implications of Deepfakes and Cheapfakes"
       ],
-      "venue_label": "Workshop on Security Implications of Deepfakes and Cheapfakes"
+      "venue_label": "Workshop on Security Implications of Deepfakes and Cheapfakes (WDC)"
     },
     {
       "paper_id": "curated:78e64e4829587c072681",
@@ -58191,9 +58158,11 @@
       "publication_date": "2025-07-03",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "dataset"
       ],
-      "venue": "Proceedings of the 4th Workshop on Security Implications of Deepfakes and Cheapfakes",
+      "venue": "Workshop on Security Implications of Deepfakes and Cheapfakes",
+      "venue_name": "Workshop on Security Implications of Deepfakes and Cheapfakes",
+      "venue_type": "conference",
       "publisher": "",
       "publication_type": "conference",
       "abstract": "AI-generated images are increasingly prevalent on the web, raising concerns about the real-world applicability of detection methods. While current detectors perform well on benchmark datasets, they suffer significant performance degradation on real-world datasets. Misalignment within benchmark datasets, caused by discrepancies in how data from different classes are encoded or transformed, leads models to learn shortcuts. These shortcuts make detectors overly reliant on factors such as image compression, causing biased predictions of real-world images that inevitably undergo compression. In this work, we reveal the misalignment in widely used benchmark datasets and demonstrate that aligning datasets improves model robustness and generalizability. Additionally, we propose leveraging pre-trained visual encoders to further enhance performance in real-world scenarios. Our approach achieves significant performance gains, highlighting the importance of dataset alignment for real-world AI-generated image detection.",
@@ -58226,7 +58195,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -58235,15 +58204,15 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": true,
+      "source_database": "openalex",
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 2,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -58251,12 +58220,22 @@
         {
           "institution_name": "Sungkyunkwan University",
           "institution_id": "institution:e80b94c605da24ce",
-          "institution_type": "other",
+          "institution_type": "university",
           "country": "South Korea",
           "country_code": "KR",
           "region": "",
           "region_code": "",
           "location_display": "South Korea"
+        },
+        {
+          "institution_name": "Sungkyunkwan University",
+          "institution_id": "institution:e80b94c605da24ce",
+          "institution_type": "university",
+          "country": "South Korea",
+          "country_code": "KR",
+          "region": "Gyeonggi-do",
+          "region_code": "",
+          "location_display": "Gyeonggi-do, South Korea"
         }
       ],
       "aggregated_institutions": [
@@ -58271,28 +58250,35 @@
       "aggregated_country_codes": [
         "KR"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Gyeonggi-do"
+      ],
       "aggregated_region_codes": [],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "paper_id": "curated:cba231098f84685520e8",
+      "venue_id": "venue:workshop-on-security-implications-of-deepfakes-and-cheapfakes",
+      "venue_acronym": "WDC",
+      "venue_track": "workshops",
       "raw_venue": "Proceedings of the 4th Workshop on Security Implications of Deepfakes and Cheapfakes",
-      "ambiguity_status": "unmapped",
-      "affiliations": [
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1145/3709022.3736541",
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Sungkyunkwan University",
-          "canonical_name": "Sungkyunkwan University",
+          "mapping_id": "mapping:6cb87449cd7d5c2943c4",
           "institution_id": "institution:e80b94c605da24ce",
-          "institution_type": "university",
-          "country": "South Korea",
-          "country_code": "",
-          "region": "",
-          "location_display": "South Korea"
+          "location_id": "location:e80b94c605da24cea15f",
+          "institution": "Sungkyunkwan University",
+          "institution_authors": [
+            "Hyeongjun Choi",
+            "Inho Jung",
+            "Simon S. Woo"
+          ],
+          "raw_affiliation": "Department of Artificial Intelligence, Sungkyunkwan University, South Korea",
+          "mapping_status": "active"
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -58302,45 +58288,11 @@
           "authors": [
             "Hyejoo Choi",
             "Inho Jung",
-            "Simon S. Woo"
+            "Simon S. Woo",
+            "Hyeongjun Choi"
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Hyejoo Choi",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:e80b94c605da24ce"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Inho Jung",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:e80b94c605da24ce"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Simon S. Woo",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:e80b94c605da24ce"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
         }
       ],
       "author_institution_indices": [
@@ -58370,6 +58322,62 @@
           "institution_ids": [
             "institution:e80b94c605da24ce"
           ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "Workshop on Security Implications of Deepfakes and Cheapfakes (WDC)",
+      "venue_aliases": [
+        "Workshop on Security Implications of Deepfakes and Cheapfakes"
+      ],
+      "ambiguity_status": "resolved",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Sungkyunkwan University",
+          "canonical_name": "Sungkyunkwan University",
+          "institution_id": "institution:e80b94c605da24ce",
+          "institution_type": "university",
+          "country": "South Korea",
+          "country_code": "",
+          "region": "Gyeonggi-do",
+          "location_display": "Gyeonggi-do, South Korea"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Hyejoo Choi",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Inho Jung",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Simon S. Woo",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ],
+          "source": "curated_admin",
+          "fallback": false
         }
       ]
     },
@@ -64409,10 +64417,11 @@
           "affiliation_indices": [
             2,
             3,
-            4
+            4,
+            6
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -64421,7 +64430,7 @@
             5
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -64430,7 +64439,7 @@
             5
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -64439,7 +64448,7 @@
             5
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -64448,7 +64457,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
@@ -64456,16 +64465,16 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex match recovered by conservative query-failure retry. Ready for manual paper import review.",
       "has_map_location": true,
-      "map_record_count": 5,
+      "map_record_count": 6,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Centre for Research and Technology Hellas (CERTH)",
-        "French National Centre for Scientific Research",
-        "Université Paris-Saclay",
         "Centre Borelli",
-        "Agence France-Presse"
+        "Agence France-Presse",
+        "French National Centre for Scientific Research",
+        "Paris-Saclay University"
       ],
       "aggregated_country_names": [
         "Greece",
@@ -64475,81 +64484,11 @@
         "GR",
         "FR"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
-          "institution_id": "institution:f841aa8a7a0d29aa",
-          "institution_type": "research_unit",
-          "country": "Greece",
-          "country_code": "",
-          "region": "",
-          "location_display": "Greece",
-          "source_institution_names": [
-            "Information Technologies Institute",
-            "Centre for Research and Technology Hellas"
-          ],
-          "preliminary": true
-        },
-        {
-          "index": 2,
-          "name": "French National Centre for Scientific Research",
-          "canonical_name": "French National Centre for Scientific Research",
-          "institution_id": "institution:29645bb566fcd576",
-          "institution_type": "research_unit",
-          "country": "France",
-          "country_code": "",
-          "region": "",
-          "location_display": "France",
-          "source_institution_names": [
-            "Centre National de la Recherche Scientifique"
-          ],
-          "preliminary": true
-        },
-        {
-          "index": 3,
-          "name": "Paris-Saclay University",
-          "canonical_name": "Paris-Saclay University",
-          "institution_id": "institution:0c5e25ec47ce33fe",
-          "institution_type": "university",
-          "country": "France",
-          "country_code": "",
-          "region": "",
-          "location_display": "France",
-          "source_institution_names": [
-            "Université Paris-Saclay"
-          ],
-          "preliminary": true
-        },
-        {
-          "index": 4,
-          "name": "Centre Borelli",
-          "canonical_name": "Centre Borelli",
-          "institution_id": "institution:995961c53e221f07",
-          "institution_type": "research_unit",
-          "country": "France",
-          "country_code": "",
-          "region": "",
-          "location_display": "France",
-          "preliminary": true
-        },
-        {
-          "index": 5,
-          "name": "Agence France-Presse",
-          "canonical_name": "Agence France-Presse",
-          "institution_id": "institution:e24529de73ecaa2c",
-          "institution_type": "other",
-          "country": "France",
-          "country_code": "",
-          "region": "",
-          "location_display": "France",
-          "preliminary": true
-        }
+      "aggregated_regions": [
+        "Central Macedonia",
+        "Île-de-France"
       ],
-      "current_institution": null,
+      "aggregated_region_codes": [],
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -64558,7 +64497,8 @@
           "institution_type": "research_unit",
           "authors": [
             "Dimitrios Karageogiou",
-            "Symeon Papadopoulos"
+            "Symeon Papadopoulos",
+            "Dimitrios Karageorgiou"
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
@@ -64602,7 +64542,7 @@
           "index": 4,
           "institution_id": "institution:995961c53e221f07",
           "institution": "Centre Borelli",
-          "institution_type": "research_unit",
+          "institution_type": "other",
           "authors": [
             "Quentin Bammey"
           ],
@@ -64623,6 +64563,15 @@
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
           "preliminary": true
+        },
+        {
+          "index": 6,
+          "institution_id": "institution:212d8dcc1a46b96e",
+          "institution": "ENS Paris-Saclay",
+          "institution_type": "other",
+          "authors": [],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -64640,12 +64589,14 @@
           "institution_indices": [
             2,
             3,
-            4
+            4,
+            6
           ],
           "institution_ids": [
             "institution:29645bb566fcd576",
             "institution:0c5e25ec47ce33fe",
-            "institution:995961c53e221f07"
+            "institution:995961c53e221f07",
+            "institution:212d8dcc1a46b96e"
           ]
         },
         {
@@ -64702,14 +64653,16 @@
           "indices": [
             2,
             3,
-            4
+            4,
+            6
           ],
           "institution_ids": [
             "institution:29645bb566fcd576",
             "institution:0c5e25ec47ce33fe",
-            "institution:995961c53e221f07"
+            "institution:995961c53e221f07",
+            "institution:212d8dcc1a46b96e"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -64720,7 +64673,7 @@
           "institution_ids": [
             "institution:e24529de73ecaa2c"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -64731,7 +64684,7 @@
           "institution_ids": [
             "institution:e24529de73ecaa2c"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -64742,7 +64695,7 @@
           "institution_ids": [
             "institution:e24529de73ecaa2c"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -64753,44 +64706,24 @@
           "institution_ids": [
             "institution:f841aa8a7a0d29aa"
           ],
-          "source": "canonical_author_mapping",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [
         {
           "institution_name": "Centre for Research and Technology Hellas (CERTH)",
           "institution_id": "institution:f841aa8a7a0d29aa",
-          "institution_type": "other",
+          "institution_type": "research_unit",
           "country": "Greece",
           "country_code": "GR",
           "region": "",
           "region_code": "",
           "location_display": "Greece"
-        },
-        {
-          "institution_name": "French National Centre for Scientific Research",
-          "institution_id": "institution:29645bb566fcd576",
-          "institution_type": "other",
-          "country": "France",
-          "country_code": "FR",
-          "region": "",
-          "region_code": "",
-          "location_display": "France"
-        },
-        {
-          "institution_name": "Université Paris-Saclay",
-          "institution_id": "institution:0c5e25ec47ce33fe",
-          "institution_type": "other",
-          "country": "France",
-          "country_code": "FR",
-          "region": "",
-          "region_code": "",
-          "location_display": "France"
         },
         {
           "institution_name": "Centre Borelli",
@@ -64811,6 +64744,36 @@
           "region": "",
           "region_code": "",
           "location_display": "France"
+        },
+        {
+          "institution_name": "Centre for Research and Technology Hellas (CERTH)",
+          "institution_id": "institution:f841aa8a7a0d29aa",
+          "institution_type": "research_unit",
+          "country": "Greece",
+          "country_code": "GR",
+          "region": "Central Macedonia",
+          "region_code": "",
+          "location_display": "Central Macedonia, Greece"
+        },
+        {
+          "institution_name": "French National Centre for Scientific Research",
+          "institution_id": "institution:29645bb566fcd576",
+          "institution_type": "research_unit",
+          "country": "France",
+          "country_code": "FR",
+          "region": "Île-de-France",
+          "region_code": "",
+          "location_display": "Île-de-France, France"
+        },
+        {
+          "institution_name": "Paris-Saclay University",
+          "institution_id": "institution:0c5e25ec47ce33fe",
+          "institution_type": "university",
+          "country": "France",
+          "country_code": "FR",
+          "region": "Île-de-France",
+          "region_code": "",
+          "location_display": "Île-de-France, France"
         }
       ],
       "aggregated_institution_types": [
@@ -64839,7 +64802,162 @@
       ],
       "paper_categories": [
         "dataset"
-      ]
+      ],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:9781457aa819b9f26ead",
+          "institution_id": "institution:f841aa8a7a0d29aa",
+          "location_id": "location:2be8edf081e0c9efdf5d",
+          "institution": "Centre for Research and Technology Hellas (CERTH)",
+          "institution_authors": [
+            "Dimitrios Karageorgiou",
+            "Symeon Papadopoulos"
+          ],
+          "raw_affiliation": "Information Technologies Institute, CERTH, Greece",
+          "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:6f965a92cdc1a450ab7e",
+          "institution_id": "institution:29645bb566fcd576",
+          "location_id": "location:29645bb566fcd57661c6",
+          "institution": "French National Centre for Scientific Research",
+          "institution_authors": [
+            "Quentin Bammey"
+          ],
+          "raw_affiliation": "CNRS",
+          "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:a6305ede5b6dfe7e26de",
+          "institution_id": "institution:0c5e25ec47ce33fe",
+          "location_id": "location:0c5e25ec47ce33feefff",
+          "institution": "Paris-Saclay University",
+          "institution_authors": [
+            "Quentin Bammey"
+          ],
+          "raw_affiliation": "Université Paris-Saclay, ENS Paris-Saclay",
+          "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:aaeea0f794690677e93c",
+          "institution_id": "institution:995961c53e221f07",
+          "location_id": "",
+          "institution": "Centre Borelli",
+          "institution_authors": [
+            "Quentin Bammey"
+          ],
+          "raw_affiliation": "Centre Borelli",
+          "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:52d1b26c6ea79d5c688d",
+          "institution_id": "institution:e24529de73ecaa2c",
+          "location_id": "",
+          "institution": "Agence France-Presse",
+          "institution_authors": [
+            "Valentin Porcellini",
+            "Bertrand Goupil",
+            "Denis Teyssou"
+          ],
+          "raw_affiliation": "Agence France-Presse, France",
+          "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:ed156b64d4b3c2e0df87",
+          "institution_id": "institution:212d8dcc1a46b96e",
+          "location_id": "",
+          "institution": "ENS Paris-Saclay",
+          "institution_authors": [
+            "Quentin Bammey"
+          ],
+          "raw_affiliation": "Université Paris-Saclay, ENS Paris-Saclay, CNRS, Centre Borelli, France",
+          "mapping_status": "active"
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "institution_id": "institution:f841aa8a7a0d29aa",
+          "institution_type": "research_unit",
+          "country": "Greece",
+          "country_code": "",
+          "region": "Central Macedonia",
+          "location_display": "Central Macedonia, Greece",
+          "source_institution_names": [
+            "Information Technologies Institute",
+            "Centre for Research and Technology Hellas"
+          ],
+          "preliminary": true
+        },
+        {
+          "index": 2,
+          "name": "French National Centre for Scientific Research",
+          "canonical_name": "French National Centre for Scientific Research",
+          "institution_id": "institution:29645bb566fcd576",
+          "institution_type": "research_unit",
+          "country": "France",
+          "country_code": "",
+          "region": "Île-de-France",
+          "location_display": "Île-de-France, France",
+          "source_institution_names": [
+            "Centre National de la Recherche Scientifique"
+          ],
+          "preliminary": true
+        },
+        {
+          "index": 3,
+          "name": "Paris-Saclay University",
+          "canonical_name": "Paris-Saclay University",
+          "institution_id": "institution:0c5e25ec47ce33fe",
+          "institution_type": "university",
+          "country": "France",
+          "country_code": "",
+          "region": "Île-de-France",
+          "location_display": "Île-de-France, France",
+          "source_institution_names": [
+            "Université Paris-Saclay"
+          ],
+          "preliminary": true
+        },
+        {
+          "index": 4,
+          "name": "Centre Borelli",
+          "canonical_name": "Centre Borelli",
+          "institution_id": "institution:995961c53e221f07",
+          "institution_type": "other",
+          "country": "France",
+          "country_code": "",
+          "region": "",
+          "location_display": "France",
+          "preliminary": true
+        },
+        {
+          "index": 5,
+          "name": "Agence France-Presse",
+          "canonical_name": "Agence France-Presse",
+          "institution_id": "institution:e24529de73ecaa2c",
+          "institution_type": "other",
+          "country": "France",
+          "country_code": "",
+          "region": "",
+          "location_display": "France",
+          "preliminary": true
+        },
+        {
+          "index": 6,
+          "name": "ENS Paris-Saclay",
+          "canonical_name": "ENS Paris-Saclay",
+          "institution_id": "institution:212d8dcc1a46b96e",
+          "institution_type": "other",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "ExDA: Towards Universal Detection and Plug-and-Play Attribution of AI-Generated Ex-Regulatory Images",
@@ -66157,6 +66275,7 @@
       "review_status": "reviewed",
       "formal_url": "https://doi.org/10.1109/tifs.2025.3597211",
       "paper_categories": [
+        "dataset",
         "benchmark"
       ],
       "affiliations": [
@@ -72292,7 +72411,8 @@
       "publication_date": "2023-05-23",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "method",
+        "dataset"
       ],
       "venue": "IEEE Transactions on Artificial Intelligence",
       "venue_name": "IEEE Transactions on Artificial Intelligence",
@@ -72320,21 +72440,25 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
           "name": "Jiantao Zhou",
-          "affiliation_indices": [],
+          "affiliation_indices": [
+            2
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
           "name": "Shile Zhang",
-          "affiliation_indices": [],
+          "affiliation_indices": [
+            3
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
@@ -72342,7 +72466,7 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 1,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -72356,10 +72480,32 @@
           "region": "",
           "region_code": "",
           "location_display": "China"
+        },
+        {
+          "institution_name": "University of Macau",
+          "institution_id": "institution:53e6219d595780e3",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Macau",
+          "region_code": "MO",
+          "location_display": "Macau, China"
+        },
+        {
+          "institution_name": "Macao Polytechnic University",
+          "institution_id": "institution:b8e44ef51464a97c",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Macau",
+          "region_code": "MO",
+          "location_display": "Macau, China"
         }
       ],
       "aggregated_institutions": [
-        "University of Electronic Science and Technology of China"
+        "University of Electronic Science and Technology of China",
+        "University of Macau",
+        "Macao Polytechnic University"
       ],
       "aggregated_institution_types": [
         "university"
@@ -72370,8 +72516,12 @@
       "aggregated_country_codes": [
         "CN"
       ],
-      "aggregated_regions": [],
-      "aggregated_region_codes": [],
+      "aggregated_regions": [
+        "Macau"
+      ],
+      "aggregated_region_codes": [
+        "MO"
+      ],
       "paper_id": "curated:0fb6a9c0db904eae726d",
       "venue_id": "venue:ieee-tai",
       "venue_acronym": "",
@@ -72381,10 +72531,108 @@
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
       "formal_url": "https://doi.org/10.1109/tai.2025.3641104",
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:61b85859e24c572c710f",
+          "institution_id": "institution:5fc8d686887fa82a",
+          "location_id": "",
+          "institution": "University of Electronic Science and Technology of China",
+          "institution_authors": [
+            "Haiwei Wu"
+          ],
+          "raw_affiliation": "School of Computer Science and Engineering, University of Electronic Science and Technology of China, Chengdu, China",
+          "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:f6ae71472a4250d653f3",
+          "institution_id": "institution:53e6219d595780e3",
+          "location_id": "location:53e6219d595780e300c1",
+          "institution": "University of Macau",
+          "institution_authors": [
+            "Jiantao Zhou"
+          ],
+          "raw_affiliation": "State Key Laboratory of Internet of Things for Smart City, and also with the Department of Computer and Information Science, Faculty of Science and Technology, University of Macau, Macau, China",
+          "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:07e467cb11c615cfa20d",
+          "institution_id": "institution:b8e44ef51464a97c",
+          "location_id": "location:b8e44ef51464a97caf45",
+          "institution": "Macao Polytechnic University",
+          "institution_authors": [
+            "Shile Zhang"
+          ],
+          "raw_affiliation": "Faculty of Applied Sciences, Macao Polytechnic University, Macau, China",
+          "mapping_status": "active"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:5fc8d686887fa82a",
+          "institution": "University of Electronic Science and Technology of China",
+          "institution_type": "university",
+          "authors": [
+            "Haiwei Wu"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:53e6219d595780e3",
+          "institution": "University of Macau",
+          "institution_type": "university",
+          "authors": [
+            "Jiantao Zhou"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:b8e44ef51464a97c",
+          "institution": "Macao Polytechnic University",
+          "institution_type": "university",
+          "authors": [
+            "Shile Zhang"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Haiwei Wu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:5fc8d686887fa82a"
+          ]
+        },
+        {
+          "author": "Jiantao Zhou",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:53e6219d595780e3"
+          ]
+        },
+        {
+          "author": "Shile Zhang",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:b8e44ef51464a97c"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
       "venue_label": "IEEE Transactions on Artificial Intelligence",
       "venue_aliases": [
         "IEEE Transactions on Artificial Intelligence"
@@ -72401,22 +72649,31 @@
           "country_code": "",
           "region": "",
           "location_display": "China"
+        },
+        {
+          "index": 2,
+          "name": "University of Macau",
+          "canonical_name": "University of Macau",
+          "institution_id": "institution:53e6219d595780e3",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Macau",
+          "location_display": "Macau, China"
+        },
+        {
+          "index": 3,
+          "name": "Macao Polytechnic University",
+          "canonical_name": "Macao Polytechnic University",
+          "institution_id": "institution:b8e44ef51464a97c",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Macau",
+          "location_display": "Macau, China"
         }
       ],
       "current_institution": null,
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:5fc8d686887fa82a",
-          "institution": "University of Electronic Science and Technology of China",
-          "institution_type": "university",
-          "authors": [
-            "Haiwei Wu"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        }
-      ],
       "author_affiliation_indices": [
         {
           "author": "Haiwei Wu",
@@ -72426,33 +72683,30 @@
           "institution_ids": [
             "institution:5fc8d686887fa82a"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Jiantao Zhou",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:53e6219d595780e3"
+          ],
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Shile Zhang",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
-          "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Haiwei Wu",
-          "institution_indices": [
-            1
+          "indices": [
+            3
           ],
           "institution_ids": [
-            "institution:5fc8d686887fa82a"
-          ]
+            "institution:b8e44ef51464a97c"
+          ],
+          "source": "curated_admin",
+          "fallback": false
         }
       ]
     },
@@ -73860,7 +74114,7 @@
       "publication_year": 2025,
       "publication_date": "",
       "task": "detection",
-      "venue": "Proceedings of the 1stWorkshop on GenAI Content Detection (GenAIDetect)",
+      "venue": "International Conference on Computational Linguistics",
       "publisher": "",
       "publication_type": "conference",
       "abstract": "With the advent of publicly available AI-based text-to-image systems, the\\nprocess of creating photorealistic but fully synthetic images has been largely\\ndemocratized. This can pose a threat to the public through a simplified spread\\nof disinformation. Machine detectors and human media expertise can help to\\ndifferentiate between AI-generated (fake) and real images and counteract this\\ndanger. Although AI generation models are highly prompt-dependent, the impact\\nof the prompt on the fake detection performance has rarely been investigated\\nyet. This work therefore examines the influence of the prompt's level of detail\\non the detectability of fake images, both with an AI detector and in a user\\nstudy. For this purpose, we create a novel dataset, COCOXGEN, which consists of\\nreal photos from the COCO dataset as well as images generated with SDXL and\\nFooocus using prompts of two standardized lengths. Our user study with 200\\nparticipants shows that images generated with longer, more detailed prompts are\\ndetected significantly more easily than those generated with short prompts.\\nSimilarly, an AI-based detection model achieves better performance on images\\ngenerated with longer prompts. However, humans and AI models seem to pay\\nattention to different details, as we show in a heat map analysis.\\n",
@@ -73884,7 +74138,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -73893,7 +74147,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
@@ -73906,8 +74160,8 @@
       "has_map_location": false,
       "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "paper_only_review",
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
@@ -73917,13 +74171,14 @@
         {
           "mapping_id": "mapping:ab1e8e8a5e0a18348cc3",
           "institution_id": "institution:d4c79ca44c5dbbbc",
+          "location_id": "",
           "institution": "Stuttgart Media University",
           "institution_authors": [
             "Philipp Moeßner",
             "Heike Adel"
           ],
           "raw_affiliation": "Hochschule der Medien Stuttgart , Germany",
-          "mapping_status": "needs_review"
+          "mapping_status": "active"
         }
       ],
       "author_institution_affiliations": [
@@ -73934,8 +74189,7 @@
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false,
-          "preliminary": true
+          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -73967,7 +74221,7 @@
           "institution_ids": [
             "institution:d4c79ca44c5dbbbc"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -73978,9 +74232,33 @@
           "institution_ids": [
             "institution:d4c79ca44c5dbbbc"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
+      ],
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "raw_venue": "Proceedings of the 1stWorkshop on GenAI Content Detection (GenAIDetect)",
+      "ambiguity_status": "resolved",
+      "formal_url": "",
+      "paper_categories": [
+        "method",
+        "dataset"
+      ],
+      "venue_name": "International Conference on Computational Linguistics",
+      "venue_id": "venue:international-conference-on-computational-linguistics",
+      "venue_acronym": "COLING",
+      "venue_type": "conference",
+      "venue_track": "workshops",
+      "venue_label": "International Conference on Computational Linguistics (COLING) · Workshops",
+      "venue_aliases": [
+        "International Conference on Computational Linguistics"
       ],
       "affiliations": [
         {
@@ -73992,25 +74270,10 @@
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": "",
-          "preliminary": true
+          "location_display": ""
         }
       ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "aggregated_locations": [],
-      "aggregated_institution_types": [
-        "university"
-      ],
-      "raw_venue": "Proceedings of the 1stWorkshop on GenAI Content Detection (GenAIDetect)",
-      "ambiguity_status": "unmapped",
-      "formal_url": "",
-      "paper_categories": [
-        "method"
-      ]
+      "current_institution": null
     },
     {
       "title": "Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective",
@@ -87109,11 +87372,20 @@
         "university"
       ],
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "ambiguity_status": "resolved",
       "formal_url": "https://doi.org/10.1109/access.2025.3597641",
       "paper_categories": [
         "method"
       ],
+      "venue_name": "IEEE Access",
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_type": "journal",
+      "venue_track": "",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -100072,6 +100344,8 @@
         "method"
       ],
       "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "journal",
       "publisher": "Institute of Electrical and Electronics Engineers",
       "publication_type": "journal",
       "abstract": "The rapid advancement of Artificial Intelligence (AI) models such as Generative Adversarial Networks (GANs) has been a great success in the field of image synthesis and creation. Artificially generated GAN-based images are widely spread over the Internet along with the development in generation of natural and photorealistic images. While this could lead to better digital media and content, it also poses a risk to security, legitimacy, and authenticity. The advancement of AI-generated images, particularly those that are produced by Generative Adversarial Networks (GANs), has created a rising concern about the potential misuse of these images in spreading misinformation and creating deepfakes. Detecting such fake or AI-generated images has become an important challenge in maintaining the integrity of digital media. In this research, we have explored the application of the Vision Transformer (ViTs) model for detecting AI-generated images, leveraging the Kaggle dataset - a balanced collection of real and AI-generated images. The Vision Transformer is recognized for its innovative method of treating images as sequences of patches and excels at identifying long-range dependencies and complex patterns within images. That makes it exceptionally well-suited for this task of detecting fake images. We have fine-tuned the ViT model on the dataset, performing data augmentation techniques on it and leveraging pretrained weights to boost the model’s performance. The findings thus obtained demonstrate that the ViT model attains a high level of accuracy in differentiating between real and AI-generated images, outperforming traditional CNN-based approaches. Beyond performance evaluation, we also conducted an ablation study to examine the impact of various components of the ViT model, including the number of attention heads, patch size, the impact of data augmentation, and the depth of layers. The results obtained in this study indicate that the ViT model not only excels in accuracy but also provides a robust framework for detecting AI-generated images across diverse scenarios. Our study shows the strength of transformer based models in addressing the increasing challenge of AI-generated image detection, laying a foundation for future research in this critical area. This experiment highlights that when the ViT model is fine tuned with optimal data augmentation techniques, it gains state of the art performance in AI-generated image detection, emphasizing its potential for real-world applications.",
@@ -100175,8 +100449,15 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_track": "",
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -102528,17 +102809,20 @@
       "publication_date": "2024-01-01",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "method",
+        "dataset"
       ],
       "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "journal",
       "publisher": "Institute of Electrical and Electronics Engineers",
       "publication_type": "journal",
       "abstract": "Recent advances in synthetic data have enabled the generation of images with such high quality that human beings cannot tell the difference between real-life photographs and Artificial Intelligence (AI) generated images. Given the critical necessity of data reliability and authentication, this article proposes to enhance our ability to recognise AI-generated images through computer vision. Initially, a synthetic dataset is generated that mirrors the ten classes of the already available CIFAR-10 dataset with latent diffusion, providing a contrasting set of images for comparison to real photographs. The model is capable of generating complex visual attributes, such as photorealistic reflections in water. The two sets of data present as a binary classification problem with regard to whether the photograph is real or generated by AI. This study then proposes the use of a Convolutional Neural Network (CNN) to classify the images into two categories; Real or Fake. Following hyperparameter tuning and the training of 36 individual network topologies, the optimal approach could correctly classify the images with 92.98% accuracy. Finally, this study implements explainable AI via Gradient Class Activation Mapping to explore which features within the images are useful for classification. Interpretation reveals interesting concepts within the image, in particular, noting that the actual entity itself does not hold useful information for classification; instead, the model focuses on small visual imperfections in the background of the images. The complete dataset engineered for this study, referred to as the CIFAKE dataset, is made publicly available to the research community for future work.",
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
       "doi": "10.1109/access.2024.3356122",
-      "arxiv_id": "2303.14126v1",
-      "arxiv_url": "https://arxiv.org/abs/2303.14126v1",
+      "arxiv_id": "2303.14126",
+      "arxiv_url": "https://arxiv.org/abs/2303.14126",
       "arxiv_year": 2023,
       "has_arxiv_version": true,
       "paper_url": "https://doi.org/10.1109/access.2024.3356122",
@@ -102567,7 +102851,7 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. | Manual key-paper expected_task applied.",
       "has_map_location": true,
@@ -102603,6 +102887,15 @@
         "Nottinghamshire"
       ],
       "aggregated_region_codes": [],
+      "paper_id": "curated:b698cb82df706d1a8c95",
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_track": "",
+      "raw_venue": "IEEE Access",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/access.2024.3356122",
       "affiliation_review_state": "curated",
       "curated_mappings": [
         {
@@ -102654,8 +102947,11 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
-      "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "venue_label": "IEEE Access",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "ambiguity_status": "resolved",
       "affiliations": [
         {
           "index": 1,
@@ -104407,7 +104703,8 @@
       "publication_date": "2024-01-03",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "method",
+        "dataset"
       ],
       "venue": "IEEE/CVF Winter Conference on Applications of Computer Vision",
       "venue_name": "IEEE/CVF Winter Conference on Applications of Computer Vision",
@@ -104418,8 +104715,8 @@
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
       "doi": "10.1109/wacv57701.2024.00402",
-      "arxiv_id": "2303.10762v4",
-      "arxiv_url": "https://arxiv.org/abs/2303.10762v4",
+      "arxiv_id": "2303.10762",
+      "arxiv_url": "https://arxiv.org/abs/2303.10762",
       "arxiv_year": 2023,
       "has_arxiv_version": true,
       "paper_url": "https://doi.org/10.1109/wacv57701.2024.00402",
@@ -104435,7 +104732,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -104444,52 +104741,85 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_locations": [
-        {
-          "institution_name": "Brandman University",
-          "institution_id": "institution:685d63d32831e960",
-          "institution_type": "university",
-          "country": "United States",
-          "country_code": "US",
-          "region": "",
-          "region_code": "",
-          "location_display": "United States"
-        }
-      ],
-      "aggregated_institutions": [
-        "Brandman University"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_locations": [],
+      "aggregated_institutions": [],
       "aggregated_institution_types": [
         "university"
       ],
-      "aggregated_country_names": [
-        "United States"
-      ],
-      "aggregated_country_codes": [
-        "US"
-      ],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "paper_id": "curated:04932cb03f767948ddf4",
       "venue_id": "venue:wacv",
       "venue_acronym": "WACV",
       "venue_track": "main",
       "raw_venue": "2024 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/wacv57701.2024.00402",
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:72e6480de06989fe821a",
+          "institution_id": "institution:ef0812aa48e97be6",
+          "location_id": "",
+          "institution": "Reichman University",
+          "institution_authors": [
+            "Sergey Sinitsa",
+            "Ohad Fried"
+          ],
+          "raw_affiliation": "Reichman University",
+          "mapping_status": "active"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:ef0812aa48e97be6",
+          "institution": "Reichman University",
+          "institution_type": "university",
+          "authors": [],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Sergey Sinitsa",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ef0812aa48e97be6"
+          ]
+        },
+        {
+          "author": "Ohad Fried",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ef0812aa48e97be6"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
       "venue_aliases": [
         "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
         "IEEE/CVF Winter Conference on Applications of Computer Vision",
@@ -104501,35 +104831,20 @@
         "IEEE/CVF Winter Conference on Applications of Computer Vision (WACVW) Workshop"
       ],
       "ambiguity_status": "resolved",
-      "venue_label": "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
       "affiliations": [
         {
           "index": 1,
-          "name": "Brandman University",
-          "canonical_name": "Brandman University",
-          "institution_id": "institution:685d63d32831e960",
+          "name": "Reichman University",
+          "canonical_name": "Reichman University",
+          "institution_id": "institution:ef0812aa48e97be6",
           "institution_type": "university",
-          "country": "United States",
+          "country": "",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": ""
         }
       ],
       "current_institution": null,
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:685d63d32831e960",
-          "institution": "Brandman University",
-          "institution_type": "university",
-          "authors": [
-            "Sergey Sinitsa",
-            "Ohad Fried"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        }
-      ],
       "author_affiliation_indices": [
         {
           "author": "Sergey Sinitsa",
@@ -104537,9 +104852,9 @@
             1
           ],
           "institution_ids": [
-            "institution:685d63d32831e960"
+            "institution:ef0812aa48e97be6"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -104548,30 +104863,10 @@
             1
           ],
           "institution_ids": [
-            "institution:685d63d32831e960"
+            "institution:ef0812aa48e97be6"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Sergey Sinitsa",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:685d63d32831e960"
-          ]
-        },
-        {
-          "author": "Ohad Fried",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:685d63d32831e960"
-          ]
         }
       ]
     },
@@ -111205,6 +111500,8 @@
         "method"
       ],
       "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "journal",
       "publisher": "Institute of Electrical and Electronics Engineers",
       "publication_type": "journal",
       "abstract": "The advancement of deep forgery technology has significantly impacted the credibility of media content, making the detection of deep forgeries crucial for ensuring media security. Although research on deepfake detection methods has been progressively advancing, current approaches predominantly rely on detecting and identifying artifacts. As deep forgery technology continually improves, high-quality synthetic images and those produced through reconstruction methods have become increasingly sophisticated, rendering artifact and trace detection methods somewhat limited. To address this issue, we introduce a deep forgery detection method that integrates deep neural networks with fine-grained artifact features. Our proposed method simulates diverse facial synthesis data by employing facial color conversion, facial frequency domain conversion, and facial mask deformation and blurring. This trains the deepfake detection model to adapt to various synthesis techniques. The classifier model is trained using multiple perturbations of authentic images, with fine-grained artifacts features ensuring the stability of the detection process. Our approach achieves superior accuracy and AUC values on the FF++ and WildDeepfake datasets, demonstrating its effectiveness and adaptability in detecting deep forgeries.",
@@ -111295,8 +111592,15 @@
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_track": "",
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -121196,7 +121500,7 @@
         "university"
       ],
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "ambiguity_status": "resolved",
       "paper_categories": [
         "method"
       ],
@@ -123158,6 +123462,259 @@
       ]
     },
     {
+      "paper_id": "curated:7e4d63017f1419256211",
+      "title": "Real-Time Deepfake Detection in the Real-World",
+      "in_scope": true,
+      "year": 2024,
+      "publication_year": 2024,
+      "publication_date": "",
+      "task": "detection",
+      "paper_categories": [
+        "method",
+        "dataset"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "abstract": "Recent improvements in generative AI made synthesizing fake images easy; as they can be used to cause harm, it is crucial to develop accurate techniques to identify them. This paper introduces \"Locally Aware Deepfake Detection Algorithm\" (LaDeDa), that accepts a single 9x9 image patch and outputs its deepfake score. The image deepfake score is the pooled score of its patches. With merely patch-level information, LaDeDa significantly improves over the state-of-the-art, achieving around 99% mAP on current benchmarks. Owing to the patch-level structure of LaDeDa, we hypothesize that the generation artifacts can be detected by a simple model. We therefore distill LaDeDa into Tiny-LaDeDa, a highly efficient model consisting of only 4 convolutional layers. Remarkably, Tiny-LaDeDa has 375x fewer FLOPs and is 10,000x more parameter-efficient than LaDeDa, allowing it to run efficiently on edge devices with a minor decrease in accuracy. These almost-perfect scores raise the question: is the task of deepfake detection close to being solved? Perhaps surprisingly, our investigation reveals that current training protocols prevent methods from generalizing to real-world deepfakes extracted from social media. To address this issue, we introduce WildRF, a new deepfake detection dataset curated from several popular social networks. Our method achieves the top performance of 93.7% mAP on WildRF, however the large gap from perfect accuracy shows that reliable real-world deepfake detection is still unsolved.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.48550/arxiv.2406.09398",
+      "arxiv_id": "2406.09398",
+      "arxiv_url": "https://arxiv.org/abs/2406.09398",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://openalex.org/W4399695946",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4399695946",
+      "is_arxiv_preprint": false,
+      "url": "https://openalex.org/W4399695946",
+      "authors": [
+        {
+          "name": "Bar Cavia",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Eliahu Horwitz",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Tal Reiss",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Yedid Hoshen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": false,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "The Hebrew University of Jerusalem"
+      ],
+      "aggregated_country_names": [
+        "Israel"
+      ],
+      "aggregated_country_codes": [
+        "IL"
+      ],
+      "aggregated_regions": [
+        "Jerusalem District"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:e86779401891198b346d",
+          "institution_id": "institution:ad93ddd1194b7b31",
+          "location_id": "",
+          "institution": "The Hebrew University of Jerusalem",
+          "institution_authors": [
+            "Bar Cavia",
+            "Eliahu Horwitz",
+            "Tal Reiss",
+            "Yedid Hoshen"
+          ],
+          "raw_affiliation": "School of Computer Science and Engineering, The Hebrew University of Jerusalem, Israel",
+          "mapping_status": "active"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:ad93ddd1194b7b31",
+          "institution": "The Hebrew University of Jerusalem",
+          "institution_type": "university",
+          "authors": [
+            "Bar Cavia",
+            "Eliahu Horwitz",
+            "Tal Reiss",
+            "Yedid Hoshen"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Bar Cavia",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ]
+        },
+        {
+          "author": "Eliahu Horwitz",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ]
+        },
+        {
+          "author": "Tal Reiss",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ]
+        },
+        {
+          "author": "Yedid Hoshen",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "The Hebrew University of Jerusalem",
+          "institution_id": "institution:ad93ddd1194b7b31",
+          "institution_type": "university",
+          "country": "Israel",
+          "country_code": "IL",
+          "region": "Jerusalem District",
+          "region_code": "",
+          "location_display": "Jerusalem District, Israel"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Bar Cavia",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Eliahu Horwitz",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Tal Reiss",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yedid Hoshen",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:ad93ddd1194b7b31"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "The Hebrew University of Jerusalem",
+          "canonical_name": "The Hebrew University of Jerusalem",
+          "institution_id": "institution:ad93ddd1194b7b31",
+          "institution_type": "university",
+          "country": "Israel",
+          "country_code": "",
+          "region": "Jerusalem District",
+          "location_display": "Jerusalem District, Israel"
+        }
+      ],
+      "current_institution": null
+    },
+    {
       "title": "Rethinking the Up-Sampling Operations in CNN-Based Generative Network for Generalizable Deepfake Detection",
       "in_scope": true,
       "year": 2024,
@@ -124340,7 +124897,7 @@
       "publication_year": 2024,
       "publication_date": "",
       "task": "detection",
-      "venue": "Advances in Neural Information Processing Systems (NeurIPS)",
+      "venue": "Advances in Neural Information Processing Systems",
       "raw_venue": "Advances in Neural Information Processing Systems (NeurIPS)",
       "publisher": "",
       "publication_type": "conference",
@@ -124575,7 +125132,7 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
-      "ambiguity_status": "unmapped",
+      "ambiguity_status": "resolved",
       "aggregated_locations": [
         {
           "institution_name": "Georgia Institute of Technology",
@@ -124682,7 +125239,17 @@
       ],
       "formal_url": "https://doi.org/10.52202/079017-3748",
       "paper_categories": [
-        "method"
+        "dataset"
+      ],
+      "venue_name": "Advances in Neural Information Processing Systems",
+      "venue_id": "venue:neurips",
+      "venue_acronym": "NeurIPS",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "venue_label": "Advances in Neural Information Processing Systems (NeurIPS)",
+      "venue_aliases": [
+        "Advances in Neural Information Processing Systems",
+        "NeurIPS"
       ],
       "affiliations": [
         {
@@ -131902,6 +132469,8 @@
         "method"
       ],
       "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "journal",
       "publisher": "Institute of Electrical and Electronics Engineers",
       "publication_type": "journal",
       "abstract": "Recent advancements in computer vision processing need potent tools to create realistic deepfakes. A generative adversarial network (GAN) can fake the captured media streams, such as images, audio, and video, and make them visually fit other environments. So, the dissemination of fake media streams creates havoc in social communities and can destroy the reputation of a person or a community. Moreover, it manipulates public sentiments and opinions toward the person or community. Recent studies have suggested using the convolutional neural network (CNN) as an effective tool to detect deepfakes in the network. But, most techniques cannot capture the inter-frame dissimilarities of the collected media streams. Motivated by this, this paper presents a novel and improved deep-CNN (D-CNN) architecture for deepfake detection with reasonable accuracy and high generalizability. Images from multiple sources are captured to train the model, improving overall generalizability capabilities. The images are re-scaled and fed to the D-CNN model. A binary-cross entropy and Adam optimizer are utilized to improve the learning rate of the D-CNN model. We have considered seven different datasets from the reconstruction challenge with 5000 deepfake images and 10000 real images. The proposed model yields an accuracy of 98.33% in AttGAN <sup xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><i>a</i></sup> , 99.33% in GDWCT <sup xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><i>b</i></sup> , 95.33% in StyleGAN, 94.67% in StyleGAN2, and 99.17% in StarGAN <sup xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\"><i>c</i></sup> real and deepfake images, that indicates its viability in experimental setups.",
@@ -132056,8 +132625,15 @@
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_track": "",
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -134281,7 +134857,7 @@
       "venue_type": "preprint",
       "publisher": "Cornell University",
       "publication_type": "preprint",
-      "abstract": "",
+      "abstract": "This paper explores the image synthesis capabilities of GPT-4, a leading multi\u0002modal large language model. We establish a benchmark for evaluating the fidelity of texture features in images generated by GPT-4, comprising manually painted pictures and their AI-generated counterparts. The contributions of this study are threefold: First, we provide an in-depth analysis of the fidelity of image synthesis features based on GPT-4, marking the first such study on this state-of-the-art model. Second, the quantitative and qualitative experiments fully reveals the limitations of the GPT-4 model in image synthesis. Third, we have compiled a unique benchmark of manual drawings and corresponding GPT-4-generated images, introducing a new task to advance fidelity research in AI-generated content (AIGC). The dataset is available at: https://github.com/rickwang28574/DeepArt.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.48550/arxiv.2312.10407",
@@ -134289,12 +134865,12 @@
       "arxiv_url": "https://arxiv.org/abs/2312.10407",
       "arxiv_year": null,
       "has_arxiv_version": true,
-      "paper_url": "http://arxiv.org/abs/2312.10407",
-      "primary_url": "http://arxiv.org/abs/2312.10407",
+      "paper_url": "",
+      "primary_url": "https://openalex.org/W4389983109",
       "landing_page_url": "http://arxiv.org/abs/2312.10407",
       "openalex_url": "https://openalex.org/W4389983109",
       "is_arxiv_preprint": true,
-      "url": "http://arxiv.org/abs/2312.10407",
+      "url": "https://openalex.org/W4389983109",
       "authors": [
         {
           "name": "Wentao Wang",
@@ -134333,7 +134909,7 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review. Imported from a manual import-ready CSV. Strong OpenAlex title match; ready for broad paper-level import. Marker depends on affiliation/coordinates.",
       "has_map_location": true,
@@ -134568,8 +135144,14 @@
       "ambiguity_status": "resolved",
       "venue_label": "arXiv",
       "paper_categories": [
+        "dataset",
         "benchmark"
       ],
+      "paper_id": "curated:e952f6b86662d0a4372a",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "",
       "affiliations": [
         {
           "index": 1,
@@ -135171,6 +135753,8 @@
         "method"
       ],
       "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "journal",
       "publisher": "Institute of Electrical and Electronics Engineers",
       "publication_type": "journal",
       "abstract": "In smart communities, social media has allowed users easy access to multimedia content. With recent advancements in computer vision and natural language processing, machine learning (ML), and deep learning (DL) models have evolved. With advancements in generative adversarial networks (GAN), it has become possible to create fake images/audio/and video streams of a person or use some person’s audio and visual details to fit other environments. Thus, deepfakes are specifically used to disseminate fake information and propaganda on social circles that tarnish the reputation of an individual or an organization. Recently, many surveys have focused on generating and detecting deepfake images, audio, and video streams. Existing surveys are mostly aligned toward detecting deepfake contents, but the generation process is not suitably discussed. To address the survey gap, the paper proposes a comprehensive review of deepfake generation and detection and the different ML/DL approaches to synthesize deepfake contents. We discuss a comparative analysis of deepfake models and public datasets present for deepfake detection purposes. We discuss the implementation challenges and future research directions regarding optimized approaches and models. A unique case study, <italic xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">IBMM</i> is discussed, which presents a multi-modal overview of deepfake detection. The proposed survey would benefit researchers, industry, and academia to study deepfake generation and subsequent detection schemes.",
@@ -135319,8 +135903,15 @@
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_track": "",
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -136485,6 +137076,321 @@
       "current_institution": null
     },
     {
+      "paper_id": "curated:763f1f0571f4bc4c6459",
+      "title": "DiffusionDB: A Large-Scale Prompt Gallery Dataset for Text-to-Image Generative Models",
+      "in_scope": true,
+      "year": 2023,
+      "publication_year": 2023,
+      "publication_date": "",
+      "task": "detection",
+      "paper_categories": [
+        "dataset"
+      ],
+      "venue": "Annual Meeting of the Association for Computational Linguistics",
+      "venue_name": "Annual Meeting of the Association for Computational Linguistics",
+      "venue_id": "venue:acl",
+      "venue_acronym": "ACL",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "Annual Meeting of the Association for Computational Linguistics",
+      "publisher": "",
+      "publication_type": "conference",
+      "abstract": "With recent advancements in diffusion models, users can generate high-quality images by writing text prompts in natural language. However, generating images with desired details requires proper prompts, and it is often unclear how a model reacts to different prompts or what the best prompts are. To help researchers tackle these critical challenges, we introduce DiffusionDB, the first large-scale text-to-image prompt dataset totaling 6.5TB, containing 14 million images generated by Stable Diffusion, 1.8 million unique prompts, and hyperparameters specified by real users. We analyze the syntactic and semantic characteristics of prompts. We pinpoint specific hyperparameter values and prompt styles that can lead to model errors and present evidence of potentially harmful model usage, such as the generation of misinformation. The unprecedented scale and diversity of this human-actuated dataset provide exciting research opportunities in understanding the interplay between prompts and generative models, detecting deepfakes, and designing human-AI interaction tools to help users more easily use these models. DiffusionDB is publicly available at: https://poloclub.github.io/diffusiondb.",
+      "abstract_source": "openalex",
+      "ai_summary": "",
+      "doi": "10.18653/v1/2023.acl-long.51",
+      "arxiv_id": "2210.14896",
+      "arxiv_url": "https://arxiv.org/abs/2210.14896",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "https://doi.org/10.18653/v1/2023.acl-long.51",
+      "formal_url": "https://doi.org/10.18653/v1/2023.acl-long.51",
+      "primary_url": "https://doi.org/10.18653/v1/2023.acl-long.51",
+      "landing_page_url": "",
+      "openalex_url": "https://openalex.org/W4385570204",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.18653/v1/2023.acl-long.51",
+      "authors": [
+        {
+          "name": "Zijie J. Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Evan Montoya",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "David Munechika",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Haoyang Yang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Benjamin Hoover",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Duen Horng Chau",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "source_database": "openalex",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "needs_review": false,
+      "has_map_location": true,
+      "map_record_count": 1,
+      "missing_affiliation": false,
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_institutions": [
+        "Georgia Institute of Technology"
+      ],
+      "aggregated_country_names": [
+        "United States"
+      ],
+      "aggregated_country_codes": [
+        "US"
+      ],
+      "aggregated_regions": [
+        "Georgia"
+      ],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:0ec360c4bc0c3ef88dc1",
+          "institution_id": "institution:c2dab080fa856716",
+          "location_id": "location:c2dab080fa8567162a91",
+          "institution": "Georgia Institute of Technology",
+          "institution_authors": [
+            "Zijie J. Wang",
+            "Evan Montoya",
+            "David Munechika",
+            "Haoyang Yang",
+            "Benjamin Hoover",
+            "Duen Horng Chau"
+          ],
+          "raw_affiliation": "College of Computing, Georgia Tech",
+          "mapping_status": "active"
+        }
+      ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:c2dab080fa856716",
+          "institution": "Georgia Institute of Technology",
+          "institution_type": "university",
+          "authors": [
+            "Zijie J. Wang",
+            "Evan Montoya",
+            "David Munechika",
+            "Haoyang Yang",
+            "Benjamin Hoover",
+            "Duen Horng Chau"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Zijie J. Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ]
+        },
+        {
+          "author": "Evan Montoya",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ]
+        },
+        {
+          "author": "David Munechika",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ]
+        },
+        {
+          "author": "Haoyang Yang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ]
+        },
+        {
+          "author": "Benjamin Hoover",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ]
+        },
+        {
+          "author": "Duen Horng Chau",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "Annual Meeting of the Association for Computational Linguistics (ACL)",
+      "venue_aliases": [
+        "Annual Meeting of the Association for Computational Linguistics",
+        "Annual Meeting of the Association for Computational Linguistics (ACL)",
+        "Findings of the Association for Computational Linguistics (ACL)",
+        "Annual Meeting of the Association for Computational Linguistics (Volume 6: Industry Track)"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [
+        {
+          "institution_name": "Georgia Institute of Technology",
+          "institution_id": "institution:c2dab080fa856716",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "US",
+          "region": "Georgia",
+          "region_code": "",
+          "location_display": "Georgia, United States"
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "author_affiliation_indices": [
+        {
+          "author": "Zijie J. Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Evan Montoya",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "David Munechika",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Haoyang Yang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Benjamin Hoover",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Duen Horng Chau",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:c2dab080fa856716"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Georgia Institute of Technology",
+          "canonical_name": "Georgia Institute of Technology",
+          "institution_id": "institution:c2dab080fa856716",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "Georgia",
+          "location_display": "Georgia, United States"
+        }
+      ],
+      "current_institution": null
+    },
+    {
       "title": "Digital Image Forensic Analyzer to Detect AI-Generated Fake Images",
       "in_scope": true,
       "year": 2023,
@@ -136652,7 +137558,8 @@
       "publication_date": "2023-10-01",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "method",
+        "dataset"
       ],
       "venue": "IEEE/CVF International Conference on Computer Vision",
       "venue_name": "IEEE/CVF International Conference on Computer Vision",
@@ -136663,8 +137570,8 @@
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
       "doi": "10.1109/iccv51070.2023.02051",
-      "arxiv_id": "2303.09295v1",
-      "arxiv_url": "https://arxiv.org/abs/2303.09295v1",
+      "arxiv_id": "2303.09295",
+      "arxiv_url": "https://arxiv.org/abs/2303.09295",
       "arxiv_year": 2023,
       "has_arxiv_version": true,
       "paper_url": "https://doi.org/10.1109/iccv51070.2023.02051",
@@ -136740,7 +137647,7 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
@@ -136813,6 +137720,15 @@
         "Guangdong"
       ],
       "aggregated_region_codes": [],
+      "paper_id": "curated:5d3c6fda5b268e0153ec",
+      "venue_id": "venue:iccv",
+      "venue_acronym": "ICCV",
+      "venue_track": "main",
+      "raw_venue": "2023 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/iccv51070.2023.02051",
       "affiliation_review_state": "curated",
       "curated_mappings": [
         {
@@ -136987,17 +137903,13 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
-      "venue_id": "venue:iccv",
-      "venue_acronym": "ICCV",
-      "venue_track": "main",
-      "raw_venue": "2023 IEEE/CVF International Conference on Computer Vision (ICCV)",
+      "venue_label": "IEEE/CVF International Conference on Computer Vision (ICCV)",
       "venue_aliases": [
         "IEEE/CVF International Conference on Computer Vision (ICCV)",
         "IEEE/CVF International Conference on Computer Vision",
         "IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)"
       ],
       "ambiguity_status": "resolved",
-      "venue_label": "IEEE/CVF International Conference on Computer Vision (ICCV)",
       "affiliations": [
         {
           "index": 1,
@@ -141178,7 +142090,8 @@
       "publication_date": "2023-05-05",
       "task": "detection",
       "paper_categories": [
-        "method"
+        "method",
+        "dataset"
       ],
       "venue": "IEEE International Conference on Acoustics, Speech and Signal Processing",
       "venue_name": "IEEE International Conference on Acoustics, Speech and Signal Processing",
@@ -141189,8 +142102,8 @@
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
       "doi": "10.1109/icassp49357.2023.10095167",
-      "arxiv_id": "2211.00680v1",
-      "arxiv_url": "https://arxiv.org/abs/2211.00680v1",
+      "arxiv_id": "2211.00680",
+      "arxiv_url": "https://arxiv.org/abs/2211.00680",
       "arxiv_year": 2022,
       "has_arxiv_version": true,
       "paper_url": "https://doi.org/10.1109/icassp49357.2023.10095167",
@@ -141238,9 +142151,11 @@
         },
         {
           "name": "Koki Nagano",
-          "affiliation_indices": [],
+          "affiliation_indices": [
+            2
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -141253,8 +142168,8 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
-      "needs_review": false,
+      "source_database": "openalex",
+      "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
@@ -141277,7 +142192,8 @@
         "University of Naples Federico II"
       ],
       "aggregated_institution_types": [
-        "university"
+        "university",
+        "company"
       ],
       "aggregated_country_names": [
         "Italy"
@@ -141289,6 +142205,15 @@
         "Campania"
       ],
       "aggregated_region_codes": [],
+      "paper_id": "curated:a35e111d52c6ad788ef7",
+      "venue_id": "venue:icassp",
+      "venue_acronym": "ICASSP",
+      "venue_track": "main",
+      "raw_venue": "ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1109/icassp49357.2023.10095167",
       "affiliation_review_state": "curated",
       "curated_mappings": [
         {
@@ -141305,6 +142230,17 @@
           ],
           "raw_affiliation": "University Federico II of Naples, Italy",
           "mapping_status": "active"
+        },
+        {
+          "mapping_id": "mapping:34f5349ebec9401a4f45",
+          "institution_id": "institution:8d4321d936320802",
+          "location_id": "",
+          "institution": "NVIDIA",
+          "institution_authors": [
+            "Koki Nagano"
+          ],
+          "raw_affiliation": "NVIDIA",
+          "mapping_status": "active"
         }
       ],
       "author_institution_affiliations": [
@@ -141320,6 +142256,15 @@
             "Giovanni Poggi",
             "Luisa Verdoliva"
           ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:8d4321d936320802",
+          "institution": "NVIDIA",
+          "institution_type": "company",
+          "authors": [],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false
         }
@@ -141362,6 +142307,15 @@
           ]
         },
         {
+          "author": "Koki Nagano",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:8d4321d936320802"
+          ]
+        },
+        {
           "author": "Luisa Verdoliva",
           "institution_indices": [
             1
@@ -141373,10 +142327,7 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
-      "venue_id": "venue:icassp",
-      "venue_acronym": "ICASSP",
-      "venue_track": "main",
-      "raw_venue": "ICASSP 2023 - 2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+      "venue_label": "IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
       "venue_aliases": [
         "IEEE International Conference on Acoustics Speech and Signal Processing (ICASSP)",
         "IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
@@ -141390,7 +142341,6 @@
         "ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"
       ],
       "ambiguity_status": "resolved",
-      "venue_label": "IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
       "affiliations": [
         {
           "index": 1,
@@ -141402,6 +142352,17 @@
           "country_code": "",
           "region": "Campania",
           "location_display": "Campania, Italy"
+        },
+        {
+          "index": 2,
+          "name": "NVIDIA",
+          "canonical_name": "NVIDIA",
+          "institution_id": "institution:8d4321d936320802",
+          "institution_type": "company",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
         }
       ],
       "current_institution": null,
@@ -141452,9 +142413,13 @@
         },
         {
           "author": "Koki Nagano",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:8d4321d936320802"
+          ],
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -144579,7 +145544,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -144588,7 +145553,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -144597,7 +145562,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
@@ -144618,7 +145583,9 @@
       "aggregated_country_codes": [
         "US"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Wisconsin"
+      ],
       "aggregated_region_codes": [],
       "author_institution_affiliations": [
         {
@@ -144632,8 +145599,7 @@
             "Yong Jae Lee"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false,
-          "preliminary": true
+          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -144674,7 +145640,7 @@
           "institution_ids": [
             "institution:3e2e527953176c93"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -144685,7 +145651,7 @@
           "institution_ids": [
             "institution:3e2e527953176c93"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -144696,7 +145662,7 @@
           "institution_ids": [
             "institution:3e2e527953176c93"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
@@ -144704,36 +145670,35 @@
       "metadata_source": "openalex",
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
-      "curated_mappings": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "University of Wisconsin-Madison",
-          "canonical_name": "University of Wisconsin-Madison",
+          "mapping_id": "mapping:014b41a09e42e4ae8fa6",
           "institution_id": "institution:3e2e527953176c93",
-          "institution_type": "university",
-          "country": "United States",
-          "country_code": "",
-          "region": "",
-          "location_display": "United States",
-          "preliminary": true
+          "location_id": "location:3e2e527953176c93d518",
+          "institution": "University of Wisconsin-Madison",
+          "institution_authors": [
+            "Utkarsh Ojha",
+            "Yuheng Li",
+            "Yong Jae Lee"
+          ],
+          "raw_affiliation": "University of Wisconsin-Madison",
+          "mapping_status": "active"
         }
       ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [
         {
           "institution_name": "University of Wisconsin-Madison",
           "institution_id": "institution:3e2e527953176c93",
-          "institution_type": "other",
+          "institution_type": "university",
           "country": "United States",
           "country_code": "US",
-          "region": "",
+          "region": "Wisconsin",
           "region_code": "",
-          "location_display": "United States"
+          "location_display": "Wisconsin, United States"
         }
       ],
       "aggregated_institution_types": [
@@ -144755,8 +145720,23 @@
       "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
       "formal_url": "https://doi.org/10.1109/cvpr52729.2023.02345",
       "paper_categories": [
-        "method"
-      ]
+        "method",
+        "dataset"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "University of Wisconsin-Madison",
+          "canonical_name": "University of Wisconsin-Madison",
+          "institution_id": "institution:3e2e527953176c93",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "Wisconsin",
+          "location_display": "Wisconsin, United States"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "TWIGMA: A Dataset of AI-Generated Images with Metadata from Twitter",
@@ -162581,6 +163561,8 @@
         "analysis"
       ],
       "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "journal",
       "publisher": "Institute of Electrical and Electronics Engineers",
       "publication_type": "journal",
       "abstract": "With the rapid development of Computer Graphics, the computer-generated images (CG) are almost as realistic as real photographs(PG) and it is difficult to distinguish between CG and PG accurately with the naked eye. Image is an important carrier for people to get information on a daily basis. However the spread of CG produced for malicious purposes may disrupt social order and even undermine social stability. Therefore, the accurate detection of CG and PG is of great significance. In this paper, we (1) introduce 11 approaches that apply deep learning to the implementations of CG detection, and divide them into 4 categories based on the network structure; (2) give an introduction to the available datasets; (3) design a series of experiments to test the detection performance of each approach,then analyze the experimental results; The experimental results show that most approaches can differentiate CG from PG, while the detection accuracy and efficiency of each model are different. Nevertheless none of these methods is valid when the images tampered by noise. Above all (4) summarize the problems and challenges in this field, and look forward to the trends in future research.",
@@ -162682,8 +163664,15 @@
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_track": "",
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -164667,6 +165656,8 @@
         "method"
       ],
       "venue": "IEEE Access",
+      "venue_name": "IEEE Access",
+      "venue_type": "journal",
       "publisher": "Institute of Electrical and Electronics Engineers",
       "publication_type": "journal",
       "abstract": "Fake or tampered images pose a real problem in today's life. It is easy to unknowingly be drawn to an interesting image that is false. Recently, with the emergence of generative adversarial networks (GANs), it becomes much more easy to generate high-quality fake images in a very realistic way. However, the current digital image forensics algorithms mainly focus on the detection of traditional tampered images or need prior knowledge of the network structure of GANs. Hence, verifying the authenticity of an image is very challenging. In this paper, we propose a general method for simultaneously detecting tampered images, and GANs generated images. First, we use the Scharr operator to extract the edge information of the image. Then, we converted the edge image information matrix into the gray level co-occurrence matrix (GLCM) to scale the image without loss of image information. Finally, GLCM was fed into the deep neural network designed based on depthwise separable convolution for training. Compared with other methods, our model achieves a higher macro average of F1 score of 0.9865. Meanwhile, our method has better performance in detecting tampered images and has strong generalization ability for many GANs models.",
@@ -164927,8 +165918,15 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
+      "venue_id": "venue:ieee-access",
+      "venue_acronym": "",
+      "venue_track": "",
       "raw_venue": "IEEE Access",
-      "ambiguity_status": "unmapped",
+      "venue_aliases": [
+        "IEEE Access"
+      ],
+      "ambiguity_status": "resolved",
+      "venue_label": "IEEE Access",
       "affiliations": [
         {
           "index": 1,
@@ -173454,6 +174452,56 @@
       ],
       "normalized_names": [
         "institute of informatics and telematics of the national research council of italy"
+      ]
+    },
+    "institution:ef0812aa48e97be6": {
+      "canonical_name": "Reichman University",
+      "institution_type": "university",
+      "names": [
+        "Reichman University"
+      ],
+      "normalized_names": [
+        "reichman university"
+      ]
+    },
+    "institution:995961c53e221f07": {
+      "canonical_name": "Centre Borelli",
+      "institution_type": "other",
+      "names": [
+        "Centre Borelli"
+      ],
+      "normalized_names": [
+        "centre borelli"
+      ]
+    },
+    "institution:e24529de73ecaa2c": {
+      "canonical_name": "Agence France-Presse",
+      "institution_type": "other",
+      "names": [
+        "Agence France-Presse"
+      ],
+      "normalized_names": [
+        "agence france presse"
+      ]
+    },
+    "institution:212d8dcc1a46b96e": {
+      "canonical_name": "ENS Paris-Saclay",
+      "institution_type": "other",
+      "names": [
+        "ENS Paris-Saclay"
+      ],
+      "normalized_names": [
+        "ens paris saclay"
+      ]
+    },
+    "institution:8d4321d936320802": {
+      "canonical_name": "NVIDIA",
+      "institution_type": "company",
+      "names": [
+        "NVIDIA"
+      ],
+      "normalized_names": [
+        "nvidia"
       ]
     }
   },

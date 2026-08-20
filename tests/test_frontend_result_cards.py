@@ -214,6 +214,8 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn('document.createElement("li")', render)
         self.assertIn("fragment.append(item)", render)
         self.assertIn("resultsList.append(fragment)", render)
+        self.assertIn("setResultsLayoutPending(true)", render)
+        self.assertIn("scheduleResultsMasonryLayout()", render)
         self.assertNotIn("style.order", render)
         self.assertNotIn("appendToColumn", render)
         masonry = self.function("updateResultsMasonryLayout", "scheduleResultsMasonryLayout")
@@ -240,7 +242,33 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
 
         scheduler = self.function("scheduleResultsMasonryLayout", "renderResults")
         self.assertEqual(scheduler.count("requestAnimationFrame"), 2)
-        self.assertIn("requestAnimationFrame(updateResultsMasonryLayout)", scheduler)
+        self.assertIn("updateResultsMasonryLayout(generation)", scheduler)
+
+    def test_cards_stay_hidden_behind_records_only_skeleton_until_layout_finishes(self):
+        self.assertIn('<div class="results-records-area">', self.html)
+        self.assertIn('id="results-loading"', self.html)
+        pending = self.css.split(
+            ".results-list.is-layout-pending .result-item {", 1
+        )[1].split("}", 1)[0]
+        self.assertIn("visibility: hidden", pending)
+        loading = self.css.split(".results-loading {", 1)[1].split("}", 1)[0]
+        self.assertIn("position: absolute", loading)
+        self.assertIn("pointer-events: none", loading)
+
+        layout = self.function(
+            "setResultsLayoutPending", "finishResultsMasonryLayout"
+        )
+        self.assertIn('classList.toggle("is-layout-pending", isPending)', layout)
+        self.assertIn('setAttribute("aria-busy", String(isPending))', layout)
+        self.assertIn("resultsLoading.hidden = !isPending", layout)
+
+        masonry = self.function(
+            "updateResultsMasonryLayout", "scheduleResultsMasonryLayout"
+        )
+        ready_position = masonry.index('classList.add("is-masonry-ready")')
+        reveal_position = masonry.index("finishResultsMasonryLayout(generation)", ready_position)
+        self.assertGreater(reveal_position, ready_position)
+        self.assertIn("generation !== resultsLayoutGeneration", masonry)
 
     def test_adaptive_content_and_metadata_follow_natural_flow(self):
         adaptive = self.css.split(".result-card-adaptive {", 1)[1].split("}", 1)[0]

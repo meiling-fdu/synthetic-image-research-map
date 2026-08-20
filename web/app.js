@@ -188,6 +188,7 @@ const institutionChartContent = document.querySelector("#institution-chart-conte
 const yearChartContent = document.querySelector("#year-chart-content");
 const resultsCount = document.querySelector("#results-count");
 const resultsList = document.querySelector("#results-list");
+const resultsLoading = document.querySelector("#results-loading");
 const resultsEmpty = document.querySelector("#results-empty");
 const exportCsvButton = document.querySelector("#export-csv");
 const resultsViewButtons = document.querySelectorAll("[data-results-view]");
@@ -216,6 +217,7 @@ let countryComboboxOptionData = [];
 let activeCountryOptionIndex = -1;
 let filtersDrawerOpen = false;
 let resultsMasonryFrame = null;
+let resultsLayoutGeneration = 0;
 const interactionState = {
   hoveredMarkerId: null,
   pinnedMarkerId: null,
@@ -2832,14 +2834,29 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
   `;
 }
 
-function updateResultsMasonryLayout() {
+function setResultsLayoutPending(isPending) {
+  resultsList.classList.toggle("is-layout-pending", isPending);
+  resultsList.setAttribute("aria-busy", String(isPending));
+  resultsLoading.hidden = !isPending;
+}
+
+function finishResultsMasonryLayout(generation) {
+  if (generation !== resultsLayoutGeneration) return;
+  setResultsLayoutPending(false);
+}
+
+function updateResultsMasonryLayout(generation) {
+  if (generation !== resultsLayoutGeneration) return;
   resultsMasonryFrame = null;
   const listStyles = getComputedStyle(resultsList);
   const cards = resultsList.querySelectorAll(".result-item");
 
   resultsList.classList.remove("is-masonry-ready");
   cards.forEach((card) => card.style.removeProperty("grid-row-end"));
-  if (mobileFiltersMedia.matches) return;
+  if (mobileFiltersMedia.matches) {
+    finishResultsMasonryLayout(generation);
+    return;
+  }
 
   const documentStyles = getComputedStyle(document.documentElement);
   const rowHeight = Number.parseFloat(
@@ -2850,7 +2867,10 @@ function updateResultsMasonryLayout() {
   );
   const computedGap = Number.parseFloat(listStyles.rowGap);
   const rowGap = Number.isFinite(computedGap) ? computedGap : tokenGap;
-  if (!Number.isFinite(rowHeight) || !Number.isFinite(rowGap)) return;
+  if (!Number.isFinite(rowHeight) || !Number.isFinite(rowGap)) {
+    finishResultsMasonryLayout(generation);
+    return;
+  }
 
   cards.forEach((card) => {
     const cardStyles = getComputedStyle(card);
@@ -2880,14 +2900,19 @@ function updateResultsMasonryLayout() {
     card.style.gridRowEnd = `span ${span}`;
   });
   resultsList.classList.add("is-masonry-ready");
+  finishResultsMasonryLayout(generation);
 }
 
 function scheduleResultsMasonryLayout() {
   if (resultsMasonryFrame !== null) {
     cancelAnimationFrame(resultsMasonryFrame);
   }
+  const generation = ++resultsLayoutGeneration;
   resultsMasonryFrame = requestAnimationFrame(() => {
-    resultsMasonryFrame = requestAnimationFrame(updateResultsMasonryLayout);
+    if (generation !== resultsLayoutGeneration) return;
+    resultsMasonryFrame = requestAnimationFrame(() => {
+      updateResultsMasonryLayout(generation);
+    });
   });
 }
 
@@ -2915,6 +2940,11 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
   resultsList.hidden = count === 0;
 
   if (!count) {
+    if (resultsMasonryFrame !== null) cancelAnimationFrame(resultsMasonryFrame);
+    resultsMasonryFrame = null;
+    resultsLayoutGeneration += 1;
+    resultsList.classList.remove("is-masonry-ready");
+    setResultsLayoutPending(false);
     return;
   }
 
@@ -2930,6 +2960,7 @@ function renderResults(visibleRecords, visiblePaperRecords = []) {
     fragment.append(item);
   });
   resultsList.append(fragment);
+  setResultsLayoutPending(true);
   scheduleResultsMasonryLayout();
 }
 

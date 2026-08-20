@@ -334,10 +334,18 @@
               </button>
             </div>
           </div>
-          <ol id="results-list" class="results-list"></ol>
-          <p id="results-empty" class="results-empty" hidden>
-            No matching records.
-          </p>
+          <div class="results-records-area">
+            <div id="results-loading" class="results-loading" hidden aria-hidden="true">
+              <span class="results-loading-card"></span>
+              <span class="results-loading-card"></span>
+              <span class="results-loading-card"></span>
+              <span class="results-loading-card"></span>
+            </div>
+            <ol id="results-list" class="results-list"></ol>
+            <p id="results-empty" class="results-empty" hidden>
+              No matching records.
+            </p>
+          </div>
         </section>
       </div>
 
