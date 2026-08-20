@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-20T13:44:58Z |
+| public_preview_generated_at | 2026-08-20T20:56:19Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1175 |
+| Map records | 1180 |
 | Unique mapped papers | 520 |
-| Unique institutions | 597 |
+| Unique institutions | 598 |
 | Countries | 54 |
 | arXiv/preprint records | 562 |
-| Records with DOI | 1100 |
-| Records with venue | 1154 |
+| Records with DOI | 1105 |
+| Records with venue | 1159 |
 | Records missing venue | 21 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -73,7 +73,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Country | Records |
 | --- | ---: |
-| China | 529 |
+| China | 533 |
 | United States | 157 |
 | Italy | 88 |
 | India | 59 |
@@ -81,7 +81,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | South Korea | 34 |
 | United Kingdom | 33 |
 | France | 29 |
-| Singapore | 24 |
+| Singapore | 25 |
 | Australia | 18 |
 
 ## Top Institutions
@@ -96,14 +96,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | University of Siena | 15 |
 | Fudan University | 14 |
 | University of Science and Technology of China | 14 |
-| Zhejiang University | 12 |
+| Zhejiang University | 13 |
 | Beijing University of Posts and Telecommunications | 10 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1062 |
+| high | 1067 |
 | medium | 113 |
 
 ## Potential quality issues
