@@ -63,6 +63,7 @@ try:
         location_reviews_for_paper,
         mapping_location_state,
         mappings_for_paper,
+        reorder_mappings,
         replace_all_mappings,
         update_mapping,
         save_location_reviews,
@@ -185,6 +186,7 @@ except ImportError:
         location_reviews_for_paper,
         mapping_location_state,
         mappings_for_paper,
+        reorder_mappings,
         replace_all_mappings,
         update_mapping,
         save_location_reviews,
@@ -3019,6 +3021,7 @@ def make_handler(
                 "/api/paper/mapping/create",
                 "/api/paper/mapping/update",
                 "/api/paper/mapping/exclude",
+                "/api/paper/mappings/reorder",
                 "/api/paper/mappings/replace-all",
                 "/api/paper/metadata/update",
                 "/api/venues/create",
@@ -3889,6 +3892,19 @@ def make_handler(
                                 }
                                 response_status = HTTPStatus.OK
                                 message = "Curated mapping excluded; audit history preserved."
+                            elif request.path == "/api/paper/mappings/reorder":
+                                mapping_ids = payload.get("mapping_ids")
+                                if not isinstance(mapping_ids, list):
+                                    raise CuratedMappingError(
+                                        "mapping_ids must be a JSON array"
+                                    )
+                                result = reorder_mappings(
+                                    paper,
+                                    mapping_ids,
+                                    mappings_path=mappings_path,
+                                )
+                                response_status = HTTPStatus.OK
+                                message = "Affiliation order saved."
                             else:
                                 drafts = payload.get("mappings")
                                 if not isinstance(drafts, list):

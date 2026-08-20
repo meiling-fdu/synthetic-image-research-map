@@ -123,10 +123,11 @@
     for (const value of values) {
       const url = safeHttpUrl(value);
       const target = canonicalPaperLinkTarget(url);
+      const doi = normalizedDoi(url);
       if (
         url
         && !target.startsWith("arxiv:")
-        && !target.startsWith("doi:")
+        && !(doi && doi.toLocaleLowerCase().startsWith("10.48550/arxiv."))
         && !target.startsWith("openalex:")
       ) {
         return url;

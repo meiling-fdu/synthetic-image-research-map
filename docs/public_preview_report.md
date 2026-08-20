@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-20T09:53:00Z |
+| public_preview_generated_at | 2026-08-20T10:48:33Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -23,7 +23,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Unique mapped papers | 520 |
 | Unique institutions | 598 |
 | Countries | 54 |
-| arXiv/preprint records | 575 |
+| arXiv/preprint records | 559 |
 | Records with DOI | 1093 |
 | Records with venue | 1146 |
 | Records missing venue | 21 |

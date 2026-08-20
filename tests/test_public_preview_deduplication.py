@@ -7,6 +7,7 @@ from pathlib import Path
 from scripts.curated_export import (
     _ordered_mapping_authors,
     build_curated_map_records,
+    integrate_curated_records,
     load_curated_mappings,
 )
 from scripts.curated_locations import load_confirmed_locations
@@ -24,6 +25,7 @@ from scripts.export_public_preview import (
     public_institution_aliases,
     institution_id_redirects,
     preserve_map_relationships_after_integration,
+    reconstruct_publication_links,
     synchronize_publication_types,
 )
 from scripts.country_normalization import normalize_country_region
@@ -1773,6 +1775,11 @@ process.stdout.write(JSON.stringify({
     paper_url: "https://arxiv.org/abs/2401.12345",
     doi: "10.48550/arXiv.2401.12345",
   }),
+  arxivDoiWithLaterPublication: links({
+    doi: "10.48550/arXiv.2304.13023",
+    paper_url: "https://doi.org/10.52202/075280-1105",
+    arxiv_url: "https://arxiv.org/abs/2304.13023",
+  }),
   missing: published({openalex_url: "https://openalex.org/W1"}),
   publishedCard: links({
     publisher_url: "https://publisher.example/article/1",
@@ -1805,6 +1812,16 @@ process.stdout.write(JSON.stringify({
                 "doiResolved": "https://doi.org/10.1000/example",
                 "venueFallback": "https://venue.example/paper/1",
                 "preprintOnly": "",
+                "arxivDoiWithLaterPublication": [
+                    {
+                        "label": "Publisher",
+                        "url": "https://doi.org/10.52202/075280-1105",
+                    },
+                    {
+                        "label": "Preprint",
+                        "url": "https://arxiv.org/abs/2304.13023",
+                    },
+                ],
                 "missing": "",
                 "publishedCard": [
                     {
@@ -1832,6 +1849,55 @@ process.stdout.write(JSON.stringify({
                 "missingCard": [],
             },
         )
+
+    def test_publish_rebuilds_links_after_formal_url_is_added(self):
+        previous = {
+            "paper_id": "paper:example",
+            "title": "Example Paper",
+            "year": 2024,
+            "publication_year": 2024,
+            "task": "detection",
+            "doi": "10.48550/arXiv.2401.12345",
+            "arxiv_id": "2401.12345",
+            "arxiv_url": "https://arxiv.org/abs/2401.12345",
+            "paper_url": "https://arxiv.org/abs/2401.12345",
+            "primary_url": "https://arxiv.org/abs/2401.12345",
+            "url": "https://arxiv.org/abs/2401.12345",
+            "is_arxiv_preprint": True,
+            "links": {"arxiv": "https://arxiv.org/abs/2401.12345"},
+        }
+        admin = {
+            "paper_id": "paper:example",
+            "title": "Example Paper",
+            "year": "2024",
+            "authors": "Example Author",
+            "doi": "10.1000/example.12345",
+            "arxiv_id": "2401.12345",
+            "paper_url": "https://doi.org/10.1000/example.12345",
+            "publication_type": "conference",
+            "task": "detection",
+            "scope_status": "in_scope",
+            "curation_status": "confirmed",
+            "review_status": "reviewed",
+        }
+
+        papers, _maps, _reviews, _summary = integrate_curated_records(
+            [previous], [], [admin], []
+        )
+        paper = papers[0]
+        reconstruct_publication_links([paper])
+
+        self.assertEqual(
+            paper["doi"], "10.1000/example.12345"
+        )
+        self.assertEqual(
+            paper["paper_url"], "https://doi.org/10.1000/example.12345"
+        )
+        self.assertEqual(
+            paper["arxiv_url"], "https://arxiv.org/abs/2401.12345"
+        )
+        self.assertFalse(paper["is_arxiv_preprint"])
+        self.assertNotIn("links", paper)
 
     def test_validator_warns_for_missing_mapping_without_crashing(self):
         record = {

@@ -42,6 +42,7 @@ try:
         normalize_publication_type,
     )
     from .paper_categories import categories_from_record
+    from .paper_links import resolve_public_links
     from .venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
     from .public_relationships import (
         ReviewedRelationshipResolver,
@@ -134,6 +135,7 @@ except ImportError:  # Direct execution from the scripts directory.
         normalize_publication_type,
     )
     from paper_categories import categories_from_record
+    from paper_links import resolve_public_links
     from venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
     from public_relationships import (
         ReviewedRelationshipResolver,
@@ -840,6 +842,11 @@ def add_public_detail_fields(
         grouped[detail_paper_identity(record)].append(record)
 
     for records in grouped.values():
+        has_curated_affiliations = any(
+            clean_text(record.get("affiliation_review_state")) == "curated"
+            or clean_text(record.get("institution_source")) == "curated"
+            for record in records
+        )
         affiliations: List[Dict[str, Any]] = []
         affiliation_by_identity: Dict[str, Dict[str, Any]] = {}
         source_index_identities: Dict[int, Dict[int, str]] = {}
@@ -1027,6 +1034,8 @@ def add_public_detail_fields(
         # Consume stable and legacy index mappings only after every source record's
         # original index-to-institution relationship is known.
         for record in records:
+            if has_curated_affiliations:
+                continue
             source_indices = source_index_identities.get(id(record), {})
             stable_mappings = record.get("author_affiliation_indices")
             canonical_mappings = record.get("canonical_author_mappings")
@@ -1786,6 +1795,16 @@ def apply_ordered_paper_location_summaries(
         maps_by_paper[detail_paper_identity(record)].append(record)
     for paper in paper_records:
         matches = maps_by_paper.get(detail_paper_identity(paper), [])
+        matches = [
+            record for _index, record in sorted(
+                enumerate(matches),
+                key=lambda item: (
+                    parse_year(item[1].get("affiliation_order")) is None,
+                    parse_year(item[1].get("affiliation_order")) or item[0] + 1,
+                    item[0],
+                ),
+            )
+        ]
         paper.update(ordered_paper_location_summary(matches))
         paper["map_record_count"] = len(matches)
         paper["has_map_location"] = bool(matches)
@@ -2429,6 +2448,33 @@ def merge_existing_records(
             order.append(key)
         merged[key] = dict(record)
     return [merged[key] for key in order]
+
+
+def reconstruct_publication_links(
+    records: Sequence[Dict[str, Any]],
+) -> None:
+    """Rebuild derived publication links from each final canonical record.
+
+    Preservation protects public coverage, but its historical derived fields
+    must not outrank publication metadata added later through Admin. Run this
+    after preservation and curated integration so the current canonical DOI,
+    publication URL, and arXiv metadata define the exported link set.
+    """
+    for record in records:
+        links = resolve_public_links(record)
+        record["arxiv_id"] = links["arxiv_id"]
+        record["arxiv_url"] = links["arxiv_url"]
+        record["has_arxiv_version"] = bool(links["arxiv_id"])
+        record["paper_url"] = links["formal_url"]
+        record["formal_url"] = links["formal_url"]
+        record["primary_url"] = links["primary_url"]
+        record["url"] = links["primary_url"]
+        record["is_arxiv_preprint"] = bool(
+            links["arxiv_id"] and not links["formal_url"]
+        )
+        # Older previews briefly carried a derived link collection. It is not
+        # canonical and can otherwise preserve an arXiv-only historical state.
+        record.pop("links", None)
 
 
 def preserve_map_relationships_after_integration(
@@ -3530,6 +3576,48 @@ def canonicalize_public_institutions(
                         for index in indices
                         if 0 < index <= len(canonical_affiliations)
                     ]
+        # Curated affiliation rows are the final authority for superscripts.
+        # Rebuild this derived field after legacy-index remapping so preserved
+        # preview data cannot add stale indices to a newly reordered mapping.
+        canonical_author_affiliations = record.get(
+            "author_institution_affiliations"
+        )
+        if isinstance(canonical_author_affiliations, list):
+            paper_author_names = []
+            for author in record.get("authors") or []:
+                if isinstance(author, dict):
+                    name = clean_text(
+                        author.get("display_name") or author.get("name")
+                    )
+                else:
+                    name = clean_text(author)
+                if name:
+                    paper_author_names.append(name)
+            rebuilt: Dict[str, Dict[str, Any]] = {}
+            for affiliation in canonical_author_affiliations:
+                if not isinstance(affiliation, dict):
+                    continue
+                index = parse_year(affiliation.get("index"))
+                institution_id = clean_text(affiliation.get("institution_id"))
+                if index is None:
+                    continue
+                for mapped_author in affiliation.get("authors") or []:
+                    mapped_name = clean_text(mapped_author)
+                    matches = [
+                        author for author in paper_author_names
+                        if names_match(author, mapped_name)
+                    ]
+                    author_name = matches[0] if len(matches) == 1 else mapped_name
+                    key = canonical_name_key(author_name)
+                    values = rebuilt.setdefault(key, {
+                        "author": author_name,
+                        "institution_indices": [],
+                        "institution_ids": [],
+                    })
+                    if index not in values["institution_indices"]:
+                        values["institution_indices"].append(index)
+                        values["institution_ids"].append(institution_id)
+            record["author_institution_indices"] = list(rebuilt.values())
         current = record.get("current_institution")
         if isinstance(current, dict):
             canonicalize_value(current)
@@ -3587,9 +3675,19 @@ def canonicalize_public_institutions(
         if paper_maps:
             paper["map_record_count"] = len(paper_maps)
             paper["has_map_location"] = True
-            paper["aggregated_institutions"] = list(dict.fromkeys(
-                institution_name(record) for record in paper_maps if institution_name(record)
-            ))
+            ordered_affiliations = paper.get("author_institution_affiliations")
+            if isinstance(ordered_affiliations, list) and ordered_affiliations:
+                paper["aggregated_institutions"] = list(dict.fromkeys(
+                    institution_name(record)
+                    for record in ordered_affiliations
+                    if institution_name(record)
+                ))
+            else:
+                paper["aggregated_institutions"] = list(dict.fromkeys(
+                    institution_name(record)
+                    for record in paper_maps
+                    if institution_name(record)
+                ))
     return [deduplicated[key] for key in order]
 
 
@@ -4217,6 +4315,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 f"{retired_fields_removed} preserved public records.",
                 flush=True,
             )
+        reconstruct_publication_links(integrated_papers)
+        reconstruct_publication_links(integrated_maps)
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         payload["institution_aliases"] = exported_aliases

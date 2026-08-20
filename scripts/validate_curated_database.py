@@ -427,11 +427,21 @@ def validate_mapping_evidence(
 ) -> None:
     active_statuses = {"active", "needs_review"}
     active_rows: List[Tuple[int, Mapping[str, str]]] = []
+    orders_by_paper: DefaultDict[str, List[Tuple[int, str]]] = defaultdict(list)
     for row_number, row in enumerate(mappings, start=2):
         mapping_status = clean(row.get("mapping_status")).casefold()
         if mapping_status not in active_statuses:
             continue
         active_rows.append((row_number, row))
+        paper_key = (
+            clean(row.get("paper_id"))
+            or normalize_doi(row.get("doi"))
+            or normalize_openalex_url(row.get("openalex_url"))
+            or f"{normalize_title(row.get('title'))}|{clean(row.get('year'))}"
+        )
+        orders_by_paper[paper_key].append(
+            (row_number, clean(row.get("affiliation_order")))
+        )
         for field in ("institution", "institution_authors"):
             if not clean(row.get(field)):
                 add_issue(
@@ -449,6 +459,17 @@ def validate_mapping_evidence(
                 "author_institution_mappings.csv",
                 "institution_authors must use semicolons between authors",
                 row_number,
+            )
+    for paper_key, values in orders_by_paper.items():
+        submitted = [value for _row_number, value in values]
+        expected = [str(index) for index in range(1, len(values) + 1)]
+        if sorted(submitted, key=lambda value: int(value) if value.isdigit() else 0) != expected:
+            add_issue(
+                issues,
+                "ERROR",
+                "author_institution_mappings.csv",
+                f"active affiliation_order must be contiguous 1..N for {paper_key}",
+                values[0][0],
             )
     for position, (left_number, left) in enumerate(active_rows):
         left_keys = {

@@ -5189,7 +5189,10 @@ function renderMappings(payload) {
   const currentStatuses = new Set(["active", "needs_review"]);
   const currentMappings = mappings.filter((mapping) =>
     currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
-  );
+  ).sort((left, right) => (
+    Number(left.affiliation_order || Number.MAX_SAFE_INTEGER)
+    - Number(right.affiliation_order || Number.MAX_SAFE_INTEGER)
+  ));
   const historicalMappings = mappings.filter((mapping) =>
     !currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
   );
@@ -5208,8 +5211,11 @@ function renderMappings(payload) {
 
   const body = elements["mapping-table-body"];
   body.replaceChildren();
+  let draggedRow = null;
+  let originalOrder = [];
   currentMappings.forEach((mapping) => {
     const row = document.createElement("tr");
+    row.dataset.mappingId = text(mapping.mapping_id);
     [
       mapping.institution,
       mapping.institution_authors,
@@ -5236,6 +5242,67 @@ function renderMappings(payload) {
     exclude.addEventListener("click", () => openMappingDialog("exclude", mapping));
     actions.append(edit, exclude);
     row.append(actions);
+
+    const orderCell = document.createElement("td");
+    orderCell.className = "mapping-order-cell";
+    const handle = document.createElement("button");
+    handle.type = "button";
+    handle.className = "mapping-order-handle";
+    handle.textContent = "⋮⋮";
+    handle.setAttribute("aria-label", `Reorder ${text(mapping.institution)}`);
+    handle.title = "Drag to reorder affiliation";
+    handle.addEventListener("pointerdown", () => {
+      row.draggable = true;
+    });
+    handle.addEventListener("pointerup", () => {
+      row.draggable = false;
+    });
+    handle.addEventListener("keydown", (event) => event.preventDefault());
+    row.addEventListener("dragstart", (event) => {
+      draggedRow = row;
+      originalOrder = [...body.rows].map((item) => item.dataset.mappingId);
+      row.classList.add("mapping-row-dragging");
+      event.dataTransfer.effectAllowed = "move";
+      event.dataTransfer.setData("text/plain", row.dataset.mappingId);
+    });
+    row.addEventListener("dragover", (event) => {
+      if (!draggedRow || draggedRow === row) return;
+      event.preventDefault();
+      const bounds = row.getBoundingClientRect();
+      const after = event.clientY > bounds.top + bounds.height / 2;
+      body.insertBefore(draggedRow, after ? row.nextSibling : row);
+    });
+    row.addEventListener("drop", async (event) => {
+      if (!draggedRow) return;
+      event.preventDefault();
+      const mappingIds = [...body.rows].map((item) => item.dataset.mappingId);
+      const changed = mappingIds.some((mappingId, index) => (
+        mappingId !== originalOrder[index]
+      ));
+      draggedRow.classList.remove("mapping-row-dragging");
+      draggedRow.draggable = false;
+      draggedRow = null;
+      if (!changed) return;
+      try {
+        const result = await apiFetch("/api/paper/mappings/reorder", {
+          method: "POST",
+          body: JSON.stringify({id: state.selectedId, mapping_ids: mappingIds}),
+        });
+        showNotice(result.message);
+        await loadSelectedMappings();
+      } catch (error) {
+        elements["mapping-panel-error"].hidden = false;
+        elements["mapping-panel-error"].textContent = error.message;
+        await loadSelectedMappings();
+      }
+    });
+    row.addEventListener("dragend", () => {
+      row.classList.remove("mapping-row-dragging");
+      row.draggable = false;
+      draggedRow = null;
+    });
+    orderCell.append(handle);
+    row.append(orderCell);
     body.append(row);
   });
 

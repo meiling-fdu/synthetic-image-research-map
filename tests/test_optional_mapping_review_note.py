@@ -74,6 +74,7 @@ class SimplifiedMappingSchemaTests(unittest.TestCase):
         self.draft = {
             "institution": "Example University",
             "institution_authors": "Researcher One",
+            "affiliation_order": "1",
             "raw_affiliation": "Department of Vision, Example University",
         }
 

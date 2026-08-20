@@ -74,6 +74,7 @@ AUTHOR_INSTITUTION_MAPPING_COLUMNS = (
     "location_id",
     "institution_authors",
     "author_order",
+    "affiliation_order",
     "raw_affiliation",
     "openalex_institution_id",
     "institution_city",

@@ -150,11 +150,22 @@ def _read_csv(
                 column for column in actual_columns
                 if column not in OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
             )
+            missing_affiliation_order = (
+                tuple(expected_columns) == tuple(AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+                and "affiliation_order" not in actual_columns
+                and tuple(
+                    column for column in expected_columns
+                    if column != "affiliation_order"
+                ) == projected_columns
+            )
             legacy_mapping_header = (
                 tuple(expected_columns) == tuple(AUTHOR_INSTITUTION_MAPPING_COLUMNS)
-                and projected_columns == tuple(expected_columns)
+                and (
+                    projected_columns == tuple(expected_columns)
+                    or missing_affiliation_order
+                )
                 and set(actual_columns) - set(expected_columns)
-                <= OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
+                    <= OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
             )
             if actual_columns != tuple(expected_columns) and not legacy_mapping_header:
                 raise CuratedMappingError(
@@ -189,6 +200,7 @@ def _write_csv(
             writer.writerows(rows)
         temporary_path.replace(path)
     except OSError as error:
+        temporary_path.unlink(missing_ok=True)
         raise CuratedMappingError(f"could not write {path}: {error}") from error
 
 
@@ -227,7 +239,62 @@ def mappings_for_paper(
     paper: Mapping[str, Any],
     rows: Iterable[Mapping[str, Any]],
 ) -> List[Dict[str, Any]]:
-    return [dict(row) for row in rows if records_share_paper_identity(paper, row)]
+    matches = [dict(row) for row in rows if records_share_paper_identity(paper, row)]
+    current = [
+        row for row in matches
+        if clean(row.get("mapping_status")) in ACTIVE_MAPPING_STATUSES
+    ]
+    historical = [
+        row for row in matches
+        if clean(row.get("mapping_status")) not in ACTIVE_MAPPING_STATUSES
+    ]
+    return [*ordered_active_mappings(current), *historical]
+
+
+def _positive_order(value: Any) -> int | None:
+    text = clean(value)
+    if not text.isdigit() or int(text) < 1:
+        return None
+    return int(text)
+
+
+def ordered_active_mappings(
+    rows: Iterable[Mapping[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Return current mappings in persisted order, with CSV order as legacy fallback."""
+    indexed = [
+        (index, dict(row))
+        for index, row in enumerate(rows)
+        if clean(row.get("mapping_status")) in ACTIVE_MAPPING_STATUSES
+    ]
+    indexed.sort(key=lambda item: (
+        _positive_order(item[1].get("affiliation_order")) is None,
+        _positive_order(item[1].get("affiliation_order")) or item[0] + 1,
+        item[0],
+    ))
+    return [row for _index, row in indexed]
+
+
+def _normalize_active_orders(
+    paper: Mapping[str, Any], rows: List[Dict[str, str]]
+) -> None:
+    current = ordered_active_mappings(
+        row for row in rows if records_share_paper_identity(paper, row)
+    )
+    by_id = {clean(row.get("mapping_id")): row for row in rows}
+    for order, current_row in enumerate(current, start=1):
+        by_id[clean(current_row.get("mapping_id"))]["affiliation_order"] = str(order)
+
+
+def _next_affiliation_order(
+    paper: Mapping[str, Any], rows: Iterable[Mapping[str, Any]]
+) -> int:
+    active = [
+        row for row in rows
+        if records_share_paper_identity(paper, row)
+        and clean(row.get("mapping_status")) in ACTIVE_MAPPING_STATUSES
+    ]
+    return len(active) + 1
 
 
 def location_reviews_for_paper(
@@ -609,6 +676,7 @@ def create_mapping(
     institution_locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
 ) -> Dict[str, Any]:
     rows = load_mappings(mappings_path)
+    _normalize_active_orders(paper, rows)
     institutions = load_institutions(institutions_path)
     candidate = _mapping_fields(paper, draft)
     institution_resolution = _resolve_mapping_institution(
@@ -622,6 +690,7 @@ def create_mapping(
     row = {
         "mapping_id": _unique_mapping_id(candidate, rows, now),
         **candidate,
+        "affiliation_order": str(_next_affiliation_order(paper, rows)),
         "created_at": now,
         "updated_at": now,
     }
@@ -665,6 +734,7 @@ def create_mapping_candidates(
 ) -> Dict[str, Any]:
     """Atomically append all non-duplicate candidates for a newly added paper."""
     rows = load_mappings(mappings_path)
+    _normalize_active_orders(paper, rows)
     location_rows = load_location_reviews(location_review_path)
     institutions = load_institutions(institutions_path)
     aliases = _load_aliases(institution_aliases_path)
@@ -684,6 +754,9 @@ def create_mapping_candidates(
                 candidate, [*rows, *created], f"{now}|candidate|{index}"
             ),
             **candidate,
+            "affiliation_order": str(
+                _next_affiliation_order(paper, [*rows, *created])
+            ),
             "created_at": now,
             "updated_at": now,
         }
@@ -733,6 +806,7 @@ def update_mapping(
     changed_by: str = "local-admin",
 ) -> Dict[str, Any]:
     rows = load_mappings(mappings_path)
+    _normalize_active_orders(paper, rows)
     row = next(
         (row for row in rows if clean(row.get("mapping_id")) == clean(mapping_id)),
         None,
@@ -756,8 +830,18 @@ def update_mapping(
     if duplicate:
         raise DuplicateMappingError(duplicate)
     previous = dict(row)
+    affiliation_order = clean(row.get("affiliation_order"))
     created_at = clean(row.get("created_at")) or _timestamp()
     row.update(candidate)
+    row["affiliation_order"] = affiliation_order or str(
+        _next_affiliation_order(
+            paper,
+            (
+                candidate_row for candidate_row in rows
+                if clean(candidate_row.get("mapping_id")) != clean(mapping_id)
+            ),
+        )
+    )
     row["created_at"] = created_at
     row["updated_at"] = _timestamp()
     location_rows = load_location_reviews(location_review_path)
@@ -848,6 +932,7 @@ def exclude_mapping(
     previous = dict(row)
     row["mapping_status"] = "excluded"
     row["updated_at"] = _timestamp()
+    _normalize_active_orders(paper, rows)
     snapshots = {
         path: path.read_bytes() if path.exists() else None
         for path in (mappings_path, institution_audit_path)
@@ -891,6 +976,7 @@ def replace_all_mappings(
         raise CuratedMappingError("at least one replacement mapping is required")
 
     rows = load_mappings(mappings_path)
+    _normalize_active_orders(paper, rows)
     institutions = load_institutions(institutions_path)
     aliases = _load_aliases(institution_aliases_path)
     replaced_rows = []
@@ -907,7 +993,7 @@ def replace_all_mappings(
     location_rows = load_location_reviews(location_review_path)
     location_results = []
     institution_resolutions = []
-    for draft in drafts:
+    for affiliation_order, draft in enumerate(drafts, start=1):
         candidate_draft = dict(draft)
         candidate = _mapping_fields(paper, candidate_draft)
         resolution = _resolve_mapping_institution(candidate, institutions, aliases)
@@ -921,6 +1007,7 @@ def replace_all_mappings(
                 candidate, rows, f"{now}|{len(created)}"
             ),
             **candidate,
+            "affiliation_order": str(affiliation_order),
             "created_at": now,
             "updated_at": now,
         }
@@ -1005,4 +1092,41 @@ def replace_all_mappings(
         "mappings": created,
         "location_reviews": location_results,
         "institution_resolutions": institution_resolutions,
+    }
+
+
+def reorder_mappings(
+    paper: Mapping[str, Any],
+    mapping_ids: Sequence[Any],
+    *,
+    mappings_path: Path = DEFAULT_MAPPINGS_PATH,
+) -> Dict[str, Any]:
+    """Atomically persist an exact permutation of a paper's current mappings."""
+    if not isinstance(mapping_ids, list) or not mapping_ids:
+        raise CuratedMappingError("mapping_ids must be a non-empty JSON array")
+    requested = [clean(mapping_id) for mapping_id in mapping_ids]
+    if any(not mapping_id for mapping_id in requested):
+        raise CuratedMappingError("mapping_ids cannot contain blank values")
+    if len(set(requested)) != len(requested):
+        raise CuratedMappingError("mapping_ids must not contain duplicates")
+
+    rows = load_mappings(mappings_path)
+    current = [
+        row for row in rows
+        if records_share_paper_identity(paper, row)
+        and clean(row.get("mapping_status")) in ACTIVE_MAPPING_STATUSES
+    ]
+    current_ids = {clean(row.get("mapping_id")) for row in current}
+    if set(requested) != current_ids:
+        raise CuratedMappingError(
+            "mapping_ids must contain every current mapping exactly once"
+        )
+
+    by_id = {clean(row.get("mapping_id")): row for row in current}
+    for order, mapping_id in enumerate(requested, start=1):
+        by_id[mapping_id]["affiliation_order"] = str(order)
+    save_mappings(rows, mappings_path)
+    return {
+        "mapping_ids": requested,
+        "mappings": [dict(by_id[mapping_id]) for mapping_id in requested],
     }

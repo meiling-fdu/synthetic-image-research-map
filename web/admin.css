@@ -1914,6 +1914,35 @@ a {
   gap: 0.35rem;
 }
 
+.mapping-order-heading,
+.mapping-order-cell {
+  width: 2.7rem;
+  min-width: 2.7rem;
+  padding-right: 0.45rem;
+  padding-left: 0.45rem;
+  text-align: center;
+}
+
+.mapping-order-handle {
+  min-width: 1.8rem;
+  padding: 0.25rem 0.35rem;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  cursor: grab;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: -0.18rem;
+}
+
+.mapping-order-handle:active {
+  cursor: grabbing;
+}
+
+.mapping-table tr.mapping-row-dragging {
+  opacity: 0.5;
+}
+
 .scope-review-section {
   display: flex;
   align-items: center;

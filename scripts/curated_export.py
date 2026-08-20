@@ -121,6 +121,12 @@ CURATED_OVERRIDE_FIELDS = (
     "review_status",
 )
 CURATED_AUTHORITATIVE_PUBLIC_FIELDS = {
+    "doi",
+    "arxiv_id",
+    "arxiv_url",
+    "paper_url",
+    "primary_url",
+    "openalex_url",
     "venue",
     "venue_name",
     "venue_id",
@@ -159,9 +165,20 @@ def _read_csv(path: Path, columns: Sequence[str]) -> List[Dict[str, str]]:
                 column for column in actual_columns
                 if column not in OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
             )
+            missing_affiliation_order = (
+                tuple(columns) == tuple(AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+                and "affiliation_order" not in actual_columns
+                and tuple(
+                    column for column in columns
+                    if column != "affiliation_order"
+                ) == projected_columns
+            )
             legacy_mapping_header = (
                 tuple(columns) == tuple(AUTHOR_INSTITUTION_MAPPING_COLUMNS)
-                and projected_columns == tuple(columns)
+                and (
+                    projected_columns == tuple(columns)
+                    or missing_affiliation_order
+                )
                 and set(actual_columns) - set(columns)
                 <= OBSOLETE_AUTHOR_INSTITUTION_MAPPING_COLUMNS
             )
@@ -892,7 +909,13 @@ def _mapping_public_fields(mapping: Mapping[str, Any]) -> Dict[str, Any]:
         ),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
         "mapping_status": clean(mapping.get("mapping_status")),
+        "affiliation_order": _affiliation_order(mapping),
     }
+
+
+def _affiliation_order(mapping: Mapping[str, Any]) -> int | None:
+    value = clean(mapping.get("affiliation_order"))
+    return int(value) if value.isdigit() and int(value) > 0 else None
 
 
 def stable_institution_id(value: Any) -> str:
@@ -1007,6 +1030,7 @@ def _curated_marker(
         "metadata_source": clean(paper.get("metadata_source")),
         "curation_status": normalize_curation_status(paper.get("curation_status")),
         "mapping_id": clean(mapping.get("mapping_id")),
+        "affiliation_order": _affiliation_order(mapping),
         "raw_affiliation": clean(mapping.get("raw_affiliation")),
         "resolution_method": (
             "curated_confirmed_location"
@@ -1556,6 +1580,16 @@ def _recalculate_paper_details(
         if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
         and _mapping_matches_paper(mapping, paper)
     ]
+    visible_mappings = [
+        mapping for _index, mapping in sorted(
+            enumerate(visible_mappings),
+            key=lambda item: (
+                _affiliation_order(item[1]) is None,
+                _affiliation_order(item[1]) or item[0] + 1,
+                item[0],
+            ),
+        )
+    ]
     has_map_location = bool(markers)
     missing_affiliation = not has_map_location and not visible_mappings
     active_mappings = [
@@ -1694,14 +1728,14 @@ def _recalculate_paper_details(
         )
         marker.pop("affiliations", None)
         marker.pop("current_institution", None)
-    paper["aggregated_institutions"] = sorted(
-        {
-            clean(record.get("institution"))
-            for record in [*markers, *visible_mappings]
-            if clean(record.get("institution"))
-        },
-        key=str.casefold,
-    )
+    paper["aggregated_institutions"] = []
+    aggregated_keys: set[str] = set()
+    for record in [*affiliation_records, *markers]:
+        institution = clean(record.get("institution"))
+        key = normalize_institution(institution)
+        if institution and key not in aggregated_keys:
+            aggregated_keys.add(key)
+            paper["aggregated_institutions"].append(institution)
     paper["aggregated_country_names"] = sorted(
         {
             clean(marker.get("country"))
