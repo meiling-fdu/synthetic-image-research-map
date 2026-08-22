@@ -261,26 +261,53 @@ def _positive_order(value: Any) -> int | None:
 def ordered_active_mappings(
     rows: Iterable[Mapping[str, Any]],
 ) -> List[Dict[str, Any]]:
-    """Return current mappings in persisted order, with CSV order as legacy fallback."""
+    """Return current mappings in their complete persisted affiliation order."""
     indexed = [
         (index, dict(row))
         for index, row in enumerate(rows)
         if clean(row.get("mapping_status")) in ACTIVE_MAPPING_STATUSES
     ]
-    indexed.sort(key=lambda item: (
-        _positive_order(item[1].get("affiliation_order")) is None,
-        _positive_order(item[1].get("affiliation_order")) or item[0] + 1,
-        item[0],
-    ))
+    persisted_orders = [
+        _positive_order(row.get("affiliation_order")) for _index, row in indexed
+    ]
+    has_persisted_order = any(
+        clean(row.get("affiliation_order")) for _index, row in indexed
+    )
+    if has_persisted_order:
+        expected = list(range(1, len(indexed) + 1))
+        if sorted(order for order in persisted_orders if order is not None) != expected:
+            raise CuratedMappingError(
+                "active affiliation_order must be explicit, unique, and contiguous 1..N"
+            )
+        indexed.sort(
+            key=lambda item: _positive_order(item[1].get("affiliation_order"))
+        )
     return [row for _index, row in indexed]
 
 
 def _normalize_active_orders(
     paper: Mapping[str, Any], rows: List[Dict[str, str]]
 ) -> None:
-    current = ordered_active_mappings(
-        row for row in rows if records_share_paper_identity(paper, row)
+    current = [
+        row for row in rows
+        if records_share_paper_identity(paper, row)
+        and clean(row.get("mapping_status")) in ACTIVE_MAPPING_STATUSES
+    ]
+    persisted_orders = [
+        _positive_order(row.get("affiliation_order")) for row in current
+    ]
+    has_persisted_order = any(
+        clean(row.get("affiliation_order")) for row in current
     )
+    if has_persisted_order:
+        if (
+            any(order is None for order in persisted_orders)
+            or len(set(persisted_orders)) != len(persisted_orders)
+        ):
+            raise CuratedMappingError(
+                "active affiliation_order must be explicit and unique before normalization"
+            )
+        current.sort(key=lambda row: _positive_order(row.get("affiliation_order")))
     by_id = {clean(row.get("mapping_id")): row for row in rows}
     for order, current_row in enumerate(current, start=1):
         by_id[clean(current_row.get("mapping_id"))]["affiliation_order"] = str(order)

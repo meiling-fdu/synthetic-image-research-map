@@ -48,6 +48,9 @@ const elements = {};
 let arxivAutofillPollTimer = null;
 let arxivAutofillPolling = false;
 let workflowStatusPollTimer = null;
+let metadataPreviewSyncPollTimer = null;
+let metadataPreviewSyncPollEpoch = 0;
+let metadataPreviewSyncPageActive = true;
 let noticeTimer = null;
 let paperSelectionSequence = 0;
 let activeVenueOptionIndex = -1;
@@ -60,6 +63,16 @@ const workflowCommandIds = [
   "run-full-refresh",
   "publish-changes",
 ];
+
+if (typeof window !== "undefined") {
+  window.addEventListener("pagehide", () => {
+    metadataPreviewSyncPageActive = false;
+    stopMetadataPreviewSyncPolling();
+  });
+  window.addEventListener("pageshow", () => {
+    metadataPreviewSyncPageActive = true;
+  });
+}
 
 if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", () => {
   [
@@ -4274,6 +4287,7 @@ function renderPaperList() {
 }
 
 async function selectPaper(id) {
+  stopMetadataPreviewSyncPolling();
   const selectionSequence = ++paperSelectionSequence;
   state.selectedId = id;
   state.selectedPaper = null;
@@ -5038,6 +5052,51 @@ function closeMetadataEditor() {
   elements["metadata-edit-form"].hidden = true;
 }
 
+function metadataPreviewSyncMessage(sync) {
+  if (sync?.status === "synchronized") return "Saved · Public preview synchronized";
+  if (sync?.status === "failed") return "Saved · Public preview sync failed";
+  return "Saved · Public preview updating…";
+}
+
+function stopMetadataPreviewSyncPolling() {
+  metadataPreviewSyncPollEpoch += 1;
+  if (metadataPreviewSyncPollTimer !== null) {
+    window.clearTimeout(metadataPreviewSyncPollTimer);
+    metadataPreviewSyncPollTimer = null;
+  }
+}
+
+function pollMetadataPreviewSync(selectedId, selectionSequence) {
+  stopMetadataPreviewSyncPolling();
+  if (!metadataPreviewSyncPageActive) return;
+  const pollEpoch = metadataPreviewSyncPollEpoch;
+  let lastStatusActive = true;
+  const schedule = (delay) => {
+    if (!metadataPreviewSyncPageActive || pollEpoch !== metadataPreviewSyncPollEpoch) return;
+    if (metadataPreviewSyncPollTimer !== null) window.clearTimeout(metadataPreviewSyncPollTimer);
+    metadataPreviewSyncPollTimer = window.setTimeout(poll, delay);
+  };
+  const poll = async () => {
+    metadataPreviewSyncPollTimer = null;
+    try {
+      const payload = await apiFetch("/api/public-preview-sync");
+      const sync = payload.data?.public_preview_sync;
+      if (!metadataPreviewSyncPageActive || pollEpoch !== metadataPreviewSyncPollEpoch) return;
+      if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+      if (!state.metadataSave.inFlight && state.metadataSave.status === "success") {
+        renderMetadataSaveStatus("success", metadataPreviewSyncMessage(sync));
+      }
+      lastStatusActive = sync?.status === "dirty" || sync?.status === "running";
+      schedule(lastStatusActive ? 1000 : 10000);
+    } catch (_error) {
+      if (selectionSequence === paperSelectionSequence && state.selectedId === selectedId) {
+        schedule(lastStatusActive ? 1000 : 5000);
+      }
+    }
+  };
+  schedule(250);
+}
+
 async function saveMetadata(event) {
   event.preventDefault();
   if (state.metadataSave.inFlight || !metadataFormIsDirty()) return;
@@ -5131,12 +5190,12 @@ async function saveMetadata(event) {
     }
     await refreshAfterMetadataSave(selectedId, payload, selectionSequence);
     if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
+    const previewSync = payload.data?.public_preview_sync;
     renderMetadataSaveStatus(
       "success",
-      payload.preview_refreshed === false
-        ? "Curated override saved successfully. Public preview refresh failed."
-        : "Curated override saved successfully.",
+      metadataPreviewSyncMessage(previewSync),
     );
+    pollMetadataPreviewSync(selectedId, selectionSequence);
   } catch (error) {
     if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
     const possibleMatches = error.payload?.data?.possible_matches || [];

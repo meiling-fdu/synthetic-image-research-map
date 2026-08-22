@@ -1,6 +1,11 @@
 import csv
+import json
 import tempfile
+import threading
 import unittest
+import urllib.parse
+import urllib.request
+from http.server import ThreadingHTTPServer
 from pathlib import Path
 from unittest.mock import patch
 
@@ -20,6 +25,8 @@ from scripts.curated_schema import (
     INSTITUTION_COLUMNS,
     INSTITUTION_LOCATION_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
+    INSTITUTION_REVIEW_QUEUE_COLUMNS,
+    PAPER_EXCLUSION_COLUMNS,
 )
 from scripts.export_public_preview import (
     add_public_detail_fields,
@@ -27,9 +34,18 @@ from scripts.export_public_preview import (
     canonicalize_public_institutions,
 )
 from scripts.migrate_affiliation_order import migrate
+from scripts.serve_admin import make_handler
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CURATED_PAPER_COLUMNS = (
+    "paper_id", "title", "year", "authors", "venue", "venue_id",
+    "venue_name", "venue_acronym", "venue_type", "venue_track", "raw_venue",
+    "doi", "arxiv_id", "openalex_url", "paper_url", "publication_type",
+    "abstract", "task", "scope_status", "source_database", "metadata_source",
+    "curation_status", "review_status", "created_at", "updated_at",
+    "paper_categories",
+)
 
 
 def blank(columns, **values):
@@ -99,6 +115,99 @@ class AffiliationOrderTests(unittest.TestCase):
             expected["affiliation_order"] = row["affiliation_order"]
             self.assertEqual(row, expected)
 
+    def test_admin_endpoint_reorder_survives_disk_reload_and_get(self):
+        rows = [self.mapping(index) for index in range(1, 6)]
+        write_csv(self.mappings, AUTHOR_INSTITUTION_MAPPING_COLUMNS, rows)
+        root = self.mappings.parent
+        curated_papers = root / "papers.csv"
+        exclusions = root / "exclusions.csv"
+        queue = root / "institution_review_queue.csv"
+        public_papers = root / "public_papers.json"
+        public_map = root / "public_map.json"
+        write_csv(curated_papers, CURATED_PAPER_COLUMNS, [{
+            "paper_id": self.paper["paper_id"],
+            "title": self.paper["title"],
+            "year": self.paper["year"],
+            "authors": "Author 1; Author 2; Author 3; Author 4; Author 5",
+            "task": "detection",
+            "scope_status": "in_scope",
+            "source_database": "fixture",
+            "metadata_source": "fixture",
+            "curation_status": "confirmed",
+            "review_status": "reviewed",
+        }])
+        write_csv(exclusions, PAPER_EXCLUSION_COLUMNS)
+        write_csv(queue, INSTITUTION_REVIEW_QUEUE_COLUMNS)
+        public_papers.write_text("[]", encoding="utf-8")
+        public_map.write_text("[]", encoding="utf-8")
+        requested = [
+            "mapping:1", "mapping:4", "mapping:2", "mapping:5", "mapping:3"
+        ]
+
+        with (
+            patch("scripts.serve_admin.PUBLIC_PAPERS_PATH", public_papers),
+            patch("scripts.serve_admin.PUBLIC_MAP_PATH", public_map),
+        ):
+            server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler(
+                "test-token",
+                exclusions_path=exclusions,
+                curated_papers_path=curated_papers,
+                mappings_path=self.mappings,
+                location_review_path=self.reviews,
+                institution_review_queue_path=queue,
+            ))
+            thread = threading.Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            try:
+                base_url = f"http://127.0.0.1:{server.server_port}"
+                request = urllib.request.Request(
+                    base_url + "/api/paper/mappings/reorder",
+                    data=json.dumps({
+                        "id": self.paper["paper_id"],
+                        "mapping_ids": requested,
+                    }).encode("utf-8"),
+                    method="POST",
+                    headers={
+                        "X-Admin-Token": "test-token",
+                        "Content-Type": "application/json",
+                    },
+                )
+                with urllib.request.urlopen(request, timeout=3) as response:
+                    saved_response = json.loads(response.read())
+
+                self.assertEqual(saved_response["mapping_ids"], requested)
+                del saved_response
+
+                reloaded_rows = load_mappings(self.mappings)
+                reloaded = mappings_for_paper(self.paper, reloaded_rows)
+                self.assertEqual(
+                    [(row["mapping_id"], row["affiliation_order"]) for row in reloaded],
+                    [(mapping_id, str(index)) for index, mapping_id in enumerate(requested, 1)],
+                )
+                del reloaded_rows, reloaded
+
+                get_url = (
+                    base_url + "/api/paper/mappings?id="
+                    + urllib.parse.quote(self.paper["paper_id"])
+                )
+                get_request = urllib.request.Request(
+                    get_url, headers={"X-Admin-Token": "test-token"}
+                )
+                with urllib.request.urlopen(get_request, timeout=3) as response:
+                    admin_reload = json.loads(response.read())
+                self.assertEqual(
+                    [row["mapping_id"] for row in admin_reload["curated_mappings"]],
+                    requested,
+                )
+                self.assertEqual(
+                    [row["affiliation_order"] for row in admin_reload["curated_mappings"]],
+                    ["1", "2", "3", "4", "5"],
+                )
+            finally:
+                server.shutdown()
+                server.server_close()
+                thread.join(timeout=2)
+
     def test_migration_groups_by_stable_paper_id_and_normalizes_legacy_duplicates(self):
         rows = [
             {**self.mapping(1), "doi": "10.1/formal", "affiliation_order": "1"},
@@ -121,13 +230,22 @@ class AffiliationOrderTests(unittest.TestCase):
                 reorder_mappings(self.paper, mapping_ids, mappings_path=self.mappings)
             self.assertEqual(self.mappings.read_bytes(), before)
 
+    def test_explicit_order_cannot_fall_back_when_incomplete_or_non_contiguous(self):
+        for orders in (("1", ""), ("1", "invalid"), ("1", "1"), ("1", "3")):
+            rows = [
+                self.mapping(index, order=order)
+                for index, order in enumerate(orders, start=1)
+            ]
+            with self.assertRaisesRegex(CuratedMappingError, "explicit, unique"):
+                mappings_for_paper(self.paper, rows)
+
     def test_failed_atomic_save_leaves_original_order_intact(self):
         write_csv(self.mappings, AUTHOR_INSTITUTION_MAPPING_COLUMNS, [
             self.mapping(1), self.mapping(2)
         ])
         before = self.mappings.read_bytes()
-        with patch("scripts.curated_mappings._write_csv", side_effect=OSError("failed")):
-            with self.assertRaisesRegex(OSError, "failed"):
+        with patch("pathlib.Path.replace", side_effect=OSError("failed")):
+            with self.assertRaisesRegex(CuratedMappingError, "could not write"):
                 reorder_mappings(
                     self.paper, ["mapping:2", "mapping:1"],
                     mappings_path=self.mappings,
@@ -246,11 +364,44 @@ class AffiliationOrderTests(unittest.TestCase):
         self.assertIn('handle.textContent = "⋮⋮"', javascript)
         self.assertIn('row.addEventListener("dragstart"', javascript)
         self.assertIn('"/api/paper/mappings/reorder"', javascript)
+        self.assertIn("body.ondrop", javascript)
+        self.assertIn("restoreMappingRows(previousMappingIds)", javascript)
+        self.assertIn("The server did not confirm", javascript)
+        self.assertIn("Persisted affiliation_order must be explicit", javascript)
         self.assertNotIn("Move Up", html + javascript)
         self.assertNotIn("Move Down", html + javascript)
 
 
 class AffiliationOrderReproductionTests(unittest.TestCase):
+    def test_affected_papers_have_requested_persisted_admin_order(self):
+        rows = load_mappings(
+            ROOT / "data/curated/author_institution_mappings.csv"
+        )
+        expected = {
+            "curated:6a5bef99dcdc1ad4ba28": [
+                "Zhejiang University",
+                "Hangzhou High-Tech Zone (Binjiang) Institute of Blockchain and Data Security",
+                "George Mason University",
+            ],
+            "curated:211ea83fa8d41c8ec810": [
+                "Anhui University",
+                "Institute of Artificial Intelligence, Hefei Comprehensive National Science Center",
+                "National University of Singapore",
+                "University of Science and Technology of China",
+                "Origin Quantum Computing Technology (Hefei) Co., Ltd.",
+            ],
+        }
+        for paper_id, institutions in expected.items():
+            paper = {"paper_id": paper_id}
+            mappings = mappings_for_paper(paper, rows)
+            self.assertEqual(
+                [row["institution"] for row in mappings], institutions
+            )
+            self.assertEqual(
+                [row["affiliation_order"] for row in mappings],
+                [str(index) for index in range(1, len(institutions) + 1)],
+            )
+
     def test_towards_generalizable_detector_public_numbering(self):
         paper = {
             "paper_id": "curated:0b5e852ad2faa5d89eb5",

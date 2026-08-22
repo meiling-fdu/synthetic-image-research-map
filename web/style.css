@@ -609,14 +609,14 @@ button.institution-filter-link:focus-visible {
 .year-range-slider {
   position: relative;
   height: 24px;
-  margin: 0 9px;
+  margin: 0;
 }
 
 .year-range-track {
   position: absolute;
   top: 10px;
-  right: 0;
-  left: 0;
+  right: 16px;
+  left: 16px;
   height: 4px;
   border-radius: 999px;
   background: linear-gradient(
@@ -631,8 +631,8 @@ button.institution-filter-link:focus-visible {
   position: absolute;
   z-index: 2;
   top: 0;
-  left: 0;
-  width: 100%;
+  left: -6px;
+  width: calc(100% + 12px);
   height: 24px;
   margin: 0;
   border: 0;

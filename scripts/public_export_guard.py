@@ -92,6 +92,53 @@ def _paper_matches(left: Mapping[str, Any], right: Mapping[str, Any]) -> bool:
     return records_share_any_identity(left, right)
 
 
+class _PaperIdentityIndex:
+    """Transaction-local index mirroring records_share_any_identity exactly."""
+
+    def __init__(self, records: Sequence[Mapping[str, Any]]) -> None:
+        self.positions = {id(record): index for index, record in enumerate(records)}
+        self.strong: dict[str, list[Mapping[str, Any]]] = {}
+        self.weak: dict[str, list[Mapping[str, Any]]] = {}
+        self.cache: dict[
+            int,
+            tuple[
+                Mapping[str, Any],
+                tuple[tuple[str, ...], tuple[str, ...]],
+            ],
+        ] = {}
+        for record in records:
+            keys, strong_keys = self._identities(record)
+            target = self.strong if strong_keys else self.weak
+            for key in strong_keys or keys:
+                target.setdefault(key, []).append(record)
+
+    def _identities(
+        self, record: Mapping[str, Any]
+    ) -> tuple[tuple[str, ...], tuple[str, ...]]:
+        marker = id(record)
+        entry = self.cache.get(marker)
+        if entry is None or entry[0] is not record:
+            keys = tuple(all_identity_keys(record))
+            cached = (
+                keys,
+                tuple(key for key in keys if not key.startswith("title_year:")),
+            )
+            self.cache[marker] = (record, cached)
+            return cached
+        return entry[1]
+
+    def matches(self, record: Mapping[str, Any]) -> list[Mapping[str, Any]]:
+        keys, strong_keys = self._identities(record)
+        source = self.strong if strong_keys else self.weak
+        candidates: dict[int, Mapping[str, Any]] = {}
+        for key in strong_keys or keys:
+            for candidate in source.get(key, ()):
+                candidates.setdefault(id(candidate), candidate)
+        return sorted(
+            candidates.values(), key=lambda candidate: self.positions[id(candidate)]
+        )
+
+
 def _identity_label(record: Mapping[str, Any]) -> str:
     keys = all_identity_keys(record)
     return keys[0] if keys else f"title:{clean(record.get('title')) or '[unknown]'}"
@@ -139,10 +186,14 @@ def _canonical_institution_identity(
 def _map_present(
     old: Mapping[str, Any],
     new_maps: Sequence[Mapping[str, Any]],
+    identity_index: _PaperIdentityIndex | None = None,
 ) -> bool:
     institution = _institution_identity(old)
     location = _location_identity(old)
     authors = _relationship_author_set(old)
+    candidates = (
+        identity_index.matches(old) if identity_index is not None else new_maps
+    )
     return any(
         _institution_identity(new) == institution
         and (not location or _location_identity(new) == location)
@@ -150,8 +201,8 @@ def _map_present(
             not authors
             or _relationship_author_set(new) == authors
         )
-        and _paper_matches(old, new)
-        for new in new_maps
+        and (identity_index is not None or _paper_matches(old, new))
+        for new in candidates
     )
 
 
@@ -623,10 +674,12 @@ def analyze_shrinkage(
     relationship_resolver = ReviewedRelationshipResolver(
         curated_mappings, institution_audits
     )
+    new_paper_index = _PaperIdentityIndex(new_papers)
+    new_map_index = _PaperIdentityIndex(new_maps)
     removed_paper_records = [
         old
         for old in previous_papers
-        if not any(_paper_matches(old, new) for new in new_papers)
+        if not new_paper_index.matches(old)
     ]
     paper_removals = []
     explained_paper_keys: list[set[str]] = []
@@ -657,7 +710,7 @@ def analyze_shrinkage(
 
     map_removals = []
     for old in previous_maps:
-        if _map_present(old, new_maps):
+        if _map_present(old, new_maps, new_map_index):
             continue
         exclusion = _exclusion_evidence(old, exclusion_index)
         merge = next(

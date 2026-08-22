@@ -26,6 +26,8 @@ try:
         DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
+        PaperIdentityCache,
+        PaperIdentityIndex,
         enforce_affiliation_source_precedence,
         integrate_curated_records,
         load_curated_mappings,
@@ -120,6 +122,8 @@ except ImportError:  # Direct execution from the scripts directory.
         DEFAULT_INSTITUTION_ALIASES_PATH,
         DEFAULT_LOCATION_REVIEW_PATH,
         CuratedExportError,
+        PaperIdentityCache,
+        PaperIdentityIndex,
         enforce_affiliation_source_precedence,
         integrate_curated_records,
         load_curated_mappings,
@@ -3339,17 +3343,16 @@ def add_paper_institution_search_ids(
         if clean_text(mapping.get("mapping_status")) in {"active", "needs_review"}
         and clean_text(mapping.get("institution_id"))
     ]
+    identity_cache = PaperIdentityCache()
+    mapping_index = PaperIdentityIndex(searchable_mappings, identity_cache)
     annotated = 0
     for paper in paper_records:
-        paper_keys = set(normalize_paper_identity_keys(paper))
         search_ids = list(dict.fromkeys(
             clean_text(value)
             for value in paper.get("search_institution_ids", [])
             if clean_text(value)
         ))
-        for mapping in searchable_mappings:
-            if not paper_keys.intersection(normalize_paper_identity_keys(mapping)):
-                continue
+        for mapping in mapping_index.matches(paper):
             institution_id = clean_text(mapping.get("institution_id"))
             institution_id = redirects.get(institution_id, institution_id)
             if institution_id and institution_id not in search_ids:
@@ -3360,6 +3363,41 @@ def add_paper_institution_search_ids(
         else:
             paper.pop("search_institution_ids", None)
     return annotated
+
+
+def preserve_equal_record_key_order(
+    records: Sequence[Dict[str, Any]],
+    previous_records: Sequence[Mapping[str, Any]],
+) -> int:
+    """Keep byte-stable key order for records whose values are unchanged."""
+    if not previous_records:
+        return 0
+    identity_cache = PaperIdentityCache()
+    previous_index = PaperIdentityIndex(previous_records, identity_cache)
+    reordered = 0
+    for record in records:
+        equal_matches = [
+            previous
+            for previous in previous_index.matches(record)
+            if previous == record
+        ]
+        if len(equal_matches) != 1:
+            continue
+        previous = equal_matches[0]
+        if list(previous) == list(record):
+            continue
+        ordered = {
+            key: record[key]
+            for key in previous
+            if key in record
+        }
+        ordered.update(
+            (key, value) for key, value in record.items() if key not in ordered
+        )
+        record.clear()
+        record.update(ordered)
+        reordered += 1
+    return reordered
 
 
 def canonicalize_public_institutions(
@@ -4422,6 +4460,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             curated_mappings,
             exported_id_redirects,
         )
+        preserve_equal_record_key_order(integrated_papers, previous_papers)
+        preserve_equal_record_key_order(integrated_maps, previous_maps)
         payload["records"] = integrated_maps
         paper_payload["records"] = integrated_papers
         payload["institution_aliases"] = exported_aliases

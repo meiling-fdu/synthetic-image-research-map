@@ -309,6 +309,9 @@ def materialize_existing_venue_id(
     aliases: Sequence[Mapping[str, Any]],
     *,
     registry: Mapping[str, Mapping[str, Any]] | None = None,
+    catalog: tuple[
+        dict[str, list[dict[str, str]]], dict[str, tuple[str, ...]]
+    ] | None = None,
 ) -> dict[str, Any]:
     """Materialize a confirmed ID or migrate an exact legacy placeholder.
 
@@ -330,6 +333,7 @@ def materialize_existing_venue_id(
         publication_type=result.get("publication_type"),
         venue_type=result.get("venue_type"),
         aliases=aliases,
+        catalog=catalog,
     )
     if resolved.venue_id in confirmed and resolved.ambiguity_status == "resolved":
         result["venue_id"] = resolved.venue_id
@@ -691,6 +695,9 @@ def resolve_venue(
     publication_type: Any = "",
     venue_type: Any = "",
     aliases: Sequence[Mapping[str, Any]] | None = None,
+    catalog: tuple[
+        dict[str, list[dict[str, str]]], dict[str, tuple[str, ...]]
+    ] | None = None,
 ) -> CanonicalVenue:
     raw = clean_text(raw_venue)
     if not raw:
@@ -710,7 +717,7 @@ def resolve_venue(
             "unresolved",
         )
     rows = list(aliases) if aliases is not None else read_venue_aliases()
-    by_alias, aliases_by_id = _catalog_index(rows)
+    by_alias, aliases_by_id = catalog or _catalog_index(rows)
     inferred_type = normalize_venue_type(
         venue_type, publication_type=publication_type
     )
@@ -749,6 +756,9 @@ def canonicalize_record(
     aliases: Sequence[Mapping[str, Any]] | None = None,
     *,
     registry: Mapping[str, Mapping[str, Any]] | None = None,
+    catalog: tuple[
+        dict[str, list[dict[str, str]]], dict[str, tuple[str, ...]]
+    ] | None = None,
 ) -> dict[str, Any]:
     result = dict(record)
     resolved_aliases = list(aliases) if aliases is not None else read_venue_aliases()
@@ -756,7 +766,10 @@ def canonicalize_record(
     confirmed_registry = registry or canonical_venue_registry(resolved_aliases)
     if existing_id:
         result = materialize_existing_venue_id(
-            result, resolved_aliases, registry=confirmed_registry
+            result,
+            resolved_aliases,
+            registry=confirmed_registry,
+            catalog=catalog,
         )
         effective_type, _rule = resolve_publication_type(
             result.get("publication_type"),
@@ -771,7 +784,13 @@ def canonicalize_record(
             result["publication_type"] = effective_type
         return result
     source = result.get("raw_venue") or result.get("venue_name") or result.get("venue")
-    venue = resolve_venue(source, publication_type=result.get("publication_type"), venue_type=result.get("venue_type"), aliases=resolved_aliases)
+    venue = resolve_venue(
+        source,
+        publication_type=result.get("publication_type"),
+        venue_type=result.get("venue_type"),
+        aliases=resolved_aliases,
+        catalog=catalog,
+    )
     result.update(venue.as_record())
     result.pop("aliases", None)
     result["venue"] = venue.venue_name
@@ -793,7 +812,13 @@ def canonicalize_record(
 def canonicalize_records(records: Iterable[Mapping[str, Any]], aliases: Sequence[Mapping[str, Any]] | None = None) -> list[dict[str, Any]]:
     resolved_aliases = list(aliases) if aliases is not None else read_venue_aliases()
     registry = canonical_venue_registry(resolved_aliases)
+    catalog = _catalog_index(resolved_aliases)
     return [
-        canonicalize_record(record, resolved_aliases, registry=registry)
+        canonicalize_record(
+            record,
+            resolved_aliases,
+            registry=registry,
+            catalog=catalog,
+        )
         for record in records
     ]

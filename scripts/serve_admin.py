@@ -108,6 +108,10 @@ try:
     )
     from .publication_types import normalize_book_record
     from .paper_categories import categories_from_record
+    from .public_preview_sync import (
+        DEFAULT_STATE_PATH as DEFAULT_PUBLIC_PREVIEW_SYNC_STATE_PATH,
+        PublicPreviewSyncCoordinator,
+    )
     from .admin_review_queues import (
         AdminReviewQueueError,
         dashboard_data,
@@ -231,6 +235,10 @@ except ImportError:
     )
     from publication_types import normalize_book_record
     from paper_categories import categories_from_record
+    from public_preview_sync import (
+        DEFAULT_STATE_PATH as DEFAULT_PUBLIC_PREVIEW_SYNC_STATE_PATH,
+        PublicPreviewSyncCoordinator,
+    )
     from admin_review_queues import (
         AdminReviewQueueError,
         dashboard_data,
@@ -1576,10 +1584,17 @@ def make_handler(
     ),
     curated_arxiv_links_path: Path = DEFAULT_CURATED_ARXIV_LINKS_PATH,
     metadata_export_runner: Callable[[str], Mapping[str, Any]] = run_workflow,
+    public_preview_sync_state_path: Path = DEFAULT_PUBLIC_PREVIEW_SYNC_STATE_PATH,
+    public_preview_sync_coordinator: PublicPreviewSyncCoordinator | None = None,
     workflow_runner: Callable[..., Mapping[str, Any]] = run_workflow,
     geocoder: Any = None,
 ) -> type[BaseHTTPRequestHandler]:
     institution_geocoder = geocoder or configured_geocoder()
+    preview_sync = public_preview_sync_coordinator or PublicPreviewSyncCoordinator(
+        public_preview_sync_state_path,
+        lambda: metadata_export_runner("export_preview"),
+        autostart=False,
+    )
     workflow_lock = threading.Lock()
     workflow_status_lock = threading.Lock()
     latest_workflow_status: Dict[str, Any] = {
@@ -1744,7 +1759,9 @@ def make_handler(
         def run_arxiv_autofill_job(cls) -> None:
             try:
                 stats = dict(autofill_runner(
-                    export=lambda: run_workflow("export_preview"),
+                    export=lambda: preview_sync.run_exclusive(
+                        lambda: run_workflow("export_preview")
+                    ),
                     progress=cls.update_autofill_progress,
                 ))
                 cls.update_autofill_progress(stats)
@@ -1819,8 +1836,17 @@ def make_handler(
 
             response_status = HTTPStatus.OK
             try:
+                def run() -> Mapping[str, Any]:
+                    return workflow_runner(
+                        workflow_name, progress=update_progress
+                    )
+
                 result = dict(
-                    workflow_runner(workflow_name, progress=update_progress)
+                    preview_sync.run_exclusive(run)
+                    if workflow_name in {
+                        "export_preview", "full_refresh", "publish_changes",
+                    }
+                    else run()
                 )
             except AdminWorkflowError as error:
                 response_status = HTTPStatus.BAD_REQUEST
@@ -1942,6 +1968,12 @@ def make_handler(
                 return
             if request.path in WORKFLOW_ENDPOINTS:
                 self.send_method_not_allowed("POST")
+                return
+            if request.path == "/api/public-preview-sync":
+                self.send_json(
+                    HTTPStatus.OK,
+                    api_payload(data={"public_preview_sync": preview_sync.snapshot()}),
+                )
                 return
             if request.path == "/api/admin/papers/autofill-arxiv/status":
                 if not self.is_header_authorized():
@@ -2501,8 +2533,30 @@ def make_handler(
                 "/api/paper/metadata",
                 "/api/venues",
                 "/api/admin/papers/arxiv-enrichment",
+                "/api/public-preview-sync",
             }:
                 self.send_method_not_allowed("GET")
+                return
+            if request.path == "/api/public-preview-sync/retry":
+                if not self.is_header_authorized() or not self.is_loopback_client():
+                    self.send_json(
+                        HTTPStatus.FORBIDDEN,
+                        api_payload(
+                            success=False,
+                            errors=(
+                                "public-preview synchronization retry is restricted "
+                                "to authorized loopback clients",
+                            ),
+                        ),
+                    )
+                    return
+                self.send_json(
+                    HTTPStatus.ACCEPTED,
+                    api_payload(
+                        message="Public-preview synchronization queued.",
+                        data={"public_preview_sync": preview_sync.retry()},
+                    ),
+                )
                 return
             if request.path in WORKFLOW_ENDPOINTS:
                 if not self.is_header_authorized():
@@ -3172,7 +3226,11 @@ def make_handler(
                                 venue_aliases_path,
                             ))
                             perf.mark("snapshot_files")
+                            curated_change_started = False
                             try:
+                                preview_sync.begin_curated_change()
+                                curated_change_started = True
+                                perf.mark("mark_preview_intent")
                                 venue_proposal = payload.get("venue_proposal")
                                 if venue_proposal is not None and not isinstance(
                                     venue_proposal, dict
@@ -3351,15 +3409,24 @@ def make_handler(
                                         match_record=paper,
                                     )
                                 perf.mark("update_arxiv_override")
+                                sync_state = preview_sync.request_sync()
+                                perf.mark("mark_preview_dirty")
+                                curated_change_started = False
+                                try:
+                                    preview_sync.complete_curated_change()
+                                except Exception as error:
+                                    LOGGER.warning(
+                                        "Could not clear public-preview curated-change "
+                                        "intent after generation commit; startup will "
+                                        "replay it safely: %s",
+                                        error,
+                                    )
+                                perf.mark("clear_preview_intent")
                             except Exception:
                                 restore_file_snapshots(snapshots)
+                                if curated_change_started:
+                                    preview_sync.cancel_curated_change()
                                 raise
-                        # A validated curated save is durable independently of
-                        # the best-effort local preview refresh.
-                        export_result = dict(
-                            metadata_export_runner("export_preview")
-                        )
-                        perf.mark("export_preview")
                     except VenueRegistryError as error:
                         possible_matches = getattr(error, "possible_matches", [])
                         self.send_json(
@@ -3392,58 +3459,32 @@ def make_handler(
                         curated_arxiv_links_path,
                     )
                     perf.mark("apply_arxiv_metadata")
-                    refreshed_summary = None
-                    if export_result.get("success"):
-                        _refreshed_papers, refreshed_admin_data = load_admin_data(
-                            exclusions_path, curated_papers_path
-                        )
-                        refreshed_paper = refreshed_admin_data[
-                            "papers_by_id"
-                        ].get(paper_id)
-                        if refreshed_paper is not None:
-                            refreshed_summary = paper_summary(refreshed_paper)
+                    refreshed_summary = paper_summary({
+                        **paper,
+                        **effective_row,
+                        "curated_record": row,
+                    })
                     perf.mark("refresh_saved_summary")
                     timings = perf.finish()
                     response_data = {
                         "paper": effective_row,
                         "paper_summary": refreshed_summary,
-                        "export": export_result,
+                        "export": None,
                         "venue": venue_resolution,
+                        "public_preview_sync": sync_state,
                     }
                     if PERF_LOG_ENABLED:
                         response_data["timings"] = timings
                     self.send_json(
                         HTTPStatus.OK,
                         api_payload(
-                            message=(
-                                "Saved metadata and regenerated public preview."
-                                if export_result.get("success")
-                                else "Metadata saved; public preview refresh failed."
-                            ),
+                            message="Saved metadata; public preview synchronization queued.",
                             success=True,
                             data=response_data,
-                            warnings=(
-                                ()
-                                if export_result.get("success")
-                                else (
-                                    workflow_failure_message(
-                                        export_result,
-                                        fallback="public preview export failed",
-                                    ),
-                                )
-                            ),
                             saved=True,
-                            preview_refreshed=bool(export_result.get("success")),
-                            stage=(
-                                "complete"
-                                if export_result.get("success")
-                                else "preview_refresh"
-                            ),
-                            warning_code=(
-                                ""
-                                if export_result.get("success")
-                                else "preview_refresh_failed"
-                            ),
+                            preview_refreshed=False,
+                            stage="curated_save_complete",
+                            warning_code="",
                         ),
                     )
                     return
@@ -4053,6 +4094,7 @@ def make_handler(
                 f"{self.address_string()} - {format_string % args}\n"
             )
 
+    AdminRequestHandler.public_preview_sync = preview_sync  # type: ignore[attr-defined]
     return AdminRequestHandler
 
 
@@ -4098,9 +4140,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         institution_audit_path=args.institution_audit,
         institution_location_audit_path=args.institution_location_audit,
     )
+    handler.public_preview_sync.start()  # type: ignore[attr-defined]
     try:
         server = ThreadingHTTPServer((args.host, args.port), handler)
     except OSError as error:
+        handler.public_preview_sync.close()  # type: ignore[attr-defined]
         print(f"ERROR: could not start admin server: {error}", file=sys.stderr)
         return 1
     server.daemon_threads = True
@@ -4116,6 +4160,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         print("\nStopping admin server.")
     finally:
         server.server_close()
+        handler.public_preview_sync.close()  # type: ignore[attr-defined]
     return 0
 
 

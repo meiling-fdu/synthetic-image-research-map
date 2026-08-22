@@ -299,6 +299,48 @@ def normalize_paper_identity_keys(record: Mapping[str, Any]) -> List[str]:
     return list(dict.fromkeys(keys))
 
 
+class PaperIdentityCache:
+    """Transaction-local normalized identities keyed by live record identity."""
+
+    def __init__(self) -> None:
+        self._keys: Dict[int, Tuple[Mapping[str, Any], Tuple[str, ...]]] = {}
+
+    def keys(self, record: Mapping[str, Any]) -> Tuple[str, ...]:
+        marker = id(record)
+        cached = self._keys.get(marker)
+        if cached is None or cached[0] is not record:
+            keys = tuple(normalize_paper_identity_keys(record))
+            self._keys[marker] = (record, keys)
+            return keys
+        return cached[1]
+
+
+class PaperIdentityIndex:
+    """Match any canonical identity while preserving source-record order."""
+
+    def __init__(
+        self,
+        records: Sequence[Mapping[str, Any]],
+        cache: PaperIdentityCache,
+    ) -> None:
+        self.records = records
+        self.cache = cache
+        self.positions = {id(record): index for index, record in enumerate(records)}
+        self.by_key: Dict[str, List[Mapping[str, Any]]] = {}
+        for record in records:
+            for key in cache.keys(record):
+                self.by_key.setdefault(key, []).append(record)
+
+    def matches(self, record: Mapping[str, Any]) -> List[Mapping[str, Any]]:
+        candidates: Dict[int, Mapping[str, Any]] = {}
+        for key in self.cache.keys(record):
+            for candidate in self.by_key.get(key, ()):
+                candidates.setdefault(id(candidate), candidate)
+        return sorted(
+            candidates.values(), key=lambda candidate: self.positions[id(candidate)]
+        )
+
+
 def normalize_institution(value: Any) -> str:
     text = unicodedata.normalize("NFKC", clean(value)).casefold()
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
@@ -737,10 +779,12 @@ def match_institutions_to_known_coordinates(
 
 def _paper_index(
     records: Sequence[MutableMapping[str, Any]],
+    identity_cache: PaperIdentityCache | None = None,
 ) -> Dict[str, List[MutableMapping[str, Any]]]:
     index: Dict[str, List[MutableMapping[str, Any]]] = {}
+    cache = identity_cache or PaperIdentityCache()
     for record in records:
-        for key in normalize_paper_identity_keys(record):
+        for key in cache.keys(record):
             index.setdefault(key, []).append(record)
     return index
 
@@ -748,9 +792,15 @@ def _paper_index(
 def _matching_papers(
     record: Mapping[str, Any],
     index: Mapping[str, Sequence[MutableMapping[str, Any]]],
+    identity_cache: PaperIdentityCache | None = None,
 ) -> List[MutableMapping[str, Any]]:
     seen = set()
-    for key in normalize_paper_identity_keys(record):
+    keys = (
+        identity_cache.keys(record)
+        if identity_cache is not None
+        else normalize_paper_identity_keys(record)
+    )
+    for key in keys:
         matches = index.get(key, ())
         if not matches:
             continue
@@ -1058,6 +1108,8 @@ def affiliation_review_state(
     paper: Mapping[str, Any],
     mappings: Sequence[Mapping[str, Any]],
     curated_papers: Sequence[Mapping[str, Any]] = (),
+    *,
+    matching_mappings: Sequence[Mapping[str, Any]] | None = None,
 ) -> str:
     """Return the paper-level source decision for affiliation evidence.
 
@@ -1067,9 +1119,12 @@ def affiliation_review_state(
     that an empty affiliation result was reviewed. General paper-metadata
     review is deliberately not treated as affiliation review.
     """
-    matching_mappings = [
-        mapping for mapping in mappings if _mapping_matches_paper(mapping, paper)
-    ]
+    if matching_mappings is None:
+        matching_mappings = [
+            mapping
+            for mapping in mappings
+            if _mapping_matches_paper(mapping, paper)
+        ]
     statuses = {
         clean(mapping.get("mapping_status")) for mapping in matching_mappings
     }
@@ -1111,9 +1166,15 @@ def enforce_affiliation_source_precedence(
     map_records: List[Dict[str, Any]],
     mappings: Sequence[Mapping[str, Any]],
     curated_papers: Sequence[Mapping[str, Any]] = (),
+    *,
+    identity_cache: PaperIdentityCache | None = None,
 ) -> int:
     """Apply paper-level manual-first selection and return removed markers."""
-    removed = 0
+    cache = identity_cache or PaperIdentityCache()
+    mapping_index = PaperIdentityIndex(mappings, cache)
+    marker_index = PaperIdentityIndex(map_records, cache)
+    active_marker_ids = {id(marker) for marker in map_records}
+    removed_marker_ids: set[int] = set()
     resolved_mapping_ids = {
         clean(record.get("mapping_id"))
         for record in map_records
@@ -1121,32 +1182,32 @@ def enforce_affiliation_source_precedence(
         and clean(record.get("mapping_id"))
     }
     for paper in paper_records:
-        state = affiliation_review_state(paper, mappings, curated_papers)
+        matching_mappings = mapping_index.matches(paper)
+        state = affiliation_review_state(
+            paper,
+            mappings,
+            curated_papers,
+            matching_mappings=matching_mappings,
+        )
         paper["affiliation_review_state"] = state
         active_mapping_ids = {
             clean(mapping.get("mapping_id"))
-            for mapping in mappings
-            if _mapping_matches_paper(mapping, paper)
-            and clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+            for mapping in matching_mappings
+            if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
             and clean(mapping.get("mapping_id"))
         }
-        matching_marker_ids = {
-            id(marker)
-            for marker in map_records
-            if _mapping_matches_paper(marker, paper)
-        }
+        matching_markers = [
+            marker
+            for marker in marker_index.matches(paper)
+            if id(marker) in active_marker_ids
+        ]
         if state == "unreviewed":
             _mark_preliminary_automatic_evidence(paper)
-            for marker in map_records:
-                if id(marker) in matching_marker_ids:
-                    _mark_preliminary_automatic_evidence(marker)
+            for marker in matching_markers:
+                _mark_preliminary_automatic_evidence(marker)
             continue
 
-        kept = []
-        for marker in map_records:
-            if id(marker) not in matching_marker_ids:
-                kept.append(marker)
-                continue
+        for marker in matching_markers:
             if (
                 state == "curated"
                 and clean(marker.get("source_database")).casefold() == "curated"
@@ -1155,18 +1216,39 @@ def enforce_affiliation_source_precedence(
                 marker["affiliation_review_state"] = "curated"
                 marker["institution_source"] = "curated"
                 marker["preliminary_affiliations"] = False
-                kept.append(marker)
             else:
-                removed += 1
-        map_records[:] = kept
+                marker_id = id(marker)
+                active_marker_ids.discard(marker_id)
+                removed_marker_ids.add(marker_id)
+        remaining_markers = [
+            marker
+            for marker in marker_index.matches(paper)
+            if id(marker) in active_marker_ids
+        ]
+        visible_mappings = [
+            mapping
+            for mapping in matching_mappings
+            if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+        ]
         _recalculate_paper_details(
-            paper, map_records, mappings, resolved_mapping_ids
+            paper,
+            map_records,
+            mappings,
+            resolved_mapping_ids,
+            matching_markers=remaining_markers,
+            matching_mappings=visible_mappings,
         )
         paper["affiliation_review_state"] = state
         paper["institution_source"] = (
             "curated" if state == "curated" else "reviewed_empty"
         )
         paper["preliminary_affiliations"] = False
+    removed = sum(
+        id(marker) in removed_marker_ids for marker in map_records
+    )
+    map_records[:] = [
+        marker for marker in map_records if id(marker) in active_marker_ids
+    ]
     return removed
 
 
@@ -1200,6 +1282,7 @@ def _upsert_location_review(
     mapping: Mapping[str, Any],
     *,
     coordinate_status: str,
+    row_index: Dict[Tuple[str, str], Dict[str, str]] | None = None,
 ) -> str:
     institution_id = clean(mapping.get("institution_id"))
     if not institution_id:
@@ -1237,8 +1320,13 @@ def _upsert_location_review(
         "coordinate_status": coordinate_status,
         "updated_at": now,
     }
-    for row in rows:
-        if _queue_key(row) != key:
+    matching_rows = (
+        [row_index[key]]
+        if row_index is not None and key in row_index
+        else [] if row_index is not None else rows
+    )
+    for row in matching_rows:
+        if row_index is None and _queue_key(row) != key:
             continue
         row["institution_authors"] = _merged_people(
             row.get("institution_authors"), values["institution_authors"]
@@ -1251,16 +1339,27 @@ def _upsert_location_review(
         row["created_at"] = clean(row.get("created_at")) or now
         row["updated_at"] = now
         return "updated"
-    rows.append({**values, "created_at": now})
+    row = {**values, "created_at": now}
+    rows.append(row)
+    if row_index is not None:
+        row_index.setdefault(key, row)
     return "created"
 
 
 def _mark_location_known(
-    rows: List[Dict[str, str]], mapping: Mapping[str, Any]
+    rows: List[Dict[str, str]],
+    mapping: Mapping[str, Any],
+    *,
+    row_index: Dict[Tuple[str, str], Dict[str, str]] | None = None,
 ) -> bool:
     key = _queue_key(mapping)
-    for row in rows:
-        if _queue_key(row) == key:
+    matching_rows = (
+        [row_index[key]]
+        if row_index is not None and key in row_index
+        else [] if row_index is not None else rows
+    )
+    for row in matching_rows:
+        if row_index is not None or _queue_key(row) == key:
             if (
                 clean(row.get("location_status")) == "known"
                 and clean(row.get("coordinate_status")) == "known"
@@ -1283,8 +1382,11 @@ def build_curated_map_records(
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
     processed_cache_records: Sequence[Mapping[str, Any]] = (),
     institution_aliases: Sequence[Mapping[str, Any]] = (),
+    *,
+    identity_cache: PaperIdentityCache | None = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
-    paper_index = _paper_index(paper_records)
+    cache = identity_cache or PaperIdentityCache()
+    paper_index = _paper_index(paper_records, cache)
     exclusion_index = build_active_exclusion_index(exclusion_rows)
     locations = match_institutions_to_known_coordinates(
         public_map_records,
@@ -1326,6 +1428,9 @@ def build_curated_map_records(
         _queue_key(row): clean(row.get("review_status")) or "pending_review"
         for row in review_rows
     }
+    review_row_by_key: Dict[Tuple[str, str], Dict[str, str]] = {}
+    for row in review_rows:
+        review_row_by_key.setdefault(_queue_key(row), row)
     non_exportable_statuses = {
         "pending_review",
         "ambiguous",
@@ -1337,12 +1442,12 @@ def build_curated_map_records(
         if clean(mapping.get("mapping_status")) != ACTIVE_MAPPING_STATUS:
             skipped_status += 1
             continue
-        papers = _matching_papers(mapping, paper_index)
+        papers = _matching_papers(mapping, paper_index, cache)
         if not papers:
             skipped_paper += 1
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
-                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(mapping)),
+                "canonical_paper_identity": "; ".join(cache.keys(mapping)),
                 "title": clean(mapping.get("title")),
                 "mapping_id": clean(mapping.get("mapping_id")),
                 "source_institution_id": clean(mapping.get("institution_id")),
@@ -1359,7 +1464,7 @@ def build_curated_map_records(
             skipped_paper += 1
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
-                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "canonical_paper_identity": "; ".join(cache.keys(paper)),
                 "title": clean(mapping.get("title") or paper.get("title")),
                 "mapping_id": clean(mapping.get("mapping_id")),
                 "source_institution_id": clean(mapping.get("institution_id")),
@@ -1392,7 +1497,7 @@ def build_curated_map_records(
             skipped_status += 1
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
-                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "canonical_paper_identity": "; ".join(cache.keys(paper)),
                 "title": clean(mapping.get("title") or paper.get("title")),
                 "mapping_id": clean(mapping.get("mapping_id")),
                 "source_institution_id": clean(mapping.get("institution_id")),
@@ -1411,7 +1516,7 @@ def build_curated_map_records(
             skipped_status += 1
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
-                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "canonical_paper_identity": "; ".join(cache.keys(paper)),
                 "title": clean(mapping.get("title") or paper.get("title")),
                 "mapping_id": clean(mapping.get("mapping_id")),
                 "source_institution_id": clean(mapping.get("institution_id")),
@@ -1428,7 +1533,10 @@ def build_curated_map_records(
                 "ambiguous" if match.status == "ambiguous" else "missing"
             )
             result = _upsert_location_review(
-                review_rows, mapping, coordinate_status=coordinate_status
+                review_rows,
+                mapping,
+                coordinate_status=coordinate_status,
+                row_index=review_row_by_key,
             )
             queue_created += int(result == "created")
             queue_updated += int(result == "updated")
@@ -1436,7 +1544,7 @@ def build_curated_map_records(
             ambiguous += int(coordinate_status == "ambiguous")
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
-                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "canonical_paper_identity": "; ".join(cache.keys(paper)),
                 "title": clean(mapping.get("title") or paper.get("title")),
                 "mapping_id": clean(mapping.get("mapping_id")),
                 "source_institution_id": clean(mapping.get("institution_id")),
@@ -1448,13 +1556,17 @@ def build_curated_map_records(
                 "final_drop_reason": f"{coordinate_status}_coordinates",
             })
             continue
-        queue_known += int(_mark_location_known(review_rows, mapping))
+        queue_known += int(
+            _mark_location_known(
+                review_rows, mapping, row_index=review_row_by_key
+            )
+        )
         resolved_mapping_ids.add(clean(mapping.get("mapping_id")))
         if clean(paper.get("task")) not in PUBLIC_MAP_TASKS:
             skipped_task += 1
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
-                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "canonical_paper_identity": "; ".join(cache.keys(paper)),
                 "title": clean(mapping.get("title") or paper.get("title")),
                 "mapping_id": clean(mapping.get("mapping_id")),
                 "source_institution_id": clean(mapping.get("institution_id")),
@@ -1476,13 +1588,13 @@ def build_curated_map_records(
         if not canonical_institution and clean(match.record.get("institution")):
             export_mapping["institution"] = clean(match.record.get("institution"))
         marker_key = (
-            next(iter(normalize_paper_identity_keys(paper)), ""),
+            next(iter(cache.keys(paper)), ""),
             _preferred_institution_location_key(export_mapping),
         )
         if marker_key in emitted_marker_keys:
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
-                "canonical_paper_identity": "; ".join(normalize_paper_identity_keys(paper)),
+                "canonical_paper_identity": "; ".join(cache.keys(paper)),
                 "title": clean(mapping.get("title") or paper.get("title")),
                 "mapping_id": clean(mapping.get("mapping_id")),
                 "source_institution_id": clean(mapping.get("institution_id")),
@@ -1568,18 +1680,23 @@ def _recalculate_paper_details(
     map_records: Sequence[Mapping[str, Any]],
     mappings: Sequence[Mapping[str, Any]],
     resolved_mapping_ids: set[str],
+    *,
+    matching_markers: Sequence[Mapping[str, Any]] | None = None,
+    matching_mappings: Sequence[Mapping[str, Any]] | None = None,
 ) -> None:
-    markers = [
-        marker
-        for marker in map_records
-        if _mapping_matches_paper(marker, paper)
+    markers = list(matching_markers) if matching_markers is not None else [
+        marker for marker in map_records if _mapping_matches_paper(marker, paper)
     ]
-    visible_mappings = [
-        mapping
-        for mapping in mappings
-        if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
-        and _mapping_matches_paper(mapping, paper)
-    ]
+    visible_mappings = (
+        list(matching_mappings)
+        if matching_mappings is not None
+        else [
+            mapping
+            for mapping in mappings
+            if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+            and _mapping_matches_paper(mapping, paper)
+        ]
+    )
     visible_mappings = [
         mapping for _index, mapping in sorted(
             enumerate(visible_mappings),
@@ -1811,11 +1928,17 @@ def integrate_curated_records(
         for map_record in _matching_papers(curated, map_index):
             _merge_curated_paper(map_record, curated)
 
+    identity_cache = PaperIdentityCache()
+
     # Source selection is paper-wide. Remove every automatic marker before
     # creating replacements so a different institution or missing coordinate
     # cannot leave stale automatic evidence behind.
     replaced_markers = enforce_affiliation_source_precedence(
-        papers, maps, mappings, curated_papers
+        papers,
+        maps,
+        mappings,
+        curated_papers,
+        identity_cache=identity_cache,
     )
 
     marker_records, mapping_summary = build_curated_map_records(
@@ -1828,6 +1951,7 @@ def integrate_curated_records(
         confirmed_location_records,
         processed_cache_records,
         institution_aliases,
+        identity_cache=identity_cache,
     )
     for marker in marker_records:
         matching = _matching_papers(marker, paper_index)
@@ -1839,7 +1963,11 @@ def integrate_curated_records(
     # second time is intentional: curated markers now exist and must be the
     # only marker inputs used for detail affiliations and superscripts.
     replaced_markers += enforce_affiliation_source_precedence(
-        papers, maps, mappings, curated_papers
+        papers,
+        maps,
+        mappings,
+        curated_papers,
+        identity_cache=identity_cache,
     )
 
     papers.sort(

@@ -3,6 +3,7 @@ import contextlib
 import json
 import tempfile
 import threading
+import time
 import unittest
 import shutil
 import urllib.request
@@ -347,6 +348,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
     @contextlib.contextmanager
     def metadata_server(
         self, directory, export_calls, export_success=True, original_overrides=None,
+        export_runner=None,
     ):
         directory = Path(directory)
         curated_path = directory / "papers.csv"
@@ -376,19 +378,24 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 curated_papers_path=curated_path,
             )
             display_id = next(iter(admin_data["papers_by_id"]))
-            server = ThreadingHTTPServer(
-                ("127.0.0.1", 0),
-                make_handler(
-                    "test-token",
-                    exclusions_path=exclusions_path,
-                    curated_papers_path=curated_path,
-                    venue_aliases_path=venue_aliases,
-                    curated_arxiv_links_path=links_path,
-                    metadata_export_runner=lambda name: (
+            handler = make_handler(
+                "test-token",
+                exclusions_path=exclusions_path,
+                curated_papers_path=curated_path,
+                venue_aliases_path=venue_aliases,
+                curated_arxiv_links_path=links_path,
+                public_preview_sync_state_path=directory / "preview_sync.json",
+                metadata_export_runner=(
+                    export_runner
+                    or (lambda name: (
                         export_calls.append(name)
                         or {"success": export_success}
-                    ),
+                    ))
                 ),
+            )
+            server = ThreadingHTTPServer(
+                ("127.0.0.1", 0),
+                handler,
             )
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()
@@ -404,6 +411,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 server.shutdown()
                 server.server_close()
                 thread.join(timeout=2)
+                handler.public_preview_sync.close(timeout=2)
 
     def metadata_request(self, base_url, path, payload=None):
         if payload is not None and isinstance(payload.get("paper_categories"), str):
@@ -419,6 +427,16 @@ class PaperMetadataEditingTests(unittest.TestCase):
         )
         with urllib.request.urlopen(request, timeout=3) as response:
             return json.loads(response.read())
+
+    @staticmethod
+    def wait_for_export_count(exports, expected, timeout=2):
+        deadline = time.monotonic() + timeout
+        while len(exports) < expected and time.monotonic() < deadline:
+            time.sleep(0.01)
+        if len(exports) < expected:
+            raise AssertionError(
+                f"expected {expected} export calls, observed {len(exports)}"
+            )
 
     def test_metadata_endpoint_reads_edits_and_clears_arxiv_override(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -452,6 +470,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 )["data"]["paper"]
                 self.assertEqual(updated["arxiv_id"], "2501.99999")
                 self.assertEqual(len(read_curated_arxiv_links(links_path)), 1)
+                self.wait_for_export_count(exports, 1)
                 self.assertEqual(exports, ["export_preview"])
                 with curated_path.open(encoding="utf-8", newline="") as handle:
                     saved = next(csv.DictReader(handle))
@@ -463,7 +482,73 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     base_url, "/api/paper/metadata/update", cleared
                 )
                 self.assertEqual(read_curated_arxiv_links(links_path), [])
+                self.wait_for_export_count(exports, 2)
                 self.assertEqual(exports, ["export_preview", "export_preview"])
+
+    def test_metadata_save_returns_before_public_preview_export_completes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            exports = []
+            export_started = threading.Event()
+            release_export = threading.Event()
+
+            def blocked_export(name):
+                exports.append(name)
+                export_started.set()
+                release_export.wait(2)
+                return {"success": True}
+
+            try:
+                with self.metadata_server(
+                    directory, exports, export_runner=blocked_export
+                ) as (base_url, original, _curated_path, _links_path, display_id):
+                    edit = {
+                        **original,
+                        **chi_venue_fields(),
+                        "id": display_id,
+                        "review_status": "pending",
+                        "venue_selection_confirmed": True,
+                    }
+                    started = time.perf_counter()
+                    payload = self.metadata_request(
+                        base_url, "/api/paper/metadata/update", edit
+                    )
+                    elapsed = time.perf_counter() - started
+
+                    self.assertTrue(payload["success"])
+                    self.assertTrue(payload["saved"])
+                    self.assertLess(elapsed, 1)
+                    self.assertTrue(export_started.wait(1))
+                    sync = self.metadata_request(
+                        base_url, "/api/public-preview-sync"
+                    )["data"]["public_preview_sync"]
+                    self.assertEqual(sync["status"], "running")
+                    self.assertEqual(sync["synchronized_generation"], 0)
+                    release_export.set()
+                    deadline = time.monotonic() + 2
+                    while sync["status"] != "synchronized" and time.monotonic() < deadline:
+                        time.sleep(0.01)
+                        sync = self.metadata_request(
+                            base_url, "/api/public-preview-sync"
+                        )["data"]["public_preview_sync"]
+                    self.assertEqual(sync["status"], "synchronized")
+            finally:
+                release_export.set()
+
+    def test_metadata_write_uses_intent_before_commit_and_generation_after_commit(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "scripts" / "serve_admin.py"
+        ).read_text()
+        update_body = source.split(
+            'if request.path == "/api/paper/metadata/update":', 1
+        )[1]
+
+        intent = update_body.index("preview_sync.begin_curated_change()")
+        curated_write = update_body.index("update_curated_paper(")
+        generation = update_body.index("preview_sync.request_sync()")
+        intent_clear = update_body.index("preview_sync.complete_curated_change()")
+        self.assertLess(intent, curated_write)
+        self.assertLess(curated_write, generation)
+        self.assertLess(generation, intent_clear)
 
     def test_unchanged_or_omitted_arxiv_field_preserves_override_bytes(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -497,6 +582,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     base_url, "/api/paper/metadata/update", omitted
                 )
                 self.assertEqual(links_path.read_bytes(), before)
+                self.wait_for_export_count(exports, 2)
                 self.assertEqual(exports, ["export_preview", "export_preview"])
 
     def test_frontend_marks_arxiv_changes_explicitly(self):
@@ -889,9 +975,33 @@ class PaperMetadataEditingTests(unittest.TestCase):
             self.assertIn(f"{state_name}:", source)
         self.assertIn("state.metadataSave.inFlight || !metadataFormIsDirty()", save_body)
         self.assertIn('renderMetadataSaveStatus("saving")', save_body)
-        self.assertIn('"Curated override saved successfully."', save_body)
+        self.assertIn('"Saved · Public preview synchronized"', source)
+        self.assertIn('"Saved · Public preview updating…"', source)
+        self.assertIn('"Saved · Public preview sync failed"', source)
+        self.assertIn('apiFetch("/api/public-preview-sync")', source)
         self.assertIn('renderMetadataSaveStatus("error")', save_body)
         self.assertIn('elements["metadata-edit-error"].focus()', save_body)
+
+    def test_frontend_preview_sync_polling_is_deduplicated_and_lifecycle_aware(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "web" / "admin.js"
+        ).read_text()
+        poll_body = source.split(
+            "function pollMetadataPreviewSync", 1
+        )[1].split("\nasync function saveMetadata", 1)[0]
+
+        self.assertIn("lastStatusActive ? 1000 : 10000", poll_body)
+        self.assertIn("lastStatusActive ? 1000 : 5000", poll_body)
+        self.assertIn("stopMetadataPreviewSyncPolling();", poll_body)
+        self.assertIn("pollEpoch !== metadataPreviewSyncPollEpoch", poll_body)
+        self.assertNotIn("loadApplication(", poll_body)
+        self.assertNotIn("loadDashboardAndQueues(", poll_body)
+        self.assertIn('window.addEventListener("pagehide"', source)
+        self.assertIn("metadataPreviewSyncPageActive = false", source)
+        select_body = source.split("async function selectPaper(id) {", 1)[1].split(
+            "\nfunction clearPaperMetadata", 1
+        )[0]
+        self.assertIn("stopMetadataPreviewSyncPolling();", select_body)
 
     def test_frontend_metadata_save_applies_authoritative_response_and_new_baseline(self):
         source = (
@@ -918,7 +1028,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
         self.assertIn('summary.textContent = `${label}${record ? "" : " · none"}`;', source)
         self.assertIn('pre.textContent = record ? JSON.stringify(record, null, 2) : "No record.";', source)
 
-    def test_export_failure_preserves_saved_metadata_and_reports_warning(self):
+    def test_export_failure_preserves_saved_metadata_and_reports_sync_failure(self):
         with tempfile.TemporaryDirectory() as directory:
             exports = []
             with self.metadata_server(
@@ -947,12 +1057,63 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 self.assertTrue(payload["success"])
                 self.assertTrue(payload["saved"])
                 self.assertFalse(payload["preview_refreshed"])
-                self.assertEqual(payload["stage"], "preview_refresh")
-                self.assertEqual(
-                    payload["warning_code"], "preview_refresh_failed"
-                )
+                self.assertEqual(payload["stage"], "curated_save_complete")
+                self.assertEqual(payload["warning_code"], "")
+                sync = self.metadata_request(
+                    base_url, "/api/public-preview-sync"
+                )["data"]["public_preview_sync"]
+                deadline = time.monotonic() + 2
+                while sync["status"] not in {"failed", "synchronized"} and time.monotonic() < deadline:
+                    time.sleep(0.01)
+                    sync = self.metadata_request(
+                        base_url, "/api/public-preview-sync"
+                    )["data"]["public_preview_sync"]
+                self.assertEqual(sync["status"], "failed")
                 self.assertNotEqual(curated_path.read_bytes(), curated_before)
                 self.assertNotEqual(links_path.read_bytes(), links_before)
+
+    def test_failed_public_preview_sync_can_be_retried_through_api(self):
+        with tempfile.TemporaryDirectory() as directory:
+            exports = []
+
+            def fail_once(name):
+                exports.append(name)
+                return {"success": len(exports) > 1, "error_summary": "fail once"}
+
+            with self.metadata_server(
+                directory, exports, export_runner=fail_once
+            ) as (base_url, original, _curated_path, _links_path, display_id):
+                edit = {
+                    **original,
+                    **chi_venue_fields(),
+                    "id": display_id,
+                    "review_status": "pending",
+                    "venue_selection_confirmed": True,
+                }
+                self.metadata_request(
+                    base_url, "/api/paper/metadata/update", edit
+                )
+                deadline = time.monotonic() + 2
+                sync = {"status": "dirty"}
+                while sync["status"] != "failed" and time.monotonic() < deadline:
+                    time.sleep(0.01)
+                    sync = self.metadata_request(
+                        base_url, "/api/public-preview-sync"
+                    )["data"]["public_preview_sync"]
+                self.assertEqual(sync["status"], "failed")
+
+                retry = self.metadata_request(
+                    base_url, "/api/public-preview-sync/retry", {}
+                )
+                self.assertTrue(retry["success"])
+                deadline = time.monotonic() + 2
+                while sync["status"] != "synchronized" and time.monotonic() < deadline:
+                    time.sleep(0.01)
+                    sync = self.metadata_request(
+                        base_url, "/api/public-preview-sync"
+                    )["data"]["public_preview_sync"]
+                self.assertEqual(sync["status"], "synchronized")
+                self.assertEqual(exports, ["export_preview", "export_preview"])
 
     def test_curated_arxiv_override_matches_public_effective_metadata(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
