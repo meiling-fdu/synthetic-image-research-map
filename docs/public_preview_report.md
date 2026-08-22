@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-20T21:03:14Z |
+| public_preview_generated_at | 2026-08-22T12:33:53Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1180 |
-| Unique mapped papers | 520 |
-| Unique institutions | 598 |
+| Map records | 1185 |
+| Unique mapped papers | 523 |
+| Unique institutions | 600 |
 | Countries | 54 |
 | arXiv/preprint records | 562 |
-| Records with DOI | 1105 |
-| Records with venue | 1159 |
+| Records with DOI | 1110 |
+| Records with venue | 1164 |
 | Records missing venue | 21 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 445 |
+| detection | 448 |
 | source_attribution | 45 |
 | detection_and_source_attribution | 30 |
 
@@ -44,7 +44,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 143 |
+| 2026 | 146 |
 | 2025 | 140 |
 | 2024 | 112 |
 | 2023 | 51 |
@@ -73,11 +73,11 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Country | Records |
 | --- | ---: |
-| China | 533 |
+| China | 537 |
 | United States | 157 |
 | Italy | 88 |
 | India | 59 |
-| Germany | 39 |
+| Germany | 40 |
 | South Korea | 34 |
 | United Kingdom | 33 |
 | France | 29 |
@@ -88,7 +88,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Institution | Records |
 | --- | ---: |
-| Shanghai Jiao Tong University | 21 |
+| Shanghai Jiao Tong University | 22 |
 | University of Naples Federico II | 18 |
 | Beijing Jiaotong University | 17 |
 | University of Chinese Academy of Sciences | 17 |
@@ -103,7 +103,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1067 |
+| high | 1072 |
 | medium | 113 |
 
 ## Potential quality issues

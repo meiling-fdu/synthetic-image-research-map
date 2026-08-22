@@ -5236,10 +5236,28 @@ function renderMappings(payload) {
   const currentStatuses = new Set(["active", "needs_review"]);
   const currentMappings = mappings.filter((mapping) =>
     currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
-  ).sort((left, right) => (
-    Number(left.affiliation_order || Number.MAX_SAFE_INTEGER)
-    - Number(right.affiliation_order || Number.MAX_SAFE_INTEGER)
-  ));
+  );
+  const hasPersistedOrder = currentMappings.some((mapping) =>
+    text(mapping.affiliation_order).trim()
+  );
+  if (hasPersistedOrder) {
+    const orders = currentMappings.map((mapping) => Number(mapping.affiliation_order));
+    const validOrders = (
+      orders.every((order) => Number.isInteger(order) && order > 0)
+      && new Set(orders).size === orders.length
+      && [...orders].sort((left, right) => left - right).every(
+        (order, index) => order === index + 1
+      )
+    );
+    if (!validOrders) {
+      throw new Error(
+        "Persisted affiliation_order must be explicit, unique, and contiguous 1..N."
+      );
+    }
+    currentMappings.sort((left, right) => (
+      Number(left.affiliation_order) - Number(right.affiliation_order)
+    ));
+  }
   const historicalMappings = mappings.filter((mapping) =>
     !currentStatuses.has(text(mapping.mapping_status).trim().toLowerCase())
   );
@@ -5260,6 +5278,81 @@ function renderMappings(payload) {
   body.replaceChildren();
   let draggedRow = null;
   let originalOrder = [];
+  const expectedMappingIds = currentMappings.map((mapping) => text(mapping.mapping_id));
+
+  function restoreMappingRows(mappingIds) {
+    const rowsById = new Map(
+      [...body.rows].map((item) => [item.dataset.mappingId, item])
+    );
+    mappingIds.forEach((mappingId) => {
+      const item = rowsById.get(mappingId);
+      if (item) body.append(item);
+    });
+  }
+
+  async function persistDraggedOrder() {
+    if (!draggedRow) return;
+    const activeDraggedRow = draggedRow;
+    const previousMappingIds = [...originalOrder];
+    const mappingIds = [...body.rows].map((item) => item.dataset.mappingId);
+    const validPermutation = (
+      mappingIds.length === expectedMappingIds.length
+      && mappingIds.every(Boolean)
+      && new Set(mappingIds).size === mappingIds.length
+      && expectedMappingIds.every((mappingId) => mappingIds.includes(mappingId))
+    );
+    const changed = validPermutation && mappingIds.some((mappingId, index) => (
+      mappingId !== previousMappingIds[index]
+    ));
+    activeDraggedRow.classList.remove("mapping-row-dragging");
+    activeDraggedRow.draggable = false;
+    draggedRow = null;
+    originalOrder = [];
+    if (!validPermutation) {
+      restoreMappingRows(previousMappingIds);
+      elements["mapping-panel-error"].hidden = false;
+      elements["mapping-panel-error"].textContent =
+        "Affiliation order was not saved because the drag did not contain every mapping exactly once.";
+      return;
+    }
+    if (!changed) return;
+    try {
+      const result = await apiFetch("/api/paper/mappings/reorder", {
+        method: "POST",
+        body: JSON.stringify({id: state.selectedId, mapping_ids: mappingIds}),
+      });
+      const savedIds = result.mapping_ids || [];
+      const savedMappings = result.mappings || [];
+      const confirmed = (
+        savedIds.length === mappingIds.length
+        && savedIds.every((mappingId, index) => mappingId === mappingIds[index])
+        && savedMappings.length === mappingIds.length
+        && savedMappings.every((mapping, index) => (
+          text(mapping.mapping_id) === mappingIds[index]
+          && Number(mapping.affiliation_order) === index + 1
+        ))
+      );
+      if (!confirmed) {
+        throw new Error("The server did not confirm the complete persisted affiliation order.");
+      }
+      showNotice(result.message);
+      await loadSelectedMappings();
+    } catch (error) {
+      restoreMappingRows(previousMappingIds);
+      elements["mapping-panel-error"].hidden = false;
+      elements["mapping-panel-error"].textContent = error.message;
+      await loadSelectedMappings();
+    }
+  }
+
+  body.ondragover = (event) => {
+    if (draggedRow) event.preventDefault();
+  };
+  body.ondrop = (event) => {
+    if (!draggedRow) return;
+    event.preventDefault();
+    void persistDraggedOrder();
+  };
   currentMappings.forEach((mapping) => {
     const row = document.createElement("tr");
     row.dataset.mappingId = text(mapping.mapping_id);
@@ -5319,34 +5412,14 @@ function renderMappings(payload) {
       const after = event.clientY > bounds.top + bounds.height / 2;
       body.insertBefore(draggedRow, after ? row.nextSibling : row);
     });
-    row.addEventListener("drop", async (event) => {
-      if (!draggedRow) return;
-      event.preventDefault();
-      const mappingIds = [...body.rows].map((item) => item.dataset.mappingId);
-      const changed = mappingIds.some((mappingId, index) => (
-        mappingId !== originalOrder[index]
-      ));
-      draggedRow.classList.remove("mapping-row-dragging");
-      draggedRow.draggable = false;
-      draggedRow = null;
-      if (!changed) return;
-      try {
-        const result = await apiFetch("/api/paper/mappings/reorder", {
-          method: "POST",
-          body: JSON.stringify({id: state.selectedId, mapping_ids: mappingIds}),
-        });
-        showNotice(result.message);
-        await loadSelectedMappings();
-      } catch (error) {
-        elements["mapping-panel-error"].hidden = false;
-        elements["mapping-panel-error"].textContent = error.message;
-        await loadSelectedMappings();
-      }
-    });
     row.addEventListener("dragend", () => {
-      row.classList.remove("mapping-row-dragging");
-      row.draggable = false;
-      draggedRow = null;
+      if (draggedRow) {
+        restoreMappingRows(originalOrder);
+        row.classList.remove("mapping-row-dragging");
+        row.draggable = false;
+        draggedRow = null;
+        originalOrder = [];
+      }
     });
     orderCell.append(handle);
     row.append(orderCell);
