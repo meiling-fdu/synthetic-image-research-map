@@ -205,6 +205,8 @@ let institutionHierarchy = [];
 let institutionSearchRelationships = [];
 let canonicalInstitutionSearchIndex = {};
 let institutionIdRedirects = {};
+const normalizedRecordSearchTextById = new Map();
+let cachedInstitutionFilterIndexes = null;
 let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
@@ -220,10 +222,13 @@ let filtersDrawerOpen = false;
 const resultsMasonryFrames = new Set();
 let resultsRenderGeneration = 0;
 let resultsObserver = null;
-let resultsKeywordTimeout = null;
+let resultsKeywordFrame = null;
 let resultsResizeTimeout = null;
 let resultsPipeline = null;
-const RESULTS_KEYWORD_DEBOUNCE_MS = 140;
+let keywordCompositionActive = false;
+let filteringDataCacheGeneration = 0;
+let searchTextPrewarmHandle = null;
+let searchTextPrewarmGeneration = -1;
 const RESULTS_RESIZE_DEBOUNCE_MS = 100;
 const RESULTS_INITIAL_VIEWPORTS = 2.25;
 const RESULTS_OBSERVER_MARGIN = "125% 0px";
@@ -1773,6 +1778,21 @@ function recordSearchText(record) {
   ].filter(Boolean).join(" "));
 }
 
+function recordSearchCacheId(record) {
+  const stableRecordId = String(record.id || record.record_id || "").trim();
+  const paperId = stableRecordId || paperIdentity(record);
+  const institutionId = recordInstitution(record) ? institutionIdentity(record) : "paper";
+  return `${paperId}||${institutionId}`;
+}
+
+function cachedRecordSearchText(record) {
+  const cacheId = recordSearchCacheId(record);
+  if (!normalizedRecordSearchTextById.has(cacheId)) {
+    normalizedRecordSearchTextById.set(cacheId, recordSearchText(record));
+  }
+  return normalizedRecordSearchTextById.get(cacheId);
+}
+
 function searchTextMatchesTerms(searchableText, keywordTerms) {
   return keywordTerms.every((term) => searchableText.includes(term));
 }
@@ -1810,6 +1830,85 @@ function buildInstitutionSearchRelationshipIndex(relationships) {
     relatedByRoot.get(root).add(related);
   });
   return relatedByRoot;
+}
+
+function invalidateFilteringDataCaches() {
+  filteringDataCacheGeneration += 1;
+  normalizedRecordSearchTextById.clear();
+  cachedInstitutionFilterIndexes = null;
+  if (searchTextPrewarmHandle) {
+    if (searchTextPrewarmHandle.idle && typeof cancelIdleCallback === "function") {
+      cancelIdleCallback(searchTextPrewarmHandle.id);
+    } else {
+      clearTimeout(searchTextPrewarmHandle.id);
+    }
+  }
+  searchTextPrewarmHandle = null;
+  searchTextPrewarmGeneration = -1;
+}
+
+function requestSearchTextPrewarmIdle(callback) {
+  if (typeof requestIdleCallback === "function") {
+    return {
+      id: requestIdleCallback(callback, { timeout: 1000 }),
+      idle: true,
+    };
+  }
+  return {
+    id: setTimeout(() => {
+      const started = performance.now();
+      callback({
+        didTimeout: false,
+        timeRemaining: () => Math.max(0, 6 - (performance.now() - started)),
+      });
+    }, 0),
+    idle: false,
+  };
+}
+
+function scheduleSearchTextCachePrewarm() {
+  const dataGeneration = filteringDataCacheGeneration;
+  if (searchTextPrewarmGeneration === dataGeneration) return;
+  searchTextPrewarmGeneration = dataGeneration;
+  const sourceRecords = [...records, ...paperRecords];
+  let nextIndex = 0;
+  const warmNextChunk = (deadline) => {
+    searchTextPrewarmHandle = null;
+    if (dataGeneration !== filteringDataCacheGeneration) return;
+    let processed = 0;
+    while (nextIndex < sourceRecords.length
+        && dataGeneration === filteringDataCacheGeneration
+        && (deadline.timeRemaining() > 1 || (deadline.didTimeout && processed < 25))
+        && processed < 100) {
+      cachedRecordSearchText(sourceRecords[nextIndex]);
+      nextIndex += 1;
+      processed += 1;
+    }
+    if (nextIndex < sourceRecords.length
+        && dataGeneration === filteringDataCacheGeneration) {
+      searchTextPrewarmHandle = requestSearchTextPrewarmIdle(warmNextChunk);
+    }
+  };
+  searchTextPrewarmHandle = requestSearchTextPrewarmIdle(warmNextChunk);
+}
+
+function institutionFilterIndexes() {
+  if (!cachedInstitutionFilterIndexes) {
+    cachedInstitutionFilterIndexes = {
+      search: buildInstitutionSearchIndex(
+        records,
+        paperRecords,
+        institutionAliases,
+        institutionHierarchy,
+        canonicalInstitutionSearchIndex,
+      ),
+      hierarchy: buildInstitutionHierarchyIndex(institutionHierarchy),
+      searchRelationships: buildInstitutionSearchRelationshipIndex(
+        institutionSearchRelationships,
+      ),
+    };
+  }
+  return cachedInstitutionFilterIndexes;
 }
 
 function institutionIdentityWithDescendants(identity, hierarchyIndex) {
@@ -1903,8 +2002,9 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     && recordMatchesInstitutionIdentities(
       record, resolvedInstitutionIdentities, institutionRecord,
     );
-  const matchesKeyword = matchesInstitutionKeyword
-    || searchTextMatchesTerms(recordSearchText(record), keywordTerms);
+  const matchesKeyword = keywordTerms.length === 0
+    || matchesInstitutionKeyword
+    || searchTextMatchesTerms(cachedRecordSearchText(record), keywordTerms);
   const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
   const selectedEntryTypes = [...entryTypeFilter.selectedOptions]
     .map((option) => option.value).filter((value) => value !== "all");
@@ -2260,9 +2360,16 @@ function deriveFilteredRecordSets(
     }
   });
 
-  const fallbackPapersByIdentity = new Map(
-    aggregateRecords(filteredRecords).map((paper) => [identityForRecord(paper), paper]),
+  const missingPaperIdentities = new Set(
+    [...matchingPaperIdentities].filter((identity) => !papersByIdentity.has(identity)),
   );
+  const fallbackPapersByIdentity = missingPaperIdentities.size
+    ? new Map(
+      aggregateRecords(
+        filteredRecords.filter((record) => missingPaperIdentities.has(identityForRecord(record))),
+      ).map((paper) => [identityForRecord(paper), paper]),
+    )
+    : new Map();
   const filteredPapers = [...matchingPaperIdentities]
     .map((identity) => papersByIdentity.get(identity) || fallbackPapersByIdentity.get(identity))
     .filter(Boolean);
@@ -2904,6 +3011,7 @@ function invalidateResultsRenderPipeline() {
   resultsObserver = null;
   document.querySelector(".results-list-staging")?.remove();
   resultsPipeline = null;
+  resultsKeywordFrame = null;
   return resultsRenderGeneration;
 }
 
@@ -3121,6 +3229,10 @@ function prepareFirstResultViewport(generation) {
     pipeline.layoutSignature = resultsLayoutSignature();
     setResultsLayoutPending(false);
     observeResultSentinel(generation);
+    requestResultsAnimationFrame(() => {
+      if (generation !== resultsRenderGeneration || resultsPipeline !== pipeline) return;
+      scheduleSearchTextCachePrewarm();
+    });
   });
 }
 
@@ -3450,10 +3562,6 @@ function renderRecords() {
 }
 
 function renderRecordsForGeneration({ generation = null } = {}) {
-  if (resultsKeywordTimeout !== null) {
-    clearTimeout(resultsKeywordTimeout);
-    resultsKeywordTimeout = null;
-  }
   const activeGeneration = generation ?? invalidateResultsRenderPipeline();
   if (activeGeneration !== resultsRenderGeneration) return;
   const previousPin = interactionState.pinned;
@@ -3462,13 +3570,8 @@ function renderRecordsForGeneration({ generation = null } = {}) {
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   const normalizedKeyword = normalizedSearchText(keywordFilter.value);
-  const institutionSearchIndex = buildInstitutionSearchIndex(
-    records,
-    paperRecords,
-    institutionAliases,
-    institutionHierarchy,
-    canonicalInstitutionSearchIndex,
-  );
+  const filterIndexes = institutionFilterIndexes();
+  const institutionSearchIndex = filterIndexes.search;
   const directlyResolvedInstitutionIdentities = resolveInstitutionSearchIdentities(
     normalizedKeyword,
     institutionSearchIndex,
@@ -3480,10 +3583,8 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  const hierarchyIndex = buildInstitutionHierarchyIndex(institutionHierarchy);
-  const searchRelationshipIndex = buildInstitutionSearchRelationshipIndex(
-    institutionSearchRelationships,
-  );
+  const hierarchyIndex = filterIndexes.hierarchy;
+  const searchRelationshipIndex = filterIndexes.searchRelationships;
   const selectedIdentity = activeInstitutionFilter?.identity || resolvedInstitutionIdentity;
   const resolvedInstitutionIdentities = institutionIdentitiesWithSearchExpansion(
     directlyResolvedInstitutionIdentities,
@@ -3961,6 +4062,8 @@ function showDatasetMessage(message, isError = false, isLoadFailure = false) {
   clearPaperInteraction(false);
   records = [];
   paperRecords = [];
+  canonicalPaperRecordsByIdentity = new Map();
+  invalidateFilteringDataCaches();
   configureYearRange();
   currentFilteredRecords = [];
   currentFilteredPaperRecords = [];
@@ -4118,6 +4221,7 @@ function displayDataset(normalizedData) {
   );
   records = canonicalized.mapRecords;
   paperRecords = canonicalized.paperRecords;
+  invalidateFilteringDataCaches();
   canonicalPaperRecordsByIdentity = new Map(
     paperRecords.map((record) => [paperIdentity(record), record]),
   );
@@ -4202,15 +4306,26 @@ document.addEventListener("focusout", (event) => {
 window.addEventListener("resize", hideChartTooltip);
 window.addEventListener("scroll", hideChartTooltip, true);
 
-keywordFilter.addEventListener("input", () => {
+function scheduleKeywordRender() {
   const generation = invalidateResultsRenderPipeline();
-  if (resultsKeywordTimeout !== null) clearTimeout(resultsKeywordTimeout);
   setResultsLayoutPending(true, resultsList.querySelector(".result-item") === null);
-  resultsKeywordTimeout = setTimeout(() => {
+  resultsKeywordFrame = requestResultsAnimationFrame(() => {
+    resultsKeywordFrame = null;
     if (generation !== resultsRenderGeneration) return;
-    resultsKeywordTimeout = null;
     renderRecordsForGeneration({ generation });
-  }, RESULTS_KEYWORD_DEBOUNCE_MS);
+  });
+}
+
+keywordFilter.addEventListener("compositionstart", () => {
+  keywordCompositionActive = true;
+});
+keywordFilter.addEventListener("compositionend", () => {
+  keywordCompositionActive = false;
+  scheduleKeywordRender();
+});
+keywordFilter.addEventListener("input", (event) => {
+  if (keywordCompositionActive || event.isComposing) return;
+  scheduleKeywordRender();
 });
 taskFilter.addEventListener("change", renderRecords);
 entryTypeFilter.addEventListener("change", renderRecords);

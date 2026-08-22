@@ -291,6 +291,137 @@ process.stdout.write(JSON.stringify({{
         self.assertEqual(set(result["paperIds"]), {"mapped", "venue-only", "standalone"})
         self.assertEqual(result["paperIds"].count("mapped"), 1)
 
+    def test_paper_fallback_aggregation_runs_only_for_missing_canonical_identities(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        start = self.app.index("function deriveFilteredRecordSets")
+        end = self.app.index("\nfunction normalizedSetSize", start)
+        script = f"""
+{self.app[start:end]}
+const maps = [
+  {{id: 'canonical', source: 'map'}},
+  {{id: 'fallback', source: 'map-a'}},
+  {{id: 'fallback', source: 'map-b'}},
+];
+const papers = [{{id: 'canonical', source: 'paper'}}];
+let calls = 0;
+const aggregationInputs = [];
+const aggregate = records => {{
+  calls += 1;
+  aggregationInputs.push(records.map(record => record.id));
+  return [...new Map(records.map(record => [record.id, record])).values()];
+}};
+const result = deriveFilteredRecordSets(
+  maps, papers, () => true, () => true, record => record.id, aggregate,
+);
+const canonicalOnly = deriveFilteredRecordSets(
+  maps.slice(0, 1), papers, () => true, () => true, record => record.id, aggregate,
+);
+const callsAfterCanonicalOnly = calls;
+const incompleteDataset = deriveFilteredRecordSets(
+  maps, [], () => true, () => true, record => record.id, aggregate,
+);
+process.stdout.write(JSON.stringify({{
+  calls,
+  callsAfterCanonicalOnly,
+  aggregationInputs,
+  result: result.filteredPapers.map(record => [record.id, record.source]),
+  canonicalOnly: canonicalOnly.filteredPapers.map(record => [record.id, record.source]),
+  incompleteDataset: incompleteDataset.filteredPapers.map(record => [record.id, record.source]),
+}}));
+"""
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["callsAfterCanonicalOnly"], 1)
+        self.assertEqual(result["calls"], 2)
+        self.assertEqual(
+            result["aggregationInputs"],
+            [["fallback", "fallback"], ["canonical", "fallback", "fallback"]],
+        )
+        self.assertEqual(
+            result["result"],
+            [["canonical", "paper"], ["fallback", "map-b"]],
+        )
+        self.assertEqual(result["canonicalOnly"], [["canonical", "paper"]])
+        self.assertEqual(
+            result["incompleteDataset"],
+            [["canonical", "map"], ["fallback", "map-b"]],
+        )
+
+    def test_keyword_text_and_institution_indexes_are_dataset_scoped_caches(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        cache_start = self.app.index("function recordSearchCacheId")
+        cache_end = self.app.index("\nfunction searchTextMatchesTerms", cache_start)
+        index_start = self.app.index("function invalidateFilteringDataCaches")
+        index_end = self.app.index("\nfunction institutionIdentityWithDescendants", index_start)
+        script = r'''
+const normalizedRecordSearchTextById = new Map();
+let cachedInstitutionFilterIndexes = null;
+let filteringDataCacheGeneration = 0;
+let searchTextPrewarmHandle = null;
+let searchTextPrewarmGeneration = -1;
+let records = [], paperRecords = [], institutionAliases = [], institutionHierarchy = [];
+let canonicalInstitutionSearchIndex = {}, institutionSearchRelationships = [];
+let searchTextBuilds = 0, searchIndexBuilds = 0, hierarchyBuilds = 0, relationshipBuilds = 0;
+function paperIdentity(record) { return `paper:${record.id}`; }
+function recordInstitution(record) { return record.institution || ''; }
+function institutionIdentity(record) { return `institution:${record.institution || ''}`; }
+function recordSearchText(record) { searchTextBuilds += 1; return record.title.toLowerCase(); }
+function buildInstitutionSearchIndex() { searchIndexBuilds += 1; return new Map(); }
+function buildInstitutionHierarchyIndex() { hierarchyBuilds += 1; return new Map(); }
+function buildInstitutionSearchRelationshipIndex() { relationshipBuilds += 1; return new Map(); }
+''' + self.app[cache_start:cache_end] + self.app[index_start:index_end] + r'''
+const first = {id: 'stable', institution: 'A', title: 'One'};
+cachedRecordSearchText(first);
+cachedRecordSearchText({...first});
+const firstIndexes = institutionFilterIndexes();
+const secondIndexes = institutionFilterIndexes();
+const beforeInvalidation = {
+  searchTextBuilds, searchIndexBuilds, hierarchyBuilds, relationshipBuilds,
+  sameIndexes: firstIndexes === secondIndexes,
+};
+invalidateFilteringDataCaches();
+cachedRecordSearchText({...first, title: 'Two'});
+const rebuiltIndexes = institutionFilterIndexes();
+process.stdout.write(JSON.stringify({
+  beforeInvalidation,
+  afterInvalidation: {searchTextBuilds, searchIndexBuilds, hierarchyBuilds, relationshipBuilds},
+  rebuiltIndexes: rebuiltIndexes !== firstIndexes,
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["beforeInvalidation"], {
+            "searchTextBuilds": 1,
+            "searchIndexBuilds": 1,
+            "hierarchyBuilds": 1,
+            "relationshipBuilds": 1,
+            "sameIndexes": True,
+        })
+        self.assertEqual(result["afterInvalidation"], {
+            "searchTextBuilds": 2,
+            "searchIndexBuilds": 2,
+            "hierarchyBuilds": 2,
+            "relationshipBuilds": 2,
+        })
+        self.assertTrue(result["rebuiltIndexes"])
+
+    def test_empty_keyword_short_circuits_before_search_text_lookup(self):
+        predicate = self.app[
+            self.app.index("function recordMatchesActiveFilters"):
+            self.app.index("function deriveFilteredRecordSets")
+        ]
+        self.assertIn("const matchesKeyword = keywordTerms.length === 0", predicate)
+        self.assertIn("cachedRecordSearchText(record)", predicate)
+        self.assertNotIn("recordSearchText(record), keywordTerms", predicate)
+
     def test_alias_resolution_and_exact_filter_match_canonical_identity(self):
         render = self.app[
             self.app.index("function renderRecords()"):
@@ -300,7 +431,7 @@ process.stdout.write(JSON.stringify({{
             self.app.index("function recordMatchesActiveFilters"):
             self.app.index("function deriveFilteredRecordSets")
         ]
-        self.assertIn("buildInstitutionSearchIndex(", render)
+        self.assertIn("institutionFilterIndexes()", render)
         self.assertIn("resolveInstitutionSearchIdentities(", render)
         self.assertIn("resolvedInstitutionIdentities", render)
         self.assertIn("activeInstitutionIdentities", render)

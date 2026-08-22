@@ -281,7 +281,7 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn("rootMargin: RESULTS_OBSERVER_MARGIN", observe)
         self.assertIn('id="results-sentinel"', self.html)
 
-    def test_render_generation_guards_async_work_and_debounces_input_and_resize(self):
+    def test_render_generation_guards_async_work_and_coalesces_keyword_input(self):
         invalidation = self.function(
             "invalidateResultsRenderPipeline", "resultsColumnCount"
         )
@@ -289,10 +289,88 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn("cancelAnimationFrame", invalidation)
         self.assertIn("resultsObserver.disconnect()", invalidation)
         self.assertGreaterEqual(self.app.count("generation !== resultsRenderGeneration"), 12)
-        self.assertIn("const RESULTS_KEYWORD_DEBOUNCE_MS = 140", self.app)
+        self.assertNotIn("RESULTS_KEYWORD_DEBOUNCE_MS", self.app)
         self.assertIn("const RESULTS_RESIZE_DEBOUNCE_MS = 100", self.app)
-        self.assertIn("setTimeout(() =>", self.app)
+        keyword_start = self.app.index("function scheduleKeywordRender")
+        keyword = self.app[
+            keyword_start:
+            self.app.index('taskFilter.addEventListener', keyword_start)
+        ]
+        self.assertIn("requestResultsAnimationFrame", keyword)
+        self.assertIn("invalidateResultsRenderPipeline()", keyword)
+        self.assertIn("generation !== resultsRenderGeneration", keyword)
+        self.assertIn('addEventListener("compositionstart"', keyword)
+        self.assertIn('addEventListener("compositionend"', keyword)
+        self.assertIn("event.isComposing", keyword)
+        self.assertNotIn("setTimeout", keyword)
         self.assertIn("resultsLayoutSignature() !== resultsPipeline.layoutSignature", self.app)
+
+    def test_search_text_cache_prewarms_once_after_the_first_viewport_paints(self):
+        cache = self.function(
+            "invalidateFilteringDataCaches", "institutionFilterIndexes"
+        )
+        prepare = self.function(
+            "prepareFirstResultViewport", "scheduleResultsMasonryLayout"
+        )
+        self.assertIn('typeof requestIdleCallback === "function"', cache)
+        self.assertIn("requestIdleCallback(callback, { timeout: 1000 })", cache)
+        self.assertIn("setTimeout(() =>", cache)
+        self.assertIn("dataGeneration !== filteringDataCacheGeneration", cache)
+        self.assertIn("cachedRecordSearchText(sourceRecords[nextIndex])", cache)
+        self.assertIn("searchTextPrewarmGeneration === dataGeneration", cache)
+        reveal = prepare.index("resultsList.replaceChildren(...preparedCards)")
+        post_paint_frame = prepare.index("requestResultsAnimationFrame", reveal)
+        prewarm = prepare.index("scheduleSearchTextCachePrewarm()", post_paint_frame)
+        self.assertGreater(post_paint_frame, reveal)
+        self.assertGreater(prewarm, post_paint_frame)
+
+    def test_same_frame_keyword_updates_render_only_the_latest_state(self):
+        invalidation_start = self.app.index("function invalidateResultsRenderPipeline")
+        invalidation_end = self.app.index("\nfunction resultsColumnCount", invalidation_start)
+        keyword_start = self.app.index("function scheduleKeywordRender")
+        keyword_end = self.app.index(
+            '\nkeywordFilter.addEventListener("compositionstart"', keyword_start
+        )
+        script = r'''
+let resultsRenderGeneration = 0;
+let resultsKeywordFrame = null;
+let resultsObserver = null;
+let resultsPipeline = null;
+const resultsMasonryFrames = new Set();
+const callbacks = new Map();
+let nextFrame = 1;
+function requestAnimationFrame(callback) {
+  const id = nextFrame++;
+  callbacks.set(id, callback);
+  return id;
+}
+function cancelAnimationFrame(id) { callbacks.delete(id); }
+const document = {querySelector: () => null};
+const resultsList = {querySelector: () => ({})};
+function setResultsLayoutPending() {}
+const keywordFilter = {value: ''};
+const applied = [];
+function renderRecordsForGeneration({generation}) {
+  if (generation === resultsRenderGeneration) applied.push(keywordFilter.value);
+}
+''' + self.app[invalidation_start:invalidation_end] + self.app[keyword_start:keyword_end] + r'''
+for (const value of ['d', 'diff', 'diffusion']) {
+  keywordFilter.value = value;
+  scheduleKeywordRender();
+}
+for (const callback of [...callbacks.values()]) callback();
+process.stdout.write(JSON.stringify({
+  applied,
+  generation: resultsRenderGeneration,
+  pendingFrames: callbacks.size,
+}));
+'''
+        completed = subprocess.run(
+            [str(NODE), "-e", script], check=True, capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["applied"], ["diffusion"])
+        self.assertEqual(result["generation"], 3)
 
     def test_adaptive_content_and_metadata_follow_natural_flow(self):
         adaptive = self.css.split(".result-card-adaptive {", 1)[1].split("}", 1)[0]

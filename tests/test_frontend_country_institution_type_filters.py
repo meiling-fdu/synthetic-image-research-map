@@ -195,7 +195,10 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords", render)
         self.assertIn("updateDatasetStatistics(visibleRecords, visiblePaperRecords)", render)
         self.assertIn("renderHeaderStatistics(visibleRecords, visiblePaperRecords)", render)
-        self.assertIn("renderResults(visibleRecords, visiblePaperRecords)", render)
+        self.assertIn(
+            "renderResults(visibleRecords, visiblePaperRecords, activeGeneration)",
+            render,
+        )
         self.assertIn("updateInstitutionDimensionFilters(", render)
         self.assertIn("currentFilteredRecords = visibleRecords", render)
         self.assertIn("currentFilteredPaperRecords = visiblePaperRecords", render)

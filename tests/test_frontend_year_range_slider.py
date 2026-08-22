@@ -152,7 +152,7 @@ process.stdout.write(JSON.stringify({{values, constrainedStartEnd, constrainedEn
         matching_source = self.app[start:end]
         payload = self.run_node(f"""
 const taskFilter = {{value: 'all'}};
-const entryTypeFilter = {{value: 'all'}};
+const entryTypeFilter = {{value: 'all', selectedOptions: []}};
 const venueFilter = {{value: 'venue:wifs'}};
 const venueTypeFilter = {{value: 'conference'}};
 const preprintFilter = {{value: 'all'}};
