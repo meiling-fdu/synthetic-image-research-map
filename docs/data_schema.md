@@ -19,8 +19,11 @@ exception must be curator-maintained in
 exception files authorize nothing.
 
 `data/curated/institutions.csv` owns institution identity. Each row has a stable
-`institution_id`, `canonical_name`, `institution_type`, `institution_status`, an
-optional `parent_institution_id`, and a `public_display` preference. Ignored,
+`institution_id`, full official `canonical_name`, optional `abbreviation`,
+`institution_type`, `institution_status`, an optional `parent_institution_id`,
+and a `public_display` preference. Abbreviations are identity metadata, not
+aliases; search indexes canonical names, abbreviations, and confirmed aliases.
+Presentation may combine the separate fields as `Full Name (ABBR)`. Ignored,
 deprecated, and merged entities remain traceable but are omitted from public
 outputs.
 
@@ -470,7 +473,7 @@ One row represents one institution or organizational unit used for affiliation a
 
 `data/curated/institution_aliases.csv` has `alias_name`, `canonical_institution_name`, `alias_language`, `alias_source`, `review_status`, and `notes`. Alias targets must exist in `institution_locations.csv`. Duplicate mappings are invalid, and one normalized alias pointing to multiple canonical institutions is ambiguous. Confirmed aliases resolve to the canonical public name and coordinates; no alias is exported as a separate node.
 
-Public-preview JSON includes an additive top-level `institution_aliases` array containing confirmed alias display text, canonical display text, the stable `canonical_institution_id`, language, and provenance source. For backward compatibility, an active canonical name ending in a unique trailing acronym also exports its exact pre-acronym form with `alias_source=legacy-canonical-name`; this rule does not infer similar names or parent/child relationships. It also includes `canonical_institution_search_index`, an object keyed by active canonical institution ID. Each entry contains `canonical_name`, the reviewed display `names` used for search, and their `normalized_names`; merged, ignored, and deprecated institutions are not keys. A confirmed merge-source name remains searchable only as an alias of its active canonical target.
+Public-preview JSON includes an additive top-level `institution_aliases` array containing confirmed alias display text, canonical display text, the stable `canonical_institution_id`, language, and provenance source. Abbreviations remain separate from that alias array. The exporter combines canonical name and abbreviation for compatible public display while adding the abbreviation to the same canonical institution's search names. It also includes `canonical_institution_search_index`, an object keyed by active canonical institution ID. Each entry contains `canonical_name`, the reviewed display `names` used for search, and their `normalized_names`; merged, ignored, and deprecated institutions are not keys. A confirmed merge-source name remains searchable only as an alias of its active canonical target.
 
 Public search normalizes only lookup text (Unicode normalization and accent folding, case folding, punctuation, hyphens, and repeated whitespace); displayed names are unchanged. The institution branch matches the normalized full query as an exact name or phrase substring against the canonical index and converts every match to canonical institution IDs. It does not split institution names into loose OR tokens. Title, author, publication venue, task, year, and known arXiv-version metadata remain a separate branch, and all downstream map records, paper coverage, statistics, result views, markers, and CSV export derive from the same filtered canonical record sets.
 

@@ -141,11 +141,11 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
             self.assertIn(action, actions)
         for removed in ("Save edited metadata", "Needs coordinate review"):
             self.assertNotIn(removed, actions)
-        self.assertIn("More actions", actions)
-        for action in ("Mark ambiguous", "Ignore this institution", "Exclude from public map"):
+        self.assertNotIn("More actions", actions)
+        for action in ("Mark ambiguous", "Ignore institution", "Exclude from public map"):
             self.assertIn(action, actions)
         rendering = self.source[self.source.index("function renderLocationActions") : self.source.index("function renderLocationContext")]
-        self.assertIn('elements["location-confirm-alias"].hidden = !hasCanonicalInstitution', rendering)
+        self.assertIn('["pending_review", "ambiguous"].includes(status)', rendering)
         self.assertIn('elements["canonical-institution"].addEventListener("change", renderLocationActions)', self.source)
 
     def test_alias_candidates_show_evidence_and_require_confirmation(self):
@@ -163,29 +163,19 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertLess(confirmation.index("window.confirm("), confirmation.index('apiFetch("/api/location-review/confirm-alias"'))
         self.assertIn("Suggestions never merge canonical institutions", self.html)
 
-    def test_more_actions_escapes_panel_clipping_and_has_viewport_positioning(self):
+    def test_actions_share_one_wrapping_aligned_row(self):
         css = (ROOT / "web/admin.css").read_text(encoding="utf-8")
-        workspace = css[css.index(".location-review-workspace {") : css.index("}", css.index(".location-review-workspace {"))]
-        self.assertIn("overflow: visible", workspace)
-        menu = css[css.index(".location-more-actions .overflow-menu-items") : css.index("}", css.index(".location-more-actions .overflow-menu-items"))]
-        self.assertIn("position: fixed", menu)
-        self.assertIn("z-index: 2000", menu)
-        self.assertIn("max-width: calc(100vw - 1rem)", menu)
-        positioning = self.source[self.source.index("function positionLocationMoreActions") : self.source.index("function initializeLocationMoreActions")]
-        self.assertIn("spaceBelow < menuHeight && spaceAbove > spaceBelow", positioning)
-        self.assertIn('menu.dataset.placement = opensUpward ? "top" : "bottom"', positioning)
-        self.assertIn("viewportWidth - menuWidth - viewportMargin", positioning)
+        row = css[css.index(".location-form-actions {") : css.index("}", css.index(".location-form-actions {"))]
+        self.assertIn("display: flex", row)
+        self.assertIn("align-items: center", row)
+        self.assertIn("flex-wrap: wrap", row)
+        self.assertNotIn("location-more-actions", css)
+        self.assertNotIn("initializeLocationMoreActions", self.source)
 
-    def test_more_actions_preserves_actions_keyboard_and_outside_click(self):
-        behavior = self.source[self.source.index("function initializeLocationMoreActions") : self.source.index("function renderLocationContext")]
-        self.assertIn('event.key === "Escape"', behavior)
-        self.assertIn('event.key === "ArrowDown"', behavior)
-        self.assertIn("trigger.focus()", behavior)
-        self.assertIn('menu.querySelector("button")?.focus()', behavior)
-        self.assertIn("!disclosure.contains(event.target)", behavior)
-        self.assertIn('event.target.closest("button")', behavior)
+    def test_exceptional_actions_are_direct_buttons(self):
         for element_id in ("location-mark-ambiguous", "location-ignore", "location-exclude"):
             self.assertIn(f'id="{element_id}"', self.html)
+        self.assertNotIn('id="location-more-actions"', self.html)
 
 
 if __name__ == "__main__":

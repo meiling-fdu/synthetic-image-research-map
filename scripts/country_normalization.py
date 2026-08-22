@@ -62,6 +62,31 @@ def normalized_location_name(value: Any) -> str:
     )
 
 
+def country_code_for_name(country: Any) -> str:
+    """Return an alpha-2 code for an unambiguous supported country name."""
+    value = clean_text(country)
+    if len(value) == 2 and value.isalpha():
+        code = value.upper()
+        return code if code in COUNTRY_NAME_BY_CODE else ""
+    normalized = normalized_location_name(value)
+    aliases = {
+        "great britain": "GB",
+        "uk": "GB",
+        "united states of america": "US",
+        "usa": "US",
+        "republic of korea": "KR",
+        "south korea": "KR",
+        "turkey": "TR",
+    }
+    if normalized in aliases:
+        return aliases[normalized]
+    matches = [
+        code for code, name in COUNTRY_NAME_BY_CODE.items()
+        if normalized_location_name(name) == normalized
+    ]
+    return matches[0] if len(matches) == 1 else ""
+
+
 def public_country_name(country: Any, country_code: Any = "") -> str:
     """Return a concise country name without exposing a raw alpha-2 code."""
     country_text = clean_text(country)

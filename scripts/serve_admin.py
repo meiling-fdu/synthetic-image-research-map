@@ -637,6 +637,88 @@ def institution_hierarchy_details(
     }
 
 
+_institution_registry_payload_cache: Dict[Tuple[Any, ...], Dict[str, Any]] = {}
+
+
+def _file_signature(path: Path) -> Tuple[str, int, int]:
+    stat = path.stat()
+    return str(path.resolve()), stat.st_mtime_ns, stat.st_size
+
+
+def institution_registry_payload(
+    *, institutions_path: Path, aliases_path: Path, mappings_path: Path,
+    locations_path: Path, public_map_path: Path,
+) -> Dict[str, Any]:
+    """Build and cache the registry view; atomic replaces invalidate by stat."""
+    signature = tuple(
+        _file_signature(path) for path in (
+            institutions_path, aliases_path, mappings_path,
+            locations_path, public_map_path,
+        )
+    )
+    cached = _institution_registry_payload_cache.get(signature)
+    if cached is not None:
+        return cached
+    institutions = load_institutions(institutions_path)
+    aliases = load_institution_aliases(aliases_path)
+    mappings = load_mappings(mappings_path)
+    public_markers = read_json_records(public_map_path)
+    locations = load_confirmed_locations(locations_path)
+    aliases_by_id: DefaultDict[str, List[str]] = defaultdict(list)
+    for alias in aliases:
+        if clean(alias.get("review_status")) == "confirmed":
+            aliases_by_id[clean(alias.get("institution_id"))].append(
+                clean(alias.get("alias_name"))
+            )
+    locations_by_id: DefaultDict[str, List[Mapping[str, Any]]] = defaultdict(list)
+    for location in locations:
+        locations_by_id[clean(location.get("institution_id"))].append(location)
+    usage_by_id: DefaultDict[str, Dict[str, Any]] = defaultdict(
+        lambda: {"paper_ids": set(), "author_mappings": 0, "authors": set(), "markers": 0}
+    )
+    for mapping in mappings:
+        if clean(mapping.get("mapping_status")) not in {"active", "needs_review"}:
+            continue
+        usage = usage_by_id[clean(mapping.get("institution_id"))]
+        usage["paper_ids"].add(clean(mapping.get("paper_id")) or clean(mapping.get("title")))
+        usage["author_mappings"] += 1
+        usage["authors"].update(
+            value.strip() for value in clean(mapping.get("institution_authors")).split(";")
+            if value.strip()
+        )
+    for marker in public_markers:
+        usage_by_id[clean(marker.get("institution_id"))]["markers"] += 1
+    records = []
+    for institution in institutions:
+        identifier = clean(institution.get("institution_id"))
+        alias_names = aliases_by_id.get(identifier, [])
+        resolved_type, type_rule, type_evidence = classify_institution_type(
+            institution.get("canonical_name"), alias_names,
+            institution.get("institution_type"),
+        )
+        usage = usage_by_id[identifier]
+        records.append({
+            **institution,
+            "institution_type": resolved_type,
+            "institution_type_rule": type_rule,
+            "institution_type_evidence": type_evidence,
+            **institution_hierarchy_details(institutions, identifier),
+            "aliases": list(alias_names),
+            "location": (locations_by_id.get(identifier) or [None])[0],
+            "locations": list(locations_by_id.get(identifier, [])),
+            "usage": {
+                "papers": len(usage["paper_ids"]),
+                "author_mappings": usage["author_mappings"],
+                "markers": usage["markers"] if public_markers else usage["author_mappings"],
+                "authors": sorted(usage["authors"]),
+            },
+        })
+    payload = {"records": records}
+    _institution_registry_payload_cache.clear()
+    _institution_registry_payload_cache[signature] = payload
+    return payload
+
+
 def load_author_mapping_coverage(
     path: Path = AUTHOR_MAPPING_REPORT_PATH, *, unresolved_only: bool = False
 ) -> Dict[str, Any]:
@@ -2118,37 +2200,13 @@ def make_handler(
                             ],
                         }})
                     else:
-                        aliases = load_institution_aliases(institution_aliases_path)
-                        mappings = load_mappings(mappings_path)
-                        public_markers = read_json_records(PUBLIC_MAP_PATH)
-                        locations = load_confirmed_locations(institution_locations_path)
-                        locations_by_id = defaultdict(list)
-                        for row in locations:
-                            locations_by_id[clean(row.get("institution_id"))].append(row)
-                        records = []
-                        for institution in institutions:
-                            identifier = clean(institution.get("institution_id"))
-                            confirmed_alias_names = [
-                                clean(row.get("alias_name")) for row in aliases
-                                if clean(row.get("institution_id")) == identifier
-                                and clean(row.get("review_status")) == "confirmed"
-                            ]
-                            resolved_type, type_rule, type_evidence = classify_institution_type(
-                                institution.get("canonical_name"), confirmed_alias_names,
-                                institution.get("institution_type"),
-                            )
-                            records.append({
-                                **institution,
-                                "institution_type": resolved_type,
-                                "institution_type_rule": type_rule,
-                                "institution_type_evidence": type_evidence,
-                                **institution_hierarchy_details(institutions, identifier),
-                                "aliases": [row.get("alias_name") for row in aliases if clean(row.get("institution_id")) == identifier and clean(row.get("review_status")) == "confirmed"],
-                                "location": (locations_by_id.get(identifier) or [None])[0],
-                                "locations": locations_by_id.get(identifier, []),
-                                "usage": institution_impact(identifier, mappings, public_markers),
-                            })
-                        self.send_json(HTTPStatus.OK, {"records": records})
+                        self.send_json(HTTPStatus.OK, institution_registry_payload(
+                            institutions_path=institutions_path,
+                            aliases_path=institution_aliases_path,
+                            mappings_path=mappings_path,
+                            locations_path=institution_locations_path,
+                            public_map_path=PUBLIC_MAP_PATH,
+                        ))
                 except (CuratedInstitutionError, CuratedLocationError) as error:
                     self.send_json(HTTPStatus.BAD_REQUEST, {"error": str(error)})
                 return

@@ -18,6 +18,7 @@ class FrontendVenueFilterTests(unittest.TestCase):
     def setUpClass(cls):
         cls.app = (ROOT / "web" / "app.js").read_text(encoding="utf-8")
         cls.html = (ROOT / "web" / "index.html").read_text(encoding="utf-8")
+        cls.css = (ROOT / "web" / "style.css").read_text(encoding="utf-8")
         cls.papers = json.loads(
             (ROOT / "web" / "data" / "public_preview_papers.json").read_text(encoding="utf-8")
         )["records"]
@@ -69,7 +70,7 @@ process.stdout.write(JSON.stringify({{
             self.skipTest("Node.js is not on PATH")
         count_helpers = self.app[
             self.app.index("function dimensionPaperCounts"):
-            self.app.index("\nfunction nextCountryOptionIndex")
+            self.app.index("\nfunction nextFilterOptionIndex")
         ]
         script = f"""
 const venueTypeOrder = ['conference', 'journal', 'preprint', 'book'];
@@ -138,7 +139,7 @@ process.stdout.write(JSON.stringify({{
         ]
         count_helpers = self.app[
             self.app.index("function dimensionPaperCounts"):
-            self.app.index("\nfunction nextCountryOptionIndex")
+            self.app.index("\nfunction nextFilterOptionIndex")
         ]
         update_start = self.app.index("function updateVenueDimensionFilters")
         update_helper = self.app[
@@ -165,6 +166,7 @@ function formatTask(value) {{
     part => part ? part[0].toUpperCase() + part.slice(1) : part
   ).join(' ');
 }}
+function syncFilterDropdownForSelect() {{}}
 {venue_helpers}
 {count_helpers}
 {update_helper}
@@ -188,6 +190,34 @@ process.stdout.write(JSON.stringify({{
         self.assertIn('id="venue-type-filter"', self.html)
         self.assertIn("Publication Type", self.html)
         self.assertNotIn("Venue Type", self.html)
+
+    def test_publication_venue_uses_attached_scrolling_combobox(self):
+        self.assertIn('id="venue-filter"', self.html)
+        self.assertIn('id="venue-filter-label"', self.html)
+        panel = self.css[
+            self.css.index(".filter-dropdown-panel {"):
+            self.css.index(".filter-dropdown-panel[hidden]")
+        ]
+        options = self.css[
+            self.css.index(".filter-dropdown-options {"):
+            self.css.index(".filter-dropdown-option {")
+        ]
+        self.assertIn("position: absolute", panel)
+        self.assertIn("max-height: min(320px, 40vh)", panel)
+        self.assertIn("overflow: hidden", panel)
+        self.assertIn("overflow-y: auto", options)
+        self.assertIn("overscroll-behavior: contain", options)
+
+    def test_publication_venue_combobox_preserves_accessible_interactions(self):
+        events = self.app[self.app.index("function createFilterDropdown") :]
+        self.assertIn('button.addEventListener("keydown"', events)
+        self.assertIn('["ArrowDown", "ArrowUp"]', events)
+        self.assertIn('["Enter", " "]', events)
+        self.assertIn('event.key === "Escape"', events)
+        self.assertIn('document.addEventListener("pointerdown"', events)
+        self.assertIn("!dropdown.root.contains(event.target)", events)
+        self.assertIn("closeAllFilterDropdowns(dropdown)", self.app)
+        self.assertIn("syncFilterDropdownForSelect(venueFilter)", self.app)
         self.assertNotIn("All Publication Types", self.html)
         self.assertIn('matchesVenue &&\n    matchesVenueType', self.app)
         self.assertIn('venueTypeFilter.addEventListener("change", renderRecords)', self.app)
@@ -312,7 +342,7 @@ process.stdout.write(JSON.stringify({{
         if node is None:
             self.skipTest("Node.js is not on PATH")
         helper_start = self.app.index("function dimensionPaperCounts")
-        helper_end = self.app.index("\nfunction nextCountryOptionIndex", helper_start)
+        helper_end = self.app.index("\nfunction nextFilterOptionIndex", helper_start)
         helpers = self.app[helper_start:helper_end]
         type_start = self.app.index("function recordVenueType")
         type_end = self.app.index("\nfunction venueDisplayHtml", type_start)

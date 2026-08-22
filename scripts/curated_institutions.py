@@ -29,6 +29,7 @@ try:
         INSTITUTION_REVIEW_QUEUE_COLUMNS,
         INSTITUTION_SEARCH_RELATIONSHIP_COLUMNS,
     )
+    from .country_normalization import country_code_for_name
 except ImportError:
     from curated_schema import (
         ALLOWED_INSTITUTION_STATUSES,
@@ -45,6 +46,7 @@ except ImportError:
         INSTITUTION_REVIEW_QUEUE_COLUMNS,
         INSTITUTION_SEARCH_RELATIONSHIP_COLUMNS,
     )
+    from country_normalization import country_code_for_name
 
 
 DEFAULT_INSTITUTIONS_PATH = CURATED_DATA_DIR / "institutions.csv"
@@ -72,6 +74,24 @@ def clean(value: Any) -> str:
 def normalize_institution(value: Any) -> str:
     text = unicodedata.normalize("NFKC", clean(value)).casefold()
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
+
+
+def format_institution_name(canonical_name: Any, abbreviation: Any = "") -> str:
+    """Return the presentation label without changing the stored canonical name."""
+    canonical = clean(canonical_name)
+    short = clean(abbreviation)
+    return f"{canonical} ({short})" if canonical and short else canonical
+
+
+def clear_abbreviation_suffix(value: Any) -> tuple[str, str] | None:
+    match = re.fullmatch(
+        r"(.+\S)\s+\(([A-Z0-9][A-Z0-9&+./* -]{1,22})\)", clean(value)
+    )
+    if not match:
+        return None
+    short = clean(match.group(2))
+    letters = [character for character in short if character.isalpha()]
+    return (clean(match.group(1)), short) if len(letters) >= 2 else None
 
 
 def stable_institution_id(value: Any) -> str:
@@ -411,10 +431,28 @@ def update_institution_identity(
     rows = load_institutions(institutions_path)
     row = _entity(rows, institution_id)
     canonical = clean(draft.get("canonical_name") or row.get("canonical_name"))
+    abbreviation = (
+        clean(draft.get("abbreviation"))
+        if "abbreviation" in draft
+        else clean(row.get("abbreviation"))
+    )
     institution_type = clean(draft.get("institution_type") or row.get("institution_type"))
     status = clean(draft.get("institution_status") or row.get("institution_status"))
     if not canonical:
         raise CuratedInstitutionError("canonical_name is required")
+    if clear_abbreviation_suffix(canonical):
+        raise CuratedInstitutionError(
+            "canonical_name must contain only the full name; use abbreviation separately"
+        )
+    if abbreviation and (
+        len(abbreviation) > 24
+        or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9&+./* -]*", abbreviation)
+    ):
+        raise CuratedInstitutionError("abbreviation must be a short acronym-style value")
+    if re.search(rf"\({re.escape(abbreviation)}\)$", canonical, re.IGNORECASE) if abbreviation else False:
+        raise CuratedInstitutionError(
+            "canonical_name must not include the abbreviation suffix"
+        )
     if institution_type not in ALLOWED_INSTITUTION_TYPES:
         raise CuratedInstitutionError("unsupported institution_type")
     if status not in ALLOWED_INSTITUTION_STATUSES:
@@ -426,7 +464,7 @@ def update_institution_identity(
     duplicate = next((other for other in rows if other is not row and normalize_institution(other.get("canonical_name")) == normalize_institution(canonical)), None)
     if duplicate:
         raise CuratedInstitutionError("canonical_name belongs to another institution; use the explicit merge action")
-    row.update({"canonical_name": canonical, "institution_type": institution_type, "institution_status": status, "public_display": clean(draft.get("public_display") or row.get("public_display")) or "self", "updated_at": _timestamp()})
+    row.update({"canonical_name": canonical, "abbreviation": abbreviation, "institution_type": institution_type, "institution_status": status, "public_display": clean(draft.get("public_display") or row.get("public_display")) or "self", "updated_at": _timestamp()})
     save_institutions(rows, institutions_path)
     return dict(row)
 
@@ -529,6 +567,8 @@ def update_institution_location(
     for field in ("city", "region", "country", "country_code", "lat", "lon", "coordinate_status"):
         if field in draft:
             row[field] = clean(draft.get(field))
+    if not clean(row.get("country_code")) and clean(row.get("country")):
+        row["country_code"] = country_code_for_name(row.get("country"))
     row["updated_at"] = now
     required_location_fields = (
         "location_id",

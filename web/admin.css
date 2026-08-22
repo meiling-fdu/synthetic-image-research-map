@@ -1094,6 +1094,34 @@ button:focus-visible {
   border-radius: 11px;
 }
 
+.location-review-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.65rem;
+}
+
+.location-review-pagination .secondary-button {
+  padding: 0.4rem 0.65rem;
+}
+
+.location-details {
+  margin-top: 0.8rem;
+  border-top: 1px solid var(--border-color, #d8dee8);
+  padding-top: 0.65rem;
+}
+
+.location-details > summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.location-details .location-context {
+  margin-top: 0.55rem;
+  font-size: 0.88rem;
+}
+
 .location-queue {
   padding: 1rem;
   border-right: 1px solid var(--line);
@@ -1195,24 +1223,14 @@ button:focus-visible {
 
 .location-form-actions {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 0.55rem;
   margin-top: 0.8rem;
 }
 
-.location-more-actions {
-  margin-left: auto;
-}
-
-.location-more-actions .overflow-menu-items {
-  position: fixed;
-  z-index: 2000;
-  top: auto;
-  right: auto;
-  left: auto;
-  max-width: calc(100vw - 1rem);
-  margin: 0;
-  overflow-y: auto;
+.location-form-actions > button {
+  min-height: 2.55rem;
 }
 
 .openalex-search-form,

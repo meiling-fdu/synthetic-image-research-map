@@ -25,6 +25,7 @@ try:
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
     )
     from .curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
+    from .country_normalization import country_code_for_name
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -36,6 +37,7 @@ except ImportError:
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
     )
     from curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
+    from country_normalization import country_code_for_name
 
 
 DEFAULT_LOCATION_REVIEW_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
@@ -319,15 +321,16 @@ def _confirmed_location_fields(
     normalized = normalize_institution_name(normalized_institution)
     if not normalized:
         raise CuratedLocationError("confirmed_institution is invalid")
+    country = clean(draft.get("confirmed_country") or draft.get("country"))
     country_code = validate_country_code(
         draft.get("confirmed_country_code") or draft.get("country_code")
+        or country_code_for_name(country)
     )
     latitude, longitude = validate_coordinates(
         draft.get("confirmed_lat") if "confirmed_lat" in draft else draft.get("lat"),
         draft.get("confirmed_lon") if "confirmed_lon" in draft else draft.get("lon"),
     )
     city = clean(draft.get("confirmed_city") or draft.get("city"))
-    country = clean(draft.get("confirmed_country") or draft.get("country"))
     if not city or not country:
         raise CuratedLocationError(
             "confirmed city and country are required"
@@ -706,12 +709,18 @@ def location_review_payload(
     reviews = load_location_review_queue(review_path)
     locations = load_confirmed_locations(locations_path)
     aliases = load_institution_aliases(aliases_path)
+    institutions = load_institutions(institutions_path)
+    institution_by_id = {
+        clean(row.get("institution_id")): row for row in institutions
+        if clean(row.get("institution_id"))
+    }
     ignored_ids = {
         clean(row.get("institution_id"))
-        for row in load_institutions(institutions_path)
+        for row in institutions
         if clean(row.get("institution_status")) == "ignored"
     }
     aliases_by_canonical: Dict[str, List[str]] = defaultdict(list)
+    aliases_by_id: Dict[str, List[str]] = defaultdict(list)
     confirmed_alias_targets: Dict[str, str] = {}
     for alias in aliases:
         if clean(alias.get("review_status")) != "confirmed":
@@ -720,10 +729,14 @@ def location_review_payload(
         aliases_by_canonical[normalize_institution_name(canonical)].append(
             clean(alias.get("alias_name"))
         )
+        aliases_by_id[clean(alias.get("institution_id"))].append(
+            clean(alias.get("alias_name"))
+        )
         confirmed_alias_targets[
             normalize_institution_name(alias.get("alias_name"))
         ] = canonical
     by_institution: Dict[str, List[Dict[str, str]]] = defaultdict(list)
+    by_institution_id: Dict[str, List[Dict[str, str]]] = defaultdict(list)
     for location in locations:
         by_institution[
             normalize_institution_name(
@@ -731,6 +744,8 @@ def location_review_payload(
                 or location.get("institution")
             )
         ].append(location)
+        if clean(location.get("institution_id")):
+            by_institution_id[clean(location.get("institution_id"))].append(location)
     records = []
     suppression_reasons: Counter[str] = Counter()
     mappings_by_institution: Dict[str, List[Mapping[str, Any]]] = defaultdict(list)
@@ -739,13 +754,15 @@ def location_review_payload(
             normalize_institution_name(mapping.get("institution"))
         ].append(mapping)
     for row in reviews:
+        institution_id = clean(row.get("institution_id"))
+        entity = institution_by_id.get(institution_id, {})
         raw_key = normalize_institution_name(row.get("institution"))
         alias_target = confirmed_alias_targets.get(raw_key)
         canonical_key = normalize_institution_name(
             row.get("canonical_institution_name") or alias_target
             or row.get("institution")
         )
-        matches = by_institution.get(canonical_key, [])
+        matches = by_institution_id.get(institution_id) or by_institution.get(canonical_key, [])
         affected_mappings = mappings_by_institution.get(raw_key, [])
         affected_papers = {}
         for mapping in affected_mappings:
@@ -758,12 +775,21 @@ def location_review_payload(
                 "title": clean(mapping.get("title")),
                 "year": clean(mapping.get("year")),
             }
+        effective_status = clean(row.get("review_status")) or "pending_review"
+        if institution_id in ignored_ids:
+            effective_status = "ignore"
+        elif alias_target and effective_status not in {"ignore", "excluded"}:
+            effective_status = "alias_of_confirmed"
         candidate_suggestions = []
         suggested_key = normalize_institution_name(
             row.get("suggested_canonical_institution")
             or row.get("matched_institution")
         )
-        for location in locations:
+        needs_candidate_review = (
+            effective_status in {"pending_review", "ambiguous"}
+            and (not matches or effective_status == "ambiguous")
+        )
+        for location in locations if needs_candidate_review else ():
             canonical_name = clean(location.get("institution"))
             location_key = normalize_institution_name(canonical_name)
             score, reason = institution_candidate_evidence(
@@ -826,14 +852,16 @@ def location_review_payload(
                         candidate["location_conflicts"].append(
                             conflict_fields[field]
                         )
-        effective_status = clean(row.get("review_status"))
-        if alias_target and effective_status not in {"ignore", "excluded"}:
-            effective_status = "alias_of_confirmed"
         record = {
                 **row,
-                "review_status": effective_status or "pending_review",
+                "review_status": effective_status,
                 "canonical_institution_name": clean(
-                    row.get("canonical_institution_name") or alias_target
+                    entity.get("canonical_name") or row.get("canonical_institution_name") or alias_target
+                ),
+                "abbreviation": clean(entity.get("abbreviation")),
+                "aliases": (
+                    aliases_by_id.get(institution_id, [])
+                    if institution_id else aliases_by_canonical.get(canonical_key, [])
                 ),
                 "queue_id": queue_row_id(row),
                 "confirmed_location": matches[0] if len(matches) == 1 else None,
@@ -852,7 +880,7 @@ def location_review_payload(
                 ],
                 "affected_papers": list(affected_papers.values()),
             }
-        if clean(row.get("institution_id")) in ignored_ids:
+        if institution_id in ignored_ids:
             suppression_reasons["resolved_by_ignored_institution"] += 1
         elif effective_status in {"ignore", "excluded"}:
             suppression_reasons["resolved_by_durable_exclusion"] += 1
@@ -860,14 +888,36 @@ def location_review_payload(
             suppression_reasons["resolved_by_curated_correction"] += 1
         elif matches or effective_status == "confirmed" or clean(row.get("coordinate_status")) == "known":
             suppression_reasons["resolved_by_active_institution_override"] += 1
-        else:
-            records.append(record)
+        records.append(record)
+    summary = location_review_report(reviews, locations)
+    effective_counts = Counter(record["review_status"] for record in records)
+    summary.update({
+        "total_queue_rows": len(records),
+        "pending_review": effective_counts["pending_review"],
+        "needs_coordinates": sum(
+            record["review_status"] == "pending_review"
+            and not (
+                record.get("confirmed_location")
+                and clean(record["confirmed_location"].get("lat"))
+                and clean(record["confirmed_location"].get("lon"))
+            )
+            for record in records
+        ),
+        "ambiguous": effective_counts["ambiguous"],
+        "confirmed": effective_counts["confirmed"],
+        "alias_of_confirmed": effective_counts["alias_of_confirmed"],
+        "ignore": effective_counts["ignore"],
+        "excluded": effective_counts["excluded"],
+    })
     return {
         "records": records,
-        "total_unresolved": len(records),
+        "total_unresolved": sum(
+            record["review_status"] in {"pending_review", "ambiguous"}
+            for record in records
+        ),
         "hidden_resolved": sum(suppression_reasons.values()),
         "suppression_reasons": dict(sorted(suppression_reasons.items())),
         "confirmed_locations": locations,
         "institution_aliases": aliases,
-        "summary": location_review_report(reviews, locations),
+        "summary": summary,
     }

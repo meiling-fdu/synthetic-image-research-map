@@ -3003,6 +3003,13 @@ def legacy_canonical_name(value: Any) -> str:
     return clean_text(match.group(1)) if match else ""
 
 
+def institution_display_name(record: Mapping[str, Any]) -> str:
+    """Combine canonical identity fields only for public presentation."""
+    canonical = clean_text(record.get("canonical_name"))
+    abbreviation = clean_text(record.get("abbreviation"))
+    return f"{canonical} ({abbreviation})" if canonical and abbreviation else canonical
+
+
 def institution_id_redirects(
     institutions: Sequence[Dict[str, Any]],
     audit_rows: Sequence[Dict[str, Any]],
@@ -3169,7 +3176,8 @@ def public_canonical_institution_search_index(
     """
     active = {
         clean_text(row.get("institution_id")): {
-            "canonical_name": clean_text(row.get("canonical_name")),
+            "canonical_name": institution_display_name(row),
+            "abbreviation": clean_text(row.get("abbreviation")),
             "institution_type": resolve_public_institution_type(row.get("institution_type")),
         }
         for row in institutions
@@ -3178,7 +3186,9 @@ def public_canonical_institution_search_index(
         and clean_text(row.get("canonical_name"))
     }
     names_by_id: Dict[str, List[str]] = {
-        institution_id: [institution["canonical_name"]]
+        institution_id: [
+            institution["canonical_name"], institution.get("abbreviation", "")
+        ]
         for institution_id, institution in active.items()
     }
     for alias in aliases:
@@ -3412,7 +3422,9 @@ def canonicalize_public_institutions(
     resolver_candidates: Dict[str, Dict[str, Dict[str, str]]] = defaultdict(dict)
     canonical_by_id: Dict[str, Dict[str, str]] = {
         clean_text(row.get("institution_id")): {
-            "name": clean_text(row.get("canonical_name")),
+            "name": institution_display_name(row),
+            "canonical_name": clean_text(row.get("canonical_name")),
+            "abbreviation": clean_text(row.get("abbreviation")),
             "id": clean_text(row.get("institution_id")),
             "type": resolve_public_institution_type(row.get("institution_type")),
         }
@@ -3430,14 +3442,19 @@ def canonicalize_public_institutions(
 
     for canonical in canonical_by_id.values():
         add_resolver_name(canonical["name"], canonical)
+        add_resolver_name(canonical.get("canonical_name"), canonical)
+        add_resolver_name(canonical.get("abbreviation"), canonical)
     for alias in aliases:
+        canonical_id = clean_text(alias.get("canonical_institution_id"))
+        registered = canonical_by_id.get(canonical_id, {})
         canonical = {
-            "name": clean_text(alias.get("canonical_institution_name")),
-            "id": clean_text(alias.get("canonical_institution_id")),
+            "name": clean_text(registered.get("name"))
+            or clean_text(alias.get("canonical_institution_name")),
+            "canonical_name": clean_text(registered.get("canonical_name")),
+            "abbreviation": clean_text(registered.get("abbreviation")),
+            "id": canonical_id,
             "type": clean_text(
-                canonical_by_id.get(
-                    clean_text(alias.get("canonical_institution_id")), {}
-                ).get("type")
+                registered.get("type")
             ),
         }
         if canonical["id"]:

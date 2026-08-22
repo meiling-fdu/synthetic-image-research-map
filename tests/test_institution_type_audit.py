@@ -216,8 +216,10 @@ class InstitutionTypeFrontendContractTests(unittest.TestCase):
 
     def test_admin_uses_label_resolver_but_edits_machine_value(self):
         admin = (ROOT / "web/admin.js").read_text(encoding="utf-8")
+        html = (ROOT / "web/admin.html").read_text(encoding="utf-8")
         self.assertIn("InstitutionTypeLabels.label(institution.institution_type)", admin)
-        self.assertIn("Research Institute = research_unit", admin)
+        self.assertIn('<option value="research_unit">Research Institute</option>', html)
+        self.assertIn('elements["institution-identity-type"].value', admin)
 
 
 if __name__ == "__main__":

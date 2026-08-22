@@ -232,6 +232,7 @@ INSTITUTION_LOCATION_COLUMNS = (
 INSTITUTION_COLUMNS = (
     "institution_id",
     "canonical_name",
+    "abbreviation",
     "institution_type",
     "institution_status",
     "parent_institution_id",

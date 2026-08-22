@@ -18,6 +18,8 @@ const state = {
   institutionEvidenceCase: null,
   institutionMerge: { source: null, target: null, submitting: false },
   locationStatusFilter: "",
+  locationReviewPage: 1,
+  locationReviewPageSize: 50,
   selectedLocationReviewId: "",
   dashboard: {},
   reviewQueues: {},
@@ -205,6 +207,14 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "institution-management-search",
     "institution-management-rows",
     "institution-management-empty",
+    "institution-identity-dialog",
+    "institution-identity-form",
+    "institution-identity-id",
+    "institution-identity-name",
+    "institution-identity-abbreviation",
+    "institution-identity-type",
+    "institution-identity-error",
+    "institution-identity-cancel",
     "institution-merge-dialog",
     "institution-merge-form",
     "institution-merge-target-step",
@@ -233,14 +243,20 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "location-review-list",
     "location-review-counts",
     "empty-location-reviews",
+    "location-review-previous",
+    "location-review-page-status",
+    "location-review-next",
     "location-editor-placeholder",
     "location-form",
     "location-queue-id",
     "location-institution-id",
     "location-context",
     "confirmed-institution",
-    "institution-language",
+    "institution-abbreviation",
+    "institution-aliases",
+    "institution-new-alias",
     "institution-review-status",
+    "canonical-institution-label",
     "canonical-institution",
     "confirmed-location-record-label",
     "confirmed-location-record",
@@ -252,13 +268,12 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "confirmed-lon",
     "location-form-error",
     "location-confirm",
+    "location-save-identity",
     "location-confirm-alias",
     "location-geocode",
     "location-mark-ambiguous",
     "location-ignore",
     "location-exclude",
-    "location-more-actions",
-    "location-more-actions-menu",
     "geocode-dialog",
     "geocode-form",
     "geocode-dialog-title",
@@ -531,8 +546,18 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["institution-merge-dialog"].addEventListener("cancel", (event) => {
     if (state.institutionMerge.submitting) event.preventDefault();
   });
-  elements["location-search"].addEventListener("input", renderLocationReviewList);
+  elements["institution-identity-form"].addEventListener("submit", submitInstitutionIdentity);
+  elements["institution-identity-cancel"].addEventListener("click", () => elements["institution-identity-dialog"].close());
+  elements["location-search"].addEventListener("input", () => {
+    state.locationReviewPage = 1;
+    renderLocationReviewList();
+  });
+  elements["location-status-filters"].addEventListener("click", selectLocationStatusFilter);
+  elements["location-review-list"].addEventListener("click", selectLocationReviewResult);
+  elements["location-review-previous"].addEventListener("click", () => changeLocationReviewPage(-1));
+  elements["location-review-next"].addEventListener("click", () => changeLocationReviewPage(1));
   elements["location-form"].addEventListener("submit", confirmLocation);
+  elements["location-save-identity"].addEventListener("click", saveLocationInstitutionIdentity);
   elements["location-mark-ambiguous"].addEventListener("click", () => {
     markLocationReview("ambiguous");
   });
@@ -540,6 +565,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["location-exclude"].addEventListener("click", () => markLocationReview("excluded"));
   elements["location-confirm-alias"].addEventListener("click", confirmLocationAlias);
   elements["canonical-institution"].addEventListener("change", renderLocationActions);
+  elements["location-form"].addEventListener("input", renderLocationActions);
   elements["confirmed-location-record"].addEventListener("change", selectConfirmedLocationRecord);
   elements["location-geocode"].addEventListener("click", findInstitutionCoordinates);
   elements["geocode-cancel"].addEventListener("click", closeGeocodeDialog);
@@ -547,7 +573,6 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["geocode-dialog"].addEventListener("close", () => {
     state.selectedGeocodeCandidate = null;
   });
-  initializeLocationMoreActions();
   document.querySelectorAll("[data-console-target]").forEach((button) => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
   });
@@ -835,7 +860,7 @@ function navigateConsole(target) {
     workflows: elements["workflow-panel"],
   };
   if (target === "add-paper") openAddPaperPanel();
-  if (target === "location-review") openLocationReview();
+  if (target === "location-review") openLocationReview({ direct: true });
   if (target === "institution-management") openInstitutionManagement();
   if (target === "arxiv-enrichment") loadArxivEnrichment();
   const node = targets[target];
@@ -982,6 +1007,7 @@ function renderGlobalSearch() {
   const institutionMatches = institutionQuery.length < 2 ? [] : state.institutions
     .filter((institution) => [
       institution.canonical_name,
+      institution.abbreviation,
       ...(institution.aliases || []),
     ].some((name) => canonicalInstitutionKey(name).includes(institutionQuery)))
     .slice(0, Math.max(0, 8 - matches.length));
@@ -991,7 +1017,7 @@ function renderGlobalSearch() {
     button.className = "global-search-result";
     button.setAttribute("role", "option");
     const title = document.createElement("strong");
-    title.textContent = text(institution.canonical_name) || institution.institution_id;
+    title.textContent = institutionContextLabel(institution) || institution.institution_id;
     const meta = document.createElement("small");
     meta.textContent = `Institution · ${humanize(institution.institution_type)}`;
     button.append(title, meta);
@@ -2150,7 +2176,9 @@ function applyLocationPayload(payload) {
   state.locationReviews = payload.records || [];
   state.confirmedLocations = payload.confirmed_locations || [];
   state.locationSummary = payload.summary || {};
-  elements["location-review-counts"].textContent = suppressionCountText(payload);
+  elements["location-review-counts"].textContent =
+    `${formatNumber(payload.total_unresolved || 0)} unresolved · `
+    + `${formatNumber((payload.records || []).length - (payload.total_unresolved || 0))} resolved and available`;
   renderLocationSummary();
   renderLocationReviewList();
   if (state.locationEditorMode === "review" && state.selectedLocationReviewId) {
@@ -2159,6 +2187,60 @@ function applyLocationPayload(payload) {
     );
     if (selected) selectLocationReview(selected.queue_id);
     else clearLocationEditor();
+  }
+}
+
+function patchLocationReviewRecord(updated, confirmedLocation = null) {
+  const queueId = text(updated?.queue_id);
+  const index = state.locationReviews.findIndex((row) => row.queue_id === queueId);
+  if (index < 0) return;
+  const previousFilteredRecords = filteredLocationReviewRecords();
+  const previousFilteredIndex = previousFilteredRecords.findIndex(
+    (row) => row.queue_id === queueId
+  );
+  state.locationReviews[index] = {
+    ...state.locationReviews[index],
+    ...updated,
+    ...(confirmedLocation ? { confirmed_location: confirmedLocation } : {}),
+  };
+  const counts = state.locationReviews.reduce((result, row) => {
+    result[row.review_status] = (result[row.review_status] || 0) + 1;
+    return result;
+  }, {});
+  Object.assign(state.locationSummary, {
+    total_queue_rows: state.locationReviews.length,
+    pending_review: counts.pending_review || 0,
+    needs_coordinates: state.locationReviews.filter(
+      (row) => locationReviewStatusLabel(row, row.confirmed_location) === "Needs coordinates"
+    ).length,
+    ambiguous: counts.ambiguous || 0,
+    confirmed: counts.confirmed || 0,
+    alias_of_confirmed: counts.alias_of_confirmed || 0,
+    ignore: counts.ignore || 0,
+    excluded: counts.excluded || 0,
+  });
+  const unresolved = (counts.pending_review || 0) + (counts.ambiguous || 0);
+  state.locationSummary.total_unresolved = unresolved;
+  elements["location-review-counts"].textContent =
+    `${formatNumber(unresolved)} unresolved · `
+    + `${formatNumber(state.locationReviews.length - unresolved)} resolved and available`;
+  renderLocationSummary();
+  if (
+    state.locationEditorMode === "review"
+    && state.selectedLocationReviewId === queueId
+    && !locationReviewMatches(state.locationReviews[index])
+  ) {
+    const remaining = filteredLocationReviewRecords();
+    const next = remaining[Math.min(
+      Math.max(previousFilteredIndex, 0),
+      Math.max(remaining.length - 1, 0)
+    )];
+    if (next) selectLocationReview(next.queue_id);
+    else clearLocationEditor();
+  } else if (state.locationEditorMode === "review" && state.selectedLocationReviewId === queueId) {
+    selectLocationReview(queueId);
+  } else {
+    renderLocationReviewList();
   }
 }
 
@@ -2200,7 +2282,7 @@ function filteredInstitutionRecords() {
   }
   const query = normalize(state.institutionManagement.query);
   return state.institutions.filter((row) => normalize([
-    row.canonical_name, row.institution_type, row.institution_status,
+    row.canonical_name, row.abbreviation, row.institution_type, row.institution_status,
     ...(row.aliases || []), row.parent_institution_id, row.parent?.canonical_name,
     ...(row.descendants || []).flatMap((descendant) => [
       descendant.institution_id, descendant.canonical_name,
@@ -2313,8 +2395,49 @@ function renderInstitutionManagement() {
 }
 
 async function postInstitutionAction(path, body) {
-  await apiFetch(path, { method: "POST", body: JSON.stringify(body) });
-  await Promise.all([refreshInstitutions(), loadLocationReviews()]);
+  return apiFetch(path, { method: "POST", body: JSON.stringify(body) });
+}
+
+function patchInstitutionRecord(updated) {
+  const identifier = text(updated?.institution_id);
+  const index = state.institutions.findIndex(
+    (institution) => text(institution.institution_id) === identifier
+  );
+  if (index < 0) return;
+  state.institutions[index] = { ...state.institutions[index], ...updated };
+  renderInstitutionManagement();
+}
+
+function openInstitutionIdentityDialog(institution) {
+  elements["institution-identity-id"].value = institution.institution_id;
+  elements["institution-identity-name"].value = text(institution.canonical_name);
+  elements["institution-identity-abbreviation"].value = text(institution.abbreviation);
+  elements["institution-identity-type"].value = institution.institution_type;
+  elements["institution-identity-error"].hidden = true;
+  elements["institution-identity-dialog"].showModal();
+  elements["institution-identity-name"].focus();
+}
+
+async function submitInstitutionIdentity(event) {
+  event.preventDefault();
+  const identifier = elements["institution-identity-id"].value;
+  const current = state.institutions.find((row) => row.institution_id === identifier);
+  if (!current) return;
+  try {
+    const payload = await postInstitutionAction("/api/institution/identity", {
+      institution_id: identifier,
+      canonical_name: elements["institution-identity-name"].value.trim(),
+      abbreviation: elements["institution-identity-abbreviation"].value.trim(),
+      institution_type: elements["institution-identity-type"].value,
+      institution_status: current.institution_status,
+    });
+    patchInstitutionRecord(payload.data);
+    elements["institution-identity-dialog"].close();
+    showNotice("Institution identity saved.");
+  } catch (error) {
+    elements["institution-identity-error"].textContent = error.message;
+    elements["institution-identity-error"].hidden = false;
+  }
 }
 
 function shortInstitutionId(value) {
@@ -2338,6 +2461,7 @@ function normalizeInstitutionMergeId(value) {
 function institutionMergeSearchText(institution) {
   return [
     institution.canonical_name,
+    institution.abbreviation,
     ...(institution.aliases || []),
     institution.institution_id,
     shortInstitutionId(institution.institution_id),
@@ -2442,6 +2566,7 @@ function resolveInstitutionMergeTarget() {
       const key = canonicalInstitutionKey(input);
       matches = state.institutions.filter((row) => [
         row.canonical_name,
+        row.abbreviation,
         ...(row.aliases || []),
       ].some((name) => canonicalInstitutionKey(name) === key));
       if (!matches.length) throw new Error("No canonical institution matches that name or alias.");
@@ -2530,31 +2655,25 @@ async function runInstitutionAction(action, institution) {
       return;
     }
     if (action === "identity") {
-      const canonicalName = window.prompt("Canonical name (identity only; this does not reassign mappings):", institution.canonical_name);
-      if (!canonicalName) return;
-      const institutionType = window.prompt(
-        "Institution type machine value: University = university; Research Institute = research_unit; Company = company; Other = other",
-        institution.institution_type,
-      );
-      if (!institutionType) return;
-      if (!["university", "research_unit", "company", "other"].includes(institutionType)) {
-        showNotice("Choose University, Research Institute, Company, or Other using its listed machine value.", "error");
-        return;
-      }
-      await postInstitutionAction("/api/institution/identity", { institution_id: institution.institution_id, canonical_name: canonicalName, institution_type: institutionType, institution_status: institution.institution_status });
+      openInstitutionIdentityDialog(institution);
+      return;
     } else if (action === "alias") {
       const aliasName = window.prompt("Alias to resolve to this canonical institution:");
       if (!aliasName) return;
-      await postInstitutionAction("/api/institution/alias", { institution_id: institution.institution_id, alias_name: aliasName, review_note: "Confirmed in institution management." });
+      const payload = await postInstitutionAction("/api/institution/alias", { institution_id: institution.institution_id, alias_name: aliasName, review_note: "Confirmed in institution management." });
+      institution.aliases = [...new Set([...(institution.aliases || []), payload.data.alias_name])];
+      renderInstitutionManagement();
     } else if (action === "parent") {
       const parentId = window.prompt("Parent institution ID (blank removes parent):", institution.parent_institution_id || "");
       if (parentId === null) return;
       await postInstitutionAction("/api/institution/parent", { institution_id: institution.institution_id, parent_institution_id: parentId });
+      await refreshInstitutions();
     } else if (action === "ignore") {
       if (!window.confirm("This hides this institution from public outputs without deleting data.")) return;
       const note = window.prompt("Review note for the audit trail:");
       if (!note) return;
       await postInstitutionAction("/api/institution/ignore", { institution_id: institution.institution_id, confirmation: true, review_note: note });
+      await refreshInstitutions();
     } else if (action === "merge") {
       openInstitutionMergeDialog(institution);
       return;
@@ -2630,11 +2749,15 @@ function selectCanonicalInstitutionLocation(detail) {
   elements["location-queue-id"].value = "";
   elements["location-institution-id"].value = identifier;
   elements["confirmed-institution"].value = text(institution.canonical_name);
-  elements["institution-language"].value = text(review.detected_language);
+  elements["institution-abbreviation"].value = text(institution.abbreviation);
+  elements["institution-aliases"].textContent = (detail.aliases || [])
+    .map((row) => row.alias_name).filter(Boolean).join("; ") || "No aliases";
+  elements["institution-new-alias"].value = "";
   elements["institution-review-status"].textContent = locationReviewStatusLabel(review, location);
   const canonicalSelect = elements["canonical-institution"];
   canonicalSelect.replaceChildren(new Option(institution.canonical_name, institution.canonical_name));
   canonicalSelect.value = institution.canonical_name;
+  elements["canonical-institution-label"].hidden = true;
   const locationSelect = elements["confirmed-location-record"];
   elements["confirmed-location-record-label"].hidden = false;
   locationSelect.replaceChildren();
@@ -2679,9 +2802,6 @@ function renderCanonicalLocationContext(detail) {
   const reviews = detail.location_reviews || [];
   const fields = [
     ["Canonical institution ID", institution.institution_id],
-    ["Canonical institution name", institution.canonical_name],
-    ["Aliases", (detail.aliases || []).map((row) => row.alias_name).join("; ")],
-    ["Current location", [location.city, location.region, location.country].filter(Boolean).join(", ")],
     ["Current location review", reviews.map((row) => row.review_status).filter(Boolean).join("; ")],
     ["Affiliation evidence", (detail.affiliation_evidence || []).map((row) => row.raw_affiliation).filter(Boolean).join("; ")],
   ];
@@ -2695,8 +2815,11 @@ function renderCanonicalLocationContext(detail) {
   });
 }
 
-function openLocationReview() {
+function openLocationReview({ direct = false } = {}) {
+  if (direct && state.locationEditorMode !== "review") clearLocationEditor();
   elements["location-review-panel"].hidden = false;
+  renderLocationSummary();
+  renderLocationReviewList();
   elements["location-review-panel"].scrollIntoView({
     behavior: "smooth",
     block: "start",
@@ -2730,6 +2853,7 @@ function renderLocationSummary() {
   });
   const filters = [
     ["", "All", summary.total_queue_rows],
+    ["pending_review", "Pending Review", summary.pending_review],
     ["needs_coordinates", "Needs Coordinates", summary.needs_coordinates],
     ["ambiguous", "Ambiguous", summary.ambiguous],
     [
@@ -2745,50 +2869,87 @@ function renderLocationSummary() {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = `${label} (${count || 0})`;
+    button.dataset.locationStatus = value;
     button.dataset.active = String(state.locationStatusFilter === value);
-    button.addEventListener("click", () => {
-      state.locationStatusFilter = value;
-      renderLocationSummary();
-      renderLocationReviewList();
-    });
+    button.setAttribute("aria-pressed", String(state.locationStatusFilter === value));
     elements["location-status-filters"].append(button);
   });
 }
 
-function renderLocationReviewList() {
+function locationReviewMatches(row, query = normalize(elements["location-search"].value)) {
+  if (
+    state.locationStatusFilter &&
+    !(
+      state.locationStatusFilter === "confirmed"
+        ? ["confirmed", "alias_of_confirmed"].includes(row.review_status)
+        : state.locationStatusFilter === "needs_coordinates"
+          ? locationReviewStatusLabel(row, row.confirmed_location) === "Needs coordinates"
+          : row.review_status === state.locationStatusFilter
+    )
+  ) return false;
+  if (!query) return true;
+  return normalize([
+    row.institution,
+    row.canonical_institution_name,
+    row.abbreviation,
+    ...(row.aliases || []),
+    row.title,
+    row.year,
+    row.institution_authors,
+    row.raw_affiliation,
+    row.location_status,
+    row.coordinate_status,
+    row.review_status,
+    row.suggested_city,
+    row.suggested_country,
+  ].join(" ")).includes(query);
+}
+
+function filteredLocationReviewRecords() {
   const query = normalize(elements["location-search"].value);
-  const records = state.locationReviews.filter((row) => {
-    if (
-      state.locationStatusFilter &&
-      !(
-        state.locationStatusFilter === "confirmed"
-          ? ["confirmed", "alias_of_confirmed"].includes(row.review_status)
-          : state.locationStatusFilter === "needs_coordinates"
-            ? locationReviewStatusLabel(row, row.confirmed_location) === "Needs coordinates"
-            : row.review_status === state.locationStatusFilter
-      )
-    ) return false;
-    if (!query) return true;
-    return normalize([
-      row.institution,
-      row.title,
-      row.year,
-      row.institution_authors,
-      row.raw_affiliation,
-      row.location_status,
-      row.coordinate_status,
-      row.review_status,
-      row.canonical_institution_name,
-      row.suggested_city,
-      row.suggested_country,
-    ].join(" ")).includes(query);
-  });
+  return state.locationReviews.filter((row) => locationReviewMatches(row, query));
+}
+
+function selectLocationStatusFilter(event) {
+  const button = event.target.closest("button[data-location-status]");
+  if (!button) return;
+  state.locationStatusFilter = button.dataset.locationStatus;
+  state.locationReviewPage = 1;
+  if (state.locationEditorMode === "review") {
+    const selected = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    if (selected && !locationReviewMatches(selected)) clearLocationEditor();
+  }
+  renderLocationSummary();
+  renderLocationReviewList();
+}
+
+function selectLocationReviewResult(event) {
+  const button = event.target.closest("button[data-location-review-id]");
+  if (button) selectLocationReview(button.dataset.locationReviewId);
+}
+
+function changeLocationReviewPage(delta) {
+  const records = filteredLocationReviewRecords();
+  const pages = Math.max(1, Math.ceil(records.length / state.locationReviewPageSize));
+  state.locationReviewPage = Math.max(1, Math.min(pages, state.locationReviewPage + delta));
+  renderLocationReviewList();
+}
+
+function renderLocationReviewList() {
+  const records = filteredLocationReviewRecords();
+  const pages = Math.max(1, Math.ceil(records.length / state.locationReviewPageSize));
+  state.locationReviewPage = Math.min(state.locationReviewPage, pages);
+  const start = (state.locationReviewPage - 1) * state.locationReviewPageSize;
+  const visibleRecords = records.slice(start, start + state.locationReviewPageSize);
   const list = elements["location-review-list"];
   list.replaceChildren();
-  records.forEach((row) => {
+  visibleRecords.forEach((row) => {
     const item = document.createElement("li");
     const button = document.createElement("button");
     button.type = "button";
+    button.dataset.locationReviewId = row.queue_id;
     button.dataset.selected =
       row.queue_id === state.selectedLocationReviewId ? "true" : "false";
     const institution = document.createElement("strong");
@@ -2803,11 +2964,15 @@ function renderLocationReviewList() {
     const candidateCount = (row.candidate_suggestions || []).length;
     diagnostic.textContent = `Diagnostics: ${humanize(row.location_status)} · ${humanize(row.coordinate_status)}${candidateCount ? ` · ${candidateCount} alias/duplicate candidate${candidateCount === 1 ? "" : "s"}` : ""}`;
     button.append(institution, paper, status, diagnostic);
-    button.addEventListener("click", () => selectLocationReview(row.queue_id));
     item.append(button);
     list.append(item);
   });
   elements["empty-location-reviews"].hidden = records.length !== 0;
+  elements["location-review-page-status"].textContent = records.length
+    ? `Page ${state.locationReviewPage} of ${pages} · ${records.length}`
+    : "No results";
+  elements["location-review-previous"].disabled = state.locationReviewPage <= 1;
+  elements["location-review-next"].disabled = state.locationReviewPage >= pages;
 }
 
 function selectLocationReview(queueId) {
@@ -2829,16 +2994,36 @@ function selectLocationReview(queueId) {
   elements["location-institution-id"].value = text(row.institution_id);
   const confirmed = row.confirmed_location || {};
   elements["confirmed-institution"].value =
-    text(confirmed.institution || row.canonical_institution_name || row.institution);
-  elements["institution-language"].value = text(row.detected_language);
+    text(row.canonical_institution_name || confirmed.institution || row.institution);
+  elements["institution-abbreviation"].value = text(row.abbreviation);
+  elements["institution-aliases"].textContent = (row.aliases || row.existing_aliases || []).join("; ") || "No aliases";
+  elements["institution-new-alias"].value = "";
   elements["institution-review-status"].textContent = locationReviewStatusLabel(row, confirmed);
   const canonicalSelect = elements["canonical-institution"];
   canonicalSelect.replaceChildren(new Option("Select confirmed institution…", ""));
   state.confirmedLocations
     .slice()
     .sort((a, b) => text(a.institution).localeCompare(text(b.institution)))
-    .forEach((location) => canonicalSelect.add(new Option(location.institution, location.institution)));
-  canonicalSelect.value = text(row.canonical_institution_name || row.suggested_canonical_institution || row.matched_institution);
+    .forEach((location) => {
+      const entity = state.institutions.find(
+        (institution) => institution.institution_id === location.institution_id
+      );
+      canonicalSelect.add(new Option(
+        institutionContextLabel(entity || { canonical_name: location.institution }),
+        location.institution,
+      ));
+    });
+  const canonicalLocation = state.confirmedLocations.find(
+    (location) => text(location.institution_id) === text(row.institution_id)
+  );
+  canonicalSelect.value = text(
+    canonicalLocation?.institution || row.canonical_institution_name
+    || row.suggested_canonical_institution || row.matched_institution
+  );
+  elements["canonical-institution-label"].hidden = !(
+    ["pending_review", "ambiguous"].includes(row.review_status)
+    || (row.candidate_suggestions || []).length > 1
+  );
   elements["confirmed-city"].value =
     text(confirmed.city || row.suggested_city);
   elements["confirmed-region"].value = text(confirmed.region);
@@ -2854,10 +3039,85 @@ function selectLocationReview(queueId) {
 }
 
 function renderLocationActions() {
+  const selected = state.locationReviews.find(
+    (row) => row.queue_id === state.selectedLocationReviewId
+  );
+  const reviewMode = state.locationEditorMode === "review" && Boolean(selected);
+  const status = text(selected?.review_status || "pending_review");
   const hasCanonicalInstitution = Boolean(
     elements["canonical-institution"].value.trim()
   );
-  elements["location-confirm-alias"].hidden = !hasCanonicalInstitution;
+  const confirmed = selected?.confirmed_location || {};
+  const locationChanged = [
+    ["confirmed-city", "city"],
+    ["confirmed-region", "region"],
+    ["confirmed-country", "country"],
+    ["confirmed-country-code", "country_code"],
+    ["confirmed-lat", "lat"],
+    ["confirmed-lon", "lon"],
+  ].some(([elementId, field]) => (
+    text(elements[elementId].value).trim() !== text(confirmed[field]).trim()
+  ));
+  elements["location-save-identity"].hidden = !elements["location-institution-id"].value;
+  elements["location-confirm"].hidden = reviewMode
+    ? status === "alias_of_confirmed" || (status === "confirmed" && !locationChanged)
+    : false;
+  elements["location-confirm-alias"].hidden = !(
+    reviewMode
+    && ["pending_review", "ambiguous"].includes(status)
+    && hasCanonicalInstitution
+  );
+  elements["location-mark-ambiguous"].hidden = !(reviewMode && status === "pending_review");
+  elements["location-ignore"].hidden = !(reviewMode && status !== "ignore");
+  elements["location-exclude"].hidden = !(reviewMode && status !== "excluded");
+}
+
+async function saveLocationInstitutionIdentity() {
+  const identifier = elements["location-institution-id"].value.trim();
+  const institution = state.institutions.find((row) => row.institution_id === identifier);
+  if (!institution) {
+    showLocationFormError("This review row is not bound to a canonical institution.");
+    return;
+  }
+  elements["location-save-identity"].disabled = true;
+  try {
+    const payload = await postInstitutionAction("/api/institution/identity", {
+      institution_id: identifier,
+      canonical_name: elements["confirmed-institution"].value.trim(),
+      abbreviation: elements["institution-abbreviation"].value.trim(),
+      institution_type: institution.institution_type,
+      institution_status: institution.institution_status,
+    });
+    patchInstitutionRecord(payload.data);
+    const aliasName = elements["institution-new-alias"].value.trim();
+    if (aliasName) {
+      const aliasPayload = await postInstitutionAction("/api/institution/alias", {
+        institution_id: identifier,
+        alias_name: aliasName,
+        review_note: "Confirmed in Institution Alias and Location Review.",
+      });
+      const aliases = [...new Set([
+        ...(state.institutions.find((row) => row.institution_id === identifier)?.aliases || []),
+        aliasPayload.data.alias_name,
+      ])];
+      state.institutions.find((row) => row.institution_id === identifier).aliases = aliases;
+      elements["institution-aliases"].textContent = aliases.join("; ") || "No aliases";
+      elements["institution-new-alias"].value = "";
+    }
+    const selected = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    if (selected) {
+      selected.canonical_institution_name = payload.data.canonical_name;
+      selected.abbreviation = payload.data.abbreviation;
+    }
+    renderLocationReviewList();
+    showNotice("Institution identity saved without reloading the review dataset.");
+  } catch (error) {
+    showLocationFormError(error.message);
+  } finally {
+    elements["location-save-identity"].disabled = false;
+  }
 }
 
 function locationReviewStatusLabel(review, location = {}) {
@@ -2867,83 +3127,19 @@ function locationReviewStatusLabel(review, location = {}) {
   return humanize(status);
 }
 
-function positionLocationMoreActions() {
-  const disclosure = elements["location-more-actions"];
-  const menu = elements["location-more-actions-menu"];
-  if (!disclosure.open) return;
-
-  const trigger = disclosure.querySelector("summary");
-  const triggerRect = trigger.getBoundingClientRect();
-  const viewportWidth = window.visualViewport?.width || window.innerWidth;
-  const viewportHeight = window.visualViewport?.height || window.innerHeight;
-  const viewportMargin = 8;
-  const triggerGap = 6;
-  const menuWidth = Math.min(menu.offsetWidth, viewportWidth - viewportMargin * 2);
-  const menuHeight = menu.offsetHeight;
-  const spaceBelow = viewportHeight - triggerRect.bottom - viewportMargin - triggerGap;
-  const spaceAbove = triggerRect.top - viewportMargin - triggerGap;
-  const opensUpward = spaceBelow < menuHeight && spaceAbove > spaceBelow;
-  const availableHeight = Math.max(opensUpward ? spaceAbove : spaceBelow, 0);
-
-  menu.dataset.placement = opensUpward ? "top" : "bottom";
-  menu.style.width = `${menuWidth}px`;
-  menu.style.maxHeight = `${availableHeight}px`;
-  menu.style.left = `${Math.max(
-    viewportMargin,
-    Math.min(triggerRect.right - menuWidth, viewportWidth - menuWidth - viewportMargin)
-  )}px`;
-  menu.style.top = `${opensUpward
-    ? Math.max(viewportMargin, triggerRect.top - menuHeight - triggerGap)
-    : Math.min(triggerRect.bottom + triggerGap, viewportHeight - viewportMargin)}px`;
-}
-
-function initializeLocationMoreActions() {
-  const disclosure = elements["location-more-actions"];
-  const menu = elements["location-more-actions-menu"];
-  const trigger = disclosure.querySelector("summary");
-
-  disclosure.addEventListener("toggle", () => {
-    if (disclosure.open) positionLocationMoreActions();
-  });
-  disclosure.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && disclosure.open) {
-      event.preventDefault();
-      disclosure.open = false;
-      trigger.focus();
-    } else if (event.key === "ArrowDown" && document.activeElement === trigger) {
-      event.preventDefault();
-      disclosure.open = true;
-      positionLocationMoreActions();
-      menu.querySelector("button")?.focus();
-    }
-  });
-  menu.addEventListener("click", (event) => {
-    if (event.target.closest("button")) disclosure.open = false;
-  });
-  document.addEventListener("click", (event) => {
-    if (disclosure.open && !disclosure.contains(event.target)) disclosure.open = false;
-  });
-  window.addEventListener("resize", positionLocationMoreActions);
-  window.addEventListener("scroll", positionLocationMoreActions, { capture: true, passive: true });
-}
-
 function renderLocationContext(row) {
   const fields = [
     ["Raw institution name", row.institution],
-    ["Canonical institution name", row.canonical_institution_name],
     ["Detected language", row.detected_language],
     ["Paper", [row.title, row.year].filter(Boolean).join(" · ")],
     ["Institution authors", row.institution_authors],
     ["Raw affiliation", row.raw_affiliation],
     ["Evidence source", row.evidence_source],
     ["Evidence URL", row.evidence_url],
-    ["Suggested location", [row.suggested_city, row.suggested_country].filter(Boolean).join(", ")],
-    ["Current review status", locationReviewStatusLabel(row, row.confirmed_location)],
     ["Existing matched institution", row.matched_institution],
     ["Suggested canonical institution", row.suggested_canonical_institution],
     ["Match diagnostics", [row.match_method, row.similarity_score, row.confidence].filter(Boolean).join(" · ")],
     ["External IDs", [row.openalex_institution_id, row.ror_id, row.wikidata_id].filter(Boolean).join(" · ")],
-    ["Existing aliases", (row.existing_aliases || []).join("; ")],
     ["Affected papers", (row.affected_papers || []).map((paper) => [paper.title, paper.year].filter(Boolean).join(" · ")).join("; ")],
     ["Affected mappings", (row.affected_mappings || []).map((mapping) => [mapping.mapping_id, mapping.institution, mapping.mapping_status].filter(Boolean).join(" · ")).join("; ")],
     ["Legacy diagnostics", [row.location_status, row.coordinate_status].filter(Boolean).map(humanize).join(" · ")],
@@ -3071,7 +3267,9 @@ function locationDraft() {
     institution_id: elements["location-institution-id"].value,
     confirmed_institution: elements["confirmed-institution"].value.trim(),
     canonical_institution_name: elements["canonical-institution"].value,
-    detected_language: elements["institution-language"].value.trim(),
+    detected_language: text(
+      state.locationReviews.find((row) => row.queue_id === elements["location-queue-id"].value)?.detected_language
+    ),
     confirmed_city: elements["confirmed-city"].value.trim(),
     confirmed_region: elements["confirmed-region"].value.trim(),
     confirmed_country: elements["confirmed-country"].value.trim(),
@@ -3317,10 +3515,30 @@ async function confirmLocation(event) {
       } : draft),
     });
     showNotice(result.message);
-    await Promise.all([loadLocationReviews(), refreshInstitutions()]);
-    if (canonicalMode) await openCanonicalInstitutionLocation(
-      { institution_id: boundInstitutionId }
-    );
+    if (canonicalMode) {
+      const institution = state.institutions.find(
+        (row) => row.institution_id === boundInstitutionId
+      );
+      if (institution) {
+        institution.location = result.data;
+        institution.locations = [
+          ...(institution.locations || []).filter(
+            (location) => location.location_id !== result.data.location_id
+          ),
+          result.data,
+        ];
+      }
+      state.selectedInstitutionLocations = institution?.locations || [result.data];
+      selectCanonicalInstitutionLocation({
+        institution,
+        locations: state.selectedInstitutionLocations,
+        current_location: result.data,
+        aliases: (institution?.aliases || []).map((alias_name) => ({ alias_name })),
+      });
+      renderInstitutionManagement();
+    } else {
+      patchLocationReviewRecord(result.queue_row, result.location);
+    }
   } catch (error) {
     showLocationFormError(locationApiErrorMessage(error));
   } finally {
@@ -3348,7 +3566,7 @@ async function markLocationReview(status) {
       }
     );
     showNotice(result.message);
-    await loadLocationReviews();
+    patchLocationReviewRecord(result.queue_row);
   } catch (error) {
     elements["location-form-error"].hidden = false;
     elements["location-form-error"].textContent = error.message;
@@ -3378,7 +3596,13 @@ async function confirmLocationAlias() {
       body: JSON.stringify(draft),
     });
     showNotice(result.message);
-    await loadLocationReviews();
+    patchLocationReviewRecord(result.queue_row);
+    const institution = state.institutions.find(
+      (row) => row.institution_id === result.alias.institution_id
+    );
+    if (institution) {
+      institution.aliases = [...new Set([...(institution.aliases || []), result.alias.alias_name])];
+    }
   } catch (error) {
     elements["location-form-error"].hidden = false;
     elements["location-form-error"].textContent = error.message;
@@ -5594,6 +5818,7 @@ function mappingInstitutionMatches(value) {
   if (exactOption) return [exactOption];
   return state.institutions.filter((row) => [
     row.canonical_name,
+    row.abbreviation,
     ...(row.aliases || []),
   ].some((name) => canonicalInstitutionKey(name) === key));
 }
@@ -5659,7 +5884,9 @@ function mappingInstitutionLocationLabel(institution) {
 }
 
 function institutionContextLabel(institution) {
-  return text(institution.canonical_name);
+  const canonical = text(institution.canonical_name);
+  const abbreviation = text(institution.abbreviation);
+  return canonical && abbreviation ? `${canonical} (${abbreviation})` : canonical;
 }
 
 function mappingInstitutionOptionValue(institution) {

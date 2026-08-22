@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>Local Paper Curator · Synthetic Image Research Map</title>
-    <link rel="stylesheet" href="/admin.css?v=20260820-affiliation-order">
+    <link rel="stylesheet" href="/admin.css?v=20260822-institution-abbreviations">
     <script src="/institution_type_labels.js?v=20260718-research-institute" defer></script>
-    <script src="/admin.js?v=20260820-affiliation-order" defer></script>
+    <script src="/admin.js?v=20260822-institution-abbreviations" defer></script>
   </head>
   <body>
     <header class="masthead">
@@ -316,6 +316,28 @@
         </nav>
       </section>
 
+      <dialog id="institution-identity-dialog">
+        <form id="institution-identity-form" method="dialog">
+          <div class="section-heading">
+            <div><p class="eyebrow">Canonical identity</p><h2>Edit institution identity</h2></div>
+          </div>
+          <input id="institution-identity-id" type="hidden">
+          <div class="location-form-grid">
+            <label class="full-width">Institution name
+              <input id="institution-identity-name" type="text" required>
+            </label>
+            <label class="full-width">Abbreviation
+              <input id="institution-identity-abbreviation" type="text" maxlength="24" placeholder="Optional, e.g. CERTH">
+            </label>
+            <label>Institution type
+              <select id="institution-identity-type"><option value="university">University</option><option value="research_unit">Research Institute</option><option value="company">Company</option><option value="other">Other</option></select>
+            </label>
+          </div>
+          <p class="form-error" id="institution-identity-error" role="alert" hidden></p>
+          <div class="form-actions"><button class="secondary-button" id="institution-identity-cancel" type="button">Cancel</button><button class="primary-button" type="submit">Save identity</button></div>
+        </form>
+      </dialog>
+
       <section class="location-review-panel" id="location-review-panel" hidden>
         <div class="section-heading">
           <div>
@@ -337,6 +359,11 @@
             <div class="location-status-filters" id="location-status-filters" aria-label="Filter institutions by review status"></div>
             <ol id="location-review-list"></ol>
             <p class="empty-markers" id="empty-location-reviews" hidden>No location-review rows match.</p>
+            <nav class="location-review-pagination" aria-label="Review result pages">
+              <button class="secondary-button" id="location-review-previous" type="button">Previous</button>
+              <span id="location-review-page-status" role="status"></span>
+              <button class="secondary-button" id="location-review-next" type="button">Next</button>
+            </nav>
           </aside>
           <article class="location-editor">
             <div id="location-editor-placeholder">
@@ -346,18 +373,23 @@
             <form id="location-form" hidden>
               <input id="location-queue-id" type="hidden">
               <input id="location-institution-id" type="hidden">
-              <div class="location-context" id="location-context"></div>
               <div class="location-form-grid">
-                <label class="full-width">Confirmed institution
-                  <input id="confirmed-institution" type="text" required readonly>
+                <label class="full-width">Institution name
+                  <input id="confirmed-institution" type="text" required>
                 </label>
-                <label>Detected language
-                  <input id="institution-language" type="text" placeholder="en, es, zh…">
+                <label class="full-width">Abbreviation
+                  <input id="institution-abbreviation" type="text" maxlength="24" placeholder="Optional, e.g. CRIM">
                 </label>
-                <label>Current review status
+                <label class="full-width">Aliases
+                  <output id="institution-aliases" class="status-output">No aliases</output>
+                </label>
+                <label class="full-width">Add alias
+                  <input id="institution-new-alias" type="text" placeholder="Optional new alias">
+                </label>
+                <label class="full-width">Review status
                   <output id="institution-review-status" class="status-output">Pending review</output>
                 </label>
-                <label class="full-width">Canonical institution
+                <label class="full-width" id="canonical-institution-label" hidden>Location candidate
                   <select id="canonical-institution"><option value="">Select confirmed institution…</option></select>
                 </label>
                 <label class="full-width" id="confirmed-location-record-label" hidden>Confirmed location record
@@ -372,9 +404,7 @@
                 <label>Confirmed country
                   <input id="confirmed-country" type="text">
                 </label>
-                <label>Country code
-                  <input id="confirmed-country-code" type="text" maxlength="2" pattern="[A-Z]{2}" placeholder="US" required>
-                </label>
+                <input id="confirmed-country-code" type="hidden">
                 <label>Latitude
                   <input id="confirmed-lat" type="text" inputmode="decimal" autocomplete="off" aria-describedby="location-form-error">
                 </label>
@@ -386,19 +416,16 @@
                   <span>Uses the canonical ID, aliases, affiliation evidence, and current city, region, and country. Nothing changes until you select and confirm a consistent result.</span>
                 </div>
               </div>
-              <p class="workflow-note">Confirm a usable location, or use More actions for exceptional review outcomes. Saving does not run the exporter.</p>
+              <details class="location-details"><summary>Details</summary><div class="location-context" id="location-context"></div></details>
+              <p class="workflow-note">Confirm a usable location or choose the appropriate review outcome. Saving does not run the exporter.</p>
               <p class="form-error" id="location-form-error" role="alert" hidden></p>
               <div class="location-form-actions">
+                <button class="secondary-button" id="location-save-identity" type="button">Save identity</button>
                 <button class="primary-button" id="location-confirm" type="submit">Confirm location</button>
-                <button class="secondary-button" id="location-confirm-alias" type="button" hidden>Confirm as alias of selected institution</button>
-                <details class="overflow-menu location-more-actions" id="location-more-actions">
-                  <summary>More actions <span aria-hidden="true">⋯</span></summary>
-                  <div class="overflow-menu-items" id="location-more-actions-menu">
-                    <button class="secondary-button" id="location-mark-ambiguous" type="button">Mark ambiguous</button>
-                    <button class="secondary-button" id="location-ignore" type="button">Ignore this institution</button>
-                    <button class="secondary-button" id="location-exclude" type="button">Exclude from public map</button>
-                  </div>
-                </details>
+                <button class="secondary-button" id="location-confirm-alias" type="button" hidden>Confirm as alias</button>
+                <button class="secondary-button" id="location-mark-ambiguous" type="button" hidden>Mark ambiguous</button>
+                <button class="danger-button" id="location-ignore" type="button" hidden>Ignore institution</button>
+                <button class="danger-button" id="location-exclude" type="button" hidden>Exclude from public map</button>
               </div>
             </form>
           </article>

@@ -63,7 +63,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             self.html.index('<div class="filter-grid">'):
             self.html.index('<div id="active-institution-filter"')
         ]
-        ordered_ids = re.findall(r'id="([^"]+)"', filter_grid)
+        ordered_ids = re.findall(r'<(?:input|select)[^>]+id="([^"]+)"', filter_grid)
         self.assertLess(
             ordered_ids.index("entry-type-filter"),
             ordered_ids.index("venue-type-filter"),
@@ -87,12 +87,38 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         ]
         groups = (
             "keyword-filter", "task-filter", "entry-type-filter",
-            "venue-type-filter", "venue-filter", "country-combobox",
+            "venue-type-filter", "venue-filter", "country-filter",
             "institution-type-filter", "preprint-filter", "year-range",
         )
         for group in groups:
             marker = f'id="{group}"' if group != "year-range" else 'class="year-range"'
             self.assertIn(marker, filter_grid)
+
+    def test_all_select_filters_use_one_custom_dropdown_controller(self):
+        dropdown_ids = (
+            "task-filter", "entry-type-filter", "venue-type-filter",
+            "venue-filter", "country-filter", "institution-type-filter",
+            "preprint-filter",
+        )
+        self.assertEqual(self.html.count("data-filter-dropdown"), len(dropdown_ids))
+        initialization = self.app[
+            self.app.index("filterDropdowns = ["):
+            self.app.index("const chartTooltip")
+        ]
+        for dropdown_id in dropdown_ids:
+            variable = {
+                "task-filter": "taskFilter",
+                "entry-type-filter": "entryTypeFilter",
+                "venue-type-filter": "venueTypeFilter",
+                "venue-filter": "venueFilter",
+                "country-filter": "countryFilter",
+                "institution-type-filter": "institutionTypeFilter",
+                "preprint-filter": "preprintFilter",
+            }[dropdown_id]
+            self.assertIn(variable, initialization)
+        self.assertIn("].map(createFilterDropdown)", initialization)
+        self.assertIn('select.setAttribute("aria-hidden", "true")', self.app)
+        self.assertIn("select.tabIndex = -1", self.app)
 
     def test_filtered_overview_has_only_three_map_metrics(self):
         overview = self.html[
@@ -129,7 +155,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertIn(".filter-grid {\n  display: grid;\n  gap: 8px;", self.css)
         self.assertIn(".filter-grid label {\n  gap: 4px;", self.css)
         self.assertIn('.filter-grid input:not([type="range"])', self.css)
-        self.assertIn(".country-combobox-button {\n  display: flex;", self.css)
+        self.assertIn(".filter-dropdown-button {\n  display: flex;", self.css)
         self.assertIn("height: 35px", self.css)
         self.assertIn(".year-range-slider {\n  position: relative;\n  height: 24px;", self.css)
         self.assertIn("justify-content: space-between", self.css)

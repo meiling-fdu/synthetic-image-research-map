@@ -156,11 +156,6 @@ const sortControl = document.querySelector("#sort-control");
 const venueFilter = document.querySelector("#venue-filter");
 const venueTypeFilter = document.querySelector("#venue-type-filter");
 const countryFilter = document.querySelector("#country-filter");
-const countryCombobox = document.querySelector("#country-combobox");
-const countryComboboxButton = document.querySelector("#country-combobox-button");
-const countryComboboxValue = document.querySelector("#country-combobox-value");
-const countryComboboxPanel = document.querySelector("#country-combobox-panel");
-const countryComboboxOptions = document.querySelector("#country-combobox-options");
 const institutionTypeFilter = document.querySelector("#institution-type-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
@@ -216,8 +211,8 @@ let activeInstitutionFilter = null;
 let displayedInstitutionFilter = null;
 let yearRangeBounds = null;
 let venueTypeOrder = ["conference", "journal", "preprint", "book"];
-let countryComboboxOptionData = [];
-let activeCountryOptionIndex = -1;
+let filterDropdowns = [];
+let filterDropdownBySelect = new Map();
 let filtersDrawerOpen = false;
 const resultsMasonryFrames = new Set();
 let resultsRenderGeneration = 0;
@@ -2151,7 +2146,7 @@ function replaceCountedFilterOptions(
     : "all";
 }
 
-function nextCountryOptionIndex(visibleIndices, currentIndex, direction) {
+function nextFilterOptionIndex(visibleIndices, currentIndex, direction) {
   if (!visibleIndices.length) return -1;
   const currentPosition = visibleIndices.indexOf(currentIndex);
   if (currentPosition === -1) {
@@ -2165,143 +2160,221 @@ function nextCountryOptionIndex(visibleIndices, currentIndex, direction) {
   return visibleIndices[nextPosition];
 }
 
-function countryComboboxPlacement(
+function filterDropdownPlacement(
   triggerRect,
   panelHeight,
-  viewportWidth,
   viewportHeight,
   padding = 8,
-  gap = 4,
 ) {
-  const width = Math.min(
-    Math.max(triggerRect.width, 240),
-    Math.max(0, viewportWidth - (padding * 2)),
-  );
-  const left = Math.min(
-    Math.max(triggerRect.left, padding),
-    Math.max(padding, viewportWidth - padding - width),
-  );
-  const availableBelow = viewportHeight - triggerRect.bottom - gap - padding;
-  const availableAbove = triggerRect.top - gap - padding;
+  const availableBelow = viewportHeight - triggerRect.bottom - padding;
+  const availableAbove = triggerRect.top - padding;
   const placement = availableBelow < panelHeight && availableAbove > availableBelow
     ? "up"
     : "down";
-  const preferredTop = placement === "up"
-    ? triggerRect.top - gap - panelHeight
-    : triggerRect.bottom + gap;
-  const top = Math.min(
-    Math.max(preferredTop, padding),
-    Math.max(padding, viewportHeight - padding - panelHeight),
-  );
-  return { left, top, width, placement };
+  return { placement };
 }
 
-function countryOptionElements() {
-  return [...countryComboboxOptions.querySelectorAll("[role='option']")];
+function filterDropdownOptionElements(dropdown) {
+  return [...dropdown.options.querySelectorAll("[role='option']")];
 }
 
-function setActiveCountryOption(index, scroll = false) {
-  activeCountryOptionIndex = index;
+function setActiveFilterDropdownOption(dropdown, index, scroll = false) {
+  dropdown.activeIndex = index;
   let activeElement = null;
-  countryOptionElements().forEach((option) => {
-    const isActive = Number(option.dataset.countryOptionIndex) === index;
+  filterDropdownOptionElements(dropdown).forEach((option) => {
+    const isActive = Number(option.dataset.filterOptionIndex) === index;
     option.classList.toggle("is-active", isActive);
     if (isActive) activeElement = option;
   });
   const activeId = activeElement?.id || "";
-  if (activeId) countryComboboxButton.setAttribute("aria-activedescendant", activeId);
-  else countryComboboxButton.removeAttribute("aria-activedescendant");
+  if (activeId) dropdown.button.setAttribute("aria-activedescendant", activeId);
+  else dropdown.button.removeAttribute("aria-activedescendant");
   if (scroll && activeElement) {
     activeElement.scrollIntoView({ block: "nearest" });
   }
 }
 
-function visibleCountryOptionIndices() {
-  return countryOptionElements()
+function visibleFilterDropdownOptionIndices(dropdown) {
+  return filterDropdownOptionElements(dropdown)
     .filter((option) => !option.hidden)
-    .map((option) => Number(option.dataset.countryOptionIndex));
+    .map((option) => Number(option.dataset.filterOptionIndex));
 }
 
-function moveActiveCountryOption(direction) {
-  setActiveCountryOption(
-    nextCountryOptionIndex(
-      visibleCountryOptionIndices(),
-      activeCountryOptionIndex,
+function moveActiveFilterDropdownOption(dropdown, direction) {
+  setActiveFilterDropdownOption(
+    dropdown,
+    nextFilterOptionIndex(
+      visibleFilterDropdownOptionIndices(dropdown),
+      dropdown.activeIndex,
       direction,
     ),
     true,
   );
 }
 
-function syncCountryComboboxOptions() {
-  countryComboboxOptionData = [...countryFilter.options].map((option, index) => ({
+function syncFilterDropdown(dropdown) {
+  dropdown.optionData = [...dropdown.select.options].map((option, index) => ({
     value: option.value,
     label: option.textContent,
     index,
   }));
-  countryComboboxOptions.replaceChildren(...countryComboboxOptionData.map((option) => {
+  dropdown.options.replaceChildren(...dropdown.optionData.map((option) => {
     const element = document.createElement("li");
-    element.id = `country-combobox-option-${option.index}`;
-    element.className = "country-combobox-option";
-    element.dataset.countryOptionIndex = String(option.index);
-    element.dataset.countryValue = option.value;
+    element.id = `${dropdown.select.id}-dropdown-option-${option.index}`;
+    element.className = "filter-dropdown-option";
+    element.dataset.filterOptionIndex = String(option.index);
+    element.dataset.filterValue = option.value;
     element.setAttribute("role", "option");
-    element.setAttribute("aria-selected", String(option.value === countryFilter.value));
+    element.setAttribute("aria-selected", String(option.value === dropdown.select.value));
     element.textContent = option.label;
     return element;
   }));
-  const selectedOption = countryComboboxOptionData.find(
-    ({ value }) => value === countryFilter.value,
-  ) || countryComboboxOptionData[0];
-  countryComboboxValue.textContent = selectedOption?.label || "All";
-  activeCountryOptionIndex = selectedOption?.index ?? -1;
-  setActiveCountryOption(activeCountryOptionIndex);
+  const selectedOption = dropdown.optionData.find(
+    ({ value }) => value === dropdown.select.value,
+  ) || dropdown.optionData[0];
+  dropdown.value.textContent = selectedOption?.label || "All";
+  dropdown.activeIndex = selectedOption?.index ?? -1;
+  dropdown.panel.classList.toggle("is-long", dropdown.optionData.length > 8);
+  setActiveFilterDropdownOption(dropdown, dropdown.activeIndex);
 }
 
-function positionCountryComboboxPanel() {
-  if (countryComboboxPanel.hidden) return;
-  const triggerRect = countryComboboxButton.getBoundingClientRect();
+function positionFilterDropdownPanel(dropdown) {
+  if (dropdown.panel.hidden) return;
+  const triggerRect = dropdown.button.getBoundingClientRect();
   const panelHeight = Math.min(
-    countryComboboxPanel.scrollHeight,
-    420,
-    window.innerHeight * 0.6,
+    dropdown.panel.scrollHeight, 320, window.innerHeight * 0.4,
   );
-  const placement = countryComboboxPlacement(
-    triggerRect,
-    panelHeight,
-    window.innerWidth,
-    window.innerHeight,
+  const placement = filterDropdownPlacement(
+    triggerRect, panelHeight, window.innerHeight,
   );
-  countryComboboxPanel.style.left = `${placement.left}px`;
-  countryComboboxPanel.style.top = `${placement.top}px`;
-  countryComboboxPanel.style.width = `${placement.width}px`;
-  countryComboboxPanel.dataset.placement = placement.placement;
+  dropdown.panel.dataset.placement = placement.placement;
 }
 
-function openCountryCombobox() {
-  if (countryComboboxButton.disabled || !countryComboboxPanel.hidden) return;
-  countryComboboxPanel.hidden = false;
-  countryComboboxButton.setAttribute("aria-expanded", "true");
-  positionCountryComboboxPanel();
-  const selectedIndex = countryComboboxOptionData.findIndex(
-    ({ value }) => value === countryFilter.value,
+function closeFilterDropdown(dropdown, returnFocus = false) {
+  if (dropdown.panel.hidden) return;
+  dropdown.panel.hidden = true;
+  dropdown.button.setAttribute("aria-expanded", "false");
+  dropdown.button.removeAttribute("aria-activedescendant");
+  if (returnFocus) dropdown.button.focus();
+}
+
+function closeAllFilterDropdowns(except = null) {
+  filterDropdowns.forEach((dropdown) => {
+    if (dropdown !== except) closeFilterDropdown(dropdown);
+  });
+}
+
+function openFilterDropdown(dropdown) {
+  if (dropdown.button.disabled || !dropdown.panel.hidden) return;
+  closeAllFilterDropdowns(dropdown);
+  dropdown.panel.hidden = false;
+  dropdown.button.setAttribute("aria-expanded", "true");
+  positionFilterDropdownPanel(dropdown);
+  const selectedIndex = dropdown.optionData.findIndex(
+    ({ value }) => value === dropdown.select.value,
   );
-  setActiveCountryOption(selectedIndex, true);
+  setActiveFilterDropdownOption(dropdown, selectedIndex, true);
 }
 
-function closeCountryCombobox(returnFocus = false) {
-  if (countryComboboxPanel.hidden) return;
-  countryComboboxPanel.hidden = true;
-  countryComboboxButton.setAttribute("aria-expanded", "false");
-  countryComboboxButton.removeAttribute("aria-activedescendant");
-  if (returnFocus) countryComboboxButton.focus();
+function selectFilterDropdownValue(dropdown, value) {
+  if (!dropdown.optionData.some((option) => option.value === value)) return;
+  dropdown.select.value = value;
+  closeFilterDropdown(dropdown, true);
+  dropdown.select.dispatchEvent(new Event("change", { bubbles: true }));
 }
 
-function selectCountryComboboxValue(value) {
-  if (!countryComboboxOptionData.some((option) => option.value === value)) return;
-  countryFilter.value = value;
-  closeCountryCombobox(true);
-  countryFilter.dispatchEvent(new Event("change", { bubbles: true }));
+function createFilterDropdown(select) {
+  const field = select.closest("[data-filter-dropdown]");
+  const label = field.querySelector(".filter-label");
+  const dropdownElement = document.createElement("div");
+  const button = document.createElement("button");
+  const value = document.createElement("span");
+  const chevron = document.createElement("span");
+  const panel = document.createElement("div");
+  const options = document.createElement("ul");
+  const buttonId = `${select.id}-dropdown-button`;
+  const valueId = `${select.id}-dropdown-value`;
+  const optionsId = `${select.id}-dropdown-options`;
+
+  field.classList.add("is-enhanced");
+  select.tabIndex = -1;
+  select.setAttribute("aria-hidden", "true");
+  dropdownElement.className = "filter-dropdown";
+  button.id = buttonId;
+  button.className = "filter-dropdown-button";
+  button.type = "button";
+  button.setAttribute("role", "combobox");
+  button.setAttribute("aria-labelledby", `${label.id} ${valueId}`);
+  button.setAttribute("aria-controls", optionsId);
+  button.setAttribute("aria-expanded", "false");
+  button.setAttribute("aria-haspopup", "listbox");
+  button.disabled = select.disabled;
+  value.id = valueId;
+  chevron.className = "filter-dropdown-chevron";
+  chevron.setAttribute("aria-hidden", "true");
+  panel.className = "filter-dropdown-panel";
+  panel.hidden = true;
+  options.id = optionsId;
+  options.className = "filter-dropdown-options";
+  options.setAttribute("role", "listbox");
+  options.setAttribute("aria-labelledby", label.id);
+  button.append(value, chevron);
+  panel.append(options);
+  dropdownElement.append(button, panel);
+  field.append(dropdownElement);
+
+  const dropdown = {
+    select, field, root: dropdownElement, button, value, panel, options,
+    optionData: [], activeIndex: -1,
+  };
+  button.addEventListener("click", () => {
+    if (panel.hidden) openFilterDropdown(dropdown);
+    else closeFilterDropdown(dropdown, true);
+  });
+  button.addEventListener("keydown", (event) => {
+    if (["ArrowDown", "ArrowUp"].includes(event.key)) {
+      event.preventDefault();
+      if (panel.hidden) openFilterDropdown(dropdown);
+      moveActiveFilterDropdownOption(dropdown, event.key === "ArrowDown" ? 1 : -1);
+    } else if (["Enter", " "].includes(event.key)) {
+      event.preventDefault();
+      if (panel.hidden) {
+        openFilterDropdown(dropdown);
+      } else {
+        const option = dropdown.optionData[dropdown.activeIndex];
+        if (option && visibleFilterDropdownOptionIndices(dropdown).includes(
+          dropdown.activeIndex,
+        )) {
+          selectFilterDropdownValue(dropdown, option.value);
+        }
+      }
+    } else if (event.key === "Escape") {
+      event.preventDefault();
+      closeFilterDropdown(dropdown, true);
+    }
+  });
+  options.addEventListener("mousemove", (event) => {
+    const option = event.target.closest("[data-filter-option-index]");
+    if (option && !option.hidden) {
+      setActiveFilterDropdownOption(
+        dropdown, Number(option.dataset.filterOptionIndex),
+      );
+    }
+  });
+  options.addEventListener("click", (event) => {
+    const option = event.target.closest("[data-filter-value]");
+    if (option && !option.hidden) {
+      selectFilterDropdownValue(dropdown, option.dataset.filterValue);
+    }
+  });
+  select.addEventListener("change", () => syncFilterDropdown(dropdown));
+  syncFilterDropdown(dropdown);
+  return dropdown;
+}
+
+function syncFilterDropdownForSelect(select) {
+  const dropdown = filterDropdownBySelect.get(select);
+  if (dropdown) syncFilterDropdown(dropdown);
 }
 
 function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers) {
@@ -2316,7 +2389,7 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
     (value) => value,
     false,
   );
-  syncCountryComboboxOptions();
+  syncFilterDropdownForSelect(countryFilter);
 
   const typeCounts = dimensionPaperCounts(
     institutionTypePapers,
@@ -2329,6 +2402,7 @@ function updateInstitutionDimensionFilters(countryPapers, institutionTypePapers)
     institutionTypeLabel,
     false,
   );
+  syncFilterDropdownForSelect(institutionTypeFilter);
 }
 
 function deriveFilteredRecordSets(
@@ -3802,7 +3876,7 @@ function openFiltersDrawer() {
 function closeFiltersDrawer({ restoreFocus = true } = {}) {
   if (!filtersDrawerOpen) return;
   filtersDrawerOpen = false;
-  closeCountryCombobox();
+  closeAllFilterDropdowns();
   filtersPanel.classList.remove("is-open");
   filtersBackdrop.hidden = true;
   document.body.classList.remove("filters-drawer-open");
@@ -3960,6 +4034,8 @@ function configureVenueFilter() {
   venueTypeFilter.replaceChildren(new Option("All", "all"));
   venueFilter.value = "all";
   venueTypeFilter.value = "all";
+  syncFilterDropdownForSelect(venueFilter);
+  syncFilterDropdownForSelect(venueTypeFilter);
 }
 
 function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
@@ -4009,6 +4085,8 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
     sortedVenueTypeCounts(venueTypeCounts),
     (value) => value === "__unknown__" ? "Unknown" : formatTask(value),
   );
+  syncFilterDropdownForSelect(venueFilter);
+  syncFilterDropdownForSelect(venueTypeFilter);
 }
 
 function enableControls() {
@@ -4019,9 +4097,11 @@ function enableControls() {
   venueFilter.disabled = false;
   venueTypeFilter.disabled = false;
   countryFilter.disabled = false;
-  countryComboboxButton.disabled = false;
   institutionTypeFilter.disabled = false;
   preprintFilter.disabled = false;
+  filterDropdowns.forEach((dropdown) => {
+    dropdown.button.disabled = dropdown.select.disabled;
+  });
   minYearFilter.disabled = !yearRangeBounds;
   maxYearFilter.disabled = !yearRangeBounds;
   resetButton.disabled = false;
@@ -4253,6 +4333,19 @@ async function loadData() {
   }
 }
 
+filterDropdowns = [
+  taskFilter,
+  entryTypeFilter,
+  venueTypeFilter,
+  venueFilter,
+  countryFilter,
+  institutionTypeFilter,
+  preprintFilter,
+].map(createFilterDropdown);
+filterDropdownBySelect = new Map(
+  filterDropdowns.map((dropdown) => [dropdown.select, dropdown]),
+);
+
 const chartTooltip = document.createElement("div");
 chartTooltip.className = "chart-tooltip";
 chartTooltip.setAttribute("role", "tooltip");
@@ -4333,53 +4426,23 @@ sortControl.addEventListener("change", renderRecords);
 venueFilter.addEventListener("change", renderRecords);
 venueTypeFilter.addEventListener("change", renderRecords);
 countryFilter.addEventListener("change", renderRecords);
-countryComboboxButton.addEventListener("click", () => {
-  if (countryComboboxPanel.hidden) openCountryCombobox();
-  else closeCountryCombobox(true);
-});
-countryComboboxButton.addEventListener("keydown", (event) => {
-  if (["ArrowDown", "ArrowUp"].includes(event.key)) {
-    event.preventDefault();
-    if (countryComboboxPanel.hidden) openCountryCombobox();
-    moveActiveCountryOption(event.key === "ArrowDown" ? 1 : -1);
-  } else if (["Enter", " "].includes(event.key)) {
-    event.preventDefault();
-    if (countryComboboxPanel.hidden) {
-      openCountryCombobox();
-    } else {
-      const option = countryComboboxOptionData[activeCountryOptionIndex];
-      if (option && visibleCountryOptionIndices().includes(activeCountryOptionIndex)) {
-        selectCountryComboboxValue(option.value);
-      }
-    }
-  } else if (event.key === "Escape") {
-    event.preventDefault();
-    closeCountryCombobox(true);
-  }
-});
-countryComboboxOptions.addEventListener("mousemove", (event) => {
-  const option = event.target.closest("[data-country-option-index]");
-  if (option && !option.hidden) {
-    setActiveCountryOption(Number(option.dataset.countryOptionIndex));
-  }
-});
-countryComboboxOptions.addEventListener("click", (event) => {
-  const option = event.target.closest("[data-country-value]");
-  if (option && !option.hidden) selectCountryComboboxValue(option.dataset.countryValue);
-});
 document.addEventListener("pointerdown", (event) => {
-  if (!countryComboboxPanel.hidden && !countryCombobox.contains(event.target)) {
-    closeCountryCombobox();
-  }
+  filterDropdowns.forEach((dropdown) => {
+    if (!dropdown.panel.hidden && !dropdown.root.contains(event.target)) {
+      closeFilterDropdown(dropdown);
+    }
+  });
 });
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && !countryComboboxPanel.hidden) {
+  const openDropdown = filterDropdowns.find((dropdown) => !dropdown.panel.hidden);
+  if (event.key === "Escape" && openDropdown) {
     event.preventDefault();
-    closeCountryCombobox(true);
+    closeFilterDropdown(openDropdown, true);
   }
 });
-window.addEventListener("resize", positionCountryComboboxPanel);
-window.addEventListener("scroll", positionCountryComboboxPanel, true);
+window.addEventListener("resize", () => {
+  filterDropdowns.forEach(positionFilterDropdownPanel);
+});
 mobileFiltersTrigger.addEventListener("click", openFiltersDrawer);
 closeFiltersButton.addEventListener("click", () => closeFiltersDrawer());
 doneFiltersButton.addEventListener("click", () => closeFiltersDrawer());
@@ -4491,6 +4554,7 @@ resetButton.addEventListener("click", () => {
   countryFilter.value = "all";
   institutionTypeFilter.value = "all";
   preprintFilter.value = "all";
+  filterDropdowns.forEach(syncFilterDropdown);
   if (yearRangeBounds) {
     minYearFilter.value = String(yearRangeBounds.minimum);
     maxYearFilter.value = String(yearRangeBounds.maximum);

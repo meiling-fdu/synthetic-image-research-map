@@ -946,9 +946,25 @@ def validate_institution_entities(
     for row_number, row in enumerate(institutions, start=2):
         institution_id = clean(row.get("institution_id"))
         canonical = clean(row.get("canonical_name"))
+        abbreviation = clean(row.get("abbreviation"))
         if not institution_id or not canonical:
             add_issue(issues, "ERROR", "institutions.csv", "institution_id and canonical_name are required", row_number)
             continue
+        if abbreviation and (
+            len(abbreviation) > 24
+            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9&+./* -]*", abbreviation)
+        ):
+            add_issue(
+                issues, "ERROR", "institutions.csv",
+                f"invalid abbreviation: {abbreviation}", row_number,
+            )
+        if abbreviation and re.search(
+            rf"\({re.escape(abbreviation)}\)$", canonical, re.IGNORECASE
+        ):
+            add_issue(
+                issues, "ERROR", "institutions.csv",
+                "canonical_name must not persist its abbreviation suffix", row_number,
+            )
         if institution_id in ids:
             add_issue(issues, "ERROR", "institutions.csv", f"duplicate institution_id: {institution_id}", row_number)
         normalized = normalize_institution(canonical)
@@ -1585,7 +1601,9 @@ def main() -> int:
     validate_paper_mapping_coverage(papers, mappings, issues)
     validate_confirmed_locations(confirmed_locations, issues)
     confirmed_by_name = {}
+    confirmed_institution_ids = set()
     for row in confirmed_locations:
+        confirmed_institution_ids.add(clean(row.get("institution_id")))
         confirmed_by_name[normalize_institution(row.get("institution"))] = row
         confirmed_by_name[normalize_institution(
             row.get("normalized_institution")
@@ -1612,12 +1630,16 @@ def main() -> int:
     for row_number, row in enumerate(locations, start=2):
         status = clean(row.get("review_status"))
         canonical = normalize_institution(row.get("canonical_institution_name"))
-        if status == "confirmed" and canonical not in confirmed_by_name:
+        has_confirmed_target = (
+            clean(row.get("institution_id")) in confirmed_institution_ids
+            or canonical in confirmed_by_name
+        )
+        if status == "confirmed" and not has_confirmed_target:
             add_issue(
                 issues, "ERROR", "institution_location_review.csv",
                 "confirmed status requires a canonical confirmed location", row_number
             )
-        if status == "alias_of_confirmed" and canonical not in confirmed_by_name:
+        if status == "alias_of_confirmed" and not has_confirmed_target:
             add_issue(
                 issues, "ERROR", "institution_location_review.csv",
                 "alias_of_confirmed requires a confirmed canonical target", row_number

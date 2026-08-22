@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-22T12:33:53Z"
+    "public_preview_generated_at": "2026-08-22T15:11:55Z"
   },
   "records": [
     {
@@ -67240,8 +67240,8 @@
       "publication_date": "2025-01-01",
       "task": "detection",
       "publisher": "Springer Science+Business Media",
-      "publication_type": "book",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "With sudden proliferation in evolving Deepfake technology to manipulate media content, identity theft etc., several modern deep learning based solutions are being continuously developed for Deepfake detection, distinguishing the manipulated media. Therefore, the work presented in this paper proposes a novel and real-time MobileNetV3 based Deepfake detection model. With the fine-tuning of MobileNetV3 using additional fully connected layers and self-attention mechanism placed optimally, the proposed model proved effective in concentrating on crucial image regions over relatively lesser important features. The integration of self-attention layers had a direct impact on the model’s capacity to identify the artifacts manipulated during the generation of Deepfakes, thereby, alleviating the detection efficiency. The work also implemented and trained five widely used and recent convolutional models including XceptionNet, InceptionV3, EfficientNetB0, MobileNetV3, and InceptionResNet for best baseline model selection and comparisons against the proposed approach. The proposed model outperformed all other state-of-art models by a margin of 3% with an F-score = 98.46%. The proposed model also has minimalistic memory and time requirements supporting the real-time applicability of the model even on mobile devices.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.1007/978-3-031-84543-7_11",
@@ -67302,14 +67302,14 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
       "aggregated_locations": [
         {
           "institution_name": "Amrita Vishwa Vidyapeetham",
@@ -67336,25 +67336,40 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
-      "affiliations": [
+      "paper_id": "curated:b388bfe1b5785775a436",
+      "venue": "International Conference on Applied Algorithms",
+      "venue_name": "International Conference on Applied Algorithms",
+      "venue_id": "venue:international-conference-on-applied-algorithms",
+      "venue_acronym": "ICAA",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "International Conference on Applied Algorithms",
+      "paper_categories": [
+        "method"
+      ],
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1007/978-3-031-84543-7_11",
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Amrita Vishwa Vidyapeetham",
-          "canonical_name": "Amrita Vishwa Vidyapeetham",
+          "mapping_id": "mapping:4a2fe56a2ec65f9bfe89",
           "institution_id": "institution:cdedd18207a1eeb2",
-          "institution_type": "other",
-          "country": "India",
-          "country_code": "",
-          "region": "",
-          "location_display": "India"
+          "location_id": "",
+          "institution": "Amrita Vishwa Vidyapeetham",
+          "institution_authors": [
+            "Talluri Harshitha",
+            "Tanya Simhadri",
+            "Thadakuluru Jaswanthi",
+            "N. Rayvanth",
+            "Rimjhim Padam Singh"
+          ],
+          "raw_affiliation": "Department of Computer Science and Engineering, Amrita School of Computing, Bengaluru, Amrita Vishwa Vidyapeetham, Bengaluru, India",
+          "mapping_status": "active",
+          "affiliation_order": 1
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -67372,6 +67387,74 @@
           "mapping_fallback": false
         }
       ],
+      "author_institution_indices": [
+        {
+          "author": "Talluri Harshitha",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:cdedd18207a1eeb2"
+          ]
+        },
+        {
+          "author": "Tanya Simhadri",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:cdedd18207a1eeb2"
+          ]
+        },
+        {
+          "author": "Thadakuluru Jaswanthi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:cdedd18207a1eeb2"
+          ]
+        },
+        {
+          "author": "N. Rayvanth",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:cdedd18207a1eeb2"
+          ]
+        },
+        {
+          "author": "Rimjhim Padam Singh",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:cdedd18207a1eeb2"
+          ]
+        }
+      ],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "International Conference on Applied Algorithms (ICAA)",
+      "venue_aliases": [
+        "International Conference on Applied Algorithms"
+      ],
+      "ambiguity_status": "resolved",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Amrita Vishwa Vidyapeetham",
+          "canonical_name": "Amrita Vishwa Vidyapeetham",
+          "institution_id": "institution:cdedd18207a1eeb2",
+          "institution_type": "other",
+          "country": "India",
+          "country_code": "",
+          "region": "",
+          "location_display": "India"
+        }
+      ],
+      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Talluri Harshitha",
@@ -67429,55 +67512,9 @@
           "fallback": false
         }
       ],
-      "author_institution_indices": [
-        {
-          "author": "Talluri Harshitha",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:cdedd18207a1eeb2"
-          ]
-        },
-        {
-          "author": "Tanya Simhadri",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:cdedd18207a1eeb2"
-          ]
-        },
-        {
-          "author": "Thadakuluru Jaswanthi",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:cdedd18207a1eeb2"
-          ]
-        },
-        {
-          "author": "N. Rayvanth",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:cdedd18207a1eeb2"
-          ]
-        },
-        {
-          "author": "Rimjhim Padam Singh",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:cdedd18207a1eeb2"
-          ]
-        }
-      ],
-      "paper_categories": [],
-      "formal_url": "https://doi.org/10.1007/978-3-031-84543-7_11"
+      "search_institution_ids": [
+        "institution:cdedd18207a1eeb2"
+      ]
     },
     {
       "title": "Deepfake Image Detection with Transfer Learning Models",
@@ -86595,8 +86632,14 @@
       "publication_year": 2025,
       "publication_date": "2025-10-21",
       "task": "detection",
+      "paper_categories": [
+        "method"
+      ],
+      "venue": "European Conference on Artificial Intelligence",
+      "venue_name": "European Conference on Artificial Intelligence",
+      "venue_type": "conference",
       "publisher": "",
-      "publication_type": "book",
+      "publication_type": "conference",
       "abstract": "The prevalence of generative models in image and video generation has raised extensive concerns about potential harm and misuse. To identify the truthfulness of generated images, most of the existing methods typically apply Fast Fourier Transform (FFT) for frequency extraction. An existing problem is that the frequency-domain representations extracted by FFT are not comprehensive for AI-generated image detection. In this paper, we propose a Multi-perspective Frequency Domain Learning (MFDL) framework, which aims to learn both generalized and discriminative frequency representations via DWT and FFT. Specifically, we design a Frequency Representation Enhancement (FRE) module using the Discrete Wavelet Transform (DWT) and incorporating a multi-granularity enhancement strategy that amplifies all subbands across high frequency to improve discriminability. Additionally, we introduce a Frequency Representation Consistency (FRC) module, which employs complex convolution to capture and preserve forgery patterns in the real and imaginary components derived from FFT. By integrating complementary frequency representations from the DWT and FFT domains obtained through the FRE and FRC modules, MFDL achieves a comprehensive understanding of forgery traces in the frequency domain. This enhances the model’s generalization capability for detecting generated content. Extensive experiments conducted on 32 distinct datasets, covering both GAN-generated and Diffusion-based images, demonstrate the effectiveness of our proposed MFDL framework. These experiments validate the effectiveness of multi-perspective frequency domain learning and show that MFDL outperforms existing detection methods, confirming its strong generalization ability across diverse generative models.",
       "abstract_source": "OpenAlex local raw cache",
       "ai_summary": "",
@@ -86618,7 +86661,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -86627,7 +86670,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -86645,11 +86688,11 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
@@ -86661,12 +86704,12 @@
         {
           "institution_name": "Guangdong University of Technology",
           "institution_id": "institution:8fe72087521e285a",
-          "institution_type": "other",
+          "institution_type": "university",
           "country": "China",
           "country_code": "CN",
-          "region": "",
+          "region": "Guangdong",
           "region_code": "",
-          "location_display": "China"
+          "location_display": "Guangdong, China"
         },
         {
           "institution_name": "Qilu University of Technology",
@@ -86692,38 +86735,48 @@
       "aggregated_country_codes": [
         "CN"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Guangdong"
+      ],
       "aggregated_region_codes": [],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "resolved",
-      "affiliations": [
+      "paper_id": "curated:22c0f35b356c01cbd122",
+      "venue_id": "venue:european-conference-on-artificial-intelligence",
+      "venue_acronym": "ECAI",
+      "venue_track": "main",
+      "raw_venue": "European Conference on Artificial Intelligence",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.3233/faia251048",
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Guangdong University of Technology",
-          "canonical_name": "Guangdong University of Technology",
+          "mapping_id": "mapping:dfef265e4b430172775d",
           "institution_id": "institution:8fe72087521e285a",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China"
+          "location_id": "location:8fe72087521e285a8c05",
+          "institution": "Guangdong University of Technology",
+          "institution_authors": [
+            "Zili Xu",
+            "Jianjie Luo",
+            "Zhenguo Yang"
+          ],
+          "raw_affiliation": "Guangdong University of Technology",
+          "mapping_status": "active",
+          "affiliation_order": 1
         },
         {
-          "index": 2,
-          "name": "Qilu University of Technology",
-          "canonical_name": "Qilu University of Technology",
+          "mapping_id": "mapping:a4e7461b7b8e039861cc",
           "institution_id": "institution:77fb2ba62b721cd6",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China"
+          "location_id": "",
+          "institution": "Qilu University of Technology",
+          "institution_authors": [
+            "Fuqiang Yu"
+          ],
+          "raw_affiliation": "Key Laboratory of Computing Power Network and Information Security, Ministry of Education, Qilu University of Technology (Shandong Academy of Sciences)",
+          "mapping_status": "active",
+          "affiliation_order": 2
         }
       ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -86748,52 +86801,6 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Zili Xu",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:8fe72087521e285a"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Jianjie Luo",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:8fe72087521e285a"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Fuqiang Yu",
-          "indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:77fb2ba62b721cd6"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
-        },
-        {
-          "author": "Zhenguo Yang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:8fe72087521e285a"
-          ],
-          "source": "raw_affiliation",
-          "fallback": false
         }
       ],
       "author_institution_indices": [
@@ -86834,8 +86841,88 @@
           ]
         }
       ],
-      "paper_categories": [],
-      "formal_url": "https://doi.org/10.3233/faia251048"
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "European Conference on Artificial Intelligence (ECAI)",
+      "venue_aliases": [
+        "European Conference on Artificial Intelligence"
+      ],
+      "ambiguity_status": "resolved",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Guangdong University of Technology",
+          "canonical_name": "Guangdong University of Technology",
+          "institution_id": "institution:8fe72087521e285a",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "index": 2,
+          "name": "Qilu University of Technology",
+          "canonical_name": "Qilu University of Technology",
+          "institution_id": "institution:77fb2ba62b721cd6",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "",
+          "location_display": "China"
+        }
+      ],
+      "current_institution": null,
+      "author_affiliation_indices": [
+        {
+          "author": "Zili Xu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:8fe72087521e285a"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jianjie Luo",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:8fe72087521e285a"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Fuqiang Yu",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:77fb2ba62b721cd6"
+          ],
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Zhenguo Yang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:8fe72087521e285a"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "search_institution_ids": [
+        "institution:8fe72087521e285a",
+        "institution:77fb2ba62b721cd6"
+      ]
     },
     {
       "paper_id": "curated:cda6067db322246e8195",
@@ -90055,7 +90142,7 @@
       "publication_date": "",
       "task": "detection",
       "publisher": "",
-      "publication_type": "book",
+      "publication_type": "conference",
       "abstract": "The proliferation of highly realistic AI-generated images presents significant challenges related to authenticity and misinformation. Although multimodal large language models (LLMs) possess advanced visual understanding capabilities, their effectiveness in distinguishing synthetic images from real ones requires systematic evaluation. This paper investigates the ability of four prominent LLMs—GPT-4V, Gemini, LLaVA, and Claude to detect AI-generated images. Using a case study methodology, twelve diverse synthetic images were presented to the models using ten distinct prompts, ranging from generic classification requests to detailed, forensically-guided queries. The study analyzes the accuracy and response patterns of each LLM, with a particular focus on the impact of prompt specificity and iterative refinement (prompt engineering) on detection performance. The results indicate that while GPT-4V demonstrated superior consistency, the performance of all tested LLMs, particularly Gemini, Claude, and LLaVA, was significantly influenced by prompt quality. Specific, detailed prompts markedly improved detection accuracy compared to generic ones. The findings underscore that effective prompt engineering is crucial for leveraging LLMs as tools for synthetic image detection and highlight the need for skilled human interaction to guide these systems to achieve reliable results. This research contributes to understanding the potential and current limitations of LLMs in addressing the challenges posed by synthetic media.",
       "abstract_source": "openalex",
       "ai_summary": "",
@@ -90073,20 +90160,16 @@
       "authors": [
         {
           "name": "Rita Ferrara",
-          "affiliation_indices": [
-            1
-          ],
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
           "name": "Leonardo Galteri",
-          "affiliation_indices": [
-            1
-          ],
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         }
       ],
@@ -90099,8 +90182,8 @@
       "has_map_location": false,
       "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "paper_only_review",
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
       "aggregated_institutions": [],
       "aggregated_country_names": [],
       "aggregated_country_codes": [],
@@ -90110,13 +90193,15 @@
         {
           "mapping_id": "mapping:459d7dc442815c14aedd",
           "institution_id": "institution:4f596f4cb1eacc17",
+          "location_id": "",
           "institution": "Pegaso Telematic University",
           "institution_authors": [
             "Rita Ferrara",
             "Leonardo Galteri"
           ],
           "raw_affiliation": "Pegaso Telematic University",
-          "mapping_status": "needs_review"
+          "mapping_status": "active",
+          "affiliation_order": 1
         }
       ],
       "author_institution_affiliations": [
@@ -90127,53 +90212,52 @@
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false,
-          "preliminary": true
+          "mapping_fallback": false
         }
       ],
-      "author_institution_indices": [
-        {
-          "author": "Rita Ferrara",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4f596f4cb1eacc17"
-          ]
-        },
-        {
-          "author": "Leonardo Galteri",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4f596f4cb1eacc17"
-          ]
-        }
-      ],
+      "author_institution_indices": [],
       "author_affiliation_indices": [
         {
           "author": "Rita Ferrara",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4f596f4cb1eacc17"
-          ],
-          "source": "raw_affiliation",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
           "author": "Leonardo Galteri",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:4f596f4cb1eacc17"
-          ],
-          "source": "raw_affiliation",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         }
+      ],
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "ambiguity_status": "resolved",
+      "formal_url": "https://doi.org/10.3233/faia250538",
+      "search_institution_ids": [
+        "institution:4f596f4cb1eacc17"
+      ],
+      "paper_categories": [
+        "method"
+      ],
+      "venue": "International Conference on New Trends in Intelligent Software Methodologies, Tools and Techniques",
+      "venue_name": "International Conference on New Trends in Intelligent Software Methodologies, Tools and Techniques",
+      "venue_id": "venue:international-conference-on-new-trends-in-intelligent-software-methodologies-tools-and-techniques",
+      "venue_acronym": "SoMeT",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "International Conference on New Trends in Intelligent Software Methodologies, Tools and Techniques",
+      "venue_label": "International Conference on New Trends in Intelligent Software Methodologies, Tools and Techniques (SoMeT)",
+      "venue_aliases": [
+        "International Conference on New Trends in Intelligent Software Methodologies, Tools and Techniques"
       ],
       "affiliations": [
         {
@@ -90185,25 +90269,10 @@
           "country": "",
           "country_code": "",
           "region": "",
-          "location_display": "",
-          "preliminary": true
+          "location_display": ""
         }
       ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "aggregated_locations": [],
-      "aggregated_institution_types": [
-        "university"
-      ],
-      "ambiguity_status": "unresolved",
-      "formal_url": "https://doi.org/10.3233/faia250538",
-      "search_institution_ids": [
-        "institution:4f596f4cb1eacc17"
-      ],
-      "paper_categories": []
+      "current_institution": null
     },
     {
       "title": "RADAR: Reasoning AI-Generated Image Detection for Semantic Fakes",
@@ -91887,8 +91956,8 @@
       "publication_date": "2025-11-16",
       "task": "detection",
       "publisher": "Springer Science+Business Media",
-      "publication_type": "book",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "The rapid progression of generative AI (GenAI) technologies has heightened concerns regarding the misuse of AI-generated imagery. To address this issue, robust detection methods have emerged as particularly compelling, especially in challenging conditions where the targeted GenAI models are out-of-distribution or the generated images have been subjected to perturbations during transmission. This paper introduces a multi-feature fusion framework designed to enhance spatial forensic feature representations with incorporating three complementary components, namely noise correlation analysis, image gradient information, and pretrained vision encoder knowledge, using a cross-source attention mechanism. Furthermore, to identify spectral abnormality in synthetic images, we propose a frequency-aware architecture that employs the Frequency-Adaptive Dilated Convolution, enabling the joint modeling of spatial and spectral features while maintaining low computational complexity. Our framework exhibits exceptional generalization performance across fourteen diverse GenAI systems, including text-to-image diffusion models, autoregressive approaches, and post-processed deepfake methods. Notably, it achieves significantly higher mean accuracy in cross-model detection tasks when compared to existing state-of-the-art techniques. Additionally, the proposed method demonstrates resilience against various types of real-world image noise perturbations such as compression and blurring. Extensive ablation studies further corroborate the synergistic benefits of fusing multi-model forensic features with frequency-aware learning, underscoring the efficacy of our approach.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "https://doi.org/10.1007/978-981-95-3001-4_12",
@@ -91909,7 +91978,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -91918,20 +91987,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Peng Gui",
-          "affiliation_indices": [
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
@@ -91940,34 +91996,44 @@
             2
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         },
         {
           "name": "Youyang Qu",
           "affiliation_indices": [
             3,
-            4,
-            5
+            4
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "canonical_author_mapping",
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Peng Gui",
+          "affiliation_indices": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": true,
       "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
       "has_map_location": true,
-      "map_record_count": 5,
+      "map_record_count": 4,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
       "aggregated_institutions": [
         "City University of Macau",
         "Torrens University Australia",
         "Qilu University of Technology",
-        "Shandong Academy of Sciences",
         "Wuhan Institute of Technology"
       ],
       "aggregated_country_names": [
@@ -91984,69 +92050,6 @@
       "aggregated_region_codes": [
         "MO"
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "City University of Macau",
-          "canonical_name": "City University of Macau",
-          "institution_id": "institution:769b711ed2fee7c0",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Macau",
-          "location_display": "Macau, China",
-          "preliminary": true
-        },
-        {
-          "index": 2,
-          "name": "Torrens University Australia",
-          "canonical_name": "Torrens University Australia",
-          "institution_id": "institution:e58a37a2924e1779",
-          "institution_type": "university",
-          "country": "Australia",
-          "country_code": "",
-          "region": "",
-          "location_display": "Australia",
-          "preliminary": true
-        },
-        {
-          "index": 3,
-          "name": "Qilu University of Technology",
-          "canonical_name": "Qilu University of Technology",
-          "institution_id": "institution:77fb2ba62b721cd6",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China",
-          "preliminary": true
-        },
-        {
-          "index": 4,
-          "name": "Shandong Academy of Sciences",
-          "canonical_name": "Shandong Academy of Sciences",
-          "institution_id": "institution:932fb42ad74deeea",
-          "institution_type": "research_unit",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China",
-          "preliminary": true
-        },
-        {
-          "index": 5,
-          "name": "Wuhan Institute of Technology",
-          "canonical_name": "Wuhan Institute of Technology",
-          "institution_id": "institution:cdde929ea128594e",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China",
-          "preliminary": true
-        }
-      ],
-      "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
@@ -92066,7 +92069,7 @@
           "index": 2,
           "institution_id": "institution:e58a37a2924e1779",
           "institution": "Torrens University Australia",
-          "institution_type": "university",
+          "institution_type": "other",
           "authors": [
             "Sheng Shen",
             "Peng Gui"
@@ -92090,9 +92093,9 @@
         },
         {
           "index": 4,
-          "institution_id": "institution:932fb42ad74deeea",
-          "institution": "Shandong Academy of Sciences",
-          "institution_type": "research_unit",
+          "institution_id": "institution:cdde929ea128594e",
+          "institution": "Wuhan Institute of Technology",
+          "institution_type": "university",
           "authors": [
             "Youyang Qu",
             "Peng Gui"
@@ -92103,13 +92106,10 @@
         },
         {
           "index": 5,
-          "institution_id": "institution:cdde929ea128594e",
-          "institution": "Wuhan Institute of Technology",
-          "institution_type": "university",
-          "authors": [
-            "Youyang Qu",
-            "Peng Gui"
-          ],
+          "institution_id": "institution:932fb42ad74deeea",
+          "institution": "Shandong Academy of Sciences",
+          "institution_type": "research_unit",
+          "authors": [],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
           "preliminary": true
@@ -92135,23 +92135,6 @@
           ]
         },
         {
-          "author": "Peng Gui",
-          "institution_indices": [
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "institution_ids": [
-            "institution:769b711ed2fee7c0",
-            "institution:e58a37a2924e1779",
-            "institution:77fb2ba62b721cd6",
-            "institution:932fb42ad74deeea",
-            "institution:cdde929ea128594e"
-          ]
-        },
-        {
           "author": "Sheng Shen",
           "institution_indices": [
             2
@@ -92164,12 +92147,25 @@
           "author": "Youyang Qu",
           "institution_indices": [
             3,
-            4,
-            5
+            4
           ],
           "institution_ids": [
             "institution:77fb2ba62b721cd6",
-            "institution:932fb42ad74deeea",
+            "institution:cdde929ea128594e"
+          ]
+        },
+        {
+          "author": "Peng Gui",
+          "institution_indices": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "institution_ids": [
+            "institution:769b711ed2fee7c0",
+            "institution:e58a37a2924e1779",
+            "institution:77fb2ba62b721cd6",
             "institution:cdde929ea128594e"
           ]
         }
@@ -92183,7 +92179,7 @@
           "institution_ids": [
             "institution:769b711ed2fee7c0"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -92194,26 +92190,7 @@
           "institution_ids": [
             "institution:769b711ed2fee7c0"
           ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Peng Gui",
-          "indices": [
-            1,
-            2,
-            3,
-            4,
-            5
-          ],
-          "institution_ids": [
-            "institution:769b711ed2fee7c0",
-            "institution:e58a37a2924e1779",
-            "institution:77fb2ba62b721cd6",
-            "institution:932fb42ad74deeea",
-            "institution:cdde929ea128594e"
-          ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
@@ -92224,28 +92201,43 @@
           "institution_ids": [
             "institution:e58a37a2924e1779"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
           "fallback": false
         },
         {
           "author": "Youyang Qu",
           "indices": [
             3,
-            4,
-            5
+            4
           ],
           "institution_ids": [
             "institution:77fb2ba62b721cd6",
-            "institution:932fb42ad74deeea",
             "institution:cdde929ea128594e"
           ],
-          "source": "canonical_author_mapping",
+          "source": "raw_affiliation",
+          "fallback": false
+        },
+        {
+          "author": "Peng Gui",
+          "indices": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "institution_ids": [
+            "institution:769b711ed2fee7c0",
+            "institution:e58a37a2924e1779",
+            "institution:77fb2ba62b721cd6",
+            "institution:cdde929ea128594e"
+          ],
+          "source": "raw_affiliation",
           "fallback": false
         }
       ],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [
         {
@@ -92279,16 +92271,6 @@
           "location_display": "China"
         },
         {
-          "institution_name": "Shandong Academy of Sciences",
-          "institution_id": "institution:932fb42ad74deeea",
-          "institution_type": "research_unit",
-          "country": "China",
-          "country_code": "CN",
-          "region": "",
-          "region_code": "",
-          "location_display": "China"
-        },
-        {
           "institution_name": "Wuhan Institute of Technology",
           "institution_id": "institution:cdde929ea128594e",
           "institution_type": "university",
@@ -92301,11 +92283,153 @@
       ],
       "aggregated_institution_types": [
         "university",
+        "other",
         "research_unit"
       ],
-      "ambiguity_status": "unresolved",
+      "ambiguity_status": "resolved",
       "formal_url": "https://doi.org/10.1007/978-981-95-3001-4_12",
-      "paper_categories": []
+      "paper_categories": [
+        "method"
+      ],
+      "paper_id": "curated:71ff0674850f84bf8df7",
+      "venue": "International Conference on Knowledge Science, Engineering and Management",
+      "venue_name": "International Conference on Knowledge Science, Engineering and Management",
+      "venue_id": "venue:international-conference-on-knowledge-science-engineering-and-management",
+      "venue_acronym": "KSEM",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "International Conference on Knowledge Science, Engineering and Management",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "venue_label": "International Conference on Knowledge Science, Engineering and Management (KSEM)",
+      "venue_aliases": [
+        "International Conference on Knowledge Science, Engineering and Management"
+      ],
+      "curated_mappings": [
+        {
+          "mapping_id": "mapping:30bd49d12f7ddae48fe5",
+          "institution_id": "institution:769b711ed2fee7c0",
+          "location_id": "",
+          "institution": "City University of Macau",
+          "institution_authors": [
+            "Hongfei Cai",
+            "Chi Liu",
+            "Peng Gui"
+          ],
+          "raw_affiliation": "Faculty of Data Science, City University of Macau, Macao SAR, China",
+          "mapping_status": "active",
+          "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:868c6d49cb298d52e23a",
+          "institution_id": "institution:e58a37a2924e1779",
+          "location_id": "",
+          "institution": "Torrens University Australia",
+          "institution_authors": [
+            "Sheng Shen",
+            "Peng Gui"
+          ],
+          "raw_affiliation": "Design and Creative Technology Vertical, Torrens University Australia, NSW, Australia",
+          "mapping_status": "active",
+          "affiliation_order": 2
+        },
+        {
+          "mapping_id": "mapping:8a149d80f64196c73358",
+          "institution_id": "institution:77fb2ba62b721cd6",
+          "location_id": "",
+          "institution": "Qilu University of Technology",
+          "institution_authors": [
+            "Youyang Qu",
+            "Peng Gui"
+          ],
+          "raw_affiliation": "Shandong Provincial Key Laboratory of Computer Networks, Ministry of Education, Shandong Computer Science Center, Qilu University of Technology (Shandong Academy of Sciences), Jinan, China",
+          "mapping_status": "active",
+          "affiliation_order": 3
+        },
+        {
+          "mapping_id": "mapping:009f8d492e0026402774",
+          "institution_id": "institution:cdde929ea128594e",
+          "location_id": "",
+          "institution": "Wuhan Institute of Technology",
+          "institution_authors": [
+            "Youyang Qu",
+            "Peng Gui"
+          ],
+          "raw_affiliation": "School of Computer Science and Engineering, Wuhan Institute of Technology, Wuhan, China",
+          "mapping_status": "active",
+          "affiliation_order": 4
+        }
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "City University of Macau",
+          "canonical_name": "City University of Macau",
+          "institution_id": "institution:769b711ed2fee7c0",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Macau",
+          "location_display": "Macau, China",
+          "preliminary": true
+        },
+        {
+          "index": 2,
+          "name": "Torrens University Australia",
+          "canonical_name": "Torrens University Australia",
+          "institution_id": "institution:e58a37a2924e1779",
+          "institution_type": "other",
+          "country": "Australia",
+          "country_code": "",
+          "region": "",
+          "location_display": "Australia",
+          "preliminary": true
+        },
+        {
+          "index": 3,
+          "name": "Qilu University of Technology",
+          "canonical_name": "Qilu University of Technology",
+          "institution_id": "institution:77fb2ba62b721cd6",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "",
+          "location_display": "China",
+          "preliminary": true
+        },
+        {
+          "index": 4,
+          "name": "Wuhan Institute of Technology",
+          "canonical_name": "Wuhan Institute of Technology",
+          "institution_id": "institution:cdde929ea128594e",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "",
+          "location_display": "China",
+          "preliminary": true
+        },
+        {
+          "index": 5,
+          "name": "Shandong Academy of Sciences",
+          "canonical_name": "Shandong Academy of Sciences",
+          "institution_id": "institution:932fb42ad74deeea",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "",
+          "region": "",
+          "location_display": "China",
+          "preliminary": true
+        }
+      ],
+      "current_institution": null,
+      "search_institution_ids": [
+        "institution:769b711ed2fee7c0",
+        "institution:e58a37a2924e1779",
+        "institution:77fb2ba62b721cd6",
+        "institution:cdde929ea128594e"
+      ]
     },
     {
       "paper_id": "curated:8ffdbd0ba264927d1c3a",
@@ -116830,8 +116954,8 @@
       "publication_date": "2024-12-03",
       "task": "detection",
       "publisher": "Springer Science+Business Media",
-      "publication_type": "book",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "This paper explores leveraging representations of the data distribution learned by diffusion models to improve a downstream task of deepfake image detection. With the recent upsurge in the popularity of generative AI, it has become increasingly common to encounter disinformation in modalities such as language and text, images and speech. However, a significant portion of disinformative content can solely be attributed to deepfake images. Effective countermeasures in the past have relied upon classifying deepfake images based on spatial irregularities, inconsistencies in high frequency content and fingerprint matching with known residuals from popular deepfake generation models. However, as the technology behind deepfakes continues to advance, there is a growing need for robust detection methods and tools to ensure the integrity of visual information and mitigate the risks associated with the spread of misleading or malicious content. Thus, we investigate using diffusion-generated reconstructions and latent space inversion to enhance deepfake detection, adapting to the changing landscape of visual disinformation. We explore the feasibility of using diffusion generated reconstruction, diffusion generated latent space inversion and high frequency feature extraction for improving the performance of detecting deepfakes.",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.1007/978-3-031-78305-0_15",
@@ -116848,172 +116972,134 @@
       "authors": [
         {
           "name": "Rajjeshwar Ganguly",
-          "affiliation_indices": [
-            1
-          ],
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
           "name": "Mamadou Dian Bah",
-          "affiliation_indices": [
-            1
-          ],
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         },
         {
           "name": "Mohamed Dahmane",
-          "affiliation_indices": [
-            1
-          ],
+          "affiliation_indices": [],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "unmapped",
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": true,
-      "map_record_count": 1,
+      "has_map_location": false,
+      "map_record_count": 0,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_locations": [
-        {
-          "institution_name": "Computer Research Institute of Montreal",
-          "institution_id": "institution:35f84ec19dab5880",
-          "institution_type": "research_unit",
-          "country": "Canada",
-          "country_code": "CA",
-          "region": "",
-          "region_code": "",
-          "location_display": "Canada"
-        }
-      ],
-      "aggregated_institutions": [
-        "Computer Research Institute of Montreal"
-      ],
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
+      "aggregated_locations": [],
+      "aggregated_institutions": [],
       "aggregated_institution_types": [
         "research_unit"
       ],
-      "aggregated_country_names": [
-        "Canada"
-      ],
-      "aggregated_country_codes": [
-        "CA"
-      ],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Computer Research Institute of Montreal",
-          "canonical_name": "Computer Research Institute of Montreal",
-          "institution_id": "institution:35f84ec19dab5880",
-          "institution_type": "research_unit",
-          "country": "Canada",
-          "country_code": "",
-          "region": "",
-          "location_display": "Canada",
-          "source_institution_names": [
-            "Computer Research Institute of Montréal"
-          ]
-        }
+      "paper_id": "curated:6a0913decc4e81abddb3",
+      "venue": "International Conference on Pattern Recognition",
+      "venue_name": "International Conference on Pattern Recognition",
+      "venue_id": "venue:international-conference-on-pattern-recognition",
+      "venue_acronym": "ICPR",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "International Conference on Pattern Recognition",
+      "paper_categories": [
+        "method"
       ],
-      "current_institution": null,
-      "author_institution_affiliations": [
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1007/978-3-031-78305-0_15",
+      "affiliation_review_state": "curated",
+      "curated_mappings": [
         {
-          "index": 1,
-          "institution_id": "institution:35f84ec19dab5880",
-          "institution": "Computer Research Institute of Montreal",
-          "institution_type": "research_unit",
-          "authors": [
+          "mapping_id": "mapping:84d15e9b1464659f29c8",
+          "institution_id": "institution:ea16e0a7b9bd2e5e",
+          "location_id": "",
+          "institution": "Computer Research Institute of Montreal (CRIM)",
+          "institution_authors": [
             "Rajjeshwar Ganguly",
             "Mamadou Dian Bah",
             "Mohamed Dahmane"
           ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false,
-          "source_institution_names": [
-            "Computer Research Institute of Montréal"
-          ]
+          "raw_affiliation": "Computer Research Institute of Montreal (CRIM), Montreal, Canada",
+          "mapping_status": "active",
+          "affiliation_order": 1
         }
       ],
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:ea16e0a7b9bd2e5e",
+          "institution": "Computer Research Institute of Montreal (CRIM)",
+          "institution_type": "research_unit",
+          "authors": [],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "venue_label": "International Conference on Pattern Recognition (ICPR)",
+      "venue_aliases": [
+        "International Conference on Pattern Recognition"
+      ],
+      "ambiguity_status": "resolved",
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Computer Research Institute of Montreal (CRIM)",
+          "canonical_name": "Computer Research Institute of Montreal (CRIM)",
+          "institution_id": "institution:ea16e0a7b9bd2e5e",
+          "institution_type": "research_unit",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": ""
+        }
+      ],
+      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Rajjeshwar Ganguly",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:35f84ec19dab5880"
-          ],
-          "source": "raw_affiliation",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
           "author": "Mamadou Dian Bah",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:35f84ec19dab5880"
-          ],
-          "source": "raw_affiliation",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         },
         {
           "author": "Mohamed Dahmane",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:35f84ec19dab5880"
-          ],
-          "source": "raw_affiliation",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
           "fallback": false
         }
       ],
-      "author_institution_indices": [
-        {
-          "author": "Rajjeshwar Ganguly",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:35f84ec19dab5880"
-          ]
-        },
-        {
-          "author": "Mamadou Dian Bah",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:35f84ec19dab5880"
-          ]
-        },
-        {
-          "author": "Mohamed Dahmane",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:35f84ec19dab5880"
-          ]
-        }
-      ],
-      "paper_categories": [],
-      "formal_url": "https://doi.org/10.1007/978-3-031-78305-0_15"
+      "search_institution_ids": [
+        "institution:ea16e0a7b9bd2e5e"
+      ]
     },
     {
       "paper_id": "curated:87ef976b546206fde199",
@@ -126955,8 +127041,8 @@
       "publication_date": "2024-01-01",
       "task": "detection",
       "publisher": "Springer International Publishing",
-      "publication_type": "book",
-      "abstract": "",
+      "publication_type": "conference",
+      "abstract": "The evolution of generative models has opened new challenges among forensic researchers in creating new sophisticated deepfake detection algorithms. This study analyzed in detail the domain of deepfake detection and recognition by exploring a specialized dataset consisting of real images and synthetic ones generated by nine distinct Generative Adversarial Networks (GANs) and four Diffusion Models (DMs). Then, a multi-level hierarchical strategy was presented to address three different tasks in deepfake detection and recognition: (i) detection between authentic and AI-generated images; (ii) identification of the technology used to create the synthetic data between GANs and DMs; and (iii) recognition of the specific AI-generative architecture. Experimental results showed classification accuracy exceeding 97% in each scenario, outperforming existing methodologies. The obtained models turn out to be robust to various attacks such as JPEG compression and resize, demonstrating that the framework can be used in real-world contexts (e.g. Image Forensics Ballistics).",
       "abstract_source": "",
       "ai_summary": "",
       "doi": "10.1007/978-3-031-66431-1_43",
@@ -126999,7 +127085,7 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
@@ -127045,11 +127131,30 @@
       ],
       "aggregated_regions": [],
       "aggregated_region_codes": [],
+      "paper_id": "curated:56afa39191eba5bf8797",
+      "venue": "Intelligent Systems Conference",
+      "venue_name": "Intelligent Systems Conference",
+      "venue_id": "venue:intelligent-systems-conference",
+      "venue_acronym": "IntelliSys",
+      "venue_type": "conference",
+      "venue_track": "main",
+      "raw_venue": "Intelligent Systems Conference",
+      "paper_categories": [
+        "method"
+      ],
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1007/978-3-031-66431-1_43",
       "affiliation_review_state": "unreviewed",
       "institution_source": "automatic_fallback",
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "unresolved",
+      "venue_label": "Intelligent Systems Conference (IntelliSys)",
+      "venue_aliases": [
+        "Intelligent Systems Conference"
+      ],
+      "ambiguity_status": "resolved",
       "affiliations": [
         {
           "index": 1,
@@ -127163,9 +127268,7 @@
             "institution:fd8ba2b56bf5212d"
           ]
         }
-      ],
-      "paper_categories": [],
-      "formal_url": "https://doi.org/10.1007/978-3-031-66431-1_43"
+      ]
     },
     {
       "title": "Leveraging Representations from Intermediate Encoder-Blocks for Synthetic Image Detection",
@@ -176369,13 +176472,6 @@
       "alias_source": "maintainer-confirmed"
     },
     {
-      "alias_name": "Computer Research Institute of Montréal",
-      "canonical_institution_name": "Computer Research Institute of Montreal",
-      "canonical_institution_id": "institution:35f84ec19dab5880",
-      "alias_language": "",
-      "alias_source": "english-name-migration"
-    },
-    {
       "alias_name": "Drexel University",
       "canonical_institution_name": "Drexel University",
       "canonical_institution_id": "institution:e0fc2ffb269489e7",
@@ -183419,6 +183515,36 @@
       ],
       "normalized_names": [
         "china mobile communications group beijing co ltd"
+      ]
+    },
+    "institution:cdedd18207a1eeb2": {
+      "canonical_name": "Amrita Vishwa Vidyapeetham",
+      "institution_type": "other",
+      "names": [
+        "Amrita Vishwa Vidyapeetham"
+      ],
+      "normalized_names": [
+        "amrita vishwa vidyapeetham"
+      ]
+    },
+    "institution:ea16e0a7b9bd2e5e": {
+      "canonical_name": "Computer Research Institute of Montreal (CRIM)",
+      "institution_type": "research_unit",
+      "names": [
+        "Computer Research Institute of Montreal (CRIM)"
+      ],
+      "normalized_names": [
+        "computer research institute of montreal crim"
+      ]
+    },
+    "institution:e58a37a2924e1779": {
+      "canonical_name": "Torrens University Australia",
+      "institution_type": "other",
+      "names": [
+        "Torrens University Australia"
+      ],
+      "normalized_names": [
+        "torrens university australia"
       ]
     }
   },

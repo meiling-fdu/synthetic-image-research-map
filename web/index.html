@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260822-year-range-edges">
+    <link rel="stylesheet" href="style.css?v=20260822-filter-dropdowns">
   </head>
   <body>
     <header class="site-header">
@@ -106,18 +106,18 @@
               >
             </label>
 
-            <label for="task-filter">
-              Task
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="task-filter-label" class="filter-label">Task</span>
               <select id="task-filter" disabled>
                 <option value="all">All</option>
                 <option value="detection">Detection</option>
                 <option value="source_attribution">Source Attribution</option>
                 <option value="detection_and_source_attribution">Detection + Source Attribution</option>
               </select>
-            </label>
+            </div>
 
-            <label for="entry-type-filter">
-              Paper Type
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="entry-type-filter-label" class="filter-label">Paper Type</span>
               <select id="entry-type-filter" disabled>
                 <option value="all">All</option>
                 <option value="method">Methods</option>
@@ -126,65 +126,44 @@
                 <option value="survey">Surveys</option>
                 <option value="analysis">Analysis Studies</option>
               </select>
-            </label>
+            </div>
 
-            <label for="venue-type-filter">
-              Publication Type
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="venue-type-filter-label" class="filter-label">Publication Type</span>
               <select id="venue-type-filter" disabled>
                 <option value="all">All</option>
               </select>
-            </label>
+            </div>
 
-            <label for="venue-filter">
-              Publication Venue
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="venue-filter-label" class="filter-label">Publication Venue</span>
               <select id="venue-filter" disabled>
                 <option value="all">All</option>
               </select>
-            </label>
-
-            <div class="country-combobox-field">
-              <span id="country-filter-label" class="filter-label">Country</span>
-              <select id="country-filter" class="country-filter-native" tabindex="-1" aria-hidden="true" disabled>
-                <option value="all">All</option>
-              </select>
-              <div id="country-combobox" class="country-combobox">
-                <button
-                  id="country-combobox-button"
-                  class="country-combobox-button"
-                  type="button"
-                  role="combobox"
-                  aria-labelledby="country-filter-label country-combobox-value"
-                  aria-controls="country-combobox-options"
-                  aria-expanded="false"
-                  aria-haspopup="listbox"
-                  disabled
-                ><span id="country-combobox-value">All</span><span class="country-combobox-chevron" aria-hidden="true"></span></button>
-                <div id="country-combobox-panel" class="country-combobox-panel" hidden>
-                  <ul
-                    id="country-combobox-options"
-                    class="country-combobox-options"
-                    role="listbox"
-                    aria-labelledby="country-filter-label"
-                  ></ul>
-                </div>
-              </div>
             </div>
 
-            <label for="institution-type-filter">
-              Institution Type
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="country-filter-label" class="filter-label">Country</span>
+              <select id="country-filter" disabled>
+                <option value="all">All</option>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="institution-type-filter-label" class="filter-label">Institution Type</span>
               <select id="institution-type-filter" disabled>
                 <option value="all">All</option>
               </select>
-            </label>
+            </div>
 
-            <label for="preprint-filter">
-              Record Version
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="preprint-filter-label" class="filter-label">Record Version</span>
               <select id="preprint-filter" disabled>
                 <option value="all">All</option>
                 <option value="has-arxiv">Records With arXiv Version</option>
                 <option value="no-arxiv">Records Without arXiv Version</option>
               </select>
-            </label>
+            </div>
 
             <fieldset class="year-range">
               <legend>Publication Year</legend>
@@ -432,12 +411,12 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="paper_details_helpers.js?v=20260820-progressive-results"></script>
+    <script src="paper_details_helpers.js?v=20260822-filter-dropdowns"></script>
     <script src="paper_link_helpers.js?v=20260729-formal-publication-links"></script>
     <script src="marker_size_helpers.js?v=20260813-wide-desktop-shell-4"></script>
     <script src="marker_interaction_helpers.js?v=20260712-pinned-state"></script>
     <script src="public_metadata.js?v=20260718-export-date"></script>
     <script src="institution_type_labels.js?v=20260718-research-institute"></script>
-    <script src="app.js?v=20260820-progressive-results"></script>
+    <script src="app.js?v=20260822-filter-dropdowns"></script>
   </body>
 </html>

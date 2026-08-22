@@ -78,7 +78,10 @@ class InstitutionLocationCoordinateFrontendTests(unittest.TestCase):
         ]
         self.assertNotIn("institution_id:", canonical_body)
         self.assertNotIn("loaded_institution_id:", canonical_body)
-        self.assertIn("await openCanonicalInstitutionLocation(", self.confirm_source)
+        self.assertIn("selectCanonicalInstitutionLocation({", self.confirm_source)
+        self.assertIn("renderInstitutionManagement();", self.confirm_source)
+        self.assertNotIn("loadLocationReviews", self.confirm_source)
+        self.assertNotIn("refreshInstitutions", self.confirm_source)
 
     def test_duplicate_submissions_and_backend_errors_are_visible(self):
         self.assertIn("if (state.locationSaveRunning) return", self.confirm_source)

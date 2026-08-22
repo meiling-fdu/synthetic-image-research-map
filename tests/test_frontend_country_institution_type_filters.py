@@ -128,11 +128,9 @@ process.stdout.write(JSON.stringify({{
 
     def test_dropdowns_are_compact_defaults_near_institution_filters(self):
         self.assertIn('id="country-filter"', self.html)
-        self.assertIn('id="country-filter"', self.html)
-        self.assertIn('id="country-combobox-button"', self.html)
-        self.assertIn('role="combobox"', self.html)
-        self.assertIn('role="listbox"', self.html)
-        self.assertNotIn('id="country-combobox-search"', self.html)
+        self.assertEqual(self.html.count('data-filter-dropdown'), 7)
+        self.assertIn('button.setAttribute("role", "combobox")', self.app)
+        self.assertIn('options.setAttribute("role", "listbox")', self.app)
         self.assertNotIn('role="searchbox"', self.html)
         self.assertIn('id="institution-type-filter"', self.html)
         self.assertNotIn("All Countries", self.html)
@@ -240,36 +238,48 @@ process.stdout.write(JSON.stringify({{
 
     def test_country_panel_height_and_internal_scrolling(self):
         panel = self.css[
-            self.css.index(".country-combobox-panel {"):
-            self.css.index(".country-combobox-panel[hidden]")
+            self.css.index(".filter-dropdown-panel {"):
+            self.css.index(".filter-dropdown-panel[hidden]")
         ]
         options = self.css[
-            self.css.index(".country-combobox-options {"):
-            self.css.index(".country-combobox-option {")
+            self.css.index(".filter-dropdown-options {"):
+            self.css.index(".filter-dropdown-option {")
         ]
-        self.assertIn("max-height: min(420px, 60vh)", panel)
+        self.assertIn("position: absolute", panel)
+        self.assertIn("top: 100%", panel)
+        self.assertIn("max-height: min(320px, 40vh)", panel)
         self.assertIn("overflow: hidden", panel)
         self.assertIn("overflow-y: auto", options)
         self.assertIn("overscroll-behavior: contain", options)
+        combobox_start = self.css.index(".filter-dropdown {")
+        combobox = self.css[
+            combobox_start:
+            self.css.index(".filter-dropdown-button {", combobox_start)
+        ]
+        self.assertIn("position: relative", combobox)
+        self.assertIn(
+            'dropdown.panel.classList.toggle("is-long", dropdown.optionData.length > 8)',
+            self.app,
+        )
 
     def test_keyboard_and_upward_placement_helpers(self):
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
         source = self.app[
-            self.app.index("function nextCountryOptionIndex"):
-            self.app.index("\nfunction countryOptionElements")
+            self.app.index("function nextFilterOptionIndex"):
+            self.app.index("\nfunction filterDropdownOptionElements")
         ]
         script = f"""
 {source}
 process.stdout.write(JSON.stringify({{
-  arrowDown: nextCountryOptionIndex([0, 1, 2], 1, 1),
-  arrowUpWrap: nextCountryOptionIndex([0, 1, 2], 0, -1),
-  upward: countryComboboxPlacement(
-    {{left: 300, top: 730, bottom: 770, width: 220}}, 400, 800, 800,
+  arrowDown: nextFilterOptionIndex([0, 1, 2], 1, 1),
+  arrowUpWrap: nextFilterOptionIndex([0, 1, 2], 0, -1),
+  upward: filterDropdownPlacement(
+    {{top: 730, bottom: 770}}, 400, 800,
   ),
-  narrow: countryComboboxPlacement(
-    {{left: 280, top: 100, bottom: 140, width: 220}}, 300, 320, 700,
+  downward: filterDropdownPlacement(
+    {{top: 100, bottom: 140}}, 300, 700,
   ),
 }}));
 """
@@ -280,27 +290,23 @@ process.stdout.write(JSON.stringify({{
         self.assertEqual(result["arrowDown"], 2)
         self.assertEqual(result["arrowUpWrap"], 2)
         self.assertEqual(result["upward"]["placement"], "up")
-        self.assertLess(result["upward"]["top"], 730)
-        self.assertGreaterEqual(result["narrow"]["left"], 8)
-        self.assertLessEqual(
-            result["narrow"]["left"] + result["narrow"]["width"], 312,
-        )
+        self.assertEqual(result["downward"]["placement"], "down")
 
     def test_selection_escape_and_outside_click_use_shared_filter_state(self):
         selection = self.app[
-            self.app.index("function selectCountryComboboxValue"):
-            self.app.index("\nfunction updateInstitutionDimensionFilters")
+            self.app.index("function selectFilterDropdownValue"):
+            self.app.index("\nfunction createFilterDropdown")
         ]
         events = self.app[self.app.index('countryFilter.addEventListener("change"'):]
-        self.assertIn("countryFilter.value = value", selection)
+        self.assertIn("dropdown.select.value = value", selection)
         self.assertIn('dispatchEvent(new Event("change", { bubbles: true }))', selection)
-        self.assertIn("closeCountryCombobox(true)", selection)
+        self.assertIn("closeFilterDropdown(dropdown, true)", selection)
         self.assertIn('event.key === "Escape"', events)
-        self.assertIn("closeCountryCombobox(true)", events)
+        self.assertIn("closeFilterDropdown(openDropdown, true)", events)
         self.assertIn('document.addEventListener("pointerdown"', events)
-        self.assertIn("!countryCombobox.contains(event.target)", events)
-        self.assertIn("setActiveCountryOption(selectedIndex, true)", self.app)
-        self.assertNotIn("filterCountryComboboxOptions", self.app)
+        self.assertIn("!dropdown.root.contains(event.target)", events)
+        self.assertIn("setActiveFilterDropdownOption(dropdown, selectedIndex, true)", self.app)
+        self.assertIn("closeAllFilterDropdowns(dropdown)", self.app)
         self.assertIn(
             'replaceCountedFilterOptions(\n    countryFilter,\n    "All",',
             self.app,
@@ -313,8 +319,8 @@ process.stdout.write(JSON.stringify({{
     def test_country_trigger_matches_native_filter_control_geometry_and_states(self):
         select = self.css[self.css.index("select {"):self.css.index("\ninput {", self.css.index("select {"))]
         button = self.css[
-            self.css.index(".country-combobox-button {"):
-            self.css.index(".country-combobox-button > span:first-child")
+            self.css.index(".filter-dropdown-button {"):
+            self.css.index(".filter-dropdown-button > span:first-child")
         ]
         for declaration in (
             "height: 35px", "border-radius: 5px", "font-size: 0.8rem",
@@ -327,7 +333,7 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("button:hover:not(:disabled)", self.css)
         self.assertIn("button:focus-visible", self.css)
         self.assertIn("button:disabled,\nselect:disabled", self.css)
-        self.assertIn('.country-combobox-option[aria-selected="true"]', self.css)
+        self.assertIn('.filter-dropdown-option[aria-selected="true"]', self.css)
 
 
 if __name__ == "__main__":
