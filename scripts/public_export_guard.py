@@ -271,7 +271,11 @@ def _merge_target(
         and clean(row.get("institution_id"))
     }
     source = institution_id.casefold()
-    if registry.get(source) != "merged" or source not in direct:
+    # Automatic exact-equivalent consolidation removes the duplicate canonical
+    # row after every dependent reference is rebound. The durable merge audit
+    # remains the redirect authority; an extant source must still be a merged
+    # tombstone, while an absent source is valid only with that exact audit.
+    if source not in direct or registry.get(source, "") not in {"", "merged"}:
         return "", "not_a_reviewed_merge"
     visited = {source}
     target = direct[source]

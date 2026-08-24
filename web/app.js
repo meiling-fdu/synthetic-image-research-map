@@ -59,6 +59,7 @@ const URL_STATE_PARAMETER_ORDER = [
   "institution_type", "version", "year_start", "year_end", "institution",
   "institution_label", "paper", "view", "sort",
 ];
+const PAPER_ISSUE_URL = "https://github.com/meiling-fdu/synthetic-image-research-map/issues/new";
 const TILE_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
 const DISPLAY_BOUNDS = L.latLngBounds([[-50, -170], [72, 180]]);
 const BASE_MIN_ZOOM = 1;
@@ -3262,21 +3263,132 @@ async function copyCanonicalViewUrl() {
   return url;
 }
 
-function appendCopyPaperLinkAction() {
-  if (!requestedPaperIdentity) return;
+function publicIssueText(value, fallback = "Not available") {
+  const text = String(value ?? "").replace(/\s+/g, " ").trim();
+  return text ? text.replaceAll("`", "'") : fallback;
+}
+
+function publicIssueList(values, limit = 8) {
+  const unique = [...new Set((values || [])
+    .map((value) => publicIssueText(value, ""))
+    .filter(Boolean))];
+  if (!unique.length) return "Not available";
+  const visible = unique.slice(0, limit);
+  return `${visible.join("; ")}${unique.length > limit ? `; +${unique.length - limit} more` : ""}`;
+}
+
+function paperIssueReportUrl(context = {}) {
+  const title = publicIssueText(context.title, "Unknown title");
+  const params = new URLSearchParams({
+    title: `Paper metadata issue: ${title}`.slice(0, 180),
+    body: [
+      "### Problem type",
+      "- [ ] Incorrect affiliation",
+      "- [ ] Incorrect location",
+      "- [ ] Incorrect publication metadata",
+      "- [ ] Duplicate record",
+      "- [ ] Missing information",
+      "- [ ] Other",
+      "",
+      "### Paper",
+      `- Stable ID: \`${publicIssueText(context.paperId)}\``,
+      `- Title: ${title}`,
+      `- Paper deep link: ${publicIssueText(context.deepLink)}`,
+      "",
+      "### Current public metadata",
+      `- Publication type: ${publicIssueText(context.publicationType)}`,
+      `- Publication venue: ${publicIssueText(context.venue)}`,
+      `- Publication year: ${publicIssueText(context.year)}`,
+      `- Research type: ${publicIssueList(context.researchTypes)}`,
+      `- Task: ${publicIssueText(context.task)}`,
+      `- Institutions: ${publicIssueList(context.institutions)}`,
+      `- Locations: ${publicIssueList(context.locations)}`,
+      "",
+      "### What should be corrected?",
+      "Please describe the expected metadata and, if possible, provide a source.",
+    ].join("\n"),
+  });
+  return `${PAPER_ISSUE_URL}?${params.toString()}`;
+}
+
+function paperIssueContext(record, relatedEntries, paperId, deepLink) {
+  const sourceRecord = record || {};
+  const publication = paperDetailsPublication(sourceRecord);
+  const affiliations = [
+    ...(Array.isArray(sourceRecord.affiliations) ? sourceRecord.affiliations : []),
+    ...(Array.isArray(sourceRecord.author_institution_affiliations)
+      ? sourceRecord.author_institution_affiliations : []),
+  ];
+  const relatedRecords = (relatedEntries || [])
+    .map(({ record: relatedRecord }) => relatedRecord)
+    .filter(Boolean);
+  const institutions = [
+    ...(sourceRecord.aggregated_institutions || []),
+    ...affiliations.map((affiliation) => (
+      typeof affiliation === "string" ? affiliation
+        : affiliation?.name || affiliation?.institution || affiliation?.institution_name
+    )),
+    ...relatedRecords.map(recordInstitution),
+  ];
+  const locations = [
+    ...(sourceRecord.aggregated_locations || []).map((location) => (
+      typeof location === "string" ? location : location?.location_display
+    )),
+    ...affiliations.map((affiliation) => {
+      if (!affiliation || typeof affiliation === "string") return "";
+      return affiliation.location_display
+        || [affiliation.region, affiliation.country].filter(Boolean).join(", ");
+    }),
+    ...relatedRecords.map(recordLocation),
+  ];
+  return {
+    paperId,
+    title: recordTitle(sourceRecord),
+    deepLink,
+    publicationType: publication.typeLabel,
+    venue: publication.venue,
+    year: publicationYear(sourceRecord),
+    researchTypes: record
+      ? getPaperCategories(sourceRecord).map(getEntryTypeLabel) : [],
+    task: record ? formatPublicTask(sourceRecord.task) : "",
+    institutions,
+    locations,
+  };
+}
+
+function appendCopyPaperLinkAction(record = null, relatedEntries = []) {
+  const reportPaperIdentity = requestedPaperIdentity
+    || (record ? paperIdentity(record) : "");
+  if (!reportPaperIdentity) return;
   const container = document.createElement("div");
   const button = document.createElement("button");
+  const reportLink = document.createElement("a");
   const status = document.createElement("span");
+  const deepLink = canonicalViewUrl({
+    ...currentViewState(),
+    paper: reportPaperIdentity,
+  });
   container.className = "paper-details-share-actions";
   button.type = "button";
   button.className = "copy-paper-link-button";
   button.dataset.copyPaperLink = "";
   button.textContent = "Copy paper link";
+  reportLink.className = "report-paper-issue-link";
+  reportLink.href = paperIssueReportUrl(paperIssueContext(
+    record, relatedEntries, reportPaperIdentity, deepLink,
+  ));
+  reportLink.target = "_blank";
+  reportLink.rel = "noopener noreferrer";
+  reportLink.textContent = "Report issue";
+  reportLink.setAttribute(
+    "aria-label", "Report a metadata issue for this paper (opens in a new tab)",
+  );
   status.className = "visually-hidden";
   status.dataset.copyPaperLinkStatus = "";
   status.setAttribute("role", "status");
   status.setAttribute("aria-live", "polite");
-  container.append(button, status);
+  if (requestedPaperIdentity) container.append(button, reportLink, status);
+  else container.append(reportLink);
   paperDetailsContent.append(container);
 }
 
@@ -4076,7 +4188,7 @@ function showPaperDetails(record, relatedEntries, source, { filteredOut = false 
     notice.textContent = "This linked paper does not match the current filters. Your filters were not changed.";
     paperDetailsContent.prepend(notice);
   }
-  if (isPinned) appendCopyPaperLinkAction();
+  appendCopyPaperLinkAction(record, relatedEntries);
   paperDetails.scrollTop = 0;
   updateShowInResultsAction();
 }
@@ -4573,6 +4685,7 @@ function renderRecordsForGeneration({ generation = null } = {}) {
       .addTo(markerLayer);
     MarkerInteractionHelpers.bindMarkerHandlers(marker, {
       supportsHover: supportsMarkerHover,
+      accessibleLabel: `${recordInstitution(locationRecord) || "Unknown institution"}; ${MarkerSizeHelpers.formatInstitutionPaperCount(group.paperCount)}. Show paper details.`,
       click: () => pinPaper(
         record,
         identity,
@@ -5171,6 +5284,7 @@ async function loadData() {
 }
 
 filterDropdowns = [
+  sortControl,
   taskFilter,
   entryTypeFilter,
   venueTypeFilter,
@@ -5548,11 +5662,15 @@ document.fonts?.ready.then(() => {
 });
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
+  const selectionOrigin = interactionState.selected?.marker?.getElement?.()
+    || visibleMarkerEntryByInstitutionKey
+      .get(interactionState.selectedMarkerId)?.marker?.getElement?.();
   if (interactionState.selected || requestedPaperIdentity) {
     clearPersistentSelection();
   } else {
     clearHoveredSelection();
   }
+  (selectionOrigin || mapElement).focus({ preventScroll: true });
 });
 paperDetails.addEventListener("pointerenter", () => {
   interactionState.isPointerInsideDetails = true;

@@ -9,6 +9,7 @@ class FrontendResponsiveOverflowTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.css = (ROOT / "web" / "style.css").read_text(encoding="utf-8")
+        cls.admin_css = (ROOT / "web" / "admin.css").read_text(encoding="utf-8")
 
     def test_site_information_can_shrink_inside_the_page_shell(self):
         site_information = self.css[
@@ -38,6 +39,15 @@ class FrontendResponsiveOverflowTests(unittest.TestCase):
     def test_fix_does_not_mask_document_overflow(self):
         normalized = " ".join(self.css.split())
         self.assertNotIn("html, body { overflow-x: hidden", normalized)
+
+    def test_admin_title_can_wrap_at_the_smallest_supported_width(self):
+        mobile = self.admin_css.split("@media (max-width: 620px)", 1)[1]
+        self.assertIn("h1 {\n    white-space: normal;", mobile)
+
+    def test_admin_mobile_menus_position_against_the_full_navigation_bar(self):
+        mobile = self.admin_css.split("@media (max-width: 620px)", 1)[1]
+        self.assertIn(".console-nav { position: relative; }", mobile)
+        self.assertIn(".nav-menu { position: static; }", mobile)
 
 
 if __name__ == "__main__":

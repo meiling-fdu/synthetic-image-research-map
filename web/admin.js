@@ -2762,7 +2762,7 @@ function selectCanonicalInstitutionLocation(detail) {
   elements["confirmed-location-record-label"].hidden = false;
   locationSelect.replaceChildren();
   locations.forEach((record) => locationSelect.add(new Option(
-    [record.city, record.region, record.country].filter(Boolean).join(", "),
+    mappingLocationLabel(record),
     record.location_id
   )));
   locationSelect.add(new Option("Add another confirmed location…", ""));
@@ -2781,9 +2781,14 @@ function selectCanonicalInstitutionLocation(detail) {
 }
 
 function selectConfirmedLocationRecord() {
-  if (state.locationEditorMode !== "canonical") return;
   const locationId = elements["confirmed-location-record"].value;
-  const location = state.selectedInstitutionLocations.find(
+  const review = state.locationReviews.find(
+    (row) => row.queue_id === state.selectedLocationReviewId
+  );
+  const locations = state.locationEditorMode === "canonical"
+    ? state.selectedInstitutionLocations
+    : (review?.confirmed_locations || []);
+  const location = locations.find(
     (record) => text(record.location_id) === locationId
   ) || {};
   for (const [elementId, field] of [
@@ -2988,7 +2993,14 @@ function selectLocationReview(queueId) {
   elements["location-editor-placeholder"].hidden = true;
   elements["location-form"].hidden = false;
   elements["location-form"].reset();
-  elements["confirmed-location-record-label"].hidden = true;
+  const confirmedLocations = row.confirmed_locations || [];
+  const locationSelect = elements["confirmed-location-record"];
+  locationSelect.replaceChildren();
+  confirmedLocations.forEach((record) => locationSelect.add(new Option(
+    mappingLocationLabel(record),
+    record.location_id,
+  )));
+  elements["confirmed-location-record-label"].hidden = confirmedLocations.length === 0;
   clearLocationFields();
   elements["location-queue-id"].value = queueId;
   elements["location-institution-id"].value = text(row.institution_id);
@@ -3033,6 +3045,11 @@ function selectLocationReview(queueId) {
     text(confirmed.country_code).toUpperCase();
   elements["confirmed-lat"].value = text(confirmed.lat);
   elements["confirmed-lon"].value = text(confirmed.lon);
+  if (confirmedLocations.length === 1) {
+    locationSelect.value = text(confirmedLocations[0].location_id);
+  } else {
+    locationSelect.value = "";
+  }
   elements["location-form-error"].hidden = true;
   renderLocationActions();
   renderLocationContext(row);
@@ -5830,8 +5847,10 @@ function syncMappingInstitutionId() {
 }
 
 function mappingLocationLabel(location) {
-  return [location.city, location.region, location.country]
+  const locality = [location.city, location.region, location.country]
     .map(text).filter(Boolean).join(", ");
+  const coordinates = [location.lat, location.lon].map(text).filter(Boolean).join(", ");
+  return [locality, coordinates].filter(Boolean).join(" · ");
 }
 
 function validMappingLocations(institution) {

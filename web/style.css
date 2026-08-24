@@ -1228,13 +1228,33 @@ input:disabled {
   white-space: nowrap;
 }
 
-.sort-control-label select {
-  min-width: 150px;
+.sort-control-label .filter-label {
+  flex: 0 0 auto;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.sort-control-label .filter-dropdown {
+  flex: 0 1 176px;
+  width: 176px;
+}
+
+.sort-control-label .filter-dropdown-button {
+  width: 100%;
   height: 32px;
   min-height: 32px;
-  padding: 3px 28px 3px 8px;
+  padding: 3px 8px;
   font-size: 0.78rem;
   line-height: 1.2;
+}
+
+.sort-control-label .filter-dropdown-panel {
+  right: 0;
+  left: auto;
+  width: max-content;
+  min-width: 100%;
+  max-width: min(280px, calc(100vw - 24px));
 }
 
 .export-button,
@@ -2179,15 +2199,36 @@ input:disabled {
 .paper-details-share-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
   margin-top: 12px;
 }
 
-.copy-paper-link-button {
+.copy-paper-link-button,
+.report-paper-issue-link {
   width: auto;
   min-height: 44px;
   margin: 0;
   padding: 7px 10px;
   font-size: 0.74rem;
+}
+
+.report-paper-issue-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--secondary-surface);
+  color: var(--accent-dark);
+  font-weight: 750;
+  line-height: 1.15;
+  text-decoration: none;
+}
+
+.report-paper-issue-link:hover,
+.report-paper-issue-link:focus-visible {
+  border-color: var(--accent-dark);
+  text-decoration: underline;
 }
 
 .copy-paper-link-button.is-copied {
@@ -3107,7 +3148,7 @@ footer a {
     white-space: normal;
   }
 
-  .sort-control-label select {
+  .sort-control-label .filter-dropdown {
     min-width: 0;
     flex: 1 1 150px;
   }

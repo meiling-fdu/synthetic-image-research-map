@@ -296,7 +296,15 @@ class InstitutionHierarchyTests(unittest.TestCase):
         self.assertTrue(any(row["institution_id"] == root_id for row in mappings))
         self.assertTrue(any(row["institution_id"] == guangzhou_id for row in mappings))
         self.assertTrue(any(row["institution_id"] == root_id for row in locations))
-        self.assertFalse(any(row["institution_id"] == guangzhou_id for row in locations))
+        guangzhou_locations = [
+            row for row in locations if row["institution_id"] == guangzhou_id
+        ]
+        self.assertTrue(guangzhou_locations)
+        for location in guangzhou_locations:
+            self.assertEqual(location["institution"], by_id[guangzhou_id]["canonical_name"])
+            self.assertEqual(location["coordinate_status"], "known")
+            self.assertTrue(-90 <= float(location["lat"]) <= 90)
+            self.assertTrue(-180 <= float(location["lon"]) <= 180)
 
     def test_public_hkust_search_metadata_covers_root_alias_and_specific_branch(self):
         import json

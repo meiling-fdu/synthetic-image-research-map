@@ -2354,6 +2354,10 @@ tbody tr:last-child td {
 }
 
 @media (max-width: 620px) {
+  h1 {
+    white-space: normal;
+  }
+
   .masthead {
     display: block;
   }
@@ -2368,6 +2372,7 @@ tbody tr:last-child td {
   }
 
   .console-nav { position: relative; }
+  .nav-menu { position: static; }
   .nav-menu-items,
   .nav-menu-align-end .nav-menu-items {
     right: auto;

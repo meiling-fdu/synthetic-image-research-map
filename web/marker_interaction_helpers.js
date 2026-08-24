@@ -29,6 +29,9 @@
     if (element) {
       element.setAttribute("role", "button");
       element.setAttribute("tabindex", "0");
+      if (handlers.accessibleLabel) {
+        element.setAttribute("aria-label", handlers.accessibleLabel);
+      }
       element.addEventListener("keydown", (event) => {
         if (event.key !== "Enter" && event.key !== " ") {
           return;

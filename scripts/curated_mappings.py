@@ -32,6 +32,7 @@ try:
         CuratedInstitutionError,
         append_confirmed_mapping_change_audit,
         append_confirmed_mapping_removal_audit,
+        exact_institution_matches,
         load_institutions,
         normalize_institution,
         save_institutions,
@@ -54,6 +55,7 @@ except ImportError:
         CuratedInstitutionError,
         append_confirmed_mapping_change_audit,
         append_confirmed_mapping_removal_audit,
+        exact_institution_matches,
         load_institutions,
         normalize_institution,
         save_institutions,
@@ -416,19 +418,7 @@ def _resolve_mapping_institution(
         mapping["institution"] = clean(entity.get("canonical_name"))
         return "existing"
 
-    normalized = normalize_institution(submitted_name)
-    matched_ids = {
-        identifier
-        for identifier, row in active_by_id.items()
-        if normalize_institution(row.get("canonical_name")) == normalized
-    }
-    matched_ids.update(
-        clean(alias.get("institution_id"))
-        for alias in aliases
-        if clean(alias.get("review_status")) == "confirmed"
-        and normalize_institution(alias.get("alias_name")) == normalized
-        and clean(alias.get("institution_id")) in active_by_id
-    )
+    matched_ids = set(exact_institution_matches(submitted_name, institutions, aliases))
     if len(matched_ids) > 1:
         candidates = ", ".join(
             f"{clean(active_by_id[identifier].get('canonical_name'))} ({identifier})"
@@ -476,10 +466,20 @@ def _resolve_mapping_location(
     locations_path: Path,
 ) -> None:
     """Validate and denormalize an explicitly selected confirmed location."""
+    locations = _read_csv(locations_path, INSTITUTION_LOCATION_COLUMNS)
     location_id = clean(mapping.get("location_id"))
     if not location_id:
-        return
-    locations = _read_csv(locations_path, INSTITUTION_LOCATION_COLUMNS)
+        canonical_locations = [
+            row for row in locations
+            if clean(row.get("institution_id")) == clean(mapping.get("institution_id"))
+            and clean(row.get("coordinate_status")) == "known"
+            and _valid_coordinate(row.get("lat"), latitude=True)
+            and _valid_coordinate(row.get("lon"), latitude=False)
+        ]
+        if len(canonical_locations) != 1:
+            return
+        location_id = clean(canonical_locations[0].get("location_id"))
+        mapping["location_id"] = location_id
     location = next(
         (
             row for row in locations
@@ -653,6 +653,12 @@ def _sync_location_review(
         raise CuratedMappingError(
             "location review creation requires a canonical institution_id"
         )
+    if (
+        clean(mapping.get("location_id"))
+        and _valid_coordinate(mapping.get("institution_latitude"), latitude=True)
+        and _valid_coordinate(mapping.get("institution_longitude"), latitude=False)
+    ):
+        return "known"
     if _queue_institution_key(mapping) in known_location_institutions(
         map_records
     ):

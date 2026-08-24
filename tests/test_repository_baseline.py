@@ -77,6 +77,43 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         self.assert_current("author_institution_mappings", len(self.mappings))
         self.assert_current("institution_hierarchy_edges", len(self.hierarchy))
 
+    def test_release_checkpoint_artifact_matches_reviewed_repository_baseline(self):
+        artifact = json.loads(
+            (ROOT / "data/processed/current_repository_baseline.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(artifact["checkpoint"], "2026-08-24-stable-release")
+        counts = artifact["dataset_counts"]
+        for name, expected in CURRENT_REPOSITORY_BASELINE.items():
+            with self.subTest(name=name):
+                self.assertEqual(counts[name], expected)
+        self.assertEqual(
+            artifact["distribution_counts"]["institution_status"],
+            CANONICAL_INSTITUTION_STATUS_TOTALS,
+        )
+        self.assertEqual(
+            artifact["distribution_counts"]["publication_type"],
+            PUBLICATION_TYPE_TOTALS,
+        )
+        self.assertEqual(
+            artifact["distribution_counts"]["task"], TASK_TOTALS
+        )
+
+    def test_historical_public_export_baseline_is_an_explicit_reviewed_snapshot(self):
+        baseline = json.loads(
+            (CURATED / "public_export_baseline.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(baseline, {
+            "paper_records": 488,
+            "map_records": 950,
+            "approval_note": (
+                "Last reviewed complete public export before the venue taxonomy "
+                "migration. Decreases require an explicitly reviewed replacement "
+                "baseline."
+            ),
+        })
+
     def test_public_paper_and_map_relationship_identities_are_unique(self):
         paper_identities = [identity_key(row) for row in self.public_papers]
         self.assertEqual(len(paper_identities), len(set(paper_identities)))

@@ -202,6 +202,181 @@ def load_institution_aliases(
     return _read_csv(path, INSTITUTION_ALIAS_COLUMNS)
 
 
+def normalized_location_key(row: Mapping[str, Any]) -> tuple[str, ...]:
+    """Return the conservative exact-equivalence key for one confirmed location."""
+    try:
+        latitude = format(float(clean(row.get("lat"))), ".10g")
+        longitude = format(float(clean(row.get("lon"))), ".10g")
+    except ValueError:
+        latitude = clean(row.get("lat"))
+        longitude = clean(row.get("lon"))
+    country = clean(row.get("country_code")).upper() or normalize_candidate_name(
+        row.get("country")
+    )
+    return (
+        clean(row.get("institution_id")),
+        normalize_candidate_name(row.get("city")),
+        normalize_candidate_name(row.get("region")),
+        country,
+        latitude,
+        longitude,
+    )
+
+
+def location_id_redirects(
+    audit_path: Path = DEFAULT_INSTITUTION_AUDIT_PATH,
+) -> Dict[str, str]:
+    redirects = {}
+    for row in _read_csv(audit_path, INSTITUTION_AUDIT_COLUMNS):
+        if clean(row.get("action")) != "location_merge":
+            continue
+        source = clean(row.get("previous_location_id"))
+        target = clean(row.get("location_id"))
+        if source and target and source != target:
+            redirects[source] = target
+    return redirects
+
+
+def resolve_location_id(value: Any, redirects: Mapping[str, str]) -> str:
+    identifier = clean(value)
+    seen = set()
+    while identifier in redirects and identifier not in seen:
+        seen.add(identifier)
+        identifier = clean(redirects[identifier])
+    return identifier
+
+
+def consolidate_exact_confirmed_locations(
+    *,
+    locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
+    mappings_path: Path = DEFAULT_AUTHOR_INSTITUTION_MAPPINGS_PATH,
+    institution_audit_path: Path = DEFAULT_INSTITUTION_AUDIT_PATH,
+    write: bool = False,
+    institution_id: Any = "",
+) -> Dict[str, Any]:
+    """Consolidate only byte-normalized physical-location equivalents atomically."""
+    locations = load_confirmed_locations(locations_path)
+    mappings = _read_csv(mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+    audits = _read_csv(institution_audit_path, INSTITUTION_AUDIT_COLUMNS)
+    scope = clean(institution_id)
+    usage = Counter(clean(row.get("location_id")) for row in mappings)
+    groups: Dict[tuple[str, ...], List[Dict[str, str]]] = defaultdict(list)
+    for row in locations:
+        if scope and clean(row.get("institution_id")) != scope:
+            continue
+        if clean(row.get("coordinate_status")) != "known":
+            continue
+        key = normalized_location_key(row)
+        if key[0] and key[1] and key[3] and key[4] and key[5]:
+            groups[key].append(row)
+
+    existing_redirects = location_id_redirects(institution_audit_path)
+    redirects: Dict[str, str] = {}
+    findings = []
+    for key, equivalent in sorted(groups.items()):
+        if len(equivalent) < 2:
+            continue
+        survivor = min(
+            equivalent,
+            key=lambda row: (
+                -usage[clean(row.get("location_id"))],
+                clean(row.get("created_at")) or "9999",
+                clean(row.get("location_id")),
+            ),
+        )
+        target_id = clean(survivor.get("location_id"))
+        for duplicate in equivalent:
+            source_id = clean(duplicate.get("location_id"))
+            if source_id == target_id:
+                continue
+            redirects[source_id] = target_id
+            findings.append({
+                "action": "location_merged",
+                "institution_id": key[0],
+                "institution": clean(survivor.get("institution")),
+                "source_location_id": source_id,
+                "target_location_id": target_id,
+                "city": clean(survivor.get("city")),
+                "region": clean(survivor.get("region")),
+                "country": clean(survivor.get("country")),
+                "lat": clean(survivor.get("lat")),
+                "lon": clean(survivor.get("lon")),
+                "status": "merged" if write else "would_merge",
+            })
+
+    if not write or not redirects:
+        return {"findings": findings, "redirects": {**existing_redirects, **redirects}}
+
+    now = _timestamp()
+    survivors = {target for target in redirects.values()}
+    location_by_id = {
+        clean(row.get("location_id")): row for row in locations
+        if clean(row.get("location_id")) in survivors
+    }
+    for mapping in mappings:
+        source_id = clean(mapping.get("location_id"))
+        if source_id not in redirects:
+            continue
+        target_id = redirects[source_id]
+        target = location_by_id[target_id]
+        mapping.update({
+            "location_id": target_id,
+            "institution_city": clean(target.get("city")),
+            "institution_country": clean(target.get("country")),
+            "institution_latitude": clean(target.get("lat")),
+            "institution_longitude": clean(target.get("lon")),
+            "updated_at": now,
+        })
+    for audit in audits:
+        current_id = clean(audit.get("location_id"))
+        if current_id in redirects:
+            audit["location_id"] = redirects[current_id]
+    known_audits = {
+        (clean(row.get("previous_location_id")), clean(row.get("location_id")))
+        for row in audits if clean(row.get("action")) == "location_merge"
+    }
+    for source_id, target_id in redirects.items():
+        if (source_id, target_id) in known_audits:
+            continue
+        target = location_by_id[target_id]
+        digest = hashlib.sha256(f"{source_id}|{target_id}".encode()).hexdigest()[:20]
+        affected = usage[source_id]
+        audits.append({
+            "audit_id": f"institution-audit:{digest}",
+            "action": "location_merge",
+            "institution_id": clean(target.get("institution_id")),
+            "previous_location_id": source_id,
+            "location_id": target_id,
+            "affected_papers": str(affected),
+            "affected_mappings": str(affected),
+            "affected_markers": str(affected),
+            "confirmation_text": "Exact normalized city, region, country, latitude, and longitude equivalence.",
+            "review_note": "Automatic exact-equivalent confirmed-location consolidation.",
+            "created_at": now,
+            "created_by": "institution-location-audit",
+        })
+    locations = [
+        row for row in locations
+        if clean(row.get("location_id")) not in redirects
+    ]
+    snapshots = {
+        path: path.read_bytes() if path.exists() else None
+        for path in (locations_path, mappings_path, institution_audit_path)
+    }
+    try:
+        save_confirmed_locations(locations, locations_path)
+        _write_csv_atomic(mappings, mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+        _write_csv_atomic(audits, institution_audit_path, INSTITUTION_AUDIT_COLUMNS)
+    except Exception:
+        for path, content in snapshots.items():
+            if content is None:
+                path.unlink(missing_ok=True)
+            else:
+                path.write_bytes(content)
+        raise
+    return {"findings": findings, "redirects": {**existing_redirects, **redirects}}
+
+
 def save_institution_aliases(
     rows: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
@@ -451,22 +626,51 @@ def create_or_update_confirmed_location(
         normalized_institution=queue_normalized,
     )
 
+    # Repair exact duplicate rows before matching the user's selection.  A
+    # legacy selected ID remains usable through the durable location redirect.
+    consolidate_exact_confirmed_locations(
+        locations_path=locations_path,
+        mappings_path=mappings_path,
+        institution_audit_path=institution_audit_path,
+        write=True,
+        institution_id=current_institution_id,
+    )
     locations = load_confirmed_locations(locations_path)
-    matches = [
-        index
-        for index, row in enumerate(locations)
-        if clean(row.get("institution_id")) == current_institution_id
-        and (
-            clean(row.get("location_id")) == values["location_id"]
-            or (
-                clean(row.get("city")).casefold() == values["city"].casefold()
-                and clean(row.get("region")).casefold()
-                == values["region"].casefold()
-                and clean(row.get("country")).casefold()
-                == values["country"].casefold()
+    selected_location_id = resolve_location_id(
+        draft.get("location_id"), location_id_redirects(institution_audit_path)
+    )
+    if selected_location_id:
+        matches = [
+            index for index, row in enumerate(locations)
+            if clean(row.get("institution_id")) == current_institution_id
+            and clean(row.get("location_id")) == selected_location_id
+        ]
+        if not matches:
+            raise CuratedLocationError(
+                "selected confirmed location does not belong to this institution",
+                field="location_id",
+                error_code="invalid_location_id",
             )
-        )
-    ]
+    else:
+        values_key = normalized_location_key(values)
+        matches = [
+            index for index, row in enumerate(locations)
+            if normalized_location_key(row) == values_key
+        ]
+        same_locality = [
+            row for row in locations
+            if clean(row.get("institution_id")) == current_institution_id
+            and normalize_candidate_name(row.get("city")) == normalize_candidate_name(values["city"])
+            and normalize_candidate_name(row.get("region")) == normalize_candidate_name(values["region"])
+            and (clean(row.get("country_code")).upper() or normalize_candidate_name(row.get("country")))
+            == (values["country_code"] or normalize_candidate_name(values["country"]))
+        ]
+        if not matches and len(same_locality) > 1:
+            raise CuratedLocationError(
+                "multiple distinct confirmed locations match this locality; select a location candidate",
+                field="location_id",
+                error_code="ambiguous_location",
+            )
     if len(matches) > 1:
         raise CuratedLocationError("duplicate confirmed location rows exist")
     now = _timestamp()
@@ -865,6 +1069,7 @@ def location_review_payload(
                 ),
                 "queue_id": queue_row_id(row),
                 "confirmed_location": matches[0] if len(matches) == 1 else None,
+                "confirmed_locations": [dict(location) for location in matches],
                 "confirmed_location_count": len(matches),
                 "existing_aliases": aliases_by_canonical.get(canonical_key, []),
                 "candidate_suggestions": candidate_suggestions,

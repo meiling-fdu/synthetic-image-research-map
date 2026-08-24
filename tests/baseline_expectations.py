@@ -7,56 +7,56 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "curated_papers": 302,
-    "public_unique_papers": 533,
-    "public_map_source_papers": 520,
-    "public_papers_with_map": 519,
-    "public_papers_without_map": 14,
-    "public_map_relationships": 1167,
-    "canonical_institution_rows": 640,
-    "active_canonical_institutions": 636,
-    "inactive_or_merged_institutions": 4,
-    "author_institution_mappings": 828,
+    "curated_papers": 315,
+    "public_unique_papers": 541,
+    "public_map_source_papers": 529,
+    "public_papers_with_map": 528,
+    "public_papers_without_map": 13,
+    "public_map_relationships": 1205,
+    "canonical_institution_rows": 635,
+    "active_canonical_institutions": 632,
+    "inactive_or_merged_institutions": 3,
+    "author_institution_mappings": 853,
     "institution_hierarchy_edges": 7,
-    "institution_aliases": 84,
+    "institution_aliases": 53,
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 636,
-    "merged": 2,
+    "active": 632,
+    "merged": 1,
     "ignored": 2,
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 466,
-    "research_unit": 72,
+    "university": 463,
+    "research_unit": 66,
     "company": 63,
-    "other": 39,
+    "other": 43,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 464,
-    "research_unit": 72,
+    "university": 462,
+    "research_unit": 66,
     "company": 61,
-    "other": 39,
+    "other": 43,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    "university": 501,
-    "research_unit": 101,
-    "company": 77,
-    "other": 48,
+    "university": 509,
+    "research_unit": 103,
+    "company": 80,
+    "other": 50,
 }
 
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 295,
+    "conference": 308,
     "journal": 167,
-    "preprint": 64,
-    "book": 7,
+    "preprint": 65,
+    "book": 1,
 }
 
 TASK_TOTALS = {
-    "detection": 458,
+    "detection": 466,
     "source_attribution": 46,
     "detection_and_source_attribution": 29,
 }
@@ -81,8 +81,6 @@ PUBLIC_PAPERS_WITHOUT_MAP = {
     "The Deployment Gap in AI Media Detection: Platform-Aware and Visually Constrained Adversarial Evaluation":
         "missing_affiliation_rows",
     "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion":
-        "missing_affiliation_rows",
-    "Prompt-Engineered Detection of AI-Generated Images":
         "missing_affiliation_rows",
     "Weakly‐Aligned Region‐Language Transformer for Real‐Time Artistic Content Detection in SAGIN":
         "missing_affiliation_rows",

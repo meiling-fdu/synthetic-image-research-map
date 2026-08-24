@@ -49,10 +49,12 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
         self.reviews = root / "reviews.csv"
         self.institutions = root / "institutions.csv"
         self.aliases = root / "aliases.csv"
+        self.locations = root / "locations.csv"
         write_csv(self.mappings, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
         write_csv(self.reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS)
         write_csv(self.institutions, INSTITUTION_COLUMNS)
         write_csv(self.aliases, INSTITUTION_ALIAS_COLUMNS)
+        write_csv(self.locations, INSTITUTION_LOCATION_COLUMNS)
         self.paper = {
             "paper_id": "curated:fixture",
             "title": "Progressive Open Space Expansion for Synthetic Images",
@@ -81,6 +83,7 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
             location_review_path=self.reviews,
             institutions_path=self.institutions,
             institution_aliases_path=self.aliases,
+            institution_locations_path=self.locations,
         )
 
     def seed_institutions(self, *entities):
@@ -129,6 +132,61 @@ class MappingInstitutionRegistrationTests(unittest.TestCase):
         })
         self.assertEqual(result["mapping"]["institution_id"], "institution:zhejiang")
         self.assertEqual(result["mapping"]["institution"], "Zhejiang Lab")
+
+    def test_exact_abbreviation_reuses_canonical_institution_without_pending_identity(self):
+        canonical_id = "institution:astar"
+        canonical_name = "Agency for Science, Technology and Research"
+        self.seed_institutions(row(
+            INSTITUTION_COLUMNS,
+            institution_id=canonical_id,
+            canonical_name=canonical_name,
+            abbreviation="A*STAR",
+            institution_type="research_unit",
+            institution_status="active",
+        ))
+        result = self.create({
+            **self.draft,
+            "institution": "A. STAR",
+            "institution_id": "institution:stale",
+        })
+        self.assertEqual(result["institution_resolution"], "existing")
+        self.assertEqual(result["mapping"]["institution_id"], canonical_id)
+        self.assertEqual(result["mapping"]["institution"], canonical_name)
+        self.assertEqual(len(read_csv := load_location_reviews(self.reviews)), 1)
+        self.assertEqual(read_csv[0]["institution_id"], canonical_id)
+
+    def test_exact_canonical_match_reuses_one_confirmed_location_without_review(self):
+        canonical_id = "institution:known"
+        self.seed_institutions(row(
+            INSTITUTION_COLUMNS,
+            institution_id=canonical_id,
+            canonical_name="Known Laboratory",
+            institution_status="active",
+        ))
+        write_csv(self.locations, INSTITUTION_LOCATION_COLUMNS, [
+            row(
+                INSTITUTION_LOCATION_COLUMNS,
+                location_id="location:known",
+                institution_id=canonical_id,
+                institution="Known Laboratory",
+                country="Italy",
+                country_code="IT",
+                lat="41.9",
+                lon="12.5",
+                coordinate_status="known",
+            ),
+        ])
+
+        result = self.create({
+            **self.draft,
+            "institution": "Known-Laboratory",
+            "institution_id": "institution:stale",
+        })
+
+        self.assertEqual(result["mapping"]["institution_id"], canonical_id)
+        self.assertEqual(result["mapping"]["location_id"], "location:known")
+        self.assertEqual(result["location_review"], "known")
+        self.assertEqual(load_location_reviews(self.reviews), [])
 
     def test_new_name_creates_provisional_mapping_and_needs_coordinates_review(self):
         result = self.create()

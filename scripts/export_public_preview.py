@@ -3030,12 +3030,10 @@ def institution_id_redirects(
     }
     redirects: Dict[str, str] = {}
     for source in direct:
-        # Historical cleanup may retain a merge audit after deleting the old
-        # registry row. Keep that audit history, but never use it as an active
-        # identity redirect.
-        if source not in status_by_id:
-            continue
-        if status_by_id.get(source) != "merged":
+        # Exact-equivalent consolidation may remove the duplicate row after
+        # rebinding every reference. Its reviewed audit remains a safe legacy
+        # ID redirect; an extant source must still be a merged tombstone.
+        if source in status_by_id and status_by_id.get(source) != "merged":
             raise PreviewExportError(
                 f"Institution merge audit source is not merged: {source}"
             )

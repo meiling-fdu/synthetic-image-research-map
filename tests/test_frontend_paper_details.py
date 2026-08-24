@@ -242,6 +242,19 @@ process.stdout.write(JSON.stringify(Object.fromEntries(
         self.assertIn('setAttribute("aria-expanded", String(!isExpanded))', self.app)
         self.assertIn('"Show fewer authors"', self.app)
 
+    def test_closing_details_restores_focus_to_the_selection_origin(self):
+        close_handler = self.app.split(
+            'closePaperDetailsButton.addEventListener("click", () => {', 1
+        )[1].split("\n});", 1)[0]
+        self.assertIn(
+            "interactionState.selected?.marker?.getElement?.()", close_handler
+        )
+        self.assertIn(
+            ".get(interactionState.selectedMarkerId)?.marker?.getElement?.()",
+            close_handler,
+        )
+        self.assertIn("(selectionOrigin || mapElement).focus({ preventScroll: true })", close_handler)
+
     def test_existing_pin_hover_and_filtered_selection_guards_remain(self):
         self.assertIn(
             "const detailSelection = interactionState.selected || interactionState.hovered",

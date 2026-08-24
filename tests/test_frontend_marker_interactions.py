@@ -115,6 +115,7 @@ const marker = {
 let activations = 0;
 helpers.bindMarkerHandlers(marker, {
   supportsHover: false,
+  accessibleLabel: "Example University; 3 unique papers. Show paper details.",
   click() { activations += 1; },
 });
 let prevented = 0;
@@ -135,7 +136,11 @@ process.stdout.write(JSON.stringify({attributes, activations, prevented, stopped
             text=True,
         )
         values = json.loads(result.stdout)
-        self.assertEqual(values["attributes"], {"role": "button", "tabindex": "0"})
+        self.assertEqual(values["attributes"], {
+            "role": "button",
+            "tabindex": "0",
+            "aria-label": "Example University; 3 unique papers. Show paper details.",
+        })
         self.assertEqual(values["activations"], 2)
         self.assertEqual(values["prevented"], 2)
         self.assertEqual(values["stopped"], 2)

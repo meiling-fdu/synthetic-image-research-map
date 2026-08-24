@@ -215,7 +215,13 @@ def build_audit(
 ) -> list[dict[str, str]]:
     institutions = active_institutions(tables)
     by_id = {clean(row.get("institution_id")): row for row in institutions}
-    unknown = sorted(set(overrides) - set(by_id))
+    # A retired exact-duplicate ID can remain in the manual evidence file as a
+    # no-op `keep` decision after its canonical row is removed. Actionable
+    # overrides must still identify one active institution.
+    unknown = sorted(
+        identifier for identifier in set(overrides) - set(by_id)
+        if clean(overrides[identifier].get("status")) != "keep"
+    )
     if unknown:
         raise MigrationError(f"override IDs do not exist as active institutions: {', '.join(unknown)}")
     aliases = aliases_by_id(tables)

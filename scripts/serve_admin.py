@@ -86,6 +86,7 @@ try:
         DEFAULT_LOCATION_AUDIT_PATH,
         CuratedInstitutionError,
         add_institution_alias,
+        exact_institution_matches,
         ignore_institution,
         institution_impact,
         load_institutions,
@@ -213,6 +214,7 @@ except ImportError:
         DEFAULT_LOCATION_AUDIT_PATH,
         CuratedInstitutionError,
         add_institution_alias,
+        exact_institution_matches,
         ignore_institution,
         institution_impact,
         load_institutions,
@@ -1463,19 +1465,9 @@ def queue_location_review(
     requested_id = clean(draft.get("institution_id"))
     target = entities_by_id.get(requested_id)
     if target is None:
-        normalized = normalize_institution_name(institution)
-        matching_ids = {
-            clean(row.get("institution_id"))
-            for row in entities
-            if normalize_institution_name(row.get("canonical_name")) == normalized
-        }
-        matching_ids.update(
-            clean(row.get("institution_id"))
-            for row in load_institution_aliases(aliases_path)
-            if clean(row.get("review_status")) == "confirmed"
-            and normalize_institution_name(row.get("alias_name")) == normalized
-            and clean(row.get("institution_id")) in entities_by_id
-        )
+        matching_ids = set(exact_institution_matches(
+            institution, entities, load_institution_aliases(aliases_path)
+        ))
         if len(matching_ids) > 1:
             raise AdminDataError(
                 "institution identity is ambiguous; choose a canonical institution"

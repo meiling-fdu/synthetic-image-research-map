@@ -49,8 +49,10 @@ KNOWN_WORKFLOW_OUTPUTS = (
     Path("data/curated/institution_review_queue.csv"),
     Path("data/processed/orphan_institution_cleanup_audit.csv"),
     Path("data/processed/full_source_completeness_audit.csv"),
+    Path("data/processed/institution_identity_resolution_audit.csv"),
     Path("docs/missing_author_mappings_report.md"),
     Path("docs/public_preview_report.md"),
+    Path("docs/institution_identity_resolution_audit.md"),
 )
 
 CURATED_VALIDATION = (
@@ -60,6 +62,11 @@ CURATED_VALIDATION = (
 INSTITUTION_CONSISTENCY_REPORT = (
     "python3",
     "scripts/audit_institution_consistency.py",
+)
+INSTITUTION_IDENTITY_RESOLUTION = (
+    "python3",
+    "scripts/audit_institution_identities.py",
+    "--write",
 )
 INSTITUTION_REVIEW_QUEUE_SYNC = (
     "python3",
@@ -139,6 +146,7 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         VENUE_CANONICALIZATION_PREFLIGHT,
         CURATED_SCHEMA_MIGRATION,
         VENUE_CANONICALIZATION,
+        INSTITUTION_IDENTITY_RESOLUTION,
         INSTITUTION_CONSISTENCY_REPORT,
         INSTITUTION_REVIEW_QUEUE_SYNC,
         FULL_SOURCE_COMPLETENESS_AUDIT,

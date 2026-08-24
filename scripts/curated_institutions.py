@@ -76,6 +76,44 @@ def normalize_institution(value: Any) -> str:
     return " ".join(re.findall(r"\w+", text, flags=re.UNICODE))
 
 
+def institution_match_key(value: Any) -> str:
+    """Normalize exact identity evidence, including punctuated abbreviations."""
+    return "".join(normalize_institution(value).split())
+
+
+def exact_institution_matches(
+    value: Any,
+    institutions: Sequence[Mapping[str, Any]],
+    aliases: Sequence[Mapping[str, Any]] = (),
+) -> list[str]:
+    """Return active canonical IDs with exact canonical/abbreviation/alias evidence."""
+    key = institution_match_key(value)
+    if not key:
+        return []
+    active = {
+        clean(row.get("institution_id")): row
+        for row in institutions
+        if clean(row.get("institution_status")) == "active"
+        and clean(row.get("institution_id"))
+    }
+    matched = {
+        identifier
+        for identifier, row in active.items()
+        if key in {
+            institution_match_key(row.get("canonical_name")),
+            institution_match_key(row.get("abbreviation")),
+        }
+    }
+    matched.update(
+        clean(alias.get("institution_id"))
+        for alias in aliases
+        if clean(alias.get("review_status")) == "confirmed"
+        and institution_match_key(alias.get("alias_name")) == key
+        and clean(alias.get("institution_id")) in active
+    )
+    return sorted(matched)
+
+
 def format_institution_name(canonical_name: Any, abbreviation: Any = "") -> str:
     """Return the presentation label without changing the stored canonical name."""
     canonical = clean(canonical_name)
@@ -461,7 +499,7 @@ def update_institution_identity(
         raise CuratedInstitutionError(
             "institution status changes require their dedicated action"
         )
-    duplicate = next((other for other in rows if other is not row and normalize_institution(other.get("canonical_name")) == normalize_institution(canonical)), None)
+    duplicate = next((other for other in rows if other is not row and institution_match_key(other.get("canonical_name")) == institution_match_key(canonical)), None)
     if duplicate:
         raise CuratedInstitutionError("canonical_name belongs to another institution; use the explicit merge action")
     row.update({"canonical_name": canonical, "abbreviation": abbreviation, "institution_type": institution_type, "institution_status": status, "public_display": clean(draft.get("public_display") or row.get("public_display")) or "self", "updated_at": _timestamp()})
@@ -892,6 +930,11 @@ def merge_institutions(
             "merge requires manual parent resolution when both institutions have different parents"
         )
     now = _timestamp()
+    source_mapping_ids = {
+        clean(mapping.get("mapping_id"))
+        for mapping in mappings
+        if clean(mapping.get("institution_id")) == source_id
+    }
     for mapping in mappings:
         if clean(mapping.get("institution_id")) == source_id:
             mapping["institution_id"] = target_id
@@ -907,9 +950,9 @@ def merge_institutions(
     ]
     if source_locations and target_locations:
         resolution = clean(location_resolution)
-        if resolution not in {"keep_target", "use_source"}:
+        if resolution not in {"keep_target", "use_source", "keep_both"}:
             raise CuratedInstitutionError(
-                "location_resolution must explicitly be keep_target or use_source "
+                "location_resolution must explicitly be keep_target, use_source, or keep_both "
                 "when both institutions have confirmed locations"
             )
     else:
@@ -931,7 +974,7 @@ def merge_institutions(
         location_id_replacements.update(
             (location_id, replacement_id) for location_id in source_location_ids
         )
-    else:
+    elif resolution == "use_source":
         kept_locations = source_locations
         migrated_locations = []
         for location in source_locations:
@@ -962,6 +1005,48 @@ def merge_institutions(
         location_id_replacements.update(
             (location_id, replacement_id) for location_id in target_location_ids
         )
+    else:
+        kept_locations = list(target_locations)
+        for location in source_locations:
+            previous_location_id = clean(location.get("location_id"))
+            location["institution_id"] = target_id
+            location["institution"] = target_name
+            location["normalized_institution"] = normalize_institution(target_name)
+            location_identity = "|".join((
+                target_id.casefold(),
+                clean(location.get("city")).casefold(),
+                clean(location.get("region")).casefold(),
+                clean(location.get("country")).casefold(),
+            ))
+            location["location_id"] = (
+                "location:"
+                f"{hashlib.sha256(location_identity.encode()).hexdigest()[:20]}"
+            )
+            location["updated_at"] = now
+            location_id_replacements[previous_location_id] = clean(
+                location.get("location_id")
+            )
+            kept_locations.append(location)
+
+    # A canonical institution may legitimately have multiple campuses, but
+    # identical coordinates/location fields must not create duplicate markers.
+    deduplicated_locations: list[dict[str, str]] = []
+    locations_by_key: dict[tuple[str, ...], dict[str, str]] = {}
+    for location in kept_locations:
+        key = tuple(
+            clean(location.get(field)).casefold()
+            for field in ("city", "region", "country", "country_code", "lat", "lon")
+        )
+        existing = locations_by_key.get(key)
+        if existing is None:
+            copied = dict(location)
+            locations_by_key[key] = copied
+            deduplicated_locations.append(copied)
+            continue
+        location_id_replacements[clean(location.get("location_id"))] = clean(
+            existing.get("location_id")
+        )
+    kept_locations = deduplicated_locations
     locations = [
         row for row in locations
         if clean(row.get("institution_id")) not in {source_id, target_id}
@@ -972,6 +1057,25 @@ def merge_institutions(
         if selected_location_id in location_id_replacements:
             mapping["location_id"] = location_id_replacements[selected_location_id]
             mapping["updated_at"] = now
+        elif (
+            clean(mapping.get("mapping_id")) in source_mapping_ids
+            and not selected_location_id
+            and len(source_locations) == 1
+        ):
+            migrated_id = location_id_replacements.get(
+                clean(source_locations[0].get("location_id")), ""
+            )
+            migrated = next(
+                (row for row in kept_locations if clean(row.get("location_id")) == migrated_id),
+                None,
+            )
+            if migrated:
+                mapping["location_id"] = migrated_id
+                mapping["institution_city"] = clean(migrated.get("city"))
+                mapping["institution_country"] = clean(migrated.get("country"))
+                mapping["institution_latitude"] = clean(migrated.get("lat"))
+                mapping["institution_longitude"] = clean(migrated.get("lon"))
+                mapping["updated_at"] = now
 
     location_reviews = _read(
         location_reviews_path, INSTITUTION_LOCATION_REVIEW_COLUMNS

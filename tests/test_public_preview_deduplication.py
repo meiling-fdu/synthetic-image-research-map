@@ -514,6 +514,15 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             },
         )
 
+    def test_reviewed_merge_redirect_survives_pruned_duplicate_registry_row(self):
+        self.assertEqual(
+            institution_id_redirects(
+                [{"institution_id": "institution:new", "institution_status": "active"}],
+                [{"action": "merge", "previous_institution_id": "institution:old", "institution_id": "institution:new"}],
+            ),
+            {"institution:old": "institution:new"},
+        )
+
     def test_id_first_canonicalization_covers_alias_merge_authors_and_parent_child(self):
         parent_id = "institution:parent"
         child_id = "institution:child"

@@ -758,6 +758,26 @@ class PublicExportShrinkageTests(unittest.TestCase):
         self.assertFalse(missing.allowed)
         self.assertIn("no matching", missing.removed_maps[0].evidence)
 
+    def test_exact_canonical_merge_allows_pruned_duplicate_source_with_audit(self):
+        old = {**marker(paper(), "institution:old", "Old"),
+               "institution_authors": ["Ada Author"]}
+        new = {**marker(paper(), "institution:new", "New"),
+               "institution_authors": ["Ada Author"]}
+        registry = [
+            {"institution_id": "institution:new", "institution_status": "active"},
+        ]
+        audits = [{
+            "audit_id": "institution-audit:merge", "action": "merge",
+            "previous_institution_id": "institution:old",
+            "institution_id": "institution:new",
+        }]
+        explained = analyze_shrinkage(
+            [paper()], [paper()], [old], [new], institution_rows=registry,
+            institution_audits=audits,
+        )
+        self.assertTrue(explained.allowed)
+        self.assertIn("canonical_merge", explained.removed_maps[0].evidence)
+
     def test_multihop_merge_resolves_and_cycle_or_dangling_target_fails(self):
         old = marker(paper(), "institution:a", "A")
         new = marker(paper(), "institution:c", "C")

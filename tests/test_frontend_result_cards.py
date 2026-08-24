@@ -118,7 +118,17 @@ process.stdout.write(JSON.stringify({
     def test_mapping_assets_share_a_current_cache_key(self):
         versions = {
             asset: self.html.split(f'{asset}?v=', 1)[1].split('"', 1)[0]
-            for asset in ("style.css", "paper_details_helpers.js", "app.js")
+            for asset in (
+                "style.css",
+                "synthetic-image-detection-attribution-landscape-logo.png",
+                "paper_details_helpers.js",
+                "paper_link_helpers.js",
+                "marker_size_helpers.js",
+                "marker_interaction_helpers.js",
+                "public_metadata.js",
+                "institution_type_labels.js",
+                "app.js",
+            )
         }
         self.assertEqual(len(set(versions.values())), 1)
 
@@ -546,17 +556,24 @@ process.stdout.write(JSON.stringify({
         self.assertIn("${resultBadges(record)}", institution)
         self.assertNotIn("resultBadges(record, true)", institution)
 
-    def test_sort_control_uses_compact_sizing_without_changing_options(self):
+    def test_sort_control_uses_shared_compact_dropdown_without_changing_options(self):
         self.assertIn(
             '<select id="sort-control" class="sort-control-compact" disabled>',
             self.html,
         )
-        select_css = self.css.split(".sort-control-label select {", 1)[1].split(
+        self.assertIn(
+            '<div class="sort-control-label filter-dropdown-field" data-filter-dropdown>',
+            self.html,
+        )
+        button_css = self.css.split(
+            ".sort-control-label .filter-dropdown-button {", 1
+        )[1].split(
             "}", 1
         )[0]
-        self.assertIn("height: 32px", select_css)
-        self.assertIn("min-height: 32px", select_css)
-        self.assertIn("padding: 3px 28px 3px 8px", select_css)
+        self.assertIn("height: 32px", button_css)
+        self.assertIn("min-height: 32px", button_css)
+        self.assertIn("padding: 3px 8px", button_css)
+        self.assertNotIn(".sort-control-label select {", self.css)
         sort_options = self.html.split(
             '<select id="sort-control" class="sort-control-compact" disabled>', 1
         )[1].split("</select>", 1)[0]

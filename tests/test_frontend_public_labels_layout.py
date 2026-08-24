@@ -97,6 +97,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
 
     def test_all_select_filters_use_one_custom_dropdown_controller(self):
         dropdown_ids = (
+            "sort-control",
             "task-filter", "entry-type-filter", "venue-type-filter",
             "venue-filter", "country-filter", "institution-type-filter",
             "preprint-filter",
@@ -108,6 +109,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         ]
         for dropdown_id in dropdown_ids:
             variable = {
+                "sort-control": "sortControl",
                 "task-filter": "taskFilter",
                 "entry-type-filter": "entryTypeFilter",
                 "venue-type-filter": "venueTypeFilter",
