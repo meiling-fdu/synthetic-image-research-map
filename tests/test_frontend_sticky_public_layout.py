@@ -21,9 +21,9 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
         ]
         for content in (
             'class="header-brand"',
-            "Task Distribution",
-            "Top Institutions",
-            "Year Distribution",
+            "Unique Papers by Task",
+            "Top Institutions by Unique Papers",
+            "Unique Papers by Year",
             "GitHub Repository",
             'id="data-updated"',
         ):
@@ -72,10 +72,11 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
         ]
         self.assertIn('class="dataset-overview"', summary)
         self.assertIn('class="map-status-row"', summary)
-        self.assertIn("Map Records", summary)
+        self.assertIn("Institution Records", summary)
+        self.assertIn("Unique Papers", summary)
         self.assertIn("Unique Institutions", summary)
         self.assertIn("Countries", summary)
-        self.assertIn("Circle Size = Papers in Current View", summary)
+        self.assertIn("Circle Size = Unique Papers in Current View", summary)
         self.assertIn("Circle Color = Dominant Task", summary)
         self.assertIn('id="map-status"', summary)
 
@@ -232,18 +233,21 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
         self.assertIn(".sidebar .filters-panel {\n    position: fixed;", mobile)
         self.assertIn("z-index: 2000", mobile)
 
-    def test_narrow_header_stays_sticky_and_compacts_to_three_panels(self):
+    def test_narrow_header_stays_sticky_with_tablet_grid_and_mobile_rail(self):
         tablet = self.css.split("@media (max-width: 820px) {", 1)[1].split(
             "@media (max-width: 820px) and", 1
         )[0]
         mobile = self.css.split("@media (max-width: 540px) {", 1)[1]
+        self.assertIn(
+            "grid-template-columns: repeat(3, minmax(0, 1fr))",
+            tablet,
+        )
+        self.assertIn("display: flex", mobile)
+        self.assertIn("overflow-x: auto", mobile)
+        self.assertIn("scroll-snap-type: inline proximity", mobile)
         for responsive_rules in (tablet, mobile):
-            self.assertIn(
-                "grid-template-columns: repeat(3, minmax(0, 1fr))",
-                responsive_rules,
-            )
             self.assertNotIn(".site-header {\n    position: static", responsive_rules)
-        self.assertIn("--sticky-summary-offset: 141px", mobile)
+        self.assertIn("--sticky-summary-offset: 195px", mobile)
 
 
 if __name__ == "__main__":

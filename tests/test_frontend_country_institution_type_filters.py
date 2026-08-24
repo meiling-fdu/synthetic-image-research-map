@@ -231,9 +231,13 @@ process.stdout.write(JSON.stringify({{
         self.assertIn('class="affiliation-type"', self.app)
         self.assertIn("sortedInstitutionTypeCounts(typeCounts)", self.app)
         self.assertIn("compareTextValues(labelForValue(first[0])", self.app)
-        self.assertIn('countryFilter.addEventListener("change", renderRecords)', self.app)
         self.assertIn(
-            'institutionTypeFilter.addEventListener("change", renderRecords)', self.app,
+            'countryFilter.addEventListener("change", handleFilterControlChange)',
+            self.app,
+        )
+        self.assertIn(
+            'institutionTypeFilter.addEventListener("change", handleFilterControlChange)',
+            self.app,
         )
 
     def test_country_panel_height_and_internal_scrolling(self):

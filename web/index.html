@@ -15,7 +15,7 @@
       integrity="sha256-p4NxAoJBhIINfQ3ynhymWCqKZs17ecT2n7GqrE/Tq4g="
       crossorigin=""
     >
-    <link rel="stylesheet" href="style.css?v=20260822-filter-dropdowns">
+    <link rel="stylesheet" href="style.css?v=20260824-paper-deep-links">
   </head>
   <body>
     <header class="site-header">
@@ -31,21 +31,21 @@
         >
       </div>
 
-      <section class="header-statistics" aria-label="Filtered Research Statistics">
+      <section class="header-statistics" aria-label="Filtered unique-paper statistics">
         <article class="header-chart task-chart">
-          <h2>Task Distribution</h2>
+          <h2>Unique Papers by Task</h2>
           <div id="task-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
         </article>
         <article class="header-chart institution-chart">
-          <h2>Top Institutions</h2>
+          <h2>Top Institutions by Unique Papers</h2>
           <div id="institution-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
         </article>
         <article class="header-chart year-chart">
-          <h2>Year Distribution</h2>
+          <h2>Unique Papers by Year</h2>
           <div id="year-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
@@ -68,7 +68,7 @@
     </header>
 
     <main class="page-shell">
-      <aside class="sidebar" aria-label="Map controls and summary">
+      <aside class="sidebar" aria-labelledby="filters-heading">
         <button
           id="mobile-filters-trigger"
           class="mobile-filters-trigger"
@@ -81,8 +81,7 @@
           id="filters-panel"
           class="panel filters-panel"
           aria-labelledby="filters-heading"
-          aria-modal="true"
-          role="dialog"
+          role="region"
         >
           <div class="filters-panel-heading">
             <h2 id="filters-heading" tabindex="-1">Filters</h2>
@@ -117,8 +116,16 @@
             </div>
 
             <div class="filter-dropdown-field" data-filter-dropdown>
-              <span id="entry-type-filter-label" class="filter-label">Paper Type</span>
-              <select id="entry-type-filter" disabled>
+              <span
+                id="entry-type-filter-label"
+                class="filter-label"
+                title="Research contribution type: Methods, Datasets, Benchmarks, Surveys, Analysis Studies, and related contributions."
+              >Research Type</span>
+              <span id="entry-type-filter-description" class="visually-hidden">
+                Research contribution type: Methods, Datasets, Benchmarks, Surveys,
+                Analysis Studies, and related contributions.
+              </span>
+              <select id="entry-type-filter" aria-describedby="entry-type-filter-description" disabled>
                 <option value="all">All</option>
                 <option value="method">Methods</option>
                 <option value="dataset">Datasets</option>
@@ -129,8 +136,16 @@
             </div>
 
             <div class="filter-dropdown-field" data-filter-dropdown>
-              <span id="venue-type-filter-label" class="filter-label">Publication Type</span>
-              <select id="venue-type-filter" disabled>
+              <span
+                id="venue-type-filter-label"
+                class="filter-label"
+                title="Publication format: Conference, Journal, Preprint, Book Chapter, and related formats."
+              >Publication Type</span>
+              <span id="venue-type-filter-description" class="visually-hidden">
+                Publication format: Conference, Journal, Preprint, Book Chapter, and related
+                formats.
+              </span>
+              <select id="venue-type-filter" aria-describedby="venue-type-filter-description" disabled>
                 <option value="all">All</option>
               </select>
             </div>
@@ -195,7 +210,18 @@
             </fieldset>
 
             </div>
-            <div id="active-institution-filter" class="active-filter-chip" hidden></div>
+            <div
+              id="active-filter-bar"
+              class="active-filter-bar"
+              aria-label="Active filters"
+              hidden
+            >
+              <ul id="active-filter-chips" class="active-filter-chips"></ul>
+              <button id="clear-active-filters" class="clear-active-filters" type="button" hidden>
+                Clear all
+              </button>
+              <span id="active-filter-status" class="visually-hidden" role="status" aria-live="polite"></span>
+            </div>
           </div>
           <div class="filters-panel-actions">
             <button id="reset-filters" type="button" disabled>Reset Filters</button>
@@ -207,11 +233,15 @@
       <div class="map-column">
         <section class="map-panel" aria-label="Research Map">
           <div class="map-summary">
-            <div class="dataset-overview" aria-label="Filtered map overview">
+            <div class="dataset-overview" aria-label="Filtered data overview">
               <dl class="dataset-statistics" aria-live="polite">
                 <div>
-                  <dt>Map Records</dt>
+                  <dt>Institution Records</dt>
                   <dd id="dataset-record-count">0</dd>
+                </div>
+                <div>
+                  <dt>Unique Papers</dt>
+                  <dd id="dataset-paper-count">0</dd>
                 </div>
                 <div>
                   <dt>Unique Institutions</dt>
@@ -223,18 +253,19 @@
                 </div>
               </dl>
               <p id="dataset-statistics-note">
-                Institution records matching the current filters.
+                Filtered institution records represent paper–institution links; unique papers
+                include papers without mapped institutions.
               </p>
             </div>
             <div class="map-status-row">
-              <p class="map-encoding-legend" aria-label="Circle size represents papers in the current view; circle color represents dominant task">
+              <p class="map-encoding-legend" aria-label="Circle size represents unique papers in the current view; circle color represents dominant task">
                 <span class="map-encoding-item">
                   <span class="marker-size-examples" aria-hidden="true">
                     <i class="marker-size-example small"></i>
                     <i class="marker-size-example medium"></i>
                     <i class="marker-size-example large"></i>
                   </span>
-                  Circle Size = Papers in Current View
+                  Circle Size = Unique Papers in Current View
                 </span>
                 <span class="map-encoding-item">
                   <span class="marker-color-examples" aria-hidden="true">
@@ -282,7 +313,7 @@
           <div class="results-heading-row">
             <div class="results-heading-group">
               <h2 id="results-heading">Filtered Records</h2>
-              <p id="results-count" role="status" aria-live="polite">Loading…</p>
+            <p id="results-count" role="status" aria-live="polite" tabindex="-1">Loading…</p>
             </div>
             <div class="results-view-toggle" role="group" aria-label="Results View">
               <span>View:</span>
@@ -308,9 +339,13 @@
                   <option value="title-desc">Title: Z–A</option>
                 </select>
               </label>
+              <button id="copy-view-link" class="copy-link-button" type="button">
+                Copy link
+              </button>
               <button id="export-csv" class="export-button" type="button" disabled>
                 Export CSV
               </button>
+              <span id="copy-view-link-status" class="visually-hidden" role="status" aria-live="polite"></span>
             </div>
           </div>
           <div class="results-records-area">
@@ -322,9 +357,24 @@
             </div>
             <ol id="results-list" class="results-list"></ol>
             <div id="results-sentinel" class="results-sentinel" aria-hidden="true"></div>
-            <p id="results-empty" class="results-empty" hidden>
-              No matching records.
-            </p>
+            <section
+              id="results-empty"
+              class="results-empty"
+              aria-labelledby="results-empty-heading"
+              hidden
+            >
+              <h3 id="results-empty-heading">No matching results</h3>
+              <p id="results-empty-summary"></p>
+              <div class="results-empty-primary-actions">
+                <button id="undo-last-filter" type="button" hidden>Undo last filter</button>
+                <button id="clear-empty-filters" type="button" hidden>Clear all filters</button>
+              </div>
+              <ul
+                id="results-empty-filter-actions"
+                class="results-empty-filter-actions"
+                aria-label="Remove individual filters"
+              ></ul>
+            </section>
           </div>
         </section>
       </div>
@@ -411,12 +461,12 @@
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
-    <script src="paper_details_helpers.js?v=20260822-filter-dropdowns"></script>
+    <script src="paper_details_helpers.js?v=20260824-paper-deep-links"></script>
     <script src="paper_link_helpers.js?v=20260729-formal-publication-links"></script>
-    <script src="marker_size_helpers.js?v=20260813-wide-desktop-shell-4"></script>
+    <script src="marker_size_helpers.js?v=20260824-data-units"></script>
     <script src="marker_interaction_helpers.js?v=20260712-pinned-state"></script>
     <script src="public_metadata.js?v=20260718-export-date"></script>
     <script src="institution_type_labels.js?v=20260718-research-institute"></script>
-    <script src="app.js?v=20260822-filter-dropdowns"></script>
+    <script src="app.js?v=20260824-paper-deep-links"></script>
   </body>
 </html>

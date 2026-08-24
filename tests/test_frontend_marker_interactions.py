@@ -146,16 +146,17 @@ process.stdout.write(JSON.stringify({attributes, activations, prevented, stopped
         css = (REPOSITORY / "web" / "style.css").read_text()
 
         for field in (
-            "hoveredMarkerId", "pinnedMarkerId", "detailsSource",
+            "hoveredMarkerId", "selectedMarkerId", "detailsSource",
             "isPointerInsideDetails",
         ):
             self.assertIn(field, app)
         self.assertIn("paperDetails.contains(relatedTarget)", app)
         self.assertIn('paperDetails.addEventListener("pointerenter"', app)
         self.assertIn('paperDetails.addEventListener("pointerleave"', app)
-        self.assertIn('element?.setAttribute("aria-pressed", String(isPinned))', app)
-        self.assertIn("interactionState.pinnedMarkerId === institutionKey", app)
-        self.assertIn("restoredPinRecord", app)
+        self.assertIn('element?.setAttribute("aria-pressed", String(isOrigin))', app)
+        self.assertIn("interactionState.selectedMarkerId === institutionKey", app)
+        self.assertIn("restoreLinkedPaperSelection", app)
+        self.assertIn("visiblePaperSelectionByIdentity", app)
         self.assertIn("paper-details-pin-status", html)
         self.assertIn("Pinned", html)
         self.assertIn(".leaflet-interactive.is-paper-pinned", css)

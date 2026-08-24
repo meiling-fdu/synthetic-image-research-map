@@ -31,14 +31,14 @@ window.addEventListener("unhandledrejection", (event) => {
 const DATASET_CONFIG = {
   openalex: {
     url: "data/openalex_candidate_map_data.json",
-    recordLabel: "OpenAlex record",
+    recordLabel: "institution record",
     emptyMessage:
       "The local OpenAlex dataset contains no records with valid mapped locations.",
   },
   preview: {
     url: "data/public_preview_map_data.json",
     paperUrl: "data/public_preview_papers.json",
-    recordLabel: "public map record",
+    recordLabel: "institution record",
     emptyMessage: "The public dataset contains no eligible map records.",
   },
 };
@@ -47,9 +47,18 @@ function resolveDatasetName(requestedName) {
   return requestedName === "openalex" ? "openalex" : "preview";
 }
 
-const requestedDataset = new URLSearchParams(window.location.search).get("dataset");
+const initialUrlSearchParams = new URLSearchParams(window.location.search);
+const requestedDataset = initialUrlSearchParams.get("dataset");
 const datasetName = resolveDatasetName(requestedDataset);
 const datasetConfig = DATASET_CONFIG[datasetName];
+const preservedDatasetParameter = ["preview", "openalex"].includes(requestedDataset)
+  ? requestedDataset
+  : "";
+const URL_STATE_PARAMETER_ORDER = [
+  "keyword", "task", "paper_type", "publication_type", "venue", "country",
+  "institution_type", "version", "year_start", "year_end", "institution",
+  "institution_label", "paper", "view", "sort",
+];
 const TILE_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
 const DISPLAY_BOUNDS = L.latLngBounds([[-50, -170], [72, 180]]);
 const BASE_MIN_ZOOM = 1;
@@ -164,7 +173,10 @@ const yearRangeMinimum = document.querySelector("#year-range-min");
 const yearRangeMaximum = document.querySelector("#year-range-max");
 const yearRangeSlider = document.querySelector(".year-range-slider");
 const resetButton = document.querySelector("#reset-filters");
-const activeInstitutionFilterChip = document.querySelector("#active-institution-filter");
+const activeFilterBar = document.querySelector("#active-filter-bar");
+const activeFilterChips = document.querySelector("#active-filter-chips");
+const clearActiveFiltersButton = document.querySelector("#clear-active-filters");
+const activeFilterStatus = document.querySelector("#active-filter-status");
 const filtersPanel = document.querySelector("#filters-panel");
 const filtersBackdrop = document.querySelector("#filters-backdrop");
 const mobileFiltersTrigger = document.querySelector("#mobile-filters-trigger");
@@ -175,16 +187,25 @@ const filtersHeading = document.querySelector("#filters-heading");
 const mobileFiltersMedia = window.matchMedia("(max-width: 820px)");
 const mapStatus = document.querySelector("#map-status");
 const datasetRecordCount = document.querySelector("#dataset-record-count");
+const datasetPaperCount = document.querySelector("#dataset-paper-count");
 const datasetInstitutionCount = document.querySelector("#dataset-institution-count");
 const datasetCountryCount = document.querySelector("#dataset-country-count");
 const datasetStatisticsNote = document.querySelector("#dataset-statistics-note");
 const taskChartContent = document.querySelector("#task-chart-content");
 const institutionChartContent = document.querySelector("#institution-chart-content");
 const yearChartContent = document.querySelector("#year-chart-content");
+const headerStatistics = document.querySelector(".header-statistics");
 const resultsCount = document.querySelector("#results-count");
 const resultsList = document.querySelector("#results-list");
 const resultsLoading = document.querySelector("#results-loading");
 const resultsEmpty = document.querySelector("#results-empty");
+const resultsEmptyHeading = document.querySelector("#results-empty-heading");
+const resultsEmptySummary = document.querySelector("#results-empty-summary");
+const resultsEmptyFilterActions = document.querySelector("#results-empty-filter-actions");
+const undoLastFilterButton = document.querySelector("#undo-last-filter");
+const clearEmptyFiltersButton = document.querySelector("#clear-empty-filters");
+const copyViewLinkButton = document.querySelector("#copy-view-link");
+const copyViewLinkStatus = document.querySelector("#copy-view-link-status");
 const exportCsvButton = document.querySelector("#export-csv");
 const resultsViewButtons = document.querySelectorAll("[data-results-view]");
 const paperDetails = document.querySelector("#paper-details");
@@ -195,6 +216,7 @@ const paperDetailsPinStatus = document.querySelector("#paper-details-pin-status"
 let records = [];
 let paperRecords = [];
 let canonicalPaperRecordsByIdentity = new Map();
+let mapRecordsByPaperIdentity = new Map();
 let institutionAliases = [];
 let institutionHierarchy = [];
 let institutionSearchRelationships = [];
@@ -207,6 +229,7 @@ let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
+let visibleMarkerEntryByInstitutionKey = new Map();
 let activeInstitutionFilter = null;
 let displayedInstitutionFilter = null;
 let yearRangeBounds = null;
@@ -224,16 +247,30 @@ let keywordCompositionActive = false;
 let filteringDataCacheGeneration = 0;
 let searchTextPrewarmHandle = null;
 let searchTextPrewarmGeneration = -1;
+let activeFilterChipsSignature = "";
+let lastKnownFilterState = null;
+let lastFilterChange = null;
+let urlStateReady = false;
+let restoringUrlState = false;
+let pendingUrlHistoryMode = "replace";
+let lastCanonicalViewUrl = "";
+let keywordHistoryStarted = false;
+let yearHistoryStarted = false;
+let copyLinkFeedbackTimer = null;
+let copyPaperLinkFeedbackTimer = null;
+let pendingResultReveal = null;
+let requestedPaperIdentity = "";
+let visiblePaperSelectionByIdentity = new Map();
 const RESULTS_RESIZE_DEBOUNCE_MS = 100;
 const RESULTS_INITIAL_VIEWPORTS = 2.25;
 const RESULTS_OBSERVER_MARGIN = "125% 0px";
 const interactionState = {
   hoveredMarkerId: null,
-  pinnedMarkerId: null,
+  selectedMarkerId: null,
   detailsSource: null,
   isPointerInsideDetails: false,
   hovered: null,
-  pinned: null,
+  selected: null,
 };
 let activeInstitutionTooltipMarker = null;
 
@@ -801,6 +838,17 @@ function institutionFilterButtonHtml(affiliation) {
   return `<button type="button" class="institution-filter-link" data-institution-filter="${escapeHtml(identity)}" data-institution-label="${escapeHtml(label)}" aria-label="Filter by institution ${escapeHtml(label)}">${escapeHtml(label)}</button>`;
 }
 
+function institutionFocusButtonHtml(affiliation) {
+  const label = String(affiliation.institution || affiliation.name || "").trim();
+  if (!label) return "";
+  const identity = institutionIdentity({
+    institution: label,
+    institution_id: affiliation.institutionId || affiliation.institution_id,
+    canonical_institution_name: affiliation.canonicalName || affiliation.canonical_name,
+  });
+  return `<button type="button" class="institution-filter-link institution-map-focus-link" data-focus-institution="${escapeHtml(identity)}" aria-label="Highlight ${escapeHtml(label)} on the map">${escapeHtml(label)}</button>`;
+}
+
 function compactAffiliationsHtml(affiliations, limit = 3) {
   const visibleAffiliations = affiliations.slice(0, limit);
   const items = visibleAffiliations.map((affiliation) => (
@@ -813,23 +861,333 @@ function compactAffiliationsHtml(affiliations, limit = 3) {
   return items.join("; ");
 }
 
-function renderActiveInstitutionFilter() {
-  activeInstitutionFilterChip.hidden = !displayedInstitutionFilter;
-  activeInstitutionFilterChip.innerHTML = displayedInstitutionFilter
-    ? `<span class="active-institution-label">Institution: ${escapeHtml(displayedInstitutionFilter.label)}</span><button type="button" data-clear-institution-filter aria-label="Clear institution filter for ${escapeHtml(displayedInstitutionFilter.label)}">×</button>`
-    : "";
+function selectedFilterOptionLabel(control) {
+  const label = control.selectedOptions?.[0]?.textContent || control.value;
+  return String(label).replace(/\s+\([\d,]+\)$/, "").trim();
+}
+
+function activeFilterChipDescriptors() {
+  const descriptors = [];
+  const keyword = keywordFilter.value.trim();
+  if (keyword) descriptors.push({ key: "keyword", category: "Keyword", value: keyword });
+  if (taskFilter.value !== "all") {
+    descriptors.push({ key: "task", category: "Task", value: formatPublicTask(taskFilter.value) });
+  }
+  if (entryTypeFilter.value !== "all") {
+    descriptors.push({
+      key: "entry-type", category: "Research Type", value: getEntryTypeLabel(entryTypeFilter.value),
+    });
+  }
+  if (venueTypeFilter.value !== "all") {
+    descriptors.push({
+      key: "venue-type", category: "Publication Type",
+      value: selectedFilterOptionLabel(venueTypeFilter),
+    });
+  }
+  if (venueFilter.value !== "all") {
+    descriptors.push({
+      key: "venue", category: "Venue", value: selectedFilterOptionLabel(venueFilter),
+    });
+  }
+  if (countryFilter.value !== "all") {
+    descriptors.push({
+      key: "country", category: "Country", value: selectedFilterOptionLabel(countryFilter),
+    });
+  }
+  if (institutionTypeFilter.value !== "all") {
+    descriptors.push({
+      key: "institution-type", category: "Institution Type",
+      value: institutionTypeLabel(institutionTypeFilter.value),
+    });
+  }
+  if (preprintFilter.value !== "all") {
+    descriptors.push({
+      key: "version", category: "Version", value: selectedFilterOptionLabel(preprintFilter),
+    });
+  }
+  const selection = currentYearSelection();
+  if (yearRangeBounds && selection && (
+    selection.start !== yearRangeBounds.minimum || selection.end !== yearRangeBounds.maximum
+  )) {
+    descriptors.push({
+      key: "year", category: "Publication Year",
+      value: selection.start === selection.end
+        ? String(selection.start)
+        : `${selection.start}\u2013${selection.end}`,
+    });
+  }
+  if (activeInstitutionFilter) {
+    descriptors.push({
+      key: "institution", category: "Institution", value: activeInstitutionFilter.label,
+    });
+  }
+  return descriptors;
+}
+
+function currentViewState() {
+  const years = currentYearSelection();
+  return {
+    keyword: keywordFilter.value.trim(),
+    task: taskFilter.value,
+    paperType: entryTypeFilter.value,
+    publicationType: venueTypeFilter.value,
+    venue: venueFilter.value,
+    country: countryFilter.value,
+    institutionType: institutionTypeFilter.value,
+    version: preprintFilter.value,
+    yearStart: years?.start ?? null,
+    yearEnd: years?.end ?? null,
+    yearMinimum: yearRangeBounds?.minimum ?? null,
+    yearMaximum: yearRangeBounds?.maximum ?? null,
+    institution: activeInstitutionFilter?.identity || "",
+    institutionLabel: activeInstitutionFilter?.label || "",
+    paper: requestedPaperIdentity,
+    view: resultsView,
+    sort: sortControl.value,
+  };
+}
+
+function currentFilterConstraintState() {
+  const { view, sort, paper, ...filters } = currentViewState();
+  return filters;
+}
+
+function filterConstraintSignature(state) {
+  return JSON.stringify(state);
+}
+
+function rememberFilterChange(key, { coalesce = false } = {}) {
+  const after = currentFilterConstraintState();
+  const before = lastKnownFilterState || after;
+  if (filterConstraintSignature(before) === filterConstraintSignature(after)) return;
+  if (coalesce && lastFilterChange?.key === key) {
+    lastFilterChange.after = after;
+  } else {
+    lastFilterChange = { key, before, after };
+  }
+  lastKnownFilterState = after;
+}
+
+function syncKnownFilterState() {
+  const current = currentFilterConstraintState();
+  if (lastKnownFilterState
+    && filterConstraintSignature(lastKnownFilterState) !== filterConstraintSignature(current)
+    && !restoringUrlState) {
+    lastFilterChange = { key: "", before: lastKnownFilterState, after: current };
+  }
+  lastKnownFilterState = current;
+}
+
+function serializeViewState(state, datasetParameter = "") {
+  const params = new URLSearchParams();
+  if (["preview", "openalex"].includes(datasetParameter)) {
+    params.set("dataset", datasetParameter);
+  }
+  const values = {
+    keyword: state.keyword,
+    task: state.task !== "all" ? state.task : "",
+    paper_type: state.paperType !== "all" ? state.paperType : "",
+    publication_type: state.publicationType !== "all" ? state.publicationType : "",
+    venue: state.venue !== "all" ? state.venue : "",
+    country: state.country !== "all" ? state.country : "",
+    institution_type: state.institutionType !== "all" ? state.institutionType : "",
+    version: state.version !== "all" ? state.version : "",
+    year_start: Number.isInteger(state.yearStart)
+      && state.yearStart !== state.yearMinimum ? String(state.yearStart) : "",
+    year_end: Number.isInteger(state.yearEnd)
+      && state.yearEnd !== state.yearMaximum ? String(state.yearEnd) : "",
+    institution: state.institution,
+    institution_label: state.institution ? state.institutionLabel : "",
+    paper: state.paper,
+    view: state.view !== "institutions" ? state.view : "",
+    sort: state.sort !== "year-desc" ? state.sort : "",
+  };
+  URL_STATE_PARAMETER_ORDER.forEach((key) => {
+    const value = String(values[key] ?? "").trim();
+    if (value) params.set(key, value);
+  });
+  return params.toString();
+}
+
+function parseViewState(search) {
+  const params = search instanceof URLSearchParams
+    ? search
+    : new URLSearchParams(String(search || "").replace(/^\?/, ""));
+  const yearValue = (key) => {
+    const raw = params.get(key);
+    if (!/^\d{4}$/.test(raw || "")) return null;
+    return Number(raw);
+  };
+  return {
+    keyword: params.get("keyword") || "",
+    task: params.get("task") || "all",
+    paperType: params.get("paper_type") || "all",
+    publicationType: params.get("publication_type") || "all",
+    venue: params.get("venue") || "all",
+    country: params.get("country") || "all",
+    institutionType: params.get("institution_type") || "all",
+    version: params.get("version") || "all",
+    yearStart: yearValue("year_start"),
+    yearEnd: yearValue("year_end"),
+    institution: params.get("institution") || "",
+    institutionLabel: params.get("institution_label") || "",
+    paper: params.get("paper") || "",
+    view: params.get("view") || "institutions",
+    sort: params.get("sort") || "year-desc",
+  };
+}
+
+function canonicalViewUrl(state = currentViewState(), href = window.location.href) {
+  const url = new URL(href);
+  url.search = serializeViewState(state, preservedDatasetParameter);
+  url.hash = "";
+  return url.href;
+}
+
+function selectContainsValue(select, value) {
+  return [...select.options].some((option) => option.value === value);
+}
+
+function setRestoredSelectValue(select, value, { dynamic = false } = {}) {
+  const normalized = String(value || "").trim();
+  if (!normalized || normalized === "all") {
+    select.value = "all";
+    return;
+  }
+  if (!selectContainsValue(select, normalized)) {
+    if (!dynamic) {
+      select.value = "all";
+      return;
+    }
+    const option = document.createElement("option");
+    option.value = normalized;
+    option.textContent = normalized;
+    select.append(option);
+  }
+  select.value = normalized;
+}
+
+function setResultsViewState(view) {
+  resultsView = ["institutions", "papers"].includes(view) ? view : "institutions";
+  resultsViewButtons.forEach((button) => {
+    button.setAttribute(
+      "aria-pressed",
+      String(button.dataset.resultsView === resultsView),
+    );
+  });
+}
+
+function restoreViewState(state) {
+  resetFilterValues({ resetSort: true });
+  keywordFilter.value = state.keyword;
+  setRestoredSelectValue(taskFilter, state.task);
+  setRestoredSelectValue(entryTypeFilter, state.paperType);
+  setRestoredSelectValue(venueTypeFilter, state.publicationType, { dynamic: true });
+  setRestoredSelectValue(venueFilter, state.venue, { dynamic: true });
+  setRestoredSelectValue(countryFilter, state.country, { dynamic: true });
+  setRestoredSelectValue(institutionTypeFilter, state.institutionType, { dynamic: true });
+  setRestoredSelectValue(preprintFilter, state.version);
+  if (yearRangeBounds) {
+    const selection = resolveYearSelection(yearRangeBounds, {
+      start: state.yearStart ?? yearRangeBounds.minimum,
+      end: state.yearEnd ?? yearRangeBounds.maximum,
+    });
+    minYearFilter.value = String(selection.start);
+    maxYearFilter.value = String(selection.end);
+    syncYearRange();
+  }
+  if (state.institution) {
+    activeInstitutionFilter = {
+      identity: state.institution,
+      label: state.institutionLabel
+        || hierarchyInstitutionLabel(state.institution, institutionHierarchy)
+        || state.institution,
+    };
+  }
+  requestedPaperIdentity = String(state.paper || "").trim();
+  if (selectContainsValue(sortControl, state.sort)) sortControl.value = state.sort;
+  setResultsViewState(state.view);
+  filterDropdowns.forEach(syncFilterDropdown);
+}
+
+function requestUrlStateSync(mode = "push") {
+  if (mode === "push" || pendingUrlHistoryMode !== "push") {
+    pendingUrlHistoryMode = mode;
+  }
+}
+
+function syncUrlFromState() {
+  if (!urlStateReady || restoringUrlState) return;
+  const nextUrl = canonicalViewUrl();
+  if (nextUrl === window.location.href || nextUrl === lastCanonicalViewUrl) {
+    lastCanonicalViewUrl = nextUrl;
+    pendingUrlHistoryMode = "replace";
+    return;
+  }
+  const method = pendingUrlHistoryMode === "push" ? "pushState" : "replaceState";
+  window.history[method]({ researchMapView: true }, "", nextUrl);
+  lastCanonicalViewUrl = nextUrl;
+  pendingUrlHistoryMode = "replace";
+}
+
+function restoreViewStateFromLocation() {
+  restoringUrlState = true;
+  lastFilterChange = null;
+  try {
+    restoreViewState(parseViewState(window.location.search));
+    renderRecords();
+  } finally {
+    restoringUrlState = false;
+  }
+  lastCanonicalViewUrl = "";
+  pendingUrlHistoryMode = "replace";
+  syncUrlFromState();
+}
+
+function renderActiveFilterChips() {
+  const descriptors = activeFilterChipDescriptors();
+  const signature = JSON.stringify(descriptors);
+  if (signature === activeFilterChipsSignature) return;
+  activeFilterChipsSignature = signature;
+  const fragment = document.createDocumentFragment();
+  descriptors.forEach(({ key, category, value }) => {
+    const item = document.createElement("li");
+    const label = document.createElement("span");
+    const remove = document.createElement("button");
+    item.className = "active-filter-chip";
+    label.className = "active-filter-chip-label";
+    label.textContent = `${category}: ${value}`;
+    remove.type = "button";
+    remove.dataset.removeFilter = key;
+    remove.setAttribute("aria-label", `Remove ${category} filter: ${value}`);
+    remove.textContent = "\u00d7";
+    item.append(label, remove);
+    fragment.append(item);
+  });
+  activeFilterChips.replaceChildren(fragment);
+  activeFilterBar.hidden = descriptors.length === 0;
+  clearActiveFiltersButton.hidden = descriptors.length < 2;
+  activeFilterStatus.textContent = descriptors.length
+    ? `${descriptors.length} active filter${descriptors.length === 1 ? "" : "s"}`
+    : "No active filters";
 }
 
 function applyInstitutionFilter(identity, label) {
   activeInstitutionFilter = { identity, label };
+  rememberFilterChange("institution");
+  requestUrlStateSync("push");
   renderRecords();
 }
 
 function clearInstitutionFilter() {
+  const clearedKeyword = !activeInstitutionFilter
+    && displayedInstitutionFilter?.source === "keyword";
   if (!activeInstitutionFilter && displayedInstitutionFilter?.source === "keyword") {
     keywordFilter.value = "";
   }
   activeInstitutionFilter = null;
+  rememberFilterChange(clearedKeyword ? "keyword" : "institution");
+  requestUrlStateSync("push");
   renderRecords();
 }
 
@@ -1741,7 +2099,11 @@ function canonicalizePublicDataset(
       paper.aggregated_institutions = [...new Set(related.map(recordInstitution))];
     }
   });
-  return { mapRecords: canonicalMaps, paperRecords: publicPaperRecords };
+  return {
+    mapRecords: canonicalMaps,
+    paperRecords: publicPaperRecords,
+    mapRecordsByPaperIdentity: mapsByPaper,
+  };
 }
 
 function recordSearchText(record) {
@@ -2305,6 +2667,8 @@ function createFilterDropdown(select) {
   button.type = "button";
   button.setAttribute("role", "combobox");
   button.setAttribute("aria-labelledby", `${label.id} ${valueId}`);
+  const descriptionIds = select.getAttribute("aria-describedby");
+  if (descriptionIds) button.setAttribute("aria-describedby", descriptionIds);
   button.setAttribute("aria-controls", optionsId);
   button.setAttribute("aria-expanded", "false");
   button.setAttribute("aria-haspopup", "listbox");
@@ -2448,7 +2812,7 @@ function deriveFilteredRecordSets(
     .map((identity) => papersByIdentity.get(identity) || fallbackPapersByIdentity.get(identity))
     .filter(Boolean);
 
-  return { filteredRecords, filteredPapers };
+  return { filteredRecords, filteredPapers, matchingPaperIdentities };
 }
 
 function normalizedSetSize(values) {
@@ -2580,6 +2944,9 @@ function isPreprintOnlyRecord(record) {
 
 function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
   datasetRecordCount.textContent = datasetRecords.length;
+  // The filtered-paper pipeline is already keyed by paper identity; use its
+  // length directly rather than cloning or scanning it again for this metric.
+  datasetPaperCount.textContent = datasetPaperRecords.length;
   datasetInstitutionCount.textContent = normalizedSetSize(
     datasetRecords.map(institutionIdentity),
   );
@@ -2590,6 +2957,43 @@ function updateDatasetStatistics(datasetRecords, datasetPaperRecords = []) {
 
 function renderChartEmpty(container) {
   container.innerHTML = '<p class="chart-empty">No data</p>';
+}
+
+function activateChartFilter(filter, value, label = "") {
+  if (filter === "task") {
+    if (!selectContainsValue(taskFilter, value)) return;
+    taskFilter.value = taskFilter.value === value ? "all" : value;
+    syncFilterDropdownForSelect(taskFilter);
+  } else if (filter === "institution") {
+    if (!value) return;
+    if (activeInstitutionFilter?.identity === value) {
+      activeInstitutionFilter = null;
+      displayedInstitutionFilter = null;
+    } else {
+      activeInstitutionFilter = { identity: value, label: label || value };
+    }
+  } else if (filter === "year") {
+    const year = Number(value);
+    if (!yearRangeBounds || !Number.isInteger(year)
+      || year < yearRangeBounds.minimum || year > yearRangeBounds.maximum) return;
+    const selection = currentYearSelection();
+    const isActive = selection?.start === year && selection?.end === year;
+    minYearFilter.value = String(isActive ? yearRangeBounds.minimum : year);
+    maxYearFilter.value = String(isActive ? yearRangeBounds.maximum : year);
+    yearHistoryStarted = false;
+    syncYearRange();
+  } else {
+    return;
+  }
+  rememberFilterChange(filter === "task" ? "task" : filter);
+  hideChartTooltip();
+  requestUrlStateSync("push");
+  renderRecords();
+  const refreshedControl = [...headerStatistics.querySelectorAll("button[data-chart-filter]")]
+    .find((control) => (
+      control.dataset.chartFilter === filter && control.dataset.chartValue === value
+    ));
+  refreshedControl?.focus({ preventScroll: true });
 }
 
 function renderTaskChart(paperCoverageRecords) {
@@ -2609,16 +3013,16 @@ function renderTaskChart(paperCoverageRecords) {
   const segments = tasks
     .filter((task) => task.count)
     .map((task) => (
-      `<span class="task-chart-segment" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count}"></span>`
+      `<span class="task-chart-segment" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count} unique paper${task.count === 1 ? "" : "s"}"></span>`
     ))
     .join("");
   const items = tasks
     .map((task) => (
-      `<div class="task-chart-item"><i style="background:${task.color}"></i><span title="${escapeHtml(task.label)}">${escapeHtml(task.label)}</span><strong>${task.count}</strong></div>`
+      `<button type="button" class="task-chart-item" data-chart-filter="task" data-chart-value="${task.task}" data-chart-tooltip="${escapeHtml(task.label)} — ${task.count} unique paper${task.count === 1 ? "" : "s"}" aria-pressed="${taskFilter.value === task.task}" aria-label="${taskFilter.value === task.task ? "Clear" : "Filter by"} task ${escapeHtml(task.label)}; ${task.count} unique paper${task.count === 1 ? "" : "s"}"><i style="background:${task.color}"></i><span title="${escapeHtml(task.label)}">${escapeHtml(task.label)}</span><strong>${task.count}</strong></button>`
     ))
     .join("");
   taskChartContent.innerHTML = (
-    `<div class="task-chart-bar" aria-label="${total} filtered papers">${segments}</div><div class="task-chart-list" aria-label="Task category counts">${items}</div><div class="task-chart-total" aria-label="Total filtered papers"><span>Total</span><strong>${total}</strong></div>`
+    `<div class="task-chart-bar" aria-label="${total} filtered unique paper${total === 1 ? "" : "s"}">${segments}</div><div class="task-chart-list" aria-label="Unique paper counts by task">${items}</div><div class="task-chart-total" aria-label="Total filtered unique papers"><span>Total Unique Papers</span><strong>${total}</strong></div>`
   );
 }
 
@@ -2634,8 +3038,8 @@ function renderInstitutionChart(datasetRecords) {
     entry.papers.add(paperIdentity(record));
     institutions.set(key, entry);
   });
-  const topInstitutions = [...institutions.values()]
-    .map((entry) => ({ name: entry.name, count: entry.papers.size }))
+  const topInstitutions = [...institutions.entries()]
+    .map(([key, entry]) => ({ key, name: entry.name, count: entry.papers.size }))
     .sort((first, second) => (
       second.count - first.count || compareTextValues(first.name, second.name)
     ))
@@ -2647,7 +3051,7 @@ function renderInstitutionChart(datasetRecords) {
   const maximum = topInstitutions[0].count;
   institutionChartContent.innerHTML = (
     `<div class="institution-chart-list">${topInstitutions.map((entry) => (
-      `<div class="institution-chart-row" tabindex="0" data-chart-tooltip="${escapeHtml(entry.name)} — ${entry.count} paper${entry.count === 1 ? "" : "s"}" aria-label="${escapeHtml(entry.name)}: ${entry.count} paper${entry.count === 1 ? "" : "s"}"><div class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></div><span class="institution-chart-count">${entry.count}</span></div>`
+      `<button type="button" class="institution-chart-row" data-chart-filter="institution" data-chart-value="${escapeHtml(entry.key)}" data-chart-label="${escapeHtml(entry.name)}" data-chart-tooltip="${escapeHtml(entry.name)} — ${entry.count} unique paper${entry.count === 1 ? "" : "s"}" aria-pressed="${activeInstitutionFilter?.identity === entry.key}" aria-label="${activeInstitutionFilter?.identity === entry.key ? "Clear" : "Filter by"} institution ${escapeHtml(entry.name)}; ${entry.count} unique paper${entry.count === 1 ? "" : "s"}"><span class="institution-chart-label"><span class="institution-chart-fill" style="width:${(entry.count / maximum) * 100}%"></span><span class="institution-chart-name">${escapeHtml(entry.name)}</span></span><span class="institution-chart-count">${entry.count}</span></button>`
     )).join("")}</div>`
   );
 }
@@ -2667,9 +3071,10 @@ function renderYearChart(paperCoverageRecords) {
     return;
   }
   const maximum = Math.max(...years.map(([, count]) => count));
+  const yearSelection = currentYearSelection();
   yearChartContent.innerHTML = (
     `<div class="year-chart-bars">${years.map(([year, count]) => (
-      `<div class="year-chart-item" tabindex="0" data-chart-tooltip="${year} — ${count} paper${count === 1 ? "" : "s"}" aria-label="${year}: ${count} paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></div>`
+      `<button type="button" class="year-chart-item" data-chart-filter="year" data-chart-value="${year}" data-chart-tooltip="${year} — ${count} unique paper${count === 1 ? "" : "s"}" aria-pressed="${yearSelection?.start === year && yearSelection?.end === year}" aria-label="${yearSelection?.start === year && yearSelection?.end === year ? "Clear" : "Filter by"} publication year ${year}; ${count} unique paper${count === 1 ? "" : "s"}"><span class="year-chart-count">${count}</span><span class="year-chart-bar-slot"><span class="year-chart-bar" style="height:${(count / maximum) * 100}%"></span></span><span class="year-chart-label">${String(year).slice(-2)}</span></button>`
     )).join("")}</div>`
   );
 }
@@ -2816,6 +3221,93 @@ function downloadFilteredCsv() {
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+}
+
+async function writeViewUrlToClipboard(url, writeText = null) {
+  const clipboardWriter = writeText || navigator.clipboard?.writeText?.bind(navigator.clipboard);
+  if (clipboardWriter) {
+    await clipboardWriter(url);
+    return;
+  }
+  const fallback = document.createElement("textarea");
+  fallback.value = url;
+  fallback.setAttribute("readonly", "");
+  fallback.className = "visually-hidden";
+  document.body.append(fallback);
+  fallback.select();
+  const copied = document.execCommand?.("copy");
+  fallback.remove();
+  if (!copied) throw new Error("Clipboard access is unavailable.");
+}
+
+function showCopyLinkFeedback(message, copied = false) {
+  copyViewLinkStatus.textContent = message;
+  copyViewLinkButton.classList.toggle("is-copied", copied);
+  copyViewLinkButton.textContent = copied ? "Copied" : "Copy link";
+  window.clearTimeout(copyLinkFeedbackTimer);
+  copyLinkFeedbackTimer = window.setTimeout(() => {
+    copyViewLinkButton.classList.remove("is-copied");
+    copyViewLinkButton.textContent = "Copy link";
+  }, 1800);
+}
+
+async function copyCanonicalViewUrl() {
+  const url = canonicalViewUrl();
+  try {
+    await writeViewUrlToClipboard(url);
+    showCopyLinkFeedback("View link copied to clipboard.", true);
+  } catch (_error) {
+    showCopyLinkFeedback("Unable to copy the view link.");
+  }
+  return url;
+}
+
+function appendCopyPaperLinkAction() {
+  if (!requestedPaperIdentity) return;
+  const container = document.createElement("div");
+  const button = document.createElement("button");
+  const status = document.createElement("span");
+  container.className = "paper-details-share-actions";
+  button.type = "button";
+  button.className = "copy-paper-link-button";
+  button.dataset.copyPaperLink = "";
+  button.textContent = "Copy paper link";
+  status.className = "visually-hidden";
+  status.dataset.copyPaperLinkStatus = "";
+  status.setAttribute("role", "status");
+  status.setAttribute("aria-live", "polite");
+  container.append(button, status);
+  paperDetailsContent.append(container);
+}
+
+function showCopyPaperLinkFeedback(message, copied = false) {
+  const button = paperDetailsContent.querySelector("[data-copy-paper-link]");
+  const status = paperDetailsContent.querySelector("[data-copy-paper-link-status]");
+  if (!button || !status) return;
+  status.textContent = message;
+  button.classList.toggle("is-copied", copied);
+  button.textContent = copied ? "Copied" : "Copy paper link";
+  window.clearTimeout(copyPaperLinkFeedbackTimer);
+  copyPaperLinkFeedbackTimer = window.setTimeout(() => {
+    const currentButton = paperDetailsContent.querySelector("[data-copy-paper-link]");
+    currentButton?.classList.remove("is-copied");
+    if (currentButton) currentButton.textContent = "Copy paper link";
+  }, 1800);
+}
+
+async function copySelectedPaperUrl() {
+  if (!requestedPaperIdentity) return "";
+  const url = canonicalViewUrl({
+    ...currentViewState(),
+    paper: requestedPaperIdentity,
+  });
+  try {
+    await writeViewUrlToClipboard(url);
+    showCopyPaperLinkFeedback("Paper link copied to clipboard.", true);
+  } catch (_error) {
+    showCopyPaperLinkFeedback("Unable to copy the paper link.");
+  }
+  return url;
 }
 
 function formatResolutionValue(value) {
@@ -2994,7 +3486,7 @@ function institutionResultContent(record, relatedEntries = [{ record }], cardId 
       <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
       <div class="result-card-adaptive">
         <section class="result-institution-primary" aria-label="Institution represented by this record">
-          <h4 title="${escapeHtml(institutionName || "Unknown institution")}">${institutionFilterButtonHtml(institution || {
+          <h4 title="${escapeHtml(institutionName || "Unknown institution")}">${institutionFocusButtonHtml(institution || {
             institution: institutionName,
             institutionId: record.institution_id,
             canonicalName: record.canonical_institution_name,
@@ -3032,7 +3524,7 @@ function resultInstitutions(affiliations, regionId, visibleLimit = 4) {
   const affiliationHtml = (affiliation) => `
     <li>
       <sup class="result-institution-number" aria-label="Institution ${escapeHtml(affiliation.number)}">${escapeHtml(affiliation.number)}</sup>
-      ${institutionFilterButtonHtml(affiliation)}
+      ${institutionFocusButtonHtml(affiliation)}
       ${affiliation.location ? `<span class="result-institution-location">${escapeHtml(affiliation.location)}</span>` : ""}
     </li>
   `;
@@ -3085,6 +3577,7 @@ function invalidateResultsRenderPipeline() {
   resultsObserver = null;
   document.querySelector(".results-list-staging")?.remove();
   resultsPipeline = null;
+  pendingResultReveal = null;
   resultsKeywordFrame = null;
   return resultsRenderGeneration;
 }
@@ -3185,15 +3678,125 @@ function resultSentinelNeedsMoreCards() {
   return sentinel.getBoundingClientRect().top <= window.innerHeight * RESULTS_INITIAL_VIEWPORTS;
 }
 
+function addResultIndex(indexes, key, index) {
+  if (!key) return;
+  const values = indexes.get(key) || new Set();
+  values.add(index);
+  indexes.set(key, values);
+}
+
+function interactionResultIndexes(selection, pipeline = resultsPipeline) {
+  const indexes = new Set();
+  if (!selection || !pipeline) return indexes;
+  const paperIdentities = selection.resultPaperIdentities?.length
+    ? selection.resultPaperIdentities
+    : [selection.identity];
+  paperIdentities.forEach((identity) => {
+    pipeline.resultIndexesByPaperIdentity.get(identity)?.forEach((index) => indexes.add(index));
+  });
+  if (selection.resultScope === "institution" && selection.institutionKey) {
+    pipeline.resultIndexesByInstitutionKey.get(selection.institutionKey)
+      ?.forEach((index) => indexes.add(index));
+  }
+  return indexes;
+}
+
+function renderedResultItem(index, generation = resultsRenderGeneration) {
+  return resultsList.querySelector(
+    `.result-item[data-result-generation="${generation}"][data-result-index="${index}"]`,
+  );
+}
+
+function syncResultHighlights() {
+  const selectedIndexes = interactionResultIndexes(interactionState.selected);
+  const hoveredIndexes = interactionResultIndexes(interactionState.hovered);
+  resultsList.querySelectorAll(
+    `.result-item[data-result-generation="${resultsRenderGeneration}"]`,
+  ).forEach((item) => {
+    const index = Number(item.dataset.resultIndex);
+    const isSelected = selectedIndexes.has(index);
+    const isHovered = hoveredIndexes.has(index);
+    item.classList.toggle("is-interaction-selected", isSelected);
+    item.classList.toggle("is-interaction-hovered", isHovered);
+    if (isSelected) item.setAttribute("aria-current", "true");
+    else item.removeAttribute("aria-current");
+  });
+}
+
+function selectionNeedsResultsReveal(selection = interactionState.selected) {
+  const indexes = interactionResultIndexes(selection);
+  return indexes.size > 0 && ![...indexes].some((index) => renderedResultItem(index));
+}
+
+function updateShowInResultsAction() {
+  paperDetailsContent.querySelector("[data-show-selection-in-results]")?.remove();
+  if (!interactionState.selected || !selectionNeedsResultsReveal()) return;
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "show-in-results-button";
+  button.dataset.showSelectionInResults = "";
+  button.textContent = "Show in results";
+  button.setAttribute("aria-label", "Show the selected paper or institution in results");
+  paperDetailsContent.append(button);
+}
+
+function revealPendingResult() {
+  if (!pendingResultReveal || pendingResultReveal.generation !== resultsRenderGeneration) {
+    pendingResultReveal = null;
+    return;
+  }
+  const item = renderedResultItem(pendingResultReveal.index);
+  if (!item) return;
+  pendingResultReveal = null;
+  syncResultHighlights();
+  updateShowInResultsAction();
+  item.focus({ preventScroll: true });
+  item.scrollIntoView({ block: "nearest", behavior: "auto" });
+}
+
+function continuePendingResultReveal() {
+  if (!pendingResultReveal || !resultsPipeline || resultsPipeline.isPreparing) return;
+  const { generation, index } = pendingResultReveal;
+  if (generation !== resultsRenderGeneration || resultsPipeline.generation !== generation) {
+    pendingResultReveal = null;
+    return;
+  }
+  if (index < resultsPipeline.renderedCount) {
+    revealPendingResult();
+    return;
+  }
+  appendResultChunk(generation, index - resultsPipeline.renderedCount + 1);
+}
+
+function showSelectionInResults() {
+  const indexes = [...interactionResultIndexes(interactionState.selected)].sort((a, b) => a - b);
+  if (!indexes.length || !resultsPipeline) return;
+  pendingResultReveal = { generation: resultsRenderGeneration, index: indexes[0] };
+  continuePendingResultReveal();
+}
+
 function createResultItem(record, index, pipeline) {
   const item = document.createElement("li");
   item.className = `result-item result-item-${pipeline.view === "papers" ? "paper" : "institution"} is-masonry-pending`;
   item.dataset.resultIndex = String(index);
+  item.dataset.resultGeneration = String(pipeline.generation);
+  item.tabIndex = -1;
   const relatedEntries = pipeline.relatedEntriesByIdentity.get(paperIdentity(record)) || [];
   const cardId = `result-card-title-${pipeline.view}-${index}`;
   item.innerHTML = pipeline.view === "papers"
     ? paperResultContent(record, relatedEntries, cardId)
     : institutionResultContent(record, relatedEntries, cardId);
+  const identity = paperIdentity(record);
+  item.querySelectorAll("[data-focus-institution]").forEach((button) => {
+    const markerEntry = visibleMarkerEntryByInstitutionKey.get(button.dataset.focusInstitution);
+    const hasVisiblePaperMarker = markerEntry?.records.some(
+      (markerRecord) => paperIdentity(markerRecord) === identity,
+    );
+    if (!hasVisiblePaperMarker) {
+      button.disabled = true;
+      button.setAttribute("aria-label", `${button.textContent} has no visible map marker`);
+    }
+  });
   return item;
 }
 
@@ -3246,12 +3849,15 @@ function appendResultChunk(generation, requestedCount = null) {
   newCards.forEach((card) => fragment.append(card));
   if (generation !== resultsRenderGeneration) return;
   resultsList.append(fragment);
+  syncResultHighlights();
   scheduleMasonryMeasurement(resultsList, newCards, generation, () => {
     if (generation !== resultsRenderGeneration || resultsPipeline !== pipeline) return;
     updateEstimatedCardHeight(pipeline, newCards, generation);
     pipeline.renderedCount = end;
     pipeline.isAppending = false;
     pipeline.layoutSignature = resultsLayoutSignature();
+    updateShowInResultsAction();
+    continuePendingResultReveal();
     if (end >= pipeline.displayedResults.length) {
       resultsObserver?.disconnect();
     } else if (resultSentinelNeedsMoreCards()) {
@@ -3300,7 +3906,11 @@ function prepareFirstResultViewport(generation) {
     resultsList.classList.toggle("is-masonry-ready", masonryReady);
     resultsList.hidden = false;
     pipeline.renderedCount = firstEnd;
+    pipeline.isPreparing = false;
     pipeline.layoutSignature = resultsLayoutSignature();
+    syncResultHighlights();
+    updateShowInResultsAction();
+    continuePendingResultReveal();
     setResultsLayoutPending(false);
     observeResultSentinel(generation);
     requestResultsAnimationFrame(() => {
@@ -3322,6 +3932,29 @@ function scheduleResultsMasonryLayout(cards = null) {
   });
 }
 
+function renderNoResultsState(resultNoun) {
+  const descriptors = activeFilterChipDescriptors();
+  const constraintCount = descriptors.length;
+  resultsEmptyHeading.textContent = `No matching ${resultNoun}s`;
+  resultsEmptySummary.textContent = constraintCount
+    ? `${constraintCount} active filter/search constraint${constraintCount === 1 ? "" : "s"} ${constraintCount === 1 ? "is" : "are"} currently excluding all ${resultNoun}s.`
+    : `No ${resultNoun}s are available in the current dataset view.`;
+  const fragment = document.createDocumentFragment();
+  descriptors.forEach(({ key, category, value }) => {
+    const item = document.createElement("li");
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.dataset.emptyRemoveFilter = key;
+    remove.textContent = `Remove ${category}: ${value}`;
+    remove.setAttribute("aria-label", `Remove ${category} filter: ${value}`);
+    item.append(remove);
+    fragment.append(item);
+  });
+  resultsEmptyFilterActions.replaceChildren(fragment);
+  undoLastFilterButton.hidden = !lastFilterChange;
+  clearEmptyFiltersButton.hidden = constraintCount === 0;
+}
+
 function renderResults(visibleRecords, visiblePaperRecords = [], generation = null) {
   const activeGeneration = generation ?? invalidateResultsRenderPipeline();
   if (activeGeneration !== resultsRenderGeneration) return;
@@ -3336,16 +3969,34 @@ function renderResults(visibleRecords, visiblePaperRecords = [], generation = nu
     ? paperListRecordsForDisplay(visiblePaperRecords)
     : visibleRecords;
   currentDisplayedResults = displayedResults;
+  pendingResultReveal = null;
+  const resultIndexesByPaperIdentity = new Map();
+  const resultIndexesByInstitutionKey = new Map();
+  for (const [index, record] of displayedResults.entries()) {
+    const identity = paperIdentity(record);
+    addResultIndex(resultIndexesByPaperIdentity, identity, index);
+    const institutionKeys = resultsView === "papers"
+      ? new Set([
+          ...recordInstitutionIdentities(record),
+          ...(relatedEntriesByIdentity.get(identity) || [])
+            .map(({ record: relatedRecord }) => institutionIdentity(relatedRecord)),
+        ])
+      : new Set([institutionIdentity(record)]);
+    institutionKeys.forEach((key) => {
+      addResultIndex(resultIndexesByInstitutionKey, key, index);
+    });
+  }
   const count = displayedResults.length;
-  const resultNoun = resultsView === "papers" ? "paper" : "institution record";
+  const resultNoun = resultsView === "papers" ? "unique paper" : "institution record";
   resultsCount.textContent = count
     ? `${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`
     : `No matching ${resultNoun}s`;
-  resultsEmpty.textContent = `No matching ${resultNoun}s.`;
   exportCsvButton.disabled = count === 0;
   resultsEmpty.hidden = count !== 0;
 
   if (!count) {
+    renderNoResultsState(resultNoun);
+    resultsPipeline = null;
     resultsList.replaceChildren();
     resultsList.hidden = true;
     resultsList.classList.remove("is-masonry-ready");
@@ -3357,10 +4008,13 @@ function renderResults(visibleRecords, visiblePaperRecords = [], generation = nu
     generation: activeGeneration,
     displayedResults,
     relatedEntriesByIdentity,
+    resultIndexesByPaperIdentity,
+    resultIndexesByInstitutionKey,
     view: resultsView,
     renderedCount: 0,
     estimatedCardHeight: 260,
     isAppending: false,
+    isPreparing: true,
     layoutSignature: "",
   };
   setResultsLayoutPending(true, !hasCurrentCards);
@@ -3372,14 +4026,12 @@ function selectResultsView(view) {
     return;
   }
   const generation = invalidateResultsRenderPipeline();
-  resultsView = view;
-  clearPaperInteraction();
-  resultsViewButtons.forEach((button) => {
-    button.setAttribute(
-      "aria-pressed",
-      String(button.dataset.resultsView === resultsView),
-    );
-  });
+  requestUrlStateSync("push");
+  setResultsViewState(view);
+  closeActiveInstitutionTooltip();
+  interactionState.hovered = null;
+  interactionState.hoveredMarkerId = null;
+  pendingResultReveal = null;
   renderRecordsForGeneration({ generation });
 }
 
@@ -3394,6 +4046,7 @@ function baseMapStatusText(visibleRecords) {
 }
 
 function resetPaperDetails() {
+  window.clearTimeout(copyPaperLinkFeedbackTimer);
   paperDetails.classList.remove("has-content");
   paperDetailsContent.innerHTML =
     '<p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>';
@@ -3404,11 +4057,11 @@ function resetPaperDetails() {
   paperDetails.classList.remove("is-pinned");
 }
 
-function showPaperDetails(record, relatedEntries, source) {
+function showPaperDetails(record, relatedEntries, source, { filteredOut = false } = {}) {
   paperDetailsContent.innerHTML = paperDetailsHtml(record, relatedEntries);
   paperDetails.classList.add("has-content");
   closePaperDetailsButton.disabled = false;
-  const isPinned = source === "pinned";
+  const isPinned = source === "selected";
   paperDetails.classList.toggle("is-pinned", isPinned);
   paperDetailsPinStatus.hidden = !isPinned;
   closePaperDetailsButton.textContent = "×";
@@ -3416,6 +4069,30 @@ function showPaperDetails(record, relatedEntries, source) {
     "aria-label",
     "Close paper details",
   );
+  if (filteredOut) {
+    const notice = document.createElement("p");
+    notice.className = "paper-details-filter-notice";
+    notice.setAttribute("role", "status");
+    notice.textContent = "This linked paper does not match the current filters. Your filters were not changed.";
+    paperDetailsContent.prepend(notice);
+  }
+  if (isPinned) appendCopyPaperLinkAction();
+  paperDetails.scrollTop = 0;
+  updateShowInResultsAction();
+}
+
+function showLinkedPaperUnavailable() {
+  paperDetailsContent.innerHTML = `
+    <section class="paper-details-link-unavailable" role="status">
+      <h3>Linked paper unavailable</h3>
+      <p>The paper identifier in this link was not found in the current dataset. Your filters were not changed.</p>
+    </section>
+  `;
+  paperDetails.classList.add("has-content", "is-pinned");
+  closePaperDetailsButton.disabled = false;
+  closePaperDetailsButton.setAttribute("aria-label", "Close linked paper details");
+  paperDetailsPinStatus.hidden = false;
+  appendCopyPaperLinkAction();
   paperDetails.scrollTop = 0;
 }
 
@@ -3428,13 +4105,15 @@ function restoreBaseMarkerStyles() {
 function clearPaperInteraction(updateStatus = true) {
   closeActiveInstitutionTooltip();
   interactionState.hovered = null;
-  interactionState.pinned = null;
+  interactionState.selected = null;
   interactionState.hoveredMarkerId = null;
-  interactionState.pinnedMarkerId = null;
+  interactionState.selectedMarkerId = null;
   interactionState.detailsSource = null;
+  pendingResultReveal = null;
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   restoreBaseMarkerStyles();
+  syncResultHighlights();
   resetPaperDetails();
   scheduleMapResize();
   if (updateStatus) {
@@ -3490,7 +4169,7 @@ function renderConnectionSelection(selection, mode) {
       taskKey,
       paperCount,
     } = entry;
-    const isCurrent = markerRecords.includes(selection.record);
+    const isCurrent = entry.institutionKey === selection.institutionKey;
     const isRelated = markerRecords.some(
       (candidate) => paperIdentity(candidate) === selection.identity,
     );
@@ -3516,26 +4195,36 @@ function renderConnectionSelection(selection, mode) {
   return { lineCount, visibleCount: relatedEntries.length };
 }
 
-function setMarkerPinnedState(markerId) {
+function setMarkerSelectionState(selection) {
   visibleMarkerEntries.forEach((entry) => {
-    const isPinned = entry.institutionKey === markerId;
+    const isSelectedPaper = Boolean(selection && entry.records.some(
+      (record) => paperIdentity(record) === selection.identity,
+    ));
+    const isOrigin = isSelectedPaper && entry.institutionKey === selection.institutionKey;
     const element = entry.marker.getElement?.();
-    element?.classList.toggle("is-paper-pinned", isPinned);
-    element?.setAttribute("aria-pressed", String(isPinned));
+    element?.classList.toggle("is-paper-pinned", isSelectedPaper);
+    element?.classList.toggle("is-paper-selection-origin", isOrigin);
+    element?.setAttribute("aria-pressed", String(isOrigin));
     element?.setAttribute(
       "aria-label",
-      `${isPinned ? "Unpin" : "Pin"} paper details for ${recordInstitution(entry.record) || "institution"}`,
+      `${isOrigin ? "Clear" : "Select"} paper details for ${recordInstitution(entry.record) || "institution"}`,
     );
   });
 }
 
 function renderPaperSelection(selection, source) {
-  const relatedEntries = selection ? relatedMarkerEntries(selection) : [];
-  if (!relatedEntries.length) {
+  if (!selection) {
     resetPaperDetails();
     return;
   }
-  showPaperDetails(selection.record, relatedEntries, source);
+  const visibleRelatedEntries = relatedMarkerEntries(selection);
+  const detailEntries = visibleRelatedEntries.length
+    ? visibleRelatedEntries
+    : (mapRecordsByPaperIdentity.get(selection.identity) || [])
+      .map((record) => ({ record }));
+  showPaperDetails(selection.record, detailEntries, source, {
+    filteredOut: selection.filteredOut === true,
+  });
 }
 
 function showPaperInteraction(detailSelection, connectionSelection) {
@@ -3547,18 +4236,23 @@ function showPaperInteraction(detailSelection, connectionSelection) {
   renderPaperSelection(detailSelection, interactionState.detailsSource);
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", true);
+  if (detailSelection?.filteredOut) {
+    mapStatus.textContent = "The linked paper does not match the current filters. Filters were not changed.";
+    return;
+  }
   const connectionText = lineCount ? " · Connections shown." : ".";
   mapStatus.textContent =
     `Showing ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"}${connectionText}`;
 }
 
 function renderActiveSelection() {
-  const detailSelection = interactionState.pinned || interactionState.hovered;
-  const connectionSelection = interactionState.hovered || interactionState.pinned;
-  interactionState.detailsSource = interactionState.pinned
-    ? "pinned"
+  const detailSelection = interactionState.selected || interactionState.hovered;
+  const connectionSelection = interactionState.hovered || interactionState.selected;
+  interactionState.detailsSource = interactionState.selected
+    ? "selected"
     : interactionState.hovered ? "hover" : null;
-  setMarkerPinnedState(interactionState.pinnedMarkerId);
+  setMarkerSelectionState(interactionState.selected);
+  syncResultHighlights();
   if (detailSelection) {
     showPaperInteraction(detailSelection, connectionSelection);
     return;
@@ -3567,6 +4261,13 @@ function renderActiveSelection() {
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   restoreBaseMarkerStyles();
+  if (requestedPaperIdentity
+      && !canonicalPaperRecordsByIdentity.has(requestedPaperIdentity)) {
+    showLinkedPaperUnavailable();
+    mapStatus.classList.toggle("paper-highlight-active", true);
+    mapStatus.textContent = "The linked paper was not found. Filters were not changed.";
+    return;
+  }
   resetPaperDetails();
   mapStatus.classList.toggle("paper-highlight-active", false);
   mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
@@ -3587,25 +4288,75 @@ function clearHoveredSelection(marker) {
   renderActiveSelection();
 }
 
-function setPinnedSelection(selection) {
+function setPersistentSelection(selection, { syncUrl = true } = {}) {
   interactionState.hovered = null;
   interactionState.hoveredMarkerId = null;
-  interactionState.pinned = selection;
-  interactionState.pinnedMarkerId = selection?.markerId || null;
+  interactionState.selected = selection;
+  interactionState.selectedMarkerId = selection?.markerId || null;
+  requestedPaperIdentity = selection?.identity || "";
   renderActiveSelection();
+  if (syncUrl) {
+    requestUrlStateSync("push");
+    syncUrlFromState();
+  }
   scheduleMapResize();
 }
 
-function clearPinnedSelection() {
-  interactionState.pinned = null;
-  interactionState.pinnedMarkerId = null;
+function clearPersistentSelection({ syncUrl = true } = {}) {
+  interactionState.selected = null;
+  interactionState.selectedMarkerId = null;
+  requestedPaperIdentity = "";
+  pendingResultReveal = null;
   renderActiveSelection();
+  if (syncUrl) {
+    requestUrlStateSync("push");
+    syncUrlFromState();
+  }
   scheduleMapResize();
 }
 
-function activateHoverPreview(record, identity, markerId, marker, paperCount, taskBreakdown) {
+function restoreLinkedPaperSelection(matchingPaperIdentities) {
+  if (!requestedPaperIdentity) {
+    interactionState.selected = null;
+    interactionState.selectedMarkerId = null;
+    return "closed";
+  }
+  const paper = canonicalPaperRecordsByIdentity.get(requestedPaperIdentity);
+  if (!paper) {
+    interactionState.selected = null;
+    interactionState.selectedMarkerId = null;
+    return "unavailable";
+  }
+  const visibleOrigin = visiblePaperSelectionByIdentity.get(requestedPaperIdentity);
+  interactionState.selected = {
+    identity: requestedPaperIdentity,
+    record: visibleOrigin?.record || paper,
+    markerId: visibleOrigin?.institutionKey || null,
+    marker: visibleOrigin?.marker || null,
+    institutionKey: visibleOrigin?.institutionKey || null,
+    resultPaperIdentities: [requestedPaperIdentity],
+    resultScope: "paper",
+    source: "deep-link",
+    filteredOut: !matchingPaperIdentities.has(requestedPaperIdentity),
+  };
+  interactionState.selectedMarkerId = visibleOrigin?.institutionKey || null;
+  return interactionState.selected.filteredOut ? "filtered-out" : "open";
+}
+
+function activateHoverPreview(
+  record, identity, markerId, marker, paperCount, taskBreakdown, resultPaperIdentities,
+) {
   openInstitutionTooltip(marker, record, paperCount, taskBreakdown);
-  setHoveredSelection({ identity, record, markerId, marker });
+  setHoveredSelection({
+    identity,
+    record,
+    markerId,
+    marker,
+    institutionKey: markerId,
+    resultPaperIdentities,
+    resultScope: "institution",
+    source: "marker-hover",
+  });
 }
 
 function clearHoverPreview(marker, event = null) {
@@ -3621,14 +4372,63 @@ function clearHoverPreview(marker, event = null) {
   clearHoveredSelection(marker);
 }
 
-function pinPaper(record, identity, institutionKey) {
+function pinPaper(record, identity, institutionKey, resultPaperIdentities = [identity]) {
   closeActiveInstitutionTooltip();
-  if (interactionState.pinnedMarkerId === institutionKey &&
-      interactionState.pinned?.identity === identity) {
-    clearPinnedSelection();
+  if (interactionState.selectedMarkerId === institutionKey &&
+      interactionState.selected?.identity === identity) {
+    clearPersistentSelection();
     return;
   }
-  setPinnedSelection({ identity, record, markerId: institutionKey, institutionKey });
+  setPersistentSelection({
+    identity,
+    record,
+    markerId: institutionKey,
+    institutionKey,
+    resultPaperIdentities,
+    resultScope: "institution",
+    source: "marker",
+  });
+}
+
+function resultInstitutionSelection(button) {
+  const item = button.closest(".result-item");
+  const index = Number(item?.dataset.resultIndex);
+  if (!resultsPipeline || item?.dataset.resultGeneration !== String(resultsRenderGeneration)
+      || !Number.isInteger(index)) return null;
+  const displayedRecord = resultsPipeline.displayedResults[index];
+  const institutionKey = button.dataset.focusInstitution;
+  const markerEntry = visibleMarkerEntryByInstitutionKey.get(institutionKey);
+  if (!displayedRecord || !markerEntry) return null;
+  const identity = paperIdentity(displayedRecord);
+  const markerRecord = markerEntry.records.find(
+    (record) => paperIdentity(record) === identity,
+  );
+  if (!markerRecord) return null;
+  return {
+    identity: paperIdentity(markerRecord),
+    record: markerRecord,
+    markerId: institutionKey,
+    marker: markerEntry.marker,
+    institutionKey,
+    resultPaperIdentities: [identity],
+    resultScope: "paper",
+    source: "result",
+  };
+}
+
+function previewInstitutionFromResult(button) {
+  const selection = resultInstitutionSelection(button);
+  if (selection) setHoveredSelection(selection);
+}
+
+function selectInstitutionFromResult(button) {
+  const selection = resultInstitutionSelection(button);
+  if (!selection) {
+    mapStatus.textContent = "No visible map marker matches this institution.";
+    return;
+  }
+  setPersistentSelection(selection);
+  selection.marker.bringToFront();
 }
 
 function renderRecords() {
@@ -3638,7 +4438,7 @@ function renderRecords() {
 function renderRecordsForGeneration({ generation = null } = {}) {
   const activeGeneration = generation ?? invalidateResultsRenderPipeline();
   if (activeGeneration !== resultsRenderGeneration) return;
-  const previousPin = interactionState.pinned;
+  syncKnownFilterState();
   closeActiveInstitutionTooltip();
   interactionState.hovered = null;
   hoverConnectionLayer.clearLayers();
@@ -3718,6 +4518,8 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     venueDimensionSets.filteredPapers,
     venueTypeDimensionSets.filteredPapers,
   );
+  renderActiveFilterChips();
+  syncUrlFromState();
   const filteredSets = deriveFilteredRecordSets(
     records,
     paperRecords,
@@ -3737,6 +4539,8 @@ function renderRecordsForGeneration({ generation = null } = {}) {
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
+  visibleMarkerEntryByInstitutionKey = new Map();
+  visiblePaperSelectionByIdentity = new Map();
 
   const institutionRepresentatives = new Map();
   records.forEach((record) => {
@@ -3769,7 +4573,12 @@ function renderRecordsForGeneration({ generation = null } = {}) {
       .addTo(markerLayer);
     MarkerInteractionHelpers.bindMarkerHandlers(marker, {
       supportsHover: supportsMarkerHover,
-      click: () => pinPaper(record, identity, group.key),
+      click: () => pinPaper(
+        record,
+        identity,
+        group.key,
+        [...new Set(group.records.map(paperIdentity))],
+      ),
       hover: () => activateHoverPreview(
         record,
         identity,
@@ -3777,10 +4586,11 @@ function renderRecordsForGeneration({ generation = null } = {}) {
         marker,
         group.paperCount,
         taskBreakdown,
+        [...new Set(group.records.map(paperIdentity))],
       ),
       leave: (event) => clearHoverPreview(marker, event),
     });
-    visibleMarkerEntries.push({
+    const markerEntry = {
       record,
       records: group.records,
       marker,
@@ -3790,37 +4600,37 @@ function renderRecordsForGeneration({ generation = null } = {}) {
       taskBreakdown,
       taskCounts,
       taskKey,
+    };
+    visibleMarkerEntries.push(markerEntry);
+    visibleMarkerEntryByInstitutionKey.set(group.key, markerEntry);
+    group.records.forEach((groupRecord) => {
+      const groupPaperIdentity = paperIdentity(groupRecord);
+      if (!visiblePaperSelectionByIdentity.has(groupPaperIdentity)) {
+        visiblePaperSelectionByIdentity.set(groupPaperIdentity, {
+          record: groupRecord,
+          marker,
+          institutionKey: group.key,
+        });
+      }
     });
   });
 
-  const restoredPinEntry = previousPin
-    ? visibleMarkerEntries.find(
-      (entry) => entry.institutionKey === previousPin.institutionKey,
-    )
-    : null;
-  const restoredPinRecord = restoredPinEntry?.records.find(
-    (record) => paperIdentity(record) === previousPin?.identity,
+  const linkedPaperState = restoreLinkedPaperSelection(
+    filteredSets.matchingPaperIdentities,
   );
-  if (restoredPinEntry && restoredPinRecord) {
-    interactionState.pinned = {
-      identity: previousPin.identity,
-      record: restoredPinRecord,
-      markerId: previousPin.institutionKey,
-      institutionKey: previousPin.institutionKey,
-    };
-    interactionState.pinnedMarkerId = previousPin.institutionKey;
-  } else {
-    interactionState.pinned = null;
-    interactionState.pinnedMarkerId = null;
-  }
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
-  renderActiveInstitutionFilter();
   renderHeaderStatistics(visibleRecords, visiblePaperRecords);
   renderResults(visibleRecords, visiblePaperRecords, activeGeneration);
   mapStatus.classList.toggle("error", false);
-  if (interactionState.pinned) {
+  if (interactionState.selected) {
     renderActiveSelection();
+  } else if (linkedPaperState === "unavailable") {
+    setMarkerSelectionState(null);
+    syncResultHighlights();
+    showLinkedPaperUnavailable();
+    mapStatus.classList.toggle("paper-highlight-active", true);
+    mapStatus.textContent = "The linked paper was not found. Filters were not changed.";
   } else {
     resetPaperDetails();
     mapStatus.classList.toggle("paper-highlight-active", false);
@@ -3832,22 +4642,7 @@ function renderRecordsForGeneration({ generation = null } = {}) {
 // A category is active when its authoritative value differs from its neutral default.
 // The two year handles form one category, as does an institution selected from a record.
 function activeFilterCategoryCount() {
-  const selection = currentYearSelection();
-  const yearIsActive = Boolean(yearRangeBounds && selection && (
-    selection.start !== yearRangeBounds.minimum || selection.end !== yearRangeBounds.maximum
-  ));
-  return [
-    keywordFilter.value.trim() !== "",
-    taskFilter.value !== "all",
-    entryTypeFilter.value !== "all",
-    venueTypeFilter.value !== "all",
-    venueFilter.value !== "all",
-    countryFilter.value !== "all",
-    institutionTypeFilter.value !== "all",
-    preprintFilter.value !== "all",
-    yearIsActive,
-    Boolean(activeInstitutionFilter),
-  ].filter(Boolean).length;
+  return activeFilterChipDescriptors().length;
 }
 
 function updateMobileFiltersTrigger() {
@@ -3859,8 +4654,22 @@ function updateMobileFiltersTrigger() {
 
 function drawerFocusableElements() {
   return [...filtersPanel.querySelectorAll(
-    'button:not([disabled]), input:not([disabled]):not([tabindex="-1"]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
-  )].filter((element) => !element.hidden && element.getClientRects().length);
+    'button:not([disabled]), input:not([disabled]), select:not([disabled]), a[href], [tabindex]',
+  )].filter((element) => (
+    element.tabIndex >= 0
+    && !element.hidden
+    && !element.closest("[inert]")
+    && element.getClientRects().length
+    && getComputedStyle(element).visibility !== "hidden"
+  ));
+}
+
+function syncFiltersPanelAccessibility() {
+  const isOpenMobileDialog = mobileFiltersMedia.matches && filtersDrawerOpen;
+  filtersPanel.setAttribute("role", isOpenMobileDialog ? "dialog" : "region");
+  if (isOpenMobileDialog) filtersPanel.setAttribute("aria-modal", "true");
+  else filtersPanel.removeAttribute("aria-modal");
+  filtersPanel.toggleAttribute("inert", mobileFiltersMedia.matches && !filtersDrawerOpen);
 }
 
 function openFiltersDrawer() {
@@ -3870,6 +4679,7 @@ function openFiltersDrawer() {
   filtersBackdrop.hidden = false;
   document.body.classList.add("filters-drawer-open");
   mobileFiltersTrigger.setAttribute("aria-expanded", "true");
+  syncFiltersPanelAccessibility();
   filtersHeading.focus();
 }
 
@@ -3882,10 +4692,11 @@ function closeFiltersDrawer({ restoreFocus = true } = {}) {
   document.body.classList.remove("filters-drawer-open");
   mobileFiltersTrigger.setAttribute("aria-expanded", "false");
   if (restoreFocus && mobileFiltersMedia.matches) mobileFiltersTrigger.focus();
+  syncFiltersPanelAccessibility();
 }
 
 function handleFiltersDrawerKeydown(event) {
-  if (!filtersDrawerOpen) return;
+  if (!mobileFiltersMedia.matches || !filtersDrawerOpen) return;
   if (event.key === "Escape") {
     event.preventDefault();
     closeFiltersDrawer();
@@ -3900,13 +4711,23 @@ function handleFiltersDrawerKeydown(event) {
   }
   const first = focusable[0];
   const last = focusable[focusable.length - 1];
-  if (event.shiftKey && (document.activeElement === first || document.activeElement === filtersHeading)) {
+  if (!filtersPanel.contains(document.activeElement)) {
+    event.preventDefault();
+    (event.shiftKey ? last : first).focus();
+  } else if (event.shiftKey && (
+    document.activeElement === first || document.activeElement === filtersHeading
+  )) {
     event.preventDefault();
     last.focus();
   } else if (!event.shiftKey && document.activeElement === last) {
     event.preventDefault();
     first.focus();
   }
+}
+
+function handleMobileFiltersMediaChange(event) {
+  if (!event.matches) closeFiltersDrawer({ restoreFocus: false });
+  syncFiltersPanelAccessibility();
 }
 
 function deriveYearBounds(datasetRecords) {
@@ -4006,6 +4827,9 @@ function configureYearRange() {
 
 function handleYearRangeInput(handle) {
   syncYearRange(handle);
+  rememberFilterChange("year", { coalesce: yearHistoryStarted });
+  requestUrlStateSync(yearHistoryStarted ? "replace" : "push");
+  yearHistoryStarted = true;
   renderRecords();
 }
 
@@ -4143,6 +4967,7 @@ function showDatasetMessage(message, isError = false, isLoadFailure = false) {
   records = [];
   paperRecords = [];
   canonicalPaperRecordsByIdentity = new Map();
+  mapRecordsByPaperIdentity = new Map();
   invalidateFilteringDataCaches();
   configureYearRange();
   currentFilteredRecords = [];
@@ -4153,6 +4978,7 @@ function showDatasetMessage(message, isError = false, isLoadFailure = false) {
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
+  visibleMarkerEntryByInstitutionKey = new Map();
   interactionState.hovered = null;
   updateDatasetStatistics(records, paperRecords);
   renderHeaderStatistics(records, paperRecords);
@@ -4173,7 +4999,7 @@ function updateDatasetLabels() {
     ? "Loading research map data..."
     : "Loading local OpenAlex data...";
   datasetStatisticsNote.textContent =
-    "Institution records matching the current filters.";
+    "Filtered institution records represent paper–institution links; unique papers include papers without mapped institutions.";
 }
 
 function normalizeDatasetPayload(payload) {
@@ -4281,6 +5107,10 @@ async function readDataset(name) {
 }
 
 function displayDataset(normalizedData) {
+  lastKnownFilterState = null;
+  lastFilterChange = null;
+  clearPaperInteraction(false);
+  visibleMarkerEntryByInstitutionKey = new Map();
   institutionAliases = normalizedData.institutionAliases || [];
   institutionHierarchy = normalizedData.institutionHierarchy || [];
   institutionSearchRelationships = normalizedData.institutionSearchRelationships || [];
@@ -4301,14 +5131,21 @@ function displayDataset(normalizedData) {
   );
   records = canonicalized.mapRecords;
   paperRecords = canonicalized.paperRecords;
+  mapRecordsByPaperIdentity = canonicalized.mapRecordsByPaperIdentity;
   invalidateFilteringDataCaches();
   canonicalPaperRecordsByIdentity = new Map(
-    paperRecords.map((record) => [paperIdentity(record), record]),
+    [
+      ...records.map((record) => [paperIdentity(record), record]),
+      ...paperRecords.map((record) => [paperIdentity(record), record]),
+    ],
   );
   displayPublicPreviewDate(normalizedData.metadata);
   configureYearRange();
   configureVenueFilter();
   enableControls();
+  restoreViewState(parseViewState(window.location.search));
+  urlStateReady = true;
+  pendingUrlHistoryMode = "replace";
   renderRecords();
   scheduleMapResize(true);
 }
@@ -4381,6 +5218,16 @@ function hideChartTooltip() {
   chartTooltip.hidden = true;
 }
 
+headerStatistics.addEventListener("click", (event) => {
+  const control = event.target.closest("button[data-chart-filter]");
+  if (!control || !headerStatistics.contains(control)) return;
+  activateChartFilter(
+    control.dataset.chartFilter,
+    control.dataset.chartValue,
+    control.dataset.chartLabel,
+  );
+});
+
 document.addEventListener("pointerover", (event) => {
   const target = event.target.closest("[data-chart-tooltip]");
   if (target) showChartTooltip(target);
@@ -4399,6 +5246,11 @@ document.addEventListener("focusout", (event) => {
 window.addEventListener("resize", hideChartTooltip);
 window.addEventListener("scroll", hideChartTooltip, true);
 
+function requestKeywordUrlSync() {
+  requestUrlStateSync(keywordHistoryStarted ? "replace" : "push");
+  keywordHistoryStarted = true;
+}
+
 function scheduleKeywordRender() {
   const generation = invalidateResultsRenderPipeline();
   setResultsLayoutPending(true, resultsList.querySelector(".result-item") === null);
@@ -4409,23 +5261,134 @@ function scheduleKeywordRender() {
   });
 }
 
+function resetFilterValues({ resetSort = false } = {}) {
+  keywordFilter.value = "";
+  taskFilter.value = "all";
+  entryTypeFilter.value = "all";
+  if (resetSort) sortControl.value = "year-desc";
+  venueFilter.value = "all";
+  venueTypeFilter.value = "all";
+  countryFilter.value = "all";
+  institutionTypeFilter.value = "all";
+  preprintFilter.value = "all";
+  filterDropdowns.forEach(syncFilterDropdown);
+  if (yearRangeBounds) {
+    minYearFilter.value = String(yearRangeBounds.minimum);
+    maxYearFilter.value = String(yearRangeBounds.maximum);
+    syncYearRange();
+  }
+  activeInstitutionFilter = null;
+  displayedInstitutionFilter = null;
+}
+
+function clearActiveFilter(key) {
+  const controls = {
+    keyword: keywordFilter,
+    task: taskFilter,
+    "entry-type": entryTypeFilter,
+    "venue-type": venueTypeFilter,
+    venue: venueFilter,
+    country: countryFilter,
+    "institution-type": institutionTypeFilter,
+    version: preprintFilter,
+  };
+  if (key === "keyword") keywordFilter.value = "";
+  else if (key === "year" && yearRangeBounds) {
+    minYearFilter.value = String(yearRangeBounds.minimum);
+    maxYearFilter.value = String(yearRangeBounds.maximum);
+    syncYearRange();
+  } else if (key === "institution") {
+    activeInstitutionFilter = null;
+    displayedInstitutionFilter = null;
+  } else if (controls[key]) {
+    controls[key].value = "all";
+    syncFilterDropdownForSelect(controls[key]);
+  } else return;
+  rememberFilterChange(key);
+  requestUrlStateSync("push");
+  renderRecords();
+}
+
+function clearAllActiveFilters() {
+  resetFilterValues();
+  rememberFilterChange("all");
+  requestUrlStateSync("push");
+  renderRecords();
+}
+
+function focusResultsRecoveryDestination() {
+  const nextAction = resultsEmpty.hidden
+    ? null
+    : resultsEmpty.querySelector("button:not([hidden])");
+  (nextAction || resultsCount).focus({ preventScroll: true });
+}
+
+function undoLastFilterChange() {
+  if (!lastFilterChange) return;
+  const previousFilters = lastFilterChange.before;
+  const { view, sort, paper } = currentViewState();
+  lastFilterChange = null;
+  restoreViewState({ ...previousFilters, view, sort, paper });
+  lastKnownFilterState = currentFilterConstraintState();
+  requestUrlStateSync("push");
+  renderRecords();
+  focusResultsRecoveryDestination();
+}
+
+function focusFilterControl(key) {
+  const controls = {
+    keyword: keywordFilter,
+    task: taskFilter,
+    "entry-type": entryTypeFilter,
+    "venue-type": venueTypeFilter,
+    venue: venueFilter,
+    country: countryFilter,
+    "institution-type": institutionTypeFilter,
+    version: preprintFilter,
+    year: minYearFilter,
+  };
+  const control = controls[key];
+  (filterDropdownBySelect.get(control)?.button || control || filtersHeading).focus();
+}
+
 keywordFilter.addEventListener("compositionstart", () => {
   keywordCompositionActive = true;
 });
 keywordFilter.addEventListener("compositionend", () => {
   keywordCompositionActive = false;
+  rememberFilterChange("keyword", { coalesce: keywordHistoryStarted });
+  requestKeywordUrlSync();
   scheduleKeywordRender();
 });
 keywordFilter.addEventListener("input", (event) => {
   if (keywordCompositionActive || event.isComposing) return;
+  rememberFilterChange("keyword", { coalesce: keywordHistoryStarted });
+  requestKeywordUrlSync();
   scheduleKeywordRender();
 });
-taskFilter.addEventListener("change", renderRecords);
-entryTypeFilter.addEventListener("change", renderRecords);
-sortControl.addEventListener("change", renderRecords);
-venueFilter.addEventListener("change", renderRecords);
-venueTypeFilter.addEventListener("change", renderRecords);
-countryFilter.addEventListener("change", renderRecords);
+keywordFilter.addEventListener("focus", () => { keywordHistoryStarted = false; });
+keywordFilter.addEventListener("blur", () => { keywordHistoryStarted = false; });
+function handleFilterControlChange(event) {
+  const filterKeys = new Map([
+    [taskFilter, "task"],
+    [entryTypeFilter, "entry-type"],
+    [venueTypeFilter, "venue-type"],
+    [venueFilter, "venue"],
+    [countryFilter, "country"],
+    [institutionTypeFilter, "institution-type"],
+    [preprintFilter, "version"],
+  ]);
+  const key = filterKeys.get(event.currentTarget);
+  if (key) rememberFilterChange(key);
+  requestUrlStateSync("push");
+  renderRecords();
+}
+taskFilter.addEventListener("change", handleFilterControlChange);
+entryTypeFilter.addEventListener("change", handleFilterControlChange);
+sortControl.addEventListener("change", handleFilterControlChange);
+venueFilter.addEventListener("change", handleFilterControlChange);
+venueTypeFilter.addEventListener("change", handleFilterControlChange);
+countryFilter.addEventListener("change", handleFilterControlChange);
 document.addEventListener("pointerdown", (event) => {
   filterDropdowns.forEach((dropdown) => {
     if (!dropdown.panel.hidden && !dropdown.root.contains(event.target)) {
@@ -4451,15 +5414,16 @@ filtersBackdrop.addEventListener("pointerdown", (event) => {
   closeFiltersDrawer();
 });
 document.addEventListener("keydown", handleFiltersDrawerKeydown);
-mobileFiltersMedia.addEventListener("change", (event) => {
-  filtersPanel.toggleAttribute("aria-modal", event.matches);
-  if (!event.matches) closeFiltersDrawer({ restoreFocus: false });
-});
-filtersPanel.toggleAttribute("aria-modal", mobileFiltersMedia.matches);
-institutionTypeFilter.addEventListener("change", renderRecords);
-preprintFilter.addEventListener("change", renderRecords);
+mobileFiltersMedia.addEventListener("change", handleMobileFiltersMediaChange);
+syncFiltersPanelAccessibility();
+institutionTypeFilter.addEventListener("change", handleFilterControlChange);
+preprintFilter.addEventListener("change", handleFilterControlChange);
 minYearFilter.addEventListener("input", () => handleYearRangeInput("start"));
 maxYearFilter.addEventListener("input", () => handleYearRangeInput("end"));
+[minYearFilter, maxYearFilter].forEach((input) => {
+  input.addEventListener("change", () => { yearHistoryStarted = false; });
+  input.addEventListener("blur", () => { yearHistoryStarted = false; });
+});
 minYearFilter.addEventListener("keydown", (event) => {
   handleYearRangeKeydown(event, "start");
 });
@@ -4468,6 +5432,11 @@ maxYearFilter.addEventListener("keydown", (event) => {
 });
 [resultsList, paperDetails].forEach((container) => {
   container.addEventListener("click", (event) => {
+    const copyPaperLink = event.target.closest("[data-copy-paper-link]");
+    if (copyPaperLink) {
+      copySelectedPaperUrl();
+      return;
+    }
     const authorToggle = event.target.closest(".paper-authors-toggle");
     if (authorToggle) {
       const section = authorToggle.closest(".result-authors");
@@ -4493,16 +5462,69 @@ maxYearFilter.addEventListener("keydown", (event) => {
       scheduleResultsMasonryLayout([institutionToggle.closest(".result-item")].filter(Boolean));
       return;
     }
+    const showInResults = event.target.closest("[data-show-selection-in-results]");
+    if (showInResults) {
+      showSelectionInResults();
+      return;
+    }
+    const focusInstitution = event.target.closest("[data-focus-institution]");
+    if (focusInstitution) {
+      selectInstitutionFromResult(focusInstitution);
+      return;
+    }
     const button = event.target.closest("[data-institution-filter]");
     if (button) {
       applyInstitutionFilter(button.dataset.institutionFilter, button.dataset.institutionLabel);
     }
   });
 });
-activeInstitutionFilterChip.addEventListener("click", (event) => {
-  if (event.target.closest("[data-clear-institution-filter]")) {
-    clearInstitutionFilter();
+resultsList.addEventListener("pointerover", (event) => {
+  const button = event.target.closest("[data-focus-institution]");
+  if (button && !button.contains(event.relatedTarget)) previewInstitutionFromResult(button);
+});
+resultsList.addEventListener("pointerout", (event) => {
+  const button = event.target.closest("[data-focus-institution]");
+  if (button && !button.contains(event.relatedTarget)) clearHoveredSelection();
+});
+resultsList.addEventListener("focusin", (event) => {
+  const button = event.target.closest("[data-focus-institution]");
+  if (button) previewInstitutionFromResult(button);
+});
+resultsList.addEventListener("focusout", (event) => {
+  const button = event.target.closest("[data-focus-institution]");
+  if (button && !button.contains(event.relatedTarget)) clearHoveredSelection();
+});
+activeFilterChips.addEventListener("click", (event) => {
+  const remove = event.target.closest("[data-remove-filter]");
+  if (!remove) return;
+  const key = remove.dataset.removeFilter;
+  clearActiveFilter(key);
+  focusFilterControl(key);
+});
+clearActiveFiltersButton.addEventListener("click", () => {
+  clearAllActiveFilters();
+  filtersHeading.focus();
+});
+resultsEmpty.addEventListener("click", (event) => {
+  const remove = event.target.closest("[data-empty-remove-filter]");
+  if (remove) {
+    clearActiveFilter(remove.dataset.emptyRemoveFilter);
+    focusResultsRecoveryDestination();
+    return;
   }
+  if (event.target === undoLastFilterButton) {
+    undoLastFilterChange();
+    return;
+  }
+  if (event.target === clearEmptyFiltersButton) {
+    clearAllActiveFilters();
+    focusResultsRecoveryDestination();
+  }
+});
+copyViewLinkButton.addEventListener("click", copyCanonicalViewUrl);
+window.addEventListener("popstate", () => {
+  if (!urlStateReady) return;
+  restoreViewStateFromLocation();
 });
 window.addEventListener("resize", () => scheduleMapResize());
 window.addEventListener("resize", () => {
@@ -4526,8 +5548,8 @@ document.fonts?.ready.then(() => {
 });
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
-  if (interactionState.pinned) {
-    clearPinnedSelection();
+  if (interactionState.selected || requestedPaperIdentity) {
+    clearPersistentSelection();
   } else {
     clearHoveredSelection();
   }
@@ -4537,7 +5559,7 @@ paperDetails.addEventListener("pointerenter", () => {
 });
 paperDetails.addEventListener("pointerleave", () => {
   interactionState.isPointerInsideDetails = false;
-  if (!interactionState.pinned && !interactionState.hoveredMarkerId) {
+  if (!interactionState.selected && !interactionState.hoveredMarkerId) {
     clearHoveredSelection();
   }
 });
@@ -4545,23 +5567,9 @@ resultsViewButtons.forEach((button) => {
   button.addEventListener("click", () => selectResultsView(button.dataset.resultsView));
 });
 resetButton.addEventListener("click", () => {
-  keywordFilter.value = "";
-  taskFilter.value = "all";
-  entryTypeFilter.value = "all";
-  sortControl.value = "year-desc";
-  venueFilter.value = "all";
-  venueTypeFilter.value = "all";
-  countryFilter.value = "all";
-  institutionTypeFilter.value = "all";
-  preprintFilter.value = "all";
-  filterDropdowns.forEach(syncFilterDropdown);
-  if (yearRangeBounds) {
-    minYearFilter.value = String(yearRangeBounds.minimum);
-    maxYearFilter.value = String(yearRangeBounds.maximum);
-    syncYearRange();
-  }
-  activeInstitutionFilter = null;
-  displayedInstitutionFilter = null;
+  resetFilterValues({ resetSort: true });
+  rememberFilterChange("all");
+  requestUrlStateSync("push");
   renderRecords();
   scheduleMapResize(true);
 });

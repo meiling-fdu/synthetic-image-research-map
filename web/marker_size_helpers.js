@@ -110,7 +110,7 @@
 
   function formatInstitutionPaperCount(count) {
     const normalizedCount = Math.max(0, Number(count) || 0);
-    return `${normalizedCount} paper${normalizedCount === 1 ? "" : "s"} in current view`;
+    return `${normalizedCount} unique paper${normalizedCount === 1 ? "" : "s"} in current view`;
   }
 
   return {

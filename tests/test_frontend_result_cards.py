@@ -161,7 +161,7 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         self.assertIn("institution?.authors?.length", institution)
         self.assertIn("recordInstitutionAuthors(record)", institution)
         self.assertIn("recordAuthors(normalizedRecord)", institution)
-        self.assertIn("institutionFilterButtonHtml", institution)
+        self.assertIn("institutionFocusButtonHtml", institution)
         self.assertIn("recordLocation(record)", institution)
         self.assertIn("institutionTypeLabel(institutionType)", institution)
         self.assertIn('`${cardId}-authors`, 4', institution)
@@ -565,7 +565,7 @@ process.stdout.write(JSON.stringify({
     def test_counts_states_list_semantics_and_nested_controls(self):
         render = self.function("renderResults", "selectResultsView")
         self.assertIn(
-            'resultNoun = resultsView === "papers" ? "paper" : "institution record"',
+            'resultNoun = resultsView === "papers" ? "unique paper" : "institution record"',
             render,
         )
         self.assertIn("displayedResults.length", render)

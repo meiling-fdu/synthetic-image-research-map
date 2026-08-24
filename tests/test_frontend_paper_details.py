@@ -244,19 +244,19 @@ process.stdout.write(JSON.stringify(Object.fromEntries(
 
     def test_existing_pin_hover_and_filtered_selection_guards_remain(self):
         self.assertIn(
-            "const detailSelection = interactionState.pinned || interactionState.hovered",
+            "const detailSelection = interactionState.selected || interactionState.hovered",
             self.app,
         )
         clear_hover = self.app.split(
             "function clearHoverPreview(marker, event = null) {", 1
         )[1].split("\nfunction pinPaper", 1)[0]
-        self.assertNotIn("interactionState.pinned = null", clear_hover)
+        self.assertNotIn("interactionState.selected = null", clear_hover)
         render = self.app.split("function renderRecords() {", 1)[1].split(
             "\nfunction configureYearRange()", 1
         )[0]
-        self.assertIn("interactionState.pinned = null", render)
-        self.assertIn("interactionState.pinnedMarkerId = null", render)
-        self.assertIn("clearPinnedSelection()", self.app)
+        self.assertIn("restoreLinkedPaperSelection(", render)
+        self.assertIn("filteredSets.matchingPaperIdentities", render)
+        self.assertIn("clearPersistentSelection()", self.app)
 
 
 if __name__ == "__main__":

@@ -220,7 +220,10 @@ process.stdout.write(JSON.stringify({{
         self.assertIn("syncFilterDropdownForSelect(venueFilter)", self.app)
         self.assertNotIn("All Publication Types", self.html)
         self.assertIn('matchesVenue &&\n    matchesVenueType', self.app)
-        self.assertIn('venueTypeFilter.addEventListener("change", renderRecords)', self.app)
+        self.assertIn(
+            'venueTypeFilter.addEventListener("change", handleFilterControlChange)',
+            self.app,
+        )
         self.assertIn(
             'String(record.publication_type || record.venue_type || "")',
             self.app,

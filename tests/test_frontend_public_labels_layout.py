@@ -18,7 +18,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
 
     def test_renamed_public_filter_labels_and_title_case(self):
         for expected in (
-            "Paper Type",
+            "Research Type",
             "Publication Type",
             "Publication Venue",
             "Record Version",
@@ -27,12 +27,13 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             "Filtered Records",
             "Institution Records",
             "Unique Papers",
-            "Map Records",
+            "Institution Records",
             "Unique Institutions",
         ):
             self.assertIn(expected, self.html)
         for removed in (
             "Entry type",
+            "Paper Type",
             "Venue Type",
             "Version Status",
             "Institution type",
@@ -61,7 +62,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
     def test_filter_order_places_publication_type_immediately_before_venue(self):
         filter_grid = self.html[
             self.html.index('<div class="filter-grid">'):
-            self.html.index('<div id="active-institution-filter"')
+            self.html.index('id="active-filter-bar"')
         ]
         ordered_ids = re.findall(r'<(?:input|select)[^>]+id="([^"]+)"', filter_grid)
         self.assertLess(
@@ -83,7 +84,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
     def test_all_nine_filter_groups_remain_present(self):
         filter_grid = self.html[
             self.html.index('<div class="filter-grid">'):
-            self.html.index('<div id="active-institution-filter"')
+            self.html.index('id="active-filter-bar"')
         ]
         groups = (
             "keyword-filter", "task-filter", "entry-type-filter",
@@ -120,20 +121,20 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertIn('select.setAttribute("aria-hidden", "true")', self.app)
         self.assertIn("select.tabIndex = -1", self.app)
 
-    def test_filtered_overview_has_only_three_map_metrics(self):
+    def test_filtered_overview_distinguishes_all_four_data_units(self):
         overview = self.html[
             self.html.index('<div class="dataset-overview"'):
             self.html.index('<div class="map-status-row"')
         ]
-        self.assertIn('aria-label="Filtered map overview"', overview)
+        self.assertIn('aria-label="Filtered data overview"', overview)
         self.assertNotIn("Filtered Overview", overview)
         self.assertNotIn("<h2", overview)
         labels = re.findall(r"<dt>([^<]+)</dt>", overview)
         self.assertEqual(labels, [
-            "Map Records", "Unique Institutions", "Countries",
+            "Institution Records", "Unique Papers", "Unique Institutions", "Countries",
         ])
-        self.assertNotIn("dataset-paper-count", overview)
-        self.assertNotIn("datasetPaperCount", self.app)
+        self.assertIn('id="dataset-paper-count"', overview)
+        self.assertIn("datasetPaperCount", self.app)
         for removed_id in (
             "dataset-detection-count", "dataset-attribution-count",
             "dataset-combined-count",
@@ -247,7 +248,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
     def test_sort_is_in_filtered_records_header_not_filter_panel(self):
         filter_grid = self.html[
             self.html.index('<div class="filter-grid">'):
-            self.html.index('<div id="active-institution-filter"')
+            self.html.index('id="active-filter-bar"')
         ]
         results_header = self.html[
             self.html.index('<div class="results-heading-row">'):
@@ -338,9 +339,9 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertIn('aria-label="Paper categories"', self.app)
 
     def test_map_and_result_count_labels_use_record_scope_consistently(self):
-        self.assertIn("Institution records matching the current filters.", self.html)
-        self.assertIn('resultsView === "papers" ? "paper" : "institution record"', self.app)
-        self.assertIn('recordLabel: "public map record"', self.app)
+        self.assertIn("Filtered institution records represent paper–institution links", self.html)
+        self.assertIn('resultsView === "papers" ? "unique paper" : "institution record"', self.app)
+        self.assertEqual(self.app.count('recordLabel: "institution record"'), 2)
         self.assertIn("No records match the current filters.", self.app)
         self.assertIn('aria-label="Research Map"', self.html)
 

@@ -20,6 +20,10 @@ class FrontendMobileFiltersTests(unittest.TestCase):
         self.assertIn('aria-label="Close filters"', self.html)
         self.assertIn('id="done-filters"', self.html)
         self.assertIn('id="filters-backdrop"', self.html)
+        self.assertIn('role="region"', self.html)
+        self.assertIn('aria-labelledby="filters-heading"', self.html)
+        self.assertNotIn('role="dialog"', self.html)
+        self.assertNotIn('aria-modal="true"', self.html)
 
     def test_existing_breakpoint_preserves_desktop_and_enables_mobile_drawer(self):
         mobile = self.css.split("@media (max-width: 820px)", 1)[1]
@@ -33,18 +37,19 @@ class FrontendMobileFiltersTests(unittest.TestCase):
         self.assertIn("display: none", desktop)
 
     def test_active_count_uses_authoritative_categories_and_omits_zero(self):
-        helper = self.app[
-            self.app.index("function activeFilterCategoryCount"):
-            self.app.index("\nfunction updateMobileFiltersTrigger")
+        descriptor = self.app[
+            self.app.index("function activeFilterChipDescriptors"):
+            self.app.index("\nfunction renderActiveFilterChips")
         ]
         for filter_name in (
             "keywordFilter", "taskFilter", "entryTypeFilter", "venueTypeFilter",
             "venueFilter", "countryFilter", "institutionTypeFilter",
             "preprintFilter", "activeInstitutionFilter",
         ):
-            self.assertIn(filter_name, helper)
-        self.assertIn("selection.start !== yearRangeBounds.minimum", helper)
-        self.assertIn("selection.end !== yearRangeBounds.maximum", helper)
+            self.assertIn(filter_name, descriptor)
+        self.assertIn("selection.start !== yearRangeBounds.minimum", descriptor)
+        self.assertIn("selection.end !== yearRangeBounds.maximum", descriptor)
+        self.assertIn("return activeFilterChipDescriptors().length", self.app)
         self.assertIn('count ? `Filters (${count})` : "Filters"', self.app)
         self.assertNotIn("Filters (0)", self.app)
 
@@ -55,6 +60,12 @@ class FrontendMobileFiltersTests(unittest.TestCase):
         self.assertIn('mobileFiltersTrigger.focus()', self.app)
         self.assertIn('event.key === "Escape"', self.app)
         self.assertIn('event.key !== "Tab"', self.app)
+        self.assertIn('!mobileFiltersMedia.matches || !filtersDrawerOpen', self.app)
+        self.assertIn('filtersPanel.contains(document.activeElement)', self.app)
+        self.assertIn('filtersPanel.toggleAttribute("inert"', self.app)
+        self.assertIn('filtersPanel.setAttribute("aria-modal", "true")', self.app)
+        self.assertIn('filtersPanel.removeAttribute("aria-modal")', self.app)
+        self.assertIn('isOpenMobileDialog ? "dialog" : "region"', self.app)
         self.assertIn('filtersBackdrop.addEventListener("pointerdown"', self.app)
         self.assertIn('doneFiltersButton.addEventListener("click"', self.app)
         self.assertIn('mobileFiltersMedia.addEventListener("change"', self.app)
@@ -65,10 +76,15 @@ class FrontendMobileFiltersTests(unittest.TestCase):
             self.app.count('resetButton.addEventListener("click"'),
             1,
         )
+        reset_values = self.app[
+            self.app.index("function resetFilterValues"):
+            self.app.index("\nfunction clearActiveFilter")
+        ]
         reset = self.app[self.app.index('resetButton.addEventListener("click"'):]
-        self.assertIn('keywordFilter.value = ""', reset)
-        self.assertIn('countryFilter.value = "all"', reset)
-        self.assertIn("activeInstitutionFilter = null", reset)
+        self.assertIn('keywordFilter.value = ""', reset_values)
+        self.assertIn('countryFilter.value = "all"', reset_values)
+        self.assertIn("activeInstitutionFilter = null", reset_values)
+        self.assertIn("resetFilterValues({ resetSort: true })", reset)
         self.assertIn("renderRecords()", reset)
         self.assertNotIn("closeFiltersDrawer", reset)
 

@@ -16,44 +16,42 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         cls.css = (REPOSITORY / "web" / "style.css").read_text()
         cls.html = (REPOSITORY / "web" / "index.html").read_text()
 
-    def test_all_summary_charts_are_static(self):
+    def test_all_summary_charts_render_native_filter_buttons(self):
         chart_source = self.app[
             self.app.index("function renderTaskChart"):
             self.app.index("function renderHeaderStatistics")
         ]
-        for interactive_text in (
-            "<button", "aria-pressed", "data-chart-task",
-            "data-chart-institution", "data-chart-year",
-            "activateChartFilter",
-        ):
-            self.assertNotIn(interactive_text, chart_source)
+        self.assertEqual(chart_source.count('<button type="button"'), 3)
+        self.assertEqual(chart_source.count('data-chart-filter="'), 3)
+        self.assertEqual(chart_source.count('aria-pressed="'), 3)
         self.assertIn('<span class="task-chart-segment"', chart_source)
-        self.assertIn('<div class="institution-chart-row"', chart_source)
-        self.assertIn('<div class="year-chart-item"', chart_source)
+        self.assertIn('<button type="button" class="institution-chart-row"', chart_source)
+        self.assertIn('<button type="button" class="year-chart-item"', chart_source)
 
-    def test_top_institutions_retains_compact_static_bar_structure(self):
+    def test_top_institutions_retains_compact_interactive_bar_structure(self):
         self.assertIn(
-            '<div class="institution-chart-label"><span class="institution-chart-fill"',
+            '<span class="institution-chart-label"><span class="institution-chart-fill"',
             self.app,
         )
         self.assertIn('<span class="institution-chart-count">', self.app)
         self.assertIn("grid-template-rows: repeat(5, 1fr)", self.css)
         self.assertIn("grid-auto-flow: column", self.css)
-        self.assertNotIn(".institution-chart-row.is-selected", self.css)
+        self.assertIn('.header-chart button[aria-pressed="true"]', self.css)
 
     def test_chart_rows_expose_full_values_to_pointer_and_keyboard_users(self):
         chart_source = self.app[
             self.app.index("function renderInstitutionChart"):
             self.app.index("function renderHeaderStatistics")
         ]
-        self.assertEqual(chart_source.count('tabindex="0"'), 2)
+        self.assertNotIn('tabindex="0"', chart_source)
         self.assertEqual(chart_source.count('data-chart-tooltip="'), 2)
-        self.assertIn('aria-label="${escapeHtml(entry.name)}:', chart_source)
-        self.assertIn('aria-label="${year}:', chart_source)
+        self.assertIn('institution ${escapeHtml(entry.name)};', chart_source)
+        self.assertIn('publication year ${year};', chart_source)
         self.assertIn('className = "chart-tooltip"', self.app)
         self.assertIn('chartTooltip.setAttribute("role", "tooltip")', self.app)
         self.assertIn('document.addEventListener("focusin"', self.app)
         self.assertIn('document.addEventListener("pointerover"', self.app)
+        self.assertIn('headerStatistics.addEventListener("click"', self.app)
 
     def test_exact_institution_filter_is_separate_from_keyword_filter(self):
         matching = self.app[
@@ -71,8 +69,9 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
 
     def test_affiliation_links_chip_and_reset_are_accessible(self):
         self.assertIn('aria-label="Filter by institution', self.app)
-        self.assertIn("active-institution-filter", self.html)
-        self.assertIn("data-clear-institution-filter", self.app)
+        self.assertIn("active-filter-bar", self.html)
+        self.assertIn("active-filter-chips", self.html)
+        self.assertIn("dataset.removeFilter", self.app)
         self.assertIn("activeInstitutionFilter = null", self.app)
         self.assertIn(".active-filter-chip", self.css)
         self.assertIn("button.institution-filter-link", self.css)
@@ -197,7 +196,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         self.assertNotIn("task-chart-total", header)
         self.assertNotIn(">0<", header)
         self.assertIn(
-            '<p id="results-count" role="status" aria-live="polite">Loading…</p>',
+            '<p id="results-count" role="status" aria-live="polite" tabindex="-1">Loading…</p>',
             self.html,
         )
 
@@ -207,13 +206,13 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
             self.app.index("function configureYearRange(")
         ]
         self.assertIn(
-            'const resultNoun = resultsView === "papers" ? "paper" : "institution record"',
+            'const resultNoun = resultsView === "papers" ? "unique paper" : "institution record"',
             render,
         )
         self.assertIn('count.toLocaleString("en-US")', render)
         self.assertIn('`${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`', render)
         self.assertIn('`No matching ${resultNoun}s`', render)
-        self.assertIn('`No matching ${resultNoun}s.`', render)
+        self.assertIn("renderNoResultsState(resultNoun);", render)
 
     def test_overview_metrics_are_semantic_non_input_pills(self):
         overview = self.html[
@@ -1163,7 +1162,10 @@ process.stdout.write(JSON.stringify({
             self.app.index("function renderRecords()"):
             self.app.index("function configureYearRange()")
         ]
-        self.assertNotIn("datasetPaperCount", statistics)
+        self.assertIn(
+            "datasetPaperCount.textContent = datasetPaperRecords.length",
+            statistics,
+        )
         task_chart = self.app[
             self.app.index("function renderTaskChart"):
             self.app.index("function renderInstitutionChart")

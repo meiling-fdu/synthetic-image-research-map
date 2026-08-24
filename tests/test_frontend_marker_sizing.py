@@ -58,8 +58,8 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(values["capped"], values["maximum"])
         self.assertEqual(values["allCount"], 2)
         self.assertEqual(values["filteredCount"], 1)
-        self.assertEqual(values["singular"], "1 paper in current view")
-        self.assertEqual(values["plural"], "3 papers in current view")
+        self.assertEqual(values["singular"], "1 unique paper in current view")
+        self.assertEqual(values["plural"], "3 unique papers in current view")
         self.assertEqual(values["detectionTask"], "detection")
         self.assertEqual(values["attributionTask"], "source_attribution")
         self.assertEqual(
@@ -149,9 +149,9 @@ process.stdout.write(JSON.stringify({
         )
         self.assertIn("const interactionState = {", app_source)
         self.assertIn("hovered: null", app_source)
-        self.assertIn("pinned: null", app_source)
-        self.assertIn("const previousPin =", app_source)
-        self.assertIn("if (interactionState.pinned)", app_source)
+        self.assertIn("selected: null", app_source)
+        self.assertIn("const previousSelection =", app_source)
+        self.assertIn("if (interactionState.selected)", app_source)
         self.assertIn(
             "closePaperDetailsButton.addEventListener",
             app_source,
@@ -186,15 +186,15 @@ process.stdout.write(JSON.stringify({
         )[1].split("\nfunction clearHoverPreview", 1)[0]
 
         self.assertIn(
-            "const detailSelection = interactionState.pinned || interactionState.hovered",
+            "const detailSelection = interactionState.selected || interactionState.hovered",
             restore_body,
         )
         self.assertIn(
-            "const connectionSelection = interactionState.hovered || interactionState.pinned",
+            "const connectionSelection = interactionState.hovered || interactionState.selected",
             restore_body,
         )
         self.assertIn(
-            "setHoveredSelection({ identity, record, markerId, marker })", hover_body
+            "setHoveredSelection({", hover_body
         )
         self.assertIn('closePaperDetailsButton.addEventListener("click", () => {', app_source)
 
@@ -205,9 +205,9 @@ process.stdout.write(JSON.stringify({
             "function pinPaper(", 1
         )[1].split("\nfunction renderRecords", 1)[0]
         self.assertIn("clearHoveredSelection(marker)", clear_body)
-        self.assertNotIn("interactionState.pinned = null", clear_body)
+        self.assertNotIn("interactionState.selected = null", clear_body)
         self.assertIn(
-            "setPinnedSelection({ identity, record, markerId: institutionKey, institutionKey })",
+            "setPersistentSelection({",
             pin_body,
         )
         self.assertNotIn('paperDetails.addEventListener("mouseleave"', app_source)
@@ -229,10 +229,10 @@ process.stdout.write(JSON.stringify({
         )[1].split("\nfunction relatedMarkerEntries", 1)[0]
 
         self.assertIn(
-            "interactionState.pinned || interactionState.hovered", active_body
+            "interactionState.selected || interactionState.hovered", active_body
         )
         self.assertIn(
-            "interactionState.hovered || interactionState.pinned", active_body
+            "interactionState.hovered || interactionState.selected", active_body
         )
         self.assertIn(
             "renderPaperSelection(detailSelection, interactionState.detailsSource)", interaction_body
@@ -247,19 +247,16 @@ process.stdout.write(JSON.stringify({
         self.assertIn("if (locations.length < 2)", draw_body)
         self.assertIn("return 0", draw_body)
 
-    def test_rerender_restores_only_visible_pinned_marker(self):
+    def test_rerender_restores_pinned_paper_from_shared_identity_state(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
         render_body = app_source.split(
             "function renderRecords() {", 1
         )[1].split("\nfunction configureYearRange()", 1)[0]
 
-        self.assertIn("const previousPin = interactionState.pinned", render_body)
-        self.assertIn("visibleMarkerEntries.find", render_body)
-        self.assertIn("entry.institutionKey === previousPin.institutionKey", render_body)
-        self.assertIn("paperIdentity(record) === previousPin?.identity", render_body)
-        self.assertIn("interactionState.pinned = {", render_body)
-        self.assertIn("record: restoredPinRecord", render_body)
-        self.assertIn("interactionState.pinned = null", render_body)
+        self.assertIn("visiblePaperSelectionByIdentity = new Map()", render_body)
+        self.assertIn("visiblePaperSelectionByIdentity.set", render_body)
+        self.assertIn("restoreLinkedPaperSelection(", render_body)
+        self.assertIn("filteredSets.matchingPaperIdentities", render_body)
 
     def test_marker_handlers_are_rebuilt_once_and_ai_summary_is_absent(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
