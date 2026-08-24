@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-24T17:35:32Z"
+    "public_preview_generated_at": "2026-08-24T22:33:02Z"
   },
   "records": [
     {
@@ -33691,7 +33691,7 @@
     },
     {
       "paper_id": "curated:268336295435cfbbbd5d",
-      "title": "Learning a Semantic Similarity Orthogonal Space for Model‐Level <scp>AI</scp> ‐Generated Image Source Attribution",
+      "title": "Learning a Semantic Similarity Orthogonal Space for Model-Level AI-Generated Image Source Attribution",
       "in_scope": true,
       "year": 2026,
       "publication_year": 2026,
@@ -33903,7 +33903,7 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
-      "ambiguity_status": "unmapped",
+      "ambiguity_status": "resolved",
       "aggregated_locations": [
         {
           "institution_name": "Macau University of Science and Technology",
@@ -33997,6 +33997,15 @@
         "institution:95626cb146b52080",
         "institution:b8e44ef51464a97c"
       ],
+      "venue_name": "Expert Systems",
+      "venue_id": "venue:expert-systems",
+      "venue_acronym": "",
+      "venue_type": "journal",
+      "venue_track": "",
+      "venue_aliases": [
+        "Expert Systems"
+      ],
+      "venue_label": "Expert Systems",
       "affiliations": [
         {
           "index": 1,
@@ -36083,7 +36092,7 @@
       "venue_type": "conference",
       "publisher": "",
       "publication_type": "conference",
-      "abstract": "Detecting AI-generated images (AIGI) is becoming increasingly difficult as modern generators produce content nearly indistinguishable from real images. Recent alignment-based methods improve generalization by reconstructing real images with VAE models to create near-real samples, yet they still face three major limitations: single-view coverage, discrete sample distributions, and unstable decision boundaries. These issues highlight a deeper challenge: reliable AIGI detection requires modeling and amplifying the \"near-real but weak\" deviations around the real manifold. We propose M<sup xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">2</sup>EA (Multi-VAE Manifold Envelope Alignment), a framework that systematically addresses these limitations. M<sup xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">2</sup>EA employs Multi-VAE reconstruction to provide diverse near-real views, ϵ-perturbation scheduling to generate a continuous spectrum of sample difficulty, and Double-Boundary Constraint to stabilize decision surfaces. Extensive experiments across multiple benchmarks demonstrate that M<sup xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">2</sup>EA achieves superior accuracy, robustness, and cross-generator generalization compared to existing approaches.",
+      "abstract": "Detecting AI-generated images (AIGI) is becoming increasingly difficult as modern generators produce content nearly indistinguishable from real images. Recent alignment-based methods improve generalization by reconstructing real images with VAE models to create near-real samples, yet they still face three major limitations: single-view coverage, discrete sample distributions, and unstable decision boundaries. These issues highlight a deeper challenge: reliable AIGI detection requires modeling and amplifying the \"near-real but weak\" deviations around the real manifold. We propose M2EA (Multi-VAE Manifold Envelope Alignment), a framework that systematically addresses these limitations. M2EA employs Multi-VAE reconstruction to provide diverse near-real views, ϵ-perturbation scheduling to generate a continuous spectrum of sample difficulty, and Double-Boundary Constraint to stabilize decision surfaces. Extensive experiments across multiple benchmarks demonstrate that M2EA achieves superior accuracy, robustness, and cross-generator generalization compared to existing approaches.",
       "abstract_source": "openalex",
       "ai_summary": "",
       "doi": "10.1109/icassp55912.2026.11463215",
@@ -36099,7 +36108,7 @@
       "url": "https://doi.org/10.1109/icassp55912.2026.11463215",
       "authors": [
         {
-          "name": "R X Liu",
+          "name": "Ruiqi Liu",
           "affiliation_indices": [
             1
           ],
@@ -36109,9 +36118,11 @@
         },
         {
           "name": "Yi Han",
-          "affiliation_indices": [],
+          "affiliation_indices": [
+            2
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -36135,7 +36146,7 @@
         {
           "name": "Yuxuan Zhou",
           "affiliation_indices": [
-            2
+            3
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -36144,7 +36155,7 @@
         {
           "name": "Yan Wang",
           "affiliation_indices": [
-            2
+            3
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -36158,12 +36169,13 @@
       "needs_review": false,
       "notes": "",
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "Institute of Automation, Chinese Academy of Sciences",
+        "Southwest University",
         "Tsinghua University"
       ],
       "aggregated_country_names": [
@@ -36173,23 +36185,36 @@
         "CN"
       ],
       "aggregated_regions": [
-        "Beijing"
+        "Beijing",
+        "Chongqing"
       ],
       "aggregated_region_codes": [],
       "curated_mappings": [
         {
           "mapping_id": "mapping:96a52a5695846d67a4d3",
           "institution_id": "institution:966ff12833f90bb0",
-          "location_id": "",
+          "location_id": "location:966ff12833f90bb0ba7e",
           "institution": "Institute of Automation, Chinese Academy of Sciences",
           "institution_authors": [
-            "R X Liu",
+            "Ruiqi Liu",
             "Boyi Sun",
             "Houxin He"
           ],
           "raw_affiliation": "Institute of Automation, Chinese Academy of Sciences",
           "mapping_status": "active",
           "affiliation_order": 1
+        },
+        {
+          "mapping_id": "mapping:b174ab5e8b05d86bbad8",
+          "institution_id": "institution:d473cbf12de5fb53",
+          "location_id": "location:682519f38b7e9a7c6e4d",
+          "institution": "Southwest University",
+          "institution_authors": [
+            "Yi Han"
+          ],
+          "raw_affiliation": "Southwest University",
+          "mapping_status": "active",
+          "affiliation_order": 2
         },
         {
           "mapping_id": "mapping:504a4968f9eb11dbacc3",
@@ -36212,7 +36237,7 @@
           "institution": "Institute of Automation, Chinese Academy of Sciences",
           "institution_type": "research_unit",
           "authors": [
-            "R X Liu",
+            "Ruiqi Liu",
             "Boyi Sun",
             "Houxin He"
           ],
@@ -36221,6 +36246,17 @@
         },
         {
           "index": 2,
+          "institution_id": "institution:d473cbf12de5fb53",
+          "institution": "Southwest University",
+          "institution_type": "university",
+          "authors": [
+            "Yi Han"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
           "institution_id": "institution:4ae45b121fe12e9c",
           "institution": "Tsinghua University",
           "institution_type": "university",
@@ -36234,12 +36270,21 @@
       ],
       "author_institution_indices": [
         {
-          "author": "R X Liu",
+          "author": "Ruiqi Liu",
           "institution_indices": [
             1
           ],
           "institution_ids": [
             "institution:966ff12833f90bb0"
+          ]
+        },
+        {
+          "author": "Yi Han",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:d473cbf12de5fb53"
           ]
         },
         {
@@ -36263,7 +36308,7 @@
         {
           "author": "Yuxuan Zhou",
           "institution_indices": [
-            2
+            3
           ],
           "institution_ids": [
             "institution:4ae45b121fe12e9c"
@@ -36272,7 +36317,7 @@
         {
           "author": "Yan Wang",
           "institution_indices": [
-            2
+            3
           ],
           "institution_ids": [
             "institution:4ae45b121fe12e9c"
@@ -36281,7 +36326,7 @@
       ],
       "author_affiliation_indices": [
         {
-          "author": "R X Liu",
+          "author": "Ruiqi Liu",
           "indices": [
             1
           ],
@@ -36293,9 +36338,13 @@
         },
         {
           "author": "Yi Han",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:d473cbf12de5fb53"
+          ],
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -36323,7 +36372,7 @@
         {
           "author": "Yuxuan Zhou",
           "indices": [
-            2
+            3
           ],
           "institution_ids": [
             "institution:4ae45b121fe12e9c"
@@ -36334,7 +36383,7 @@
         {
           "author": "Yan Wang",
           "indices": [
-            2
+            3
           ],
           "institution_ids": [
             "institution:4ae45b121fe12e9c"
@@ -36356,6 +36405,16 @@
           "region": "Beijing",
           "region_code": "",
           "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "Southwest University",
+          "institution_id": "institution:d473cbf12de5fb53",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Chongqing",
+          "region_code": "",
+          "location_display": "Chongqing, China"
         },
         {
           "institution_name": "Tsinghua University",
@@ -36413,6 +36472,17 @@
         },
         {
           "index": 2,
+          "name": "Southwest University",
+          "canonical_name": "Southwest University",
+          "institution_id": "institution:d473cbf12de5fb53",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Chongqing",
+          "location_display": "Chongqing, China"
+        },
+        {
+          "index": 3,
           "name": "Tsinghua University",
           "canonical_name": "Tsinghua University",
           "institution_id": "institution:4ae45b121fe12e9c",
@@ -63183,7 +63253,7 @@
       "current_institution": null
     },
     {
-      "title": "Bi‐ <scp>LORA</scp> : A Vision‐Language Approach for Synthetic Image Detection",
+      "title": "Bi‐LORA: A Vision‐Language Approach for Synthetic Image Detection",
       "in_scope": true,
       "year": 2025,
       "publication_year": 2025,
@@ -63193,6 +63263,8 @@
         "method"
       ],
       "venue": "Expert Systems",
+      "venue_name": "Expert Systems",
+      "venue_type": "journal",
       "publisher": "Wiley",
       "publication_type": "journal",
       "abstract": "ABSTRACT Advancements in deep image synthesis techniques, such as generative adversarial networks (GANs) and diffusion models (DMs), have ushered in an era of generating highly realistic images. While this technological progress has captured significant interest, it has also raised concerns about the high challenge in distinguishing real images from their synthetic counterparts. This paper takes inspiration from the potent convergence capabilities between vision and language, coupled with the zero‐shot nature of vision‐language models (VLMs). We introduce an innovative method called Bi‐LORA that leverages VLMs, combined with low‐rank adaptation (LORA) tuning techniques, to enhance the precision of synthetic image detection for unseen model‐generated images. The pivotal conceptual shift in our methodology revolves around reframing binary classification as an image captioning task, leveraging the distinctive capabilities of cutting‐edge VLM, notably bootstrapping language image pre‐training (BLIP)2. Rigorous and comprehensive experiments are conducted to validate the effectiveness of our proposed approach, particularly in detecting unseen diffusion‐generated images from unknown diffusion‐based generative models during training, showcasing robustness to noise, and demonstrating generalisation capabilities to GANs. The experiments show that Bi‐LORA outperforms state of the art models in cross‐generator tasks because it leverages multi‐modal learning, open‐world visual knowledge, and benefits from robust, high‐level semantic understanding. By combining visual and textual knowledge, it can handle variations in the data distribution (such as those caused by different generators) and maintain strong performance across different domains. Its ability to transfer knowledge, robustly extract features and perform zero‐shot learning also contributes to its generalisation capabilities, making it more adaptable to new generators. The experimental results showcase an impressive average accuracy of 93.41% in synthetic image detection on unseen generation models. The code and models associated with this research can be publicly accessed at https://github.com/Mamadou‐Keita/VLM‐DETECT .",
@@ -63265,7 +63337,7 @@
           "affiliation_fallback": false
         }
       ],
-      "source_database": "OpenAlex",
+      "source_database": "openalex",
       "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
@@ -63340,6 +63412,15 @@
         "Madrid"
       ],
       "aggregated_region_codes": [],
+      "paper_id": "curated:3ec6b6d00f72f8b450e6",
+      "venue_id": "venue:expert-systems",
+      "venue_acronym": "",
+      "venue_track": "",
+      "raw_venue": "Expert Systems",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "review_status": "reviewed",
+      "formal_url": "https://doi.org/10.1111/exsy.13829",
       "affiliation_review_state": "curated",
       "curated_mappings": [
         {
@@ -63499,8 +63580,11 @@
       ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
-      "raw_venue": "Expert Systems",
-      "ambiguity_status": "unmapped",
+      "venue_label": "Expert Systems",
+      "venue_aliases": [
+        "Expert Systems"
+      ],
+      "ambiguity_status": "resolved",
       "affiliations": [
         {
           "index": 1,
@@ -63616,7 +63700,6 @@
           "fallback": false
         }
       ],
-      "formal_url": "https://doi.org/10.1111/exsy.13829",
       "search_institution_ids": [
         "institution:1e2fe2432a089705",
         "institution:81f79a387128ccac",
@@ -70805,7 +70888,7 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
@@ -70814,18 +70897,34 @@
             1
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
           "name": "Qi Xiong",
           "affiliation_indices": [
-            1,
-            2,
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Jing Huang",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Bing Bai",
+          "affiliation_indices": [
             3
           ],
           "is_current_marker_author": false,
-          "affiliation_source": "raw_affiliation",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
@@ -70833,12 +70932,14 @@
       "needs_review": false,
       "notes": "Imported from next50 missing key-paper OpenAlex strong match; broad paper-level preview eligible; affiliation/location repair may still be needed.",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 5,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "Tencent (China)",
+        "Tencent Inc.",
+        "Hikvision",
+        "Microsoft",
         "Microsoft (United States)",
         "Microsoft Research (United Kingdom)"
       ],
@@ -70852,13 +70953,17 @@
         "US",
         "GB"
       ],
-      "aggregated_regions": [],
+      "aggregated_regions": [
+        "Guangdong",
+        "Zhejiang",
+        "Washington"
+      ],
       "aggregated_region_codes": [],
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:a992a0408381afc7",
-          "institution": "Tencent (China)",
+          "institution_id": "institution:aa542458d996a5d3",
+          "institution": "Tencent Inc.",
           "institution_type": "company",
           "authors": [
             "Yingsong Huang",
@@ -70866,11 +70971,42 @@
             "Qi Xiong"
           ],
           "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:f1a54130f4c752b7",
+          "institution": "Hikvision",
+          "institution_type": "other",
+          "authors": [
+            "Jing Huang"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:9fbf261b62c1d7c0",
+          "institution": "Microsoft",
+          "institution_type": "company",
+          "authors": [
+            "Bing Bai"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 4,
+          "institution_id": "institution:a992a0408381afc7",
+          "institution": "Tencent (China)",
+          "institution_type": "company",
+          "authors": [],
+          "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
           "preliminary": true
         },
         {
-          "index": 2,
+          "index": 5,
           "institution_id": "institution:9e1ab9137907fdce",
           "institution": "Microsoft (United States)",
           "institution_type": "company",
@@ -70882,7 +71018,7 @@
           "preliminary": true
         },
         {
-          "index": 3,
+          "index": 6,
           "institution_id": "institution:330ddee32a318616",
           "institution": "Microsoft Research (United Kingdom)",
           "institution_type": "company",
@@ -70901,7 +71037,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a992a0408381afc7"
+            "institution:aa542458d996a5d3"
           ]
         },
         {
@@ -70910,20 +71046,34 @@
             1
           ],
           "institution_ids": [
-            "institution:a992a0408381afc7"
+            "institution:aa542458d996a5d3"
           ]
         },
         {
           "author": "Qi Xiong",
           "institution_indices": [
-            1,
-            2,
+            1
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ]
+        },
+        {
+          "author": "Jing Huang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:f1a54130f4c752b7"
+          ]
+        },
+        {
+          "author": "Bing Bai",
+          "institution_indices": [
             3
           ],
           "institution_ids": [
-            "institution:a992a0408381afc7",
-            "institution:9e1ab9137907fdce",
-            "institution:330ddee32a318616"
+            "institution:9fbf261b62c1d7c0"
           ]
         }
       ],
@@ -70934,9 +71084,9 @@
             1
           ],
           "institution_ids": [
-            "institution:a992a0408381afc7"
+            "institution:aa542458d996a5d3"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -70945,24 +71095,42 @@
             1
           ],
           "institution_ids": [
-            "institution:a992a0408381afc7"
+            "institution:aa542458d996a5d3"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Qi Xiong",
           "indices": [
-            1,
-            2,
+            1
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jing Huang",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:f1a54130f4c752b7"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Bing Bai",
+          "indices": [
             3
           ],
           "institution_ids": [
-            "institution:a992a0408381afc7",
-            "institution:9e1ab9137907fdce",
-            "institution:330ddee32a318616"
+            "institution:9fbf261b62c1d7c0"
           ],
-          "source": "raw_affiliation",
+          "source": "curated_admin",
           "fallback": false
         }
       ],
@@ -70970,60 +71138,80 @@
       "metadata_source": "openalex",
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
-      "curated_mappings": [],
-      "affiliations": [
+      "curated_mappings": [
         {
-          "index": 1,
-          "name": "Tencent (China)",
-          "canonical_name": "Tencent (China)",
-          "institution_id": "institution:a992a0408381afc7",
-          "institution_type": "company",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China",
-          "preliminary": true
+          "mapping_id": "mapping:cf10d7185f439a0db511",
+          "institution_id": "institution:aa542458d996a5d3",
+          "location_id": "",
+          "institution": "Tencent Inc.",
+          "institution_authors": [
+            "Yingsong Huang",
+            "Hui Guo",
+            "Qi Xiong"
+          ],
+          "raw_affiliation": "Tencent Inc.",
+          "mapping_status": "active",
+          "affiliation_order": 1
         },
         {
-          "index": 2,
-          "name": "Microsoft (United States)",
-          "canonical_name": "Microsoft (United States)",
-          "institution_id": "institution:9e1ab9137907fdce",
-          "institution_type": "company",
-          "country": "United States",
-          "country_code": "",
-          "region": "",
-          "location_display": "United States",
-          "preliminary": true
+          "mapping_id": "mapping:de3c74bd25aad6066947",
+          "institution_id": "institution:f1a54130f4c752b7",
+          "location_id": "",
+          "institution": "Hikvision",
+          "institution_authors": [
+            "Jing Huang"
+          ],
+          "raw_affiliation": "Hikvision",
+          "mapping_status": "active",
+          "affiliation_order": 2
         },
         {
-          "index": 3,
-          "name": "Microsoft Research (United Kingdom)",
-          "canonical_name": "Microsoft Research (United Kingdom)",
-          "institution_id": "institution:330ddee32a318616",
-          "institution_type": "company",
-          "country": "United Kingdom",
-          "country_code": "",
-          "region": "",
-          "location_display": "United Kingdom",
-          "preliminary": true
+          "mapping_id": "mapping:3391367efbba41545f99",
+          "institution_id": "institution:9fbf261b62c1d7c0",
+          "location_id": "location:90097e1154e9ceeb0cb1",
+          "institution": "Microsoft",
+          "institution_authors": [
+            "Bing Bai"
+          ],
+          "raw_affiliation": "Microsoft MAI",
+          "mapping_status": "active",
+          "affiliation_order": 3
         }
       ],
-      "current_institution": null,
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [
         {
-          "institution_name": "Tencent (China)",
-          "institution_id": "institution:a992a0408381afc7",
+          "institution_name": "Tencent Inc.",
+          "institution_id": "institution:aa542458d996a5d3",
           "institution_type": "company",
           "country": "China",
           "country_code": "CN",
-          "region": "",
+          "region": "Guangdong",
           "region_code": "",
-          "location_display": "China"
+          "location_display": "Guangdong, China"
+        },
+        {
+          "institution_name": "Hikvision",
+          "institution_id": "institution:f1a54130f4c752b7",
+          "institution_type": "other",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Zhejiang",
+          "region_code": "",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "institution_name": "Microsoft",
+          "institution_id": "institution:9fbf261b62c1d7c0",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "US",
+          "region": "Washington",
+          "region_code": "",
+          "location_display": "Washington, United States"
         },
         {
           "institution_name": "Microsoft (United States)",
@@ -71047,7 +71235,8 @@
         }
       ],
       "aggregated_institution_types": [
-        "company"
+        "company",
+        "other"
       ],
       "venue_id": "venue:iccv",
       "venue_acronym": "ICCV",
@@ -71063,6 +71252,83 @@
       "formal_url": "https://doi.org/10.1109/iccv51701.2025.01588",
       "paper_categories": [
         "method"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Tencent Inc.",
+          "canonical_name": "Tencent Inc.",
+          "institution_id": "institution:aa542458d996a5d3",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China"
+        },
+        {
+          "index": 2,
+          "name": "Hikvision",
+          "canonical_name": "Hikvision",
+          "institution_id": "institution:f1a54130f4c752b7",
+          "institution_type": "other",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "index": 3,
+          "name": "Microsoft",
+          "canonical_name": "Microsoft",
+          "institution_id": "institution:9fbf261b62c1d7c0",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "Washington",
+          "location_display": "Washington, United States"
+        },
+        {
+          "index": 4,
+          "name": "Tencent (China)",
+          "canonical_name": "Tencent (China)",
+          "institution_id": "institution:a992a0408381afc7",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "",
+          "region": "",
+          "location_display": "China",
+          "preliminary": true
+        },
+        {
+          "index": 5,
+          "name": "Microsoft (United States)",
+          "canonical_name": "Microsoft (United States)",
+          "institution_id": "institution:9e1ab9137907fdce",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "",
+          "location_display": "United States",
+          "preliminary": true
+        },
+        {
+          "index": 6,
+          "name": "Microsoft Research (United Kingdom)",
+          "canonical_name": "Microsoft Research (United Kingdom)",
+          "institution_id": "institution:330ddee32a318616",
+          "institution_type": "company",
+          "country": "United Kingdom",
+          "country_code": "",
+          "region": "",
+          "location_display": "United Kingdom",
+          "preliminary": true
+        }
+      ],
+      "current_institution": null,
+      "search_institution_ids": [
+        "institution:aa542458d996a5d3",
+        "institution:f1a54130f4c752b7",
+        "institution:9fbf261b62c1d7c0"
       ]
     },
     {
@@ -125347,7 +125613,7 @@
       "metadata_source": "openalex",
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "",
       "has_map_location": true,
       "map_record_count": 3,
@@ -125451,18 +125717,8 @@
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
           "source_institution_names": [
-            "Agency for Science, Technology and Research",
-            "A*STAR"
+            "Agency for Science, Technology and Research"
           ]
-        },
-        {
-          "index": 4,
-          "institution_id": "institution:91aeee1163fdce71",
-          "institution": "A*STAR",
-          "institution_type": "research_unit",
-          "authors": [],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
         }
       ],
       "author_institution_indices": [
@@ -125681,20 +125937,8 @@
           "region": "Singapore",
           "location_display": "Singapore",
           "source_institution_names": [
-            "Agency for Science, Technology and Research",
-            "A*STAR"
+            "Agency for Science, Technology and Research"
           ]
-        },
-        {
-          "index": 4,
-          "name": "A*STAR",
-          "canonical_name": "A*STAR",
-          "institution_id": "institution:91aeee1163fdce71",
-          "institution_type": "research_unit",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": ""
         }
       ],
       "current_institution": null
@@ -135967,35 +136211,58 @@
       "authors": [
         {
           "name": "Manos Schinas",
-          "affiliation_indices": [],
+          "affiliation_indices": [
+            1
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         },
         {
           "name": "Symeon Papadopoulos",
-          "affiliation_indices": [],
+          "affiliation_indices": [
+            1
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false
         }
       ],
       "source_database": "openalex",
-      "needs_review": true,
+      "needs_review": false,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
-      "has_map_location": false,
-      "map_record_count": 0,
+      "has_map_location": true,
+      "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": true,
-      "coverage_status": "missing_coordinates",
-      "aggregated_locations": [],
-      "aggregated_institutions": [],
+      "missing_coordinates": false,
+      "coverage_status": "map_ready",
+      "aggregated_locations": [
+        {
+          "institution_name": "Centre for Research and Technology Hellas (CERTH)",
+          "institution_id": "institution:f841aa8a7a0d29aa",
+          "institution_type": "research_unit",
+          "country": "Greece",
+          "country_code": "GR",
+          "region": "Central Macedonia",
+          "region_code": "",
+          "location_display": "Central Macedonia, Greece"
+        }
+      ],
+      "aggregated_institutions": [
+        "Centre for Research and Technology Hellas (CERTH)"
+      ],
       "aggregated_institution_types": [
         "research_unit"
       ],
-      "aggregated_country_names": [],
-      "aggregated_country_codes": [],
-      "aggregated_regions": [],
+      "aggregated_country_names": [
+        "Greece"
+      ],
+      "aggregated_country_codes": [
+        "GR"
+      ],
+      "aggregated_regions": [
+        "Central Macedonia"
+      ],
       "aggregated_region_codes": [],
       "paper_id": "curated:960c6a53879767054f0c",
       "venue_id": "venue:mad",
@@ -136028,12 +136295,34 @@
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution": "Centre for Research and Technology Hellas (CERTH)",
           "institution_type": "research_unit",
-          "authors": [],
+          "authors": [
+            "Manos Schinas",
+            "Symeon Papadopoulos"
+          ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false
         }
       ],
-      "author_institution_indices": [],
+      "author_institution_indices": [
+        {
+          "author": "Manos Schinas",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f841aa8a7a0d29aa"
+          ]
+        },
+        {
+          "author": "Symeon Papadopoulos",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f841aa8a7a0d29aa"
+          ]
+        }
+      ],
       "institution_source": "curated",
       "preliminary_affiliations": false,
       "venue_label": "ACM International Workshop on Multimedia AI against Disinformation (MAD)",
@@ -136049,26 +136338,34 @@
           "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
-          "country": "",
+          "country": "Greece",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Central Macedonia",
+          "location_display": "Central Macedonia, Greece"
         }
       ],
       "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Manos Schinas",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f841aa8a7a0d29aa"
+          ],
+          "source": "curated_admin",
           "fallback": false
         },
         {
           "author": "Symeon Papadopoulos",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:f841aa8a7a0d29aa"
+          ],
+          "source": "curated_admin",
           "fallback": false
         }
       ],
@@ -185391,6 +185688,26 @@
       ],
       "normalized_names": [
         "san jose state university"
+      ]
+    },
+    "institution:aa542458d996a5d3": {
+      "canonical_name": "Tencent Inc.",
+      "institution_type": "company",
+      "names": [
+        "Tencent Inc."
+      ],
+      "normalized_names": [
+        "tencent inc"
+      ]
+    },
+    "institution:f1a54130f4c752b7": {
+      "canonical_name": "Hikvision",
+      "institution_type": "other",
+      "names": [
+        "Hikvision"
+      ],
+      "normalized_names": [
+        "hikvision"
       ]
     }
   },

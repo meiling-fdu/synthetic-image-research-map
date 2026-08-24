@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-23T14:25:42Z |
+| public_preview_generated_at | 2026-08-24T22:33:02Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1205 |
-| Unique mapped papers | 529 |
+| Map records | 1209 |
+| Unique mapped papers | 530 |
 | Unique institutions | 602 |
 | Countries | 54 |
-| arXiv/preprint records | 571 |
-| Records with DOI | 1124 |
-| Records with venue | 1194 |
+| arXiv/preprint records | 574 |
+| Records with DOI | 1128 |
+| Records with venue | 1198 |
 | Records missing venue | 11 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 454 |
+| detection | 455 |
 | source_attribution | 45 |
 | detection_and_source_attribution | 30 |
 
@@ -46,7 +46,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | ---: |
 | 2026 | 149 |
 | 2025 | 143 |
-| 2024 | 112 |
+| 2024 | 113 |
 | 2023 | 51 |
 | 2022 | 22 |
 | 2021 | 23 |
@@ -73,8 +73,8 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Country | Records |
 | --- | ---: |
-| China | 543 |
-| United States | 159 |
+| China | 545 |
+| United States | 160 |
 | Italy | 95 |
 | India | 60 |
 | Germany | 41 |
@@ -97,14 +97,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Fudan University | 14 |
 | University of Science and Technology of China | 14 |
 | Zhejiang University | 13 |
-| Beijing University of Posts and Telecommunications | 10 |
+| Centre for Research and Technology Hellas (CERTH) | 11 |
 
 ## Records by Resolution Confidence
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1095 |
-| medium | 110 |
+| high | 1100 |
+| medium | 109 |
 
 ## Potential quality issues
 

@@ -3139,7 +3139,10 @@ async function saveLocationInstitutionIdentity() {
 
 function locationReviewStatusLabel(review, location = {}) {
   const status = text(review?.review_status || "pending_review");
-  const hasUsableLocation = Boolean(text(location?.lat) && text(location?.lon));
+  const hasUsableLocation = Boolean(
+    review?.has_usable_confirmed_location
+    || (text(location?.lat) && text(location?.lon))
+  );
   if (status === "pending_review" && !hasUsableLocation) return "Needs coordinates";
   return humanize(status);
 }
