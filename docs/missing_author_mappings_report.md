@@ -6,8 +6,8 @@ This audit reports author affiliation-index coverage in the current public paper
 
 | Metric | Count |
 | --- | ---: |
-| Total public papers | 547 |
-| Complete mappings | 509 |
+| Total public papers | 548 |
+| Complete mappings | 510 |
 | Partial mappings | 38 |
 | Zero mappings | 0 |
 | Total missing author links | 63 |

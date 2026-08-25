@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-25T06:01:36Z |
+| public_preview_generated_at | 2026-08-25T06:19:40Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1226 |
-| Unique mapped papers | 536 |
-| Unique institutions | 607 |
+| Map records | 1228 |
+| Unique mapped papers | 537 |
+| Unique institutions | 608 |
 | Countries | 54 |
-| arXiv/preprint records | 579 |
+| arXiv/preprint records | 581 |
 | Records with DOI | 1132 |
-| Records with venue | 1215 |
+| Records with venue | 1217 |
 | Records missing venue | 11 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,7 +36,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 461 |
+| detection | 462 |
 | source_attribution | 45 |
 | detection_and_source_attribution | 30 |
 
@@ -44,7 +44,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Year | Records |
 | --- | ---: |
-| 2026 | 154 |
+| 2026 | 155 |
 | 2025 | 144 |
 | 2024 | 113 |
 | 2023 | 51 |
@@ -58,14 +58,14 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Venue | Records |
 | --- | ---: |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 39 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 40 |
 | AAAI Conference on Artificial Intelligence (AAAI) | 23 |
 | International Conference on Machine Learning (ICML) | 18 |
 | Advances in Neural Information Processing Systems (NeurIPS) | 14 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 14 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 11 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 11 |
 | International Conference on Learning Representations (ICLR) | 11 |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 10 |
 | European Conference on Computer Vision (ECCV) | 9 |
 | ACM International Conference on Multimedia (ACM MM) | 8 |
 
@@ -103,7 +103,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1117 |
+| high | 1119 |
 | medium | 109 |
 
 ## Potential quality issues

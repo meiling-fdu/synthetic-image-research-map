@@ -5,7 +5,7 @@ Only normalized exact canonical-name, abbreviation, and confirmed-alias equivale
 - Duplicates merged: 13
 - Abbreviation/alias matches resolved: 16
 - Pending Review records automatically resolved: 26
-- Known identities left in Needs Coordinates: 2
+- Known identities left in Needs Coordinates: 3
 - Ambiguous cases left untouched: 1
 
 Machine-readable report: `data/processed/institution_identity_resolution_audit.csv`
