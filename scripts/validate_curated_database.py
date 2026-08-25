@@ -45,7 +45,7 @@ try:
         OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
     )
     from .curated_schema_migrations import migrate_obsolete_location_schema
-    from .curated_mappings import canonical_institution_authors
+    from .curated_mappings import canonical_institution_authors, paper_identity_keys
 except ImportError:  # Support direct execution from the repository root.
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
@@ -78,7 +78,7 @@ except ImportError:  # Support direct execution from the repository root.
         OVERRIDES_PATH as ENGLISH_NAME_OVERRIDES_PATH,
     )
     from curated_schema_migrations import migrate_obsolete_location_schema
-    from curated_mappings import canonical_institution_authors
+    from curated_mappings import canonical_institution_authors, paper_identity_keys
 
 
 BOOLEAN_LIKE_VALUES = {"true", "false", "1", "0", "yes", "no", "y", "n"}
@@ -427,21 +427,11 @@ def validate_mapping_evidence(
 ) -> None:
     active_statuses = {"active", "needs_review"}
     active_rows: List[Tuple[int, Mapping[str, str]]] = []
-    orders_by_paper: DefaultDict[str, List[Tuple[int, str]]] = defaultdict(list)
     for row_number, row in enumerate(mappings, start=2):
         mapping_status = clean(row.get("mapping_status")).casefold()
         if mapping_status not in active_statuses:
             continue
         active_rows.append((row_number, row))
-        paper_key = (
-            clean(row.get("paper_id"))
-            or normalize_doi(row.get("doi"))
-            or normalize_openalex_url(row.get("openalex_url"))
-            or f"{normalize_title(row.get('title'))}|{clean(row.get('year'))}"
-        )
-        orders_by_paper[paper_key].append(
-            (row_number, clean(row.get("affiliation_order")))
-        )
         for field in ("institution", "institution_authors"):
             if not clean(row.get(field)):
                 add_issue(
@@ -460,10 +450,35 @@ def validate_mapping_evidence(
                 "institution_authors must use semicolons between authors",
                 row_number,
             )
-    for paper_key, values in orders_by_paper.items():
+    # A paper can retain multiple legacy paper IDs while sharing a durable DOI,
+    # OpenAlex ID, or title/year identity. Validate the same transitive logical
+    # paper components that the strict mapping reader loads.
+    parent = list(range(len(active_rows)))
+
+    def find(index: int) -> int:
+        while parent[index] != index:
+            parent[index] = parent[parent[index]]
+            index = parent[index]
+        return index
+
+    owner_by_key: Dict[str, int] = {}
+    for index, (_row_number, row) in enumerate(active_rows):
+        for key in paper_identity_keys(row):
+            owner = owner_by_key.setdefault(key, index)
+            left, right = find(index), find(owner)
+            if left != right:
+                parent[right] = left
+    orders_by_component: DefaultDict[int, List[Tuple[int, str]]] = defaultdict(list)
+    for index, (row_number, row) in enumerate(active_rows):
+        orders_by_component[find(index)].append(
+            (row_number, clean(row.get("affiliation_order")))
+        )
+    for root, values in orders_by_component.items():
         submitted = [value for _row_number, value in values]
         expected = [str(index) for index in range(1, len(values) + 1)]
         if sorted(submitted, key=lambda value: int(value) if value.isdigit() else 0) != expected:
+            representative = active_rows[root][1]
+            paper_key = next(iter(paper_identity_keys(representative)), "unknown paper")
             add_issue(
                 issues,
                 "ERROR",

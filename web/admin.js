@@ -983,7 +983,7 @@ function renderGlobalSearch() {
   results.replaceChildren();
   if (query.length < 2) { closeGlobalSearch(); return; }
   const matches = state.papers.filter((paper) => normalize([
-    paper.title, paper.doi, paper.arxiv_id, paper.authors, paper.affiliations,
+    paperTitleSearchText(paper.title), paper.doi, paper.arxiv_id, paper.authors, paper.affiliations,
     paper.institutions, paper.openalex_id,
   ].map((value) => typeof value === "object" ? JSON.stringify(value) : text(value)).join(" ")).includes(query)).slice(0, 8);
   matches.forEach((paper) => {
@@ -992,12 +992,12 @@ function renderGlobalSearch() {
     button.className = "global-search-result";
     button.setAttribute("role", "option");
     const title = document.createElement("strong");
-    title.textContent = text(paper.title) || "Untitled paper";
+    renderPaperTitle(title, paper.title);
     const meta = document.createElement("small");
     meta.textContent = `Paper · ${text(paper.doi || paper.arxiv_id || paper.display_id) || "local record"}`;
     button.append(title, meta);
     button.addEventListener("click", () => {
-      elements["search-input"].value = text(paper.title);
+      elements["search-input"].value = plainPaperTitle(paper.title);
       applyFilters();
       navigateConsole("papers");
       closeGlobalSearch();
@@ -1088,7 +1088,7 @@ function mappingCoverageRow(row, { includeRank = false } = {}) {
   const titleButton = document.createElement("button");
   titleButton.type = "button";
   titleButton.className = "mapping-report-link";
-  titleButton.textContent = text(row.title) || "Untitled paper";
+  renderPaperTitle(titleButton, row.title);
   titleButton.addEventListener("click", () => openCoverageMappingEditor(row));
   titleCell.append(titleButton);
 
@@ -1169,7 +1169,8 @@ function mappingCoverageRow(row, { includeRank = false } = {}) {
 
 function priorityPaperRow(row) {
   const tr = document.createElement("tr");
-  const paper = mappingTextCell(row.title || "Untitled paper");
+  const paper = document.createElement("td");
+  renderPaperTitle(paper, row.title);
   paper.className = "priority-paper-title";
   const issue = mappingTextCell(
     row.mapping_status === "zero"
@@ -1182,7 +1183,7 @@ function priorityPaperRow(row) {
   button.type = "button";
   button.className = "secondary-button compact-action";
   button.textContent = "Review";
-  button.setAttribute("aria-label", `Review ${text(row.title) || "priority paper"}`);
+  button.setAttribute("aria-label", `Review ${plainPaperTitle(row.title) || "priority paper"}`);
   button.addEventListener("click", () => openCoverageMappingEditor(row));
   action.append(button);
   tr.append(paper, issue, impact, action);
@@ -1420,9 +1421,10 @@ function renderInstitutionAudit() {
     });
     selectionCell.append(checkbox);
     row.append(selectionCell);
-    [item.severity, item.paper_title, item.author, (item.current_institutions || []).join("; "), (item.historical_institutions || []).join("; "), item.classification, (item.suggested_institutions || []).join("; ")].forEach((value) => {
+    [item.severity, item.paper_title, item.author, (item.current_institutions || []).join("; "), (item.historical_institutions || []).join("; "), item.classification, (item.suggested_institutions || []).join("; ")].forEach((value, index) => {
       const cell = document.createElement("td");
-      cell.textContent = text(value) || "—";
+      if (index === 1) renderPaperTitle(cell, value, "—");
+      else cell.textContent = text(value) || "—";
       row.append(cell);
     });
     row.tabIndex = 0;
@@ -1453,9 +1455,10 @@ function renderInstitutionAudit() {
       (item.issue_types || []).map(humanize).join("; "),
       resolution,
       item.updated_at,
-    ].forEach((value) => {
+    ].forEach((value, index) => {
       const cell = document.createElement("td");
-      cell.textContent = text(value) || "—";
+      if (index === 1) renderPaperTitle(cell, value, "—");
+      else cell.textContent = text(value) || "—";
       row.append(cell);
     });
     row.tabIndex = 0;
@@ -1497,7 +1500,7 @@ function renderInstitutionAuditDetail(item) {
   const detail = elements["institution-audit-detail"];
   detail.replaceChildren();
   const heading = document.createElement("h3");
-  heading.textContent = item.paper_title || "Institution review case";
+  renderPaperTitle(heading, item.paper_title, "Institution review case");
   const actions = document.createElement("div");
   actions.className = "form-actions";
   const evidenceButton = document.createElement("button");
@@ -1642,6 +1645,10 @@ function evidenceLink(label, url) {
   return link;
 }
 
+function paperTitleNode(value, fallback = "—") {
+  return renderPaperTitle(document.createElement("span"), value, fallback);
+}
+
 function openInstitutionEvidence(item) {
   state.institutionEvidenceCase = item;
   const evidence = item.evidence_detail || {};
@@ -1652,11 +1659,13 @@ function openInstitutionEvidence(item) {
   const risk = audit.risk_factors || {};
   const content = elements["institution-evidence-content"];
   content.replaceChildren();
-  elements["institution-evidence-title"].textContent = item.paper_title || "Evidence inspection";
+  renderPaperTitle(
+    elements["institution-evidence-title"], item.paper_title, "Evidence inspection"
+  );
 
   const paperSection = evidenceSection("Paper information");
   appendEvidenceFields(paperSection, [
-    ["Title", paper.title],
+    ["Title", paperTitleNode(paper.title)],
     ["Year", paper.year],
     ["Venue", paper.venue],
     ["DOI", paper.doi],
@@ -1851,7 +1860,7 @@ function openInstitutionResolutionDialog(item, action, queueIds, batch = false) 
     ? `Resolve ${item.batch_count} selected review cases`
     : "Resolve institution review case";
   elements["institution-resolution-issue"].textContent = (item.issue_types || [item.issue_type]).filter(Boolean).join(", ") || "—";
-  elements["institution-resolution-paper"].textContent = text(item.paper_title) || "—";
+  renderPaperTitle(elements["institution-resolution-paper"], item.paper_title, "—");
   elements["institution-resolution-author"].textContent = text(item.author) || "—";
   elements["institution-resolution-previous"].textContent = item.mapping_change
     ? `${item.mapping_change.previous_institution_name} (${item.mapping_change.previous_institution_id})`
@@ -1972,7 +1981,7 @@ function renderReviewDetail(name, row) {
   state.selectedReviewKeys[name] = reviewRecordKey(row);
   detail.replaceChildren();
   const heading = document.createElement("h3");
-  heading.textContent = text(row.title) || "Review row";
+  renderPaperTitle(heading, row.title, "Review row");
   const groups = [
     ["Paper", [["Title", row.title || row.requested_title], ["Year", row.year || row.candidate_year], ["DOI", row.doi], ["OpenAlex", row.openalex_url || row.openalex_id]]],
     ["Marker / Institution", [["Institution", row.institution || row.institutions], ["Institution authors", row.institution_authors], ["Location", [row.city, row.region, row.country].filter(Boolean).join(", ")]]],
@@ -1991,7 +2000,8 @@ function renderReviewDetail(name, row) {
       const dt = document.createElement("dt");
       dt.textContent = key;
       const dd = document.createElement("dd");
-      dd.textContent = text(value);
+      if (key === "Title") renderPaperTitle(dd, value, "—");
+      else dd.textContent = text(value);
       dl.append(dt, dd);
     });
     section.append(groupHeading, dl);
@@ -2002,7 +2012,9 @@ function renderReviewDetail(name, row) {
   const extraDl = document.createElement("dl");
   Object.entries(row).filter(([, value]) => text(value)).forEach(([key, value]) => {
     const dt = document.createElement("dt"); dt.textContent = humanize(key);
-    const dd = document.createElement("dd"); dd.textContent = text(value);
+    const dd = document.createElement("dd");
+    if (key.toLocaleLowerCase().includes("title")) renderPaperTitle(dd, value, "—");
+    else dd.textContent = text(value);
     extraDl.append(dt, dd);
   });
   extra.append(extraDl);
@@ -3151,7 +3163,7 @@ function renderLocationContext(row) {
   const fields = [
     ["Raw institution name", row.institution],
     ["Detected language", row.detected_language],
-    ["Paper", [row.title, row.year].filter(Boolean).join(" · ")],
+    ["Paper", row.title],
     ["Institution authors", row.institution_authors],
     ["Raw affiliation", row.raw_affiliation],
     ["Evidence source", row.evidence_source],
@@ -3160,7 +3172,7 @@ function renderLocationContext(row) {
     ["Suggested canonical institution", row.suggested_canonical_institution],
     ["Match diagnostics", [row.match_method, row.similarity_score, row.confidence].filter(Boolean).join(" · ")],
     ["External IDs", [row.openalex_institution_id, row.ror_id, row.wikidata_id].filter(Boolean).join(" · ")],
-    ["Affected papers", (row.affected_papers || []).map((paper) => [paper.title, paper.year].filter(Boolean).join(" · ")).join("; ")],
+    ["Affected papers", row.affected_papers || []],
     ["Affected mappings", (row.affected_mappings || []).map((mapping) => [mapping.mapping_id, mapping.institution, mapping.mapping_status].filter(Boolean).join(" · ")).join("; ")],
     ["Legacy diagnostics", [row.location_status, row.coordinate_status].filter(Boolean).map(humanize).join(" · ")],
   ];
@@ -3170,7 +3182,18 @@ function renderLocationContext(row) {
     const strong = document.createElement("strong");
     strong.textContent = `${label}: `;
     wrapper.append(strong);
-    if (label === "Evidence URL" && safeUrl(value)) {
+    if (label === "Paper") {
+      const title = renderPaperTitle(document.createElement("span"), value, "—");
+      wrapper.append(title);
+      if (row.year) wrapper.append(document.createTextNode(` · ${row.year}`));
+    } else if (label === "Affected papers") {
+      value.forEach((paper, index) => {
+        if (index) wrapper.append(document.createTextNode("; "));
+        wrapper.append(renderPaperTitle(document.createElement("span"), paper.title, "—"));
+        if (paper.year) wrapper.append(document.createTextNode(` · ${paper.year}`));
+      });
+      if (!value.length) wrapper.append("—");
+    } else if (label === "Evidence URL" && safeUrl(value)) {
       wrapper.append(linkValue(value, value));
     } else {
       wrapper.append(text(value) || "—");
@@ -3910,9 +3933,16 @@ function renderArxivAutofillStatus(status) {
     ? "Finding candidates…"
     : "Find candidates";
   if (!status || status.status === "idle") return;
-  elements["arxiv-enrichment-summary"].textContent = running
-    ? `Searching ${status.processed_lookups ?? 0} of ${status.papers_requiring_lookup ?? 0} missing papers${status.current_paper_title ? ` · ${status.current_paper_title}` : ""}`
-    : elements["arxiv-enrichment-summary"].textContent;
+  if (running) {
+    elements["arxiv-enrichment-summary"].textContent =
+      `Searching ${status.processed_lookups ?? 0} of ${status.papers_requiring_lookup ?? 0} missing papers`;
+    if (status.current_paper_title) {
+      elements["arxiv-enrichment-summary"].append(document.createTextNode(" · "));
+      elements["arxiv-enrichment-summary"].append(
+        renderPaperTitle(document.createElement("span"), status.current_paper_title)
+      );
+    }
+  }
 }
 
 function scheduleArxivAutofillPoll() {
@@ -3970,7 +4000,7 @@ function renderArxivEnrichment() {
     const card = document.createElement("article");
     card.className = "arxiv-enrichment-card";
     const heading = document.createElement("h3");
-    heading.textContent = paper.title || "Untitled paper";
+    renderPaperTitle(heading, paper.title);
     const metadata = document.createElement("p");
     metadata.className = "candidate-meta";
     metadata.textContent = [paper.year, paper.doi && `DOI ${paper.doi}`, paper.openalex_url]
@@ -4019,7 +4049,7 @@ function renderArxivEnrichment() {
 
 async function submitArxivDecision(paper, candidate, action) {
   const verb = action === "accept" ? "save this curated arXiv link" : "ignore this candidate";
-  if (!window.confirm(`Confirm you want to ${verb}?\n\n${paper.title}\narXiv:${candidate.arxiv_id}`)) return;
+  if (!window.confirm(`Confirm you want to ${verb}?\n\n${plainPaperTitle(paper.title)}\narXiv:${candidate.arxiv_id}`)) return;
   try {
     const payload = await apiFetch("/api/admin/papers/arxiv-enrichment/action", {
       method: "POST",
@@ -4158,7 +4188,7 @@ function renderOpenAlexResults(results, debug = {}) {
     card.className = "openalex-result-card";
 
     const heading = document.createElement("h4");
-    heading.textContent = text(candidate.title) || "Untitled OpenAlex record";
+    renderPaperTitle(heading, candidate.title, "Untitled OpenAlex record");
     const meta = document.createElement("p");
     meta.className = "candidate-meta";
     meta.textContent = [
@@ -4438,7 +4468,7 @@ function applyFilters() {
   const exclusionFilter = elements["filter-exclusion"].value;
 
   state.filtered = state.papers.filter((paper) => {
-    if (query && !normalize(paper.title).includes(query)) return false;
+    if (query && !normalize(paperTitleSearchText(paper.title)).includes(query)) return false;
     if (Object.entries(filters).some(([field, expected]) =>
       expected && text(paper[field]) !== expected
     )) return false;
@@ -4465,11 +4495,11 @@ function renderPaperList() {
     const selectButton = document.createElement("button");
     selectButton.type = "button";
     selectButton.className = "paper-select";
-    selectButton.setAttribute("aria-label", `Inspect ${text(paper.title) || "untitled paper"}`);
+    selectButton.setAttribute("aria-label", `Inspect ${plainPaperTitle(paper.title) || "untitled paper"}`);
     selectButton.addEventListener("click", () => selectPaper(paper.display_id));
 
     const title = document.createElement("strong");
-    title.textContent = text(paper.title) || "Untitled paper";
+    renderPaperTitle(title, paper.title);
     const authors = document.createElement("span");
     authors.textContent = authorListText(paper.authors) || "Authors unavailable";
     const venue = document.createElement("span");
@@ -5211,7 +5241,9 @@ function populateMetadataForm() {
     if (elements[id]) {
       elements[id].value = field === "publication_type"
         ? normalizePublicationTypeForForm(record?.[field])
-        : metadataValue(record, field);
+        : field === "title"
+          ? plainPaperTitle(metadataValue(record, field))
+          : metadataValue(record, field);
     }
   });
   const categoriesHydrated = hydratePaperCategories(
@@ -5356,7 +5388,7 @@ async function saveMetadata(event) {
     return;
   }
   const fields = [
-    "title", "year", "authors", "doi", "arxiv_id", "openalex_url",
+    "year", "authors", "doi", "arxiv_id", "openalex_url",
     "paper_url", "publication_type", "task", "scope_status",
     "curation_status", "review_status", "abstract",
   ];
@@ -5366,6 +5398,10 @@ async function saveMetadata(event) {
     const value = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
     if (value !== metadataValue(effective, field).trim()) draft[field] = value;
   });
+  const submittedTitle = elements["metadata-title"].value.trim();
+  if (submittedTitle !== plainPaperTitle(metadataValue(effective, "title")).trim()) {
+    draft.title = submittedTitle;
+  }
   const paperCategories = validatePaperCategories({ focus: true });
   if (paperCategories === null) return;
   draft.paper_categories = paperCategories;
@@ -5480,7 +5516,7 @@ function renderPaperDetail(paper) {
     public_preview: "Public preview record",
   };
   elements["detail-source"].textContent = sourceLabels[paper.record_source] || "Admin record";
-  elements["detail-title"].textContent = text(paper.title) || "Untitled paper";
+  renderPaperTitle(elements["detail-title"], paper.title);
   elements["detail-badges"].replaceChildren();
   if (paper.has_map_location) elements["detail-badges"].append(makeBadge("Published on map", "map"));
   if (paper.is_in_curated_papers) elements["detail-badges"].append(makeBadge("Curated", "curated"));
@@ -5569,13 +5605,12 @@ function renderMappings(payload) {
   elements["mapping-diagnostic"].hidden =
     diagnostic.status !== "missing_mapping";
   elements["mapping-diagnostic"].textContent = text(diagnostic.message);
-  elements["mapping-paper-context"].textContent = [
-    text(paper.title),
+  renderPaperTitleContext(elements["mapping-paper-context"], paper.title, [
     paper.year || paper.publication_year,
     authorListText(paper.authors),
     paper.doi ? `DOI ${paper.doi}` : "",
     paper.openalex_url,
-  ].filter(Boolean).join(" · ");
+  ]);
 
   const body = elements["mapping-table-body"];
   body.replaceChildren();
@@ -5774,10 +5809,10 @@ function openMappingDialog(mode, mapping = {}) {
   elements["mapping-form"].reset();
   elements["mapping-mode"].value = mode;
   elements["mapping-id"].value = text(mapping.mapping_id);
-  elements["mapping-dialog-paper"].textContent =
-    `${text(state.selectedPaper?.title) || "Untitled paper"} (${text(
-      state.selectedPaper?.year || state.selectedPaper?.publication_year
-    ) || "year unknown"})`;
+  renderPaperTitleContext(
+    elements["mapping-dialog-paper"], state.selectedPaper?.title,
+    [`(${text(state.selectedPaper?.year || state.selectedPaper?.publication_year) || "year unknown"})`]
+  );
   elements["mapping-institution"].value = text(mapping.institution);
   elements["mapping-institution-id"].value = text(mapping.institution_id);
   renderMappingInstitutionOptions();
@@ -6042,13 +6077,12 @@ function openScopeDialog(paper, mode) {
   elements["scope-form"].reset();
   elements["scope-paper-id"].value = paper.display_id;
   elements["scope-mode"].value = mode;
-  elements["scope-paper-title"].textContent = [
-    text(paper.title) || "Untitled paper",
+  renderPaperTitleContext(elements["scope-paper-title"], paper.title, [
     paper.openalex_url ? `OpenAlex ${paper.openalex_url}` : "",
     paper.doi ? `DOI ${paper.doi}` : "",
     text(paper.source_database) ? `Source ${text(paper.source_database)}` : "",
     text(paper.venue || paper.venue_name) ? `Venue ${text(paper.venue || paper.venue_name)}` : "",
-  ].filter(Boolean).join(" · ");
+  ]);
   elements["scope-form-error"].hidden = true;
   const restoring = mode === "restore";
   elements["scope-dialog-title"].textContent = restoring
@@ -6199,6 +6233,25 @@ function authorListText(value, separator = ", ") {
 
 function normalize(value) {
   return text(value).toLocaleLowerCase();
+}
+
+function plainPaperTitle(value) {
+  return TitleMarkup.plainText(text(value));
+}
+
+function paperTitleSearchText(value) {
+  return TitleMarkup.searchText(text(value));
+}
+
+function renderPaperTitle(element, value, fallback = "Untitled paper") {
+  return TitleMarkup.render(element, text(value), fallback);
+}
+
+function renderPaperTitleContext(element, title, suffixValues = []) {
+  renderPaperTitle(element, title);
+  const suffix = suffixValues.map(text).filter(Boolean).join(" · ");
+  if (suffix) element.append(document.createTextNode(` · ${suffix}`));
+  return element;
 }
 
 function text(value) {

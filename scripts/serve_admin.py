@@ -355,6 +355,10 @@ WORKFLOW_ENDPOINTS = {
 STATIC_ROUTES = {
     "/admin/": (WEB_DIR / "admin.html", "text/html; charset=utf-8"),
     "/admin.js": (WEB_DIR / "admin.js", "text/javascript; charset=utf-8"),
+    "/title_markup.js": (
+        WEB_DIR / "title_markup.js",
+        "text/javascript; charset=utf-8",
+    ),
     "/admin.css": (WEB_DIR / "admin.css", "text/css; charset=utf-8"),
     "/institution_type_labels.js": (
         WEB_DIR / "institution_type_labels.js",
@@ -722,15 +726,35 @@ def institution_registry_payload(
 
 
 def load_author_mapping_coverage(
-    path: Path = AUTHOR_MAPPING_REPORT_PATH, *, unresolved_only: bool = False
+    path: Path = AUTHOR_MAPPING_REPORT_PATH,
+    *,
+    unresolved_only: bool = False,
+    current_state: bool = False,
+    curated_papers_path: Path = CURATED_PAPERS_PATH,
+    mappings_path: Path = CURATED_MAPPINGS_PATH,
+    exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
 ) -> Dict[str, Any]:
-    """Load the fixed generated author-mapping report for the local dashboard."""
-    if not path.exists():
+    """Load coverage, optionally recalculating from authoritative curated state."""
+    if not path.exists() and not current_state:
         raise AdminDataError(
             "Author mapping coverage report is missing. Run the refresh pipeline "
             "to generate data/manual/missing_author_mappings_report.csv."
         )
-    rows = read_csv_rows(path)
+    rows: List[Mapping[str, Any]] = read_csv_rows(path) if path.exists() else []
+    if current_state:
+        try:
+            from .report_missing_author_mappings import build_report_rows
+        except ImportError:  # pragma: no cover - direct script execution
+            from report_missing_author_mappings import build_report_rows
+        key_papers_path = REPOSITORY_ROOT / "data" / "manual" / "key_papers.csv"
+        rows = build_report_rows(
+            read_json_records(PUBLIC_PAPERS_PATH),
+            read_json_records(PUBLIC_MAP_PATH),
+            read_csv_rows(curated_papers_path),
+            read_csv_rows(mappings_path),
+            read_csv_rows(key_papers_path) if key_papers_path.exists() else [],
+            read_csv_rows(exclusions_path),
+        )
     required_fields = {
         "priority_rank",
         "mapping_status",
@@ -1162,6 +1186,8 @@ def load_admin_data(
         paper["has_active_exclusion"] = active_exclusion
         if active_exclusion:
             paper["coverage_status"] = "excluded"
+            paper["missing_affiliation"] = False
+            paper["missing_coordinates"] = False
         paper["exclusion_reasons"] = sorted(
             {
                 clean(exclusion.get("reason"))
@@ -2119,6 +2145,7 @@ def make_handler(
                         locations_path=institution_locations_path,
                         aliases_path=institution_aliases_path,
                         mappings=load_mappings(mappings_path),
+                        exclusions=read_csv_rows(exclusions_path),
                         institutions_path=institutions_path,
                     )
                 except CuratedLocationError as error:
@@ -2225,6 +2252,12 @@ def make_handler(
                     report = load_author_mapping_coverage(
                         author_mapping_report_path,
                         unresolved_only=True,
+                        current_state=(
+                            author_mapping_report_path == AUTHOR_MAPPING_REPORT_PATH
+                        ),
+                        curated_papers_path=curated_papers_path,
+                        mappings_path=mappings_path,
+                        exclusions_path=exclusions_path,
                     )
                 except AdminDataError as error:
                     self.send_json(
@@ -2326,6 +2359,7 @@ def make_handler(
                             locations_path=institution_locations_path,
                             aliases_path=institution_aliases_path,
                             mappings=load_mappings(mappings_path),
+                            exclusions=read_csv_rows(exclusions_path),
                         )
                         curated_counts = {
                             "total_papers": counts["total_papers"],
@@ -2334,21 +2368,29 @@ def make_handler(
                             "papers_missing_affiliations": counts[
                                 "papers_missing_affiliations"
                             ],
-                            "papers_missing_coordinates": counts[
-                                "papers_missing_coordinates"
-                            ],
+                            "papers_missing_coordinates": location_payload[
+                                "summary"
+                            ]["needs_coordinates"],
                             "curated_mappings": len(load_mappings(mappings_path)),
-                            "pending_location_reviews": sum(
-                                clean(row.get("coordinate_status")) != "known"
-                                for row in location_payload.get("records", [])
-                            ),
+                            "pending_location_reviews": location_payload[
+                                "total_unresolved"
+                            ],
                             "confirmed_institution_locations": len(
                                 read_csv_rows(institution_locations_path)
                             ),
                         }
                         try:
                             author_mapping_coverage = (
-                                load_author_mapping_coverage(author_mapping_report_path)
+                                load_author_mapping_coverage(
+                                    author_mapping_report_path,
+                                    current_state=(
+                                        author_mapping_report_path
+                                        == AUTHOR_MAPPING_REPORT_PATH
+                                    ),
+                                    curated_papers_path=curated_papers_path,
+                                    mappings_path=mappings_path,
+                                    exclusions_path=exclusions_path,
+                                )
                             )
                         except AdminDataError:
                             author_mapping_coverage = unavailable_author_mapping_coverage(
@@ -2803,7 +2845,13 @@ def make_handler(
                         )
                         return
                     report = load_author_mapping_coverage(
-                        author_mapping_report_path
+                        author_mapping_report_path,
+                        current_state=(
+                            author_mapping_report_path == AUTHOR_MAPPING_REPORT_PATH
+                        ),
+                        curated_papers_path=curated_papers_path,
+                        mappings_path=mappings_path,
+                        exclusions_path=exclusions_path,
                     )
                     self.send_json(
                         HTTPStatus.OK,

@@ -311,7 +311,12 @@ def identity_snapshot(
             clean(row.get("institution_type")),
             clean(row.get("institution_status")),
             clean(row.get("parent_institution_id")),
-            clean(row.get("public_display")),
+            (
+                "canonical_name"
+                if clean(row.get("public_display"))
+                == clean(row.get("canonical_name"))
+                else clean(row.get("public_display"))
+            ),
         ) for row in institutions),
         "mapping_count": len(mappings),
         "mapping_identity": sorted((
@@ -416,6 +421,8 @@ def apply_approved(
             continue
         old_by_id[institution_id] = old_name
         row["canonical_name"] = new_name
+        if clean(row.get("public_display")) == old_name:
+            row["public_display"] = new_name
         aliases_added += int(add_previous_alias(
             aliases, aliases_table["columns"], institution_id, old_name, new_name
         ))

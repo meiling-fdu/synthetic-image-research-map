@@ -7,56 +7,56 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "curated_papers": 315,
-    "public_unique_papers": 541,
-    "public_map_source_papers": 529,
-    "public_papers_with_map": 528,
-    "public_papers_without_map": 13,
-    "public_map_relationships": 1205,
-    "canonical_institution_rows": 635,
-    "active_canonical_institutions": 632,
-    "inactive_or_merged_institutions": 3,
-    "author_institution_mappings": 853,
+    "curated_papers": 324,
+    "public_unique_papers": 546,
+    "public_map_source_papers": 535,
+    "public_papers_with_map": 534,
+    "public_papers_without_map": 12,
+    "public_map_relationships": 1224,
+    "canonical_institution_rows": 644,
+    "active_canonical_institutions": 640,
+    "inactive_or_merged_institutions": 4,
+    "author_institution_mappings": 877,
     "institution_hierarchy_edges": 7,
-    "institution_aliases": 53,
+    "institution_aliases": 55,
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 632,
-    "merged": 1,
+    "active": 640,
+    "merged": 2,
     "ignored": 2,
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 463,
+    "university": 465,
     "research_unit": 66,
-    "company": 63,
-    "other": 43,
+    "company": 65,
+    "other": 48,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 462,
+    "university": 463,
     "research_unit": 66,
-    "company": 61,
-    "other": 43,
+    "company": 63,
+    "other": 48,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    "university": 509,
-    "research_unit": 103,
-    "company": 80,
-    "other": 50,
+    "university": 513,
+    "research_unit": 104,
+    "company": 81,
+    "other": 55,
 }
 
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 308,
-    "journal": 167,
+    "conference": 314,
+    "journal": 166,
     "preprint": 65,
     "book": 1,
 }
 
 TASK_TOTALS = {
-    "detection": 466,
+    "detection": 471,
     "source_attribution": 46,
     "detection_and_source_attribution": 29,
 }
@@ -86,8 +86,6 @@ PUBLIC_PAPERS_WITHOUT_MAP = {
         "missing_affiliation_rows",
     "Explainable Artifacts for Synthetic Western Blot Source Attribution":
         "missing_affiliation_rows",
-    "SIDBench: A Python Framework for Reliably Assessing Synthetic Image Detection Methods":
-        "public_preview_cap_or_filter",
 }
 
 INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {

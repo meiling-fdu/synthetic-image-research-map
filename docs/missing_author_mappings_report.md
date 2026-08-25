@@ -6,11 +6,11 @@ This audit reports author affiliation-index coverage in the current public paper
 
 | Metric | Count |
 | --- | ---: |
-| Total public papers | 548 |
-| Complete mappings | 510 |
-| Partial mappings | 38 |
+| Total public papers | 546 |
+| Complete mappings | 509 |
+| Partial mappings | 37 |
 | Zero mappings | 0 |
-| Total missing author links | 63 |
+| Total missing author links | 62 |
 
 ## Highest Priority
 
@@ -37,15 +37,15 @@ This audit reports author affiliation-index coverage in the current public paper
 | 19 | Harnessing the Power of Large Vision Language Models for Synthetic Image Detection | 2024 | 4/5 | Abdenour Hadid | 3 | Yes |  |
 | 20 | Fusing Global and Local Features for Generalized AI-Synthesized Image Detection | 2022 | 5/6 | Koki Nagano | 1 | Yes |  |
 | 21 | Beyond the Spectrum: Detecting Deepfakes via Re-Synthesis | 2021 | 3/4 | Ning Yu | 2 | Yes |  |
-| 22 | Black-Box Adaptation for Deepfake Detection via Local Relation Guided AUC Optimization | 2026 | 6/7 | Qi Tian | 2 |  | Yes |
-| 23 | Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks | 2026 | 2/3 | Jia Wang | 0 |  | Yes |
-| 24 | Geometric-Semantic Dual-Adaptation for Generalizable AI-Generated Image Detection | 2026 | 5/6 | Jiaye Li | 0 |  | Yes |
-| 25 | IncreFA: Breaking the Static Wall of Generative Model Attribution | 2026 | 5/6 | Yuexuan Tan | 2 |  | Yes |
-| 26 | RIGID: A Training-Free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2026 | 2/3 | Pin‐Yu Chen | 1 |  | Yes |
-| 27 | Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated | 2026 | 9/10 | Henan Wang | 2 |  | Yes |
-| 28 | A Novel Framework for Deepfake Image Detection Using Deep Learning Approach | 2025 | 5/6 | Aruna J. Chamatkar | 5 |  |  |
-| 29 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-Hoc Distribution Alignment | 2025 | 4/5 | Li Ping Wang | 1 |  | Yes |
-| 30 | Deepfake Image Detection Using ResNet50 Model | 2024 | 5/6 | Chuah ChaiWen | 2 |  |  |
+| 22 | Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks | 2026 | 2/3 | Jia Wang | 0 |  | Yes |
+| 23 | Geometric-Semantic Dual-Adaptation for Generalizable AI-Generated Image Detection | 2026 | 5/6 | Jiaye Li | 0 |  | Yes |
+| 24 | IncreFA: Breaking the Static Wall of Generative Model Attribution | 2026 | 5/6 | Yuexuan Tan | 2 |  | Yes |
+| 25 | RIGID: A Training-Free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2026 | 2/3 | Pin‐Yu Chen | 1 |  | Yes |
+| 26 | Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated | 2026 | 9/10 | Henan Wang | 2 |  | Yes |
+| 27 | A Novel Framework for Deepfake Image Detection Using Deep Learning Approach | 2025 | 5/6 | Aruna J. Chamatkar | 5 |  |  |
+| 28 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-Hoc Distribution Alignment | 2025 | 4/5 | Li Ping Wang | 1 |  | Yes |
+| 29 | Deepfake Image Detection Using ResNet50 Model | 2024 | 5/6 | Chuah ChaiWen | 2 |  |  |
+| 30 | Enhancing Deepfake Detection With Diversified Self-Blending Images and Residuals | 2024 | 3/4 | Jing Liu | 1 |  |  |
 
 ## Zero-Mapping Papers
 
@@ -78,20 +78,19 @@ This audit reports author affiliation-index coverage in the current public paper
 | 19 | Harnessing the Power of Large Vision Language Models for Synthetic Image Detection | 2024 | 4/5 | Abdenour Hadid | 3 | Yes |  |
 | 20 | Fusing Global and Local Features for Generalized AI-Synthesized Image Detection | 2022 | 5/6 | Koki Nagano | 1 | Yes |  |
 | 21 | Beyond the Spectrum: Detecting Deepfakes via Re-Synthesis | 2021 | 3/4 | Ning Yu | 2 | Yes |  |
-| 22 | Black-Box Adaptation for Deepfake Detection via Local Relation Guided AUC Optimization | 2026 | 6/7 | Qi Tian | 2 |  | Yes |
-| 23 | Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks | 2026 | 2/3 | Jia Wang | 0 |  | Yes |
-| 24 | Geometric-Semantic Dual-Adaptation for Generalizable AI-Generated Image Detection | 2026 | 5/6 | Jiaye Li | 0 |  | Yes |
-| 25 | IncreFA: Breaking the Static Wall of Generative Model Attribution | 2026 | 5/6 | Yuexuan Tan | 2 |  | Yes |
-| 26 | RIGID: A Training-Free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2026 | 2/3 | Pin‐Yu Chen | 1 |  | Yes |
-| 27 | Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated | 2026 | 9/10 | Henan Wang | 2 |  | Yes |
-| 28 | A Novel Framework for Deepfake Image Detection Using Deep Learning Approach | 2025 | 5/6 | Aruna J. Chamatkar | 5 |  |  |
-| 29 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-Hoc Distribution Alignment | 2025 | 4/5 | Li Ping Wang | 1 |  | Yes |
-| 30 | Deepfake Image Detection Using ResNet50 Model | 2024 | 5/6 | Chuah ChaiWen | 2 |  |  |
-| 31 | Enhancing Deepfake Detection With Diversified Self-Blending Images and Residuals | 2024 | 3/4 | Jing Liu | 1 |  |  |
-| 32 | Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection | 2024 | 3/4 | Digvijay Pandey | 2 |  |  |
-| 33 | Organic or Diffused: Can We Distinguish Human Art from AI-Generated Images? | 2024 | 6/7 | Reid Southen | 1 |  | Yes |
-| 34 | An Improved Dense CNN Architecture for Deepfake Image Detection | 2023 | 6/7 | Pronaya Bhattacharya | 4 |  |  |
-| 35 | Intriguing properties of synthetic images: from generative adversarial networks to diffusion models | 2023 | 4/5 | Koki Nagano | 1 |  |  |
-| 36 | Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model | 2023 | 2/3 | Usha Kosarkar | 2 |  |  |
-| 37 | On Attribution of Deepfakes | 2020 | 4/5 | Jin Zhou | 3 |  |  |
-| 38 | Complement Face Forensic Detection and Localization with FacialLandmarks | 2019 | 1/2 | Kritaphat Songsri-in | 1 |  |  |
+| 22 | Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks | 2026 | 2/3 | Jia Wang | 0 |  | Yes |
+| 23 | Geometric-Semantic Dual-Adaptation for Generalizable AI-Generated Image Detection | 2026 | 5/6 | Jiaye Li | 0 |  | Yes |
+| 24 | IncreFA: Breaking the Static Wall of Generative Model Attribution | 2026 | 5/6 | Yuexuan Tan | 2 |  | Yes |
+| 25 | RIGID: A Training-Free and Model-Agnostic Framework for Robust AI-Generated Image Detection | 2026 | 2/3 | Pin‐Yu Chen | 1 |  | Yes |
+| 26 | Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated | 2026 | 9/10 | Henan Wang | 2 |  | Yes |
+| 27 | A Novel Framework for Deepfake Image Detection Using Deep Learning Approach | 2025 | 5/6 | Aruna J. Chamatkar | 5 |  |  |
+| 28 | Beyond Known Fakes: Generalized Detection of AI-Generated Images via Post-Hoc Distribution Alignment | 2025 | 4/5 | Li Ping Wang | 1 |  | Yes |
+| 29 | Deepfake Image Detection Using ResNet50 Model | 2024 | 5/6 | Chuah ChaiWen | 2 |  |  |
+| 30 | Enhancing Deepfake Detection With Diversified Self-Blending Images and Residuals | 2024 | 3/4 | Jing Liu | 1 |  |  |
+| 31 | Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection | 2024 | 3/4 | Digvijay Pandey | 2 |  |  |
+| 32 | Organic or Diffused: Can We Distinguish Human Art from AI-Generated Images? | 2024 | 6/7 | Reid Southen | 1 |  | Yes |
+| 33 | An Improved Dense CNN Architecture for Deepfake Image Detection | 2023 | 6/7 | Pronaya Bhattacharya | 4 |  |  |
+| 34 | Intriguing properties of synthetic images: from generative adversarial networks to diffusion models | 2023 | 4/5 | Koki Nagano | 1 |  |  |
+| 35 | Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model | 2023 | 2/3 | Usha Kosarkar | 2 |  |  |
+| 36 | On Attribution of Deepfakes | 2020 | 4/5 | Jin Zhou | 3 |  |  |
+| 37 | Complement Face Forensic Detection and Localization with FacialLandmarks | 2019 | 1/2 | Kritaphat Songsri-in | 1 |  |  |

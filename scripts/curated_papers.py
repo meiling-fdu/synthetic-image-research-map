@@ -7,6 +7,7 @@ import csv
 import hashlib
 import json
 import re
+from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Sequence
@@ -108,6 +109,44 @@ class DuplicatePaperError(CuratedPaperError):
         super().__init__("paper matches an existing preview, curated, or exclusion record")
 
 
+class AmbiguousPaperIdentityError(CuratedPaperError):
+    """More than one curated record satisfies an exact identity rule."""
+
+
+def existing_canonical_match(
+    paper: Mapping[str, Any],
+    existing_rows: Sequence[Mapping[str, Any]],
+) -> Mapping[str, Any] | None:
+    """Return one exact reusable identity; never fuzzy-match similar titles."""
+    doi_keys = {
+        key for key in all_identity_keys(paper) if key.startswith("doi:")
+    }
+    matches = [
+        row for row in existing_rows
+        if doi_keys & set(all_identity_keys(row))
+    ]
+    if not matches:
+        title_year = normalized_title_year_key(paper)
+        incoming_doi = next(iter(doi_keys), "")
+        matches = [
+            row for row in existing_rows
+            if title_year
+            and normalized_title_year_key(row) == title_year
+            and (
+                not incoming_doi
+                or not any(
+                    key.startswith("doi:") for key in all_identity_keys(row)
+                )
+                or incoming_doi in all_identity_keys(row)
+            )
+        ]
+    if len(matches) > 1:
+        raise AmbiguousPaperIdentityError(
+            "multiple curated papers match the exact DOI or normalized title + year"
+        )
+    return matches[0] if matches else None
+
+
 def read_curated_papers(
     path: Path = DEFAULT_CURATED_PAPERS_PATH,
 ) -> List[Dict[str, str]]:
@@ -144,6 +183,23 @@ def write_curated_papers(
     rows: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_CURATED_PAPERS_PATH,
 ) -> None:
+    collisions: Dict[str, List[str]] = defaultdict(list)
+    for row in rows:
+        paper_id = clean(row.get("paper_id"))
+        for key in all_identity_keys(row):
+            if key.startswith(("paper_id:", "doi:", "openalex:", "title_year:")):
+                collisions[key].append(paper_id)
+    duplicate_keys = {
+        key: values for key, values in collisions.items() if len(values) > 1
+    }
+    if duplicate_keys:
+        details = "; ".join(
+            f"{key} -> {', '.join(values)}"
+            for key, values in sorted(duplicate_keys.items())
+        )
+        raise CuratedPaperError(
+            f"refusing to write duplicate curated paper identities: {details}"
+        )
     temporary_path = path.with_suffix(path.suffix + ".tmp")
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -434,6 +490,9 @@ def create_curated_paper(
 ) -> Dict[str, str]:
     normalized = normalize_paper_draft(draft)
     curated_rows = read_curated_papers(path)
+    reusable = existing_canonical_match(normalized, curated_rows)
+    if reusable is not None:
+        return dict(reusable)
     matches = duplicate_matches(
         normalized,
         (

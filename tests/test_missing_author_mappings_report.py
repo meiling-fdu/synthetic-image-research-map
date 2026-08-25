@@ -4,7 +4,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.report_missing_author_mappings import CSV_COLUMNS, main, priority_key
+from scripts.report_missing_author_mappings import (
+    CSV_COLUMNS,
+    build_report_rows,
+    main,
+    priority_key,
+)
 
 
 class MissingAuthorMappingsReportTests(unittest.TestCase):
@@ -180,6 +185,38 @@ class MissingAuthorMappingsReportTests(unittest.TestCase):
         self.assertEqual(
             [row["title"] for row in sorted(rows, key=priority_key)],
             ["Most missing", "Key", "Newest", "Partial", "Complete"],
+        )
+
+    def test_active_paper_mapping_covers_normalized_author_names(self):
+        paper = {
+            "paper_id": "curated:sidbench",
+            "title": "SIDBench",
+            "year": 2024,
+            "doi": "10.1000/sidbench",
+            "authors": [{"name": "Manos Schinas"}, {"name": "Symeon Papadópoulos"}],
+        }
+        mapping = {
+            "paper_id": "openalex:other-id",
+            "title": "SIDBench",
+            "year": "2024",
+            "doi": "https://doi.org/10.1000/SIDBENCH",
+            "mapping_status": "active",
+            "institution": "CERTH",
+            "institution_authors": "Manos Schinas; Symeon Papadopoulos",
+        }
+        rows = build_report_rows([paper], [], [paper], [mapping], [])
+        self.assertEqual(rows[0]["mapping_status"], "complete")
+        self.assertEqual(rows[0]["mapped_authors"], 2)
+        self.assertEqual(rows[0]["missing_authors"], 0)
+
+    def test_active_exclusion_removes_paper_from_actionable_coverage(self):
+        paper = {
+            "paper_id": "paper:excluded", "title": "Excluded", "year": 2024,
+            "authors": [{"name": "Unmapped Author"}],
+        }
+        exclusions = [{"paper_id": "paper:excluded", "is_active": "true"}]
+        self.assertEqual(
+            build_report_rows([paper], [], [paper], [], [], exclusions), []
         )
 
 

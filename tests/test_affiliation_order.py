@@ -33,7 +33,8 @@ from scripts.export_public_preview import (
     apply_ordered_paper_location_summaries,
     canonicalize_public_institutions,
 )
-from scripts.migrate_affiliation_order import migrate
+from scripts.migrate_affiliation_order import affiliation_order_issues, migrate
+from scripts.validate_curated_database import validate_mapping_evidence
 from scripts.serve_admin import make_handler
 
 
@@ -218,6 +219,71 @@ class AffiliationOrderTests(unittest.TestCase):
         self.assertEqual(
             [row["affiliation_order"] for row in load_mappings(self.mappings)],
             ["1", "2"],
+        )
+
+    def test_migration_groups_legacy_ids_by_shared_openalex_identity(self):
+        rows = [
+            {**self.mapping(1), "paper_id": "curated:legacy", "doi": "10.1/shared",
+             "openalex_url": "https://openalex.org/W1", "affiliation_order": "1"},
+            {**self.mapping(2), "paper_id": "openalex:W1", "doi": "10.1/shared",
+             "openalex_url": "https://openalex.org/W1", "affiliation_order": "1"},
+            {**self.mapping(3), "paper_id": "curated:legacy", "doi": "10.1/shared",
+             "openalex_url": "https://openalex.org/W1", "affiliation_order": "2"},
+        ]
+        write_csv(self.mappings, AUTHOR_INSTITUTION_MAPPING_COLUMNS, rows)
+
+        issues = affiliation_order_issues(load_mappings(self.mappings))
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0]["reasons"], ["duplicate", "gapped_or_non_contiguous"])
+        self.assertEqual(migrate(self.mappings), 2)
+        self.assertEqual(
+            [row["affiliation_order"] for row in load_mappings(self.mappings)],
+            ["1", "2", "3"],
+        )
+        self.assertEqual(migrate(self.mappings), 0)
+
+    def test_audit_reports_missing_duplicate_gapped_and_accepts_valid_sets(self):
+        cases = {
+            "missing": (["1", ""], "missing"),
+            "duplicate": (["1", "1"], "duplicate"),
+            "gapped": (["1", "3"], "gapped_or_non_contiguous"),
+            "non_integer": (["1", "two"], "non_integer"),
+            "zero_based": (["0", "1"], "non_positive"),
+        }
+        for name, (orders, reason) in cases.items():
+            with self.subTest(name=name):
+                rows = [self.mapping(index, order=order) for index, order in enumerate(orders, 1)]
+                issues = affiliation_order_issues(rows)
+                self.assertEqual(len(issues), 1)
+                self.assertIn(reason, issues[0]["reasons"])
+        self.assertEqual(
+            affiliation_order_issues([
+                self.mapping(1, order="1"), self.mapping(2, order="2")
+            ]),
+            [],
+        )
+
+    def test_repository_has_no_active_affiliation_order_violations(self):
+        rows = load_mappings(ROOT / "data/curated/author_institution_mappings.csv")
+        self.assertEqual(affiliation_order_issues(rows), [])
+
+    def test_curated_validator_uses_shared_durable_identity_component(self):
+        rows = [
+            {**self.mapping(1), "paper_id": "curated:legacy", "openalex_url": "https://openalex.org/W1", "affiliation_order": "1"},
+            {**self.mapping(2), "paper_id": "openalex:W1", "openalex_url": "https://openalex.org/W1", "affiliation_order": "2"},
+            {**self.mapping(3), "paper_id": "curated:legacy", "openalex_url": "https://openalex.org/W1", "affiliation_order": "3"},
+        ]
+        issues = []
+        validate_mapping_evidence(rows, issues)
+        self.assertFalse([
+            issue for issue in issues if "affiliation_order" in issue.message
+        ])
+        rows[2]["affiliation_order"] = "2"
+        issues = []
+        validate_mapping_evidence(rows, issues)
+        self.assertEqual(
+            len([issue for issue in issues if "affiliation_order" in issue.message]),
+            1,
         )
 
     def test_reorder_rejects_partial_or_duplicate_requests_without_writing(self):

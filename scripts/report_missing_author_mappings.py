@@ -24,6 +24,7 @@ DEFAULT_PAPERS = Path("web/data/public_preview_papers.json")
 DEFAULT_MAP_DATA = Path("web/data/public_preview_map_data.json")
 DEFAULT_MAPPINGS = Path("data/curated/author_institution_mappings.csv")
 DEFAULT_CURATED_PAPERS = Path("data/curated/papers.csv")
+DEFAULT_EXCLUSIONS = Path("data/curated/paper_exclusions.csv")
 DEFAULT_KEY_PAPERS = Path("data/manual/key_papers.csv")
 DEFAULT_CSV_OUTPUT = Path("data/manual/missing_author_mappings_report.csv")
 DEFAULT_MARKDOWN_OUTPUT = Path("docs/missing_author_mappings_report.md")
@@ -296,7 +297,10 @@ def report_authors(record: Mapping[str, Any]) -> List[Any]:
     return split_author_text(record.get("authors_text"))
 
 
-def author_coverage(record: Mapping[str, Any]) -> Tuple[int, int, List[str]]:
+def author_coverage(
+    record: Mapping[str, Any],
+    active_mapping_authors: Sequence[Any] = (),
+) -> Tuple[int, int, List[str]]:
     authors = report_authors(record)
     mapped_names = {
         normalize_author(mapping)
@@ -308,6 +312,12 @@ def author_coverage(record: Mapping[str, Any]) -> Tuple[int, int, List[str]]:
             or mapping.get("institution_ids")
         )
     }
+    mapped_names.update(
+        normalize_author(author)
+        for group in active_mapping_authors
+        for author in split_author_text(group)
+        if normalize_author(author)
+    )
     missing: List[str] = []
     mapped = 0
     for author in authors:
@@ -380,19 +390,11 @@ def build_report_rows(
     curated_papers: Sequence[Mapping[str, Any]],
     curated_mappings: Sequence[Mapping[str, Any]],
     key_papers: Sequence[Mapping[str, Any]],
+    exclusions: Sequence[Mapping[str, Any]] = (),
 ) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
     paper_marker_counts = marker_counts(papers, markers)
     for paper in papers:
-        total, mapped, missing_names = author_coverage(paper)
-        missing = len(missing_names)
-        if mapped == 0:
-            status = "zero"
-        elif missing:
-            status = "partial"
-        else:
-            status = "complete"
-
         curated_matches = matching_rows(paper, curated_papers)
         mapping_matches = matching_rows(paper, curated_mappings)
         visible_mapping_matches = [
@@ -406,6 +408,22 @@ def build_report_rows(
             for mapping in visible_mapping_matches
             if clean(mapping.get("mapping_status")).casefold() == "active"
         ]
+        if any(
+            parse_bool(exclusion.get("is_active"))
+            for exclusion in matching_rows(paper, exclusions)
+        ):
+            continue
+        total, mapped, missing_names = author_coverage(
+            paper,
+            [mapping.get("institution_authors") for mapping in active_mapping_matches],
+        )
+        missing = len(missing_names)
+        if mapped == 0:
+            status = "zero"
+        elif missing:
+            status = "partial"
+        else:
+            status = "complete"
         pending_mapping_matches = [
             mapping
             for mapping in visible_mapping_matches
@@ -632,6 +650,7 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
     parser.add_argument("--map-data", type=Path, default=DEFAULT_MAP_DATA)
     parser.add_argument("--mappings", type=Path, default=DEFAULT_MAPPINGS)
     parser.add_argument("--curated-papers", type=Path, default=DEFAULT_CURATED_PAPERS)
+    parser.add_argument("--exclusions", type=Path, default=DEFAULT_EXCLUSIONS)
     parser.add_argument("--key-papers", type=Path, default=DEFAULT_KEY_PAPERS)
     parser.add_argument("--csv-output", type=Path, default=DEFAULT_CSV_OUTPUT)
     parser.add_argument("--markdown-output", type=Path, default=DEFAULT_MARKDOWN_OUTPUT)
@@ -647,6 +666,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             read_csv_rows(args.curated_papers),
             read_csv_rows(args.mappings),
             read_csv_rows(args.key_papers, optional=True),
+            read_csv_rows(args.exclusions, optional=True),
         )
         write_csv_report(args.csv_output, rows)
         write_markdown_report(args.markdown_output, rows)

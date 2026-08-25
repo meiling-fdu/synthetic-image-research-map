@@ -15,6 +15,7 @@ from scripts.curated_institutions import (
     set_parent_institution,
     stable_institution_id,
     update_institution_location,
+    exact_institution_matches,
 )
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -591,6 +592,66 @@ class InstitutionManagementTests(unittest.TestCase):
         with self.mappings.open(encoding="utf-8", newline="") as handle:
             mapping = next(csv.DictReader(handle))
         self.assertEqual(mapping["institution_id"], self.certh_id)
+
+    def test_merge_retires_logical_duplicate_mapping_instead_of_creating_two(self):
+        with self.mappings.open(encoding="utf-8", newline="") as handle:
+            source_mapping = next(csv.DictReader(handle))
+        source_mapping["affiliation_order"] = "1"
+        target_mapping = {
+            **source_mapping,
+            "mapping_id": "mapping:amazon-duplicate",
+            "institution": AMAZON,
+            "institution_id": self.amazon_id,
+            "affiliation_order": "2",
+        }
+        write_csv(
+            self.mappings, AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+            [source_mapping, target_mapping],
+        )
+
+        result = merge_institutions(
+            self.certh_id, self.amazon_id,
+            confirmation=f"REPLACE {CERTH} WITH {AMAZON} GLOBALLY",
+            review_note="Confirmed duplicate fixture.",
+            institutions_path=self.institutions, mappings_path=self.mappings,
+            aliases_path=self.aliases, locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+            location_audit_path=self.location_audits,
+            hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
+            review_queue_path=self.review_queue,
+            audit_path=self.audits,
+        )
+
+        with self.mappings.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        active = [row for row in rows if row["mapping_status"] == "active"]
+        self.assertEqual(result["deduplicated_mappings"], 1)
+        self.assertEqual(len(active), 1)
+        self.assertEqual(active[0]["mapping_id"], "mapping:amazon-duplicate")
+        self.assertEqual(active[0]["affiliation_order"], "1")
+
+    def test_hong_kong_polytechnic_alias_resolves_to_one_active_canonical_id(self):
+        institutions_path = ROOT / "data/curated/institutions.csv"
+        aliases_path = ROOT / "data/curated/institution_aliases.csv"
+        with institutions_path.open(encoding="utf-8", newline="") as handle:
+            institutions = list(csv.DictReader(handle))
+        with aliases_path.open(encoding="utf-8", newline="") as handle:
+            aliases = list(csv.DictReader(handle))
+        survivor = "institution:31f980eaa403801a"
+        active = [
+            row for row in institutions
+            if row["institution_status"] == "active"
+            and row["canonical_name"].casefold().removeprefix("the ")
+            == "hong kong polytechnic university"
+        ]
+        self.assertEqual([row["institution_id"] for row in active], [survivor])
+        self.assertEqual(
+            exact_institution_matches(
+                "Hong Kong Polytechnic University", institutions, aliases
+            ),
+            [survivor],
+        )
 
     def test_merge_requires_location_resolution_and_keeps_selected_target_location(self):
         guangzhou_id = "institution:hkust-guangzhou"

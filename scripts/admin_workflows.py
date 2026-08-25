@@ -131,6 +131,10 @@ AUTHOR_MAPPING_REPORT = (
     "python3",
     "scripts/report_missing_author_mappings.py",
 )
+DUPLICATE_PAPER_AUDIT = (
+    "python3",
+    "scripts/audit_duplicate_papers.py",
+)
 PUBLISH_CHANGES = (
     "python3",
     "scripts/admin_publish_changes.py",
@@ -151,6 +155,7 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         INSTITUTION_REVIEW_QUEUE_SYNC,
         FULL_SOURCE_COMPLETENESS_AUDIT,
         ORPHAN_INSTITUTION_CLEANUP,
+        DUPLICATE_PAPER_AUDIT,
         CURATED_VALIDATION,
         ACTIVE_EXCLUSION_PUBLIC_MIGRATION,
         PAPER_EXCLUSION_VALIDATION,

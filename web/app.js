@@ -118,7 +118,7 @@ const COUNTRY_NAME_BY_CODE = {
   NL: "Netherlands", NO: "Norway", NP: "Nepal", NZ: "New Zealand",
   PK: "Pakistan", PL: "Poland", PT: "Portugal", RU: "Russia",
   SA: "Saudi Arabia", SE: "Sweden", SG: "Singapore", SI: "Slovenia",
-  SK: "Slovakia", SY: "Syria", TH: "Thailand", TR: "Türkiye",
+  SK: "Slovakia", SY: "Syria", TH: "Thailand", TR: "Turkey",
   UA: "Ukraine", US: "United States", VN: "Vietnam", ZA: "South Africa",
 };
 
@@ -452,6 +452,10 @@ function getEntryTypeLabel(value) {
 
 function recordTitle(record) {
   return record.title ?? record.paper_title;
+}
+
+function paperTitleHtml(record) {
+  return TitleMarkup.toHtml(recordTitle(record), escapeHtml);
 }
 
 function recordAuthors(record) {
@@ -2118,7 +2122,7 @@ function recordSearchText(record) {
     record.venue_track,
   ];
   return normalizedSearchText([
-    recordTitle(record),
+    TitleMarkup.searchText(recordTitle(record)),
     ...authors,
     publicationYear(record),
     record.country,
@@ -3498,7 +3502,7 @@ function paperDetailsHtml(record, relatedEntries) {
     : "";
 
   return `
-    <h3 class="popup-title paper-details-title">${escapeHtml(recordTitle(record))}</h3>
+    <h3 class="popup-title paper-details-title">${paperTitleHtml(record)}</h3>
     <div class="popup-badges">
       <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatPublicTask(record.task))}</span>
       ${entryTypeBadge}
@@ -3595,7 +3599,7 @@ function institutionResultContent(record, relatedEntries = [{ record }], cardId 
   return `
     <article class="result-card result-card-institution" aria-labelledby="${cardId}">
       <p class="result-entity-kicker">Institution record</p>
-      <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
+      <h3 class="result-title" id="${cardId}">${paperTitleHtml(record)}</h3>
       <div class="result-card-adaptive">
         <section class="result-institution-primary" aria-label="Institution represented by this record">
           <h4 title="${escapeHtml(institutionName || "Unknown institution")}">${institutionFocusButtonHtml(institution || {
@@ -3661,7 +3665,7 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
   return `
     <article class="result-card result-card-paper" aria-labelledby="${cardId}">
       <p class="result-entity-kicker">Unique paper</p>
-      <h3 class="result-title" id="${cardId}">${escapeHtml(recordTitle(record))}</h3>
+      <h3 class="result-title" id="${cardId}">${paperTitleHtml(record)}</h3>
       <div class="result-card-adaptive">
         ${resultAuthors(normalizedRecord.authors, "Authors", `${cardId}-authors`, 4)}
         ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`, 3)}

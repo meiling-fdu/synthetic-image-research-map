@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Any, Dict, Optional
 
 
@@ -44,9 +45,17 @@ COUNTRY_NAME_BY_CODE = {
     "NZ": "New Zealand", "PK": "Pakistan", "PL": "Poland",
     "PT": "Portugal", "RU": "Russia", "SA": "Saudi Arabia",
     "SE": "Sweden", "SG": "Singapore", "SI": "Slovenia",
-    "SK": "Slovakia", "SY": "Syria", "TH": "Thailand", "TR": "Türkiye",
+    "SK": "Slovakia", "SY": "Syria", "TH": "Thailand", "TR": "Turkey",
     "TW": "Taiwan", "UA": "Ukraine", "US": "United States",
     "VN": "Vietnam", "ZA": "South Africa",
+}
+
+ENGLISH_CITY_ALIASES = {
+    "montreal": "Montreal",
+}
+ENGLISH_REGION_ALIASES = {
+    "quebec": "Quebec",
+    "trentino alto adige sudtirol": "Trentino-South Tyrol",
 }
 
 
@@ -57,8 +66,13 @@ def clean_text(value: Any) -> str:
 
 
 def normalized_location_name(value: Any) -> str:
+    decomposed = unicodedata.normalize("NFKD", clean_text(value).casefold())
+    without_marks = "".join(
+        character for character in decomposed
+        if unicodedata.category(character) != "Mn"
+    )
     return " ".join(
-        re.sub(r"[^a-z0-9]+", " ", clean_text(value).casefold()).split()
+        re.sub(r"[^\w]+", " ", without_marks, flags=re.UNICODE).split()
     )
 
 
@@ -77,6 +91,7 @@ def country_code_for_name(country: Any) -> str:
         "republic of korea": "KR",
         "south korea": "KR",
         "turkey": "TR",
+        "turkiye": "TR",
     }
     if normalized in aliases:
         return aliases[normalized]
@@ -85,6 +100,25 @@ def country_code_for_name(country: Any) -> str:
         if normalized_location_name(name) == normalized
     ]
     return matches[0] if len(matches) == 1 else ""
+
+
+def canonical_english_location_fields(record: Dict[str, Any]) -> Dict[str, str]:
+    """Normalize persisted structured geographic fields to reviewed English forms."""
+    result = {key: clean_text(value) for key, value in record.items()}
+    city_key = normalized_location_name(result.get("city"))
+    region_key = normalized_location_name(result.get("region"))
+    if city_key in ENGLISH_CITY_ALIASES:
+        result["city"] = ENGLISH_CITY_ALIASES[city_key]
+    if region_key in ENGLISH_REGION_ALIASES:
+        result["region"] = ENGLISH_REGION_ALIASES[region_key]
+
+    code = clean_text(result.get("country_code")).upper()
+    if not code:
+        code = country_code_for_name(result.get("country"))
+    if code in COUNTRY_NAME_BY_CODE:
+        result["country_code"] = code
+        result["country"] = COUNTRY_NAME_BY_CODE[code]
+    return result
 
 
 def public_country_name(country: Any, country_code: Any = "") -> str:

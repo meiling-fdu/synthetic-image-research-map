@@ -25,7 +25,11 @@ try:
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
     )
     from .curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
-    from .country_normalization import country_code_for_name
+    from .country_normalization import (
+        canonical_english_location_fields,
+        country_code_for_name,
+    )
+    from .paper_exclusions import build_active_exclusion_index, record_is_excluded
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -37,7 +41,11 @@ except ImportError:
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
     )
     from curated_institutions import DEFAULT_INSTITUTIONS_PATH, load_institutions
-    from country_normalization import country_code_for_name
+    from country_normalization import (
+        canonical_english_location_fields,
+        country_code_for_name,
+    )
+    from paper_exclusions import build_active_exclusion_index, record_is_excluded
 
 
 DEFAULT_LOCATION_REVIEW_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
@@ -388,7 +396,16 @@ def save_confirmed_locations(
     rows: Sequence[Mapping[str, Any]],
     path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
 ) -> None:
-    _write_csv_atomic(rows, path, INSTITUTION_LOCATION_COLUMNS)
+    normalized_rows = []
+    for row in rows:
+        normalized_rows.append({
+            **row,
+            **canonical_english_location_fields({
+                field: row.get(field)
+                for field in ("city", "region", "country", "country_code")
+            }),
+        })
+    _write_csv_atomic(normalized_rows, path, INSTITUTION_LOCATION_COLUMNS)
 
 
 def save_location_review_queue(
@@ -496,16 +513,22 @@ def _confirmed_location_fields(
     normalized = normalize_institution_name(normalized_institution)
     if not normalized:
         raise CuratedLocationError("confirmed_institution is invalid")
-    country = clean(draft.get("confirmed_country") or draft.get("country"))
+    geographic = canonical_english_location_fields({
+        "city": draft.get("confirmed_city") or draft.get("city"),
+        "region": draft.get("confirmed_region") or draft.get("region"),
+        "country": draft.get("confirmed_country") or draft.get("country"),
+        "country_code": draft.get("confirmed_country_code") or draft.get("country_code"),
+    })
+    country = geographic["country"]
     country_code = validate_country_code(
-        draft.get("confirmed_country_code") or draft.get("country_code")
+        geographic.get("country_code")
         or country_code_for_name(country)
     )
     latitude, longitude = validate_coordinates(
         draft.get("confirmed_lat") if "confirmed_lat" in draft else draft.get("lat"),
         draft.get("confirmed_lon") if "confirmed_lon" in draft else draft.get("lon"),
     )
-    city = clean(draft.get("confirmed_city") or draft.get("city"))
+    city = geographic["city"]
     if not city or not country:
         raise CuratedLocationError(
             "confirmed city and country are required"
@@ -515,14 +538,14 @@ def _confirmed_location_fields(
             institution,
             institution_id=draft.get("institution_id"),
             city=city,
-            region=draft.get("confirmed_region") or draft.get("region"),
+            region=geographic["region"],
             country=country,
         ),
         "institution_id": clean(draft.get("institution_id")),
         "institution": institution,
         "normalized_institution": normalized,
         "city": city,
-        "region": clean(draft.get("confirmed_region") or draft.get("region")),
+        "region": geographic["region"],
         "country": country,
         "country_code": country_code,
         "lat": latitude,
@@ -908,6 +931,7 @@ def location_review_payload(
     locations_path: Path = DEFAULT_INSTITUTION_LOCATIONS_PATH,
     aliases_path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
     mappings: Sequence[Mapping[str, Any]] = (),
+    exclusions: Sequence[Mapping[str, Any]] = (),
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
 ) -> Dict[str, Any]:
     reviews = load_location_review_queue(review_path)
@@ -918,11 +942,12 @@ def location_review_payload(
         clean(row.get("institution_id")): row for row in institutions
         if clean(row.get("institution_id"))
     }
-    ignored_ids = {
+    inactive_ids = {
         clean(row.get("institution_id"))
         for row in institutions
-        if clean(row.get("institution_status")) == "ignored"
+        if clean(row.get("institution_status")) != "active"
     }
+    active_exclusion_index = build_active_exclusion_index(exclusions)
     aliases_by_canonical: Dict[str, List[str]] = defaultdict(list)
     aliases_by_id: Dict[str, List[str]] = defaultdict(list)
     confirmed_alias_targets: Dict[str, str] = {}
@@ -953,10 +978,58 @@ def location_review_payload(
     records = []
     suppression_reasons: Counter[str] = Counter()
     mappings_by_institution: Dict[str, List[Mapping[str, Any]]] = defaultdict(list)
+    eligible_mappings: List[Mapping[str, Any]] = []
     for mapping in mappings:
+        if clean(mapping.get("mapping_status")) not in {"active", "needs_review"}:
+            continue
+        if record_is_excluded(mapping, active_exclusion_index):
+            continue
+        eligible_mappings.append(mapping)
         mappings_by_institution[
             normalize_institution_name(mapping.get("institution"))
         ].append(mapping)
+    reviewed_mapping_keys = {
+        (
+            clean(row.get("institution_id")),
+            clean(row.get("related_paper_id"))
+            or clean(row.get("doi"))
+            or f"{clean(row.get('title'))}|{clean(row.get('year'))}",
+        )
+        for row in reviews
+    }
+    for mapping in eligible_mappings:
+        institution_id = clean(mapping.get("institution_id"))
+        entity = institution_by_id.get(institution_id, {})
+        if clean(entity.get("institution_status")) != "active":
+            continue
+        mapping_key = (
+            institution_id,
+            clean(mapping.get("paper_id"))
+            or clean(mapping.get("doi"))
+            or f"{clean(mapping.get('title'))}|{clean(mapping.get('year'))}",
+        )
+        if mapping_key in reviewed_mapping_keys:
+            continue
+        known = by_institution_id.get(institution_id, [])
+        if any(clean(row.get("lat")) and clean(row.get("lon")) for row in known):
+            continue
+        reviews.append({
+            "institution": clean(mapping.get("institution")),
+            "canonical_institution_name": clean(entity.get("canonical_name")),
+            "institution_id": institution_id,
+            "related_paper_id": clean(mapping.get("paper_id")),
+            "title": clean(mapping.get("title")),
+            "year": clean(mapping.get("year")),
+            "doi": clean(mapping.get("doi")),
+            "openalex_url": clean(mapping.get("openalex_url")),
+            "institution_authors": clean(mapping.get("institution_authors")),
+            "raw_affiliation": clean(mapping.get("raw_affiliation")),
+            "review_status": "pending_review",
+            "location_status": "needs_location_review",
+            "coordinate_status": "missing",
+            "derived_from_active_mapping": "true",
+        })
+        reviewed_mapping_keys.add(mapping_key)
     for row in reviews:
         institution_id = clean(row.get("institution_id"))
         entity = institution_by_id.get(institution_id, {})
@@ -980,8 +1053,18 @@ def location_review_payload(
                 "year": clean(mapping.get("year")),
             }
         effective_status = clean(row.get("review_status")) or "pending_review"
-        if institution_id in ignored_ids:
+        row_paper_identity = {
+            **row,
+            "paper_id": clean(row.get("related_paper_id")),
+        }
+        row_only_references_excluded_paper = (
+            record_is_excluded(row_paper_identity, active_exclusion_index)
+            and not affected_mappings
+        )
+        if institution_id in inactive_ids:
             effective_status = "ignore"
+        elif row_only_references_excluded_paper:
+            effective_status = "excluded"
         elif alias_target and effective_status not in {"ignore", "excluded"}:
             effective_status = "alias_of_confirmed"
         candidate_suggestions = []
@@ -1071,6 +1154,10 @@ def location_review_payload(
                 "confirmed_location": matches[0] if len(matches) == 1 else None,
                 "confirmed_locations": [dict(location) for location in matches],
                 "confirmed_location_count": len(matches),
+                "has_usable_confirmed_location": any(
+                    clean(location.get("lat")) and clean(location.get("lon"))
+                    for location in matches
+                ),
                 "existing_aliases": aliases_by_canonical.get(canonical_key, []),
                 "candidate_suggestions": candidate_suggestions,
                 "affected_mappings": [
@@ -1085,8 +1172,10 @@ def location_review_payload(
                 ],
                 "affected_papers": list(affected_papers.values()),
             }
-        if institution_id in ignored_ids:
+        if institution_id in inactive_ids:
             suppression_reasons["resolved_by_ignored_institution"] += 1
+        elif row_only_references_excluded_paper:
+            suppression_reasons["resolved_by_durable_exclusion"] += 1
         elif effective_status in {"ignore", "excluded"}:
             suppression_reasons["resolved_by_durable_exclusion"] += 1
         elif alias_target or effective_status == "alias_of_confirmed":
@@ -1101,11 +1190,7 @@ def location_review_payload(
         "pending_review": effective_counts["pending_review"],
         "needs_coordinates": sum(
             record["review_status"] == "pending_review"
-            and not (
-                record.get("confirmed_location")
-                and clean(record["confirmed_location"].get("lat"))
-                and clean(record["confirmed_location"].get("lon"))
-            )
+            and not record.get("has_usable_confirmed_location")
             for record in records
         ),
         "ambiguous": effective_counts["ambiguous"],

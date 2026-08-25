@@ -28,73 +28,73 @@
     "task": "Exactly one task enum per public paper; detection_and_source_attribution is one combined enum."
   },
   "dataset_counts": {
-    "curated_papers": 315,
-    "public_unique_papers": 541,
-    "public_map_source_papers": 529,
-    "public_papers_with_map": 528,
-    "public_papers_without_map": 13,
-    "public_map_relationships": 1205,
-    "public_unique_institutions": 600,
-    "canonical_institution_rows": 635,
-    "active_canonical_institutions": 632,
-    "inactive_or_merged_institutions": 3,
-    "author_institution_mappings": 853,
-    "confirmed_institution_locations": 401,
-    "institution_location_review_rows": 514,
-    "institution_aliases": 53,
+    "curated_papers": 324,
+    "public_unique_papers": 546,
+    "public_map_source_papers": 535,
+    "public_papers_with_map": 534,
+    "public_papers_without_map": 12,
+    "public_map_relationships": 1224,
+    "public_unique_institutions": 606,
+    "canonical_institution_rows": 644,
+    "active_canonical_institutions": 640,
+    "inactive_or_merged_institutions": 4,
+    "author_institution_mappings": 877,
+    "confirmed_institution_locations": 410,
+    "institution_location_review_rows": 531,
+    "institution_aliases": 55,
     "institution_hierarchy_edges": 7,
     "institution_search_relationships": 1,
-    "institution_review_queue_rows": 371
+    "institution_review_queue_rows": 384
   },
   "distribution_counts": {
     "institution_status": {
-      "active": 632,
-      "merged": 1,
+      "active": 640,
+      "merged": 2,
       "ignored": 2
     },
     "author_institution_mapping_status": {
-      "active": 790,
+      "active": 814,
       "excluded": 24,
       "needs_review": 39
     },
     "canonical_institution_type": {
+      "university": 465,
+      "research_unit": 66,
+      "company": 65,
+      "other": 48
+    },
+    "active_canonical_institution_type": {
       "university": 463,
       "research_unit": 66,
       "company": 63,
-      "other": 43
-    },
-    "active_canonical_institution_type": {
-      "university": 462,
-      "research_unit": 66,
-      "company": 61,
-      "other": 43
+      "other": 48
     },
     "public_paper_institution_type": {
-      "university": 509,
-      "research_unit": 103,
-      "company": 80,
-      "other": 50
+      "university": 513,
+      "research_unit": 104,
+      "company": 81,
+      "other": 55
     },
     "publication_type": {
-      "conference": 308,
-      "journal": 167,
+      "conference": 314,
+      "journal": 166,
       "preprint": 65,
       "book": 1
     },
     "task": {
-      "detection": 466,
+      "detection": 471,
       "source_attribution": 46,
       "detection_and_source_attribution": 29
     },
     "public_map_relationship_resolution": {
-      "active_canonical_institution": 1176,
+      "active_canonical_institution": 1195,
       "unreviewed_automatic_fallback": 29
     }
   },
   "validation": {
     "complete_test_suite": {
-      "collected": 1037,
-      "passed": 989,
+      "collected": 1056,
+      "passed": 1008,
       "skipped_environment_conditional": 48,
       "failed": 0,
       "deselected": 0
@@ -111,7 +111,7 @@
     },
     "public_papers": {
       "errors": 0,
-      "warnings": 70,
+      "warnings": 62,
       "papers_missing_affiliations": 0,
       "papers_missing_coordinates": 2
     },
@@ -123,7 +123,7 @@
     "git_diff_check": "passed"
   },
   "manual_curation_backlog": [
-    "Seventy public-paper author entries lack an institution index and require evidence-based mapping review.",
+    "Sixty-two public-paper author entries lack an institution index and require evidence-based mapping review.",
     "Curated warnings retain missing/conflicting mapping evidence, historical audit references, and explicit review-queue conflicts.",
     "Two restored exclusions are not currently present in the public preview.",
     "Same-name Northeastern University identities remain separate because their confirmed country evidence conflicts.",

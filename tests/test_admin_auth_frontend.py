@@ -127,7 +127,10 @@ class AdminStaticAssetTests(unittest.TestCase):
 
     def test_admin_static_assets_use_no_store_cache_headers(self):
         with self.server() as base_url:
-            for path in ("/admin/", "/admin.js", "/admin.css", "/institution_type_labels.js"):
+            for path in (
+                "/admin/", "/admin.js", "/title_markup.js", "/admin.css",
+                "/institution_type_labels.js",
+            ):
                 with self.subTest(path=path):
                     with urllib.request.urlopen(f"{base_url}{path}", timeout=3) as response:
                         self.assertEqual(response.status, 200)

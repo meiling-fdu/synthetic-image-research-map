@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-25T06:19:40Z"
+    "public_preview_generated_at": "2026-08-25T19:36:51Z"
   },
   "records": [
     {
@@ -9813,373 +9813,6 @@
       "current_institution": null
     },
     {
-      "paper_id": "curated:4c6404676fc92cb9e8eb",
-      "title": "Black-Box Adaptation for Deepfake Detection via Local Relation Guided AUC Optimization",
-      "in_scope": true,
-      "year": 2026,
-      "publication_year": 2026,
-      "publication_date": "",
-      "task": "detection",
-      "venue": "IEEE Internet of Things Journal",
-      "publisher": "",
-      "publication_type": "journal",
-      "abstract": "Deepfake technologies pose a growing threat to the Internet of Things (IoT), enabling identity spoofing and the spread of misinformation. Although numerous face forgery detectors have been developed to counter these risks, their realworld deployment is often limited by inherent dataset biases. Existing domain adaptation techniques offer potential remedies, but typically rely on access to raw source data and employ data-dependent alignment strategies under a transductive learning paradigm, raising substantial privacy concerns for source domain individuals. This study revisits the problem from the perspective of black-box domain adaptation and introduces a detection framework that leverages only the predictions from the source model. The method is grounded in a local relation-guided AUC optimization strategy, which leverages the robustness of AUC-based objectives in noisy environments while addressing the limitations of conventional AUC optimization, particularly its vulnerability to confirmation bias and reliance on a fixed decision threshold. To this end, two key components are introduced. First, a nearest-neighbor calibration mechanism is presented, where the local relation feature (LRF), a parameter-free representation, captures differences between real and fake images without favoring specific forgery types, thereby reducing bias inherited from the source model. Second, a GMM-based adaptive thresholding scheme is employed to address asymmetric predictions by dynamically determining the optimal decision boundary for real and fake images. Experiments across multiple datasets show that our approach achieves superior generalization compared to state-of-the-art methods. Moreover, the framework is compatible with a broad range of source and target model configurations to enhance detection performance.",
-      "abstract_source": "openalex",
-      "ai_summary": "",
-      "doi": "10.1109/jiot.2026.3686234",
-      "arxiv_id": "",
-      "arxiv_url": "",
-      "arxiv_year": null,
-      "has_arxiv_version": false,
-      "paper_url": "https://doi.org/10.1109/jiot.2026.3686234",
-      "primary_url": "https://doi.org/10.1109/jiot.2026.3686234",
-      "landing_page_url": "",
-      "openalex_url": "https://openalex.org/W7155048878",
-      "is_arxiv_preprint": false,
-      "url": "https://doi.org/10.1109/jiot.2026.3686234",
-      "authors": [
-        {
-          "name": "Xiaotian Si",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Linghui Li",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Bingyu Li",
-          "affiliation_indices": [
-            2
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Liwei Zhang",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "郭子铎",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Kaiguo Yuan",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Qi Tian",
-          "affiliation_indices": [],
-          "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
-          "affiliation_fallback": false
-        }
-      ],
-      "source_database": "openalex",
-      "metadata_source": "openalex",
-      "curation_status": "manually_confirmed",
-      "review_status": "reviewed",
-      "needs_review": false,
-      "notes": "",
-      "has_map_location": true,
-      "map_record_count": 2,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "Beijing University of Posts and Telecommunications",
-        "Beihang University"
-      ],
-      "aggregated_country_names": [
-        "China"
-      ],
-      "aggregated_country_codes": [
-        "CN"
-      ],
-      "aggregated_regions": [
-        "Beijing"
-      ],
-      "aggregated_region_codes": [],
-      "curated_mappings": [
-        {
-          "mapping_id": "mapping:c57cc799d5fe8691170a",
-          "institution_id": "institution:1502cb7c96ae3095",
-          "location_id": "",
-          "institution": "Beijing University of Posts and Telecommunications",
-          "institution_authors": [
-            "Xiaotian Si",
-            "Linghui Li",
-            "Liwei Zhang",
-            "郭子铎",
-            "Kaiguo Yuan"
-          ],
-          "raw_affiliation": "Key Laboratory of Trustworthy Distributed Computing and Service, Ministry of Education, Beijing University of Posts and Telecommunications, Beijing, China",
-          "mapping_status": "active",
-          "affiliation_order": 1
-        },
-        {
-          "mapping_id": "mapping:11bafd218fb2174b710a",
-          "institution_id": "institution:f336b3005794930b",
-          "location_id": "",
-          "institution": "Beihang University",
-          "institution_authors": [
-            "Bingyu Li"
-          ],
-          "raw_affiliation": "School of Cyber Science and Technology, Beihang University, Beijing, China",
-          "mapping_status": "active",
-          "affiliation_order": 2
-        }
-      ],
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:1502cb7c96ae3095",
-          "institution": "Beijing University of Posts and Telecommunications",
-          "institution_type": "university",
-          "authors": [
-            "Xiaotian Si",
-            "Linghui Li",
-            "Liwei Zhang",
-            "郭子铎",
-            "Kaiguo Yuan"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        },
-        {
-          "index": 2,
-          "institution_id": "institution:f336b3005794930b",
-          "institution": "Beihang University",
-          "institution_type": "university",
-          "authors": [
-            "Bingyu Li"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Xiaotian Si",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ]
-        },
-        {
-          "author": "Linghui Li",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ]
-        },
-        {
-          "author": "Bingyu Li",
-          "institution_indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:f336b3005794930b"
-          ]
-        },
-        {
-          "author": "Liwei Zhang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ]
-        },
-        {
-          "author": "郭子铎",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ]
-        },
-        {
-          "author": "Kaiguo Yuan",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ]
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Xiaotian Si",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Linghui Li",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Bingyu Li",
-          "indices": [
-            2
-          ],
-          "institution_ids": [
-            "institution:f336b3005794930b"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Liwei Zhang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "郭子铎",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Kaiguo Yuan",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:1502cb7c96ae3095"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Qi Tian",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
-          "fallback": false
-        }
-      ],
-      "affiliation_review_state": "curated",
-      "institution_source": "curated",
-      "preliminary_affiliations": false,
-      "aggregated_locations": [
-        {
-          "institution_name": "Beijing University of Posts and Telecommunications",
-          "institution_id": "institution:1502cb7c96ae3095",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Beijing",
-          "region_code": "",
-          "location_display": "Beijing, China"
-        },
-        {
-          "institution_name": "Beihang University",
-          "institution_id": "institution:f336b3005794930b",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Beijing",
-          "region_code": "",
-          "location_display": "Beijing, China"
-        }
-      ],
-      "aggregated_institution_types": [
-        "university"
-      ],
-      "raw_venue": "IEEE Internet of Things Journal",
-      "ambiguity_status": "unmapped",
-      "formal_url": "https://doi.org/10.1109/jiot.2026.3686234",
-      "paper_categories": [
-        "method"
-      ],
-      "search_institution_ids": [
-        "institution:1502cb7c96ae3095",
-        "institution:f336b3005794930b",
-        "institution:570cf7f2e9869b63"
-      ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Beijing University of Posts and Telecommunications",
-          "canonical_name": "Beijing University of Posts and Telecommunications",
-          "institution_id": "institution:1502cb7c96ae3095",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Beijing",
-          "location_display": "Beijing, China"
-        },
-        {
-          "index": 2,
-          "name": "Beihang University",
-          "canonical_name": "Beihang University",
-          "institution_id": "institution:f336b3005794930b",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Beijing",
-          "location_display": "Beijing, China"
-        }
-      ],
-      "current_institution": null
-    },
-    {
       "paper_id": "curated:f7906cb987975444e893",
       "title": "Boosting Robust AIGI Detection with LoRA-Based Pairwise Training",
       "in_scope": true,
@@ -12163,7 +11796,7 @@
       ],
       "aggregated_country_names": [
         "South Korea",
-        "España"
+        "Spain"
       ],
       "aggregated_country_codes": [
         "KR",
@@ -12336,11 +11969,11 @@
           "institution_name": "Jaume I University",
           "institution_id": "institution:bc52939c5da8ad98",
           "institution_type": "university",
-          "country": "España",
+          "country": "Spain",
           "country_code": "ES",
           "region": "Valencian Community",
           "region_code": "",
-          "location_display": "Valencian Community, España"
+          "location_display": "Valencian Community, Spain"
         }
       ],
       "aggregated_institution_types": [
@@ -12384,10 +12017,10 @@
           "canonical_name": "Jaume I University",
           "institution_id": "institution:bc52939c5da8ad98",
           "institution_type": "university",
-          "country": "España",
+          "country": "Spain",
           "country_code": "",
           "region": "Valencian Community",
-          "location_display": "Valencian Community, España"
+          "location_display": "Valencian Community, Spain"
         }
       ],
       "current_institution": null
@@ -13396,7 +13029,7 @@
           "name": "Yiheng Li",
           "affiliation_indices": [
             1,
-            3
+            2
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -13415,7 +13048,7 @@
           "name": "Guoqing Xu",
           "affiliation_indices": [
             1,
-            3
+            2
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -13425,7 +13058,7 @@
           "name": "Yichun Yeh",
           "affiliation_indices": [
             1,
-            3
+            2
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -13435,7 +13068,7 @@
           "name": "Yang Yang",
           "affiliation_indices": [
             1,
-            3
+            2
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -13463,8 +13096,8 @@
       "coverage_status": "map_ready",
       "aggregated_institutions": [
         "University of Chinese Academy of Sciences",
-        "HKISI, Chinese Academy of Sciences",
         "Institute of Automation, Chinese Academy of Sciences",
+        "HKISI, Chinese Academy of Sciences",
         "Sangfor Technologies Inc."
       ],
       "aggregated_country_names": [
@@ -13499,18 +13132,6 @@
           "affiliation_order": 1
         },
         {
-          "mapping_id": "mapping:44591910a80ca65c5490",
-          "institution_id": "institution:9dd7b58a09f6962c",
-          "location_id": "",
-          "institution": "HKISI, Chinese Academy of Sciences",
-          "institution_authors": [
-            "Zhen Lei"
-          ],
-          "raw_affiliation": "CAIR, Hong Kong Institute of Science & Innovation, Chinese Academy of Sciences",
-          "mapping_status": "active",
-          "affiliation_order": 1
-        },
-        {
           "mapping_id": "mapping:0020d199f143ae414a23",
           "institution_id": "institution:966ff12833f90bb0",
           "location_id": "location:966ff12833f90bb0ba7e",
@@ -13527,6 +13148,18 @@
           "affiliation_order": 2
         },
         {
+          "mapping_id": "mapping:44591910a80ca65c5490",
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "location_id": "",
+          "institution": "HKISI, Chinese Academy of Sciences",
+          "institution_authors": [
+            "Zhen Lei"
+          ],
+          "raw_affiliation": "CAIR, Hong Kong Institute of Science & Innovation, Chinese Academy of Sciences",
+          "mapping_status": "active",
+          "affiliation_order": 3
+        },
+        {
           "mapping_id": "mapping:f18315bcfa8161b164b2",
           "institution_id": "institution:a86e3c911036d069",
           "location_id": "",
@@ -13536,7 +13169,7 @@
           ],
           "raw_affiliation": "",
           "mapping_status": "active",
-          "affiliation_order": 2
+          "affiliation_order": 4
         }
       ],
       "author_institution_affiliations": [
@@ -13557,17 +13190,6 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:9dd7b58a09f6962c",
-          "institution": "HKISI, Chinese Academy of Sciences",
-          "institution_type": "research_unit",
-          "authors": [
-            "Zhen Lei"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        },
-        {
-          "index": 3,
           "institution_id": "institution:966ff12833f90bb0",
           "institution": "Institute of Automation, Chinese Academy of Sciences",
           "institution_type": "research_unit",
@@ -13576,6 +13198,17 @@
             "Guoqing Xu",
             "Yichun Yeh",
             "Yang Yang",
+            "Zhen Lei"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution": "HKISI, Chinese Academy of Sciences",
+          "institution_type": "research_unit",
+          "authors": [
             "Zhen Lei"
           ],
           "mapping_source": "raw_affiliation",
@@ -13598,7 +13231,7 @@
           "author": "Yiheng Li",
           "institution_indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13618,7 +13251,7 @@
           "author": "Guoqing Xu",
           "institution_indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13629,7 +13262,7 @@
           "author": "Yichun Yeh",
           "institution_indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13640,7 +13273,7 @@
           "author": "Yang Yang",
           "institution_indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13656,8 +13289,8 @@
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
-            "institution:9dd7b58a09f6962c",
-            "institution:966ff12833f90bb0"
+            "institution:966ff12833f90bb0",
+            "institution:9dd7b58a09f6962c"
           ]
         }
       ],
@@ -13666,7 +13299,7 @@
           "author": "Yiheng Li",
           "indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13690,7 +13323,7 @@
           "author": "Guoqing Xu",
           "indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13703,7 +13336,7 @@
           "author": "Yichun Yeh",
           "indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13716,7 +13349,7 @@
           "author": "Yang Yang",
           "indices": [
             1,
-            3
+            2
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
@@ -13734,8 +13367,8 @@
           ],
           "institution_ids": [
             "institution:69309405e04976ec",
-            "institution:9dd7b58a09f6962c",
-            "institution:966ff12833f90bb0"
+            "institution:966ff12833f90bb0",
+            "institution:9dd7b58a09f6962c"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -13756,16 +13389,6 @@
           "location_display": "Beijing, China"
         },
         {
-          "institution_name": "HKISI, Chinese Academy of Sciences",
-          "institution_id": "institution:9dd7b58a09f6962c",
-          "institution_type": "research_unit",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Hong Kong",
-          "region_code": "HK",
-          "location_display": "Hong Kong, China"
-        },
-        {
           "institution_name": "Institute of Automation, Chinese Academy of Sciences",
           "institution_id": "institution:966ff12833f90bb0",
           "institution_type": "research_unit",
@@ -13774,6 +13397,16 @@
           "region": "Beijing",
           "region_code": "",
           "location_display": "Beijing, China"
+        },
+        {
+          "institution_name": "HKISI, Chinese Academy of Sciences",
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hong Kong",
+          "region_code": "HK",
+          "location_display": "Hong Kong, China"
         },
         {
           "institution_name": "Sangfor Technologies Inc.",
@@ -13831,17 +13464,6 @@
         },
         {
           "index": 2,
-          "name": "HKISI, Chinese Academy of Sciences",
-          "canonical_name": "HKISI, Chinese Academy of Sciences",
-          "institution_id": "institution:9dd7b58a09f6962c",
-          "institution_type": "research_unit",
-          "country": "China",
-          "country_code": "CN",
-          "region": "Hong Kong",
-          "location_display": "Hong Kong, China"
-        },
-        {
-          "index": 3,
           "name": "Institute of Automation, Chinese Academy of Sciences",
           "canonical_name": "Institute of Automation, Chinese Academy of Sciences",
           "institution_id": "institution:966ff12833f90bb0",
@@ -13850,6 +13472,17 @@
           "country_code": "",
           "region": "Beijing",
           "location_display": "Beijing, China"
+        },
+        {
+          "index": 3,
+          "name": "HKISI, Chinese Academy of Sciences",
+          "canonical_name": "HKISI, Chinese Academy of Sciences",
+          "institution_id": "institution:9dd7b58a09f6962c",
+          "institution_type": "research_unit",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Hong Kong",
+          "location_display": "Hong Kong, China"
         },
         {
           "index": 4,
@@ -46164,345 +45797,6 @@
       ]
     },
     {
-      "paper_id": "curated:c7701d799543661b8a53",
-      "title": "Robust Deepfake Detection: Mitigating Spatial Attention Drift via Calibrated Complementary Ensembles",
-      "in_scope": true,
-      "year": 2026,
-      "publication_year": 2026,
-      "publication_date": "",
-      "task": "detection",
-      "paper_categories": [
-        "method"
-      ],
-      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
-      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
-      "venue_id": "venue:cvpr",
-      "venue_acronym": "CVPR",
-      "venue_type": "conference",
-      "venue_track": "workshops",
-      "raw_venue": "arXiv (Cornell University)",
-      "publisher": "",
-      "publication_type": "conference",
-      "abstract": "Current deepfake detection models achieve state-of-the-art performance on pristine academic datasets but suffer severe spatial attention drift under real-world compound degradations, such as blurring and severe lossy compression. To address this vulnerability, we propose a foundation-driven forensic framework that integrates an extreme compound degradation engine with a structurally constrained, multi-stream architecture. During training, our degradation pipeline systematically destroys high-frequency artifacts, optimizing the DINOv2-Giant backbone to extract invariant geometric and semantic priors. We then process images through three specialized pathways: a Global Texture stream, a Localized Facial stream, and a Hybrid Semantic Fusion stream incorporating CLIP. Through analyzing spatial attribution via Score-CAM and feature stability using Cosine Similarity, we quantitatively demonstrate that these streams extract non-redundant, complementary feature representations and stabilize attention entropy. By aggregating these predictions via a calibrated, discretized voting mechanism, our ensemble successfully suppresses background attention drift while acting as a robust geometric anchor. Our approach yields highly stable zero-shot generalization, achieving Fourth Place in the NTIRE 2026 Robust Deepfake Detection Challenge at CVPR. Code is available at https://github.com/khoalephanminh/ntire26-deepfake-challenge.",
-      "abstract_source": "openalex",
-      "ai_summary": "",
-      "doi": "",
-      "arxiv_id": "2604.25889",
-      "arxiv_url": "https://arxiv.org/abs/2604.25889",
-      "arxiv_year": null,
-      "has_arxiv_version": true,
-      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Le-Phan_Robust_Deepfake_Detection_Mitigating_Spatial_Attention_Drift_via_Calibrated_Complementary_CVPRW_2026_paper.pdf",
-      "formal_url": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Le-Phan_Robust_Deepfake_Detection_Mitigating_Spatial_Attention_Drift_via_Calibrated_Complementary_CVPRW_2026_paper.pdf",
-      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Le-Phan_Robust_Deepfake_Detection_Mitigating_Spatial_Attention_Drift_via_Calibrated_Complementary_CVPRW_2026_paper.pdf",
-      "landing_page_url": "",
-      "openalex_url": "https://openalex.org/W7159546930",
-      "is_arxiv_preprint": false,
-      "url": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Le-Phan_Robust_Deepfake_Detection_Mitigating_Spatial_Attention_Drift_via_Calibrated_Complementary_CVPRW_2026_paper.pdf",
-      "authors": [
-        {
-          "name": "Minh-Khoa Le-Phan",
-          "affiliation_indices": [
-            1,
-            2
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Minh-Hoang Le",
-          "affiliation_indices": [
-            1,
-            2
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Trong-Le Do",
-          "affiliation_indices": [
-            1,
-            2
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Minh-Triet Tran",
-          "affiliation_indices": [
-            1,
-            2
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        }
-      ],
-      "source_database": "openalex",
-      "metadata_source": "openalex",
-      "curation_status": "confirmed",
-      "review_status": "reviewed",
-      "needs_review": false,
-      "has_map_location": true,
-      "map_record_count": 2,
-      "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
-      "aggregated_institutions": [
-        "University of Science, Viet Nam National University Ho Chi Minh City",
-        "Vietnam National University Ho Chi Minh City (VNU-HCM)"
-      ],
-      "aggregated_country_names": [
-        "Vietnam"
-      ],
-      "aggregated_country_codes": [
-        "VN"
-      ],
-      "aggregated_regions": [
-        "Ho Chi Minh City"
-      ],
-      "aggregated_region_codes": [],
-      "affiliation_review_state": "curated",
-      "institution_source": "curated",
-      "preliminary_affiliations": false,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
-      "venue_aliases": [
-        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
-        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
-        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
-        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
-        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
-        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
-      ],
-      "ambiguity_status": "resolved",
-      "aggregated_locations": [
-        {
-          "institution_name": "University of Science, Viet Nam National University Ho Chi Minh City",
-          "institution_id": "institution:806523d1aae41484",
-          "institution_type": "university",
-          "country": "Vietnam",
-          "country_code": "VN",
-          "region": "Ho Chi Minh City",
-          "region_code": "",
-          "location_display": "Ho Chi Minh City, Vietnam"
-        },
-        {
-          "institution_name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
-          "institution_id": "institution:19d2ee8d44bfb9f0",
-          "institution_type": "university",
-          "country": "Vietnam",
-          "country_code": "VN",
-          "region": "Ho Chi Minh City",
-          "region_code": "",
-          "location_display": "Ho Chi Minh City, Vietnam"
-        }
-      ],
-      "aggregated_institution_types": [
-        "university"
-      ],
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:806523d1aae41484",
-          "institution": "University of Science, Viet Nam National University Ho Chi Minh City",
-          "institution_type": "university",
-          "authors": [
-            "Minh-Khoa Le-Phan",
-            "Minh-Hoang Le",
-            "Trong-Le Do",
-            "Minh-Triet Tran"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
-        },
-        {
-          "index": 2,
-          "institution_id": "institution:19d2ee8d44bfb9f0",
-          "institution": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
-          "institution_type": "university",
-          "authors": [
-            "Minh-Khoa Le-Phan",
-            "Minh-Hoang Le",
-            "Trong-Le Do",
-            "Minh-Triet Tran"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false,
-          "source_institution_names": [
-            "Vietnam National University Ho Chi Minh City"
-          ]
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Minh-Khoa Le-Phan",
-          "indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Minh-Hoang Le",
-          "indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Trong-Le Do",
-          "indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
-          "author": "Minh-Triet Tran",
-          "indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Minh-Khoa Le-Phan",
-          "institution_indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ]
-        },
-        {
-          "author": "Minh-Hoang Le",
-          "institution_indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ]
-        },
-        {
-          "author": "Trong-Le Do",
-          "institution_indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ]
-        },
-        {
-          "author": "Minh-Triet Tran",
-          "institution_indices": [
-            1,
-            2
-          ],
-          "institution_ids": [
-            "institution:806523d1aae41484",
-            "institution:19d2ee8d44bfb9f0"
-          ]
-        }
-      ],
-      "search_institution_ids": [
-        "institution:329f39cda413f721",
-        "institution:19d2ee8d44bfb9f0",
-        "institution:806523d1aae41484"
-      ],
-      "curated_mappings": [
-        {
-          "mapping_id": "mapping:f134355428958df759fd",
-          "institution_id": "institution:806523d1aae41484",
-          "location_id": "location:806523d1aae41484a05a",
-          "institution": "University of Science, Viet Nam National University Ho Chi Minh City",
-          "institution_authors": [
-            "Minh-Khoa Le-Phan",
-            "Minh-Hoang Le",
-            "Trong-Le Do",
-            "Minh-Triet Tran"
-          ],
-          "raw_affiliation": "University of Science , VNU-HCM , Ho Chi Minh City , Vietnam Vietnam",
-          "mapping_status": "active",
-          "affiliation_order": 1
-        },
-        {
-          "mapping_id": "mapping:6a50f42fb90e87cb84f1",
-          "institution_id": "institution:19d2ee8d44bfb9f0",
-          "location_id": "",
-          "institution": "Vietnam National University Ho Chi Minh City",
-          "institution_authors": [
-            "Minh-Khoa Le-Phan",
-            "Minh-Hoang Le",
-            "Trong-Le Do",
-            "Minh-Triet Tran"
-          ],
-          "raw_affiliation": "Vietnam National University, Ho Chi Minh City, Vietnam",
-          "mapping_status": "active",
-          "affiliation_order": 2
-        }
-      ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "University of Science, Viet Nam National University Ho Chi Minh City",
-          "canonical_name": "University of Science, Viet Nam National University Ho Chi Minh City",
-          "institution_id": "institution:806523d1aae41484",
-          "institution_type": "university",
-          "country": "Vietnam",
-          "country_code": "",
-          "region": "Ho Chi Minh City",
-          "location_display": "Ho Chi Minh City, Vietnam"
-        },
-        {
-          "index": 2,
-          "name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
-          "canonical_name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
-          "institution_id": "institution:19d2ee8d44bfb9f0",
-          "institution_type": "university",
-          "country": "Vietnam",
-          "country_code": "",
-          "region": "Ho Chi Minh City",
-          "location_display": "Ho Chi Minh City, Vietnam",
-          "source_institution_names": [
-            "Vietnam National University Ho Chi Minh City"
-          ]
-        }
-      ],
-      "current_institution": null
-    },
-    {
       "paper_id": "curated:91645e26cfd2c499fbcc",
       "title": "Robustness of AI-Art Detectors Under Generator Shift",
       "in_scope": true,
@@ -71257,11 +70551,11 @@
           "institution_name": "Kahramanmaraş Sütçü İmam University",
           "institution_id": "institution:5919d60e453e2459",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "TR",
           "region": "",
           "region_code": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         }
       ],
       "aggregated_institutions": [
@@ -71271,7 +70565,7 @@
         "university"
       ],
       "aggregated_country_names": [
-        "Türkiye"
+        "Turkey"
       ],
       "aggregated_country_codes": [
         "TR"
@@ -71291,10 +70585,10 @@
           "canonical_name": "Kahramanmaraş Sütçü İmam University",
           "institution_id": "institution:5919d60e453e2459",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "",
           "region": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         }
       ],
       "current_institution": null,
@@ -73446,15 +72740,6 @@
           "affiliation_fallback": false
         },
         {
-          "name": "Qi Xiong",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": false,
-          "affiliation_source": "curated_admin",
-          "affiliation_fallback": false
-        },
-        {
           "name": "Jing Huang",
           "affiliation_indices": [
             2
@@ -73467,6 +72752,15 @@
           "name": "Bing Bai",
           "affiliation_indices": [
             3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Qi Xiong",
+          "affiliation_indices": [
+            1
           ],
           "is_current_marker_author": false,
           "affiliation_source": "curated_admin",
@@ -73595,15 +72889,6 @@
           ]
         },
         {
-          "author": "Qi Xiong",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:aa542458d996a5d3"
-          ]
-        },
-        {
           "author": "Jing Huang",
           "institution_indices": [
             2
@@ -73619,6 +72904,15 @@
           ],
           "institution_ids": [
             "institution:9fbf261b62c1d7c0"
+          ]
+        },
+        {
+          "author": "Qi Xiong",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
           ]
         }
       ],
@@ -73646,17 +72940,6 @@
           "fallback": false
         },
         {
-          "author": "Qi Xiong",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:aa542458d996a5d3"
-          ],
-          "source": "curated_admin",
-          "fallback": false
-        },
-        {
           "author": "Jing Huang",
           "indices": [
             2
@@ -73674,6 +72957,17 @@
           ],
           "institution_ids": [
             "institution:9fbf261b62c1d7c0"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Qi Xiong",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -73798,6 +73092,11 @@
       "paper_categories": [
         "method"
       ],
+      "search_institution_ids": [
+        "institution:aa542458d996a5d3",
+        "institution:f1a54130f4c752b7",
+        "institution:9fbf261b62c1d7c0"
+      ],
       "affiliations": [
         {
           "index": 1,
@@ -73869,12 +73168,7 @@
           "preliminary": true
         }
       ],
-      "current_institution": null,
-      "search_institution_ids": [
-        "institution:aa542458d996a5d3",
-        "institution:f1a54130f4c752b7",
-        "institution:9fbf261b62c1d7c0"
-      ]
+      "current_institution": null
     },
     {
       "paper_id": "curated:198223005280daa8979e",
@@ -84912,7 +84206,7 @@
           ],
           "raw_affiliation": "Xiaohongshu Inc., Beijing, China",
           "mapping_status": "active",
-          "affiliation_order": 1
+          "affiliation_order": 2
         }
       ],
       "author_institution_affiliations": [
@@ -88944,7 +88238,7 @@
           ],
           "raw_affiliation": "Fujitsu Limited",
           "mapping_status": "active",
-          "affiliation_order": 1
+          "affiliation_order": 2
         },
         {
           "mapping_id": "mapping:f1c26e9152e739f91d8e",
@@ -88957,7 +88251,7 @@
           ],
           "raw_affiliation": "Technion - Israel Institute of Technology",
           "mapping_status": "active",
-          "affiliation_order": 2
+          "affiliation_order": 3
         }
       ],
       "affiliation_review_state": "curated",
@@ -92164,7 +91458,6 @@
         "CA"
       ],
       "aggregated_regions": [
-        "Québec",
         "Quebec"
       ],
       "aggregated_region_codes": [],
@@ -92387,9 +91680,9 @@
           "institution_type": "university",
           "country": "Canada",
           "country_code": "CA",
-          "region": "Québec",
+          "region": "Quebec",
           "region_code": "",
-          "location_display": "Québec, Canada"
+          "location_display": "Quebec, Canada"
         },
         {
           "institution_name": "Mila - Quebec Artificial Intelligence Institute",
@@ -92407,9 +91700,9 @@
           "institution_type": "university",
           "country": "Canada",
           "country_code": "CA",
-          "region": "Québec",
+          "region": "Quebec",
           "region_code": "",
-          "location_display": "Québec, Canada"
+          "location_display": "Quebec, Canada"
         },
         {
           "institution_name": "IVADO",
@@ -92543,8 +91836,8 @@
           "institution_type": "university",
           "country": "Canada",
           "country_code": "",
-          "region": "Québec",
-          "location_display": "Québec, Canada"
+          "region": "Quebec",
+          "location_display": "Quebec, Canada"
         },
         {
           "index": 2,
@@ -92565,8 +91858,8 @@
           "institution_type": "university",
           "country": "Canada",
           "country_code": "",
-          "region": "Québec",
-          "location_display": "Québec, Canada"
+          "region": "Quebec",
+          "location_display": "Quebec, Canada"
         },
         {
           "index": 4,
@@ -93241,20 +92534,20 @@
         "university"
       ],
       "raw_venue": "IEEE Internet of Things Journal",
-      "ambiguity_status": "unmapped",
+      "ambiguity_status": "resolved",
       "paper_categories": [
         "method"
       ],
       "formal_url": "https://doi.org/10.1109/jiot.2025.3531053",
       "venue_id": "venue:ieee-internet-of-things-journal",
       "venue_name": "IEEE Internet of Things Journal",
-      "venue_acronym": "",
+      "venue_acronym": "IEEE Internet Things J.",
       "venue_type": "journal",
       "venue_track": "",
       "venue_aliases": [
         "IEEE Internet of Things Journal"
       ],
-      "venue_label": "IEEE Internet of Things Journal"
+      "venue_label": "IEEE Internet of Things Journal (IEEE Internet Things J.)"
     },
     {
       "paper_id": "curated:1f9d168cc6c4c445a231",
@@ -108665,9 +107958,9 @@
           "institution_type": "university",
           "country": "Italy",
           "country_code": "IT",
-          "region": "Trentino-Alto Adige/Südtirol",
+          "region": "Trentino-South Tyrol",
           "region_code": "",
-          "location_display": "Trentino-Alto Adige/Südtirol, Italy"
+          "location_display": "Trentino-South Tyrol, Italy"
         },
         {
           "institution_name": "University of Catania",
@@ -108719,7 +108012,7 @@
       "aggregated_regions": [
         "Toscany",
         "Lombardy",
-        "Trentino-Alto Adige/Südtirol",
+        "Trentino-South Tyrol",
         "Sicily",
         "Lazio"
       ],
@@ -110282,11 +109575,11 @@
           "institution_name": "Altınbaş University",
           "institution_id": "institution:5dc3b0fc32168ce3",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "TR",
           "region": "",
           "region_code": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         }
       ],
       "aggregated_institutions": [
@@ -110298,7 +109591,7 @@
       ],
       "aggregated_country_names": [
         "Iraq",
-        "Türkiye"
+        "Turkey"
       ],
       "aggregated_country_codes": [
         "IQ",
@@ -110330,10 +109623,10 @@
           "canonical_name": "Altınbaş University",
           "institution_id": "institution:5dc3b0fc32168ce3",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "",
           "region": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         }
       ],
       "current_institution": null,
@@ -112007,11 +111300,11 @@
           "institution_name": "Everest English Boarding Secondary School",
           "institution_id": "institution:141dbbea6bba3a37",
           "institution_type": "other",
-          "country": "Nepel",
+          "country": "Nepal",
           "country_code": "NP",
           "region": "Lumbini",
           "region_code": "",
-          "location_display": "Lumbini, Nepel"
+          "location_display": "Lumbini, Nepal"
         }
       ],
       "aggregated_institutions": [
@@ -112021,7 +111314,7 @@
         "other"
       ],
       "aggregated_country_names": [
-        "Nepel"
+        "Nepal"
       ],
       "aggregated_country_codes": [
         "NP"
@@ -112087,10 +111380,10 @@
           "canonical_name": "Everest English Boarding Secondary School",
           "institution_id": "institution:141dbbea6bba3a37",
           "institution_type": "other",
-          "country": "Nepel",
+          "country": "Nepal",
           "country_code": "",
           "region": "Lumbini",
-          "location_display": "Lumbini, Nepel"
+          "location_display": "Lumbini, Nepal"
         }
       ],
       "current_institution": null,
@@ -112549,8 +111842,8 @@
       "coverage_status": "map_ready",
       "aggregated_locations": [
         {
-          "institution_name": "Hong Kong Polytechnic University",
-          "institution_id": "institution:a7d5cec59e029db5",
+          "institution_name": "The Hong Kong Polytechnic University",
+          "institution_id": "institution:31f980eaa403801a",
           "institution_type": "university",
           "country": "China",
           "country_code": "CN",
@@ -112560,7 +111853,7 @@
         }
       ],
       "aggregated_institutions": [
-        "Hong Kong Polytechnic University"
+        "The Hong Kong Polytechnic University"
       ],
       "aggregated_institution_types": [
         "university"
@@ -112594,22 +111887,25 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Hong Kong Polytechnic University",
-          "canonical_name": "Hong Kong Polytechnic University",
-          "institution_id": "institution:a7d5cec59e029db5",
+          "name": "The Hong Kong Polytechnic University",
+          "canonical_name": "The Hong Kong Polytechnic University",
+          "institution_id": "institution:31f980eaa403801a",
           "institution_type": "university",
           "country": "China",
           "country_code": "CN",
           "region": "Hong Kong",
-          "location_display": "Hong Kong, China"
+          "location_display": "Hong Kong, China",
+          "source_institution_names": [
+            "Hong Kong Polytechnic University"
+          ]
         }
       ],
       "current_institution": null,
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:a7d5cec59e029db5",
-          "institution": "Hong Kong Polytechnic University",
+          "institution_id": "institution:31f980eaa403801a",
+          "institution": "The Hong Kong Polytechnic University",
           "institution_type": "university",
           "authors": [
             "Zihang Lyu",
@@ -112618,7 +111914,10 @@
             "Kin‐Man Lam"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Hong Kong Polytechnic University"
+          ]
         }
       ],
       "author_affiliation_indices": [
@@ -112628,7 +111927,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -112639,7 +111938,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -112650,7 +111949,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -112661,7 +111960,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -112674,7 +111973,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ]
         },
         {
@@ -112683,7 +111982,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ]
         },
         {
@@ -112692,7 +111991,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ]
         },
         {
@@ -112701,7 +112000,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ]
         }
       ],
@@ -128482,7 +127781,7 @@
       "metadata_source": "openalex",
       "curation_status": "manually_confirmed",
       "review_status": "reviewed",
-      "needs_review": false,
+      "needs_review": true,
       "notes": "",
       "has_map_location": true,
       "map_record_count": 3,
@@ -139098,13 +138397,13 @@
         }
       ],
       "source_database": "openalex",
-      "needs_review": false,
+      "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
       "map_record_count": 1,
       "missing_affiliation": false,
-      "missing_coordinates": false,
-      "coverage_status": "map_ready",
+      "missing_coordinates": true,
+      "coverage_status": "missing_coordinates",
       "aggregated_locations": [
         {
           "institution_name": "Centre for Research and Technology Hellas (CERTH)",
@@ -149078,21 +148377,21 @@
           "institution_name": "Haliç University",
           "institution_id": "institution:bb302a0231577b3c",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "TR",
           "region": "",
           "region_code": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         },
         {
           "institution_name": "Kadir Has University",
           "institution_id": "institution:f88815962e62ced1",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "TR",
           "region": "",
           "region_code": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         },
         {
           "institution_name": "National Yunlin University of Science and Technology",
@@ -149108,11 +148407,11 @@
           "institution_name": "Istanbul Nisantasi University",
           "institution_id": "institution:cf2e81e79ecee1b8",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "TR",
           "region": "",
           "region_code": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         }
       ],
       "aggregated_institutions": [
@@ -149125,7 +148424,7 @@
         "university"
       ],
       "aggregated_country_names": [
-        "Türkiye",
+        "Turkey",
         "China"
       ],
       "aggregated_country_codes": [
@@ -149151,10 +148450,10 @@
           "canonical_name": "Haliç University",
           "institution_id": "institution:bb302a0231577b3c",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "",
           "region": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         },
         {
           "index": 2,
@@ -149162,10 +148461,10 @@
           "canonical_name": "Kadir Has University",
           "institution_id": "institution:f88815962e62ced1",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "",
           "region": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         },
         {
           "index": 3,
@@ -149184,10 +148483,10 @@
           "canonical_name": "Istanbul Nisantasi University",
           "institution_id": "institution:cf2e81e79ecee1b8",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "",
           "region": "",
-          "location_display": "Türkiye",
+          "location_display": "Turkey",
           "source_institution_names": [
             "İstanbul Nişantaşı Üniversitesi"
           ]
@@ -155901,7 +155200,7 @@
           ],
           "raw_affiliation": "NVIDIA",
           "mapping_status": "active",
-          "affiliation_order": 1
+          "affiliation_order": 2
         }
       ],
       "author_institution_affiliations": [
@@ -161273,21 +160572,21 @@
           "institution_name": "Karabük University",
           "institution_id": "institution:f4c98270ae3164c6",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "TR",
           "region": "",
           "region_code": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         },
         {
           "institution_name": "Marmara University",
           "institution_id": "institution:720565e77c6f2c38",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "TR",
           "region": "",
           "region_code": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         }
       ],
       "aggregated_institutions": [
@@ -161298,7 +160597,7 @@
         "university"
       ],
       "aggregated_country_names": [
-        "Türkiye"
+        "Turkey"
       ],
       "aggregated_country_codes": [
         "TR"
@@ -161318,10 +160617,10 @@
           "canonical_name": "Karabük University",
           "institution_id": "institution:f4c98270ae3164c6",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "",
           "region": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         },
         {
           "index": 2,
@@ -161329,10 +160628,10 @@
           "canonical_name": "Marmara University",
           "institution_id": "institution:720565e77c6f2c38",
           "institution_type": "university",
-          "country": "Türkiye",
+          "country": "Turkey",
           "country_code": "",
           "region": "",
-          "location_display": "Türkiye"
+          "location_display": "Turkey"
         }
       ],
       "current_institution": null,
@@ -167236,8 +166535,8 @@
       "coverage_status": "map_ready",
       "aggregated_locations": [
         {
-          "institution_name": "Hong Kong Polytechnic University",
-          "institution_id": "institution:a7d5cec59e029db5",
+          "institution_name": "The Hong Kong Polytechnic University",
+          "institution_id": "institution:31f980eaa403801a",
           "institution_type": "university",
           "country": "China",
           "country_code": "CN",
@@ -167257,7 +166556,7 @@
         }
       ],
       "aggregated_institutions": [
-        "Hong Kong Polytechnic University",
+        "The Hong Kong Polytechnic University",
         "Zhejiang University"
       ],
       "aggregated_institution_types": [
@@ -167296,14 +166595,17 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Hong Kong Polytechnic University",
-          "canonical_name": "Hong Kong Polytechnic University",
-          "institution_id": "institution:a7d5cec59e029db5",
+          "name": "The Hong Kong Polytechnic University",
+          "canonical_name": "The Hong Kong Polytechnic University",
+          "institution_id": "institution:31f980eaa403801a",
           "institution_type": "university",
           "country": "China",
           "country_code": "CN",
           "region": "Hong Kong",
-          "location_display": "Hong Kong, China"
+          "location_display": "Hong Kong, China",
+          "source_institution_names": [
+            "Hong Kong Polytechnic University"
+          ]
         },
         {
           "index": 2,
@@ -167321,15 +166623,18 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:a7d5cec59e029db5",
-          "institution": "Hong Kong Polytechnic University",
+          "institution_id": "institution:31f980eaa403801a",
+          "institution": "The Hong Kong Polytechnic University",
           "institution_type": "university",
           "authors": [
             "Chengdong Dong",
             "Ajay Kumar"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Hong Kong Polytechnic University"
+          ]
         },
         {
           "index": 2,
@@ -167350,7 +166655,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -167361,7 +166666,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ],
           "source": "raw_affiliation",
           "fallback": false
@@ -167385,7 +166690,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ]
         },
         {
@@ -167394,7 +166699,7 @@
             1
           ],
           "institution_ids": [
-            "institution:a7d5cec59e029db5"
+            "institution:31f980eaa403801a"
           ]
         },
         {
@@ -179796,9 +179101,9 @@
           "institution_type": "university",
           "country": "Italy",
           "country_code": "IT",
-          "region": "Trentino-Alto Adige/Südtirol",
+          "region": "Trentino-South Tyrol",
           "region_code": "",
-          "location_display": "Trentino-Alto Adige/Südtirol, Italy"
+          "location_display": "Trentino-South Tyrol, Italy"
         }
       ],
       "aggregated_institutions": [
@@ -179816,7 +179121,7 @@
       ],
       "aggregated_regions": [
         "Campania",
-        "Trentino-Alto Adige/Südtirol"
+        "Trentino-South Tyrol"
       ],
       "aggregated_region_codes": [],
       "affiliation_review_state": "curated",
@@ -179845,7 +179150,7 @@
           ],
           "raw_affiliation": "",
           "mapping_status": "active",
-          "affiliation_order": 1
+          "affiliation_order": 2
         }
       ],
       "author_institution_affiliations": [
@@ -179955,8 +179260,8 @@
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
-          "region": "Trentino-Alto Adige/Südtirol",
-          "location_display": "Trentino-Alto Adige/Südtirol, Italy"
+          "region": "Trentino-South Tyrol",
+          "location_display": "Trentino-South Tyrol, Italy"
         }
       ],
       "current_institution": null,
@@ -181992,11 +181297,25 @@
       "alias_source": "institution-location-review"
     },
     {
+      "alias_name": "Technische Hochschule Mannheim",
+      "canonical_institution_name": "Technical University of Applied Sciences Mannheim",
+      "canonical_institution_id": "institution:bbbd3e4c853af6c2",
+      "alias_language": "",
+      "alias_source": "english-name-migration"
+    },
+    {
       "alias_name": "Technische Universität Darmstadt",
       "canonical_institution_name": "Technical University of Darmstadt",
       "canonical_institution_id": "institution:f29a43c08a37e42f",
       "alias_language": "",
       "alias_source": "english-name-migration"
+    },
+    {
+      "alias_name": "Hong Kong Polytechnic University",
+      "canonical_institution_name": "The Hong Kong Polytechnic University",
+      "canonical_institution_id": "institution:31f980eaa403801a",
+      "alias_language": "",
+      "alias_source": "institution-merge"
     },
     {
       "alias_name": "Hong Kong University of Science and Technology",
@@ -184243,10 +183562,12 @@
       "canonical_name": "The Hong Kong Polytechnic University",
       "institution_type": "university",
       "names": [
-        "The Hong Kong Polytechnic University"
+        "The Hong Kong Polytechnic University",
+        "Hong Kong Polytechnic University"
       ],
       "normalized_names": [
-        "the hong kong polytechnic university"
+        "the hong kong polytechnic university",
+        "hong kong polytechnic university"
       ]
     },
     "institution:fa80d3c071c298e1": {
@@ -186005,16 +185326,6 @@
       ],
       "normalized_names": [
         "honeywell united states"
-      ]
-    },
-    "institution:a7d5cec59e029db5": {
-      "canonical_name": "Hong Kong Polytechnic University",
-      "institution_type": "university",
-      "names": [
-        "Hong Kong Polytechnic University"
-      ],
-      "normalized_names": [
-        "hong kong polytechnic university"
       ]
     },
     "institution:ed58576681c8c7e7": {
@@ -188470,12 +187781,14 @@
       ]
     },
     "institution:bbbd3e4c853af6c2": {
-      "canonical_name": "Technische Hochschule Mannheim",
+      "canonical_name": "Technical University of Applied Sciences Mannheim",
       "institution_type": "other",
       "names": [
+        "Technical University of Applied Sciences Mannheim",
         "Technische Hochschule Mannheim"
       ],
       "normalized_names": [
+        "technical university of applied sciences mannheim",
         "technische hochschule mannheim"
       ]
     },
@@ -188678,6 +187991,7 @@
     "institution:91aeee1163fdce71": "institution:e81a0314e783d8a4",
     "institution:707f47de3ba40880": "institution:966ff12833f90bb0",
     "institution:75d38d0aaffc30fe": "institution:cbc62794911ff31b",
+    "institution:a7d5cec59e029db5": "institution:31f980eaa403801a",
     "institution:5b5759334c2dc53e": "institution:6faf58b52bec4e39",
     "institution:8ab1276f56c9f894": "institution:cbc62794911ff31b",
     "institution:4a7d89a851b0ec21": "institution:2792f975d7b5565e",

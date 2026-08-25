@@ -212,7 +212,7 @@ Project Health reuses the public-preview JSON counts, Admin corpus counts, locat
 
 The overall score is a bounded 0–100 heuristic maintenance score, not a paper-quality rating. It starts at 100 and deducts 0.25 per uncovered author-mapping percentage point (maximum 25), 0.5 per missing coordinate (maximum 15), 0.1 per missing affiliation (maximum 15), one point per 150 combined high-risk/blocker rows (maximum 20), and one point per 50 missing author links (maximum 15). Scores of 90 or more are **Excellent**, 75–89 **Needs attention**, and lower scores **Critical maintenance**. If a score input report is absent, the score reads **Needs refresh**.
 
-The Dashboard also shows a read-only **Author Mapping Coverage** card with complete, partial, and missing-mapping counts, full-paper coverage percentage, and the ten highest-priority gaps. Its dedicated tab defaults to warnings and provides search, status, triage, and key-paper filters, rank/missing-author sorting, and direct links into the paper's Author–Institution Mapping Editor. Each warning exposes current canonical institutions, mapping state and author text, raw affiliation evidence when it already exists in curated mappings, stable source identifiers, a public-impact cue, and a deterministic suggested action. **Likely auto-fixable** requires a displayed conservative name-reconciliation suggestion between a missing public author and an existing active curated mapping author; it is a suggestion, not a confirmed mapping or an automatic edit. **Map missing authors** opens a new mapping draft with the missing names prefilled; institution and affiliation evidence still require maintainer confirmation.
+The Dashboard also shows a read-only **Author Mapping Coverage** card with complete, partial, and missing-mapping counts, full-paper coverage percentage, and the ten highest-priority gaps. Its dedicated tab defaults to warnings and provides search, status, triage, and key-paper filters, rank/missing-author sorting, and direct links into the paper's Author–Institution Mapping Editor. Coverage is recalculated from the current active curated mappings and active paper exclusions when Admin reloads; generated public markers are display/provenance inputs, not the authoritative mapping state. Authors explicitly named by an active paper-level mapping count as mapped after normal author-name normalization. Excluded papers do not enter this publication-preparation backlog. Each warning exposes current canonical institutions, mapping state and author text, raw affiliation evidence when it already exists in curated mappings, stable source identifiers, a public-impact cue, and a deterministic suggested action. **Likely auto-fixable** requires a displayed conservative name-reconciliation suggestion between a missing public author and an existing active curated mapping author; it is a suggestion, not a confirmed mapping or an automatic edit. **Map missing authors** opens a new mapping draft with the missing names prefilled; institution and affiliation evidence still require maintainer confirmation.
 
 - Dashboard data source: `data/manual/missing_author_mappings_report.csv`
 - Full narrative report: `docs/missing_author_mappings_report.md`
@@ -390,6 +390,12 @@ percentage, while allowing any size decrease for which every removal has
 durable reviewed evidence. A partial refresh therefore cannot pass merely
 because its count decrease is small, and an intentional Admin exclusion is not
 blocked merely because it crosses a static count floor.
+
+Curated paper identity remains strict: `scripts/audit_duplicate_papers.py`
+reports exact normalized DOI, OpenAlex, paper-ID, and normalized-title + year
+collisions. Reviewed duplicates are consolidated explicitly with
+`scripts/reconcile_duplicate_papers.py`; the survivor keeps its stable ID,
+references are reassigned, and ambiguous candidates are never fuzzy-merged.
 
 The publish set is calculated from Git's changed tracked files after refresh. It
 includes the complete durable admin layer under `data/curated/`, review outputs

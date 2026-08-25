@@ -209,10 +209,7 @@ class TitleNormalizationTests(unittest.TestCase):
         start = app_source.index("function recordTitle(record)")
         end = app_source.index("\n}\n", start) + 2
         record_title_source = app_source[start:end]
-        self.assertIn(
-            "${escapeHtml(recordTitle(record))}",
-            app_source,
-        )
+        self.assertIn("TitleMarkup.toHtml(recordTitle(record), escapeHtml)", app_source)
         stored_title = "A deliberately Lowercase Token with AI"
         script = "\n".join(
             (

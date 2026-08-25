@@ -29,7 +29,10 @@ try:
         INSTITUTION_REVIEW_QUEUE_COLUMNS,
         INSTITUTION_SEARCH_RELATIONSHIP_COLUMNS,
     )
-    from .country_normalization import country_code_for_name
+    from .country_normalization import (
+        canonical_english_location_fields,
+        country_code_for_name,
+    )
 except ImportError:
     from curated_schema import (
         ALLOWED_INSTITUTION_STATUSES,
@@ -46,7 +49,10 @@ except ImportError:
         INSTITUTION_REVIEW_QUEUE_COLUMNS,
         INSTITUTION_SEARCH_RELATIONSHIP_COLUMNS,
     )
-    from country_normalization import country_code_for_name
+    from country_normalization import (
+        canonical_english_location_fields,
+        country_code_for_name,
+    )
 
 
 DEFAULT_INSTITUTIONS_PATH = CURATED_DATA_DIR / "institutions.csv"
@@ -300,6 +306,74 @@ def normalized_author_set(value: Any) -> str:
     return "; ".join(sorted(part for part in normalized if part))
 
 
+def _mapping_paper_keys(row: Mapping[str, Any]) -> set[str]:
+    keys = set()
+    for field in ("paper_id", "doi", "openalex_url"):
+        value = clean(row.get(field)).casefold().rstrip("/")
+        if value:
+            keys.add(f"{field}:{value}")
+    title = normalize_institution(row.get("title"))
+    year = clean(row.get("year"))
+    if title and year:
+        keys.add(f"title_year:{title}|{year}")
+    return keys
+
+
+def _exclude_merge_duplicate_mappings(
+    mappings: list[dict[str, str]],
+    source_mapping_ids: set[str],
+    target_mapping_ids: set[str],
+    now: str,
+) -> int:
+    """Retire logical duplicates created by a confirmed institution merge."""
+    retired = 0
+    affected_keys: set[str] = set()
+    active = {"active", "needs_review"}
+    for source_mapping in mappings:
+        if (
+            clean(source_mapping.get("mapping_id")) not in source_mapping_ids
+            or clean(source_mapping.get("mapping_status")) not in active
+        ):
+            continue
+        source_keys = _mapping_paper_keys(source_mapping)
+        source_authors = normalized_author_set(
+            source_mapping.get("institution_authors")
+        )
+        duplicate = next((
+            target_mapping for target_mapping in mappings
+            if clean(target_mapping.get("mapping_id")) in target_mapping_ids
+            and clean(target_mapping.get("mapping_status")) in active
+            and source_keys & _mapping_paper_keys(target_mapping)
+            and source_authors
+            and source_authors == normalized_author_set(
+                target_mapping.get("institution_authors")
+            )
+        ), None)
+        if duplicate is None:
+            continue
+        source_mapping["mapping_status"] = "excluded"
+        source_mapping["updated_at"] = now
+        affected_keys.update(source_keys)
+        retired += 1
+
+    if affected_keys:
+        current = [
+            (index, mapping) for index, mapping in enumerate(mappings)
+            if clean(mapping.get("mapping_status")) in active
+            and affected_keys & _mapping_paper_keys(mapping)
+        ]
+        current.sort(key=lambda item: (
+            int(clean(item[1].get("affiliation_order")))
+            if clean(item[1].get("affiliation_order")).isdigit()
+            and int(clean(item[1].get("affiliation_order"))) > 0
+            else 10**9,
+            item[0],
+        ))
+        for order, (_index, mapping) in enumerate(current, start=1):
+            mapping["affiliation_order"] = str(order)
+    return retired
+
+
 def append_mapping_change_resolution_audit(
     *, action: str, review_queue_id: Any, source_audit_id: Any,
     mapping_id: Any, previous_institution_id: Any,
@@ -540,6 +614,16 @@ def update_institution_location(
             f"location confirmation contains unsupported field: {unexpected[0]}"
         )
     rows = _read(locations_path, INSTITUTION_LOCATION_COLUMNS)
+    submitted_geography = {
+        field: draft.get(field)
+        for field in ("city", "region", "country", "country_code")
+        if field in draft
+    }
+    normalized_geography = canonical_english_location_fields(submitted_geography)
+    if "country" not in submitted_geography and "country_code" not in submitted_geography:
+        normalized_geography.pop("country", None)
+        normalized_geography.pop("country_code", None)
+    draft = {**draft, **normalized_geography}
     institution_rows = [
         row for row in rows if clean(row.get("institution_id")) == identifier
     ]
@@ -935,11 +1019,19 @@ def merge_institutions(
         for mapping in mappings
         if clean(mapping.get("institution_id")) == source_id
     }
+    target_mapping_ids = {
+        clean(mapping.get("mapping_id"))
+        for mapping in mappings
+        if clean(mapping.get("institution_id")) == target_id
+    }
     for mapping in mappings:
         if clean(mapping.get("institution_id")) == source_id:
             mapping["institution_id"] = target_id
             mapping["institution"] = target_name
             mapping["updated_at"] = now
+    deduplicated_mappings = _exclude_merge_duplicate_mappings(
+        mappings, source_mapping_ids, target_mapping_ids, now
+    )
 
     locations = _read(locations_path, INSTITUTION_LOCATION_COLUMNS)
     source_locations = [
@@ -1246,4 +1338,5 @@ def merge_institutions(
         "location_resolution": resolution,
         "locations": [dict(row) for row in kept_locations],
         "audit": audit,
+        "deduplicated_mappings": deduplicated_mappings,
     }
