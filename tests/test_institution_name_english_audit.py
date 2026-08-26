@@ -94,6 +94,29 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
         self.assertEqual(by_name[PARIS_OLD]["proposed_english_name"], PARIS_NEW)
         self.assertNotIn("Universidad Politécnica de Madrid", by_name)
 
+    def test_official_international_polimi_brand_survives_translated_duplicate_merge(self):
+        tables = load_tables(CURATED)
+        institutions = {
+            row["institution_id"]: row
+            for row in tables["institutions.csv"]["rows"]
+        }
+        survivor = institutions["institution:1ee9da20656fd88b"]
+        retired = institutions["institution:fed327d8187255e5"]
+        self.assertEqual(survivor["canonical_name"], "Politecnico di Milano")
+        self.assertEqual(survivor["abbreviation"], "POLIMI")
+        self.assertEqual(retired["institution_status"], "merged")
+        self.assertTrue(any(
+            row["institution_id"] == survivor["institution_id"]
+            and row["alias_name"] == "Polytechnic University of Milan"
+            and row["review_status"] == "confirmed"
+            for row in tables["institution_aliases.csv"]["rows"]
+        ))
+        audit = build_audit(tables, load_overrides(OVERRIDES))
+        decision = next(
+            row for row in audit if row["institution_id"] == survivor["institution_id"]
+        )
+        self.assertEqual(decision["decision"], "keep")
+
     def test_known_paper_mapping_identity_and_raw_affiliation_are_preserved(self):
         mappings = [
             row for row in rows(CURATED / "author_institution_mappings.csv")

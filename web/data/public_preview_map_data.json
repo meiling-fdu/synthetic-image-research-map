@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-25T20:17:00Z"
+    "public_preview_generated_at": "2026-08-26T11:18:11Z"
   },
   "records": [
     {
@@ -4790,14 +4790,16 @@
         },
         {
           "index": 2,
-          "name": "Czech Technical University in Prague",
+          "name": "Czech Technical University in Prague (CTU)",
           "canonical_name": "Czech Technical University in Prague",
           "institution_id": "institution:3d7a55d07b650cfa",
           "institution_type": "university",
           "country": "Czechia",
           "country_code": "",
           "region": "",
-          "location_display": "Czechia"
+          "location_display": "Czechia",
+          "canonical_institution_name": "Czech Technical University in Prague",
+          "abbreviation": "CTU"
         }
       ],
       "current_institution": {
@@ -4842,13 +4844,16 @@
         {
           "index": 2,
           "institution_id": "institution:3d7a55d07b650cfa",
-          "institution": "Czech Technical University in Prague",
+          "institution": "Czech Technical University in Prague (CTU)",
           "institution_type": "university",
           "authors": [
             "Giorgos Kordopatis-Zilos"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Czech Technical University in Prague",
+          "canonical_institution_name": "Czech Technical University in Prague",
+          "abbreviation": "CTU"
         }
       ],
       "author_affiliation_indices": [
@@ -7950,7 +7955,7 @@
         "Paolo Bestagini",
         "Stefano Tubaro"
       ],
-      "institution": "Politecnico di Milano",
+      "institution": "Politecnico di Milano (POLIMI)",
       "country": "Italy",
       "country_code": "IT",
       "region": "",
@@ -7982,14 +7987,16 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Politecnico di Milano",
+          "name": "Politecnico di Milano (POLIMI)",
           "canonical_name": "Politecnico di Milano",
           "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "",
-          "location_display": "Italy"
+          "location_display": "Italy",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 2,
@@ -8005,20 +8012,22 @@
       ],
       "current_institution": {
         "index": 1,
-        "name": "Politecnico di Milano",
+        "name": "Politecnico di Milano (POLIMI)",
         "canonical_name": "Politecnico di Milano",
         "institution_id": "institution:1ee9da20656fd88b",
         "institution_type": "university",
         "country": "Italy",
         "country_code": "",
         "region": "",
-        "location_display": "Italy"
+        "location_display": "Italy",
+        "canonical_institution_name": "Politecnico di Milano",
+        "abbreviation": "POLIMI"
       },
       "author_institution_affiliations": [
         {
           "index": 1,
           "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Nicolò Bonettini",
@@ -8026,7 +8035,10 @@
             "Stefano Tubaro"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 2,
@@ -8124,6 +8136,7 @@
           ]
         }
       ],
+      "abbreviation": "POLIMI",
       "aggregated_institution_types": [
         "university"
       ],
@@ -18453,7 +18466,7 @@
         "Lin Li",
         "Shu Hu"
       ],
-      "institution": "Purdue University West Lafayette",
+      "institution": "Purdue University",
       "country": "United States",
       "country_code": "US",
       "region": "",
@@ -18474,9 +18487,13 @@
       "preliminary_affiliations": true,
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "institution_type": "university",
-      "canonical_name": "Purdue University West Lafayette",
-      "canonical_institution_name": "Purdue University West Lafayette",
-      "institution_id": "institution:312d37d9636306c2",
+      "source_institution_names": [
+        "Purdue University West Lafayette"
+      ],
+      "source_institution": "Purdue University West Lafayette",
+      "canonical_name": "Purdue University",
+      "canonical_institution_name": "Purdue University",
+      "institution_id": "institution:90b589325857dff0",
       "venue_id": "venue:ieee-international-conference-on-advanced-video-and-signal-based-surveillance:main",
       "venue_name": "IEEE International Conference on Advanced Video and Signal Based Surveillance",
       "venue_acronym": "AVSS",
@@ -18490,14 +18507,17 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Purdue University West Lafayette",
-          "canonical_name": "Purdue University West Lafayette",
-          "institution_id": "institution:312d37d9636306c2",
+          "name": "Purdue University",
+          "canonical_name": "Purdue University",
+          "institution_id": "institution:90b589325857dff0",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "",
           "location_display": "United States",
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -18539,21 +18559,24 @@
       ],
       "current_institution": {
         "index": 1,
-        "name": "Purdue University West Lafayette",
-        "canonical_name": "Purdue University West Lafayette",
-        "institution_id": "institution:312d37d9636306c2",
+        "name": "Purdue University",
+        "canonical_name": "Purdue University",
+        "institution_id": "institution:90b589325857dff0",
         "institution_type": "university",
         "country": "United States",
         "country_code": "",
         "region": "",
         "location_display": "United States",
+        "source_institution_names": [
+          "Purdue University West Lafayette"
+        ],
         "preliminary": true
       },
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:312d37d9636306c2",
-          "institution": "Purdue University West Lafayette",
+          "institution_id": "institution:90b589325857dff0",
+          "institution": "Purdue University",
           "institution_type": "university",
           "authors": [
             "Santosh",
@@ -18562,6 +18585,9 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -18608,7 +18634,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -18619,7 +18645,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -18654,7 +18680,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -18667,7 +18693,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -18676,7 +18702,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -18705,7 +18731,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         }
       ],
@@ -22184,246 +22210,6 @@
       "formal_url": "https://doi.org/10.1109/tmm.2026.3668513"
     },
     {
-      "id": "openalex-candidate-bfc89b0b63bcdc26",
-      "title": "Adversarial Diffusion Model: Generating High-Quality and Undetectable Images from Scratch",
-      "in_scope": true,
-      "year": 2026,
-      "publication_year": 2026,
-      "publication_date": "2026-01-01",
-      "task": "detection",
-      "paper_categories": [
-        "method"
-      ],
-      "venue": "IEEE Transactions on Information Forensics and Security",
-      "venue_id": "venue:ieee-transactions-on-information-forensics-and-security",
-      "venue_name": "IEEE Transactions on Information Forensics and Security",
-      "venue_acronym": "TIFS",
-      "venue_type": "journal",
-      "venue_track": "",
-      "raw_venue": "IEEE Transactions on Information Forensics and Security",
-      "venue_aliases": [
-        "IEEE Transactions on Information Forensics and Security",
-        "TIFS"
-      ],
-      "venue_label": "IEEE Transactions on Information Forensics and Security (TIFS)",
-      "publisher": "Institute of Electrical and Electronics Engineers",
-      "publication_type": "journal",
-      "abstract": "",
-      "abstract_source": "",
-      "ai_summary": "",
-      "doi": "https://doi.org/10.1109/tifs.2026.3657841",
-      "arxiv_id": "",
-      "arxiv_url": "",
-      "arxiv_year": null,
-      "has_arxiv_version": false,
-      "paper_url": "https://doi.org/10.1109/tifs.2026.3657841",
-      "primary_url": "https://doi.org/10.1109/tifs.2026.3657841",
-      "landing_page_url": "https://doi.org/10.1109/tifs.2026.3657841",
-      "openalex_url": "https://openalex.org/W7125828141",
-      "is_arxiv_preprint": false,
-      "url": "https://doi.org/10.1109/tifs.2026.3657841",
-      "authors": [
-        {
-          "name": "Haoyue Wang",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": true,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Sheng Li",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": true,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Zhenxing Qian",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": true,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        },
-        {
-          "name": "Xinpeng Zhang",
-          "affiliation_indices": [
-            1
-          ],
-          "is_current_marker_author": true,
-          "affiliation_source": "canonical_author_mapping",
-          "affiliation_fallback": false
-        }
-      ],
-      "institution_authors": [
-        "Haoyue Wang",
-        "Sheng Li",
-        "Zhenxing Qian",
-        "Xinpeng Zhang"
-      ],
-      "institution": "Fudan University",
-      "country": "China",
-      "country_code": "CN",
-      "region": "",
-      "region_code": "",
-      "raw_country": "CN",
-      "raw_country_code": "CN",
-      "city": "Shanghai",
-      "location_display": "China",
-      "latitude": 31.222219467163086,
-      "longitude": 121.45806121826172,
-      "source_database": "OpenAlex",
-      "resolution_method": "openalex_institution_geo",
-      "resolution_confidence": "medium",
-      "needs_review": false,
-      "notes": "Imported OpenAlex authorship affiliation for broad key-paper marker expansion; verify manually. | Imported from key_papers missing-from-candidate-pool top50 strong OpenAlex match; broad paper-level preview eligible; affiliation/location repair can happen later. | key-paper checklist export attempt",
-      "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
-      "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
-      "ambiguity_status": "resolved",
-      "institution_type": "university",
-      "canonical_name": "Fudan University",
-      "canonical_institution_name": "Fudan University",
-      "institution_id": "institution:baa1df7c4adddbda",
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Fudan University",
-          "canonical_name": "Fudan University",
-          "institution_id": "institution:baa1df7c4adddbda",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "",
-          "location_display": "China",
-          "preliminary": true
-        }
-      ],
-      "current_institution": {
-        "index": 1,
-        "name": "Fudan University",
-        "canonical_name": "Fudan University",
-        "institution_id": "institution:baa1df7c4adddbda",
-        "institution_type": "university",
-        "country": "China",
-        "country_code": "",
-        "region": "",
-        "location_display": "China",
-        "preliminary": true
-      },
-      "author_institution_affiliations": [
-        {
-          "index": 1,
-          "institution_id": "institution:baa1df7c4adddbda",
-          "institution": "Fudan University",
-          "institution_type": "university",
-          "authors": [
-            "Haoyue Wang",
-            "Sheng Li",
-            "Zhenxing Qian",
-            "Xinpeng Zhang"
-          ],
-          "mapping_source": "raw_affiliation",
-          "mapping_fallback": false,
-          "preliminary": true
-        }
-      ],
-      "author_affiliation_indices": [
-        {
-          "author": "Haoyue Wang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Sheng Li",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Zhenxing Qian",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        },
-        {
-          "author": "Xinpeng Zhang",
-          "indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ],
-          "source": "canonical_author_mapping",
-          "fallback": false
-        }
-      ],
-      "author_institution_indices": [
-        {
-          "author": "Haoyue Wang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ]
-        },
-        {
-          "author": "Sheng Li",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ]
-        },
-        {
-          "author": "Zhenxing Qian",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ]
-        },
-        {
-          "author": "Xinpeng Zhang",
-          "institution_indices": [
-            1
-          ],
-          "institution_ids": [
-            "institution:baa1df7c4adddbda"
-          ]
-        }
-      ],
-      "aggregated_institution_types": [
-        "university"
-      ],
-      "formal_url": "https://doi.org/10.1109/tifs.2026.3657841"
-    },
-    {
       "id": "openalex-candidate-19e6026830ef9ce2",
       "title": "Harnessing Attention for Cropping and Fusion in CLIP-Based AIGC Detection",
       "in_scope": true,
@@ -24555,7 +24341,7 @@
         "Weida Xu",
         "Xinlong He"
       ],
-      "institution": "Guizhou Normal University",
+      "institution": "Guizhou Normal University (GZNU)",
       "country": "China",
       "country_code": "CN",
       "region": "",
@@ -24583,7 +24369,7 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Guizhou Normal University",
+          "name": "Guizhou Normal University (GZNU)",
           "canonical_name": "Guizhou Normal University",
           "institution_id": "institution:a1e1ec8b780e67c8",
           "institution_type": "university",
@@ -24591,12 +24377,17 @@
           "country_code": "",
           "region": "",
           "location_display": "China",
-          "preliminary": true
+          "source_institution_names": [
+            "Guizhou Normal University"
+          ],
+          "preliminary": true,
+          "canonical_institution_name": "Guizhou Normal University",
+          "abbreviation": "GZNU"
         }
       ],
       "current_institution": {
         "index": 1,
-        "name": "Guizhou Normal University",
+        "name": "Guizhou Normal University (GZNU)",
         "canonical_name": "Guizhou Normal University",
         "institution_id": "institution:a1e1ec8b780e67c8",
         "institution_type": "university",
@@ -24604,13 +24395,18 @@
         "country_code": "",
         "region": "",
         "location_display": "China",
-        "preliminary": true
+        "source_institution_names": [
+          "Guizhou Normal University"
+        ],
+        "preliminary": true,
+        "canonical_institution_name": "Guizhou Normal University",
+        "abbreviation": "GZNU"
       },
       "author_institution_affiliations": [
         {
           "index": 1,
           "institution_id": "institution:a1e1ec8b780e67c8",
-          "institution": "Guizhou Normal University",
+          "institution": "Guizhou Normal University (GZNU)",
           "institution_type": "university",
           "authors": [
             "Rui Liu",
@@ -24621,7 +24417,13 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
-          "preliminary": true
+          "source_institution_names": [
+            "Guizhou Normal University"
+          ],
+          "preliminary": true,
+          "canonical_name": "Guizhou Normal University",
+          "canonical_institution_name": "Guizhou Normal University",
+          "abbreviation": "GZNU"
         }
       ],
       "author_affiliation_indices": [
@@ -24728,6 +24530,7 @@
           ]
         }
       ],
+      "abbreviation": "GZNU",
       "aggregated_institution_types": [
         "university"
       ],
@@ -25200,7 +25003,7 @@
         },
         {
           "index": 2,
-          "name": "Huazhong University of Science and Technology",
+          "name": "Huazhong University of Science and Technology (HUST)",
           "canonical_name": "Huazhong University of Science and Technology",
           "institution_id": "institution:e540a2485c3e954f",
           "institution_type": "university",
@@ -25208,7 +25011,12 @@
           "country_code": "",
           "region": "",
           "location_display": "China",
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -25276,7 +25084,7 @@
         {
           "index": 2,
           "institution_id": "institution:e540a2485c3e954f",
-          "institution": "Huazhong University of Science and Technology",
+          "institution": "Huazhong University of Science and Technology (HUST)",
           "institution_type": "university",
           "authors": [
             "Peipei Yuan",
@@ -25284,7 +25092,13 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_name": "Huazhong University of Science and Technology",
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -59063,7 +58877,7 @@
       "institution_authors": [
         "Giorgos Kordopatis-Zilos"
       ],
-      "institution": "Czech Technical University in Prague",
+      "institution": "Czech Technical University in Prague (CTU)",
       "country": "Czechia",
       "country_code": "CZ",
       "region": "",
@@ -59120,26 +58934,30 @@
         },
         {
           "index": 2,
-          "name": "Czech Technical University in Prague",
+          "name": "Czech Technical University in Prague (CTU)",
           "canonical_name": "Czech Technical University in Prague",
           "institution_id": "institution:3d7a55d07b650cfa",
           "institution_type": "university",
           "country": "Czechia",
           "country_code": "",
           "region": "",
-          "location_display": "Czechia"
+          "location_display": "Czechia",
+          "canonical_institution_name": "Czech Technical University in Prague",
+          "abbreviation": "CTU"
         }
       ],
       "current_institution": {
         "index": 2,
-        "name": "Czech Technical University in Prague",
+        "name": "Czech Technical University in Prague (CTU)",
         "canonical_name": "Czech Technical University in Prague",
         "institution_id": "institution:3d7a55d07b650cfa",
         "institution_type": "university",
         "country": "Czechia",
         "country_code": "",
         "region": "",
-        "location_display": "Czechia"
+        "location_display": "Czechia",
+        "canonical_institution_name": "Czech Technical University in Prague",
+        "abbreviation": "CTU"
       },
       "author_institution_affiliations": [
         {
@@ -59166,13 +58984,16 @@
         {
           "index": 2,
           "institution_id": "institution:3d7a55d07b650cfa",
-          "institution": "Czech Technical University in Prague",
+          "institution": "Czech Technical University in Prague (CTU)",
           "institution_type": "university",
           "authors": [
             "Giorgos Kordopatis-Zilos"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Czech Technical University in Prague",
+          "canonical_institution_name": "Czech Technical University in Prague",
+          "abbreviation": "CTU"
         }
       ],
       "author_affiliation_indices": [
@@ -59263,6 +59084,7 @@
           ]
         }
       ],
+      "abbreviation": "CTU",
       "aggregated_institution_types": [
         "research_unit",
         "university"
@@ -61047,14 +60869,19 @@
         },
         {
           "index": 2,
-          "name": "Polytechnic University of Milan",
-          "canonical_name": "Polytechnic University of Milan",
-          "institution_id": "institution:fed327d8187255e5",
+          "name": "Politecnico di Milano (POLIMI)",
+          "canonical_name": "Politecnico di Milano",
+          "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "Lombardy",
-          "location_display": "Lombardy, Italy"
+          "location_display": "Lombardy, Italy",
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -61091,14 +60918,14 @@
         },
         {
           "index": 6,
-          "name": "Politecnico di Milano",
-          "canonical_name": "Politecnico di Milano",
-          "institution_id": "institution:1ee9da20656fd88b",
+          "name": "Polytechnic University of Milan",
+          "canonical_name": "Polytechnic University of Milan",
+          "institution_id": "institution:fed327d8187255e5",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
-          "region": "",
-          "location_display": "Italy"
+          "region": "Lombardy",
+          "location_display": "Lombardy, Italy"
         }
       ],
       "current_institution": {
@@ -61128,15 +60955,21 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:fed327d8187255e5",
-          "institution": "Polytechnic University of Milan",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Sara Mandelli",
             "Paolo Bestagini"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -61183,8 +61016,8 @@
         },
         {
           "index": 6,
-          "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution_id": "institution:fed327d8187255e5",
+          "institution": "Polytechnic University of Milan",
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
@@ -61209,7 +61042,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -61330,7 +61163,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -61396,7 +61229,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -61495,7 +61328,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -64956,14 +64789,16 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Politecnico di Milano",
+          "name": "Politecnico di Milano (POLIMI)",
           "canonical_name": "Politecnico di Milano",
           "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "",
-          "location_display": "Italy"
+          "location_display": "Italy",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 2,
@@ -64992,7 +64827,7 @@
         {
           "index": 1,
           "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Nicolò Bonettini",
@@ -65000,7 +64835,10 @@
             "Stefano Tubaro"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 2,
@@ -74377,7 +74215,7 @@
         "Peipei Yuan",
         "Zijing Xie"
       ],
-      "institution": "Huazhong University of Science and Technology",
+      "institution": "Huazhong University of Science and Technology (HUST)",
       "country": "China",
       "country_code": "CN",
       "region": "",
@@ -74417,7 +74255,7 @@
         },
         {
           "index": 2,
-          "name": "Huazhong University of Science and Technology",
+          "name": "Huazhong University of Science and Technology (HUST)",
           "canonical_name": "Huazhong University of Science and Technology",
           "institution_id": "institution:e540a2485c3e954f",
           "institution_type": "university",
@@ -74425,7 +74263,12 @@
           "country_code": "",
           "region": "",
           "location_display": "China",
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -74466,7 +74309,7 @@
       ],
       "current_institution": {
         "index": 2,
-        "name": "Huazhong University of Science and Technology",
+        "name": "Huazhong University of Science and Technology (HUST)",
         "canonical_name": "Huazhong University of Science and Technology",
         "institution_id": "institution:e540a2485c3e954f",
         "institution_type": "university",
@@ -74474,7 +74317,12 @@
         "country_code": "",
         "region": "",
         "location_display": "China",
-        "preliminary": true
+        "source_institution_names": [
+          "Huazhong University of Science and Technology"
+        ],
+        "preliminary": true,
+        "canonical_institution_name": "Huazhong University of Science and Technology",
+        "abbreviation": "HUST"
       },
       "author_institution_affiliations": [
         {
@@ -74493,7 +74341,7 @@
         {
           "index": 2,
           "institution_id": "institution:e540a2485c3e954f",
-          "institution": "Huazhong University of Science and Technology",
+          "institution": "Huazhong University of Science and Technology (HUST)",
           "institution_type": "university",
           "authors": [
             "Peipei Yuan",
@@ -74501,7 +74349,13 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_name": "Huazhong University of Science and Technology",
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -74652,6 +74506,7 @@
           ]
         }
       ],
+      "abbreviation": "HUST",
       "aggregated_institution_types": [
         "university"
       ],
@@ -74788,7 +74643,7 @@
         },
         {
           "index": 2,
-          "name": "Huazhong University of Science and Technology",
+          "name": "Huazhong University of Science and Technology (HUST)",
           "canonical_name": "Huazhong University of Science and Technology",
           "institution_id": "institution:e540a2485c3e954f",
           "institution_type": "university",
@@ -74796,7 +74651,12 @@
           "country_code": "",
           "region": "",
           "location_display": "China",
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -74864,7 +74724,7 @@
         {
           "index": 2,
           "institution_id": "institution:e540a2485c3e954f",
-          "institution": "Huazhong University of Science and Technology",
+          "institution": "Huazhong University of Science and Technology (HUST)",
           "institution_type": "university",
           "authors": [
             "Peipei Yuan",
@@ -74872,7 +74732,13 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_name": "Huazhong University of Science and Technology",
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -75159,7 +75025,7 @@
         },
         {
           "index": 2,
-          "name": "Huazhong University of Science and Technology",
+          "name": "Huazhong University of Science and Technology (HUST)",
           "canonical_name": "Huazhong University of Science and Technology",
           "institution_id": "institution:e540a2485c3e954f",
           "institution_type": "university",
@@ -75167,7 +75033,12 @@
           "country_code": "",
           "region": "",
           "location_display": "China",
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -75235,7 +75106,7 @@
         {
           "index": 2,
           "institution_id": "institution:e540a2485c3e954f",
-          "institution": "Huazhong University of Science and Technology",
+          "institution": "Huazhong University of Science and Technology (HUST)",
           "institution_type": "university",
           "authors": [
             "Peipei Yuan",
@@ -75243,7 +75114,13 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_name": "Huazhong University of Science and Technology",
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -75530,7 +75407,7 @@
         },
         {
           "index": 2,
-          "name": "Huazhong University of Science and Technology",
+          "name": "Huazhong University of Science and Technology (HUST)",
           "canonical_name": "Huazhong University of Science and Technology",
           "institution_id": "institution:e540a2485c3e954f",
           "institution_type": "university",
@@ -75538,7 +75415,12 @@
           "country_code": "",
           "region": "",
           "location_display": "China",
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -75606,7 +75488,7 @@
         {
           "index": 2,
           "institution_id": "institution:e540a2485c3e954f",
-          "institution": "Huazhong University of Science and Technology",
+          "institution": "Huazhong University of Science and Technology (HUST)",
           "institution_type": "university",
           "authors": [
             "Peipei Yuan",
@@ -75614,7 +75496,13 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
-          "preliminary": true
+          "source_institution_names": [
+            "Huazhong University of Science and Technology"
+          ],
+          "preliminary": true,
+          "canonical_name": "Huazhong University of Science and Technology",
+          "canonical_institution_name": "Huazhong University of Science and Technology",
+          "abbreviation": "HUST"
         },
         {
           "index": 3,
@@ -84523,14 +84411,17 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Purdue University West Lafayette",
-          "canonical_name": "Purdue University West Lafayette",
-          "institution_id": "institution:312d37d9636306c2",
+          "name": "Purdue University",
+          "canonical_name": "Purdue University",
+          "institution_id": "institution:90b589325857dff0",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "",
           "location_display": "United States",
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -84585,8 +84476,8 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:312d37d9636306c2",
-          "institution": "Purdue University West Lafayette",
+          "institution_id": "institution:90b589325857dff0",
+          "institution": "Purdue University",
           "institution_type": "university",
           "authors": [
             "Santosh",
@@ -84595,6 +84486,9 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -84641,7 +84535,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -84652,7 +84546,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -84687,7 +84581,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -84700,7 +84594,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -84709,7 +84603,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -84738,7 +84632,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         }
       ],
@@ -84864,14 +84758,17 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Purdue University West Lafayette",
-          "canonical_name": "Purdue University West Lafayette",
-          "institution_id": "institution:312d37d9636306c2",
+          "name": "Purdue University",
+          "canonical_name": "Purdue University",
+          "institution_id": "institution:90b589325857dff0",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "",
           "location_display": "United States",
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -84926,8 +84823,8 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:312d37d9636306c2",
-          "institution": "Purdue University West Lafayette",
+          "institution_id": "institution:90b589325857dff0",
+          "institution": "Purdue University",
           "institution_type": "university",
           "authors": [
             "Santosh",
@@ -84936,6 +84833,9 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -84982,7 +84882,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -84993,7 +84893,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -85028,7 +84928,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -85041,7 +84941,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -85050,7 +84950,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -85079,7 +84979,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         }
       ],
@@ -85205,14 +85105,17 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "Purdue University West Lafayette",
-          "canonical_name": "Purdue University West Lafayette",
-          "institution_id": "institution:312d37d9636306c2",
+          "name": "Purdue University",
+          "canonical_name": "Purdue University",
+          "institution_id": "institution:90b589325857dff0",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "",
           "location_display": "United States",
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -85267,8 +85170,8 @@
       "author_institution_affiliations": [
         {
           "index": 1,
-          "institution_id": "institution:312d37d9636306c2",
-          "institution": "Purdue University West Lafayette",
+          "institution_id": "institution:90b589325857dff0",
+          "institution": "Purdue University",
           "institution_type": "university",
           "authors": [
             "Santosh",
@@ -85277,6 +85180,9 @@
           ],
           "mapping_source": "raw_affiliation",
           "mapping_fallback": false,
+          "source_institution_names": [
+            "Purdue University West Lafayette"
+          ],
           "preliminary": true
         },
         {
@@ -85323,7 +85229,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -85334,7 +85240,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -85369,7 +85275,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ],
           "source": "canonical_author_mapping",
           "fallback": false
@@ -85382,7 +85288,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -85391,7 +85297,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         },
         {
@@ -85420,7 +85326,7 @@
             1
           ],
           "institution_ids": [
-            "institution:312d37d9636306c2"
+            "institution:90b589325857dff0"
           ]
         }
       ],
@@ -362321,15 +362227,21 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:fed327d8187255e5",
-          "institution": "Polytechnic University of Milan",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Sara Mandelli",
             "Paolo Bestagini"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -362376,8 +362288,8 @@
         },
         {
           "index": 6,
-          "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution_id": "institution:fed327d8187255e5",
+          "institution": "Polytechnic University of Milan",
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
@@ -362400,7 +362312,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -362499,7 +362411,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -362567,14 +362479,19 @@
         },
         {
           "index": 2,
-          "name": "Polytechnic University of Milan",
-          "canonical_name": "Polytechnic University of Milan",
-          "institution_id": "institution:fed327d8187255e5",
+          "name": "Politecnico di Milano (POLIMI)",
+          "canonical_name": "Politecnico di Milano",
+          "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "Lombardy",
-          "location_display": "Lombardy, Italy"
+          "location_display": "Lombardy, Italy",
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -362611,14 +362528,14 @@
         },
         {
           "index": 6,
-          "name": "Politecnico di Milano",
-          "canonical_name": "Politecnico di Milano",
-          "institution_id": "institution:1ee9da20656fd88b",
+          "name": "Polytechnic University of Milan",
+          "canonical_name": "Polytechnic University of Milan",
+          "institution_id": "institution:fed327d8187255e5",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
-          "region": "",
-          "location_display": "Italy"
+          "region": "Lombardy",
+          "location_display": "Lombardy, Italy"
         }
       ],
       "current_institution": {
@@ -362650,7 +362567,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -362771,7 +362688,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -363061,15 +362978,21 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:fed327d8187255e5",
-          "institution": "Polytechnic University of Milan",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Sara Mandelli",
             "Paolo Bestagini"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -363116,8 +363039,8 @@
         },
         {
           "index": 6,
-          "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution_id": "institution:fed327d8187255e5",
+          "institution": "Polytechnic University of Milan",
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
@@ -363140,7 +363063,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -363239,7 +363162,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -363307,14 +363230,19 @@
         },
         {
           "index": 2,
-          "name": "Polytechnic University of Milan",
-          "canonical_name": "Polytechnic University of Milan",
-          "institution_id": "institution:fed327d8187255e5",
+          "name": "Politecnico di Milano (POLIMI)",
+          "canonical_name": "Politecnico di Milano",
+          "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "Lombardy",
-          "location_display": "Lombardy, Italy"
+          "location_display": "Lombardy, Italy",
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -363351,14 +363279,14 @@
         },
         {
           "index": 6,
-          "name": "Politecnico di Milano",
-          "canonical_name": "Politecnico di Milano",
-          "institution_id": "institution:1ee9da20656fd88b",
+          "name": "Polytechnic University of Milan",
+          "canonical_name": "Polytechnic University of Milan",
+          "institution_id": "institution:fed327d8187255e5",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
-          "region": "",
-          "location_display": "Italy"
+          "region": "Lombardy",
+          "location_display": "Lombardy, Italy"
         }
       ],
       "current_institution": {
@@ -363390,7 +363318,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -363511,7 +363439,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -363803,15 +363731,21 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:fed327d8187255e5",
-          "institution": "Polytechnic University of Milan",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Sara Mandelli",
             "Paolo Bestagini"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -363858,8 +363792,8 @@
         },
         {
           "index": 6,
-          "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution_id": "institution:fed327d8187255e5",
+          "institution": "Polytechnic University of Milan",
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
@@ -363882,7 +363816,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -363981,7 +363915,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -364049,14 +363983,19 @@
         },
         {
           "index": 2,
-          "name": "Polytechnic University of Milan",
-          "canonical_name": "Polytechnic University of Milan",
-          "institution_id": "institution:fed327d8187255e5",
+          "name": "Politecnico di Milano (POLIMI)",
+          "canonical_name": "Politecnico di Milano",
+          "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "Lombardy",
-          "location_display": "Lombardy, Italy"
+          "location_display": "Lombardy, Italy",
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -364093,14 +364032,14 @@
         },
         {
           "index": 6,
-          "name": "Politecnico di Milano",
-          "canonical_name": "Politecnico di Milano",
-          "institution_id": "institution:1ee9da20656fd88b",
+          "name": "Polytechnic University of Milan",
+          "canonical_name": "Polytechnic University of Milan",
+          "institution_id": "institution:fed327d8187255e5",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
-          "region": "",
-          "location_display": "Italy"
+          "region": "Lombardy",
+          "location_display": "Lombardy, Italy"
         }
       ],
       "current_institution": {
@@ -364132,7 +364071,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -364253,7 +364192,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -364544,15 +364483,21 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:fed327d8187255e5",
-          "institution": "Polytechnic University of Milan",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Sara Mandelli",
             "Paolo Bestagini"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -364599,8 +364544,8 @@
         },
         {
           "index": 6,
-          "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution_id": "institution:fed327d8187255e5",
+          "institution": "Polytechnic University of Milan",
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
@@ -364623,7 +364568,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -364722,7 +364667,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -364790,14 +364735,19 @@
         },
         {
           "index": 2,
-          "name": "Polytechnic University of Milan",
-          "canonical_name": "Polytechnic University of Milan",
-          "institution_id": "institution:fed327d8187255e5",
+          "name": "Politecnico di Milano (POLIMI)",
+          "canonical_name": "Politecnico di Milano",
+          "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "Lombardy",
-          "location_display": "Lombardy, Italy"
+          "location_display": "Lombardy, Italy",
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -364834,14 +364784,14 @@
         },
         {
           "index": 6,
-          "name": "Politecnico di Milano",
-          "canonical_name": "Politecnico di Milano",
-          "institution_id": "institution:1ee9da20656fd88b",
+          "name": "Polytechnic University of Milan",
+          "canonical_name": "Polytechnic University of Milan",
+          "institution_id": "institution:fed327d8187255e5",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
-          "region": "",
-          "location_display": "Italy"
+          "region": "Lombardy",
+          "location_display": "Lombardy, Italy"
         }
       ],
       "current_institution": {
@@ -364873,7 +364823,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -364994,7 +364944,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -367172,9 +367122,9 @@
           "affiliation_fallback": false
         }
       ],
-      "institution": "Polytechnic University of Milan",
-      "institution_id": "institution:fed327d8187255e5",
-      "location_id": "location:ff777e44f9ce4d1db35d",
+      "institution": "Politecnico di Milano (POLIMI)",
+      "institution_id": "institution:1ee9da20656fd88b",
+      "location_id": "location:b78ddf1c32aefc86f954",
       "institution_authors": [
         "Sara Mandelli",
         "Paolo Bestagini"
@@ -367220,15 +367170,21 @@
         },
         {
           "index": 2,
-          "institution_id": "institution:fed327d8187255e5",
-          "institution": "Polytechnic University of Milan",
+          "institution_id": "institution:1ee9da20656fd88b",
+          "institution": "Politecnico di Milano (POLIMI)",
           "institution_type": "university",
           "authors": [
             "Sara Mandelli",
             "Paolo Bestagini"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_name": "Politecnico di Milano",
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -367275,8 +367231,8 @@
         },
         {
           "index": 6,
-          "institution_id": "institution:1ee9da20656fd88b",
-          "institution": "Politecnico di Milano",
+          "institution_id": "institution:fed327d8187255e5",
+          "institution": "Polytechnic University of Milan",
           "institution_type": "university",
           "authors": [],
           "mapping_source": "raw_affiliation",
@@ -367299,7 +367255,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -367398,7 +367354,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ]
         },
         {
@@ -367447,8 +367403,13 @@
       ],
       "ambiguity_status": "resolved",
       "institution_type": "university",
-      "canonical_name": "Polytechnic University of Milan",
-      "canonical_institution_name": "Polytechnic University of Milan",
+      "source_institution_names": [
+        "Politecnico di Milano"
+      ],
+      "source_institution": "Politecnico di Milano",
+      "canonical_name": "Politecnico di Milano",
+      "canonical_institution_name": "Politecnico di Milano",
+      "abbreviation": "POLIMI",
       "mapping_lineage_ids": [
         "mapping:8afe035d9510a4d27366"
       ],
@@ -367466,14 +367427,19 @@
         },
         {
           "index": 2,
-          "name": "Polytechnic University of Milan",
-          "canonical_name": "Polytechnic University of Milan",
-          "institution_id": "institution:fed327d8187255e5",
+          "name": "Politecnico di Milano (POLIMI)",
+          "canonical_name": "Politecnico di Milano",
+          "institution_id": "institution:1ee9da20656fd88b",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
           "region": "Lombardy",
-          "location_display": "Lombardy, Italy"
+          "location_display": "Lombardy, Italy",
+          "source_institution_names": [
+            "Politecnico di Milano"
+          ],
+          "canonical_institution_name": "Politecnico di Milano",
+          "abbreviation": "POLIMI"
         },
         {
           "index": 3,
@@ -367510,26 +367476,31 @@
         },
         {
           "index": 6,
-          "name": "Politecnico di Milano",
-          "canonical_name": "Politecnico di Milano",
-          "institution_id": "institution:1ee9da20656fd88b",
+          "name": "Polytechnic University of Milan",
+          "canonical_name": "Polytechnic University of Milan",
+          "institution_id": "institution:fed327d8187255e5",
           "institution_type": "university",
           "country": "Italy",
           "country_code": "",
-          "region": "",
-          "location_display": "Italy"
+          "region": "Lombardy",
+          "location_display": "Lombardy, Italy"
         }
       ],
       "current_institution": {
         "index": 2,
-        "name": "Polytechnic University of Milan",
-        "canonical_name": "Polytechnic University of Milan",
-        "institution_id": "institution:fed327d8187255e5",
+        "name": "Politecnico di Milano (POLIMI)",
+        "canonical_name": "Politecnico di Milano",
+        "institution_id": "institution:1ee9da20656fd88b",
         "institution_type": "university",
         "country": "Italy",
         "country_code": "",
         "region": "Lombardy",
-        "location_display": "Lombardy, Italy"
+        "location_display": "Lombardy, Italy",
+        "source_institution_names": [
+          "Politecnico di Milano"
+        ],
+        "canonical_institution_name": "Politecnico di Milano",
+        "abbreviation": "POLIMI"
       },
       "author_affiliation_indices": [
         {
@@ -367549,7 +367520,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -367670,7 +367641,7 @@
             2
           ],
           "institution_ids": [
-            "institution:fed327d8187255e5"
+            "institution:1ee9da20656fd88b"
           ],
           "source": "curated_admin",
           "fallback": false
@@ -424148,9 +424119,1261 @@
         "company"
       ],
       "is_arxiv_preprint": false
+    },
+    {
+      "id": "curated-map:e5fe281f88c5afa620a7",
+      "paper_id": "curated:17c17b87dfcd355ab1ba",
+      "title": "Adversarial Diffusion Model: Generating High-Quality and Undetectable Images from Scratch",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "2026-01-01",
+      "task": "detection",
+      "paper_categories": [
+        "method"
+      ],
+      "venue": "IEEE Transactions on Information Forensics and Security",
+      "venue_name": "IEEE Transactions on Information Forensics and Security",
+      "venue_id": "venue:ieee-transactions-on-information-forensics-and-security",
+      "venue_acronym": "TIFS",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Transactions on Information Forensics and Security",
+      "publication_type": "journal",
+      "abstract": "Diffusion models have made tremendous progress in generating visually realistic images. However, these images are statistically different from the real images, which could be accurately classified by carefully designed detectors. To evade detection, researchers have proposed various adversarial example generation schemes for AI-generated images. Despite the progress, most of these schemes have the tendency to post-process the images and the distortion is inevitable. In this paper, we propose an Adversarial Diffusion Model (ADM), which is able to directly generate high quality and undetectable images from scratch on top of a pre-trained stable diffusion model. In the ADM, an adversarial denoising U-Net is proposed for searching an adversarial latent. This latent is helpful for generating a prompt consistent adversarial example which is able to deceive the detector. Then, we propose a latent compensation module to make the adversarial examples have a similar reconstruction error to that of the real images. We further propose an adversarial decoder to minimize the difference between the high-frequency components of the real and adversarial examples. Comprehensive experiments are carried out to demonstrate the advantages of our ADM in generating adversarial AI-generated images.",
+      "abstract_source": "",
+      "doi": "https://doi.org/10.1109/tifs.2026.3657841",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tifs.2026.3657841",
+      "formal_url": "https://doi.org/10.1109/tifs.2026.3657841",
+      "primary_url": "https://doi.org/10.1109/tifs.2026.3657841",
+      "openalex_url": "https://openalex.org/W7125828141",
+      "url": "https://doi.org/10.1109/tifs.2026.3657841",
+      "authors": [
+        {
+          "name": "Haoyue Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Sheng Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Zhenxing Qian",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xinpeng Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "Fudan University",
+      "institution_id": "institution:baa1df7c4adddbda",
+      "location_id": "location:baa1df7c4adddbda8d0b",
+      "institution_authors": [
+        "Haoyue Wang",
+        "Sheng Li",
+        "Zhenxing Qian",
+        "Xinpeng Zhang"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Shanghai",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Shanghai",
+      "latitude": 31.2989,
+      "longitude": 121.5018,
+      "lat": 31.2989,
+      "lon": 121.5018,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:a89063afa207e58c13cf",
+      "affiliation_order": 1,
+      "raw_affiliation": "Fudan University",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Fudan University",
+      "location_display": "Shanghai, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution": "Fudan University",
+          "institution_type": "university",
+          "authors": [
+            "Haoyue Wang",
+            "Sheng Li",
+            "Zhenxing Qian",
+            "Xinpeng Zhang"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Haoyue Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Sheng Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Zhenxing Qian",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        },
+        {
+          "author": "Xinpeng Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Transactions on Information Forensics and Security (TIFS)",
+      "venue_aliases": [
+        "IEEE Transactions on Information Forensics and Security",
+        "TIFS"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "university",
+      "canonical_name": "Fudan University",
+      "canonical_institution_name": "Fudan University",
+      "mapping_lineage_ids": [
+        "mapping:a89063afa207e58c13cf"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Fudan University",
+          "canonical_name": "Fudan University",
+          "institution_id": "institution:baa1df7c4adddbda",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "current_institution": {
+        "index": 1,
+        "name": "Fudan University",
+        "canonical_name": "Fudan University",
+        "institution_id": "institution:baa1df7c4adddbda",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Shanghai",
+        "location_display": "Shanghai, China"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Haoyue Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Sheng Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zhenxing Qian",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xinpeng Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:baa1df7c4adddbda"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "is_arxiv_preprint": false
+    },
+    {
+      "id": "curated-map:4e2df0614be3b643a517",
+      "paper_id": "curated:d8df0e4505f5d38ebb28",
+      "title": "Lightweight Image Forgery Detection via Tucker Decomposition for Efficient Edge Deployment",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "paper_categories": [
+        "method"
+      ],
+      "venue": "IEEE Transactions on Artificial Intelligence",
+      "venue_name": "IEEE Transactions on Artificial Intelligence",
+      "venue_id": "venue:ieee-tai",
+      "venue_acronym": "",
+      "venue_type": "journal",
+      "venue_track": "",
+      "raw_venue": "IEEE Transactions on Artificial Intelligence",
+      "publication_type": "journal",
+      "abstract": "In recent years, the rapid advancement of deepfake generation techniques has escalated security risks, prompting the development of detection methods based on image domain, frequency domain, and pre-trained models. However, existing approaches predominantly prioritize cross-domain generalization, which has driven the adoption of increasingly large and complex neural networks. These models incur substantial parameter overhead and computational costs, hindering their deployment on resource-constrained edge devices. To address these deployment challenges, this paper proposes the integration of Tucker decomposition to construct lightweight forgery detection networks. We introduce a unified Tucker compression method that can be applied to mainstream architectures, and validate its effectiveness by compressing three state-of-the-art detectors across 24 diverse forgery datasets. Experimental results show that the proposed method substantially reduces model size and computational cost while preserving cross-dataset generalization.In particular, the proposed PID-Tucker method attains performance comparable to the original model using only 0.17M parameters. It realizes an 88.03% reduction in parameters and an 87.4% decrease in FLOPs, with a negligible accuracy drop of only 0.2%.",
+      "abstract_source": "openalex",
+      "doi": "10.1109/tai.2026.3703792",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/tai.2026.3703792",
+      "formal_url": "https://doi.org/10.1109/tai.2026.3703792",
+      "primary_url": "https://doi.org/10.1109/tai.2026.3703792",
+      "openalex_url": "https://openalex.org/W7164849447",
+      "url": "https://doi.org/10.1109/tai.2026.3703792",
+      "authors": [
+        {
+          "name": "Yongling Huang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "L Yang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Xianjun Deng",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Debin Liu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Shuilong Wang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "Zhengzhou University (ZZU)",
+      "institution_id": "institution:885fab7ed0f92891",
+      "location_id": "location:c88952ad397c3d4eea91",
+      "institution_authors": [
+        "Debin Liu"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Henan",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Zhengzhou",
+      "latitude": 34.8214567,
+      "longitude": 113.5297412,
+      "lat": 34.8214567,
+      "lon": 113.5297412,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:f5d1e8057ea9b4c45fd9",
+      "affiliation_order": 2,
+      "raw_affiliation": "School of Computer and Artificial Intelligence, Zhengzhou University, Zhengzhou, China",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: School of Computer and Artificial Intelligence, Zhengzhou University, Zhengzhou, China",
+      "location_display": "Henan, China",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:885fab7ed0f92891",
+          "institution": "Zhengzhou University (ZZU)",
+          "institution_type": "university",
+          "authors": [
+            "Debin Liu"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Zhengzhou University"
+          ],
+          "canonical_name": "Zhengzhou University",
+          "canonical_institution_name": "Zhengzhou University",
+          "abbreviation": "ZZU"
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Debin Liu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:885fab7ed0f92891"
+          ]
+        }
+      ],
+      "venue_label": "IEEE Transactions on Artificial Intelligence",
+      "venue_aliases": [
+        "IEEE Transactions on Artificial Intelligence"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "university",
+      "source_institution_names": [
+        "Zhengzhou University"
+      ],
+      "source_institution": "Zhengzhou University",
+      "canonical_name": "Zhengzhou University",
+      "canonical_institution_name": "Zhengzhou University",
+      "abbreviation": "ZZU",
+      "mapping_lineage_ids": [
+        "mapping:f5d1e8057ea9b4c45fd9"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Zhengzhou University (ZZU)",
+          "canonical_name": "Zhengzhou University",
+          "institution_id": "institution:885fab7ed0f92891",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Henan",
+          "location_display": "Henan, China",
+          "source_institution_names": [
+            "Zhengzhou University"
+          ],
+          "canonical_institution_name": "Zhengzhou University",
+          "abbreviation": "ZZU"
+        }
+      ],
+      "current_institution": {
+        "index": 1,
+        "name": "Zhengzhou University (ZZU)",
+        "canonical_name": "Zhengzhou University",
+        "institution_id": "institution:885fab7ed0f92891",
+        "institution_type": "university",
+        "country": "China",
+        "country_code": "",
+        "region": "Henan",
+        "location_display": "Henan, China",
+        "source_institution_names": [
+          "Zhengzhou University"
+        ],
+        "canonical_institution_name": "Zhengzhou University",
+        "abbreviation": "ZZU"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Yongling Huang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "L Yang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Xianjun Deng",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Debin Liu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:885fab7ed0f92891"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Shuilong Wang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university"
+      ],
+      "is_arxiv_preprint": false
+    },
+    {
+      "id": "curated-map:bbb7b30d0c3c6146d03e",
+      "paper_id": "curated:589870527983af575480",
+      "title": "The Deployment Gap in AI Media Detection: Platform-Aware and Visually Constrained Adversarial Evaluation",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "paper_categories": [
+        "method"
+      ],
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "workshops",
+      "raw_venue": "2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+      "publication_type": "conference",
+      "abstract": "Recent AI media detectors report near-perfect performance under clean laboratory evaluation, yet their robustness under realistic deployment conditions remains underexplored. In practice, AI-generated images are resized, compressed, re-encoded, and visually modified before being shared on online platforms. We argue that this creates a deployment gap between laboratory robustness and real-world reliability. In this work, we introduce a platform-aware adversarial evaluation framework for AI media detection that explicitly models deployment transforms (e.g., resizing, compression, screenshot-style distortions) and constrains perturbations to visually plausible meme-style bands rather than full-image noise. Under this threat model, detectors achieving AUC $\\approx$ 0{.}99 in clean settings experience substantial degradation. Per-image platform-aware attacks reduce AUC to significantly lower levels and achieve high fake-to-real misclassification rates, despite strict visual constraints. We further demonstrate that universal perturbations exist even under localized band constraints, revealing shared vulnerability directions across inputs. Beyond accuracy degradation, we observe pronounced calibration collapse under attack, where detectors become confidently incorrect. Our findings highlight that robustness measured under clean conditions substantially overestimates deployment robustness. We advocate for platform-aware evaluation as a necessary component of future AI media security benchmarks and release our evaluation framework to facilitate standardized robustness assessment.",
+      "abstract_source": "openalex",
+      "doi": "",
+      "arxiv_id": "2604.09706",
+      "arxiv_url": "https://arxiv.org/abs/2604.09706",
+      "has_arxiv_version": true,
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "formal_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "openalex_url": "https://openalex.org/W7154539686",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "authors": [
+        {
+          "name": "Aishwarya Budhkar",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Trishita Dhara",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Siddhesh Sheth",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "Indiana University",
+      "institution_id": "institution:4c6b8eaa9cee97d7",
+      "location_id": "location:32cbd2e37d72f83fd2f3",
+      "institution_authors": [
+        "Aishwarya Budhkar"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Indiana",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Bloomington",
+      "latitude": 39.1660594,
+      "longitude": -86.5265353,
+      "lat": 39.1660594,
+      "lon": -86.5265353,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:0116d58f49baa1bbaa0e",
+      "affiliation_order": 1,
+      "raw_affiliation": "Indiana University",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Indiana University",
+      "location_display": "Indiana, United States",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:4c6b8eaa9cee97d7",
+          "institution": "Indiana University",
+          "institution_type": "university",
+          "authors": [
+            "Aishwarya Budhkar"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:bcff30a7f8b18e0a",
+          "institution": "Upper Hand, Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Trishita Dhara"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:e3c54da54efe6e7e",
+          "institution": "ACE Rent A Car Reservations, Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Siddhesh Sheth"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Aishwarya Budhkar",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4c6b8eaa9cee97d7"
+          ]
+        },
+        {
+          "author": "Trishita Dhara",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:bcff30a7f8b18e0a"
+          ]
+        },
+        {
+          "author": "Siddhesh Sheth",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:e3c54da54efe6e7e"
+          ]
+        }
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "university",
+      "canonical_name": "Indiana University",
+      "canonical_institution_name": "Indiana University",
+      "mapping_lineage_ids": [
+        "mapping:0116d58f49baa1bbaa0e"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Indiana University",
+          "canonical_name": "Indiana University",
+          "institution_id": "institution:4c6b8eaa9cee97d7",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        },
+        {
+          "index": 2,
+          "name": "Upper Hand, Inc.",
+          "canonical_name": "Upper Hand, Inc.",
+          "institution_id": "institution:bcff30a7f8b18e0a",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        },
+        {
+          "index": 3,
+          "name": "ACE Rent A Car Reservations, Inc.",
+          "canonical_name": "ACE Rent A Car Reservations, Inc.",
+          "institution_id": "institution:e3c54da54efe6e7e",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        }
+      ],
+      "current_institution": {
+        "index": 1,
+        "name": "Indiana University",
+        "canonical_name": "Indiana University",
+        "institution_id": "institution:4c6b8eaa9cee97d7",
+        "institution_type": "university",
+        "country": "United States",
+        "country_code": "",
+        "region": "Indiana",
+        "location_display": "Indiana, United States"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Aishwarya Budhkar",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4c6b8eaa9cee97d7"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Trishita Dhara",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:bcff30a7f8b18e0a"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Siddhesh Sheth",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:e3c54da54efe6e7e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "company"
+      ],
+      "is_arxiv_preprint": false
+    },
+    {
+      "id": "curated-map:33bb3c7dddd650a90cb6",
+      "paper_id": "curated:589870527983af575480",
+      "title": "The Deployment Gap in AI Media Detection: Platform-Aware and Visually Constrained Adversarial Evaluation",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "paper_categories": [
+        "method"
+      ],
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "workshops",
+      "raw_venue": "2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+      "publication_type": "conference",
+      "abstract": "Recent AI media detectors report near-perfect performance under clean laboratory evaluation, yet their robustness under realistic deployment conditions remains underexplored. In practice, AI-generated images are resized, compressed, re-encoded, and visually modified before being shared on online platforms. We argue that this creates a deployment gap between laboratory robustness and real-world reliability. In this work, we introduce a platform-aware adversarial evaluation framework for AI media detection that explicitly models deployment transforms (e.g., resizing, compression, screenshot-style distortions) and constrains perturbations to visually plausible meme-style bands rather than full-image noise. Under this threat model, detectors achieving AUC $\\approx$ 0{.}99 in clean settings experience substantial degradation. Per-image platform-aware attacks reduce AUC to significantly lower levels and achieve high fake-to-real misclassification rates, despite strict visual constraints. We further demonstrate that universal perturbations exist even under localized band constraints, revealing shared vulnerability directions across inputs. Beyond accuracy degradation, we observe pronounced calibration collapse under attack, where detectors become confidently incorrect. Our findings highlight that robustness measured under clean conditions substantially overestimates deployment robustness. We advocate for platform-aware evaluation as a necessary component of future AI media security benchmarks and release our evaluation framework to facilitate standardized robustness assessment.",
+      "abstract_source": "openalex",
+      "doi": "",
+      "arxiv_id": "2604.09706",
+      "arxiv_url": "https://arxiv.org/abs/2604.09706",
+      "has_arxiv_version": true,
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "formal_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "openalex_url": "https://openalex.org/W7154539686",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "authors": [
+        {
+          "name": "Aishwarya Budhkar",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Trishita Dhara",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Siddhesh Sheth",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "Upper Hand, Inc.",
+      "institution_id": "institution:bcff30a7f8b18e0a",
+      "location_id": "location:ef7f8faf60d3e7f0fdd5",
+      "institution_authors": [
+        "Trishita Dhara"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Indiana",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Indianapolis",
+      "latitude": 39.7682188,
+      "longitude": -86.1554749,
+      "lat": 39.7682188,
+      "lon": -86.1554749,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:af6ebff4918bb5223443",
+      "affiliation_order": 2,
+      "raw_affiliation": "Upper Hand",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Upper Hand",
+      "location_display": "Indiana, United States",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:4c6b8eaa9cee97d7",
+          "institution": "Indiana University",
+          "institution_type": "university",
+          "authors": [
+            "Aishwarya Budhkar"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:bcff30a7f8b18e0a",
+          "institution": "Upper Hand, Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Trishita Dhara"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:e3c54da54efe6e7e",
+          "institution": "ACE Rent A Car Reservations, Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Siddhesh Sheth"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Aishwarya Budhkar",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4c6b8eaa9cee97d7"
+          ]
+        },
+        {
+          "author": "Trishita Dhara",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:bcff30a7f8b18e0a"
+          ]
+        },
+        {
+          "author": "Siddhesh Sheth",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:e3c54da54efe6e7e"
+          ]
+        }
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "company",
+      "canonical_name": "Upper Hand, Inc.",
+      "canonical_institution_name": "Upper Hand, Inc.",
+      "mapping_lineage_ids": [
+        "mapping:af6ebff4918bb5223443"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Indiana University",
+          "canonical_name": "Indiana University",
+          "institution_id": "institution:4c6b8eaa9cee97d7",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        },
+        {
+          "index": 2,
+          "name": "Upper Hand, Inc.",
+          "canonical_name": "Upper Hand, Inc.",
+          "institution_id": "institution:bcff30a7f8b18e0a",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        },
+        {
+          "index": 3,
+          "name": "ACE Rent A Car Reservations, Inc.",
+          "canonical_name": "ACE Rent A Car Reservations, Inc.",
+          "institution_id": "institution:e3c54da54efe6e7e",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        }
+      ],
+      "current_institution": {
+        "index": 2,
+        "name": "Upper Hand, Inc.",
+        "canonical_name": "Upper Hand, Inc.",
+        "institution_id": "institution:bcff30a7f8b18e0a",
+        "institution_type": "company",
+        "country": "United States",
+        "country_code": "",
+        "region": "Indiana",
+        "location_display": "Indiana, United States"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Aishwarya Budhkar",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4c6b8eaa9cee97d7"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Trishita Dhara",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:bcff30a7f8b18e0a"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Siddhesh Sheth",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:e3c54da54efe6e7e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "company"
+      ],
+      "is_arxiv_preprint": false
+    },
+    {
+      "id": "curated-map:4b698b14538ae5729712",
+      "paper_id": "curated:589870527983af575480",
+      "title": "The Deployment Gap in AI Media Detection: Platform-Aware and Visually Constrained Adversarial Evaluation",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "task": "detection",
+      "paper_categories": [
+        "method"
+      ],
+      "venue": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+      "venue_id": "venue:cvpr",
+      "venue_acronym": "CVPR",
+      "venue_type": "conference",
+      "venue_track": "workshops",
+      "raw_venue": "2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+      "publication_type": "conference",
+      "abstract": "Recent AI media detectors report near-perfect performance under clean laboratory evaluation, yet their robustness under realistic deployment conditions remains underexplored. In practice, AI-generated images are resized, compressed, re-encoded, and visually modified before being shared on online platforms. We argue that this creates a deployment gap between laboratory robustness and real-world reliability. In this work, we introduce a platform-aware adversarial evaluation framework for AI media detection that explicitly models deployment transforms (e.g., resizing, compression, screenshot-style distortions) and constrains perturbations to visually plausible meme-style bands rather than full-image noise. Under this threat model, detectors achieving AUC $\\approx$ 0{.}99 in clean settings experience substantial degradation. Per-image platform-aware attacks reduce AUC to significantly lower levels and achieve high fake-to-real misclassification rates, despite strict visual constraints. We further demonstrate that universal perturbations exist even under localized band constraints, revealing shared vulnerability directions across inputs. Beyond accuracy degradation, we observe pronounced calibration collapse under attack, where detectors become confidently incorrect. Our findings highlight that robustness measured under clean conditions substantially overestimates deployment robustness. We advocate for platform-aware evaluation as a necessary component of future AI media security benchmarks and release our evaluation framework to facilitate standardized robustness assessment.",
+      "abstract_source": "openalex",
+      "doi": "",
+      "arxiv_id": "2604.09706",
+      "arxiv_url": "https://arxiv.org/abs/2604.09706",
+      "has_arxiv_version": true,
+      "paper_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "formal_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "primary_url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "openalex_url": "https://openalex.org/W7154539686",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026W/AIMS/papers/Budhkar_The_Deployment_Gap_in_AI_Media_Detection_Platform-Aware_and_Visually_CVPRW_2026_paper.pdf",
+      "authors": [
+        {
+          "name": "Aishwarya Budhkar",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Trishita Dhara",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        },
+        {
+          "name": "Siddhesh Sheth",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false
+        }
+      ],
+      "institution": "ACE Rent A Car Reservations, Inc.",
+      "institution_id": "institution:e3c54da54efe6e7e",
+      "location_id": "location:55e1b0548dc21b254bd5",
+      "institution_authors": [
+        "Siddhesh Sheth"
+      ],
+      "country": "United States",
+      "country_code": "US",
+      "region": "Indiana",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Indianapolis",
+      "latitude": 39.7673866,
+      "longitude": -86.14142,
+      "lat": 39.7673866,
+      "lon": -86.14142,
+      "source_database": "curated",
+      "metadata_source": "openalex",
+      "curation_status": "confirmed",
+      "mapping_id": "mapping:87c6054c82e6ec9e3420",
+      "affiliation_order": 3,
+      "raw_affiliation": "Ace Rent a Car",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: Ace Rent a Car",
+      "location_display": "Indiana, United States",
+      "affiliation_review_state": "curated",
+      "institution_source": "curated",
+      "preliminary_affiliations": false,
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:4c6b8eaa9cee97d7",
+          "institution": "Indiana University",
+          "institution_type": "university",
+          "authors": [
+            "Aishwarya Budhkar"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:bcff30a7f8b18e0a",
+          "institution": "Upper Hand, Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Trishita Dhara"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:e3c54da54efe6e7e",
+          "institution": "ACE Rent A Car Reservations, Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Siddhesh Sheth"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Aishwarya Budhkar",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4c6b8eaa9cee97d7"
+          ]
+        },
+        {
+          "author": "Trishita Dhara",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:bcff30a7f8b18e0a"
+          ]
+        },
+        {
+          "author": "Siddhesh Sheth",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:e3c54da54efe6e7e"
+          ]
+        }
+      ],
+      "venue_label": "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops",
+      "venue_aliases": [
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings"
+      ],
+      "ambiguity_status": "resolved",
+      "institution_type": "company",
+      "canonical_name": "ACE Rent A Car Reservations, Inc.",
+      "canonical_institution_name": "ACE Rent A Car Reservations, Inc.",
+      "mapping_lineage_ids": [
+        "mapping:87c6054c82e6ec9e3420"
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Indiana University",
+          "canonical_name": "Indiana University",
+          "institution_id": "institution:4c6b8eaa9cee97d7",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        },
+        {
+          "index": 2,
+          "name": "Upper Hand, Inc.",
+          "canonical_name": "Upper Hand, Inc.",
+          "institution_id": "institution:bcff30a7f8b18e0a",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        },
+        {
+          "index": 3,
+          "name": "ACE Rent A Car Reservations, Inc.",
+          "canonical_name": "ACE Rent A Car Reservations, Inc.",
+          "institution_id": "institution:e3c54da54efe6e7e",
+          "institution_type": "company",
+          "country": "United States",
+          "country_code": "",
+          "region": "Indiana",
+          "location_display": "Indiana, United States"
+        }
+      ],
+      "current_institution": {
+        "index": 3,
+        "name": "ACE Rent A Car Reservations, Inc.",
+        "canonical_name": "ACE Rent A Car Reservations, Inc.",
+        "institution_id": "institution:e3c54da54efe6e7e",
+        "institution_type": "company",
+        "country": "United States",
+        "country_code": "",
+        "region": "Indiana",
+        "location_display": "Indiana, United States"
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Aishwarya Budhkar",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:4c6b8eaa9cee97d7"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Trishita Dhara",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:bcff30a7f8b18e0a"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Siddhesh Sheth",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:e3c54da54efe6e7e"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "company"
+      ],
+      "is_arxiv_preprint": false
     }
   ],
   "institution_aliases": [
+    {
+      "alias_name": "Ace Rent a Car",
+      "canonical_institution_name": "ACE Rent A Car Reservations, Inc.",
+      "canonical_institution_id": "institution:e3c54da54efe6e7e",
+      "alias_language": "",
+      "alias_source": "official CVPR paper PDF"
+    },
     {
       "alias_name": "A*STAR",
       "canonical_institution_name": "Agency for Science, Technology and Research",
@@ -424467,6 +425690,13 @@
       "alias_source": "english-name-migration"
     },
     {
+      "alias_name": "Polytechnic University of Milan",
+      "canonical_institution_name": "Politecnico di Milano",
+      "canonical_institution_id": "institution:1ee9da20656fd88b",
+      "alias_language": "",
+      "alias_source": "institution-merge"
+    },
+    {
       "alias_name": "University Polytechnique Hauts-de-France",
       "canonical_institution_name": "Polytechnic University of Hauts-de-France",
       "canonical_institution_id": "institution:1e2fe2432a089705",
@@ -424479,6 +425709,13 @@
       "canonical_institution_id": "institution:1e2fe2432a089705",
       "alias_language": "",
       "alias_source": "local-admin | english-name-migration"
+    },
+    {
+      "alias_name": "Purdue University West Lafayette",
+      "canonical_institution_name": "Purdue University",
+      "canonical_institution_id": "institution:90b589325857dff0",
+      "alias_language": "",
+      "alias_source": "institution-merge"
     },
     {
       "alias_name": "Sorbonne Université",
@@ -424649,6 +425886,13 @@
       "alias_source": "english-name-migration"
     },
     {
+      "alias_name": "Upper Hand",
+      "canonical_institution_name": "Upper Hand, Inc.",
+      "canonical_institution_id": "institution:bcff30a7f8b18e0a",
+      "alias_language": "",
+      "alias_source": "official CVPR paper PDF"
+    },
+    {
       "alias_name": "Xi’an Jiaotong University",
       "canonical_institution_name": "Xi'an Jiaotong University",
       "canonical_institution_id": "institution:afc29be68ac419be",
@@ -424790,13 +426034,15 @@
       ]
     },
     "institution:6f15f620028933fb": {
-      "canonical_name": "Anqing Normal University",
+      "canonical_name": "Anqing Normal University (AQNU)",
       "institution_type": "university",
       "names": [
-        "Anqing Normal University"
+        "Anqing Normal University (AQNU)",
+        "AQNU"
       ],
       "normalized_names": [
-        "anqing normal university"
+        "anqing normal university aqnu",
+        "aqnu"
       ]
     },
     "institution:5a28a1a99a417ba5": {
@@ -424817,16 +426063,6 @@
       ],
       "normalized_names": [
         "arizona state university"
-      ]
-    },
-    "institution:583e34971c9eeb5b": {
-      "canonical_name": "Artificial Intelligence in Medicine (Canada)",
-      "institution_type": "research_unit",
-      "names": [
-        "Artificial Intelligence in Medicine (Canada)"
-      ],
-      "normalized_names": [
-        "artificial intelligence in medicine canada"
       ]
     },
     "institution:c739468458199e8c": {
@@ -424932,13 +426168,15 @@
       ]
     },
     "institution:ffd387a3478eb9e9": {
-      "canonical_name": "Birla Institute of Technology, Mesra",
+      "canonical_name": "Birla Institute of Technology, Mesra (BIT)",
       "institution_type": "university",
       "names": [
-        "Birla Institute of Technology, Mesra"
+        "Birla Institute of Technology, Mesra (BIT)",
+        "BIT"
       ],
       "normalized_names": [
-        "birla institute of technology mesra"
+        "birla institute of technology mesra bit",
+        "bit"
       ]
     },
     "institution:e822c28c6d58a829": {
@@ -425030,13 +426268,15 @@
       ]
     },
     "institution:6bdc62fb06ac696f": {
-      "canonical_name": "Changsha University of Science and Technology",
+      "canonical_name": "Changsha University of Science and Technology (CSUST)",
       "institution_type": "university",
       "names": [
-        "Changsha University of Science and Technology"
+        "Changsha University of Science and Technology (CSUST)",
+        "CSUST"
       ],
       "normalized_names": [
-        "changsha university of science and technology"
+        "changsha university of science and technology csust",
+        "csust"
       ]
     },
     "institution:7aae859eefe8edd1": {
@@ -425216,13 +426456,15 @@
       ]
     },
     "institution:3d7a55d07b650cfa": {
-      "canonical_name": "Czech Technical University in Prague",
+      "canonical_name": "Czech Technical University in Prague (CTU)",
       "institution_type": "university",
       "names": [
-        "Czech Technical University in Prague"
+        "Czech Technical University in Prague (CTU)",
+        "CTU"
       ],
       "normalized_names": [
-        "czech technical university in prague"
+        "czech technical university in prague ctu",
+        "ctu"
       ]
     },
     "institution:3be1ce40ea53f6d2": {
@@ -425376,23 +426618,15 @@
       ]
     },
     "institution:a1e1ec8b780e67c8": {
-      "canonical_name": "Guizhou Normal University",
+      "canonical_name": "Guizhou Normal University (GZNU)",
       "institution_type": "university",
       "names": [
-        "Guizhou Normal University"
+        "Guizhou Normal University (GZNU)",
+        "GZNU"
       ],
       "normalized_names": [
-        "guizhou normal university"
-      ]
-    },
-    "institution:2b9a45614734dda3": {
-      "canonical_name": "Hand and Upper Limb Clinic",
-      "institution_type": "other",
-      "names": [
-        "Hand and Upper Limb Clinic"
-      ],
-      "normalized_names": [
-        "hand and upper limb clinic"
+        "guizhou normal university gznu",
+        "gznu"
       ]
     },
     "institution:91e76fe32279c58d": {
@@ -425528,13 +426762,15 @@
       ]
     },
     "institution:e540a2485c3e954f": {
-      "canonical_name": "Huazhong University of Science and Technology",
+      "canonical_name": "Huazhong University of Science and Technology (HUST)",
       "institution_type": "university",
       "names": [
-        "Huazhong University of Science and Technology"
+        "Huazhong University of Science and Technology (HUST)",
+        "HUST"
       ],
       "normalized_names": [
-        "huazhong university of science and technology"
+        "huazhong university of science and technology hust",
+        "hust"
       ]
     },
     "institution:be8fe6da68f67876": {
@@ -425548,13 +426784,15 @@
       ]
     },
     "institution:42d2e85e0328361b": {
-      "canonical_name": "Hunan University of Science and Technology",
+      "canonical_name": "Hunan University of Science and Technology (HNUST)",
       "institution_type": "university",
       "names": [
-        "Hunan University of Science and Technology"
+        "Hunan University of Science and Technology (HNUST)",
+        "HNUST"
       ],
       "normalized_names": [
-        "hunan university of science and technology"
+        "hunan university of science and technology hnust",
+        "hnust"
       ]
     },
     "institution:f5c8a9b792d3b901": {
@@ -425600,13 +426838,15 @@
       ]
     },
     "institution:c49f954847b969c5": {
-      "canonical_name": "Incheon National University",
+      "canonical_name": "Incheon National University (INU)",
       "institution_type": "university",
       "names": [
-        "Incheon National University"
+        "Incheon National University (INU)",
+        "INU"
       ],
       "normalized_names": [
-        "incheon national university"
+        "incheon national university inu",
+        "inu"
       ]
     },
     "institution:4269181ef8bd7d6e": {
@@ -425639,16 +426879,6 @@
         "indian institute of technology roorkee"
       ]
     },
-    "institution:7c73c5ea3377e7f2": {
-      "canonical_name": "Indiana Hand to Shoulder Center",
-      "institution_type": "other",
-      "names": [
-        "Indiana Hand to Shoulder Center"
-      ],
-      "normalized_names": [
-        "indiana hand to shoulder center"
-      ]
-    },
     "institution:df7499422b3e4d82": {
       "canonical_name": "Indraprastha Institute of Information Technology Delhi",
       "institution_type": "university",
@@ -425672,13 +426902,15 @@
       ]
     },
     "institution:ce9788da3b7b6137": {
-      "canonical_name": "Inner Mongolia University of Technology",
+      "canonical_name": "Inner Mongolia University of Technology (IMUT)",
       "institution_type": "university",
       "names": [
-        "Inner Mongolia University of Technology"
+        "Inner Mongolia University of Technology (IMUT)",
+        "IMUT"
       ],
       "normalized_names": [
-        "inner mongolia university of technology"
+        "inner mongolia university of technology imut",
+        "imut"
       ]
     },
     "institution:507c5724052f23eb": {
@@ -425860,13 +427092,15 @@
       ]
     },
     "institution:24b3cd33acdc095d": {
-      "canonical_name": "Kochi University of Technology",
+      "canonical_name": "Kochi University of Technology (KUT)",
       "institution_type": "university",
       "names": [
-        "Kochi University of Technology"
+        "Kochi University of Technology (KUT)",
+        "KUT"
       ],
       "normalized_names": [
-        "kochi university of technology"
+        "kochi university of technology kut",
+        "kut"
       ]
     },
     "institution:696e90c102571ea3": {
@@ -425912,13 +427146,15 @@
       ]
     },
     "institution:d30e2f168f8ccc03": {
-      "canonical_name": "Loyola University Chicago",
+      "canonical_name": "Loyola University Chicago (LUC)",
       "institution_type": "university",
       "names": [
-        "Loyola University Chicago"
+        "Loyola University Chicago (LUC)",
+        "LUC"
       ],
       "normalized_names": [
-        "loyola university chicago"
+        "loyola university chicago luc",
+        "luc"
       ]
     },
     "institution:1a36f9f1487a39da": {
@@ -426282,13 +427518,17 @@
       ]
     },
     "institution:1ee9da20656fd88b": {
-      "canonical_name": "Politecnico di Milano",
+      "canonical_name": "Politecnico di Milano (POLIMI)",
       "institution_type": "university",
       "names": [
-        "Politecnico di Milano"
+        "Politecnico di Milano (POLIMI)",
+        "POLIMI",
+        "Polytechnic University of Milan"
       ],
       "normalized_names": [
-        "politecnico di milano"
+        "politecnico di milano polimi",
+        "polimi",
+        "polytechnic university of milan"
       ]
     },
     "institution:35caf31d5104b996": {
@@ -426329,19 +427569,11 @@
       "canonical_name": "Purdue University",
       "institution_type": "university",
       "names": [
-        "Purdue University"
-      ],
-      "normalized_names": [
-        "purdue university"
-      ]
-    },
-    "institution:312d37d9636306c2": {
-      "canonical_name": "Purdue University West Lafayette",
-      "institution_type": "university",
-      "names": [
+        "Purdue University",
         "Purdue University West Lafayette"
       ],
       "normalized_names": [
+        "purdue university",
         "purdue university west lafayette"
       ]
     },
@@ -426506,23 +427738,27 @@
       ]
     },
     "institution:07ba242d76aafb0e": {
-      "canonical_name": "Shanghai University of Engineering Science",
+      "canonical_name": "Shanghai University of Engineering Science (SUES)",
       "institution_type": "university",
       "names": [
-        "Shanghai University of Engineering Science"
+        "Shanghai University of Engineering Science (SUES)",
+        "SUES"
       ],
       "normalized_names": [
-        "shanghai university of engineering science"
+        "shanghai university of engineering science sues",
+        "sues"
       ]
     },
     "institution:11d4e5b507bbbada": {
-      "canonical_name": "Shenzhen MSU-BIT University",
+      "canonical_name": "Shenzhen MSU-BIT University (SMBU)",
       "institution_type": "university",
       "names": [
-        "Shenzhen MSU-BIT University"
+        "Shenzhen MSU-BIT University (SMBU)",
+        "SMBU"
       ],
       "normalized_names": [
-        "shenzhen msu bit university"
+        "shenzhen msu bit university smbu",
+        "smbu"
       ]
     },
     "institution:ad9c8964d01f80d8": {
@@ -427614,13 +428850,15 @@
       ]
     },
     "institution:4955c30e161b66f8": {
-      "canonical_name": "Xinjiang University",
+      "canonical_name": "Xinjiang University (XJU)",
       "institution_type": "university",
       "names": [
-        "Xinjiang University"
+        "Xinjiang University (XJU)",
+        "XJU"
       ],
       "normalized_names": [
-        "xinjiang university"
+        "xinjiang university xju",
+        "xju"
       ]
     },
     "institution:afc29be68ac419be": {
@@ -430651,16 +431889,6 @@
         "google deepmind"
       ]
     },
-    "institution:fed327d8187255e5": {
-      "canonical_name": "Polytechnic University of Milan",
-      "institution_type": "university",
-      "names": [
-        "Polytechnic University of Milan"
-      ],
-      "normalized_names": [
-        "polytechnic university of milan"
-      ]
-    },
     "institution:ce832fad3d4de534": {
       "canonical_name": "Fraunhofer Institute for Industrial Mathematics ITWM",
       "institution_type": "research_unit",
@@ -431200,6 +432428,52 @@
       "normalized_names": [
         "vietnam national university"
       ]
+    },
+    "institution:4c6b8eaa9cee97d7": {
+      "canonical_name": "Indiana University",
+      "institution_type": "university",
+      "names": [
+        "Indiana University"
+      ],
+      "normalized_names": [
+        "indiana university"
+      ]
+    },
+    "institution:bcff30a7f8b18e0a": {
+      "canonical_name": "Upper Hand, Inc.",
+      "institution_type": "company",
+      "names": [
+        "Upper Hand, Inc.",
+        "Upper Hand"
+      ],
+      "normalized_names": [
+        "upper hand inc",
+        "upper hand"
+      ]
+    },
+    "institution:e3c54da54efe6e7e": {
+      "canonical_name": "ACE Rent A Car Reservations, Inc.",
+      "institution_type": "company",
+      "names": [
+        "ACE Rent A Car Reservations, Inc.",
+        "Ace Rent a Car"
+      ],
+      "normalized_names": [
+        "ace rent a car reservations inc",
+        "ace rent a car"
+      ]
+    },
+    "institution:885fab7ed0f92891": {
+      "canonical_name": "Zhengzhou University (ZZU)",
+      "institution_type": "university",
+      "names": [
+        "Zhengzhou University (ZZU)",
+        "ZZU"
+      ],
+      "normalized_names": [
+        "zhengzhou university zzu",
+        "zzu"
+      ]
     }
   },
   "institution_id_redirects": {
@@ -431228,6 +432502,9 @@
     "institution:75d38d0aaffc30fe": "institution:cbc62794911ff31b",
     "institution:a7d5cec59e029db5": "institution:31f980eaa403801a",
     "institution:4e4d723f7fa11734": "institution:2d64a600151c6a44",
+    "institution:fed327d8187255e5": "institution:1ee9da20656fd88b",
+    "institution:312d37d9636306c2": "institution:90b589325857dff0",
+    "institution:1af01a1de49e79d4": "institution:e3c54da54efe6e7e",
     "institution:5b5759334c2dc53e": "institution:6faf58b52bec4e39",
     "institution:8ab1276f56c9f894": "institution:cbc62794911ff31b",
     "institution:4a7d89a851b0ec21": "institution:2792f975d7b5565e",
@@ -431252,7 +432529,8 @@
     "institution:d2a4352ce61ef116": "institution:612630c2527bff83",
     "institution:8711db27bd356de1": "institution:612630c2527bff83",
     "institution:255d0bab819b36aa": "institution:612630c2527bff83",
-    "institution:a8e2f77acd78514d": "institution:d046d2c57bb3a863"
+    "institution:a8e2f77acd78514d": "institution:d046d2c57bb3a863",
+    "institution:5e34b5396fd59f62": "institution:bcff30a7f8b18e0a"
   },
   "institution_hierarchy": [
     {

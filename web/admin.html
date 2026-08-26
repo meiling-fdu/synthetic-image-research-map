@@ -398,7 +398,7 @@
                   <select id="confirmed-location-record"></select>
                 </label>
                 <label>Confirmed city
-                  <input id="confirmed-city" type="text">
+                  <input id="confirmed-city" type="text" aria-describedby="city-resolution-status">
                 </label>
                 <label>Confirmed region
                   <input id="confirmed-region" type="text">
@@ -407,6 +407,7 @@
                   <input id="confirmed-country" type="text">
                 </label>
                 <input id="confirmed-country-code" type="hidden">
+                <p class="full-width city-resolution-status" id="city-resolution-status" role="status" hidden></p>
                 <label>Latitude
                   <input id="confirmed-lat" type="text" inputmode="decimal" autocomplete="off" aria-describedby="location-form-error">
                 </label>

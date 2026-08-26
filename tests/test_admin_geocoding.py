@@ -10,6 +10,7 @@ from urllib.error import HTTPError, URLError
 
 from scripts.admin_geocoding import (
     CachedGeocoder,
+    city_resolution_result,
     GeocodingInputError,
     GeocodingProviderError,
     GeocodingRateLimitError,
@@ -60,6 +61,52 @@ class FakeProvider:
 
 
 class AdminGeocodingTests(unittest.TestCase):
+    def test_unique_milan_city_resolution_populates_normalized_geography_only(self):
+        result = city_resolution_result({"candidates": [{
+            "display_name": "Milano, Lombardia, Italia",
+            "city": "Milan", "region": "Lombardy", "country": "Italia",
+            "country_code": "IT", "latitude": 45.46, "longitude": 9.19,
+            "confidence": 0.72, "score": 60, "selectable": True,
+        }, {
+            "display_name": "Milan, Tennessee, United States",
+            "city": "Milan", "region": "Tennessee", "country": "United States",
+            "country_code": "US", "latitude": 35.9, "longitude": -88.8,
+            "confidence": 0.2, "score": 25, "selectable": True,
+        }]}, "Milan")
+        self.assertEqual(result["resolution_status"], "resolved")
+        self.assertEqual(result["resolved_location"]["region"], "Lombardy")
+        self.assertEqual(result["resolved_location"]["country"], "Italy")
+        self.assertFalse(result["coordinates_authoritative"])
+
+    def test_cambridge_country_context_prefers_massachusetts(self):
+        ranked = rank_candidates([{
+            "display_name": "Cambridge, Massachusetts, United States",
+            "city": "Cambridge", "region": "Massachusetts",
+            "country": "United States", "country_code": "US",
+            "latitude": 42.37, "longitude": -71.11, "confidence": 0.6,
+        }, {
+            "display_name": "Cambridge, Cambridgeshire, United Kingdom",
+            "city": "Cambridge", "region": "Cambridgeshire",
+            "country": "United Kingdom", "country_code": "GB",
+            "latitude": 52.2, "longitude": 0.12, "confidence": 0.7,
+        }], {"city": "Cambridge", "country": "United States", "country_code": "US"})
+        result = city_resolution_result({"candidates": ranked}, "Cambridge")
+        self.assertEqual(result["resolution_status"], "resolved")
+        self.assertEqual(result["resolved_location"]["region"], "Massachusetts")
+
+    def test_ambiguous_city_without_context_is_not_silently_resolved(self):
+        result = city_resolution_result({"candidates": [{
+            "display_name": "Springfield, Illinois", "city": "Springfield",
+            "region": "Illinois", "country": "United States", "country_code": "US",
+            "confidence": 0.55, "score": 50, "selectable": True,
+        }, {
+            "display_name": "Springfield, Missouri", "city": "Springfield",
+            "region": "Missouri", "country": "United States", "country_code": "US",
+            "confidence": 0.51, "score": 49, "selectable": True,
+        }]}, "Springfield")
+        self.assertEqual(result["resolution_status"], "ambiguous")
+        self.assertIsNone(result["resolved_location"])
+
     def test_palermo_location_evidence_outranks_and_blocks_wrong_country(self):
         candidates = rank_candidates([
             {
@@ -119,6 +166,7 @@ class AdminGeocodingTests(unittest.TestCase):
         self.assertEqual(candidate["country"], "Italy")
         self.assertEqual(candidate["country_code"], "IT")
         self.assertIn("countrycodes=it", requests[0])
+        self.assertIn("accept-language=en", requests[0])
         self.assertNotIn("test-agent", json.dumps(result))
 
     def test_macau_country_code_is_normalized_without_stale_fallback(self):
@@ -254,7 +302,7 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             "country_code": "IT",
         }
 
-    def request(self, geocoder, payload):
+    def request(self, geocoder, payload, path="/api/institution/geocode"):
         server = ThreadingHTTPServer(("127.0.0.1", 0), make_handler("token", geocoder=geocoder))
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()
@@ -262,7 +310,7 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
             connection = HTTPConnection("127.0.0.1", server.server_port, timeout=2)
             connection.request(
                 "POST",
-                "/api/institution/geocode",
+                path,
                 body=json.dumps(payload),
                 headers={"X-Admin-Token": "token", "Content-Type": "application/json"},
             )
@@ -290,6 +338,20 @@ class AdminGeocodingEndpointTests(unittest.TestCase):
         self.assertEqual(geocoder.calls[0][2]["country_code"], "IT")
         self.assertEqual(before, after)
         self.assertNotIn("credential", json.dumps(payload).casefold())
+
+    def test_city_endpoint_reuses_geocoder_without_persisting(self):
+        geocoder = EndpointGeocoder()
+        status, payload = self.request(
+            geocoder,
+            self.geocode_payload(),
+            "/api/institution/resolve-city",
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual(geocoder.calls[0][0], "")
+        self.assertEqual(geocoder.calls[0][1], "Palermo")
+        self.assertEqual(payload["data"]["resolution_kind"], "city")
+        self.assertEqual(payload["data"]["resolution_status"], "resolved")
+        self.assertFalse(payload["data"]["coordinates_authoritative"])
 
     def test_endpoint_maps_provider_and_rate_limit_errors(self):
         cases = [

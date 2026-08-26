@@ -28,52 +28,52 @@
     "task": "Exactly one task enum per public paper; detection_and_source_attribution is one combined enum."
   },
   "dataset_counts": {
-    "curated_papers": 324,
+    "curated_papers": 325,
     "public_unique_papers": 546,
-    "public_map_source_papers": 535,
-    "public_papers_with_map": 534,
-    "public_papers_without_map": 12,
-    "public_map_relationships": 1224,
-    "public_unique_institutions": 605,
-    "canonical_institution_rows": 644,
-    "active_canonical_institutions": 638,
-    "inactive_or_merged_institutions": 6,
-    "author_institution_mappings": 877,
-    "confirmed_institution_locations": 410,
-    "institution_location_review_rows": 531,
-    "institution_aliases": 65,
+    "public_map_source_papers": 537,
+    "public_papers_with_map": 536,
+    "public_papers_without_map": 10,
+    "public_map_relationships": 1228,
+    "public_unique_institutions": 607,
+    "canonical_institution_rows": 648,
+    "active_canonical_institutions": 637,
+    "inactive_or_merged_institutions": 11,
+    "author_institution_mappings": 881,
+    "confirmed_institution_locations": 432,
+    "institution_location_review_rows": 536,
+    "institution_aliases": 69,
     "institution_hierarchy_edges": 7,
     "institution_search_relationships": 1,
-    "institution_review_queue_rows": 384
+    "institution_review_queue_rows": 391
   },
   "distribution_counts": {
     "institution_status": {
-      "active": 638,
-      "merged": 3,
-      "ignored": 3
+      "active": 637,
+      "merged": 5,
+      "ignored": 6
     },
     "author_institution_mapping_status": {
-      "active": 814,
-      "excluded": 24,
-      "needs_review": 39
+      "active": 819,
+      "excluded": 26,
+      "needs_review": 36
     },
     "canonical_institution_type": {
-      "university": 465,
+      "university": 467,
       "research_unit": 66,
-      "company": 65,
+      "company": 67,
       "other": 48
     },
     "active_canonical_institution_type": {
       "university": 462,
-      "research_unit": 65,
-      "company": 63,
-      "other": 48
+      "research_unit": 64,
+      "company": 65,
+      "other": 46
     },
     "public_paper_institution_type": {
-      "university": 513,
-      "research_unit": 104,
-      "company": 81,
-      "other": 55
+      "university": 514,
+      "research_unit": 103,
+      "company": 82,
+      "other": 54
     },
     "publication_type": {
       "conference": 314,
@@ -87,7 +87,7 @@
       "detection_and_source_attribution": 29
     },
     "public_map_relationship_resolution": {
-      "active_canonical_institution": 1195,
+      "active_canonical_institution": 1199,
       "unreviewed_automatic_fallback": 29
     }
   },

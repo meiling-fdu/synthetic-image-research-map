@@ -38,6 +38,8 @@ const state = {
   arxivEnrichment: { records: [], summary: {}, discovery: {} },
   draftMappingCandidates: [],
   selectedGeocodeCandidate: null,
+  geocodePurpose: "coordinates",
+  cityAutofill: { regionSource: "empty", countrySource: "empty", lastLookupKey: "" },
   locationEditorMode: "review",
   selectedInstitutionLocationId: "",
   selectedInstitutionLocations: [],
@@ -58,6 +60,8 @@ let paperSelectionSequence = 0;
 let activeVenueOptionIndex = -1;
 let institutionLocationSequence = 0;
 let geocodeRequestSequence = 0;
+let cityResolutionRequestSequence = 0;
+let cityResolutionTimer = null;
 const workflowCommandIds = [
   "run-curated-validation",
   "run-export-preview",
@@ -264,6 +268,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "confirmed-region",
     "confirmed-country",
     "confirmed-country-code",
+    "city-resolution-status",
     "confirmed-lat",
     "confirmed-lon",
     "location-form-error",
@@ -566,12 +571,27 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["location-confirm-alias"].addEventListener("click", confirmLocationAlias);
   elements["canonical-institution"].addEventListener("change", renderLocationActions);
   elements["location-form"].addEventListener("input", renderLocationActions);
+  elements["confirmed-city"].addEventListener("input", scheduleCityResolution);
+  elements["confirmed-city"].addEventListener("blur", () => {
+    if (cityResolutionTimer) clearTimeout(cityResolutionTimer);
+    const lookupKey = `${state.selectedInstitutionLocationId}|${elements["confirmed-city"].value.trim()}`;
+    if (lookupKey !== state.cityAutofill.lastLookupKey) resolveInstitutionCity();
+  });
+  for (const [elementId, sourceKey] of [
+    ["confirmed-region", "regionSource"],
+    ["confirmed-country", "countrySource"],
+  ]) {
+    elements[elementId].addEventListener("input", () => {
+      state.cityAutofill[sourceKey] = elements[elementId].value.trim() ? "manual" : "empty";
+    });
+  }
   elements["confirmed-location-record"].addEventListener("change", selectConfirmedLocationRecord);
   elements["location-geocode"].addEventListener("click", findInstitutionCoordinates);
   elements["geocode-cancel"].addEventListener("click", closeGeocodeDialog);
   elements["geocode-confirm"].addEventListener("click", confirmGeocodeCandidate);
   elements["geocode-dialog"].addEventListener("close", () => {
     state.selectedGeocodeCandidate = null;
+    state.geocodePurpose = "coordinates";
   });
   document.querySelectorAll("[data-console-target]").forEach((button) => {
     button.addEventListener("click", () => navigateConsole(button.dataset.consoleTarget));
@@ -2785,6 +2805,8 @@ function selectCanonicalInstitutionLocation(detail) {
   elements["confirmed-country-code"].value = text(location.country_code).toUpperCase();
   elements["confirmed-lat"].value = text(location.lat);
   elements["confirmed-lon"].value = text(location.lon);
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
   elements["location-form-error"].hidden = true;
   renderLocationActions();
   renderCanonicalLocationContext(detail);
@@ -2810,6 +2832,8 @@ function selectConfirmedLocationRecord() {
   ]) {
     elements[elementId].value = text(location[field]);
   }
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
   elements["confirmed-city"].focus();
 }
 
@@ -3057,6 +3081,8 @@ function selectLocationReview(queueId) {
     text(confirmed.country_code).toUpperCase();
   elements["confirmed-lat"].value = text(confirmed.lat);
   elements["confirmed-lon"].value = text(confirmed.lon);
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
   if (confirmedLocations.length === 1) {
     locationSelect.value = text(confirmedLocations[0].location_id);
   } else {
@@ -3242,6 +3268,8 @@ function renderLocationContext(row) {
 function clearLocationEditor() {
   institutionLocationSequence += 1;
   geocodeRequestSequence += 1;
+  cityResolutionRequestSequence += 1;
+  if (cityResolutionTimer) clearTimeout(cityResolutionTimer);
   state.selectedInstitutionLocationId = "";
   state.selectedLocationReviewId = "";
   state.selectedInstitutionLocations = [];
@@ -3346,6 +3374,100 @@ function setLocationSaveRunning(running) {
   elements["location-confirm"].disabled = running;
 }
 
+function scheduleCityResolution() {
+  cityResolutionRequestSequence += 1;
+  state.cityAutofill.lastLookupKey = "";
+  if (cityResolutionTimer) clearTimeout(cityResolutionTimer);
+  const city = elements["confirmed-city"].value.trim();
+  if (!city) {
+    setCityResolutionStatus("");
+    return;
+  }
+  setCityResolutionStatus("Waiting to resolve city…", "loading");
+  cityResolutionTimer = setTimeout(resolveInstitutionCity, 550);
+}
+
+function applyResolvedCity(candidate, { explicit = false } = {}) {
+  if (!candidate) return { protectedFields: [] };
+  const protectedFields = [];
+  if (text(candidate.city)) elements["confirmed-city"].value = text(candidate.city);
+  for (const [elementId, candidateField, sourceKey] of [
+    ["confirmed-region", "region", "regionSource"],
+    ["confirmed-country", "country", "countrySource"],
+  ]) {
+    const incoming = text(candidate[candidateField]);
+    if (!incoming && state.cityAutofill[sourceKey] === "auto") {
+      elements[elementId].value = "";
+      state.cityAutofill[sourceKey] = "empty";
+      continue;
+    }
+    if (!incoming) continue;
+    if (!explicit && state.cityAutofill[sourceKey] === "manual") {
+      if (elements[elementId].value.trim() !== incoming) protectedFields.push(candidateField);
+      continue;
+    }
+    elements[elementId].value = incoming;
+    state.cityAutofill[sourceKey] = explicit ? "manual" : "auto";
+  }
+  if (explicit || state.cityAutofill.countrySource !== "manual") {
+    elements["confirmed-country-code"].value = text(candidate.country_code).toUpperCase();
+  }
+  renderLocationActions();
+  return { protectedFields };
+}
+
+async function resolveInstitutionCity() {
+  cityResolutionTimer = null;
+  const institutionId = elements["location-institution-id"].value.trim();
+  const loadedInstitutionId = state.selectedInstitutionLocationId;
+  const city = elements["confirmed-city"].value.trim();
+  if (!city || !institutionId || institutionId !== loadedInstitutionId) return;
+  state.cityAutofill.lastLookupKey = `${institutionId}|${city}`;
+  const requestSequence = ++cityResolutionRequestSequence;
+  setCityResolutionStatus(`Resolving ${city}…`, "loading");
+  try {
+    const payload = await apiFetch("/api/institution/resolve-city", {
+      method: "POST",
+      body: JSON.stringify({
+        institution_id: institutionId,
+        loaded_institution_id: loadedInstitutionId,
+        city,
+        region: elements["confirmed-region"].value.trim(),
+        country: elements["confirmed-country"].value.trim(),
+        country_code: elements["confirmed-country-code"].value.trim().toUpperCase(),
+      }),
+    });
+    if (
+      requestSequence !== cityResolutionRequestSequence ||
+      city !== elements["confirmed-city"].value.trim() ||
+      institutionId !== state.selectedInstitutionLocationId ||
+      text(payload.data?.institution_id) !== institutionId
+    ) return;
+    const result = payload.data || {};
+    if (result.resolution_status === "resolved" && result.resolved_location) {
+      const { protectedFields } = applyResolvedCity(result.resolved_location);
+      if (protectedFields.length) {
+        setCityResolutionStatus(
+          `City resolved, but manually edited ${protectedFields.join(" and ")} was preserved. Use Find coordinates to review conflicting candidates.`,
+          "warning"
+        );
+      } else {
+        setCityResolutionStatus("Region/country fields updated from the city lookup. Save explicitly to persist.", "resolved");
+      }
+      return;
+    }
+    if (result.resolution_status === "ambiguous") {
+      setCityResolutionStatus("Multiple plausible cities were found. Choose a candidate; no fields were overwritten.", "warning");
+      renderGeocodeCandidates(result, "city");
+      return;
+    }
+    setCityResolutionStatus("No reliable city match was found. Keep editing manually or use Find coordinates.", "warning");
+  } catch (error) {
+    if (requestSequence !== cityResolutionRequestSequence) return;
+    setCityResolutionStatus(`City lookup failed: ${error.message}. Manual entry and Find coordinates remain available.`, "error");
+  }
+}
+
 function geocodeAddress() {
   const entity = state.institutions.find(
     (row) => row.institution_id === elements["location-institution-id"].value
@@ -3375,6 +3497,24 @@ function clearLocationFields() {
   elements["confirmed-lat"].removeAttribute("aria-invalid");
   elements["confirmed-lon"].removeAttribute("aria-invalid");
   state.selectedGeocodeCandidate = null;
+  resetCityAutofillSources();
+  setCityResolutionStatus("");
+}
+
+function resetCityAutofillSources() {
+  state.cityAutofill.regionSource = elements["confirmed-region"].value.trim()
+    ? "manual" : "empty";
+  state.cityAutofill.countrySource = elements["confirmed-country"].value.trim()
+    ? "manual" : "empty";
+  state.cityAutofill.lastLookupKey = "";
+}
+
+function setCityResolutionStatus(message, status = "") {
+  const output = elements["city-resolution-status"];
+  output.textContent = message;
+  output.hidden = !message;
+  if (status) output.dataset.state = status;
+  else delete output.dataset.state;
 }
 
 function candidateDetail(label, value) {
@@ -3393,9 +3533,12 @@ function candidateDetail(label, value) {
   return row;
 }
 
-function renderGeocodeCandidates(result) {
+function renderGeocodeCandidates(result, purpose = "coordinates") {
   const candidates = result.candidates || [];
   state.selectedGeocodeCandidate = null;
+  state.geocodePurpose = purpose;
+  elements["geocode-dialog-title"].textContent = purpose === "city"
+    ? "Select a city candidate" : "Select a location candidate";
   elements["geocode-query"].textContent = `Query: ${text(result.query)}`;
   elements["geocode-candidates"].replaceChildren();
   elements["geocode-candidates"].hidden = candidates.length === 0;
@@ -3406,7 +3549,8 @@ function renderGeocodeCandidates(result) {
   elements["geocode-error"].hidden = true;
   elements["geocode-confirm"].disabled = true;
   elements["geocode-replace-warning"].hidden = !(
-    elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim()
+    purpose === "coordinates" &&
+    (elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim())
   );
   candidates.forEach((candidate, index) => {
     const label = document.createElement("label");
@@ -3494,7 +3638,7 @@ async function findInstitutionCoordinates() {
       institutionId !== state.selectedInstitutionLocationId ||
       text(payload.data?.institution_id) !== institutionId
     ) return;
-    renderGeocodeCandidates(payload.data || {});
+    renderGeocodeCandidates(payload.data || {}, "coordinates");
   } catch (error) {
     elements["location-form-error"].hidden = false;
     elements["location-form-error"].textContent = `Coordinate search failed: ${error.message}`;
@@ -3515,6 +3659,12 @@ function confirmGeocodeCandidate() {
     !state.selectedInstitutionLocationId ||
     state.selectedInstitutionLocationId !== elements["location-institution-id"].value
   ) return;
+  if (state.geocodePurpose === "city") {
+    applyResolvedCity(candidate, { explicit: true });
+    setCityResolutionStatus("City, region, and country set from the selected candidate. Save explicitly to persist.", "resolved");
+    closeGeocodeDialog();
+    return;
+  }
   const hasExisting = elements["confirmed-lat"].value.trim() || elements["confirmed-lon"].value.trim();
   if (hasExisting && !window.confirm("Replace the existing latitude and longitude with the selected candidate?")) {
     return;
@@ -3525,6 +3675,7 @@ function confirmGeocodeCandidate() {
   elements["confirmed-region"].value = text(candidate.region);
   elements["confirmed-country"].value = text(candidate.country);
   elements["confirmed-country-code"].value = text(candidate.country_code).toUpperCase();
+  resetCityAutofillSources();
   closeGeocodeDialog();
 }
 

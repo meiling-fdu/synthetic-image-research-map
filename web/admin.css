@@ -2132,6 +2132,17 @@ dialog::backdrop {
   font-size: 0.78rem;
 }
 
+.city-resolution-status {
+  margin: -0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.city-resolution-status[data-state="error"],
+.city-resolution-status[data-state="warning"] {
+  color: var(--warning-text, #8a4b08);
+}
+
 .geocode-candidates {
   display: grid;
   max-height: min(24rem, 50vh);

@@ -7,45 +7,45 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "curated_papers": 324,
+    "curated_papers": 325,
     "public_unique_papers": 546,
-    "public_map_source_papers": 535,
-    "public_papers_with_map": 534,
-    "public_papers_without_map": 12,
-    "public_map_relationships": 1224,
-    "canonical_institution_rows": 644,
-    "active_canonical_institutions": 638,
-    "inactive_or_merged_institutions": 6,
-    "author_institution_mappings": 877,
+    "public_map_source_papers": 537,
+    "public_papers_with_map": 536,
+    "public_papers_without_map": 10,
+    "public_map_relationships": 1228,
+    "canonical_institution_rows": 648,
+    "active_canonical_institutions": 637,
+    "inactive_or_merged_institutions": 11,
+    "author_institution_mappings": 881,
     "institution_hierarchy_edges": 7,
-    "institution_aliases": 65,
+    "institution_aliases": 69,
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 638,
-    "merged": 3,
-    "ignored": 3,
+    "active": 637,
+    "merged": 5,
+    "ignored": 6,
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 465,
+    "university": 467,
     "research_unit": 66,
-    "company": 65,
+    "company": 67,
     "other": 48,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
     "university": 462,
-    "research_unit": 65,
-    "company": 63,
-    "other": 48,
+    "research_unit": 64,
+    "company": 65,
+    "other": 46,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    "university": 513,
-    "research_unit": 104,
-    "company": 81,
-    "other": 55,
+    "university": 514,
+    "research_unit": 103,
+    "company": 82,
+    "other": 54,
 }
 
 PUBLICATION_TYPE_TOTALS = {
@@ -72,13 +72,9 @@ PUBLIC_PAPERS_WITHOUT_MAP = {
         "missing_affiliation_rows",
     "Geometric-Semantic Dual-Adaptation for Generalizable AI-Generated Image Detection":
         "missing_affiliation_rows",
-    "Lightweight Image Forgery Detection via Tucker Decomposition for Efficient Edge Deployment":
-        "missing_affiliation_rows",
     "NSFF: Noise and Semantic Features Fusion for AI-Generated Image Detection":
         "missing_affiliation_rows",
     "Spatial Flatness-Curvature Mask Driven Generalized Detection of Synthetic Images":
-        "missing_affiliation_rows",
-    "The Deployment Gap in AI Media Detection: Platform-Aware and Visually Constrained Adversarial Evaluation":
         "missing_affiliation_rows",
     "Unified Detection of Synthetic and Manipulated Images via Dual-Stream Artifact Fusion":
         "missing_affiliation_rows",

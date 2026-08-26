@@ -17,6 +17,11 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
+try:
+    from .country_normalization import canonical_english_location_fields
+except ImportError:
+    from country_normalization import canonical_english_location_fields
+
 
 NOMINATIM_ENDPOINT = "https://nominatim.openstreetmap.org/search"
 MAX_QUERY_LENGTH = 300
@@ -172,7 +177,13 @@ class NominatimProvider:
         self.opener = opener
 
     def search(self, query: str, *, country_codes: str = "") -> Sequence[Dict[str, Any]]:
-        parameters = {"q": query, "format": "jsonv2", "addressdetails": "1", "limit": "5"}
+        parameters = {
+            "q": query,
+            "format": "jsonv2",
+            "addressdetails": "1",
+            "accept-language": "en",
+            "limit": "5",
+        }
         if clean(country_codes):
             parameters["countrycodes"] = clean(country_codes).casefold()
         if self.email:
@@ -359,6 +370,78 @@ def rank_candidates(
         ranked.append(candidate)
     ranked.sort(key=lambda item: (-float(item.get("score", 0)), clean(item.get("display_name"))))
     return ranked
+
+
+def normalize_candidate_geography(candidate: Mapping[str, Any]) -> Dict[str, Any]:
+    """Apply the canonical persisted geography policy to a provider candidate."""
+    value = dict(candidate)
+    geographic = canonical_english_location_fields({
+        "city": value.get("city"),
+        "region": value.get("region"),
+        "country": value.get("country"),
+        "country_code": value.get("country_code"),
+    })
+    value.update(geographic)
+    return value
+
+
+def city_resolution_result(
+    result: Mapping[str, Any], city: Any, *, confidence_threshold: float = 0.45,
+    confidence_margin: float = 0.12,
+) -> Dict[str, Any]:
+    """Classify a city lookup without silently choosing a plausible namesake."""
+    typed_city = clean(city)
+    candidates = [
+        normalize_candidate_geography(candidate)
+        for candidate in result.get("candidates", ())
+        if isinstance(candidate, Mapping)
+    ]
+    safe = [candidate for candidate in candidates if candidate.get("selectable") is not False]
+    groups: OrderedDict[tuple[str, str, str], list[Dict[str, Any]]] = OrderedDict()
+    for candidate in safe:
+        key = (
+            normalized_text(candidate.get("city") or typed_city),
+            normalized_text(candidate.get("region")),
+            clean(candidate.get("country_code")).upper()
+            or normalized_text(candidate.get("country")),
+        )
+        groups.setdefault(key, []).append(candidate)
+
+    resolved = None
+    if len(groups) == 1:
+        resolved = next(iter(groups.values()))[0]
+    elif len(groups) > 1:
+        representatives = [values[0] for values in groups.values()]
+        representatives.sort(
+            key=lambda candidate: (
+                -float(candidate.get("score", 0) or 0),
+                -float(candidate.get("confidence", 0) or 0),
+            )
+        )
+        top = representatives[0]
+        runner_up = representatives[1]
+        top_confidence = float(top.get("confidence", 0) or 0)
+        runner_up_confidence = float(runner_up.get("confidence", 0) or 0)
+        exact_city = text_similarity(top.get("city"), typed_city) >= 0.9
+        if (
+            exact_city
+            and not top.get("conflicts")
+            and top_confidence >= confidence_threshold
+            and top_confidence - runner_up_confidence >= confidence_margin
+        ):
+            resolved = top
+
+    response = dict(result)
+    response["candidates"] = candidates
+    response["resolution_kind"] = "city"
+    response["resolution_status"] = (
+        "resolved" if resolved else "ambiguous" if safe else "not_found"
+    )
+    response["resolved_location"] = resolved
+    # Coordinates remain candidate evidence only; City autofill must not turn a
+    # generic locality centroid into an authoritative institution coordinate.
+    response["coordinates_authoritative"] = False
+    return response
 
 
 def geocoding_result(

@@ -20,6 +20,40 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertIn("button.disabled = true", self.source)
         self.assertIn('button.textContent = "Searching…"', self.source)
 
+    def test_city_autofill_is_debounced_contextual_and_never_persists(self):
+        self.assertIn('setTimeout(resolveInstitutionCity, 550)', self.source)
+        self.assertIn('apiFetch("/api/institution/resolve-city"', self.source)
+        self.assertIn('resolution_status === "resolved"', self.source)
+        resolver = self.source[
+            self.source.index("async function resolveInstitutionCity"):
+            self.source.index("function geocodeAddress")
+        ]
+        self.assertNotIn("confirm-location", resolver)
+        self.assertNotIn('elements["confirmed-lat"].value =', resolver)
+
+    def test_city_autofill_protects_manual_fields_and_ignores_stale_results(self):
+        self.assertIn('state.cityAutofill[sourceKey] === "manual"', self.source)
+        self.assertIn('protectedFields.push(candidateField)', self.source)
+        self.assertIn('state.cityAutofill[sourceKey] === "auto"', self.source)
+        self.assertIn('state.cityAutofill[sourceKey] = "empty"', self.source)
+        resolver = self.source[
+            self.source.index("async function resolveInstitutionCity"):
+            self.source.index("function geocodeAddress")
+        ]
+        self.assertIn("requestSequence !== cityResolutionRequestSequence", resolver)
+        self.assertIn('city !== elements["confirmed-city"].value.trim()', resolver)
+        self.assertIn("Manual entry and Find coordinates remain available", resolver)
+
+    def test_ambiguous_city_uses_shared_candidate_ui_without_city_centroid_coordinates(self):
+        self.assertIn('renderGeocodeCandidates(result, "city")', self.source)
+        confirmation = self.source[
+            self.source.index("function confirmGeocodeCandidate()"):
+            self.source.index("async function confirmLocation")
+        ]
+        city_branch = confirmation[:confirmation.index('const hasExisting')]
+        self.assertIn('state.geocodePurpose === "city"', city_branch)
+        self.assertNotIn('elements["confirmed-lat"].value =', city_branch)
+
     def test_dialog_renders_candidate_details_and_explicit_confirmation(self):
         for field in ("candidate.institution_name", "candidate.address", "candidate.latitude", "candidate.longitude", "candidate.confidence", "candidate.provider"):
             self.assertIn(field, self.source)

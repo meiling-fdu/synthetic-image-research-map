@@ -8,33 +8,37 @@ import sys
 try:
     from .curated_locations import (
         CuratedLocationError,
-        load_confirmed_locations,
-        load_location_review_queue,
-        location_review_report,
+        location_review_payload,
     )
+    from .curated_mappings import load_mappings
+    from .paper_exclusions import read_exclusion_rows
 except ImportError:
     from curated_locations import (
         CuratedLocationError,
-        load_confirmed_locations,
-        load_location_review_queue,
-        location_review_report,
+        location_review_payload,
     )
+    from curated_mappings import load_mappings
+    from paper_exclusions import read_exclusion_rows
 
 
 def main() -> int:
     try:
-        report = location_review_report(
-            load_location_review_queue(), load_confirmed_locations()
-        )
+        report = location_review_payload(
+            mappings=load_mappings(), exclusions=read_exclusion_rows()
+        )["summary"]
     except CuratedLocationError as error:
         print(f"Location review report failed: {error}", file=sys.stderr)
         return 1
 
     print("Institution location review")
     print(f"Total queue rows: {report['total_queue_rows']}")
-    print(f"Known: {report['known']}")
-    print(f"Missing: {report['missing']}")
+    print(f"Confirmed: {report['confirmed']}")
+    print(f"Pending review: {report['pending_review']}")
+    print(f"Aliases: {report['alias_of_confirmed']}")
+    print(f"Ignored: {report['ignore']}")
+    print(f"Excluded: {report['excluded']}")
     print(f"Ambiguous: {report['ambiguous']}")
+    print(f"Needs coordinates: {report['needs_coordinates']}")
     print(
         "Needs coordinate review: "
         f"{report['needs_coordinate_review']}"

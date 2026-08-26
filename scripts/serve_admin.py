@@ -120,6 +120,7 @@ try:
         load_queue,
     )
     from .admin_geocoding import (
+        city_resolution_result,
         GeocodingInputError,
         GeocodingProviderError,
         GeocodingRateLimitError,
@@ -248,6 +249,7 @@ except ImportError:
         load_queue,
     )
     from admin_geocoding import (
+        city_resolution_result,
         GeocodingInputError,
         GeocodingProviderError,
         GeocodingRateLimitError,
@@ -2872,7 +2874,10 @@ def make_handler(
                 finally:
                     AUTHOR_MAPPING_REPORT_WRITE_LOCK.release()
                 return
-            if request.path == "/api/institution/geocode":
+            if request.path in {
+                "/api/institution/geocode",
+                "/api/institution/resolve-city",
+            }:
                 if not self.is_header_authorized():
                     self.send_json(
                         HTTPStatus.UNAUTHORIZED,
@@ -2934,19 +2939,28 @@ def make_handler(
                         "countries": [clean(payload.get("country") or location.get("country")), *[
                             clean(row.get("suggested_country")) for row in reviews
                         ], *[clean(row.get("institution_country")) for row in mappings]],
+                        "country_codes": [
+                            clean(payload.get("country_code") or location.get("country_code")).upper(),
+                            *[clean(row.get("source_country_code")).upper() for row in mappings],
+                        ],
                         "affiliation_evidence": [
                             clean(row.get("raw_affiliation")) for row in mappings
                             if clean(row.get("raw_affiliation"))
                         ],
                     }
-                    address = ", ".join(
-                        item for item in (
-                            context["city"], context["region"], context["country"]
-                        ) if item
-                    )
+                    city_lookup = request.path.endswith("/resolve-city")
+                    if city_lookup and not clean(payload.get("city")):
+                        raise GeocodingInputError("city is required")
+                    address = ", ".join(item for item in (
+                        context["city"], context["region"], context["country"]
+                    ) if item)
                     result = institution_geocoder.search(
-                        entity.get("canonical_name"), address, context=context
+                        "" if city_lookup else entity.get("canonical_name"),
+                        clean(payload.get("city")) if city_lookup else address,
+                        context=context,
                     )
+                    if city_lookup:
+                        result = city_resolution_result(result, payload.get("city"))
                     result["institution_id"] = identifier
                     self.send_json(HTTPStatus.OK, api_payload(data=result))
                 except GeocodingInputError as error:
