@@ -1,4 +1,5 @@
 institution_id,canonical_name,abbreviation,institution_type,institution_status,parent_institution_id,public_display,created_at,updated_at,created_by
+institution:c45f90fe3d40e0f7,Jilin Engineering Vocational College,,university,active,,self,2026-08-26T19:12:00Z,2026-08-26T19:12:00Z,codex-data-repair
 institution:b85a1a866c0c7fe8,Aarhus University,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:7a0d6a63667ac750,Adobe Research,,company,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:e81a0314e783d8a4,"Agency for Science, Technology and Research",A*STAR,research_unit,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
@@ -52,7 +53,7 @@ institution:721b1fe645c5b099,National Inter-University Consortium for Telecommun
 institution:3da00d58d4c97192,Commonwealth Scientific and Industrial Research Organisation,,research_unit,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:6a318a8411b5cf74,Complutense University of Madrid,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:3d7a55d07b650cfa,Czech Technical University in Prague,CTU,university,active,,self,2026-07-13T21:50:39Z,2026-08-26T11:11:34Z,institution-model-migration
-institution:3be1ce40ea53f6d2,Data61,,research_unit,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
+institution:3be1ce40ea53f6d2,Data61,,research_unit,active,institution:3da00d58d4c97192,self,2026-07-13T21:50:39Z,2026-08-26T19:12:00Z,local-admin
 institution:e0fc2ffb269489e7,Drexel University,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:a8d8c5fe60be3e65,East China Normal University,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:82b627d49a985ef1,East China University of Science and Technology,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
@@ -73,7 +74,7 @@ institution:91e76fe32279c58d,Hangzhou High-Tech Zone (Binjiang) Institute of Blo
 institution:3e2d6c20e9d268da,Hanyang University,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:fe438b1c7662476f,Harbin Institute of Technology,,university,active,,self,2026-07-13T21:50:39Z,2026-07-18T16:01:56Z,institution-model-migration
 institution:6c5bb70e9f4b77ba,"Harbin Institute of Technology, Shenzhen",,university,active,,self,2026-07-13T21:50:39Z,2026-07-18T16:01:56Z,institution-model-migration
-institution:329f39cda413f721,Ho Chi Minh City University of Science,,university,active,institution:19d2ee8d44bfb9f0,self,2026-07-15T11:28:05Z,2026-07-15T11:28:05Z,referential-integrity-repair
+institution:329f39cda413f721,Ho Chi Minh City University of Science,,university,merged,institution:19d2ee8d44bfb9f0,self,2026-07-15T11:28:05Z,2026-08-26T19:00:00Z,local-admin
 institution:b83f47152ad1ec29,Hebei University of Technology,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:dfb7666cf1c6e052,Hefei Comprehensive National Science Center,,research_unit,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:f6342fd457763517,Hefei University of Technology,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
@@ -87,7 +88,7 @@ institution:be8fe6da68f67876,Hunan University,,university,active,,self,2026-07-1
 institution:42d2e85e0328361b,Hunan University of Science and Technology,HNUST,university,active,,self,2026-07-13T21:50:39Z,2026-08-26T11:11:34Z,institution-model-migration
 institution:f5c8a9b792d3b901,IBM Thomas J. Watson Research Center,,company,active,,self,2026-07-13T21:50:39Z,2026-07-18T16:01:56Z,institution-model-migration
 institution:fe7a819f82113c79,IdentifAI,,company,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
-institution:b91c4ceb2690766e,IIIT Delhi,,university,active,,self,2026-07-13T21:50:39Z,2026-07-18T16:01:56Z,institution-model-migration
+institution:b91c4ceb2690766e,IIIT Delhi,,university,merged,,self,2026-07-13T21:50:39Z,2026-08-26T18:40:00Z,local-admin
 institution:9958d7ee1cfec4aa,IMT School for Advanced Studies Lucca,,university,active,,self,2026-07-13T21:50:39Z,2026-07-18T16:01:56Z,institution-model-migration
 institution:c49f954847b969c5,Incheon National University,INU,university,active,,self,2026-07-13T21:50:39Z,2026-08-26T11:11:34Z,institution-model-migration
 institution:4269181ef8bd7d6e,"Indian Institute of Engineering Science and Technology, Shibpur",,university,active,,self,2026-07-13T21:50:39Z,2026-07-18T16:01:56Z,institution-model-migration
@@ -159,7 +160,6 @@ institution:35caf31d5104b996,"Polytechnic Institute of Turin, Turin, Italy",,uni
 institution:1e2fe2432a089705,Polytechnic University of Hauts-de-France,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:6f4241a7694672b8,Princeton University,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:90b589325857dff0,Purdue University,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
-institution:312d37d9636306c2,Purdue University West Lafayette,,university,merged,,self,2026-07-13T21:50:39Z,2026-08-26T11:11:33Z,institution-model-migration
 institution:a4cdf5c9d1038c90,Purple Mountain Laboratories,,research_unit,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:c5eade35ea50a856,Queen Mary University of London,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
 institution:2469c3505064216c,Queen's University,,university,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
@@ -379,7 +379,6 @@ institution:f904c5dbc038c1df,Heidelberg University,,university,active,,self,2026
 institution:6f14a665aa77ba34,Helmholtz Center for Information Security,,research_unit,active,,self,2026-07-22T00:00:00Z,2026-07-22T00:00:00Z,institution-type-audit
 institution:9862b50bf0eb12f0,Hindustan Institute of Technology and Science,,university,active,,self,2026-07-22T00:00:00Z,2026-07-22T00:00:00Z,institution-type-audit
 institution:834e8b5e7fb040b9,Honeywell (United States),,company,active,,self,2026-07-22T00:00:00Z,2026-07-22T00:00:00Z,institution-type-audit
-institution:a7d5cec59e029db5,Hong Kong Polytechnic University,,university,merged,,self,2026-07-22T00:00:00Z,2026-08-25T14:57:35Z,institution-type-audit
 institution:ed58576681c8c7e7,Huazhong Agricultural University,,university,active,,self,2026-07-22T00:00:00Z,2026-07-22T00:00:00Z,institution-type-audit
 institution:bbc6ae7ed9b4bd38,Humboldt University of Berlin,,university,active,,self,2026-07-22T00:00:00Z,2026-07-22T00:39:23Z,institution-type-audit
 institution:1ba4ddc6758a80c0,Imperial College London,,university,active,,self,2026-07-22T00:00:00Z,2026-07-22T00:00:00Z,institution-type-audit
@@ -549,7 +548,7 @@ institution:815062efbb762258,University of New South Wales,,university,active,,U
 institution:2d64a600151c6a44,Technical University of Madrid,UPM,university,active,,Technical University of Madrid,2026-07-26T20:46:04Z,2026-08-25T20:06:52Z,local-admin
 institution:48441fb89f75bf9d,People's Public Security University of China,,university,active,,People’s Public Security University of China,2026-07-29T06:24:13Z,2026-07-29T06:41:06Z,local-admin
 institution:6235ae2101dec1c1,Shanghai Customs University,,university,active,,Shanghai Customs University,2026-07-29T06:25:39Z,2026-07-29T06:25:39Z,local-admin
-institution:806523d1aae41484,"University of Science, Viet Nam National University Ho Chi Minh City",,university,active,,"University of Science, Viet Nam National University Ho Chi Minh City",2026-07-29T06:53:48Z,2026-07-29T06:53:48Z,local-admin
+institution:806523d1aae41484,"University of Science, Viet Nam National University Ho Chi Minh City",,university,active,institution:19d2ee8d44bfb9f0,"University of Science, Viet Nam National University Ho Chi Minh City",2026-07-29T06:53:48Z,2026-08-26T19:00:00Z,local-admin
 institution:f2c797b53862241e,Changsha Medical University,,university,active,,Changsha Medical University,2026-07-29T07:00:43Z,2026-07-29T07:00:43Z,local-admin
 institution:94efe2a875dd4d0e,The University of British Columbia,,university,active,,The University of British Columbia,2026-07-29T07:06:29Z,2026-07-29T07:06:29Z,local-admin
 institution:a2c9ccf9659160de,Electronics and Telecommunications Research Institute,ETRI,research_unit,active,,self,2026-07-13T21:50:39Z,2026-07-13T21:50:39Z,institution-model-migration
@@ -574,7 +573,6 @@ institution:584ce56aba1d421b,General Directorate of Education in Al-Qadisiyah Go
 institution:4fb750575364983b,Guizhou University,,university,active,,Guizhou University,2026-08-07T07:34:25Z,2026-08-07T07:34:25Z,local-admin
 institution:905a9d3ec1d52c0b,Guizhou Minzu University,,university,active,,Guizhou Minzu University,2026-08-07T07:34:25Z,2026-08-07T07:34:25Z,local-admin
 institution:24b3b4892146f8f3,Guizhou Police College,,other,active,,Guizhou Police College,2026-08-07T07:36:19Z,2026-08-07T07:36:19Z,local-admin
-institution:b4ddcbb2ba993b21,"Antgroup, Hangzhou, China",,other,active,,"Antgroup, Hangzhou, China",2026-08-07T07:47:42Z,2026-08-07T07:47:42Z,local-admin
 institution:0094b55826d7cf3e,HKU Shanghai Intelligent Computing Research Center,,other,active,,HKU Shanghai Intelligent Computing Research Center,2026-08-07T08:53:00Z,2026-08-07T08:53:00Z,local-admin
 institution:fe6f0cc7c1924a6a,Hangzhou Institute for Advanced Study,,other,active,institution:69309405e04976ec,Hangzhou Institute for Advanced Study,2026-08-07T08:54:28Z,2026-08-07T09:04:23Z,local-admin
 institution:34697ffbc06b8534,MEGVII Technology,,company,active,,MEGVII Technology,2026-08-07T08:56:07Z,2026-08-07T08:56:07Z,local-admin
@@ -647,3 +645,4 @@ institution:4c6b8eaa9cee97d7,Indiana University,,university,active,,Indiana Univ
 institution:bcff30a7f8b18e0a,"Upper Hand, Inc.",,company,active,,"Upper Hand, Inc.",2026-08-26T11:11:34Z,2026-08-26T11:11:34Z,local-admin
 institution:e3c54da54efe6e7e,"ACE Rent A Car Reservations, Inc.",,company,active,,"ACE Rent A Car Reservations, Inc.",2026-08-26T11:11:34Z,2026-08-26T11:11:34Z,local-admin
 institution:885fab7ed0f92891,Zhengzhou University,ZZU,university,active,,Zhengzhou University,2026-08-26T11:11:34Z,2026-08-26T11:11:34Z,local-admin
+institution:807ee51b6afcf8f2,Institute of Artificial Intelligence,,other,active,,Institute of Artificial Intelligence,2026-08-26T21:31:19Z,2026-08-26T21:31:19Z,local-admin
