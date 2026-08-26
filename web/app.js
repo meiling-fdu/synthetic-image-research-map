@@ -550,6 +550,7 @@ function recordInstitutionIdentities(record) {
       institution: affiliation.name || affiliation.institution || affiliation.institution_name,
       institution_id: affiliation.institution_id || affiliation.canonical_institution_id,
       canonical_institution_name: affiliation.canonical_name,
+      abbreviation: affiliation.abbreviation,
     }));
   });
   identities.delete("name:");
@@ -582,6 +583,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
           : recordInstitution(record || {}),
         institution_id: record?.institution_id || "",
         canonical_name: record?.canonical_institution_name || "",
+        abbreviation: record?.abbreviation || "",
         institution_type: record?.institution_type || "",
         country: record?.country || "",
         region: record?.region || "",
@@ -591,6 +593,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
         institution: currentInstitution.name,
         institution_id: currentInstitution.institution_id,
         canonical_institution_name: currentInstitution.canonical_name,
+        abbreviation: currentInstitution.abbreviation,
       })
     : "";
   const affiliationsByIdentity = new Map();
@@ -601,13 +604,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
       ? { name: rawAffiliation }
       : rawAffiliation || {};
     const raw = normalizeCountryRegionRecord(rawValue);
-    const institution = String(
-      raw.name
-      || raw.canonical_name
-      || raw.institution
-      || raw.institution_name
-      || "",
-    ).trim();
+    const institution = InstitutionDisplay.formatRecord(raw);
     if (!institution) {
       return;
     }
@@ -615,6 +612,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
       institution,
       institution_id: raw.institution_id || raw.canonical_institution_id || "",
       canonical_institution_name: raw.canonical_name || "",
+      abbreviation: raw.abbreviation || "",
       city: raw.city || "",
       region: raw.region || "",
       country: raw.country || "",
@@ -627,6 +625,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
         institutionId: String(
           raw.institution_id || raw.canonical_institution_id || "",
         ).trim(),
+        abbreviation: String(raw.abbreviation || "").trim(),
         institutionType: normalizeInstitutionType(raw.institution_type || raw.type),
         country: String(raw.country || "").trim(),
         region: String(raw.region || "").trim(),
@@ -831,7 +830,11 @@ function renderPaperAuthors(
 }
 
 function institutionFilterButtonHtml(affiliation) {
-  const label = String(affiliation.institution || affiliation.name || "").trim();
+  const label = InstitutionDisplay.formatRecord({
+    canonical_name: affiliation.canonicalName || affiliation.canonical_name,
+    abbreviation: affiliation.abbreviation,
+    institution: affiliation.institution || affiliation.name,
+  });
   if (!label) {
     return "";
   }
@@ -844,7 +847,11 @@ function institutionFilterButtonHtml(affiliation) {
 }
 
 function institutionFocusButtonHtml(affiliation) {
-  const label = String(affiliation.institution || affiliation.name || "").trim();
+  const label = InstitutionDisplay.formatRecord({
+    canonical_name: affiliation.canonicalName || affiliation.canonical_name,
+    abbreviation: affiliation.abbreviation,
+    institution: affiliation.institution || affiliation.name,
+  });
   if (!label) return "";
   const identity = institutionIdentity({
     institution: label,
@@ -1235,7 +1242,7 @@ function paperIdentity(record) {
 }
 
 function recordInstitution(record) {
-  return String(record.institution_name || record.institution || "").trim();
+  return InstitutionDisplay.formatRecord(record);
 }
 
 function recordCountry(record) {
@@ -1412,6 +1419,7 @@ function dimensionAffiliations(record) {
       institution: value.name || value.institution || value.institution_name,
       institution_id: value.institution_id || value.canonical_institution_id,
       canonical_institution_name: value.canonical_name,
+      abbreviation: value.abbreviation,
     });
     if (identity !== "name:" && !unique.has(identity)) unique.set(identity, value);
   });
@@ -1485,6 +1493,7 @@ function recordMatchesInstitutionDimensions(
           institution_id: affiliation.institution_id
             || affiliation.canonical_institution_id,
           canonical_institution_name: affiliation.canonical_name,
+          abbreviation: affiliation.abbreviation,
         }));
       const matchesCountry = selectedCountry === "all"
         || countriesForRecord(affiliation, true).includes(selectedCountry);
@@ -1817,6 +1826,7 @@ function buildInstitutionSearchIndex(
       const affiliationRecord = {
         institution: affiliation.name || affiliation.institution || affiliation.institution_name,
         canonical_institution_name: affiliation.canonical_name,
+        abbreviation: affiliation.abbreviation,
         institution_id: affiliation.institution_id || affiliation.canonical_institution_id,
       };
       const name = affiliationRecord.canonical_institution_name

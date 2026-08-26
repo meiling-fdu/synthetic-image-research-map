@@ -1725,13 +1725,13 @@ function openInstitutionEvidence(item) {
   const relationshipSection = evidenceSection("Institution relationships");
   (evidence.relationships || []).forEach((relationship) => {
     const heading = document.createElement("h4");
-    heading.textContent = relationship.canonical_name || relationship.institution_id;
+    heading.textContent = institutionContextLabel(relationship) || relationship.institution_id;
     relationshipSection.append(heading);
     appendEvidenceFields(relationshipSection, [
       ["Institution ID", relationship.institution_id],
       ["Aliases", (relationship.aliases || []).join("; ")],
-      ["Parent", relationship.parent ? `${relationship.parent.canonical_name || relationship.parent.institution_id} (${relationship.parent.institution_id})` : ""],
-      ["Children", (relationship.children || []).map((child) => `${child.canonical_name || child.institution_id} (${child.institution_id})`).join("; ")],
+      ["Parent", relationship.parent ? `${institutionContextLabel(relationship.parent) || relationship.parent.institution_id} (${relationship.parent.institution_id})` : ""],
+      ["Children", (relationship.children || []).map((child) => `${institutionContextLabel(child) || child.institution_id} (${child.institution_id})`).join("; ")],
     ]);
   });
   if (!(evidence.relationships || []).length) relationshipSection.append(evidenceList([]));
@@ -2368,10 +2368,10 @@ function renderInstitutionManagement() {
     const hierarchy = document.createElement("td");
     const aliases = (institution.aliases || []).join(", ") || "No aliases";
     const parent = institution.parent
-      ? `${institution.parent.canonical_name} (${institution.parent.institution_id})`
+      ? `${institutionContextLabel(institution.parent)} (${institution.parent.institution_id})`
       : "None";
     const descendants = (institution.descendants || []).map(
-      (descendant) => `${descendant.canonical_name} (${descendant.institution_id})`,
+      (descendant) => `${institutionContextLabel(descendant)} (${descendant.institution_id})`,
     ).join(", ") || "None";
     hierarchy.textContent = `${aliases} · Parent: ${parent} · Descendants: ${descendants}`;
     const status = document.createElement("td");
@@ -2527,7 +2527,7 @@ function closeInstitutionMergeDialog() {
 function openInstitutionMergeDialog(source) {
   state.institutionMerge = { source, target: null, submitting: false };
   elements["institution-merge-form"].reset();
-  elements["institution-merge-source-label"].textContent = source.canonical_name;
+  elements["institution-merge-source-label"].textContent = institutionContextLabel(source);
   elements["institution-merge-target-step"].hidden = false;
   elements["institution-merge-confirm-step"].hidden = true;
   elements["institution-merge-submit"].disabled = true;
@@ -2593,9 +2593,9 @@ function resolveInstitutionMergeTarget() {
       throw new Error("The target institution must be active in the canonical registry.");
     }
     state.institutionMerge.target = target;
-    elements["institution-merge-source-name"].textContent = source.canonical_name;
+    elements["institution-merge-source-name"].textContent = institutionContextLabel(source);
     elements["institution-merge-source-id"].textContent = shortInstitutionId(source.institution_id);
-    elements["institution-merge-target-name"].textContent = target.canonical_name;
+    elements["institution-merge-target-name"].textContent = institutionContextLabel(target);
     elements["institution-merge-target-id"].textContent = shortInstitutionId(target.institution_id);
     const locationConflict = institutionMergeHasLocationConflict();
     elements["institution-merge-location-resolution"].hidden = !locationConflict;
@@ -2789,7 +2789,7 @@ function selectCanonicalInstitutionLocation(detail) {
   renderLocationActions();
   renderCanonicalLocationContext(detail);
   elements["confirmed-city"].focus();
-  showNotice(`Editing location for ${institution.canonical_name}; identity and mappings remain unchanged.`);
+  showNotice(`Editing location for ${institutionContextLabel(institution)}; identity and mappings remain unchanged.`);
 }
 
 function selectConfirmedLocationRecord() {
@@ -5941,9 +5941,7 @@ function mappingInstitutionLocationLabel(institution) {
 }
 
 function institutionContextLabel(institution) {
-  const canonical = text(institution.canonical_name);
-  const abbreviation = text(institution.abbreviation);
-  return canonical && abbreviation ? `${canonical} (${abbreviation})` : canonical;
+  return InstitutionDisplay.formatRecord(institution);
 }
 
 function mappingInstitutionOptionValue(institution) {

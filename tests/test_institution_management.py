@@ -593,6 +593,27 @@ class InstitutionManagementTests(unittest.TestCase):
             mapping = next(csv.DictReader(handle))
         self.assertEqual(mapping["institution_id"], self.certh_id)
 
+    def test_merge_preserves_source_abbreviation_when_target_has_none(self):
+        with self.institutions.open(encoding="utf-8", newline="") as handle:
+            institutions = list(csv.DictReader(handle))
+        institutions[0]["abbreviation"] = "CERTH"
+        write_csv(self.institutions, INSTITUTION_COLUMNS, institutions)
+
+        result = merge_institutions(
+            self.certh_id, self.amazon_id,
+            confirmation=f"REPLACE {CERTH} WITH {AMAZON} GLOBALLY",
+            review_note="Confirmed duplicate fixture.",
+            institutions_path=self.institutions, mappings_path=self.mappings,
+            aliases_path=self.aliases, locations_path=self.locations,
+            location_reviews_path=self.location_reviews,
+            location_audit_path=self.location_audits,
+            hierarchy_path=self.hierarchy,
+            search_relationships_path=self.search_relationships,
+            review_queue_path=self.review_queue, audit_path=self.audits,
+        )
+
+        self.assertEqual(result["target"]["abbreviation"], "CERTH")
+
     def test_merge_retires_logical_duplicate_mapping_instead_of_creating_two(self):
         with self.mappings.open(encoding="utf-8", newline="") as handle:
             source_mapping = next(csv.DictReader(handle))

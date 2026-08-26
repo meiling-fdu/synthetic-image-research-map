@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-25T19:36:51Z"
+    "public_preview_generated_at": "2026-08-25T20:17:00Z"
   },
   "records": [
     {
@@ -4251,7 +4251,10 @@
             "Symeon Papadopoulos"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -4539,13 +4542,15 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
           "country_code": "",
           "region": "Central Macedonia",
-          "location_display": "Central Macedonia, Greece"
+          "location_display": "Central Macedonia, Greece",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -7102,7 +7107,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Centre for Research and Technology Hellas"
-          ]
+          ],
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "author_institution_indices": [
@@ -7173,7 +7181,7 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
@@ -7182,7 +7190,9 @@
           "location_display": "Central Macedonia, Greece",
           "source_institution_names": [
             "Centre for Research and Technology Hellas"
-          ]
+          ],
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "current_institution": null,
@@ -12980,6 +12990,9 @@
           "affiliation_order": 1
         }
       ],
+      "search_institution_ids": [
+        "institution:e721b03b6f6c172d"
+      ],
       "affiliations": [
         {
           "index": 1,
@@ -12993,10 +13006,7 @@
           "location_display": "Anhui, China"
         }
       ],
-      "current_institution": null,
-      "search_institution_ids": [
-        "institution:e721b03b6f6c172d"
-      ]
+      "current_institution": null
     },
     {
       "title": "CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection",
@@ -17215,7 +17225,10 @@
             "Jang-Ho Choi"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Korea AI Safety Institute",
+          "canonical_institution_name": "Korea AI Safety Institute",
+          "abbreviation": "AISI"
         },
         {
           "index": 2,
@@ -17428,13 +17441,15 @@
         {
           "index": 1,
           "name": "Korea AI Safety Institute (AISI)",
-          "canonical_name": "Korea AI Safety Institute (AISI)",
+          "canonical_name": "Korea AI Safety Institute",
           "institution_id": "institution:696e90c102571ea3",
           "institution_type": "research_unit",
           "country": "South Korea",
           "country_code": "",
           "region": "Gyeonggi-do",
-          "location_display": "Gyeonggi-do, South Korea"
+          "location_display": "Gyeonggi-do, South Korea",
+          "canonical_institution_name": "Korea AI Safety Institute",
+          "abbreviation": "AISI"
         },
         {
           "index": 2,
@@ -35633,20 +35648,6 @@
       "aggregated_institution_types": [
         "university"
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Shanghai Jiao Tong University",
-          "canonical_name": "Shanghai Jiao Tong University",
-          "institution_id": "institution:fccd5d0ac9cc52f9",
-          "institution_type": "university",
-          "country": "China",
-          "country_code": "",
-          "region": "Shanghai",
-          "location_display": "Shanghai, China"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Yuefan Li",
@@ -35707,7 +35708,21 @@
       "search_institution_ids": [
         "institution:b0b93bb53a8b88c1",
         "institution:fccd5d0ac9cc52f9"
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Shanghai Jiao Tong University",
+          "canonical_name": "Shanghai Jiao Tong University",
+          "institution_id": "institution:fccd5d0ac9cc52f9",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Shanghai",
+          "location_display": "Shanghai, China"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:d8df0e4505f5d38ebb28",
@@ -39186,7 +39201,7 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
@@ -39195,7 +39210,9 @@
           "location_display": "Greece",
           "source_institution_names": [
             "Information Technologies Institute"
-          ]
+          ],
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "current_institution": null,
@@ -39217,7 +39234,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Information Technologies Institute"
-          ]
+          ],
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "author_affiliation_indices": [
@@ -42294,7 +42314,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Mohamed bin Zayed University of Artificial Intelligence"
-          ]
+          ],
+          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "canonical_institution_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "abbreviation": "MBZUAI"
         },
         {
           "index": 2,
@@ -42421,11 +42444,15 @@
           "affiliation_order": 2
         }
       ],
+      "search_institution_ids": [
+        "institution:f04b96a9716ab2f4",
+        "institution:02e0cb0a82c051ec"
+      ],
       "affiliations": [
         {
           "index": 1,
           "name": "Mohamed bin Zayed University of Artificial Intelligence (MBZUAI)",
-          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence (MBZUAI)",
+          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence",
           "institution_id": "institution:f04b96a9716ab2f4",
           "institution_type": "university",
           "country": "United Arab Emirates",
@@ -42434,7 +42461,9 @@
           "location_display": "Abu Dhabi, United Arab Emirates",
           "source_institution_names": [
             "Mohamed bin Zayed University of Artificial Intelligence"
-          ]
+          ],
+          "canonical_institution_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "abbreviation": "MBZUAI"
         },
         {
           "index": 2,
@@ -42448,11 +42477,7 @@
           "location_display": "Victoria, Australia"
         }
       ],
-      "current_institution": null,
-      "search_institution_ids": [
-        "institution:f04b96a9716ab2f4",
-        "institution:02e0cb0a82c051ec"
-      ]
+      "current_institution": null
     },
     {
       "paper_id": "curated:b45849aa3f89cc8b64ef",
@@ -45968,20 +45993,6 @@
       "aggregated_institution_types": [
         "university"
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "San Jose State University",
-          "canonical_name": "San Jose State University",
-          "institution_id": "institution:4fd673972df51513",
-          "institution_type": "university",
-          "country": "United States",
-          "country_code": "",
-          "region": "California",
-          "location_display": "California, United States"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Shivank Singh Thakur",
@@ -46019,7 +46030,21 @@
       ],
       "search_institution_ids": [
         "institution:4fd673972df51513"
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "San Jose State University",
+          "canonical_name": "San Jose State University",
+          "institution_id": "institution:4fd673972df51513",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "California",
+          "location_display": "California, United States"
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:beb92721c8ba0d0c4231",
@@ -47908,6 +47933,11 @@
           "affiliation_order": 3
         }
       ],
+      "search_institution_ids": [
+        "institution:bf6195b78f6dc951",
+        "institution:7b971ad17fd639eb",
+        "institution:ad9c8964d01f80d8"
+      ],
       "affiliations": [
         {
           "index": 1,
@@ -47943,12 +47973,7 @@
           "location_display": "Guangdong, China"
         }
       ],
-      "current_institution": null,
-      "search_institution_ids": [
-        "institution:bf6195b78f6dc951",
-        "institution:7b971ad17fd639eb",
-        "institution:ad9c8964d01f80d8"
-      ]
+      "current_institution": null
     },
     {
       "paper_id": "curated:0400c6b857f88ce96704",
@@ -53427,7 +53452,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "University of Petroleum and Energy Studies"
-          ]
+          ],
+          "canonical_name": "University of Petroleum and Energy Studies",
+          "canonical_institution_name": "University of Petroleum and Energy Studies",
+          "abbreviation": "UPES"
         },
         {
           "index": 4,
@@ -53441,7 +53469,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Mohamed bin Zayed University of Artificial Intelligence"
-          ]
+          ],
+          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "canonical_institution_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "abbreviation": "MBZUAI"
         }
       ],
       "author_institution_indices": [
@@ -53698,7 +53729,7 @@
         {
           "index": 3,
           "name": "University of Petroleum and Energy Studies (UPES)",
-          "canonical_name": "University of Petroleum and Energy Studies (UPES)",
+          "canonical_name": "University of Petroleum and Energy Studies",
           "institution_id": "institution:018c503420feda75",
           "institution_type": "university",
           "country": "India",
@@ -53707,12 +53738,14 @@
           "location_display": "Uttarakhand, India",
           "source_institution_names": [
             "University of Petroleum and Energy Studies"
-          ]
+          ],
+          "canonical_institution_name": "University of Petroleum and Energy Studies",
+          "abbreviation": "UPES"
         },
         {
           "index": 4,
           "name": "Mohamed bin Zayed University of Artificial Intelligence (MBZUAI)",
-          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence (MBZUAI)",
+          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence",
           "institution_id": "institution:f04b96a9716ab2f4",
           "institution_type": "university",
           "country": "United Arab Emirates",
@@ -53721,7 +53754,9 @@
           "location_display": "Abu Dhabi, United Arab Emirates",
           "source_institution_names": [
             "Mohamed bin Zayed University of Artificial Intelligence"
-          ]
+          ],
+          "canonical_institution_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "abbreviation": "MBZUAI"
         }
       ],
       "current_institution": null
@@ -54059,7 +54094,10 @@
           "source_institution_names": [
             "Vietnam National University Ho Chi Minh City"
           ],
-          "preliminary": true
+          "preliminary": true,
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
+          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+          "abbreviation": "VNU-HCM"
         }
       ],
       "author_institution_indices": [
@@ -54150,7 +54188,7 @@
         {
           "index": 1,
           "name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
-          "canonical_name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
+          "canonical_name": "Vietnam National University Ho Chi Minh City",
           "institution_id": "institution:19d2ee8d44bfb9f0",
           "institution_type": "university",
           "country": "",
@@ -54160,7 +54198,9 @@
           "source_institution_names": [
             "Vietnam National University Ho Chi Minh City"
           ],
-          "preliminary": true
+          "preliminary": true,
+          "canonical_institution_name": "Vietnam National University Ho Chi Minh City",
+          "abbreviation": "VNU-HCM"
         }
       ],
       "current_institution": null,
@@ -55969,7 +56009,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Agency for Science, Technology and Research"
-          ]
+          ],
+          "canonical_name": "Agency for Science, Technology and Research",
+          "canonical_institution_name": "Agency for Science, Technology and Research",
+          "abbreviation": "A*STAR"
         },
         {
           "index": 2,
@@ -56226,7 +56269,7 @@
         {
           "index": 1,
           "name": "Agency for Science, Technology and Research (A*STAR)",
-          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_name": "Agency for Science, Technology and Research",
           "institution_id": "institution:e81a0314e783d8a4",
           "institution_type": "research_unit",
           "country": "Singapore",
@@ -56235,7 +56278,9 @@
           "location_display": "Singapore",
           "source_institution_names": [
             "Agency for Science, Technology and Research"
-          ]
+          ],
+          "canonical_institution_name": "Agency for Science, Technology and Research",
+          "abbreviation": "A*STAR"
         },
         {
           "index": 2,
@@ -56623,6 +56668,11 @@
           "affiliation_order": 3
         }
       ],
+      "search_institution_ids": [
+        "institution:5fc8d686887fa82a",
+        "institution:53e6219d595780e3",
+        "institution:ad9c8964d01f80d8"
+      ],
       "affiliations": [
         {
           "index": 1,
@@ -56658,12 +56708,7 @@
           "location_display": "Guangdong, China"
         }
       ],
-      "current_institution": null,
-      "search_institution_ids": [
-        "institution:5fc8d686887fa82a",
-        "institution:53e6219d595780e3",
-        "institution:ad9c8964d01f80d8"
-      ]
+      "current_institution": null
     },
     {
       "title": "Zooming In on Fakes: A Novel Dataset for Localized AI-Generated Image Detection with Forgery Amplification Approach",
@@ -58782,14 +58827,16 @@
         },
         {
           "index": 4,
-          "name": "University of Petroleum and Energy Studies",
+          "name": "University of Petroleum and Energy Studies (UPES)",
           "canonical_name": "University of Petroleum and Energy Studies",
           "institution_id": "institution:018c503420feda75",
           "institution_type": "university",
           "country": "India",
           "country_code": "",
           "region": "",
-          "location_display": "India"
+          "location_display": "India",
+          "canonical_institution_name": "University of Petroleum and Energy Studies",
+          "abbreviation": "UPES"
         }
       ],
       "current_institution": null,
@@ -58830,13 +58877,16 @@
         {
           "index": 4,
           "institution_id": "institution:018c503420feda75",
-          "institution": "University of Petroleum and Energy Studies",
+          "institution": "University of Petroleum and Energy Studies (UPES)",
           "institution_type": "university",
           "authors": [
             "Hitesh Kumar Sharma"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "University of Petroleum and Energy Studies",
+          "canonical_institution_name": "University of Petroleum and Energy Studies",
+          "abbreviation": "UPES"
         }
       ],
       "author_affiliation_indices": [
@@ -59442,7 +59492,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "University at Buffalo, State University of New York",
+        "University at Buffalo (UB)",
         "Institute of Information Engineering, Chinese Academy of Sciences"
       ],
       "aggregated_country_names": [
@@ -59463,7 +59513,7 @@
           "mapping_id": "mapping:701e78fa5e24e30b0aca",
           "institution_id": "institution:612630c2527bff83",
           "location_id": "",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo",
           "institution_authors": [
             "Yu Cai",
             "Siwei Lyu"
@@ -59492,14 +59542,20 @@
         {
           "index": 1,
           "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo (UB)",
           "institution_type": "university",
           "authors": [
             "Yu Cai",
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         },
         {
           "index": 2,
@@ -59632,7 +59688,7 @@
       "preliminary_affiliations": false,
       "aggregated_locations": [
         {
-          "institution_name": "University at Buffalo, State University of New York",
+          "institution_name": "University at Buffalo (UB)",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
@@ -59679,14 +59735,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
+          "name": "University at Buffalo (UB)",
+          "canonical_name": "University at Buffalo",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "Amherst",
-          "location_display": "Amherst, United States"
+          "location_display": "Amherst, United States",
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         },
         {
           "index": 2,
@@ -59869,7 +59930,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Mohamed bin Zayed University of Artificial Intelligence"
-          ]
+          ],
+          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "canonical_institution_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "abbreviation": "MBZUAI"
         },
         {
           "index": 3,
@@ -60061,7 +60125,7 @@
         {
           "index": 2,
           "name": "Mohamed bin Zayed University of Artificial Intelligence (MBZUAI)",
-          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence (MBZUAI)",
+          "canonical_name": "Mohamed bin Zayed University of Artificial Intelligence",
           "institution_id": "institution:f04b96a9716ab2f4",
           "institution_type": "university",
           "country": "United Arab Emirates",
@@ -60070,7 +60134,9 @@
           "location_display": "Abu Dhabi, United Arab Emirates",
           "source_institution_names": [
             "Mohamed bin Zayed University of Artificial Intelligence"
-          ]
+          ],
+          "canonical_institution_name": "Mohamed bin Zayed University of Artificial Intelligence",
+          "abbreviation": "MBZUAI"
         },
         {
           "index": 3,
@@ -61497,6 +61563,10 @@
         "method",
         "dataset"
       ],
+      "search_institution_ids": [
+        "institution:929ddef9540ec1e7",
+        "institution:3e78e883c14f8bb8"
+      ],
       "affiliations": [
         {
           "index": 1,
@@ -61521,11 +61591,7 @@
           "location_display": "Shanghai, China"
         }
       ],
-      "current_institution": null,
-      "search_institution_ids": [
-        "institution:929ddef9540ec1e7",
-        "institution:3e78e883c14f8bb8"
-      ]
+      "current_institution": null
     },
     {
       "paper_id": "curated:0b34eeaa2b4f5b0a7b3b",
@@ -62484,7 +62550,7 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
@@ -62494,7 +62560,9 @@
           "source_institution_names": [
             "Information Technologies Institute",
             "Centre for Research and Technology Hellas"
-          ]
+          ],
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -62525,7 +62593,10 @@
           "source_institution_names": [
             "Information Technologies Institute",
             "Centre for Research and Technology Hellas"
-          ]
+          ],
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -65206,7 +65277,7 @@
           "location_display": "Abu Dhabi, United Arab Emirates"
         },
         {
-          "institution_name": "Technical University of Madrid",
+          "institution_name": "Technical University of Madrid (UPM)",
           "institution_id": "institution:2d64a600151c6a44",
           "institution_type": "university",
           "country": "Spain",
@@ -65229,7 +65300,7 @@
       "aggregated_institutions": [
         "Polytechnic University of Hauts-de-France",
         "Khalifa University",
-        "Technical University of Madrid",
+        "Technical University of Madrid (UPM)",
         "Sorbonne University Abu Dhabi"
       ],
       "aggregated_institution_types": [
@@ -65341,13 +65412,19 @@
         {
           "index": 3,
           "institution_id": "institution:2d64a600151c6a44",
-          "institution": "Technical University of Madrid",
+          "institution": "Technical University of Madrid (UPM)",
           "institution_type": "university",
           "authors": [
             "David Camacho"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Technical University of Madrid"
+          ],
+          "canonical_name": "Technical University of Madrid",
+          "canonical_institution_name": "Technical University of Madrid",
+          "abbreviation": "UPM"
         },
         {
           "index": 4,
@@ -65449,14 +65526,19 @@
         },
         {
           "index": 3,
-          "name": "Technical University of Madrid",
+          "name": "Technical University of Madrid (UPM)",
           "canonical_name": "Technical University of Madrid",
           "institution_id": "institution:2d64a600151c6a44",
           "institution_type": "university",
           "country": "Spain",
           "country_code": "",
           "region": "Madrid",
-          "location_display": "Madrid, Spain"
+          "location_display": "Madrid, Spain",
+          "source_institution_names": [
+            "Technical University of Madrid"
+          ],
+          "canonical_institution_name": "Technical University of Madrid",
+          "abbreviation": "UPM"
         },
         {
           "index": 4,
@@ -67085,7 +67167,7 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "University at Buffalo, State University of New York",
+        "University at Buffalo (UB)",
         "Institute of Information Engineering, Chinese Academy of Sciences"
       ],
       "aggregated_country_names": [
@@ -67105,7 +67187,7 @@
         {
           "index": 1,
           "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo (UB)",
           "institution_type": "university",
           "authors": [
             "Yu Cai",
@@ -67113,7 +67195,13 @@
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         },
         {
           "index": 2,
@@ -67259,7 +67347,7 @@
       "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
       "aggregated_locations": [
         {
-          "institution_name": "University at Buffalo, State University of New York",
+          "institution_name": "University at Buffalo (UB)",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
@@ -67307,7 +67395,7 @@
           "mapping_id": "mapping:17a3a333642cadbae30b",
           "institution_id": "institution:612630c2527bff83",
           "location_id": "",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo",
           "institution_authors": [
             "Yu Cai",
             "Shan Jia",
@@ -67340,14 +67428,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
+          "name": "University at Buffalo (UB)",
+          "canonical_name": "University at Buffalo",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "Amherst",
-          "location_display": "Amherst, United States"
+          "location_display": "Amherst, United States",
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         },
         {
           "index": 2,
@@ -69283,7 +69376,10 @@
             "Symeon Papadopoulos"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "author_institution_indices": [
@@ -69464,13 +69560,15 @@
         {
           "index": 2,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
           "country_code": "",
           "region": "Central Macedonia",
-          "location_display": "Central Macedonia, Greece"
+          "location_display": "Central Macedonia, Greece",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "current_institution": null
@@ -71329,20 +71427,6 @@
       "aggregated_institution_types": [
         "university"
       ],
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "San Jose State University",
-          "canonical_name": "San Jose State University",
-          "institution_id": "institution:4fd673972df51513",
-          "institution_type": "university",
-          "country": "United States",
-          "country_code": "",
-          "region": "California",
-          "location_display": "California, United States"
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Meien Li",
@@ -71369,7 +71453,21 @@
       ],
       "search_institution_ids": [
         "institution:4fd673972df51513"
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "San Jose State University",
+          "canonical_name": "San Jose State University",
+          "institution_id": "institution:4fd673972df51513",
+          "institution_type": "university",
+          "country": "United States",
+          "country_code": "",
+          "region": "California",
+          "location_display": "California, United States"
+        }
+      ],
+      "current_institution": null
     },
     {
       "title": "Detecting AI-Generated Images Using a Hybrid ResNet-SE Attention Model",
@@ -81172,7 +81270,7 @@
       "aggregated_institutions": [
         "Zhejiang University",
         "Hangzhou High-Tech Zone (Binjiang) Institute of Blockchain and Data Security",
-        "University at Buffalo, State University of New York"
+        "University at Buffalo (UB)"
       ],
       "aggregated_country_names": [
         "China",
@@ -81220,7 +81318,7 @@
           "mapping_id": "mapping:6605eb8d4eabbe32a5ad",
           "institution_id": "institution:612630c2527bff83",
           "location_id": "",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo",
           "institution_authors": [
             "Siwei Lyu",
             "Defang Chen"
@@ -81260,14 +81358,20 @@
         {
           "index": 3,
           "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo (UB)",
           "institution_type": "university",
           "authors": [
             "Siwei Lyu",
             "Defang Chen"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         }
       ],
       "author_institution_indices": [
@@ -81411,7 +81515,7 @@
           "location_display": "Zhejiang, China"
         },
         {
-          "institution_name": "University at Buffalo, State University of New York",
+          "institution_name": "University at Buffalo (UB)",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
@@ -81471,14 +81575,19 @@
         },
         {
           "index": 3,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
+          "name": "University at Buffalo (UB)",
+          "canonical_name": "University at Buffalo",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "Amherst",
-          "location_display": "Amherst, United States"
+          "location_display": "Amherst, United States",
+          "source_institution_names": [
+            "University at Buffalo"
+          ],
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         }
       ],
       "current_institution": null
@@ -90395,7 +90504,10 @@
             "Mirko Zaffaroni"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Center for Artificial Intelligence",
+          "canonical_institution_name": "Center for Artificial Intelligence",
+          "abbreviation": "CENTAI"
         },
         {
           "index": 2,
@@ -90525,13 +90637,15 @@
         {
           "index": 1,
           "name": "Center for Artificial Intelligence (CENTAI)",
-          "canonical_name": "Center for Artificial Intelligence (CENTAI)",
+          "canonical_name": "Center for Artificial Intelligence",
           "institution_id": "institution:6e9fae05d0f9bbc3",
           "institution_type": "research_unit",
           "country": "Italy",
           "country_code": "",
           "region": "Piedmont",
-          "location_display": "Piedmont, Italy"
+          "location_display": "Piedmont, Italy",
+          "canonical_institution_name": "Center for Artificial Intelligence",
+          "abbreviation": "CENTAI"
         },
         {
           "index": 2,
@@ -91449,7 +91563,7 @@
         "McGill University",
         "Mila - Quebec Artificial Intelligence Institute",
         "Université de Montréal",
-        "IVADO"
+        "Institute for Data Valorization (IVADO)"
       ],
       "aggregated_country_names": [
         "Canada"
@@ -91513,7 +91627,7 @@
           "mapping_id": "mapping:db93c4839d0faeb9ec93",
           "institution_id": "institution:a4967ac8ddffe56e",
           "location_id": "",
-          "institution": "IVADO",
+          "institution": "Institute for Data Valorization",
           "institution_authors": [
             "Andreea Musulan"
           ],
@@ -91569,13 +91683,19 @@
         {
           "index": 4,
           "institution_id": "institution:a4967ac8ddffe56e",
-          "institution": "IVADO",
+          "institution": "Institute for Data Valorization (IVADO)",
           "institution_type": "other",
           "authors": [
             "Andreea Musulan"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Institute for Data Valorization"
+          ],
+          "canonical_name": "Institute for Data Valorization",
+          "canonical_institution_name": "Institute for Data Valorization",
+          "abbreviation": "IVADO"
         }
       ],
       "author_institution_indices": [
@@ -91705,7 +91825,7 @@
           "location_display": "Quebec, Canada"
         },
         {
-          "institution_name": "IVADO",
+          "institution_name": "Institute for Data Valorization (IVADO)",
           "institution_id": "institution:a4967ac8ddffe56e",
           "institution_type": "other",
           "country": "Canada",
@@ -91863,14 +91983,19 @@
         },
         {
           "index": 4,
-          "name": "IVADO",
-          "canonical_name": "IVADO",
+          "name": "Institute for Data Valorization (IVADO)",
+          "canonical_name": "Institute for Data Valorization",
           "institution_id": "institution:a4967ac8ddffe56e",
           "institution_type": "other",
           "country": "Canada",
           "country_code": "",
           "region": "Quebec",
-          "location_display": "Quebec, Canada"
+          "location_display": "Quebec, Canada",
+          "source_institution_names": [
+            "Institute for Data Valorization"
+          ],
+          "canonical_institution_name": "Institute for Data Valorization",
+          "abbreviation": "IVADO"
         }
       ],
       "current_institution": null
@@ -94332,7 +94457,10 @@
             "Battista Biggio"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "National Interuniversity Consortium for Informatics",
+          "canonical_institution_name": "National Interuniversity Consortium for Informatics",
+          "abbreviation": "CINI"
         }
       ],
       "author_institution_indices": [
@@ -94705,13 +94833,15 @@
         {
           "index": 6,
           "name": "National Interuniversity Consortium for Informatics (CINI)",
-          "canonical_name": "National Interuniversity Consortium for Informatics (CINI)",
+          "canonical_name": "National Interuniversity Consortium for Informatics",
           "institution_id": "institution:b4e88842382d76c1",
           "institution_type": "other",
           "country": "Italy",
           "country_code": "",
           "region": "Lazio",
-          "location_display": "Lazio, Italy"
+          "location_display": "Lazio, Italy",
+          "canonical_institution_name": "National Interuniversity Consortium for Informatics",
+          "abbreviation": "CINI"
         }
       ],
       "current_institution": null
@@ -98292,14 +98422,16 @@
         },
         {
           "index": 2,
-          "name": "University of Petroleum and Energy Studies",
+          "name": "University of Petroleum and Energy Studies (UPES)",
           "canonical_name": "University of Petroleum and Energy Studies",
           "institution_id": "institution:018c503420feda75",
           "institution_type": "university",
           "country": "India",
           "country_code": "",
           "region": "",
-          "location_display": "India"
+          "location_display": "India",
+          "canonical_institution_name": "University of Petroleum and Energy Studies",
+          "abbreviation": "UPES"
         },
         {
           "index": 3,
@@ -98362,13 +98494,16 @@
         {
           "index": 2,
           "institution_id": "institution:018c503420feda75",
-          "institution": "University of Petroleum and Energy Studies",
+          "institution": "University of Petroleum and Energy Studies (UPES)",
           "institution_type": "university",
           "authors": [
             "Akshat Gaurav"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "University of Petroleum and Energy Studies",
+          "canonical_institution_name": "University of Petroleum and Energy Studies",
+          "abbreviation": "UPES"
         },
         {
           "index": 3,
@@ -101637,7 +101772,10 @@
             "Symeon Papadopoulos"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "author_institution_indices": [
@@ -101770,13 +101908,15 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
           "country_code": "",
           "region": "Central Macedonia",
-          "location_display": "Central Macedonia, Greece"
+          "location_display": "Central Macedonia, Greece",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "current_institution": null
@@ -116330,8 +116470,8 @@
       "missing_coordinates": false,
       "coverage_status": "map_ready",
       "aggregated_institutions": [
-        "ISTI-CNR",
-        "CNIT",
+        "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy (ISTI-CNR)",
+        "National Inter-University Consortium for Telecommunications (CNIT)",
         "Universitas Mercatorum",
         "NVIDIA AI Technology Center Italy"
       ],
@@ -116342,7 +116482,6 @@
         "IT"
       ],
       "aggregated_regions": [
-        "Toscany",
         "Tuscany",
         "Lazio"
       ],
@@ -116352,7 +116491,7 @@
           "mapping_id": "mapping:f40ea97c548679e03ace",
           "institution_id": "institution:541450f1f663948c",
           "location_id": "",
-          "institution": "ISTI-CNR",
+          "institution": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
           "institution_authors": [
             "Davide Alessandro Coccomini",
             "Claudio Gennaro",
@@ -116367,7 +116506,7 @@
           "mapping_id": "mapping:ad517bd6745138028756",
           "institution_id": "institution:721b1fe645c5b099",
           "location_id": "",
-          "institution": "CNIT",
+          "institution": "National Inter-University Consortium for Telecommunications",
           "institution_authors": [
             "Roberto Caldelli"
           ],
@@ -116404,7 +116543,7 @@
         {
           "index": 1,
           "institution_id": "institution:541450f1f663948c",
-          "institution": "ISTI-CNR",
+          "institution": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy (ISTI-CNR)",
           "institution_type": "research_unit",
           "authors": [
             "Davide Alessandro Coccomini",
@@ -116413,18 +116552,30 @@
             "Fabrizio Falchi"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy"
+          ],
+          "canonical_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
+          "canonical_institution_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
+          "abbreviation": "ISTI-CNR"
         },
         {
           "index": 2,
           "institution_id": "institution:721b1fe645c5b099",
-          "institution": "CNIT",
+          "institution": "National Inter-University Consortium for Telecommunications (CNIT)",
           "institution_type": "research_unit",
           "authors": [
             "Roberto Caldelli"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "National Inter-University Consortium for Telecommunications"
+          ],
+          "canonical_name": "National Inter-University Consortium for Telecommunications",
+          "canonical_institution_name": "National Inter-University Consortium for Telecommunications",
+          "abbreviation": "CNIT"
         },
         {
           "index": 3,
@@ -116582,17 +116733,17 @@
       "preliminary_affiliations": false,
       "aggregated_locations": [
         {
-          "institution_name": "ISTI-CNR",
+          "institution_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy (ISTI-CNR)",
           "institution_id": "institution:541450f1f663948c",
           "institution_type": "research_unit",
           "country": "Italy",
           "country_code": "IT",
-          "region": "Toscany",
+          "region": "Tuscany",
           "region_code": "",
-          "location_display": "Toscany, Italy"
+          "location_display": "Tuscany, Italy"
         },
         {
-          "institution_name": "CNIT",
+          "institution_name": "National Inter-University Consortium for Telecommunications (CNIT)",
           "institution_id": "institution:721b1fe645c5b099",
           "institution_type": "research_unit",
           "country": "Italy",
@@ -116651,25 +116802,35 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "ISTI-CNR",
-          "canonical_name": "ISTI-CNR",
+          "name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy (ISTI-CNR)",
+          "canonical_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
           "institution_id": "institution:541450f1f663948c",
           "institution_type": "research_unit",
           "country": "Italy",
           "country_code": "",
-          "region": "Toscany",
-          "location_display": "Toscany, Italy"
+          "region": "Tuscany",
+          "location_display": "Tuscany, Italy",
+          "source_institution_names": [
+            "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy"
+          ],
+          "canonical_institution_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
+          "abbreviation": "ISTI-CNR"
         },
         {
           "index": 2,
-          "name": "CNIT",
-          "canonical_name": "CNIT",
+          "name": "National Inter-University Consortium for Telecommunications (CNIT)",
+          "canonical_name": "National Inter-University Consortium for Telecommunications",
           "institution_id": "institution:721b1fe645c5b099",
           "institution_type": "research_unit",
           "country": "Italy",
           "country_code": "",
           "region": "Tuscany",
-          "location_display": "Tuscany, Italy"
+          "location_display": "Tuscany, Italy",
+          "source_institution_names": [
+            "National Inter-University Consortium for Telecommunications"
+          ],
+          "canonical_institution_name": "National Inter-University Consortium for Telecommunications",
+          "abbreviation": "CNIT"
         },
         {
           "index": 3,
@@ -121565,7 +121726,10 @@
             "Mohamed Dahmane"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Computer Research Institute of Montreal",
+          "canonical_institution_name": "Computer Research Institute of Montreal",
+          "abbreviation": "CRIM"
         }
       ],
       "author_institution_indices": [
@@ -121608,13 +121772,15 @@
         {
           "index": 1,
           "name": "Computer Research Institute of Montreal (CRIM)",
-          "canonical_name": "Computer Research Institute of Montreal (CRIM)",
+          "canonical_name": "Computer Research Institute of Montreal",
           "institution_id": "institution:ea16e0a7b9bd2e5e",
           "institution_type": "research_unit",
           "country": "Canada",
           "country_code": "",
           "region": "Quebec",
-          "location_display": "Quebec, Canada"
+          "location_display": "Quebec, Canada",
+          "canonical_institution_name": "Computer Research Institute of Montreal",
+          "abbreviation": "CRIM"
         }
       ],
       "current_institution": null,
@@ -124042,7 +124208,10 @@
             "Information Technologies Institute",
             "Centre for Research and Technology Hellas"
           ],
-          "preliminary": true
+          "preliminary": true,
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -124460,7 +124629,7 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
@@ -124471,7 +124640,9 @@
             "Information Technologies Institute",
             "Centre for Research and Technology Hellas"
           ],
-          "preliminary": true
+          "preliminary": true,
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -127886,7 +128057,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Agency for Science, Technology and Research"
-          ]
+          ],
+          "canonical_name": "Agency for Science, Technology and Research",
+          "canonical_institution_name": "Agency for Science, Technology and Research",
+          "abbreviation": "A*STAR"
         }
       ],
       "author_institution_indices": [
@@ -128097,7 +128271,7 @@
         {
           "index": 3,
           "name": "Agency for Science, Technology and Research (A*STAR)",
-          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_name": "Agency for Science, Technology and Research",
           "institution_id": "institution:e81a0314e783d8a4",
           "institution_type": "research_unit",
           "country": "Singapore",
@@ -128106,7 +128280,9 @@
           "location_display": "Singapore",
           "source_institution_names": [
             "Agency for Science, Technology and Research"
-          ]
+          ],
+          "canonical_institution_name": "Agency for Science, Technology and Research",
+          "abbreviation": "A*STAR"
         }
       ],
       "current_institution": null
@@ -131986,7 +132162,10 @@
             "Symeon Papadopoulos"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "author_institution_indices": [
@@ -132022,13 +132201,15 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
           "country_code": "",
           "region": "Central Macedonia",
-          "location_display": "Central Macedonia, Greece"
+          "location_display": "Central Macedonia, Greece",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "current_institution": null,
@@ -132723,7 +132904,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Instituto de Matemática Pura e Aplicada"
-          ]
+          ],
+          "canonical_name": "Institute for Pure and Applied Mathematics",
+          "canonical_institution_name": "Institute for Pure and Applied Mathematics",
+          "abbreviation": "IMPA"
         },
         {
           "index": 3,
@@ -132957,7 +133141,7 @@
         {
           "index": 2,
           "name": "Institute for Pure and Applied Mathematics (IMPA)",
-          "canonical_name": "Institute for Pure and Applied Mathematics (IMPA)",
+          "canonical_name": "Institute for Pure and Applied Mathematics",
           "institution_id": "institution:0aed8b5908ebcd25",
           "institution_type": "research_unit",
           "country": "Brazil",
@@ -132966,7 +133150,9 @@
           "location_display": "Rio de Janeiro, Brazil",
           "source_institution_names": [
             "Instituto de Matemática Pura e Aplicada"
-          ]
+          ],
+          "canonical_institution_name": "Institute for Pure and Applied Mathematics",
+          "abbreviation": "IMPA"
         },
         {
           "index": 3,
@@ -133312,7 +133498,7 @@
       "aggregated_institutions": [
         "City University of Hong Kong",
         "Shanghai Jiao Tong University",
-        "University at Buffalo, State University of New York"
+        "University at Buffalo (UB)"
       ],
       "aggregated_country_names": [
         "China",
@@ -133355,8 +133541,8 @@
         },
         {
           "index": 3,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
+          "name": "University at Buffalo (UB)",
+          "canonical_name": "University at Buffalo",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
@@ -133367,7 +133553,9 @@
             "University at Buffalo, State University of New York",
             "University at Buffalo"
           ],
-          "preliminary": true
+          "preliminary": true,
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         }
       ],
       "current_institution": null,
@@ -133406,7 +133594,7 @@
         {
           "index": 3,
           "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo (UB)",
           "institution_type": "university",
           "authors": [
             "Shan Jia",
@@ -133418,7 +133606,10 @@
             "University at Buffalo, State University of New York",
             "University at Buffalo"
           ],
-          "preliminary": true
+          "preliminary": true,
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         }
       ],
       "author_institution_indices": [
@@ -133591,9 +133782,9 @@
           "location_display": "China"
         },
         {
-          "institution_name": "University at Buffalo, State University of New York",
+          "institution_name": "University at Buffalo (UB)",
           "institution_id": "institution:612630c2527bff83",
-          "institution_type": "other",
+          "institution_type": "university",
           "country": "United States",
           "country_code": "US",
           "region": "",
@@ -138468,7 +138659,10 @@
             "Symeon Papadopoulos"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "author_institution_indices": [
@@ -138503,13 +138697,15 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
           "country_code": "",
           "region": "Central Macedonia",
-          "location_display": "Central Macedonia, Greece"
+          "location_display": "Central Macedonia, Greece",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         }
       ],
       "current_institution": null,
@@ -139871,7 +140067,10 @@
           "mapping_fallback": false,
           "source_institution_names": [
             "Agency for Science, Technology and Research"
-          ]
+          ],
+          "canonical_name": "Agency for Science, Technology and Research",
+          "canonical_institution_name": "Agency for Science, Technology and Research",
+          "abbreviation": "A*STAR"
         },
         {
           "index": 4,
@@ -140232,7 +140431,7 @@
         {
           "index": 3,
           "name": "Agency for Science, Technology and Research (A*STAR)",
-          "canonical_name": "Agency for Science, Technology and Research (A*STAR)",
+          "canonical_name": "Agency for Science, Technology and Research",
           "institution_id": "institution:e81a0314e783d8a4",
           "institution_type": "research_unit",
           "country": "Singapore",
@@ -140241,7 +140440,9 @@
           "location_display": "Singapore",
           "source_institution_names": [
             "Agency for Science, Technology and Research"
-          ]
+          ],
+          "canonical_institution_name": "Agency for Science, Technology and Research",
+          "abbreviation": "A*STAR"
         },
         {
           "index": 4,
@@ -153725,9 +153926,9 @@
           "location_display": "United States"
         },
         {
-          "institution_name": "University at Buffalo, State University of New York",
+          "institution_name": "University at Buffalo (UB)",
           "institution_id": "institution:612630c2527bff83",
-          "institution_type": "other",
+          "institution_type": "university",
           "country": "United States",
           "country_code": "US",
           "region": "",
@@ -153747,7 +153948,7 @@
       ],
       "aggregated_institutions": [
         "State University of New York",
-        "University at Buffalo, State University of New York",
+        "University at Buffalo (UB)",
         "National Institute of Standards and Technology"
       ],
       "aggregated_institution_types": [
@@ -153790,14 +153991,19 @@
         },
         {
           "index": 2,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
+          "name": "University at Buffalo (UB)",
+          "canonical_name": "University at Buffalo",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         },
         {
           "index": 3,
@@ -153830,7 +154036,7 @@
         {
           "index": 2,
           "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo (UB)",
           "institution_type": "university",
           "authors": [
             "Yan Ju",
@@ -153839,7 +154045,13 @@
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         },
         {
           "index": 3,
@@ -154109,7 +154321,7 @@
         {
           "index": 1,
           "name": "Centre for Research and Technology Hellas (CERTH)",
-          "canonical_name": "Centre for Research and Technology Hellas (CERTH)",
+          "canonical_name": "Centre for Research and Technology Hellas",
           "institution_id": "institution:f841aa8a7a0d29aa",
           "institution_type": "research_unit",
           "country": "Greece",
@@ -154119,7 +154331,9 @@
           "source_institution_names": [
             "Information Technologies Institute",
             "Centre for Research and Technology Hellas"
-          ]
+          ],
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -154151,7 +154365,10 @@
           "source_institution_names": [
             "Information Technologies Institute",
             "Centre for Research and Technology Hellas"
-          ]
+          ],
+          "canonical_name": "Centre for Research and Technology Hellas",
+          "canonical_institution_name": "Centre for Research and Technology Hellas",
+          "abbreviation": "CERTH"
         },
         {
           "index": 2,
@@ -164623,9 +164840,9 @@
       "coverage_status": "map_ready",
       "aggregated_locations": [
         {
-          "institution_name": "University at Buffalo, State University of New York",
+          "institution_name": "University at Buffalo (UB)",
           "institution_id": "institution:612630c2527bff83",
-          "institution_type": "other",
+          "institution_type": "university",
           "country": "United States",
           "country_code": "US",
           "region": "",
@@ -164634,7 +164851,7 @@
         }
       ],
       "aggregated_institutions": [
-        "University at Buffalo, State University of New York"
+        "University at Buffalo (UB)"
       ],
       "aggregated_institution_types": [
         "university"
@@ -164664,14 +164881,19 @@
       "affiliations": [
         {
           "index": 1,
-          "name": "University at Buffalo, State University of New York",
-          "canonical_name": "University at Buffalo, State University of New York",
+          "name": "University at Buffalo (UB)",
+          "canonical_name": "University at Buffalo",
           "institution_id": "institution:612630c2527bff83",
           "institution_type": "university",
           "country": "United States",
           "country_code": "",
           "region": "",
-          "location_display": "United States"
+          "location_display": "United States",
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         }
       ],
       "current_institution": null,
@@ -164679,7 +164901,7 @@
         {
           "index": 1,
           "institution_id": "institution:612630c2527bff83",
-          "institution": "University at Buffalo, State University of New York",
+          "institution": "University at Buffalo (UB)",
           "institution_type": "university",
           "authors": [
             "Yan Ju",
@@ -164689,7 +164911,13 @@
             "Siwei Lyu"
           ],
           "mapping_source": "raw_affiliation",
-          "mapping_fallback": false
+          "mapping_fallback": false,
+          "source_institution_names": [
+            "University at Buffalo, State University of New York"
+          ],
+          "canonical_name": "University at Buffalo",
+          "canonical_institution_name": "University at Buffalo",
+          "abbreviation": "UB"
         }
       ],
       "author_affiliation_indices": [
@@ -181164,6 +181392,13 @@
       "alias_source": "institution-location-review"
     },
     {
+      "alias_name": "IVADO",
+      "canonical_institution_name": "Institute for Data Valorization",
+      "canonical_institution_id": "institution:a4967ac8ddffe56e",
+      "alias_language": "",
+      "alias_source": "english-name-migration"
+    },
+    {
       "alias_name": "Instituto de Matemática Pura e Aplicada",
       "canonical_institution_name": "Institute for Pure and Applied Mathematics",
       "canonical_institution_id": "institution:0aed8b5908ebcd25",
@@ -181192,6 +181427,27 @@
       "alias_source": "maintainer-confirmed"
     },
     {
+      "alias_name": "ISTI",
+      "canonical_institution_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
+      "canonical_institution_id": "institution:541450f1f663948c",
+      "alias_language": "",
+      "alias_source": "institution-name-audit"
+    },
+    {
+      "alias_name": "ISTI-CNR",
+      "canonical_institution_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
+      "canonical_institution_id": "institution:541450f1f663948c",
+      "alias_language": "",
+      "alias_source": "english-name-migration"
+    },
+    {
+      "alias_name": "Istituto di Scienza e Tecnologie dell'Informazione \"A. Faedo\", Consiglio Nazionale delle Ricerche",
+      "canonical_institution_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy",
+      "canonical_institution_id": "institution:541450f1f663948c",
+      "alias_language": "",
+      "alias_source": "institution-name-audit"
+    },
+    {
       "alias_name": "İstanbul Nişantaşı Üniversitesi",
       "canonical_institution_name": "Istanbul Nisantasi University",
       "canonical_institution_id": "institution:cf2e81e79ecee1b8",
@@ -181211,6 +181467,13 @@
       "canonical_institution_id": "institution:357dc1b545173dd5",
       "alias_language": "",
       "alias_source": "local-admin"
+    },
+    {
+      "alias_name": "CNIT",
+      "canonical_institution_name": "National Inter-University Consortium for Telecommunications",
+      "canonical_institution_id": "institution:721b1fe645c5b099",
+      "alias_language": "",
+      "alias_source": "english-name-migration"
     },
     {
       "alias_name": "National Interuniversity Consortium for Informatics (CINI)",
@@ -181311,6 +181574,27 @@
       "alias_source": "english-name-migration"
     },
     {
+      "alias_name": "Polytechnic University of Madrid",
+      "canonical_institution_name": "Technical University of Madrid",
+      "canonical_institution_id": "institution:2d64a600151c6a44",
+      "alias_language": "",
+      "alias_source": "institution-name-audit"
+    },
+    {
+      "alias_name": "Universidad Politécnica de Madrid",
+      "canonical_institution_name": "Technical University of Madrid",
+      "canonical_institution_id": "institution:2d64a600151c6a44",
+      "alias_language": "",
+      "alias_source": "institution-merge"
+    },
+    {
+      "alias_name": "UPM",
+      "canonical_institution_name": "Technical University of Madrid",
+      "canonical_institution_id": "institution:2d64a600151c6a44",
+      "alias_language": "",
+      "alias_source": "institution-name-audit"
+    },
+    {
       "alias_name": "Hong Kong Polytechnic University",
       "canonical_institution_name": "The Hong Kong Polytechnic University",
       "canonical_institution_id": "institution:31f980eaa403801a",
@@ -181354,17 +181638,31 @@
     },
     {
       "alias_name": "State University of New York at Buffalo",
-      "canonical_institution_name": "University at Buffalo, State University of New York",
+      "canonical_institution_name": "University at Buffalo",
       "canonical_institution_id": "institution:612630c2527bff83",
       "alias_language": "",
       "alias_source": "local-admin"
     },
     {
-      "alias_name": "University at Buffalo",
-      "canonical_institution_name": "University at Buffalo, State University of New York",
+      "alias_name": "SUNY Buffalo",
+      "canonical_institution_name": "University at Buffalo",
       "canonical_institution_id": "institution:612630c2527bff83",
       "alias_language": "",
-      "alias_source": "institution-merge"
+      "alias_source": "institution-name-audit"
+    },
+    {
+      "alias_name": "University at Buffalo, State University of New York",
+      "canonical_institution_name": "University at Buffalo",
+      "canonical_institution_id": "institution:612630c2527bff83",
+      "alias_language": "",
+      "alias_source": "english-name-migration"
+    },
+    {
+      "alias_name": "University at Buffalo, The State University of New York",
+      "canonical_institution_name": "University at Buffalo",
+      "canonical_institution_id": "institution:612630c2527bff83",
+      "alias_language": "",
+      "alias_source": "institution-name-audit"
     },
     {
       "alias_name": "Universidade Estadual de Campinas (UNICAMP)",
@@ -181947,12 +182245,14 @@
       ]
     },
     "institution:721b1fe645c5b099": {
-      "canonical_name": "CNIT",
+      "canonical_name": "National Inter-University Consortium for Telecommunications (CNIT)",
       "institution_type": "research_unit",
       "names": [
+        "National Inter-University Consortium for Telecommunications (CNIT)",
         "CNIT"
       ],
       "normalized_names": [
+        "national inter university consortium for telecommunications cnit",
         "cnit"
       ]
     },
@@ -182569,13 +182869,19 @@
       ]
     },
     "institution:541450f1f663948c": {
-      "canonical_name": "ISTI-CNR",
+      "canonical_name": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy (ISTI-CNR)",
       "institution_type": "research_unit",
       "names": [
-        "ISTI-CNR"
+        "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy (ISTI-CNR)",
+        "ISTI-CNR",
+        "ISTI",
+        "Istituto di Scienza e Tecnologie dell'Informazione \"A. Faedo\", Consiglio Nazionale delle Ricerche"
       ],
       "normalized_names": [
-        "isti cnr"
+        "institute of information science and technologies alessandro faedo national research council of italy isti cnr",
+        "isti cnr",
+        "isti",
+        "istituto di scienza e tecnologie dell informazione a faedo consiglio nazionale delle ricerche"
       ]
     },
     "institution:bc52939c5da8ad98": {
@@ -183719,17 +184025,23 @@
       ]
     },
     "institution:612630c2527bff83": {
-      "canonical_name": "University at Buffalo, State University of New York",
+      "canonical_name": "University at Buffalo (UB)",
       "institution_type": "university",
       "names": [
-        "University at Buffalo, State University of New York",
+        "University at Buffalo (UB)",
+        "UB",
         "State University of New York at Buffalo",
-        "University at Buffalo"
+        "SUNY Buffalo",
+        "University at Buffalo, State University of New York",
+        "University at Buffalo, The State University of New York"
       ],
       "normalized_names": [
-        "university at buffalo state university of new york",
+        "university at buffalo ub",
+        "ub",
         "state university of new york at buffalo",
-        "university at buffalo"
+        "suny buffalo",
+        "university at buffalo state university of new york",
+        "university at buffalo the state university of new york"
       ]
     },
     "institution:4cdbeb4bb5d94d04": {
@@ -186981,13 +187293,19 @@
       ]
     },
     "institution:2d64a600151c6a44": {
-      "canonical_name": "Technical University of Madrid",
+      "canonical_name": "Technical University of Madrid (UPM)",
       "institution_type": "university",
       "names": [
-        "Technical University of Madrid"
+        "Technical University of Madrid (UPM)",
+        "UPM",
+        "Polytechnic University of Madrid",
+        "Universidad Politécnica de Madrid"
       ],
       "normalized_names": [
-        "technical university of madrid"
+        "technical university of madrid upm",
+        "upm",
+        "polytechnic university of madrid",
+        "universidad politecnica de madrid"
       ]
     },
     "institution:48441fb89f75bf9d": {
@@ -187124,16 +187442,6 @@
         "shanghai customs college"
       ]
     },
-    "institution:647c89e2c8a671f8": {
-      "canonical_name": "Association Clinique et Thérapeutique Infantile du Val de Marne",
-      "institution_type": "research_unit",
-      "names": [
-        "Association Clinique et Thérapeutique Infantile du Val de Marne"
-      ],
-      "normalized_names": [
-        "association clinique et therapeutique infantile du val de marne"
-      ]
-    },
     "institution:48be4a3c2949fee3": {
       "canonical_name": "Changsha University",
       "institution_type": "university",
@@ -187182,16 +187490,6 @@
       ],
       "normalized_names": [
         "data assurance and communication security"
-      ]
-    },
-    "institution:4e4d723f7fa11734": {
-      "canonical_name": "Universidad Politécnica de Madrid",
-      "institution_type": "university",
-      "names": [
-        "Universidad Politécnica de Madrid"
-      ],
-      "normalized_names": [
-        "universidad politecnica de madrid"
       ]
     },
     "institution:ad93ddd1194b7b31": {
@@ -187501,12 +187799,14 @@
       ]
     },
     "institution:a4967ac8ddffe56e": {
-      "canonical_name": "IVADO",
+      "canonical_name": "Institute for Data Valorization (IVADO)",
       "institution_type": "other",
       "names": [
+        "Institute for Data Valorization (IVADO)",
         "IVADO"
       ],
       "normalized_names": [
+        "institute for data valorization ivado",
         "ivado"
       ]
     },
@@ -187992,6 +188292,7 @@
     "institution:707f47de3ba40880": "institution:966ff12833f90bb0",
     "institution:75d38d0aaffc30fe": "institution:cbc62794911ff31b",
     "institution:a7d5cec59e029db5": "institution:31f980eaa403801a",
+    "institution:4e4d723f7fa11734": "institution:2d64a600151c6a44",
     "institution:5b5759334c2dc53e": "institution:6faf58b52bec4e39",
     "institution:8ab1276f56c9f894": "institution:cbc62794911ff31b",
     "institution:4a7d89a851b0ec21": "institution:2792f975d7b5565e",
@@ -188001,15 +188302,21 @@
     "institution:aa2be35854d57bb8": "institution:f5c8a9b792d3b901",
     "institution:b91c4ceb2690766e": "institution:df7499422b3e4d82",
     "institution:9aae8d70d2d6eed8": "institution:cee70184073782c7",
+    "institution:686f7a8bc10501b6": "institution:541450f1f663948c",
+    "institution:c9ef950bd215ad97": "institution:541450f1f663948c",
     "institution:e7cd2fed8fbf31dc": "institution:ff1a1bc95dbe91a8",
     "institution:ce0e1a06643dbbdd": "institution:0008285766dcabc7",
     "institution:396a4d0a966e0146": "institution:0008285766dcabc7",
     "institution:cfae1927a336ab10": "institution:ff1a1bc95dbe91a8",
     "institution:629f45629442b450": "institution:0008285766dcabc7",
     "institution:6688d0d34a3ee58b": "institution:271362b3e1310a1c",
+    "institution:58cb811a73a88ea3": "institution:2d64a600151c6a44",
+    "institution:4986247086fa3cd1": "institution:2d64a600151c6a44",
     "institution:71291e6e0b68ccef": "institution:942667142da716c5",
     "institution:5569bbb14e2f912a": "institution:942667142da716c5",
     "institution:d2a4352ce61ef116": "institution:612630c2527bff83",
+    "institution:8711db27bd356de1": "institution:612630c2527bff83",
+    "institution:255d0bab819b36aa": "institution:612630c2527bff83",
     "institution:a8e2f77acd78514d": "institution:d046d2c57bb3a863"
   },
   "institution_hierarchy": [
@@ -188085,7 +188392,7 @@
     },
     {
       "parent_institution_id": "institution:19d2ee8d44bfb9f0",
-      "parent_institution_name": "Vietnam National University Ho Chi Minh City",
+      "parent_institution_name": "Vietnam National University Ho Chi Minh City (VNU-HCM)",
       "child_institution_id": "institution:329f39cda413f721",
       "child_institution_name": "Ho Chi Minh City University of Science",
       "relationship_type": "affiliated_institute",

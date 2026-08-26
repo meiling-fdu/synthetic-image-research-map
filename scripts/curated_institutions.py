@@ -561,6 +561,8 @@ def update_institution_identity(
         or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9&+./* -]*", abbreviation)
     ):
         raise CuratedInstitutionError("abbreviation must be a short acronym-style value")
+    if abbreviation and institution_match_key(abbreviation) == institution_match_key(canonical):
+        raise CuratedInstitutionError("abbreviation must differ from canonical_name")
     if re.search(rf"\({re.escape(abbreviation)}\)$", canonical, re.IGNORECASE) if abbreviation else False:
         raise CuratedInstitutionError(
             "canonical_name must not include the abbreviation suffix"
@@ -1001,6 +1003,11 @@ def merge_institutions(
     source_id = clean(source_institution_id)
     target_id = clean(target_institution_id)
     target_name = clean(target.get("canonical_name"))
+    # The target remains the canonical identity, but an established short name
+    # on the retired duplicate must not disappear merely because the fuller
+    # record had not stored it yet.
+    if not clean(target.get("abbreviation")) and clean(source.get("abbreviation")):
+        target["abbreviation"] = clean(source.get("abbreviation"))
     source_parent = clean(source.get("parent_institution_id"))
     target_parent = clean(target.get("parent_institution_id"))
     if (

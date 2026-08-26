@@ -1,13 +1,13 @@
 {
-  "total_canonical_institutions_scanned": 640,
-  "total_candidates_reviewed": 44,
-  "total_approved_renames": 8,
-  "total_names_intentionally_retained": 32,
-  "total_unresolved_manual_review_cases": 4,
-  "total_collision_warnings": 3,
-  "total_aliases_added": 8,
-  "total_affected_papers": 12,
-  "total_affected_relationships": 13,
+  "total_canonical_institutions_scanned": 638,
+  "total_candidates_reviewed": 48,
+  "total_approved_renames": 12,
+  "total_names_intentionally_retained": 36,
+  "total_unresolved_manual_review_cases": 0,
+  "total_collision_warnings": 2,
+  "total_aliases_added": 12,
+  "total_affected_papers": 17,
+  "total_affected_relationships": 19,
   "renamed_institutions": [
     {
       "institution_id": "institution:bbbd3e4c853af6c2",
@@ -30,6 +30,11 @@
       "to": "Istanbul Nisantasi University"
     },
     {
+      "institution_id": "institution:a4967ac8ddffe56e",
+      "from": "IVADO",
+      "to": "Institute for Data Valorization"
+    },
+    {
       "institution_id": "institution:7aae859eefe8edd1",
       "from": "Chang’an University",
       "to": "Chang'an University"
@@ -48,28 +53,22 @@
       "institution_id": "institution:daff50b65ce469a3",
       "from": "Université Paris Cité",
       "to": "Paris Cité University"
-    }
-  ],
-  "unresolved_candidates": [
-    {
-      "institution_id": "institution:647c89e2c8a671f8",
-      "canonical_name": "Association Clinique et Thérapeutique Infantile du Val de Marne",
-      "reason": "No sufficiently authoritative official English canonical name found; do not invent a translation."
     },
     {
-      "institution_id": "institution:4e4d723f7fa11734",
-      "canonical_name": "Universidad Politécnica de Madrid",
-      "reason": "Official English history page uses Technical University of Madrid but that display name is already held by active institution:2d64a600151c6a44; identity resolution is required before any rename. Same-name canonical IDs: institution:2d64a600151c6a44."
+      "institution_id": "institution:721b1fe645c5b099",
+      "from": "CNIT",
+      "to": "National Inter-University Consortium for Telecommunications"
     },
     {
       "institution_id": "institution:541450f1f663948c",
-      "canonical_name": "ISTI-CNR",
-      "reason": "Acronym is an established international display but expansion and English branding require manual confirmation."
+      "from": "ISTI-CNR",
+      "to": "Institute of Information Science and Technologies \"Alessandro Faedo\", National Research Council of Italy"
     },
     {
       "institution_id": "institution:612630c2527bff83",
-      "canonical_name": "University at Buffalo, State University of New York",
-      "reason": "Candidate signals: different_english_alias"
+      "from": "University at Buffalo, State University of New York",
+      "to": "University at Buffalo"
     }
-  ]
+  ],
+  "unresolved_candidates": []
 }

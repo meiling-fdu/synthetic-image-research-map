@@ -3084,6 +3084,7 @@ def public_institution_aliases(
     candidates = []
     for row in aliases:
         alias_name = clean_text(row.get("alias_name"))
+        canonical_id = clean_text(row.get("institution_id"))
         canonical_name = clean_text(row.get("canonical_institution_name"))
         if (
             clean_text(row.get("review_status")) != "confirmed"
@@ -3094,8 +3095,7 @@ def public_institution_aliases(
         candidates.append({
             "alias_name": alias_name,
             "canonical_institution_name": canonical_name,
-            "canonical_institution_id": clean_text(row.get("institution_id"))
-            or stable_institution_id(canonical_name),
+            "canonical_institution_id": canonical_id or stable_institution_id(canonical_name),
             "alias_language": clean_text(row.get("alias_language")),
             "alias_source": clean_text(row.get("alias_source")),
         })
@@ -3230,7 +3230,7 @@ def public_institution_hierarchy(
         and clean_text(row.get("canonical_name"))
     }
     names_by_id.update({
-        institution_id: clean_text(row.get("canonical_name"))
+        institution_id: institution_display_name(row)
         for institution_id, row in active_by_id.items()
     })
     candidates = sorted(
@@ -3301,7 +3301,7 @@ def public_institution_search_relationships(
 ) -> List[Dict[str, str]]:
     """Export directed search expansion without changing identity or hierarchy."""
     active_names = {
-        clean_text(row.get("institution_id")): clean_text(row.get("canonical_name"))
+        clean_text(row.get("institution_id")): institution_display_name(row)
         for row in institutions
         if clean_text(row.get("institution_status")) == "active"
         and clean_text(row.get("institution_id"))
@@ -3519,11 +3519,6 @@ def canonicalize_public_institutions(
             return
         if canonical.get("type"):
             value["institution_type"] = canonical["type"]
-        if (
-            original_name == canonical["name"]
-            and (not canonical["id"] or original_id == canonical["id"])
-        ):
-            return
         if original_name and original_name != canonical["name"]:
             source_names = value.get("source_institution_names")
             if not isinstance(source_names, list):
@@ -3538,8 +3533,11 @@ def canonicalize_public_institutions(
         value[name_field] = canonical["name"]
         if "institution_name" in value:
             value["institution_name"] = canonical["name"]
-        value["canonical_name"] = canonical["name"]
-        value["canonical_institution_name"] = canonical["name"]
+        canonical_full_name = clean_text(canonical.get("canonical_name")) or canonical["name"]
+        value["canonical_name"] = canonical_full_name
+        value["canonical_institution_name"] = canonical_full_name
+        if clean_text(canonical.get("abbreviation")):
+            value["abbreviation"] = clean_text(canonical.get("abbreviation"))
         value["institution_id"] = canonical["id"]
 
     def collapse_stale_alias_shadows(values: Any) -> Any:
@@ -3844,9 +3842,14 @@ def normalize_exported_institution_types(
 ) -> None:
     """Apply one final canonical type source after detail reconstruction."""
     canonical_by_id = {
-        clean_text(row.get("institution_id")): resolve_public_institution_type(
-            row.get("institution_type")
-        )
+        clean_text(row.get("institution_id")): {
+            "canonical_name": clean_text(row.get("canonical_name")),
+            "abbreviation": clean_text(row.get("abbreviation")),
+            "display_name": institution_display_name(row),
+            "institution_type": resolve_public_institution_type(
+                row.get("institution_type")
+            ),
+        }
         for row in institutions
         if clean_text(row.get("institution_status")) == "active"
         and clean_text(row.get("institution_id"))
@@ -3857,7 +3860,17 @@ def normalize_exported_institution_types(
             value.get("institution_id") or value.get("canonical_institution_id")
         )
         if institution_id in canonical_by_id:
-            resolved = canonical_by_id[institution_id]
+            canonical = canonical_by_id[institution_id]
+            resolved = canonical["institution_type"]
+            if canonical["abbreviation"]:
+                name_field = "name" if "name" in value else "institution"
+                if name_field in value:
+                    value[name_field] = canonical["display_name"]
+                if "institution_name" in value:
+                    value["institution_name"] = canonical["display_name"]
+                value["canonical_name"] = canonical["canonical_name"]
+                value["canonical_institution_name"] = canonical["canonical_name"]
+                value["abbreviation"] = canonical["abbreviation"]
         else:
             name = clean_text(
                 value.get("canonical_name") or value.get("canonical_institution_name")

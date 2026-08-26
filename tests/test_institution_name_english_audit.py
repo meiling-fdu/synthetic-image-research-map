@@ -10,7 +10,6 @@ from pathlib import Path
 from scripts.migrate_institution_english_names import (
     AUDIT_COLUMNS,
     build_audit,
-    collision_for,
     load_overrides,
     load_tables,
     normalized_key,
@@ -93,10 +92,7 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
         self.assertEqual(by_name["University of Žilina"]["decision"], "keep")
         self.assertEqual(by_name[PARIS_OLD]["decision"], "rename")
         self.assertEqual(by_name[PARIS_OLD]["proposed_english_name"], PARIS_NEW)
-        self.assertEqual(
-            by_name["Universidad Politécnica de Madrid"]["collision_status"],
-            "existing_canonical_collision",
-        )
+        self.assertNotIn("Universidad Politécnica de Madrid", by_name)
 
     def test_known_paper_mapping_identity_and_raw_affiliation_are_preserved(self):
         mappings = [
@@ -235,37 +231,33 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
             self.assertEqual(digest(tracked), first)
             self.assertIn("Applied renames this run: 0", second_run.stdout)
 
-    def test_unsafe_collision_is_reported_and_not_promoted(self):
+    def test_resolved_madrid_collision_is_represented_as_a_merge(self):
         tables = load_tables(CURATED)
         audit = build_audit(tables, load_overrides(OVERRIDES))
+        self.assertNotIn(
+            "institution:4e4d723f7fa11734",
+            {row["institution_id"] for row in audit},
+        )
         madrid = next(
-            row for row in audit
+            row for row in tables["institutions.csv"]["rows"]
             if row["institution_id"] == "institution:4e4d723f7fa11734"
         )
-        self.assertEqual(madrid["decision"], "review")
-        self.assertEqual(madrid["collision_status"], "existing_canonical_collision")
-        collision, ids = collision_for(
-            madrid["institution_id"],
-            madrid["proposed_english_name"],
-            [
-                row for row in tables["institutions.csv"]["rows"]
-                if row["institution_status"] == "active"
-            ],
-            {
-                row["institution_id"]: row
-                for row in tables["institution_locations.csv"]["rows"]
-            },
-        )
-        self.assertEqual(collision, "existing_canonical_collision")
-        self.assertEqual(ids, ["institution:2d64a600151c6a44"])
+        self.assertEqual(madrid["institution_status"], "merged")
+        aliases = tables["institution_aliases.csv"]["rows"]
+        self.assertTrue(any(
+            row["alias_name"] == "Universidad Politécnica de Madrid"
+            and row["institution_id"] == "institution:2d64a600151c6a44"
+            and row["review_status"] == "confirmed"
+            for row in aliases
+        ))
 
     def test_summary_lists_every_rename_and_unresolved_candidate(self):
         summary = json.loads(
             (ROOT / "data" / "processed" / "institution_english_name_migration_summary.json")
             .read_text(encoding="utf-8")
         )
-        self.assertEqual(summary["total_approved_renames"], 8)
-        self.assertEqual(summary["total_unresolved_manual_review_cases"], 4)
+        self.assertEqual(summary["total_approved_renames"], 12)
+        self.assertEqual(summary["total_unresolved_manual_review_cases"], 0)
         self.assertIn(PARIS_ID, {
             row["institution_id"] for row in summary["renamed_institutions"]
         })

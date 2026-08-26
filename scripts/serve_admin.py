@@ -364,6 +364,10 @@ STATIC_ROUTES = {
         WEB_DIR / "institution_type_labels.js",
         "text/javascript; charset=utf-8",
     ),
+    "/institution_display.js": (
+        WEB_DIR / "institution_display.js",
+        "text/javascript; charset=utf-8",
+    ),
     "/docs/missing_author_mappings_report.md": (
         AUTHOR_MAPPING_MARKDOWN_PATH,
         "text/markdown; charset=utf-8",
