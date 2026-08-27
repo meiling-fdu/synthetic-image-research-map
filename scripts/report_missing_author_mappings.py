@@ -15,8 +15,10 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Set, Tuple
 
 try:
+    from .author_affiliation_reviews import AuthorReviewIndex, load_author_reviews, annotate_author, is_non_institutional
     from .name_matching import canonical_name_key, names_match
 except ImportError:
+    from author_affiliation_reviews import AuthorReviewIndex, load_author_reviews, annotate_author, is_non_institutional
     from name_matching import canonical_name_key, names_match
 
 
@@ -49,6 +51,7 @@ CSV_COLUMNS = (
     "is_curated_paper",
     "total_authors",
     "mapped_authors",
+    "non_institutional_authors",
     "missing_authors",
     "missing_author_names",
     "marker_count",
@@ -333,7 +336,7 @@ def author_coverage(
             names_match(author, mapped_name) for mapped_name in mapped_names
         ):
             mapped += 1
-        else:
+        elif not (isinstance(author, Mapping) and is_non_institutional(author)):
             missing.append(name or "<unnamed author>")
     return len(authors), mapped, missing
 
@@ -393,6 +396,7 @@ def build_report_rows(
     exclusions: Sequence[Mapping[str, Any]] = (),
 ) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
+    reviews = AuthorReviewIndex(load_author_reviews())
     paper_marker_counts = marker_counts(papers, markers)
     for paper in papers:
         curated_matches = matching_rows(paper, curated_papers)
@@ -413,12 +417,19 @@ def build_report_rows(
             for exclusion in matching_rows(paper, exclusions)
         ):
             continue
+        reviewed_paper = {**paper, "authors": [
+            annotate_author(paper, author, reviews) if isinstance(author, Mapping) else author
+            for author in report_authors(paper)
+        ]}
         total, mapped, missing_names = author_coverage(
-            paper,
+            reviewed_paper,
             [mapping.get("institution_authors") for mapping in active_mapping_matches],
         )
         missing = len(missing_names)
-        if mapped == 0:
+        non_institutional = total - mapped - missing
+        if total and not missing:
+            status = "complete"
+        elif mapped == 0:
             status = "zero"
         elif missing:
             status = "partial"
@@ -525,6 +536,7 @@ def build_report_rows(
                 "is_curated_paper": is_curated,
                 "total_authors": total,
                 "mapped_authors": mapped,
+                "non_institutional_authors": non_institutional,
                 "missing_authors": missing,
                 "missing_author_names": "; ".join(missing_names),
                 "marker_count": marker_count,
@@ -618,6 +630,8 @@ def write_markdown_report(path: Path, rows: Sequence[Mapping[str, Any]]) -> None
         f"| Complete mappings | {len(complete)} |",
         f"| Partial mappings | {len(partial)} |",
         f"| Zero mappings | {len(zero)} |",
+        f"| Mapped authors (paper-author occurrences) | {sum(int(row.get('mapped_authors', 0)) for row in rows)} |",
+        f"| Explicitly non-institutional authors | {sum(int(row.get('non_institutional_authors', 0)) for row in rows)} |",
         f"| Total missing author links | {sum(int(row['missing_authors']) for row in rows)} |",
         "",
         "## Highest Priority",

@@ -180,6 +180,8 @@ class AdminAuthorMappingCoverageTests(unittest.TestCase):
                 "partial_mappings": 1,
                 "zero_mappings": 1,
                 "total_missing_author_links": 4,
+                "mapped_authors": 3,
+                "non_institutional_authors": 0,
                 "mapping_coverage_percentage": 33.3,
                 "map_markers_reconciled": 4,
             },

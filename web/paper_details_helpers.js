@@ -121,7 +121,15 @@
         currentAffiliationNumber !== null
         && numbers.includes(currentAffiliationNumber)
       );
-      const authorHtml = `<span class="paper-author${isActive ? " is-active-institution-author is-hover-author" : ""}">${escapeHtml(authorName)}${superscript}</span>`;
+      const nonInstitutional = author.affiliation_status === "non_institutional"
+        && author.affiliation_review?.status === "non_institutional";
+      const roleText = author.affiliation_review?.reason_kind === "contact_only"
+        ? "No institution listed (contact only)"
+        : author.affiliation_review?.source_text;
+      const role = nonInstitutional
+        ? `<span class="author-role" title="Reviewed: no institutional affiliation in the publication"> (${escapeHtml(roleText)})</span>`
+        : "";
+      const authorHtml = `<span class="paper-author${isActive ? " is-active-institution-author is-hover-author" : ""}">${escapeHtml(authorName)}${superscript}${role}</span>`;
       return isActive
         ? `<strong class="current-institution-author">${authorHtml}</strong>`
         : authorHtml;

@@ -19,6 +19,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 try:
+    from .author_affiliation_reviews import AuthorReviewIndex, load_author_reviews, annotate_author, affiliation_counts
     from .curated_export import (
         DEFAULT_CURATED_MAPPINGS_PATH,
         DEFAULT_CURATED_PAPERS_PATH,
@@ -115,6 +116,7 @@ try:
         read_paper_abstracts,
     )
 except ImportError:  # Direct execution from the scripts directory.
+    from author_affiliation_reviews import AuthorReviewIndex, load_author_reviews, annotate_author, affiliation_counts
     from curated_export import (
         DEFAULT_CURATED_MAPPINGS_PATH,
         DEFAULT_CURATED_PAPERS_PATH,
@@ -867,6 +869,7 @@ def add_public_detail_fields(
     is only assigned to one when the source record explicitly names that author
     in ``institution_authors``.
     """
+    author_reviews = AuthorReviewIndex(load_author_reviews())
     map_record_ids = {id(record) for record in map_records}
     grouped: Dict[Tuple[str, Any], List[Dict[str, Any]]] = defaultdict(list)
     for record in [*paper_records, *map_records]:
@@ -1263,7 +1266,13 @@ def add_public_detail_fields(
                         }
                     )
 
-            record["authors"] = author_objects
+            record["authors"] = [annotate_author(record, author, author_reviews) for author in author_objects]
+            record["author_affiliation_counts"] = affiliation_counts(record["authors"])
+            record["affiliation_complete"] = bool(author_objects) and record["author_affiliation_counts"]["unresolved"] == 0
+            if record["affiliation_complete"] and not record["author_affiliation_counts"]["mapped"]:
+                record["missing_affiliation"] = False
+                record["missing_coordinates"] = False
+                record["coverage_status"] = "paper_only_review"
             record["affiliations"] = [dict(item) for item in exported_affiliations]
             record["current_institution"] = (
                 dict(exported_affiliations[current_index - 1])

@@ -661,6 +661,46 @@ In-scope work must combine explicit AI-generated/synthetic image context with de
 
 ## Manual Review and Automatic Labels
 
+### Reviewed author affiliation status
+
+The existing append-only `data/curated/institution_audit_log.csv` also stores
+`action=author_affiliation_review`. Each event identifies exactly one author in
+`affected_authors` and one paper by `paper_id`, with an optional DOI in the JSON
+`confirmation_text`. It retains `evidence_url`, `review_note`, reviewer and date.
+The JSON payload has `status` (`mapped`, `non_institutional`, or `unresolved`),
+`reason_kind`, and exact `source_text`. Institution, mapping and location IDs
+remain blank on the review event; real mapped affiliations use the existing
+mapping table. No fake institution is created for a role or missing affiliation.
+
+`non_institutional` requires an explicit primary-source review and one of
+`independent`, `role_only`, or `contact_only`. The last means the publication
+supplies a separate contact-only entry, not that the person has no employer.
+Geography alone, absent metadata and conflicting sources remain `unresolved`.
+Latest timestamp wins (append order breaks ties); a later reviewed `mapped`
+decision plus a real mapping can resolve a previously unresolved case. Exact
+paper identifiers and normalized full author names are required; fuzzy names,
+email domains, coauthor institutions and current employment are never used.
+
+Public author objects add `affiliation_status` and, for reviewed cases,
+`affiliation_review` with source wording, URL, reason and audit ID. Existing
+author order and `affiliation_indices` are unchanged. Paper and marker records
+add `author_affiliation_counts` and `affiliation_complete`: every author must
+have supported indices or a valid non-institutional review. Old snapshots
+without these additive fields remain readable. Validators reject contradictory
+review/mapping states and malformed non-institutional claims. Reports count
+mapped, explicitly non-institutional and unresolved paper-author occurrences
+separately. Non-institutional authors have no marker or missing-author warning.
+
+For a report-only regeneration that preserves manual files, use:
+
+```text
+python3 scripts/report_missing_author_mappings.py --csv-output data/processed/author_affiliation_review.csv --markdown-output docs/missing_author_mappings_report.md
+```
+
+Admin's live coverage calculation reads the current audit decisions, even when
+its legacy report snapshot predates them. The public author display preserves
+the source role; contact-only cases display “No institution listed (contact only)”.
+
 Automatic labels are preliminary suggestions, not final classifications. They must remain visible, traceable, and editable so that a reviewer can understand and correct them. Future processing should preserve the rule, model, query, or source that produced an automatic decision rather than silently replacing it.
 
 Set `manual_review=true` whenever a value is uncertain or conflicting, including ambiguous paper scope, author identity, institution normalization, affiliation mapping, deduplication, or geocoding. Describe the question in `notes`. After a human resolves the issue, update the reviewed manual record, set `manual_review=false`, and retain enough provenance or notes to explain the decision. An empty value means unknown; it should not be treated as reviewed or inferred automatically.

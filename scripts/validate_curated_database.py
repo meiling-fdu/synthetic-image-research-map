@@ -14,6 +14,7 @@ from dataclasses import dataclass
 from typing import DefaultDict, Dict, Iterable, List, Mapping, Sequence, Tuple
 
 try:
+    from .author_affiliation_reviews import ACTION as AUTHOR_REVIEW_ACTION, review_payload, review_mapping_conflicts
     from .curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
@@ -47,6 +48,7 @@ try:
     from .curated_schema_migrations import migrate_obsolete_location_schema
     from .curated_mappings import canonical_institution_authors, paper_identity_keys
 except ImportError:  # Support direct execution from the repository root.
+    from author_affiliation_reviews import ACTION as AUTHOR_REVIEW_ACTION, review_payload, review_mapping_conflicts
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
@@ -1266,6 +1268,17 @@ def main() -> int:
     search_relationships = datasets.get("institution_search_relationships.csv", [])
     institutions = datasets.get("institutions.csv", [])
     institution_audits = datasets.get("institution_audit_log.csv", [])
+    try:
+        for conflict in review_mapping_conflicts(institution_audits, mappings):
+            add_issue(issues, "ERROR", "institution_audit_log.csv", conflict)
+    except ValueError as error:
+        add_issue(issues, "ERROR", "institution_audit_log.csv", str(error))
+    for row_number, row in enumerate(institution_audits, start=2):
+        if row.get("action") == AUTHOR_REVIEW_ACTION:
+            try:
+                review_payload(row)
+            except ValueError as error:
+                add_issue(issues, "ERROR", "institution_audit_log.csv", str(error), row_number)
     institution_review_queue = datasets.get("institution_review_queue.csv", [])
     review_decisions = datasets.get("review_decisions.csv", [])
     version_merges = datasets.get("paper_version_merges.csv", [])

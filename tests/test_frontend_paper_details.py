@@ -67,6 +67,26 @@ process.stdout.write(JSON.stringify({html}));
             ".paper-details-affiliations", 1
         )[1].split(".result-author-affiliations", 1)[0])
 
+    def test_reviewed_roles_are_visible_without_affiliation_numbers(self):
+        script = r"""
+const helpers = require(process.argv[1]);
+const authors = [
+  {name: "Reid Southen", affiliation_indices: [], affiliation_status: "non_institutional",
+   affiliation_review: {status: "non_institutional", reason_kind: "role_only", source_text: "Concept Artist"}},
+  {name: "Hainan Ren", affiliation_indices: [], affiliation_status: "non_institutional",
+   affiliation_review: {status: "non_institutional", reason_kind: "contact_only", source_text: "Hainan Ren. email only"}},
+  {name: "Jason Li", affiliation_indices: [], affiliation_status: "unresolved"}
+];
+process.stdout.write(helpers.renderPaperAuthors({authors}, String));
+"""
+        result = subprocess.run([str(NODE), "-e", script, str(REPOSITORY / "web/paper_details_helpers.js")],
+                                check=True, capture_output=True, text=True)
+        self.assertIn("Concept Artist", result.stdout)
+        self.assertIn("No institution listed (contact only)", result.stdout)
+        self.assertIn("Jason Li", result.stdout)
+        self.assertNotIn("<sup", result.stdout)
+        self.assertNotIn("is-active-institution-author", result.stdout)
+
     def test_publication_metadata_and_content_follow_reading_order(self):
         details = self.app.split(
             "function paperDetailsHtml(record, relatedEntries) {", 1

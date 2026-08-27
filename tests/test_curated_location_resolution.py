@@ -617,6 +617,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
                     "is_current_marker_author": False,
                     "affiliation_source": "curated_admin",
                     "affiliation_fallback": False,
+                    "affiliation_status": "mapped",
                 },
                 {
                     "name": "Ben Researcher",
@@ -624,6 +625,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
                     "is_current_marker_author": False,
                     "affiliation_source": "unmapped",
                     "affiliation_fallback": False,
+                    "affiliation_status": "unresolved",
                 },
             ],
         )

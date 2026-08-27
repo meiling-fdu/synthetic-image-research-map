@@ -1,0 +1,96 @@
+{
+  "baseline_commit": "c926c18",
+  "author_counts": {
+    "mapped": 2720,
+    "unresolved": 7,
+    "non_institutional": 3
+  },
+  "affiliation_complete_papers": 539,
+  "zero_mapped_author_papers": 0,
+  "queue": {
+    "total_queue_rows": 567,
+    "alias_of_confirmed": 77,
+    "ambiguous": 0,
+    "confirmed": 446,
+    "excluded": 6,
+    "ignore": 33,
+    "pending_review": 5,
+    "needs_coordinates": 5,
+    "needs_coordinate_review": 5,
+    "confirmed_locations_count": 455,
+    "institutions_with_multiple_location_candidates": [
+      "deakin university",
+      "northeastern university",
+      "peng cheng laboratory",
+      "sony ai",
+      "xiaohongshu inc"
+    ],
+    "multiple_location_candidate_count": 5
+  },
+  "relationships": {
+    "ACTIONABLE": 5,
+    "COMPLETE": 1261,
+    "EXCLUDED": 29
+  },
+  "shrinkage": {
+    "previous_papers": 546,
+    "new_papers": 546,
+    "previous_maps": 1261,
+    "new_maps": 1261,
+    "removed_papers": [],
+    "removed_maps": [],
+    "approved_by_baseline": false
+  },
+  "changed_curated_files": [
+    "institution_location_review.csv",
+    "institution_audit_log.csv"
+  ],
+  "changed_review_rows": [
+    {
+      "institution_id": "institution:e07792f5cf49ebda",
+      "fields": [
+        "evidence_source",
+        "evidence_url",
+        "updated_at"
+      ]
+    },
+    {
+      "institution_id": "institution:44469d661cb0034c",
+      "fields": [
+        "evidence_source",
+        "evidence_url",
+        "updated_at"
+      ]
+    },
+    {
+      "institution_id": "institution:2f2a5a5c1021efe4",
+      "fields": [
+        "evidence_source",
+        "updated_at"
+      ]
+    },
+    {
+      "institution_id": "institution:96dd3389141fcf35",
+      "fields": [
+        "evidence_source",
+        "evidence_url",
+        "updated_at"
+      ]
+    },
+    {
+      "institution_id": "institution:1f939a5a9221dfb6",
+      "fields": [
+        "evidence_source",
+        "updated_at"
+      ]
+    }
+  ],
+  "author_order_and_indices_unchanged": true,
+  "all_public_geographic_relationships_unchanged": true,
+  "all_historical_audit_rows_unchanged": true,
+  "inactive_institution_references": [],
+  "duplicate_active_mappings": [],
+  "malformed_csv_rows": [],
+  "malformed_coordinates": [],
+  "canonical_turkiye_count": 0
+}

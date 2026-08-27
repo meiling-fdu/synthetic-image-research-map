@@ -785,7 +785,10 @@ function normalizePaperDetailsRecord(record, context = {}) {
     const explicitIndices = affiliations
       .map((affiliation) => affiliation.number)
       .filter((number) => explicitIndexSet.has(number));
-    const affiliationIndices = explicitIndices.length
+    const nonInstitutional = raw.affiliation_status === "non_institutional"
+      && raw.affiliation_review?.status === "non_institutional"
+      && raw.affiliation_review?.review_id;
+    const affiliationIndices = nonInstitutional ? [] : explicitIndices.length
       ? explicitIndices
       : matchingAuthorMapValue(name, affiliationNumbersByAuthor) || [];
     const isCurrentMarkerAuthor = typeof raw.is_current_marker_author === "boolean"
@@ -803,7 +806,9 @@ function normalizePaperDetailsRecord(record, context = {}) {
     return {
       name,
       affiliation_indices: affiliationIndices,
-      is_current_marker_author: isCurrentMarkerAuthor,
+      is_current_marker_author: nonInstitutional ? false : isCurrentMarkerAuthor,
+      affiliation_status: raw.affiliation_status,
+      affiliation_review: raw.affiliation_review,
     };
   }).filter((author) => author.name);
 

@@ -1172,6 +1172,7 @@ function mappingCoverageRow(row, { includeRank = false } = {}) {
     tr.append(
       mappingTextCell(
         `${formatNumber(row.mapped_authors)} / ${formatNumber(row.total_authors)}`
+        + (row.non_institutional_authors ? `; ${formatNumber(row.non_institutional_authors)} reviewed without institution` : "")
       )
     );
   }

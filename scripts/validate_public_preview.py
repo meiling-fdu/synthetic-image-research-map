@@ -18,8 +18,10 @@ from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 try:
+    from .author_affiliation_reviews import is_non_institutional, author_status_errors, affiliation_counts
     from .curated_schema import VENUE_TYPE_ORDER
 except ImportError:
+    from author_affiliation_reviews import is_non_institutional, author_status_errors, affiliation_counts
     from curated_schema import VENUE_TYPE_ORDER
 
 try:
@@ -1440,10 +1442,14 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
             "and author affiliation numbers are unavailable",
         )
     for author in record.get("authors") or []:
+        if isinstance(author, dict):
+            for message in author_status_errors(author):
+                add_issue(issues, "ERROR", index, title, message + ": " + author_name(author))
         if (
             record.get("affiliations")
             and isinstance(author, dict)
             and not author.get("affiliation_indices")
+            and not is_non_institutional(author)
         ):
             add_issue(
                 issues,
@@ -1452,6 +1458,13 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
                 title,
                 f"author has no institution index: {author_name(author)}",
             )
+    if "author_affiliation_counts" in record:
+        counts = affiliation_counts(record.get("authors") or [])
+        if counts != record["author_affiliation_counts"]:
+            add_issue(issues, "ERROR", index, title, "author affiliation counts disagree with author states")
+        complete = bool(record.get("authors")) and counts["unresolved"] == 0
+        if record.get("affiliation_complete") is not complete:
+            add_issue(issues, "ERROR", index, title, "affiliation_complete disagrees with author states")
     if record.get("affiliations") and not record.get("authors"):
         add_issue(
             issues,

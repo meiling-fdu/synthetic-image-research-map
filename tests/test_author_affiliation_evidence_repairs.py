@@ -12,6 +12,12 @@ import pytest
 
 from scripts.export_public_preview import add_public_detail_fields
 from scripts.public_relationships import ReviewedRelationshipResolver
+from scripts.author_affiliation_reviews import (
+    ACTION, AuthorReviewIndex, annotate_author, affiliation_counts,
+    is_non_institutional, review_payload, author_status_errors, review_mapping_conflicts,
+)
+from scripts.report_missing_author_mappings import author_coverage, build_report_rows
+from scripts.validate_public_preview import validate_paper_record
 
 ROOT = Path(__file__).resolve().parents[1]
 CURATED = ROOT / "data/curated"
@@ -119,7 +125,7 @@ def test_every_new_mapping_has_exact_author_positions_and_unique_order():
         assert sorted(values) == list(range(1, len(values) + 1))
 
 
-def test_unresolved_roster_remains_visible_and_has_durable_review_notes():
+def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
     records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
     unresolved = {a["name"] for p in records for a in p["authors"] if not a["affiliation_indices"]}
     assert unresolved == {
@@ -131,6 +137,109 @@ def test_unresolved_roster_remains_visible_and_has_durable_review_notes():
     assert unresolved <= notes.keys()
     assert all(notes[name]["evidence_url"] and notes[name]["review_note"] for name in unresolved)
     assert all(any(a["affiliation_indices"] for a in p["authors"]) for p in records)
+
+
+def author_review(status="non_institutional", kind="independent", text="Independent Researcher"):
+    return {
+        "action": ACTION, "audit_id": "review:1", "paper_id": "paper:review",
+        "affected_authors": "Ada Example", "evidence_url": "https://example.org/paper.pdf",
+        "review_note": "Reviewed title-page author block", "created_at": "2026-08-27T00:00:00Z",
+        "confirmation_text": json.dumps({"status": status, "reason_kind": kind, "source_text": text}),
+    }
+
+
+@pytest.mark.parametrize("kind,text", [
+    ("independent", "Independent Researcher"), ("role_only", "Concept Artist"),
+    ("contact_only", "Ada Example. e-mail: ada@example.org"),
+])
+def test_explicit_non_institutional_author_is_complete_without_a_fake_institution(kind, text, monkeypatch):
+    review = author_review(kind=kind, text=text)
+    monkeypatch.setattr("scripts.export_public_preview.load_author_reviews", lambda: [review])
+    monkeypatch.setattr("scripts.report_missing_author_mappings.load_author_reviews", lambda: [review])
+    record = {"paper_id": "paper:review", "title": "Example", "year": 2026,
+              "authors": [{"name": "Ada Example", "affiliation_indices": []}],
+              "missing_affiliation": True, "missing_coordinates": True}
+    for _ in range(3):
+        add_public_detail_fields([record], [])
+        assert record["authors"][0]["name"] == "Ada Example"
+        assert record["authors"][0]["affiliation_review"]["source_text"] == text
+        assert is_non_institutional(record["authors"][0])
+        assert record["affiliations"] == []
+        assert record["current_institution"] is None
+        assert record["affiliation_complete"]
+        assert not record["missing_affiliation"] and not record["missing_coordinates"]
+    row, = build_report_rows([record], [], [], [], [])
+    assert (row["mapped_authors"], row["non_institutional_authors"], row["missing_authors"]) == (0, 1, 0)
+    assert row["mapping_status"] == "complete"
+    issues = []
+    validate_paper_record(0, record, issues)
+    assert not [i for i in issues if i.level == "WARNING"]
+
+
+@pytest.mark.parametrize("kind,text", [("conflicting_sources", ""), ("geographic_only", "Hong Kong, China")])
+def test_conflict_and_geography_only_remain_unresolved(kind, text):
+    record = {"paper_id": "paper:review"}
+    author = annotate_author(record, {"name": "Ada Example", "affiliation_indices": []},
+                             AuthorReviewIndex([author_review("unresolved", kind, text)]))
+    assert author["affiliation_status"] == "unresolved"
+    assert author_coverage({"authors": [author]}) == (1, 0, ["Ada Example"])
+
+
+def test_blank_affiliation_does_not_automatically_mean_non_institutional():
+    author = annotate_author({}, {"name": "Ada Example", "affiliation_indices": []}, AuthorReviewIndex())
+    assert author["affiliation_status"] == "unresolved"
+    assert author_status_errors({**author, "affiliation_status": "non_institutional"})
+    assert author_status_errors({**author, "affiliation_status": "non_institutional", "affiliation_review": "unverified"})
+    with pytest.raises(ValueError, match="supported reason kind"):
+        review_payload(author_review(kind="geographic_only", text="Hong Kong, China"))
+
+
+def test_review_requires_exact_paper_and_author_identity_and_cannot_hide_a_mapping():
+    row = author_review()
+    index = AuthorReviewIndex([row])
+    assert index.get({"paper_id": "paper:other"}, "Ada Example") is None
+    assert index.get({"paper_id": "paper:review"}, "A. Example") is None
+    with pytest.raises(ValueError, match="has an institution mapping"):
+        annotate_author({"paper_id": "paper:review"}, {"name": "Ada Example", "affiliation_indices": [1]}, index)
+    assert review_mapping_conflicts([row], [{"paper_id": "paper:review", "mapping_status": "active", "institution_authors": "Ada Example", "mapping_id": "mapping:1"}])
+
+
+def test_mixed_mapped_and_reviewed_non_institutional_paper_is_complete(monkeypatch):
+    monkeypatch.setattr("scripts.report_missing_author_mappings.load_author_reviews", lambda: [author_review()])
+    p = {"paper_id": "paper:review", "authors": [
+        {"name": "Institution Author", "affiliation_indices": [1]},
+        {"name": "Ada Example", "affiliation_indices": []},
+    ]}
+    row, = build_report_rows([p], [], [], [], [])
+    assert (row["mapped_authors"], row["non_institutional_authors"], row["missing_authors"]) == (1, 1, 0)
+    assert row["mapping_status"] == "complete"
+
+
+def test_newer_review_can_reopen_non_institutional_case():
+    old = author_review()
+    new = {**author_review("unresolved", "conflicting_sources", ""), "created_at": "2026-08-28T00:00:00Z"}
+    assert AuthorReviewIndex([new, old]).get({"paper_id": "paper:review"}, "Ada Example")["status"] == "unresolved"
+
+
+def test_new_supported_mapping_can_supersede_an_unresolved_review():
+    old = author_review("unresolved", "conflicting_sources", "")
+    new = {**author_review("mapped"), "created_at": "2026-08-28T00:00:00Z"}
+    author = annotate_author({"paper_id": "paper:review"}, {"name": "Ada Example", "affiliation_indices": [1]}, AuthorReviewIndex([old, new]))
+    assert author["affiliation_status"] == "mapped"
+    assert not review_mapping_conflicts([old, new], [{"paper_id": "paper:review", "mapping_status": "active", "institution_authors": "Ada Example"}])
+
+
+def test_final_repository_author_states_preserve_the_ten_authors():
+    records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
+    noninstitutional = {a["name"] for p in records for a in p["authors"] if is_non_institutional(a)}
+    assert noninstitutional == {"Henan Wang", "Reid Southen", "Hainan Ren"}
+    unresolved = {a["name"] for p in records for a in p["authors"] if a["affiliation_status"] == "unresolved"}
+    assert unresolved == {"Jia Wang", "Yuexuan Tan", "Jason Li", "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Usha Kosarkar"}
+    assert sum(p["affiliation_complete"] for p in records) == 539
+    for p in records:
+        assert p["author_affiliation_counts"] == affiliation_counts(p["authors"])
+    entities = {r["canonical_name"] for r in csv_rows("institutions.csv")}
+    assert not entities & {"Independent Researcher", "Concept Artist", "Freelancer", "Independent"}
 
 
 @pytest.mark.parametrize("doi,confirmation,removed", [

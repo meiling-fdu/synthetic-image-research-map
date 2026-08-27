@@ -148,6 +148,27 @@ def test_location_integrity_and_scoped_naming():
     assert entities["institution:1ee9da20656fd88b"]["canonical_name"] == "Politecnico di Milano"
 
 
+@pytest.mark.parametrize("key,author,city,evidence", [
+    ("44469d661cb0034c", "Jawadul H. Bappy", "", "headquarters"),
+    ("2f2a5a5c1021efe4", "Xiao Meng", "Guangzhou", "510006"),
+    ("e07792f5cf49ebda", "Arjuna Flenner", "China Lake", "Point Mugu"),
+    ("96dd3389141fcf35", "Digvijay Pandey", "Kanpur", "building"),
+    ("1f939a5a9221dfb6", "Jing Liu", "Beijing", "2024"),
+])
+def test_final_public_textual_locations_remain_actionable_without_site_evidence(key, author, city, evidence):
+    iid = "institution:" + key
+    review, = [r for r in rows("institution_location_review") if r["institution_id"] == iid]
+    assert review["institution_authors"] == author
+    assert review["suggested_city"] == city
+    assert evidence in review["evidence_source"]
+    assert review["review_status"] == "pending_review"
+    assert review["coordinate_status"] == "needs_coordinate_review"
+    mapping, = [r for r in rows("author_institution_mappings") if r["institution_id"] == iid]
+    assert not mapping["location_id"]
+    assert not mapping["institution_latitude"] and not mapping["institution_longitude"]
+    assert not locations(key) and not markers(key)
+
+
 def test_audited_legacy_centroid_markers_are_replaced_not_duplicated():
     audit = json.loads((ROOT / "docs/audited_marker_replacements_2026-08-27.json").read_text())
     exported = json.loads((ROOT / "web/data/public_preview_map_data.json").read_text())["records"]

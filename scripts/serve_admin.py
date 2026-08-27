@@ -816,7 +816,7 @@ def load_author_mapping_coverage(
                 "mapping_status": status,
             }
         )
-        for field in ("total_authors", "mapped_authors"):
+        for field in ("total_authors", "mapped_authors", "non_institutional_authors"):
             try:
                 record[field] = int(clean(row.get(field)) or 0)
             except ValueError as error:
@@ -840,6 +840,8 @@ def load_author_mapping_coverage(
         "total_missing_author_links": sum(
             row["missing_authors"] for row in records
         ),
+        "mapped_authors": sum(row["mapped_authors"] for row in records),
+        "non_institutional_authors": sum(row["non_institutional_authors"] for row in records),
         "mapping_coverage_percentage": round(
             (complete / total * 100) if total else 0.0, 1
         ),
