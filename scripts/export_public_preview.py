@@ -657,9 +657,22 @@ def detail_institution_identity(value: Dict[str, Any]) -> str:
 
 def _affiliation_values(record: Dict[str, Any]) -> List[Any]:
     """Normalize legacy scalar/dict affiliations to the current list shape."""
-    raw_affiliations = record.get("affiliations")
+    # The compatibility ``affiliations`` list intentionally omits its author
+    # roster. Prefer the canonical author-bearing list on repeated detail
+    # passes so active mappings without map coordinates keep their paper-level
+    # superscripts even though they cannot emit a marker.
+    canonical_affiliations = record.get("author_institution_affiliations")
+    display_affiliations = record.get("affiliations")
+    if isinstance(canonical_affiliations, list) and isinstance(
+        display_affiliations, list
+    ):
+        # Both forms carry useful, complementary fields: the canonical form
+        # retains authors while the display form retains normalized location
+        # and provenance details. The identity merge below combines them.
+        return [*canonical_affiliations, *display_affiliations]
+    raw_affiliations = canonical_affiliations
     if raw_affiliations in (None, "", []):
-        raw_affiliations = record.get("author_institution_affiliations")
+        raw_affiliations = display_affiliations
     if raw_affiliations in (None, ""):
         return []
     if isinstance(raw_affiliations, list):

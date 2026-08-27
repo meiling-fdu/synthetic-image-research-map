@@ -211,6 +211,19 @@ class InstitutionEnglishNameMigrationTests(unittest.TestCase):
             {locations[row["institution_id"]] for row in northeast},
             {"China", "United States"},
         )
+        find_mapping = next(
+            row for row in rows(CURATED / "author_institution_mappings.csv")
+            if row["mapping_id"] == "mapping:9c18ec68e699f57fc00c"
+        )
+        self.assertEqual(find_mapping["institution_id"], "institution:0008285766dcabc7")
+        self.assertEqual(find_mapping["location_id"], "location:0008285766dcabc77b7e")
+        self.assertEqual(
+            (find_mapping["institution_city"], find_mapping["institution_country"]),
+            ("Shenyang", "China"),
+        )
+        self.assertNotEqual(
+            find_mapping["location_id"], "location:ff1a1bc95dbe91a8a2a3"
+        )
 
     def test_parent_child_edges_are_not_name_identity(self):
         hierarchy = rows(CURATED / "institution_hierarchy.csv")

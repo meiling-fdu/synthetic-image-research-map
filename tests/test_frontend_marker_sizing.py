@@ -15,6 +15,41 @@ NODE = Path(
 
 
 class FrontendMarkerSizingTests(unittest.TestCase):
+    def test_marker_grouping_preserves_distinct_sites_for_one_institution(self):
+        helper = REPOSITORY / "web" / "marker_size_helpers.js"
+        app = (REPOSITORY / "web/app.js").read_text()
+        start = app.index("function markerInstitutionIdentity(")
+        end = app.index("\nfunction canonicalInstitutionIds", start)
+        marker_identity = app[start:end]
+        script = f"""
+const helpers = require(process.argv[1]);
+const institutionIdentity = (record) => `id:${{record.institution_id}}`;
+{marker_identity}
+const base = {{paper: 'paper:1', institution_id: 'institution:deakin'}};
+const records = [
+  {{...base, location_id: 'location:burwood', latitude: -37.8475136, longitude: 145.1149474}},
+  {{...base, location_id: 'location:burwood', latitude: -37.8475136, longitude: 145.1149474}},
+  {{...base, location_id: 'location:waurn-ponds', latitude: -38.1989397, longitude: 144.2969971}},
+];
+const groups = helpers.groupInstitutionRecords(records, markerInstitutionIdentity, (record) => record.paper);
+const coordinateGroups = helpers.groupInstitutionRecords(
+  records.map(({{location_id, ...record}}) => record), markerInstitutionIdentity, (record) => record.paper,
+);
+process.stdout.write(JSON.stringify({{
+  keys: groups.map((group) => group.key),
+  sizes: groups.map((group) => group.records.length),
+  coordinateGroupCount: coordinateGroups.length,
+}}));
+"""
+        completed = subprocess.run(
+            [str(NODE), "-e", script, str(helper)], check=True,
+            capture_output=True, text=True,
+        )
+        result = json.loads(completed.stdout)
+        self.assertEqual(len(result["keys"]), 2)
+        self.assertEqual(result["sizes"], [2, 1])
+        self.assertEqual(result["coordinateGroupCount"], 2)
+
     def test_marker_sizing_and_filtered_unique_counts(self):
         helper = REPOSITORY / "web" / "marker_size_helpers.js"
         script = """

@@ -531,6 +531,17 @@ function institutionIdentity(record) {
   )}`;
 }
 
+function markerInstitutionIdentity(record) {
+  const institution = institutionIdentity(record);
+  const location = String(record?.location_id || "").trim();
+  const coordinates = [
+    record?.latitude ?? record?.lat ?? "",
+    record?.longitude ?? record?.lon ?? "",
+  ].map((value) => String(value).trim()).join(",");
+  const site = location ? `location:${location}` : `coordinates:${coordinates}`;
+  return coordinates === "," && !location ? institution : `${institution}||${site}`;
+}
+
 function recordInstitutionIdentities(record) {
   const identities = new Set();
   if (recordInstitution(record)) {
@@ -846,18 +857,21 @@ function institutionFilterButtonHtml(affiliation) {
   return `<button type="button" class="institution-filter-link" data-institution-filter="${escapeHtml(identity)}" data-institution-label="${escapeHtml(label)}" aria-label="Filter by institution ${escapeHtml(label)}">${escapeHtml(label)}</button>`;
 }
 
-function institutionFocusButtonHtml(affiliation) {
+function institutionFocusButtonHtml(affiliation, markerRecord = null) {
   const label = InstitutionDisplay.formatRecord({
     canonical_name: affiliation.canonicalName || affiliation.canonical_name,
     abbreviation: affiliation.abbreviation,
     institution: affiliation.institution || affiliation.name,
   });
   if (!label) return "";
-  const identity = institutionIdentity({
+  const institutionRecord = {
     institution: label,
     institution_id: affiliation.institutionId || affiliation.institution_id,
     canonical_institution_name: affiliation.canonicalName || affiliation.canonical_name,
-  });
+  };
+  const identity = markerRecord
+    ? markerInstitutionIdentity({ ...institutionRecord, ...markerRecord })
+    : institutionIdentity(institutionRecord);
   return `<button type="button" class="institution-filter-link institution-map-focus-link" data-focus-institution="${escapeHtml(identity)}" aria-label="Highlight ${escapeHtml(label)} on the map">${escapeHtml(label)}</button>`;
 }
 
@@ -2080,7 +2094,12 @@ function canonicalizePublicDataset(
 
   const canonicalMapRecords = new Map();
   mapRecords.forEach((record) => {
-    const key = `${paperIdentity(record)}||${institutionIdentity(record)}`;
+    // A canonical institution can have multiple paper-specific campus markers.
+    const site = record.location_id || [
+      record.lat ?? record.latitude ?? "",
+      record.lon ?? record.longitude ?? "",
+    ].join(",");
+    const key = `${paperIdentity(record)}||${institutionIdentity(record)}||${site}`;
     const existing = canonicalMapRecords.get(key);
     if (!existing) {
       canonicalMapRecords.set(key, record);
@@ -3616,7 +3635,7 @@ function institutionResultContent(record, relatedEntries = [{ record }], cardId 
             institution: institutionName,
             institutionId: record.institution_id,
             canonicalName: record.canonical_institution_name,
-          }) || escapeHtml(institutionName || "Unknown institution")}</h4>
+          }, record) || escapeHtml(institutionName || "Unknown institution")}</h4>
           ${location ? `<p title="${escapeHtml(location)}">${escapeHtml(location)}</p>` : ""}
           ${institutionType !== "other" ? `<p>${escapeHtml(institutionTypeLabel(institutionType))}</p>` : ""}
         </section>
@@ -3914,11 +3933,21 @@ function createResultItem(record, index, pipeline) {
     : institutionResultContent(record, relatedEntries, cardId);
   const identity = paperIdentity(record);
   item.querySelectorAll("[data-focus-institution]").forEach((button) => {
-    const markerEntry = visibleMarkerEntryByInstitutionKey.get(button.dataset.focusInstitution);
+    let markerEntry = visibleMarkerEntryByInstitutionKey.get(button.dataset.focusInstitution);
+    if (!markerEntry?.records.some((candidate) => paperIdentity(candidate) === identity)) {
+      // Paper cards name an institution, not a campus. Choose one of this
+      // paper's visible sites instead of a different paper's default campus.
+      markerEntry = visibleMarkerEntries.find((entry) => (
+        institutionIdentity(entry.record) === button.dataset.focusInstitution
+        && entry.records.some((candidate) => paperIdentity(candidate) === identity)
+      ));
+    }
     const hasVisiblePaperMarker = markerEntry?.records.some(
       (markerRecord) => paperIdentity(markerRecord) === identity,
     );
-    if (!hasVisiblePaperMarker) {
+    if (hasVisiblePaperMarker) {
+      button.dataset.focusInstitution = markerEntry.institutionKey;
+    } else {
       button.disabled = true;
       button.setAttribute("aria-label", `${button.textContent} has no visible map marker`);
     }
@@ -4105,9 +4134,9 @@ function renderResults(visibleRecords, visiblePaperRecords = [], generation = nu
       ? new Set([
           ...recordInstitutionIdentities(record),
           ...(relatedEntriesByIdentity.get(identity) || [])
-            .map(({ record: relatedRecord }) => institutionIdentity(relatedRecord)),
+            .map(({ record: relatedRecord }) => markerInstitutionIdentity(relatedRecord)),
         ])
-      : new Set([institutionIdentity(record)]);
+      : new Set([institutionIdentity(record), markerInstitutionIdentity(record)]);
     institutionKeys.forEach((key) => {
       addResultIndex(resultIndexesByInstitutionKey, key, index);
     });
@@ -4668,22 +4697,15 @@ function renderRecordsForGeneration({ generation = null } = {}) {
   visibleMarkerEntryByInstitutionKey = new Map();
   visiblePaperSelectionByIdentity = new Map();
 
-  const institutionRepresentatives = new Map();
-  records.forEach((record) => {
-    const key = institutionIdentity(record);
-    if (!institutionRepresentatives.has(key)) {
-      institutionRepresentatives.set(key, record);
-    }
-  });
   const institutionGroups = MarkerSizeHelpers.groupInstitutionRecords(
     visibleRecords,
-    institutionIdentity,
+    markerInstitutionIdentity,
     paperIdentity,
   );
 
   institutionGroups.forEach((group) => {
     const record = group.record;
-    const locationRecord = institutionRepresentatives.get(group.key) || record;
+    const locationRecord = record;
     const identity = paperIdentity(record);
     const taskCounts = MarkerSizeHelpers.getInstitutionTaskCounts(
       group.records,
@@ -4730,6 +4752,10 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     };
     visibleMarkerEntries.push(markerEntry);
     visibleMarkerEntryByInstitutionKey.set(group.key, markerEntry);
+    const canonicalInstitutionKey = institutionIdentity(record);
+    if (!visibleMarkerEntryByInstitutionKey.has(canonicalInstitutionKey)) {
+      visibleMarkerEntryByInstitutionKey.set(canonicalInstitutionKey, markerEntry);
+    }
     group.records.forEach((groupRecord) => {
       const groupPaperIdentity = paperIdentity(groupRecord);
       if (!visiblePaperSelectionByIdentity.has(groupPaperIdentity)) {

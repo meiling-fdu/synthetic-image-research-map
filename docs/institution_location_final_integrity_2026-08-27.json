@@ -1,0 +1,662 @@
+{
+  "queue_before": {
+    "total_queue_rows": 567,
+    "alias_of_confirmed": 75,
+    "ambiguous": 0,
+    "confirmed": 443,
+    "excluded": 6,
+    "ignore": 33,
+    "pending_review": 10,
+    "needs_coordinates": 10,
+    "needs_coordinate_review": 10,
+    "confirmed_locations_count": 451,
+    "institutions_with_multiple_location_candidates": [
+      "nirma university",
+      "northeastern university",
+      "peng cheng laboratory",
+      "sony ai",
+      "xiaohongshu inc"
+    ],
+    "multiple_location_candidate_count": 5
+  },
+  "queue_after": {
+    "total_queue_rows": 567,
+    "alias_of_confirmed": 77,
+    "ambiguous": 0,
+    "confirmed": 446,
+    "excluded": 6,
+    "ignore": 33,
+    "pending_review": 5,
+    "needs_coordinates": 5,
+    "needs_coordinate_review": 5,
+    "confirmed_locations_count": 455,
+    "institutions_with_multiple_location_candidates": [
+      "deakin university",
+      "northeastern university",
+      "peng cheng laboratory",
+      "sony ai",
+      "xiaohongshu inc"
+    ],
+    "multiple_location_candidate_count": 5
+  },
+  "completeness_before_stale_export": {
+    "ACTIONABLE": 10,
+    "COMPLETE": 1248,
+    "ERROR": 18,
+    "EXCLUDED": 30
+  },
+  "completeness_after": {
+    "ACTIONABLE": 5,
+    "COMPLETE": 1261,
+    "EXCLUDED": 29
+  },
+  "shrinkage": {
+    "previous_papers": 546,
+    "new_papers": 546,
+    "previous_maps": 1248,
+    "new_maps": 1261,
+    "removed_papers": [],
+    "removed_maps": [
+      {
+        "kind": "map",
+        "identity": "paper_id:curated:4b406d0cf578db643214 + institution_id:institution:5396ea72656b4b19 + location_id:[none] + mapping_id:[none] + authors:tsung yi ho; zhiyuan he",
+        "title": "RIGID: A Training-Free and Model-Agnostic Framework for Robust AI-Generated Image Detection",
+        "evidence": "active curated mapping supersession via mapping:659545cd2e2e6e4cd7f5",
+        "explained": true
+      },
+      {
+        "kind": "map",
+        "identity": "doi:10.1109/access.2023.3251417 + institution_id:institution:af28dc8d805f8918 + location_id:[none] + mapping_id:[none] + authors:rajesh gupta; sudeep tanwar; y g patel",
+        "title": "An Improved Dense CNN Architecture for Deepfake Image Detection",
+        "evidence": "active curated mapping supersession via mapping:7b5d0f836aa1fa476a20",
+        "explained": true
+      },
+      {
+        "kind": "map",
+        "identity": "doi:10.1109/access.2023.3342107 + institution_id:institution:af28dc8d805f8918 + location_id:[none] + mapping_id:[none] + authors:rajesh gupta; sudeep tanwar; y g patel",
+        "title": "Deepfake Generation and Detection: Case Study and Challenges",
+        "evidence": "active curated mapping supersession via mapping:81be361b0991ea9e8a75",
+        "explained": true
+      },
+      {
+        "kind": "map",
+        "identity": "doi:10.6084/m9.figshare.12731039.v1 + institution_id:institution:30e93da233b7eeef + location_id:[none] + mapping_id:[none] + authors:thanh thi nguyen",
+        "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+        "evidence": "active curated mapping supersession via mapping:e52721d76b4e36468169",
+        "explained": true
+      },
+      {
+        "kind": "map",
+        "identity": "doi:10.1109/access.2023.3251417 + institution_id:institution:d04d3d98b14dcbc7 + location_id:[none] + mapping_id:[none] + authors:innocent e davidson",
+        "title": "An Improved Dense CNN Architecture for Deepfake Image Detection",
+        "evidence": "active curated mapping supersession via mapping:5f4209363fff0c520844",
+        "explained": true
+      },
+      {
+        "kind": "map",
+        "identity": "doi:10.1109/access.2023.3251417 + institution_id:institution:cc8345310a2617a6 + location_id:[none] + mapping_id:[none] + authors:thokozile mazibuko",
+        "title": "An Improved Dense CNN Architecture for Deepfake Image Detection",
+        "evidence": "active curated mapping supersession via mapping:3138e3f13845d64f2868",
+        "explained": true
+      },
+      {
+        "kind": "map",
+        "identity": "doi:10.1109/access.2023.3342107 + institution_id:institution:d04d3d98b14dcbc7 + location_id:[none] + mapping_id:[none] + authors:innocent e davidson; royi nyameko",
+        "title": "Deepfake Generation and Detection: Case Study and Challenges",
+        "evidence": "active curated mapping supersession via mapping:8d1b00858d3963810df3",
+        "explained": true
+      },
+      {
+        "kind": "map",
+        "identity": "paper_id:curated:084e01a1a2191cb4c86a + institution_id:institution:ff4b6fb0e7e3f155 + location_id:location:c64f284c57cab3a3fe18 + mapping_id:mapping:858d81da9652d68ee59d + authors:dahua lin; tong wu",
+        "title": "LOKI: A Comprehensive Synthetic Data Detection Benchmark Using Large Multimodal Models",
+        "evidence": "active curated mapping supersession via mapping:858d81da9652d68ee59d",
+        "explained": true
+      }
+    ],
+    "approved_by_baseline": false
+  },
+  "unexplained_shrinkage": 0,
+  "author_links_before": 2189,
+  "author_links_after": 2190,
+  "lost_author_institution_links": [],
+  "forgerymoe_mapping_unchanged": true,
+  "inactive_references": [],
+  "duplicate_mapping_ids": [],
+  "duplicate_active_mappings": [],
+  "duplicate_location_ids": [],
+  "duplicate_logical_locations": [],
+  "malformed_coordinates": [],
+  "malformed_csv_rows": [],
+  "alias_collisions": {},
+  "canonical_turkiye_count": 0,
+  "added_author_institution_links": [
+    [
+      "curated:40db3b79c5d83b80e5a4",
+      "institution:966ff12833f90bb0",
+      "Jiguang Zhang"
+    ]
+  ],
+  "resolved_pending_persistence": [
+    {
+      "decision": {
+        "institution_id": "institution:f13bfb2d3e774fb3",
+        "classification": "A",
+        "city": "Catania",
+        "region": "Sicily",
+        "country": "Italy",
+        "lat": "37.5256898",
+        "lon": "15.0730615",
+        "evidence_url": "https://www.ictlab.srl/",
+        "reason": "Paper names iCTLab s.r.l., Catania 95125. Official company contact at Viale Andrea Doria 6 links directly to company map pin 37.5256898,15.0730615. Use the target pin, not the Google Maps viewport center or a random University of Catania building.",
+        "location_id": "location:1b60c4bdbda074486d61",
+        "result": "confirmed"
+      },
+      "institution": {
+        "institution_id": "institution:f13bfb2d3e774fb3",
+        "canonical_name": "iCTLab s.r.l.",
+        "abbreviation": "",
+        "institution_type": "company",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-08-27T00:30:00Z",
+        "updated_at": "2026-08-27T00:30:00Z",
+        "created_by": "codex-author-affiliation-review"
+      },
+      "locations": [
+        {
+          "location_id": "location:1b60c4bdbda074486d61",
+          "institution_id": "institution:f13bfb2d3e774fb3",
+          "institution": "iCTLab s.r.l.",
+          "normalized_institution": "ictlab s r l",
+          "city": "Catania",
+          "region": "Sicily",
+          "country": "Italy",
+          "country_code": "IT",
+          "lat": "37.5256898",
+          "lon": "15.0730615",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T11:06:20Z",
+          "updated_at": "2026-08-27T11:06:20Z",
+          "created_by": "codex-remaining-location-audit-20260827"
+        }
+      ],
+      "active_paper_author_mappings": [
+        {
+          "mapping_id": "mapping:987448097cf88ef6af77",
+          "paper_id": "curated:bbe4e9e8c5b41e467a76",
+          "title": "The Face Deepfake Detection Challenge",
+          "year": "2022",
+          "doi": "10.3390/jimaging8100263",
+          "openalex_url": "https://openalex.org/W4297477523",
+          "institution": "iCTLab s.r.l.",
+          "institution_id": "institution:f13bfb2d3e774fb3",
+          "location_id": "location:1b60c4bdbda074486d61",
+          "institution_authors": "Antonino Paratore",
+          "author_order": "6",
+          "affiliation_order": "4",
+          "raw_affiliation": "iCTLab s.r.l., 95125 Catania, Italy",
+          "openalex_institution_id": "",
+          "institution_city": "Catania",
+          "institution_country": "Italy",
+          "institution_latitude": "37.5256898",
+          "institution_longitude": "15.0730615",
+          "provenance_source": "Visually verified paper PDF: https://www.dmi.unict.it/ortis/articoli/85140647182.pdf",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T15:08:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "iCTLab s.r.l.",
+          "canonical_institution_name": "iCTLab s.r.l.",
+          "institution_id": "institution:f13bfb2d3e774fb3",
+          "detected_language": "",
+          "related_paper_id": "curated:bbe4e9e8c5b41e467a76",
+          "title": "The Face Deepfake Detection Challenge",
+          "year": "2022",
+          "doi": "10.3390/jimaging8100263",
+          "openalex_url": "https://openalex.org/W4297477523",
+          "institution_authors": "Antonino Paratore",
+          "raw_affiliation": "iCTLab s.r.l., 95125 Catania, Italy",
+          "evidence_source": "Independent review 2026-08-27: Paper names iCTLab s.r.l., Catania 95125. Official company contact at Viale Andrea Doria 6 links directly to company map pin 37.5256898,15.0730615. Use the target pin, not the Google Maps viewport center or a random University of Catania building. Verified region: Sicily.",
+          "evidence_url": "https://www.ictlab.srl/",
+          "suggested_city": "Catania",
+          "suggested_country": "Italy",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "confirmed",
+          "location_status": "known",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T11:06:20Z"
+        }
+      ],
+      "audits": []
+    },
+    {
+      "decision": {
+        "institution_id": "institution:ff687d6367c7c51d",
+        "classification": "A",
+        "city": "Trieste",
+        "region": "Friuli-Venezia Giulia",
+        "country": "Italy",
+        "lat": "45.6573731",
+        "lon": "13.8296700",
+        "evidence_url": "https://www.areasciencepark.it/tenant/amped/",
+        "reason": "Paper names Amped Software, Trieste 34149. Official company address Padriciano 99 and park tenant entry identify Campus Padriciano Building A. Point is inside named OSM office-building way 62251650, Edificio A (Innovation Factory), not the park/road centroid.",
+        "location_id": "location:a5b0422287ed9080fcc7",
+        "result": "confirmed"
+      },
+      "institution": {
+        "institution_id": "institution:ff687d6367c7c51d",
+        "canonical_name": "Amped Software",
+        "abbreviation": "",
+        "institution_type": "company",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-08-27T00:30:00Z",
+        "updated_at": "2026-08-27T00:30:00Z",
+        "created_by": "codex-author-affiliation-review"
+      },
+      "locations": [
+        {
+          "location_id": "location:a5b0422287ed9080fcc7",
+          "institution_id": "institution:ff687d6367c7c51d",
+          "institution": "Amped Software",
+          "normalized_institution": "amped software",
+          "city": "Trieste",
+          "region": "Friuli-Venezia Giulia",
+          "country": "Italy",
+          "country_code": "IT",
+          "lat": "45.6573731",
+          "lon": "13.82967",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T11:06:20Z",
+          "updated_at": "2026-08-27T11:06:20Z",
+          "created_by": "codex-remaining-location-audit-20260827"
+        }
+      ],
+      "active_paper_author_mappings": [
+        {
+          "mapping_id": "mapping:000b2e5a2b1807c345ff",
+          "paper_id": "curated:bbe4e9e8c5b41e467a76",
+          "title": "The Face Deepfake Detection Challenge",
+          "year": "2022",
+          "doi": "10.3390/jimaging8100263",
+          "openalex_url": "https://openalex.org/W4297477523",
+          "institution": "Amped Software",
+          "institution_id": "institution:ff687d6367c7c51d",
+          "location_id": "location:a5b0422287ed9080fcc7",
+          "institution_authors": "Linh M. Q. Bui; Marco Fontani",
+          "author_order": "7; 8",
+          "affiliation_order": "5",
+          "raw_affiliation": "Amped Software, 34149 Trieste, Italy",
+          "openalex_institution_id": "",
+          "institution_city": "Trieste",
+          "institution_country": "Italy",
+          "institution_latitude": "45.6573731",
+          "institution_longitude": "13.82967",
+          "provenance_source": "Visually verified paper PDF: https://www.dmi.unict.it/ortis/articoli/85140647182.pdf",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T15:08:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Amped Software",
+          "canonical_institution_name": "Amped Software",
+          "institution_id": "institution:ff687d6367c7c51d",
+          "detected_language": "",
+          "related_paper_id": "curated:bbe4e9e8c5b41e467a76",
+          "title": "The Face Deepfake Detection Challenge",
+          "year": "2022",
+          "doi": "10.3390/jimaging8100263",
+          "openalex_url": "https://openalex.org/W4297477523",
+          "institution_authors": "Linh M. Q. Bui; Marco Fontani",
+          "raw_affiliation": "Amped Software, 34149 Trieste, Italy",
+          "evidence_source": "Independent review 2026-08-27: Paper names Amped Software, Trieste 34149. Official company address Padriciano 99 and park tenant entry identify Campus Padriciano Building A. Point is inside named OSM office-building way 62251650, Edificio A (Innovation Factory), not the park/road centroid. Verified region: Friuli-Venezia Giulia.",
+          "evidence_url": "https://www.areasciencepark.it/tenant/amped/",
+          "suggested_city": "Trieste",
+          "suggested_country": "Italy",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "confirmed",
+          "location_status": "known",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T11:06:20Z"
+        }
+      ],
+      "audits": []
+    },
+    {
+      "decision": {
+        "institution_id": "institution:bcd3d53e57c31275",
+        "classification": "B",
+        "city": "Santa Barbara",
+        "region": "California",
+        "country": "United States",
+        "lat": "34.4357895",
+        "lon": "-119.807088",
+        "evidence_url": "https://www.mayachitra.com/company",
+        "reason": "Paper identifies Mayachitra Inc., Santa Barbara, not UCSB. Official company contact map links to 5266 Hollister Avenue suite 229; exact address pin independently matches OSM house 5266 node 6070215092. Government DCAA FY2019 contractor listing supports same historical address. Santa Barbara is the official postal city; map municipality is Goleta.",
+        "location_id": "location:8d2e5d5a4a1875da46d9",
+        "result": "confirmed"
+      },
+      "institution": {
+        "institution_id": "institution:bcd3d53e57c31275",
+        "canonical_name": "Mayachitra Inc.",
+        "abbreviation": "",
+        "institution_type": "company",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-07-22T00:00:00Z",
+        "updated_at": "2026-08-27T11:06:19Z",
+        "created_by": "institution-type-audit"
+      },
+      "locations": [
+        {
+          "location_id": "location:8d2e5d5a4a1875da46d9",
+          "institution_id": "institution:bcd3d53e57c31275",
+          "institution": "Mayachitra Inc.",
+          "normalized_institution": "mayachitra inc",
+          "city": "Santa Barbara",
+          "region": "California",
+          "country": "United States",
+          "country_code": "US",
+          "lat": "34.4357895",
+          "lon": "-119.807088",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T11:06:20Z",
+          "updated_at": "2026-08-27T11:06:20Z",
+          "created_by": "codex-remaining-location-audit-20260827"
+        }
+      ],
+      "active_paper_author_mappings": [
+        {
+          "mapping_id": "mapping:b2dfbca89d216899e9c8",
+          "paper_id": "curated:60066ef08c2226131085",
+          "title": "Detecting GAN Generated Fake Images Using Co-Occurrence Matrices",
+          "year": "2019",
+          "doi": "10.2352/issn.2470-1173.2019.5.mwsf-532",
+          "openalex_url": "https://openalex.org/W2975558816",
+          "institution": "Mayachitra Inc.",
+          "institution_id": "institution:bcd3d53e57c31275",
+          "location_id": "location:8d2e5d5a4a1875da46d9",
+          "institution_authors": "Lakshmanan Nataraj; Tajuddin Manhar Mohammed; B.S. Manjunath; Shivkumar Chandrasekaran",
+          "author_order": "1; 2; 3; 4",
+          "affiliation_order": "1",
+          "raw_affiliation": "Mayachitra Inc., Santa Barbara, California, USA",
+          "openalex_institution_id": "",
+          "institution_city": "Santa Barbara",
+          "institution_country": "United States",
+          "institution_latitude": "34.4357895",
+          "institution_longitude": "-119.807088",
+          "provenance_source": "Visually verified paper PDF: https://library.imaging.org/admin/apis/public/api/ist/website/downloadArticle/ei/31/5/art00008",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T15:08:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Mayachitra (United States)",
+          "canonical_institution_name": "Mayachitra (United States)",
+          "institution_id": "institution:bcd3d53e57c31275",
+          "detected_language": "",
+          "related_paper_id": "curated:60066ef08c2226131085",
+          "title": "Detecting GAN Generated Fake Images Using Co-Occurrence Matrices",
+          "year": "2019",
+          "doi": "10.2352/issn.2470-1173.2019.5.mwsf-532",
+          "openalex_url": "https://openalex.org/W2975558816",
+          "institution_authors": "Lakshmanan Nataraj; Tajuddin Manhar Mohammed; B.S. Manjunath; Shivkumar Chandrasekaran",
+          "raw_affiliation": "Mayachitra Inc., Santa Barbara, California, USA",
+          "evidence_source": "Independent review 2026-08-27: Paper identifies Mayachitra Inc., Santa Barbara, not UCSB. Official company contact map links to 5266 Hollister Avenue suite 229; exact address pin independently matches OSM house 5266 node 6070215092. Government DCAA FY2019 contractor listing supports same historical address. Santa Barbara is the official postal city; map municipality is Goleta. Verified region: California.",
+          "evidence_url": "https://www.mayachitra.com/company",
+          "suggested_city": "Santa Barbara",
+          "suggested_country": "United States",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "confirmed",
+          "location_status": "known",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T11:06:20Z"
+        }
+      ],
+      "audits": []
+    },
+    {
+      "decision": {
+        "institution_id": "institution:4fa8181033939648",
+        "classification": "A",
+        "city": "Warangal",
+        "region": "Telangana",
+        "country": "India",
+        "lat": "18.0899939",
+        "lon": "79.4685340",
+        "evidence_url": "https://sru.edu.in/campus-visit",
+        "reason": "Paper names SR University, Warangal 506371. Official campus address Ananthasagar, Hasanparthy matches named former SR Engineering College OSM college node 7008099215. Official AdmissionsPolicy.pdf establishes institutional continuity. Rejected latitude 18.01989 in sustainability report: conflicts with named campus about 7.8 km south. Not Hyderabad corporate office.",
+        "location_id": "location:fe9bb1bad0b966527492",
+        "result": "confirmed"
+      },
+      "institution": {
+        "institution_id": "institution:4fa8181033939648",
+        "canonical_name": "SR University",
+        "abbreviation": "",
+        "institution_type": "university",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-08-27T00:30:00Z",
+        "updated_at": "2026-08-27T00:30:00Z",
+        "created_by": "codex-author-affiliation-review"
+      },
+      "locations": [
+        {
+          "location_id": "location:fe9bb1bad0b966527492",
+          "institution_id": "institution:4fa8181033939648",
+          "institution": "SR University",
+          "normalized_institution": "sr university",
+          "city": "Warangal",
+          "region": "Telangana",
+          "country": "India",
+          "country_code": "IN",
+          "lat": "18.0899939",
+          "lon": "79.468534",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T11:06:20Z",
+          "updated_at": "2026-08-27T11:06:20Z",
+          "created_by": "codex-remaining-location-audit-20260827"
+        }
+      ],
+      "active_paper_author_mappings": [
+        {
+          "mapping_id": "mapping:0fa7a422688f307ab3d9",
+          "paper_id": "curated:616984c24ff3792431e6",
+          "title": "Deepfake Generation and Detection: Case Study and Challenges",
+          "year": "2023",
+          "doi": "10.1109/access.2023.3342107",
+          "openalex_url": "https://openalex.org/W4389633690",
+          "institution": "SR University",
+          "institution_id": "institution:4fa8181033939648",
+          "location_id": "location:fe9bb1bad0b966527492",
+          "institution_authors": "Srinivas Aluvala",
+          "author_order": "7",
+          "affiliation_order": "4",
+          "raw_affiliation": "Department of Computer Science and Artificial Intelligence, SR University, Warangal, Telangana 506371, India",
+          "openalex_institution_id": "",
+          "institution_city": "Warangal",
+          "institution_country": "India",
+          "institution_latitude": "18.0899939",
+          "institution_longitude": "79.468534",
+          "provenance_source": "Visually verified paper PDF: https://digitalknowledge.cput.ac.za/bitstream/11189/9706/1/Deepfake_Generation_and_Detection.pdf",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T15:08:28Z"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "SR University",
+          "canonical_institution_name": "SR University",
+          "institution_id": "institution:4fa8181033939648",
+          "detected_language": "",
+          "related_paper_id": "curated:616984c24ff3792431e6",
+          "title": "Deepfake Generation and Detection: Case Study and Challenges",
+          "year": "2023",
+          "doi": "10.1109/access.2023.3342107",
+          "openalex_url": "https://openalex.org/W4389633690",
+          "institution_authors": "Srinivas Aluvala",
+          "raw_affiliation": "Department of Computer Science and Artificial Intelligence, SR University, Warangal, Telangana 506371, India",
+          "evidence_source": "Independent review 2026-08-27: Paper names SR University, Warangal 506371. Official campus address Ananthasagar, Hasanparthy matches named former SR Engineering College OSM college node 7008099215. Official AdmissionsPolicy.pdf establishes institutional continuity. Rejected latitude 18.01989 in sustainability report: conflicts with named campus about 7.8 km south. Not Hyderabad corporate office. Verified region: Telangana.",
+          "evidence_url": "https://sru.edu.in/campus-visit",
+          "suggested_city": "Warangal",
+          "suggested_country": "India",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "confirmed",
+          "location_status": "known",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T11:06:20Z"
+        }
+      ],
+      "audits": []
+    },
+    {
+      "decision": {
+        "institution_id": "institution:ef894bd5e789abd7",
+        "classification": "A",
+        "city": "Pantnagar",
+        "region": "Uttarakhand",
+        "country": "India",
+        "lat": "29.0227737",
+        "lon": "79.4913268",
+        "evidence_url": "https://link.springer.com/article/10.1007/s11468-024-02492-1",
+        "reason": "Publisher lists Binay Kumar Pandey at Department of Information Technology, College of Technology, G. B. Pant University, Pantnagar. Official university and college sites corroborate. Named College of Technology university building relation 16118300 provides exact component site; canonical university identity retained.",
+        "location_id": "location:68430421b377f89c6e66",
+        "result": "confirmed"
+      },
+      "institution": {
+        "institution_id": "institution:ef894bd5e789abd7",
+        "canonical_name": "Govind Ballabh Pant University of Agriculture and Technology",
+        "abbreviation": "",
+        "institution_type": "university",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-07-22T00:00:00Z",
+        "updated_at": "2026-07-22T00:00:00Z",
+        "created_by": "institution-type-audit"
+      },
+      "locations": [
+        {
+          "location_id": "location:68430421b377f89c6e66",
+          "institution_id": "institution:ef894bd5e789abd7",
+          "institution": "Govind Ballabh Pant University of Agriculture and Technology",
+          "normalized_institution": "govind ballabh pant university of agriculture and technology",
+          "city": "Pantnagar",
+          "region": "Uttarakhand",
+          "country": "India",
+          "country_code": "IN",
+          "lat": "29.0227737",
+          "lon": "79.4913268",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T11:06:20Z",
+          "updated_at": "2026-08-27T11:06:20Z",
+          "created_by": "codex-remaining-location-audit-20260827"
+        }
+      ],
+      "active_paper_author_mappings": [
+        {
+          "mapping_id": "mapping:1ba8c7beef6433c071c4",
+          "paper_id": "curated:6e6c7c4645ed4af43a61",
+          "title": "Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection",
+          "year": "2024",
+          "doi": "10.1007/s11468-024-02492-1",
+          "openalex_url": "https://openalex.org/W4402322120",
+          "institution": "Govind Ballabh Pant University of Agriculture and Technology",
+          "institution_id": "institution:ef894bd5e789abd7",
+          "location_id": "location:68430421b377f89c6e66",
+          "institution_authors": "Binay Kumar Pandey",
+          "author_order": "3",
+          "affiliation_order": "2",
+          "raw_affiliation": "Department of Information Technology, College of Technology, Govind Ballabh Pant University of Agriculture and Technology Pantnagar, Udham Singh Nagar, Uttarakhand, India",
+          "openalex_institution_id": "",
+          "institution_city": "Pantnagar",
+          "institution_country": "India",
+          "institution_latitude": "29.0227737",
+          "institution_longitude": "79.4913268",
+          "provenance_source": "Verified structured author-affiliation metadata: https://link.springer.com/article/10.1007/s11468-024-02492-1",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T15:08:29Z"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Govind Ballabh Pant University of Agriculture and Technology",
+          "canonical_institution_name": "Govind Ballabh Pant University of Agriculture and Technology",
+          "institution_id": "institution:ef894bd5e789abd7",
+          "detected_language": "",
+          "related_paper_id": "curated:6e6c7c4645ed4af43a61",
+          "title": "Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection",
+          "year": "2024",
+          "doi": "10.1007/s11468-024-02492-1",
+          "openalex_url": "https://openalex.org/W4402322120",
+          "institution_authors": "Binay Kumar Pandey",
+          "raw_affiliation": "Department of Information Technology, College of Technology, Govind Ballabh Pant University of Agriculture and Technology Pantnagar, Udham Singh Nagar, Uttarakhand, India",
+          "evidence_source": "Independent review 2026-08-27: Publisher lists Binay Kumar Pandey at Department of Information Technology, College of Technology, G. B. Pant University, Pantnagar. Official university and college sites corroborate. Named College of Technology university building relation 16118300 provides exact component site; canonical university identity retained. Verified region: Uttarakhand.",
+          "evidence_url": "https://link.springer.com/article/10.1007/s11468-024-02492-1",
+          "suggested_city": "Pantnagar",
+          "suggested_country": "India",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "confirmed",
+          "location_status": "known",
+          "coordinate_status": "known",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T11:06:20Z"
+        }
+      ],
+      "audits": []
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "checkpoint": "2026-08-24-stable-release",
-  "validated_on": "2026-08-24",
+  "validated_on": "2026-08-27",
   "generated_from": [
     "data/curated/papers.csv",
     "data/curated/institutions.csv",
@@ -19,7 +19,7 @@
     "public_map_source_papers": "Unique paper identities represented by the raw public map relationship export.",
     "public_papers_with_map": "Public paper records matching at least one raw public map relationship.",
     "public_papers_without_map": "Public paper records without a matching raw public map relationship.",
-    "public_map_relationships": "Production-export unique canonical paper/institution relationships.",
+    "public_map_relationships": "Production-export unique canonical paper/institution/location relationships, retaining distinct campuses.",
     "public_unique_institutions": "Unique institution identities in the raw map export under validator semantics.",
     "canonical_institution_rows": "All canonical registry rows, including merged and ignored rows.",
     "active_canonical_institutions": "Canonical rows with institution_status=active; this is the public canonical search-index population.",
@@ -28,52 +28,52 @@
     "task": "Exactly one task enum per public paper; detection_and_source_attribution is one combined enum."
   },
   "dataset_counts": {
-    "curated_papers": 325,
+    "curated_papers": 342,
     "public_unique_papers": 546,
-    "public_map_source_papers": 537,
-    "public_papers_with_map": 536,
-    "public_papers_without_map": 10,
-    "public_map_relationships": 1228,
-    "public_unique_institutions": 607,
-    "canonical_institution_rows": 648,
-    "active_canonical_institutions": 637,
-    "inactive_or_merged_institutions": 11,
-    "author_institution_mappings": 881,
-    "confirmed_institution_locations": 432,
-    "institution_location_review_rows": 536,
-    "institution_aliases": 69,
-    "institution_hierarchy_edges": 7,
+    "public_map_source_papers": 540,
+    "public_papers_with_map": 539,
+    "public_papers_without_map": 7,
+    "public_map_relationships": 1261,
+    "public_unique_institutions": 616,
+    "canonical_institution_rows": 658,
+    "active_canonical_institutions": 646,
+    "inactive_or_merged_institutions": 12,
+    "author_institution_mappings": 937,
+    "confirmed_institution_locations": 455,
+    "institution_location_review_rows": 567,
+    "institution_aliases": 80,
+    "institution_hierarchy_edges": 8,
     "institution_search_relationships": 1,
-    "institution_review_queue_rows": 391
+    "institution_review_queue_rows": 398
   },
   "distribution_counts": {
     "institution_status": {
-      "active": 637,
-      "merged": 5,
-      "ignored": 6
+      "active": 646,
+      "ignored": 6,
+      "merged": 6
     },
     "author_institution_mapping_status": {
-      "active": 819,
-      "excluded": 26,
-      "needs_review": 36
+      "active": 888,
+      "excluded": 28,
+      "needs_review": 21
     },
     "canonical_institution_type": {
-      "university": 467,
-      "research_unit": 66,
-      "company": 67,
-      "other": 48
+      "university": 470,
+      "company": 72,
+      "research_unit": 67,
+      "other": 49
     },
     "active_canonical_institution_type": {
-      "university": 462,
-      "research_unit": 64,
-      "company": 65,
-      "other": 46
+      "university": 464,
+      "company": 70,
+      "research_unit": 65,
+      "other": 47
     },
     "public_paper_institution_type": {
+      "other": 55,
+      "research_unit": 105,
       "university": 514,
-      "research_unit": 103,
-      "company": 82,
-      "other": 54
+      "company": 91
     },
     "publication_type": {
       "conference": 314,
@@ -87,22 +87,22 @@
       "detection_and_source_attribution": 29
     },
     "public_map_relationship_resolution": {
-      "active_canonical_institution": 1199,
-      "unreviewed_automatic_fallback": 29
+      "active_canonical_institution": 1235,
+      "unreviewed_automatic_fallback": 26
     }
   },
   "validation": {
     "complete_test_suite": {
-      "collected": 1067,
-      "passed": 1019,
-      "skipped_environment_conditional": 48,
+      "collected": 1129,
+      "passed": 1129,
+      "skipped_environment_conditional": 0,
       "failed": 0,
       "deselected": 0
     },
     "curated": {
       "files_checked": 16,
       "errors": 0,
-      "warnings": 192,
+      "warnings": 178,
       "duplicate_candidates": 0
     },
     "public_map": {
@@ -111,19 +111,19 @@
     },
     "public_papers": {
       "errors": 0,
-      "warnings": 62,
+      "warnings": 10,
       "papers_missing_affiliations": 0,
-      "papers_missing_coordinates": 2
+      "papers_missing_coordinates": 1
     },
     "paper_exclusions": {
       "errors": 0,
       "warnings": 2
     },
-    "javascript_syntax_files": 8,
+    "javascript_syntax_files": 10,
     "git_diff_check": "passed"
   },
   "manual_curation_backlog": [
-    "Sixty-two public-paper author entries lack an institution index and require evidence-based mapping review.",
+    "Ten public-paper author entries lack an institution index; precise paper-specific unresolved reasons are recorded in institution_audit_log.csv and docs/author_affiliation_review_2026-08-27.md.",
     "Curated warnings retain missing/conflicting mapping evidence, historical audit references, and explicit review-queue conflicts.",
     "Two restored exclusions are not currently present in the public preview.",
     "Same-name Northeastern University identities remain separate because their confirmed country evidence conflicts.",
@@ -133,7 +133,7 @@
     "Frontend behavior tests use semantic assertions or isolated fixtures; mutable production totals are confined to dedicated repository-baseline integration tests.",
     "Historical public-export shrinkage baselines and historical audit reports are intentionally not rewritten.",
     "The internal institution type enum remains research_unit; the public-facing label remains Research Institute.",
-    "Twenty-nine public map relationships intentionally retain unreviewed automatic-fallback institution IDs outside the active canonical search index.",
+    "26 public map relationships intentionally retain unreviewed automatic-fallback institution IDs outside the active canonical search index.",
     "Strict public validation intentionally remains nonzero while manual-curation warnings exist; warnings are neither suppressed nor auto-resolved."
   ]
 }

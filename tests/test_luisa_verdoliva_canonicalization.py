@@ -16,8 +16,8 @@ REGRESSION_TITLES = {
     "Raising the Bar of AI-generated Image Detection with CLIP",
     "Zero-Shot Detection of AI-Generated Images",
     (
-        "Intriguing properties of synthetic images: from generative "
-        "adversarial networks to diffusion models"
+        "Intriguing Properties of Synthetic Images: From Generative "
+        "Adversarial Networks to Diffusion Models"
     ),
 }
 

@@ -51,13 +51,22 @@ class XiaohongshuMultiLocationTests(unittest.TestCase):
             ("Beijing", "China"),
         )
         shanghai = next(
+            row for row in rows("institution_locations.csv")
+            if row["location_id"] == "location:d1012c88e7ee61fd9f4c"
+        )
+        self.assertEqual(
+            (shanghai["city"], shanghai["country"]),
+            ("Shanghai", "China"),
+        )
+        sanity_check = next(
             row for row in mappings
             if row["doi"] == "10.48550/arxiv.2406.19435"
         )
         self.assertEqual(
-            (shanghai["institution_city"], shanghai["institution_country"]),
-            ("Shanghai", "China"),
+            (sanity_check["institution_city"], sanity_check["institution_country"]),
+            ("Beijing", "China"),
         )
+        self.assertEqual(sanity_check["location_id"], beijing["location_id"])
         self.assertTrue(all(row["institution"] == "Xiaohongshu Inc." for row in mappings))
 
     def test_previous_capitalization_is_a_confirmed_alias(self):

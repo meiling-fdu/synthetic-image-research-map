@@ -117,6 +117,11 @@ class ReviewedRelationshipResolver:
         ] = defaultdict(set)
         self.mapping_ids: set[str] = set()
         self.audits = tuple(audits)
+        self.active_mappings = {
+            clean(row.get("mapping_id")): row for row in mappings
+            if clean(row.get("mapping_status")) == "active"
+            and clean(row.get("mapping_id"))
+        }
         for mapping in mappings:
             if clean(mapping.get("mapping_status")).casefold() != "active":
                 continue
@@ -195,8 +200,54 @@ class ReviewedRelationshipResolver:
                 return True
         return False
 
+    def _audit_removes(self, record: Mapping[str, Any]) -> bool:
+        """Return whether an exact reviewed removal retires this public row."""
+        old_institution = clean(record.get("institution_id")).casefold()
+        old_location = clean(record.get("location_id")).casefold()
+        old_mapping = clean(record.get("mapping_id"))
+        old_authors = normalized_author_set(record.get("institution_authors"))
+        old_paper_id = clean(record.get("paper_id")).casefold()
+        for audit in self.audits:
+            if clean(audit.get("action")).casefold() != "mapping_removed":
+                continue
+            metadata = self._metadata(audit.get("confirmation_text"))
+            audit_paper_id = clean(
+                audit.get("paper_id") or metadata.get("paper_id")
+            ).casefold()
+            if not audit_paper_id or (old_paper_id and audit_paper_id != old_paper_id):
+                continue
+            if not old_paper_id:
+                # Automatic legacy rows may have no curated paper_id. Their
+                # removal still needs an exact paper identity, not merely an
+                # author/institution tuple that another paper could share.
+                audit_doi = normalized_doi(metadata.get("paper_doi"))
+                if not audit_doi or audit_doi != normalized_doi(record.get("doi")):
+                    continue
+            previous_mapping = clean(
+                audit.get("previous_mapping_id")
+                or audit.get("mapping_id")
+                or metadata.get("mapping_id")
+            )
+            if old_mapping and previous_mapping != old_mapping:
+                continue
+            if clean(audit.get("previous_institution_id")).casefold() != old_institution:
+                continue
+            previous_location = clean(audit.get("previous_location_id")).casefold()
+            if old_location and previous_location != old_location:
+                continue
+            audit_authors = normalized_author_set(
+                audit.get("previous_authors") or audit.get("affected_authors")
+            )
+            if old_authors and audit_authors != old_authors:
+                continue
+            return True
+        return False
+
     def superseding_mapping_ids(self, record: Mapping[str, Any]) -> tuple[str, ...]:
         """Return exact curated lineage authorizing a supersession."""
+        audited = self._audited_replacement_mapping_ids(record)
+        if audited:
+            return audited
         if not self.supersedes(record):
             return ()
         scope = (
@@ -205,8 +256,47 @@ class ReviewedRelationshipResolver:
         )
         return tuple(sorted(self.mapping_ids_by_scope.get(scope, ())))
 
+    def _audited_replacement_mapping_ids(self, record: Mapping[str, Any]) -> tuple[str, ...]:
+        """Honor an exact reviewed legacy-marker transition, including initials.
+
+        Do not fuzzy-match authors or infer a replacement from the institution.
+        Both the old exported record and the current target mapping must match
+        durable evidence; this permits reviewed author spelling/campus repairs.
+        """
+        for audit in self.audits:
+            if clean(audit.get("action")) not in {"mapping_change_confirmed", "mapping_replaced"}:
+                continue
+            metadata = self._metadata(audit.get("confirmation_text"))
+            old_record_id = metadata.get("previous_record_id")
+            if not old_record_id or old_record_id != clean(record.get("id")):
+                continue
+            doi = normalized_doi(metadata.get("paper_doi"))
+            if not doi or doi != normalized_doi(record.get("doi")):
+                continue
+            if clean(audit.get("previous_institution_id")) != clean(record.get("institution_id")):
+                continue
+            if clean(audit.get("previous_location_id")) != clean(record.get("location_id")):
+                continue
+            if normalized_author_set(audit.get("previous_authors")) != normalized_author_set(record.get("institution_authors")):
+                continue
+            target = self.active_mappings.get(clean(audit.get("mapping_id")))
+            if target is None or clean(target.get("paper_id")) != clean(audit.get("paper_id")):
+                continue
+            if normalized_doi(target.get("doi")) != doi:
+                continue
+            if (clean(target.get("institution_id")), clean(target.get("location_id"))) != (clean(audit.get("institution_id")), clean(audit.get("location_id"))):
+                continue
+            if normalized_author_set(target.get("institution_authors")) != normalized_author_set(audit.get("new_authors")):
+                continue
+            return (clean(target.get("mapping_id")),)
+        return ()
+
     def supersedes(self, record: Mapping[str, Any]) -> bool:
         """Return whether explicit current state replaces this older row."""
+        if self._audited_replacement_mapping_ids(record):
+            return True
+        if self._audit_removes(record):
+            return True
         authors = normalized_author_set(record.get("institution_authors"))
         if not authors:
             return False

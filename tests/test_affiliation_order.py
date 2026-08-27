@@ -423,6 +423,48 @@ class AffiliationOrderTests(unittest.TestCase):
             "Institution 1", "Institution 2", "Institution 3"
         ])
 
+    def test_repeated_public_pass_keeps_coordinate_missing_mapping_superscript(self):
+        paper = {
+            **self.paper,
+            "authors": ["Mapped Author", "Marker Author"],
+            "author_institution_affiliations": [
+                {
+                    "index": 1,
+                    "institution": "Institution 1",
+                    "institution_id": "institution:1",
+                    "authors": ["Mapped Author"],
+                    "mapping_source": "curated_admin",
+                },
+                {
+                    "index": 2,
+                    "institution": "Institution 2",
+                    "institution_id": "institution:2",
+                    "authors": ["Marker Author"],
+                    "mapping_source": "curated_admin",
+                },
+            ],
+            "affiliation_review_state": "curated",
+            "institution_source": "curated",
+        }
+        marker = {
+            **self.paper,
+            "institution": "Institution 2",
+            "institution_id": "institution:2",
+            "institution_authors": ["Marker Author"],
+            "source_database": "curated",
+            "institution_source": "curated",
+        }
+
+        add_public_detail_fields([paper], [marker])
+        add_public_detail_fields([paper], [marker])
+
+        indices = {
+            row["author"]: row["institution_indices"]
+            for row in paper["author_institution_indices"]
+        }
+        self.assertEqual(indices["Mapped Author"], [1])
+        self.assertEqual(indices["Marker Author"], [2])
+
     def test_admin_has_handle_only_drag_reorder_ui(self):
         html = (ROOT / "web/admin.html").read_text(encoding="utf-8")
         javascript = (ROOT / "web/admin.js").read_text(encoding="utf-8")

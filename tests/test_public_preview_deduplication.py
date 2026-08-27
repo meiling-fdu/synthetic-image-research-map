@@ -87,6 +87,30 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertEqual(kept, [])
         self.assertEqual(removed, 1)
 
+    def test_exact_mapping_removal_audit_drops_preserved_marker(self):
+        marker = {
+            "paper_id": "paper:1",
+            "institution_id": "institution:old",
+            "location_id": "location:old",
+            "mapping_id": "mapping:1",
+            "institution_authors": ["Ada Example"],
+        }
+        audit = {
+            "action": "mapping_removed",
+            "paper_id": "paper:1",
+            "previous_mapping_id": "mapping:1",
+            "previous_institution_id": "institution:old",
+            "previous_location_id": "location:old",
+            "previous_authors": "Ada Example",
+        }
+
+        kept, removed = ReviewedRelationshipResolver([], [audit]).filter_superseded(
+            [marker]
+        )
+
+        self.assertEqual(kept, [])
+        self.assertEqual(removed, 1)
+
     def test_reviewed_location_replacement_supersedes_stale_location(self):
         previous = [{
             "paper_id": "paper:1", "institution_id": "institution:one",

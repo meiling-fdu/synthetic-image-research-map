@@ -13,6 +13,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.app = (REPOSITORY / "web" / "app.js").read_text()
+        cls.institution_display = (REPOSITORY / "web" / "institution_display.js").read_text()
         cls.css = (REPOSITORY / "web" / "style.css").read_text()
         cls.html = (REPOSITORY / "web" / "index.html").read_text()
 
@@ -795,7 +796,7 @@ process.stdout.write(JSON.stringify({
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
-        functions = []
+        functions = [self.institution_display]
         for start_name, end_name in (
             ("function normalizedTitle", "function paperIdentity"),
             ("function recordInstitution(", "function recordCountry"),
@@ -849,7 +850,7 @@ process.stdout.write(JSON.stringify({
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
-        functions = []
+        functions = [self.institution_display]
         for start_name, end_name in (
             ("function normalizedTitle", "function paperIdentity"),
             ("function recordInstitution(", "function recordCountry"),
@@ -926,7 +927,7 @@ process.stdout.write(JSON.stringify({
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
-        functions = []
+        functions = [self.institution_display]
         for start_name, end_name in (
             ("function normalizedTitle", "function paperIdentity"),
             ("function recordInstitution(", "function recordCountry"),
@@ -1046,7 +1047,7 @@ process.stdout.write(JSON.stringify({
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
-        slices = []
+        slices = [self.institution_display]
         for start_name, end_name in (
             ("function institutionIdentity", "function affiliationIdentity"),
             ("function normalizedIdentityValue", "function recordCountry"),
@@ -1124,6 +1125,49 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(result["csv"], result["repeatedCsv"])
         self.assertEqual(result["csv"].count("institution:e81a0314e783d8a4"), 2)
 
+    def test_canonicalization_preserves_paper_specific_campus_markers(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        slices = [self.institution_display]
+        for start_name, end_name in (
+            ("function institutionIdentity", "function affiliationIdentity"),
+            ("function normalizedIdentityValue", "function recordCountry"),
+            ("function normalizedSearchText", "function recordSearchText"),
+        ):
+            start = self.app.index(start_name)
+            slices.append(self.app[start:self.app.index(end_name, start)])
+        script = r'''
+function normalizedDoi(value) { return String(value || ''); }
+function recordPaperUrl(record) { return record.paper_url || ''; }
+function recordTitle(record) { return record.title || ''; }
+function recordInstitutionAuthors(record) { return record.institution_authors || []; }
+''' + "\n".join(slices) + r'''
+const base = {doi: '10.1/campuses', institution_id: 'institution:deakin', institution: 'Deakin University'};
+const maps = [
+  {...base, location_id: 'location:burwood', latitude: -37.8475136, longitude: 145.1149474, institution_authors: ['Thanh Thi Nguyen']},
+  {...base, location_id: 'location:burwood', latitude: -37.8475136, longitude: 145.1149474, institution_authors: ['Dung Tien Nguyen']},
+  {...base, location_id: 'location:waurn-ponds', latitude: -38.1989397, longitude: 144.2969971, institution_authors: ['Cuong M. Nguyen', 'Saeid Nahavandi']},
+];
+const result = canonicalizePublicDataset(maps, [{...base}], []);
+// Automatic records without location IDs must also retain distinct coordinates.
+const coordinateOnly = canonicalizePublicDataset(maps.map(({location_id, ...rest}) => rest), [], []);
+process.stdout.write(JSON.stringify({
+  locations: result.mapRecords.map(row => row.location_id),
+  authors: result.mapRecords.map(row => row.institution_authors),
+  paperMapCount: result.paperRecords[0].map_record_count,
+  coordinateOnlyCount: coordinateOnly.mapRecords.length,
+}));
+'''
+        completed = subprocess.run([node, "-e", script], check=True, capture_output=True, text=True)
+        result = json.loads(completed.stdout)
+        self.assertEqual(result["locations"], ["location:burwood", "location:waurn-ponds"])
+        self.assertEqual(result["authors"], [
+            ["Thanh Thi Nguyen", "Dung Tien Nguyen"], ["Cuong M. Nguyen", "Saeid Nahavandi"],
+        ])
+        self.assertEqual(result["paperMapCount"], 2)
+        self.assertEqual(result["coordinateOnlyCount"], 2)
+
     def test_counts_markers_and_csv_use_canonical_identity(self):
         statistics = self.app[
             self.app.index("function updateDatasetStatistics"):
@@ -1137,7 +1181,10 @@ process.stdout.write(JSON.stringify({
         self.assertIn("const key = institutionIdentity(record)", chart)
         self.assertIn('["institution_id", (record)', self.app)
         self.assertIn('["institution_ids", (record)', self.app)
-        self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords,\n    institutionIdentity", self.app)
+        self.assertIn("MarkerSizeHelpers.groupInstitutionRecords(\n    visibleRecords,\n    markerInstitutionIdentity", self.app)
+        marker_identity = self.app.split("function markerInstitutionIdentity(record) {", 1)[1].split("\nfunction ", 1)[0]
+        self.assertIn("institutionIdentity(record)", marker_identity)
+        self.assertIn("record?.location_id", marker_identity)
 
     def test_toggle_and_csv_reuse_the_same_current_filtered_sets(self):
         toggle = self.app[

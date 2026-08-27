@@ -339,7 +339,9 @@ class InstitutionHierarchyTests(unittest.TestCase):
             [row["title"] for row in guangzhou_papers],
             [
                 "RealNet: Efficient and Unsupervised Detection of "
-                "AI-Generated Images via Real-Only Representation Learning"
+                "AI-Generated Images via Real-Only Representation Learning",
+                "SynerDetect: Hierarchical Synergistic Learning for "
+                "Generalizable AI-Generated Image Detection",
             ],
         )
 
