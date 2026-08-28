@@ -959,7 +959,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
         self.assertIn("payload?.data?.paper_summary", refresh_body)
         self.assertIn("effective_record: savedPaper", refresh_body)
         self.assertIn("populateMetadataForm();", refresh_body)
-        self.assertIn("void loadDashboardAndQueues()", refresh_body)
+        self.assertIn("await loadDashboardAndQueues()", refresh_body)
 
     def test_frontend_metadata_editor_has_accessible_explicit_save_states(self):
         root = Path(__file__).resolve().parents[1]

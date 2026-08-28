@@ -42,10 +42,11 @@ ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    "university": 514,
-    "research_unit": 105,
+    # 2026-08-28: active curated affiliations only, including paper-only rows.
+    "university": 513,
+    "research_unit": 103,
     "company": 91,
-    "other": 55,
+    "other": 54,
 }
 
 PUBLICATION_TYPE_TOTALS = {

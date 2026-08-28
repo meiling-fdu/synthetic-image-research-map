@@ -864,10 +864,8 @@ def add_public_detail_fields(
 ) -> None:
     """Export one stable author/affiliation schema to papers and markers.
 
-    Existing confirmed affiliation lists and author mappings take precedence.
-    Marker institutions are unioned as paper-level affiliations, but an author
-    is only assigned to one when the source record explicitly names that author
-    in ``institution_authors``.
+    Effective curated mappings, including a reviewed empty list, are closed
+    sets. Only unreviewed papers may union automatic/legacy marker evidence.
     """
     author_reviews = AuthorReviewIndex(load_author_reviews())
     map_record_ids = {id(record) for record in map_records}
@@ -876,6 +874,19 @@ def add_public_detail_fields(
         grouped[detail_paper_identity(record)].append(record)
 
     for records in grouped.values():
+        authoritative_record = next((record for record in records
+            if id(record) not in map_record_ids
+            and record.get("affiliation_review_state") in {"curated", "reviewed_empty"}
+            and isinstance(record.get("curated_mappings"), list)), None)
+        authoritative_mappings = (
+            [mapping for mapping in authoritative_record["curated_mappings"]
+             if mapping.get("mapping_status") == "active"]
+            if authoritative_record is not None else None
+        )
+        allowed_institutions = (
+            {mapping["institution_id"] for mapping in authoritative_mappings}
+            if authoritative_mappings is not None else None
+        )
         has_curated_affiliations = any(
             clean_text(record.get("affiliation_review_state")) == "curated"
             or clean_text(record.get("institution_source")) == "curated"
@@ -930,6 +941,8 @@ def add_public_detail_fields(
         ) -> Optional[str]:
             affiliation = _detail_affiliation(raw_affiliation)
             if affiliation is None:
+                return None
+            if allowed_institutions is not None and affiliation["institution_id"] not in allowed_institutions:
                 return None
             identity = detail_institution_identity(affiliation)
             existing = affiliation_by_identity.get(identity)
@@ -1010,11 +1023,24 @@ def add_public_detail_fields(
                     ] = identity
             return identity
 
+        if authoritative_mappings is not None:
+            for mapping in authoritative_mappings:
+                add_affiliation({
+                    "institution_id": mapping["institution_id"],
+                    "name": mapping["institution"],
+                    "authors": mapping["institution_authors"],
+                    "mapping_source": "curated_admin",
+                })
+
         # Prefer already exported/confirmed lists so their numbering remains
         # stable across refreshes. Curated export currently writes the legacy
         # field; the new field is consumed first on subsequent transformations.
         for record in records:
             for raw_affiliation in _affiliation_values(record):
+                if authoritative_mappings is not None and isinstance(raw_affiliation, dict):
+                    # Location/provenance can enrich a selected institution,
+                    # but old author assignments cannot become current again.
+                    raw_affiliation = {**raw_affiliation, "authors": []}
                 add_affiliation(raw_affiliation, source_record=record)
 
         # Preserve paper-level institutions even when no author-level mapping
@@ -1043,6 +1069,8 @@ def add_public_detail_fields(
                 continue
             marker_current_identities[id(record)] = current_identity
             current_affiliation = affiliation_by_identity[current_identity]
+            if authoritative_mappings is not None:
+                continue
             for author in record.get("institution_authors") or []:
                 author_name = author_display_name(author)
                 author_key = normalized_author_name(author_name)
@@ -1845,7 +1873,14 @@ def apply_ordered_paper_location_summaries(
                 ),
             )
         ]
-        paper.update(ordered_paper_location_summary(matches))
+        summary_records = matches
+        if paper.get("affiliation_review_state") in {"curated", "reviewed_empty"}:
+            by_institution = {record.get("institution_id"): record for record in matches}
+            summary_records = [
+                {**affiliation, **by_institution.get(affiliation.get("institution_id"), {})}
+                for affiliation in paper.get("author_institution_affiliations", [])
+            ]
+        paper.update(ordered_paper_location_summary(summary_records))
         paper["map_record_count"] = len(matches)
         paper["has_map_location"] = bool(matches)
 
@@ -2528,11 +2563,11 @@ def preserve_map_relationships_after_integration(
     institution_audits: Sequence[Mapping[str, Any]] = (),
     location_rows: Sequence[Mapping[str, Any]] = (),
 ) -> List[Dict[str, Any]]:
-    """Retain unexplained published relationships after curated precedence.
+    """Retain published relationships only outside authoritative curation.
 
     The initial no-search merge happens before curated mappings are integrated.
-    Reapply the same durable-removal filters afterward so precedence cannot
-    silently discard a still-protected published relationship.
+    Historical author subsets and different institutions cannot override a
+    paper's complete active curated mapping set.
     """
     preserved = filter_preserved_records(
         previous,
@@ -2544,6 +2579,15 @@ def preserve_map_relationships_after_integration(
     preserved, _removed = ReviewedRelationshipResolver(
         curated_mappings, institution_audits, location_rows
     ).filter_superseded(preserved)
+    try:
+        from .curated_export import curated_affiliation_removal_reason
+    except ImportError:
+        from curated_export import curated_affiliation_removal_reason
+    mapping_index = PaperIdentityIndex(curated_mappings, PaperIdentityCache())
+    preserved = [record for record in preserved
+                 if not curated_affiliation_removal_reason(
+                     record, mapping_index.matches(record)
+                 )]
     return merge_existing_records(preserved, integrated, map_records=True)
 
 
@@ -3379,14 +3423,18 @@ def add_paper_institution_search_ids(
     mapping_index = PaperIdentityIndex(searchable_mappings, identity_cache)
     annotated = 0
     for paper in paper_records:
-        search_ids = list(dict.fromkeys(
+        reviewed = paper.get("affiliation_review_state") in {"curated", "reviewed_empty"}
+        search_ids = [] if reviewed else list(dict.fromkeys(
             clean_text(value)
             for value in paper.get("search_institution_ids", [])
             if clean_text(value)
         ))
         for mapping in mapping_index.matches(paper):
+            if reviewed and clean_text(mapping.get("mapping_status")) != "active":
+                continue
             institution_id = clean_text(mapping.get("institution_id"))
-            institution_id = redirects.get(institution_id, institution_id)
+            if not reviewed:
+                institution_id = redirects.get(institution_id, institution_id)
             if institution_id and institution_id not in search_ids:
                 search_ids.append(institution_id)
         if search_ids:
@@ -4358,6 +4406,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         exported_id_redirects.update(
             confirmed_alias_id_redirects(exported_aliases)
         )
+        # A global alias is search/provenance evidence, not permission to
+        # overwrite an institution explicitly selected by active curation.
+        active_institution_ids = {
+            clean_text(mapping.get("institution_id")) for mapping in curated_mappings
+            if clean_text(mapping.get("mapping_status")) == "active"
+        }
+        exported_id_redirects = {
+            source: target for source, target in exported_id_redirects.items()
+            if source not in active_institution_ids
+        }
         canonical_institution_search_index = (
             public_canonical_institution_search_index(
                 institution_rows,
@@ -4431,6 +4489,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 deduplicate_public_map_relationships(integrated_maps)
             )
             exact_map_relationships_deduplicated += preserved_relationships_deduplicated
+
+        # Publication-boundary source selection: preservation and derived
+        # schemas must not reintroduce affiliations absent from current curation.
+        stale_mapping_markers_excluded += enforce_affiliation_source_precedence(
+            integrated_papers, integrated_maps, curated_mappings, curated_papers
+        )
+        integrated_maps = canonicalize_public_institutions(
+            integrated_papers, integrated_maps, exported_aliases,
+            confirmed_location_rows, institution_rows, exported_id_redirects,
+        )
 
         # Preservation can reintroduce older fallback markers after the first
         # integration pass. Synchronize at the final merged shape so those
@@ -4511,6 +4579,18 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             curated_mappings,
             exported_id_redirects,
         )
+        # Validate against the actual curation input (including custom paths),
+        # not merely the self-consistency of the two derived public schemas.
+        try:
+            from .audit_public_institution_consistency import audit_consistency
+        except ImportError:
+            from audit_public_institution_consistency import audit_consistency
+        consistency = audit_consistency(integrated_papers, integrated_maps, curated_mappings)
+        if consistency["mismatch_count"]:
+            raise PreviewExportError(
+                "Curated/public institution consistency audit failed: "
+                + "; ".join(row["title"] for row in consistency["mismatches"])
+            )
         preserve_equal_record_key_order(integrated_papers, previous_papers)
         preserve_equal_record_key_order(integrated_maps, previous_maps)
         payload["records"] = integrated_maps

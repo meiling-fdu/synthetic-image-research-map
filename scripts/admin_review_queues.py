@@ -40,11 +40,34 @@ DEFAULT_AUTHOR_OVERRIDES_PATH = MANUAL_DIR / "institution_author_overrides.csv"
 DEFAULT_CORRECTIONS_PATH = MANUAL_DIR / "institution_corrections.csv"
 DEFAULT_PUBLIC_PAPERS_PATH = WEB_DATA_DIR / "public_preview_papers.json"
 DEFAULT_PUBLIC_MAP_PATH = WEB_DATA_DIR / "public_preview_map_data.json"
+DEFAULT_PAPERS_PATH = CURATED_DIR / "papers.csv"
+DEFAULT_INSTITUTIONS_PATH = CURATED_DIR / "institutions.csv"
+DEFAULT_DECISIONS_PATH = CURATED_DIR / "review_decisions.csv"
 
 QUEUE_PATHS = {
     "high_risk_marker": MANUAL_DIR / "high_risk_marker_review.csv",
     "marker_blocker": MANUAL_DIR / "paper_marker_blocker_report.csv",
     "key_paper_coverage": MANUAL_DIR / "key_paper_coverage_report.csv",
+}
+
+# A category's count, endpoint and Review destination describe the same objects.
+ACTION_QUEUES = {
+    "marker_blocker": ("marker_blockers", "Marker blockers", "marker-blockers"),
+    "missing_author_mappings": ("missing_author_mappings", "Missing author mappings", "missing-author-mappings"),
+    "missing_affiliations": ("missing_affiliations", "Missing affiliations", "missing-affiliations"),
+    "missing_coordinates": ("missing_coordinates", "Missing institution locations", "missing-locations"),
+    "high_risk_marker": ("high_risk_markers", "High-risk markers", "high-risk"),
+    "high_risk_paper": ("high_risk_papers", "High-risk papers", "high-risk-papers"),
+    "key_paper_coverage": ("key_paper_coverage_queue", "Key-paper coverage", "key-coverage"),
+    "manual_import": ("manual_import_queue", "Manual imports", "manual-import"),
+}
+QUEUE_ENDPOINTS = {
+    name: "/api/review/" + endpoint for name, endpoint in {
+        "marker_blocker": "marker-blockers", "high_risk_marker": "high-risk-markers",
+        "high_risk_paper": "high-risk-papers", "key_paper_coverage": "key-paper-coverage",
+        "manual_import": "manual-import", "missing_coordinates": "missing-locations",
+        "missing_author_mappings": "missing-author-mappings", "missing_affiliations": "missing-affiliations",
+    }.items()
 }
 MANUAL_IMPORT_PATTERNS = (
     "key_papers_openalex_problem_review.csv",
@@ -60,7 +83,7 @@ class AdminReviewQueueError(RuntimeError):
 
 
 def clean(value: Any) -> str:
-    return " ".join(str(value or "").split())
+    return " ".join(str("" if value is None else value).split())
 
 
 def _normalized_words(value: Any) -> str:
@@ -273,6 +296,250 @@ def annotate_public_visibility(
     ]
 
 
+TERMINAL_STATUSES = {
+    "confirmed", "resolved", "reviewed", "ignore", "ignored", "excluded",
+    "inactive", "superseded", "archived", "rejected", "out_of_scope",
+    "alias_of_confirmed", "merged", "imported", "complete",
+}
+
+
+def terminal_reason(row: Mapping[str, Any]) -> str:
+    """Only explicit lifecycle facts suppress; missing flags are not false."""
+    for field in ("effective_review_status", "review_status", "status", "paper_status", "mapping_status", "import_status",
+                  "institution_status", "scope_status"):
+        if clean(row.get(field)).casefold() in TERMINAL_STATUSES:
+            return f"terminal_{field}"
+    if clean(row.get("is_active")).casefold() in {"false", "0", "no"}:
+        return "inactive_record"
+    return ""
+
+
+class ReviewContext:
+    """Request-local evidence snapshot. Never caches generated actionable totals."""
+
+    def __init__(self, *, mappings_path=DEFAULT_MAPPINGS_PATH,
+                 exclusions_path=DEFAULT_EXCLUSIONS_PATH,
+                 papers_path=DEFAULT_PAPERS_PATH,
+                 institutions_path=DEFAULT_INSTITUTIONS_PATH,
+                 decisions_path=DEFAULT_DECISIONS_PATH,
+                 record_overrides_path=DEFAULT_RECORD_OVERRIDES_PATH,
+                 author_overrides_path=DEFAULT_AUTHOR_OVERRIDES_PATH,
+                 corrections_path=DEFAULT_CORRECTIONS_PATH,
+                 public_papers_path=DEFAULT_PUBLIC_PAPERS_PATH,
+                 public_map_path=DEFAULT_PUBLIC_MAP_PATH, merge_rows=None):
+        self.rows = {
+            name: read_csv(path) for name, path in {
+                "mappings": mappings_path, "exclusions": exclusions_path,
+                "papers": papers_path, "institutions": institutions_path,
+                "decisions": decisions_path, "record_overrides": record_overrides_path,
+                "author_overrides": author_overrides_path, "corrections": corrections_path,
+            }.items()
+        }
+        self.rows["public_papers"] = read_json(public_papers_path)
+        self.rows["public_markers"] = read_json(public_map_path)
+        self.indexes = {}
+        for name, rows in self.rows.items():
+            index = defaultdict(list)
+            for row in rows:
+                for key in _identity_keys(row):
+                    index[key].append(row)
+            self.indexes[name] = index
+        self.merges = list(merge_rows) if merge_rows is not None else read_paper_version_merges()
+        self.public_index = build_public_visibility_index(
+            self.rows["public_papers"], self.rows["public_markers"]
+        )
+
+    def matching(self, name, row):
+        keys = _identity_keys(row)
+        strong = {key for key in keys if not key.startswith("title-year:")}
+        matches = {id(item): item for key in strong for item in self.indexes[name].get(key, [])}
+        if not matches:
+            # Exact title/year is necessary for title-only key-paper/import rows.
+            # Conflicting strong identities never get merged by title similarity.
+            for key in keys - strong:
+                candidates = self.indexes[name].get(key, [])
+                identities = {tuple(sorted(k for k in _identity_keys(item)
+                                           if not k.startswith("title-year:"))) for item in candidates}
+                if not strong and len(identities) <= 1:
+                    matches.update({id(item): item for item in candidates})
+                elif strong:
+                    matches.update({id(item): item for item in candidates
+                                    if not any(not k.startswith("title-year:") for k in _identity_keys(item))})
+        return list(matches.values())
+
+    def paper_suppression(self, row):
+        if any(clean(item.get("is_active")).casefold() in {"1", "true", "yes", "y"}
+               for item in self.matching("exclusions", row)):
+            return "resolved_by_durable_exclusion"
+        for paper in self.matching("papers", row):
+            # Metadata confirmation is not confirmation of every marker.
+            lifecycle = {k: v for k, v in paper.items() if k not in {"review_status", "status"}}
+            if terminal_reason(lifecycle):
+                return "suppressed_by_curated_paper"
+            if clean(paper.get("curation_status")) in {"excluded", "inactive", "superseded", "merged"}:
+                return "suppressed_by_curated_paper"
+        if any(record_matches_merge_side(row, merge, "duplicate")
+               for merge in active_confirmed_merges(self.merges)):
+            return "superseded_by_canonical_paper"
+        return ""
+
+    def reason(self, name, row):
+        reason = self.paper_suppression(row)
+        if reason:
+            return reason
+        institution = _normalized_words(row.get("institution"))
+        institution_id = clean(row.get("institution_id"))
+        if any((institution_id and institution_id == clean(item.get("institution_id"))
+                or institution and institution == _normalized_words(item.get("canonical_name")))
+               and clean(item.get("institution_status")) in TERMINAL_STATUSES
+               for item in self.rows["institutions"]):
+            return "suppressed_by_inactive_institution"
+        decisions = [item for item in self.matching("decisions", row)
+                     if clean(item.get("review_queue")) in {name, "high_risk_marker" if name == "high_risk_paper" else name}
+                     and _normalized_words(item.get("institution")) == institution]
+        if decisions:
+            decision = max(decisions, key=lambda item: clean(item.get("updated_at") or item.get("created_at")))
+            action = clean(decision.get("action"))
+            if action in {"confirm_marker", "exclude_wrong_mapping", "exclude_paper_scope",
+                          "no_action_after_review", "ignore_warning", "accept_mapping", "add_paper", "add_manually"}:
+                return "resolved_by_review_decision"
+            if action == "unresolved":
+                return ""  # Explicit reopening beats stale diagnostic status.
+        if terminal_reason(row):
+            return terminal_reason(row)
+        if clean(row.get("recommended_action")) == "no_action":
+            return "diagnostic_no_action"
+        if row.get("blocker_type") == "already_mapped" or row.get("missing_stage") == "covered_as_map_marker":
+            return "diagnostic_already_covered"
+        mappings = self.matching("mappings", row)
+        if institution and any(_normalized_words(item.get("institution")) == institution
+                               and clean(item.get("mapping_status")) in {"excluded", "inactive", "superseded"}
+                               for item in mappings) and not any(
+                _normalized_words(item.get("institution")) == institution
+                and clean(item.get("mapping_status")) == "active" for item in mappings):
+            return "suppressed_by_curated_mapping"
+        # Reuse marker-specific override precedence with already identity-matched evidence.
+        evidence = {key: [dict(item, paper_id="matched") for item in self.matching(key, row)
+                          if key == "mappings" or not (
+                              clean(item.get("is_active")).casefold() in {"false", "0", "no"}
+                              or clean(item.get("status")) in {"inactive", "excluded", "superseded"})]
+                    for key in ("mappings", "record_overrides", "author_overrides")}
+        diagnostic = " ".join(clean(row.get(field)).casefold() for field in
+                              ("blocker_type", "missing_stage", "review_type"))
+        if name in {"high_risk_marker", "marker_blocker", "high_risk_paper", "key_paper_coverage"} and (
+                institution or any(token in diagnostic for token in ("affiliation", "mapping"))):
+            reason = suppression_reason(dict(row, paper_id="matched"), **evidence,
+                                        corrections=self.rows["corrections"])
+            if reason:
+                return reason
+        curated = self.matching("papers", row)
+        if name == "manual_import" and (curated or self.matching("public_papers", row)):
+            return "already_imported"
+        if name in {"marker_blocker", "key_paper_coverage", "high_risk_paper"} and self.matching("public_markers", row):
+            return "covered_by_current_public_marker"
+        return ""
+
+
+def diagnostic_identities(source_rows, context):
+    """Join exact identifiers, with title/year fallback only when unambiguous.
+
+    This deduplicates work items, not author/institution entities or source files.
+    Conflicting DOI/OpenAlex records are never joined on title alone.
+    """
+    keys_by_row = []
+    parent = {}
+
+    def root(key):
+        parent.setdefault(key, key)
+        while parent[key] != key:
+            key = parent[key]
+        return key
+
+    for row in source_rows:
+        curated = context.matching("papers", row)
+        keys = _identity_keys(curated[0] if len(curated) == 1 else row)
+        keys_by_row.append(keys)
+        strong = sorted(k for k in keys if not k.startswith("title-year:"))
+        for key in strong[1:]:
+            left, right = sorted((root(strong[0]), root(key)))
+            parent[right] = left
+    by_title = defaultdict(set)
+    for keys in keys_by_row:
+        for title in (k for k in keys if k.startswith("title-year:")):
+            by_title[title].update(root(k) for k in keys if not k.startswith("title-year:"))
+    identities = []
+    for row, keys in zip(source_rows, keys_by_row):
+        strong = sorted(k for k in keys if not k.startswith("title-year:"))
+        if strong:
+            identity = root(strong[0])
+        elif keys:
+            title = sorted(keys)[0]
+            identity = next(iter(by_title[title])) if len(by_title[title]) == 1 else title
+        else:
+            identity = json.dumps(row, sort_keys=True)
+        identities.append(identity)
+    return identities
+
+
+def actionable_payload(name, source_rows, context, *, available=True, group_field="review_type", **metadata):
+    records = []
+    hidden = Counter()
+    seen = {}
+    for source, identity in zip(source_rows, diagnostic_identities(source_rows, context)):
+        row = dict(source)
+        reason = context.reason(name, row)
+        if reason:
+            hidden[reason] += 1
+            continue
+        if name == "missing_coordinates":
+            identity = clean(row.get("institution_id")) or _normalized_words(row.get("institution"))
+        # One work item per paper, except marker queues (paper + institution + authors).
+        key = (identity, _normalized_words(row.get("institution")) if name == "high_risk_marker" else "",
+               tuple(sorted(_authors(row))) if name == "high_risk_marker" else ())
+        provenance = {k: row[k] for k in ("source_file", "source_row", "review_type", "missing_stage", "blocker_type") if k in row}
+        if key in seen:
+            seen[key]["diagnostic_sources"].append(provenance)
+            hidden["duplicate_diagnostic"] += 1
+            continue
+        row.update(public_visibility_status(row, context.public_index, context.merges))
+        row["effective_review_status"] = "unresolved"
+        row["actionable"] = True
+        row["actionable_id"] = "|".join((name, *map(str, key)))
+        row["diagnostic_sources"] = [provenance]
+        seen[key] = row
+        records.append(row)
+    return {
+        "queue": name, "available": available, "records": records,
+        "count": len(records), "total_unresolved": len(records),
+        "raw_count": len(source_rows), "hidden_resolved": sum(hidden.values()),
+        "suppression_reasons": dict(sorted(hidden.items())),
+        "summary": _summary(records, group_field), "durable_source": False, **metadata,
+    }
+
+
+def build_action_queues(context, *, location_payload, author_mapping_coverage, papers):
+    """All Action Required categories, computed from one effective evidence snapshot."""
+    queues = {name: load_queue(name, context=context) for name in
+              ("high_risk_marker", "high_risk_paper", "marker_blocker", "key_paper_coverage")}
+    queues["manual_import"] = load_manual_import_queue(context=context)
+    queues["missing_coordinates"] = actionable_payload(
+        "missing_coordinates", [row for row in location_payload["records"]
+                                if row.get("actionable") and not row.get("has_usable_confirmed_location")], context)
+    queues["missing_author_mappings"] = actionable_payload(
+        "missing_author_mappings", [row for row in author_mapping_coverage.get("records", [])
+                                    if row.get("mapping_status") == "zero"], context,
+        available=bool(author_mapping_coverage.get("available")))
+    queues["missing_affiliations"] = actionable_payload(
+        "missing_affiliations", [dict(row, review_status="unresolved", effective_review_status="unresolved") for row in papers
+                                 if row.get("missing_affiliation")
+                                 and not any(clean(m.get("mapping_status")) == "active"
+                                             for m in context.matching("mappings", row))
+                                 and not context.matching("public_markers", row)], context)
+    for name, queue in queues.items():
+        queue["endpoint"] = QUEUE_ENDPOINTS[name]
+    return queues
+
+
 def load_queue(
     name: str,
     *,
@@ -284,41 +551,34 @@ def load_queue(
     public_papers_path: Path = DEFAULT_PUBLIC_PAPERS_PATH,
     public_map_path: Path = DEFAULT_PUBLIC_MAP_PATH,
     merge_rows: Sequence[Mapping[str, Any]] | None = None,
+    context: ReviewContext | None = None,
+    papers_path: Path = DEFAULT_PAPERS_PATH,
+    institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    decisions_path: Path = DEFAULT_DECISIONS_PATH,
 ) -> Dict[str, Any]:
-    path = QUEUE_PATHS.get(name)
+    path = QUEUE_PATHS.get("high_risk_marker" if name == "high_risk_paper" else name)
     if path is None:
         raise AdminReviewQueueError(f"unsupported review queue: {name}")
-    source_rows = read_csv(path)
-    rows, hidden = suppress_resolved_records(
-        source_rows,
-        mappings=read_csv(mappings_path),
-        exclusions=read_csv(exclusions_path),
-        record_overrides=read_csv(record_overrides_path),
-        author_overrides=read_csv(author_overrides_path),
-        corrections=read_csv(corrections_path),
+    source_rows = [dict(row, source_file=str(path.relative_to(REPOSITORY_ROOT)), source_row=index)
+                   for index, row in enumerate(read_csv(path), 2)]
+    if name in {"high_risk_marker", "high_risk_paper"}:
+        source_rows = [row for row in source_rows
+                       if bool(clean(row.get("institution"))) == (name == "high_risk_marker")]
+    context = context or ReviewContext(
+        mappings_path=mappings_path, exclusions_path=exclusions_path,
+        papers_path=papers_path, institutions_path=institutions_path, decisions_path=decisions_path,
+        record_overrides_path=record_overrides_path, author_overrides_path=author_overrides_path,
+        corrections_path=corrections_path, public_papers_path=public_papers_path,
+        public_map_path=public_map_path, merge_rows=merge_rows,
     )
     group_field = {
         "high_risk_marker": "priority",
+        "high_risk_paper": "priority",
         "marker_blocker": "blocker_type",
         "key_paper_coverage": "missing_stage",
     }[name]
-    return {
-        "queue": name,
-        "available": path.exists(),
-        "source_file": str(path.relative_to(REPOSITORY_ROOT)),
-        "count": len(rows),
-        "total_unresolved": len(rows),
-        "hidden_resolved": sum(hidden.values()),
-        "suppression_reasons": dict(sorted(hidden.items())),
-        "summary": _summary(rows, group_field),
-        "records": annotate_public_visibility(
-            rows,
-            public_papers_path=public_papers_path,
-            public_map_path=public_map_path,
-            merge_rows=merge_rows,
-        ),
-        "durable_source": False,
-    }
+    return actionable_payload(name, source_rows, context, available=path.exists(),
+                              group_field=group_field, source_file=str(path.relative_to(REPOSITORY_ROOT)))
 
 
 def _manual_import_files() -> list[Path]:
@@ -353,6 +613,7 @@ def load_manual_import_queue(
     public_papers_path: Path = DEFAULT_PUBLIC_PAPERS_PATH,
     public_map_path: Path = DEFAULT_PUBLIC_MAP_PATH,
     merge_rows: Sequence[Mapping[str, Any]] | None = None,
+    context: ReviewContext | None = None,
 ) -> Dict[str, Any]:
     records: list[Dict[str, Any]] = []
     files = _manual_import_files()
@@ -366,31 +627,12 @@ def load_manual_import_queue(
             row.setdefault("candidate_year", row.get("best_match_year", ""))
             row.setdefault("venue", row.get("publication_venue", ""))
             records.append(row)
-    visible, hidden = suppress_resolved_records(
-        records,
-        mappings=read_csv(mappings_path),
-        exclusions=read_csv(exclusions_path),
-        record_overrides=read_csv(DEFAULT_RECORD_OVERRIDES_PATH),
-        author_overrides=read_csv(DEFAULT_AUTHOR_OVERRIDES_PATH),
-        corrections=read_csv(DEFAULT_CORRECTIONS_PATH),
-    )
-    return {
-        "queue": "manual_import",
-        "available": bool(files),
-        "source_files": [str(path.relative_to(REPOSITORY_ROOT)) for path in files],
-        "count": len(visible),
-        "total_unresolved": len(visible),
-        "hidden_resolved": sum(hidden.values()),
-        "suppression_reasons": dict(sorted(hidden.items())),
-        "summary": _summary(visible, "candidate_status"),
-        "records": annotate_public_visibility(
-            visible,
-            public_papers_path=public_papers_path,
-            public_map_path=public_map_path,
-            merge_rows=merge_rows,
-        ),
-        "durable_source": False,
-    }
+    context = context or ReviewContext(mappings_path=mappings_path, exclusions_path=exclusions_path,
+                                       public_papers_path=public_papers_path,
+                                       public_map_path=public_map_path, merge_rows=merge_rows)
+    return actionable_payload("manual_import", records, context, available=bool(files),
+                              group_field="candidate_status",
+                              source_files=[str(path.relative_to(REPOSITORY_ROOT)) for path in files])
 
 
 def _count_csv(path: Path) -> int:
@@ -772,15 +1014,10 @@ def dashboard_data(
     validation_status: Mapping[str, Any],
     git_status: Mapping[str, Any],
     author_mapping_coverage: Mapping[str, Any],
+    queues: Mapping[str, Mapping[str, Any]],
 ) -> Dict[str, Any]:
     public_papers = read_json(WEB_DATA_DIR / "public_preview_papers.json")
     map_markers = read_json(WEB_DATA_DIR / "public_preview_map_data.json")
-    queues = {
-        "high_risk_marker": load_queue("high_risk_marker"),
-        "marker_blocker": load_queue("marker_blocker"),
-        "key_paper_coverage": load_queue("key_paper_coverage"),
-        "manual_import": load_manual_import_queue(),
-    }
     counts = {
         "public_preview_papers": len(public_papers),
         "map_markers": len(map_markers),
@@ -800,6 +1037,13 @@ def dashboard_data(
             name: dict(summary) for name, summary in queue_summaries.items()
         },
         "author_mapping_coverage": dict(author_mapping_coverage),
+        "action_queues": dict(queues),
+        "action_required": [
+            {"key": key, "label": label, "target": target,
+             "queue": name, "endpoint": QUEUE_ENDPOINTS[name],
+             "value": len(queues[name]["records"]), "available": queues[name]["available"]}
+            for name, (key, label, target) in ACTION_QUEUES.items() if name in queues
+        ],
         "project_health": project_health_data(
             counts=counts,
             queues=queue_summaries,

@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>Local Paper Curator · Synthetic Image Research Map</title>
-    <link rel="stylesheet" href="/admin.css?v=20260825-title-superscripts">
+    <link rel="stylesheet" href="/admin.css?v=20260828-curation-snapshot">
     <script src="/institution_type_labels.js?v=20260718-research-institute" defer></script>
     <script src="/institution_display.js?v=20260825-institution-abbreviations" defer></script>
     <script src="/title_markup.js?v=20260825-title-superscripts" defer></script>
-    <script src="/admin.js?v=20260825-title-superscripts" defer></script>
+    <script src="/admin.js?v=20260828-curation-snapshot" defer></script>
   </head>
   <body>
     <header class="masthead">
@@ -79,6 +79,19 @@
         </div>
         <div class="action-queue" id="dashboard-grid"><p>Action queue loads after authentication.</p></div>
         <p class="action-queue-empty" id="action-queue-empty" hidden>No review actions are currently required.</p>
+        <section class="mapping-coverage-card" aria-labelledby="curation-dashboard-title">
+          <div class="section-heading">
+            <h3 id="curation-dashboard-title">Papers needing curation <span class="action-count" id="curation-dashboard-count">—</span></h3>
+            <button class="text-button" id="curation-dashboard-review" type="button">Review</button>
+          </div>
+          <p class="mapping-coverage-empty" id="curation-dashboard-summary" aria-live="polite">Curation state loads after authentication.</p>
+          <div class="table-wrap" id="curation-dashboard-table" hidden>
+            <table class="curation-paper-table">
+              <thead><tr><th>Title</th><th>Year</th><th>Publication venue</th><th>Curation status</th><th>Review status</th><th>Scope status</th><th>Curation note</th><th>Action</th></tr></thead>
+              <tbody id="curation-dashboard-rows"></tbody>
+            </table>
+          </div>
+        </section>
         <section class="mapping-coverage-card" aria-labelledby="mapping-coverage-dashboard-title">
           <div class="section-heading">
             <div>
@@ -455,6 +468,13 @@
                 </select>
               </label>
               <label>Source<select id="filter-source"><option value="">All sources</option></select></label>
+              <label>Curation status
+                <select id="filter-curation-status">
+                  <option value="">All curation statuses</option>
+                  <option value="needs_review">Needs review</option>
+                  <option value="confirmed">Confirmed</option>
+                </select>
+              </label>
               <label>Exclusion status
                 <select id="filter-exclusion">
                   <option value="">Any</option>
@@ -717,14 +737,14 @@
 
       <section class="review-queue-panel" id="marker-blocker-review-panel" hidden data-queue="marker-blockers">
         <div class="section-heading"><div><p class="eyebrow">Generated diagnostic</p><h2>Marker Blocker Review</h2><p>Resolve affiliations, coordinates, review confidence, scope, or metadata through curated editors.</p></div></div>
-        <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
+        <p class="review-scope-help">One actionable record per paper with an unresolved map blocker. Already-mapped diagnostics and blockers resolved by current curated evidence are suppressed. This queue is distinct from individual high-risk markers.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Search blocker queue…"><select data-role="group"><option value="">All blocker types</option></select></div>
         <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>
 
       <section class="review-queue-panel" id="key-coverage-review-panel" hidden data-queue="key-paper-coverage">
         <div class="section-heading"><div><p class="eyebrow">Key-paper audit</p><h2>Key Paper Coverage Review</h2><p>Inspect missing stages and possible title-match failures without editing the generated audit.</p></div></div>
-        <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
+        <p class="review-scope-help">One actionable record per key paper with an unresolved coverage stage. Covered papers, reviewed decisions, exclusions and superseded versions are suppressed; uncertain exact identities remain reviewable.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Search coverage queue…"><select data-role="group"><option value="">All missing stages</option></select></div>
         <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>
@@ -764,7 +784,7 @@
 
       <section class="review-queue-panel" id="manual-import-review-panel" hidden data-queue="manual-import">
         <div class="section-heading"><div><p class="eyebrow">Candidate CSVs</p><h2>Manual Import Review</h2><p>Review available ready, weak-match, query-failed, no-match, and manual-review candidates.</p></div></div>
-        <p class="review-scope-help">Review lists show unresolved paper-institution map evidence only. If a marker, author-institution mapping, institution identity, or location has already been confirmed or excluded in the curated layer, it is hidden from this list. This is not a paper-scope review. It checks whether a paper-institution map marker should be shown and whether its authors, institution identity, and location are correct.</p><p class="review-counts" data-role="counts"></p>
+        <p class="review-scope-help">One actionable record per import candidate, deduplicated across historical files. Already-imported papers, completed reviews, exclusions and inactive records are suppressed. Original diagnostic source references remain available in the detail.</p><p class="review-counts" data-role="counts"></p>
         <div class="review-filters"><input type="search" data-role="search" placeholder="Search import candidates…"><select data-role="group"><option value="">All candidate statuses</option></select></div>
         <div class="review-layout"><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Title</th><th>Year</th><th>Institution</th><th>Institution authors</th><th>Review type</th><th>Recommended action</th><th>Current status</th><th>Public visibility</th></tr></thead><tbody data-role="rows"></tbody></table><p data-role="empty"></p></div><article data-role="detail" class="review-detail">Select a row.</article></div>
       </section>

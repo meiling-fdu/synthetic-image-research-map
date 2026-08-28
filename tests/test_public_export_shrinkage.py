@@ -420,7 +420,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
 
     def test_composed_decomposed_accents_and_stable_separators_match(self):
         old = paper()
@@ -441,7 +441,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [old], [old], [old_marker], [],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
 
     def test_reordered_partial_author_list_can_prove_reviewed_replacement(self):
         old = paper()
@@ -462,7 +462,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [old], [old], [old_marker], [],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
 
     def test_admin_audit_explains_destructive_mapping_replacement(self):
         old = paper()
@@ -563,9 +563,9 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
 
-    def test_partial_manual_mapping_does_not_explain_other_author_fallback(self):
+    def test_curated_paper_does_not_preserve_other_author_fallback(self):
         old = paper()
         old_marker = {
             **marker(old, institution_id="institution:old", institution="Old"),
@@ -589,9 +589,10 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[reviewed],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
+        self.assertIn("outside effective active curated mappings", report.removed_maps[0].evidence)
 
-    def test_manual_old_relationship_disappearing_without_correction_still_blocks(self):
+    def test_old_mapping_absent_from_current_curated_state_is_not_preserved(self):
         old = paper()
         old_marker = {
             **marker(old, institution_id="institution:old", institution="Old"),
@@ -615,7 +616,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
 
     def test_nested_affiliation_authors_can_support_supersession_evidence(self):
         old = paper()
@@ -648,7 +649,7 @@ class PublicExportShrinkageTests(unittest.TestCase):
             [],
             curated_mappings=[replacement],
         )
-        self.assertFalse(report.allowed)
+        self.assertTrue(report.allowed)
 
     def test_institution_redirects_are_applied_to_old_and_new_map_identities(self):
         old = paper()

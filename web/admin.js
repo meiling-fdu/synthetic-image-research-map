@@ -62,6 +62,7 @@ let institutionLocationSequence = 0;
 let geocodeRequestSequence = 0;
 let cityResolutionRequestSequence = 0;
 let cityResolutionTimer = null;
+let reviewSnapshotSequence = 0;
 const workflowCommandIds = [
   "run-curated-validation",
   "run-export-preview",
@@ -81,6 +82,7 @@ if (typeof window !== "undefined") {
 }
 
 if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded", () => {
+  initializeActionQueuePanels();
   [
     "connection-status",
     "add-paper-toggle",
@@ -138,6 +140,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "filter-map",
     "filter-source",
     "filter-exclusion",
+    "filter-curation-status",
     "result-count",
     "paper-list",
     "empty-results",
@@ -307,6 +310,11 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "console-nav",
     "dashboard-panel",
     "dashboard-grid",
+    "curation-dashboard-count",
+    "curation-dashboard-review",
+    "curation-dashboard-summary",
+    "curation-dashboard-table",
+    "curation-dashboard-rows",
     "action-queue-empty",
     "reload-review-queues",
     "dashboard-open-publish",
@@ -460,6 +468,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "filter-map",
     "filter-source",
     "filter-exclusion",
+    "filter-curation-status",
   ].forEach((id) => elements[id].addEventListener("change", applyFilters));
 
   elements["detail-exclude-button"].addEventListener("click", () => {
@@ -618,6 +627,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "mapping-coverage-key",
   ].forEach((id) => elements[id].addEventListener("input", renderFullMappingCoverage));
   elements["dashboard-open-publish"].addEventListener("click", () => navigateConsole("publish"));
+  elements["curation-dashboard-review"].addEventListener("click", reviewPapersNeedingCuration);
   elements["metadata-edit-button"].addEventListener("click", openMetadataEditor);
   elements["metadata-edit-cancel"].addEventListener("click", closeMetadataEditor);
   elements["metadata-edit-form"].addEventListener("submit", saveMetadata);
@@ -698,7 +708,6 @@ async function loadApplication(preserveSelection = false) {
   try {
     initialData = await Promise.all([
       apiFetch("/api/status"),
-      apiFetch("/api/papers"),
       apiFetch("/api/latest-validation-status"),
       apiFetch("/api/location-review"),
       apiFetch("/api/institutions"),
@@ -715,13 +724,8 @@ async function loadApplication(preserveSelection = false) {
     return;
   }
 
-  const [status, papersPayload, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus, arxivEnrichment] = initialData;
+  const [status, workflowStatus, locationPayload, institutionPayload, autofillStatus, gitStatus, arxivEnrichment] = initialData;
   try {
-    state.papers = papersPayload.records.slice().sort((left, right) =>
-      text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
-    );
-    populateFilters();
-    applyFilters();
     elements.workspace.hidden = false;
     setConnection("ok", "● Local curation connected");
     renderLatestWorkflowStatus(workflowStatus);
@@ -757,48 +761,150 @@ async function loadApplication(preserveSelection = false) {
 }
 
 async function loadDashboardAndQueues() {
+  const sequence = ++reviewSnapshotSequence;
   const buttons = [elements["reload-review-queues"]];
   buttons.forEach((button) => {
     button.disabled = true;
   });
-  const paths = {
-    dashboard: "/api/dashboard",
-    "high-risk": "/api/review/high-risk-markers",
-    "marker-blockers": "/api/review/marker-blockers",
-    "key-paper-coverage": "/api/review/key-paper-coverage",
-    "manual-import": "/api/review/manual-import",
-    "institution-audit": "/api/review/institution-cleanup",
-  };
-  Object.keys(paths).filter((name) => !["dashboard", "institution-audit"].includes(name)).forEach((name) => {
-    state.reviewQueues[name] = { available: true, records: [], hidden_resolved: 0 };
-    renderReviewQueue(name);
-  });
   try {
-    const entries = await Promise.all(
-      Object.entries(paths).map(async ([name, path]) => [name, await apiFetch(path)])
-    );
-    entries.forEach(([name, payload]) => {
-      if (name === "dashboard") {
-        state.dashboard = payload.data || {};
-        if (state.dashboard.author_mapping_coverage) {
-          state.authorMappingCoverage = state.dashboard.author_mapping_coverage;
-        }
+    const payload = await apiFetch("/api/dashboard");
+    if (sequence !== reviewSnapshotSequence) return;
+    const snapshot = payload.data;
+    if (!snapshot?.action_queues || !snapshot?.action_required) {
+      throw new Error("Restart the Admin server to load the actionable-queue API.");
+    }
+    // Validate before replacing either side; an incomplete refresh is never a zero queue.
+    snapshot.action_required.forEach((metric) => {
+      const queue = snapshot.action_queues[metric.queue];
+      if (!queue || metric.value !== queue.records.length || queue.count !== queue.records.length) {
+        throw new Error(`Inconsistent review snapshot: ${metric.queue}`);
       }
-      else if (name === "institution-audit") state.institutionAudit = payload.data || { records: [], summary: {} };
-      else state.reviewQueues[name] = payload.data || {};
     });
-    renderDashboard();
-    renderMappingCoverage();
+    const curation = snapshot.papers_needing_curation;
+    if (!Array.isArray(snapshot.papers) || !curation || !Array.isArray(curation.records)) {
+      throw new Error("Restart the Admin server to load the effective paper-curation API.");
+    }
+    const expected = snapshot.papers.filter(paperNeedsCuration);
+    if (new Set(snapshot.papers.map(paper => paper.display_id)).size !== snapshot.papers.length
+        || curation.count !== expected.length || curation.records.length !== expected.length
+        || curation.records.some((paper, index) => JSON.stringify(paper) !== JSON.stringify(expected[index]))) {
+      throw new Error("Inconsistent paper-curation snapshot");
+    }
+    const queues = {};
+    snapshot.action_required.forEach((metric) => {
+      const name = metric.target === "key-coverage" ? "key-paper-coverage" : metric.target;
+      queues[name] = snapshot.action_queues[metric.queue];
+    });
+    state.dashboard = snapshot;
+    state.papers = snapshot.papers;
+    state.reviewQueues = queues;
+    state.authorMappingCoverage = snapshot.author_mapping_coverage;
     Object.keys(state.reviewQueues).forEach(renderReviewQueue);
+    renderDashboard();
+    renderPapersNeedingCuration();
+    populateFilters();
+    applyFilters();
+    applyLocationPayload(snapshot.location_review);
+    renderMappingCoverage();
+  } catch (error) {
+    if (sequence === reviewSnapshotSequence) {
+      showNotice(`Review refresh failed; the last complete snapshot is retained: ${error.message}`, "error");
+    }
+  } finally {
+    if (sequence === reviewSnapshotSequence) buttons.forEach((button) => { button.disabled = false; });
+  }
+  // Auxiliary cleanup must not prevent the Action Required snapshot from loading.
+  try {
+    const paths = { "institution-audit": "/api/review/institution-cleanup" };
+    const payload = await apiFetch(paths["institution-audit"]);
+    if (sequence !== reviewSnapshotSequence) return;
+    state.institutionAudit = payload.data || { records: [], summary: {} };
     renderInstitutionAudit();
   } catch (error) {
-    showNotice(`Review queues could not be loaded: ${error.message}`, "error");
-  } finally {
-    buttons.forEach((button) => {
-      button.disabled = false;
-    });
+    if (sequence === reviewSnapshotSequence) showNotice(`Institution cleanup could not be loaded: ${error.message}`, "error");
   }
-  await loadAuthorMappingCoverage({ showError: false });
+}
+
+function initializeActionQueuePanels() {
+  const source = document.getElementById("key-coverage-review-panel");
+  [
+    ["high-risk-papers", "High-risk Paper Review", "Paper-level coverage and metadata findings, separate from individual marker evidence."],
+    ["missing-locations", "Missing Institution Locations", "One actionable location review per active institution."],
+    ["missing-author-mappings", "Missing Author Mappings", "Papers with no resolved author mappings."],
+    ["missing-affiliations", "Missing Affiliations", "Papers still missing active institution evidence."],
+  ].forEach(([name, title, help]) => {
+    const panel = source.cloneNode(true);
+    panel.id = `${name}-review-panel`;
+    panel.dataset.queue = name;
+    panel.querySelector("h2").textContent = title;
+    panel.querySelector(".eyebrow").textContent = "Actionable review";
+    panel.querySelector(".section-heading p:last-child").textContent = help;
+    panel.querySelector(".review-scope-help").textContent = "Only effective unresolved records are actionable. Curated decisions, exclusions and inactive records take precedence over diagnostics.";
+    panel.querySelector('[data-role="search"]').placeholder = "Search review queue…";
+    panel.querySelector('[data-role="group"] option').textContent = "All review types";
+    source.after(panel);
+  });
+}
+
+function paperNeedsCuration(paper) {
+  return paper.is_active_corpus === true && paper.curation_status === "needs_review";
+}
+
+function reviewPapersNeedingCuration() {
+  ["search-input", "filter-year", "filter-task", "filter-coverage", "filter-map",
+    "filter-source", "filter-exclusion"].forEach(id => { elements[id].value = ""; });
+  elements["filter-curation-status"].value = "needs_review";
+  applyFilters();
+  navigateConsole("papers");
+}
+
+async function openCurationPaper(id) {
+  navigateConsole("papers");
+  await selectPaper(id);
+  if (state.selectedId === id && state.paperMetadata) openMetadataEditor();
+}
+
+function renderPapersNeedingCuration() {
+  const { count, records } = state.dashboard.papers_needing_curation;
+  const visible = records.slice(0, 5);
+  elements["curation-dashboard-count"].textContent = formatNumber(count);
+  elements["curation-dashboard-summary"].textContent = count
+    ? `Showing ${visible.length} of ${count} papers. Review opens the complete Needs review list.`
+    : "No papers currently need curation.";
+  elements["curation-dashboard-table"].hidden = count === 0;
+  elements["curation-dashboard-rows"].replaceChildren();
+  visible.forEach(paper => {
+    const row = document.createElement("tr");
+    row.dataset.paperId = paper.display_id;
+    const titleCell = document.createElement("td");
+    const title = document.createElement("button");
+    title.type = "button";
+    title.className = "text-button";
+    renderPaperTitle(title, paper.title);
+    title.addEventListener("click", () => openCurationPaper(paper.display_id));
+    titleCell.append(title);
+    row.append(titleCell);
+    [paper.year, paper.venue_label || paper.venue_name || paper.venue,
+      humanize(paper.curation_status), humanize(paper.review_status), humanize(paper.scope_status),
+      paper.curation_note || paper.review_note || paper.notes].forEach((value, index) => {
+      const cell = document.createElement("td");
+      const content = document.createElement("span");
+      content.textContent = text(value) || "—";
+      if (index === 5) { cell.className = "curation-note"; content.title = text(value); }
+      cell.append(content);
+      row.append(cell);
+    });
+    const actionCell = document.createElement("td");
+    const action = document.createElement("button");
+    action.type = "button";
+    action.className = "text-button";
+    action.textContent = "Open/Edit";
+    action.setAttribute("aria-label", `Edit ${plainPaperTitle(paper.title)}`);
+    action.addEventListener("click", () => openCurationPaper(paper.display_id));
+    actionCell.append(action);
+    row.append(actionCell);
+    elements["curation-dashboard-rows"].append(row);
+  });
 }
 
 async function loadAuthorMappingCoverage({ showError = true } = {}) {
@@ -870,6 +976,10 @@ function navigateConsole(target) {
     "institution-management": elements["institution-management-panel"],
     "location-review": elements["location-review-panel"],
     "high-risk": elements["high-risk-review-panel"],
+    "high-risk-papers": document.getElementById("high-risk-papers-review-panel"),
+    "missing-locations": document.getElementById("missing-locations-review-panel"),
+    "missing-author-mappings": document.getElementById("missing-author-mappings-review-panel"),
+    "missing-affiliations": document.getElementById("missing-affiliations-review-panel"),
     "institution-audit": elements["institution-audit-panel"],
     "marker-blockers": elements["marker-blocker-review-panel"],
     "key-coverage": elements["key-coverage-review-panel"],
@@ -901,8 +1011,7 @@ function navigateConsole(target) {
 }
 
 function renderDashboard() {
-  const metrics = (state.dashboard.project_health?.groups || [])
-    .flatMap((group) => group.metrics || []);
+  const metrics = state.dashboard.action_required || [];
   const wanted = {
     marker_blockers: { title: "Marker blockers", priority: 1, impact: "Preventing papers from appearing correctly on the public map." },
     identity_unresolved: { title: "Unresolved paper identities", priority: 2, impact: "Canonical papers cannot yet be resolved reliably." },
@@ -910,7 +1019,8 @@ function renderDashboard() {
     missing_author_mappings: { title: "Missing author mappings", priority: 4, impact: "Author identities cannot yet be resolved reliably." },
     missing_affiliations: { title: "Missing affiliations", priority: 4, impact: "Papers are missing institution context on the public map." },
     missing_coordinates: { title: "Missing institution locations", priority: 5, impact: "Institutions cannot be placed on the map." },
-    high_risk_markers: { title: "High-risk papers", priority: 6, impact: "Low-confidence metadata needs review before release." },
+    high_risk_markers: { title: "High-risk markers", priority: 6, impact: "Paper-institution marker evidence needs review." },
+    high_risk_papers: { title: "High-risk papers", priority: 6, impact: "Paper-level coverage or metadata needs review." },
     key_paper_coverage_queue: { title: "Key-paper coverage", priority: 7, impact: "Important corpus coverage needs maintainer review." },
     manual_import_queue: { title: "Manual imports", priority: 7, impact: "Imported records still need cleanup or confirmation." },
   };
@@ -920,7 +1030,7 @@ function renderDashboard() {
   ).sort((left, right) => wanted[left.key].priority - wanted[right.key].priority);
   elements["dashboard-grid"].replaceChildren();
   elements["action-queue-empty"].hidden = queue.length !== 0;
-  queue.slice(0, 5).forEach((metric) => {
+  queue.forEach((metric) => {
     const copy = wanted[metric.key];
     const row = document.createElement("button");
     row.type = "button";
@@ -943,14 +1053,6 @@ function renderDashboard() {
     row.addEventListener("click", () => navigateProjectHealthMetric(metric));
     elements["dashboard-grid"].append(row);
   });
-  if (queue.length > 5) {
-    const expand = document.createElement("button");
-    expand.type = "button";
-    expand.className = "text-button queue-expand";
-    expand.textContent = "View all review queues";
-    expand.addEventListener("click", () => navigateConsole("validation"));
-    elements["dashboard-grid"].append(expand);
-  }
 }
 
 function initializeNavigationMenus() {
@@ -1066,6 +1168,13 @@ function handleGlobalSearchKeydown(event) {
 }
 
 function navigateProjectHealthMetric(metric) {
+  if (metric.queue) {
+    const name = metric.target === "key-coverage" ? "key-paper-coverage" : metric.target;
+    const panel = queuePanel(name);
+    panel?.querySelectorAll(".review-filters input, .review-filters select").forEach((field) => { field.value = ""; });
+    clearReviewDetail(name);
+    renderReviewQueue(name);
+  }
   const navigation = metric.navigation || {};
   if (metric.target === "papers" && navigation.paper_filter === "missing_affiliations") {
     elements["filter-map"].value = "missing_affiliations";
@@ -1340,7 +1449,7 @@ function queueGroupField(name) {
     "marker-blockers": "blocker_type",
     "key-paper-coverage": "missing_stage",
     "manual-import": "candidate_status",
-  }[name];
+  }[name] || "review_type";
 }
 
 function renderReviewQueue(name) {
@@ -1371,7 +1480,7 @@ function renderReviewQueue(name) {
     if (actionFilter?.value && text(row.recommended_action) !== actionFilter.value) return false;
     if (typeFilter?.value && text(row.review_type) !== typeFilter.value) return false;
     return !search || normalize(Object.values(row).join(" ")).includes(search);
-  }).slice(0, 500);
+  });
   const body = panel.querySelector('[data-role="rows"]');
   body.replaceChildren();
   const visibleKeys = new Set(filtered.map(reviewRecordKey));
@@ -2054,6 +2163,9 @@ function renderReviewDetail(name, row) {
 
 function reviewActionsFor(name, row) {
   const common = [["Open metadata", "open_metadata"], ["Open scope review", "open_scope"]];
+  if (name === "missing-locations") return [["Open location review", "open_location_review"]];
+  if (["missing-author-mappings", "missing-affiliations"].includes(name)) return [["Open mapping editor", "replace_author_institution_mapping"], ["Open metadata", "open_metadata"]];
+  if (name === "high-risk-papers") return [["Open blocker review", "open_blockers"], ["No action after review", "no_action_after_review"], ...common];
   if (name === "high-risk") return [
     ["Confirm marker", "confirm_marker"],
     ["Replace mapping", "replace_author_institution_mapping"],
@@ -2131,6 +2243,13 @@ async function openCoverageMappingEditor(row, { mapMissingAuthors = false } = {}
 }
 
 async function handleReviewAction(name, row, action) {
+  if (action === "open_location_review") {
+    navigateConsole("location-review");
+    state.locationStatusFilter = "";
+    elements["location-search"].value = "";
+    selectLocationReview(row.queue_id);
+    return;
+  }
   if (action === "open_high_risk") return navigateConsole("high-risk");
   if (action === "open_blockers") return navigateConsole("marker-blockers");
   if (action === "open_metadata") {
@@ -2184,6 +2303,7 @@ async function handleReviewAction(name, row, action) {
 async function saveReviewDecision(name, row, action, note) {
   const endpoints = {
     "high-risk": "/api/review/high-risk-markers/action",
+    "high-risk-papers": "/api/review/high-risk-markers/action",
     "marker-blockers": "/api/review/marker-blockers/action",
     "key-paper-coverage": "/api/review/key-paper-coverage/action",
     "manual-import": "/api/review/manual-import/action",
@@ -2925,7 +3045,7 @@ function locationReviewMatches(row, query = normalize(elements["location-search"
       state.locationStatusFilter === "confirmed"
         ? ["confirmed", "alias_of_confirmed"].includes(row.review_status)
         : state.locationStatusFilter === "needs_coordinates"
-          ? locationReviewStatusLabel(row, row.confirmed_location) === "Needs coordinates"
+          ? row.actionable === true && !row.has_usable_confirmed_location
           : row.review_status === state.locationStatusFilter
     )
   ) return false;
@@ -4025,16 +4145,7 @@ async function recoverPublishResult() {
 async function refreshAfterMetadataSave(selectedId, payload, selectionSequence) {
   const summary = payload?.data?.paper_summary;
   const savedPaper = payload?.data?.paper;
-  if (summary) {
-    const index = state.papers.findIndex((paper) => paper.display_id === selectedId);
-    if (index >= 0) state.papers.splice(index, 1, summary);
-    else state.papers.push(summary);
-    state.papers.sort((left, right) =>
-      text(left.title).localeCompare(text(right.title), undefined, { sensitivity: "base" })
-    );
-    populateFilters();
-    applyFilters();
-  }
+  // List and Dashboard update together via the validated snapshot below.
   if (selectionSequence !== paperSelectionSequence || state.selectedId !== selectedId) return;
   if (!savedPaper || typeof savedPaper !== "object") {
     throw new Error("The server response did not include the saved canonical metadata.");
@@ -4048,7 +4159,7 @@ async function refreshAfterMetadataSave(selectedId, payload, selectionSequence) 
   renderPaperDetail(state.selectedPaper);
   renderMetadataComparison();
   populateMetadataForm();
-  void loadDashboardAndQueues();
+  await loadDashboardAndQueues();
 }
 
 async function autofillArxivIds() {
@@ -4618,8 +4729,10 @@ function applyFilters() {
   };
   const mapFilter = elements["filter-map"].value;
   const exclusionFilter = elements["filter-exclusion"].value;
+  const curationFilter = elements["filter-curation-status"].value;
 
   state.filtered = state.papers.filter((paper) => {
+    if (curationFilter && (!paper.is_active_corpus || paper.curation_status !== curationFilter)) return false;
     if (query && !normalize(paperTitleSearchText(paper.title)).includes(query)) return false;
     if (Object.entries(filters).some(([field, expected]) =>
       expected && text(paper[field]) !== expected
@@ -5557,8 +5670,8 @@ async function saveMetadata(event) {
   const paperCategories = validatePaperCategories({ focus: true });
   if (paperCategories === null) return;
   draft.paper_categories = paperCategories;
-  // Submitting this form is an explicit human review action.
-  draft.curation_status = "confirmed";
+  // Honor explicit curation state independently of review_status.
+  draft.curation_status = elements["metadata-curation-status"].value;
   const publicationType = elements["metadata-publication-type"].value;
   const isBook = publicationType === "book";
   if (!state.selectedVenue && !isBook) {

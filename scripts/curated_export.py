@@ -40,7 +40,7 @@ try:
     from .name_matching import canonical_name_key, names_match
     from .curated_papers import normalize_author_names
     from .paper_links import resolve_public_links
-    from .public_relationships import ReviewedRelationshipResolver
+    from .public_relationships import ReviewedRelationshipResolver, normalized_author_set
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -67,7 +67,7 @@ except ImportError:
     from name_matching import canonical_name_key, names_match
     from curated_papers import normalize_author_names
     from paper_links import resolve_public_links
-    from public_relationships import ReviewedRelationshipResolver
+    from public_relationships import ReviewedRelationshipResolver, normalized_author_set
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -1172,6 +1172,45 @@ def _mark_preliminary_automatic_evidence(
                 value["mapping_fallback"] = True
 
 
+def curated_affiliation_removal_reason(
+    marker: Mapping[str, Any],
+    matching_mappings: Sequence[Mapping[str, Any]],
+) -> str:
+    """Explain why a marker is outside the paper's effective curated state.
+
+    This is paper-wide selection, not author-set supersession: a historical
+    subset of an author group is not an additional legitimate affiliation.
+    Candidate-only curation deliberately retains automatic fallback evidence.
+    """
+    if not matching_mappings:
+        return ""
+    state = affiliation_review_state(
+        marker, (), matching_mappings=matching_mappings
+    )
+    if state == "unreviewed":
+        return ""
+    if state == "reviewed_empty":
+        return "reviewed empty affiliations; no active curated mappings"
+    active = [row for row in matching_mappings
+              if clean(row.get("mapping_status")) == ACTIVE_MAPPING_STATUS]
+    for mapping in active:
+        institution_id = clean(mapping.get("institution_id")) or stable_institution_id(
+            mapping.get("institution")
+        )
+        if (
+            clean(marker.get("mapping_id")) == clean(mapping.get("mapping_id"))
+            and clean(marker.get("institution_id")) == institution_id
+            and normalized_author_set(marker.get("institution_authors"))
+            == normalized_author_set(mapping.get("institution_authors"))
+            and (not clean(mapping.get("location_id"))
+                 or clean(marker.get("location_id")) == clean(mapping.get("location_id")))
+        ):
+            return ""
+    return "outside effective active curated mappings: " + ", ".join(
+        clean(row.get("mapping_id")) for row in active
+    )
+
+
 def enforce_affiliation_source_precedence(
     paper_records: Sequence[MutableMapping[str, Any]],
     map_records: List[Dict[str, Any]],
@@ -1223,6 +1262,7 @@ def enforce_affiliation_source_precedence(
                 state == "curated"
                 and clean(marker.get("source_database")).casefold() == "curated"
                 and clean(marker.get("mapping_id")) in active_mapping_ids
+                and not curated_affiliation_removal_reason(marker, matching_mappings)
             ):
                 marker["affiliation_review_state"] = "curated"
                 marker["institution_source"] = "curated"
@@ -1490,6 +1530,10 @@ def build_curated_map_records(
         matched_paper_mappings += 1
         raw_institution_key = normalize_institution(mapping.get("institution"))
         canonical_alias = confirmed_aliases.get(raw_institution_key) or {}
+        if clean(mapping.get("institution_id")):
+            # An explicit active mapping is already an identity decision.
+            # Name aliases and coordinate evidence must not replace that ID.
+            canonical_alias = {}
         canonical_institution = clean(canonical_alias.get("institution"))
         canonical_institution_id = clean(canonical_alias.get("institution_id"))
         lookup_mapping = dict(mapping)
@@ -1594,9 +1638,9 @@ def build_curated_map_records(
             export_mapping["institution"] = canonical_institution
         if canonical_institution_id:
             export_mapping["institution_id"] = canonical_institution_id
-        elif clean(match.record.get("institution_id")):
+        elif not clean(mapping.get("institution_id")) and clean(match.record.get("institution_id")):
             export_mapping["institution_id"] = clean(match.record.get("institution_id"))
-        if not canonical_institution and clean(match.record.get("institution")):
+        if not clean(mapping.get("institution_id")) and not canonical_institution and clean(match.record.get("institution")):
             export_mapping["institution"] = clean(match.record.get("institution"))
         marker_key = (
             next(iter(cache.keys(paper)), ""),
@@ -1800,7 +1844,7 @@ def _recalculate_paper_details(
     paper_authors = _parse_people(paper.get("authors"))
     for index, mapping in enumerate(affiliation_records, start=1):
         institution = clean(mapping.get("institution"))
-        institution_id = stable_institution_id(institution)
+        institution_id = clean(mapping.get("institution_id")) or stable_institution_id(institution)
         mapping_authors = _parse_people(mapping.get("institution_authors"))
         mapping_source = (
             "curated_admin"

@@ -109,12 +109,18 @@ try:
     )
     from .publication_types import normalize_book_record
     from .paper_categories import categories_from_record
+    from .paper_version_merges import (
+        active_confirmed_merges, read_paper_version_merges, record_matches_merge_side,
+    )
     from .public_preview_sync import (
         DEFAULT_STATE_PATH as DEFAULT_PUBLIC_PREVIEW_SYNC_STATE_PATH,
         PublicPreviewSyncCoordinator,
     )
     from .admin_review_queues import (
         AdminReviewQueueError,
+        ReviewContext,
+        QUEUE_ENDPOINTS,
+        build_action_queues,
         dashboard_data,
         load_manual_import_queue,
         load_queue,
@@ -238,12 +244,18 @@ except ImportError:
     )
     from publication_types import normalize_book_record
     from paper_categories import categories_from_record
+    from paper_version_merges import (
+        active_confirmed_merges, read_paper_version_merges, record_matches_merge_side,
+    )
     from public_preview_sync import (
         DEFAULT_STATE_PATH as DEFAULT_PUBLIC_PREVIEW_SYNC_STATE_PATH,
         PublicPreviewSyncCoordinator,
     )
     from admin_review_queues import (
         AdminReviewQueueError,
+        ReviewContext,
+        QUEUE_ENDPOINTS,
+        build_action_queues,
         dashboard_data,
         load_manual_import_queue,
         load_queue,
@@ -1033,6 +1045,11 @@ def merge_curated_fields(
         "metadata_source",
         "curation_status",
         "review_status",
+        "notes",
+        "curation_note",
+        "review_note",
+        "is_active",
+        "paper_status",
     ):
         if field in curated_record:
             public_record[field] = curated_record[field]
@@ -1076,6 +1093,8 @@ def load_admin_data(
         record["record_source"] = "public_preview"
         record["is_in_curated_papers"] = False
         record["curated_record"] = None
+        if strongest_matching_records(record, paper_identity_index):
+            continue
         papers.append(record)
         for key in identity_keys(record):
             paper_identity_index[key].append(record)
@@ -1096,6 +1115,9 @@ def load_admin_data(
             match["is_in_curated_papers"] = True
             match["curated_record"] = dict(curated_row)
             merge_curated_fields(match, curated_record)
+            for key in identity_keys(match):
+                if not any(item is match for item in paper_identity_index[key]):
+                    paper_identity_index[key].append(match)
 
     # Keep durable exclusions visible after they disappear from public exports,
     # so maintainers can inspect or restore them later.
@@ -1114,7 +1136,10 @@ def load_admin_data(
     exclusion_index = index_by_identity(exclusion_rows)
     canonical_mapping_index = index_by_identity(curated_mapping_rows)
     canonical_candidate_map_index = index_by_identity(canonical_candidate_maps)
+    merges = active_confirmed_merges(read_paper_version_merges())
     for paper in papers:
+        # The editor, summaries, and curation filter share this normalized value.
+        paper["curation_status"] = normalize_curation_status(paper.get("curation_status"))
         public_markers = [
             marker_for_api(record)
             for record in strongest_matching_records(paper, marker_index)
@@ -1192,6 +1217,16 @@ def load_admin_data(
         )
         paper["is_in_curated_exclusions"] = bool(exclusions)
         paper["has_active_exclusion"] = active_exclusion
+        # Corpus lifecycle is separate from metadata/marker review completion.
+        paper["is_active_corpus"] = not (
+            active_exclusion
+            or paper.get("record_source") == "exclusion_only"
+            or str(paper.get("is_active", "")).strip().casefold() in {"false", "0", "no"}
+            or any(clean(paper.get(field)).casefold() in {
+                "excluded", "inactive", "superseded", "merged", "archived", "out_of_scope",
+            } for field in ("paper_status", "scope_status"))
+            or any(record_matches_merge_side(paper, merge, "duplicate") for merge in merges)
+        )
         if active_exclusion:
             paper["coverage_status"] = "excluded"
             paper["missing_affiliation"] = False
@@ -1288,8 +1323,21 @@ def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
         "is_in_curated_exclusions",
         "has_active_exclusion",
         "exclusion_reasons",
+        "curation_status",
+        "review_status",
+        "scope_status",
+        "is_active_corpus",
+        "notes",
+        "curation_note",
+        "review_note",
     )
     return {field: paper.get(field) for field in fields}
+
+
+def filtered_curation_papers(papers, status):
+    """Filter effective Admin papers, not diagnostics or review decisions."""
+    return [paper for paper in papers
+            if paper.get("is_active_corpus") and paper.get("curation_status") == status]
 
 
 def workflow_failure_message(
@@ -1697,6 +1745,36 @@ def make_handler(
     workflow_runner: Callable[..., Mapping[str, Any]] = run_workflow,
     geocoder: Any = None,
 ) -> type[BaseHTTPRequestHandler]:
+    def review_context():
+        return ReviewContext(
+            mappings_path=mappings_path, exclusions_path=exclusions_path,
+            papers_path=curated_papers_path, institutions_path=institutions_path,
+            decisions_path=review_decisions_path,
+        )
+
+    def action_snapshot():
+        context = review_context()
+        papers, admin_data = load_admin_data(exclusions_path, curated_papers_path)
+        locations = location_review_payload(
+            review_path=location_review_path, locations_path=institution_locations_path,
+            aliases_path=institution_aliases_path, institutions_path=institutions_path,
+            mappings=context.rows["mappings"], exclusions=context.rows["exclusions"],
+            paper_is_suppressed=context.paper_suppression,
+        )
+        try:
+            coverage = load_author_mapping_coverage(
+                author_mapping_report_path, unresolved_only=True,
+                current_state=author_mapping_report_path == AUTHOR_MAPPING_REPORT_PATH,
+                curated_papers_path=curated_papers_path, mappings_path=mappings_path,
+                exclusions_path=exclusions_path,
+            )
+        except AdminDataError:
+            coverage = unavailable_author_mapping_coverage("Report missing")
+        queues = build_action_queues(context, location_payload=locations,
+                                     author_mapping_coverage=coverage, papers=papers)
+        admin_data["paper_list"] = [paper_summary(paper) for paper in papers]
+        return queues, locations, coverage, admin_data
+
     institution_geocoder = geocoder or configured_geocoder()
     preview_sync = public_preview_sync_coordinator or PublicPreviewSyncCoordinator(
         public_preview_sync_state_path,
@@ -2155,6 +2233,7 @@ def make_handler(
                         mappings=load_mappings(mappings_path),
                         exclusions=read_csv_rows(exclusions_path),
                         institutions_path=institutions_path,
+                        paper_is_suppressed=review_context().paper_suppression,
                     )
                 except CuratedLocationError as error:
                     self.send_json(
@@ -2283,11 +2362,7 @@ def make_handler(
                     return
                 self.send_json(HTTPStatus.OK, api_payload(data=report))
                 return
-            review_get_paths = {
-                "/api/review/high-risk-markers": "high_risk_marker",
-                "/api/review/marker-blockers": "marker_blocker",
-                "/api/review/key-paper-coverage": "key_paper_coverage",
-            }
+            review_get_paths = {endpoint: name for name, endpoint in QUEUE_ENDPOINTS.items()}
             if request.path in {
                 "/api/review/institution-consistency",
                 "/api/review/institution-cleanup",
@@ -2341,34 +2416,18 @@ def make_handler(
                     return
                 try:
                     if request.path in review_get_paths:
-                        queue = load_queue(
-                            review_get_paths[request.path],
-                            mappings_path=mappings_path,
-                            exclusions_path=exclusions_path,
-                        )
+                        name = review_get_paths[request.path]
+                        if name in {"missing_coordinates", "missing_author_mappings", "missing_affiliations"}:
+                            queue = action_snapshot()[0][name]
+                        elif name == "manual_import":
+                            queue = load_manual_import_queue(context=review_context())
+                        else:
+                            queue = load_queue(name, context=review_context())
                         self.send_json(HTTPStatus.OK, api_payload(data=queue))
                         return
-                    if request.path == "/api/review/manual-import":
-                        self.send_json(
-                            HTTPStatus.OK,
-                            api_payload(data=load_manual_import_queue(
-                                mappings_path=mappings_path,
-                                exclusions_path=exclusions_path,
-                            )),
-                        )
-                        return
                     if request.path == "/api/dashboard":
-                        _papers, admin_data = load_admin_data(
-                            exclusions_path, curated_papers_path
-                        )
+                        queues, location_payload, author_mapping_coverage, admin_data = action_snapshot()
                         counts = admin_data["status"]["counts"]
-                        location_payload = location_review_payload(
-                            review_path=location_review_path,
-                            locations_path=institution_locations_path,
-                            aliases_path=institution_aliases_path,
-                            mappings=load_mappings(mappings_path),
-                            exclusions=read_csv_rows(exclusions_path),
-                        )
                         curated_counts = {
                             "total_papers": counts["total_papers"],
                             "curated_papers": counts["curated_papers"],
@@ -2387,29 +2446,19 @@ def make_handler(
                                 read_csv_rows(institution_locations_path)
                             ),
                         }
-                        try:
-                            author_mapping_coverage = (
-                                load_author_mapping_coverage(
-                                    author_mapping_report_path,
-                                    current_state=(
-                                        author_mapping_report_path
-                                        == AUTHOR_MAPPING_REPORT_PATH
-                                    ),
-                                    curated_papers_path=curated_papers_path,
-                                    mappings_path=mappings_path,
-                                    exclusions_path=exclusions_path,
-                                )
-                            )
-                        except AdminDataError:
-                            author_mapping_coverage = unavailable_author_mapping_coverage(
-                                "Report missing"
-                            )
                         dashboard = dashboard_data(
                             curated_counts=curated_counts,
                             validation_status=self.workflow_status_snapshot(),
                             git_status=git_status_result(),
                             author_mapping_coverage=author_mapping_coverage,
+                            queues=queues,
                         )
+                        dashboard["location_review"] = location_payload
+                        dashboard["papers"] = admin_data["paper_list"]
+                        curation_records = filtered_curation_papers(dashboard["papers"], "needs_review")
+                        dashboard["papers_needing_curation"] = {
+                            "count": len(curation_records), "records": curation_records,
+                        }
                         self.send_json(
                             HTTPStatus.OK, api_payload(data=dashboard)
                         )
@@ -2517,6 +2566,12 @@ def make_handler(
                 self.send_json(HTTPStatus.OK, data["status"])
                 return
             if request.path == "/api/papers":
+                curation_filter = next(iter(query.get("curation_status", [])), "")
+                if curation_filter:
+                    if curation_filter not in {"needs_review", "confirmed"}:
+                        self.send_json(HTTPStatus.BAD_REQUEST, {"error": "unsupported curation_status filter"})
+                        return
+                    papers = filtered_curation_papers(papers, curation_filter)
                 self.send_json(
                     HTTPStatus.OK,
                     {
@@ -2630,6 +2685,7 @@ def make_handler(
                 "/api/review/key-paper-coverage",
                 "/api/review/manual-import",
                 *AUTHOR_MAPPING_COVERAGE_ENDPOINTS,
+                *QUEUE_ENDPOINTS.values(),
                 "/api/paper/metadata",
                 "/api/venues",
                 "/api/admin/papers/arxiv-enrichment",

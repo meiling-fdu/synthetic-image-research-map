@@ -12,7 +12,7 @@ import unicodedata
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Mapping, Sequence
+from typing import Any, Callable, Dict, Iterable, List, Mapping, Sequence
 
 try:
     from .curated_schema import (
@@ -944,6 +944,7 @@ def location_review_payload(
     mappings: Sequence[Mapping[str, Any]] = (),
     exclusions: Sequence[Mapping[str, Any]] = (),
     institutions_path: Path = DEFAULT_INSTITUTIONS_PATH,
+    paper_is_suppressed: Callable[[Mapping[str, Any]], str] | None = None,
 ) -> Dict[str, Any]:
     reviews = load_location_review_queue(review_path)
     locations = load_confirmed_locations(locations_path)
@@ -996,6 +997,8 @@ def location_review_payload(
         if clean(mapping.get("mapping_status")) not in {"active", "needs_review"}:
             continue
         if record_is_excluded(mapping, active_exclusion_index):
+            continue
+        if paper_is_suppressed and paper_is_suppressed(mapping):
             continue
         eligible_mappings.append(mapping)
         mappings_by_institution[
@@ -1071,7 +1074,8 @@ def location_review_payload(
             "paper_id": clean(row.get("related_paper_id")),
         }
         row_only_references_excluded_paper = (
-            record_is_excluded(row_paper_identity, active_exclusion_index)
+            (record_is_excluded(row_paper_identity, active_exclusion_index)
+             or bool(paper_is_suppressed and paper_is_suppressed(row_paper_identity)))
             and not affected_mappings
         )
         if institution_id in inactive_ids:
@@ -1080,6 +1084,10 @@ def location_review_payload(
             effective_status = "excluded"
         elif alias_target and effective_status not in {"ignore", "excluded"}:
             effective_status = "alias_of_confirmed"
+        elif effective_status in {"pending_review", "ambiguous"} and any(
+            clean(location.get("lat")) and clean(location.get("lon")) for location in matches
+        ):
+            effective_status = "confirmed"
         candidate_suggestions = []
         suggested_key = normalize_institution_name(
             row.get("suggested_canonical_institution")
@@ -1155,6 +1163,8 @@ def location_review_payload(
         record = {
                 **row,
                 "review_status": effective_status,
+                "effective_review_status": effective_status,
+                "actionable": effective_status in {"pending_review", "ambiguous"},
                 "canonical_institution_name": clean(
                     entity.get("canonical_name") or row.get("canonical_institution_name") or alias_target
                 ),
@@ -1195,14 +1205,15 @@ def location_review_payload(
             suppression_reasons["resolved_by_curated_correction"] += 1
         elif matches or effective_status == "confirmed" or clean(row.get("coordinate_status")) == "known":
             suppression_reasons["resolved_by_active_institution_override"] += 1
-        records.append(record)
+        if not any(existing["queue_id"] == record["queue_id"] for existing in records):
+            records.append(record)
     summary = location_review_report(reviews, locations)
     effective_counts = Counter(record["review_status"] for record in records)
     summary.update({
         "total_queue_rows": len(records),
         "pending_review": effective_counts["pending_review"],
         "needs_coordinates": sum(
-            record["review_status"] == "pending_review"
+            record["actionable"]
             and not record.get("has_usable_confirmed_location")
             for record in records
         ),

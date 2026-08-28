@@ -685,7 +685,13 @@ function normalizePaperDetailsRecord(record, context = {}) {
       : [];
     const sourceAffiliations = exported.length ? exported : legacy;
     sourceAffiliations.forEach((affiliation) => {
-      addAffiliation(affiliation, sourceRecord);
+      // The display schema carries location metadata; its matching legacy
+      // row carries authors. Enrich existing IDs without unioning institutions.
+      const authorRow = legacy.find((item) => affiliation?.institution_id
+        && item?.institution_id === affiliation.institution_id);
+      addAffiliation(authorRow
+        ? { ...affiliation, authors: authorRow.authors || affiliation.authors || [] }
+        : affiliation, sourceRecord);
     });
   });
 
@@ -835,6 +841,7 @@ function renderPaperAuthors(
   record,
   currentAffiliationNumber = null,
   visibleLimit = Infinity,
+  regionId = "",
 ) {
   const normalized = normalizePaperDetailsRecord(record);
   return PaperDetailsHelpers.renderPaperAuthors(
@@ -842,6 +849,7 @@ function renderPaperAuthors(
     escapeHtml,
     currentAffiliationNumber,
     visibleLimit,
+    regionId,
   );
 }
 
@@ -2129,6 +2137,16 @@ function canonicalizePublicDataset(
   });
   publicPaperRecords.forEach((paper) => {
     const related = mapsByPaper.get(paperIdentity(paper)) || [];
+    if (["curated", "reviewed_empty"].includes(paper.affiliation_review_state)) {
+      const byInstitution = new Map(related.map(record => [record.institution_id, record]));
+      const summaryRecords = (paper.affiliations || []).map(affiliation => ({
+        ...affiliation, ...byInstitution.get(affiliation.institution_id),
+      }));
+      Object.assign(paper, orderedPaperLocationSummary(summaryRecords));
+      paper.map_record_count = related.length;
+      paper.has_map_location = Boolean(related.length);
+      return;
+    }
     if (!related.length) return;
     paper.map_record_count = related.length;
     paper.has_map_location = true;
@@ -3512,6 +3530,7 @@ function paperDetailsHtml(record, relatedEntries) {
         normalizedRecord,
         currentAffiliation?.number ?? null,
         8,
+        "paper-details-authors-overflow",
       )
     : "Unknown";
   const publicationMetadataBlock = paperDetailsPublicationHtml(record);
@@ -3586,22 +3605,19 @@ function resultLinks(record) {
 }
 
 function resultAuthors(authors, label, regionId, visibleLimit = 6) {
-  const authorItems = PaperDetailsHelpers.renderPaperAuthorItems(
+  const authorsHtml = PaperDetailsHelpers.renderPaperAuthors(
     { authors },
     escapeHtml,
-  );
-  const visibleAuthors = authorItems.slice(0, visibleLimit);
-  const overflowAuthors = authorItems.slice(visibleLimit);
-  const authorsHtml = visibleAuthors.length
-    ? visibleAuthors.join(", ")
-    : "Unknown";
+    null,
+    visibleLimit,
+    `${regionId}-overflow`,
+  ) || "Unknown";
   return `
     <section class="result-entity-section result-authors">
       <h4>${escapeHtml(label)}</h4>
       <div class="result-authors-content" id="${regionId}" aria-label="${escapeHtml(label)}">
-        <p>${authorsHtml}${overflowAuthors.length ? `<span class="paper-authors-overflow" hidden>, ${overflowAuthors.join(", ")}</span>` : ""}</p>
+        <p>${authorsHtml}</p>
       </div>
-      ${overflowAuthors.length ? `<button type="button" class="paper-authors-toggle" aria-expanded="false" aria-controls="${regionId}">Show all authors</button>` : ""}
     </section>
   `;
 }
@@ -4440,6 +4456,9 @@ function setHoveredSelection(selection) {
 }
 
 function clearHoveredSelection(marker) {
+  // Pinning already clears hover. A later result-button blur must not rebuild
+  // the pinned pane while its next control is receiving focus/click.
+  if (!interactionState.hovered) return;
   if (marker && interactionState.hovered?.marker !== marker) {
     return;
   }
@@ -5598,13 +5617,9 @@ maxYearFilter.addEventListener("keydown", (event) => {
     }
     const authorToggle = event.target.closest(".paper-authors-toggle");
     if (authorToggle) {
-      const section = authorToggle.closest(".result-authors");
-      const content = section?.querySelector(".result-authors-content");
-      const overflow = content?.querySelector(".paper-authors-overflow");
-      const isExpanded = authorToggle.getAttribute("aria-expanded") === "true";
-      authorToggle.setAttribute("aria-expanded", String(!isExpanded));
-      authorToggle.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
-      if (overflow) overflow.hidden = isExpanded;
+      event.preventDefault();
+      event.stopPropagation();
+      PaperDetailsHelpers.togglePaperAuthors(authorToggle);
       scheduleResultsMasonryLayout([authorToggle.closest(".result-item")].filter(Boolean));
       return;
     }

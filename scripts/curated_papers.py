@@ -574,8 +574,9 @@ def update_curated_paper(
             draft.get("publication_type"), venue=draft.get("venue")
         )
     )
-    # Reaching this write is an explicit human save.
-    curation_status = "confirmed"
+    # Explicitly reopening curation must survive a metadata save. Callers that
+    # omit the field retain the existing human-save confirmation default.
+    curation_status = submitted_curation_status or "confirmed"
     review_status = clean(draft.get("review_status")) or "reviewed"
     if not title:
         raise CuratedPaperError("title is required")

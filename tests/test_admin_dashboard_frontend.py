@@ -196,14 +196,15 @@ class AdminDashboardFrontendTests(unittest.TestCase):
         self.assertIn(r'replace(/\p{M}+/gu, "")', self.javascript)
         self.assertIn('event.key === "/"', self.javascript)
 
-    def test_dashboard_queues_are_impact_ordered_and_capped(self):
+    def test_dashboard_queues_are_impact_ordered_and_complete(self):
         body = self.javascript.split("function renderDashboard()", 1)[1].split(
             "\nfunction initializeNavigationMenus", 1
         )[0]
         self.assertIn('marker_blockers: { title: "Marker blockers", priority: 1', body)
         self.assertIn(".sort((left, right)", body)
-        self.assertIn("queue.slice(0, 5)", body)
-        self.assertIn("View all review queues", body)
+        self.assertIn("queue.forEach", body)
+        self.assertNotIn("queue.slice", body)
+        self.assertIn("state.dashboard.action_required", body)
         self.assertIn("copy.impact", body)
 
     def test_publish_readiness_and_changed_count_are_staged(self):

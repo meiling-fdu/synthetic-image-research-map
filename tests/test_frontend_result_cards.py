@@ -50,22 +50,21 @@ class FrontendResultCardTests(unittest.TestCase):
 
     def test_author_order_object_safety_and_accessible_expansion(self):
         authors = self.function("resultAuthors", "institutionResultContent")
-        self.assertIn("PaperDetailsHelpers.renderPaperAuthorItems", authors)
-        self.assertIn("visibleAuthors", authors)
-        self.assertIn("overflowAuthors", authors)
+        self.assertIn("PaperDetailsHelpers.renderPaperAuthors", authors)
+        self.assertNotIn(".slice(", authors)
         self.assertIn("visibleLimit", authors)
         self.assertIn("Authors at this institution", self.app)
         self.assertIn("Paper authors", self.app)
         self.assertIn('closest(".paper-authors-toggle")', self.app)
         self.assertIn('setAttribute("aria-expanded"', self.app)
-        self.assertIn('aria-controls="${regionId}"', authors)
+        self.assertIn('`${regionId}-overflow`', authors)
         self.assertNotIn("[object Object]", authors)
 
     def test_unique_paper_cards_reuse_author_affiliation_numbers(self):
         paper = self.function("paperResultContent", "renderResults")
         authors = self.function("resultAuthors", "institutionResultContent")
         self.assertIn("resultAuthors(normalizedRecord.authors", paper)
-        self.assertIn("renderPaperAuthorItems", authors)
+        self.assertIn("renderPaperAuthors", authors)
         self.assertIn("author-affiliation-numbers", (
             ROOT / "web" / "paper_details_helpers.js"
         ).read_text(encoding="utf-8"))
@@ -493,14 +492,17 @@ process.stdout.write(JSON.stringify({
         )
         institution_record = next(
             record for record in map_data["records"]
-            if record["title"] == title and record["paper_categories"] == ["benchmark"]
+            if record["title"] == title
         )
         paper_record = next(
             record for record in paper_data["records"] if record["title"] == title
         )
-        self.assertNotEqual(
+        self.assertEqual(
             institution_record["paper_categories"], paper_record["paper_categories"]
         )
+        # Exercise stale metadata explicitly; corrected exports no longer
+        # retain an obsolete automatic marker as this test's fixture.
+        institution_record = {**institution_record, "paper_categories": ["benchmark"]}
 
         sources = [
             "const ENTRY_TYPE_LABELS = {method: 'Method', dataset: 'Dataset', "

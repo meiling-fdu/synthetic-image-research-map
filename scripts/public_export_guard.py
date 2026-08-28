@@ -675,6 +675,15 @@ def analyze_shrinkage(
     institution_redirects: Optional[Mapping[str, str]] = None,
     approved_by_baseline: bool = False,
 ) -> ShrinkageReport:
+    try:
+        from .curated_export import (
+            PaperIdentityCache, PaperIdentityIndex, curated_affiliation_removal_reason,
+        )
+    except ImportError:
+        from curated_export import (
+            PaperIdentityCache, PaperIdentityIndex, curated_affiliation_removal_reason,
+        )
+    curated_index = PaperIdentityIndex(curated_mappings, PaperIdentityCache())
     exclusion_index = build_active_exclusion_index(exclusion_rows)
     relationship_resolver = ReviewedRelationshipResolver(
         curated_mappings, institution_audits, location_rows
@@ -752,6 +761,13 @@ def analyze_shrinkage(
         if relationship_resolver.location_is_rejected(old):
             transition = RelationshipExplanation(
                 "location_review", "explicit current location status requires review; candidate coordinates retained", True,
+            )
+        precedence_reason = curated_affiliation_removal_reason(
+            old, curated_index.matches(old)
+        )
+        if precedence_reason and not transition.explained:
+            transition = RelationshipExplanation(
+                "curated_affiliation_precedence", precedence_reason, True,
             )
         institution_id = clean(
             old.get("institution_id") or old.get("canonical_institution_id")

@@ -81,7 +81,7 @@ class AdminReviewVisibilityTests(unittest.TestCase):
         self.assertIn("body.replaceChildren();", source)
         self.assertIn("!visibleKeys.has(state.selectedReviewKeys[name])", source)
         self.assertIn("clearReviewDetail(name);", source)
-        self.assertIn("state.reviewQueues[name] = payload.data || {};", source)
+        self.assertIn("state.reviewQueues = queues;", source)
 
 
 if __name__ == "__main__":

@@ -141,6 +141,7 @@
     escapeHtml,
     currentAffiliationNumber = null,
     visibleLimit = Infinity,
+    regionId = "",
   ) {
     const authorItems = renderPaperAuthorItems(
       paper,
@@ -151,10 +152,25 @@
       return authorItems.join(", ");
     }
     return [
+      '<span data-paper-authors>',
       authorItems.slice(0, visibleLimit).join(", "),
-      `<span class="paper-authors-overflow" hidden>, ${authorItems.slice(visibleLimit).join(", ")}</span>`,
-      `<button type="button" class="paper-authors-toggle" aria-expanded="false">Show all authors</button>`,
+      `<span class="paper-authors-overflow" hidden${regionId ? ` id="${escapeHtml(regionId)}"` : ""}>, ${authorItems.slice(visibleLimit).join(", ")}</span>`,
+      `<button type="button" class="paper-authors-toggle" aria-expanded="false"${regionId ? ` aria-controls="${escapeHtml(regionId)}"` : ""}>Show all authors</button>`,
+      '</span>',
     ].join("");
+  }
+
+  function togglePaperAuthors(button) {
+    const group = button.closest("[data-paper-authors]");
+    const overflow = group?.querySelector(".paper-authors-overflow");
+    if (!overflow) return false;
+    // State belongs to this rendered disclosure, not a paper/title cache.
+    // Update in place to retain focus; a new render starts collapsed.
+    const isExpanded = button.getAttribute("aria-expanded") === "true";
+    overflow.hidden = isExpanded;
+    button.setAttribute("aria-expanded", String(!isExpanded));
+    button.textContent = isExpanded ? "Show all authors" : "Show fewer authors";
+    return true;
   }
 
   return {
@@ -163,5 +179,6 @@
     publicationTypeLabel,
     renderPaperAuthorItems,
     renderPaperAuthors,
+    togglePaperAuthors,
   };
 }));
