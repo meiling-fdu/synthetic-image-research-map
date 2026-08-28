@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-27T22:43:48Z |
+| public_preview_generated_at | 2026-08-28T01:08:06Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1263 |
+| Map records | 1264 |
 | Unique mapped papers | 540 |
-| Unique institutions | 617 |
+| Unique institutions | 618 |
 | Countries | 53 |
-| arXiv/preprint records | 589 |
-| Records with DOI | 1166 |
-| Records with venue | 1252 |
+| arXiv/preprint records | 590 |
+| Records with DOI | 1167 |
+| Records with venue | 1253 |
 | Records missing venue | 11 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -78,7 +78,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Italy | 97 |
 | India | 69 |
 | Germany | 42 |
-| South Korea | 38 |
+| South Korea | 39 |
 | United Kingdom | 33 |
 | France | 30 |
 | Singapore | 25 |
@@ -103,7 +103,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1159 |
+| high | 1160 |
 | medium | 104 |
 
 ## Potential quality issues

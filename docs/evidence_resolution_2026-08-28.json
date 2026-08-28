@@ -1,0 +1,1727 @@
+{
+  "date": "2026-08-28",
+  "baseline_commit": "69229b3",
+  "baseline": {
+    "location_summary": {
+      "total_queue_rows": 571,
+      "alias_of_confirmed": 77,
+      "ambiguous": 0,
+      "confirmed": 447,
+      "excluded": 6,
+      "ignore": 33,
+      "pending_review": 8,
+      "needs_coordinates": 8,
+      "needs_coordinate_review": 4,
+      "confirmed_locations_count": 456,
+      "institutions_with_multiple_location_candidates": [
+        "deakin university",
+        "northeastern university",
+        "peng cheng laboratory",
+        "sony ai",
+        "xiaohongshu inc"
+      ],
+      "multiple_location_candidate_count": 5
+    },
+    "relationships": {
+      "ACTIONABLE": 8,
+      "COMPLETE": 1263,
+      "EXCLUDED": 29
+    },
+    "authors": {
+      "mapped": 2725,
+      "unresolved": 5,
+      "non_institutional": 3
+    },
+    "complete_papers": 541,
+    "papers": 546,
+    "maps": 1263,
+    "mapped_institution_names": 617,
+    "zero_resolved_author_papers": 0
+  },
+  "locations": [
+    {
+      "institution": {
+        "institution_id": "institution:e07792f5cf49ebda",
+        "canonical_name": "Naval Air Warfare Center Weapons Division",
+        "abbreviation": "",
+        "institution_type": "research_unit",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-08-27T00:30:00Z",
+        "updated_at": "2026-08-27T00:30:00Z",
+        "created_by": "codex-author-affiliation-review"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:0f51254f7cd4fb7fa8d1",
+          "paper_id": "curated:60066ef08c2226131085",
+          "title": "Detecting GAN Generated Fake Images Using Co-Occurrence Matrices",
+          "year": "2019",
+          "doi": "10.2352/issn.2470-1173.2019.5.mwsf-532",
+          "openalex_url": "https://openalex.org/W2975558816",
+          "institution": "Naval Air Warfare Center Weapons Division",
+          "institution_id": "institution:e07792f5cf49ebda",
+          "location_id": "",
+          "institution_authors": "Arjuna Flenner",
+          "author_order": "5",
+          "affiliation_order": "2",
+          "raw_affiliation": "Naval Air Warfare Center Weapons Division, China Lake, California, USA",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Visually verified formal publication: https://library.imaging.org/admin/apis/public/api/ist/website/downloadArticle/ei/31/5/art00008",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:50:55.389191Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:60066ef08c2226131085",
+          "title": "Detecting GAN Generated Fake Images Using Co-Occurrence Matrices",
+          "year": "2019",
+          "authors": "Lakshmanan Nataraj; Tajuddin Manhar Mohammed; B. S. Manjunath; Shivkumar Chandrasekaran; Arjuna Flenner; Jawadul H. Bappy; Amit K. Roy-Chowdhury",
+          "venue": "Electronic Imaging",
+          "venue_id": "venue:electronic-imaging",
+          "venue_name": "Electronic Imaging",
+          "venue_acronym": "",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "Electronic Imaging",
+          "doi": "10.2352/issn.2470-1173.2019.5.mwsf-532",
+          "arxiv_id": "1903.06836",
+          "openalex_url": "https://openalex.org/W2975558816",
+          "paper_url": "https://library.imaging.org/admin/apis/public/api/ist/website/downloadArticle/ei/31/5/art00008",
+          "publication_type": "journal",
+          "abstract": "The advent of Generative Adversarial Networks (GANs) has brought about completely novel ways of transforming and manipulating pixels in digital images. GAN based techniques such as Image-to-Image translations, DeepFakes, and other automated methods have become increasingly popular in creating fake images. In this paper, we propose a novel approach to detect GAN generated fake images using a combination of co-occurrence matrices and deep learning. We extract co-occurrence matrices on three color channels in the pixel domain and train a model using a deep convolutional neural network (CNN) framework. Experimental results on two diverse and challenging GAN datasets comprising more than 56,000 images based on unpaired image-to-image translations (cycleGAN [1]) and facial attributes/expressions (StarGAN [2]) show that our approach is promising and achieves more than 99% classification accuracy in both datasets. Further, our approach also generalizes well and achieves good results when trained on one dataset and tested on the other.",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "Formal publication author block: https://library.imaging.org/admin/apis/public/api/ist/website/downloadArticle/ei/31/5/art00008",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:50:55.376604Z",
+          "paper_categories": "method"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Naval Air Warfare Center Weapons Division",
+          "canonical_institution_name": "Naval Air Warfare Center Weapons Division",
+          "institution_id": "institution:e07792f5cf49ebda",
+          "detected_language": "",
+          "related_paper_id": "curated:60066ef08c2226131085",
+          "title": "Detecting GAN Generated Fake Images Using Co-Occurrence Matrices",
+          "year": "2019",
+          "doi": "10.2352/issn.2470-1173.2019.5.mwsf-532",
+          "openalex_url": "https://openalex.org/W2975558816",
+          "institution_authors": "Arjuna Flenner",
+          "raw_affiliation": "Naval Air Warfare Center Weapons Division, China Lake, California, USA",
+          "evidence_source": "Formal-publication/site verification 2026-08-27: Formal paper identifies Arjuna Flenner at NAWCWD China Lake, California, not Point Mugu. NAVAIR identifies 1 Administration Circle; selected 35.6857,-117.692 has no mapped institution/building linkage (nearest reverse feature is airfield arresting gear 0.5 km away). Site is insufficiently evidenced, not a confirmed building coordinate. Retain submitted point only as a needs-review candidate.",
+          "evidence_url": "https://www.navair.navy.mil/nawcwd/Contact_NAWCWD",
+          "suggested_city": "China Lake",
+          "suggested_country": "United States",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "needs_coordinate_review",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:51:15Z"
+        }
+      ],
+      "locations": [
+        {
+          "location_id": "location:996f8ef2b93b29cb56c4",
+          "institution_id": "institution:e07792f5cf49ebda",
+          "institution": "Naval Air Warfare Center Weapons Division",
+          "normalized_institution": "naval air warfare center weapons division",
+          "city": "China Lake",
+          "region": "California",
+          "country": "United States",
+          "country_code": "US",
+          "lat": "35.6857",
+          "lon": "-117.692",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T18:31:29Z",
+          "updated_at": "2026-08-27T18:51:09.790736Z",
+          "created_by": "local-admin"
+        }
+      ],
+      "aliases": [],
+      "decision": {
+        "status": "ACTIONABLE",
+        "city": "China Lake",
+        "region": "California",
+        "country": "United States",
+        "address_evidence": "1 Administration Circle, Building 1 (official command address; exact point unverified)",
+        "reason": "Formal 2019 paper explicitly places Arjuna Flenner at China Lake, California. NAVAIR command contact and archived Building 1 notice support 1 Administration Circle; DoD check-in guidance gives Knox Road/Blandy Avenue. Exact-address Nominatim query returned no feature. Neither the retained airfield candidate nor a whole-base centroid is a verified building point. Point Mugu is not this paper site.",
+        "sources": [
+          "https://library.imaging.org/admin/apis/public/api/ist/website/downloadArticle/ei/31/5/art00008",
+          "https://www.navair.navy.mil/nawcwd/Contact_NAWCWD",
+          "https://www.navair.navy.mil/node/5061",
+          "https://installations.militaryonesource.mil/military-installation/naval-air-weapons-station-china-lake/base-essentials/check-in-procedures"
+        ],
+        "coordinates": null
+      }
+    },
+    {
+      "institution": {
+        "institution_id": "institution:2f2a5a5c1021efe4",
+        "canonical_name": "Huya Inc.",
+        "abbreviation": "",
+        "institution_type": "company",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-08-27T00:30:00Z",
+        "updated_at": "2026-08-27T00:30:00Z",
+        "created_by": "codex-author-affiliation-review"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:9121743520db34334d78",
+          "paper_id": "curated:4b042ad660312ec3b338",
+          "title": "Evasion on General GAN-Generated Image Detection by Disentangled Representation",
+          "year": "2024",
+          "doi": "10.1016/j.ins.2024.121267",
+          "openalex_url": "https://openalex.org/W4401325047",
+          "institution": "Huya Inc.",
+          "institution_id": "institution:2f2a5a5c1021efe4",
+          "location_id": "",
+          "institution_authors": "Xiao Meng",
+          "author_order": "5",
+          "affiliation_order": "2",
+          "raw_affiliation": "Huya Inc, Guangzhou, 510006, China",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Visually verified paper PDF: https://tas-lab.org/publication/2024-evasion-on-general-gan-generated-image-detection-by-disentangled-representation/index.pdf",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T00:30:00Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:4b042ad660312ec3b338",
+          "title": "Evasion on General GAN-Generated Image Detection by Disentangled Representation",
+          "year": "2024",
+          "authors": "Patrick P. K. Chan; Chuanxin Zhang; Haitao Chen; Jingwen Deng; Xiao Meng; Daniel S. Yeung",
+          "venue": "Information Sciences",
+          "venue_id": "venue:information-sciences",
+          "venue_name": "Information Sciences",
+          "venue_acronym": "",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "Information Sciences",
+          "doi": "10.1016/j.ins.2024.121267",
+          "arxiv_id": "",
+          "openalex_url": "https://openalex.org/W4401325047",
+          "paper_url": "https://doi.org/10.1016/j.ins.2024.121267",
+          "publication_type": "journal",
+          "abstract": "",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "openalex",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T00:30:00Z",
+          "paper_categories": "method"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Huya Inc.",
+          "canonical_institution_name": "Huya Inc.",
+          "institution_id": "institution:2f2a5a5c1021efe4",
+          "detected_language": "",
+          "related_paper_id": "curated:4b042ad660312ec3b338",
+          "title": "Evasion on General GAN-Generated Image Detection by Disentangled Representation",
+          "year": "2024",
+          "doi": "10.1016/j.ins.2024.121267",
+          "openalex_url": "https://openalex.org/W4401325047",
+          "institution_authors": "Xiao Meng",
+          "raw_affiliation": "Huya Inc, Guangzhou, 510006, China",
+          "evidence_source": "Formal-publication/site verification 2026-08-27: Formal publisher PDF gives Xiao Meng affiliation d: Huya Inc, Guangzhou, 510006, China. Selected 23.0009,113.3268 lies inside OSM residential development 1431856585 (Chimelong Wanbo Yuefu), near apartment Block 12, not a verified Huya 510006 office. Official Huya 2019 move notice names Zexi Street 13, Hanxi commercial center; no publication-specific evidence links this selected residential point to the paper. Do not substitute headquarters postcode 511446.",
+          "evidence_url": "https://blog.huya.com/policy/1387",
+          "suggested_city": "Guangzhou",
+          "suggested_country": "China",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "needs_coordinate_review",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:51:15Z"
+        }
+      ],
+      "locations": [
+        {
+          "location_id": "location:0983c64cf9d4e52c81df",
+          "institution_id": "institution:2f2a5a5c1021efe4",
+          "institution": "Huya Inc.",
+          "normalized_institution": "huya inc",
+          "city": "Guangzhou City",
+          "region": "Guangdong",
+          "country": "China",
+          "country_code": "CN",
+          "lat": "23.0009",
+          "lon": "113.3268",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T18:35:10Z",
+          "updated_at": "2026-08-27T18:51:09.797226Z",
+          "created_by": "local-admin"
+        }
+      ],
+      "aliases": [],
+      "decision": {
+        "status": "ACTIONABLE",
+        "city": "Guangzhou",
+        "region": "Guangdong",
+        "country": "China",
+        "address_evidence": "510006 (paper); no verified street address",
+        "reason": "Formal 2024 PDF affiliation d names Huya Inc, Guangzhou, 510006, China. The company filing dated 2024-04-26 instead lists Building A3, E-Park, 280 Hanxi Road, 511446. No contemporaneous official 510006 office linkage was established. Preserve the paper postcode; do not substitute headquarters or the rejected residential-development candidate.",
+        "sources": [
+          "https://tas-lab.org/publication/2024-evasion-on-general-gan-generated-image-detection-by-disentangled-representation/index.pdf",
+          "https://filecache.investorroom.com/mr5ir_huya/148/download/HUYA%20%28HUYA%20Inc.%20American%20depositary%20shares%20each%20representing%20one%20Class%20A%29%20%20%2820-F%29%202024-04-26.pdf",
+          "https://blog.huya.com/policy/1387"
+        ],
+        "coordinates": null
+      }
+    },
+    {
+      "institution": {
+        "institution_id": "institution:96dd3389141fcf35",
+        "canonical_name": "Department of Technical Education, Uttar Pradesh",
+        "abbreviation": "",
+        "institution_type": "other",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-08-27T00:30:00Z",
+        "updated_at": "2026-08-27T00:30:00Z",
+        "created_by": "codex-author-affiliation-review"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:44292523d51b513f7a9c",
+          "paper_id": "curated:6e6c7c4645ed4af43a61",
+          "title": "Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection",
+          "year": "2025",
+          "doi": "10.1007/s11468-024-02492-1",
+          "openalex_url": "https://openalex.org/W4402322120",
+          "institution": "Department of Technical Education, Uttar Pradesh",
+          "institution_id": "institution:96dd3389141fcf35",
+          "location_id": "",
+          "institution_authors": "Digvijay Pandey",
+          "author_order": "4",
+          "affiliation_order": "3",
+          "raw_affiliation": "Department of Technical Education, Kanpur, Uttar Pradesh, India",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Verified structured author-affiliation metadata: https://link.springer.com/article/10.1007/s11468-024-02492-1",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:50:55.444416Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:6e6c7c4645ed4af43a61",
+          "title": "Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection",
+          "year": "2025",
+          "authors": "R. Uma Maheshwari; B. Paulchamy; Binay Kumar Pandey; Digvijay Pandey",
+          "venue": "Plasmonics",
+          "venue_id": "venue:plasmonics",
+          "venue_name": "Plasmonics",
+          "venue_acronym": "",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "Plasmonics",
+          "doi": "10.1007/s11468-024-02492-1",
+          "arxiv_id": "",
+          "openalex_url": "https://openalex.org/W4402322120",
+          "paper_url": "https://doi.org/10.1007/s11468-024-02492-1",
+          "publication_type": "journal",
+          "abstract": "",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "Formal Springer volume 20 (2025), pp. 2945-2964; first online 2024-09-06. https://link.springer.com/article/10.1007/s11468-024-02492-1",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:50:55.420450Z",
+          "paper_categories": "method"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Department of Technical Education, Uttar Pradesh",
+          "canonical_institution_name": "Department of Technical Education, Uttar Pradesh",
+          "institution_id": "institution:96dd3389141fcf35",
+          "detected_language": "",
+          "related_paper_id": "curated:6e6c7c4645ed4af43a61",
+          "title": "Enhancing Sensing and Imaging Capabilities Through Surface Plasmon Resonance for Deepfake Image Detection",
+          "year": "2025",
+          "doi": "10.1007/s11468-024-02492-1",
+          "openalex_url": "https://openalex.org/W4402322120",
+          "institution_authors": "Digvijay Pandey",
+          "raw_affiliation": "Department of Technical Education, Kanpur, Uttar Pradesh, India",
+          "evidence_source": "Formal-publication/site verification 2026-08-27: Springer author entry identifies Digvijay Pandey at Department of Technical Education, Kanpur, Uttar Pradesh. Government evidence identifies Directorate at Vikas Nagar. Selected 26.4936,80.3018 lies inside a mapped private park (OSM way 1211543677), not an identified Directorate office. No institution/building linkage verified; official site timed out. Retain candidate and textual geography, suppress unsupported marker.",
+          "evidence_url": "https://link.springer.com/article/10.1007/s11468-024-02492-1",
+          "suggested_city": "Kanpur",
+          "suggested_country": "India",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "needs_coordinate_review",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:51:15Z"
+        }
+      ],
+      "locations": [
+        {
+          "location_id": "location:2f94b504d52f4314ee5d",
+          "institution_id": "institution:96dd3389141fcf35",
+          "institution": "Department of Technical Education, Uttar Pradesh",
+          "normalized_institution": "department of technical education uttar pradesh",
+          "city": "Kanpur",
+          "region": "Uttar Pradesh",
+          "country": "India",
+          "country_code": "IN",
+          "lat": "26.4936",
+          "lon": "80.3018",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T18:36:44Z",
+          "updated_at": "2026-08-27T18:51:09.803110Z",
+          "created_by": "local-admin"
+        }
+      ],
+      "aliases": [],
+      "decision": {
+        "status": "ACTIONABLE",
+        "city": "Kanpur",
+        "region": "Uttar Pradesh",
+        "country": "India",
+        "address_evidence": "Directorate of Technical Education, Vikas Nagar, Kanpur 208002",
+        "reason": "Springer author affiliation identifies Digvijay Pandey at Department of Technical Education, Kanpur, Uttar Pradesh. AICTE 2024 approval and government procurement evidence support the Vikas Nagar directorate. No named government-building point was verified; the retained private-park candidate is rejected. Official department page was inaccessible. Final-volume year remains 2025.",
+        "sources": [
+          "https://link.springer.com/article/10.1007/s11468-024-02492-1",
+          "https://www.glikanpur.com/uploads/EOA-Report-2024-25.PDF",
+          "https://etender.up.nic.in/nicgep/app?component=%24DirectLink&page=FrontEndViewTender&service=direct&sp=SeEYJKIfg5KjWhJIAhb1NYg%3D%3D"
+        ],
+        "coordinates": null
+      }
+    },
+    {
+      "institution": {
+        "institution_id": "institution:1f939a5a9221dfb6",
+        "canonical_name": "Beijing IrisKing Co., Ltd.",
+        "abbreviation": "",
+        "institution_type": "company",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "self",
+        "created_at": "2026-08-27T00:30:00Z",
+        "updated_at": "2026-08-27T00:30:00Z",
+        "created_by": "codex-author-affiliation-review"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:c9139a042858068c242c",
+          "paper_id": "curated:a0c532923fe10a4ee7c0",
+          "title": "Enhancing Deepfake Detection with Diversified Self-Blending Images and Residuals",
+          "year": "2024",
+          "doi": "10.1109/access.2024.3382196",
+          "openalex_url": "https://openalex.org/W4393217303",
+          "institution": "Beijing IrisKing Co., Ltd.",
+          "institution_id": "institution:1f939a5a9221dfb6",
+          "location_id": "",
+          "institution_authors": "Jing Liu",
+          "author_order": "4",
+          "affiliation_order": "2",
+          "raw_affiliation": "Beijing IrisKing Company Ltd., Beijing, China",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Verified structured author-affiliation metadata: https://doaj.org/article/119351797e28470998c905b4426d63e1",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T00:30:00Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:a0c532923fe10a4ee7c0",
+          "title": "Enhancing Deepfake Detection with Diversified Self-Blending Images and Residuals",
+          "year": "2024",
+          "authors": "Qingtong Liu; Ziyu Xue; Haitao Liu; Jing Liu",
+          "venue": "IEEE Access",
+          "venue_id": "venue:ieee-access",
+          "venue_name": "IEEE Access",
+          "venue_acronym": "",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "IEEE Access",
+          "doi": "10.1109/access.2024.3382196",
+          "arxiv_id": "",
+          "openalex_url": "https://openalex.org/W4393217303",
+          "paper_url": "https://doi.org/10.1109/access.2024.3382196",
+          "publication_type": "journal",
+          "abstract": "The advancement of deep forgery technology has significantly impacted the credibility of media content, making the detection of deep forgeries crucial for ensuring media security. Although research on deepfake detection methods has been progressively advancing, current approaches predominantly rely on detecting and identifying artifacts. As deep forgery technology continually improves, high-quality synthetic images and those produced through reconstruction methods have become increasingly sophisticated, rendering artifact and trace detection methods somewhat limited. To address this issue, we introduce a deep forgery detection method that integrates deep neural networks with fine-grained artifact features. Our proposed method simulates diverse facial synthesis data by employing facial color conversion, facial frequency domain conversion, and facial mask deformation and blurring. This trains the deepfake detection model to adapt to various synthesis techniques. The classifier model is trained using multiple perturbations of authentic images, with fine-grained artifacts features ensuring the stability of the detection process. Our approach achieves superior accuracy and AUC values on the FF++ and WildDeepfake datasets, demonstrating its effectiveness and adaptability in detecting deep forgeries.",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "openalex",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T00:30:00Z",
+          "paper_categories": "method"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Beijing IrisKing Co., Ltd.",
+          "canonical_institution_name": "Beijing IrisKing Co., Ltd.",
+          "institution_id": "institution:1f939a5a9221dfb6",
+          "detected_language": "",
+          "related_paper_id": "curated:a0c532923fe10a4ee7c0",
+          "title": "Enhancing Deepfake Detection with Diversified Self-Blending Images and Residuals",
+          "year": "2024",
+          "doi": "10.1109/access.2024.3382196",
+          "openalex_url": "https://openalex.org/W4393217303",
+          "institution_authors": "Jing Liu",
+          "raw_affiliation": "Beijing IrisKing Company Ltd., Beijing, China",
+          "evidence_source": "Formal-publication/site verification 2026-08-27: Jing Liu publication affiliation is Beijing IrisKing Company Ltd., Beijing, China (2024). Selected 39.9856,116.3096 lies inside OSM garden 1100981091 near Haidian Road/Peking University. It is not the 2024 disclosed residence at No. 9 North Fourth Ring West Road, floor 22 room 2210 (Yingu Tower), and no publication-time office evidence links IrisKing to this garden. The 2022 Chengfu Road 45 office must not substitute for a verified 2024 site.",
+          "evidence_url": "https://epaper.cs.com.cn/zgzqb/images/2024-04/29/B132/zqB13229.pdf",
+          "suggested_city": "Beijing",
+          "suggested_country": "China",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "needs_coordinate_review",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:51:15Z"
+        }
+      ],
+      "locations": [
+        {
+          "location_id": "location:476082f6180906139bf3",
+          "institution_id": "institution:1f939a5a9221dfb6",
+          "institution": "Beijing IrisKing Co., Ltd.",
+          "normalized_institution": "beijing irisking co ltd",
+          "city": "Beijing",
+          "region": "Beijing",
+          "country": "China",
+          "country_code": "CN",
+          "lat": "39.9856",
+          "lon": "116.3096",
+          "coordinate_status": "needs_coordinate_review",
+          "created_at": "2026-08-27T18:37:50Z",
+          "updated_at": "2026-08-27T18:51:09.809527Z",
+          "created_by": "local-admin"
+        }
+      ],
+      "aliases": [],
+      "decision": {
+        "status": "ACTIONABLE",
+        "city": "Beijing",
+        "region": "Beijing",
+        "country": "China",
+        "address_evidence": "Registered residence: No. 9 North Fourth Ring West Road, floor 22, room 2210 (2024 disclosure; paper office not established)",
+        "reason": "Jing Liu affiliation names Beijing IrisKing Company Ltd., Beijing, China. The 2024-04-29 corporate disclosure lists North Fourth Ring West Road 9, floor 22 room 2210; older Chengfu Road 45 evidence differs. The disclosure does not establish when the author used this office. Retain Beijing geography; neither the garden candidate nor an inferred Yingu Tower office is confirmed for this publication.",
+        "sources": [
+          "https://doi.org/10.1109/ACCESS.2024.3382196",
+          "https://doaj.org/article/119351797e28470998c905b4426d63e1",
+          "https://epaper.cs.com.cn/zgzqb/images/2024-04/29/B132/zqB13229.pdf"
+        ],
+        "coordinates": null
+      }
+    },
+    {
+      "institution": {
+        "institution_id": "institution:866f00322aa693b8",
+        "canonical_name": "Griffith University",
+        "abbreviation": "",
+        "institution_type": "university",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "Griffith University",
+        "created_at": "2026-08-27T18:55:25Z",
+        "updated_at": "2026-08-27T18:55:25Z",
+        "created_by": "local-admin"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:7b3e580c7133d150e40d",
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution": "Griffith University",
+          "institution_id": "institution:866f00322aa693b8",
+          "location_id": "",
+          "institution_authors": "Quoc Viet Hung Nguyen",
+          "author_order": "2",
+          "affiliation_order": "2",
+          "raw_affiliation": "School of Information and Communication Technology, Griffith University, Queensland, Australia",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Visually verified formal publication: https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T18:55:25Z",
+          "updated_at": "2026-08-27T18:55:26.193760Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "authors": "Thanh Thi Nguyen; Quoc Viet Hung Nguyen; Dung Tien Nguyen; Duc Thanh Nguyen; Thien Huynh-The; Saeid Nahavandi; Thanh Tam Nguyen; Quoc-Viet Pham; Cuong M. Nguyen",
+          "venue": "Computer Vision and Image Understanding",
+          "venue_id": "venue:computer-vision-and-image-understanding",
+          "venue_name": "Computer Vision and Image Understanding",
+          "venue_acronym": "CVIU",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "Figshare",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "arxiv_id": "1909.11573",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "paper_url": "https://doi.org/10.1016/j.cviu.2022.103525",
+          "publication_type": "journal",
+          "abstract": "Deep learning has been successfully applied to solve various complex problems ranging from big data analytics to computer vision and human-level control. Deep learning advances however have also been employed to create software that can cause threats to privacy, democracy and national security. One of those deep learning-powered applications recently emerged is \"deepfake\". Deepfake algorithms can create fake images and videos that humans cannot distinguish them from authentic ones. The proposal of technologies that can automatically detect and assess the integrity of digital visual media is therefore indispensable. This paper presents a survey of algorithms used to create deepfakes and, more importantly, methods proposed to detect deepfakes in the literature to date. We present extensive discussions on challenges, research trends and directions related to deepfake technologies. By reviewing the background of deepfakes and state-of-the-art deepfake detection methods, this study provides a comprehensive overview of deepfake techniques and facilitates the development of new and more robust methods to deal with the increasingly challenging deepfakes.",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "Formal 2022 publication; Griffith repository labels deposited file Version of Record. https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:55:25Z",
+          "paper_categories": "survey"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Griffith University",
+          "canonical_institution_name": "Griffith University",
+          "institution_id": "institution:866f00322aa693b8",
+          "detected_language": "",
+          "related_paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution_authors": "Quoc Viet Hung Nguyen",
+          "raw_affiliation": "School of Information and Communication Technology, Griffith University, Queensland, Australia",
+          "evidence_source": "Formal 2022 publication establishes institution via superscript; exact paper-supported campus/building coordinate has not been verified. No centroid or headquarters inferred.",
+          "evidence_url": "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "suggested_city": "",
+          "suggested_country": "Australia",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "missing",
+          "coordinate_status": "missing",
+          "created_at": "2026-08-27T18:55:25Z",
+          "updated_at": "2026-08-27T18:55:26.206357Z"
+        }
+      ],
+      "locations": [],
+      "aliases": [],
+      "decision": {
+        "status": "ACTIONABLE",
+        "city": "",
+        "region": "Queensland",
+        "country": "Australia",
+        "address_evidence": "No publication-specific campus",
+        "reason": "Formal 2022 survey affiliation b gives School of Information and Communication Technology, Griffith University, Queensland, Australia, without a campus. Later formal papers (2023/2024) place this author at Gold Coast, but do not establish this survey site. No principal-campus default is authorized for an ambiguous paper site; Nathan, Gold Coast and South Bank are not assigned.",
+        "sources": [
+          "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "https://onlinelibrary.wiley.com/doi/10.1155/2023/5494961",
+          "https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/cit2.12362"
+        ],
+        "coordinates": null
+      }
+    },
+    {
+      "institution": {
+        "institution_id": "institution:845768c6b2d48f68",
+        "canonical_name": "Kumoh National Institute of Technology",
+        "abbreviation": "",
+        "institution_type": "university",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "Kumoh National Institute of Technology",
+        "created_at": "2026-08-27T18:55:25Z",
+        "updated_at": "2026-08-27T18:55:25Z",
+        "created_by": "local-admin"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:27618b8da3c3e6c1b003",
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution": "Kumoh National Institute of Technology",
+          "institution_id": "institution:845768c6b2d48f68",
+          "location_id": "",
+          "institution_authors": "Thien Huynh-The",
+          "author_order": "5",
+          "affiliation_order": "3",
+          "raw_affiliation": "ICT Convergence Research Center, Kumoh National Institute of Technology, Gyeongbuk, Republic of Korea",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Visually verified formal publication: https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T18:55:25Z",
+          "updated_at": "2026-08-27T18:55:26.193762Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "authors": "Thanh Thi Nguyen; Quoc Viet Hung Nguyen; Dung Tien Nguyen; Duc Thanh Nguyen; Thien Huynh-The; Saeid Nahavandi; Thanh Tam Nguyen; Quoc-Viet Pham; Cuong M. Nguyen",
+          "venue": "Computer Vision and Image Understanding",
+          "venue_id": "venue:computer-vision-and-image-understanding",
+          "venue_name": "Computer Vision and Image Understanding",
+          "venue_acronym": "CVIU",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "Figshare",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "arxiv_id": "1909.11573",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "paper_url": "https://doi.org/10.1016/j.cviu.2022.103525",
+          "publication_type": "journal",
+          "abstract": "Deep learning has been successfully applied to solve various complex problems ranging from big data analytics to computer vision and human-level control. Deep learning advances however have also been employed to create software that can cause threats to privacy, democracy and national security. One of those deep learning-powered applications recently emerged is \"deepfake\". Deepfake algorithms can create fake images and videos that humans cannot distinguish them from authentic ones. The proposal of technologies that can automatically detect and assess the integrity of digital visual media is therefore indispensable. This paper presents a survey of algorithms used to create deepfakes and, more importantly, methods proposed to detect deepfakes in the literature to date. We present extensive discussions on challenges, research trends and directions related to deepfake technologies. By reviewing the background of deepfakes and state-of-the-art deepfake detection methods, this study provides a comprehensive overview of deepfake techniques and facilitates the development of new and more robust methods to deal with the increasingly challenging deepfakes.",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "Formal 2022 publication; Griffith repository labels deposited file Version of Record. https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:55:25Z",
+          "paper_categories": "survey"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Kumoh National Institute of Technology",
+          "canonical_institution_name": "Kumoh National Institute of Technology",
+          "institution_id": "institution:845768c6b2d48f68",
+          "detected_language": "",
+          "related_paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution_authors": "Thien Huynh-The",
+          "raw_affiliation": "ICT Convergence Research Center, Kumoh National Institute of Technology, Gyeongbuk, Republic of Korea",
+          "evidence_source": "Formal 2022 publication establishes institution via superscript; exact paper-supported campus/building coordinate has not been verified. No centroid or headquarters inferred.",
+          "evidence_url": "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "suggested_city": "",
+          "suggested_country": "South Korea",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "missing",
+          "coordinate_status": "missing",
+          "created_at": "2026-08-27T18:55:25Z",
+          "updated_at": "2026-08-27T18:55:26.206362Z"
+        }
+      ],
+      "locations": [],
+      "aliases": [],
+      "decision": {
+        "status": "CONFIRMED",
+        "city": "Gumi",
+        "region": "Gyeongsangbuk-do",
+        "country": "South Korea",
+        "address_evidence": "Room 408, Industry-Academic Cooperation Building, 61 Daehak-ro, Gumi 39177",
+        "reason": "Formal 2022 survey affiliation c identifies Thien Huynh-The at ICT Convergence Research Center, Kumoh National Institute of Technology. The center's 2018 and 2020 brochures name the researcher and give Room 408, Industry-Academic Cooperation Building, 61 Daehak-ro. Official KIT pages confirm the Yangho campus address. Named OSM university building 산학협력관 (way 1518535866) matches that building within campus way 234847049. The point is derived inside its footprint, not a city/postcode/campus centroid or Shinpyeong site. Institution identity and original author group remain unchanged.",
+        "sources": [
+          "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "https://ictcrc.org/images/sub/2018_catal.pdf",
+          "https://ictcrc.org/images/sub/2020_catal.pdf",
+          "https://www.kumoh.ac.kr/eng/sub01_04.do",
+          "https://www.kumoh.ac.kr/eng/sub06_04_02.do",
+          "https://www.openstreetmap.org/way/1518535866"
+        ],
+        "coordinates": [
+          36.148713,
+          128.3932287
+        ],
+        "location_id": "location:940d31d28b1c4cb7c094"
+      }
+    },
+    {
+      "institution": {
+        "institution_id": "institution:6ed8b18e4c077bfc",
+        "canonical_name": "Ho Chi Minh City University of Technology (HUTECH)",
+        "abbreviation": "",
+        "institution_type": "university",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "Ho Chi Minh City University of Technology (HUTECH)",
+        "created_at": "2026-08-27T18:55:25Z",
+        "updated_at": "2026-08-27T18:55:25Z",
+        "created_by": "local-admin"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:3ccd22bfe50f3c185660",
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution": "Ho Chi Minh City University of Technology (HUTECH)",
+          "institution_id": "institution:6ed8b18e4c077bfc",
+          "location_id": "",
+          "institution_authors": "Thanh Tam Nguyen",
+          "author_order": "7",
+          "affiliation_order": "5",
+          "raw_affiliation": "Faculty of Information Technology, Ho Chi Minh City University of Technology (HUTECH), Ho Chi Minh City, Vietnam",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Visually verified formal publication: https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T18:55:25Z",
+          "updated_at": "2026-08-27T18:55:26.193764Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "authors": "Thanh Thi Nguyen; Quoc Viet Hung Nguyen; Dung Tien Nguyen; Duc Thanh Nguyen; Thien Huynh-The; Saeid Nahavandi; Thanh Tam Nguyen; Quoc-Viet Pham; Cuong M. Nguyen",
+          "venue": "Computer Vision and Image Understanding",
+          "venue_id": "venue:computer-vision-and-image-understanding",
+          "venue_name": "Computer Vision and Image Understanding",
+          "venue_acronym": "CVIU",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "Figshare",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "arxiv_id": "1909.11573",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "paper_url": "https://doi.org/10.1016/j.cviu.2022.103525",
+          "publication_type": "journal",
+          "abstract": "Deep learning has been successfully applied to solve various complex problems ranging from big data analytics to computer vision and human-level control. Deep learning advances however have also been employed to create software that can cause threats to privacy, democracy and national security. One of those deep learning-powered applications recently emerged is \"deepfake\". Deepfake algorithms can create fake images and videos that humans cannot distinguish them from authentic ones. The proposal of technologies that can automatically detect and assess the integrity of digital visual media is therefore indispensable. This paper presents a survey of algorithms used to create deepfakes and, more importantly, methods proposed to detect deepfakes in the literature to date. We present extensive discussions on challenges, research trends and directions related to deepfake technologies. By reviewing the background of deepfakes and state-of-the-art deepfake detection methods, this study provides a comprehensive overview of deepfake techniques and facilitates the development of new and more robust methods to deal with the increasingly challenging deepfakes.",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "Formal 2022 publication; Griffith repository labels deposited file Version of Record. https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:55:25Z",
+          "paper_categories": "survey"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Ho Chi Minh City University of Technology (HUTECH)",
+          "canonical_institution_name": "Ho Chi Minh City University of Technology (HUTECH)",
+          "institution_id": "institution:6ed8b18e4c077bfc",
+          "detected_language": "",
+          "related_paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution_authors": "Thanh Tam Nguyen",
+          "raw_affiliation": "Faculty of Information Technology, Ho Chi Minh City University of Technology (HUTECH), Ho Chi Minh City, Vietnam",
+          "evidence_source": "Formal 2022 publication establishes institution via superscript; exact paper-supported campus/building coordinate has not been verified. No centroid or headquarters inferred.",
+          "evidence_url": "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "suggested_city": "",
+          "suggested_country": "Vietnam",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "missing",
+          "coordinate_status": "missing",
+          "created_at": "2026-08-27T18:55:25Z",
+          "updated_at": "2026-08-27T18:55:26.206365Z"
+        }
+      ],
+      "locations": [],
+      "aliases": [],
+      "decision": {
+        "status": "ACTIONABLE",
+        "city": "Ho Chi Minh City",
+        "region": "Ho Chi Minh City",
+        "country": "Vietnam",
+        "address_evidence": "Faculty web footer: 475A Dien Bien Phu (not established as author's 2022 site)",
+        "reason": "Formal survey affiliation e explicitly identifies Faculty of Information Technology, Ho Chi Minh City University of Technology (HUTECH). Official English faculty news dated 2022-03-27 confirms that exact canonical English identity. Its current footer gives 475A Dien Bien Phu, but does not identify Thanh Tam Nguyen's publication-time campus. Do not confuse HUTECH with VNU-HCM University of Technology or University of Technology and Education; no alias or campus invented.",
+        "sources": [
+          "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "https://www.hutech.edu.vn/khoacntten/news/14618716-hutech-it-open-day-career-orientation-internship-implementation"
+        ],
+        "coordinates": null
+      }
+    },
+    {
+      "institution": {
+        "institution_id": "institution:70691539bab41121",
+        "canonical_name": "Pusan National University",
+        "abbreviation": "",
+        "institution_type": "university",
+        "institution_status": "active",
+        "parent_institution_id": "",
+        "public_display": "Pusan National University",
+        "created_at": "2026-08-27T18:55:26Z",
+        "updated_at": "2026-08-27T18:55:26Z",
+        "created_by": "local-admin"
+      },
+      "mappings": [
+        {
+          "mapping_id": "mapping:ff5a05296dbb2552e5cb",
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution": "Pusan National University",
+          "institution_id": "institution:70691539bab41121",
+          "location_id": "",
+          "institution_authors": "Quoc-Viet Pham",
+          "author_order": "8",
+          "affiliation_order": "6",
+          "raw_affiliation": "Korean Southeast Center for the 4th Industrial Revolution Leader Education, Pusan National University, Busan, Republic of Korea",
+          "openalex_institution_id": "",
+          "institution_city": "",
+          "institution_country": "",
+          "institution_latitude": "",
+          "institution_longitude": "",
+          "provenance_source": "Visually verified formal publication: https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "mapping_status": "active",
+          "created_at": "2026-08-27T18:55:26Z",
+          "updated_at": "2026-08-27T18:55:26.193765Z"
+        }
+      ],
+      "papers": [
+        {
+          "paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "authors": "Thanh Thi Nguyen; Quoc Viet Hung Nguyen; Dung Tien Nguyen; Duc Thanh Nguyen; Thien Huynh-The; Saeid Nahavandi; Thanh Tam Nguyen; Quoc-Viet Pham; Cuong M. Nguyen",
+          "venue": "Computer Vision and Image Understanding",
+          "venue_id": "venue:computer-vision-and-image-understanding",
+          "venue_name": "Computer Vision and Image Understanding",
+          "venue_acronym": "CVIU",
+          "venue_type": "journal",
+          "venue_track": "",
+          "raw_venue": "Figshare",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "arxiv_id": "1909.11573",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "paper_url": "https://doi.org/10.1016/j.cviu.2022.103525",
+          "publication_type": "journal",
+          "abstract": "Deep learning has been successfully applied to solve various complex problems ranging from big data analytics to computer vision and human-level control. Deep learning advances however have also been employed to create software that can cause threats to privacy, democracy and national security. One of those deep learning-powered applications recently emerged is \"deepfake\". Deepfake algorithms can create fake images and videos that humans cannot distinguish them from authentic ones. The proposal of technologies that can automatically detect and assess the integrity of digital visual media is therefore indispensable. This paper presents a survey of algorithms used to create deepfakes and, more importantly, methods proposed to detect deepfakes in the literature to date. We present extensive discussions on challenges, research trends and directions related to deepfake technologies. By reviewing the background of deepfakes and state-of-the-art deepfake detection methods, this study provides a comprehensive overview of deepfake techniques and facilitates the development of new and more robust methods to deal with the increasingly challenging deepfakes.",
+          "task": "detection",
+          "scope_status": "in_scope",
+          "source_database": "openalex",
+          "metadata_source": "Formal 2022 publication; Griffith repository labels deposited file Version of Record. https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "curation_status": "confirmed",
+          "review_status": "reviewed",
+          "created_at": "2026-08-27T00:30:00Z",
+          "updated_at": "2026-08-27T18:55:25Z",
+          "paper_categories": "survey"
+        }
+      ],
+      "reviews": [
+        {
+          "institution": "Pusan National University",
+          "canonical_institution_name": "Pusan National University",
+          "institution_id": "institution:70691539bab41121",
+          "detected_language": "",
+          "related_paper_id": "curated:c071c25bc2957d78569b",
+          "title": "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "year": "2022",
+          "doi": "10.1016/j.cviu.2022.103525",
+          "openalex_url": "https://openalex.org/W3045755384",
+          "institution_authors": "Quoc-Viet Pham",
+          "raw_affiliation": "Korean Southeast Center for the 4th Industrial Revolution Leader Education, Pusan National University, Busan, Republic of Korea",
+          "evidence_source": "Formal 2022 publication establishes institution via superscript; exact paper-supported campus/building coordinate has not been verified. No centroid or headquarters inferred.",
+          "evidence_url": "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "suggested_city": "",
+          "suggested_country": "South Korea",
+          "matched_institution": "",
+          "suggested_canonical_institution": "",
+          "match_method": "",
+          "similarity_score": "",
+          "confidence": "",
+          "openalex_institution_id": "",
+          "ror_id": "",
+          "wikidata_id": "",
+          "review_status": "pending_review",
+          "location_status": "missing",
+          "coordinate_status": "missing",
+          "created_at": "2026-08-27T18:55:26Z",
+          "updated_at": "2026-08-27T18:55:26.206368Z"
+        }
+      ],
+      "locations": [],
+      "aliases": [],
+      "decision": {
+        "status": "ACTIONABLE",
+        "city": "Busan",
+        "region": "Busan",
+        "country": "South Korea",
+        "address_evidence": "Center web footer: 2 Busandaehak-ro 63beon-gil, Jangjeon-dong, Busan 46241; exact unit site not verified",
+        "reason": "Formal survey affiliation f identifies Quoc-Viet Pham at Korean Southeast Center for the 4th Industrial Revolution Leader Education, Pusan National University, Busan. Official center greeting confirms identity and Department of Information Convergence Engineering; footer gives Busan 46241/Jangjeon campus address. The center Map page supplied no usable location content and no publication-time unit/building point was verified. Preserve Busan; do not infer a hospital, Yangsan site or principal-campus marker from a generic footer.",
+        "sources": [
+          "https://research-repository.griffith.edu.au/server/api/core/bitstreams/9047c38e-4092-41fe-a8e7-e73d74b6d891/content",
+          "https://bk4-iceeng.pusan.ac.kr/bk4-iceeng/57351/subview.do",
+          "https://bk4-iceeng.pusan.ac.kr/bk4-iceeng/57354/subview.do",
+          "https://quantum-ai.pusan.ac.kr/pnuProfl/wireless-ai/2135/27021/artclView.do"
+        ],
+        "coordinates": null
+      }
+    }
+  ],
+  "authors": [
+    {
+      "paper_id": "curated:8ebf01a335c20fdc902d",
+      "title": "Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks",
+      "doi": "10.1109/cscwd68734.2026.11582378",
+      "author": "Jia Wang",
+      "status": "UNRESOLVED",
+      "reason": "Publisher author listing retains Jia Wang, Qian Luo, Jeon Gwanggil. The official CSCWD 2026 programme lists Jia Wang, Qian Luo, Gwanggil Jeon, but supplies no author affiliation markers. IEEE document 11582378 was unavailable. Jia Wang is not merged with Yi-Xiang Wang. Full formal affiliation block and the third author's published spelling remain unverified.",
+      "sources": [
+        "https://ieeexplore-custom.ieee.org/author/609900097147935?reload=true",
+        "https://ieeexplore.ieee.org/document/11582378",
+        "https://fyust.edu.cn/gjhyqk/cscwd2026/program.pdf"
+      ],
+      "before_roster": [
+        {
+          "name": "Jia Wang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "doi": "10.1109/cscwd68734.2026.11582378",
+            "reason_kind": "conflicting_sources",
+            "source_text": "",
+            "status": "unresolved",
+            "review_id": "institution-audit:author-status-298c77ae57a7",
+            "evidence_url": "https://ieeexplore-custom.ieee.org/author/609900097147935?reload=true",
+            "review_note": "Focused recheck: the official CSCWD 2026 programme names Jia Wang, Qian Luo and Gwanggil Jeon. IEEE full-text access did not supply an author-affiliation block. Existing Yi-Xiang Wang mapping cannot establish Jia Wang identity; no name merge or inferred institution."
+          },
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Qian Luo",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jeon Gwanggil",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "formal_roster_verified": false
+    },
+    {
+      "paper_id": "openalex:W4409047068",
+      "title": "A Novel Framework for Deepfake Image Detection Using Deep Learning Approach",
+      "doi": "10.1109/lt64002.2025.10940759",
+      "author": "Aruna J. Chamatkar",
+      "status": "UNRESOLVED",
+      "reason": "IEEE document 10940759 and a publication-specific institutional manuscript could not be retrieved. Current employer/profile suggestions do not prove this paper affiliation. Keep Aruna J. Chamatkar unresolved; six-author roster, spelling, order and numeric mappings retained without claiming a formal-PDF verification.",
+      "sources": [
+        "https://ieeexplore.ieee.org/document/10940759"
+      ],
+      "before_roster": [
+        {
+          "name": "Ambika Jaiswal",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Aruna J. Chamatkar",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "doi": "10.1109/lt64002.2025.10940759",
+            "reason_kind": "primary_evidence_unavailable",
+            "source_text": "",
+            "status": "unresolved",
+            "review_id": "institution-audit:author-status-3c4f9da8523d",
+            "evidence_url": "https://doi.org/10.1109/lt64002.2025.10940759",
+            "review_note": "One focused primary-source check: IEEE document 10940759 was inaccessible; the Chitkara publication listing supplies no verified paper-specific affiliation for Chamatkar. Authorship/current employment does not establish publication affiliation. Remains unresolved."
+          },
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Akash Prakash Kharat",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Bhisham Sharma",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Imed Ben Dhaou",
+          "affiliation_indices": [
+            4
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Suhashini Awadhesh Chaurasia",
+          "affiliation_indices": [
+            5
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "formal_roster_verified": false
+    },
+    {
+      "paper_id": "openalex:W4408401076",
+      "title": "Deepfake Image Detection Using ResNet50 Model",
+      "doi": "10.1109/cybercomp60759.2024.10913843",
+      "author": "Chuah ChaiWen",
+      "status": "UNRESOLVED",
+      "reason": "IEEE document 10913843 returned a JavaScript verification challenge; no formal affiliation block retrieved. Proceedings TOC and UTHM publication listing spell first author Lew Kar Yee, versus canonical Lee Kar Yee; retain this discrepancy pending the formal publisher source. Secondary Guangdong University of Science and Technology suggestion is not sufficient to assign Chuah or a campus. No identity merge or index shift.",
+      "sources": [
+        "https://ieeexplore.ieee.org/document/10913843",
+        "https://www.proceedings.com/content/079/079233webtoc.pdf",
+        "https://community.uthm.edu.my/rahmi?print=1"
+      ],
+      "before_roster": [
+        {
+          "name": "Lee Kar Yee",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Isredza Rahmi A. Hamid",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Chuah ChaiWen",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "doi": "10.1109/cybercomp60759.2024.10913843",
+            "reason_kind": "primary_evidence_unavailable",
+            "source_text": "",
+            "status": "unresolved",
+            "review_id": "institution-audit:author-status-8ef6e78b1a1b",
+            "evidence_url": "https://doi.org/10.1109/cybercomp60759.2024.10913843",
+            "review_note": "One focused primary-source check: IEEE document 10913843 presented a verification page. Proceedings contents confirm authorship but not affiliation. J-GLOBAL suggests Guangdong University of Science and Technology, Dongguan; primary author-affiliation/campus evidence remains unverified. Do not substitute Guangdong University of Technology."
+          },
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Zubaile Abdullah",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Kuryati Kipli",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Cik Feresa Mohd Foozy",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "formal_roster_verified": false
+    },
+    {
+      "paper_id": "curated:4b042ad660312ec3b338",
+      "title": "Evasion on General GAN-Generated Image Detection by Disentangled Representation",
+      "doi": "10.1016/j.ins.2024.121267",
+      "author": "Daniel S. Yeung",
+      "status": "UNRESOLVED",
+      "reason": "Final 2024 publisher-layout PDF has six authors in canonical order. Daniel S. Yeung is sixth, marker e: Hong Kong, China. Entire text, first-page correspondence, CRediT contribution statement and ending pages checked; no organization or author biography providing one found. Geography is not an institution and does not explicitly establish independent status. Remains unresolved.",
+      "sources": [
+        "https://tas-lab.org/publication/2024-evasion-on-general-gan-generated-image-detection-by-disentangled-representation/index.pdf"
+      ],
+      "before_roster": [
+        {
+          "name": "Patrick P. K. Chan",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Chuanxin Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Haitao Chen",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jingwen Deng",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xiao Meng",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Daniel S. Yeung",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "doi": "10.1016/j.ins.2024.121267",
+            "reason_kind": "geographic_only",
+            "source_text": "Hong Kong, China",
+            "status": "unresolved",
+            "review_id": "institution-audit:author-status-dbd394dc6050",
+            "evidence_url": "https://tas-lab.org/publication/2024-evasion-on-general-gan-generated-image-detection-by-disentangled-representation/index.pdf",
+            "review_note": "Rendered publisher PDF rechecked: author superscript e resolves only to Hong Kong, China. This is geography, not an institution or an explicit independent role. Keep unresolved; do not copy SCUT or Huya from coauthors."
+          },
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "formal_roster_verified": true
+    },
+    {
+      "paper_id": "openalex:W4318559723",
+      "title": "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model",
+      "doi": "10.1016/j.procs.2023.01.237",
+      "author": "Usha Kosarkar",
+      "status": "UNRESOLVED",
+      "reason": "ScienceDirect formal paper was inaccessible (403). An author-uploaded ResearchGate excerpt says Department of Science and Technology, GHRIET, Nagpur, India, but the full formal author/affiliation block was not retrievable. Science College Nagpur's institutional research list points to the same DOI without supplying Usha's affiliation block. Exact GHRIET institutional entity/campus remains unverified; do not infer it from an employer profile.",
+      "sources": [
+        "https://www.sciencedirect.com/science/article/pii/S1877050923002375",
+        "https://sscnagpur.ac.in/uploaded_files/3.3.1.1Papers_the_first_page_with_author_and_affiliation_details.pdf",
+        "https://www.researchgate.net/publication/367596688_Revealing_and_Classification_of_Deepfakes_Video%27s_Images_using_a_Customize_Convolution_Neural_Network_Model"
+      ],
+      "before_roster": [
+        {
+          "name": "Usha Kosarkar",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_review": {
+            "doi": "10.1016/j.procs.2023.01.237",
+            "reason_kind": "primary_evidence_unavailable",
+            "source_text": "",
+            "status": "unresolved",
+            "review_id": "institution-audit:author-status-3026f4792b21",
+            "evidence_url": "https://doi.org/10.1016/j.procs.2023.01.237",
+            "review_note": "One focused primary-source check: ScienceDirect S1877050923002375/DOI 10.1016/j.procs.2023.01.237 remained blocked (403). No primary full-text affiliation layout or exact GHRIET campus was verified. Do not infer a campus from generic author information."
+          },
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Gopal Sarkarkar",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Shilpa Gedam",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "formal_roster_verified": false
+    }
+  ],
+  "scope": "Eight actionable locations and five unresolved authors only; no prior migrations replayed.",
+  "pdf_evidence": [
+    {
+      "url": "https://ictcrc.org/images/sub/2018_catal.pdf",
+      "sha256": "4ba9b9bf2572d72305fa7cf327eb46a307ba3178715e8f49693f7d754f1f1659",
+      "pages_checked": [
+        3,
+        15
+      ],
+      "role": "Historical center roster and exact address; corroborated by 2020 brochure pages 7 and 17."
+    },
+    {
+      "url": "https://tas-lab.org/publication/2024-evasion-on-general-gan-generated-image-detection-by-disentangled-representation/index.pdf",
+      "sha256": "9462904b06b1969857b1e4683c55ac9afd970a9ab78691b4e76e01ccb221e511",
+      "role": "Formal six-author affiliation block, correspondence and ending text; geographic-only Daniel entry."
+    }
+  ],
+  "verification": {
+    "curated_changes": {
+      "author_institution_mappings.csv": {
+        "changed": [
+          "mapping:27618b8da3c3e6c1b003"
+        ],
+        "added": [],
+        "removed": []
+      },
+      "institution_audit_log.csv": {
+        "changed": [],
+        "added": [
+          "institution-audit:89c7b73b8c407428f025",
+          "institution-audit:4cd8bc4af74fdb47282c",
+          "institution-audit:bccdc891b3f34b0a9d4f",
+          "institution-audit:e76505eab968a86b8e71",
+          "institution-audit:bc68b45d77e636bb708c",
+          "institution-audit:5c4685467938d3adbd67",
+          "institution-audit:ea1c895cabcefe89e1fb",
+          "institution-audit:522e7656fcac444b5141",
+          "institution-audit:263c46167738141bc3c8",
+          "institution-audit:43512f53f3f2dc35125b",
+          "institution-audit:f865ed770ce023f5e783",
+          "institution-audit:bc55778e23b2004d17db",
+          "institution-audit:47fb97900ff5e7a22139"
+        ],
+        "removed": []
+      },
+      "institution_location_review.csv": {
+        "changed": [
+          "Pusan National University",
+          "Naval Air Warfare Center Weapons Division",
+          "Huya Inc.",
+          "Department of Technical Education, Uttar Pradesh",
+          "Ho Chi Minh City University of Technology (HUTECH)",
+          "Griffith University",
+          "Kumoh National Institute of Technology",
+          "Beijing IrisKing Co., Ltd."
+        ],
+        "added": [],
+        "removed": [],
+        "row_comparison": [
+          {
+            "row": 546,
+            "institution_id": "institution:e07792f5cf49ebda",
+            "fields": [
+              "evidence_source",
+              "evidence_url",
+              "updated_at"
+            ]
+          },
+          {
+            "row": 549,
+            "institution_id": "institution:2f2a5a5c1021efe4",
+            "fields": [
+              "evidence_source",
+              "evidence_url",
+              "updated_at"
+            ]
+          },
+          {
+            "row": 567,
+            "institution_id": "institution:96dd3389141fcf35",
+            "fields": [
+              "evidence_source",
+              "updated_at"
+            ]
+          },
+          {
+            "row": 568,
+            "institution_id": "institution:1f939a5a9221dfb6",
+            "fields": [
+              "evidence_source",
+              "evidence_url",
+              "updated_at"
+            ]
+          },
+          {
+            "row": 569,
+            "institution_id": "institution:866f00322aa693b8",
+            "fields": [
+              "evidence_source",
+              "location_status",
+              "coordinate_status",
+              "updated_at"
+            ]
+          },
+          {
+            "row": 570,
+            "institution_id": "institution:845768c6b2d48f68",
+            "fields": [
+              "evidence_source",
+              "suggested_city",
+              "review_status",
+              "location_status",
+              "coordinate_status",
+              "updated_at"
+            ]
+          },
+          {
+            "row": 571,
+            "institution_id": "institution:6ed8b18e4c077bfc",
+            "fields": [
+              "evidence_source",
+              "suggested_city",
+              "location_status",
+              "coordinate_status",
+              "updated_at"
+            ]
+          },
+          {
+            "row": 572,
+            "institution_id": "institution:70691539bab41121",
+            "fields": [
+              "evidence_source",
+              "suggested_city",
+              "location_status",
+              "coordinate_status",
+              "updated_at"
+            ]
+          }
+        ]
+      },
+      "institution_locations.csv": {
+        "changed": [],
+        "added": [
+          "location:940d31d28b1c4cb7c094"
+        ],
+        "removed": []
+      }
+    },
+    "exports": {
+      "public_preview_papers.json": {
+        "before": 546,
+        "after": 546,
+        "removed": 0,
+        "added": 0,
+        "changed": 6,
+        "changed_titles": [
+          "A Novel Framework for Deepfake Image Detection Using Deep Learning Approach",
+          "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "Deepfake Image Detection Using ResNet50 Model",
+          "Evasion on General GAN-Generated Image Detection by Disentangled Representation",
+          "Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks",
+          "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model"
+        ],
+        "sha256": "3f1d9d0fa493786d27fa1bdc9102c8bb887e4de942b8d368217a6c3d42406bc5"
+      },
+      "public_preview_map_data.json": {
+        "before": 1263,
+        "after": 1264,
+        "removed": 0,
+        "added": 1,
+        "changed": 13,
+        "changed_titles": [
+          "A Novel Framework for Deepfake Image Detection Using Deep Learning Approach",
+          "Deep Learning for Deepfakes Creation and Detection: A Survey",
+          "Deepfake Image Detection Using ResNet50 Model",
+          "Evasion on General GAN-Generated Image Detection by Disentangled Representation",
+          "Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model"
+        ],
+        "sha256": "2f1b351db3150813f7c9d855531db14234879986e6347653c2c162a358c9337a"
+      }
+    },
+    "location_summary": {
+      "total_queue_rows": 571,
+      "alias_of_confirmed": 77,
+      "ambiguous": 0,
+      "confirmed": 448,
+      "excluded": 6,
+      "ignore": 33,
+      "pending_review": 7,
+      "needs_coordinates": 7,
+      "needs_coordinate_review": 7,
+      "confirmed_locations_count": 457,
+      "institutions_with_multiple_location_candidates": [
+        "deakin university",
+        "northeastern university",
+        "peng cheng laboratory",
+        "sony ai",
+        "xiaohongshu inc"
+      ],
+      "multiple_location_candidate_count": 5
+    },
+    "relationships": {
+      "ACTIONABLE": 7,
+      "COMPLETE": 1264,
+      "EXCLUDED": 29
+    },
+    "authors": {
+      "mapped": 2725,
+      "non_institutional": 3,
+      "unresolved": 5
+    },
+    "complete_papers": 541,
+    "papers_with_zero_mapped_or_reviewed_authors": 0,
+    "numeric_mapping_rows_checked": 67,
+    "unchanged_legacy_author_order_fields": {
+      "blank": 743,
+      "positional_labels": 104
+    },
+    "public_author_superscripts": "all valid",
+    "candidate_locations_excluded": 4,
+    "duplicate_logical_locations": 0,
+    "malformed_coordinates": 0,
+    "inactive_institution_references": 0,
+    "canonical_Türkiye": 0,
+    "affiliation_order_violations": 0,
+    "public_papers": 546,
+    "public_map_source_papers": 540,
+    "papers_with_locations": 539,
+    "mapped_institution_names": 618,
+    "unexplained_shrinkage": 0,
+    "static_checks": {
+      "javascript_files": 10,
+      "python_files": 221,
+      "all_passed": true
+    },
+    "export_stability": {
+      "public_preview_papers.json": {
+        "byte_identical": true,
+        "sha256": "3f1d9d0fa493786d27fa1bdc9102c8bb887e4de942b8d368217a6c3d42406bc5"
+      },
+      "public_preview_map_data.json": {
+        "byte_identical": true,
+        "sha256": "2f1b351db3150813f7c9d855531db14234879986e6347653c2c162a358c9337a"
+      }
+    },
+    "tests": {
+      "focused": {
+        "passed": 218,
+        "skipped": 0,
+        "failed": 0,
+        "seconds": 90.97
+      },
+      "full": {
+        "passed": 1184,
+        "skipped": 0,
+        "failed": 0,
+        "seconds": 154.19
+      },
+      "final_baseline_recheck": {
+        "passed": 66,
+        "skipped": 0,
+        "failed": 0,
+        "seconds": 33.39
+      }
+    },
+    "validators": {
+      "curated": {
+        "files": 16,
+        "errors": 0,
+        "warnings": 178
+      },
+      "public_map": {
+        "errors": 0,
+        "warnings": 0
+      },
+      "generated_papers": {
+        "errors": 0,
+        "warnings": 5,
+        "papers_missing_affiliations": 0,
+        "papers_missing_coordinates": 1
+      }
+    },
+    "consistency": {
+      "high": 0,
+      "medium": 0,
+      "low": 173,
+      "note": "Regeneration can reorder/reverse equivalent duplicate-candidate pairs; no Low case was processed or canonical identity changed."
+    },
+    "missing_coordinates": {
+      "public_relevant": 7,
+      "referenced_non_public": 3,
+      "dormant": 189,
+      "invariant_violations": 0
+    },
+    "git_diff_check": "passed",
+    "browser": {
+      "public_url": "http://localhost:8878/web/",
+      "admin_url": "http://localhost:8877/admin/",
+      "confirmed_kumoh_site": "Marker and Admin coordinates 36.148713,128.3932287; Thien Huynh-The only.",
+      "actionable_sites": "All seven Admin rows reviewed with expanded evidence; no marker for any of the seven in relevant public institution-record views.",
+      "unresolved_authors": "All five names visible in Admin coverage; Daniel appears without a speculative institutional superscript on public Evasion card.",
+      "formal_rosters": "Expanded unique-paper cards verified survey nine authors, IncreFA five, Omni-Fake Xiangtai Li superscript 4 -> NTU.",
+      "non_institutional": "Organic or Diffused expanded card displays Reid Southen (Concept Artist), no institutional superscript; only University of Chicago for institutionally mapped coauthors.",
+      "console_errors": {
+        "public": 0,
+        "admin": 0
+      },
+      "limitation": "Pinned survey detail-pane Show all authors did not expand the ninth author; the unique-paper card expands correctly. Frontend code is unchanged and this observed pre-existing behavior was not repaired in this scoped data pass.",
+      "environment": "Temporary localhost access failure was resolved by using the separate static server; no production workaround."
+    }
+  }
+}

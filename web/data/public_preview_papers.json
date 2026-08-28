@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-27T22:43:48Z"
+    "public_preview_generated_at": "2026-08-28T01:08:06Z"
   },
   "records": [
     {
@@ -23755,9 +23755,9 @@
             "reason_kind": "conflicting_sources",
             "source_text": "",
             "status": "unresolved",
-            "review_id": "institution-audit:author-status-298c77ae57a7",
+            "review_id": "institution-audit:47fb97900ff5e7a22139",
             "evidence_url": "https://ieeexplore-custom.ieee.org/author/609900097147935?reload=true",
-            "review_note": "Focused recheck: the official CSCWD 2026 programme names Jia Wang, Qian Luo and Gwanggil Jeon. IEEE full-text access did not supply an author-affiliation block. Existing Yi-Xiang Wang mapping cannot establish Jia Wang identity; no name merge or inferred institution."
+            "review_note": "Publisher author listing retains Jia Wang, Qian Luo, Jeon Gwanggil. The official CSCWD 2026 programme lists Jia Wang, Qian Luo, Gwanggil Jeon, but supplies no author affiliation markers. IEEE document 11582378 was unavailable. Jia Wang is not merged with Yi-Xiang Wang. Full formal affiliation block and the third author's published spelling remain unverified."
           },
           "affiliation_status": "unresolved"
         },
@@ -61027,9 +61027,9 @@
             "reason_kind": "primary_evidence_unavailable",
             "source_text": "",
             "status": "unresolved",
-            "review_id": "institution-audit:author-status-3c4f9da8523d",
-            "evidence_url": "https://doi.org/10.1109/lt64002.2025.10940759",
-            "review_note": "One focused primary-source check: IEEE document 10940759 was inaccessible; the Chitkara publication listing supplies no verified paper-specific affiliation for Chamatkar. Authorship/current employment does not establish publication affiliation. Remains unresolved."
+            "review_id": "institution-audit:5c4685467938d3adbd67",
+            "evidence_url": "https://ieeexplore.ieee.org/document/10940759",
+            "review_note": "IEEE document 10940759 and a publication-specific institutional manuscript could not be retrieved. Current employer/profile suggestions do not prove this paper affiliation. Keep Aruna J. Chamatkar unresolved; six-author roster, spelling, order and numeric mappings retained without claiming a formal-PDF verification."
           },
           "affiliation_status": "unresolved"
         },
@@ -122661,9 +122661,9 @@
             "reason_kind": "primary_evidence_unavailable",
             "source_text": "",
             "status": "unresolved",
-            "review_id": "institution-audit:author-status-8ef6e78b1a1b",
-            "evidence_url": "https://doi.org/10.1109/cybercomp60759.2024.10913843",
-            "review_note": "One focused primary-source check: IEEE document 10913843 presented a verification page. Proceedings contents confirm authorship but not affiliation. J-GLOBAL suggests Guangdong University of Science and Technology, Dongguan; primary author-affiliation/campus evidence remains unverified. Do not substitute Guangdong University of Technology."
+            "review_id": "institution-audit:263c46167738141bc3c8",
+            "evidence_url": "https://ieeexplore.ieee.org/document/10913843",
+            "review_note": "IEEE document 10913843 returned a JavaScript verification challenge; no formal affiliation block retrieved. Proceedings TOC and UTHM publication listing spell first author Lew Kar Yee, versus canonical Lee Kar Yee; retain this discrepancy pending the formal publisher source. Secondary Guangdong University of Science and Technology suggestion is not sufficient to assign Chuah or a campus. No identity merge or index shift."
           },
           "affiliation_status": "unresolved"
         },
@@ -129601,9 +129601,9 @@
             "reason_kind": "geographic_only",
             "source_text": "Hong Kong, China",
             "status": "unresolved",
-            "review_id": "institution-audit:author-status-dbd394dc6050",
+            "review_id": "institution-audit:522e7656fcac444b5141",
             "evidence_url": "https://tas-lab.org/publication/2024-evasion-on-general-gan-generated-image-detection-by-disentangled-representation/index.pdf",
-            "review_note": "Rendered publisher PDF rechecked: author superscript e resolves only to Hong Kong, China. This is geography, not an institution or an explicit independent role. Keep unresolved; do not copy SCUT or Huya from coauthors."
+            "review_note": "Final 2024 publisher-layout PDF has six authors in canonical order. Daniel S. Yeung is sixth, marker e: Hong Kong, China. Entire text, first-page correspondence, CRediT contribution statement and ending pages checked; no organization or author biography providing one found. Geography is not an institution and does not explicitly establish independent status. Remains unresolved."
           },
           "affiliation_status": "unresolved"
         }
@@ -164666,9 +164666,9 @@
             "reason_kind": "primary_evidence_unavailable",
             "source_text": "",
             "status": "unresolved",
-            "review_id": "institution-audit:author-status-3026f4792b21",
-            "evidence_url": "https://doi.org/10.1016/j.procs.2023.01.237",
-            "review_note": "One focused primary-source check: ScienceDirect S1877050923002375/DOI 10.1016/j.procs.2023.01.237 remained blocked (403). No primary full-text affiliation layout or exact GHRIET campus was verified. Do not infer a campus from generic author information."
+            "review_id": "institution-audit:43512f53f3f2dc35125b",
+            "evidence_url": "https://www.sciencedirect.com/science/article/pii/S1877050923002375",
+            "review_note": "ScienceDirect formal paper was inaccessible (403). An author-uploaded ResearchGate excerpt says Department of Science and Technology, GHRIET, Nagpur, India, but the full formal author/affiliation block was not retrievable. Science College Nagpur's institutional research list points to the same DOI without supplying Usha's affiliation block. Exact GHRIET institutional entity/campus remains unverified; do not infer it from an employer profile."
           },
           "affiliation_status": "unresolved"
         },
@@ -169858,7 +169858,7 @@
       "needs_review": true,
       "notes": "Automatically extracted OpenAlex candidate; all metadata and preliminary labels require manual review.",
       "has_map_location": true,
-      "map_record_count": 3,
+      "map_record_count": 4,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -169872,6 +169872,16 @@
           "region": "Victoria",
           "region_code": "",
           "location_display": "Victoria, Australia"
+        },
+        {
+          "institution_name": "Kumoh National Institute of Technology",
+          "institution_id": "institution:845768c6b2d48f68",
+          "institution_type": "university",
+          "country": "South Korea",
+          "country_code": "KR",
+          "region": "Gyeongsangbuk-do",
+          "region_code": "",
+          "location_display": "Gyeongsangbuk-do, South Korea"
         },
         {
           "institution_name": "Deakin University",
@@ -169896,6 +169906,7 @@
       ],
       "aggregated_institutions": [
         "Deakin University",
+        "Kumoh National Institute of Technology",
         "Polytechnic University of Hauts-de-France"
       ],
       "aggregated_institution_types": [
@@ -169903,14 +169914,17 @@
       ],
       "aggregated_country_names": [
         "Australia",
+        "South Korea",
         "France"
       ],
       "aggregated_country_codes": [
         "AU",
+        "KR",
         "FR"
       ],
       "aggregated_regions": [
         "Victoria",
+        "Gyeongsangbuk-do",
         "Hauts-de-France"
       ],
       "aggregated_region_codes": [],
@@ -169954,7 +169968,7 @@
         {
           "mapping_id": "mapping:27618b8da3c3e6c1b003",
           "institution_id": "institution:845768c6b2d48f68",
-          "location_id": "",
+          "location_id": "location:940d31d28b1c4cb7c094",
           "institution": "Kumoh National Institute of Technology",
           "institution_authors": [
             "Thien Huynh-The"
@@ -170208,10 +170222,10 @@
           "canonical_name": "Kumoh National Institute of Technology",
           "institution_id": "institution:845768c6b2d48f68",
           "institution_type": "university",
-          "country": "",
+          "country": "South Korea",
           "country_code": "",
-          "region": "",
-          "location_display": ""
+          "region": "Gyeongsangbuk-do",
+          "location_display": "Gyeongsangbuk-do, South Korea"
         },
         {
           "index": 4,

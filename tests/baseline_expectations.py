@@ -12,7 +12,7 @@ CURRENT_REPOSITORY_BASELINE = {
     "public_map_source_papers": 540,
     "public_papers_with_map": 539,
     "public_papers_without_map": 7,
-    "public_map_relationships": 1263,
+    "public_map_relationships": 1264,
     "canonical_institution_rows": 662,
     "active_canonical_institutions": 650,
     "inactive_or_merged_institutions": 12,

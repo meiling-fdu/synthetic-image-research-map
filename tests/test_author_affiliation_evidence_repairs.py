@@ -140,6 +140,23 @@ def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
     assert all(any(a["affiliation_indices"] for a in p["authors"]) for p in records)
 
 
+@pytest.mark.parametrize("name", [
+    "Jia Wang", "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Usha Kosarkar",
+])
+def test_final_unresolved_evidence_pass_preserves_roster_and_does_not_infer_institution(name):
+    audit = json.loads((ROOT / "docs/evidence_resolution_2026-08-28.json").read_text())
+    case = next(c for c in audit["authors"] if c["author"] == name)
+    current = paper(case["title"])
+    assert [(a["name"], a["affiliation_indices"]) for a in current["authors"]] == [
+        (a["name"], a["affiliation_indices"]) for a in case["before_roster"]
+    ]
+    author = next(a for a in current["authors"] if a["name"] == name)
+    assert author["affiliation_status"] == "unresolved"
+    assert not author["affiliation_indices"]
+    assert author["affiliation_review"]["review_note"] == case["reason"]
+    assert not is_non_institutional(author)
+
+
 def author_review(status="non_institutional", kind="independent", text="Independent Researcher"):
     return {
         "action": ACTION, "audit_id": "review:1", "paper_id": "paper:review",

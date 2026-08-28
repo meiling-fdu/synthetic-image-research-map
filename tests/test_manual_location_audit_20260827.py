@@ -118,7 +118,7 @@ def test_all_supported_manual_decisions_survive_with_original_identity():
 def test_prior_supported_records_and_current_review_candidates_preserved():
     decisions = json.loads((ROOT / "docs/remaining_institution_location_audit_2026-08-27.json").read_text())
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
-    assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"] == 8
+    assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"] == 7
     for decision in decisions:
         iid = decision["institution_id"]
         records = [r for r in payload["records"] if r["institution_id"] == iid]
@@ -147,6 +147,47 @@ def test_location_integrity_and_scoped_naming():
     assert entities["institution:bcd3d53e57c31275"]["canonical_name"] == "Mayachitra Inc."
     assert any(r["alias_name"] == "Mayachitra (United States)" and r["institution_id"] == "institution:bcd3d53e57c31275" for r in rows("institution_aliases"))
     assert entities["institution:1ee9da20656fd88b"]["canonical_name"] == "Politecnico di Milano"
+
+
+@pytest.mark.parametrize("key", [
+    "e07792f5cf49ebda", "2f2a5a5c1021efe4", "96dd3389141fcf35",
+    "1f939a5a9221dfb6", "866f00322aa693b8", "6ed8b18e4c077bfc",
+    "70691539bab41121",
+])
+def test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable(key):
+    payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
+    review, = [r for r in payload["records"] if r["institution_id"] == "institution:" + key]
+    assert review["review_status"] == "pending_review"
+    assert review["coordinate_status"] == "needs_coordinate_review"
+    assert review["evidence_source"].startswith("Evidence resolution 2026-08-28:")
+    assert not markers(key)
+    # Keeping textual evidence must not promote either a candidate or a default campus.
+    assert review["suggested_country"]
+    for candidate in locations(key):
+        assert candidate["coordinate_status"] == "needs_coordinate_review"
+
+
+def test_survey_kumoh_building_assignment_preserves_identity_and_author_group():
+    import xml.etree.ElementTree as ET
+
+    location, = locations("845768c6b2d48f68")
+    marker, = markers("845768c6b2d48f68")
+    assert location["city"] == "Gumi"
+    assert marker["institution_authors"] == ["Thien Huynh-The"]
+    mapping = next(r for r in rows("author_institution_mappings") if r["mapping_id"] == marker["mapping_id"])
+    assert mapping["author_order"] == "5" and mapping["affiliation_order"] == "3"
+    assert mapping["location_id"] == marker["location_id"] == location["location_id"]
+    assert marker["institution_id"] == mapping["institution_id"] == location["institution_id"]
+    osm = ET.parse(ROOT / "data/raw/evidence_resolution_2026-08-28/kumoh-campus.osm").getroot()
+    nodes = {n.get("id"): (float(n.get("lon")), float(n.get("lat"))) for n in osm.findall("node")}
+    building = next(w for w in osm.findall("way") if w.get("id") == "1518535866")
+    assert {t.get("k"): t.get("v") for t in building.findall("tag")}["name"] == "산학협력관"
+    points = [nodes[n.get("ref")] for n in building.findall("nd")]
+    x, y = float(location["lon"]), float(location["lat"])
+    crossings = sum((a[1] > y) != (b[1] > y) and x < (b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0]
+                    for a, b in zip(points, points[1:]))
+    assert crossings % 2 == 1  # Independently check the marker is inside the named building.
+    assert (marker["lat"], marker["lon"]) == (y, x)
 
 
 @pytest.mark.parametrize("key,author,city,evidence", [

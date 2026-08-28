@@ -33,13 +33,13 @@
     "public_map_source_papers": 540,
     "public_papers_with_map": 539,
     "public_papers_without_map": 7,
-    "public_map_relationships": 1263,
-    "public_unique_institutions": 617,
+    "public_map_relationships": 1264,
+    "public_unique_institutions": 618,
     "canonical_institution_rows": 662,
     "active_canonical_institutions": 650,
     "inactive_or_merged_institutions": 12,
     "author_institution_mappings": 942,
-    "confirmed_institution_locations": 456,
+    "confirmed_institution_locations": 457,
     "institution_location_review_rows": 571,
     "institution_aliases": 80,
     "institution_hierarchy_edges": 8,
@@ -87,14 +87,14 @@
       "detection_and_source_attribution": 29
     },
     "public_map_relationship_resolution": {
-      "active_canonical_institution": 1237,
+      "active_canonical_institution": 1238,
       "unreviewed_automatic_fallback": 26
     }
   },
   "validation": {
     "complete_test_suite": {
-      "collected": 1171,
-      "passed": 1171,
+      "collected": 1184,
+      "passed": 1184,
       "skipped_environment_conditional": 0,
       "failed": 0,
       "deselected": 0
@@ -135,6 +135,7 @@
     "The internal institution type enum remains research_unit; the public-facing label remains Research Institute.",
     "26 public map relationships intentionally retain unreviewed automatic-fallback institution IDs outside the active canonical search index.",
     "Strict public validation intentionally remains nonzero while manual-curation warnings exist; warnings are neither suppressed nor auto-resolved.",
-    "2026-08-28 formal publication/location audit: five curated papers corrected; four retained coordinate candidates are excluded from confirmed locations and public markers. See docs/formal_publication_audit_2026-08-27.md."
+    "2026-08-28 formal publication/location audit: five curated papers corrected; four retained coordinate candidates are excluded from confirmed locations and public markers. See docs/formal_publication_audit_2026-08-27.md.",
+    "2026-08-28 scoped evidence resolution confirms one Kumoh building for the 2022 survey; seven location relationships and five authors remain unresolved. See docs/evidence_resolution_2026-08-28.md."
   ]
 }

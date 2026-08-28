@@ -85,7 +85,7 @@ def test_current_repository_has_zero_silent_geographic_relationships():
     report = repository_report()
     assert not [r for r in report if r["classification"] == "ERROR"]
     actionable = [r for r in report if r["classification"] == "ACTIONABLE"]
-    assert len(actionable) == 8
+    assert len(actionable) == 7
     assert all(r["reason"] and not r["latitude"] and not r["longitude"] for r in actionable)
 
 
@@ -148,7 +148,7 @@ def test_admin_confirmed_choices_exclude_retained_candidates():
     from scripts.curated_mappings import load_mappings
     from scripts.paper_exclusions import read_exclusion_rows
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
-    assert payload['summary']['confirmed_locations_count'] == len(payload['confirmed_locations']) == 456
+    assert payload['summary']['confirmed_locations_count'] == len(payload['confirmed_locations']) == 457
     assert len(payload['candidate_locations']) == 4
     candidate_ids = {r['location_id'] for r in payload['candidate_locations']}
     assert not candidate_ids.intersection(r['location_id'] for r in payload['confirmed_locations'])
