@@ -14,7 +14,7 @@ class PaperLevelVenueTrackTests(unittest.TestCase):
     def setUp(self):
         self.aliases = read_venue_aliases()
 
-    def selection(self, track="main"):
+    def selection(self, track="Main"):
         return apply_canonical_venue_selection({
             "venue_id": "venue:iclr",
             "venue_name": "International Conference on Learning Representations",
@@ -25,13 +25,13 @@ class PaperLevelVenueTrackTests(unittest.TestCase):
         })
 
     def test_main_and_workshop_share_one_canonical_id(self):
-        main = self.selection("main")
-        workshop = self.selection("workshops")
+        main = self.selection("Main")
+        workshop = self.selection("Workshop")
         self.assertEqual(main["venue_id"], workshop["venue_id"])
         self.assertEqual(workshop["venue_id"], "venue:iclr")
-        self.assertEqual((main["venue_track"], workshop["venue_track"]), ("main", "workshops"))
+        self.assertEqual((main["venue_track"], workshop["venue_track"]), ("Main", "Workshop"))
         self.assertNotIn("Main", main["venue_label"])
-        self.assertIn("Workshops", workshop["venue_label"])
+        self.assertIn("Workshop", workshop["venue_label"])
 
     def test_invalid_track_is_rejected_independently(self):
         with self.assertRaisesRegex(CuratedPaperError, "venue_track is invalid"):
@@ -45,12 +45,12 @@ class PaperLevelVenueTrackTests(unittest.TestCase):
             "venue_type": "conference",
             "publication_type": "conference",
         })
-        self.assertEqual(selected["venue_track"], "main")
+        self.assertEqual(selected["venue_track"], "Main")
 
     def test_venue_options_aggregate_tracks_by_id(self):
         options = canonical_venue_options(self.aliases, [
-            {"paper_id": "main", "venue_id": "venue:iclr", "venue_track": "main"},
-            {"paper_id": "workshop", "venue_id": "venue:iclr", "venue_track": "workshops"},
+            {"paper_id": "Main", "venue_id": "venue:iclr", "venue_track": "Main"},
+            {"paper_id": "workshop", "venue_id": "venue:iclr", "venue_track": "Workshop"},
         ])
         iclr = next(option for option in options if option["venue_id"] == "venue:iclr")
         self.assertEqual(iclr["paper_count"], 2)
@@ -68,14 +68,14 @@ class PaperLevelVenueTrackTests(unittest.TestCase):
                     "venue_name": "Example Conference",
                     "venue_acronym": "EX",
                     "venue_type": "conference",
-                    "venue_track": "workshops",
+                    "venue_track": "Workshop",
                     "review_status": "confirmed",
                     "notes": "paper-level resolution hint",
                 })
             rows = read_venue_aliases(path)
             options = canonical_venue_options(rows)
             self.assertEqual(options[0]["venue_track"], "")
-            self.assertEqual(display_venue({**options[0], "venue_track": "main"}), "Example Conference (EX)")
+            self.assertEqual(display_venue({**options[0], "venue_track": "Main"}), "Example Conference (EX)")
 
 
 if __name__ == "__main__":

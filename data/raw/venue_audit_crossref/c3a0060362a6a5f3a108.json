@@ -1,0 +1,436 @@
+{
+  "doi": "10.1007/978-3-030-49500-8_3",
+  "source_url": "https://api.crossref.org/works/10.1007%2F978-3-030-49500-8_3",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            18
+          ]
+        ],
+        "date-time": "2026-08-18T15:41:48Z",
+        "timestamp": 1787067708627,
+        "version": "build-2736575974"
+      },
+      "publisher-location": "Cham",
+      "reference-count": 26,
+      "publisher": "Springer International Publishing",
+      "isbn-type": [
+        {
+          "value": "9783030494995",
+          "type": "print"
+        },
+        {
+          "value": "9783030495008",
+          "type": "electronic"
+        }
+      ],
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2021-01-01T00:00:00Z",
+            "timestamp": 1609459200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "http://www.springer.com/tdm"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2021-01-01T00:00:00Z",
+            "timestamp": 1609459200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "http://www.springer.com/tdm"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2021
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-3-030-49500-8_3",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            2,
+            2
+          ]
+        ],
+        "date-time": "2021-02-02T18:52:47Z",
+        "timestamp": 1612291967000
+      },
+      "page": "25-35",
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 21,
+      "title": [
+        "Detection of Deepfake Images Created Using Generative Adversarial Networks: A Review"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "given": "K.",
+          "family": "Remya Revi",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "K. R.",
+          "family": "Vidya",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "M.",
+          "family": "Wilscy",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2021,
+            2,
+            3
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "3_CR1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Alahmadi, A.A., Hussain, M., Aboalsamh, H., Muhammad, G., Bebis, G.: Splicing image forgery detection based on DCT and Local Binary Pattern. In: 2013 IEEE Global Conference on Signal and Information Processing, pp. 253–256. IEEE, Austin (2013)",
+          "DOI": "10.1109/GlobalSIP.2013.6736863"
+        },
+        {
+          "key": "3_CR2",
+          "unstructured": "Ng, T.-T., Chang, S.-F.: A model for image splicing. In: 2004 International Conference on Image Processing (ICIP), pp. 1169–1172. IEEE, Singapore (2004)"
+        },
+        {
+          "key": "3_CR3",
+          "series-title": "Lecture Notes in Computer Science",
+          "first-page": "1",
+          "volume-title": "Transactions on Data Hiding and Multimedia Security VI",
+          "author": "P Sutthiwan",
+          "year": "2011",
+          "unstructured": "Sutthiwan, P., Shi, Y.Q., Zhao, H., Ng, T.T., Su, W.: Markovian rake transform for digital image tampering detection. In: Transactions on Data Hiding and Multimedia Security VI, Lecture Notes in Computer Science, pp. 1–17. Springer, Berlin (2011)"
+        },
+        {
+          "issue": "10",
+          "key": "3_CR4",
+          "doi-asserted-by": "publisher",
+          "first-page": "1579",
+          "DOI": "10.1109/83.951542",
+          "volume": "10",
+          "author": "CS Lu",
+          "year": "2001",
+          "unstructured": "Lu, C.S., Liao, H.Y.M.: Multipurpose watermarking for image authentication and protection. IEEE Trans. Image Process. 10(10), 1579–1592 (2001)",
+          "journal-title": "IEEE Trans. Image Process."
+        },
+        {
+          "issue": "2",
+          "key": "3_CR5",
+          "doi-asserted-by": "publisher",
+          "first-page": "161",
+          "DOI": "10.1109/TMM.2003.811621",
+          "volume": "5",
+          "author": "CS Lu",
+          "year": "2003",
+          "unstructured": "Lu, C.S., Liao, H.Y.M.: Structural digital signature for image authentication: An incidental distortion resistant scheme. IEEE Trans. Multimedia. 5(2), 161–173 (2003)",
+          "journal-title": "IEEE Trans. Multimedia"
+        },
+        {
+          "issue": "4",
+          "key": "3_CR6",
+          "doi-asserted-by": "publisher",
+          "first-page": "985",
+          "DOI": "10.1007/s00138-013-0547-4",
+          "volume": "25",
+          "author": "G Muhammad",
+          "year": "2014",
+          "unstructured": "Muhammad, G., Al-Hammadi, M.H., Hussain, M., Bebis, G.: Image forgery detection using steerable pyramid transform and local binary pattern. Mach. Vis. Appl. 25(4), 985–995 (2014)",
+          "journal-title": "Mach. Vis. Appl."
+        },
+        {
+          "issue": "3",
+          "key": "3_CR7",
+          "doi-asserted-by": "publisher",
+          "first-page": "713",
+          "DOI": "10.1007/s10044-014-0396-4",
+          "volume": "18",
+          "author": "E-SM El-Alfy",
+          "year": "2015",
+          "unstructured": "El-Alfy, E.-S.M., Qureshi, M.A.: Combining spatial and DCT based Markov features for enhanced blind detection of image splicing. Pattern Anal Applic. 18(3), 713–723 (2015)",
+          "journal-title": "Pattern Anal Applic"
+        },
+        {
+          "issue": "4",
+          "key": "3_CR8",
+          "doi-asserted-by": "publisher",
+          "first-page": "3177",
+          "DOI": "10.3233/JIFS-169261",
+          "volume": "32",
+          "author": "DS Vidyadharan",
+          "year": "2017",
+          "unstructured": "Vidyadharan, D.S., Thampi, S.M.: Digital image forgery detection using compact multi-texture representation. J. Intell. Fuzzy Syst. 32(4), 3177–3188 (2017)",
+          "journal-title": "J. Intell. Fuzzy Syst."
+        },
+        {
+          "issue": "1",
+          "key": "3_CR9",
+          "doi-asserted-by": "publisher",
+          "first-page": "81",
+          "DOI": "10.1007/s11760-016-0899-0",
+          "volume": "11",
+          "author": "A Alahmadi",
+          "year": "2017",
+          "unstructured": "Alahmadi, A., Hussain, M., Aboalsamh, H., Muhammad, G., Bebis, G., Mathkour, H.: Passive detection of image forgery using DCT and local binary pattern. Signal, Image Video Process. 11(1), 81–88 (2017)",
+          "journal-title": "Signal, Image Video Process"
+        },
+        {
+          "issue": "3",
+          "key": "3_CR10",
+          "doi-asserted-by": "publisher",
+          "first-page": "1679",
+          "DOI": "10.3233/JIFS-169461",
+          "volume": "34",
+          "author": "MM Isaac",
+          "year": "2018",
+          "unstructured": "Isaac, M.M., Wilscy, M.: Image forgery detection using region–based Rotation Invariant Co-occurrences among adjacent LBPs. J. Intell. Fuzzy Syst. 34(3), 1679–1690 (2018)",
+          "journal-title": "J. Intell. Fuzzy Syst."
+        },
+        {
+          "key": "3_CR11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Dong, J., Wang, W., Tan, T.: CASIA image tampering detection evaluation database. In: 2013 IEEE China Summit and International Conference on Signal and Information Processing, pp. 422–426. IEEE, Beijing (2013)",
+          "DOI": "10.1109/ChinaSIP.2013.6625374"
+        },
+        {
+          "key": "3_CR12",
+          "doi-asserted-by": "publisher",
+          "first-page": "84",
+          "DOI": "10.1145/3065386",
+          "volume": "60",
+          "author": "A Krizhevsky",
+          "year": "2017",
+          "unstructured": "Krizhevsky, A., Sutskever, I., Hinton, G.E.: ImageNet classification with deep convolutional neural networks. Commun ACM. 60, 84–90 (2017)",
+          "journal-title": "Commun ACM"
+        },
+        {
+          "key": "3_CR13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rao, Y., Ni, J.: A deep learning approach to detection of splicing and copy-move forgeries in images. In: 2016 IEEE International Workshop on Information Forensics and Security (WIFS), pp. 1–6. IEEE, Abu Dhabi (2017)",
+          "DOI": "10.1109/WIFS.2016.7823911"
+        },
+        {
+          "key": "3_CR14",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rota, P., Sangineto, E., Conotter, V., Pramerdorfer, C.: Bad teacher or unruly student: Can deep learning say something in image forensics analysis? In: 2016 23rd International Conference on Pattern Recognition (ICPR), pp. 2503–2508. IEEE, Cancun (2017)",
+          "DOI": "10.1109/ICPR.2016.7900012"
+        },
+        {
+          "key": "3_CR15",
+          "series-title": "Lecture Notes in Computer Science",
+          "first-page": "65",
+          "volume-title": "Digital Forensics and Watermarking. IWDW 2017",
+          "author": "J Zhou",
+          "year": "2017",
+          "unstructured": "Zhou, J., Ni, J., Rao, Y.: Block-based convolutional neural network for image forgery detection. In: Digital Forensics and Watermarking. IWDW 2017, Lecture Notes in Computer Science, pp. 65–76. Springer, Cham (2017)"
+        },
+        {
+          "key": "3_CR16",
+          "unstructured": "Goodfellow, I.J., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A., Bengio, Y.: Generative adversarial nets. In: Advances in Neural Information Processing System 27, pp. 2672–2680 (2014)"
+        },
+        {
+          "key": "3_CR17",
+          "unstructured": "Karras, T., Aila, T., Laine, S., Lehtinen, J.: Progressive growing of GANs for improved quality, stability, and variation. In: arXiv preprint arXiv:1710.10196, pp. 1–26 (2017)"
+        },
+        {
+          "key": "3_CR18",
+          "unstructured": "Radford, A., Metz, L., Chintala, S.: Unsupervised representation learning with deep convolutional generative adversarial networks. In: arXiv preprint arXiv:1511.06434, pp. 1–16 (2015)"
+        },
+        {
+          "key": "3_CR19",
+          "unstructured": "Berthelot, D., Schumm, T., Metz, L.: BEGAN: boundary equilibrium generative adversarial networks. In: arXiv preprint arXiv:1703.10717, pp. 1–10 (2017)"
+        },
+        {
+          "key": "3_CR20",
+          "unstructured": "Gulrajani, I., Ahmed, F., Arjovsky, M., Dumoulin, V., Courville, A.: Improved training of Wasserstein GANs. In: arXiv:1704.00028v3, pp. 1–20 (2017)"
+        },
+        {
+          "key": "3_CR21",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhu, J., Park, T., Isola, P., Efros, A.A.: Unpaired image-to-image translation using cycle-consistent adversarial networks. In: Proceedings of the IEEE International Conference on Computer Vision, pp. 2223–2232 (2017)",
+          "DOI": "10.1109/ICCV.2017.244"
+        },
+        {
+          "key": "3_CR22",
+          "unstructured": "Li, H., Li, B., Tan, S., Huang, J.: Detection of deep network generated images using disparities in color components. In: arXiv preprint arXiv:1808.07276, pp. 1–13 (2018)"
+        },
+        {
+          "key": "3_CR23",
+          "unstructured": "Do, N.-T., Na, I.-S., Kim, S.-H.: Forensics face detection from GANs using convolutional neural network. In: 2018 International Symposium on Information Technology Convergence (ISITC 2018), South Korea (2018)"
+        },
+        {
+          "key": "3_CR24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tariq, S., Lee, S., Kim, H., Shin, Y., Woo, S.S.: Detecting both machine and human created fake face images in the wild. In: Proceedings of the 2nd International Workshop on Multimedia Privacy and Security, pp. 81–87. ACM, Toronto (2018)",
+          "DOI": "10.1145/3267357.3267367"
+        },
+        {
+          "key": "3_CR25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mccloskey, S., Albright, M.: Detecting GAN-generated imagery using color cues. In: arXiv preprint arXiv:1812.08247 (2018)",
+          "DOI": "10.1109/ICIP.2019.8803661"
+        },
+        {
+          "issue": "12",
+          "key": "3_CR26",
+          "doi-asserted-by": "publisher",
+          "first-page": "2610",
+          "DOI": "10.3390/app8122610",
+          "volume": "8",
+          "author": "LM Dang",
+          "year": "2018",
+          "unstructured": "Dang, L.M., Hassan, S.I., Im, S., Lee, J., Lee, S., Moon, H.: Deep learning based computer generated face identification using convolutional neural network. Appl. Sci. 8(12), 2610 (2018)",
+          "journal-title": "Appl. Sci."
+        }
+      ],
+      "container-title": [
+        "Transactions on Computational Science and Computational Intelligence",
+        "Second International Conference on Networks and Advances in Computational Technologies"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "http://link.springer.com/content/pdf/10.1007/978-3-030-49500-8_3",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2021,
+            2,
+            3
+          ]
+        ],
+        "date-time": "2021-02-03T01:16:09Z",
+        "timestamp": 1612314969000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "http://link.springer.com/10.1007/978-3-030-49500-8_3"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2021
+          ]
+        ]
+      },
+      "ISBN": [
+        "9783030494995",
+        "9783030495008"
+      ],
+      "references-count": 26,
+      "URL": "https://doi.org/10.1007/978-3-030-49500-8_3",
+      "relation": {},
+      "ISSN": [
+        "2569-7072",
+        "2569-7080"
+      ],
+      "issn-type": [
+        {
+          "value": "2569-7072",
+          "type": "print"
+        },
+        {
+          "value": "2569-7080",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2021
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "3 February 2021",
+          "order": 1,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ChapterHistory",
+            "label": "Chapter History"
+          }
+        }
+      ]
+    }
+  }
+}

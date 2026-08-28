@@ -1576,9 +1576,14 @@ function getRecordVenue(record) {
 
 function canonicalVenueTrack(record) {
   if (isBookRecord(record)) return "";
-  return String(record?.venue_type || "").trim().toLowerCase() === "conference"
-    ? String(record?.venue_track || "main").trim()
-    : "";
+  if (String(record?.venue_type || "").trim().toLowerCase() !== "conference") return "";
+  const track = String(record?.venue_track || "Main").trim();
+  const key = track.toLowerCase().replace(/[_\s-]+/g, " ");
+  return ({main:"Main", workshop:"Workshop", workshops:"Workshop", tutorial:"Tutorial", tutorials:"Tutorial",
+    demo:"Demo", demos:"Demo", challenge:"Challenge", challenges:"Challenge", "short paper":"Short Paper",
+    "short papers":"Short Paper", findings:"Findings", poster:"Poster", posters:"Poster", industry:"Industry",
+    "doctoral consortium":"Doctoral Consortium", other:"Other", "main track":"Main", "workshop track":"Workshop",
+    "industry track":"Industry", "demo track":"Demo", demonstration:"Demo", demonstrations:"Demo"})[key] || track;
 }
 
 function venueFilterValue(record) {
@@ -1608,7 +1613,7 @@ function venueDisplayLabel(record) {
   const trackLabel = formatTask(track);
   const alreadyNamed = trackLabel && new RegExp(`\\b${trackLabel.replace(/s$/i, "")}s?\\b`, "i")
     .test(`${name} ${acronym}`);
-  if (track && track !== "main" && !alreadyNamed) label += ` · ${trackLabel}`;
+  if (track && track !== "Main" && !alreadyNamed) label += ` · ${trackLabel}`;
   return label;
 }
 

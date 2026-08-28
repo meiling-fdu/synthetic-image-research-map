@@ -79,7 +79,7 @@ def chi_venue_fields():
         "venue_name": "CHI Conference on Human Factors in Computing Systems",
         "venue_acronym": "CHI",
         "venue_type": "conference",
-        "venue_track": "main",
+        "venue_track": "Main",
         "raw_venue": "Proceedings of the CHI Conference on Human Factors in Computing Systems",
         "publication_type": "conference",
     }
@@ -92,7 +92,7 @@ def kdd_venue_fields():
         "venue_name": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
         "venue_acronym": "KDD",
         "venue_type": "conference",
-        "venue_track": "main",
+        "venue_track": "Main",
         "raw_venue": (
             "Proceedings of the 31st ACM SIGKDD Conference on Knowledge "
             "Discovery and Data Mining V.1"
@@ -383,6 +383,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 exclusions_path=exclusions_path,
                 curated_papers_path=curated_path,
                 venue_aliases_path=venue_aliases,
+                review_decisions_path=directory / "review_decisions.csv",
                 curated_arxiv_links_path=links_path,
                 public_preview_sync_state_path=directory / "preview_sync.json",
                 metadata_export_runner=(
@@ -630,7 +631,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 self.assertEqual(reloaded["venue_acronym"], "CHI")
                 with curated_path.open(encoding="utf-8", newline="") as handle:
                     saved = next(csv.DictReader(handle))
-                self.assertEqual(saved["venue_track"], "main")
+                self.assertEqual(saved["venue_track"], "Main")
 
     def test_explicit_kdd_selection_replaces_dangling_identity_without_duplicate(self):
         stale_kdd = {
@@ -655,7 +656,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                         "venue_proposal": {
                             "venue_name": "Stale Legacy Proposal",
                             "venue_type": "conference",
-                            "venue_track": "main",
+                            "venue_track": "Main",
                             "create_if_missing": True,
                         },
                         "review_note": "Selected the existing reviewed KDD venue.",
@@ -667,7 +668,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 with curated_path.open(encoding="utf-8", newline="") as handle:
                     saved = next(csv.DictReader(handle))
                 self.assertEqual(saved["venue_id"], "venue:kdd")
-                self.assertEqual(saved["venue_track"], "main")
+                self.assertEqual(saved["venue_track"], "Main")
                 reloaded = self.metadata_request(
                     base_url,
                     f"/api/paper/metadata?id={urllib.parse.quote(display_id)}",
@@ -758,13 +759,13 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     "/api/paper/metadata/update",
                     {"id": display_id, "venue_track": "workshops"},
                 )["data"]["paper"]
-                self.assertEqual(saved["venue_track"], "workshops")
+                self.assertEqual(saved["venue_track"], "Workshop")
                 self.assertEqual(saved["venue_id"], original["venue_id"])
                 self.assertEqual(saved["venue_name"], original["venue_name"])
                 self.assertEqual(saved["venue_acronym"], original["venue_acronym"])
                 with curated_path.open(encoding="utf-8", newline="") as handle:
                     persisted = next(csv.DictReader(handle))
-                self.assertEqual(persisted["venue_track"], "workshops")
+                self.assertEqual(persisted["venue_track"], "Workshop")
                 with self.assertRaises(urllib.error.HTTPError) as caught:
                     self.metadata_request(
                         base_url,
@@ -817,7 +818,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     "venue_name": "International Test Venue",
                     "venue_acronym": "ITV",
                     "venue_type": "conference",
-                    "venue_track": "main",
+                    "venue_track": "Main",
                     "raw_alias": "Proceedings of International Test Venue",
                     "review_note": "Confirmed in API regression test.",
                 }
@@ -838,7 +839,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                     "venue_name": "CHI Conference on Human Factors in Computer Systems",
                     "venue_acronym": "CHI-X",
                     "venue_type": "conference",
-                    "venue_track": "main",
+                    "venue_track": "Main",
                     "raw_alias": "CHI-X test alias",
                 }
                 with self.assertRaises(urllib.error.HTTPError) as caught:
@@ -1478,7 +1479,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 venue_name="ACM International Conference on Multimedia",
                 venue_acronym="ACM MM",
                 venue_type="conference",
-                venue_track="main",
+                venue_track="Main",
                 raw_venue="ACM International Conference on Multimedia",
                 publication_type="conference",
                 paper_categories="method;dataset",
@@ -1495,7 +1496,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 "ACM International Conference on Multimedia",
             )
             self.assertEqual(record["venue_type"], "conference")
-            self.assertEqual(record["venue_track"], "main")
+            self.assertEqual(record["venue_track"], "Main")
             self.assertEqual(record["publication_type"], "conference")
             self.assertEqual(record["paper_categories"], ["method", "dataset"])
             frontend_venue_key = record.get("venue_id") or (

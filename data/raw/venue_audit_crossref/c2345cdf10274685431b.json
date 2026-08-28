@@ -1,0 +1,525 @@
+{
+  "doi": "10.1002/ett.70335",
+  "source_url": "https://api.crossref.org/works/10.1002%2Fett.70335",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            8
+          ]
+        ],
+        "date-time": "2026-03-08T15:37:37Z",
+        "timestamp": 1772984257363,
+        "version": "3.50.1"
+      },
+      "reference-count": 47,
+      "publisher": "Wiley",
+      "issue": "1",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                12,
+                29
+              ]
+            ],
+            "date-time": "2025-12-29T00:00:00Z",
+            "timestamp": 1766966400000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "http://onlinelibrary.wiley.com/termsAndConditions#vor"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                12,
+                29
+              ]
+            ],
+            "date-time": "2025-12-29T00:00:00Z",
+            "timestamp": 1766966400000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "http://doi.wiley.com/10.1002/tdm_license_1.1"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "onlinelibrary.wiley.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Trans Emerging Tel Tech"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            1
+          ]
+        ]
+      },
+      "abstract": "<jats:title>ABSTRACT</jats:title>\n                  <jats:p>The Space–Air–Ground Integrated Network (SAGIN) enables seamless connectivity across satellite, aerial, and terrestrial nodes. However, its heterogeneous architecture, resource‐constrained nodes, and dynamic link conditions pose significant challenges for deploying deep learning models‐particularly for detecting AI‐generated artistic content. These challenges include limited on‐board computational capacity, fluctuating bandwidth, and the requirement for fine‐grained visual‐semantic reasoning under weak supervision. To overcome these limitations, we propose the Weakly‐Aligned Region‐Language Transformer (WARL‐Transformer), a novel framework designed for robust AI‐generated content detection under realistic SAGIN constraints. WARL‐Transformer incorporates: (1) A vision‐language alignment mechanism that integrates local visual features with high‐level semantic cues derived from textual descriptions, and (2) a weakly supervised local feature alignment strategy that learns region‐language correspondences without relying on costly fine‐grained annotations. Laboratory‐based SAGIN emulation experiments further verify that WARL‐Transformer maintains high detection accuracy across diverse artistic styles while preserving robustness against network interference. In particular, WARL‐Transformer achieves an F1‐score of 96.78%, outperforming the baseline by +0.63 percentage points, and even under bandwidth‐constrained SAGIN emulation still reaches 99.7% of the full‐model F1, demonstrating strong robustness. This work establishes a foundation for reliable AI‐generated content detection in resource‐limited SAGIN settings, bridging the gap between visual content authentication and practical network‐driven constraints.</jats:p>",
+      "DOI": "10.1002/ett.70335",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            12,
+            30
+          ]
+        ],
+        "date-time": "2025-12-30T03:20:27Z",
+        "timestamp": 1767064827000
+      },
+      "update-policy": "https://doi.org/10.1002/crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Weakly‐Aligned Region‐Language Transformer for Real‐Time Artistic Content Detection in SAGIN"
+      ],
+      "prefix": "10.1002",
+      "volume": "37",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0001-1605-7963",
+          "authenticated-orcid": false,
+          "given": "Jiayue",
+          "family": "Yu",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Jilin Engineering Vocational College  Siping China"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Sudip",
+          "family": "Kumar Sahana",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Computer Science &amp; Engineering Birla Institute of Technology  Mesra India"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "311",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            12,
+            29
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_2_7_2_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/COMST.2022.3199901"
+        },
+        {
+          "key": "e_1_2_7_3_1",
+          "unstructured": "Z.Yin T. H.Luan andN.Cheng “Cybertwin‐Enabled 6G Space‐Air‐Ground Integrated Networks: Architecture Open Issues and Challenges ” arXiv preprint arXiv:2204.12153 2022."
+        },
+        {
+          "key": "e_1_2_7_4_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cja.2021.12.013"
+        },
+        {
+          "key": "e_1_2_7_5_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/s22093136"
+        },
+        {
+          "key": "e_1_2_7_6_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "N.Mohan A. E.Ferguson H.Cech et al. “Proceedings of the ACM Web Conference ”2024 2723–2734.",
+          "DOI": "10.1145/3589334.3645328"
+        },
+        {
+          "key": "e_1_2_7_7_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "S.Ma Y. C.Chou H.Zhao L.Chen X.Ma andJ.Liu “Network Characteristics of LEO Satellite Constellations: A Starlink‐Based Measurement from End Users ”IEEE Conference on Computer Communications (INFOCOM) 2023 1–10.",
+          "DOI": "10.1109/INFOCOM53939.2023.10228912"
+        },
+        {
+          "key": "e_1_2_7_8_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/drones9020108"
+        },
+        {
+          "key": "e_1_2_7_9_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s00146-025-02361-3"
+        },
+        {
+          "key": "e_1_2_7_10_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.sftr.2025.100749"
+        },
+        {
+          "key": "e_1_2_7_11_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MWC.2018.1800365"
+        },
+        {
+          "key": "e_1_2_7_12_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.4018/IJSWIS.345935"
+        },
+        {
+          "key": "e_1_2_7_13_1",
+          "unstructured": "J.Chen H.Zhang andZ.Xie “Space‐Air‐Ground Integrated Network (Sagin): A Survey ” arXiv preprint arXiv:2307.14697 2023."
+        },
+        {
+          "key": "e_1_2_7_14_1",
+          "unstructured": "M.LiandM.Stamp “Detecting AI‐Generated Artwork ” arXiv preprint arXiv:2504.07078 2025."
+        },
+        {
+          "key": "e_1_2_7_15_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "A. I.Warnakulasooriya R.Rupasingha andB.Kumara “Deep Learning‐Based Approach for Distinguishing Between AI‐Generated and Human‐Drawn Paintings ” in2025 International Research Conference on Smart Computing and Systems Engineering (SCSE) (IEEE 2025) 1–6.",
+          "DOI": "10.1109/SCSE65633.2025.11031040"
+        },
+        {
+          "key": "e_1_2_7_16_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "R.Rombach A.Blattmann D.Lorenz et al. “High‐Resolution Image Synthesis with Latent Diffusion Models ” inProceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (2022) 10684–10695.",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "e_1_2_7_17_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "K.He X.Zhang S.Ren et al. “Deep Residual Learning for Image Recognition ” inProceedings of the IEEE Conference on Computer Vision and Pattern Recognition (2016) 770–778.",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "e_1_2_7_18_1",
+          "unstructured": "A.Dosovitskiy L.Beyer A.Kolesnikov et al. “An Image is Worth 16×16 Words: Transformers for Image Recognition at Scale ” (2020). arXiv preprint arXiv:2010.11929."
+        },
+        {
+          "key": "e_1_2_7_19_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "W.Xu C.Long R.Wang et al. “Drb‐gan: A Dynamic Resblock Generative Adversarial Network for Artistic Style Transfer ” inProceedings of the IEEE/CVF International Conference on Computer Vision (2021) 6383–6392.",
+          "DOI": "10.1109/ICCV48922.2021.00632"
+        },
+        {
+          "key": "e_1_2_7_20_1",
+          "unstructured": "A.Vaswani N.Shazeer N.Parmar et al. “Attention is All You Need ” inAdvances in Neural Information Processing Systems (2017) 30."
+        },
+        {
+          "key": "e_1_2_7_21_1",
+          "unstructured": "I. J.Goodfellow J.Pouget‐Abadie M.Mirza et al. “Generative Adversarial Nets ” inAdvances in Neural Information Processing Systems (2014) 27."
+        },
+        {
+          "key": "e_1_2_7_22_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "P. N.Deelaka “Neural Artistic Style Transfer with Conditional Adversarial Network ” (2023). Available at SSRN 4358610.",
+          "DOI": "10.2139/ssrn.4358610"
+        },
+        {
+          "key": "e_1_2_7_23_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3389/fpsyg.2017.00830"
+        },
+        {
+          "key": "e_1_2_7_24_1",
+          "article-title": "Attention Is all You Need",
+          "volume": "30",
+          "author": "Vaswani A.",
+          "year": "2017",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "e_1_2_7_25_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "H.Wang X.Xia T.Song et al. “Survey on Space–Air–Ground Integrated Networks in 6G ” in2021 IEEE/CIC International Conference on Communications in China (ICCC Workshops)(IEEE 2021) 315–320.",
+          "DOI": "10.1109/ICCCWorkshops52231.2021.9538859"
+        },
+        {
+          "key": "e_1_2_7_26_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JSAC.2019.2906789"
+        },
+        {
+          "key": "e_1_2_7_27_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/COMST.2024.3421523"
+        },
+        {
+          "key": "e_1_2_7_28_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MWC.001.2000130"
+        },
+        {
+          "key": "e_1_2_7_29_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cose.2025.104515"
+        },
+        {
+          "key": "e_1_2_7_30_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/COMST.2021.3130901"
+        },
+        {
+          "key": "e_1_2_7_31_1",
+          "unstructured": "J.Frank T.Eisenhofer L.Schönherr et al. “Leveraging Frequency Analysis for Deep Fake Image Recognition ” inInternational Conference on Machine Learning(PMLR 2020) 3247–3258."
+        },
+        {
+          "key": "e_1_2_7_32_1",
+          "first-page": "36479",
+          "article-title": "Photorealistic Text‐To‐Image Diffusion Models With Deep Language Understanding",
+          "volume": "35",
+          "author": "Saharia C.",
+          "year": "2022",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "e_1_2_7_33_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Y. J.WongandT. K.Ng “Local Statistics for Generative Image Detection ” inICASSP 2025‐2025 IEEE International Conference on Acoustics Speech and Signal Processing (ICASSP)(IEEE 2025) 1–5.",
+          "DOI": "10.1109/ICASSP49660.2025.10890557"
+        },
+        {
+          "key": "e_1_2_7_34_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.eswa.2025.128853"
+        },
+        {
+          "key": "e_1_2_7_35_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Z.Wang J.Bao W.Zhou et al. “Dire for Diffusion‐Generated Image Detection ” inProceedings of the IEEE/CVF International Conference on Computer Vision(2023) 22445–22455.",
+          "DOI": "10.1109/ICCV51070.2023.02051"
+        },
+        {
+          "key": "e_1_2_7_36_1",
+          "first-page": "38307",
+          "article-title": "A Geometric View of Data Complexity: Efficient Local Intrinsic Dimension Estimation With Diffusion Models",
+          "volume": "37",
+          "author": "Kamkari H.",
+          "year": "2024",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "e_1_2_7_37_1",
+          "unstructured": "B.Vardi O.Nir andA.Shamir “CLIP‐UP: CLIP‐Based Unanswerable Problem Detection for Visual Question Answering ” (2025). arXiv preprint arXiv:2501.01371."
+        },
+        {
+          "key": "e_1_2_7_38_1",
+          "unstructured": "Y.Lyu X.Zheng andL.Wang “Image Anything: Towards Reasoning‐Coherent and Training‐Free Multi‐Modal Image Generation ” (2024). arXiv preprint arXiv:2401.17664."
+        },
+        {
+          "key": "e_1_2_7_39_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "T.Karras S.Laine M.Aittala et al. “Analyzing and Improving the Image Quality of Stylegan ” inProceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (2020) 8110–8119.",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "e_1_2_7_40_1",
+          "unstructured": "M.TanandQ.Le “EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks ” inInternational Conference on Machine Learning(PMLR 2019)."
+        },
+        {
+          "key": "e_1_2_7_41_1",
+          "unstructured": "C.Tan Y.Zhao S.Wei et al. “Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ” (2023)."
+        },
+        {
+          "key": "e_1_2_7_42_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "R.Corvi D.Cozzolino G.Zingarini et al. “On the Detection of Synthetic Images Generated by Diffusion Models ” inICASSP 2023–2023 IEEE International Conference on Acoustics Speech and Signal Processing (ICASSP)(IEEE 2023).",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "key": "e_1_2_7_43_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "S.Mandelli N.Bonettini P.Bestagini andS.Tubaro “Detecting GAN‐Generated Images by Orthogonal Training of Multiple CNNs ” in2022 IEEE International Conference on Image Processing (ICIP)(IEEE 2022).",
+          "DOI": "10.1109/ICIP46576.2022.9897310"
+        },
+        {
+          "key": "e_1_2_7_44_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "U.Ojha Y.Li andY. J.Lee “Towards Universal Fake Image Detectors That Generalize Across Generative Models ” inProceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition 2023.",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "e_1_2_7_45_1",
+          "unstructured": "B.SalehandA.Elgammal “Large‐Scale Classification of Fine‐Art Paintings: Learning the Right Metric on the Right Feature ” (2015). arXiv preprint arXiv:1505.00855."
+        },
+        {
+          "key": "e_1_2_7_46_1",
+          "unstructured": "R. S. R.Silva A.Lotfi I. K.Ihianle et al. “ArtBrain: An Explainable end‐to‐end Toolkit for Classification and Attribution of AI‐Generated Art and Style ” (2024). arXiv preprint arXiv:2412.01512."
+        },
+        {
+          "key": "e_1_2_7_47_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "D.Gragnaniello D.Cozzolino F.Marra et al. “Are GAN Generated Images Easy to Detect? A Critical Analysis of the State‐of‐the‐Art ” (2021). arXiv preprint arXiv:2104.02617.",
+          "DOI": "10.1109/ICME51207.2021.9428429"
+        },
+        {
+          "key": "e_1_2_7_48_1",
+          "unstructured": "X.Bi B.Liu F.Yang et al. “Detecting Generated Images by Real Images Only ” (2023). arXiv preprint arXiv:2311.00962."
+        }
+      ],
+      "container-title": [
+        "Transactions on Emerging Telecommunications Technologies"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/ett.70335",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://onlinelibrary.wiley.com/doi/full-xml/10.1002/ett.70335",
+          "content-type": "application/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/ett.70335",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            8
+          ]
+        ],
+        "date-time": "2026-03-08T09:43:48Z",
+        "timestamp": 1772963028000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://onlinelibrary.wiley.com/doi/10.1002/ett.70335"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            12,
+            29
+          ]
+        ]
+      },
+      "references-count": 47,
+      "journal-issue": {
+        "issue": "1",
+        "published-print": {
+          "date-parts": [
+            [
+              2026,
+              1
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "10.1002/ett.70335"
+      ],
+      "URL": "https://doi.org/10.1002/ett.70335",
+      "archive": [
+        "Portico"
+      ],
+      "relation": {},
+      "ISSN": [
+        "2161-3915",
+        "2161-3915"
+      ],
+      "issn-type": [
+        {
+          "value": "2161-3915",
+          "type": "print"
+        },
+        {
+          "value": "2161-3915",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            12,
+            29
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2025-09-21",
+          "order": 0,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2025-12-15",
+          "order": 2,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2025-12-29",
+          "order": 3,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ],
+      "article-number": "e70335"
+    }
+  }
+}

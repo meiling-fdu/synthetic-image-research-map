@@ -1,0 +1,684 @@
+{
+  "doi": "10.1109/tcyb.2026.3690601",
+  "source_url": "https://api.crossref.org/works/10.1109%2Ftcyb.2026.3690601",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            24
+          ]
+        ],
+        "date-time": "2026-08-24T19:26:20Z",
+        "timestamp": 1787599580610,
+        "version": "build-2736575974"
+      },
+      "reference-count": 52,
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "issue": "9",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2026-09-01T00:00:00Z",
+            "timestamp": 1788220800000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2026-09-01T00:00:00Z",
+            "timestamp": 1788220800000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                9,
+                1
+              ]
+            ],
+            "date-time": "2026-09-01T00:00:00Z",
+            "timestamp": 1788220800000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100001809",
+          "name": "National Natural Science Foundation of China",
+          "doi-asserted-by": "crossref",
+          "award": [
+            "62172227"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "62172227"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100001809",
+              "id-type": "DOI",
+              "asserted-by": "crossref"
+            }
+          ]
+        },
+        {
+          "name": "National Key Research and Development Program of China",
+          "award": [
+            "2021YFF0602101"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2021YFF0602101"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Princess Nourah bint Abdulrahman University Researchers Supporting",
+          "award": [
+            "PNURSP2025R303"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "PNURSP2025R303"
+              ]
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100004242",
+          "name": "Princess Nourah bint Abdulrahman University",
+          "doi-asserted-by": "crossref",
+          "award": [
+            "PNURSP2025R303"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "PNURSP2025R303"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100004242",
+              "id-type": "DOI",
+              "asserted-by": "crossref"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "IEEE Trans. Cybern."
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1109/tcyb.2026.3690601",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            14
+          ]
+        ],
+        "date-time": "2026-05-14T19:58:28Z",
+        "timestamp": 1778788708000
+      },
+      "page": "4887-4899",
+      "source": "Crossref",
+      "is-referenced-by-count": 2,
+      "title": [
+        "Multiscale Spatial Frequency-Aware Transformer and Saturation Analysis for Universal Deepfake Detection"
+      ],
+      "prefix": "10.1109",
+      "volume": "56",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0004-8042-0925",
+          "authenticated-orcid": false,
+          "given": "Kaiwen",
+          "family": "Xu",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Nanjing University of Science and Technology",
+              "place": [
+                "Nanjing, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7095-6986",
+          "authenticated-orcid": false,
+          "given": "Xiyuan",
+          "family": "Hu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Beijing University of Technology",
+              "place": [
+                "Beijing, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-8297-6549",
+          "authenticated-orcid": false,
+          "given": "Chen",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Institute of Automation, Chinese Academy of Sciences",
+              "place": [
+                "Beijing, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0005-1460-7385",
+          "authenticated-orcid": false,
+          "given": "Yichao",
+          "family": "Zhou",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Nanjing University of Science and Technology",
+              "place": [
+                "Nanjing, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-3514-9705",
+          "authenticated-orcid": false,
+          "given": "Yang",
+          "family": "Xu",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Nanjing University of Science and Technology",
+              "place": [
+                "Nanjing, China"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4897-8038",
+          "authenticated-orcid": false,
+          "given": "Hadeel",
+          "family": "Alsolai",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Princess Nourah bint Abdulrahman University, P. O. Box, 84428",
+              "place": [
+                "Riyadh, Saudi Arabia"
+              ],
+              "department": [
+                "Department of Information Systems"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6364-6149",
+          "authenticated-orcid": false,
+          "given": "Shahid",
+          "family": "Mumtaz",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Nottingham Trent University",
+              "place": [
+                "Nottingham, U.K."
+              ],
+              "department": [
+                "Department of Computer Sciences"
+              ]
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3394171.3413769"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV48922.2021.01475"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TCYB.2022.3227044"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TCYB.2021.3127716"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TCYB.2022.3233108"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00791"
+        },
+        {
+          "key": "ref7",
+          "first-page": "3247",
+          "article-title": "Leveraging frequency analysis for deep fake image recognition",
+          "volume-title": "Proc. Int. Conf. Mach. Learn.",
+          "author": "Frank"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-58610-2_6"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.52202/068431-1786"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.00408"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.01605"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MMSP53017.2021.9733606"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.00703"
+        },
+        {
+          "key": "ref14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.00083"
+        },
+        {
+          "key": "ref15",
+          "article-title": "Lighting (in)consistency of paint by text",
+          "author": "Farid",
+          "year": "2022",
+          "journal-title": "arXiv:2207.13744"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WACVW.2019.00020"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP39728.2021.9414582"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP43922.2022.9746597"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.00712"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW59228.2023.00104"
+        },
+        {
+          "key": "ref21",
+          "first-page": "18126",
+          "article-title": "On the frequency bias of generative models",
+          "volume-title": "Proc. Adv. Neural Inf. Process. Syst.",
+          "volume": "34",
+          "author": "Schwarz"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICME51207.2021.9428429"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TDSC.2025.3633381"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/app13020816"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3512527.3531415"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIP.2025.3633580"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "ref29",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52734.2025.01255"
+        },
+        {
+          "key": "ref30",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52733.2024.02657"
+        },
+        {
+          "key": "ref31",
+          "first-page": "27378",
+          "article-title": "Understanding the robustness in vision transformers",
+          "volume-title": "Proc. Int. Conf. Mach. Learn.",
+          "author": "Zhou"
+        },
+        {
+          "key": "ref32",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV48922.2021.00009"
+        },
+        {
+          "key": "ref33",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01186"
+        },
+        {
+          "key": "ref34",
+          "article-title": "MobileViT: Light-weight, general-purpose, and mobile-friendly vision transformer",
+          "author": "Mehta",
+          "year": "2021",
+          "journal-title": "arXiv:2110.02178"
+        },
+        {
+          "key": "ref35",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-25082-8_1"
+        },
+        {
+          "key": "ref36",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.00520"
+        },
+        {
+          "key": "ref37",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.patcog.2024.111092"
+        },
+        {
+          "key": "ref38",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "ref39",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-58574-7_7"
+        },
+        {
+          "key": "ref40",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01816"
+        },
+        {
+          "key": "ref41",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICIP46576.2022.9897310"
+        },
+        {
+          "key": "ref42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WACV51458.2022.00293"
+        },
+        {
+          "key": "ref43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1609/aaai.v36i1.19990"
+        },
+        {
+          "key": "ref44",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.01165"
+        },
+        {
+          "key": "ref45",
+          "first-page": "70702",
+          "article-title": "A sanity check for AI-generated image detection",
+          "volume-title": "Proc. 13th Int. Conf. Learn. Representations",
+          "author": "Yan"
+        },
+        {
+          "key": "ref46",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2025.3581726"
+        },
+        {
+          "key": "ref47",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TCYB.2024.3392474"
+        },
+        {
+          "key": "ref48",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TCYB.2024.3357213"
+        },
+        {
+          "key": "ref49",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1609/aaai.v35i3.16367"
+        },
+        {
+          "key": "ref50",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.24963/ijcai.2023/154"
+        },
+        {
+          "key": "ref51",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2025.3574983"
+        },
+        {
+          "key": "ref52",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.74"
+        }
+      ],
+      "container-title": [
+        "IEEE Transactions on Cybernetics"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/6221036/11659724/11518553.pdf?arnumber=11518553",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            24
+          ]
+        ],
+        "date-time": "2026-08-24T19:09:51Z",
+        "timestamp": 1787598591000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11518553/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      },
+      "references-count": 52,
+      "journal-issue": {
+        "issue": "9"
+      },
+      "URL": "https://doi.org/10.1109/tcyb.2026.3690601",
+      "relation": {},
+      "ISSN": [
+        "2168-2267",
+        "2168-2275"
+      ],
+      "issn-type": [
+        {
+          "value": "2168-2267",
+          "type": "print"
+        },
+        {
+          "value": "2168-2275",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      }
+    }
+  }
+}

@@ -94,6 +94,18 @@ def normalize_book_record(
     normalized = dict(record)
     if not is_book_publication(normalized.get("publication_type")):
         return normalized
+    # A publisher's "chapter" can be a conference contribution. Resolve
+    # checked paper-level proceedings evidence before clearing book fields.
+    if normalized.get("doi"):
+        try:
+            from .venue_audit import VenueAudit
+            from .venues import read_venue_aliases
+        except ImportError:
+            from venue_audit import VenueAudit
+            from venues import read_venue_aliases
+        effective, finding = VenueAudit(read_venue_aliases()).paper(normalized)
+        if finding is None and effective.get("publication_type") == "conference":
+            return effective
     normalized["publication_type"] = "book"
     for field in BOOK_INCOMPATIBLE_FIELDS:
         if remove:

@@ -15,6 +15,7 @@ from tests.baseline_expectations import (
     INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS,
     PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS,
     PUBLICATION_TYPE_TOTALS,
+    RELEASE_PUBLICATION_TYPE_TOTALS,
     PUBLIC_PAPERS_WITHOUT_MAP,
     TASK_TOTALS,
 )
@@ -94,7 +95,7 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         )
         self.assertEqual(
             artifact["distribution_counts"]["publication_type"],
-            PUBLICATION_TYPE_TOTALS,
+            RELEASE_PUBLICATION_TYPE_TOTALS,
         )
         self.assertEqual(
             artifact["distribution_counts"]["task"], TASK_TOTALS

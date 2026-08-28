@@ -1,0 +1,427 @@
+{
+  "doi": "10.1145/3702250.3702296",
+  "source_url": "https://api.crossref.org/works/10.1145%2F3702250.3702296",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            31
+          ]
+        ],
+        "date-time": "2025-08-31T10:01:28Z",
+        "timestamp": 1756634488313,
+        "version": "3.41.0"
+      },
+      "publisher-location": "New York, NY, USA",
+      "reference-count": 35,
+      "publisher": "ACM",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                13
+              ]
+            ],
+            "date-time": "2024-12-13T00:00:00Z",
+            "timestamp": 1734048000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "dl.acm.org"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            13
+          ]
+        ]
+      },
+      "DOI": "10.1145/3702250.3702296",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            31
+          ]
+        ],
+        "date-time": "2024-12-31T12:11:38Z",
+        "timestamp": 1735647098000
+      },
+      "page": "1-9",
+      "update-policy": "https://doi.org/10.1145/crossmark-policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "Addressing Diffusion Model Based Counter-Forensic Image Manipulation for Synthetic Image Detection"
+      ],
+      "prefix": "10.1145",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0009-5779-6330",
+          "authenticated-orcid": false,
+          "given": "Aryan",
+          "family": "N Herur",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Electronics and Communication Engineering, National Institute of Technology Karnataka Surathkal, Mangalore, Karnataka, IN"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0000-8662-6351",
+          "authenticated-orcid": false,
+          "given": "Vaibhav",
+          "family": "Santhosh",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Electrical and Electronics Engineering, National Institute of Technology Karnataka Surathkal, Mangalore, Karnataka, IN"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0001-0158-4656",
+          "authenticated-orcid": false,
+          "given": "Nishanth",
+          "family": "Shetty",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Electrical Engineering, Indian Institute of Science, Bangalore, Karnataka, IN"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-9049-1912",
+          "authenticated-orcid": false,
+          "given": "Chandra Sekhar",
+          "family": "Seelamantula",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Electrical Engineering, IISc Bangalore, Bangalore, Karnataka, IN"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "320",
+      "published-online": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            31
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_3_3_1_2_2",
+          "volume-title": "Proceedings of the European Conference on Computer Vision",
+          "author": "Baraldi Lorenzo",
+          "year": "2024",
+          "unstructured": "Lorenzo Baraldi, Federico Cocchi, Marcella Cornia, Lorenzo Baraldi, Alessandro Nicolosi, and Rita Cucchiara. 2024. Contrasting Deepfakes Diffusion via Contrastive Learning and Global-Local Similarities. In Proceedings of the European Conference on Computer Vision."
+        },
+        {
+          "key": "e_1_3_3_1_3_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR46437.2021.00712"
+        },
+        {
+          "key": "e_1_3_3_1_4_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW59228.2023.00104"
+        },
+        {
+          "key": "e_1_3_3_1_5_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "key": "e_1_3_3_1_6_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/VCIP53242.2021.9675329"
+        },
+        {
+          "key": "e_1_3_3_1_7_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW63382.2024.00439"
+        },
+        {
+          "key": "e_1_3_3_1_8_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW53098.2021.00110"
+        },
+        {
+          "key": "e_1_3_3_1_9_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2009.5206848"
+        },
+        {
+          "key": "e_1_3_3_1_10_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.00771"
+        },
+        {
+          "key": "e_1_3_3_1_11_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00791"
+        },
+        {
+          "key": "e_1_3_3_1_12_2",
+          "unstructured": "Tarik Dzanic Karan Shah and Freddie Witherden. 2020. Fourier Spectrum Discrepancies in Deep Network Generated Images. Advances in Neural Information Processing Systems 33 (2020) 3022–3032."
+        },
+        {
+          "key": "e_1_3_3_1_13_2",
+          "unstructured": "Adobe Firefly. [n. d.]. https://www.adobe.com/products/firefly.html."
+        },
+        {
+          "key": "e_1_3_3_1_14_2",
+          "first-page": "3247",
+          "volume-title": "International Conference on Machine Learning",
+          "author": "Frank Joel",
+          "year": "2020",
+          "unstructured": "Joel Frank, Thorsten Eisenhofer, Lea Schönherr, Asja Fischer, Dorothea Kolossa, and Thorsten Holz. 2020. Leveraging Frequency Analysis for Deep Fake Image Recognition. In International Conference on Machine Learning. PMLR, 3247–3258."
+        },
+        {
+          "key": "e_1_3_3_1_15_2",
+          "unstructured": "Ian Goodfellow Jean Pouget-Abadie Mehdi Mirza Bing Xu David Warde-Farley Sherjil Ozair Aaron Courville and Yoshua Bengio. 2014. Generative Aversarial Nets. Advances in Neural Information Processing Systems 27 (2014)."
+        },
+        {
+          "key": "e_1_3_3_1_16_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICME51207.2021.9428429"
+        },
+        {
+          "key": "e_1_3_3_1_17_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "e_1_3_3_1_18_2",
+          "unstructured": "Jonathan Ho Ajay Jain and Pieter Abbeel. 2020. Denoising Diffusion Probabilistic Models. Advances in Neural Information Processing Systems 33 (2020) 6840–6851."
+        },
+        {
+          "key": "e_1_3_3_1_19_2",
+          "first-page": "852",
+          "volume-title": "Advances in Neural Information Processing Systems",
+          "author": "Karras Tero",
+          "year": "2021",
+          "unstructured": "Tero Karras, Miika Aittala, Samuli Laine, Erik Härkönen, Janne Hellsten, Jaakko Lehtinen, and Timo Aila. 2021. Alias-Free Generative Adversarial Networks. In Advances in Neural Information Processing Systems , M. Ranzato, A. Beygelzimer, Y. Dauphin, P.S. Liang, and J. Wortman Vaughan (Eds.), Vol. 34. Curran Associates, Inc., 852–863. https://proceedings.neurips.cc/paper_files/paper/2021/file/076ccd93ad68be51f23707988e934906-Paper.pdf"
+        },
+        {
+          "key": "e_1_3_3_1_20_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-10602-1_48"
+        },
+        {
+          "key": "e_1_3_3_1_21_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICMEW46912.2020.9105991"
+        },
+        {
+          "key": "e_1_3_3_1_22_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MIPR.2018.00084"
+        },
+        {
+          "key": "e_1_3_3_1_23_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MIPR.2019.00103"
+        },
+        {
+          "key": "e_1_3_3_1_24_2",
+          "unstructured": "Midjourney. [n. d.]. https://www.midjourney.com/home."
+        },
+        {
+          "key": "e_1_3_3_1_25_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "e_1_3_3_1_26_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "John Platt et al. 1999. Probabilistic Outputs for Support Vector Machines and Comparisons to Regularized Likelihood Methods. Advances in Large Margin Classifiers 10 3 (1999) 61–74.",
+          "DOI": "10.7551/mitpress/1113.003.0008"
+        },
+        {
+          "key": "e_1_3_3_1_27_2",
+          "unstructured": "Dustin Podell Zion English Kyle Lacey Andreas Blattmann Tim Dockhorn Jonas Müller Joe Penna and Robin Rombach. 2023. SdXL: Improving Latent Diffusion Models for High-resolution Image Synthesis. arXiv preprint arXiv:https://arXiv.org/abs/2307.01952 (2023)."
+        },
+        {
+          "key": "e_1_3_3_1_28_2",
+          "first-page": "8748",
+          "volume-title": "International Conference on Machine Learning",
+          "author": "Radford Alec",
+          "year": "2021",
+          "unstructured": "Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, et al. 2021. Learning Transferable Visual Models from Natural Language Supervision. In International Conference on Machine Learning. PMLR, 8748–8763."
+        },
+        {
+          "key": "e_1_3_3_1_29_2",
+          "unstructured": "Aditya Ramesh Prafulla Dhariwal Alex Nichol Casey Chu and Mark Chen. 2022. Hierarchical Text-Conditional Image Generation with CLIP Latents. arXiv preprint arXiv:https://arXiv.org/abs/2204.06125 1 2 (2022) 3."
+        },
+        {
+          "key": "e_1_3_3_1_30_2",
+          "unstructured": "Jonas Ricker Simon Damm Thorsten Holz and Asja Fischer. 2022. Towards the Detection of Diffusion Model Deepfakes. arXiv preprint arXiv:https://arXiv.org/abs/2210.14571 (2022)."
+        },
+        {
+          "key": "e_1_3_3_1_31_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "e_1_3_3_1_32_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1117/12.525375"
+        },
+        {
+          "key": "e_1_3_3_1_33_2",
+          "unstructured": "StabilityAI. [n. d.]. DeepFloyd IF A Novel State-of-the-Art Open-Source Text-to-Image Model With a High Degree of Photorealism and Language Understanding. https://www.deepfloyd.ai/deepfloyd-if."
+        },
+        {
+          "key": "e_1_3_3_1_34_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Luisa Verdoliva. 2020. Media forensics and Deepfakes: An Overview. IEEE journal of selected topics in signal processing 14 5 (2020) 910–932.",
+          "DOI": "10.1109/JSTSP.2020.3002101"
+        },
+        {
+          "key": "e_1_3_3_1_35_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "e_1_3_3_1_36_2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WIFS47025.2019.9035107"
+        }
+      ],
+      "event": {
+        "name": "ICVGIP 2024: Indian Conference on Computer Vision Graphics and Image Processing",
+        "acronym": "ICVGIP 2024",
+        "location": "Bengaluru Karnataka India"
+      },
+      "container-title": [
+        "Proceedings of the Fifteenth Indian Conference on Computer Vision Graphics and Image Processing"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "https://dl.acm.org/doi/10.1145/3702250.3702296",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://dl.acm.org/doi/pdf/10.1145/3702250.3702296",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            6,
+            19
+          ]
+        ],
+        "date-time": "2025-06-19T01:10:32Z",
+        "timestamp": 1750295432000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://dl.acm.org/doi/10.1145/3702250.3702296"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            13
+          ]
+        ]
+      },
+      "references-count": 35,
+      "alternative-id": [
+        "10.1145/3702250.3702296",
+        "10.1145/3702250"
+      ],
+      "URL": "https://doi.org/10.1145/3702250.3702296",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            13
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2024-12-31",
+          "order": 3,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ]
+    }
+  }
+}

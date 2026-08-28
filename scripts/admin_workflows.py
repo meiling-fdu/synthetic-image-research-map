@@ -38,6 +38,12 @@ ADMIN_EDITABLE_PATHS = (
 # Files written by the canonical full-refresh pipeline. Keep this list beside the
 # workflow itself so publishing and the admin result UI cannot drift from it.
 KNOWN_WORKFLOW_OUTPUTS = (
+    Path("data/processed/canonical_venues.json"),
+    Path("data/processed/venue_normalized_papers.json"),
+    Path("data/processed/venue_normalized_papers.csv"),
+    Path("data/processed/publication_venue_audit.json"),
+    Path("data/processed/publication_venue_review.csv"),
+    Path("docs/publication_venue_audit_report.md"),
     Path("web/data/public_preview_map_data.json"),
     Path("web/data/public_preview_papers.json"),
     Path("data/curated/institution_location_review.csv"),
@@ -83,7 +89,7 @@ FULL_SOURCE_COMPLETENESS_AUDIT = (
 )
 VENUE_CANONICALIZATION_PREFLIGHT = (
     "python3",
-    "scripts/synchronize_venue_metadata.py",
+    "scripts/venue_audit.py",
 )
 CURATED_SCHEMA_MIGRATION = (
     "python3",
@@ -91,7 +97,7 @@ CURATED_SCHEMA_MIGRATION = (
 )
 VENUE_CANONICALIZATION = (
     "python3",
-    "scripts/synchronize_venue_metadata.py",
+    "scripts/venue_audit.py",
     "--write",
 )
 PAPER_EXCLUSION_VALIDATION = (

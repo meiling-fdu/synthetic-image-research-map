@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-28T14:22:10Z |
+| public_preview_generated_at | 2026-08-28T17:40:31Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -45,28 +45,28 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Year | Records |
 | --- | ---: |
 | 2026 | 157 |
-| 2025 | 144 |
+| 2025 | 145 |
 | 2024 | 113 |
-| 2023 | 51 |
+| 2023 | 50 |
 | 2022 | 22 |
 | 2021 | 24 |
-| 2020 | 14 |
-| 2019 | 11 |
+| 2020 | 15 |
+| 2019 | 10 |
 | 2018 | 3 |
 
 ## Top Venues
 
 | Venue | Records |
 | --- | ---: |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 41 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) | 42 |
 | AAAI Conference on Artificial Intelligence (AAAI) | 23 |
 | International Conference on Machine Learning (ICML) | 18 |
-| Advances in Neural Information Processing Systems (NeurIPS) | 14 |
+| Advances in Neural Information Processing Systems (NeurIPS) | 15 |
 | IEEE/CVF International Conference on Computer Vision (ICCV) | 14 |
+| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 12 |
 | European Conference on Computer Vision (ECCV) | 11 |
 | IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) | 11 |
 | International Conference on Learning Representations (ICLR) | 11 |
-| IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops | 10 |
 | ACM International Conference on Multimedia (ACM MM) | 8 |
 
 ## Top Countries

@@ -39,6 +39,7 @@ try:
     from .paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from .venues import (
         ALLOWED_VENUE_TRACKS,
+        normalize_venue_track,
         VenueRegistryError,
         canonicalize_record,
         display_venue,
@@ -71,6 +72,7 @@ except ImportError:
     from paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
     from venues import (
         ALLOWED_VENUE_TRACKS,
+        normalize_venue_track,
         VenueRegistryError,
         canonicalize_record,
         display_venue,
@@ -299,14 +301,14 @@ def apply_canonical_venue_selection(
     else:
         return {
             "venue": "", "venue_id": "", "venue_name": "", "venue_acronym": "",
-            "venue_type": "", "venue_track": "main", "raw_venue": clean((existing or {}).get("raw_venue")),
+            "venue_type": "", "venue_track": "Main", "raw_venue": clean((existing or {}).get("raw_venue")),
             "venue_aliases": [], "venue_label": "",
         }
-    requested_track = clean(
+    requested_track = normalize_venue_track(
         selected.get("venue_track") if venue_id else draft.get("venue_track")
     ) or (
-        clean((existing or {}).get("venue_track"))
-        or ("main" if canonical["venue_type"] == "conference" else "")
+        normalize_venue_track((existing or {}).get("venue_track"))
+        or ("Main" if canonical["venue_type"] == "conference" else "")
     )
     if canonical["venue_type"] == "conference":
         if requested_track not in ALLOWED_VENUE_TRACKS:

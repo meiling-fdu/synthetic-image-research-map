@@ -232,7 +232,8 @@ class ActionRequiredTests(unittest.TestCase):
                 self.assertEqual(metric["value"], len(detail["records"]))
                 self.assertEqual(detail["records"], snapshot["action_queues"][name]["records"])
                 self.assertEqual(len({r["actionable_id"] for r in detail["records"]}), detail["count"])
-                self.assertEqual(detail["count"], expected)
+                # This fixture supplies marker findings, not venue metadata.
+                self.assertEqual(detail["count"], 0 if name == "publication_venues" else expected)
                 if metric["value"]:
                     self.assertTrue(detail["records"], "Non-zero summary must never open an empty unfiltered queue")
         return snapshot

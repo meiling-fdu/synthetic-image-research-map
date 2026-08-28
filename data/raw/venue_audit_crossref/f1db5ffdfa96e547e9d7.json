@@ -1,0 +1,961 @@
+{
+  "doi": "10.1088/1361-6501/ae005c",
+  "source_url": "https://api.crossref.org/works/10.1088%2F1361-6501%2Fae005c",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            14
+          ]
+        ],
+        "date-time": "2025-10-14T11:37:33Z",
+        "timestamp": 1760441853021,
+        "version": "3.44.0"
+      },
+      "reference-count": 63,
+      "publisher": "IOP Publishing",
+      "issue": "9",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                9,
+                4
+              ]
+            ],
+            "date-time": "2025-09-04T00:00:00Z",
+            "timestamp": 1756944000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://publishingsupport.iopscience.iop.org/iop-standard/v1"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                9,
+                4
+              ]
+            ],
+            "date-time": "2025-09-04T00:00:00Z",
+            "timestamp": 1756944000000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://iopscience.iop.org/info/page/text-and-data-mining"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/100009110",
+          "name": "Xinjiang Natural Science Foundation",
+          "doi-asserted-by": "crossref",
+          "award": [
+            "2022D01A236"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2022D01A236"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/100009110",
+              "id-type": "DOI",
+              "asserted-by": "crossref"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100001809",
+          "name": "the National Natural Science Foundation of China",
+          "doi-asserted-by": "crossref",
+          "award": [
+            "62272290"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "62272290"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100001809",
+              "id-type": "DOI",
+              "asserted-by": "crossref"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "iopscience.iop.org"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "Meas. Sci. Technol."
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            30
+          ]
+        ]
+      },
+      "abstract": "<jats:title>Abstract</jats:title>\n               <jats:p>With the development of advanced generative technologies such as generative adversarial networks and diffusion models, AI-generated images have become extremely realistic. As a result, there is an urgent need for efficient detection tools to combat misinformation and protect societal trust and personal privacy. Current detection methods perform well when identifying content from known generative models, but their performance drops when facing unknown or emerging technologies. Moreover, most detection methods focus on detecting local artifacts, overlooking the extraction and effective fusion of global relationships and multi-scale features, which makes it difficult to capture the complex patterns in AI-generated images. To address these challenges, this paper proposes a multi-scale self-adaptive feature fusion network (MSAFNet). Specifically, the proposed MSAFNet utilizes a global noise feature extraction module to capture global noise patterns in images, compensating for the shortcomings of existing methods that focus solely on local noise features. Meanwhile, it adopts a texture feature extraction module to capture subtle texture anomalies and a color feature extraction module to enrich color feature information, enhancing the expression capability of color features and improving the recognition of complex features in AI-generated images. Lastly, we introduce a self-adaptive feature fusion module to capture complementary information and the importance of multi-scale features, ensuring efficient fusion of feature information across different dimensions. Experimental results on the large-scale DFFD and CIFAKE datasets demonstrate that the proposed MSAFNet achieves higher classification accuracy compared to other AI-generated image detection methods.</jats:p>",
+      "DOI": "10.1088/1361-6501/ae005c",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            8,
+            28
+          ]
+        ],
+        "date-time": "2025-08-28T22:49:59Z",
+        "timestamp": 1756421399000
+      },
+      "page": "095402",
+      "update-policy": "https://doi.org/10.1088/crossmark-policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "MSAFNet: multi-scale self-adaptive feature fusion network for AI-generated image detection"
+      ],
+      "prefix": "10.1088",
+      "volume": "36",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0009-4170-5107",
+          "authenticated-orcid": true,
+          "given": "Liwei",
+          "family": "Yao",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6259-5463",
+          "authenticated-orcid": true,
+          "given": "Sen",
+          "family": "Niu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Kaili",
+          "family": "Liao",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Guobing",
+          "family": "Zou",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Kefeng",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Tengbo",
+          "family": "Zhao",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "266",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            4
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "mstae005cbib1",
+          "first-page": "pp 2672",
+          "type": "conference-proceedings",
+          "article-title": "Generative adversarial nets",
+          "author": "Goodfellow",
+          "year": "2014"
+        },
+        {
+          "article-title": "Auto-encoding variational bayes",
+          "year": "2022",
+          "author": "Kingma",
+          "key": "mstae005cbib2",
+          "type": "preprint"
+        },
+        {
+          "year": "2018",
+          "author": "Kingma",
+          "key": "mstae005cbib3",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib4",
+          "first-page": "pp 10674",
+          "type": "conference-proceedings",
+          "article-title": "High-resolution image synthesis with latent diffusion models",
+          "author": "Rombach",
+          "year": "2022"
+        },
+        {
+          "article-title": "Large scale GAN training for high fidelity natural image synthesis",
+          "year": "2019",
+          "author": "Brock",
+          "key": "mstae005cbib5",
+          "type": "preprint"
+        },
+        {
+          "article-title": "Denoising diffusion probabilistic models",
+          "year": "2020",
+          "author": "Ho",
+          "key": "mstae005cbib6",
+          "type": "preprint"
+        },
+        {
+          "article-title": "Progressive growing of gans for improved quality, stability, and variation",
+          "year": "2018",
+          "author": "Karras",
+          "key": "mstae005cbib7",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib8",
+          "first-page": "pp 4396",
+          "type": "conference-proceedings",
+          "article-title": "A style-based generator architecture for generative adversarial networks",
+          "author": "Karras",
+          "year": "2019"
+        },
+        {
+          "article-title": "Generative modeling by estimating gradients of the data distribution",
+          "year": "2020",
+          "author": "Song",
+          "key": "mstae005cbib9",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib10",
+          "first-page": "pp 384",
+          "type": "conference-proceedings",
+          "article-title": "Detection of GAN-generated fake images over social networks",
+          "author": "Marra",
+          "year": "2018"
+        },
+        {
+          "key": "mstae005cbib11",
+          "first-page": "pp 1",
+          "type": "conference-proceedings",
+          "article-title": "Detecting and simulating artifacts in gan fake images",
+          "author": "Zhang",
+          "year": "2019"
+        },
+        {
+          "key": "mstae005cbib12",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/CVPR42600.2020.00791",
+          "type": "conference-proceedings",
+          "article-title": "Watch your up-convolution: cnn based generative deep neural networks are failing to reproduce spectral distributions",
+          "author": "Durall",
+          "year": "2020"
+        },
+        {
+          "key": "mstae005cbib13",
+          "first-page": "3022",
+          "type": "conference-proceedings",
+          "article-title": "Fourier spectrum discrepancies in deep network generated images",
+          "volume": "vol 33",
+          "author": "Dzanic",
+          "year": "2020"
+        },
+        {
+          "article-title": "Leveraging frequency analysis for deep fake image recognition",
+          "year": "2020",
+          "author": "Frank",
+          "key": "mstae005cbib14",
+          "type": "conference-proceedings"
+        },
+        {
+          "year": "2020",
+          "author": "Frank",
+          "key": "mstae005cbib15",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib16",
+          "first-page": "pp 8057",
+          "type": "conference-proceedings",
+          "article-title": "Global texture enhancement for fake face detection in the wild",
+          "author": "Liu",
+          "year": "2020"
+        },
+        {
+          "key": "mstae005cbib17",
+          "doi-asserted-by": "publisher",
+          "first-page": "pp 671",
+          "DOI": "10.1007/978-3-031-19784-0_39)",
+          "type": "conference-proceedings",
+          "article-title": "Discovering transferable forensic features for cnn-generated images detection",
+          "author": "Chandrasegaran",
+          "year": "2022"
+        },
+        {
+          "key": "mstae005cbib18",
+          "first-page": "pp 24480",
+          "type": "conference-proceedings",
+          "article-title": "Towards universal fake image detectors that generalize across generative models",
+          "author": "Ojha",
+          "year": "2023"
+        },
+        {
+          "key": "mstae005cbib19",
+          "doi-asserted-by": "publisher",
+          "first-page": "pp 3418",
+          "DOI": "10.1145/3576915.3616588)",
+          "type": "conference-proceedings",
+          "article-title": "DE-FAKE: detection and attribution of fake images generated by text-to-image generation models",
+          "author": "Sha",
+          "year": "2023"
+        },
+        {
+          "key": "mstae005cbib20",
+          "first-page": "pp 22445",
+          "type": "conference-proceedings",
+          "article-title": "Dire for diffusion-generated image detection",
+          "author": "Wang",
+          "year": "2023"
+        },
+        {
+          "key": "mstae005cbib21",
+          "first-page": "pp 2332",
+          "type": "conference-proceedings",
+          "article-title": "Semantic image synthesis with spatially-adaptive normalization",
+          "author": "Park",
+          "year": "2019"
+        },
+        {
+          "key": "mstae005cbib22",
+          "first-page": "pp 2242",
+          "type": "conference-proceedings",
+          "article-title": "Unpaired image-to-image translation using cycle-consistent adversarial networks",
+          "author": "Zhu",
+          "year": "2017"
+        },
+        {
+          "article-title": "Diffusion models beat gans on image synthesis",
+          "year": "2021",
+          "author": "Dhariwal",
+          "key": "mstae005cbib23",
+          "type": "conference-proceedings"
+        },
+        {
+          "key": "mstae005cbib24",
+          "first-page": "pp 10696",
+          "type": "conference-proceedings",
+          "article-title": "Vector quantized diffusion model for text-to-image synthesis",
+          "author": "Gu",
+          "year": "2022"
+        },
+        {
+          "key": "mstae005cbib25",
+          "first-page": "pp 16784",
+          "type": "conference-proceedings",
+          "article-title": "GLIDE: towards photorealistic image generation and editing with text-guided diffusion models",
+          "volume": "vol 162",
+          "author": "Nichol",
+          "year": "2022"
+        },
+        {
+          "key": "mstae005cbib26",
+          "first-page": "pp 10684",
+          "type": "conference-proceedings",
+          "article-title": "High-resolution image synthesis with latent diffusion models",
+          "author": "Rombach",
+          "year": "2022"
+        },
+        {
+          "article-title": "A single simple patch is all you need for AI-generated image detection",
+          "year": "2024",
+          "author": "Chen",
+          "key": "mstae005cbib27",
+          "type": "preprint"
+        },
+        {
+          "article-title": "A sanity check for AI-generated image detection",
+          "year": "2025",
+          "author": "Yan",
+          "key": "mstae005cbib28",
+          "type": "preprint"
+        },
+        {
+          "article-title": "Real-time deepfake detection in the real-world",
+          "year": "2024",
+          "author": "Cavia",
+          "key": "mstae005cbib29",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib30",
+          "doi-asserted-by": "publisher",
+          "first-page": "16192",
+          "DOI": "10.1109/JIOT.2025.3531053",
+          "type": "journal-article",
+          "article-title": "Optimized Frequency Collaborative Strategy Drives AI Image Detection",
+          "volume": "12",
+          "author": "Li",
+          "year": "2025",
+          "journal-title": "IEEE Internet Things J."
+        },
+        {
+          "key": "mstae005cbib31",
+          "first-page": "pp 59570",
+          "type": "conference-proceedings",
+          "article-title": "Breaking semantic artifacts for generalized AI-generated image detection",
+          "volume": "vol 37",
+          "author": "Zheng",
+          "year": "2024"
+        },
+        {
+          "key": "mstae005cbib32",
+          "doi-asserted-by": "publisher",
+          "first-page": "pp 399",
+          "DOI": "10.1109/WACV61041.2025.00049)",
+          "type": "conference-proceedings",
+          "article-title": "Reducing the content bias for AI-generated image detection",
+          "author": "Gye",
+          "year": "2025"
+        },
+        {
+          "key": "mstae005cbib33",
+          "doi-asserted-by": "publisher",
+          "first-page": "868",
+          "DOI": "10.1109/TIFS.2012.2190402",
+          "type": "journal-article",
+          "article-title": "Rich Models for Steganalysis of Digital Images",
+          "volume": "7",
+          "author": "Fridrich",
+          "year": "2012",
+          "journal-title": "IEEE Trans. Inf. Forensics Security"
+        },
+        {
+          "key": "mstae005cbib34",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.sigpro.2022.108859",
+          "type": "journal-article",
+          "article-title": "HTMatch: an efficient hybrid transformer based graph neural network for local feature matching",
+          "volume": "204",
+          "author": "Cai",
+          "year": "2023",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "mstae005cbib35",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1088/1361-6501/ad8592",
+          "type": "journal-article",
+          "article-title": "Multi-layer feature fusion and attention enhancement for fine-grained vehicle recognition research",
+          "volume": "36",
+          "author": "Zhang",
+          "year": "2024",
+          "journal-title": "Meas. Sci. Technol."
+        },
+        {
+          "key": "mstae005cbib36",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1088/1361-6501/ad6628",
+          "type": "journal-article",
+          "article-title": "Research on road crack segmentation based on deep convolution and transformer with multi-branch feature fusion",
+          "volume": "35",
+          "author": "Lai",
+          "year": "2024",
+          "journal-title": "Meas. Sci. Technol."
+        },
+        {
+          "key": "mstae005cbib37",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.sigpro.2022.108558",
+          "type": "journal-article",
+          "article-title": "Evading generated-image detectors: a deep dithering approach",
+          "volume": "197",
+          "author": "Xie",
+          "year": "2022",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "mstae005cbib38",
+          "first-page": "pp 4584",
+          "type": "conference-proceedings",
+          "article-title": "Detecting GAN-generated imagery using saturation cues",
+          "author": "McCloskey",
+          "year": "2019"
+        },
+        {
+          "year": "2022",
+          "author": "Ricker",
+          "key": "mstae005cbib39",
+          "type": "preprint"
+        },
+        {
+          "article-title": "Learning transferable visual models from natural language supervision",
+          "year": "2021",
+          "author": "Radford",
+          "key": "mstae005cbib40",
+          "type": "preprint"
+        },
+        {
+          "article-title": "PatchCraft: Exploring texture patch for efficient AI-generated image detection",
+          "year": "2024",
+          "author": "Zhong",
+          "key": "mstae005cbib41",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.sigpro.2025.109988",
+          "type": "journal-article",
+          "article-title": "High-accuracy image steganography with invertible neural network and generative adversarial network",
+          "volume": "234",
+          "author": "Wang",
+          "year": "2025",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "mstae005cbib43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.sigpro.2025.110038",
+          "type": "journal-article",
+          "article-title": "Elastic supernet with dynamic training for JPEG steganalysis",
+          "volume": "236",
+          "author": "Li",
+          "year": "2025",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "mstae005cbib44",
+          "doi-asserted-by": "publisher",
+          "first-page": "8",
+          "DOI": "10.1016/j.image.2017.04.008",
+          "type": "journal-article",
+          "article-title": "Detection of operation chain: JPEG-resampling-JPEG",
+          "volume": "57",
+          "author": "Chen",
+          "year": "2017",
+          "journal-title": "Signal Process., Image Commun."
+        },
+        {
+          "key": "mstae005cbib45",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.sigpro.2020.107616",
+          "type": "journal-article",
+          "article-title": "Identification of deep network generated images using disparities in color components",
+          "volume": "174",
+          "author": "Li",
+          "year": "2020",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "mstae005cbib46",
+          "first-page": "pp 3771",
+          "type": "conference-proceedings",
+          "article-title": "Faster than lies: real-time deepfake detection using binary neural networks",
+          "author": "Lanzino",
+          "year": "2024"
+        },
+        {
+          "article-title": "Attention is all you need",
+          "year": "2023",
+          "author": "Vaswani",
+          "key": "mstae005cbib47",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib48",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1088/1361-6501/adbccb",
+          "type": "journal-article",
+          "article-title": "MASNet: a novel deep learning approach for enhanced detection of small targets in complex scenarios",
+          "volume": "36",
+          "author": "Zhang",
+          "year": "2025",
+          "journal-title": "Meas. Sci. Technol."
+        },
+        {
+          "key": "mstae005cbib49",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1088/1361-6501/adb2ad",
+          "type": "journal-article",
+          "article-title": "Efficient feature fusion network for small objects detection of traffic signs based on cross-dimensional and dual-domain information",
+          "volume": "36",
+          "author": "Tao",
+          "year": "2025",
+          "journal-title": "Meas. Sci. Technol."
+        },
+        {
+          "article-title": "Gaussian error linear units (GELUs)",
+          "year": "2023",
+          "author": "Hendrycks",
+          "key": "mstae005cbib50",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib51",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/CVPR42600.2020.00582",
+          "type": "conference-proceedings",
+          "article-title": "On the detection of digital face manipulation",
+          "author": "Dang",
+          "year": "2020"
+        },
+        {
+          "key": "mstae005cbib52",
+          "doi-asserted-by": "publisher",
+          "first-page": "15642",
+          "DOI": "10.1109/ACCESS.2024.3356122",
+          "type": "journal-article",
+          "article-title": "CIFAKE: image Classification and Explainable Identification of AI-Generated Synthetic Images",
+          "volume": "12",
+          "author": "Bird",
+          "year": "2024",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "mstae005cbib53",
+          "type": "journal-article",
+          "article-title": "Learning multiple layers of features from tiny images",
+          "author": "Krizhevsky",
+          "year": "2009",
+          "journal-title": "Technical Report"
+        },
+        {
+          "key": "mstae005cbib54",
+          "first-page": "pp 3730",
+          "type": "conference-proceedings",
+          "article-title": "Deep learning face attributes the wild",
+          "author": "Liu",
+          "year": "2015"
+        },
+        {
+          "key": "mstae005cbib55",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/CVPR.2018.00916",
+          "type": "preprint",
+          "article-title": "StarGAN: unified generative adversarial networks for multi-domain image-to-image translation",
+          "author": "Choi",
+          "year": "2018"
+        },
+        {
+          "key": "mstae005cbib56",
+          "doi-asserted-by": "publisher",
+          "first-page": "1696",
+          "DOI": "10.1109/TIFS.2023.3249566",
+          "type": "journal-article",
+          "article-title": "Masked Relation Learning for DeepFake Detection",
+          "volume": "18",
+          "author": "Yang",
+          "year": "2023",
+          "journal-title": "IEEE Trans. on Information Forensics and Security"
+        },
+        {
+          "article-title": "CrossDF: improving cross-domain deepfake detection with deep information decomposition",
+          "year": "2024",
+          "author": "Yang",
+          "key": "mstae005cbib57",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib58",
+          "doi-asserted-by": "publisher",
+          "first-page": "8487",
+          "DOI": "10.1109/TMM.2023.3237322",
+          "type": "journal-article",
+          "article-title": "Augmented Multi-Scale Spatiotemporal Inconsistency Magnifier for Generalized DeepFake Detection",
+          "volume": "25",
+          "author": "Yu",
+          "year": "2023",
+          "journal-title": "IEEE Trans. on Multimedia"
+        },
+        {
+          "article-title": "2021 An image is worth 16 ×16 words: transformers for image recognition at scale",
+          "author": "Dosovitskiy",
+          "key": "mstae005cbib59",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib60",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/ICCV48922.2021.00986",
+          "type": "preprint",
+          "article-title": "Swin transformer: hierarchical vision transformer using shifted windows",
+          "author": "Liu",
+          "year": "2021"
+        },
+        {
+          "key": "mstae005cbib61",
+          "first-page": "pp 11966",
+          "type": "conference-proceedings",
+          "article-title": "A convnet for the 2020s",
+          "author": "Liu",
+          "year": "2022"
+        },
+        {
+          "article-title": "Training data-efficient image transformers and distillation through attention",
+          "year": "2021",
+          "author": "Touvron",
+          "key": "mstae005cbib62",
+          "type": "preprint"
+        },
+        {
+          "key": "mstae005cbib63",
+          "first-page": "pp 12105",
+          "type": "conference-proceedings",
+          "article-title": "Learning on gradients: generalized artifacts representation for GAN-generated images detection",
+          "author": "Tan",
+          "year": "2023"
+        }
+      ],
+      "container-title": [
+        "Measurement Science and Technology"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c",
+          "content-type": "text/html",
+          "content-version": "am",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c/pdf",
+          "content-type": "application/pdf",
+          "content-version": "am",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c",
+          "content-type": "text/html",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c/pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c/pdf",
+          "content-type": "application/pdf",
+          "content-version": "am",
+          "intended-application": "syndication"
+        },
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c/pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "syndication"
+        },
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c/pdf",
+          "content-type": "application/pdf",
+          "content-version": "am",
+          "intended-application": "similarity-checking"
+        },
+        {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c/pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2025-09-04T07:15:31Z",
+        "timestamp": 1756970131000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://iopscience.iop.org/article/10.1088/1361-6501/ae005c"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            4
+          ]
+        ]
+      },
+      "references-count": 63,
+      "journal-issue": {
+        "issue": "9",
+        "published-online": {
+          "date-parts": [
+            [
+              2025,
+              9,
+              4
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2025,
+              9,
+              30
+            ]
+          ]
+        }
+      },
+      "URL": "https://doi.org/10.1088/1361-6501/ae005c",
+      "relation": {},
+      "ISSN": [
+        "0957-0233",
+        "1361-6501"
+      ],
+      "issn-type": [
+        {
+          "type": "print",
+          "value": "0957-0233"
+        },
+        {
+          "type": "electronic",
+          "value": "1361-6501"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            4
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "MSAFNet: multi-scale self-adaptive feature fusion network for AI-generated image detection",
+          "name": "article_title",
+          "label": "Article Title"
+        },
+        {
+          "value": "Measurement Science and Technology",
+          "name": "journal_title",
+          "label": "Journal Title"
+        },
+        {
+          "value": "paper",
+          "name": "article_type",
+          "label": "Article Type"
+        },
+        {
+          "value": "© 2025 IOP Publishing Ltd. All rights, including for text and data mining, AI training, and similar technologies, are reserved.",
+          "name": "copyright_information",
+          "label": "Copyright Information"
+        },
+        {
+          "value": "2025-04-30",
+          "name": "date_received",
+          "label": "Date Received",
+          "group": {
+            "name": "publication_dates",
+            "label": "Publication dates"
+          }
+        },
+        {
+          "value": "2025-08-28",
+          "name": "date_accepted",
+          "label": "Date Accepted",
+          "group": {
+            "name": "publication_dates",
+            "label": "Publication dates"
+          }
+        },
+        {
+          "value": "2025-09-04",
+          "name": "date_epub",
+          "label": "Online publication date",
+          "group": {
+            "name": "publication_dates",
+            "label": "Publication dates"
+          }
+        }
+      ]
+    }
+  }
+}

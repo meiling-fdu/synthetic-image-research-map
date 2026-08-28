@@ -1,0 +1,537 @@
+{
+  "doi": "10.1109/wifs61860.2024.10810686",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fwifs61860.2024.10810686",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            17
+          ]
+        ],
+        "date-time": "2026-07-17T14:53:07Z",
+        "timestamp": 1784299987763,
+        "version": "3.55.0"
+      },
+      "reference-count": 43,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                2
+              ]
+            ],
+            "date-time": "2024-12-02T00:00:00Z",
+            "timestamp": 1733097600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                12,
+                2
+              ]
+            ],
+            "date-time": "2024-12-02T00:00:00Z",
+            "timestamp": 1733097600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/100009224",
+          "name": "Advanced Research Projects Agency",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/100009224",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            2
+          ]
+        ]
+      },
+      "DOI": "10.1109/wifs61860.2024.10810686",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            27
+          ]
+        ],
+        "date-time": "2024-12-27T19:10:25Z",
+        "timestamp": 1735326625000
+      },
+      "page": "1-6",
+      "source": "Crossref",
+      "is-referenced-by-count": 3,
+      "title": [
+        "Tiny Autoencoders are Effective Few-Shot Generative Model Detectors"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Luca",
+          "family": "Bindini",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "University of Florence,Department of Information Engineering,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Giulia",
+          "family": "Bertazzini",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Florence,Department of Information Engineering,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Daniele",
+          "family": "Baracchi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Florence,Department of Information Engineering,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Dasara",
+          "family": "Shullani",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Florence,Department of Information Engineering,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Paolo",
+          "family": "Frasconi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Florence,Department of Information Engineering,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Alessandro",
+          "family": "Piva",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of Florence,Department of Information Engineering,Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.37016/mr-2020-140"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-981-16-7621-5_2"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV51070.2023.02053"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52733.2024.01156"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JSTSP.2020.3002101"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3576915.3616588"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2022.3213473"
+        },
+        {
+          "key": "ref8",
+          "first-page": "3",
+          "article-title": "Source generator attribution via inversion",
+          "volume-title": "CVPR workshops",
+          "volume": "8",
+          "author": "Albright"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/IJCNN55064.2022.9892704"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52733.2024.00872"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV51070.2023.02051"
+        },
+        {
+          "key": "ref12",
+          "article-title": "T-gd: Transferable gan-generated images detection framework",
+          "author": "Jeon",
+          "year": "2020",
+          "journal-title": "arXiv preprint arXiv:2008.04115"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WIFS47025.2019.9035099"
+        },
+        {
+          "key": "ref14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/IWBF57495.2023.10157835"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.patrec.2024.02.020"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cviu.2024.104143"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3581783.3612377"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP48485.2024.10446543"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1126/science.1127647"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/1390156.1390294"
+        },
+        {
+          "key": "ref21",
+          "first-page": "15 979",
+          "article-title": "Masked autoencoders are scalable vision learners",
+          "volume-title": "2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "He"
+        },
+        {
+          "key": "ref22",
+          "article-title": "Adversarial autoencoders",
+          "author": "Makhzani",
+          "year": "2015",
+          "journal-title": "arXiv preprint arXiv:1511.05644"
+        },
+        {
+          "issue": "1",
+          "key": "ref23",
+          "first-page": "1",
+          "article-title": "Variational autoencoder based anomaly detection using reconstruction probability",
+          "volume": "2",
+          "author": "An",
+          "year": "2015",
+          "journal-title": "Special lecture on IE"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3097983.3098052"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.1312.6114"
+        },
+        {
+          "key": "ref26",
+          "article-title": "Wasserstein auto-encoders",
+          "author": "Tolstikhin",
+          "year": "2017",
+          "journal-title": "arXiv preprint arXiv:1711.01558"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1023/A:1022627411411"
+        },
+        {
+          "key": "ref28",
+          "article-title": "Genimage: A million-scale benchmark for detecting ai-generated image",
+          "volume": "36",
+          "author": "Zhu",
+          "year": "2024",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "ref29",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2009.5206848"
+        },
+        {
+          "key": "ref30",
+          "first-page": "8780",
+          "article-title": "Diffusion models beat gans on image synthesis",
+          "volume": "34",
+          "author": "Dhariwal",
+          "year": "2021",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref31",
+          "article-title": "Glide: Towards photorealistic image generation and editing with text-guided diffusion models",
+          "author": "Nichol",
+          "year": "2021",
+          "journal-title": "arXiv preprint arXiv:2112.10741"
+        },
+        {
+          "key": "ref32",
+          "article-title": "Midjourney",
+          "year": "2022"
+        },
+        {
+          "key": "ref33",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "ref34",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01043"
+        },
+        {
+          "key": "ref35",
+          "article-title": "Wukong",
+          "year": "2022"
+        },
+        {
+          "key": "ref36",
+          "article-title": "Large scale gan training for high fidelity natural image synthesis",
+          "author": "Brock",
+          "year": "2018",
+          "journal-title": "arXiv preprint arXiv:1809.11096"
+        },
+        {
+          "key": "ref37",
+          "first-page": "8748",
+          "article-title": "Learning transferable visual models from natural language supervision",
+          "volume-title": "International conference on machine learning",
+          "author": "Radford"
+        },
+        {
+          "key": "ref38",
+          "first-page": "12888",
+          "article-title": "Blip: Bootstrapping language-image pre-training for unified vision-language understanding and generation",
+          "volume-title": "International conference on machine learning",
+          "author": "Li"
+        },
+        {
+          "key": "ref39",
+          "first-page": "6088",
+          "article-title": "CLIP models are few-shot learners: Empirical studies on VQA and visual entailment",
+          "volume-title": "Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)",
+          "author": "Song"
+        },
+        {
+          "key": "ref40",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-19833-5_29"
+        },
+        {
+          "key": "ref41",
+          "article-title": "Flickr30k entities: Collecting region-to-phrase correspondences for richer image-to-sentence models",
+          "author": "Plummer",
+          "year": "2016"
+        },
+        {
+          "key": "ref42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.1201.0490"
+        },
+        {
+          "issue": "11",
+          "key": "ref43",
+          "article-title": "Visualizing data using t-sne",
+          "volume": "9",
+          "author": "Van der Maaten",
+          "year": "2008",
+          "journal-title": "Journal of machine learning research"
+        }
+      ],
+      "event": {
+        "name": "2024 IEEE International Workshop on Information Forensics and Security (WIFS)",
+        "location": "Rome, Italy",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              12,
+              2
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              12,
+              5
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2024 IEEE International Workshop on Information Forensics and Security (WIFS)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/10810660/10810670/10810686.pdf?arnumber=10810686",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            28
+          ]
+        ],
+        "date-time": "2024-12-28T06:08:18Z",
+        "timestamp": 1735366098000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10810686/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            2
+          ]
+        ]
+      },
+      "references-count": 43,
+      "URL": "https://doi.org/10.1109/wifs61860.2024.10810686",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            12,
+            2
+          ]
+        ]
+      }
+    }
+  }
+}

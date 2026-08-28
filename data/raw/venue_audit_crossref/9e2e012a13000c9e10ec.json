@@ -1,0 +1,672 @@
+{
+  "doi": "10.1109/eurospw72509.2026.00041",
+  "source_url": "https://api.crossref.org/works/10.1109%2Feurospw72509.2026.00041",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            7
+          ]
+        ],
+        "date-time": "2026-08-07T16:52:04Z",
+        "timestamp": 1786121524783,
+        "version": "build-2736575974"
+      },
+      "reference-count": 73,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                1
+              ]
+            ],
+            "date-time": "2026-07-01T00:00:00Z",
+            "timestamp": 1782864000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                1
+              ]
+            ],
+            "date-time": "2026-07-01T00:00:00Z",
+            "timestamp": 1782864000000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                1
+              ]
+            ],
+            "date-time": "2026-07-01T00:00:00Z",
+            "timestamp": 1782864000000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "funder": [
+        {
+          "name": "Vienna Science and Technology Fund"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "DOI": "10.1109/eurospw72509.2026.00041",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            6
+          ]
+        ],
+        "date-time": "2026-08-06T19:17:25Z",
+        "timestamp": 1786043845000
+      },
+      "page": "278-289",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Towards Explaining Classification Models in Security with Sparse Autoencoders"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Nils Ole",
+          "family": "Breuer",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "TU Wien"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Lorenz",
+          "family": "Linhardt",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "TU Berlin & BIFOLD"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Philipp",
+          "family": "Normann",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "TU Wien"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Daniel",
+          "family": "Arp",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "TU Wien"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3576915.3616589"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.14722/ndss.2025.240830"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52734.2025.02685"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/SP.2015.54"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.14722/ndss.2018.23158"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3548606.3560609"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/2021.woah-1.3"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW63382.2024.00439"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/SP61157.2025.00102"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1371/journal.pone.0130140"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.dsp.2017.10.011"
+        },
+        {
+          "key": "ref12",
+          "article-title": "Deep inside convolutional networks: Visualising image classification models and saliency maps",
+          "volume-title": "Proceedings of the 2nd International Conference on Learning Representations (ICLR) Workshop Track",
+          "author": "Simonyan"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.74"
+        },
+        {
+          "key": "ref14",
+          "article-title": "Towards automatic concept-based explanations",
+          "author": "Ghorbani",
+          "year": "2019",
+          "journal-title": "Advances in Neural Information Processing Systems (NIPS)"
+        },
+        {
+          "key": "ref15",
+          "article-title": "On completeness-aware concept-based explanations in deep neural networks",
+          "author": "Yeh",
+          "year": "2020",
+          "journal-title": "Advances in Neural Information Processing Systems (NIPS)"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1038/s42256-023-00711-8"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3243734.3243792"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/EuroSP48549.2020.00018"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/EuroSP57164.2023.00022"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cose.2024.103842"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/SP54263.2024.00021"
+        },
+        {
+          "key": "ref22",
+          "article-title": "Towards monosemanticity: Decomposing language models with dictionary learning",
+          "author": "Bricken",
+          "year": "2023",
+          "journal-title": "Transformer Circuits Thread"
+        },
+        {
+          "key": "ref23",
+          "article-title": "Sparse autoencoders find highly interpretable features in language models",
+          "volume-title": "International Conference on Representation Learning (ICLR)",
+          "author": "Cunningham"
+        },
+        {
+          "key": "ref24",
+          "article-title": "Scaling monosemanticity: Extracting interpretable features from claude 3 sonnet",
+          "author": "Templeton",
+          "year": "2024",
+          "journal-title": "Transformer Circuits Thread"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/S0042-6989(97)00169-7"
+        },
+        {
+          "key": "ref26",
+          "article-title": "Automatically interpreting millions of features in large language models",
+          "volume-title": "Proc. of Int. Conference on Machine Learning (ICML)",
+          "author": "Paulo"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/2025.acl-long.229"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.52202/085713-3202",
+          "article-title": "Sparse autoencoders learn monosemantic features in vision-language models",
+          "author": "Pach",
+          "year": "2025",
+          "journal-title": "Advances in Neural Information Processing Systems (NIPS)"
+        },
+        {
+          "key": "ref29",
+          "article-title": "Interpreting CLIP with hierarchical sparse autoencoders",
+          "volume-title": "Proc. of Int. Conference on Machine Learning (ICML)",
+          "author": "Zaigrajew"
+        },
+        {
+          "key": "ref30",
+          "article-title": "Batchtopk sparse autoencoders",
+          "volume-title": "NeurIPS 2024 Workshop on Scientific Methods for Understanding Deep Learning",
+          "author": "Bussmann"
+        },
+        {
+          "key": "ref31",
+          "article-title": "Are sparse autoencoders useful? a case study in sparse probing",
+          "volume-title": "Proc. of Int. Conference on Machine Learning (ICML)",
+          "author": "Kantamneni"
+        },
+        {
+          "key": "ref32",
+          "article-title": "Language models can explain neurons in language models",
+          "author": "Bills",
+          "year": "2023",
+          "journal-title": "OpenAI Research"
+        },
+        {
+          "key": "ref33",
+          "article-title": "dictionary_learning",
+          "author": "Samuel Marks",
+          "year": "2024"
+        },
+        {
+          "key": "ref34",
+          "article-title": "SAEBench: A comprehensive benchmark for sparse autoencoders in language model interpretability",
+          "volume-title": "Proc. of Int. Conference on Machine Learning (ICML)",
+          "author": "Karvonen"
+        },
+        {
+          "key": "ref35",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.inffus.2024.102301"
+        },
+        {
+          "key": "ref36",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/SP54263.2024.00194"
+        },
+        {
+          "key": "ref37",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/SP40001.2021.00028"
+        },
+        {
+          "key": "ref38",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/jimaging11070227"
+        },
+        {
+          "key": "ref39",
+          "article-title": "Hundreds of nonconsensual AI images being created by Grok on X, data shows",
+          "author": "Wilson",
+          "year": "2026"
+        },
+        {
+          "key": "ref40",
+          "article-title": "Leveraging frequency analysis for deep fake image recognition",
+          "volume-title": "Proc. of Int. Conference on Machine Learning (ICML)",
+          "author": "Frank"
+        },
+        {
+          "key": "ref41",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "ref42",
+          "article-title": "Online hate and harassment: The american experience 2023",
+          "year": "2023"
+        },
+        {
+          "key": "ref43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/2021.acl-long.4"
+        },
+        {
+          "key": "ref44",
+          "article-title": "HateBench: Benchmarking Hate Speech Detectors on LLM-Generated Content and Hate Campaigns",
+          "volume-title": "Proc. of USENIX Security Symposium",
+          "author": "Shen"
+        },
+        {
+          "key": "ref45",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/SP54263.2024.00181"
+        },
+        {
+          "key": "ref46",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52734.2025.00772"
+        },
+        {
+          "key": "ref47",
+          "article-title": "An image is worth 16x16 words: Transformers for image recognition at scale",
+          "volume-title": "International Conference on Learning Representations (ICLR)",
+          "author": "Dosovitskiy"
+        },
+        {
+          "key": "ref48",
+          "article-title": "Learning transferable visual models from natural language supervision",
+          "volume-title": "Proc. of Int. Conference on Machine Learning (ICML)",
+          "author": "Radford"
+        },
+        {
+          "key": "ref49",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "ref50",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.1405.0312"
+        },
+        {
+          "key": "ref51",
+          "article-title": "BERT: Pretraining of deep bidirectional transformers for language understanding",
+          "volume-title": "Proceedings of the Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies",
+          "volume": "1",
+          "author": "Devlin"
+        },
+        {
+          "key": "ref52",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/S19-2007"
+        },
+        {
+          "key": "ref53",
+          "article-title": "Gemini 2.5: Pushing the frontier with advanced reasoning, multimodality, long context, and next generation agentic capabilities",
+          "year": "2025",
+          "journal-title": "arXiv preprint arXiv:2507.06261"
+        },
+        {
+          "key": "ref54",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/e27040344"
+        },
+        {
+          "key": "ref55",
+          "article-title": "A is for absorption: Studying feature splitting and absorption in sparse autoencoders",
+          "author": "Chanin",
+          "year": "2024",
+          "journal-title": "Advances in Neural Information Processing Systems (NIPS)"
+        },
+        {
+          "key": "ref56",
+          "article-title": "From what to how: Attributing clip’s latent components reveals unexpected semantic reliance",
+          "author": "Dreyer",
+          "year": "2025",
+          "journal-title": "arXiv preprint arXiv:2505.20229"
+        },
+        {
+          "key": "ref57",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/2025.emnlp-main.87"
+        },
+        {
+          "key": "ref58",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.14722/ndss.2026.241749"
+        },
+        {
+          "key": "ref59",
+          "article-title": "Llms know more than they show: On the intrinsic representation of llm hallucinations",
+          "volume-title": "International Conference on Learning Representations (ICLR)",
+          "author": "Orgad"
+        },
+        {
+          "key": "ref60",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/D19-1410"
+        },
+        {
+          "key": "ref61",
+          "article-title": "Toy models of superposition",
+          "author": "Elhage",
+          "year": "2022",
+          "journal-title": "arXiv preprint arXiv:2209.10652"
+        },
+        {
+          "key": "ref62",
+          "article-title": "Mechanistic interpretability for ai safety a review",
+          "author": "Bereska",
+          "year": "2024",
+          "journal-title": "Transactions on Machine Learning Research (TMLR)"
+        },
+        {
+          "key": "ref63",
+          "article-title": "Scaling and evaluating sparse autoencoders",
+          "volume-title": "International Conference on Learning Representations (ICLR)",
+          "author": "Gao"
+        },
+        {
+          "key": "ref64",
+          "article-title": "Learning multi-level features with matryoshka sparse autoencoders",
+          "volume-title": "Proc. of Int. Conference on Machine Learning (ICML)",
+          "author": "Bussmann"
+        },
+        {
+          "key": "ref65",
+          "article-title": "On the biology of a large language model",
+          "author": "Lindsey",
+          "year": "2025",
+          "journal-title": "Transformer Circuits Thread"
+        },
+        {
+          "key": "ref66",
+          "article-title": "Sparse feature circuits: Discovering and editing interpretable causal graphs in language models",
+          "volume-title": "International Conference on Learning Representations (ICLR)",
+          "author": "Marks"
+        },
+        {
+          "key": "ref67",
+          "article-title": "Learning biologically relevant features in a pathology foundation model using sparse autoencoders",
+          "author": "Le",
+          "year": "2024",
+          "journal-title": "arXiv preprint arXiv:2407.10785"
+        },
+        {
+          "key": "ref68",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-032-05185-1_49"
+        },
+        {
+          "key": "ref69",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-032-05185-1_8"
+        },
+        {
+          "key": "ref70",
+          "article-title": "Are sparse autoencoders useful for java function bug detection?",
+          "author": "Melo",
+          "year": "2025",
+          "journal-title": "arXiv preprint arXiv:2505.10375"
+        },
+        {
+          "key": "ref71",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.18653/v1/2025.emnlp-main.1521"
+        },
+        {
+          "key": "ref72",
+          "article-title": "Sparse autoencoders do not find canonical units of analysis",
+          "volume-title": "International Conference on Learning Representations (ICLR)",
+          "author": "Leask"
+        },
+        {
+          "key": "ref73",
+          "article-title": "Sparse autoencoders trained on the same data learn different features",
+          "author": "Paulo",
+          "year": "2025",
+          "journal-title": "Advances in Neural Information Processing Systems (NIPS)"
+        }
+      ],
+      "event": {
+        "name": "2026 IEEE European Symposium on Security and Privacy Workshops (EuroS&PW)",
+        "location": "Lisbon, Portugal",
+        "start": {
+          "date-parts": [
+            [
+              2026,
+              7,
+              6
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2026,
+              7,
+              10
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2026 IEEE European Symposium on Security and Privacy Workshops (EuroS&amp;PW)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/11631844/11631895/11631915.pdf?arnumber=11631915",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            7
+          ]
+        ],
+        "date-time": "2026-08-07T04:50:48Z",
+        "timestamp": 1786078248000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11631915/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      },
+      "references-count": 73,
+      "URL": "https://doi.org/10.1109/eurospw72509.2026.00041",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7
+          ]
+        ]
+      }
+    }
+  }
+}

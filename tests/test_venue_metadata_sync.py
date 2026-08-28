@@ -13,7 +13,7 @@ def alias(**overrides):
         "venue_name": "Canonical Name",
         "venue_acronym": "TEST",
         "venue_type": "conference",
-        "venue_track": "main",
+        "venue_track": "Main",
         "review_status": "confirmed",
     })
     row.update(overrides)
@@ -39,7 +39,7 @@ class VenueMetadataSyncTests(unittest.TestCase):
         self.assertEqual(paper["venue_name"], "Canonical Name")
         self.assertEqual(paper["venue_acronym"], "TEST")
         self.assertEqual(paper["venue_type"], "conference")
-        self.assertEqual(paper["venue_track"], "main")
+        self.assertEqual(paper["venue_track"], "Main")
         self.assertEqual(paper["unrelated"], "preserved")
         self.assertEqual(report["inconsistent_records"], 1)
         second, second_report = audit_and_synchronize(synchronized, [alias()])
@@ -64,7 +64,7 @@ class VenueMetadataSyncTests(unittest.TestCase):
                 "venue_name": "Canonical Name",
                 "venue_acronym": "TEST",
                 "venue_type": "conference",
-                "venue_track": "main",
+                "venue_track": "Main",
             },
             {
                 "title": "Workshop",
@@ -72,7 +72,7 @@ class VenueMetadataSyncTests(unittest.TestCase):
                 "venue_name": "Canonical Name",
                 "venue_acronym": "TEST",
                 "venue_type": "conference",
-                "venue_track": "workshops",
+                "venue_track": "Workshop",
             },
         ]
         issues = []
@@ -95,7 +95,7 @@ class VenueMetadataSyncTests(unittest.TestCase):
             "venue_name": "Old Name",
             "venue_acronym": "TEST",
             "venue_type": "conference",
-            "venue_track": "main",
+            "venue_track": "Main",
         }], issues, {"venue:test": {
             "venue_name": "Canonical Name",
             "venue_acronym": "TEST",

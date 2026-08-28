@@ -1,0 +1,681 @@
+{
+  "doi": "10.1002/widm.1438",
+  "source_url": "https://api.crossref.org/works/10.1002%2Fwidm.1438",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            19
+          ]
+        ],
+        "date-time": "2026-08-19T17:41:58Z",
+        "timestamp": 1787161318727,
+        "version": "build-2736575974"
+      },
+      "reference-count": 73,
+      "publisher": "Wiley",
+      "issue": "3",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                12,
+                3
+              ]
+            ],
+            "date-time": "2021-12-03T00:00:00Z",
+            "timestamp": 1638489600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "http://onlinelibrary.wiley.com/termsAndConditions#vor"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "wires.onlinelibrary.wiley.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "WIREs Data Min &amp; Knowl"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2022,
+            5
+          ]
+        ]
+      },
+      "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>Synthetic media or \"deepfakes\" are making great advances in visual quality, diversity, and verisimilitude, empowered by large‐scale publicly accessible datasets and rapid technical progress in deep generative modeling. Heralding a paradigm shift in how online content is trusted, researchers in digital image forensics have responded with different proposals to reliably detect AI‐generated images in the wild. However, binary classification of image authenticity is insufficient to regulate the ethical usage of deepfake technology as new applications are developed. This article provides an overview of the major innovations in synthetic forgery detection as of 2020, while highlighting the recent shift in research towards ways to attribute AI‐generated images to their generative sources with evidence. We define the various categories of deepfakes in existence, the subtle processing traces and fingerprints that distinguish AI‐generated images from reality and each other, and the different degrees of attribution possible with current understanding of generative algorithms. Additionally, we describe the limitations of synthetic image recognition methods in practice, the counter‐forensic attacks devised to exploit these limitations, and directions for new research to assure the long‐term relevance of deepfake forensics. Reliable, explainable, and generalizable attribution methods would hold malicious users accountable for AI‐enabled disinformation, grant plausible deniability to appropriate users, and facilitate intellectual property protection of deepfake technology.</jats:p>\n                  <jats:p>\n                    This article is categorized under:\n                    <jats:list list-type=\"simple\">\n                      <jats:list-item>\n                        <jats:p>Commercial, Legal, and Ethical Issues &gt; Security and Privacy</jats:p>\n                      </jats:list-item>\n                      <jats:list-item>\n                        <jats:p>Algorithmic Development &gt; Multimedia</jats:p>\n                      </jats:list-item>\n                    </jats:list>\n                  </jats:p>",
+      "DOI": "10.1002/widm.1438",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            12,
+            3
+          ]
+        ],
+        "date-time": "2021-12-03T11:02:12Z",
+        "timestamp": 1638529332000
+      },
+      "update-policy": "https://doi.org/10.1002/crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 46,
+      "title": [
+        "Deepfake attribution: On the source identification of artificially generated images"
+      ],
+      "prefix": "10.1002",
+      "volume": "12",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-1768-558X",
+          "authenticated-orcid": false,
+          "given": "Brandon",
+          "family": "Khoo",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "School of IT Monash University, Malaysia campus  Subang Jaya Malaysia"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-7448-4595",
+          "authenticated-orcid": false,
+          "given": "Raphaël C.‐W.",
+          "family": "Phan",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of IT Monash University, Malaysia campus  Subang Jaya Malaysia"
+            },
+            {
+              "name": "Department of Software Systems &amp; Cybersecurity, Faculty of IT Monash University  Melbourne Victoria Australia"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-4754-6724",
+          "authenticated-orcid": false,
+          "given": "Chern‐Hong",
+          "family": "Lim",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "School of IT Monash University, Malaysia campus  Subang Jaya Malaysia"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "311",
+      "published-online": {
+        "date-parts": [
+          [
+            2021,
+            12,
+            3
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "e_1_2_11_2_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Abdal R. Qin Y.&Wonka P.(2019). Image2StyleGAN: How to embed images into the StyleGAN latent space? In2019 IEEE/CVF International Conference on Computer Vision (ICCV) Seoul South Korea. IEEE.https://doi.org/10.1109/iccv.2019.00453",
+          "DOI": "10.1109/ICCV.2019.00453"
+        },
+        {
+          "key": "e_1_2_11_3_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Afchar D. Nozick V. Yamagishi J.&Echizen I.(2018). MesoNet: A compact facial video forgery detection network. In2018 IEEE International Workshop on Information Forensics and Security (WIFS) Hong Kong China. IEEE.https://doi.org/10.1109/WIFS.2018.8630761",
+          "DOI": "10.1109/WIFS.2018.8630761"
+        },
+        {
+          "key": "e_1_2_11_4_1",
+          "unstructured": "Agarwal S. Farid H. Yuming G. He M. Nagano K.&Li H.(2019). Protecting world leaders against deep fakes. In2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW) Long Beach CA USA. IEEE."
+        },
+        {
+          "key": "e_1_2_11_5_1",
+          "unstructured": "Ajder H.(2020). Deepfake detection API: The automated solution for identifying fake faces.https://sensity.ai/deepfakedetection-api-the-automated-solution-for-identifying-fake-faces/"
+        },
+        {
+          "key": "e_1_2_11_6_1",
+          "unstructured": "Ajder H. Patrini G. Cavalli F.&Cullen L.(2019). The state of deepfakes: Landscape threats and impact. Technical report.https://regmedia.co.uk/2019/10/08/deepfake_report.pdf"
+        },
+        {
+          "key": "e_1_2_11_7_1",
+          "unstructured": "Albright M.&McCloskey S.(2019). Source generator attribution via inversion. In2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW) Long Beach CA USA. IEEE."
+        },
+        {
+          "key": "e_1_2_11_8_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Amerini I. Galteri L. Caldelli R.&Del Bimbo A.(2019). Deepfake video detection through optical flow based CNN. In2019 IEEE/CVF International Conference on Computer Vision Workshops (ICCVW) Seoul South Korea. IEEE.https://doi.org/10.1109/iccvw.2019.00152",
+          "DOI": "10.1109/ICCVW.2019.00152"
+        },
+        {
+          "key": "e_1_2_11_9_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bau D. Zhu J.‐Y. Wul J. Peebles W. Zhou B. Strobelt H.&Torralba A.(2019). Seeing what a GAN cannot generate. In2019 IEEE/CVF International Conference on Computer Vision (ICCV) Seoul South Korea. IEEE.https://doi.org/10.1109/iccv.2019.00460",
+          "DOI": "10.1109/ICCV.2019.00460"
+        },
+        {
+          "key": "e_1_2_11_10_1",
+          "unstructured": "Binkowski M. Sutherland D. Arbel M.&Gretton A. (2018). Demystifying MMD GANs. In6th International Conference on Learning Representations ICLR 2018 Vancouver Canada."
+        },
+        {
+          "key": "e_1_2_11_11_1",
+          "first-page": "327",
+          "volume-title": "Digital image forensics",
+          "author": "Böhme R.",
+          "year": "2012"
+        },
+        {
+          "key": "e_1_2_11_12_1",
+          "unstructured": "Brock A. Donahue J.&Simonyan K.(2018). Large scale GAN training for high fidelity natural image synthesis. In6th International Conference on Learning Representations ICLR 2018 Vancouver Canada."
+        },
+        {
+          "key": "e_1_2_11_13_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Carlini N.&Farid H.(2020). Evading deepfake‐image detectors with white‐ and black‐box attacks. In2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW) Seattle WA USA. IEEE.https://doi.org/10.1109/cvprw50498",
+          "DOI": "10.1109/CVPRW50498.2020.00337"
+        },
+        {
+          "key": "e_1_2_11_14_1",
+          "first-page": "1753",
+          "article-title": "Deep fakes: A looming challenge for privacy, democracy, and national security",
+          "volume": "107",
+          "author": "Chesney R.",
+          "year": "2018",
+          "journal-title": "California Law Review"
+        },
+        {
+          "key": "e_1_2_11_15_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Choi Y. Choi M. Kim M. Ha J.‐W. Kim S.&Choo J.(2018). StarGAN: Unified generative adversarial networks for multi‐domain image‐to‐image translation. In2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Salt Lake City UT USA. IEEE.https://doi.org/10.1109/cvpr.2018.00916",
+          "DOI": "10.1109/CVPR.2018.00916"
+        },
+        {
+          "key": "e_1_2_11_16_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Choi Y. Youngjung U. H. Yoo J.&Ha J.‐W(2020). StarGANv2: Diverse image synthesis for multiple domains. In2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Seattle WA USA. IEEE.https://doi.org/10.1109/cvpr42600.2020.00821",
+          "DOI": "10.1109/CVPR42600.2020.00821"
+        },
+        {
+          "key": "e_1_2_11_17_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chung J. S. Nagrani A.&Zisserman A.(2018). VoxCeleb2: Deep speaker recognition. Interspeech 2018 Hyderabad India. ISCA.https://doi.org/10.21437/interspeech.2018-1929",
+          "DOI": "10.21437/Interspeech.2018-1929"
+        },
+        {
+          "key": "e_1_2_11_18_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TNNLS.2018.2875194"
+        },
+        {
+          "key": "e_1_2_11_19_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Dang‐Nguyen D.‐T. Pasquini C. Conotter V.&Boato G.(2015). RAISE: a raw images dataset for digital image forensics. InMMSys '15: Proceedings of the 6th ACM Multimedia Systems Conference Portland OR USA. ACM Press.https://doi.org/10.1145/2713168.2713194",
+          "DOI": "10.1145/2713168.2713194"
+        },
+        {
+          "key": "e_1_2_11_20_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Durall R. Keuper M.&Keuper J.(2020). Watch your up‐convolution: CNN based generative deep neural networks are failing to reproduce spectral distributions. In2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Seattle WA USA. IEEE.https://doi.org/10.1109/cvpr42600.2020.00791",
+          "DOI": "10.1109/CVPR42600.2020.00791"
+        },
+        {
+          "key": "e_1_2_11_21_1",
+          "unstructured": "Frank J. Eisenhofer T. Schönherr L. Fischer A. Kolossa D.&Holz T. (2020). Leveraging frequency analysis for deep fake image recognition. InProceedings of the 37th International Conference on Machine Learning (ICML) Virtual Event. pp. 3247–3258."
+        },
+        {
+          "key": "e_1_2_11_22_1",
+          "unstructured": "Goodfellow I. Pouget‐Abadie J. Mirza M. Xu B. Warde‐Farley D. Ozair S. Courville A.&Bengio Y.(2014). Generative adversarial nets. InAdvances in Neural Information Processing Systems 27 (NIPS 2014) pp. 2672–2680."
+        },
+        {
+          "key": "e_1_2_11_23_1",
+          "unstructured": "Goodfellow I. Shlens J.&Szegedy C.(2015). Explaining and harnessing adversarial examples. In3rd International Conference on Learning Representations ICLR 2015 San Diego CA USA."
+        },
+        {
+          "key": "e_1_2_11_24_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Güera D.&Delp E. J.(2018). Deepfake video detection using recurrent neural networks. In2018 15th IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS) Auckland New Zealand. IEEE.https://doi.org/10.1109/avss.2018.8639163",
+          "DOI": "10.1109/AVSS.2018.8639163"
+        },
+        {
+          "key": "e_1_2_11_25_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He K. Zhang X. Ren S.&Sun J.(2016). Deep residual learning for image recognition. In2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Las Vegas NV USA. IEEE.https://doi.org/10.1109/cvpr.2016.90",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "e_1_2_11_26_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIP.2019.2916751"
+        },
+        {
+          "key": "e_1_2_11_27_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hsu C.‐C. Lee C.‐Y.&Zhuang Y.‐X.(2018). Learning to detect fake face images in the wild. In2018 International Symposium on Computer Consumer and Control (IS3C) Taichung Taiwan. IEEE.https://doi.org/10.1109/IS3C.2018.00104",
+          "DOI": "10.1109/IS3C.2018.00104"
+        },
+        {
+          "key": "e_1_2_11_28_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/app10010370"
+        },
+        {
+          "key": "e_1_2_11_29_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Huang Y. Juefei‐Xu F. Wang R. Guo Q. Ma L. Xie X. Li J. Miao W. Liu Y.&Geguang P(2020). FakePolisher: Making deepFakes more detection‐evasive by shallow reconstruction. InMM '20: Proceedings of the 28th ACM International Conference on Multimedia Seattle WA USA. ACM.https://doi.org/10.1145/3394171.3413732",
+          "DOI": "10.1145/3394171.3413732"
+        },
+        {
+          "key": "e_1_2_11_30_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Isola P. Zhu J.‐Y. Zhou T.&Efros A. A.(2017). Image‐to‐image translation with conditional adversarial networks. In2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Honolulu HI USA. IEEE.https://doi.org/10.1109/cvpr.2017.632",
+          "DOI": "10.1109/CVPR.2017.632"
+        },
+        {
+          "key": "e_1_2_11_31_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-46475-6_43"
+        },
+        {
+          "key": "e_1_2_11_32_1",
+          "unstructured": "Karras T. Aila T. Laine S.&Lehtinen J.(2018). Progressive growing of GANs for improved quality stability and variation. In6th International Conference on Learning Representations ICLR 2018 Vancouver Canada."
+        },
+        {
+          "key": "e_1_2_11_33_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras T. SamuliL. MiikaA. JanneH. Jaakko L.&Timo A.(2020). Analyzing and improving the image quality of StyleGAN. In2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Seattle WA USA. IEEE.https://doi.org/10.1109/cvpr42600.2020.00813",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "e_1_2_11_34_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras T. SamuliL.&Timo A.(2019). A style‐based generator architecture for generative adversarial networks. In2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Long Beach CA USA. IEEE.https://doi.org/10.1109/cvpr.2019.00453",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "e_1_2_11_35_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3450626.3459776"
+        },
+        {
+          "key": "e_1_2_11_36_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Korshunov P.&Marcel S.(2019). Vulnerability assessment and detection of deepfake videos. In2019 International Conference on Biometrics (ICB) Crete Greece. IEEE.https://doi.org/10.1109/icb45273.2019.8987375",
+          "DOI": "10.1109/ICB45273.2019.8987375"
+        },
+        {
+          "key": "e_1_2_11_37_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li Y. Chang M.‐C.&Lyu S.(2018). In Ictu Oculi: Exposing AI created fake videos by detecting eye blinking. In2018 IEEE International Workshop on Information Forensics and Security (WIFS) Hong Kong China. IEEE.https://doi.org/10.1109/wifs.2018.8630787",
+          "DOI": "10.1109/WIFS.2018.8630787"
+        },
+        {
+          "key": "e_1_2_11_38_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu M. Ding Y. Xia M. Liu X. Ding E. Zuo W.&Wen S.(2019). STGAN: A unified selective transfer network for arbitrary image attribute editing. In2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Long Beach CA USA. IEEE.https://doi.org/10.1109/cvpr.2019.00379",
+          "DOI": "10.1109/CVPR.2019.00379"
+        },
+        {
+          "key": "e_1_2_11_39_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu Z. Luo P. Wang X.&Tang X.(2015). Deep learning face attributes in the wild. In2015 IEEE International Conference on Computer Vision (ICCV) Santiago Chile. IEEE.https://doi.org/10.1109/iccv.2015.425",
+          "DOI": "10.1109/ICCV.2015.425"
+        },
+        {
+          "key": "e_1_2_11_40_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Long J. Shelhamer E.&Darrell T.(2015). Fully convolutional networks for semantic segmentation. In2015 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Boston MA USA. IEEE.https://doi.org/10.1109/cvpr.2015.7298965",
+          "DOI": "10.1109/CVPR.2015.7298965"
+        },
+        {
+          "key": "e_1_2_11_41_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-70096-0_22"
+        },
+        {
+          "key": "e_1_2_11_42_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lyu S.(2020). Deepfake detection: Current challenges and next steps. In 2020 IEEE International Conference on Multimedia and Expo Workshops (ICMEW) London UK. IEEE.https://doi.org/10.1109/icmew46912.2020.9105991",
+          "DOI": "10.1109/ICMEW46912.2020.9105991"
+        },
+        {
+          "key": "e_1_2_11_43_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Malolan B. Parekh A.&Kazi F.(2020). Explainable deep‐fake detection using visual interpretability methods. In2020 3rd International Conference on Information and Computer Technologies (ICICT) San Jose CA USA. IEEE.https://doi.org/10.1109/icict50521.2020.00051",
+          "DOI": "10.1109/ICICT50521.2020.00051"
+        },
+        {
+          "key": "e_1_2_11_44_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra F. Gragnaniello D. Cozzolino D.&Verdoliva L.(2018). Detection of GAN‐generated fake images over social networks. In2018 IEEE Conference on Multimedia Information Processing and Retrieval (MIPR) Miami FL USA. IEEE.https://doi.org/10.1109/mipr.2018.00084",
+          "DOI": "10.1109/MIPR.2018.00084"
+        },
+        {
+          "key": "e_1_2_11_45_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra F. Gragnaniello D. Verdoliva L.&Poggi G.(2019). Do GANs leave artificial fingerprints?In 2019 IEEE Conference on Multimedia Information Processing and Retrieval (MIPR) San Jose CA USA. IEEE.https://doi.org/10.1109/mipr.2019.00103",
+          "DOI": "10.1109/MIPR.2019.00103"
+        },
+        {
+          "key": "e_1_2_11_46_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Matern F. Riess C.&Stamminger M.(2019). Exploiting visual artifacts to expose deepfakes and face manipulations. In2019 IEEE Winter Applications of Computer Vision Workshops (WACVW) Waikoloa HI USA. IEEE.https://doi.org/10.1109/wacvw.2019.00020",
+          "DOI": "10.1109/WACVW.2019.00020"
+        },
+        {
+          "key": "e_1_2_11_47_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Menon S. Damian A. Hu S. Ravi N.&Rudin C.(2020). PULSE: Self‐supervised photo upsampling via latent space exploration of generative models. In2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Seattle WA USA. IEEE.https://doi.org/10.1109/cvpr42600.2020.00251",
+          "DOI": "10.1109/CVPR42600.2020.00251"
+        },
+        {
+          "key": "e_1_2_11_48_1",
+          "unstructured": "Miyato T. Kataoka T. Koyama M.&Yoshida Y.(2018). Spectral normalization for generative adversarial networks. In6th International Conference on Learning Representations ICLR 2018 Vancouver Canada."
+        },
+        {
+          "key": "e_1_2_11_49_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.2352/ISSN.2470-1173.2019.5.MWSF-532"
+        },
+        {
+          "key": "e_1_2_11_50_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JSTSP.2020.3007250"
+        },
+        {
+          "key": "e_1_2_11_51_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nirkin Y. Keller Y.&Hassner T.(2019). FSGAN: Subject agnostic face swapping and reenactment. In2019 IEEE/CVF International Conference on Computer Vision (ICCV) Seoul South Korea. IEEE.https://doi.org/10.1109/iccv.2019.00728",
+          "DOI": "10.1109/ICCV.2019.00728"
+        },
+        {
+          "key": "e_1_2_11_52_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.23915/distill.00003"
+        },
+        {
+          "key": "e_1_2_11_53_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11042-010-0620-1"
+        },
+        {
+          "key": "e_1_2_11_54_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ribeiro M. T. Singh S.&Carlos Guestrin C. (2016). “Why Should I Trust You?”: Explaining the predictions of any classifier. InKDD '16: Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining San Francisco CA USA. ACM.https://doi.org/10.1145/2939672.2939778",
+          "DOI": "10.1145/2939672.2939778"
+        },
+        {
+          "key": "e_1_2_11_55_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rössler A. Cozzolino D. Verdoliva L. Riess C. Thies J.&Niessner M.(2019). FaceForensics++: Learning to detect manipulated facial images. In2019 IEEE/CVF International Conference on Computer Vision (ICCV) Seoul South Korea. IEEE.https://doi.org/10.1109/iccv.2019.00009",
+          "DOI": "10.1109/ICCV.2019.00009"
+        },
+        {
+          "key": "e_1_2_11_56_1",
+          "unstructured": "Sabir E. Cheng J. Jaiswal A. AbdAlmageed W. Masi I.&Natarajan P.(2019). Recurrent convolutional strategies for face manipulation detection in videos. In2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW) Long Beach CA USA. IEEE."
+        },
+        {
+          "key": "e_1_2_11_57_1",
+          "unstructured": "Salimans T. Goodfellow I. Zaremba W. Cheung V. Radford A.&Chen X.(2016). Improved techniques for training GANs. InAdvances in Neural Information Processing Systems 29 (NIPS 2016) pp. 2234–2242."
+        },
+        {
+          "key": "e_1_2_11_58_1",
+          "unstructured": "Siarohin A. Lathuilière S. Tulyakov S. Ricci E.&Sebe N.(2019). First order motion model for image animation. InAdvances in Neural Information Processing Systems 32 (NeurIPS 2019) pp. 7137–7147."
+        },
+        {
+          "key": "e_1_2_11_59_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Thies J. Zollhöfer M. Stamminger M. Theobalt C.&Niessner M.(2016). Face2Face: Real‐time face capture and reenactment of RGB videos. In2016 IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Las Vegas NV USA. IEEE.https://doi.org/10.1109/cvpr.2016.262",
+          "DOI": "10.1109/CVPR.2016.262"
+        },
+        {
+          "key": "e_1_2_11_60_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.inffus.2020.06.014"
+        },
+        {
+          "key": "e_1_2_11_61_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Torralba A.&Efros A. A.(2011). Unbiased look at dataset bias. In2011 Conference on Computer Vision and Pattern Recognition (CVPR) Colorado Springs CO USA. IEEE.https://doi.org/10.1109/cvpr.2011.5995347",
+          "DOI": "10.1109/CVPR.2011.5995347"
+        },
+        {
+          "key": "e_1_2_11_62_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang R. Juefei‐Xu F. Ma L. Xie X. Huang Y. Wang J.&Liu Y.(2020). FakeSpotter: A simple yet robust baseline for spotting AI‐synthesized fake faces. InProceedings of the 29th International Joint Conference on Artificial Intelligence (IJCAI) Yokohama Japan pp. 3444–3451. International Joint Conferences on Artificial Intelligence Organization.https://doi.org/10.24963/ijcai.2020/476",
+          "DOI": "10.24963/ijcai.2020/476"
+        },
+        {
+          "key": "e_1_2_11_63_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang S.‐Y. Wang O. Zhang R. Owens A.&Efros A. A.(2020). CNN‐generated images are surprisingly easy to spot. for now. In2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Seattle WA USA. IEEE.https://doi.org/10.1109/CVPR42600.2020.00872",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "e_1_2_11_64_1",
+          "unstructured": "Wang T.‐C. Liu M.‐Y. Zhu J.‐Y. Liu G. Tao A. Kautz J.&Catanzaro B.(2018). Video‐to‐video synthesis. In Advances in Neural Information Processing Systems 31 (NeurIPS 2018) pp. 1144–1156."
+        },
+        {
+          "key": "e_1_2_11_65_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.22215/timreview/1282"
+        },
+        {
+          "key": "e_1_2_11_66_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-31456-9_15"
+        },
+        {
+          "key": "e_1_2_11_67_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yang X. Li Y.&Lyu S.(2019). Exposing deep fakes using inconsistent head poses. InICASSP 2019–2019 IEEE International Conference on Acoustics Speech and Signal Processing (ICASSP) Brighton UK. IEEE.https://doi.org/10.1109/icassp.2019.8683164",
+          "DOI": "10.1109/ICASSP.2019.8683164"
+        },
+        {
+          "key": "e_1_2_11_68_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu N. Davis L.&Fritz M.(2019). Attributing fake images to GANs: Learning and analyzing GAN fingerprints. In2019 IEEE/CVF International Conference on Computer Vision (ICCV) Seoul South Korea. IEEE.https://doi.org/10.1109/iccv.2019.00765",
+          "DOI": "10.1109/ICCV.2019.00765"
+        },
+        {
+          "key": "e_1_2_11_69_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zakharov E. Shysheya A. Burkov E.&Lempitsky V.(2019). Few‐shot adversarial learning of realistic neural talking head models. In2019 IEEE/CVF International Conference on Computer Vision (ICCV) Seoul South Korea. IEEE.https://doi.org/10.1109/iccv.2019.00955",
+          "DOI": "10.1109/ICCV.2019.00955"
+        },
+        {
+          "key": "e_1_2_11_70_1",
+          "unstructured": "Zhang R.(2019). Making convolutional networks shift‐invariant again. InProceedings of the 36th International Conference on Machine Learning (ICML) Long Beach CA USA. pp. 7324–7334."
+        },
+        {
+          "key": "e_1_2_11_71_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhang R. Isola P. Efros A. A. Shechtman E.&Wang O.(2018). The unreasonable effectiveness of deep features as a perceptual metric. In2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Salt Lake City UT USA. IEEE.https://doi.org/10.1109/cvpr.2018.00068",
+          "DOI": "10.1109/CVPR.2018.00068"
+        },
+        {
+          "key": "e_1_2_11_72_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhang X. Karaman S.&Chang S.‐F.(2019). Detecting and simulating artifacts in GAN fake images. In2019 IEEE International Workshop on Information Forensics and Security (WIFS) Delft Netherlands. IEEE.https://doi.org/10.1109/wifs47025.2019.9035107",
+          "DOI": "10.1109/WIFS47025.2019.9035107"
+        },
+        {
+          "key": "e_1_2_11_73_1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhu J.‐Y. Park T. Isola P.&Efros A. A.(2017). Unpaired image‐to‐image translation using cycle‐consistent adversarial networks. In2017 IEEE International Conference on Computer Vision (ICCV) Venice Italy. IEEE.https://doi.org/10.1109/iccv.2017.244",
+          "DOI": "10.1109/ICCV.2017.244"
+        },
+        {
+          "key": "e_1_2_11_74_1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-46454-1_36"
+        }
+      ],
+      "container-title": [
+        "WIREs Data Mining and Knowledge Discovery"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://onlinelibrary.wiley.com/doi/pdf/10.1002/widm.1438",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://onlinelibrary.wiley.com/doi/full-xml/10.1002/widm.1438",
+          "content-type": "application/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://wires.onlinelibrary.wiley.com/doi/pdf/10.1002/widm.1438",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2023,
+            8,
+            25
+          ]
+        ],
+        "date-time": "2023-08-25T18:06:15Z",
+        "timestamp": 1692986775000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://wires.onlinelibrary.wiley.com/doi/10.1002/widm.1438"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            12,
+            3
+          ]
+        ]
+      },
+      "references-count": 73,
+      "journal-issue": {
+        "issue": "3",
+        "published-print": {
+          "date-parts": [
+            [
+              2022,
+              5
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "10.1002/widm.1438"
+      ],
+      "URL": "https://doi.org/10.1002/widm.1438",
+      "archive": [
+        "Portico"
+      ],
+      "relation": {},
+      "ISSN": [
+        "1942-4787",
+        "1942-4795"
+      ],
+      "issn-type": [
+        {
+          "value": "1942-4787",
+          "type": "print"
+        },
+        {
+          "value": "1942-4795",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            12,
+            3
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2020-12-06",
+          "order": 0,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2021-08-13",
+          "order": 1,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2021-12-03",
+          "order": 2,
+          "name": "published",
+          "label": "Published",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ],
+      "article-number": "e1438"
+    }
+  }
+}

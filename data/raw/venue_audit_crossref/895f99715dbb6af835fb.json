@@ -1,0 +1,770 @@
+{
+  "doi": "10.1016/j.compag.2021.106064",
+  "source_url": "https://api.crossref.org/works/10.1016%2Fj.compag.2021.106064",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            23
+          ]
+        ],
+        "date-time": "2026-08-23T15:27:55Z",
+        "timestamp": 1787498875243,
+        "version": "build-2736575974"
+      },
+      "reference-count": 47,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                4,
+                1
+              ]
+            ],
+            "date-time": "2021-04-01T00:00:00Z",
+            "timestamp": 1617235200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                4,
+                1
+              ]
+            ],
+            "date-time": "2021-04-01T00:00:00Z",
+            "timestamp": 1617235200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                4,
+                1
+              ]
+            ],
+            "date-time": "2021-04-01T00:00:00Z",
+            "timestamp": 1617235200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-017"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                4,
+                1
+              ]
+            ],
+            "date-time": "2021-04-01T00:00:00Z",
+            "timestamp": 1617235200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                4,
+                1
+              ]
+            ],
+            "date-time": "2021-04-01T00:00:00Z",
+            "timestamp": 1617235200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-012"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                4,
+                1
+              ]
+            ],
+            "date-time": "2021-04-01T00:00:00Z",
+            "timestamp": 1617235200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                4,
+                1
+              ]
+            ],
+            "date-time": "2021-04-01T00:00:00Z",
+            "timestamp": 1617235200000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-004"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100010845",
+          "name": "Harbin Science and Technology Bureau",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/501100010845",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100002855",
+          "name": "Ministry of Science and Technology of the People's Republic of China",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/501100002855",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Computers and Electronics in Agriculture"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2021,
+            4
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.compag.2021.106064",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            6
+          ]
+        ],
+        "date-time": "2021-03-06T23:37:45Z",
+        "timestamp": 1615073865000
+      },
+      "page": "106064",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 153,
+      "special_numbering": "C",
+      "title": [
+        "Detecting soybean leaf disease from synthetic image using multi-feature fusion faster R-CNN"
+      ],
+      "prefix": "10.1016",
+      "volume": "183",
+      "author": [
+        {
+          "given": "Keke",
+          "family": "Zhang",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Qiufeng",
+          "family": "Wu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Yiping",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "key": "10.1016/j.compag.2021.106064_b0005",
+          "doi-asserted-by": "crossref",
+          "first-page": "284",
+          "DOI": "10.1016/j.compag.2017.12.001",
+          "article-title": "Data synthesis methods for semantic segmentation in agriculture: A Capsicum annuum dataset",
+          "volume": "44",
+          "author": "Barth",
+          "year": "2018",
+          "journal-title": "Comput. Electron. Agric."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0010",
+          "series-title": "IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "2874",
+          "article-title": "Inside-outside net: detecting objects in context with skip pooling and recurrent neural networks",
+          "author": "Bell",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0015",
+          "series-title": "IEEE/RSJ International Conference on Intelligent Robots and Systems",
+          "first-page": "5188",
+          "article-title": "Automatic model based dataset generation for fast and accurate crop and weeds detection",
+          "author": "Cicco",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0020",
+          "doi-asserted-by": "crossref",
+          "first-page": "63",
+          "DOI": "10.1016/j.compag.2018.12.028",
+          "article-title": "Detection of grapevine yellows symptoms in Vitis vinifera L. with artificial intelligence",
+          "volume": "157",
+          "author": "Cruz",
+          "year": "2019",
+          "journal-title": "Comput. Electron. Agric."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0025",
+          "doi-asserted-by": "crossref",
+          "first-page": "2921",
+          "DOI": "10.1016/j.patcog.2015.03.019",
+          "article-title": "On-line signature recognition through the combination of real dynamic data and synthetically generated static data",
+          "volume": "48",
+          "author": "Galbally",
+          "year": "2015",
+          "journal-title": "Pattern Recogn."
+        },
+        {
+          "issue": "12",
+          "key": "10.1016/j.compag.2021.106064_b0030",
+          "first-page": "136",
+          "article-title": "Recognition of soybean nutrient deficiency based on color characteristics of canopy",
+          "volume": "44",
+          "author": "Guan",
+          "year": "2016",
+          "journal-title": "J. Northeast A&F Uni. (Natural Science Edition)."
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.compag.2021.106064_b0035",
+          "first-page": "256",
+          "article-title": "Hyperspectral imaging for early detection of soybean mosaic disease based on convolutional neural network model",
+          "volume": "45",
+          "author": "Gui",
+          "year": "2019",
+          "journal-title": "J. Zhejiang Univ. (Agric. & Life Sci.)"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0040",
+          "series-title": "IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "2315",
+          "article-title": "Synthetic data for text localisation in natural images",
+          "author": "Gupta",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0045",
+          "series-title": "IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "3819",
+          "article-title": "Learning scene-specific pedestrian detectors without real data",
+          "author": "Hattori",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0050",
+          "series-title": "IEEE International Conference on Computer Vision",
+          "first-page": "2980",
+          "article-title": "Mask r-cnn",
+          "author": "He",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0055",
+          "series-title": "IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "770",
+          "article-title": "Deep residual learning for image recognition",
+          "author": "He",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0060",
+          "unstructured": "Hughes, D., Salathé, M., et al., 2015. An open access repository of images on plant health to enable the development of mobile disease diagnostics. arXiv preprint arXiv:1511.08060."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0065",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jia, S., Wang, P., Jia, P., et al., 2017. Research on data augmentation for image classification based on convolution neural network. In: Chinese Automation Congress. pp. 4165–4170.",
+          "DOI": "10.1109/CAC.2017.8243510"
+        },
+        {
+          "issue": "7",
+          "key": "10.1016/j.compag.2021.106064_b0070",
+          "first-page": "1177",
+          "article-title": "Soybean disease detection system based on convolutional neural network under Caffe framework",
+          "volume": "31",
+          "author": "Jiang",
+          "year": "2019",
+          "journal-title": "Acta Agriculturae Zhejiangensis."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0075",
+          "doi-asserted-by": "crossref",
+          "unstructured": "KC, K., Yin, Z., Wu M., et al., 2019. Depthwise separable convolution architectures for plant disease classification. Comput. Electron. Agric. 165, 104948.",
+          "DOI": "10.1016/j.compag.2019.104948"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0080",
+          "series-title": "International Conference on Neural Information Processing Systems",
+          "first-page": "1097",
+          "article-title": "ImageNet classification with deep convolutional neural networks",
+          "author": "Krizhevsky",
+          "year": "2012"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0085",
+          "doi-asserted-by": "crossref",
+          "first-page": "161",
+          "DOI": "10.1016/j.patcog.2018.08.005",
+          "article-title": "Illumination-aware faster R-CNN for robust multispectral pedestrian detection",
+          "volume": "85",
+          "author": "Li",
+          "year": "2019",
+          "journal-title": "Pattern Recogn."
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.compag.2021.106064_b0090",
+          "first-page": "90",
+          "article-title": "Visual Identification System of Soybean Frogeye Leaf Spot Based on SURF Feature Extraction",
+          "volume": "38",
+          "author": "Li",
+          "year": "2019",
+          "journal-title": "Soybean Science."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0095",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, Z., Pao, C., Yu, G., et al., 2018. DetNet: A Backbone network for Object Detection. arXiv:1804.06215v2.",
+          "DOI": "10.1007/978-3-030-01240-3_21"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0100",
+          "doi-asserted-by": "crossref",
+          "first-page": "518",
+          "DOI": "10.1016/j.compag.2019.01.034",
+          "article-title": "PD2SE-Net: Computer-assisted plant disease diagnosis and severity estimation network",
+          "volume": "157",
+          "author": "Liang",
+          "year": "2019",
+          "journal-title": "Comput. Electron. Agric."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0105",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lin, T.Y., Dollár, P., Girshick, R., et al., 2017. Feature Pyramid Networks for Object Detection. arXiv:1612.03144v2.",
+          "DOI": "10.1109/CVPR.2017.106"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0110",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lin, T.Y., Goyal, P., Girshick, R., et al., 2018. Focal loss for dense object detection. arXiv:1708.02002v2.",
+          "DOI": "10.1109/ICCV.2017.324"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0115",
+          "series-title": "European Conference on Computer Vision",
+          "first-page": "21",
+          "article-title": "Ssd: Single shot multibox detector",
+          "author": "Liu",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0120",
+          "series-title": "European Conference on Computer Vision",
+          "article-title": "Learning efficient single-stage pedestrian detectors by asymptotic localization fitting",
+          "author": "Liu",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0125",
+          "doi-asserted-by": "crossref",
+          "first-page": "18",
+          "DOI": "10.1016/j.compag.2018.08.048",
+          "article-title": "A recognition method for cucumber diseases using leaf symptom images based on deep convolutional neural network",
+          "volume": "154",
+          "author": "Ma",
+          "year": "2018",
+          "journal-title": "Comput. Electron. Agric."
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.compag.2021.106064_b0130",
+          "first-page": "163",
+          "article-title": "Diagnosis model of soybean leaf diseases based on improved cascade neural network",
+          "volume": "48",
+          "author": "Ma",
+          "year": "2017",
+          "journal-title": "Trans. Chinese Soc. Agric. Mach."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0135",
+          "series-title": "IEEE/RSJ International Conference on Intelligent Robots and Systems",
+          "first-page": "4296",
+          "article-title": "Fast robust monocular depth estimation for obstacle detection with fully convolutional networks",
+          "author": "Mancini",
+          "year": "2016"
+        },
+        {
+          "issue": "05",
+          "key": "10.1016/j.compag.2021.106064_b0140",
+          "first-page": "142",
+          "article-title": "Extraction of the image of soybean target leaf spot based on improved genetic algorithm",
+          "volume": "25",
+          "author": "Qi",
+          "year": "2006",
+          "journal-title": "Trans. Chinese Soc. Agric. Eng."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0145",
+          "doi-asserted-by": "crossref",
+          "first-page": "905",
+          "DOI": "10.3390/s17040905",
+          "article-title": "Deep count: Fruit counting based on deep simulated learning",
+          "volume": "17",
+          "author": "Rahnemoonfar",
+          "year": "2017",
+          "journal-title": "Sensors."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0150",
+          "series-title": "IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "779",
+          "article-title": "You only look once: Unified, real-time object detection",
+          "author": "Redmon",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0155",
+          "series-title": "IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "6517",
+          "article-title": "Yolo9000: Better, faster, stronger",
+          "author": "Redmon",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0160",
+          "unstructured": "Ren, S., He, K., Girshick, R., et al., 2015. Faster r-cnn: Towards real-time object detection with region proposal networks. In: Advances in Neural Information Processing Systems. pp, 91–99."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0165",
+          "doi-asserted-by": "crossref",
+          "first-page": "355",
+          "DOI": "10.1016/j.patcog.2017.08.007",
+          "article-title": "Forgetting of unused classes in missing data environment using automatically generated data: Application to on-line handwritten gesture command recognition",
+          "volume": "72",
+          "author": "Režnáková",
+          "year": "2017",
+          "journal-title": "Pattern Recogn."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0170",
+          "series-title": "European Conference on Computer Vision",
+          "first-page": "102",
+          "article-title": "Playing for data: ground truth from computer games",
+          "author": "Richter",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0175",
+          "doi-asserted-by": "crossref",
+          "first-page": "360",
+          "DOI": "10.1016/j.compag.2018.11.040",
+          "article-title": "Estimating soybean leaf defoliation using convolutional neural networks and synthetic images",
+          "volume": "156",
+          "author": "Silval",
+          "year": "2019",
+          "journal-title": "Comput. Electron. Agric."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0180",
+          "series-title": "International Conference on Learning Representations",
+          "article-title": "Very deep convolutional networks for large-scale image recognition",
+          "author": "Simonyan",
+          "year": "2015"
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.compag.2021.106064_b0185",
+          "first-page": "171",
+          "article-title": "Image recognition of soybean pests based on attention convolutional neural network",
+          "volume": "41",
+          "author": "Sun",
+          "year": "2020",
+          "journal-title": "J. Chinese Agric. Mechanization."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0190",
+          "first-page": "1",
+          "article-title": "Automatic recognition of soybean leaf diseases using UAV images and deep convolutional neural networks",
+          "volume": "99",
+          "author": "Tetila",
+          "year": "2019",
+          "journal-title": "IEEE Geosci. Remote Sens. Lett."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0195",
+          "doi-asserted-by": "crossref",
+          "first-page": "443",
+          "DOI": "10.1016/j.compag.2018.09.030",
+          "article-title": "Dairy goat detection based on Faster R-CNN from surveillance video",
+          "volume": "154",
+          "author": "Wang",
+          "year": "2018",
+          "journal-title": "Comput. Electron. Agric."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0200",
+          "doi-asserted-by": "crossref",
+          "first-page": "196",
+          "DOI": "10.1016/j.patcog.2019.05.026",
+          "article-title": "A deep Coarse-to-Fine network for head pose estimation from synthetic data",
+          "volume": "94",
+          "author": "Wang",
+          "year": "2019",
+          "journal-title": "Pattern Recogn."
+        },
+        {
+          "issue": "4",
+          "key": "10.1016/j.compag.2021.106064_b0205",
+          "first-page": "659",
+          "article-title": "Identification of soybean leaf diseases via deep learning",
+          "volume": "100",
+          "author": "Wu",
+          "year": "2019",
+          "journal-title": "J. Inst. Eng. (India): Series A."
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.compag.2021.106064_b0210",
+          "first-page": "195",
+          "article-title": "Leaf deficiency symptoms detection method of soybean based on dep learning",
+          "volume": "51",
+          "author": "Xiong",
+          "year": "2020",
+          "journal-title": "Trans. Chinese Soc. Agric. Mach."
+        },
+        {
+          "issue": "34",
+          "key": "10.1016/j.compag.2021.106064_b0215",
+          "first-page": "189",
+          "article-title": "Lactating sow postures recognition from depth image of videos based on improved Faster R-CNN",
+          "volume": "9",
+          "author": "Xue",
+          "year": "2018",
+          "journal-title": "Trans. Chinese Soc. Agric. Eng."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0220",
+          "doi-asserted-by": "crossref",
+          "first-page": "453",
+          "DOI": "10.1016/j.compag.2018.11.002",
+          "article-title": "Feeding behavior recognition for group-housed pigs with the Faster R-CNN",
+          "volume": "155",
+          "author": "Yang",
+          "year": "2018",
+          "journal-title": "Comput. Electron. Agric."
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0225",
+          "series-title": "International Conference on Image Processing",
+          "first-page": "3708",
+          "article-title": "Road crack detection using deep convolutional neural network",
+          "author": "Zhang",
+          "year": "2016"
+        },
+        {
+          "issue": "2",
+          "key": "10.1016/j.compag.2021.106064_b0230",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1002/jmri.26860",
+          "article-title": "Automated deep learning method for whole-breast segmentation in diffusion-weighted breast MRI",
+          "volume": "51",
+          "author": "Zhang",
+          "year": "2019",
+          "journal-title": "J. Magn. Reson. Imaging"
+        },
+        {
+          "key": "10.1016/j.compag.2021.106064_b0235",
+          "doi-asserted-by": "crossref",
+          "first-page": "51",
+          "DOI": "10.1016/j.compag.2018.01.023",
+          "article-title": "Automatic recognition of lactating sow postures from depth images by deep learning detector",
+          "volume": "147",
+          "author": "Zheng",
+          "year": "2018",
+          "journal-title": "Comput. Electron. Agric."
+        }
+      ],
+      "container-title": [
+        "Computers and Electronics in Agriculture"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S016816992100082X?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S016816992100082X?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            9,
+            29
+          ]
+        ],
+        "date-time": "2025-09-29T13:22:04Z",
+        "timestamp": 1759152124000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S016816992100082X"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            4
+          ]
+        ]
+      },
+      "references-count": 47,
+      "alternative-id": [
+        "S016816992100082X"
+      ],
+      "URL": "https://doi.org/10.1016/j.compag.2021.106064",
+      "relation": {},
+      "ISSN": [
+        "0168-1699"
+      ],
+      "issn-type": [
+        {
+          "value": "0168-1699",
+          "type": "print"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            4
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Detecting soybean leaf disease from synthetic image using multi-feature fusion faster R-CNN",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Computers and Electronics in Agriculture",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.compag.2021.106064",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2021 Elsevier B.V. All rights reserved.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ],
+      "article-number": "106064"
+    }
+  }
+}

@@ -1,0 +1,615 @@
+{
+  "doi": "10.3389/frai.2025.1663292",
+  "source_url": "https://api.crossref.org/works/10.3389%2Ffrai.2025.1663292",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            15
+          ]
+        ],
+        "date-time": "2026-07-15T11:33:18Z",
+        "timestamp": 1784115198175,
+        "version": "3.55.0"
+      },
+      "reference-count": 46,
+      "publisher": "Frontiers Media SA",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                10,
+                22
+              ]
+            ],
+            "date-time": "2025-10-22T00:00:00Z",
+            "timestamp": 1761091200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "frontiersin.org"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Front. Artif. Intell."
+      ],
+      "abstract": "<jats:p>With the rapid advancement of AI-generated content, detecting synthetic images has become a critical task in digital forensics and media integrity. In this paper, we propose a novel multi-modal fusion network that leverages complementary texture and content information to improve the detection of AI-generated images. Our approach integrates three input branches: the original RGB image, a local binary pattern (LBP) map to capture micro-texture irregularities, and a gray-level co-occurrence matrix (GLCM) representation to encode statistical texture dependencies. These three streams are processed in parallel through a shared-weight convolutional backbone and subsequently fused at the feature level to enhance discrimination capability. Extensive experiments conducted on benchmark datasets demonstrate that our method outperforms existing single-modality baselines and achieves strong generalization across multiple types of generative models. The proposed fusion framework offers an interpretable and efficient solution for robust and reliable detection of AI-synthesized imagery.</jats:p>",
+      "DOI": "10.3389/frai.2025.1663292",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            22
+          ]
+        ],
+        "date-time": "2025-10-22T05:32:29Z",
+        "timestamp": 1761111149000
+      },
+      "update-policy": "https://doi.org/10.3389/crossmark-policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 5,
+      "title": [
+        "Multi-modal texture fusion network for detecting AI-generated images"
+      ],
+      "prefix": "10.3389",
+      "volume": "8",
+      "author": [
+        {
+          "given": "Haozheng",
+          "family": "Yu",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Bing",
+          "family": "Xu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "1965",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            22
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "B1",
+          "doi-asserted-by": "crossref",
+          "first-page": "4332",
+          "DOI": "10.1145/3627673.3680085",
+          "article-title": "“UGAD: universal generative AI detector utilizing frequency fingerprints,”",
+          "volume-title": "Proceedings of the 33rd ACM International Conference on Information and Knowledge Management",
+          "author": "Alam",
+          "year": "2024"
+        },
+        {
+          "key": "B2",
+          "doi-asserted-by": "publisher",
+          "first-page": "103097",
+          "DOI": "10.1016/j.jvcir.2021.103097",
+          "article-title": "Hybrid prediction-based pixel-value-ordering method for reversible data hiding",
+          "volume": "77",
+          "author": "Chang",
+          "year": "2021",
+          "journal-title": "J. Vis. Commun. Image Represent"
+        },
+        {
+          "key": "B3",
+          "first-page": "8765",
+          "article-title": "Debiased contrastive learning",
+          "volume": "33",
+          "author": "Chuang",
+          "year": "2020",
+          "journal-title": "Adv. Neural Inf. Process. Syst"
+        },
+        {
+          "key": "B4",
+          "first-page": "54",
+          "article-title": "“Zero-shot detection of AI-generated images,”",
+          "volume-title": "European Conference on Computer Vision",
+          "author": "Cozzolino",
+          "year": "2024"
+        },
+        {
+          "key": "B5",
+          "doi-asserted-by": "publisher",
+          "first-page": "10850",
+          "DOI": "10.1109/TPAMI.2023.3261988",
+          "article-title": "Diffusion models in vision: a survey",
+          "volume": "45",
+          "author": "Croitoru",
+          "year": "2023",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell"
+        },
+        {
+          "key": "B6",
+          "doi-asserted-by": "publisher",
+          "first-page": "336",
+          "DOI": "10.1016/j.neucom.2012.09.042",
+          "article-title": "Multi-scale gray level co-occurrence matrices for texture description",
+          "volume": "120",
+          "author": "De Siqueira",
+          "year": "2013",
+          "journal-title": "Neurocomputing"
+        },
+        {
+          "key": "B7",
+          "doi-asserted-by": "publisher",
+          "first-page": "6622",
+          "DOI": "10.3390/app15126622",
+          "article-title": "Genconvit: deepfake video detection using generative convolutional vision transformer",
+          "volume": "15",
+          "author": "Deressa",
+          "year": "2025",
+          "journal-title": "Appl. Sci"
+        },
+        {
+          "key": "B8",
+          "first-page": "8780",
+          "article-title": "Diffusion models beat gans on image synthesis",
+          "volume": "34",
+          "author": "Dhariwal",
+          "year": "2021",
+          "journal-title": "Adv. Neural Inf. Process. Syst"
+        },
+        {
+          "key": "B9",
+          "doi-asserted-by": "publisher",
+          "first-page": "6682",
+          "DOI": "10.1109/TII.2022.3201572",
+          "article-title": "Securing facial bioinformation by eliminating adversarial perturbations",
+          "volume": "19",
+          "author": "Ding",
+          "year": "",
+          "journal-title": "IEEE Trans. Ind. Inf"
+        },
+        {
+          "key": "B10",
+          "doi-asserted-by": "publisher",
+          "first-page": "2485",
+          "DOI": "10.1109/LSP.2024.3438561",
+          "article-title": "Disrupting anti-spoofing systems by images of consistent identity",
+          "volume": "31",
+          "author": "Ding",
+          "year": "",
+          "journal-title": "IEEE Signal Process. Lett"
+        },
+        {
+          "key": "B11",
+          "doi-asserted-by": "crossref",
+          "first-page": "0295",
+          "DOI": "10.11834/jig.230088",
+          "article-title": "A survey of deepfake and related digital forensics",
+          "volume": "29",
+          "author": "Ding",
+          "year": "",
+          "journal-title": "J. Image Graph"
+        },
+        {
+          "key": "B12",
+          "doi-asserted-by": "publisher",
+          "first-page": "7162",
+          "DOI": "10.1109/TCYB.2022.3210294",
+          "article-title": "ExS-GAN: Synthesizing anti-forensics images via extra supervised GAN",
+          "volume": "53",
+          "author": "Ding",
+          "year": "",
+          "journal-title": "IEEE Trans. Cybern"
+        },
+        {
+          "key": "B13",
+          "doi-asserted-by": "publisher",
+          "first-page": "3429",
+          "DOI": "10.1109/TMM.2021.3098422",
+          "article-title": "Anti-forensics for face swapping videos via adversarial training",
+          "volume": "24",
+          "author": "Ding",
+          "year": "2021",
+          "journal-title": "IEEE Trans. Multimedia"
+        },
+        {
+          "key": "B14",
+          "doi-asserted-by": "publisher",
+          "first-page": "881",
+          "DOI": "10.3390/app15020881",
+          "article-title": "Detection of manipulations in digital images: a review of passive and active methods utilizing deep learning",
+          "volume": "15",
+          "author": "Duszejko",
+          "year": "2025",
+          "journal-title": "Appl. Sci"
+        },
+        {
+          "key": "B15",
+          "first-page": "382",
+          "article-title": "“Online detection of AI-generated images,”",
+          "volume-title": "Proceedings of the IEEE/CVF International Conference on Computer Vision",
+          "author": "Epstein",
+          "year": "2023"
+        },
+        {
+          "key": "B16",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1145/3729233",
+          "article-title": "“Generating higher-quality anti-forensics deepfakes with adversarial sharpening mask,”",
+          "volume-title": "ACM Transactions on Multimedia Computing, Communications and Applications",
+          "author": "Fan",
+          "year": "2025"
+        },
+        {
+          "key": "B17",
+          "first-page": "4545",
+          "article-title": "“Synthesizing black-box anti-forensics deepfakes with high visual quality,”",
+          "volume-title": "ICASSP 2024-2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+          "author": "Fan",
+          "year": "2024"
+        },
+        {
+          "key": "B18",
+          "doi-asserted-by": "crossref",
+          "first-page": "114",
+          "DOI": "10.1109/MIPR59079.2023.00035",
+          "article-title": "“Attacking identity semantics in deepfakes via deep feature fusion,”",
+          "volume-title": "2023 IEEE 6th International Conference on Multimedia Information Processing and Retrieval (MIPR)",
+          "author": "Fan",
+          "year": "2023"
+        },
+        {
+          "key": "B19",
+          "first-page": "80",
+          "article-title": "“Fake or jpeg? Revealing common biases in generated image detection datasets,”",
+          "volume-title": "European Conference on Computer Vision",
+          "author": "Grommelt",
+          "year": "2025"
+        },
+        {
+          "key": "B20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.2503.06142",
+          "article-title": "Vlforgery face triad: detection, localization and attribution via multimodal large language models",
+          "author": "He",
+          "year": "2025",
+          "journal-title": "arXiv [preprint"
+        },
+        {
+          "key": "B21",
+          "doi-asserted-by": "publisher",
+          "first-page": "8975",
+          "DOI": "10.1109/ACCESS.2018.2890743",
+          "article-title": "Texture feature extraction methods: a survey",
+          "volume": "7",
+          "author": "Humeau-Heurtier",
+          "year": "2019",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "B22",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.1710.10196",
+          "article-title": "Progressive growing of gans for improved quality, stability, and variation",
+          "author": "Karras",
+          "year": "2017",
+          "journal-title": "arXiv [preprint"
+        },
+        {
+          "key": "B23",
+          "doi-asserted-by": "publisher",
+          "first-page": "307",
+          "DOI": "10.1561/2200000056",
+          "article-title": "An introduction to variational autoencoders",
+          "volume": "12",
+          "author": "Kingma",
+          "year": "2019",
+          "journal-title": "Found. Trends Mach. Learn"
+        },
+        {
+          "key": "B24",
+          "doi-asserted-by": "publisher",
+          "first-page": "10853",
+          "DOI": "10.1007/s11042-017-5341-2",
+          "article-title": "A simple texture feature for retrieval of medical images",
+          "volume": "77",
+          "author": "Lan",
+          "year": "2018",
+          "journal-title": "Multimed. Tools Appl"
+        },
+        {
+          "key": "B25",
+          "first-page": "1537",
+          "article-title": "“Frequency-aware gan image detection via multi-scale fusion,”",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Li",
+          "year": "2022"
+        },
+        {
+          "key": "B26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.2402.00045",
+          "article-title": "Detecting multimedia generated by large AI models: a survey",
+          "author": "Lin",
+          "year": "",
+          "journal-title": "arXiv [preprint"
+        },
+        {
+          "key": "B27",
+          "first-page": "16815",
+          "article-title": "“Preserving fairness generalization in deepfake detection,”",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "author": "Lin",
+          "year": ""
+        },
+        {
+          "key": "B28",
+          "first-page": "1",
+          "article-title": "“Detection of diffusion model-generated faces by assessing smoothness and noise tolerance,”",
+          "volume-title": "2024 IEEE International Symposium on Broadband Multimedia Systems and Broadcasting (BMSB)",
+          "author": "Liu",
+          "year": "2024"
+        },
+        {
+          "key": "B29",
+          "first-page": "95",
+          "article-title": "“Detecting generated images by real images,”",
+          "volume-title": "European Conference on Computer Vision",
+          "author": "Liu",
+          "year": "2022"
+        },
+        {
+          "key": "B30",
+          "first-page": "25435",
+          "article-title": "Seeing is not always believing: Benchmarking human and model perception of AI-generated images",
+          "volume": "36",
+          "author": "Lu",
+          "year": "2023",
+          "journal-title": "Adv. Neural Inf. Process. Syst"
+        },
+        {
+          "key": "B31",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/AMLDS63918.2025.11159445",
+          "article-title": "“Simple detection of AI-generated images based on noise correlation,”",
+          "author": "Mallet",
+          "year": "2025",
+          "journal-title": "International conference on Advanced Machine Learning and Data Science (AMLDS)"
+        },
+        {
+          "key": "B32",
+          "first-page": "100",
+          "article-title": "Texture analysis methods for medical image characterisation",
+          "volume": "75",
+          "author": "Nailon",
+          "year": "2010",
+          "journal-title": "Biomed. Imaging"
+        },
+        {
+          "key": "B33",
+          "doi-asserted-by": "publisher",
+          "first-page": "971",
+          "DOI": "10.1109/TPAMI.2002.1017623",
+          "article-title": "Multiresolution gray-scale and rotation invariant texture classification with local binary patterns",
+          "volume": "24",
+          "author": "Ojala",
+          "year": "2002",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell"
+        },
+        {
+          "key": "B34",
+          "doi-asserted-by": "publisher",
+          "first-page": "24480",
+          "DOI": "10.1109/CVPR52729.2023.02345",
+          "author": "Ojha",
+          "year": "2023"
+        },
+        {
+          "key": "B35",
+          "first-page": "350",
+          "article-title": "A phase-aware framework for robust deepfake detection",
+          "volume": "18",
+          "author": "Qian",
+          "year": "2023",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur"
+        },
+        {
+          "key": "B36",
+          "doi-asserted-by": "publisher",
+          "first-page": "96",
+          "DOI": "10.1109/MSP.2017.2738401",
+          "article-title": "Deep multimodal learning:aA survey on recent advances and trends",
+          "volume": "34",
+          "author": "Ramachandram",
+          "year": "2017",
+          "journal-title": "IEEE Signal Process. Mag"
+        },
+        {
+          "key": "B37",
+          "first-page": "28130",
+          "article-title": "“Rethinking the up-sampling operations in cnn-based generative network for generalizable deepfake detection,”",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "author": "Tan",
+          "year": "2024"
+        },
+        {
+          "key": "B38",
+          "first-page": "8695",
+          "article-title": "“CNN-generated images are surprisingly easy to spot... for now,”",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision And Pattern Recognition",
+          "author": "Wang",
+          "year": "2020"
+        },
+        {
+          "key": "B39",
+          "doi-asserted-by": "publisher",
+          "first-page": "39",
+          "DOI": "10.22215/timreview/1282",
+          "article-title": "The emergence of deepfake technology: a review",
+          "volume": "9",
+          "author": "Westerlund",
+          "year": "2019",
+          "journal-title": "Technol. Innov. Manag. Rev"
+        },
+        {
+          "key": "B40",
+          "doi-asserted-by": "crossref",
+          "first-page": "392",
+          "DOI": "10.1109/ICME.2012.87",
+          "article-title": "“Camera model identification using local binary patterns,”",
+          "volume-title": "2012 IEEE International Conference on Multimedia and Expo",
+          "author": "Xu",
+          "year": "2012"
+        },
+        {
+          "key": "B41",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.2406.09739",
+          "article-title": "Decoupling forgery semantics for generalizable deepfake detection",
+          "author": "Ye",
+          "year": "2024",
+          "journal-title": "arXiv [preprint"
+        },
+        {
+          "key": "B42",
+          "first-page": "4010",
+          "article-title": "“Detecting gan-synthesized faces using shallow CNN,”",
+          "author": "Zhang",
+          "year": "2019",
+          "journal-title": "IEEE International Conference on Image Processing (ICIP)"
+        },
+        {
+          "key": "B43",
+          "first-page": "1032",
+          "article-title": "“Multi-modal deepfake detection with cross-modal attention,”",
+          "volume-title": "Proceedings of the 29th ACM International Conference on Multimedia",
+          "author": "Zhao",
+          "year": "2021"
+        },
+        {
+          "key": "B44",
+          "doi-asserted-by": "crossref",
+          "first-page": "169",
+          "DOI": "10.1145/3577163.3595103",
+          "article-title": "“Exposing deepfakes using dual-channel network with multi-axis attention and frequency analysis,”",
+          "volume-title": "Proceedings of the 2023 ACM Workshop on Information Hiding and Multimedia Security",
+          "author": "Zhou",
+          "year": "2023"
+        },
+        {
+          "key": "B45",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.2506.00874",
+          "article-title": "Breaking latent prior bias in detectors for generalizable aigc image detection",
+          "author": "Zhou",
+          "year": "2025",
+          "journal-title": "arXiv [preprint"
+        },
+        {
+          "key": "B46",
+          "first-page": "1",
+          "article-title": "“CGD-NET: a hybrid end-to-end network with gating decoding for liver tumor segmentation from ct images,”",
+          "volume-title": "2024 IEEE International Conference on Advanced Video and Signal Based Surveillance (AVSS)",
+          "author": "Zhu",
+          "year": "2024"
+        }
+      ],
+      "container-title": [
+        "Frontiers in Artificial Intelligence"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "https://www.frontiersin.org/articles/10.3389/frai.2025.1663292/full",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            22
+          ]
+        ],
+        "date-time": "2025-10-22T05:32:35Z",
+        "timestamp": 1761111155000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.frontiersin.org/articles/10.3389/frai.2025.1663292/full"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            22
+          ]
+        ]
+      },
+      "references-count": 46,
+      "alternative-id": [
+        "10.3389/frai.2025.1663292"
+      ],
+      "URL": "https://doi.org/10.3389/frai.2025.1663292",
+      "relation": {},
+      "ISSN": [
+        "2624-8212"
+      ],
+      "issn-type": [
+        {
+          "value": "2624-8212",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            22
+          ]
+        ]
+      },
+      "article-number": "1663292"
+    }
+  }
+}

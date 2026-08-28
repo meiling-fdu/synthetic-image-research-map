@@ -1,0 +1,350 @@
+{
+  "doi": "10.1117/12.3035198",
+  "source_url": "https://api.crossref.org/works/10.1117%2F12.3035198",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            15
+          ]
+        ],
+        "date-time": "2026-07-15T11:33:07Z",
+        "timestamp": 1784115187187,
+        "version": "3.55.0"
+      },
+      "reference-count": 22,
+      "publisher": "SPIE",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            19
+          ]
+        ]
+      },
+      "DOI": "10.1117/12.3035198",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            19
+          ]
+        ],
+        "date-time": "2024-07-19T11:34:56Z",
+        "timestamp": 1721388896000
+      },
+      "page": "55",
+      "source": "Crossref",
+      "is-referenced-by-count": 4,
+      "title": [
+        "Local frequency analysis for diffusion-generated image detection"
+      ],
+      "prefix": "10.1117",
+      "author": [
+        {
+          "given": "Jing",
+          "family": "Weng",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "189",
+      "reference": [
+        {
+          "key": "c1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2012.2202227"
+        },
+        {
+          "key": "c2",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1109/ICCPhot.2012.6215223",
+          "article-title": "Exposing image splicing with inconsistent local noise variances",
+          "volume-title": "2012 IEEE International conference on computational photography (ICCP)",
+          "author": "Pan",
+          "year": "2012"
+        },
+        {
+          "key": "c3",
+          "doi-asserted-by": "crossref",
+          "first-page": "159",
+          "DOI": "10.1145/3082031.3083247",
+          "article-title": "Recasting residual-based local descriptors as convolutional neural networks: an application to image forgery detection",
+          "volume-title": "Proceedings of the 5th ACM workshop on information hiding and multimedia security",
+          "author": "Cozzolino",
+          "year": "2017"
+        },
+        {
+          "key": "c4",
+          "first-page": "8695",
+          "article-title": "Cnn-generated images are surprisingly easy to spot… for now",
+          "volume-title": "Proceedings of the IEEE/CVF conference on computer vision and pattern recognition",
+          "author": "Wang",
+          "year": "2020"
+        },
+        {
+          "key": "c5",
+          "first-page": "6840",
+          "article-title": "Denoising diffusion probabilistic models",
+          "volume": "33",
+          "author": "Ho",
+          "year": "2020",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "c6",
+          "first-page": "8780",
+          "article-title": "Diffusion models beat gans on image synthesis",
+          "volume": "34",
+          "author": "Dhariwal",
+          "year": "2021",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "c7",
+          "first-page": "10684",
+          "article-title": "High-resolution image synthesis with latent diffusion models",
+          "volume-title": "Proceedings of the IEEE/CVF conference on computer vision and pattern recognition",
+          "author": "Rombach",
+          "year": "2022"
+        },
+        {
+          "key": "c8",
+          "article-title": "Pseudo numerical methods for diffusion models on manifolds",
+          "author": "Liu",
+          "year": "2022",
+          "journal-title": "arXiv preprint arXiv:2202.09778"
+        },
+        {
+          "key": "c9",
+          "article-title": "Prompt-to-prompt image editing with cross attention control",
+          "author": "Hertz",
+          "year": "2022",
+          "journal-title": "arXiv preprint arXiv:2208.01626"
+        },
+        {
+          "key": "c10",
+          "first-page": "10696",
+          "article-title": "Vector quantized diffusion model for text-to-image synthesis",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "author": "Gu",
+          "year": "2022"
+        },
+        {
+          "key": "c11",
+          "article-title": "Detecting gan-generated imagery using color cues",
+          "author": "McCloskey",
+          "year": "2018",
+          "journal-title": "arXiv preprint arXiv:1812.08247"
+        },
+        {
+          "key": "c12",
+          "first-page": "8261",
+          "article-title": "Exposing deep fakes using inconsistent head poses",
+          "volume-title": "ICASSP 2019-2019 IEEE International Conference on Acoustics",
+          "author": "Yang",
+          "year": "2019"
+        },
+        {
+          "key": "c13",
+          "doi-asserted-by": "crossref",
+          "first-page": "384",
+          "DOI": "10.1109/MIPR.2018.00084",
+          "article-title": "Detection of gan-generated fake images over social networks",
+          "volume-title": "2018 IEEE conference on multimedia information processing and retrieval (MIPR)",
+          "author": "Marra",
+          "year": "2018"
+        },
+        {
+          "key": "c14",
+          "article-title": "Forensictransfer: Weakly-supervised domain adaptation for forgery detection",
+          "author": "Cozzolino",
+          "year": "2018",
+          "journal-title": "arXiv preprint arXiv:1812.02510"
+        },
+        {
+          "key": "c15",
+          "first-page": "3247",
+          "article-title": "Leveraging frequency analysis for deep fake image recognition",
+          "volume-title": "International conference on machine learning",
+          "author": "Frank",
+          "year": "2020"
+        },
+        {
+          "key": "c16",
+          "doi-asserted-by": "crossref",
+          "first-page": "506",
+          "DOI": "10.1109/MIPR.2019.00103",
+          "article-title": "Do gans leave artificial fingerprints?",
+          "volume-title": "2019 IEEE conference on multimedia information processing and retrieval (MIPR)",
+          "author": "Marra",
+          "year": "2019"
+        },
+        {
+          "key": "c17",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1109/ICASSP49357.2023.10095167",
+          "article-title": "On the detection of synthetic images generated by diffusion models",
+          "volume-title": "ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+          "author": "Corvi",
+          "year": "2023"
+        },
+        {
+          "key": "c18",
+          "article-title": "Genimage: A million-scale benchmark for detecting ai-generated image",
+          "volume": "36",
+          "author": "Zhu",
+          "year": "2024",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "c19",
+          "article-title": "Dire for diffusion-generated image detection",
+          "author": "Wang",
+          "year": "2023",
+          "journal-title": "arXiv preprint arXiv:2303.09295"
+        },
+        {
+          "key": "c20",
+          "first-page": "770",
+          "article-title": "Deep residual learning for image recognition",
+          "volume-title": "Proceedings of the IEEE conference on computer vision and pattern recognition",
+          "author": "He",
+          "year": "2016"
+        },
+        {
+          "key": "c21",
+          "first-page": "10347",
+          "article-title": "Training data-efficient image transformers & distillation through attention",
+          "volume-title": "International conference on machine learning",
+          "author": "Touvron",
+          "year": "2021"
+        },
+        {
+          "key": "c22",
+          "first-page": "10012",
+          "article-title": "Swin transformer: Hierarchical vision transformer using shifted windows",
+          "volume-title": "Proceedings of the IEEE/CVF international conference on computer vision",
+          "author": "Liu",
+          "year": "2021"
+        }
+      ],
+      "event": {
+        "name": "International Conference on Image Processing and Artificial Intelligence (ICIPAl2024)",
+        "location": "Suzhou, China",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              4,
+              19
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              4,
+              21
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "International Conference on Image Processing and Artificial Intelligence (ICIPAl 2024)"
+      ],
+      "original-title": [],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            30
+          ]
+        ],
+        "date-time": "2024-09-30T18:36:00Z",
+        "timestamp": 1727721360000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/13213/3035198/Local-frequency-analysis-for-diffusion-generated-image-detection/10.1117/12.3035198.full"
+        }
+      },
+      "subtitle": [],
+      "editor": [
+        {
+          "given": "Chuan",
+          "family": "Qin",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "editor"
+            }
+          ]
+        },
+        {
+          "given": "Huiyu",
+          "family": "Zhou",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "editor"
+            }
+          ]
+        }
+      ],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            19
+          ]
+        ]
+      },
+      "references-count": 22,
+      "URL": "https://doi.org/10.1117/12.3035198",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            7,
+            19
+          ]
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,576 @@
+{
+  "doi": "10.1109/cvprw63382.2024.00381",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fcvprw63382.2024.00381",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            28
+          ]
+        ],
+        "date-time": "2026-08-28T16:59:10Z",
+        "timestamp": 1787936350447,
+        "version": "build-2784847793"
+      },
+      "reference-count": 57,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                6,
+                17
+              ]
+            ],
+            "date-time": "2024-06-17T00:00:00Z",
+            "timestamp": 1718582400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2024,
+                6,
+                17
+              ]
+            ],
+            "date-time": "2024-06-17T00:00:00Z",
+            "timestamp": 1718582400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            17
+          ]
+        ]
+      },
+      "DOI": "10.1109/cvprw63382.2024.00381",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            27
+          ]
+        ],
+        "date-time": "2024-09-27T18:27:42Z",
+        "timestamp": 1727461662000
+      },
+      "page": "3771-3780",
+      "source": "Crossref",
+      "is-referenced-by-count": 66,
+      "title": [
+        "Faster Than Lies: Real-time Deepfake Detection using Binary Neural Networks"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Romeo",
+          "family": "Lanzino",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Sapienza University of Rome,Department of Computer Science,Rome,Italy,00198"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Federico",
+          "family": "Fontana",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Sapienza University of Rome,Department of Computer Science,Rome,Italy,00198"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Anxhelo",
+          "family": "Diko",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Sapienza University of Rome,Department of Computer Science,Rome,Italy,00198"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Marco Raoul",
+          "family": "Marini",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Sapienza University of Rome,Department of Computer Science,Rome,Italy,00198"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Luigi",
+          "family": "Cinque",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Sapienza University of Rome,Department of Computer Science,Rome,Italy,00198"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WIFS.2018.8630761"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3665497"
+        },
+        {
+          "key": "ref3",
+          "author": "Bethge",
+          "year": "2019",
+          "journal-title": "Back to simplicity: How to train accurate bnns from scratch"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ACCESS.2024.3356122"
+        },
+        {
+          "key": "ref5",
+          "first-page": "1753",
+          "article-title": "Deep fakes: A looming challenge for privacy, democracy, and national security",
+          "volume": "107",
+          "author": "Chesney",
+          "year": "2019",
+          "journal-title": "Calif. L. Rev."
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.195"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TPAMI.2020.3009287"
+        },
+        {
+          "key": "ref8",
+          "author": "Courbariaux",
+          "year": "2016",
+          "journal-title": "Binarized neural networks: Training deep neural networks with weights and activations constrained to+ 1 or-1"
+        },
+        {
+          "key": "ref9",
+          "article-title": "Forensictransfer: Weakly-supervised domain adaptation for forgery detection",
+          "volume-title": "Conference on Computer Vision and Pattern Recognition",
+          "author": "Cozzolino"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00582"
+        },
+        {
+          "key": "ref11",
+          "author": "Dosovitskiy",
+          "year": "2021",
+          "journal-title": "An image is worth 16x16 words: Transformers for image recognition at scale"
+        },
+        {
+          "key": "ref12",
+          "volume-title": "Deep learning",
+          "author": "Goodfellow",
+          "year": "2016"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW50498.2020.00341"
+        },
+        {
+          "key": "ref14",
+          "author": "Guo",
+          "year": "2022",
+          "journal-title": "Join the high accuracy club on imagenet with a binary neural network ticket"
+        },
+        {
+          "key": "ref15",
+          "first-page": "4017",
+          "article-title": "Training binary neural networks through learning with noisy supervision",
+          "volume-title": "International Conference on Machine Learning",
+          "author": "Han"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/app10010370"
+        },
+        {
+          "key": "ref18",
+          "author": "Hu",
+          "year": "2017",
+          "journal-title": "On the diffusion approximation of nonconvex stochastic gradient descent"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2017.243"
+        },
+        {
+          "key": "ref20",
+          "author": "Iandola",
+          "year": "2014",
+          "journal-title": "Densenet: Implementing efficient convnet descriptor pyramids"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-93802-4"
+        },
+        {
+          "key": "ref22",
+          "author": "Karras",
+          "year": "2018",
+          "journal-title": "Progressive growing of gans for improved quality, stability, and variation"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.bushor.2019.11.006"
+        },
+        {
+          "key": "ref25",
+          "author": "Krizhevsky",
+          "year": "2009",
+          "journal-title": "Learning multiple layers of features from tiny images"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.5555/2999134.2999257"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WIFS.2018.8630787"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00327"
+        },
+        {
+          "key": "ref29",
+          "first-page": "33",
+          "article-title": "Rotated binary neural network",
+          "author": "Lin",
+          "year": "2020",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "ref30",
+          "author": "Lin",
+          "year": "2021",
+          "journal-title": "Siman: Sign-to-magnitude network binarization"
+        },
+        {
+          "key": "ref31",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-10602-1_48"
+        },
+        {
+          "key": "ref32",
+          "author": "Lin",
+          "year": "2017",
+          "journal-title": "Towards accurate binary convolutional neural network"
+        },
+        {
+          "key": "ref33",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2015.425"
+        },
+        {
+          "key": "ref34",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-01267-0_44"
+        },
+        {
+          "key": "ref35",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-58568-6_9"
+        },
+        {
+          "key": "ref36",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCVW60793.2023.00051"
+        },
+        {
+          "key": "ref37",
+          "author": "Loshchilov",
+          "year": "2019",
+          "journal-title": "Decoupled weight decay regularization"
+        },
+        {
+          "key": "ref38",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/BTAS46853.2019.9185974"
+        },
+        {
+          "key": "ref39",
+          "author": "Nichol",
+          "year": "2021",
+          "journal-title": "Glide: Towards photorealistic image generation and editing with text-guided diffusion models"
+        },
+        {
+          "key": "ref40",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00232"
+        },
+        {
+          "issue": "2",
+          "key": "ref41",
+          "first-page": "3",
+          "volume": "1",
+          "author": "Ramesh",
+          "year": "2022",
+          "journal-title": "Hierarchical text-conditional image generation with clip latents"
+        },
+        {
+          "key": "ref42",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-319-46493-0_32"
+        },
+        {
+          "key": "ref43",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "ref44",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00009"
+        },
+        {
+          "key": "ref45",
+          "first-page": "36479",
+          "article-title": "Photorealistic text-to-image diffusion models with deep language understanding",
+          "volume": "35",
+          "author": "Saharia",
+          "year": "2022",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "ref46",
+          "author": "Schuhmann",
+          "year": "2021",
+          "journal-title": "Laion-400m: Open dataset of clip-filtered 400 million image-text pairs"
+        },
+        {
+          "key": "ref47",
+          "author": "Schuhmann",
+          "year": "2022",
+          "journal-title": "Laion-5b: An open large-scale dataset for training next generation image-text models"
+        },
+        {
+          "key": "ref48",
+          "article-title": "Very deep convolutional networks for large-scale image recognition",
+          "volume-title": "CoRR",
+          "author": "Simonyan"
+        },
+        {
+          "key": "ref49",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3404835.3463257"
+        },
+        {
+          "key": "ref50",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-031-20083-0_23"
+        },
+        {
+          "key": "ref51",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/0031-3203(90)90135-8"
+        },
+        {
+          "key": "ref52",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "ref53",
+          "author": "Wang",
+          "year": "2024",
+          "journal-title": "Harnessing machine learning for discerning ai-generated synthetic images"
+        },
+        {
+          "key": "ref54",
+          "article-title": "Learning frequency domain approximation for binary neural networks",
+          "volume-title": "NeurIPS",
+          "author": "Xu"
+        },
+        {
+          "key": "ref55",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV48922.2021.00515"
+        },
+        {
+          "key": "ref56",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP.2019.8683164"
+        },
+        {
+          "key": "ref57",
+          "author": "Yang",
+          "year": "2020",
+          "journal-title": "Searching for lowbit weights in quantized neural networks"
+        }
+      ],
+      "event": {
+        "name": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+        "location": "Seattle, WA, USA",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              6,
+              17
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              6,
+              18
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/10677511/10677844/10678555.pdf?arnumber=10678555",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2024,
+            9,
+            29
+          ]
+        ],
+        "date-time": "2024-09-29T04:11:29Z",
+        "timestamp": 1727583089000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/10678555/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            17
+          ]
+        ]
+      },
+      "references-count": 57,
+      "URL": "https://doi.org/10.1109/cvprw63382.2024.00381",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2024,
+            6,
+            17
+          ]
+        ]
+      }
+    }
+  }
+}

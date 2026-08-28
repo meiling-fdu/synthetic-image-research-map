@@ -2246,6 +2246,8 @@ def synchronize_publication_types(
         record: Dict[str, Any], evidence: Optional[Dict[str, Any]] = None
     ) -> str:
         evidence = evidence or {}
+        if record.get("venue_review_required") and record.get("publication_type") in {"conference", "journal", "preprint", "book"}:
+            return record["publication_type"]
         if is_book_publication(record.get("publication_type")):
             return "book"
         return normalize_publication_type(
@@ -2282,6 +2284,13 @@ def synchronize_publication_types(
         matches = matching_records(marker, paper_lookup)
         if matches:
             marker["publication_type"] = clean_text(matches[0].get("publication_type"))
+            # A location marker is not a separate bibliographic record.
+            for field in ("year", "venue", "venue_id", "venue_name", "venue_type", "venue_acronym",
+                          "venue_track", "venue_label", "venue_aliases", "venue_review_required", "venue_review_reason"):
+                if field in matches[0]:
+                    marker[field] = matches[0][field]
+                else:
+                    marker.pop(field, None)
             if marker["publication_type"] == "book":
                 cleaned = normalize_book_record(marker, remove=True)
                 marker.clear()
@@ -3039,6 +3048,25 @@ def preserve_existing_curation_status(
         prior = prior_by_id.get(key)
         if prior and "curation_status" in prior:
             record["curation_status"] = prior["curation_status"]
+
+
+def preserve_existing_venue_provenance(
+    records: Sequence[Dict[str, Any]], previous: Sequence[Mapping[str, Any]]
+) -> None:
+    """Do not lose source venue text when an uncertain canonical ID is cleared.
+
+    A populated current value (including explicit manual curation) wins. Books
+    retain the existing project's no-venue-taxonomy display convention.
+    """
+    prior_by_id = {
+        clean_text(record.get("id") or record.get("paper_id") or identity_key(record)): record
+        for record in previous
+    }
+    for record in records:
+        key = clean_text(record.get("id") or record.get("paper_id") or identity_key(record))
+        prior = prior_by_id.get(key, {})
+        if not is_book_publication(record.get("publication_type")) and not record.get("raw_venue") and prior.get("raw_venue"):
+            record["raw_venue"] = prior["raw_venue"]
 
 
 def exclude_stale_curated_mapping_markers(
@@ -4550,6 +4578,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         preserve_existing_curation_status(integrated_papers, previous_papers)
         preserve_existing_curation_status(integrated_maps, previous_maps)
+        preserve_existing_venue_provenance(integrated_papers, previous_papers)
+        preserve_existing_venue_provenance(integrated_maps, previous_maps)
         integrated_papers[:] = [
             normalize_book_record(record, remove=True)
             for record in integrated_papers

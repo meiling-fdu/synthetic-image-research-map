@@ -39,7 +39,7 @@ class AdminVenueComboboxFrontendTests(unittest.TestCase):
         self.assertNotIn('value="workshop"', creation)
         for venue_type in ("conference", "journal", "preprint", "book"):
             self.assertIn(f'value="{venue_type}"', creation)
-        self.assertIn('value="workshops"', self.html)
+        self.assertIn('value="Workshop"', self.html)
         self.assertNotIn('venueType === "workshop"', self.source)
 
     def test_selection_populates_structured_fields_and_type(self):
@@ -96,10 +96,10 @@ class AdminVenueComboboxFrontendTests(unittest.TestCase):
     def test_paper_track_is_an_editable_control_independent_of_venue(self):
         track = self.html.split('id="metadata-venue-track"', 1)[1].split("</select>", 1)[0]
         for value, label in (
-            ("main", "Main"), ("workshops", "Workshop"),
-            ("findings", "Findings"), ("posters", "Poster"),
-            ("industry", "Industry"), ("demo", "Demo"),
-            ("doctoral_consortium", "Doctoral consortium"), ("other", "Other"),
+            ("Main", "Main"), ("Workshop", "Workshop"),
+            ("Findings", "Findings"), ("Poster", "Poster"),
+            ("Industry", "Industry"), ("Demo", "Demo"),
+            ("Doctoral Consortium", "Doctoral consortium"), ("Other", "Other"),
         ):
             self.assertIn(f'value="{value}">{label}', track)
         selection = self.source.split("function selectCanonicalVenue(option", 1)[1].split(

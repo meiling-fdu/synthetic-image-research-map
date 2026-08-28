@@ -1,0 +1,1417 @@
+{
+  "doi": "10.1093/cybsec/tyad011",
+  "source_url": "https://api.crossref.org/works/10.1093%2Fcybsec%2Ftyad011",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            28
+          ]
+        ],
+        "date-time": "2026-08-28T14:07:19Z",
+        "timestamp": 1787926039901,
+        "version": "build-2784847793"
+      },
+      "reference-count": 143,
+      "publisher": "Oxford University Press (OUP)",
+      "issue": "1",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2023,
+                6,
+                23
+              ]
+            ],
+            "date-time": "2023-06-23T00:00:00Z",
+            "timestamp": 1687478400000
+          },
+          "content-version": "vor",
+          "delay-in-days": 173,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100000266",
+          "name": "EPSRC",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "EP/S022503/1"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "EP/S022503/1"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100000266",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2023,
+            1,
+            5
+          ]
+        ]
+      },
+      "abstract": "<jats:title>Abstract</jats:title>\n               <jats:p>‘Deepfakes’ are computationally created entities that falsely represent reality. They can take image, video, and audio modalities, and pose a threat to many areas of systems and societies, comprising a topic of interest to various aspects of cybersecurity and cybersafety. In 2020, a workshop consulting AI experts from academia, policing, government, the private sector, and state security agencies ranked deepfakes as the most serious AI threat. These experts noted that since fake material can propagate through many uncontrolled routes, changes in citizen behaviour may be the only effective defence. This study aims to assess human ability to identify image deepfakes of human faces (these being uncurated output from the StyleGAN2 algorithm as trained on the FFHQ dataset) from a pool of non-deepfake images (these being random selection of images from the FFHQ dataset), and to assess the effectiveness of some simple interventions intended to improve detection accuracy. Using an online survey, participants (N = 280) were randomly allocated to one of four groups: a control group, and three assistance interventions. Each participant was shown a sequence of 20 images randomly selected from a pool of 50 deepfake images of human faces and 50 images of real human faces. Participants were asked whether each image was AI-generated or not, to report their confidence, and to describe the reasoning behind each response. Overall detection accuracy was only just above chance and none of the interventions significantly improved this. Of equal concern was the fact that participants’ confidence in their answers was high and unrelated to accuracy. Assessing the results on a per-image basis reveals that participants consistently found certain images easy to label correctly and certain images difficult, but reported similarly high confidence regardless of the image. Thus, although participant accuracy was 62% overall, this accuracy across images ranged quite evenly between 85 and 30%, with an accuracy of below 50% for one in every five images. We interpret the findings as suggesting that there is a need for an urgent call to action to address this threat.</jats:p>",
+      "DOI": "10.1093/cybsec/tyad011",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2023,
+            6,
+            24
+          ]
+        ],
+        "date-time": "2023-06-24T22:13:32Z",
+        "timestamp": 1687644812000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 88,
+      "title": [
+        "Testing human ability to detect ‘deepfake’ images of human faces"
+      ],
+      "prefix": "10.1093",
+      "volume": "9",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-6362-4676",
+          "authenticated-orcid": false,
+          "given": "Sergi D",
+          "family": "Bray",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Security and Crime Science, University College London (UCL) , London, WC1H 9EZ , UK"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Shane D",
+          "family": "Johnson",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Security and Crime Science, University College London (UCL) , London, WC1H 9EZ , UK"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Bennett",
+          "family": "Kleinberg",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Methodology, University of Tilburg , 5000 LE Tilburg , The Netherlands"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "286",
+      "published-online": {
+        "date-parts": [
+          [
+            2023,
+            6,
+            23
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "2023090414254499100_bib1",
+          "article-title": "The Deepfake Detection Challenge (DFDC) preview dataset",
+          "author": "Dolhansky",
+          "year": "2019",
+          "journal-title": "arXiv:1910.08854"
+        },
+        {
+          "key": "2023090414254499100_bib2",
+          "first-page": "38",
+          "article-title": "Protecting World Leaders Against Deep Fakes",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops",
+          "author": "Agarwal",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib3",
+          "volume-title": "Words we’re watching: “Deepfake.”",
+          "author": "Merriam Webster",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib4",
+          "article-title": "Prescriptivist vs descriptivist—what’s the difference?",
+          "author": "Conor",
+          "year": "2021",
+          "journal-title": "One Minute English"
+        },
+        {
+          "key": "2023090414254499100_bib5",
+          "first-page": "66",
+          "article-title": "Authority and american usage",
+          "volume-title": "Consider The Lobster",
+          "author": "Foster Wallace",
+          "year": "2006"
+        },
+        {
+          "key": "2023090414254499100_bib6",
+          "volume-title": "Deepfake"
+        },
+        {
+          "key": "2023090414254499100_bib7",
+          "article-title": "Audio deepfake",
+          "year": "2023",
+          "journal-title": "Wikipedia"
+        },
+        {
+          "key": "2023090414254499100_bib8",
+          "article-title": "The slippery slope from DALLE-2 to deepfake anarchy",
+          "author": "Scasper"
+        },
+        {
+          "key": "2023090414254499100_bib9",
+          "first-page": "1",
+          "article-title": "Are ChatGPT and deepfake algorithms endangering the cybersecurity industry? A review",
+          "volume": "10",
+          "author": "Dash",
+          "year": "2023",
+          "journal-title": "Int J Appl Sci Eng"
+        },
+        {
+          "key": "2023090414254499100_bib10",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.54501/jots.v1i4.56",
+          "article-title": "Creating, using, misusing, and detecting deep fakes",
+          "volume": "1",
+          "author": "Farid",
+          "year": "2022",
+          "journal-title": "jots"
+        },
+        {
+          "key": "2023090414254499100_bib11",
+          "first-page": "177",
+          "article-title": "“Reject the evidence of your eyes and ears”: deepfakes and the law of virtual replicants",
+          "volume": "50",
+          "author": "Caldera",
+          "year": "2020",
+          "journal-title": "Seton Hall Law Rev"
+        },
+        {
+          "key": "2023090414254499100_bib12",
+          "first-page": "50",
+          "article-title": "Deepfakes and cheap fakes",
+          "author": "Paris",
+          "journal-title": "Data & Society"
+        },
+        {
+          "key": "2023090414254499100_bib13",
+          "first-page": "1",
+          "article-title": "Deepfake Detection: current Challenges and Next Steps",
+          "volume-title": "2020 IEEE International Conference on Multimedia & Expo Workshops (ICMEW)",
+          "author": "Lyu",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib14",
+          "doi-asserted-by": "crossref",
+          "first-page": "353",
+          "DOI": "10.1145/258734.258880",
+          "article-title": "Video Rewrite: Driving Visual Speech with Audio",
+          "volume-title": "Proceedings of the 24th Annual Conference on Computer Graphics and Interactive Techniques – SIGGRAPH ’97",
+          "author": "Bregler",
+          "year": "1997"
+        },
+        {
+          "key": "2023090414254499100_bib15",
+          "article-title": "Neural style transfer",
+          "year": "2022",
+          "journal-title": "Wikipedia"
+        },
+        {
+          "key": "2023090414254499100_bib16",
+          "volume-title": "Style Transfer Guide"
+        },
+        {
+          "key": "2023090414254499100_bib17",
+          "article-title": "Multi-style generative network for real-time transfer",
+          "volume-title": "arXiv:1703.06953",
+          "author": "Zhang",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib18",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/ICCV.2017.244",
+          "article-title": "Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks",
+          "volume-title": "Proceedings of the IEEE international conference on computer vision",
+          "author": "Zhu",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib19",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1007/978-3-319-46475-6_43",
+          "article-title": "Perceptual Losses for Real-Time Style Transfer and Super-Resolution",
+          "volume-title": "arXiv:1603.08155",
+          "author": "Johnson",
+          "year": "2016"
+        },
+        {
+          "key": "2023090414254499100_bib20",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/COMITCon.2019.8862451",
+          "article-title": "A Quick Review of Machine Learning Algorithms",
+          "volume-title": "2019 International Conference on Machine Learning, Big Data, Cloud and Parallel Computing (COMITCon), Faridabad, India",
+          "author": "Ray"
+        },
+        {
+          "key": "2023090414254499100_bib21",
+          "doi-asserted-by": "crossref",
+          "first-page": "305",
+          "DOI": "10.1007/s10710-017-9314-z",
+          "article-title": "Ian Goodfellow, Yoshua Bengio, and Aaron Courville: deep learning",
+          "volume": "19",
+          "author": "Heaton",
+          "year": "2018",
+          "journal-title": "Genet Program Evolvable Mach"
+        },
+        {
+          "key": "2023090414254499100_bib22",
+          "doi-asserted-by": "crossref",
+          "first-page": "139",
+          "DOI": "10.1145/3422622",
+          "article-title": "Generative adversarial networks",
+          "volume": "63",
+          "author": "Goodfellow",
+          "year": "2020",
+          "journal-title": "Commun ACM"
+        },
+        {
+          "key": "2023090414254499100_bib23",
+          "doi-asserted-by": "crossref",
+          "first-page": "307",
+          "DOI": "10.1561/2200000056",
+          "article-title": "An Introduction to Variational Autoencoders",
+          "volume": "12",
+          "author": "Kingma",
+          "year": "2019",
+          "journal-title": "FNT in Machine Learning"
+        },
+        {
+          "key": "2023090414254499100_bib24",
+          "article-title": "DALL·E 2",
+          "journal-title": "OpenAI"
+        },
+        {
+          "key": "2023090414254499100_bib25",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1145/3339252.3340102",
+          "article-title": "Utilizing Deep Learning to Manipulate Surveillance Camera Footage in Real-Time",
+          "volume-title": "Proceedings of the 14th International Conference on Availability, Reliability and Security – ARES ’19",
+          "author": "Aigner",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib26",
+          "article-title": "Generating Images from Captions with Attention",
+          "volume-title": "International Conference on Learning Representations",
+          "author": "Mansimov",
+          "year": "2016"
+        },
+        {
+          "key": "2023090414254499100_bib27",
+          "first-page": "1060",
+          "article-title": "Generative Adversarial Text to Image Synthesis",
+          "volume-title": "International Conference on Machine Learning",
+          "author": "Reed",
+          "year": "2016"
+        },
+        {
+          "key": "2023090414254499100_bib28",
+          "first-page": "1125",
+          "article-title": "Image-to-Image Translation with Conditional Adversarial Networks",
+          "volume-title": "Proceedings of the IEEE conference on computer vision and pattern recognition",
+          "author": "Isola",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib29",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3072959.3073640",
+          "article-title": "Synthesizing Obama: learning lip sync from audio",
+          "volume": "36",
+          "author": "Suwajanakorn",
+          "year": "2017",
+          "journal-title": "ACM Trans Graph"
+        },
+        {
+          "key": "2023090414254499100_bib30",
+          "first-page": "132",
+          "article-title": "Generalization of Audio Deepfake Detection",
+          "volume-title": "Odyssey 2020 The Speaker and Language Recognition Workshop",
+          "author": "Chen",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib31",
+          "article-title": "A Voice Deepfake Was Used To Scam A CEO Out Of $243,000",
+          "author": "Damiani",
+          "year": "2019",
+          "journal-title": "Forbes"
+        },
+        {
+          "key": "2023090414254499100_bib32",
+          "doi-asserted-by": "crossref",
+          "first-page": "e0251415",
+          "DOI": "10.1371/journal.pone.0251415",
+          "article-title": "TweepFake: about detecting deepfake tweets",
+          "volume": "16",
+          "author": "Fagni",
+          "year": "2021",
+          "journal-title": "PLoS One"
+        },
+        {
+          "key": "2023090414254499100_bib33",
+          "doi-asserted-by": "crossref",
+          "first-page": "523",
+          "DOI": "10.1111/cgf.13382",
+          "article-title": "State of the art on monocular 3D face reconstruction, tracking, and applications",
+          "volume": "37",
+          "author": "Zollhöfer",
+          "year": "2018",
+          "journal-title": "Comput Graphics Forum"
+        },
+        {
+          "key": "2023090414254499100_bib34",
+          "doi-asserted-by": "crossref",
+          "first-page": "645",
+          "DOI": "10.1145/3240508.3240618",
+          "article-title": "BeautyGAN: Instance-Level Facial Makeup Transfer with Deep Generative Adversarial Network",
+          "volume-title": "2018 ACM Multimedia Conference on Multimedia Conference—MM ’18",
+          "author": "Li",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib35",
+          "first-page": "217",
+          "article-title": "Learning what and where to draw",
+          "volume": "29",
+          "author": "Reed",
+          "year": "2016",
+          "journal-title": "Adv Neural Inf Process Syst"
+        },
+        {
+          "key": "2023090414254499100_bib36",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/CVPR.2018.00917",
+          "article-title": "High-Resolution Image Synthesis and Semantic Manipulation with Conditional GANs",
+          "volume-title": "Proceedings of the IEEE conference on computer vision and pattern recognition",
+          "author": "Wang",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib37",
+          "article-title": "Snapshot Paper—Deepfakes and Audiovisual Disinformation",
+          "year": "2020",
+          "journal-title": "GOVUK"
+        },
+        {
+          "key": "2023090414254499100_bib38",
+          "doi-asserted-by": "crossref",
+          "first-page": "193",
+          "DOI": "10.1111/cgf.12552",
+          "article-title": "VDub: modifying face video of actors for plausible visual alignment to a dubbed audio track",
+          "volume": "34",
+          "author": "Garrido",
+          "year": "2015",
+          "journal-title": "Comput Graphics Forum"
+        },
+        {
+          "key": "2023090414254499100_bib39",
+          "article-title": "The Hypnotic Allure of the AI Art Generator",
+          "year": "2019",
+          "journal-title": "Sothebys.com"
+        },
+        {
+          "key": "2023090414254499100_bib40",
+          "volume-title": "On the Edge—AI Generated Rock Music Composed by AIVA",
+          "author": "Alfo Media",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib41",
+          "volume-title": "How Does A.I. Art Stack Up Against Human Art? (HBO)",
+          "author": "VICE News",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib42",
+          "article-title": "Inside the Score",
+          "year": "2020",
+          "journal-title": "Can Artificial Intelligence Make Good Music?"
+        },
+        {
+          "key": "2023090414254499100_bib43",
+          "article-title": "You Shall Be",
+          "author": "Galvani",
+          "year": "2021",
+          "journal-title": "SoundCloud"
+        },
+        {
+          "key": "2023090414254499100_bib44",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3491101.3503736",
+          "article-title": "AI-Generated Characters: putting Deepfakes to Good Use",
+          "volume-title": "CHI Conference on Human Factors in Computing Systems Extended Abstracts",
+          "author": "Danry",
+          "year": "2022"
+        },
+        {
+          "key": "2023090414254499100_bib45",
+          "doi-asserted-by": "crossref",
+          "first-page": "1013",
+          "DOI": "10.1038/s42256-021-00417-9",
+          "article-title": "AI-generated characters for supporting personalized learning and well-being",
+          "volume": "3",
+          "author": "Pataranutaporn",
+          "year": "2021",
+          "journal-title": "Nat Mach Intell"
+        },
+        {
+          "key": "2023090414254499100_bib46",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1186/s40163-020-00123-8",
+          "article-title": "AI-enabled future crime",
+          "volume": "9",
+          "author": "Caldwell",
+          "year": "2020",
+          "journal-title": "Crime Sci"
+        },
+        {
+          "key": "2023090414254499100_bib47",
+          "doi-asserted-by": "crossref",
+          "first-page": "191",
+          "DOI": "10.1146/annurev-criminol-032317-092057",
+          "article-title": "Cyber-dependent crimes: an interdisciplinary review",
+          "volume": "2",
+          "author": "Maimon",
+          "year": "2019",
+          "journal-title": "Annu Rev Criminol"
+        },
+        {
+          "key": "2023090414254499100_bib48",
+          "article-title": "Bots & Botnets: an Overview",
+          "author": "Puri",
+          "year": "2003"
+        },
+        {
+          "key": "2023090414254499100_bib49",
+          "article-title": "Sunrise to Sunset: Analyzing the End-to-end Life Cycle and Effectiveness of Phishing Attacks at Scale",
+          "volume-title": "29th {USENIX} Security Symposium ({USENIX} Security 20)",
+          "author": "Oest",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib50",
+          "article-title": "Stop Unwanted Robocalls and Texts",
+          "year": "2017",
+          "journal-title": "Federal Communications Commission"
+        },
+        {
+          "key": "2023090414254499100_bib51",
+          "first-page": "1753",
+          "article-title": "Deep fakes: a looming challenge for privacy, democracy, and national security",
+          "volume": "107",
+          "author": "Chesney",
+          "year": "2019",
+          "journal-title": "Calif Law Rev"
+        },
+        {
+          "key": "2023090414254499100_bib52",
+          "first-page": "882",
+          "article-title": "21st century-style truth decay: deep fakes and the challenge for privacy, free expression, and national security",
+          "volume": "78",
+          "author": "Chesney",
+          "year": "2019",
+          "journal-title": "MD Law Rev"
+        },
+        {
+          "key": "2023090414254499100_bib53",
+          "doi-asserted-by": "crossref",
+          "first-page": "2072",
+          "DOI": "10.1177/1461444820925811",
+          "article-title": "Anticipating and addressing the ethical implications of deepfakes in the context of elections",
+          "volume": "23",
+          "author": "Diakopoulos",
+          "year": "2021",
+          "journal-title": "New Media Soc"
+        },
+        {
+          "key": "2023090414254499100_bib54",
+          "article-title": "Deep Fakes, Fake News, and What Comes Next",
+          "author": "Dack",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib55",
+          "article-title": "The Draft Online Safety Bill and the legal but harmful debate Date Published: 24 January 2022 UK Parliament",
+          "year": "2020",
+          "journal-title": "GOVUK"
+        },
+        {
+          "key": "2023090414254499100_bib56",
+          "article-title": "Facing reality? Law enforcement and the challenge of deepfakes, an observatory report from the Europol Innovation Lab, Publications Office of the European Union, Luxembourg",
+          "author": "Europol",
+          "year": "2022"
+        },
+        {
+          "key": "2023090414254499100_bib57",
+          "article-title": "The Scary Truth Behind the FBI Warning: Deepfake Fraud is Here And it’s Serious—We Are Not Prepared",
+          "author": "Gow",
+          "year": "2021",
+          "journal-title": "Forbes"
+        },
+        {
+          "key": "2023090414254499100_bib58",
+          "article-title": "US defense bill requires comprehensive deepfake weaponization, countermeasures initiative",
+          "author": "Kimery",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib59",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/ICME51207.2021.9428361",
+          "article-title": "DefakeHop: a Light-Weight High-Performance Deepfake Detector",
+          "volume-title": "2021 IEEE International Conference on Multimedia and Expo (ICME)",
+          "author": "Chen",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib60",
+          "article-title": "The Grandparent Scam",
+          "year": "2021",
+          "journal-title": "Federal Bureau of Investigation"
+        },
+        {
+          "key": "2023090414254499100_bib61",
+          "doi-asserted-by": "crossref",
+          "first-page": "8057",
+          "DOI": "10.1109/CVPR42600.2020.00808",
+          "article-title": "Global Texture Enhancement for Fake Face Detection in the Wild",
+          "volume-title": "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Liu",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib62",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/ICCVW.2019.00152",
+          "article-title": "Deepfake Video Detection through Optical Flow Based CNN",
+          "volume-title": "2019 IEEE/CVF International Conference on Computer Vision Workshop (ICCVW)",
+          "author": "Amerini",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib63",
+          "first-page": "3242",
+          "article-title": "Deepfakes: threats and Countermeasures Systematic Review",
+          "volume": "97",
+          "author": "Albahar",
+          "year": "2019",
+          "journal-title": "J Theor Appl Inf Technol"
+        },
+        {
+          "key": "2023090414254499100_bib64",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/CVPR42600.2020.00813",
+          "article-title": "Analyzing and Improving the Image Quality of StyleGAN",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "author": "Karras",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib65",
+          "author": "Reuters Institute",
+          "year": "2020",
+          "journal-title": "Digital News Report 2020"
+        },
+        {
+          "key": "2023090414254499100_bib66",
+          "author": "Reuters Institute",
+          "year": "2018",
+          "journal-title": "Digital News Report 2018"
+        },
+        {
+          "key": "2023090414254499100_bib67",
+          "article-title": "Challenging Truth and Trust: a Global Inventory of Organized Social Media Manipulation",
+          "author": "Bradshaw",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib68",
+          "article-title": "The Strategy and Tactics of the Pro-Kremlin Disinformation Campaign",
+          "year": "2018",
+          "journal-title": "EU vs Disinfo"
+        },
+        {
+          "key": "2023090414254499100_bib69",
+          "doi-asserted-by": "crossref",
+          "first-page": "7",
+          "DOI": "10.1038/s41467-018-07761-2",
+          "article-title": "Influence of fake news in Twitter during the 2016 US presidential election",
+          "volume": "10",
+          "author": "Bovet",
+          "year": "2019",
+          "journal-title": "Nat Commun"
+        },
+        {
+          "key": "2023090414254499100_bib70",
+          "article-title": "Toxic Twitter – Women’s Experiences of Violence and Abuse on Twitter",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib71",
+          "volume-title": "Intimidation in Public Life: A Review by the Committee on Standards in Public Life",
+          "author": "Great Britain, Committee on Standards in Public Life",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib72",
+          "article-title": "Online abuse and harassment",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib73",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/ICCV.2019.00009",
+          "article-title": "FaceForensics++: Learning to Detect Manipulated Facial Images",
+          "volume-title": "Proceedings of the IEEE/CVF International Conference on Computer Vision",
+          "author": "Rössler",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib74",
+          "doi-asserted-by": "crossref",
+          "first-page": "132",
+          "DOI": "10.1109/ICCSA.2019.00011",
+          "article-title": "A Trusting News Ecosystem Against Fake News from Humanity and Technology Perspectives",
+          "volume-title": "2019 19th International Conference on Computational Science and Its Applications (ICCSA)",
+          "author": "Chen",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib75",
+          "article-title": "How blockchain could help combat deepfakes",
+          "author": "Stevens",
+          "year": "2019",
+          "journal-title": "Decrypt"
+        },
+        {
+          "key": "2023090414254499100_bib76",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3536426",
+          "article-title": "Deepfake video detection via predictive representation learning",
+          "volume": "18",
+          "author": "Ge",
+          "year": "2022",
+          "journal-title": "ACM Trans Multimedia Comput Commun Appl"
+        },
+        {
+          "key": "2023090414254499100_bib77",
+          "doi-asserted-by": "crossref",
+          "first-page": "108832",
+          "DOI": "10.1016/j.patcog.2022.108832",
+          "article-title": "Learning a deep dual-level network for robust DeepFake detection",
+          "volume": "130",
+          "author": "Pu",
+          "year": "2022",
+          "journal-title": "Pattern Recognit"
+        },
+        {
+          "key": "2023090414254499100_bib78",
+          "doi-asserted-by": "crossref",
+          "first-page": "4102",
+          "DOI": "10.1145/3503161.3547806",
+          "article-title": "Face Forgery Detection via Symmetric Transformer",
+          "volume-title": "Proceedings of the 30th ACM International Conference on Multimedia",
+          "author": "Song",
+          "year": "2022"
+        },
+        {
+          "key": "2023090414254499100_bib79",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1145/3512732.3533000",
+          "article-title": "Towards Generalization in Deepfake Detection",
+          "volume-title": "Proceedings of the 1st International Workshop on Multimedia AI against Disinformation",
+          "author": "Verdoliva",
+          "year": "2022"
+        },
+        {
+          "key": "2023090414254499100_bib80",
+          "first-page": "55",
+          "article-title": "Combating Deepfakes: Multi-LSTM and Blockchain as Proof of Authenticity for Digital Media",
+          "volume-title": "2020 IEEE /ITU International Conference on Artificial Intelligence for Good (AI4G)",
+          "author": "Ki Chan",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib81",
+          "first-page": "1044",
+          "article-title": "Blockchain technology for combating deepfake and protect video/image integrity",
+          "volume": "24",
+          "author": "Rashid",
+          "year": "2021",
+          "journal-title": "J. Korea Multimed. Soc."
+        },
+        {
+          "key": "2023090414254499100_bib82",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1109/GCWkshps50303.2020.9367545",
+          "article-title": "Making Sense of Blockchain for AI Deepfakes Technology",
+          "volume-title": "2020 IEEE Globecom Workshops (GC Wkshps)",
+          "author": "Yazdinejad",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib83",
+          "article-title": "What Is Account Takeover Fraud and How Can You Prevent It?",
+          "author": "Sato",
+          "year": "2020",
+          "journal-title": "Experian"
+        },
+        {
+          "key": "2023090414254499100_bib84",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.23919/BIOSIG.2018.8553251",
+          "article-title": "Fake Face Detection Methods: Can They Be Generalized?",
+          "volume-title": "2018 International Conference of the Biometrics Special Interest Group (BIOSIG)",
+          "author": "Khodabakhsh",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib85",
+          "article-title": "Adobe Photoshop",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib86",
+          "author": "GIMP",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib87",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/WACV48630.2021.00339",
+          "article-title": "Adversarial Deepfakes: Evaluating Vulnerability of Deepfake Detectors to Adversarial Examples",
+          "volume-title": "Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision 2021",
+          "author": "Hussain",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib88",
+          "doi-asserted-by": "crossref",
+          "first-page": "387",
+          "DOI": "10.1007/978-3-642-40994-3_25",
+          "article-title": "Evasion attacks against machine learning at test time",
+          "volume-title": "Advanced Information Systems Engineering",
+          "author": "Biggio",
+          "year": "2013"
+        },
+        {
+          "key": "2023090414254499100_bib89",
+          "doi-asserted-by": "crossref",
+          "first-page": "27",
+          "DOI": "10.1145/2666652.2666666",
+          "article-title": "Poisoning behavioral malware clustering",
+          "volume-title": "Proceedings of the 2014 Workshop on Artificial Intelligent and Security Workshop – AISec ’14",
+          "author": "Biggio",
+          "year": "2014"
+        },
+        {
+          "key": "2023090414254499100_bib90",
+          "article-title": "Microsoft and the learnings from its failed Tay artificial intelligence bot",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib91",
+          "doi-asserted-by": "crossref",
+          "first-page": "317",
+          "DOI": "10.1016/j.patcog.2018.07.023",
+          "article-title": "Wild patterns: ten years after the rise of adversarial machine learning",
+          "volume": "84",
+          "author": "Biggio",
+          "year": "2018",
+          "journal-title": "Pattern Recognit"
+        },
+        {
+          "key": "2023090414254499100_bib92",
+          "doi-asserted-by": "crossref",
+          "first-page": "99",
+          "DOI": "10.1109/EISIC.2017.21",
+          "article-title": "Adversarial Machine Learning in Malware Detection: Arms Race Between Evasion Attack and Defense",
+          "volume-title": "2017 European Intelligence and Security Informatics Conference (EISIC)",
+          "author": "Chen",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib93",
+          "doi-asserted-by": "crossref",
+          "first-page": "246",
+          "DOI": "10.1016/j.eswa.2018.10.011",
+          "article-title": "The arms race: adversarial search defeats entropy used to detect malware",
+          "volume": "118",
+          "author": "Menéndez",
+          "year": "2019",
+          "journal-title": "Expert Syst Appl"
+        },
+        {
+          "key": "2023090414254499100_bib94",
+          "article-title": "Exploring the Spam Arms Race to Characterize Spam Evolution",
+          "volume-title": "Proceedings of the 7th Collaboration, Electronic messaging, Anti-Abuse and Spam Conference (CEAS), Redmond, WA",
+          "author": "Guerra",
+          "year": "2010"
+        },
+        {
+          "key": "2023090414254499100_bib95",
+          "article-title": "Ad-Blocking and Counter Blocking: a Slice of the Arms Race",
+          "volume-title": "6th {USENIX} Workshop on Free and Open Communications on the Internet ({FOCI} 16)",
+          "author": "Nithyanand",
+          "year": "2016"
+        },
+        {
+          "key": "2023090414254499100_bib96",
+          "doi-asserted-by": "crossref",
+          "first-page": "60",
+          "DOI": "10.1057/s41284-016-0001-1",
+          "article-title": "Vehicle crime prevention and the co-evolutionary arms race: recent offender countermoves using immobiliser bypass technology",
+          "volume": "30",
+          "author": "Brown",
+          "year": "2017",
+          "journal-title": "Secur J"
+        },
+        {
+          "key": "2023090414254499100_bib97",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1002/9781119183631",
+          "volume-title": "Secrets and Lies: Digital Security in a Networked World",
+          "author": "Schneier",
+          "year": "2015"
+        },
+        {
+          "key": "2023090414254499100_bib98",
+          "doi-asserted-by": "crossref",
+          "first-page": "e2110013119",
+          "DOI": "10.1073/pnas.2110013119",
+          "article-title": "Deepfake detection by human crowds, machines, and machine-informed crowds",
+          "volume": "119",
+          "author": "Groh",
+          "year": "2022",
+          "journal-title": "Proc Natl Acad Sci USA"
+        },
+        {
+          "key": "2023090414254499100_bib99",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/CVPR.2019.00453",
+          "article-title": "A Style-Based Generator Architecture for Generative Adversarial Networks",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "author": "Karras",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib100",
+          "volume-title": "NVlabs/Ffhq-Dataset",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib101",
+          "article-title": "Celeb-DF: a New Dataset for DeepFake Forensics",
+          "volume-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "author": "Li",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib102",
+          "article-title": "Progressive Growing of GANs for Improved Quality, Stability, and Variation",
+          "volume-title": "Sixth International Conference on Learning Representations",
+          "author": "Karras",
+          "year": "2018"
+        },
+        {
+          "key": "2023090414254499100_bib103",
+          "first-page": "3730",
+          "article-title": "Deep Learning Face Attributes in the Wild",
+          "volume-title": "2015 IEEE International Conference on Computer Vision (ICCV), Santiago, Chile",
+          "author": "Liu",
+          "year": "2015"
+        },
+        {
+          "key": "2023090414254499100_bib104",
+          "doi-asserted-by": "crossref",
+          "first-page": "e2120481119",
+          "DOI": "10.1073/pnas.2120481119",
+          "article-title": "AI-synthesized faces are indistinguishable from real faces and more trustworthy",
+          "volume": "119",
+          "author": "Nightingale",
+          "year": "2022",
+          "journal-title": "Proc Natl Acad Sci USA"
+        },
+        {
+          "key": "2023090414254499100_bib105",
+          "doi-asserted-by": "crossref",
+          "first-page": "4",
+          "DOI": "10.1007/s10608-014-9634-8",
+          "article-title": "A randomised controlled study of the effects of the attention training technique on traumatic stress symptoms, emotional attention set shifting and flexibility",
+          "volume": "39",
+          "author": "Callinan",
+          "year": "2015",
+          "journal-title": "Cogn Ther Res"
+        },
+        {
+          "key": "2023090414254499100_bib106",
+          "first-page": "39",
+          "article-title": "What is typical is good: the influence of face typicality on perceived trustworthiness",
+          "volume-title": "Psychological Science",
+          "author": "Sofer",
+          "year": "2015"
+        },
+        {
+          "key": "2023090414254499100_bib107",
+          "first-page": "1",
+          "article-title": "A Study of the Human Perception of Synthetic Faces",
+          "volume-title": "2021 16th IEEE International Conference on Automatic Face and Gesture Recognition (FG 2021)",
+          "author": "Shen",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib108",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1109/FG.2015.7163125",
+          "article-title": "Lessons From Collecting a Million Biometric Samples",
+          "volume-title": "2015 11th IEEE International Conference and Workshops on Automatic Face and Gesture Recognition (FG)",
+          "author": "Flynn",
+          "year": "2015"
+        },
+        {
+          "key": "2023090414254499100_bib109",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1145/2024156.2024164",
+          "article-title": "Video Face Replacement",
+          "volume-title": "Proceedings of the 2011 SIGGRAPH Asia Conference on (SA ’11)",
+          "author": "Dale",
+          "year": "2011"
+        },
+        {
+          "key": "2023090414254499100_bib110",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/QoMEX.2019.8743316",
+          "article-title": "Subjective Evaluation of Media Consumer Vulnerability to Fake Audiovisual Content",
+          "volume-title": "2019 Eleventh International Conference on Quality of Multimedia Experience (QoMEX)",
+          "author": "Khodabakhsh",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib111",
+          "first-page": "1",
+          "article-title": "Deep video portraits",
+          "volume": "37",
+          "author": "Kim",
+          "year": "2018",
+          "journal-title": "ACM Trans Graph"
+        },
+        {
+          "key": "2023090414254499100_bib112",
+          "volume-title": "Fooled Twice—People Cannot Detect Deepfakes But Think They Can",
+          "author": "Köbis",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib113",
+          "article-title": "Deepfake detection: humans vs. machines",
+          "author": "Korshunov",
+          "year": "2020",
+          "journal-title": "ArXiv"
+        },
+        {
+          "key": "2023090414254499100_bib114",
+          "article-title": "FaceForensics: a large-scale video dataset for forgery detection in human faces",
+          "author": "Rössler",
+          "year": "2018",
+          "journal-title": "arXiv:180309179 [cs]"
+        },
+        {
+          "key": "2023090414254499100_bib115",
+          "article-title": "This X Does Not Exist",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib116",
+          "article-title": "This Person Does Not Exist",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib117",
+          "article-title": "These people do not exist. Why websites are churning out fake images of people (and cats)",
+          "author": "Metz",
+          "year": "2019",
+          "journal-title": "CNN"
+        },
+        {
+          "key": "2023090414254499100_bib118",
+          "doi-asserted-by": "crossref",
+          "first-page": "121",
+          "DOI": "10.1145/642611.642634",
+          "article-title": "Shiny happy people building trust? photos on e-commerce websites and consumer trust",
+          "volume-title": "Proceedings of the SIGCHI Conference on Human Factors in Computing Systems",
+          "author": "Riegelsberger",
+          "year": "2003"
+        },
+        {
+          "key": "2023090414254499100_bib119",
+          "doi-asserted-by": "crossref",
+          "first-page": "83",
+          "DOI": "10.1093/iwc/iwz005",
+          "article-title": "Examining the relative impact of professional profile images and facial expressions in small business-to-business marketing online",
+          "volume": "31",
+          "author": "Pawar",
+          "year": "2019",
+          "journal-title": "Interact Comput"
+        },
+        {
+          "key": "2023090414254499100_bib120",
+          "article-title": "KYC/AML Compliance – Eliminating Financial Crime in Challenger Banks",
+          "author": "Marley",
+          "year": "2022"
+        },
+        {
+          "key": "2023090414254499100_bib121",
+          "article-title": "Now fake Facebook accounts are using fake faces",
+          "author": "O'Sullivan",
+          "year": "2019",
+          "journal-title": "CNN"
+        },
+        {
+          "key": "2023090414254499100_bib122",
+          "article-title": "How fake faces are being weaponized online",
+          "author": "O'Sullivan",
+          "year": "2020",
+          "journal-title": "CNN"
+        },
+        {
+          "key": "2023090414254499100_bib123",
+          "article-title": "A spy reportedly used an AI-generated profile picture to connect with sources on LinkedIn",
+          "author": "Vincent",
+          "year": "2019",
+          "journal-title": "The Verge"
+        },
+        {
+          "key": "2023090414254499100_bib124",
+          "article-title": "Which Face is Real?",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib125",
+          "doi-asserted-by": "crossref",
+          "first-page": "22",
+          "DOI": "10.1016/j.jbef.2017.12.004",
+          "article-title": "Prolific.ac—A subject pool for online experiments",
+          "volume": "17",
+          "author": "Palan",
+          "year": "2018",
+          "journal-title": "J Behav Exp Finance"
+        },
+        {
+          "key": "2023090414254499100_bib126",
+          "article-title": "Qualitative Data Analysis with NVivo",
+          "author": "Jackson",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib127",
+          "article-title": "NVivo",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib128",
+          "doi-asserted-by": "crossref",
+          "first-page": "37",
+          "DOI": "10.1109/BTAS.2017.8272680",
+          "article-title": "SREFI: synthesis of realistic example face images",
+          "volume-title": "2017 IEEE International Joint Conference on Biometrics (IJCB)",
+          "author": "Banerjee",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib129",
+          "doi-asserted-by": "crossref",
+          "first-page": "502",
+          "DOI": "10.1037/0033-295X.115.2.502",
+          "article-title": "The trouble with overconfidence",
+          "volume": "115",
+          "author": "Moore",
+          "year": "2008",
+          "journal-title": "Psychol Rev"
+        },
+        {
+          "key": "2023090414254499100_bib130",
+          "article-title": "Older People, Fraud and Scams – Age UK report"
+        },
+        {
+          "key": "2023090414254499100_bib131",
+          "first-page": "1",
+          "article-title": "Secure comics: an interactive comic series for improving cyber security and privacy",
+          "author": "Zhang-Kennedy",
+          "year": "2017"
+        },
+        {
+          "key": "2023090414254499100_bib132",
+          "doi-asserted-by": "crossref",
+          "first-page": "6141",
+          "DOI": "10.1109/CVPR42600.2020.00618",
+          "article-title": "StyleRig: rigging StyleGAN for 3D Control Over Portrait Images",
+          "volume-title": "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Tewari",
+          "year": "2020"
+        },
+        {
+          "key": "2023090414254499100_bib133",
+          "first-page": "9841",
+          "article-title": "GANSpace: discovering interpretable GAN controls",
+          "volume": "33",
+          "author": "Härkönen",
+          "year": "2020",
+          "journal-title": "Adv Neural Inf Process Syst"
+        },
+        {
+          "key": "2023090414254499100_bib134",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3414685.3417826",
+          "article-title": "Face identity disentanglement via latent space mapping",
+          "volume": "39",
+          "author": "Nitzan",
+          "year": "2020",
+          "journal-title": "ACM Trans Graph"
+        },
+        {
+          "key": "2023090414254499100_bib135",
+          "doi-asserted-by": "crossref",
+          "first-page": "4431",
+          "DOI": "10.1109/ICCV.2019.00453",
+          "article-title": "Image2StyleGAN: how to Embed Images Into the StyleGAN Latent Space",
+          "volume-title": "2019 IEEE/CVF International Conference on Computer Vision (ICCV)",
+          "author": "Abdal",
+          "year": "2019"
+        },
+        {
+          "key": "2023090414254499100_bib136",
+          "article-title": "MelNet: a generative model for audio in the frequency domain",
+          "author": "Vasquez",
+          "year": "2019",
+          "journal-title": "ArXiv"
+        },
+        {
+          "key": "2023090414254499100_bib137",
+          "article-title": "MelNet",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib138",
+          "article-title": "Lyrebird",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib139",
+          "volume-title": "Deepest-Project/MelNet",
+          "year": "2021"
+        },
+        {
+          "key": "2023090414254499100_bib140",
+          "doi-asserted-by": "crossref",
+          "first-page": "1568",
+          "DOI": "10.1016/j.respol.2013.05.008",
+          "article-title": "Developing a framework for responsible innovation",
+          "volume": "42",
+          "author": "Stilgoe",
+          "year": "2013",
+          "journal-title": "Res Policy"
+        },
+        {
+          "key": "2023090414254499100_bib141",
+          "article-title": "This MP Does Not Exist",
+          "year": "2021",
+          "journal-title": "VOLE.wtf"
+        },
+        {
+          "key": "2023090414254499100_bib142",
+          "doi-asserted-by": "crossref",
+          "first-page": "428",
+          "DOI": "10.1016/j.jbusres.2017.12.043",
+          "article-title": "Open Science now: a systematic literature review for an integrated definition",
+          "volume": "88",
+          "author": "Vicente-Saez",
+          "year": "2018",
+          "journal-title": "J Bus Res"
+        },
+        {
+          "key": "2023090414254499100_bib143",
+          "doi-asserted-by": "crossref",
+          "first-page": "171",
+          "DOI": "10.1177/0306312718772086",
+          "article-title": "The future(s) of open science",
+          "volume": "48",
+          "author": "Mirowski",
+          "year": "2018",
+          "journal-title": "Soc Stud Sci"
+        }
+      ],
+      "container-title": [
+        "Journal of Cybersecurity"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://academic.oup.com/cybersecurity/article-pdf/9/1/tyad011/51343718/tyad011.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "syndication"
+        },
+        {
+          "URL": "https://academic.oup.com/cybersecurity/article-pdf/9/1/tyad011/51343718/tyad011.pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2023,
+            9,
+            4
+          ]
+        ],
+        "date-time": "2023-09-04T14:35:19Z",
+        "timestamp": 1693838119000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://academic.oup.com/cybersecurity/article/doi/10.1093/cybsec/tyad011/7205694"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2023,
+            1,
+            1
+          ]
+        ]
+      },
+      "references-count": 143,
+      "journal-issue": {
+        "issue": "1",
+        "published-print": {
+          "date-parts": [
+            [
+              2023,
+              1,
+              5
+            ]
+          ]
+        }
+      },
+      "URL": "https://doi.org/10.1093/cybsec/tyad011",
+      "relation": {},
+      "ISSN": [
+        "2057-2085",
+        "2057-2093"
+      ],
+      "issn-type": [
+        {
+          "value": "2057-2085",
+          "type": "print"
+        },
+        {
+          "value": "2057-2093",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published-other": {
+        "date-parts": [
+          [
+            2023,
+            1,
+            1
+          ]
+        ]
+      },
+      "published": {
+        "date-parts": [
+          [
+            2023,
+            1,
+            1
+          ]
+        ]
+      },
+      "article-number": "tyad011"
+    }
+  }
+}

@@ -1,0 +1,672 @@
+{
+  "doi": "10.1007/s11227-026-08734-9",
+  "source_url": "https://api.crossref.org/works/10.1007%2Fs11227-026-08734-9",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ],
+        "date-time": "2026-07-29T10:02:37Z",
+        "timestamp": 1785319357505,
+        "version": "3.55.0"
+      },
+      "reference-count": 36,
+      "publisher": "Springer Science and Business Media LLC",
+      "issue": "11",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                29
+              ]
+            ],
+            "date-time": "2026-07-29T00:00:00Z",
+            "timestamp": 1785283200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                29
+              ]
+            ],
+            "date-time": "2026-07-29T00:00:00Z",
+            "timestamp": 1785283200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        }
+      ],
+      "funder": [
+        {
+          "name": "‌Project supported by the National Natural Science Foundation of China",
+          "award": [
+            "Grant No. 62266012"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "Grant No. 62266012"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Scientific Research Project at the University Level of Guizhou Minzu University",
+          "award": [
+            "GZMUZK [2021] YB23"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "GZMUZK [2021] YB23"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "the Guizhou Provincial Graduate Education Innovation Program Project",
+          "award": [
+            "(No. 2025YJSKYJJ184)"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "(No. 2025YJSKYJJ184)"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Key Laboratory of Big Data Analysis and Intelligent Computing in Guizhou Higher Education Institutions",
+          "award": [
+            "No.: Qianjiaotech [2023] No. 012"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "No.: Qianjiaotech [2023] No. 012"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Research on Key Technologies of Image Deblurring Integrated with Deep Learning and Structural Constraints",
+          "award": [
+            "GZMUZK [2023] QN10"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "GZMUZK [2023] QN10"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "the Natural Science Foundation of Guizhou Province",
+          "award": [
+            "QIANKEHEJICHU-MS〔2026〕277"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "QIANKEHEJICHU-MS〔2026〕277"
+              ]
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "J Supercomput"
+      ],
+      "DOI": "10.1007/s11227-026-08734-9",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ],
+        "date-time": "2026-07-29T09:28:13Z",
+        "timestamp": 1785317293000
+      },
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Synthetic image detection method integrating neural ordinary differential equations and spatial attention transformer"
+      ],
+      "prefix": "10.1007",
+      "volume": "82",
+      "author": [
+        {
+          "given": "Tao",
+          "family": "Yang",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Qian",
+          "family": "Zhang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Bin",
+          "family": "Hu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Haiyan",
+          "family": "Jin",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Lian",
+          "family": "Zhu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "8734_CR1",
+          "doi-asserted-by": "publisher",
+          "first-page": "105828",
+          "DOI": "10.1016/j.imavis.2025.105828",
+          "volume": "165",
+          "author": "G Yang",
+          "year": "2026",
+          "unstructured": "Yang G, Song Y, Yang X, Zhang J (2026) LET-CViT: a low-light enhanced two-stream CNN and vision transformer for deepfake detection. Image Vis Comput 165:105828",
+          "journal-title": "Image Vis Comput"
+        },
+        {
+          "key": "8734_CR2",
+          "first-page": "4103",
+          "volume": "38",
+          "author": "T Zhang",
+          "year": "2026",
+          "unstructured": "Zhang T, Gao L, Peng S, Zhu X, Lei Z (2026) DevFD: developmental face forgery detection by learning shared and orthogonal LoRA subspaces. Adv Neural Inf Process Syst 38:4103–4128",
+          "journal-title": "Adv Neural Inf Process Syst"
+        },
+        {
+          "key": "8734_CR3",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Dutta A, Das AK, Naskar R, Chakraborty RS (2025) WaveDIF: wavelet sub-band based deepfake identification in frequency domain. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp 6302–6311",
+          "DOI": "10.1109/CVPRW67362.2025.00627"
+        },
+        {
+          "key": "8734_CR4",
+          "first-page": "1",
+          "volume-title": "2025 Third International Conference on Networks, Multimedia and Information Technology (NMITCON)",
+          "author": "M Tauseef",
+          "year": "2025",
+          "unstructured": "Tauseef M, Viji LS, Fenwick J (2025) Deepfaceguard: a lightweight CNN framework for robust face manipulation detection. 2025 Third International Conference on Networks, Multimedia and Information Technology (NMITCON). IEEE, pp 1–6"
+        },
+        {
+          "key": "8734_CR5",
+          "doi-asserted-by": "publisher",
+          "first-page": "129055",
+          "DOI": "10.1016/j.neucom.2024.129055",
+          "volume": "618",
+          "author": "L Ma",
+          "year": "2025",
+          "unstructured": "Ma L, Yang P, Xu Y, Yang Z, Li P, Huang H (2025) Deep learning technology for face forgery detection: a survey. Neurocomputing 618:129055",
+          "journal-title": "Neurocomputing"
+        },
+        {
+          "key": "8734_CR6",
+          "first-page": "5320",
+          "volume": "32",
+          "author": "Y Rubanova",
+          "year": "2019",
+          "unstructured": "Rubanova Y, Chen RTQ, Duvenaud D (2019) Latent ODEs for irregularly sampled time series. Adv Neural Inf Process Syst (NeurIPS) 32:5320–5330",
+          "journal-title": "Adv Neural Inf Process Syst (NeurIPS)"
+        },
+        {
+          "issue": "3",
+          "key": "8734_CR7",
+          "doi-asserted-by": "publisher",
+          "first-page": "4142",
+          "DOI": "10.3934/mbe.2024183",
+          "volume": "21",
+          "author": "X Li",
+          "year": "2024",
+          "unstructured": "Li X, Zhou H, Zhao M (2024) Transformer-based cascade networks with spatial and channel reconstruction convolution for deepfake detection. Math Biosci Eng 21(3):4142–4164",
+          "journal-title": "Math Biosci Eng"
+        },
+        {
+          "issue": "1",
+          "key": "8734_CR8",
+          "doi-asserted-by": "publisher",
+          "first-page": "57",
+          "DOI": "10.1016/j.vrih.2022.07.006",
+          "volume": "5",
+          "author": "M Zhang",
+          "year": "2023",
+          "unstructured": "Zhang M, Tian X (2023) Transformer architecture based on mutual attention for image anomaly detection. Virtual Real Intell Hardw 5(1):57–67",
+          "journal-title": "Virtual Real Intell Hardw"
+        },
+        {
+          "key": "8734_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cozzolino D, Poggi G, Verdoliva L (2017) Recasting residual-based local descriptors as convolutional neural networks: An application to image forgery detection. In: Proceedings of the 5th ACM Workshop on Information Hiding and Multimedia Security, pp 159–164",
+          "DOI": "10.1145/3082031.3083247"
+        },
+        {
+          "key": "8734_CR10",
+          "doi-asserted-by": "publisher",
+          "first-page": "110311",
+          "DOI": "10.1016/j.forsciint.2020.110311",
+          "volume": "312",
+          "author": "R Thakur",
+          "year": "2020",
+          "unstructured": "Thakur R, Rohilla R (2020) Recent advances in digital image manipulation detection techniques: a brief review. Forensic Sci Int 312:110311",
+          "journal-title": "Forensic Sci Int"
+        },
+        {
+          "key": "8734_CR11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhou P, Han X, Morariu VI, Davis LS (2018) Learning rich features for image manipulation detection. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp 1053–1061",
+          "DOI": "10.1109/CVPR.2018.00116"
+        },
+        {
+          "issue": "1",
+          "key": "8734_CR12",
+          "first-page": "80",
+          "volume": "3",
+          "author": "E Sabir",
+          "year": "2019",
+          "unstructured": "Sabir E, Cheng J, Jaiswal A, AbdAlmageed W, Masi I, Natarajan P (2019) Recurrent convolutional strategies for face manipulation detection in videos. Interfaces (GUI) 3(1):80–87",
+          "journal-title": "Interfaces (GUI)"
+        },
+        {
+          "issue": "7",
+          "key": "8734_CR13",
+          "doi-asserted-by": "publisher",
+          "first-page": "477",
+          "DOI": "10.1007/s10489-024-06168-5",
+          "volume": "55",
+          "author": "V Gupta",
+          "year": "2025",
+          "unstructured": "Gupta V, Srivastava V, Yadav A, Vishwakarma DK, Kumar N (2025) FreqFaceNet: an enhanced transformer architecture with dual-order frequency attention for deepfake detection. Appl Intell 55(7):477–486",
+          "journal-title": "Appl Intell"
+        },
+        {
+          "issue": "3",
+          "key": "8734_CR14",
+          "doi-asserted-by": "publisher",
+          "first-page": "e2270",
+          "DOI": "10.1002/cav.2270",
+          "volume": "35",
+          "author": "J Lee",
+          "year": "2024",
+          "unstructured": "Lee J, Kang H (2024) PIPformers: patch-based inpainting with vision transformers for generalized painting restoration. Comput Anim Virtual Worlds 35(3):e2270",
+          "journal-title": "Comput Anim Virtual Worlds"
+        },
+        {
+          "key": "8734_CR15",
+          "doi-asserted-by": "publisher",
+          "first-page": "50",
+          "DOI": "10.1109/TMM.2021.3120873",
+          "volume": "25",
+          "author": "X Lin",
+          "year": "2021",
+          "unstructured": "Lin X, Sun S, Huang W, Sheng B, Li P, Feng DD (2021) EAPT: efficient attention pyramid transformer for image processing. IEEE Trans Multimed 25:50–61",
+          "journal-title": "IEEE Trans Multimed"
+        },
+        {
+          "key": "8734_CR16",
+          "doi-asserted-by": "publisher",
+          "first-page": "6198",
+          "DOI": "10.1109/TMM.2025.3565935",
+          "volume": "27",
+          "author": "Y Wen",
+          "year": "2025",
+          "unstructured": "Wen Y, Luo B, Shi W, Ji J, Cao W, Yang X, Sheng B (2025) SAT-Net: structure-aware transformer-based attention fusion network for low-quality retinal fundus image enhancement. IEEE Trans Multimed 27:6198–6210",
+          "journal-title": "IEEE Trans Multimed"
+        },
+        {
+          "issue": "9",
+          "key": "8734_CR17",
+          "doi-asserted-by": "publisher",
+          "first-page": "236",
+          "DOI": "10.1007/s10462-024-10894-0",
+          "volume": "57",
+          "author": "H Niu",
+          "year": "2024",
+          "unstructured": "Niu H, Zhou Y, Yan X, Wu J, Shen Y, Yi Z, Hu J (2024) On the applications of neural ordinary differential equations in medical image analysis. Artif Intell Rev 57(9):236",
+          "journal-title": "Artif Intell Rev"
+        },
+        {
+          "issue": "10",
+          "key": "8734_CR18",
+          "first-page": "2033",
+          "volume": "14",
+          "author": "L Qian",
+          "year": "2025",
+          "unstructured": "Qian L, Sun S, Long S (2025) ConvGRU hybrid model based on neural ordinary differential equations for continuous dynamics video object detection. Electronics (Basel) 14(10):2033",
+          "journal-title": "Electronics (Basel)"
+        },
+        {
+          "issue": "1",
+          "key": "8734_CR19",
+          "doi-asserted-by": "publisher",
+          "first-page": "303",
+          "DOI": "10.1007/s00521-024-10467-w",
+          "volume": "37",
+          "author": "S Artham",
+          "year": "2025",
+          "unstructured": "Artham S, Shaikh SH (2025) Procedure segmentation in videos with Bayesian neural ODE model. Neural Comput Appl 37(1):303–317",
+          "journal-title": "Neural Comput Appl"
+        },
+        {
+          "key": "8734_CR20",
+          "unstructured": "Emre A (2024) Vision transformer network implementation for multi-label image classification. Master’s Thesis, Başkent University"
+        },
+        {
+          "key": "8734_CR21",
+          "unstructured": "Chen T, Kornblith S, Norouzi M, Hinton G (2020) A simple framework for contrastive learning of visual representations. In: Proceedings of the International Conference on Machine Learning (ICML), pp 1597–1607"
+        },
+        {
+          "key": "8734_CR22",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Musgrave K, Belongie S, Lim SN (2020) A metric learning reality check. In: Proceedings of the European Conference on Computer Vision (ECCV), pp 681–699",
+          "DOI": "10.1007/978-3-030-58595-2_41"
+        },
+        {
+          "key": "8734_CR23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhu G, Xiao R, Wang H, Zhu Z, Lyu G, Zhao J (2025) Large margin representation learning for cross-lingual named entity recognition. In: Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (ACL), pp 4270–4291",
+          "DOI": "10.18653/v1/2025.acl-long.215"
+        },
+        {
+          "issue": "428",
+          "key": "8734_CR24",
+          "first-page": "54",
+          "volume": "123",
+          "author": "H Tamegai",
+          "year": "2024",
+          "unstructured": "Tamegai H, Jinno K (2024) Effectiveness and validation of feature scaling in CNN image classification tasks. IEICE Tech Rep 123(428):54–57",
+          "journal-title": "IEICE Tech Rep"
+        },
+        {
+          "key": "8734_CR25",
+          "first-page": "4481",
+          "volume": "37",
+          "author": "Y Akram",
+          "year": "2024",
+          "unstructured": "Akram Y, Kobayashi S, von Oswald J (2024) Weight decay induces low-rank attention layers. Adv Neural Inf Process Syst (NeurIPS) 37:4481–4510",
+          "journal-title": "Adv Neural Inf Process Syst (NeurIPS)"
+        },
+        {
+          "key": "8734_CR26",
+          "unstructured": "Ding K, Xiao N, Toh KC (2023) Adam-family methods with decoupled weight decay in deep learning. arXiv:2310.08858"
+        },
+        {
+          "key": "8734_CR27",
+          "unstructured": "Frank J, Eisenhofer T, Schönherr L, Fischer A, Kolossa D, Holz T (2020) Leveraging frequency analysis for deep fake image recognition. In: Proceedings of the International Conference on Machine Learning (ICML), pp 3247–3258"
+        },
+        {
+          "key": "8734_CR28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tan C, Zhao Y, Wei S, Gu G, Wei Y (2023) Learning on gradients: generalized artifact representation for GAN-generated image detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp 12105–12114",
+          "DOI": "10.1109/CVPR52729.2023.01165"
+        },
+        {
+          "key": "8734_CR29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tan C, Zhao Y, Wei S, Gu G, Liu P, Wei Y (2024) Rethinking up-sampling operations in CNN-based generative networks for generalizable deepfake detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp 28130–28139",
+          "DOI": "10.1109/CVPR52733.2024.02657"
+        },
+        {
+          "key": "8734_CR30",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ojha U, Li Y, Lee YJ (2023) Towards universal fake image detectors that generalize across generative models. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp 24480–24489",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "8734_CR31",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Koutlis C, Papadopoulos S (2024) Leveraging representations from intermediate encoder-blocks for synthetic image detection. In: Proceedings of the European Conference on Computer Vision (ECCV), pp 394–411",
+          "DOI": "10.1007/978-3-031-73220-1_23"
+        },
+        {
+          "key": "8734_CR32",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang Z, Bao J, Zhou W, Wang W, Hu H, Chen H, Li H (2023) DIRE for diffusion-generated image detection. In: Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), pp 22445–22455",
+          "DOI": "10.1109/ICCV51070.2023.02051"
+        },
+        {
+          "key": "8734_CR33",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tan C, Zhao Y, Wei S, Gu G, Liu P, Wei Y (2024) Frequency-aware deepfake detection: improving generalizability through frequency space domain learning. In: Proceedings of the AAAI Conference on Artificial Intelligence (AAAI), 38(5):5052–5060",
+          "DOI": "10.1609/aaai.v38i5.28310"
+        },
+        {
+          "key": "8734_CR34",
+          "first-page": "70702",
+          "volume": "2025",
+          "author": "SL Yan",
+          "year": "2025",
+          "unstructured": "Yan SL, Li OX, Cai JY, Hao YB, Jiang X, Hu Y, Xie W (2025) A sanity check for AI-generated image detection. Int Conf Learn Represent (ICLR) 2025:70702–70720",
+          "journal-title": "Int Conf Learn Represent (ICLR)"
+        },
+        {
+          "key": "8734_CR35",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li OX, Cai JY, Hao YB, Jiang X, Hu Y, Feng F (2025) Improving synthetic image detection towards generalization: an image transformation perspective. In: Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining (KDD), pp 2405–2414",
+          "DOI": "10.1145/3690624.3709392"
+        },
+        {
+          "key": "8734_CR36",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chai L, Bau D, Lim SN, Isola P (2020) What makes fake images detectable? Understanding properties that generalize. In: European Conference on Computer Vision (ECCV), pp 103–120",
+          "DOI": "10.1007/978-3-030-58574-7_7"
+        }
+      ],
+      "container-title": [
+        "The Journal of Supercomputing"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/s11227-026-08734-9.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://link.springer.com/article/10.1007/s11227-026-08734-9",
+          "content-type": "text/html",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/s11227-026-08734-9.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ],
+        "date-time": "2026-07-29T09:28:20Z",
+        "timestamp": 1785317300000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://link.springer.com/10.1007/s11227-026-08734-9"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ]
+      },
+      "references-count": 36,
+      "journal-issue": {
+        "issue": "11",
+        "published-online": {
+          "date-parts": [
+            [
+              2026,
+              7
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "8734"
+      ],
+      "URL": "https://doi.org/10.1007/s11227-026-08734-9",
+      "relation": {},
+      "ISSN": [
+        "1573-0484"
+      ],
+      "issn-type": [
+        {
+          "value": "1573-0484",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "20 January 2026",
+          "order": 1,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "17 July 2026",
+          "order": 2,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "29 July 2026",
+          "order": 3,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "The authors declare no competing interests.",
+          "order": 1,
+          "name": "Ethics",
+          "label": "Conflict of interest",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Declarations"
+          }
+        }
+      ],
+      "article-number": "590"
+    }
+  }
+}

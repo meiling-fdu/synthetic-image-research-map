@@ -1,0 +1,1188 @@
+{
+  "doi": "10.3390/jimaging6030009",
+  "source_url": "https://api.crossref.org/works/10.3390%2Fjimaging6030009",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            18
+          ]
+        ],
+        "date-time": "2026-08-18T15:31:08Z",
+        "timestamp": 1787067068449,
+        "version": "build-2736575974"
+      },
+      "reference-count": 119,
+      "publisher": "MDPI AG",
+      "issue": "3",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2020,
+                3,
+                4
+              ]
+            ],
+            "date-time": "2020-03-04T00:00:00Z",
+            "timestamp": 1583280000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100012166",
+          "name": "National Key Research and Development of China",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "2016YFB0800404"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2016YFB0800404"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100012166",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100001809",
+          "name": "National Natural Science Foundation of China",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "61672090, 61532005, 61332012"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "61672090, 61532005, 61332012"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100001809",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100012226",
+          "name": "Fundamental Research Funds for the Central Universities",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "2018JBZ001, 2017YJS054"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2018JBZ001, 2017YJS054"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100012226",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "J. Imaging"
+      ],
+      "abstract": "<jats:p>Image source forensics is widely considered as one of the most effective ways to verify in a blind way digital image authenticity and integrity. In the last few years, many researchers have applied data-driven approaches to this task, inspired by the excellent performance obtained by those techniques on computer vision problems. In this survey, we present the most important data-driven algorithms that deal with the problem of image source forensics. To make order in this vast field, we have divided the area in five sub-topics: source camera identification, recaptured image forensic, computer graphics (CG) image forensic, GAN-generated image detection, and source social network identification. Moreover, we have included the works on anti-forensics and counter anti-forensics. For each of these tasks, we have highlighted advantages and limitations of the methods currently proposed in this promising and rich research field.</jats:p>",
+      "DOI": "10.3390/jimaging6030009",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2020,
+            3,
+            6
+          ]
+        ],
+        "date-time": "2020-03-06T07:33:46Z",
+        "timestamp": 1583480026000
+      },
+      "page": "9",
+      "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 77,
+      "title": [
+        "A Survey of Deep Learning-Based Source Image Forensics"
+      ],
+      "prefix": "10.3390",
+      "volume": "6",
+      "author": [
+        {
+          "given": "Pengpeng",
+          "family": "Yang",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Institute of Information Science, Beijing Jiaotong University, Beijing 100044, China"
+            },
+            {
+              "name": "Beijing Key Laboratory of Advanced Information Science and Network Technology, Beijing Jiaotong University, Beijing 100044, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Daniele",
+          "family": "Baracchi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Information Engineering, University of Florence, Via di S. Marta, 3, 50139 Florence, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Rongrong",
+          "family": "Ni",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Institute of Information Science, Beijing Jiaotong University, Beijing 100044, China"
+            },
+            {
+              "name": "Beijing Key Laboratory of Advanced Information Science and Network Technology, Beijing Jiaotong University, Beijing 100044, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Yao",
+          "family": "Zhao",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Institute of Information Science, Beijing Jiaotong University, Beijing 100044, China"
+            },
+            {
+              "name": "Beijing Key Laboratory of Advanced Information Science and Network Technology, Beijing Jiaotong University, Beijing 100044, China"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-7776-4015",
+          "authenticated-orcid": false,
+          "given": "Fabrizio",
+          "family": "Argenti",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Information Engineering, University of Florence, Via di S. Marta, 3, 50139 Florence, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-3047-0519",
+          "authenticated-orcid": false,
+          "given": "Alessandro",
+          "family": "Piva",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Information Engineering, University of Florence, Via di S. Marta, 3, 50139 Florence, Italy"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "1968",
+      "published-online": {
+        "date-parts": [
+          [
+            2020,
+            3,
+            4
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "ref_1",
+          "doi-asserted-by": "crossref",
+          "first-page": "40",
+          "DOI": "10.1109/MSP.2004.1276112",
+          "article-title": "When seeing isn’t believing [multimedia authentication technologies]",
+          "volume": "21",
+          "author": "Zhu",
+          "year": "2004",
+          "journal-title": "IEEE Signal Process. Mag."
+        },
+        {
+          "key": "ref_2",
+          "doi-asserted-by": "crossref",
+          "first-page": "162",
+          "DOI": "10.1111/j.1740-9713.2006.00197.x",
+          "article-title": "Digital doctoring: How to tell the real from the fake",
+          "volume": "3",
+          "author": "Farid",
+          "year": "2006",
+          "journal-title": "Significance"
+        },
+        {
+          "key": "ref_3",
+          "doi-asserted-by": "crossref",
+          "first-page": "14985",
+          "DOI": "10.1109/ACCESS.2018.2886814",
+          "article-title": "Recent Advances of Generative Adversarial Networks in Computer Vision",
+          "volume": "7",
+          "author": "Cao",
+          "year": "2019",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "ref_4",
+          "doi-asserted-by": "crossref",
+          "first-page": "332",
+          "DOI": "10.1038/s42256-019-0085-5",
+          "article-title": "When seeing is no longer believing",
+          "volume": "1",
+          "author": "Beridze",
+          "year": "2019",
+          "journal-title": "Nat. Mach. Intell."
+        },
+        {
+          "key": "ref_5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Piva, A. (2013). An overview on image forensics. ISRN Signal Process., 2013.",
+          "DOI": "10.1155/2013/496701"
+        },
+        {
+          "key": "ref_6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Guan, H., Kozak, M., Robertson, E., Lee, Y., Yates, A.N., Delgado, A., Zhou, D., Kheyrkhah, T., Smith, J., and Fiscus, J. (2019, January 7–11). MFC Datasets: Large-Scale Benchmark Datasets for Media Forensic Challenge Evaluation. Proceedings of the 2019 IEEE Winter Applications of Computer Vision Workshops (WACVW), Waikoloa Village, HI, USA.",
+          "DOI": "10.1109/WACVW.2019.00018"
+        },
+        {
+          "key": "ref_7",
+          "unstructured": "IEEE (2018). Signal Processing Society—Camera Model Identification, IEEE."
+        },
+        {
+          "key": "ref_8",
+          "doi-asserted-by": "crossref",
+          "first-page": "1527",
+          "DOI": "10.1162/neco.2006.18.7.1527",
+          "article-title": "A fast learning algorithm for deep belief nets",
+          "volume": "18",
+          "author": "Hinton",
+          "year": "2006",
+          "journal-title": "Neural Comput."
+        },
+        {
+          "key": "ref_9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bengio, Y., Lamblin, P., Popovici, D., and Larochelle, H. (2007). Greedy layer-wise training of deep networks. Advances in Neural Information Processing Systems, MIT Press.",
+          "DOI": "10.7551/mitpress/7503.003.0024"
+        },
+        {
+          "key": "ref_10",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ranzato, M., Poultney, C., Chopra, S., and LeCun, Y. (2007). Efficient learning of sparse representations with an energy-based model. Advances in Neural Information Processing Systems, MIT Press.",
+          "DOI": "10.7551/mitpress/7503.003.0147"
+        },
+        {
+          "key": "ref_11",
+          "doi-asserted-by": "crossref",
+          "first-page": "436",
+          "DOI": "10.1038/nature14539",
+          "article-title": "Deep learning",
+          "volume": "521",
+          "author": "LeCun",
+          "year": "2015",
+          "journal-title": "Nature"
+        },
+        {
+          "key": "ref_12",
+          "unstructured": "Goodfellow, I., Bengio, Y., and Courville, A. (2016). Deep Learning, MIT Press."
+        },
+        {
+          "key": "ref_13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Khan, A., Sohail, A., Zahoora, U., and Qureshi, A.S. (2019). A Survey of the Recent Architectures of Deep Convolutional Neural Networks. arXiv.",
+          "DOI": "10.1007/s10462-020-09825-6"
+        },
+        {
+          "key": "ref_14",
+          "unstructured": "Krizhevsky, A., Sutskever, I., and Hinton, G.E. (2012). Advances in Neural Information Processing Systems, MIT Press."
+        },
+        {
+          "key": "ref_15",
+          "unstructured": "Simonyan, K., and Zisserman, A. (2014). Very deep convolutional networks for large-scale image recognition. arXiv."
+        },
+        {
+          "key": "ref_16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Szegedy, C., Liu, W., Jia, Y., Sermanet, P., Reed, S., Anguelov, D., Erhan, D., Vanhoucke, V., and Rabinovich, A. (2015, January 7–12). Going deeper with convolutions. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Boston, MA, USA.",
+          "DOI": "10.1109/CVPR.2015.7298594"
+        },
+        {
+          "key": "ref_17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, K., Zhang, X., Ren, S., and Sun, J. (2016, January 27–30). Deep residual learning for image recognition. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Las Vegas, NV, USA.",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "ref_18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Huang, G., Liu, Z., Van Der Maaten, L., and Weinberger, K.Q. (2017, January 21–26). Densely connected convolutional networks. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Honolulu, HI, USA.",
+          "DOI": "10.1109/CVPR.2017.243"
+        },
+        {
+          "key": "ref_19",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chollet, F. (2017, January 21–26). Xception: Deep learning with depthwise separable convolutions. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Honolulu, HI, USA.",
+          "DOI": "10.1109/CVPR.2017.195"
+        },
+        {
+          "key": "ref_20",
+          "unstructured": "Jie, H., Li, S., Albanie, S., Gang, S., and Wu, E. (2017). Squeeze-and-Excitation Networks. arXiv."
+        },
+        {
+          "key": "ref_21",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chopra, S., Hadsell, R., and LeCun, Y. (2005). Learning a Similarity Metric Discriminatively, with Application to Face Verification. Proceedings of the 2005 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR’05) - Volume 1 - Volume 01, IEEE Computer Society. CVPR ’05.",
+          "DOI": "10.1109/CVPR.2005.202"
+        },
+        {
+          "key": "ref_22",
+          "doi-asserted-by": "crossref",
+          "first-page": "354",
+          "DOI": "10.1016/j.patcog.2017.10.013",
+          "article-title": "Recent advances in convolutional neural networks",
+          "volume": "77",
+          "author": "Gu",
+          "year": "2018",
+          "journal-title": "Pattern Recognit."
+        },
+        {
+          "key": "ref_23",
+          "unstructured": "Bondi, L., Baroffio, L., Güera, D., Bestagini, P., Delp, E.J., and Tubaro, S. (2016). Camera identification with deep convolutional networks. arXiv."
+        },
+        {
+          "key": "ref_24",
+          "doi-asserted-by": "crossref",
+          "first-page": "86",
+          "DOI": "10.1016/j.patrec.2018.01.005",
+          "article-title": "Deep learning for source camera identification on mobile devices",
+          "volume": "126",
+          "author": "Narducci",
+          "year": "2019",
+          "journal-title": "Pattern Recognit. Lett."
+        },
+        {
+          "key": "ref_25",
+          "doi-asserted-by": "crossref",
+          "first-page": "72",
+          "DOI": "10.1016/j.diin.2018.08.001",
+          "article-title": "Identification of the source camera of images based on convolutional neural network",
+          "volume": "26",
+          "author": "Huang",
+          "year": "2018",
+          "journal-title": "Digit. Investig."
+        },
+        {
+          "key": "ref_26",
+          "doi-asserted-by": "crossref",
+          "first-page": "24973",
+          "DOI": "10.1109/ACCESS.2018.2832066",
+          "article-title": "Robust multi-classifier for camera model identification based on convolution neural network",
+          "volume": "6",
+          "author": "Yao",
+          "year": "2018",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "ref_27",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chen, Y., Huang, Y., and Ding, X. (2017, January 17–20). Camera model identification with residual neural network. Proceedings of the 2017 IEEE International Conference on Image Processing (ICIP), Beijing, China.",
+          "DOI": "10.1109/ICIP.2017.8297101"
+        },
+        {
+          "key": "ref_28",
+          "doi-asserted-by": "crossref",
+          "first-page": "25878",
+          "DOI": "10.1109/ACCESS.2019.2897360",
+          "article-title": "Camera Identification based on Domain Knowledge-driven Deep Multi-task Learning",
+          "volume": "7",
+          "author": "Ding",
+          "year": "2019",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "ref_29",
+          "doi-asserted-by": "crossref",
+          "first-page": "240",
+          "DOI": "10.1016/j.image.2018.04.007",
+          "article-title": "On the vulnerability of deep learning to adversarial attacks for camera model identification",
+          "volume": "65",
+          "author": "Marra",
+          "year": "2018",
+          "journal-title": "Signal Process. Image Commun."
+        },
+        {
+          "key": "ref_30",
+          "doi-asserted-by": "crossref",
+          "first-page": "168",
+          "DOI": "10.1109/MSP.2018.2847326",
+          "article-title": "Forensic Camera Model Identification: Highlights from the IEEE Signal Processing Cup 2018 Student Competition [SP Competitions]",
+          "volume": "35",
+          "author": "Stamm",
+          "year": "2018",
+          "journal-title": "IEEE Signal Process. Mag."
+        },
+        {
+          "key": "ref_31",
+          "unstructured": "Kamal, U., Rafi, A.M., Hoque, R., Das, S., Abrar, A., and Hasan, M. (2018). Application of DenseNet in Camera Model Identification and Post-processing Detection. arXiv."
+        },
+        {
+          "key": "ref_32",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kuzin, A., Fattakhov, A., Kibardin, I., Iglovikov, V.I., and Dautov, R. (2018, January 10–13). Camera Model Identification Using Convolutional Neural Networks. Proceedings of the 2018 IEEE International Conference on Big Data (Big Data), Seattle, WA, USA.",
+          "DOI": "10.1109/BigData.2018.8622031"
+        },
+        {
+          "key": "ref_33",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ferreira, A., Chen, H., Li, B., and Huang, J. (2018, January 11–13). An Inception-Based Data-Driven Ensemble Approach to Camera Model Identification. Proceedings of the 2018 IEEE International Workshop on Information Forensics and Security (WIFS), Hong Kong.",
+          "DOI": "10.1109/WIFS.2018.8630774"
+        },
+        {
+          "key": "ref_34",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bayar, B., and Stamm, M.C. (2018, January 15–20). Towards open set camera model identification using a deep learning framework. Proceedings of the 2018 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Calgary, AB, Canada.",
+          "DOI": "10.1109/ICASSP.2018.8462383"
+        },
+        {
+          "key": "ref_35",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mayer, O., and Stamm, M.C. (2018, January 15–20). Learned forensic source similarity for unknown camera models. Proceedings of the 2018 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Calgary, AB, Canada.",
+          "DOI": "10.1109/ICASSP.2018.8462585"
+        },
+        {
+          "key": "ref_36",
+          "doi-asserted-by": "crossref",
+          "first-page": "259",
+          "DOI": "10.1109/LSP.2016.2641006",
+          "article-title": "First steps toward camera model identification with convolutional neural networks",
+          "volume": "24",
+          "author": "Bondi",
+          "year": "2017",
+          "journal-title": "IEEE Signal Process. Lett."
+        },
+        {
+          "key": "ref_37",
+          "doi-asserted-by": "crossref",
+          "first-page": "67",
+          "DOI": "10.2352/ISSN.2470-1173.2017.7.MWSF-327",
+          "article-title": "A preliminary study on convolutional neural networks for camera model identification",
+          "volume": "2017",
+          "author": "Bondi",
+          "year": "2017",
+          "journal-title": "Electron. Imaging"
+        },
+        {
+          "key": "ref_38",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bayar, B., and Stamm, M.C. (2017, January 17–20). Augmented convolutional feature maps for robust cnn-based camera model identification. Proceedings of the 2017 IEEE International Conference on Image Processing (ICIP), Beijing, China.",
+          "DOI": "10.1109/ICIP.2017.8297053"
+        },
+        {
+          "key": "ref_39",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tuama, A., Comby, F., and Chaumont, M. (2016, January 4–7). Camera model identification with the use of deep convolutional neural networks. Proceedings of the 2016 IEEE International workshop on information forensics and security (WIFS), Abu Dhabi, UAE.",
+          "DOI": "10.1109/WIFS.2016.7823908"
+        },
+        {
+          "key": "ref_40",
+          "unstructured": "Zuo, Z. (2018, July 02). Camera Model Identification with Convolutional Neural Networks and Image Noise Pattern. Available online: http://hdl.handle.net/2142/100123."
+        },
+        {
+          "key": "ref_41",
+          "doi-asserted-by": "crossref",
+          "first-page": "162",
+          "DOI": "10.1016/j.image.2018.08.001",
+          "article-title": "Source camera model identification based on convolutional neural networks with local binary patterns coding",
+          "volume": "68",
+          "author": "Wang",
+          "year": "2018",
+          "journal-title": "Signal Process. Image Commun."
+        },
+        {
+          "key": "ref_42",
+          "unstructured": "Yang, P., Zhao, W., Ni, R., and Zhao, Y. (2017). Source camera identification based on content-adaptive fusion network. arXiv."
+        },
+        {
+          "key": "ref_43",
+          "doi-asserted-by": "crossref",
+          "first-page": "195",
+          "DOI": "10.1016/j.patrec.2017.10.016",
+          "article-title": "Source camera identification based on content-adaptive fusion residual networks",
+          "volume": "119",
+          "author": "Yang",
+          "year": "2019",
+          "journal-title": "Pattern Recognit. Lett."
+        },
+        {
+          "key": "ref_44",
+          "doi-asserted-by": "crossref",
+          "first-page": "215",
+          "DOI": "10.1109/TIFS.2010.2045842",
+          "article-title": "Steganalysis by subtractive pixel adjacency matrix",
+          "volume": "5",
+          "author": "Pevny",
+          "year": "2010",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_45",
+          "doi-asserted-by": "crossref",
+          "first-page": "2691",
+          "DOI": "10.1109/TIFS.2018.2825953",
+          "article-title": "Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection",
+          "volume": "13",
+          "author": "Bayar",
+          "year": "2018",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_46",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Güera, D., Zhu, F., Yarlagadda, S.K., Tubaro, S., Bestagini, P., and Delp, E.J. (2018, January 12–15). Reliability map estimation for CNN-based camera model attribution. Proceedings of the 2018 IEEE Winter Conference on Applications of Computer Vision (WACV), Lake Tahoe, NV, USA.",
+          "DOI": "10.1109/WACV.2018.00111"
+        },
+        {
+          "key": "ref_47",
+          "unstructured": "Tang, Y. (2013). Deep learning using linear support vector machines. arXiv."
+        },
+        {
+          "key": "ref_48",
+          "unstructured": "Chen, S., and Wang, Y. (2014). Convolutional Neural Network and Convex Optimization, Department of Electrical and Computer EngineeringUniversity of California San Diego."
+        },
+        {
+          "key": "ref_49",
+          "doi-asserted-by": "crossref",
+          "first-page": "1949",
+          "DOI": "10.1109/TMM.2015.2477680",
+          "article-title": "Multi-task CNN model for attribute prediction",
+          "volume": "17",
+          "author": "Abdulnabi",
+          "year": "2015",
+          "journal-title": "IEEE Trans. Multimed."
+        },
+        {
+          "key": "ref_50",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yang, P., Ni, R., and Zhao, Y. (2016). Recapture image forensics based on Laplacian convolutional neural networks. International Workshop on Digital Watermarking, Springer.",
+          "DOI": "10.1007/978-3-319-53465-7_9"
+        },
+        {
+          "key": "ref_51",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Choi, H.Y., Jang, H.U., Son, J., Kim, D., and Lee, H.K. (2017). Content Recapture Detection Based on Convolutional Neural Networks. International Conference on Information Science and Applications, Springer.",
+          "DOI": "10.1007/978-981-10-4154-9_40"
+        },
+        {
+          "key": "ref_52",
+          "doi-asserted-by": "crossref",
+          "first-page": "87",
+          "DOI": "10.2352/ISSN.2470-1173.2017.7.MWSF-329",
+          "article-title": "Image recapture detection with convolutional and recurrent neural networks",
+          "volume": "2017",
+          "author": "Li",
+          "year": "2017",
+          "journal-title": "Electron. Imaging"
+        },
+        {
+          "key": "ref_53",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Agarwal, S., Fan, W., and Farid, H. (2018, January 15–20). A diverse large-scale dataset for evaluating rebroadcast attacks. Proceedings of the 2018 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Calgary, AB, Canada.",
+          "DOI": "10.1109/ICASSP.2018.8462205"
+        },
+        {
+          "key": "ref_54",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu, I.J., Kim, D.G., Park, J.S., Hou, J.U., Choi, S., and Lee, H.K. (2017, January 17–20). Identifying photorealistic computer graphics using convolutional neural networks. Proceedings of the 2017 IEEE International Conference on Image Processing (ICIP), Beijing, China.",
+          "DOI": "10.1109/ICIP.2017.8297052"
+        },
+        {
+          "key": "ref_55",
+          "doi-asserted-by": "crossref",
+          "first-page": "1369",
+          "DOI": "10.1109/LSP.2018.2855566",
+          "article-title": "Computer Graphics Identification Combining Convolutional and Recurrent Neural Networks",
+          "volume": "25",
+          "author": "He",
+          "year": "2018",
+          "journal-title": "IEEE Signal Process. Lett."
+        },
+        {
+          "key": "ref_56",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yao, Y., Hu, W., Zhang, W., Wu, T., and Shi, Y.Q. (2018). Distinguishing Computer-Generated Graphics from Natural Images Based on Sensor Pattern Noise and Deep Learning. Sensors, 18.",
+          "DOI": "10.3390/s18041296"
+        },
+        {
+          "key": "ref_57",
+          "doi-asserted-by": "crossref",
+          "first-page": "2772",
+          "DOI": "10.1109/TIFS.2018.2834147",
+          "article-title": "Distinguishing between natural and computer-generated images using convolutional neural networks",
+          "volume": "13",
+          "author": "Quan",
+          "year": "2018",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_58",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rahmouni, N., Nozick, V., Yamagishi, J., and Echizen, I. (2017, January 4–7). Distinguishing computer graphics from natural images using convolution neural networks. Proceedings of the 2017 IEEE Workshop on Information Forensics and Security (WIFS), Rennes, France.",
+          "DOI": "10.1109/WIFS.2017.8267647"
+        },
+        {
+          "key": "ref_59",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mo, H., Chen, B., and Luo, W. (2018, January 20–22). Fake Faces Identification via Convolutional Neural Network. Proceedings of the 6th ACM Workshop on Information Hiding and Multimedia Security, Innsbruck, Austria.",
+          "DOI": "10.1145/3206004.3206009"
+        },
+        {
+          "key": "ref_60",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Amerini, I., Uricchio, T., and Caldelli, R. (2017, January 4–7). Tracing images back to their social network of origin: A cnn-based approach. Proceedings of the 2017 IEEE Workshop on Information Forensics and Security (WIFS), Rennes, France.",
+          "DOI": "10.1109/WIFS.2017.8267660"
+        },
+        {
+          "key": "ref_61",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Caldelli, R., Amerini, I., and Li, C.T. (2018, January 3–7). PRNU-based Image Classification of Origin Social Network with CNN. Proceedings of the 2018 26th European Signal Processing Conference (EUSIPCO), Rome, Italy.",
+          "DOI": "10.23919/EUSIPCO.2018.8553160"
+        },
+        {
+          "key": "ref_62",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Gloe, T., and Böhme, R. (2010, January 22–26). The Dresden Image Database for benchmarking digital image forensics. Proceedings of the 2010 ACM Symposium on Applied Computing, Sierre, Switzerland.",
+          "DOI": "10.1145/1774088.1774427"
+        },
+        {
+          "key": "ref_63",
+          "doi-asserted-by": "crossref",
+          "first-page": "17",
+          "DOI": "10.1016/j.patrec.2015.02.009",
+          "article-title": "Mobile iris challenge evaluation (MICHE)-I, biometric iris dataset and protocols",
+          "volume": "57",
+          "author": "Nappi",
+          "year": "2015",
+          "journal-title": "Pattern Recognit. Lett."
+        },
+        {
+          "key": "ref_64",
+          "doi-asserted-by": "crossref",
+          "first-page": "15",
+          "DOI": "10.1186/s13635-017-0067-2",
+          "article-title": "VISION: A video and image dataset for source identification",
+          "volume": "2017",
+          "author": "Shullani",
+          "year": "2017",
+          "journal-title": "EURASIP J. Inf. Secur."
+        },
+        {
+          "key": "ref_65",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cao, H., and Kot, A.C. (2010, January 14–19). Identification of recaptured photographs on LCD screens. Proceedings of the 2010 IEEE International Conference on Acoustics, Speech and Signal Processing, Dallas, TX, USA.",
+          "DOI": "10.1109/ICASSP.2010.5495419"
+        },
+        {
+          "key": "ref_66",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, R., Ni, R., and Zhao, Y. (2015). An effective detection method based on physical traits of recaptured images on LCD screens. International Workshop on Digital Watermarking, Springer.",
+          "DOI": "10.1007/978-3-319-31960-5_10"
+        },
+        {
+          "key": "ref_67",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Gao, X., Qiu, B., Shen, J., Ng, T.T., and Shi, Y.Q. (2010). A smart phone image database for single image recapture detection. International Workshop on Digital Watermarking, Springer.",
+          "DOI": "10.1007/978-3-642-18405-5_8"
+        },
+        {
+          "key": "ref_68",
+          "doi-asserted-by": "crossref",
+          "first-page": "953",
+          "DOI": "10.1109/TIFS.2015.2392566",
+          "article-title": "An image recapture detection algorithm based on learning dictionaries of edge profiles",
+          "volume": "10",
+          "author": "Thongkamwitoon",
+          "year": "2015",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_69",
+          "unstructured": "Ng, T.T., Chang, S.F., Hsu, J., and Pepeljugoski, M. (2005). Columbia Photographic Images and Photorealistic Computer Graphics Dataset, ADVENT Technical Report Columbia University."
+        },
+        {
+          "key": "ref_70",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, M. (2018). Distinguish computer generated and digital images: A CNN solution. Concurrency Comput. Pract. Exp.",
+          "DOI": "10.1002/cpe.4788"
+        },
+        {
+          "key": "ref_71",
+          "doi-asserted-by": "crossref",
+          "first-page": "1276",
+          "DOI": "10.1016/j.jvcir.2013.08.009",
+          "article-title": "Computer generated images vs. digital photographs: A synergetic feature and classifier combination approach",
+          "volume": "24",
+          "author": "Tokuda",
+          "year": "2013",
+          "journal-title": "J. Vis. Commun. Image Represent."
+        },
+        {
+          "key": "ref_72",
+          "first-page": "229",
+          "article-title": "Identifying materials of photographic images and photorealistic computer generated graphics based on deep CNNs",
+          "volume": "55",
+          "author": "Cui",
+          "year": "2018",
+          "journal-title": "Comput. Mater. Contin."
+        },
+        {
+          "key": "ref_73",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Nguyen, H.H., Tieu, T., Nguyen-Son, H.Q., Nozick, V., Yamagishi, J., and Echizen, I. (2018, January 27–30). Modular convolutional neural network for discriminating between computer-generated images and photographic images. Proceedings of the 13th International Conference on Availability, Reliability and Security, Hamburg, Germany.",
+          "DOI": "10.1145/3230833.3230863"
+        },
+        {
+          "key": "ref_74",
+          "doi-asserted-by": "crossref",
+          "first-page": "113",
+          "DOI": "10.1016/j.image.2018.04.006",
+          "article-title": "Exposing computer generated images by using deep convolutional neural networks",
+          "volume": "66",
+          "author": "Ruppert",
+          "year": "2018",
+          "journal-title": "Signal Process. Image Commun."
+        },
+        {
+          "key": "ref_75",
+          "doi-asserted-by": "crossref",
+          "first-page": "1299",
+          "DOI": "10.1109/TIFS.2017.2656842",
+          "article-title": "Image origin classification based on social network provenance",
+          "volume": "12",
+          "author": "Caldelli",
+          "year": "2017",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_76",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Giudice, O., Paratore, A., Moltisanti, M., and Battiato, S. (2017). A classification engine for image ballistics of social data. International Conference on Image Analysis and Processing, Springer.",
+          "DOI": "10.1007/978-3-319-68548-9_57"
+        },
+        {
+          "key": "ref_77",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ng, T.T., Chang, S.F., Hsu, J., Xie, L., and Tsui, M.P. (2005, January 6–11). Physics-motivated features for distinguishing photographic images and computer graphics. Proceedings of the 13th Annual ACM International Conference on Multimedia, Singapore City, Singapore.",
+          "DOI": "10.1145/1101149.1101192"
+        },
+        {
+          "key": "ref_78",
+          "doi-asserted-by": "crossref",
+          "first-page": "72",
+          "DOI": "10.1016/j.aeue.2016.11.009",
+          "article-title": "Discrimination of natural images and computer generated graphics based on multi-fractal and regression analysis",
+          "volume": "71",
+          "author": "Peng",
+          "year": "2017",
+          "journal-title": "AEU-Int. J. Electron. Commun."
+        },
+        {
+          "key": "ref_79",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tolosana, R., Vera-Rodriguez, R., Fierrez, J., Morales, A., and Ortega-Garcia, J. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Fake Detection. arXiv.",
+          "DOI": "10.1016/j.inffus.2020.06.014"
+        },
+        {
+          "key": "ref_80",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Verdoliva, L. (2020). Media Forensics and DeepFakes: Sn overview. arXiv.",
+          "DOI": "10.1109/JSTSP.2020.3002101"
+        },
+        {
+          "key": "ref_81",
+          "unstructured": "Nguyen, T.T., Nguyen, C.M., Nguyen, D.T., Nguyen, D.T., and Nahavandi, S. (2019). Deep Learning for Deepfakes Creation and Detection. arXiv."
+        },
+        {
+          "key": "ref_82",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra, F., Gragnaniello, D., Cozzolino, D., and Verdoliva, L. (2018, January 10–12). Detection of GAN-generated fake images over social networks. Proceedings of the 2018 IEEE Conference on Multimedia Information Processing and Retrieval (MIPR), Miami, FL, USA.",
+          "DOI": "10.1109/MIPR.2018.00084"
+        },
+        {
+          "key": "ref_83",
+          "doi-asserted-by": "crossref",
+          "first-page": "868",
+          "DOI": "10.1109/TIFS.2012.2190402",
+          "article-title": "Rich models for steganalysis of digital images",
+          "volume": "7",
+          "author": "Fridrich",
+          "year": "2012",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_84",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cozzolino, D., Poggi, G., and Verdoliva, L. (2017, January 3–5). Recasting residual-based local descriptors as convolutional neural networks: An application to image forgery detection. Proceedings of the 5th ACM Workshop on Information Hiding and Multimedia Security, Paris, France.",
+          "DOI": "10.1145/3082031.3083247"
+        },
+        {
+          "key": "ref_85",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bayar, B., and Stamm, M.C. (2016, January 20–22). A deep learning approach to universal image manipulation detection using a new convolutional layer. Proceedings of the 4th ACM Workshop on Information Hiding and Multimedia Security, Vigo, Spain.",
+          "DOI": "10.1145/2909827.2930786"
+        },
+        {
+          "key": "ref_86",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., and Wojna, Z. (2016, January 27–30). Rethinking the inception architecture for computer vision. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Las Vegas, NV, USA.",
+          "DOI": "10.1109/CVPR.2016.308"
+        },
+        {
+          "key": "ref_87",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhu, J.Y., Park, T., Isola, P., and Efros, A.A. (2017, January 22–29). Unpaired image-to-image translation using cycle-consistent adversarial networks. Proceedings of the IEEE International Conference on Computer Vision, Venice, Italy.",
+          "DOI": "10.1109/ICCV.2017.244"
+        },
+        {
+          "key": "ref_88",
+          "unstructured": "Haodong, L., Han, C., Bin, L., and Shunquan, T. (2018, January 12–15). Can Forensic Detectors Identify GAN Generated Images?. Proceedings of the APSIPA Annual Summit and Conference 2018, Honolulu, HI, USA."
+        },
+        {
+          "key": "ref_89",
+          "unstructured": "Radford, A., Metz, L., and Chintala, S. (2016, January 2–4). Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks. Proceedings of the 4th International Conference on Learning Representations, San Juan, Puerto Rico."
+        },
+        {
+          "key": "ref_90",
+          "unstructured": "Arjovsky, M., Chintala, S., and Bottou, L. (2017, January 6–11). Wasserstein Generative Adversarial Networks. Proceedings of the International Conference on Machine Learning, Sydney, Australia."
+        },
+        {
+          "key": "ref_91",
+          "unstructured": "Li, H., Li, B., Tan, S., and Huang, J. (2018). Detection of deep network generated images using disparities in color components. arXiv."
+        },
+        {
+          "key": "ref_92",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, Z., Luo, P., Wang, X., and Tang, X. (2015, January 7–13). Deep learning face attributes in the wild. Proceedings of the IEEE international conference on computer vision, Santiago, Chile.",
+          "DOI": "10.1109/ICCV.2015.425"
+        },
+        {
+          "key": "ref_93",
+          "unstructured": "Karras, T., Aila, T., Laine, S., and Lehtinen, J. (2017). Progressive growing of gans for improved quality, stability, and variation. arXiv."
+        },
+        {
+          "key": "ref_94",
+          "unstructured": "Huang, G.B., Mattar, M., Berg, T., and Learned-Miller, E. (2008, January 17–18). Labeled faces in the wild: A database forstudying face recognition in unconstrained environments. Proceedings of the Workshop on faces in‘Real-Life’Images: Detection, Alignment, and Recognition, Marseille, France."
+        },
+        {
+          "key": "ref_95",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hou, X., Shen, L., Ke, S., and Qiu, G. (2016, January 24–31). Deep Feature Consistent Variational Autoencoder. Proceedings of the 2017 IEEE Winter Conference on Applications of Computer Vision (WACV), Santa Rosa, CA, USA.",
+          "DOI": "10.1109/WACV.2017.131"
+        },
+        {
+          "key": "ref_96",
+          "unstructured": "Gulrajani, I., Ahmed, F., Arjovsky, M., Dumoulin, V., and Courville, A.C. (2017, January 4–9). Improved Training of wasserstein GANs. Proceedings of the 31st International Conference on Neural Information Processing Systems, Long Beach, CA, USA."
+        },
+        {
+          "key": "ref_97",
+          "doi-asserted-by": "crossref",
+          "first-page": "1818",
+          "DOI": "10.1109/TIFS.2016.2555286",
+          "article-title": "Face spoofing detection using colour texture analysis",
+          "volume": "11",
+          "author": "Boulkenafet",
+          "year": "2016",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_98",
+          "doi-asserted-by": "crossref",
+          "unstructured": "McCloskey, S., and Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. arXiv.",
+          "DOI": "10.1109/ICIP.2019.8803661"
+        },
+        {
+          "key": "ref_99",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chen, C., McCloskey, S., and Yu, J. (2018, January 18–23). Focus Manipulation Detection via Photometric Histogram Analysis. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, Salt Lake City, UT, USA.",
+          "DOI": "10.1109/CVPR.2018.00180"
+        },
+        {
+          "key": "ref_100",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra, F., Gragnaniello, D., Verdoliva, L., and Poggi, G. (2018). Do GANs leave artificial fingerprints?. arXiv.",
+          "DOI": "10.1109/MIPR.2019.00103"
+        },
+        {
+          "key": "ref_101",
+          "doi-asserted-by": "crossref",
+          "first-page": "23",
+          "DOI": "10.1186/s13635-016-0047-y",
+          "article-title": "Double JPEG compression forensics based on a convolutional neural network",
+          "volume": "2016",
+          "author": "Wang",
+          "year": "2016",
+          "journal-title": "EURASIP J. Inf. Secur."
+        },
+        {
+          "key": "ref_102",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Güera, D., Wang, Y., Bondi, L., Bestagini, P., Tubaro, S., and Delp, E.J. (2017, January 21–26). A counter-forensic method for cnn-based camera model identification. Proceedings of the 2017 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW), Honolulu, HI, USA.",
+          "DOI": "10.1109/CVPRW.2017.230"
+        },
+        {
+          "key": "ref_103",
+          "unstructured": "Goodfellow, I.J., Shlens, J., and Szegedy, C. (2014). Explaining and Harnessing Adversarial Examples. arXiv."
+        },
+        {
+          "key": "ref_104",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Papernot, N., Mcdaniel, P., Jha, S., Fredrikson, M., Celik, Z.B., and Swami, A. (2016, January 21–24). The Limitations of Deep Learning in Adversarial Settings. Proceedings of the IEEE European Symposium on Security & Privacy, Saarbrucken, Germany.",
+          "DOI": "10.1109/EuroSP.2016.36"
+        },
+        {
+          "key": "ref_105",
+          "unstructured": "Madry, A., Makelov, A., Schmidt, L., Tsipras, D., and Vladu, A. (2017). Towards deep learning models resistant to adversarial attacks. arXiv."
+        },
+        {
+          "key": "ref_106",
+          "doi-asserted-by": "crossref",
+          "first-page": "3263",
+          "DOI": "10.1587/transinf.2018EDL8091",
+          "article-title": "Security Consideration for Deep Learning-Based Image Forensics",
+          "volume": "101",
+          "author": "Zhao",
+          "year": "2018",
+          "journal-title": "IEICE Trans. Inf. Syst."
+        },
+        {
+          "key": "ref_107",
+          "unstructured": "Kurakin, A., Goodfellow, I., and Bengio, S. (2016). Adversarial Machine Learning at Scale. arXiv."
+        },
+        {
+          "key": "ref_108",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Fan, W., Agarwal, S., and Farid, H. (2018, January 3–7). Rebroadcast Attacks: Defenses, Reattacks, and Redefenses. Proceedings of the 2018 26th European Signal Processing Conference (EUSIPCO), Rome, Italy.",
+          "DOI": "10.23919/EUSIPCO.2018.8553401"
+        },
+        {
+          "key": "ref_109",
+          "unstructured": "Szegedy, C., Zaremba, W., Sutskever, I., Bruna, J., Erhan, D., Goodfellow, I., and Fergus, R. (2013). Intriguing properties of neural networks. arXiv."
+        },
+        {
+          "key": "ref_110",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chen, C., Zhao, X., and Stamm, M.C. (2018, January 7–10). Mislgan: An Anti-Forensic Camera Model Falsification Framework Using A Generative Adversarial Network. Proceedings of the 2018 25th IEEE International Conference on Image Processing (ICIP), Athens, Greece.",
+          "DOI": "10.1109/ICIP.2018.8451503"
+        },
+        {
+          "key": "ref_111",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhao, W., Yang, P., Ni, R., Zhao, Y., and Li, W. (2018). Cycle GAN-Based Attack on Recaptured Images to Fool both Human and Machine. International Workshop on Digital Watermarking, Springer.",
+          "DOI": "10.1007/978-3-030-11389-6_7"
+        },
+        {
+          "key": "ref_112",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Barni, M., Stamm, M.C., and Tondi, B. (2018, January 3–7). Adversarial Multimedia Forensics: Overview and Challenges Ahead. Proceedings of the 26th European Signal Processing Conference (EUSIPCO), IEEE, Rome, Italy.",
+          "DOI": "10.23919/EUSIPCO.2018.8553305"
+        },
+        {
+          "key": "ref_113",
+          "doi-asserted-by": "crossref",
+          "first-page": "14410",
+          "DOI": "10.1109/ACCESS.2018.2807385",
+          "article-title": "Threat of adversarial attacks on deep learning in computer vision: A survey",
+          "volume": "6",
+          "author": "Akhtar",
+          "year": "2018",
+          "journal-title": "IEEE Access"
+        },
+        {
+          "key": "ref_114",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kurakin, A., Goodfellow, I., Bengio, S., Dong, Y., Liao, F., Liang, M., Pang, T., Zhu, J., Hu, X., and Xie, C. (2018). Adversarial attacks and defences competition. The NIPS’17 Competition: Building Intelligent Systems, Springer.",
+          "DOI": "10.1007/978-3-319-94042-7_11"
+        },
+        {
+          "key": "ref_115",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Carrara, F., Falchi, F., Caldelli, R., Amato, G., Fumarola, R., and Becarelli, R. (2017, January 19–21). Detecting adversarial example attacks to deep neural networks. Proceedings of the 15th International Workshop on Content-Based Multimedia Indexing, ACM, Florence, Italy.",
+          "DOI": "10.1145/3095713.3095753"
+        },
+        {
+          "key": "ref_116",
+          "doi-asserted-by": "crossref",
+          "first-page": "2815",
+          "DOI": "10.1007/s11042-018-5853-4",
+          "article-title": "Adversarial image detection in deep neural networks",
+          "volume": "78",
+          "author": "Carrara",
+          "year": "2019",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "ref_117",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Schöttle, P., Schlögl, A., Pasquini, C., and Böhme, R. (2018, January 3–7). Detecting Adversarial Examples – a Lesson from Multimedia Security. Proceedings of the 26th European Signal Processing Conference (EUSIPCO), Rome, Italy.",
+          "DOI": "10.23919/EUSIPCO.2018.8553164"
+        },
+        {
+          "key": "ref_118",
+          "unstructured": "Carlini, N., and Wagner, D. (November, January 30). Adversarial examples are not easily detected: Bypassing ten detection methods. Proceedings of the 10th ACM Workshop on Artificial Intelligence and Security, ACM, Dallas, TX, USA."
+        },
+        {
+          "key": "ref_119",
+          "unstructured": "Papernot, N., Faghri, F., Carlini, N., Goodfellow, I., Feinman, R., Kurakin, A., Xie, C., Sharma, Y., Brown, T., and Roy, A. (2018). Technical Report on the CleverHans v2.1.0 Adversarial Examples Library. arXiv."
+        }
+      ],
+      "container-title": [
+        "Journal of Imaging"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://www.mdpi.com/2313-433X/6/3/9/pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            11
+          ]
+        ],
+        "date-time": "2025-10-11T09:04:11Z",
+        "timestamp": 1760173451000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.mdpi.com/2313-433X/6/3/9"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2020,
+            3,
+            4
+          ]
+        ]
+      },
+      "references-count": 119,
+      "journal-issue": {
+        "issue": "3",
+        "published-online": {
+          "date-parts": [
+            [
+              2020,
+              3
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "jimaging6030009"
+      ],
+      "URL": "https://doi.org/10.3390/jimaging6030009",
+      "relation": {},
+      "ISSN": [
+        "2313-433X"
+      ],
+      "issn-type": [
+        {
+          "value": "2313-433X",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2020,
+            3,
+            4
+          ]
+        ]
+      }
+    }
+  }
+}

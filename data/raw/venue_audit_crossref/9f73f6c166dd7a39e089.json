@@ -1,0 +1,594 @@
+{
+  "doi": "10.1007/s10791-025-09538-w",
+  "source_url": "https://api.crossref.org/works/10.1007%2Fs10791-025-09538-w",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            5
+          ]
+        ],
+        "date-time": "2026-08-05T00:45:33Z",
+        "timestamp": 1785890733691,
+        "version": "3.56.0"
+      },
+      "reference-count": 31,
+      "publisher": "Springer Science and Business Media LLC",
+      "issue": "1",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                4,
+                17
+              ]
+            ],
+            "date-time": "2025-04-17T00:00:00Z",
+            "timestamp": 1744848000000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                4,
+                17
+              ]
+            ],
+            "date-time": "2025-04-17T00:00:00Z",
+            "timestamp": 1744848000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100001777",
+          "name": "The University of Wollongong",
+          "doi-asserted-by": "crossref",
+          "id": [
+            {
+              "id": "10.13039/501100001777",
+              "id-type": "DOI",
+              "asserted-by": "crossref"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "Discov Computing"
+      ],
+      "abstract": "<jats:title>Abstract</jats:title>\n          <jats:p>The emergence of deepfake images created by GANs models for malevolent purposes presents a serious risk to society as well as great challenge to digital security and trust. Leveraging the power of ensembles and combining machine and deep learning approaches, this paper presents VOTSTACK, an innovative ensemble model designed to combat the proliferation of deepfake images on social media. VOTSTACK utilizes a blended approach that combines Voting and Stacking ensemble techniques. It leverages the collective intelligence of three different classifiers—Decision Tree, Logistic Regression, and SVM—executing a hybrid feature selection method with Principal Component Analysis (PCA) conditioning as the preprocessing framework. It refines the features using iterative feature resolution with cross-validation (RFECV) method. This model operates through a two-phase architecture, with the first phase consolidating results using a voting ensemble and the second phase aggregating collective knowledge into a final decision using a stacking ensemble. A majority vote method is used in the first phase to aggregate predictions from the three base classifiers (Decision Tree, Logistic Regression, and SVM). Utilizing strength of each classifier and results of voting method as meta classifier, a stacking ensemble further refines these predictions in the second phase. The effectiveness and reliability of this approach is validated on a substantial dataset known as Real and Fake Images reliability. The proposed model outperforms conventional methods, achieving an impressive accuracy rate of 91.6%, a high precision score of 90.3%, a substantial recall of 89.8%, and an outstanding F1-Score of 90%.</jats:p>",
+      "DOI": "10.1007/s10791-025-09538-w",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            17
+          ]
+        ],
+        "date-time": "2025-04-17T12:32:51Z",
+        "timestamp": 1744893171000
+      },
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 15,
+      "title": [
+        "A robust ensemble model for Deepfake detection of GAN-generated images on social media"
+      ],
+      "prefix": "10.1007",
+      "volume": "28",
+      "author": [
+        {
+          "given": "Preeti",
+          "family": "Sharma",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Manoj",
+          "family": "Kumar",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Hitesh Kumar",
+          "family": "Sharma",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            17
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "issue": "05",
+          "key": "9538_CR1",
+          "doi-asserted-by": "publisher",
+          "first-page": "20",
+          "DOI": "10.4236/jcc.2021.95003",
+          "volume": "9",
+          "author": "AM Almars",
+          "year": "2021",
+          "unstructured": "Almars AM. Deepfakes detection techniques using deep learning: a survey. J Comput Commun. 2021;9(05):20–35.",
+          "journal-title": "J Comput Commun"
+        },
+        {
+          "issue": "2",
+          "key": "9538_CR2",
+          "first-page": "69",
+          "volume": "3",
+          "author": "P Sharma",
+          "year": "2023",
+          "unstructured": "Sharma P, Kumar M, Sharma HK. Ensemble WGAN (EWG): advancing image synthesis and Deepfake detection with heterogeneous discriminator approach. Computol J Appl Comput Sci Intell Technol. 2023;3(2):69–97.",
+          "journal-title": "Computol J Appl Comput Sci Intell Technol"
+        },
+        {
+          "issue": "18",
+          "key": "9538_CR3",
+          "doi-asserted-by": "publisher",
+          "first-page": "53549",
+          "DOI": "10.1007/s11042-023-17588-9",
+          "volume": "83",
+          "author": "P Sharma",
+          "year": "2024",
+          "unstructured": "Sharma P, Kumar M, Sharma HK. A generalized novel image forgery detection method using generative adversarial network. Multimedia Tools Appl. 2024;83(18):53549–80.",
+          "journal-title": "Multimedia Tools Appl"
+        },
+        {
+          "key": "9538_CR4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.heliyon.2024.e25933",
+          "volume": "10",
+          "author": "G Naskar",
+          "year": "2024",
+          "unstructured": "Naskar G, Mohiuddin S, Malakar S, Cuevas E, Sarkar R. Deepfake detection using deep feature stacking and meta-learning. Heliyon. 2024;10: e25933. https://doi.org/10.1016/j.heliyon.2024.e25933.",
+          "journal-title": "Heliyon"
+        },
+        {
+          "issue": "1",
+          "key": "9538_CR5",
+          "doi-asserted-by": "publisher",
+          "first-page": "7422",
+          "DOI": "10.1038/s41598-023-34629-3",
+          "volume": "13",
+          "author": "R Rafique",
+          "year": "2023",
+          "unstructured": "Rafique R, Gantassi R, Amin R, Frnda J, Mustapha A, Alshehri AH. Deep fake detection and classification using error-level analysis and deep learning. Sci Rep. 2023;13(1):7422. https://doi.org/10.1038/s41598-023-34629-3.",
+          "journal-title": "Sci Rep"
+        },
+        {
+          "key": "9538_CR6",
+          "doi-asserted-by": "publisher",
+          "first-page": "2636",
+          "DOI": "10.1016/j.procs.2023.01.237",
+          "volume": "218",
+          "author": "U Kosarkar",
+          "year": "2023",
+          "unstructured": "Kosarkar U, Sarkarkar G, Gedam S. Revealing and classification of Deepfakes video’s images using a customize convolution neural network model. Procedia Comput Sci. 2023;218:2636–52. https://doi.org/10.1016/j.procs.2023.01.237.",
+          "journal-title": "Procedia Comput Sci"
+        },
+        {
+          "key": "9538_CR7",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.55145/ajest.2023.02.02.001",
+          "volume": "2",
+          "author": "H Kareem",
+          "year": "2023",
+          "unstructured": "Kareem H, Altaei M. Detection of deep fake in face images based machine learning. Al-Salam J Eng Technol. 2023;2:1–12. https://doi.org/10.55145/ajest.2023.02.02.001.",
+          "journal-title": "Al-Salam J Eng Technol"
+        },
+        {
+          "key": "9538_CR8",
+          "unstructured": "Padmashree G, Karunkar AK. “Ensemble of machine learning classifiers for detecting Deepfake videos using deep feature.” IAENG Int J Comput Sci. 2023;50(4)."
+        },
+        {
+          "issue": "1",
+          "key": "9538_CR9",
+          "doi-asserted-by": "publisher",
+          "first-page": "011",
+          "DOI": "10.1093/cybsec/tyad011",
+          "volume": "9",
+          "author": "SD Bray",
+          "year": "2023",
+          "unstructured": "Bray SD, Johnson SD, Kleinberg B. Testing human ability to detect ‘deepfake’ images of human faces. J Cybersecurity. 2023;9(1):011. https://doi.org/10.1093/cybsec/tyad011.",
+          "journal-title": "J Cybersecurity"
+        },
+        {
+          "key": "9538_CR10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s42979-021-00495-x",
+          "author": "A Mitra",
+          "year": "2021",
+          "unstructured": "Mitra A, Mohanty S, Corcoran P, Kougianos E. A machine learning based approach for Deepfake detection in social media through key video frame extraction. SN Comput Sci. 2021. https://doi.org/10.1007/s42979-021-00495-x.",
+          "journal-title": "SN Comput Sci"
+        },
+        {
+          "key": "9538_CR11",
+          "doi-asserted-by": "publisher",
+          "first-page": "3111676",
+          "DOI": "10.1155/2021/311167",
+          "volume": "2021",
+          "author": "HS Shad",
+          "year": "2021",
+          "unstructured": "Shad HS, et al. Comparative analysis of Deepfake image detection method using convolutional neural network. Comput Intell Neurosci. 2021;2021:3111676. https://doi.org/10.1155/2021/311167.",
+          "journal-title": "Comput Intell Neurosci"
+        },
+        {
+          "key": "9538_CR12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11760-024-03432-6",
+          "author": "P Tao",
+          "year": "2024",
+          "unstructured": "Tao P, Yang D. RSC-WSRGAN super-resolution reconstruction based on improved generative adversarial network. SIViP. 2024. https://doi.org/10.1007/s11760-024-03432-6.",
+          "journal-title": "SIViP"
+        },
+        {
+          "key": "9538_CR13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11760-024-03399-4",
+          "author": "P Verma",
+          "year": "2024",
+          "unstructured": "Verma P, Rajitha B. Weighted ensemble approach for smoke-like scene classification in remote sensing images. SIViP. 2024. https://doi.org/10.1007/s11760-024-03399-4.",
+          "journal-title": "SIViP"
+        },
+        {
+          "key": "9538_CR14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s11760-024-03415-7",
+          "author": "J Yuan",
+          "year": "2024",
+          "unstructured": "Yuan J, Wu H, Zhao L, et al. Image inpainting based on tensor ring decomposition with generative adversarial network. SIViP. 2024. https://doi.org/10.1007/s11760-024-03415-7.",
+          "journal-title": "SIViP"
+        },
+        {
+          "key": "9538_CR15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/computers13040099",
+          "author": "A Al-Adwan",
+          "year": "2024",
+          "unstructured": "Al-Adwan A, Alazzam H, Al-Anbaki N, Alduweib E. Detection of Deepfake media using a hybrid CNN-RNN model and particle swarm optimization (PSO) algorithm. Computers. 2024. https://doi.org/10.3390/computers13040099.",
+          "journal-title": "Computers"
+        },
+        {
+          "key": "9538_CR16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/jimaging9010122",
+          "author": "T Al-Shammari",
+          "year": "2023",
+          "unstructured": "Al-Shammari T, Al-Hamdani M, Al-Sultani H. A comprehensive study on Deepfake detection using hybrid CNN-RNN architectures. J Imaging. 2023. https://doi.org/10.3390/jimaging9010122.",
+          "journal-title": "J Imaging"
+        },
+        {
+          "issue": "1",
+          "key": "9538_CR17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1002/widm.1520",
+          "volume": "14",
+          "author": "A Heidari",
+          "year": "2024",
+          "unstructured": "Heidari A, Navimipour NJ, Dag H, Unal M. Deepfake detection using deep learning methods: a systematic and comprehensive review. WIREs Data Min Knowl Discov. 2024;14(1): e1520. https://doi.org/10.1002/widm.1520.",
+          "journal-title": "WIREs Data Min Knowl Discov"
+        },
+        {
+          "key": "9538_CR18",
+          "doi-asserted-by": "publisher",
+          "first-page": "948",
+          "DOI": "10.1016/j.procs.2024.04.090",
+          "volume": "235",
+          "author": "P Sharma",
+          "year": "2024",
+          "unstructured": "Sharma P, Kumar M, Sharma HK. GAN-CNN ensemble: a robust Deepfake detection model of social media images using minimized catastrophic forgetting and generative replay technique. Procedia Comput Sci. 2024;235:948–60.",
+          "journal-title": "Procedia Comput Sci"
+        },
+        {
+          "key": "9538_CR19",
+          "volume-title": "MMGANGuard: a robust approach for detecting fake images generated by GANs using multi-model techniques",
+          "author": "SA Raza",
+          "year": "2024",
+          "unstructured": "Raza SA, Habib U, Usman M, Cheema AA, Khan MS. MMGANGuard: a robust approach for detecting fake images generated by GANs using multi-model techniques. IEEE Access: Piscataway; 2024."
+        },
+        {
+          "key": "9538_CR20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.4108/eetiot.5637",
+          "author": "P Sharma",
+          "year": "2024",
+          "unstructured": "Sharma P, Kumar M, Sharma HK. Robust GAN-based CNN model as generative AI application for Deepfake detection. EAI Endorsed Trans Internet Things. 2024. https://doi.org/10.4108/eetiot.5637.",
+          "journal-title": "EAI Endorsed Trans Internet Things"
+        },
+        {
+          "issue": "11",
+          "key": "9538_CR21",
+          "doi-asserted-by": "publisher",
+          "first-page": "32343",
+          "DOI": "10.1007/s11042-023-16761-4",
+          "volume": "83",
+          "author": "B Aissa",
+          "year": "2024",
+          "unstructured": "Aissa B, Fatma MH, Zaied M, Mejdoub M. An overview of GAN-DeepFakes detection: proposal, improvement, and evaluation. Multimedia Tools Appl. 2024;83(11):32343–65.",
+          "journal-title": "Multimedia Tools Appl"
+        },
+        {
+          "key": "9538_CR22",
+          "unstructured": "Mathe A. 2020. \"Real and fake face detection.\" Kaggle. Real and fake face detection dataset. Accessed 27 May 2024."
+        },
+        {
+          "key": "9538_CR23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1155/2022/6469054",
+          "author": "Y Liu",
+          "year": "2022",
+          "unstructured": "Liu Y, Yang S. Application of decision tree-based classification algorithm on content marketing. J Math. 2022. https://doi.org/10.1155/2022/6469054.",
+          "journal-title": "J Math"
+        },
+        {
+          "key": "9538_CR24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mehra A. Deepfake detection using capsule networks with long short-term memory networks (Master’s thesis, University of Twente). 2020.",
+          "DOI": "10.5220/0010289004070414"
+        },
+        {
+          "key": "9538_CR25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Trabelsi A, Pic MM, Dugelay JL. Improving Deepfake Detection by Mixing Top Solutions of the DFDC. In 2022 30th European Signal Processing Conference (EUSIPCO). IEEE. 2022; 643–647",
+          "DOI": "10.23919/EUSIPCO55093.2022.9909905"
+        },
+        {
+          "key": "9538_CR26",
+          "doi-asserted-by": "publisher",
+          "first-page": "472",
+          "DOI": "10.1016/j.ins.2022.03.026",
+          "volume": "596",
+          "author": "G Wang",
+          "year": "2022",
+          "unstructured": "Wang G, Jiang Q, Jin X, Cui X. FFR_FD: Effective and fast detection of DeepFakes via feature point defects. Inf Sci. 2022;596:472–88.",
+          "journal-title": "Inf Sci"
+        },
+        {
+          "key": "9538_CR27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.2006.07397",
+          "author": "B Dolhansky",
+          "year": "2020",
+          "unstructured": "Dolhansky B, Bitton J, Pflaum B, Lu J, Howes R, Wang M, Ferrer CC. The deepfake detection challenge (dfdc) dataset. ArXiv. 2020. https://doi.org/10.48550/arXiv.2006.07397.",
+          "journal-title": "ArXiv"
+        },
+        {
+          "key": "9538_CR28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rossler A, Cozzolino D, Verdoliva L, Riess C, Thies J, Nießner M. Faceforensics++: Learning to detect manipulated facial images. In: Proceedings of the IEEE/CVF international conference on computer vision 2019;1–11.",
+          "DOI": "10.1109/ICCV.2019.00009"
+        },
+        {
+          "key": "9538_CR29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jiang L, Li R, Wu W, Qian C, Loy CC. \"Deeperforensics-1.0: A large-scale dataset for real-world face forgery detection.\" In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pp. 2889–2898. 2020.",
+          "DOI": "10.1109/CVPR42600.2020.00296"
+        },
+        {
+          "key": "9538_CR30",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.48550/arXiv.2404.01579",
+          "author": "C Bhattacharyya",
+          "year": "2024",
+          "unstructured": "Bhattacharyya C, Wang H, Zhang F, Kim S, Zhu X. \"Diffusion Deepfake. arXiv. 2024. https://doi.org/10.48550/arXiv.2404.01579.",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "9538_CR31",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li Y, Yang X, Sun P, Qi H, Lyu S. \"Celeb-df: a large-scale challenging dataset for deepfake forensics.\" In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. 2020;3207–3216.",
+          "DOI": "10.1109/CVPR42600.2020.00327"
+        }
+      ],
+      "container-title": [
+        "Discover Computing"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/s10791-025-09538-w.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://link.springer.com/article/10.1007/s10791-025-09538-w/fulltext.html",
+          "content-type": "text/html",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/s10791-025-09538-w.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            17
+          ]
+        ],
+        "date-time": "2025-04-17T12:32:58Z",
+        "timestamp": 1744893178000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://link.springer.com/10.1007/s10791-025-09538-w"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            17
+          ]
+        ]
+      },
+      "references-count": 31,
+      "journal-issue": {
+        "issue": "1",
+        "published-online": {
+          "date-parts": [
+            [
+              2025,
+              12
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "9538"
+      ],
+      "URL": "https://doi.org/10.1007/s10791-025-09538-w",
+      "relation": {},
+      "ISSN": [
+        "2948-2992"
+      ],
+      "issn-type": [
+        {
+          "value": "2948-2992",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            17
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "29 August 2024",
+          "order": 1,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "3 April 2025",
+          "order": 2,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "17 April 2025",
+          "order": 3,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "order": 1,
+          "name": "Ethics",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Declarations"
+          }
+        },
+        {
+          "value": ".",
+          "order": 2,
+          "name": "Ethics",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Ethics approval and consent to participate"
+          }
+        },
+        {
+          "value": "I confirm that the Human Face images are sourced from a publicly available dataset and are used in accordance with its terms.",
+          "order": 3,
+          "name": "Ethics",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Consent for publication"
+          }
+        },
+        {
+          "value": "The authors declare no competing interests.",
+          "order": 4,
+          "name": "Ethics",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Competing interests"
+          }
+        }
+      ],
+      "article-number": "41"
+    }
+  }
+}

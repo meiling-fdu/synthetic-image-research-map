@@ -1,0 +1,659 @@
+{
+  "doi": "10.32604/cmc.2025.063141",
+  "source_url": "https://api.crossref.org/works/10.32604%2Fcmc.2025.063141",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            2,
+            10
+          ]
+        ],
+        "date-time": "2026-02-10T20:41:17Z",
+        "timestamp": 1770756077639,
+        "version": "3.50.0"
+      },
+      "reference-count": 43,
+      "publisher": "Tech Science Press",
+      "issue": "3",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                5,
+                25
+              ]
+            ],
+            "date-time": "2025-05-25T00:00:00Z",
+            "timestamp": 1748131200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 144,
+          "URL": "https://doi.org/10.32604/TSP-CROSSMARKPOLICY"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "CMC"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "DOI": "10.32604/cmc.2025.063141",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            26
+          ]
+        ],
+        "date-time": "2025-03-26T04:56:20Z",
+        "timestamp": 1742964980000
+      },
+      "page": "4607-4621",
+      "update-policy": "https://doi.org/10.32604/tsp-crossmarkpolicy",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "SMNDNet for Multiple Types of Deepfake Image Detection"
+      ],
+      "prefix": "10.32604",
+      "volume": "83",
+      "author": [
+        {
+          "given": "Qin",
+          "family": "Wang",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Xiaofeng",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Jianghua",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Ruidong",
+          "family": "Han",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Zinian",
+          "family": "Liu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Mingtao",
+          "family": "Guo",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "17807",
+      "published-online": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "crossref",
+          "first-page": "351",
+          "DOI": "10.1016/j.neucom.2022.09.135",
+          "article-title": "A comprehensive overview of Deepfake: generation, detection, datasets, and opportunities",
+          "volume": "513",
+          "author": "Seow",
+          "year": "2022",
+          "journal-title": "Neurocomputing"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "crossref",
+          "first-page": "39",
+          "DOI": "10.22215/timreview/1282",
+          "article-title": "The emergence of deepfake technology: a review",
+          "volume": "9",
+          "author": "Westerlund",
+          "year": "2019",
+          "journal-title": "Technol Innov Manag Rev"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "crossref",
+          "first-page": "131",
+          "DOI": "10.1016/j.inffus.2020.06.014",
+          "article-title": "Deepfakes and beyond: a survey of face manipulation and fake detection",
+          "volume": "64",
+          "author": "Tolosana",
+          "year": "2020",
+          "journal-title": "Inf Fusion"
+        },
+        {
+          "key": "ref4",
+          "series-title": "2020 IEEE International Conference on Multimedia & Expo Workshops (ICMEW)",
+          "first-page": "1",
+          "article-title": "Deepfake detection: current challenges and next steps",
+          "author": "Lyu",
+          "year": "2020 Jul 6–10"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "crossref",
+          "first-page": "607",
+          "DOI": "10.1049/bme2.12031",
+          "article-title": "A survey on deepfake video detection",
+          "volume": "10",
+          "author": "Yu",
+          "year": "2021",
+          "journal-title": "IET Biom"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "crossref",
+          "first-page": "2610",
+          "DOI": "10.3390/app8122610",
+          "article-title": "Deep learning based computer-generated face identification using convolutional neural network",
+          "volume": "8",
+          "author": "Dang",
+          "year": "2018",
+          "journal-title": "Appl Sci"
+        },
+        {
+          "key": "ref7",
+          "series-title": "Proceedings of the IEEE/CVF International Conference on Computer Vision",
+          "first-page": "7556",
+          "article-title": "Attributing fake images to GANs: learning and analyzing GAN fingerprints",
+          "author": "Yu",
+          "year": "2019 Oct 27–Nov 2"
+        },
+        {
+          "key": "ref8",
+          "series-title": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "first-page": "96",
+          "article-title": "Source generator attribution via inversion",
+          "author": "Albright",
+          "year": "2019 Jun 16–20"
+        },
+        {
+          "key": "ref9",
+          "series-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops",
+          "first-page": "666",
+          "article-title": "Deepfake detection by analyzing convolutional traces",
+          "author": "Guarnera",
+          "year": "2020 Jun 14–19"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "crossref",
+          "first-page": "370",
+          "DOI": "10.3390/app10010370",
+          "article-title": "Deep fake image detection based on pairwise learning",
+          "volume": "10",
+          "author": "Hsu",
+          "year": "2020",
+          "journal-title": "Appl Sci"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra F, Gragnaniello D, Verdoliva L, Poggi G. Do GANs leave artificial fingerprints? In: 2019 IEEE Conference on Multimedia Information Processing and Retrieval (MIPR); 2019 Mar 28–30; San Jose, CA, USA. p. 506–11.",
+          "DOI": "10.1109/MIPR.2019.00103"
+        },
+        {
+          "key": "ref12",
+          "series-title": "2019 IEEE International Workshop on Information Forensics and Security (WIFS)",
+          "first-page": "1",
+          "article-title": "Incremental learning for the detection and classification of GAN-generated images",
+          "author": "Marra",
+          "year": "2019 Dec 9–12"
+        },
+        {
+          "key": "ref13",
+          "first-page": "532",
+          "article-title": "Detecting GAN generated fake images using co-occurrence matrices",
+          "volume": "5",
+          "author": "Nataraj",
+          "year": "2019",
+          "journal-title": "Appl Sci"
+        },
+        {
+          "key": "ref14",
+          "series-title": "2017 IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+          "first-page": "1831",
+          "article-title": "Two-stream neural networks for tampered face detection",
+          "author": "Zhou",
+          "year": "2017 Jul 21–26"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "crossref",
+          "first-page": "7512",
+          "DOI": "10.1007/s10489-022-03867-9",
+          "article-title": "Deepfake detection algorithm based on improved vision transformer",
+          "volume": "53",
+          "author": "Heo",
+          "year": "2023",
+          "journal-title": "Appl Intell"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "crossref",
+          "first-page": "8458",
+          "DOI": "10.1109/TMM.2023.3237169",
+          "article-title": "Exposing deepfake face forgeries with guided residuals",
+          "volume": "25",
+          "author": "Guo",
+          "year": "2023",
+          "journal-title": "IEEE Trans Multimed"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "crossref",
+          "first-page": "1841",
+          "DOI": "10.1109/TIFS.2020.3045937",
+          "article-title": "Preventing deepfake attacks on speaker authentication by dynamic lip movement analysis",
+          "volume": "16",
+          "author": "Yang",
+          "year": "2020",
+          "journal-title": "IEEE Trans Inf Forensics Secur"
+        },
+        {
+          "key": "ref18",
+          "series-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "first-page": "18720",
+          "article-title": "Detecting deepfakes with self-blended images",
+          "author": "Shiohara",
+          "year": "2022 Jun 18–24"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "crossref",
+          "first-page": "4654",
+          "DOI": "10.1109/TPAMI.2024.3356814",
+          "article-title": "Fully unsupervised deepfake video detection via enhanced contrastive learning",
+          "volume": "46",
+          "author": "Qiao",
+          "year": "2024",
+          "journal-title": "IEEE Trans Pattern Anal Mach Intell"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "crossref",
+          "first-page": "948",
+          "DOI": "10.1016/j.procs.2024.04.090",
+          "article-title": "GAN-CNN Ensemble: a robust deepfake detection model of social media images using minimized catastrophic forgetting and generative replay technique",
+          "volume": "235",
+          "author": "Sharma",
+          "year": "2024",
+          "journal-title": "Procedia Comput Sci"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "crossref",
+          "first-page": "e37163",
+          "DOI": "10.1016/j.heliyon.2024.e37163",
+          "article-title": "Detection of real-time deep fakes and face forgery in video conferencing employing generative adversarial networks",
+          "volume": "10",
+          "author": "Sharma",
+          "year": "2024",
+          "journal-title": "Heliyon"
+        },
+        {
+          "key": "ref22",
+          "doi-asserted-by": "crossref",
+          "first-page": "4507",
+          "DOI": "10.1109/TIFS.2024.3381823",
+          "article-title": "Where deepfakes gaze at? Spatial-temporal gaze inconsistency analysis for video face forgery detection",
+          "volume": "19",
+          "author": "Peng",
+          "year": "2024",
+          "journal-title": "IEEE Trans Inf Forensics Secur"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "crossref",
+          "first-page": "4327",
+          "DOI": "10.1109/TDSC.2024.3352049",
+          "article-title": "Benchmarking joint face spoofing and forgery detection with visual and physiological cues",
+          "volume": "21",
+          "author": "Yu",
+          "year": "2024",
+          "journal-title": "IEEE Trans Dependable Secur Comput"
+        },
+        {
+          "key": "ref24",
+          "series-title": "IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)",
+          "first-page": "4500",
+          "article-title": "Towards generic deepfake detection with dynamic curriculum",
+          "author": "Song",
+          "year": "2024 Apr 14–19"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "crossref",
+          "first-page": "401",
+          "DOI": "10.1109/TIFS.2023.3324739",
+          "article-title": "Constructing new backbone networks via space-frequency interactive convolution for deepfake detection",
+          "volume": "19",
+          "author": "Guo",
+          "year": "2024",
+          "journal-title": "IEEE Trans Inf Forensics Secur"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "crossref",
+          "first-page": "4027",
+          "DOI": "10.1109/TCSVT.2023.3238517",
+          "article-title": "Exploiting complementary dynamic incoherence for deepfake video detection",
+          "volume": "33",
+          "author": "Wang",
+          "year": "2023",
+          "journal-title": "IEEE Trans Circuits Syst Video Technol"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "crossref",
+          "first-page": "19007",
+          "DOI": "10.1007/s10489-023-04462-2",
+          "article-title": "TAN-GFD: generalizing face forgery detection based on texture information and adaptive noise mining",
+          "volume": "53",
+          "author": "Zhao",
+          "year": "2023",
+          "journal-title": "Appl Intell"
+        },
+        {
+          "key": "ref28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang R, Ma L, Juefei-Xu F, Xie X, Wang J, Liu Y. FakeSpotter: a simple baseline for spotting AI-synthesized fake faces. arXiv:1909.06122. 2019.",
+          "DOI": "10.24963/ijcai.2020/476"
+        },
+        {
+          "key": "ref29",
+          "series-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern recognition",
+          "first-page": "5781",
+          "article-title": "On the detection of digital face manipulation",
+          "author": "Dang",
+          "year": "2020 Jun 13–19"
+        },
+        {
+          "key": "ref30",
+          "doi-asserted-by": "crossref",
+          "first-page": "1499",
+          "DOI": "10.1109/LSP.2016.2603342",
+          "article-title": "Joint face detection and alignment using multitask cascaded convolutional networks",
+          "volume": "23",
+          "author": "Zhang",
+          "year": "2016",
+          "journal-title": "IEEE Signal Process Lett"
+        },
+        {
+          "key": "ref31",
+          "unstructured": "Face website A. AI face website. [cited 2025 Jan 1]. Available from: http://www.seeprettyface.com/mydataset_page2.html#dataset2."
+        },
+        {
+          "key": "ref32",
+          "unstructured": "Radford A, Metz L, Chintala S. Unsupervised representation learning with deep convolutional generative adversarial networks. arXiv:1511.06434. 2015."
+        },
+        {
+          "key": "ref33",
+          "series-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "first-page": "3207",
+          "article-title": "Celeb-DF: a large-scale challenging dataset for deepfake forensics",
+          "author": "Li",
+          "year": "2020 Jun 13–19"
+        },
+        {
+          "key": "ref34",
+          "unstructured": "Rössler A, Cozzolino D, Verdoliva L, Riess C, Thies J, Nießner M. FaceForensics: a large-scale video dataset for forgery detection in human faces. arXiv:1803.09179. 2018."
+        },
+        {
+          "key": "ref35",
+          "series-title": "Proceedings of the IEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "770",
+          "article-title": "Deep residual learning for image recognition",
+          "author": "He",
+          "year": "2016 Jun 27–30"
+        },
+        {
+          "key": "ref36",
+          "series-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "2818",
+          "article-title": "Rethinking the inception architecture for computer vision",
+          "author": "Szegedy",
+          "year": "2016 Jun 27–30"
+        },
+        {
+          "key": "ref37",
+          "series-title": "Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition",
+          "first-page": "1251",
+          "article-title": "Xception: deep learning with depthwise separable convolutions",
+          "author": "Chollet",
+          "year": "2017 Jul 21–26"
+        },
+        {
+          "key": "ref38",
+          "series-title": "2020 IEEE International Workshop on Information Forensics and Security (WIFS)",
+          "first-page": "1",
+          "article-title": "CNN detection of GAN-generated face images based on cross-band co-occurrences analysis",
+          "author": "Barni",
+          "year": "2020 Dec 4–11"
+        },
+        {
+          "key": "ref39",
+          "doi-asserted-by": "crossref",
+          "first-page": "1468",
+          "DOI": "10.1109/TCSVT.2022.3209336",
+          "article-title": "Learning features of intra-consistency and inter-diversity: keys towards generalizable deepfake detection",
+          "volume": "33",
+          "author": "Chen",
+          "year": "2022",
+          "journal-title": "IEEE Trans Circuits Syst Video Technol"
+        },
+        {
+          "key": "ref40",
+          "series-title": "IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+          "first-page": "46",
+          "article-title": "Exposing deepfake videos by detecting face warping artifacts",
+          "author": "Li",
+          "year": "2019 Jun 16–17"
+        },
+        {
+          "key": "ref41",
+          "series-title": "2018 IEEE International Workshop on Information Forensics and Security (WIFS)",
+          "first-page": "1",
+          "article-title": "Mesonet: a compact facial video forgery detection network",
+          "author": "Afchar",
+          "year": "2018 Dec 11–13"
+        },
+        {
+          "key": "ref42",
+          "series-title": "2019 IEEE International Conference on Image Processing (ICIP)",
+          "first-page": "4584",
+          "article-title": "Detecting GAN-generated imagery using saturation cues",
+          "author": "McCloskey",
+          "year": "2019 Sep 22–25"
+        },
+        {
+          "key": "ref43",
+          "series-title": "2020 IEEE International Workshop on Information Forensics and Security (WIFS)",
+          "first-page": "1",
+          "article-title": "Detecting deep-fake videos from appearance and behavior",
+          "author": "Agarwal",
+          "year": "2020 Dec 6–11"
+        }
+      ],
+      "container-title": [
+        "Computers, Materials &amp; Continua"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://cdn.techscience.cn/files/cmc/2025/TSP_CMC-83-3/TSP_CMC_63141/TSP_CMC_63141.pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            17
+          ]
+        ],
+        "date-time": "2025-11-17T01:28:17Z",
+        "timestamp": 1763342897000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.techscience.com/cmc/v83n3/61034"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "references-count": 43,
+      "journal-issue": {
+        "issue": "3",
+        "published-online": {
+          "date-parts": [
+            [
+              2025
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2025
+            ]
+          ]
+        }
+      },
+      "URL": "https://doi.org/10.32604/cmc.2025.063141",
+      "relation": {},
+      "ISSN": [
+        "1546-2226"
+      ],
+      "issn-type": [
+        {
+          "value": "1546-2226",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2025-01-06",
+          "order": 0,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2025-02-27",
+          "order": 1,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        },
+        {
+          "value": "2025-05-19",
+          "order": 2,
+          "name": "published",
+          "label": "Published Online",
+          "group": {
+            "name": "publication_history",
+            "label": "Publication History"
+          }
+        }
+      ]
+    }
+  }
+}

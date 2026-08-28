@@ -1,0 +1,644 @@
+{
+  "doi": "10.1007/s10044-026-01719-7",
+  "source_url": "https://api.crossref.org/works/10.1007%2Fs10044-026-01719-7",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ],
+        "date-time": "2026-07-14T23:08:38Z",
+        "timestamp": 1784070518224,
+        "version": "3.55.0"
+      },
+      "reference-count": 46,
+      "publisher": "Springer Science and Business Media LLC",
+      "issue": "3",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                15
+              ]
+            ],
+            "date-time": "2026-07-15T00:00:00Z",
+            "timestamp": 1784073600000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                15
+              ]
+            ],
+            "date-time": "2026-07-15T00:00:00Z",
+            "timestamp": 1784073600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "Pattern Anal Applic"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            9
+          ]
+        ]
+      },
+      "DOI": "10.1007/s10044-026-01719-7",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ],
+        "date-time": "2026-07-14T22:56:14Z",
+        "timestamp": 1784069774000
+      },
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Dual-stream framework for real/fake classification and source attribution of AI-generated images using spatial and frequency features"
+      ],
+      "prefix": "10.1007",
+      "volume": "29",
+      "author": [
+        {
+          "given": "Linh Thuy Thi",
+          "family": "Pham",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Cu Vinh",
+          "family": "Loc",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Truong Nhat",
+          "family": "Tran",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-1386-1390",
+          "authenticated-orcid": false,
+          "given": "Hai Thanh",
+          "family": "Nguyen",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            15
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "issue": "11",
+          "key": "1719_CR1",
+          "doi-asserted-by": "publisher",
+          "first-page": "139",
+          "DOI": "10.1145/3422622",
+          "volume": "63",
+          "author": "I Goodfellow",
+          "year": "2020",
+          "unstructured": "Goodfellow I, Pouget-Abadie J, Mirza M, Xu B, Warde-Farley D, Ozair S, Courville A, Bengio Y (2020) Generative adversarial networks. Commun ACM 63(11):139–144. https://doi.org/10.1145/3422622",
+          "journal-title": "Commun ACM"
+        },
+        {
+          "key": "1719_CR2",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Rombach R, Blattmann A, Lorenz D, Esser P, Ommer B (2022) High-resolution image synthesis with latent diffusion models. In: 2022 IEEE/CVF conference on computer vision and pattern recognition (CVPR), pp 10674–10685. IEEE. https://doi.org/10.1109/cvpr52688.2022.01042",
+          "DOI": "10.1109/cvpr52688.2022.01042"
+        },
+        {
+          "key": "1719_CR3",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Berrahal M, Boukabous M, Idrissi I (2023) A comparative analysis of fake image detection in generative adversarial networks and variational autoencoders. In: 2023 International conference on decision aid sciences and applications (DASA). IEEE. https://doi.org/10.1109/dasa59624.2023.10286604",
+          "DOI": "10.1109/dasa59624.2023.10286604"
+        },
+        {
+          "key": "1719_CR4",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Xiong J, Liu G, Huang L, Wu C, Wu T, Mu Y, Yao Y, Shen H, Wan Z, Huang J, Tao C, Yan S, Yao H, Kong L, Yang H, Zhang M, Sapiro G, Luo J, Luo P, Wong N (2024) Autoregressive models in vision: a survey. https://doi.org/10.48550/ARXIV.2411.05902",
+          "DOI": "10.48550/ARXIV.2411.05902"
+        },
+        {
+          "issue": "8",
+          "key": "1719_CR5",
+          "doi-asserted-by": "publisher",
+          "first-page": "252",
+          "DOI": "10.3390/jimaging11080252",
+          "volume": "11",
+          "author": "Z Sordo",
+          "year": "2025",
+          "unstructured": "Sordo Z, Chagnon E, Hu Z, Donatelli JJ, Andeer P, Nico PS, Northen T, Ushizima D (2025) Synthetic scientific image generation with vae, gan, and diffusion model architectures. J Imaging 11(8):252. https://doi.org/10.3390/jimaging11080252",
+          "journal-title": "J Imaging"
+        },
+        {
+          "key": "1719_CR6",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Mandelli S, Bonettini N, Bestagini P, Tubaro S (2022) Detecting gan-generated images by orthogonal training of multiple cnns. In: 2022 IEEE international conference on image processing (ICIP), pp 3091–3095. IEEE. https://doi.org/10.1109/icip46576.2022.9897310",
+          "DOI": "10.1109/icip46576.2022.9897310"
+        },
+        {
+          "key": "1719_CR7",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Frank J, Eisenhofer T, Schönherr L, Fischer A, Kolossa D, Holz T (2020) Leveraging frequency analysis for deep fake image recognition. https://doi.org/10.48550/ARXIV.2003.08685",
+          "DOI": "10.48550/ARXIV.2003.08685"
+        },
+        {
+          "key": "1719_CR8",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Qi J, Zhang X, Ye D, Ruan Y, Guo X, Wang S, Li H (2025) Sfnet: fusion of spatial and frequency-domain features for remote sensing image forgery detection. IEEE J Sel Top Appl Earth Obs Remote Sens:1–16. https://doi.org/10.1109/jstars.2025.3621474",
+          "DOI": "10.1109/jstars.2025.3621474"
+        },
+        {
+          "key": "1719_CR9",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Mahara A, Rishe N (2025) Methods and trends in detecting AI-generated images: a comprehensive review. https://doi.org/10.48550/ARXIV.2502.15176",
+          "DOI": "10.48550/ARXIV.2502.15176"
+        },
+        {
+          "key": "1719_CR10",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1109/ojsp.2023.3337714",
+          "volume": "5",
+          "author": "Q Bammey",
+          "year": "2024",
+          "unstructured": "Bammey Q (2024) Synthbuster: towards detection of diffusion model generated images. IEEE Open J Signal Process 5:1–9. https://doi.org/10.1109/ojsp.2023.3337714",
+          "journal-title": "IEEE Open J Signal Process"
+        },
+        {
+          "key": "1719_CR11",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Jamil Awrahman B, Jamil Awrahman Z, Fatah Aziz C (2024) Enhanced detection of diffusion model-generated deepfakes using cnn feature maps and forgery traces. J Al-Qadisiyah Comput Sci Math 16(4). https://doi.org/10.29304/jqcsm.2024.16.41790",
+          "DOI": "10.29304/jqcsm.2024.16.41790"
+        },
+        {
+          "key": "1719_CR12",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Lu Y, Ebrahimi T (2024) Towards the detection of AI-synthesized human face images. https://doi.org/10.48550/ARXIV.2402.08750",
+          "DOI": "10.48550/ARXIV.2402.08750"
+        },
+        {
+          "key": "1719_CR13",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Xiao S, Guo Y, Peng H, Liu Z, Yang L, Wang Y (2025) Generalizable AI-generated image detection based on fractal self-similarity in the spectrum. https://doi.org/10.48550/ARXIV.2503.08484",
+          "DOI": "10.48550/ARXIV.2503.08484"
+        },
+        {
+          "key": "1719_CR14",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Yu N, Davis L, Fritz M (2018) Attributing fake images to GANs: learning and analyzing GAN fingerprints. https://doi.org/10.48550/ARXIV.1811.08180",
+          "DOI": "10.48550/ARXIV.1811.08180"
+        },
+        {
+          "key": "1719_CR15",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Wang H, Fei J, Dai Y, Leng L, Xia Z (2023) General gan-generated image detection by data augmentation in fingerprint domain. In: 2023 IEEE international conference on multimedia and expo (ICME), pp 1187–1192. IEEE. https://doi.org/10.1109/icme55011.2023.00207",
+          "DOI": "10.1109/icme55011.2023.00207"
+        },
+        {
+          "key": "1719_CR16",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Sinitsa S, Fried O (2023) Deep image fingerprint: towards low budget synthetic image detection and model lineage analysis.https://doi.org/10.48550/ARXIV.2303.10762",
+          "DOI": "10.48550/ARXIV.2303.10762"
+        },
+        {
+          "key": "1719_CR17",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Weng J (2024) Local frequency analysis for diffusion-generated image detection. In: Qin C, Zhou H (eds) International conference on image processing and artificial intelligence (ICIPAl 2024), pp 55. SPIE. https://doi.org/10.1117/12.3035198",
+          "DOI": "10.1117/12.3035198"
+        },
+        {
+          "key": "1719_CR18",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Gye S, Ko J, Shon H, Kwon M, Kim J (2025) SFLD: reducing the content bias for AI-generated image detection. https://doi.org/10.48550/ARXIV.2502.17105",
+          "DOI": "10.48550/ARXIV.2502.17105"
+        },
+        {
+          "key": "1719_CR19",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Cao H, Wang Y, Liu Y, Zheng S, Lv K, Zhang Z, Zhang B, Ding X, Wu F (2024) HyperDet: generalizable detection of synthesized images by generating and merging a mixture of hyper LoRAs. https://doi.org/10.48550/ARXIV.2410.06044",
+          "DOI": "10.48550/ARXIV.2410.06044"
+        },
+        {
+          "key": "1719_CR20",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Wang Z, Bao J, Zhou W, Wang W, Hu H, Chen H, Li H (2023) DIRE for diffusion-generated image detection. https://doi.org/10.48550/ARXIV.2303.09295",
+          "DOI": "10.48550/ARXIV.2303.09295"
+        },
+        {
+          "key": "1719_CR21",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Ricker J, Lukovnikov D, Fischer A (2024) AEROBLADE: training-free detection of latent diffusion images using autoencoder reconstruction error. https://doi.org/10.48550/ARXIV.2401.17879",
+          "DOI": "10.48550/ARXIV.2401.17879"
+        },
+        {
+          "key": "1719_CR22",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Zou M, Yu B, Zhan Y, Ma K (2025) Self-supervised learning for detecting AI-generated faces as anomalies. https://doi.org/10.48550/ARXIV.2501.02207",
+          "DOI": "10.48550/ARXIV.2501.02207"
+        },
+        {
+          "key": "1719_CR23",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Dogoulis P, Kordopatis-Zilos G, Kompatsiaris I, Papadopoulos S (2023) Improving synthetically generated image detection in cross-concept settings. In: Proceedings of the 2nd ACM international workshop on multimedia AI against disinformation, pp 28–35. https://doi.org/10.48550/ARXIV.2304.12053",
+          "DOI": "10.48550/ARXIV.2304.12053"
+        },
+        {
+          "issue": "4",
+          "key": "1719_CR24",
+          "doi-asserted-by": "publisher",
+          "first-page": "2165",
+          "DOI": "10.1007/s00530-023-01092-z",
+          "volume": "29",
+          "author": "H Ilyas",
+          "year": "2023",
+          "unstructured": "Ilyas H, Javed A, Malik KM, Irtaza A (2023) E-cap net: an efficient-capsule network for shallow and deepfakes forgery detection. Multimedia Syst 29(4):2165–2180. https://doi.org/10.1007/s00530-023-01092-z",
+          "journal-title": "Multimedia Syst"
+        },
+        {
+          "key": "1719_CR25",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Zhang K, Liang Y, Zhang J, Wang Z, Li X (2019) No one can escape: a general approach to detect tampered and generated image. IEEE Access 7, 129494–129503 (2019). https://doi.org/10.1109/access.2019.2939812",
+          "DOI": "10.1109/access.2019.2939812"
+        },
+        {
+          "key": "1719_CR26",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Nayim M, Mohan V, Pandey TN, Dash BB, Dash BB, Patra SS (2024) Detection of leading cnn models for ai image accuracy and efficiency. In: 2024 International conference on intelligent algorithms for computational intelligence systems (IACIS), pp 1–7. IEEE. https://doi.org/10.1109/iacis61494.2024.10721936",
+          "DOI": "10.1109/iacis61494.2024.10721936"
+        },
+        {
+          "key": "1719_CR27",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Yu H, Xu B (2025) Multi-modal texture fusion network for detecting ai-generated images. Front Artif Intell 8. https://doi.org/10.3389/frai.2025.1663292",
+          "DOI": "10.3389/frai.2025.1663292"
+        },
+        {
+          "key": "1719_CR28",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Benita R, Elad M, Keshet J (2025) Spectral analysis of diffusion models with application to schedule design. https://doi.org/10.48550/ARXIV.2502.00180",
+          "DOI": "10.48550/ARXIV.2502.00180"
+        },
+        {
+          "key": "1719_CR29",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Sadhya S, Qi X (2024) Deepfake detection with wavelet-integrated convolutional networks. In: 2024 IEEE international conference on big data (BigData), pp 4540–4547. IEEE, https://doi.org/10.1109/bigdata62323.2024.10825484",
+          "DOI": "10.1109/bigdata62323.2024.10825484"
+        },
+        {
+          "issue": "5",
+          "key": "1719_CR30",
+          "doi-asserted-by": "publisher",
+          "first-page": "5052",
+          "DOI": "10.1609/aaai.v38i5.28310",
+          "volume": "38",
+          "author": "C Tan",
+          "year": "2024",
+          "unstructured": "Tan C, Zhao Y, Wei S, Gu G, Liu P, Wei Y (2024) Frequency-aware deepfake detection: improving generalizability through frequency space domain learning. Proc AAAI Conf Artif Intell 38(5):5052–5060. https://doi.org/10.1609/aaai.v38i5.28310",
+          "journal-title": "Proc AAAI Conf Artif Intell"
+        },
+        {
+          "key": "1719_CR31",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Mandelli S, Vila-Portela D, Vázquez-Padín D, Bestagini P, Pérez-González F (2025) Beyond spectral peaks: interpreting the cues behind synthetic image detection. https://doi.org/10.48550/ARXIV.2510.05633",
+          "DOI": "10.48550/ARXIV.2510.05633"
+        },
+        {
+          "key": "1719_CR32",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Gu X, Liu J, Zou X, Kuang P (2017) Using checkerboard rendering and deconvolution to eliminate checkerboard artifacts in images generated by neural networks. In: 2017 14th international computer conference on wavelet active media technology and information processing (ICCWAMTIP), pp 197–200. IEEE, https://doi.org/10.1109/iccwamtip.2017.8301478",
+          "DOI": "10.1109/iccwamtip.2017.8301478"
+        },
+        {
+          "key": "1719_CR33",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Durall R, Keuper M, Keuper J (2020) Watch your up-convolution: CNN based generative deep neural networks are failing to reproduce spectral distributions. https://doi.org/10.48550/ARXIV.2003.01826",
+          "DOI": "10.48550/ARXIV.2003.01826"
+        },
+        {
+          "key": "1719_CR34",
+          "doi-asserted-by": "publisher",
+          "first-page": "108450",
+          "DOI": "10.1016/j.engappai.2024.108450",
+          "volume": "133",
+          "author": "J Gao",
+          "year": "2024",
+          "unstructured": "Gao J, Micheletto M, Orrù G, Concas S, Feng X, Marcialis GL, Roli F (2024) Texture and artifact decomposition for improving generalization in deep-learning-based deepfake detection. Eng Appl Artif Intell 133:108450. https://doi.org/10.1016/j.engappai.2024.108450",
+          "journal-title": "Eng Appl Artif Intell"
+        },
+        {
+          "key": "1719_CR35",
+          "doi-asserted-by": "publisher",
+          "unstructured": "He K, Zhang X, Ren S, Sun J (2015) Deep residual learning for image recognition. https://doi.org/10.48550/ARXIV.1512.03385",
+          "DOI": "10.48550/ARXIV.1512.03385"
+        },
+        {
+          "key": "1719_CR36",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Tan M, Le Q (2019) Efficientnet: rethinking model scaling for convolutional neural networks. In: International conference on machine learning, pp 6105–6114, PMLR. https://doi.org/10.48550/ARXIV.1905.11946",
+          "DOI": "10.48550/ARXIV.1905.11946"
+        },
+        {
+          "key": "1719_CR37",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Dosovitskiy A (2020) An image is worth 16x16 words: transformers for image recognition at scale. https://doi.org/10.48550/ARXIV.2010.11929",
+          "DOI": "10.48550/ARXIV.2010.11929"
+        },
+        {
+          "key": "1719_CR38",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Fu R, Hu Q, Dong X, Guo Y, Gao Y, Li B (2020) Axiom-based grad-CAM: towards accurate visualization and explanation of CNNs. https://doi.org/10.48550/ARXIV.2008.02312",
+          "DOI": "10.48550/ARXIV.2008.02312"
+        },
+        {
+          "key": "1719_CR39",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Selvaraju RR, Cogswell M, Das A, Vedantam R, Parikh D, Batra D (2017) Grad-cam: visual explanations from deep networks via gradient-based localization. In: 2017 IEEE international conference on computer vision (ICCV), pp 618–626. IEEE. https://doi.org/10.1109/iccv.2017.74",
+          "DOI": "10.1109/iccv.2017.74"
+        },
+        {
+          "issue": "2",
+          "key": "1719_CR40",
+          "doi-asserted-by": "publisher",
+          "first-page": "39",
+          "DOI": "10.5121/ijcses.2014.5204",
+          "volume": "5",
+          "author": "AM Raid",
+          "year": "2014",
+          "unstructured": "Raid AM, Khedr WM, El-Dosuky MA, Ahmed W (2014) Jpeg image compression using discrete cosine transform - a survey. Int J Comput Sci Eng Surv 5(2):39–47. https://doi.org/10.5121/ijcses.2014.5204",
+          "journal-title": "Int J Comput Sci Eng Surv"
+        },
+        {
+          "key": "1719_CR41",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Talebi H, Milanfar P (2021) Learning to resize images for computer vision tasks. In: Proceedings of the IEEE/CVF international conference on computer vision (ICCV), pp 497–506",
+          "DOI": "10.1109/ICCV48922.2021.00055"
+        },
+        {
+          "key": "1719_CR42",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Corvi R, Cozzolino D, Zingarini G, Poggi G, Nagano K, Verdoliva L (2023) On the detection of synthetic images generated by diffusion models. In: ICASSP 2023–2023 IEEE international conference on acoustics, speech and signal processing (ICASSP), pp 1–5. IEEE. https://doi.org/10.1109/icassp49357.2023.10095167",
+          "DOI": "10.1109/icassp49357.2023.10095167"
+        },
+        {
+          "key": "1719_CR43",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Wang S-Y, Wang O, Zhang R, Owens A, Efros AA (2020) Cnn-generated images are surprisingly easy to spot... for now. In: 2020 IEEE/CVF conference on computer vision and pattern recognition (CVPR), pp 8692–8701. IEEE, https://doi.org/10.1109/cvpr42600.2020.00872",
+          "DOI": "10.1109/cvpr42600.2020.00872"
+        },
+        {
+          "key": "1719_CR44",
+          "unstructured": "Frank J, Eisenhofer T, Schönherr L, Fischer A, Kolossa D, Holz T (2020) Leveraging frequency analysis for deep fake image recognition. In: III HD, Singh A (eds) Proceedings of the 37th international conference on machine learning. Proceedings of machine learning research, vol 119, pp 3247–3258. PMLR. https://proceedings.mlr.press/v119/frank20a.html"
+        },
+        {
+          "key": "1719_CR45",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Ojha U, Li Y, Lee YJ (2023) Towards universal fake image detectors that generalize across generative models. In: 2023 IEEE/CVF conference on computer vision and pattern recognition (CVPR), pp 24480–24489. IEEE. https://doi.org/10.1109/cvpr52729.2023.02345",
+          "DOI": "10.1109/cvpr52729.2023.02345"
+        },
+        {
+          "key": "1719_CR46",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Sinitsa S, Fried O (2024) Deep image fingerprint: towards low budget synthetic image detection and model lineage analysis. In: 2024 IEEE/CVF winter conference on applications of computer vision (WACV), pp 4055–4064. IEEE. https://doi.org/10.1109/wacv57701.2024.00402",
+          "DOI": "10.1109/wacv57701.2024.00402"
+        }
+      ],
+      "container-title": [
+        "Pattern Analysis and Applications"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/s10044-026-01719-7.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://link.springer.com/article/10.1007/s10044-026-01719-7",
+          "content-type": "text/html",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/s10044-026-01719-7.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ],
+        "date-time": "2026-07-14T22:56:18Z",
+        "timestamp": 1784069778000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://link.springer.com/10.1007/s10044-026-01719-7"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            15
+          ]
+        ]
+      },
+      "references-count": 46,
+      "journal-issue": {
+        "issue": "3",
+        "published-print": {
+          "date-parts": [
+            [
+              2026,
+              9
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "1719"
+      ],
+      "URL": "https://doi.org/10.1007/s10044-026-01719-7",
+      "relation": {},
+      "ISSN": [
+        "1433-7541",
+        "1433-755X"
+      ],
+      "issn-type": [
+        {
+          "value": "1433-7541",
+          "type": "print"
+        },
+        {
+          "value": "1433-755X",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            15
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "8 December 2025",
+          "order": 1,
+          "name": "received",
+          "label": "Received",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "22 June 2026",
+          "order": 2,
+          "name": "accepted",
+          "label": "Accepted",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "15 July 2026",
+          "order": 3,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ArticleHistory",
+            "label": "Article History"
+          }
+        },
+        {
+          "value": "All authors declare that they have no conflict of interest.",
+          "order": 1,
+          "name": "Ethics",
+          "label": "Conflict of interest",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Declarations"
+          }
+        },
+        {
+          "value": "Our article is published with the consent of the authors without any dispute or conflict of interest between the authors.",
+          "order": 2,
+          "name": "Ethics",
+          "label": "Ethical approval",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Declarations"
+          }
+        },
+        {
+          "value": "The images and experimental data are with the permission of the parties involved, and there is no dispute or conflict of interest.",
+          "order": 3,
+          "name": "Ethics",
+          "label": "Informed consent",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Declarations"
+          }
+        },
+        {
+          "value": "The authors declare no conflict of interest.",
+          "order": 4,
+          "name": "Ethics",
+          "label": "Conflict of interest",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Declarations"
+          }
+        }
+      ],
+      "article-number": "147"
+    }
+  }
+}

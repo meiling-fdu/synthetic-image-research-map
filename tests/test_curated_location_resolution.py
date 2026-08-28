@@ -25,7 +25,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
                 "venue_id": "venue:siggraph:posters",
                 "venue_acronym": "SIGGRAPH",
                 "venue_type": "conference",
-                "venue_track": "posters",
+                "venue_track": "Poster",
                 "raw_venue": "ACM SIGGRAPH Posters",
                 "publication_type": "conference",
             },
@@ -47,9 +47,9 @@ class CuratedLocationResolutionTests(unittest.TestCase):
         )
 
         for record in (curated, marker):
-            self.assertEqual(record["venue_id"], "venue:siggraph:posters")
+            self.assertEqual(record["venue_id"], "venue:siggraph")
             self.assertEqual(record["venue_type"], "conference")
-            self.assertEqual(record["venue_track"], "posters")
+            self.assertEqual(record["venue_track"], "Poster")
 
     def test_reviewed_manually_added_venue_overrides_automatic_candidate(self):
         curated_paper = {
@@ -61,7 +61,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "venue_id": "venue:cvpr:findings",
             "venue_acronym": "CVPR",
             "venue_type": "conference",
-            "venue_track": "findings",
+            "venue_track": "Findings",
             "raw_venue": "CVPR Findings",
             "publication_type": "conference",
             "task": "detection",
@@ -75,7 +75,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "venue": "Computer Vision and Pattern Recognition",
             "venue_id": "venue:computer-vision-and-pattern-recognition:main",
             "venue_type": "conference",
-            "venue_track": "main",
+            "venue_track": "Main",
             "task": "detection",
         }
 
@@ -83,8 +83,8 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             [candidate], [], [curated_paper], []
         )
 
-        self.assertEqual(papers[0]["venue_id"], "venue:cvpr:findings")
-        self.assertEqual(papers[0]["venue_track"], "findings")
+        self.assertEqual(papers[0]["venue_id"], "venue:cvpr")
+        self.assertEqual(papers[0]["venue_track"], "Findings")
 
     def test_curated_marker_preserves_canonical_id_across_name_correction(self):
         marker = _curated_marker(

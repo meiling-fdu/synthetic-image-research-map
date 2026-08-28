@@ -1,0 +1,467 @@
+{
+  "doi": "10.1155/2021/5511435",
+  "source_url": "https://api.crossref.org/works/10.1155%2F2021%2F5511435",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            3,
+            3
+          ]
+        ],
+        "date-time": "2026-03-03T16:15:28Z",
+        "timestamp": 1772554528232,
+        "version": "3.50.1"
+      },
+      "reference-count": 28,
+      "publisher": "Wiley",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                6,
+                15
+              ]
+            ],
+            "date-time": "2021-06-15T00:00:00Z",
+            "timestamp": 1623715200000
+          },
+          "content-version": "unspecified",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "funder": [
+        {
+          "name": "National Key Research and Development Program of China",
+          "award": [
+            "2016YFB0501900"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2016YFB0501900"
+              ]
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "Security and Communication Networks"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            15
+          ]
+        ]
+      },
+      "abstract": "<jats:p>Recently, generative adversarial networks (GANs) and its variants have shown impressive ability in image synthesis. The synthesized fake images spread widely on the Internet, and it is challenging for Internet users to identify the authenticity, which poses huge security risk to the society. However, compared with the powerful image synthesis technology, the detection of GAN-synthesized images is still in its infancy and face a variety of challenges. In this study, a method named fake images discriminator (FID) is proposed, which detects that GAN-synthesized fake images use the strong spectral correlation in the imaging process of natural color images. The proposed method first converts the color image into three color components of R, G, and B. Discrete wavelet transform (DWT) is then applied to RGB components separately. Finally, the correlation coefficient between the subband images is used as a feature vector for authenticity classification. Experimental results show that the proposed FID method achieves impressive effectiveness on the StyleGAN2-synthesized faces and multitype fake images synthesized with the state-of-the-art GANs. Also, the FID method exhibits good robustness against the four common perturbation attacks.</jats:p>",
+      "DOI": "10.1155/2021/5511435",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            16
+          ]
+        ],
+        "date-time": "2021-06-16T22:20:05Z",
+        "timestamp": 1623882005000
+      },
+      "page": "1-10",
+      "source": "Crossref",
+      "is-referenced-by-count": 10,
+      "title": [
+        "Detection of GAN-Synthesized Image Based on Discrete Wavelet Transform"
+      ],
+      "prefix": "10.1155",
+      "volume": "2021",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-3942-8894",
+          "authenticated-orcid": true,
+          "given": "Guihua",
+          "family": "Tang",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Information Engineering University, Zhengzhou 450001, China"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6010-3392",
+          "authenticated-orcid": true,
+          "given": "Lei",
+          "family": "Sun",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Engineering University, Zhengzhou 450001, China"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7305-8831",
+          "authenticated-orcid": true,
+          "given": "Xiuqing",
+          "family": "Mao",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Engineering University, Zhengzhou 450001, China"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-2495-9537",
+          "authenticated-orcid": true,
+          "given": "Song",
+          "family": "Guo",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Engineering University, Zhengzhou 450001, China"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-7322-5057",
+          "authenticated-orcid": true,
+          "given": "Hongmeng",
+          "family": "Zhang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Engineering University, Zhengzhou 450001, China"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0518-5772",
+          "authenticated-orcid": true,
+          "given": "Xiaoqin",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Information Engineering University, Zhengzhou 450001, China"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "311",
+      "reference": [
+        {
+          "key": "1",
+          "article-title": "Generative adversarial nets",
+          "author": "J. P.-A. Goodfellow"
+        },
+        {
+          "key": "2",
+          "doi-asserted-by": "crossref",
+          "article-title": "Detecting GAN-generated imagery using saturation cues",
+          "author": "S. McCloskey",
+          "DOI": "10.1109/ICIP.2019.8803661"
+        },
+        {
+          "key": "3",
+          "first-page": "1",
+          "article-title": "Detecting GAN generated fake images using Co-occurrence matrices",
+          "volume": "5",
+          "author": "L. Nataraj",
+          "year": "2019",
+          "journal-title": "Journal of Electronic Imaging"
+        },
+        {
+          "key": "4",
+          "article-title": "Exposing GAN-synthesized faces using landmark locations",
+          "author": "X. Yang"
+        },
+        {
+          "key": "5",
+          "article-title": "Exposing deep fakes using inconsistent head poses",
+          "author": "X. Yang"
+        },
+        {
+          "key": "6",
+          "doi-asserted-by": "crossref",
+          "article-title": "Detecting and simulating artifacts in gan fake images",
+          "author": "X. Zhang",
+          "DOI": "10.1109/WIFS47025.2019.9035107"
+        },
+        {
+          "key": "7",
+          "doi-asserted-by": "crossref",
+          "article-title": "Fakespotter: a simple baseline for spotting ai-synthesized fake faces",
+          "author": "R. Wang",
+          "DOI": "10.24963/ijcai.2020/476"
+        },
+        {
+          "key": "8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/msp.2008.931079"
+        },
+        {
+          "key": "9",
+          "article-title": "Progressive Growing of GANs for improved quality, stability, and variation",
+          "author": "T. Karras"
+        },
+        {
+          "key": "10",
+          "doi-asserted-by": "crossref",
+          "article-title": "A style-based generator architecture for generative adversarial networks",
+          "author": "T. Karras",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "11",
+          "doi-asserted-by": "crossref",
+          "article-title": "Analyzing and improving the image quality of stylegan",
+          "author": "T. Karras",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "12",
+          "article-title": "Unpaired image-to-image translation using cycle-consistent adversarial networks",
+          "author": "J.-Y. Zhu"
+        },
+        {
+          "key": "13",
+          "article-title": "STGAN: a unified selective transfer network for arbitrary image attribute editing",
+          "author": "M. Liu"
+        },
+        {
+          "key": "14",
+          "article-title": "StarGAN: unified generative adversarial networks for multi-domain image-to-image translation",
+          "author": "Y. Choi"
+        },
+        {
+          "key": "15",
+          "article-title": "Protecting world leaders against deep fakes",
+          "author": "S. Agarwal"
+        },
+        {
+          "key": "16",
+          "article-title": "We are truly F—ed: everyone is making AI-generated fake porn now",
+          "author": "S. Cole",
+          "year": "2018"
+        },
+        {
+          "key": "17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/tsp.2004.839932"
+        },
+        {
+          "key": "18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1155/2018/6853696"
+        },
+        {
+          "key": "19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1155/2019/8124521"
+        },
+        {
+          "key": "20",
+          "article-title": "On the detection of digit manipulation",
+          "author": "H. Dang"
+        },
+        {
+          "key": "21",
+          "article-title": "CNN-Generated images are surprisingly easy to spot for now",
+          "author": "S.-Y. Wang"
+        },
+        {
+          "key": "22",
+          "doi-asserted-by": "crossref",
+          "article-title": "Do GANs leave artificial fingerprints?",
+          "author": "F. Marra",
+          "DOI": "10.1109/MIPR.2019.00103"
+        },
+        {
+          "key": "23",
+          "article-title": "Fake faces identification via convolutional neural network",
+          "author": "H. Mo"
+        },
+        {
+          "key": "24",
+          "article-title": "Forensics face detection from GANs using convolutional neural network",
+          "author": "T. Do Nhu"
+        },
+        {
+          "key": "25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/1961189.1961199"
+        },
+        {
+          "key": "26",
+          "article-title": "Deep Learning face attributes in the wild",
+          "author": "Z. Liu"
+        },
+        {
+          "key": "27",
+          "article-title": "Large scale gan training for high fidelity natural image synthesis",
+          "author": "A. Brock"
+        },
+        {
+          "key": "28",
+          "doi-asserted-by": "crossref",
+          "article-title": "Semantic image synthesis with spatially-adaptive normalization",
+          "author": "T. Park",
+          "DOI": "10.1109/CVPR.2019.00244"
+        }
+      ],
+      "container-title": [
+        "Security and Communication Networks"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "http://downloads.hindawi.com/journals/scn/2021/5511435.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "http://downloads.hindawi.com/journals/scn/2021/5511435.xml",
+          "content-type": "application/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "http://downloads.hindawi.com/journals/scn/2021/5511435.pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            12,
+            31
+          ]
+        ],
+        "date-time": "2022-12-31T12:03:10Z",
+        "timestamp": 1672488190000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.hindawi.com/journals/scn/2021/5511435/"
+        }
+      },
+      "subtitle": [],
+      "editor": [
+        {
+          "given": "Beijing",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "editor",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            15
+          ]
+        ]
+      },
+      "references-count": 28,
+      "alternative-id": [
+        "5511435",
+        "5511435"
+      ],
+      "URL": "https://doi.org/10.1155/2021/5511435",
+      "relation": {},
+      "ISSN": [
+        "1939-0122",
+        "1939-0114"
+      ],
+      "issn-type": [
+        {
+          "value": "1939-0122",
+          "type": "electronic"
+        },
+        {
+          "value": "1939-0114",
+          "type": "print"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            6,
+            15
+          ]
+        ]
+      }
+    }
+  }
+}

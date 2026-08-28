@@ -1,0 +1,482 @@
+{
+  "doi": "10.1117/12.3055092",
+  "source_url": "https://api.crossref.org/works/10.1117%2F12.3055092",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            17
+          ]
+        ],
+        "date-time": "2026-07-17T04:46:14Z",
+        "timestamp": 1784263574919,
+        "version": "3.55.0"
+      },
+      "reference-count": 41,
+      "publisher": "SPIE",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            2,
+            25
+          ]
+        ]
+      },
+      "DOI": "10.1117/12.3055092",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            2,
+            25
+          ]
+        ],
+        "date-time": "2025-02-25T00:56:34Z",
+        "timestamp": 1740444994000
+      },
+      "page": "18",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "Detecting computer-generated images by using only real images"
+      ],
+      "prefix": "10.1117",
+      "author": [
+        {
+          "given": "Ji",
+          "family": "Li",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Kai",
+          "family": "Wang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "189",
+      "reference": [
+        {
+          "key": "B1",
+          "first-page": "2672",
+          "article-title": "Generative adversarial nets",
+          "volume": "27",
+          "author": "Goodfellow",
+          "year": "2014",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "B2",
+          "first-page": "6840",
+          "article-title": "Denoising diffusion probabilistic models",
+          "volume": "33",
+          "author": "Ho",
+          "year": "2020",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "issue": "1",
+          "key": "B3",
+          "first-page": "496701",
+          "article-title": "An overview on image forensics",
+          "volume": "2013",
+          "author": "Piva",
+          "year": "2013",
+          "journal-title": "International Scholarly Research Notices"
+        },
+        {
+          "key": "B4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/JSTSP.2020.3002101"
+        },
+        {
+          "key": "B5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/jimaging7040069"
+        },
+        {
+          "key": "B6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2018.2834147"
+        },
+        {
+          "key": "B7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIP.2021.3114989"
+        },
+        {
+          "key": "B8",
+          "article-title": "Detecting GAN generated fake images using co-occurrence matrices",
+          "author": "Nataraj",
+          "year": "2019",
+          "journal-title": "arXiv preprint arXiv:1903.06836"
+        },
+        {
+          "key": "B9",
+          "first-page": "8695",
+          "article-title": "CNN-generated images are surprisingly easy to spot… for now",
+          "volume-title": "in [Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ]",
+          "author": "Wang",
+          "year": "2020"
+        },
+        {
+          "key": "B10",
+          "first-page": "22445",
+          "article-title": "DIRE for diffusion-generated image detection",
+          "volume-title": "in [Proceedings of the IEEE/CVF International Conference on Computer Vision ]",
+          "author": "Wang",
+          "year": "2023"
+        },
+        {
+          "key": "B11",
+          "first-page": "8748",
+          "article-title": "Learning transferable visual models from natural language supervision",
+          "volume-title": "in [Proceedings of the International Conference on Machine Learning]",
+          "author": "Radford",
+          "year": "2021"
+        },
+        {
+          "key": "B12",
+          "first-page": "3022",
+          "article-title": "Fourier spectrum discrepancies in deep network generated images",
+          "volume": "33",
+          "author": "Dzanic",
+          "year": "2020",
+          "journal-title": "Advances in Neural Information Processing Systems"
+        },
+        {
+          "key": "B13",
+          "first-page": "76",
+          "article-title": "Fingerprintnet: Synthesized fingerprints for generated image detection",
+          "volume-title": "in [Proceedings of the European Conference on Computer Vision ]",
+          "author": "Jeong",
+          "year": "2022"
+        },
+        {
+          "key": "B14",
+          "first-page": "1",
+          "article-title": "Detecting and simulating artifacts in GAN fake images",
+          "volume-title": "in [Proceedings of the IEEE International Workshop on Information Forensics and Security ]",
+          "author": "Zhang",
+          "year": "2019"
+        },
+        {
+          "key": "B15",
+          "first-page": "3247",
+          "article-title": "Leveraging frequency analysis for deep fake image recognition",
+          "volume-title": "in [Proceedings of the International Conference on Machine Learning]",
+          "author": "Frank",
+          "year": "2020"
+        },
+        {
+          "key": "B16",
+          "first-page": "1",
+          "article-title": "On the detection of synthetic images generated by diffusion models",
+          "volume-title": "in [Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing]",
+          "author": "Corvi",
+          "year": "2023"
+        },
+        {
+          "key": "B17",
+          "first-page": "7200",
+          "article-title": "A closer look at Fourier spectrum discrepancies for CNNgenerated images detection",
+          "volume-title": "in [Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ]",
+          "author": "Chandrasegaran",
+          "year": "2021"
+        },
+        {
+          "key": "B18",
+          "first-page": "95",
+          "article-title": "Detecting generated images by real images",
+          "volume-title": "in [Proceedings of the European Conference on Computer Vision ]",
+          "author": "Liu",
+          "year": "2022"
+        },
+        {
+          "key": "B19",
+          "first-page": "103",
+          "article-title": "What makes fake images detectable? understanding properties that generalize",
+          "volume-title": "in [Proceedings of the European Conference on Computer Vision ]",
+          "author": "Chai",
+          "year": "2020"
+        },
+        {
+          "key": "B20",
+          "first-page": "24480",
+          "article-title": "Towards universal fake image detectors that generalize across generative models",
+          "volume-title": "in [Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ]",
+          "author": "Ojha",
+          "year": "2023"
+        },
+        {
+          "issue": "1",
+          "key": "B21",
+          "first-page": "43",
+          "article-title": "A comprehensive survey on transfer learning",
+          "volume-title": "Proceedings of the IEEE",
+          "volume": "109",
+          "author": "Zhuang",
+          "year": "2020"
+        },
+        {
+          "key": "B22",
+          "article-title": "How much can CLIP benefit vision-and-language tasks?",
+          "author": "Shen",
+          "year": "2021",
+          "journal-title": "arXivpreprint arXiv:2107.06383"
+        },
+        {
+          "key": "B23",
+          "first-page": "493",
+          "article-title": "Tip-adapter: Training-free adaption of CLIP for few-shot classification",
+          "volume-title": "in [Proceedings of the European Conference on Computer Vision]",
+          "author": "Zhang",
+          "year": "2022"
+        },
+        {
+          "key": "B24",
+          "article-title": "An image is worth 16x16 words: Transformers for image recognition at scale",
+          "author": "Dosovitskiy",
+          "year": "2020",
+          "journal-title": "arXiv preprint arXiv:2010.11929"
+        },
+        {
+          "key": "B25",
+          "first-page": "10012",
+          "article-title": "Swin transformer: Hierarchical vision transformer using shifted windows",
+          "volume-title": "in [Proceedings of the IEEE/CVF International Conference on Computer Vision]",
+          "author": "Liu",
+          "year": "2021"
+        },
+        {
+          "key": "B26",
+          "article-title": "BEiT: Bert pre-training of image transformers",
+          "author": "Bao",
+          "year": "2021",
+          "journal-title": "arXiv preprint arXiv:2106.08254"
+        },
+        {
+          "key": "B27",
+          "first-page": "804",
+          "article-title": "Revisiting weakly supervised pre-training of visual perception models",
+          "volume-title": "in [Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ]",
+          "author": "Singh",
+          "year": "2022"
+        },
+        {
+          "key": "B28",
+          "first-page": "16000",
+          "article-title": "Masked autoencoders are scalable vision learners",
+          "volume-title": "in [Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ]",
+          "author": "He",
+          "year": "2022"
+        },
+        {
+          "key": "B29",
+          "first-page": "5484",
+          "article-title": "The effectiveness of MAE pre-pretraining for billion-scale pretraining",
+          "volume-title": "in [Proceedings of the IEEE/CVF International Conference on Computer Vision]",
+          "author": "Singh",
+          "year": "2023"
+        },
+        {
+          "key": "B30",
+          "first-page": "388",
+          "article-title": "Frozen CLIP models are efficient video learners",
+          "volume-title": "in [European Conference on Computer Vision]",
+          "author": "Lin",
+          "year": "2022"
+        },
+        {
+          "key": "B31",
+          "first-page": "4662",
+          "article-title": "The unreasonable effectiveness of CLIP features for image captioning: an experimental analysis",
+          "volume-title": "in [Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition]",
+          "author": "Barraco",
+          "year": "2022"
+        },
+        {
+          "key": "B32",
+          "first-page": "22157",
+          "article-title": "CLIP2Point: Transfer CLIP to point cloud classification with image-depth pre-training",
+          "volume-title": "in [Proceedings of the IEEE/CVF International Conference on Computer Vision]",
+          "author": "Huang",
+          "year": "2023"
+        },
+        {
+          "key": "B33",
+          "article-title": "Leveraging representations from intermediate encoder-blocks for synthetic image detection",
+          "author": "Koutlis",
+          "year": "2024",
+          "journal-title": "rXiv preprint arXiv:2402.19091"
+        },
+        {
+          "key": "B34",
+          "article-title": "Attention is all you need",
+          "volume": "30",
+          "author": "Vaswani",
+          "year": "2017",
+          "journal-title": "Advances in Neural Information Processing System"
+        },
+        {
+          "key": "B35",
+          "first-page": "4393",
+          "article-title": "Deep one-class classification",
+          "volume-title": "in [Proceedings of the International Conference on Machine Learning ]",
+          "author": "Ruff",
+          "year": "2018"
+        },
+        {
+          "key": "B36",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIP.83"
+        },
+        {
+          "key": "B37",
+          "first-page": "13466",
+          "article-title": "Frequency masking for universal deepfake detection",
+          "volume-title": "in [Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing]",
+          "author": "Doloriel",
+          "year": "2024"
+        },
+        {
+          "key": "B38",
+          "article-title": "mixup: Beyond empirical risk minimization",
+          "author": "Zhang",
+          "year": "2017",
+          "journal-title": "arXiv preprint arXiv:1710.09412"
+        },
+        {
+          "key": "B39",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/38.946629"
+        },
+        {
+          "key": "B40",
+          "article-title": "LSUN: Construction of a large-scale image dataset using deep learning with humans in the loop",
+          "author": "Yu",
+          "year": "2015",
+          "journal-title": "arXiv preprint arXiv:1506.03365"
+        },
+        {
+          "issue": "3",
+          "key": "B41",
+          "first-page": "488",
+          "article-title": "Three-dimensional convolutional approaches for the verification of deepfake videos: The effect of image depth size on authentication performance",
+          "volume": "14",
+          "author": "Saealal",
+          "year": "2023",
+          "journal-title": "Journal ofAdvances in Information Technology"
+        }
+      ],
+      "event": {
+        "name": "Seventeenth International Conference on Machine Vision (ICMV 2024)",
+        "location": "Edinburg, United Kingdom",
+        "start": {
+          "date-parts": [
+            [
+              2024,
+              10,
+              10
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2024,
+              10,
+              13
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "Seventeenth International Conference on Machine Vision (ICMV 2024)"
+      ],
+      "original-title": [],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            3,
+            1
+          ]
+        ],
+        "date-time": "2025-03-01T01:42:44Z",
+        "timestamp": 1740793364000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.spiedigitallibrary.org/conference-proceedings-of-spie/13517/3055092/Detecting-computer-generated-images-by-using-only-real-images/10.1117/12.3055092.full"
+        }
+      },
+      "subtitle": [],
+      "editor": [
+        {
+          "given": "Wolfgang",
+          "family": "Osten",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "editor"
+            }
+          ]
+        }
+      ],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            2,
+            25
+          ]
+        ]
+      },
+      "references-count": 41,
+      "URL": "https://doi.org/10.1117/12.3055092",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            2,
+            25
+          ]
+        ]
+      }
+    }
+  }
+}

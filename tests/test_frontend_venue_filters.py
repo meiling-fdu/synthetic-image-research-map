@@ -280,12 +280,12 @@ process.stdout.write(JSON.stringify({{
 
     def test_workshop_is_track_not_public_type(self):
         self.assertNotIn("workshop", {paper.get("venue_type") for paper in self.papers})
-        workshop_papers = [paper for paper in self.papers if paper.get("venue_track") == "workshops"]
+        workshop_papers = [paper for paper in self.papers if paper.get("venue_track") == "Workshop"]
         self.assertTrue(workshop_papers)
         self.assertEqual({paper.get("venue_type") for paper in workshop_papers}, {"conference"})
         self.assertTrue(all(
             not label.startswith("Conference · ")
-            and ("workshop" in label.casefold() or label.endswith(" · Workshops"))
+            and ("workshop" in label.casefold() or label.endswith(" · Workshop"))
             for label in (paper.get("venue_label", "") for paper in workshop_papers)
         ))
 
@@ -462,7 +462,7 @@ process.stdout.write(JSON.stringify({{
         for paper in self.papers:
             key = (
                 paper.get("venue_name", "").casefold(),
-                paper.get("venue_track", "main"),
+                paper.get("venue_track", "Main"),
             )
             by_name_track.setdefault(key, {
                 "ids": set(),
@@ -496,10 +496,13 @@ process.stdout.write(JSON.stringify({{
     def test_corrected_public_venue_options_are_unique(self):
         expected = {
             "venue:ijcnn": {
-                "main": "International Joint Conference on Neural Networks (IJCNN)",
-                "workshops": "International Joint Conference on Neural Networks (IJCNN) · Workshops",
+                "Main": "International Joint Conference on Neural Networks (IJCNN)",
+                "Workshop": "International Joint Conference on Neural Networks (IJCNN) · Workshop",
             },
-            "venue:icmr": "ACM International Conference on Multimedia Retrieval (ICMR)",
+            "venue:icmr": {
+                "Main": "ACM International Conference on Multimedia Retrieval (ICMR)",
+                "Workshop": "ACM International Conference on Multimedia Retrieval (ICMR) · Workshop",
+            },
         }
         for venue_id, expected_labels in expected.items():
             with self.subTest(venue_id=venue_id):
@@ -524,12 +527,12 @@ process.stdout.write(JSON.stringify({{
                 )
         wacv_workshops = [paper for paper in self.papers if (
             paper.get("venue_id") == "venue:wacv"
-            and paper.get("venue_track") == "workshops"
+            and paper.get("venue_track") == "Workshop"
         )]
         self.assertTrue(wacv_workshops)
         self.assertEqual(
             {paper.get("venue_label") for paper in wacv_workshops},
-            {"IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops"},
+            {"IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshop"},
         )
         public_labels = [paper.get("venue_label", "") for paper in self.papers]
         self.assertNotIn("International Conference on Multimedia Retrieval", set(public_labels))
@@ -565,7 +568,7 @@ process.stdout.write(JSON.stringify({{
         matching = [paper for paper in self.papers if (
             paper.get("venue_id") == "venue:wifs"
             and paper.get("venue_type") == "conference"
-            and paper.get("venue_track") == "workshops"
+            and paper.get("venue_track") == "Workshop"
             and paper.get("year") == 2024
         )]
         self.assertTrue(matching)

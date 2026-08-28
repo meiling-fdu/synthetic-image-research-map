@@ -1,0 +1,412 @@
+{
+  "doi": "10.1109/ocit53463.2021.00039",
+  "source_url": "https://api.crossref.org/works/10.1109%2Focit53463.2021.00039",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            12,
+            30
+          ]
+        ],
+        "date-time": "2025-12-30T15:42:27Z",
+        "timestamp": 1767109347739,
+        "version": "3.28.0"
+      },
+      "reference-count": 30,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2021-12-01T00:00:00Z",
+            "timestamp": 1638316800000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                12,
+                1
+              ]
+            ],
+            "date-time": "2021-12-01T00:00:00Z",
+            "timestamp": 1638316800000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2021,
+            12
+          ]
+        ]
+      },
+      "DOI": "10.1109/ocit53463.2021.00039",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2022,
+            3,
+            1
+          ]
+        ],
+        "date-time": "2022-03-01T20:41:48Z",
+        "timestamp": 1646167308000
+      },
+      "page": "149-154",
+      "source": "Crossref",
+      "is-referenced-by-count": 14,
+      "title": [
+        "Detection of Deep-Morphed Deepfake Images to Make Robust Automatic Facial Recognition Systems"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Alakananda",
+          "family": "Mitra",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "University of North Texas,Dept. of Computer Science and Engineering,USA"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Saraju P.",
+          "family": "Mohanty",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of North Texas,Dept. of Computer Science and Engineering,USA"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Peter",
+          "family": "Corcoran",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "National University of Ireland,School of Engineering and Informatics,Galway,Ireland"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "given": "Elias",
+          "family": "Kougianos",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "University of North Texas,Dept. of Electrical Engineering,USA"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref30",
+          "first-page": "248",
+          "article-title": "Imagenet: A large-scale hierarchical image database",
+          "author": "deng",
+          "year": "2009",
+          "journal-title": "Proceedings of IEEE Conference on Computer Vision and Pattern Recognition"
+        },
+        {
+          "key": "ref10",
+          "first-page": "5",
+          "author": "korshunov",
+          "year": "2019",
+          "journal-title": "Vulnerability of face recognition to deep morphing"
+        },
+        {
+          "journal-title": "DeepFakes A New Threat to Face Recognition? Assessment and Detection",
+          "year": "2018",
+          "author": "korshunov",
+          "key": "ref11"
+        },
+        {
+          "key": "ref12",
+          "article-title": "Deepfakes: a new threat to face recognition? assessment and detection",
+          "author": "korshunov",
+          "year": "2018",
+          "journal-title": "Idiap Idiap-RR Idiap-RR-24?2012"
+        },
+        {
+          "key": "ref13",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WACVW.2019.00020"
+        },
+        {
+          "key": "ref14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/iSES50453.2020.00031"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/s42979-021-00495-x"
+        },
+        {
+          "key": "ref16",
+          "article-title": "Easydeep: An iot friendly robust detection method for gan generated deepfake images in socialmedia",
+          "author": "mitra",
+          "year": "2021",
+          "journal-title": "Proceedings of the 4th IFIP International Internet of Things (IoT) Conference (IFIP-IoT)"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICASSP.2019.8683164"
+        },
+        {
+          "key": "ref18",
+          "first-page": "38",
+          "article-title": "Protecting world leaders against deep fakes",
+          "author": "agarwal",
+          "year": "2019",
+          "journal-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Work-shops"
+        },
+        {
+          "key": "ref19",
+          "first-page": "46",
+          "article-title": "Exposing deepfake videos by detecting face warping artifacts",
+          "author": "li",
+          "year": "2019",
+          "journal-title": "Proceedings of IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+        },
+        {
+          "journal-title": "Keras",
+          "year": "0",
+          "author": "chollet",
+          "key": "ref28"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "ref27",
+          "article-title": "Adam: A method for stochastic optimization",
+          "author": "kingma",
+          "year": "2015",
+          "journal-title": "Proceedings of 3rd International Conference on Learning Representations ICLR 2015"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/BTAS.2018.8698563"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00728"
+        },
+        {
+          "key": "ref29",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2017.74"
+        },
+        {
+          "key": "ref5",
+          "first-page": "8107",
+          "article-title": "An-alyzing and improving the image quality of stylegan",
+          "author": "karras",
+          "year": "2020",
+          "journal-title": "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/2929464.2929475"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00916"
+        },
+        {
+          "key": "ref2",
+          "first-page": "2672",
+          "article-title": "Generative adversarial nets",
+          "volume": "27",
+          "author": "goodfellow",
+          "year": "2014",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.inffus.2020.06.014"
+        },
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MCE.2016.2556879"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WIFS.2018.8630761"
+        },
+        {
+          "journal-title": "Use of a capsule network to detect fake images and videos",
+          "year": "2019",
+          "author": "nguyen",
+          "key": "ref22"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPRW.2017.229"
+        },
+        {
+          "key": "ref24",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2018.00474"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV.2019.00009"
+        },
+        {
+          "key": "ref26",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-642-01793-3_21"
+        },
+        {
+          "key": "ref25",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR.2016.90"
+        }
+      ],
+      "event": {
+        "name": "2021 19th OITS International Conference on Information Technology (OCIT)",
+        "start": {
+          "date-parts": [
+            [
+              2021,
+              12,
+              16
+            ]
+          ]
+        },
+        "location": "Bhubaneswar, India",
+        "end": {
+          "date-parts": [
+            [
+              2021,
+              12,
+              18
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2021 19th OITS International Conference on Information Technology (OCIT)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx7/9718564/9719325/09719457.pdf?arnumber=9719457",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2022,
+            6,
+            20
+          ]
+        ],
+        "date-time": "2022-06-20T21:21:44Z",
+        "timestamp": 1655760104000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/9719457/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            12
+          ]
+        ]
+      },
+      "references-count": 30,
+      "URL": "https://doi.org/10.1109/ocit53463.2021.00039",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            12
+          ]
+        ]
+      }
+    }
+  }
+}

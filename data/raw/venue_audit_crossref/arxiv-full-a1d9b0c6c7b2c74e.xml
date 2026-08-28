@@ -1,0 +1,651 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/aQ+vRhdednuCMqXd2WwgTxY8lB0</id>
+  <title>arXiv Query: search_query=&amp;id_list=2505.11257,2505.23192,2506.03988,2507.02995,2507.03054,2509.09495,2510.03840,2511.00181,2511.21507,2512.16300,2512.17730,2512.21512,2602.07814,2603.01878,2603.17343,2604.16879,2605.12967,2607.12052v1,2607.13685,2607.16283,2608.11643,2608.12155&amp;start=0&amp;max_results=40</title>
+  <updated>2026-08-28T17:14:02Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=40&amp;id_list=2505.11257,2505.23192,2506.03988,2507.02995,2507.03054,2509.09495,2510.03840,2511.00181,2511.21507,2512.16300,2512.17730,2512.21512,2602.07814,2603.01878,2603.17343,2604.16879,2605.12967,2607.12052v1,2607.13685,2607.16283,2608.11643,2608.12155" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>22</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2603.01878v2</id>
+    <title>CTForensics: A Comprehensive Dataset and Method for AI-Generated CT Image Detection</title>
+    <updated>2026-07-06T12:30:01Z</updated>
+    <link href="https://arxiv.org/abs/2603.01878v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.01878v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in generative AI have made synthetic Computed Tomography (CT) images increasingly realistic, enabling promising applications in medical data augmentation while raising serious concerns about clinical safety and data trustworthiness. Detecting AI-generated CT images remains challenging for two key reasons: existing benchmarks cover only limited generation sources, and many detectors are adapted from natural-image forensics without explicitly modeling CT-specific imaging properties. In this paper, we introduce CTForensics, a dataset for detecting AI-generated CT images. CTForensics contains 75,990 2D CT images, including a dedicated test benchmark of 29,990 balanced authentic and generated samples from ten representative CT generative models spanning GAN-based and diffusion-based paradigms. We further propose the Enhanced Spatial-Frequency CT Forgery Detector (ESF-CTFD), a CT-oriented CNN framework built around a Wavelet-Enhanced Central Stem, Multi-Scale Spatial Aggregation, and a Frequency-Aware Prediction Block. The Wavelet-Enhanced Central Stem enhances local intensity correlations and high-frequency residuals, Multi-Scale Spatial Aggregation aligns anatomical features across resolutions with lightweight residual units, and the Frequency-Aware Prediction Block models global spectral artifacts. Extensive experiments on CTForensics show that ESF-CTFD achieves 96.01% mAcc and 99.96% mAP, outperforming existing methods and maintaining strong robustness under realistic perturbations with only a 0.99% average drop. Codes will be available at https://github.com/liyih/CTForensics.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-02T13:58:28Z</published>
+    <arxiv:comment>under review, repo: https://github.com/liyih/CTForensics</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiheng Li</name>
+    </author>
+    <author>
+      <name>Zichang Tan</name>
+    </author>
+    <author>
+      <name>Guoqing Xu</name>
+    </author>
+    <author>
+      <name>Yichun Yeh</name>
+    </author>
+    <author>
+      <name>Yang Yang</name>
+    </author>
+    <author>
+      <name>Zhen Lei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.16300v3</id>
+    <title>Code-in-the-Loop Forensics: Agentic Tool Use for Image Forgery Detection</title>
+    <updated>2026-07-22T08:44:48Z</updated>
+    <link href="https://arxiv.org/abs/2512.16300v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.16300v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing image forgery detection (IFD) methods either exploit low-level, semantics-agnostic artifacts or rely on multimodal large language models (MLLMs) with high-level semantic knowledge. Although naturally complementary, these two information streams are highly heterogeneous in both paradigm and reasoning, making it difficult for existing methods to unify them or effectively model their cross-level interactions. To address this gap, we propose ForenAgent, a multi-round interactive IFD framework that enables MLLMs to autonomously generate, execute, and iteratively refine Python-based low-level tools around the detection objective, thereby achieving more flexible and interpretable forgery analysis. ForenAgent follows a two-stage training pipeline combining Cold Start and Reinforcement Fine-Tuning to enhance its tool interaction capability and reasoning adaptability progressively. Inspired by human reasoning, we design a dynamic reasoning loop comprising global perception, local focusing, iterative probing, and holistic adjudication, and instantiate it as both a data-sampling strategy and a task-aligned process reward. For systematic training and evaluation, we construct FABench, a heterogeneous, high-quality agent-forensics dataset comprising 100k images and approximately 200k agent-interaction question-answer pairs. Experiments show that ForenAgent exhibits emergent tool-use competence and reflective reasoning on challenging IFD tasks when assisted by low-level tools, charting a promising route toward general-purpose IFD. The code will be released after the review process is completed.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-18T08:38:44Z</published>
+    <arxiv:comment>18 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Fanrui Zhang</name>
+    </author>
+    <author>
+      <name>Qiang Zhang</name>
+    </author>
+    <author>
+      <name>Sizhuo Zhou</name>
+    </author>
+    <author>
+      <name>Jianwen Sun</name>
+    </author>
+    <author>
+      <name>Chuanhao Li</name>
+    </author>
+    <author>
+      <name>Jiaxin Ai</name>
+    </author>
+    <author>
+      <name>Yukang Feng</name>
+    </author>
+    <author>
+      <name>Yujie Zhang</name>
+    </author>
+    <author>
+      <name>Wenjie Li</name>
+    </author>
+    <author>
+      <name>Zizhen Li</name>
+    </author>
+    <author>
+      <name>Yifan Chang</name>
+    </author>
+    <author>
+      <name>Jiawei Liu</name>
+    </author>
+    <author>
+      <name>Kaipeng Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.11643v1</id>
+    <title>Robustness of AI-Art Detectors under Generator Shift</title>
+    <updated>2026-08-12T04:41:38Z</updated>
+    <link href="https://arxiv.org/abs/2608.11643v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.11643v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Text-to-image generative models have advanced rapidly, with modern Diffusion Transformer architectures producing images that are increasingly difficult to distinguish from human-created artwork. This development has raised significant concerns regarding copyright protection, misinformation, fraud, impersonation, and the authenticity of digital content. Most AI-art detectors are trained and evaluated on the same generator family, leaving robustness to newer architectures underexplored. In this chapter, we analyze generator shift based on a Stable Diffusion 3.5 Medium (SD3.5m) artwork dataset spanning ten art styles through reverse prompting of held-out human artwork samples. Five detectors are trained on U-Net-based latent diffusion artwork and evaluated in a zero-shot cross-generator setting on the SD3.5m dataset. Deep learning models perform strongly in-distribution but degrade under generator shift, misclassifying many SD3.5m images as human while human false positives remain low. The CLIP ViT-L/14 model performs best overall, while Grad-CAM analysis reveals weaker and more diffuse activation on false negatives. These findings highlight a generalization gap in current AI-art detectors and motivate the development of detectors as one component of a layered defense that remains reliable across rapidly evolving generative architectures.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-12T04:41:38Z</published>
+    <arxiv:comment>To appear as a chapter in the book "Artificial Intelligence for Cyber Defense in Emerging Threats", to be published by Springer by early 2027</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shivank Singh Thakur</name>
+    </author>
+    <author>
+      <name>Meien Li</name>
+    </author>
+    <author>
+      <name>Mark Stamp</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.02995v2</id>
+    <title>FreqCross: A Multi-Modal Frequency-Spatial Fusion Network for Robust Detection of Stable Diffusion 3.5 Generated Images</title>
+    <updated>2025-07-08T03:56:18Z</updated>
+    <link href="https://arxiv.org/abs/2507.02995v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.02995v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of diffusion models, particularly Stable Diffusion 3.5, has enabled the generation of highly photorealistic synthetic images that pose significant challenges to existing detection methods. This paper presents FreqCross, a novel multi-modal fusion network that combines spatial RGB features, frequency domain artifacts, and radial energy distribution patterns to achieve robust detection of AI-generated images. Our approach leverages a three-branch architecture: (1) a ResNet-18 backbone for spatial feature extraction, (2) a lightweight CNN for processing 2D FFT magnitude spectra, and (3) a multi-layer perceptron for analyzing radial energy profiles. We introduce a novel radial energy distribution analysis that captures characteristic frequency artifacts inherent in diffusion-generated images, and fuse it with spatial and spectral cues via simple feature concatenation followed by a compact classification head. Extensive experiments on a dataset of 10,000 paired real (MS-COCO) and synthetic (Stable Diffusion 3.5) images demonstrate that FreqCross achieves 97.8\% accuracy, outperforming state-of-the-art baselines by 5.2\%. The frequency analysis further reveals that synthetic images exhibit distinct spectral signatures in the 0.1--0.4 normalised frequency range, providing theoretical foundation for our approach. Code and pre-trained models are publicly available to facilitate reproducible research.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-01T22:12:35Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Guang Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.03988v3</id>
+    <title>RAID: A Dataset for Testing the Adversarial Robustness of AI-Generated Image Detectors</title>
+    <updated>2025-06-09T10:46:28Z</updated>
+    <link href="https://arxiv.org/abs/2506.03988v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.03988v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-generated images have reached a quality level at which humans are incapable of reliably distinguishing them from real images. To counteract the inherent risk of fraud and disinformation, the detection of AI-generated images is a pressing challenge and an active research topic. While many of the presented methods claim to achieve high detection accuracy, they are usually evaluated under idealized conditions. In particular, the adversarial robustness is often neglected, potentially due to a lack of awareness or the substantial effort required to conduct a comprehensive robustness analysis. In this work, we tackle this problem by providing a simpler means to assess the robustness of AI-generated image detectors. We present RAID (Robust evaluation of AI-generated image Detectors), a dataset of 72k diverse and highly transferable adversarial examples. The dataset is created by running attacks against an ensemble of seven state-of-the-art detectors and images generated by four different text-to-image models. Extensive experiments show that our methodology generates adversarial images that transfer with a high success rate to unseen detectors, which can be used to quickly provide an approximate yet still reliable estimate of a detector's adversarial robustness. Our findings indicate that current state-of-the-art AI-generated image detectors can be easily deceived by adversarial examples, highlighting the critical need for the development of more robust methods. We release our dataset at https://huggingface.co/datasets/aimagelab/RAID and evaluation code at https://github.com/pralab/RAID.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-04T14:16:00Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hicham Eddoubi</name>
+    </author>
+    <author>
+      <name>Jonas Ricker</name>
+    </author>
+    <author>
+      <name>Federico Cocchi</name>
+    </author>
+    <author>
+      <name>Lorenzo Baraldi</name>
+    </author>
+    <author>
+      <name>Angelo Sotgiu</name>
+    </author>
+    <author>
+      <name>Maura Pintor</name>
+    </author>
+    <author>
+      <name>Marcella Cornia</name>
+    </author>
+    <author>
+      <name>Lorenzo Baraldi</name>
+    </author>
+    <author>
+      <name>Asja Fischer</name>
+    </author>
+    <author>
+      <name>Rita Cucchiara</name>
+    </author>
+    <author>
+      <name>Battista Biggio</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.21512v1</id>
+    <title>Fixed-Threshold Evaluation of a Hybrid CNN-ViT for AI-Generated Image Detection Across Photos and Art</title>
+    <updated>2025-12-25T05:19:09Z</updated>
+    <link href="https://arxiv.org/abs/2512.21512v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.21512v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI image generators create both photorealistic images and stylized art, necessitating robust detectors that maintain performance under common post-processing transformations (JPEG compression, blur, downscaling). Existing methods optimize single metrics without addressing deployment-critical factors such as operating point selection and fixed-threshold robustness. This work addresses misleading robustness estimates by introducing a fixed-threshold evaluation protocol that holds decision thresholds, selected once on clean validation data, fixed across all post-processing transformations. Traditional methods retune thresholds per condition, artificially inflating robustness estimates and masking deployment failures. We report deployment-relevant performance at three operating points (Low-FPR, ROC-optimal, Best-F1) under systematic degradation testing using a lightweight CNN-ViT hybrid with gated fusion and optional frequency enhancement. Our evaluation exposes a statistically validated forensic-semantic spectrum: frequency-aided CNNs excel on pristine photos but collapse under compression (93.33% to 61.49%), whereas ViTs degrade minimally (92.86% to 88.36%) through robust semantic pattern recognition. Multi-seed experiments demonstrate that all architectures achieve 15% higher AUROC on artistic content (0.901-0.907) versus photorealistic images (0.747-0.759), confirming that semantic patterns provide fundamentally more reliable detection cues than forensic artifacts. Our hybrid approach achieves balanced cross-domain performance: 91.4% accuracy on tiny-genimage photos, 89.7% on AiArtData art/graphics, and 98.3% (competitive) on CIFAKE. Fixed-threshold evaluation eliminates retuning inflation, reveals genuine robustness gaps, and yields actionable deployment guidance: prefer CNNs for clean photo verification, ViTs for compressed content, and hybrids for art/graphics screening.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-25T05:19:09Z</published>
+    <arxiv:comment>Accepted at the 2025 28th International Conference on Computer and Information Technology (ICCIT). 6 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Md Ashik Khan</name>
+    </author>
+    <author>
+      <name>Arafat Alam Jion</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.13685v1</id>
+    <title>DNA: Dual-stage Native Attribution for Generated Image Source Tracing</title>
+    <updated>2026-07-15T10:27:52Z</updated>
+    <link href="https://arxiv.org/abs/2607.13685v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.13685v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid evolution of image generation has produced numerous within-family variants, making source-model attribution of suspect images increasingly important for digital forensics. Existing proactive methods rely on watermark embedding or model modification, which may degrade visual quality and limit deployment flexibility. Passive methods often rely on large-scale supervised training or a single reconstruction signal, limiting their ability to handle unknown sources and distinguish highly similar within-family variants. We observe that attribution signals in latent generative models are naturally stratified across architectural levels: VAE-level cues reflect family-shared information, whereas backbone-level cues capture variant-specific behaviors. Motivated by this insight, we propose Dual-stage Native Attribution (DNA), a coarse-to-fine framework that follows this hierarchy without additional neural-network training. The coarse-grained stage uses Autoencoder Double-Reconstruction (AEDR) for efficient open-set family-level screening. The fine-grained stage performs closed-set model-level attribution with Native Prediction Consistency (NPC), which compares native prediction errors of within-family variants across multiple noise levels under semantic conditioning and attributes the source via normalized calibrated scores. To enable systematic evaluation, we construct DNA-30K, a benchmark for within-family variant attribution under open-set family-level evaluation. It comprises 30,000 images generated by 24 candidate models across six families spanning both denoising diffusion and flow matching, plus non-candidate generated and natural images as unknown sources. Experiments show that DNA achieves 89.11% end-to-end attribution accuracy on a task where random guessing accuracy is below 1% and outperforms the strongest baseline by 33.81% even when AEDR is used as the coarse-grained stage.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-15T10:27:52Z</published>
+    <arxiv:comment>18 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chao Wang</name>
+    </author>
+    <author>
+      <name>Kejiang Chen</name>
+    </author>
+    <author>
+      <name>Zijin Yang</name>
+    </author>
+    <author>
+      <name>Yaofei Wang</name>
+    </author>
+    <author>
+      <name>Yuang Qi</name>
+    </author>
+    <author>
+      <name>Weiming Zhang</name>
+    </author>
+    <author>
+      <name>Nenghai Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.16283v1</id>
+    <title>GenSyn10: A Multi-Generative AI Dataset For Benchmarking Image Classification</title>
+    <updated>2026-07-10T09:47:16Z</updated>
+    <link href="https://arxiv.org/abs/2607.16283v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.16283v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of generative AI has outpaced our ability to reliably detect its outputs, particularly when detectors encounter generators they have not seen before. We introduce GenSyn10, a CIFAR-10-aligned synthetic image dataset of 60,000 images (10 classes, 32$\times$32, 50k/10k split) generated using three architecturally diverse state-of-the-art models: FLUX.2-dev (Rectified Flow Transformer), HunyuanImage-3.0 (MoE Transformer), and Qwen-Image-2512 (Multimodal Diffusion Transformer), to advance research in AI-generated image detection. A central challenge in this domain is that detectors perform well on known generators but degrade on unseen ones. GenSyn10 addresses this limitation by curating data from multiple contemporary architectures under a standardized generation protocol, enabling controlled and systematic evaluation of out-of-distribution (OOD) generalization to novel generators. Images are generated using a template-based prompt engine and downsampled to ensure consistency. We evaluate 17 image classification models under a four-stage protocol: real-data baseline, zero-shot transfer, fine-tuning, and retention. Despite a measurable domain gap, CIFAR-10-trained models achieve up to 96.86\% zero-shot accuracy on GenSyn10, increasing to 99.88\% after fine-tuning. In binary real-vs-synthetic classification, fine-tuned models achieve 97-99.9\% accuracy on seen generators but drop to 79-96\% on images from an unseen generator, highlighting persistent limitations in OOD generalization. These results establish GenSyn10 as a controlled benchmark for studying synthetic image detection beyond single-generator settings, supporting research on robustness, domain adaptation, and cross-generator generalization.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-10T09:47:16Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Md Faraz Kabir Khan</name>
+    </author>
+    <author>
+      <name>Saeed Anwar</name>
+    </author>
+    <author>
+      <name>Ghulam Mubashar Hassan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.12155v1</id>
+    <title>Understanding Why Foundation Models Work for Diffusion-Generated Image Detection</title>
+    <updated>2026-08-12T15:18:10Z</updated>
+    <link href="https://arxiv.org/abs/2608.12155v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.12155v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision foundation models have recently emerged as powerful feature extractors for detecting AI-generated images, achieving strong generalization across generators and robustness to common image degradations. However, the reason behind their effectiveness is poorly understood. In this work, we investigate what cues are exploited by foundation-model-based detectors to distinguish real images from diffusion-generated ones. To this end, we design an ad hoc analysis protocol based on DDIM inversion. Given a real image we generate a sequence of synthetic copies by changing the depth of DDIM inversion. Even though most copies are semantically identical to the real reference, the detector score varies significantly across them due to subtle traces introduced by the diffusion synthesis, showing that its decision is not primarily driven by semantic failures. Through a frequency-swapping analysis, we further reveal that the discriminative cues exploited by the detectors are mainly localized in the low-to-mid frequency range, rather than only in the high-frequency range, as is the case for artifacts commonly associated with generative models. Finally, a latent-space analysis shows that regenerated images exhibit reduced variance and effective dimensionality, indicating that diffusion models do not fully reproduce the variability of real data. Overall, our results suggest that foundation-model-based detectors succeed by capturing non-semantic low-to-mid frequency distributional discrepancies between real and diffusion-generated images. These findings provide new insight into the robustness and generalization of such detectors and suggest directions for more interpretable forensic methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-12T15:18:10Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Davide Cozzolino</name>
+    </author>
+    <author>
+      <name>Giovanni Poggi</name>
+    </author>
+    <author>
+      <name>Luisa Verdoliva</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.23192v1</id>
+    <title>Fooling the Watchers: Breaking AIGC Detectors via Semantic Prompt Attacks</title>
+    <updated>2025-05-29T07:31:17Z</updated>
+    <link href="https://arxiv.org/abs/2505.23192v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.23192v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rise of text-to-image (T2I) models has enabled the synthesis of photorealistic human portraits, raising serious concerns about identity misuse and the robustness of AIGC detectors. In this work, we propose an automated adversarial prompt generation framework that leverages a grammar tree structure and a variant of the Monte Carlo tree search algorithm to systematically explore the semantic prompt space. Our method generates diverse, controllable prompts that consistently evade both open-source and commercial AIGC detectors. Extensive experiments across multiple T2I models validate its effectiveness, and the approach ranked first in a real-world adversarial AIGC detection competition. Beyond attack scenarios, our method can also be used to construct high-quality adversarial datasets, providing valuable resources for training and evaluating more robust AIGC detection and defense systems.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-29T07:31:17Z</published>
+    <arxiv:comment>9 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Run Hao</name>
+    </author>
+    <author>
+      <name>Peng Ying</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.16879v2</id>
+    <title>Adaptive Forensic Feature Refinement via Intrinsic Importance Perception</title>
+    <updated>2026-04-22T07:00:49Z</updated>
+    <link href="https://arxiv.org/abs/2604.16879v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.16879v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the rapid development of generative models and multimodal content editing technologies, the key challenge faced by synthetic image detection (SID) lies in cross-distribution generalization to unknown generation sources. In recent years, visual foundation models (VFM), which acquire rich visual priors through large scale image-text alignment pretraining, have become a promising technical route for improving the generalization ability of SID. However, existing VFM-based methods remain relatively coarse-grained in their adaptation strategies. They typically either directly use the final layer representations of VFM or simply fuse multi layer features, lacking explicit modeling of the optimal representational hierarchy for transferable forgery cues. Meanwhile, although directly fine-tuning VFM can enhance task adaptation, it may also damage the cross-modal pretrained structure that supports open-set generalization. To address this task specific tension, we reformulate VFM adaptation for SID as a joint optimization problem: it is necessary both to identify the critical representational layer that is more suitable for carrying forgery discriminative information and to constrain the disturbance caused by task knowledge injection to the pretrained structure. Based on this, we propose I2P, an SID framework centered on intrinsic importance perception. I2P first adaptively identifies the critical layer representations that are most discriminative for SID, and then constrains task-driven parameter updates within a low sensitivity parameter subspace, thereby improving task specificity while preserving the transferable structure of pretrained representations as much as possible.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-18T07:07:53Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiazhen Yang</name>
+    </author>
+    <author>
+      <name>Junjun Zheng</name>
+    </author>
+    <author>
+      <name>Kejia Chen</name>
+    </author>
+    <author>
+      <name>Xiangheng Kong</name>
+    </author>
+    <author>
+      <name>Jie Lei</name>
+    </author>
+    <author>
+      <name>Zunlei Feng</name>
+    </author>
+    <author>
+      <name>Bingde Hu</name>
+    </author>
+    <author>
+      <name>Yang Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.07814v1</id>
+    <title>How well are open sourced AI-generated image detection models out-of-the-box: A comprehensive benchmark study</title>
+    <updated>2026-02-08T04:36:13Z</updated>
+    <link href="https://arxiv.org/abs/2602.07814v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.07814v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As AI-generated images proliferate across digital platforms, reliable detection methods have become critical for combating misinformation and maintaining content authenticity. While numerous deepfake detection methods have been proposed, existing benchmarks predominantly evaluate fine-tuned models, leaving a critical gap in understanding out-of-the-box performance -- the most common deployment scenario for practitioners. We present the first comprehensive zero-shot evaluation of 16 state-of-the-art detection methods, comprising 23 pretrained detector variants (due to multiple released versions of certain detectors), across 12 diverse datasets, comprising 2.6~million image samples spanning 291 unique generators including modern diffusion models. Our systematic analysis reveals striking findings: (1)~no universal winner exists, with detector rankings exhibiting substantial instability (Spearman~$ρ$: 0.01 -- 0.87 across dataset pairs); (2)~a 37~percentage-point performance gap separates the best detector (75.0\% mean accuracy) from the worst (37.5\%); (3)~training data alignment critically impacts generalization, causing up to 20--60\% performance variance within architecturally identical detector families; (4)~modern commercial generators (Flux~Dev, Firefly~v4, Midjourney~v7) defeat most detectors, achieving only 18--30\% average accuracy; and (5)~we identify three systematic failure patterns affecting cross-dataset generalization. Statistical analysis confirms significant performance differences between detectors (Friedman test: $χ^2$=121.01, $p&lt;10^{-16}$, Kendall~$W$=0.524). Our findings challenge the ``one-size-fits-all'' detector paradigm and provide actionable deployment guidelines, demonstrating that practitioners must carefully select detectors based on their specific threat landscape rather than relying on published benchmark performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-08T04:36:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Simiao Ren</name>
+      <arxiv:affiliation>Neo</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Yuchen Zhou</name>
+      <arxiv:affiliation>Neo</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Xingyu Shen</name>
+      <arxiv:affiliation>Neo</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Kidus Zewde</name>
+      <arxiv:affiliation>Neo</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Tommy Duong</name>
+      <arxiv:affiliation>Neo</arxiv:affiliation>
+    </author>
+    <author>
+      <name>George Huang</name>
+      <arxiv:affiliation>Neo</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Hatsanai</name>
+      <arxiv:affiliation>Neo</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Tiangratanakul</name>
+      <arxiv:affiliation>Dennis</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Tsang</name>
+      <arxiv:affiliation>Dennis</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Ng</name>
+    </author>
+    <author>
+      <name>En Wei</name>
+    </author>
+    <author>
+      <name>Jiayu Xue</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.12052v1</id>
+    <title>Representation and Reference Selection in Training-Free Synthetic Image Attribution</title>
+    <updated>2026-07-13T18:10:39Z</updated>
+    <link href="https://arxiv.org/abs/2607.12052v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.12052v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Synthetic image attribution aims at identifying the generator responsible for a given AI-generated image. Training-free reference-based attribution methods are easily scalable, since newly emerging generators can be incorporated by adding source-specific references rather than retraining a task-specific classifier. Their performance depends on two coupled factors: the representation space used for comparison and the way source-specific references are constructed. However, the interaction between these two factors remains largely unexplored. In this paper, we provide a controlled analysis of this interaction using references and off-the-shelf pretrained representations. We study representations extracted from different layers of CLIP and DINOv2, along with three reference selection methods with varying semantic constraints: arbitrary, semantically aligned, and resynthesis-based references. Our results show that attribution accuracy consistently peaks at intermediate representation levels, indicating that source-discriminative cues are more accessible before strong semantic abstraction dominates. We further show that intermediate representations are not completely semantically neutral, making reference selection critical: semantically constrained references reduce query-reference mismatch and improve attribution, especially under limited reference budgets. Resynthesis is most useful in low-reference regimes, while semantically aligned references provide a better accuracy-cost trade-off when a moderate-sized reference pool is available. Our findings show that training-free reference-based attribution should be understood as the interaction between where images are compared, how the reference set is constructed, and how many references are available.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-13T18:10:39Z</published>
+    <arxiv:comment>6 pages, 5 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Meiling Li</name>
+    </author>
+    <author>
+      <name>Pietro Bongini</name>
+    </author>
+    <author>
+      <name>Benedetta Tondi</name>
+    </author>
+    <author>
+      <name>Mauro Barni</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.03054v2</id>
+    <title>LATTE: Latent Trajectory Embedding for Diffusion-Generated Image Detection</title>
+    <updated>2025-09-29T19:49:26Z</updated>
+    <link href="https://arxiv.org/abs/2507.03054v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.03054v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of diffusion-based image generators has made it increasingly difficult to distinguish generated from real images. This erodes trust in digital media, making it critical to develop generated image detectors that remain reliable across different generators. While recent approaches leverage diffusion denoising cues, they typically rely on single-step reconstruction errors and overlook the sequential nature of the denoising process. In this work, we propose LATTE - LATent Trajectory Embedding - a novel approach that models the evolution of latent embeddings across multiple denoising steps. Instead of treating each denoising step in isolation, LATTE captures the trajectory of these representations, revealing subtle and discriminative patterns that distinguish real from generated images. Experiments on several benchmarks, such as GenImage, Chameleon, and Diffusion Forensics, show that LATTE achieves superior performance, especially in challenging cross-generator and cross-dataset scenarios, highlighting the potential of latent trajectory modeling. The code is available on the following link: https://github.com/AnaMVasilcoiu/LATTE-Diffusion-Detector.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-03T12:53:47Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ana Vasilcoiu</name>
+    </author>
+    <author>
+      <name>Ivona Najdenkoska</name>
+    </author>
+    <author>
+      <name>Zeno Geradts</name>
+    </author>
+    <author>
+      <name>Marcel Worring</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.12967v1</id>
+    <title>ImageAttributionBench: How Far Are We from Generalizable Attribution?</title>
+    <updated>2026-05-13T04:01:10Z</updated>
+    <link href="https://arxiv.org/abs/2605.12967v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.12967v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of generative AI has enabled the creation of highly realistic and diverse synthetic images, posing critical challenges for image provenance and misinformation detection. This underscores the urgent need for effective image attribution. However, existing attribution datasets are constrained by limited scale, outdated generation methods, and insufficient semantic diversity - hindering the development of robust and generalizable attribution models. To address these limitations, we introduce ImageAttributionBench, a comprehensive dataset comprising images synthesized by a wide array of advanced generative models with state-of-the-art (SOTA) architectures. Covering multiple real-world semantic domains, the dataset offers rich diversity and scale to support and accelerate progress in image attribution research. To simulate real-world attribution scenarios, we evaluate several SOTA attribution methods on ImageAttributionBench under two challenging settings: (1) training on a standard balanced split and testing on degraded images, and (2) training and testing on semantically disjoint splits. In both cases, current methods exhibit consistently poor performance, revealing significant limitations in their robustness and generalization to unseen semantic content. Our work provides a rigorous benchmark to facilitate the development and evaluation of future image attribution methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-13T04:01:10Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Tingshu Mou</name>
+    </author>
+    <author>
+      <name>Zhipeng Wei</name>
+    </author>
+    <author>
+      <name>Chao Gong</name>
+    </author>
+    <author>
+      <name>Jingjing Chen</name>
+    </author>
+    <author>
+      <name>Xingjun Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.17343v2</id>
+    <title>EvoGuard: An Extensible Agentic RL-based Framework for Practical and Evolving AI-Generated Image Detection</title>
+    <updated>2026-07-12T07:17:15Z</updated>
+    <link href="https://arxiv.org/abs/2603.17343v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.17343v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid proliferation of AI-Generated Images (AIGIs) poses severe misinformation risks, making AIGI detection critical yet challenging. Traditional detection paradigms mainly rely on low-level features, whereas recent research increasingly focuses on leveraging the general understanding ability of Multimodal Large Language Models (MLLMs) to achieve better generalization, yet it still suffers from limited extensibility and expensive data annotations. Instead of building yet another detector, we recast AIGI detection as learned, reasoning-based evidence synthesis over a pool of heterogeneous off-the-shelf detectors, realized through EvoGuard, a novel agentic framework. A capability-aware selection mechanism profiles each detector and gathers complementary evidence per sample; a dynamic orchestration mechanism then reasons over heterogeneous outputs across multiple rounds, cross-validating conflicting or low-confidence signals before concluding. This design exploits the complementary strengths among heterogeneous detectors, transcending the limits of any single model. Furthermore, optimized by a GRPO-based Agentic Reinforcement Learning algorithm using only low-cost binary labels, it eliminates the reliance on fine-grained annotations. Extensive experiments demonstrate that this learned reasoning paradigm outperforms single-detector and static ensembling, achieving SOTA accuracy while mitigating the bias between positive and negative samples. More importantly, it allows the plug-and-play integration of new detectors to boost overall performance in a train-free manner, offering a highly practical, long-term solution to ever-evolving AIGI threats. Source code will be publicly available upon acceptance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-18T04:14:40Z</published>
+    <arxiv:comment>Template changed</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chenyang Zhu</name>
+    </author>
+    <author>
+      <name>Maorong Wang</name>
+    </author>
+    <author>
+      <name>Jun Liu</name>
+    </author>
+    <author>
+      <name>Ching-Chun Chang</name>
+    </author>
+    <author>
+      <name>Isao Echizen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.17730v2</id>
+    <title>AdaptPrompt: Parameter-Efficient Adaptation of VLMs for Generalizable Deepfake Detection</title>
+    <updated>2026-08-21T15:46:48Z</updated>
+    <link href="https://arxiv.org/abs/2512.17730v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.17730v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Detectors of AI-generated images tend to inherit the biases of the data they are trained on: models fitted to GAN imagery learn to treat GAN-specific artifacts as the very definition of "fake" and consequently miss images produced by diffusion models and commercial generation tools. We study this generalization problem from two directions. First, we introduce Diff-Gen, a balanced corpus consisting of 100k diffusion-generated samples and an equally sized set of real images, with the real subset selected to mirror the class distribution of the synthetic data. A spectral analysis shows that, unlike GAN data, Diff-Gen exhibits broad, non-periodic high-frequency energy, and we find that detectors trained on it transfer substantially better to unseen generator families. Second, we propose AdaptPrompt, a parameter-efficient adaptation of CLIP that combines a visual adapter with learnable text prompts and trains roughly 0.1% of the model's parameters. We further observe that truncating the last transformer block of the vision encoder consistently improves detection, suggesting that the final semantic-alignment layers of CLIP suppress the low-level traces on which forensic decisions rely. Across a benchmark of 25 test sets covering GANs, diffusion models, and commercial tools such as Midjourney and DALL-E 3, AdaptPrompt trained on Diff-Gen attains the best mean average precision (98.60%) and accuracy (92.72%), while matching fully fine-tuned baselines at a fraction of their training cost. We also show that the same framework supports data-efficient training and closed-set source attribution across 22 generators.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-19T16:06:03Z</published>
+    <arxiv:comment>Accepted at DFF ACM Multimedia 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yichen Jiang</name>
+    </author>
+    <author>
+      <name>Mohammed Talha Alam</name>
+    </author>
+    <author>
+      <name>Sohail Ahmed Khan</name>
+    </author>
+    <author>
+      <name>Duc-Tien Dang-Nguyen</name>
+    </author>
+    <author>
+      <name>Fakhri Karray</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.21507v1</id>
+    <title>Generalized Design Choices for Deepfake Detectors</title>
+    <updated>2025-11-26T15:40:58Z</updated>
+    <link href="https://arxiv.org/abs/2511.21507v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.21507v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The effectiveness of deepfake detection methods often depends less on their core design and more on implementation details such as data preprocessing, augmentation strategies, and optimization techniques. These factors make it difficult to fairly compare detectors and to understand which factors truly contribute to their performance. To address this, we systematically investigate how different design choices influence the accuracy and generalization capabilities of deepfake detection models, focusing on aspects related to training, inference, and incremental updates. By isolating the impact of individual factors, we aim to establish robust, architecture-agnostic best practices for the design and development of future deepfake detection systems. Our experiments identify a set of design choices that consistently improve deepfake detection and enable state-of-the-art performance on the AI-GenBench benchmark.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-26T15:40:58Z</published>
+    <arxiv:comment>12 pages, 9 figures, 10 tables, code available: https://github.com/MI-BioLab/AI-GenBench</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Lorenzo Pellegrini</name>
+    </author>
+    <author>
+      <name>Serafino Pandolfini</name>
+    </author>
+    <author>
+      <name>Davide Maltoni</name>
+    </author>
+    <author>
+      <name>Matteo Ferrara</name>
+    </author>
+    <author>
+      <name>Marco Prati</name>
+    </author>
+    <author>
+      <name>Marco Ramilli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.03840v1</id>
+    <title>Mirage: Unveiling Hidden Artifacts in Synthetic Images with Large Vision-Language Models</title>
+    <updated>2025-10-04T15:38:39Z</updated>
+    <link href="https://arxiv.org/abs/2510.03840v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.03840v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in image generation models have led to models that produce synthetic images that are increasingly difficult for standard AI detectors to identify, even though they often remain distinguishable by humans. To identify this discrepancy, we introduce \textbf{Mirage}, a curated dataset comprising a diverse range of AI-generated images exhibiting visible artifacts, where current state-of-the-art detection methods largely fail. Furthermore, we investigate whether Large Vision-Language Models (LVLMs), which are increasingly employed as substitutes for human judgment in various tasks, can be leveraged for explainable AI image detection. Our experiments on both Mirage and existing benchmark datasets demonstrate that while LVLMs are highly effective at detecting AI-generated images with visible artifacts, their performance declines when confronted with images lacking such cues.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-04T15:38:39Z</published>
+    <arxiv:comment>ACM MM'25, MALLM Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Pranav Sharma</name>
+    </author>
+    <author>
+      <name>Shivank Garg</name>
+    </author>
+    <author>
+      <name>Durga Toshniwal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.09495v2</id>
+    <title>OpenFake: An Open Dataset and Platform Toward Real-World Deepfake Detection</title>
+    <updated>2025-10-06T21:24:19Z</updated>
+    <link href="https://arxiv.org/abs/2509.09495v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.09495v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deepfakes, synthetic media created using advanced AI techniques, pose a growing threat to information integrity, particularly in politically sensitive contexts. This challenge is amplified by the increasing realism of modern generative models, which our human perception study confirms are often indistinguishable from real images. Yet, existing deepfake detection benchmarks rely on outdated generators or narrowly scoped datasets (e.g., single-face imagery), limiting their utility for real-world detection. To address these gaps, we present OpenFake, a large politically grounded dataset specifically crafted for benchmarking against modern generative models with high realism, and designed to remain extensible through an innovative crowdsourced adversarial platform that continually integrates new hard examples. OpenFake comprises nearly four million total images: three million real images paired with descriptive captions and almost one million synthetic counterparts from state-of-the-art proprietary and open-source models. Detectors trained on OpenFake achieve near-perfect in-distribution performance, strong generalization to unseen generators, and high accuracy on a curated in-the-wild social media test set, significantly outperforming models trained on existing datasets. Overall, we demonstrate that with high-quality and continually updated benchmarks, automatic deepfake detection is both feasible and effective in real-world settings.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-11T14:34:22Z</published>
+    <arxiv:comment>26 pages, 12 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Victor Livernoche</name>
+    </author>
+    <author>
+      <name>Akshatha Arodi</name>
+    </author>
+    <author>
+      <name>Andreea Musulan</name>
+    </author>
+    <author>
+      <name>Zachary Yang</name>
+    </author>
+    <author>
+      <name>Adam Salvail</name>
+    </author>
+    <author>
+      <name>Gaétan Marceau Caron</name>
+    </author>
+    <author>
+      <name>Jean-François Godbout</name>
+    </author>
+    <author>
+      <name>Reihaneh Rabbany</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.11257v1</id>
+    <title>DRAGON: A Large-Scale Dataset of Realistic Images Generated by Diffusion Models</title>
+    <updated>2025-05-16T13:50:34Z</updated>
+    <link href="https://arxiv.org/abs/2505.11257v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.11257v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The remarkable ease of use of diffusion models for image generation has led to a proliferation of synthetic content online. While these models are often employed for legitimate purposes, they are also used to generate fake images that support misinformation and hate speech. Consequently, it is crucial to develop robust tools capable of detecting whether an image has been generated by such models. Many current detection methods, however, require large volumes of sample images for training. Unfortunately, due to the rapid evolution of the field, existing datasets often cover only a limited range of models and quickly become outdated. In this work, we introduce DRAGON, a comprehensive dataset comprising images from 25 diffusion models, spanning both recent advancements and older, well-established architectures. The dataset contains a broad variety of images representing diverse subjects. To enhance image realism, we propose a simple yet effective pipeline that leverages a large language model to expand input prompts, thereby generating more diverse and higher-quality outputs, as evidenced by improvements in standard quality metrics. The dataset is provided in multiple sizes (ranging from extra-small to extra-large) to accomodate different research scenarios. DRAGON is designed to support the forensic community in developing and evaluating detection and attribution techniques for synthetic content. Additionally, the dataset is accompanied by a dedicated test set, intended to serve as a benchmark for assessing the performance of newly developed methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-16T13:50:34Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Giulia Bertazzini</name>
+    </author>
+    <author>
+      <name>Daniele Baracchi</name>
+    </author>
+    <author>
+      <name>Dasara Shullani</name>
+    </author>
+    <author>
+      <name>Isao Echizen</name>
+    </author>
+    <author>
+      <name>Alessandro Piva</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.00181v2</id>
+    <title>From Evidence to Verdict: An Agent-Based Forensic Framework for AI-Generated Image Detection</title>
+    <updated>2026-04-07T09:06:09Z</updated>
+    <link href="https://arxiv.org/abs/2511.00181v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.00181v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid evolution of AI-generated images poses growing challenges to information integrity and media authenticity. Existing detection approaches face limitations in robustness, interpretability, and generalization across diverse generative models, particularly when relying on a single source of visual evidence. We introduce AIFo (Agent-based Image Forensics), a training-free framework that formulates AI-generated image detection as a multi-stage forensic analysis process through multi-agent collaboration. The framework integrates a set of forensic tools, including reverse image search, metadata extraction, pre-trained classifiers, and vision-language model analysis, and resolves insufficient or conflicting evidence through a structured multi-agent debate mechanism. An optional memory-augmented module further enables the framework to incorporate information from historical cases. We evaluate AIFo on a benchmark of 6,000 images spanning controlled laboratory settings and challenging real-world scenarios, where it achieves 97.05% accuracy and consistently outperforms traditional classifiers and strong vision-language model baselines. These findings demonstrate the effectiveness of agent-based procedural reasoning for AI-generated image detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-31T18:36:49Z</published>
+    <arxiv:comment>15 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mengfei Liang</name>
+    </author>
+    <author>
+      <name>Yiting Qu</name>
+    </author>
+    <author>
+      <name>Yukun Jiang</name>
+    </author>
+    <author>
+      <name>Michael Backes</name>
+    </author>
+    <author>
+      <name>Yang Zhang</name>
+    </author>
+  </entry>
+</feed>

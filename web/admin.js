@@ -354,6 +354,8 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-raw-venue",
     "metadata-raw-venue-display",
     "metadata-replace-raw-venue",
+    "metadata-venue-review-confirmed",
+    "metadata-venue-review-note",
     "metadata-doi",
     "metadata-arxiv-id",
     "metadata-openalex-url",
@@ -828,6 +830,7 @@ async function loadDashboardAndQueues() {
 function initializeActionQueuePanels() {
   const source = document.getElementById("key-coverage-review-panel");
   [
+    ["publication-venues", "Publication Venue Review", "Verify scholarly venue identity, publication type, acronym and paper-level track against the publication source."],
     ["high-risk-papers", "High-risk Paper Review", "Paper-level coverage and metadata findings, separate from individual marker evidence."],
     ["missing-locations", "Missing Institution Locations", "One actionable location review per active institution."],
     ["missing-author-mappings", "Missing Author Mappings", "Papers with no resolved author mappings."],
@@ -842,6 +845,13 @@ function initializeActionQueuePanels() {
     panel.querySelector(".review-scope-help").textContent = "Only effective unresolved records are actionable. Curated decisions, exclusions and inactive records take precedence over diagnostics.";
     panel.querySelector('[data-role="search"]').placeholder = "Search review queue…";
     panel.querySelector('[data-role="group"] option').textContent = "All review types";
+    if (name === "publication-venues") {
+      const headings = ["Paper title", "DOI", "Current type", "Current venue / ID", "Current acronym / track", "Proposed type", "Proposed venue / ID", "Proposed acronym / track", "Reason / evidence", "Action"];
+      const head = panel.querySelector("thead tr");
+      head.replaceChildren(...headings.map(label => {
+        const th = document.createElement("th"); th.textContent = label; return th;
+      }));
+    }
     source.after(panel);
   });
 }
@@ -980,6 +990,7 @@ function navigateConsole(target) {
     "missing-locations": document.getElementById("missing-locations-review-panel"),
     "missing-author-mappings": document.getElementById("missing-author-mappings-review-panel"),
     "missing-affiliations": document.getElementById("missing-affiliations-review-panel"),
+    "publication-venues": document.getElementById("publication-venues-review-panel"),
     "institution-audit": elements["institution-audit-panel"],
     "marker-blockers": elements["marker-blocker-review-panel"],
     "key-coverage": elements["key-coverage-review-panel"],
@@ -1013,6 +1024,7 @@ function navigateConsole(target) {
 function renderDashboard() {
   const metrics = state.dashboard.action_required || [];
   const wanted = {
+    publication_venues: { title: "Publication venues", priority: 3, impact: "Verify publication type, canonical venue, abbreviation and track." },
     marker_blockers: { title: "Marker blockers", priority: 1, impact: "Preventing papers from appearing correctly on the public map." },
     identity_unresolved: { title: "Unresolved paper identities", priority: 2, impact: "Canonical papers cannot yet be resolved reliably." },
     retracted_publications: { title: "Retracted or invalid publications", priority: 3, impact: "Publication status may make public display incorrect." },
@@ -1400,6 +1412,15 @@ function queuePanel(name) {
 }
 
 function queueFields(name, row) {
+  if (name === "publication-venues") return [
+    row.title, row.doi, humanize(row.current_type),
+    [row.current_venue, row.current_venue_id].filter(Boolean).join(" · "),
+    [row.current_abbreviation, row.current_track].filter(Boolean).join(" · "),
+    humanize(row.proposed_type),
+    [row.proposed_name, row.proposed_venue_id].filter(Boolean).join(" · "),
+    [row.proposed_abbreviation, row.proposed_track].filter(Boolean).join(" · "),
+    [row.reason, row.evidence_url].filter(Boolean).join(" — "),
+  ];
   return [
     row.priority || row.priority_rank || "—",
     row.title || row.requested_title,
@@ -1497,6 +1518,18 @@ function renderReviewQueue(name) {
       td.textContent = text(value) || "—";
       tr.append(td);
     });
+    if (name === "publication-venues") {
+      const td = document.createElement("td");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "secondary-button";
+      button.textContent = "Open / Edit";
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+        openCurationPaper(row.display_id);
+      });
+      td.append(button); tr.append(td);
+    }
     tr.tabIndex = 0;
     tr.addEventListener("click", () => renderReviewDetail(name, row));
     tr.addEventListener("keydown", (event) => {
@@ -2162,6 +2195,7 @@ function renderReviewDetail(name, row) {
 }
 
 function reviewActionsFor(name, row) {
+  if (name === "publication-venues") return [["Open / Edit", "open_metadata"]];
   const common = [["Open metadata", "open_metadata"], ["Open scope review", "open_scope"]];
   if (name === "missing-locations") return [["Open location review", "open_location_review"]];
   if (["missing-author-mappings", "missing-affiliations"].includes(name)) return [["Open mapping editor", "replace_author_institution_mapping"], ["Open metadata", "open_metadata"]];
@@ -5140,7 +5174,7 @@ function selectCanonicalVenue(option, restoreFocus = true, explicitSelection = t
   elements["metadata-venue-type"].value = option.venue_type;
   // Track belongs to the paper. Selecting a canonical venue must preserve it.
   if (!elements["metadata-venue-track"].value) {
-    elements["metadata-venue-track"].value = option.venue_type === "conference" ? "main" : "";
+    elements["metadata-venue-track"].value = option.venue_type === "conference" ? "Main" : "";
   }
   elements["metadata-venue"].value = option.venue_name;
   elements["metadata-venue-value"].textContent = option.venue_label;
@@ -5277,7 +5311,7 @@ function openVenueCreationDialog() {
   elements["venue-create-form"].reset();
   elements["venue-create-name"].value = rawInput;
   elements["venue-create-alias"].value = rawInput;
-  elements["venue-create-track"].value = "main";
+  elements["venue-create-track"].value = "Main";
   updateVenueCreationTrackAvailability();
   elements["venue-create-matches"].hidden = true;
   elements["venue-create-error"].hidden = true;
@@ -5364,7 +5398,7 @@ const METADATA_SNAPSHOT_FIELDS = [
   "title", "year", "authors", "venue", "venue-id", "venue-name", "venue-acronym",
   "venue-type", "venue-track", "raw-venue", "doi", "arxiv-id", "openalex-url",
   "paper-url", "publication-type", "task", "scope-status",
-  "curation-status", "review-status", "abstract", "review-note",
+  "curation-status", "review-status", "abstract", "review-note", "venue-review-note",
 ];
 
 const PAPER_CATEGORY_ORDER = ["method", "dataset", "benchmark", "survey", "analysis"];
@@ -5437,6 +5471,7 @@ function metadataFormSnapshot() {
     return [field, control ? control.value.trim() : ""];
   }));
   values.replace_raw_venue = elements["metadata-replace-raw-venue"].checked;
+  values.venue_review_confirmed = elements["metadata-venue-review-confirmed"].checked;
   values.paper_categories = getSelectedPaperCategories();
   values.publication_type_override = state.publicationTypeOverride;
   values.venue_selection_confirmed = state.venueSelectionConfirmed;
@@ -5521,7 +5556,7 @@ function populateMetadataForm() {
     venue_name: venueName,
     venue_acronym: metadataValue(record, "venue_acronym"),
     venue_type: metadataValue(record, "venue_type"),
-    venue_track: metadataValue(record, "venue_track") || "main",
+    venue_track: metadataValue(record, "venue_track") || "Main",
     venue_label: metadataValue(record, "venue_label") || venueName,
   } : null;
   if (state.selectedVenue) {
@@ -5545,7 +5580,13 @@ function populateMetadataForm() {
       ? "This legacy venue could not be resolved unambiguously. Select an existing canonical venue or create a reviewed one."
       : "";
   }
+  if (record?.venue_review_required && record?.venue_review_reason) {
+    elements["metadata-venue-error"].hidden = false;
+    elements["metadata-venue-error"].textContent = record.venue_review_reason;
+  }
   const rawVenue = metadataValue(record, "raw_venue");
+  elements["metadata-venue-review-confirmed"].checked = false;
+  elements["metadata-venue-review-note"].value = "";
   elements["metadata-raw-venue"].value = rawVenue;
   elements["metadata-raw-venue-display"].textContent = rawVenue || "Not recorded";
   elements["metadata-replace-raw-venue"].checked = false;
@@ -5659,6 +5700,16 @@ async function saveMetadata(event) {
   ];
   const effective = state.paperMetadata.effective_record || state.selectedPaper;
   const draft = { id: elements["metadata-paper-id"].value };
+  if (elements["metadata-venue-review-confirmed"].checked) {
+    draft.venue_review_confirmed = true;
+    draft.venue_review_note = elements["metadata-venue-review-note"].value.trim();
+    if (!draft.venue_review_note) {
+      elements["metadata-edit-error"].hidden = false;
+      elements["metadata-edit-error"].textContent = "Add a verification source/reason before confirming the venue review.";
+      elements["metadata-venue-review-note"].focus();
+      return;
+    }
+  }
   fields.forEach((field) => {
     const value = elements[`metadata-${field.replaceAll("_", "-")}`].value.trim();
     if (value !== metadataValue(effective, field).trim()) draft[field] = value;
@@ -5686,7 +5737,7 @@ async function saveMetadata(event) {
     ? Boolean(metadataValue(effective, "venue_id"))
     : elements["metadata-venue-id"].value !== metadataValue(effective, "venue_id");
   const trackChanged = elements["metadata-venue-track"].value
-    !== (metadataValue(effective, "venue_track") || (elements["metadata-venue-type"].value === "conference" ? "main" : ""));
+    !== (metadataValue(effective, "venue_track") || (elements["metadata-venue-type"].value === "conference" ? "Main" : ""));
   if (venueChanged || trackChanged || state.venueSelectionConfirmed
       || Object.hasOwn(draft, "publication_type")) Object.assign(draft, {
     venue: isBook ? "" : elements["metadata-venue-name"].value,

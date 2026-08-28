@@ -52,6 +52,7 @@ QUEUE_PATHS = {
 
 # A category's count, endpoint and Review destination describe the same objects.
 ACTION_QUEUES = {
+    "publication_venues": ("publication_venues", "Publication venues", "publication-venues"),
     "marker_blocker": ("marker_blockers", "Marker blockers", "marker-blockers"),
     "missing_author_mappings": ("missing_author_mappings", "Missing author mappings", "missing-author-mappings"),
     "missing_affiliations": ("missing_affiliations", "Missing affiliations", "missing-affiliations"),
@@ -63,6 +64,7 @@ ACTION_QUEUES = {
 }
 QUEUE_ENDPOINTS = {
     name: "/api/review/" + endpoint for name, endpoint in {
+        "publication_venues": "publication-venues",
         "marker_blocker": "marker-blockers", "high_risk_marker": "high-risk-markers",
         "high_risk_paper": "high-risk-papers", "key_paper_coverage": "key-paper-coverage",
         "manual_import": "manual-import", "missing_coordinates": "missing-locations",
@@ -517,7 +519,7 @@ def actionable_payload(name, source_rows, context, *, available=True, group_fiel
     }
 
 
-def build_action_queues(context, *, location_payload, author_mapping_coverage, papers):
+def build_action_queues(context, *, location_payload, author_mapping_coverage, papers, venue_aliases=None):
     """All Action Required categories, computed from one effective evidence snapshot."""
     queues = {name: load_queue(name, context=context) for name in
               ("high_risk_marker", "high_risk_paper", "marker_blocker", "key_paper_coverage")}
@@ -535,6 +537,15 @@ def build_action_queues(context, *, location_payload, author_mapping_coverage, p
                                  and not any(clean(m.get("mapping_status")) == "active"
                                              for m in context.matching("mappings", row))
                                  and not context.matching("public_markers", row)], context)
+    try:
+        from .venue_audit import review_queue
+        from .venues import read_venue_aliases
+    except ImportError:
+        from venue_audit import review_queue
+        from venues import read_venue_aliases
+    queues["publication_venues"] = review_queue(
+        papers, venue_aliases if venue_aliases is not None else read_venue_aliases(),
+        decisions=context.rows["decisions"])
     for name, queue in queues.items():
         queue["endpoint"] = QUEUE_ENDPOINTS[name]
     return queues

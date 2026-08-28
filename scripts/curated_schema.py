@@ -353,16 +353,10 @@ EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
 
 VENUE_TYPE_ORDER = ("conference", "journal", "preprint", "book")
 ALLOWED_VENUE_TYPES = set(VENUE_TYPE_ORDER)
-ALLOWED_VENUE_TRACKS = {
-    "main",
-    "workshops",
-    "findings",
-    "posters",
-    "industry",
-    "demo",
-    "doctoral_consortium",
-    "other",
-}
+try:
+    from .venue_tracks import ALLOWED_VENUE_TRACKS, normalize_venue_track
+except ImportError:
+    from venue_tracks import ALLOWED_VENUE_TRACKS, normalize_venue_track
 
 ALLOWED_TASKS = {
     "detection",
@@ -475,6 +469,7 @@ ALLOWED_REVIEW_QUEUES = {
     "other",
     "institution_consistency",
     "arxiv_enrichment",
+    "publication_venues",
 }
 
 ALLOWED_REVIEW_ACTIONS = {

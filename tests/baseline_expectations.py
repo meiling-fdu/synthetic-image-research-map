@@ -49,10 +49,14 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
     "other": 54,
 }
 
+# Historical release artifacts are immutable; current effective venues have
+# changed since the 2026-08-24 checkpoint.
+RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
+
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 314,
-    "journal": 167,
-    "preprint": 64,
+    "conference": 326,
+    "journal": 158,
+    "preprint": 61,
     "book": 1,
 }
 

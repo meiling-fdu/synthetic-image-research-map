@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>Local Paper Curator · Synthetic Image Research Map</title>
-    <link rel="stylesheet" href="/admin.css?v=20260828-curation-snapshot">
+    <link rel="stylesheet" href="/admin.css?v=20260828-workshop-fields">
     <script src="/institution_type_labels.js?v=20260718-research-institute" defer></script>
     <script src="/institution_display.js?v=20260825-institution-abbreviations" defer></script>
     <script src="/title_markup.js?v=20260825-title-superscripts" defer></script>
-    <script src="/admin.js?v=20260828-curation-snapshot" defer></script>
+    <script src="/admin.js?v=20260828-workshop-fields" defer></script>
   </head>
   <body>
     <header class="masthead">
@@ -38,6 +38,7 @@
         <button data-console-target="dashboard" type="button" aria-current="page">Dashboard</button>
         <details class="nav-menu"><summary>Review</summary><div class="nav-menu-items" role="menu">
           <button role="menuitem" data-console-target="scope-review" type="button">Scope review</button>
+          <button role="menuitem" data-console-target="publication-venues" type="button">Publication venues</button>
           <button role="menuitem" data-console-target="high-risk" type="button">High-risk papers</button>
           <button role="menuitem" data-console-target="marker-blockers" type="button">Marker blockers</button>
           <button role="menuitem" data-console-target="key-coverage" type="button">Key-paper coverage</button>
@@ -548,14 +549,14 @@
                 </div>
                 <label>Venue track
                   <select id="metadata-venue-track" required>
-                    <option value="main">Main</option>
-                    <option value="workshops">Workshop</option>
-                    <option value="findings">Findings</option>
-                    <option value="posters">Poster</option>
-                    <option value="industry">Industry</option>
-                    <option value="demo">Demo</option>
-                    <option value="doctoral_consortium">Doctoral consortium</option>
-                    <option value="other">Other</option>
+                    <option value="Main">Main</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="Findings">Findings</option>
+                    <option value="Poster">Poster</option>
+                    <option value="Industry">Industry</option>
+                    <option value="Demo">Demo</option><option value="Tutorial">Tutorial</option><option value="Challenge">Challenge</option><option value="Short Paper">Short Paper</option>
+                    <option value="Doctoral Consortium">Doctoral consortium</option>
+                    <option value="Other">Other</option>
                   </select>
                   <span id="metadata-venue-track-error" class="field-warning" hidden></span>
                 </label>
@@ -596,6 +597,12 @@
                   <option value="reviewed">reviewed</option><option value="pending">pending</option><option value="needs_check">needs_check</option>
                 </select></label>
                 <label class="full-width">Abstract<textarea id="metadata-abstract" rows="5"></textarea></label>
+                <fieldset class="full-width">
+                  <legend>Publication venue review</legend>
+                  <label><input id="metadata-venue-review-confirmed" type="checkbox"> I verified this venue/type/track, including any flagged conflict</label>
+                  <label>Verification source and reason<textarea id="metadata-venue-review-note" rows="2" placeholder="Publisher URL and reason for keeping or correcting the venue"></textarea></label>
+                  <p class="field-help">Optional explicit review, separate from paper curation. Applies only to this saved bibliographic state; later venue/type/DOI changes reopen review.</p>
+                </fieldset>
                 <div class="metadata-save-status full-width" id="metadata-save-status" data-state="clean" role="status" aria-live="polite" aria-atomic="true">
                   <span class="metadata-save-status-icon" aria-hidden="true"></span>
                   <span id="metadata-save-status-text">No unsaved changes.</span>
@@ -613,7 +620,7 @@
                   <label>Canonical full name<input id="venue-create-name" required></label>
                   <label>Acronym, optional<input id="venue-create-acronym"></label>
                   <label>Venue type<select id="venue-create-type" required><option value="conference">conference</option><option value="journal">journal</option><option value="preprint">preprint</option><option value="book">book</option></select></label>
-                  <label>Paper venue track<select id="venue-create-track"><option value="main">Main</option><option value="workshops">Workshop</option><option value="findings">Findings</option><option value="posters">Poster</option><option value="industry">Industry</option><option value="demo">Demo</option><option value="doctoral_consortium">Doctoral consortium</option><option value="other">Other</option></select></label>
+                  <label>Paper venue track<select id="venue-create-track"><option value="Main">Main</option><option value="Workshop">Workshop</option><option value="Findings">Findings</option><option value="Poster">Poster</option><option value="Industry">Industry</option><option value="Demo">Demo</option><option value="Tutorial">Tutorial</option><option value="Challenge">Challenge</option><option value="Short Paper">Short Paper</option><option value="Doctoral Consortium">Doctoral consortium</option><option value="Other">Other</option></select></label>
                   <label class="full-width">Raw input or alias<input id="venue-create-alias" required></label>
                   <label class="full-width">Review note, optional<textarea id="venue-create-note" rows="2"></textarea></label>
                   <section id="venue-create-matches" class="venue-create-matches" hidden><h4>Possible existing venues</h4><ul></ul><label><input id="venue-create-confirm-similar" type="checkbox"> I reviewed these matches and confirm this is a distinct venue.</label></section>

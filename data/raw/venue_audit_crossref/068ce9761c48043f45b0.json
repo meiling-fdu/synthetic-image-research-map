@@ -1,0 +1,499 @@
+{
+  "doi": "10.1007/978-3-032-11381-8_32",
+  "source_url": "https://api.crossref.org/works/10.1007%2F978-3-032-11381-8_32",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            30
+          ]
+        ],
+        "date-time": "2026-04-30T08:05:00Z",
+        "timestamp": 1777536300636,
+        "version": "3.51.4"
+      },
+      "publisher-location": "Cham",
+      "reference-count": 25,
+      "publisher": "Springer Nature Switzerland",
+      "isbn-type": [
+        {
+          "value": "9783032113801",
+          "type": "print"
+        },
+        {
+          "value": "9783032113818",
+          "type": "electronic"
+        }
+      ],
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-3-032-11381-8_32",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            12
+          ]
+        ],
+        "date-time": "2026-01-12T08:02:00Z",
+        "timestamp": 1768204920000
+      },
+      "page": "377-388",
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Attribution of AI-Generated Images Across Multiple Models: a Benchmark"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-3839-9312",
+          "authenticated-orcid": false,
+          "given": "Giuseppe",
+          "family": "Mazzola",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0833-4403",
+          "authenticated-orcid": false,
+          "given": "Liliana",
+          "family": "Lo Presti",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8766-6395",
+          "authenticated-orcid": false,
+          "given": "Marco",
+          "family": "La Cascia",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            13
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "issue": "12",
+          "key": "32_CR1",
+          "doi-asserted-by": "publisher",
+          "first-page": "15477",
+          "DOI": "10.1109/TPAMI.2023.3301451",
+          "volume": "45",
+          "author": "V Asnani",
+          "year": "2023",
+          "unstructured": "Asnani, V., Yin, X., Hassner, T., Liu, X.: Reverse engineering of generative models: inferring model hyperparameters from generated images. IEEE Trans. Pattern Anal. Mach. Intell. 45(12), 15477–15493 (2023)",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "32_CR2",
+          "unstructured": "Dhariwal, P., Nichol, A.: Diffusion models beat GANs on image synthesis. In: Advances in Neural Information Processing Systems, vol. 34, pp. 8780–8794 (2021)"
+        },
+        {
+          "issue": "11",
+          "key": "32_CR3",
+          "doi-asserted-by": "publisher",
+          "first-page": "139",
+          "DOI": "10.1145/3422622",
+          "volume": "63",
+          "author": "I Goodfellow",
+          "year": "2020",
+          "unstructured": "Goodfellow, I., et al.: Generative adversarial networks. Commun. ACM 63(11), 139–144 (2020)",
+          "journal-title": "Commun. ACM"
+        },
+        {
+          "key": "32_CR4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, K., Zhang, X., Ren, S., Sun, J.: Deep residual learning for image recognition. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 770–778 (2016)",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "32_CR5",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hirofumi, S., Fukuchi, K., Akimoto, Y., Sakuma, J.: Did you use my GAN to generate fake? post-hoc attribution of GAN generated images via latent recovery. In: IJCNN (2022)",
+          "DOI": "10.1109/IJCNN55064.2022.9892704"
+        },
+        {
+          "key": "32_CR6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Huang, G., Liu, Z., van der Maaten, L., Weinberger, K.Q.: Densely connected convolutional networks. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 4700–4708 (2017)",
+          "DOI": "10.1109/CVPR.2017.243"
+        },
+        {
+          "key": "32_CR7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Jiang, X., Tian, J.: Source attribution for images generated by diffusion-based text-to-image models. In: APSIPA ASC (2024)",
+          "DOI": "10.1109/APSIPAASC63619.2025.10849098"
+        },
+        {
+          "key": "32_CR8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Keita, M., Hamidouche, W., et al.: Fidavl: fake image detection and attribution using vision-language model. In: International Conference on Pattern Recognition, pp. 160–176 (2025)",
+          "DOI": "10.1007/978-3-031-78305-0_11"
+        },
+        {
+          "key": "32_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kingma, D.P., Welling, M., et al.: An introduction to variational autoencoders. Found. Trends Mach. Learn. 12(4), 307–392 (2019)",
+          "DOI": "10.1561/2200000056"
+        },
+        {
+          "key": "32_CR10",
+          "unstructured": "Laszkiewicz, M., Ricker, J., Lederer, J., Fischer, A.: Single-model attribution of generative models through final-layer inversion. In: ICML (2024)"
+        },
+        {
+          "key": "32_CR11",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, J., et al.: Agiqa-3k: an open database for ai-generated image quality assessment. In: IEEE International Conference on Multimedia and Expo (ICME) (2023)",
+          "DOI": "10.1109/TCSVT.2023.3319020"
+        },
+        {
+          "key": "32_CR12",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Liu, F., Luo, H., Li, Y., Torr, P., Gu, J.: Which model generated this image? a model-agnostic approach for origin attribution. In: ECCV, pp. 282–301 (2024)",
+          "DOI": "10.1007/978-3-031-73033-7_16"
+        },
+        {
+          "key": "32_CR13",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Mazzola, G., Carapezza, M., Chella, A., Mantoan, D.: Artificial intelligence in art generation: an open issue. In: International Conference on Image Analysis and Processing, pp. 258–269. Springer (2023). https://doi.org/10.1007/978-3-031-51026-7_23",
+          "DOI": "10.1007/978-3-031-51026-7_23"
+        },
+        {
+          "key": "32_CR14",
+          "unstructured": "Midjourney: Midjourney (2023). https://www.midjourney.com/home. Accessed 13 Apr 2025"
+        },
+        {
+          "issue": "4",
+          "key": "32_CR15",
+          "doi-asserted-by": "publisher",
+          "first-page": "665",
+          "DOI": "10.3390/electronics14040665",
+          "volume": "14",
+          "author": "Y Namani",
+          "year": "2025",
+          "unstructured": "Namani, Y., Reghioua, I., Bendiab, G., Labiod, M.A., Shiaeles, S.: Deepguard: identification and attribution of ai-generated synthetic images. Electronics 14(4), 665 (2025)",
+          "journal-title": "Electronics"
+        },
+        {
+          "key": "32_CR16",
+          "unstructured": "OpenAI: Dall.e 3 (2023). https://openai.com/index/dall-e-3. Accessed 13 Apr 2025"
+        },
+        {
+          "key": "32_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sha, Z., Li, Z., Yu, N., Zhang, Y.: De-fake: detection and attribution of fake images generated by text-to-image generation models. In: ACM CCS, pp. 3418–3432 (2023)",
+          "DOI": "10.1145/3576915.3616588"
+        },
+        {
+          "key": "32_CR18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Song, H.J., Khayatkhoei, M., AbdAlmageed, W.: Manifpt: defining and analyzing fingerprints of generative models. In: CVPR (2024)",
+          "DOI": "10.1109/CVPR52733.2024.01026"
+        },
+        {
+          "key": "32_CR19",
+          "unstructured": "Stability AI: Stability AI (2023). https://stability.ai. Accessed 13 Apr 2025"
+        },
+        {
+          "key": "32_CR20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Szegedy, C., et al.: Going deeper with convolutions. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 1–9 (2015)",
+          "DOI": "10.1109/CVPR.2015.7298594"
+        },
+        {
+          "key": "32_CR21",
+          "unstructured": "Tan, M., Le, Q.V.: Efficientnet: rethinking model scaling for convolutional neural networks. In: Proceedings of the 36th International Conference on Machine Learning (ICML), pp. 6105–6114 (2019)"
+        },
+        {
+          "key": "32_CR22",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, Z., Chen, C., Zeng, Y., Lyu, L., Ma, S.: Where did i come from? origin attribution of AI-generated images. In: NeurIPS, vol. 36, pp. 74478–74500 (2023)",
+          "DOI": "10.52202/075280-3256"
+        },
+        {
+          "key": "32_CR23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu, N., et al.: Artificial fingerprinting for generative models: rooting deepfake attribution in training data. In: ICCV, pp. 14448–14457 (2021)",
+          "DOI": "10.1109/ICCV48922.2021.01418"
+        },
+        {
+          "key": "32_CR24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu, N., Davis, L.S., Fritz, M.: Attributing fake images to GANs: learning and analyzing GAN fingerprints. In: ICCV, pp. 7556–7566 (2019)",
+          "DOI": "10.1109/ICCV.2019.00765"
+        },
+        {
+          "key": "32_CR25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Zhu, L., Ye, K., Yao, J., Li, C., et al.: Maid: model attribution via inverse diffusion. In: ICASSP (2025)",
+          "DOI": "10.1109/ICASSP49660.2025.10888869"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Image Analysis and Processing - ICIAP 2025 Workshops"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/978-3-032-11381-8_32",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            4,
+            28
+          ]
+        ],
+        "date-time": "2026-04-28T17:02:11Z",
+        "timestamp": 1777395731000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://link.springer.com/10.1007/978-3-032-11381-8_32"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "ISBN": [
+        "9783032113801",
+        "9783032113818"
+      ],
+      "references-count": 25,
+      "URL": "https://doi.org/10.1007/978-3-032-11381-8_32",
+      "relation": {},
+      "ISSN": [
+        "0302-9743",
+        "1611-3349"
+      ],
+      "issn-type": [
+        {
+          "value": "0302-9743",
+          "type": "print"
+        },
+        {
+          "value": "1611-3349",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "13 January 2026",
+          "order": 1,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ChapterHistory",
+            "label": "Chapter History"
+          }
+        },
+        {
+          "value": "ICIAP",
+          "order": 1,
+          "name": "conference_acronym",
+          "label": "Conference Acronym",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "International Conference on Image Analysis and Processing",
+          "order": 2,
+          "name": "conference_name",
+          "label": "Conference Name",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "Rome",
+          "order": 3,
+          "name": "conference_city",
+          "label": "Conference City",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "Italy",
+          "order": 4,
+          "name": "conference_country",
+          "label": "Conference Country",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "2025",
+          "order": 5,
+          "name": "conference_year",
+          "label": "Conference Year",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "15 September 2025",
+          "order": 7,
+          "name": "conference_start_date",
+          "label": "Conference Start Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "19 September 2025",
+          "order": 8,
+          "name": "conference_end_date",
+          "label": "Conference End Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "23",
+          "order": 9,
+          "name": "conference_number",
+          "label": "Conference Number",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "iciap2025",
+          "order": 10,
+          "name": "conference_id",
+          "label": "Conference ID",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "https://www.iciap.org/home",
+          "order": 11,
+          "name": "conference_url",
+          "label": "Conference URL",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        }
+      ]
+    }
+  }
+}

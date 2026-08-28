@@ -1,0 +1,470 @@
+{
+  "doi": "10.1016/j.trpro.2022.09.012",
+  "source_url": "https://api.crossref.org/works/10.1016%2Fj.trpro.2022.09.012",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            24
+          ]
+        ],
+        "date-time": "2026-07-24T14:49:33Z",
+        "timestamp": 1784904573034,
+        "version": "3.55.0"
+      },
+      "reference-count": 21,
+      "publisher": "Elsevier BV",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2022,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2022-01-01T00:00:00Z",
+            "timestamp": 1640995200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2022,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2022-01-01T00:00:00Z",
+            "timestamp": 1640995200000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2022,
+                9,
+                24
+              ]
+            ],
+            "date-time": "2022-09-24T00:00:00Z",
+            "timestamp": 1663977600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 266,
+          "URL": "http://creativecommons.org/licenses/by-nc-nd/4.0/"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100001871",
+          "name": "Fundação para a Ciência e a Tecnologia",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "PRT/BD/152842/2021"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "PRT/BD/152842/2021"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100001871",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100001871",
+          "name": "Fundação para a Ciência e a Tecnologia",
+          "doi-asserted-by": "publisher",
+          "award": [
+            "2020.09565"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2020.09565"
+              ]
+            }
+          ],
+          "id": [
+            {
+              "id": "10.13039/501100001871",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Transportation Research Procedia"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.trpro.2022.09.012",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2022,
+            10,
+            12
+          ]
+        ],
+        "date-time": "2022-10-12T21:00:16Z",
+        "timestamp": 1665608416000
+      },
+      "page": "90-97",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 47,
+      "special_numbering": "C",
+      "title": [
+        "Deep Learning applied to Road Accident Detection with Transfer Learning and Synthetic Images"
+      ],
+      "prefix": "10.1016",
+      "volume": "64",
+      "author": [
+        {
+          "given": "Tiago",
+          "family": "Tamagusko",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Matheus Gomes",
+          "family": "Correia",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Minh Anh",
+          "family": "Huynh",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Adelino",
+          "family": "Ferreira",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0001",
+          "unstructured": "Abadi, M., Agarwal, A., Barham, P., Brevdo, E., Chen, Z., Citro, C., Corrado, G., Davis, A., Dean, J., Devin, M., Ghemawat, S., Goodfellow, I., Harp, A., Irving, G., Isard, M., Jia, Y., Jozefowicz, R., Kaiser, L., Kudlur, M., Levenberg, J., Mané, D., Monga, R., Moore, S., Murray, D., Olah, C., Schuster, M., Shlens, J., Steiner, B., Sutskever, I., Talwar, K., Tucker, P., Vanhoucke, V., Vasudevan, V., Viégas, F., Vinyals, O., Warden, P., Wattenberg, M., Wicke, M., Yu, Y., Zheng, X., 2015. TensorFlow: Large-Scale Machine Learning on Heterogeneous Systems."
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0002",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1186/s12864-019-6413-7",
+          "article-title": "The advantages of the Matthews correlation coefficient (MCC) over F1 score and accuracy in binary classification evaluation",
+          "author": "Chicco",
+          "year": "2020",
+          "journal-title": "BMC Genomics"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0003",
+          "unstructured": "Chollet, F., others, 2015. Keras."
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0004",
+          "first-page": "1975",
+          "article-title": "Emergency Response Times for Fatal Motor Vehicle Crashes",
+          "author": "Cruz",
+          "year": "2020",
+          "journal-title": "Transp Res Rec"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0005",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1167/9.8.1037",
+          "article-title": "ImageNet: Constructing a large-scale image database",
+          "author": "Fei-Fei",
+          "year": "2010",
+          "journal-title": "J Vis"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0006",
+          "article-title": "A Review on Evaluation Metrics for Data Classification Evaluations",
+          "author": "Hossin",
+          "year": "2015",
+          "journal-title": "International Journal of Data Mining & Knowledge Management Process"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0007",
+          "series-title": "2019 10th International Conference on Computing, Communication and Networking Technologies (ICCCNT)",
+          "article-title": "Computer Vision-based Accident Detection in Traffic Surveillance",
+          "author": "Ijjina",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0008",
+          "series-title": "3rd International Conference on Learning Representations, ICLR 2015 - Conference Track Proceedings",
+          "article-title": "Adam: A method for stochastic optimization",
+          "author": "Kingma",
+          "year": "2015"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0009",
+          "unstructured": "Kosonen, I., 2003. DIGITRAFFIC - Digital Data Infrastructure for Traffic System. pp. 191–202."
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0010",
+          "series-title": "2019 16th International Computer Conference on Wavelet Active Media Technology and Information Processing, ICCWAMTIP",
+          "article-title": "Vehicle Accident and Traffic Classification Using Deep Convolutional Neural Networks",
+          "volume": "2019",
+          "author": "Kumeda",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0011",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1162/neco.1989.1.4.541",
+          "article-title": "Backpropagation Applied to Handwritten Zip Code Recognition",
+          "author": "LeCun",
+          "year": "1989",
+          "journal-title": "Neural Comput"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0012",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/5.726791",
+          "article-title": "Gradient-Based Learning Applied to Document Recognition",
+          "author": "LeCun",
+          "year": "1998",
+          "journal-title": "Proceedings of the IEEE"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0013",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1155/2020/8848874",
+          "article-title": "A New Video-Based Crash Detection Method: Balancing Speed and Accuracy Using a Feature Fusion Deep Learning Framework",
+          "author": "Lu",
+          "year": "2020",
+          "journal-title": "J Adv Transp"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0014",
+          "series-title": "Proceedings - 2018 44th Latin American Computing Conference, CLEI 2018",
+          "article-title": "Fast car crash detection in video",
+          "author": "Machaca Arceda",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0015",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.14569/IJACSA.2016.071130",
+          "article-title": "A Novel Approach to Automatic Road-Accident Detection using Machine Vision Techniques",
+          "author": "Ravindran",
+          "year": "2016",
+          "journal-title": "International Journal of Advanced Computer Science and Applications"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0016",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.3390/computers10110148",
+          "article-title": "Automatic detection of traffic accidents from video using deep learning techniques",
+          "author": "Robles-Serrano",
+          "year": "2021",
+          "journal-title": "Computers"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0017",
+          "series-title": "Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition",
+          "article-title": "MobileNetV2: Inverted Residuals and Linear Bottlenecks",
+          "author": "Sandler",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0018",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.ecoinf.2020.101085",
+          "article-title": "How many images do I need?” Understanding how sample size per class affects deep learning model performance metrics for balanced designs in autonomous wildlife monitoring",
+          "author": "Shahinfar",
+          "year": "2020",
+          "journal-title": "Ecol Inform"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0019",
+          "series-title": "36th International Conference on Machine Learning, ICML 2019",
+          "article-title": "EfficientNet: Rethinking model scaling for convolutional neural networks",
+          "author": "Tan",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0020",
+          "article-title": "Road side video surveillance in traffic scenes using map-reduce framework for accident analysis",
+          "author": "Vishnu",
+          "year": "2016",
+          "journal-title": "Biomedical Research-India"
+        },
+        {
+          "key": "10.1016/j.trpro.2022.09.012_bib0021",
+          "article-title": "Global status report on road safety 2018",
+          "year": "2018",
+          "journal-title": "World Health Organization"
+        }
+      ],
+      "container-title": [
+        "Transportation Research Procedia"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S2352146522006263?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S2352146522006263?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            15
+          ]
+        ],
+        "date-time": "2026-05-15T18:27:54Z",
+        "timestamp": 1778869674000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S2352146522006263"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "references-count": 21,
+      "alternative-id": [
+        "S2352146522006263"
+      ],
+      "URL": "https://doi.org/10.1016/j.trpro.2022.09.012",
+      "relation": {},
+      "ISSN": [
+        "2352-1465"
+      ],
+      "issn-type": [
+        {
+          "value": "2352-1465",
+          "type": "print"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2022
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "Deep Learning applied to Road Accident Detection with Transfer Learning and Synthetic Images",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Transportation Research Procedia",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.trpro.2022.09.012",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2022 The Author(s). Published by Elsevier B.V.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ]
+    }
+  }
+}

@@ -1064,6 +1064,10 @@ def load_admin_data(
     curated_papers_path: Path = CURATED_PAPERS_PATH,
     curated_mappings_path: Path = CURATED_MAPPINGS_PATH,
     canonical_candidate_map_path: Path = CANONICAL_CANDIDATE_MAP_PATH,
+    *,
+    apply_venue_audit: bool = True,
+    venue_aliases_path: Path = DEFAULT_VENUE_ALIASES_PATH,
+    venue_decisions_path: Path = DEFAULT_REVIEW_DECISIONS_PATH,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     public_papers = read_json_records(PUBLIC_PAPERS_PATH)
     map_records = read_json_records(PUBLIC_MAP_PATH)
@@ -1114,7 +1118,13 @@ def load_admin_data(
         else:
             match["is_in_curated_papers"] = True
             match["curated_record"] = dict(curated_row)
+            previous_track = match.get("venue_track", "")
+            previous_venue = match.get("venue_id")
             merge_curated_fields(match, curated_record)
+            if not curated_row.get("venue_track") and previous_venue == match.get("venue_id") and previous_track:
+                # A blank manual field is not confirmation to discard an
+                # existing paper track, especially a disputed standalone one.
+                match["venue_track"] = previous_track
             for key in identity_keys(match):
                 if not any(item is match for item in paper_identity_index[key]):
                     paper_identity_index[key].append(match)
@@ -1239,6 +1249,30 @@ def load_admin_data(
             }
         )
 
+    if apply_venue_audit:
+        try:
+            from .venue_audit import VenueAudit
+        except ImportError:
+            from venue_audit import VenueAudit
+        audit = VenueAudit(read_venue_aliases(venue_aliases_path),
+                           decisions=read_review_decisions(venue_decisions_path))
+        for paper in papers:
+            source = dict(paper)
+            # Book display normalization clears venue taxonomy. Audit the
+            # original curated fields first so a suspect chapter is not hidden
+            # from the editor while it remains actionable in the Dashboard.
+            if paper.get("publication_type") == "book" and paper.get("curated_record"):
+                for field in ("publication_type", "venue", "venue_id", "venue_name", "venue_acronym",
+                              "venue_type", "venue_track", "raw_venue"):
+                    source[field] = paper["curated_record"].get(field, "")
+            _, finding = audit.paper(source)
+            effective = normalize_book_record(audit.effective(source))
+            paper.clear()
+            paper.update(effective)
+            paper["venue_review_required"] = finding is not None
+            paper["venue_review"] = finding
+            if finding:
+                paper["venue_review_reason"] = finding["reason"]
     papers.sort(key=lambda paper: clean(paper.get("title")).casefold())
     papers_by_id = {paper["display_id"]: paper for paper in papers}
     if len(papers_by_id) != len(papers):
@@ -1283,6 +1317,8 @@ def load_admin_data(
 
 def paper_summary(paper: Mapping[str, Any]) -> Dict[str, Any]:
     fields = (
+        "venue_review_required",
+        "venue_review_reason",
         "display_id",
         "title",
         "year",
@@ -1754,7 +1790,8 @@ def make_handler(
 
     def action_snapshot():
         context = review_context()
-        papers, admin_data = load_admin_data(exclusions_path, curated_papers_path)
+        papers, admin_data = load_admin_data(exclusions_path, curated_papers_path,
+            venue_aliases_path=venue_aliases_path, venue_decisions_path=review_decisions_path)
         locations = location_review_payload(
             review_path=location_review_path, locations_path=institution_locations_path,
             aliases_path=institution_aliases_path, institutions_path=institutions_path,
@@ -1771,7 +1808,8 @@ def make_handler(
         except AdminDataError:
             coverage = unavailable_author_mapping_coverage("Report missing")
         queues = build_action_queues(context, location_payload=locations,
-                                     author_mapping_coverage=coverage, papers=papers)
+                                     author_mapping_coverage=coverage, papers=papers,
+                                     venue_aliases=read_venue_aliases(venue_aliases_path))
         admin_data["paper_list"] = [paper_summary(paper) for paper in papers]
         return queues, locations, coverage, admin_data
 
@@ -2417,7 +2455,7 @@ def make_handler(
                 try:
                     if request.path in review_get_paths:
                         name = review_get_paths[request.path]
-                        if name in {"missing_coordinates", "missing_author_mappings", "missing_affiliations"}:
+                        if name in {"missing_coordinates", "missing_author_mappings", "missing_affiliations", "publication_venues"}:
                             queue = action_snapshot()[0][name]
                         elif name == "manual_import":
                             queue = load_manual_import_queue(context=review_context())
@@ -2482,7 +2520,8 @@ def make_handler(
                     if not paper_id:
                         raise AdminDataError("id query parameter is required")
                     _papers, admin_data = load_admin_data(
-                        exclusions_path, curated_papers_path
+                        exclusions_path, curated_papers_path,
+                        venue_aliases_path=venue_aliases_path, venue_decisions_path=review_decisions_path,
                     )
                     paper = admin_data["papers_by_id"].get(paper_id)
                     if paper is None:
@@ -2498,12 +2537,16 @@ def make_handler(
                         paper, curated_arxiv_links_path
                     )
                     effective_record = normalize_book_record(effective_record)
-                    resolved_effective = canonicalize_record(
-                        effective_record,
+                    try:
+                        from .venue_audit import VenueAudit
+                    except ImportError:
+                        from venue_audit import VenueAudit
+                    resolved_effective, venue_finding = VenueAudit(
                         read_venue_aliases(venue_aliases_path),
-                    )
+                        decisions=read_review_decisions(review_decisions_path)).paper(effective_record)
                     resolved_effective = normalize_book_record(resolved_effective)
-                    if resolved_effective.get("ambiguity_status") == "resolved":
+                    venue_finding = venue_finding or paper.get("venue_review")
+                    if venue_finding is None:
                         effective_record = resolved_effective
                         effective_record["venue_resolution_status"] = "resolved"
                         effective_record["venue_review_required"] = False
@@ -2556,6 +2599,7 @@ def make_handler(
                 papers, data = load_admin_data(
                     exclusions_path,
                     curated_papers_path,
+                    venue_aliases_path=venue_aliases_path, venue_decisions_path=review_decisions_path,
                 )
             except AdminDataError as error:
                 self.send_json(
@@ -3340,7 +3384,8 @@ def make_handler(
                     if not paper_id:
                         raise AdminDataError("paper id is required")
                     _papers, admin_data = load_admin_data(
-                        exclusions_path, curated_papers_path
+                        exclusions_path, curated_papers_path,
+                        venue_aliases_path=venue_aliases_path, venue_decisions_path=review_decisions_path,
                     )
                     perf.mark("load_admin_data")
                     paper = admin_data["papers_by_id"].get(paper_id)
@@ -3389,15 +3434,23 @@ def make_handler(
                             draft["paper_url"] = ""
                         perf.mark("prepare_draft")
                         venue_resolution = None
+                        confirm_venue_review = payload.get("venue_review_confirmed") is True
+                        venue_review_note = clean(payload.get("venue_review_note"))
+                        if "venue_review_confirmed" in payload and not isinstance(payload["venue_review_confirmed"], bool):
+                            raise VenueRegistryError("venue_review_confirmed must be a boolean")
+                        if confirm_venue_review and not venue_review_note:
+                            raise VenueRegistryError("Confirming a venue review requires a source/reason note")
                         with (
                             CURATED_PAPER_WRITE_LOCK,
                             CURATED_ARXIV_LINK_WRITE_LOCK,
                             VENUE_REGISTRY_WRITE_LOCK,
+                            REVIEW_DECISION_WRITE_LOCK,
                         ):
                             snapshots = snapshot_files((
                                 curated_papers_path,
                                 curated_arxiv_links_path,
                                 venue_aliases_path,
+                                review_decisions_path,
                             ))
                             perf.mark("snapshot_files")
                             curated_change_started = False
@@ -3553,7 +3606,7 @@ def make_handler(
                                             venue_resolution.get("paper_venue_track")
                                             or payload.get("venue_track")
                                             or base_record.get("venue_track")
-                                            or ("main" if venue_resolution["venue_type"] == "conference" else "")
+                                            or ("Main" if venue_resolution["venue_type"] == "conference" else "")
                                         ),
                                         "raw_venue": clean(
                                             venue_proposal.get("raw_alias")
@@ -3575,6 +3628,18 @@ def make_handler(
                                     venue_aliases_path=venue_aliases_path,
                                 )
                                 perf.mark("update_curated_paper")
+                                if confirm_venue_review or payload.get("publication_type_override") is True:
+                                    try:
+                                        from .venue_audit import confirmation_fingerprint
+                                    except ImportError:
+                                        from venue_audit import confirmation_fingerprint
+                                    upsert_review_decision({
+                                        "review_queue": "publication_venues", "target_type": "paper",
+                                        **{key: row.get(key, "") for key in ("title", "year", "doi", "openalex_url")},
+                                        "action": "no_action_after_review" if confirm_venue_review else "unresolved",
+                                        "review_note": (venue_review_note or "Explicit Admin publication-type override; verify source before normalization.") + " [venue-state:" + confirmation_fingerprint(row) + "]",
+                                        "created_by": "admin",
+                                    }, path=review_decisions_path)
                                 if arxiv_id_changed:
                                     set_curated_arxiv_override(
                                         row,

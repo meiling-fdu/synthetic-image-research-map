@@ -15,9 +15,11 @@ from typing import Any, Iterable, Mapping, Sequence
 
 try:
     from .curated_schema import VENUE_TYPE_ORDER
+    from .venue_tracks import ALLOWED_VENUE_TRACKS, normalize_venue_track
     from .publication_types import normalize_publication_type, resolve_publication_type
 except ImportError:
     from curated_schema import VENUE_TYPE_ORDER
+    from venue_tracks import ALLOWED_VENUE_TRACKS, normalize_venue_track
     from publication_types import normalize_publication_type, resolve_publication_type
 
 
@@ -34,10 +36,6 @@ VENUE_ALIAS_COLUMNS = (
     "notes",
 )
 ALLOWED_VENUE_TYPES = set(VENUE_TYPE_ORDER)
-ALLOWED_VENUE_TRACKS = {
-    "main", "workshops", "findings", "posters", "industry", "demo",
-    "doctoral_consortium", "other",
-}
 TRACKLESS_VENUE_TYPES = {"journal", "preprint", "book"}
 
 
@@ -73,9 +71,9 @@ def alias_key(value: Any) -> str:
     return " ".join(re.findall(r"[\w]+", clean_text(value).casefold(), flags=re.UNICODE))
 
 
-def normalize_venue_type(value: Any, *, publication_type: Any = "", track: str = "main") -> str:
+def normalize_venue_type(value: Any, *, publication_type: Any = "", track: str = "Main") -> str:
     text = clean_text(value).casefold().replace("_", " ").replace("-", " ")
-    if track == "workshops" or text in {"workshop", "workshops"}:
+    if normalize_venue_track(track) == "Workshop" or text in {"workshop", "workshops"}:
         return "conference"
     if text in ALLOWED_VENUE_TYPES:
         return text
@@ -108,7 +106,7 @@ def venue_type_rank(value: Any) -> int:
 def display_venue(record: Mapping[str, Any]) -> str:
     name = clean_text(record.get("venue_name") or record.get("venue"))
     acronym = clean_text(record.get("venue_acronym"))
-    track = clean_text(record.get("venue_track"))
+    track = normalize_venue_track(record.get("venue_track"))
     if not name:
         return ""
     label = name
@@ -118,17 +116,25 @@ def display_venue(record: Mapping[str, Any]) -> str:
     already_named = bool(track_words and re.search(
         rf"\b{re.escape(track_words.rstrip('s'))}s?\b", f"{name} {acronym}", re.I
     ))
-    if track and track != "main" and not already_named:
+    if track and track != "Main" and not already_named:
         label += f" · {track_words}"
     return label
 
 
-def read_venue_aliases(path: Path = DEFAULT_VENUE_ALIASES_PATH) -> list[dict[str, str]]:
+def read_venue_aliases(path: Path = DEFAULT_VENUE_ALIASES_PATH, *, include_evidence: bool = True) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         if tuple(reader.fieldnames or ()) != VENUE_ALIAS_COLUMNS:
             raise ValueError(f"{path} does not have the exact venue alias header")
-        return [dict(row) for row in reader]
+        rows = [dict(row) for row in reader]
+    # Evidence is an additive processed layer; never rewrite curated source rows.
+    if include_evidence and path.resolve() == DEFAULT_VENUE_ALIASES_PATH.resolve():
+        try:
+            from .venue_audit import enrich_aliases
+        except ImportError:
+            from venue_audit import enrich_aliases
+        rows = enrich_aliases(rows)
+    return rows
 
 
 def _canonical_registry(rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str, Any]]:
@@ -137,6 +143,7 @@ def _canonical_registry(rows: Sequence[Mapping[str, Any]]) -> dict[str, dict[str
         if clean_text(raw_row.get("review_status")) != "confirmed":
             continue
         row = {column: clean_text(raw_row.get(column)) for column in VENUE_ALIAS_COLUMNS}
+        row["venue_track"] = normalize_venue_track(row["venue_track"])
         venue_id = row["venue_id"]
         if not venue_id:
             raise VenueRegistryError(f"venue alias row {index} is missing venue_id")
@@ -255,7 +262,7 @@ def validate_canonical_venue_fields(
     venue = canonical_venue_by_id(record.get("venue_id"), aliases)
     for field in ("venue_name", "venue_acronym", "venue_type"):
         supplied = clean_text(record.get(field))
-        if field == "venue_type" and supplied in {"workshop", "workshops"}:
+        if field == "venue_type" and supplied.casefold() in {"workshop", "workshops"}:
             supplied = "conference"
         if supplied and supplied != venue[field]:
             raise VenueRegistryError(
@@ -288,11 +295,11 @@ def materialize_canonical_venue_metadata(
     venue["venue_label"] = display_venue(venue)
     if venue["venue_type"] == "conference":
         _venue_type, paper_track = validate_venue_type_track(
-            venue["venue_type"], clean_text(result.get("venue_track")) or "main"
+            venue["venue_type"], clean_text(result.get("venue_track")) or "Main"
         )
     else:
         paper_track = ""
-    raw_venue = clean_text(result.get("raw_venue"))
+    raw_venue = result.get("raw_venue") or ""
     result.update(venue)
     result["venue_track"] = paper_track
     result.pop("aliases", None)
@@ -358,7 +365,7 @@ def materialize_existing_venue_id(
 def validate_venue_type_track(venue_type: Any, track: Any) -> tuple[str, str]:
     """Return a compatible canonical type/track pair."""
     normalized_type = normalize_venue_type(venue_type)
-    normalized_track = clean_text(track).casefold().replace("-", "_")
+    normalized_track = normalize_venue_track(track)
     if normalized_type not in ALLOWED_VENUE_TYPES:
         raise VenueRegistryError("venue_type is invalid")
     if normalized_type in TRACKLESS_VENUE_TYPES:
@@ -409,17 +416,25 @@ def create_canonical_venue(
     name = clean_text(draft.get("venue_name"))
     acronym = clean_text(draft.get("venue_acronym"))
     venue_type = normalize_venue_type(draft.get("venue_type"))
-    track = clean_text(draft.get("venue_track"))
+    track = normalize_venue_track(draft.get("venue_track"))
     raw_alias = clean_text(draft.get("raw_alias") or draft.get("raw_venue"))
-    if _track_from_text(f"{name} {raw_alias}") == "workshops":
-        track = "workshops"
+    # An explicit paper track wins. A workshop in the venue's own name is not
+    # evidence that it is a workshop track of a different conference.
     review_note = clean_text(draft.get("review_note"))
     if not name:
         raise VenueRegistryError("canonical full name is required")
     if venue_type not in ALLOWED_VENUE_TYPES:
         raise VenueRegistryError("venue type is invalid")
+    if venue_type == "conference":
+        try:
+            from .venue_evidence import stable_event
+        except ImportError:
+            from venue_evidence import stable_event
+        name, _source_acronym = stable_event(name)
+        if re.search(r"lecture notes|\bLNCS\b|\bCCIS\b|transactions on computational science|\bvolume\b", name, re.I):
+            raise VenueRegistryError("select the underlying scholarly event, not a proceedings/book series")
     venue_type, track = validate_venue_type_track(
-        venue_type, track or ("main" if venue_type == "conference" else "")
+        venue_type, track or ("Main" if venue_type == "conference" else "")
     )
     if not raw_alias:
         raise VenueRegistryError("raw input or alias is required")
@@ -433,7 +448,7 @@ def create_canonical_venue(
                 exact_values.setdefault(key, venue["venue_id"])
     duplicate_name = next((
         venue for venue in registry.values()
-        if alias_key(venue["venue_name"]) == alias_key(name)
+        if alias_key(name) in {alias_key(venue["venue_name"]), alias_key(venue["venue_acronym"])}
     ), None)
     if duplicate_name:
         raise VenueRegistryError(
@@ -491,7 +506,7 @@ def create_canonical_venue(
     with temporary.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=VENUE_ALIAS_COLUMNS, lineterminator="\n")
         writer.writeheader()
-        writer.writerows([*rows, *new_rows])
+        writer.writerows([*read_venue_aliases(path, include_evidence=False), *new_rows])
     temporary.replace(path)
     venue = canonical_venue_by_id(venue_id, [*rows, *new_rows])
     return {**venue, "paper_venue_track": track, "aliases": aliases_to_add, "possible_matches": possible_matches}
@@ -517,7 +532,7 @@ def resolve_or_create_canonical_venue(
     requested_type, requested_track = validate_venue_type_track(
         draft.get("venue_type"),
         draft.get("venue_track")
-        or ("main" if normalize_venue_type(draft.get("venue_type")) == "conference" else ""),
+        or ("Main" if normalize_venue_type(draft.get("venue_type")) == "conference" else ""),
     )
     query_keys = {
         alias_key(value) for value in (name, acronym, raw_alias) if alias_key(value)
@@ -594,28 +609,37 @@ def _strip_edition_noise(value: str) -> str:
     return clean_text(text)
 
 
-def _track_from_text(value: str) -> str:
+def _track_from_text(value: str, canonical_name: str = "") -> str:
     lowered = value.casefold()
-    if re.search(r"\bworkshops?\b", lowered):
-        return "workshops"
+    if re.search(r"\bshort[ -]papers?\b", lowered):
+        return "Short Paper"
+    if re.search(r"\btutorials?\b", lowered):
+        return "Tutorial"
+    if re.search(r"\bchallenge\s+track\b", lowered):
+        return "Challenge"
     if re.search(r"\bfindings\b", lowered):
-        return "findings"
+        return "Findings"
     if re.search(r"\bposters?\b", lowered):
-        return "posters"
+        return "Poster"
     if re.search(r"\bindustry\s+track\b", lowered):
-        return "industry"
+        return "Industry"
     if re.search(r"\b(?:demo|demonstration)\s+track\b", lowered):
-        return "demo"
+        return "Demo"
     if re.search(r"\bdoctoral\s+consortium\b", lowered):
-        return "doctoral_consortium"
-    return "main"
+        return "Doctoral Consortium"
+    if canonical_name and re.search(r"\bworkshops?\b", lowered) and not re.search(r"\bworkshops?\b", canonical_name, re.I):
+        return "Workshop"
+    return "Main"
 
 
 def _stable_id(name: str, track: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", unicodedata.normalize("NFKD", name).encode("ascii", "ignore").decode().lower()).strip("-")
     if not slug:
         slug = hashlib.sha256(name.encode("utf-8")).hexdigest()[:16]
-    return f"venue:{slug}:{track}" if track else f"venue:{slug}"
+    # Unconfirmed legacy placeholders must remain reproducible for migration;
+    # confirmed canonical IDs are created with no track suffix.
+    legacy_track = {"Workshop": "workshops", "Poster": "posters"}.get(track, track.lower().replace(" ", "_"))
+    return f"venue:{slug}:{legacy_track}" if track else f"venue:{slug}"
 
 
 def _catalog_index(rows: Sequence[Mapping[str, Any]]) -> tuple[dict[str, list[dict[str, str]]], dict[str, tuple[str, ...]]]:
@@ -628,8 +652,15 @@ def _catalog_index(rows: Sequence[Mapping[str, Any]]) -> tuple[dict[str, list[di
         key = alias_key(alias)
         if key:
             normalized_row = {column: clean_text(row.get(column)) for column in VENUE_ALIAS_COLUMNS}
+            normalized_row["venue_track"] = normalize_venue_track(normalized_row["venue_track"])
             if normalized_row not in by_alias.setdefault(key, []):
                 by_alias[key].append(normalized_row)
+            for canonical_value in (row.get("venue_name"), row.get("venue_acronym")):
+                canonical_key = alias_key(canonical_value)
+                if canonical_key and canonical_key != key:
+                    canonical_row = {**normalized_row, "venue_track": ""}
+                    if canonical_row not in by_alias.setdefault(canonical_key, []):
+                        by_alias[canonical_key].append(canonical_row)
         venue_id = clean_text(row.get("venue_id"))
         if venue_id and alias:
             aliases_by_id.setdefault(venue_id, []).append(alias)
@@ -647,6 +678,13 @@ def _known_lookup_keys(raw: str) -> list[str]:
         candidates.append(re.sub(r"\s+\d+\s*$", "", cleaned))
     # ACM MM proceedings commonly encode only the yearly edition in this prefix.
     candidates.append(re.sub(r"^\d+(?:st|nd|rd|th)\s+", "", cleaned, flags=re.I))
+    # Edition years and tracks never identify a distinct canonical venue. Keep
+    # this exact-match only: stripping noise is not fuzzy identity inference.
+    stable = re.sub(r"\b(?:19|20)\d{2}\b", "", cleaned)
+    if re.search(r"conference|symposium|congress|meeting|\b(?:ECCV|CVPR|ICCV|WACV|BMVC|ICIAP|NeurIPS|ICLR|IJCNN|ICMR)\b", stable, re.I):
+        stable = re.sub(r"\s+(?:Workshops?|Findings|Posters?|Main Track)\s*$", "", stable, flags=re.I)
+    stable = re.sub(r"\s*\([A-Za-z][A-Za-z0-9&. -]{1,20}\)\s*$", "", stable)
+    candidates.append(clean_text(stable))
     return list(dict.fromkeys(alias_key(candidate) for candidate in candidates if candidate))
 
 
@@ -699,13 +737,14 @@ def resolve_venue(
         dict[str, list[dict[str, str]]], dict[str, tuple[str, ...]]
     ] | None = None,
 ) -> CanonicalVenue:
+    source_raw = str(raw_venue or "")
     raw = clean_text(raw_venue)
     if not raw:
         resolved_type = normalize_venue_type(
             venue_type,
             publication_type=publication_type,
         )
-        track = "main" if resolved_type == "conference" else ""
+        track = "Main" if resolved_type == "conference" else ""
         return CanonicalVenue(
             "",
             "",
@@ -722,15 +761,16 @@ def resolve_venue(
         venue_type, publication_type=publication_type
     )
     track = _track_from_text(raw) if inferred_type == "conference" else ""
-    matches = [row for key in _known_lookup_keys(raw) for row in by_alias.get(key, [])]
+    # An exact standalone identity takes precedence over stripped parent hints.
+    matches = by_alias.get(alias_key(raw), []) or [row for key in _known_lookup_keys(raw) for row in by_alias.get(key, [])]
     unique_ids = {row["venue_id"] for row in matches}
     if len(unique_ids) > 1:
         return CanonicalVenue(_stable_id(raw, track), raw, "", normalize_venue_type(venue_type, publication_type=publication_type, track=track), track, raw, (), "ambiguous")
     if matches:
         row = matches[0]
-        canonical_track = row["venue_track"] or track
-        canonical_type = normalize_venue_type(row["venue_type"] or venue_type, publication_type=publication_type, track=canonical_track)
-        return CanonicalVenue(row["venue_id"], row["venue_name"], row["venue_acronym"], canonical_type, canonical_track, raw, aliases_by_id.get(row["venue_id"], ()))
+        canonical_type = normalize_venue_type(row["venue_type"] or venue_type, publication_type=publication_type)
+        canonical_track = (normalize_venue_track(row["venue_track"]) or _track_from_text(raw, row["venue_name"])) if canonical_type == "conference" else ""
+        return CanonicalVenue(row["venue_id"], row["venue_name"], row["venue_acronym"], canonical_type, canonical_track, source_raw, aliases_by_id.get(row["venue_id"], ()))
 
     cleaned = _strip_edition_noise(raw)
     detected_track = (
@@ -745,10 +785,11 @@ def resolve_venue(
     if parenthetical and re.search(r"[A-Z]", parenthetical.group(1)):
         acronym = parenthetical.group(1)
         name = clean_text(cleaned[: parenthetical.start()] + cleaned[parenthetical.end():])
-    name = re.sub(r"\s+(?:Workshops?|Findings|Posters?|Industry Track|Demo(?:nstration)? Track|Doctoral Consortium)\s*$", "", name, flags=re.I)
+    # Unverified Workshop words may be part of the event's own identity.
+    name = re.sub(r"\s+(?:Findings|Posters?|Industry Track|Demo(?:nstration)? Track|Doctoral Consortium)\s*$", "", name, flags=re.I)
     name = clean_text(name)
     resolved_type = normalize_venue_type(venue_type, publication_type=publication_type, track=detected_track)
-    return CanonicalVenue(_stable_id(name, detected_track), name, acronym, resolved_type, detected_track, raw, (raw,), "unmapped")
+    return CanonicalVenue(_stable_id(name, detected_track), name, acronym, resolved_type, detected_track, source_raw, (source_raw,), "unmapped")
 
 
 def canonicalize_record(
@@ -818,14 +859,9 @@ def canonicalize_record(
 
 def canonicalize_records(records: Iterable[Mapping[str, Any]], aliases: Sequence[Mapping[str, Any]] | None = None) -> list[dict[str, Any]]:
     resolved_aliases = list(aliases) if aliases is not None else read_venue_aliases()
-    registry = canonical_venue_registry(resolved_aliases)
-    catalog = _catalog_index(resolved_aliases)
-    return [
-        canonicalize_record(
-            record,
-            resolved_aliases,
-            registry=registry,
-            catalog=catalog,
-        )
-        for record in records
-    ]
+    try:
+        from .venue_audit import VenueAudit
+    except ImportError:
+        from venue_audit import VenueAudit
+    audit = VenueAudit(resolved_aliases)
+    return [audit.effective(record) for record in records]

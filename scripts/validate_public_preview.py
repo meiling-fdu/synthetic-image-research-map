@@ -108,7 +108,10 @@ AUTHOR_MAPPING_SOURCES = {
     "unmapped",
 }
 ALLOWED_VENUE_TYPES = {"conference", "journal", "preprint", "book"}
-ALLOWED_VENUE_TRACKS = {"main", "workshops", "findings", "posters", "industry", "demo", "doctoral_consortium", "other"}
+try:
+    from .venue_tracks import ALLOWED_VENUE_TRACKS
+except ImportError:
+    from venue_tracks import ALLOWED_VENUE_TRACKS
 ALLOWED_INSTITUTION_TYPES = INSTITUTION_TYPE_SET
 INSTITUTION_DISPLAY_FIELDS = {
     "institution", "institution_name", "canonical_name",

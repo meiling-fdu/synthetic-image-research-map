@@ -1,0 +1,270 @@
+{
+  "doi": "10.48175/ijarsct-25140",
+  "source_url": "https://api.crossref.org/works/10.48175%2Fijarsct-25140",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            21
+          ]
+        ],
+        "date-time": "2026-05-21T17:09:25Z",
+        "timestamp": 1779383365715,
+        "version": "3.53.1"
+      },
+      "reference-count": 12,
+      "publisher": "Naksh Solutions",
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "IJARSCT"
+      ],
+      "abstract": "<jats:p>The rapid proliferation of AI-generated images poses significant challenges to digital media authenticity[1][2]. This research introduces a novel deep learning-based approach for detecting AI-generated images, leveraging an ensemble of transfer learning, ResNet50, and DenseNet architectures. By integrating a custom feature extraction method[3] that identifies artifact patterns commonly found in GAN-generated images, along with metadata analysis, our system achieves 94% accuracy in distinguishing real from AI-generated images. The proposed method demonstrates robust performance across multiple AI image generation models, including StyleGAN3, Stable Diffusion, and Midjourney[1][4], ensuring adaptability to evolving image synthesis techniques.</jats:p>",
+      "DOI": "10.48175/ijarsct-25140",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            11
+          ]
+        ],
+        "date-time": "2025-04-11T13:44:02Z",
+        "timestamp": 1744379042000
+      },
+      "page": "292-302",
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "AI-Generated-Image Detection Using Deep Learning Techniques"
+      ],
+      "prefix": "10.48175",
+      "author": [
+        {
+          "family": "Dhruv Bhatada",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Atharva College of Engineering, Mumbai University, India"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "family": "Nimesh Gujari",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Atharva College of Engineering, Mumbai University, India"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "family": "Priyanka Pandey",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Atharva College of Engineering, Mumbai University, India"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "family": "Yashvant Chhapwale",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Atharva College of Engineering, Mumbai University, India"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "family": "Dr. Yogita Shelar",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Atharva College of Engineering, Mumbai University, India"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "25968",
+      "published-online": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            11
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "ref0",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Pan, D., Sun, L., & Wang, R. (2020). Deep Fake Detection Using Deep Learning. Presented at the IEEE/ACM International Conference  on  Big  Data  Computing, AT).Applications, and Technologies (BDC",
+          "DOI": "10.1109/bdcat50828.2020.00001"
+        },
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "unstructured": "He, K., & Zhang, X. (2016). Deep Residual Learning for Image Recognition. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR).",
+          "DOI": "10.1109/cvpr.2016.90"
+        },
+        {
+          "key": "ref2",
+          "unstructured": "Goodfellow, I., Pouget-Abadie, J., & Mirza, M. (2014). Generative Adversarial Networks. Advances in Neural Information Processing Systems, 27 (NIPS)."
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Zhu, J., & Park. (Year Unknown). Unpaired Image-to-Image\tTranslation via Cycle-Consistent Adversarial Networks. Published in the Proceedings of the IEEE International Conference on Computer Vision (ICCV), pp. 2223-2232.",
+          "DOI": "10.1109/iccv.2017.244"
+        },
+        {
+          "key": "ref4",
+          "unstructured": "Howard, A. G., Zhu, M., & Chen, B. (Year Unknown). MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications."
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Jiaying Liu, Xiangjie Kong, Feng Xia, Xiaomei Bai (2000 - 2015). Artificial Intelligence in the 21st Century. IEEE Access ( Volume: 6)",
+          "DOI": "10.1109/access.2018.2819688"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Md Shohel Rana, Mohammad Nur Nobi, Beddhu Murali (2022). Deep fake Detection: A Systematic Literature Review. IEEE Access ( Volume: 10)",
+          "DOI": "10.1109/access.2022.3154404"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Youhui Tian (2020). Artificial Intelligence Image Recognition Method Based on Convolutional Neural Network Algorithm. IEEE Access PP(99):1-1",
+          "DOI": "10.1109/access.2020.3006097"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Gao Huang, Zhuang Liu, Kilian Weinberger (2017) Densely Connected Convolutional Networks. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR).",
+          "DOI": "10.1109/cvpr.2017.243"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "unstructured": "A. Alzahrani (2024) Digital Image Forensics: An Improved DenseNet Architecture for Forged Image Detection. Engineering, Technology & Applied Science Research. 14, 2 (Apr.2024),13671–13680. DOI:https://doi.org/10.48084/etasr.7029.",
+          "DOI": "10.48084/etasr.7029"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Ihsan Sahib, Tawfiq Abd Alkhaliq AlAsady (2022). Deep learning for image forgery classification based on modified Xception net and dense net. AIP Conf. Proc. 2547, 060003 (2022).",
+          "DOI": "10.1063/5.0112143"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "unstructured": "Domínguez, L.M., Andión, J.L.Z., Kolankowska, M. (2025). Artificial Intelligence and Communication: The Threat of Deep-fake Images. In: Baraybar-Fernández, A., Arrufat-Martín, S., Díaz Díaz, B. (eds) The AI Revolution. Research Series on Responsible Enterprise Ecosystems. Springer, Cham. https://doi.org/10.1007/978-3-031-80411-3_7",
+          "DOI": "10.1007/978-3-031-80411-3"
+        }
+      ],
+      "container-title": [
+        "International Journal of Advanced Research in Science, Communication and Technology"
+      ],
+      "original-title": [],
+      "language": "en",
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            11
+          ]
+        ],
+        "date-time": "2025-04-11T13:44:08Z",
+        "timestamp": 1744379048000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ijarsct.co.in/Paper25140.pdf"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            11
+          ]
+        ]
+      },
+      "references-count": 12,
+      "URL": "https://doi.org/10.48175/ijarsct-25140",
+      "archive": [
+        "Internet Archive"
+      ],
+      "relation": {},
+      "ISSN": [
+        "2581-9429"
+      ],
+      "issn-type": [
+        {
+          "value": "2581-9429",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            4,
+            11
+          ]
+        ]
+      },
+      "article-number": "25140"
+    }
+  }
+}

@@ -32,6 +32,7 @@ try:
         ALLOWED_SCOPE_STATUSES,
         ALLOWED_TASKS,
         ALLOWED_VENUE_TRACKS,
+        normalize_venue_track,
         ALLOWED_VENUE_TYPES,
         CURATED_DATA_DIR,
         EXPECTED_COLUMNS,
@@ -66,6 +67,7 @@ except ImportError:  # Support direct execution from the repository root.
         ALLOWED_SCOPE_STATUSES,
         ALLOWED_TASKS,
         ALLOWED_VENUE_TRACKS,
+        normalize_venue_track,
         ALLOWED_VENUE_TYPES,
         CURATED_DATA_DIR,
         EXPECTED_COLUMNS,
@@ -1320,20 +1322,20 @@ def main() -> int:
         papers, "papers.csv", "venue_type", ALLOWED_VENUE_TYPES, issues
     )
     validate_allowed_value(
-        papers, "papers.csv", "venue_track", ALLOWED_VENUE_TRACKS, issues
+        [{**r, "venue_track": normalize_venue_track(r.get("venue_track"))} for r in papers], "papers.csv", "venue_track", ALLOWED_VENUE_TRACKS, issues
     )
     validate_allowed_value(
         venue_aliases, "venue_aliases.csv", "venue_type", ALLOWED_VENUE_TYPES, issues
     )
     # Alias-level track is an optional legacy resolution hint, never canonical identity.
     validate_allowed_value(
-        venue_aliases, "venue_aliases.csv", "venue_track", ALLOWED_VENUE_TRACKS, issues
+        [{**r, "venue_track": normalize_venue_track(r.get("venue_track"))} for r in venue_aliases], "venue_aliases.csv", "venue_track", ALLOWED_VENUE_TRACKS, issues
     )
     for row_number, paper in enumerate(papers, start=2):
         if clean(paper.get("venue_name")) and not clean(paper.get("venue_id")):
             add_issue(issues, "ERROR", "papers.csv", "canonical venue_name requires venue_id", row_number)
         venue_type = clean(paper.get("venue_type"))
-        venue_track = clean(paper.get("venue_track"))
+        venue_track = normalize_venue_track(paper.get("venue_track"))
         if clean(paper.get("venue_id")) and venue_type == "conference" and venue_track not in ALLOWED_VENUE_TRACKS:
             add_issue(issues, "ERROR", "papers.csv", "conference venue requires a supported venue_track", row_number)
         if venue_type != "conference" and venue_track:

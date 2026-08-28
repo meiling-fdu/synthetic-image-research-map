@@ -826,6 +826,13 @@ def _matching_papers(
 
 
 def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
+    try:
+        from .venue_audit import VenueAudit
+        from .venues import read_venue_aliases
+    except ImportError:
+        from venue_audit import VenueAudit
+        from venues import read_venue_aliases
+    row = VenueAudit(read_venue_aliases()).effective(row)
     year = _parse_year(row.get("year"))
     doi = clean(row.get("doi"))
     links = resolve_public_links(row)
@@ -833,7 +840,7 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
     paper_url = links["formal_url"]
     openalex_url = links["openalex_url"]
     review_status = clean(row.get("review_status"))
-    publication_type = normalize_publication_type(
+    publication_type = row.get("publication_type") or normalize_publication_type(
         row.get("publication_type"), venue=row.get("venue"), venue_type=row.get("venue_type")
     )
     normalized_type = publication_type.casefold()
@@ -864,6 +871,8 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         "raw_venue": clean(row.get("raw_venue")),
         "publisher": "",
         "publication_type": publication_type,
+        "venue_review_required": row.get("venue_review_required", False),
+        "venue_review_reason": row.get("venue_review_reason", ""),
         "abstract": clean(row.get("abstract")),
         "abstract_source": clean(row.get("metadata_source")),
         "ai_summary": "",
@@ -1969,6 +1978,7 @@ def integrate_curated_records(
     )
     paper_index = _paper_index(papers)
     map_index = _paper_index(maps)
+    curated_source_index = _paper_index(list(curated_papers))
     added = 0
     merged = 0
     for curated in curated_records:
@@ -1976,6 +1986,9 @@ def integrate_curated_records(
         matches = _matching_papers(curated, paper_index)
         if matches:
             target = matches[0]
+            original = next(iter(_matching_papers(curated, curated_source_index)), {})
+            if not original.get("venue_track") and target.get("venue_id") == curated.get("venue_id") and target.get("venue_track"):
+                curated = {**curated, "venue_track": target["venue_track"]}
             _merge_curated_paper(target, curated)
             merged += 1
         else:

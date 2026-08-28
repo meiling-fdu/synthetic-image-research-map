@@ -1,0 +1,396 @@
+{
+  "doi": "10.1109/cscwd68734.2026.11582378",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fcscwd68734.2026.11582378",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            7
+          ]
+        ],
+        "date-time": "2026-07-07T06:14:06Z",
+        "timestamp": 1783404846187,
+        "version": "3.54.6"
+      },
+      "reference-count": 27,
+      "publisher": "IEEE",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                5,
+                13
+              ]
+            ],
+            "date-time": "2026-05-13T00:00:00Z",
+            "timestamp": 1778630400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                5,
+                13
+              ]
+            ],
+            "date-time": "2026-05-13T00:00:00Z",
+            "timestamp": 1778630400000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "funder": [
+        {
+          "DOI": "10.13039/501100001809",
+          "name": "National Natural Science Foundation of China",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/501100001809",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        },
+        {
+          "DOI": "10.13039/501100018537",
+          "name": "National Science and Technology Major Project",
+          "doi-asserted-by": "publisher",
+          "id": [
+            {
+              "id": "10.13039/501100018537",
+              "id-type": "DOI",
+              "asserted-by": "publisher"
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            13
+          ]
+        ]
+      },
+      "DOI": "10.1109/cscwd68734.2026.11582378",
+      "type": "proceedings-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            6
+          ]
+        ],
+        "date-time": "2026-07-06T19:42:40Z",
+        "timestamp": 1783366960000
+      },
+      "page": "3906-3911",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks"
+      ],
+      "prefix": "10.1109",
+      "author": [
+        {
+          "given": "Jia",
+          "family": "Wang",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Xinjiang University,School of Computer Science and Technology"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Qian",
+          "family": "Luo",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Xinjiang University,School of Computer Science and Technology"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jeon",
+          "family": "Gwanggil",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Incheon National University,College of Information Technology,Incheon,Korea,22012"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "article-title": "Generative Adversarial Nets",
+          "volume": "27",
+          "author": "Goodfellow",
+          "year": "2014",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3626235"
+        },
+        {
+          "key": "ref3",
+          "article-title": "Gartner Predicts 30% of Generative AI Projects Will Be Abandoned After Proof of Concept By End of 2025"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52733.2024.00872"
+        },
+        {
+          "key": "ref5",
+          "first-page": "3247",
+          "article-title": "Leveraging Frequency Analysis for Deep Fake Image Recognition",
+          "volume-title": "International conference on machine learning",
+          "author": "Frank"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV51070.2023.02051"
+        },
+        {
+          "issue": "2024",
+          "key": "ref7",
+          "article-title": "A Sanity Check for Ai-generated Image Detection",
+          "author": "Yan"
+        },
+        {
+          "key": "ref8",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/MDAT.2017.2709310"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cviu.2024.104078"
+        },
+        {
+          "key": "ref10",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/ICCV48922.2021.00986"
+        },
+        {
+          "key": "ref11",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.01165"
+        },
+        {
+          "key": "ref12",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/WIFS47025.2019.9035107"
+        },
+        {
+          "key": "ref13",
+          "article-title": "Patchcraft: Exploring Texture Patch for Efficient AIgenerated Image Detection",
+          "author": "Zhong",
+          "year": "2023"
+        },
+        {
+          "key": "ref14",
+          "article-title": "XD3: Scaling Up Deepfake Detection by Learning from Discrepancy",
+          "volume-title": "Proceedings of the Computer Vision and Pattern Recognition Conference",
+          "author": "Yang"
+        },
+        {
+          "key": "ref15",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00808"
+        },
+        {
+          "key": "ref16",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52729.2023.02345"
+        },
+        {
+          "key": "ref17",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/jimaging6030009"
+        },
+        {
+          "key": "ref18",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1007/978-3-030-01234-2_1"
+        },
+        {
+          "key": "ref19",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "key": "ref20",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/TIFS.2012.2190402"
+        },
+        {
+          "key": "ref21",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.52202/075280-3398"
+        },
+        {
+          "key": "ref22",
+          "first-page": "5",
+          "volume-title": "Midjourney",
+          "year": "2022"
+        },
+        {
+          "key": "ref23",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "ref25",
+          "first-page": "8780",
+          "article-title": "Diffusion Models Beat GANs on Image Synthesis",
+          "volume": "34",
+          "author": "Dhariwal",
+          "year": "2021"
+        },
+        {
+          "key": "ref26",
+          "author": "Nichol",
+          "year": "2021",
+          "journal-title": "Glide: Towards Photorealistic Image Generation and Editing with Text-guided Diffusion Models"
+        },
+        {
+          "key": "ref27",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/CVPR52688.2022.01043"
+        },
+        {
+          "key": "ref28",
+          "article-title": "Large-Scale Gan Training for High Fidelity Natural Image Synthesis",
+          "author": "Brock",
+          "year": "2018"
+        }
+      ],
+      "event": {
+        "name": "2026 29th International Conference on Computer Supported Cooperative Work in Design (CSCWD)",
+        "location": "Fuzhou, China",
+        "start": {
+          "date-parts": [
+            [
+              2026,
+              5,
+              13
+            ]
+          ]
+        },
+        "end": {
+          "date-parts": [
+            [
+              2026,
+              5,
+              15
+            ]
+          ]
+        }
+      },
+      "container-title": [
+        "2026 29th International Conference on Computer Supported Cooperative Work in Design (CSCWD)"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/11581445/11581446/11582378.pdf?arnumber=11582378",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            7
+          ]
+        ],
+        "date-time": "2026-07-07T05:17:51Z",
+        "timestamp": 1783401471000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11582378/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            13
+          ]
+        ]
+      },
+      "references-count": 27,
+      "URL": "https://doi.org/10.1109/cscwd68734.2026.11582378",
+      "relation": {},
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            5,
+            13
+          ]
+        ]
+      }
+    }
+  }
+}

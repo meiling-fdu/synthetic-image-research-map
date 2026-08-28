@@ -219,7 +219,7 @@ def migrate_rows(rows: list[dict[str, str]]) -> tuple[list[dict[str, Any]], dict
         if str(row.get("venue_type", "")).strip().casefold() == "workshop":
             workshop_record_ids.add(identity)
             workshop_venue_ids.add(str(row.get("venue_id", "")).strip())
-        if str(resolved.get("venue_track", "")).strip().casefold() == "workshops":
+        if str(resolved.get("venue_track", "")).strip().casefold() in {"workshop", "workshops"}:
             normalized_workshop_record_ids.add(identity)
             normalized_workshop_venue_ids.add(str(resolved.get("venue_id", "")).strip())
         raw = str(row.get("raw_venue") or row.get("venue") or "").strip()

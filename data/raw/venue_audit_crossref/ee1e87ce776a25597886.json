@@ -1,0 +1,724 @@
+{
+  "doi": "10.1371/journal.pone.0350655",
+  "source_url": "https://api.crossref.org/works/10.1371%2Fjournal.pone.0350655",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ],
+        "date-time": "2026-07-14T18:11:05Z",
+        "timestamp": 1784052665691,
+        "version": "3.55.0"
+      },
+      "reference-count": 51,
+      "publisher": "Public Library of Science (PLoS)",
+      "issue": "7",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                14
+              ]
+            ],
+            "date-time": "2026-07-14T00:00:00Z",
+            "timestamp": 1783987200000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "http://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "funder": [
+        {
+          "name": "Education Department of Zhejiang Province",
+          "award": [
+            "Y202456749"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "Y202456749"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Pioneer and Leading Goose R&D Program of Zhejiang",
+          "award": [
+            "2024C01006"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2024C01006"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Scientific Research Foundation of Jiaxing Vocational and Technical College",
+          "award": [
+            "jzyz202403"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "jzyz202403"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Jiaxing Public Welfare Research Project",
+          "award": [
+            "2026CFY110"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "2026CFY110"
+              ]
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "www.plosone.org"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "PLoS One"
+      ],
+      "abstract": "<jats:p>\n                    The rapid advancement of diffusion models has raised concerns about their misuse in generating deceptive visual content, motivating growing interest in AI-generated image detection. Many existing detection methods rely on image semantic features, but modern diffusion models are optimized to closely match the semantic structure of real images, reducing the effectiveness of semantic-based detection. An alternative line of work exploits differences revealed through diffusion reconstruction; however, most existing approaches treat reconstruction error as a static and passive metric, which can be sensitive to generators or post-processing, thereby limiting robustness. In this work, we propose Adversarial Diffusion Reconstruction Distance (ADRD), a detection framework that models diffusion reconstruction as a dynamic response process rather than a fixed descriptor. ADRD actively probes the reconstruction behavior by introducing perturbation in latent space and measuring how reconstruction deviations respond under identical perturbations. We empirically observe that real images typically exhibit larger and more variable reconstruction responses, while diffusion-generated images tend to show more stable reconstruction behavior, reflecting differences in their alignment with the diffusion model’s implicit data manifold. By characterizing reconstruction sensitivity instead of absolute reconstruction error, ADRD provides a complementary perspective to existing reconstruction-based detectors. Experimental evaluations on multiple benchmarks suggest that reconstruction response under controlled perturbations constitutes a meaningful signal for diffusion-generated image detection. The code is available at\n                    <jats:ext-link xmlns:xlink=\"http://www.w3.org/1999/xlink\" ext-link-type=\"uri\" xlink:href=\"https://github.com/ezell-chou/adrd\" xlink:type=\"simple\">https://github.com/ezell-chou/adrd</jats:ext-link>\n                  </jats:p>",
+      "DOI": "10.1371/journal.pone.0350655",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ],
+        "date-time": "2026-07-14T17:41:57Z",
+        "timestamp": 1784050917000
+      },
+      "page": "e0350655",
+      "update-policy": "https://doi.org/10.1371/journal.pone.corrections_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "title": [
+        "ADRD: Detecting diffusion-generated images via adversarial perturbation induced reconstruction discrepancy"
+      ],
+      "prefix": "10.1371",
+      "volume": "21",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0000-2765-5750",
+          "authenticated-orcid": true,
+          "given": "Yi",
+          "family": "Zhou",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Xiangwei",
+          "family": "Hu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Jun",
+          "family": "Tong",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-8918-6299",
+          "authenticated-orcid": true,
+          "given": "Changting",
+          "family": "Lin",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Mei",
+          "family": "Sun",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0001-9903-2015",
+          "authenticated-orcid": true,
+          "given": "Shuangxi",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "340",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "pone.0350655.ref001",
+          "first-page": "8780",
+          "article-title": "Diffusion models beat gans on image synthesis",
+          "volume": "34",
+          "author": "P Dhariwal",
+          "year": "2021",
+          "journal-title": "Adv Neural Inform Process Syst"
+        },
+        {
+          "key": "pone.0350655.ref002",
+          "unstructured": "Midjourney [Internet]. 2024. https://www.midjourney.com"
+        },
+        {
+          "key": "pone.0350655.ref003",
+          "first-page": "8821",
+          "article-title": "Zero-shot text-to-image generation.",
+          "author": "A Ramesh",
+          "year": "2021",
+          "journal-title": "International conference on machine learning"
+        },
+        {
+          "key": "pone.0350655.ref004",
+          "first-page": "3",
+          "author": "A Ramesh",
+          "year": "2022"
+        },
+        {
+          "key": "pone.0350655.ref005",
+          "unstructured": "Passantino DO. Verified Twitter accounts share fake image of ‘explosion’ near Pentagon, causing confusion. CNN Business. 2023. Accessed 2024 December 10. https://www.cnn.com/2023/05/22/tech/twitter-fake-image-pentagon-explosion/index.html"
+        },
+        {
+          "key": "pone.0350655.ref006",
+          "unstructured": "Deepfakes. 2024. Accessed 2024 December 11. https://github.com/deepfakes/faceswap"
+        },
+        {
+          "key": "pone.0350655.ref007",
+          "unstructured": "South Korea: The deepfake crisis engulfing hundreds of schools. 2024. Accessed 2025 February 11. https://www.bbc.com/news/articles/cpdlpj9zn9go"
+        },
+        {
+          "key": "pone.0350655.ref008",
+          "article-title": "Generative adversarial nets",
+          "volume": "27",
+          "author": "I Goodfellow",
+          "year": "2014",
+          "journal-title": "Adv Neural Inform Process Syst"
+        },
+        {
+          "key": "pone.0350655.ref009",
+          "author": "M Mirza",
+          "year": "2014"
+        },
+        {
+          "key": "pone.0350655.ref010",
+          "doi-asserted-by": "crossref",
+          "first-page": "2242",
+          "DOI": "10.1109/ICCV.2017.244",
+          "article-title": "Unpaired image-to-image translation using cycle-consistent adversarial networks",
+          "author": "J-Y Zhu",
+          "year": "2017",
+          "journal-title": "2017 IEEE International Conference on Computer Vision (ICCV)"
+        },
+        {
+          "key": "pone.0350655.ref011",
+          "author": "A Brock",
+          "year": "2018"
+        },
+        {
+          "key": "pone.0350655.ref012",
+          "doi-asserted-by": "crossref",
+          "first-page": "4396",
+          "DOI": "10.1109/CVPR.2019.00453",
+          "article-title": "A Style-based generator architecture for generative adversarial networks",
+          "author": "T Karras",
+          "year": "2019",
+          "journal-title": "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref013",
+          "first-page": "3247",
+          "article-title": "Leveraging frequency analysis for deep fake image recognition",
+          "author": "J Frank",
+          "year": "2020",
+          "journal-title": "International conference on machine learning"
+        },
+        {
+          "key": "pone.0350655.ref014",
+          "doi-asserted-by": "crossref",
+          "first-page": "7887",
+          "DOI": "10.1109/CVPR42600.2020.00791",
+          "article-title": "Watch your up-convolution: CNN based generative deep neural networks are failing to reproduce spectral distributions",
+          "author": "R Durall",
+          "year": "2020",
+          "journal-title": "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref015",
+          "first-page": "3022",
+          "article-title": "Fourier spectrum discrepancies in deep network generated images",
+          "volume": "33",
+          "author": "T Dzanic",
+          "year": "2020",
+          "journal-title": "Adv Neural Inform Process Syst"
+        },
+        {
+          "key": "pone.0350655.ref016",
+          "first-page": "95",
+          "article-title": "Detecting generated images by real images",
+          "author": "B Liu",
+          "year": "2022",
+          "journal-title": "European Conference on Computer Vision"
+        },
+        {
+          "key": "pone.0350655.ref017",
+          "author": "J Chen",
+          "year": "2024",
+          "journal-title": "A single simple patch is all you need for ai-generated image detection"
+        },
+        {
+          "key": "pone.0350655.ref018",
+          "article-title": "Patchcraft: Exploring texture patch for efficient ai-generated image detection",
+          "author": "N Zhong",
+          "year": "2023",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref019",
+          "article-title": "Improving synthetic image detection towards generalization: an image transformation perspective",
+          "author": "O Li",
+          "year": "2024"
+        },
+        {
+          "key": "pone.0350655.ref020",
+          "first-page": "8748",
+          "article-title": "Learning transferable visual models from natural language supervision",
+          "author": "A Radford",
+          "year": "2021",
+          "journal-title": "International Conference on Machine Learning"
+        },
+        {
+          "key": "pone.0350655.ref021",
+          "doi-asserted-by": "crossref",
+          "first-page": "4356",
+          "DOI": "10.1109/CVPRW63382.2024.00439",
+          "article-title": "Raising the bar of AI-generated Image detection with CLIP",
+          "author": "D Cozzolino",
+          "year": "2024",
+          "journal-title": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)"
+        },
+        {
+          "key": "pone.0350655.ref022",
+          "doi-asserted-by": "crossref",
+          "first-page": "501",
+          "DOI": "10.1109/LSP.2024.3522851",
+          "article-title": "Trinity detector: text-assisted and attention mechanisms based spectral fusion for diffusion generation image detection",
+          "volume": "32",
+          "author": "J Song",
+          "year": "2025",
+          "journal-title": "IEEE Signal Process Lett"
+        },
+        {
+          "key": "pone.0350655.ref023",
+          "doi-asserted-by": "crossref",
+          "first-page": "10770",
+          "DOI": "10.1109/CVPR52733.2024.01024",
+          "article-title": "Forgery-aware adaptive transformer for generalizable synthetic image detection",
+          "author": "H Liu",
+          "year": "2024",
+          "journal-title": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref024",
+          "doi-asserted-by": "crossref",
+          "first-page": "10759",
+          "DOI": "10.1109/CVPR52733.2024.01023",
+          "article-title": "FakeInversion: learning to detect images from unseen text-to-image models by inverting stable diffusion",
+          "author": "G Cazenavette",
+          "year": "2024",
+          "journal-title": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref025",
+          "first-page": "6840",
+          "article-title": "Denoising diffusion probabilistic models",
+          "volume": "33",
+          "author": "J Ho",
+          "year": "2020",
+          "journal-title": "Adv Neural Inform Process Syst"
+        },
+        {
+          "key": "pone.0350655.ref026",
+          "doi-asserted-by": "crossref",
+          "first-page": "10674",
+          "DOI": "10.1109/CVPR52688.2022.01042",
+          "article-title": "High-resolution image synthesis with latent diffusion models",
+          "author": "R Rombach",
+          "year": "2022",
+          "journal-title": "2022 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref027",
+          "first-page": "5775",
+          "article-title": "DPM-solver: a fast ODE solver for diffusion probabilistic model sampling in around 10 steps",
+          "author": "F Bao",
+          "year": "2022",
+          "journal-title": "Advances in neural information processing systems 35"
+        },
+        {
+          "key": "pone.0350655.ref028",
+          "article-title": "Pseudo numerical methods for diffusion models on manifolds",
+          "author": "L Liu",
+          "year": "2022",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref029",
+          "first-page": "1",
+          "article-title": "Zero-shot image-to-image translation.",
+          "author": "G Parmar",
+          "year": "2023",
+          "journal-title": "ACM SIGGRAPH 2023 conference proceedings"
+        },
+        {
+          "key": "pone.0350655.ref030",
+          "article-title": "Glide: Towards photorealistic image generation and editing with text-guided diffusion models",
+          "author": "A Nichol",
+          "year": "2021",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref031",
+          "article-title": "Denoising diffusion implicit models",
+          "author": "J Song",
+          "year": "2020",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref032",
+          "doi-asserted-by": "crossref",
+          "first-page": "36479",
+          "DOI": "10.52202/068431-2643",
+          "article-title": "Photorealistic text-to-image diffusion models with deep language understanding",
+          "volume": "35",
+          "author": "C Saharia",
+          "year": "2022",
+          "journal-title": "Adv Neural Inform Process Syst"
+        },
+        {
+          "key": "pone.0350655.ref033",
+          "doi-asserted-by": "crossref",
+          "first-page": "3465",
+          "DOI": "10.1109/ICIP46576.2022.9897820",
+          "article-title": "Fusing global and local features for generalized AI-synthesized image detection",
+          "author": "Y Ju",
+          "year": "2022",
+          "journal-title": "2022 IEEE International Conference on Image Processing (ICIP)"
+        },
+        {
+          "key": "pone.0350655.ref034",
+          "doi-asserted-by": "crossref",
+          "first-page": "4073",
+          "DOI": "10.1109/TMM.2023.3313503",
+          "article-title": "Glff: Global and local feature fusion for ai-synthesized image detection",
+          "volume": "26",
+          "author": "Y Ju",
+          "year": "2023",
+          "journal-title": "IEEE Transac Multimedia"
+        },
+        {
+          "key": "pone.0350655.ref035",
+          "doi-asserted-by": "crossref",
+          "first-page": "22388",
+          "DOI": "10.1109/ICCV51070.2023.02051",
+          "article-title": "DIRE for diffusion-generated image detection",
+          "author": "Z Wang",
+          "year": "2023",
+          "journal-title": "2023 IEEE/CVF International Conference on Computer Vision (ICCV)"
+        },
+        {
+          "key": "pone.0350655.ref036",
+          "article-title": "Diffusion noise feature: Accurate and fast generated image detection",
+          "author": "Y Zhang",
+          "year": "2023",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref037",
+          "doi-asserted-by": "crossref",
+          "first-page": "17006",
+          "DOI": "10.1109/CVPR52733.2024.01609",
+          "article-title": "LaRE2: latent reconstruction error based method for diffusion-generated image detection",
+          "author": "Y Luo",
+          "year": "2024",
+          "journal-title": "2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref038",
+          "doi-asserted-by": "crossref",
+          "first-page": "12830",
+          "DOI": "10.1109/CVPR52734.2025.01197",
+          "article-title": "FIRE: robust detection of diffusion-generated images via frequency-guided reconstruction error",
+          "author": "B Chu",
+          "year": "2025",
+          "journal-title": "2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref039",
+          "article-title": "Raising the cost of malicious ai-powered image editing",
+          "author": "H Salman",
+          "year": "2023",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref040",
+          "article-title": "Generative adversarial network training is a continual learning problem",
+          "author": "KJ Liang",
+          "year": "2018"
+        },
+        {
+          "key": "pone.0350655.ref041",
+          "article-title": "Adversarial example does good: Preventing painting imitation from diffusion models via adversarial examples",
+          "author": "C Liang",
+          "year": "2023",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref042",
+          "doi-asserted-by": "crossref",
+          "first-page": "118",
+          "DOI": "10.1109/CBD65573.2024.00031",
+          "article-title": "Protective perturbations against unauthorized data usage in diffusion-based image generation",
+          "author": "S Peng",
+          "year": "2024",
+          "journal-title": "2024 Twelfth International Conference on Advanced Cloud and Big Data (CBD)"
+        },
+        {
+          "key": "pone.0350655.ref043",
+          "article-title": "IDProtector: an adversarial noise encoder to protect against ID-preserving image generation",
+          "author": "Y Song",
+          "year": "2024",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref044",
+          "article-title": "Explaining and harnessing adversarial examples",
+          "author": "IJ Goodfellow",
+          "year": "2014",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref045",
+          "first-page": "77771",
+          "article-title": "GenImage: a million-scale benchmark for detecting AI-generated image",
+          "author": "H Chen",
+          "year": "2023",
+          "journal-title": "Advances in neural information processing systems 36"
+        },
+        {
+          "key": "pone.0350655.ref046",
+          "article-title": "Wildfake: A large-scale challenging dataset for ai-generated images detection",
+          "author": "Y Hong",
+          "year": "2024",
+          "journal-title": "arXiv preprint"
+        },
+        {
+          "key": "pone.0350655.ref047",
+          "doi-asserted-by": "crossref",
+          "first-page": "8692",
+          "DOI": "10.1109/CVPR42600.2020.00872",
+          "article-title": "CNN-generated images are surprisingly easy to spot… for now",
+          "author": "S-Y Wang",
+          "year": "2020",
+          "journal-title": "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref048",
+          "doi-asserted-by": "crossref",
+          "first-page": "8057",
+          "DOI": "10.1109/CVPR42600.2020.00808",
+          "article-title": "Global texture enhancement for fake face detection in the wild",
+          "author": "Z Liu",
+          "year": "2020",
+          "journal-title": "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref049",
+          "doi-asserted-by": "crossref",
+          "first-page": "24480",
+          "DOI": "10.1109/CVPR52729.2023.02345",
+          "article-title": "Towards universal fake image detectors that generalize across generative models",
+          "author": "U Ojha",
+          "year": "2023",
+          "journal-title": "2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
+        },
+        {
+          "key": "pone.0350655.ref050",
+          "article-title": "A sanity check for ai-generated image detection",
+          "author": "S Yan",
+          "year": "2024"
+        },
+        {
+          "issue": "7",
+          "key": "pone.0350655.ref051",
+          "doi-asserted-by": "crossref",
+          "first-page": "7184",
+          "DOI": "10.1609/aaai.v39i7.32772",
+          "article-title": "C2P-CLIP: injecting category common prompt in CLIP to enhance generalization in deepfake detection",
+          "volume": "39",
+          "author": "C Tan",
+          "year": "2025",
+          "journal-title": "AAAI"
+        }
+      ],
+      "container-title": [
+        "PLOS One"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://dx.plos.org/10.1371/journal.pone.0350655",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ],
+        "date-time": "2026-07-14T17:42:06Z",
+        "timestamp": 1784050926000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://dx.plos.org/10.1371/journal.pone.0350655"
+        }
+      },
+      "subtitle": [],
+      "editor": [
+        {
+          "given": "Zeyar",
+          "family": "Aung",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "editor"
+            }
+          ]
+        }
+      ],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ]
+      },
+      "references-count": 51,
+      "journal-issue": {
+        "issue": "7",
+        "published-online": {
+          "date-parts": [
+            [
+              2026,
+              7,
+              14
+            ]
+          ]
+        }
+      },
+      "URL": "https://doi.org/10.1371/journal.pone.0350655",
+      "relation": {},
+      "ISSN": [
+        "1932-6203"
+      ],
+      "issn-type": [
+        {
+          "value": "1932-6203",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            14
+          ]
+        ]
+      }
+    }
+  }
+}

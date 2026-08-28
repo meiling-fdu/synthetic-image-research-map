@@ -1,0 +1,788 @@
+{
+  "doi": "10.3390/jimaging7030050",
+  "source_url": "https://api.crossref.org/works/10.3390%2Fjimaging7030050",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2025,
+            11,
+            20
+          ]
+        ],
+        "date-time": "2025-11-20T18:48:35Z",
+        "timestamp": 1763664515680,
+        "version": "build-2065373602"
+      },
+      "reference-count": 75,
+      "publisher": "MDPI AG",
+      "issue": "3",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2021,
+                3,
+                8
+              ]
+            ],
+            "date-time": "2021-03-08T00:00:00Z",
+            "timestamp": 1615161600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "funder": [
+        {
+          "name": "European Comission",
+          "award": [
+            "892757"
+          ],
+          "award-info": [
+            {
+              "award-number": [
+                "892757"
+              ]
+            }
+          ]
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "J. Imaging"
+      ],
+      "abstract": "<jats:p>The possibility of carrying out a meaningful forensic analysis on printed and scanned images plays a major role in many applications. First of all, printed documents are often associated with criminal activities, such as terrorist plans, child pornography, and even fake packages. Additionally, printing and scanning can be used to hide the traces of image manipulation or the synthetic nature of images, since the artifacts commonly found in manipulated and synthetic images are gone after the images are printed and scanned. A problem hindering research in this area is the lack of large scale reference datasets to be used for algorithm development and benchmarking. Motivated by this issue, we present a new dataset composed of a large number of synthetic and natural printed face images. To highlight the difficulties associated with the analysis of the images of the dataset, we carried out an extensive set of experiments comparing several printer attribution methods. We also verified that state-of-the-art methods to distinguish natural and synthetic face images fail when applied to print and scanned images. We envision that the availability of the new dataset and the preliminary experiments we carried out will motivate and facilitate further research in this area.</jats:p>",
+      "DOI": "10.3390/jimaging7030050",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            8
+          ]
+        ],
+        "date-time": "2021-03-08T12:12:18Z",
+        "timestamp": 1615205538000
+      },
+      "page": "50",
+      "update-policy": "https://doi.org/10.3390/mdpi_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 17,
+      "title": [
+        "VIPPrint: Validating Synthetic Image Detection and Source Linking Methods on a Large Scale Dataset of Printed Documents"
+      ],
+      "prefix": "10.3390",
+      "volume": "7",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0002-2196-7232",
+          "authenticated-orcid": false,
+          "given": "Anselmo",
+          "family": "Ferreira",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "Department of Information Engineering and Mathematics, University of Siena, 53100 Siena, SI, Italy"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-5714-8378",
+          "authenticated-orcid": false,
+          "given": "Ehsan",
+          "family": "Nowroozi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Information Engineering and Mathematics, University of Siena, 53100 Siena, SI, Italy"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-7368-0866",
+          "authenticated-orcid": false,
+          "given": "Mauro",
+          "family": "Barni",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "Department of Information Engineering and Mathematics, University of Siena, 53100 Siena, SI, Italy"
+            }
+          ],
+          "role": [
+            {
+              "role": "author",
+              "vocabulary": "crossref"
+            }
+          ]
+        }
+      ],
+      "member": "1968",
+      "published-online": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            8
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "ref_1",
+          "unstructured": "Electronic Frontier Foundation (2020, October 05). List of Printers Which Do or Do Not Display Tracking Dots. Available online: https://www.eff.org/pages/list-printers-which-do-or-do-not-display-tracking-dots."
+        },
+        {
+          "key": "ref_2",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Richter, T., Escher, S., Schönfeld, D., and Strufe, T. (2018). Forensic Analysis and Anonymisation of Printed Documents. ACM Workshop on Information Hiding and Multimedia Security, Association for Computing Machinery.",
+          "DOI": "10.1145/3206004.3206019"
+        },
+        {
+          "key": "ref_3",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ali, G., Mikkilineni, A., Delp, E., Allebach, J., Chiang, P.J., and Chiu, G. (2004). Application of principal components analysis and gaussian mixture models to printer identification. NIP &amp Digital Fabrication Conference, Society for Imaging Science and Technology.",
+          "DOI": "10.2352/ISSN.2169-4451.2004.20.1.art00068_1"
+        },
+        {
+          "key": "ref_4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mikkilineni, A., Chiang, P., Ali, G., Chiu, G., Allebach, J., and Delp, E. (2004). Printer identification based on texture features. NIP &amp Digital Fabrication Conference, Society for Imaging Science and Technology.",
+          "DOI": "10.2352/ISSN.2169-4451.2004.20.1.art00069_1"
+        },
+        {
+          "key": "ref_5",
+          "doi-asserted-by": "crossref",
+          "first-page": "430",
+          "DOI": "10.1117/12.593796",
+          "article-title": "Printer identification based on graylevel co-occurrence features for security and forensic applications",
+          "volume": "Volume 5681",
+          "author": "Delp",
+          "year": "2005",
+          "journal-title": "Security, Steganography, and Watermarking of Multimedia Contents VII"
+        },
+        {
+          "key": "ref_6",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Mikkilineni, A., Arslan, O., Chiang, P.J., Kumontoy, R., Allebach, J., Chiu, G., and Delp, E. (2005). Printer Forensics using SVM Techniques. NIP &amp Digital Fabrication Conference, Society for Imaging Science and Technology.",
+          "DOI": "10.2352/ISSN.2169-4451.2005.21.1.art00064_1"
+        },
+        {
+          "key": "ref_7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kee, E., and Farid, H. (2008, January 22–23). Printer Profiling for Forensics and Ballistics. Proceedings of the ACM Workshop on Multimedia and Security, Oxford, UK.",
+          "DOI": "10.1145/1411328.1411332"
+        },
+        {
+          "key": "ref_8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Deng, W., Chen, Q., Yuan, F., and Yan, Y. (2008, January 1–3). Printer Identification Based on Distance Transform. Proceedings of the International Conference on Intelligent Networks and Intelligent Systems, Wuhan, China.",
+          "DOI": "10.1109/ICINIS.2008.158"
+        },
+        {
+          "key": "ref_9",
+          "unstructured": "Wu, Y., Kong, X., and Guo, Y. (2009, January 7–10). Printer forensics based on page document’s geometric distortion. Proceedings of the IEEE International Conference on Image Processing (ICIP), Cairo, Egypt."
+        },
+        {
+          "key": "ref_10",
+          "unstructured": "Qiu, G., Lam, K.M., Kiya, H., Xue, X.Y., Kuo, C.C.J., and Lew, M.S. (2010). A Novel Multi-size Block Benford’s Law Scheme for Printer Identification. Pacific-Rim Conference on Multimedia, Springer."
+        },
+        {
+          "key": "ref_11",
+          "first-page": "278",
+          "article-title": "Forensic printer detection using intrinsic signatures",
+          "volume": "Volume 7880",
+          "author": "Memon",
+          "year": "2011",
+          "journal-title": "Media Watermarking, Security, and Forensics III"
+        },
+        {
+          "key": "ref_12",
+          "unstructured": "Tsai, M., and Liu, J. (2013, January 19–23). Digital forensics for printed source identification. Proceedings of the IEEE International Symposium on Circuits and Systems (ISCAS), Beijing, China."
+        },
+        {
+          "key": "ref_13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Elkasrawi, S., and Shafait, F. (2014, January 7–10). Printer Identification Using Supervised Learning for Document Forgery Detection. Proceedings of the International Workshop on Document Analysis Systems, Tours, France.",
+          "DOI": "10.1109/DAS.2014.48"
+        },
+        {
+          "key": "ref_14",
+          "doi-asserted-by": "crossref",
+          "first-page": "2129",
+          "DOI": "10.1007/s11042-013-1642-2",
+          "article-title": "Digital Forensics of Printed Source Identification for Chinese Characters",
+          "volume": "73",
+          "author": "Tsai",
+          "year": "2014",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "ref_15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hao, J., Kong, X., and Shang, S. (2015, January 12–15). Printer Identification Using Page Geometric Distortion on Text Lines. Proceedings of the IEEE China Summit and International Conference on Signal and Information Processing (ChinaSIP), Chengdu, China.",
+          "DOI": "10.1109/ChinaSIP.2015.7230526"
+        },
+        {
+          "key": "ref_16",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1117/1.JEI.24.2.023008",
+          "article-title": "Document forgery detection using distortion mutation of geometric parameters in characters",
+          "volume": "24",
+          "author": "Shang",
+          "year": "2015",
+          "journal-title": "J. Electron. Imaging"
+        },
+        {
+          "key": "ref_17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tsai, M., Hsu, C., Yin, J., and Yuadi, I. (2015, January 24–27). Japanese Character Based Printed Source Identification. Proceedings of the Proceedings of the IEEE International Symposium on Circuits and Systems (ISCAS), Lisbon, Portugal.",
+          "DOI": "10.1109/ISCAS.2015.7169268"
+        },
+        {
+          "key": "ref_18",
+          "doi-asserted-by": "crossref",
+          "first-page": "1860",
+          "DOI": "10.1109/TIFS.2017.2692722",
+          "article-title": "Data-Driven Feature Characterization Techniques for Laser Printer Attribution",
+          "volume": "12",
+          "author": "Ferreira",
+          "year": "2017",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_19",
+          "doi-asserted-by": "crossref",
+          "first-page": "1603",
+          "DOI": "10.1109/TIFS.2017.2779441",
+          "article-title": "Single Classifier-Based Passive System for Source Printer Classification Using Local Texture Features",
+          "volume": "13",
+          "author": "Joshi",
+          "year": "2018",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Joshi, S., Lomba, M., Goyal, V., and Khanna, N. (2018, January 15–20). Augmented Data and Improved Noise Residual-Based CNN for Printer Source Identification. Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), Calgary, AB, Canada.",
+          "DOI": "10.1109/ICASSP.2018.8462537"
+        },
+        {
+          "key": "ref_21",
+          "doi-asserted-by": "crossref",
+          "first-page": "7377",
+          "DOI": "10.1007/s11042-019-08508-x",
+          "article-title": "Passive classification of source printer using text-line-level geometric distortion signatures from scanned images of printed documents",
+          "volume": "79",
+          "author": "Jain",
+          "year": "2019",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "ref_22",
+          "doi-asserted-by": "crossref",
+          "first-page": "160",
+          "DOI": "10.1109/TIFS.2019.2919869",
+          "article-title": "Source Printer Classification Using Printer Specific Local Texture Descriptor",
+          "volume": "15",
+          "author": "Joshi",
+          "year": "2020",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_23",
+          "unstructured": "Ali, G., Mikkilineni, A., Chiang, P.J., Allebach, J., Chiu, G., and Delp, E. (October, January 28). Intrinsic and Extrinsic Signatures for Information Hiding and Secure Printing with Electrophotographic Devices. Proceedings of the International Conference on Digital Printing Technologies, New Orleans, MS, USA."
+        },
+        {
+          "key": "ref_24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Eid, A.H., Ahmed, M.N., and Rippetoe, E.E. (2008, January 12–15). EP Printer Jitter Characterization Using 2D Gabor Filter and Spectral Analysis. Proceedings of the IEEE International Conference on Image Processing, San Diego, CA, USA.",
+          "DOI": "10.1109/ICIP.2008.4712141"
+        },
+        {
+          "key": "ref_25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bulan, O., Mao, J., and Sharma, G. (2009, January 19–24). Geometric Distortion Signatures for Printer Identification. Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICAASP), Taipei, Taiwan.",
+          "DOI": "10.1109/ICASSP.2009.4959855"
+        },
+        {
+          "key": "ref_26",
+          "unstructured": "Choi, J.H., Im, D.H., Lee, H.Y., Oh, J.T., Ryu, J.H., and Lee, H.K. (2009, January 7–10). Color Laser Printer Identification by Analyzing Statistical Features on Discrete Wavelet Transform. Proceedings of the IEEE International Conference on Image Processing (ICIP), Cairo, Egypt."
+        },
+        {
+          "key": "ref_27",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Choi, J.H., Lee, H.K., Lee, H.Y., and Suh, Y.H. (2009, January 7–10). Color Laser Printer Forensics with Noise Texture Analysis. Proceedings of the ACM Workshop on Multimedia and Security, Cairo, Egypt.",
+          "DOI": "10.1145/1854229.1854235"
+        },
+        {
+          "key": "ref_28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ryu, S., Lee, H., Im, D., Choi, J., and Lee, H. (2010, January 14–19). Electrophotographic Printer Identification by Halftone Texture Analysis. Proceedings of the IEEE International Conference on Acoustics, Speech and Signal Processing (ICAASP), Dallas, TX, USA.",
+          "DOI": "10.1109/ICASSP.2010.5495377"
+        },
+        {
+          "key": "ref_29",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tsai, M., Liu, J., Wang, C., and Chuang, C. (2011, January 15–18). Source Color Laser Printer Identification Using Discrete Wavelet Transform and Feature Selection Algorithms. Proceedings of the IEEE International Symposium of Circuits and Systems (ISCAS), Rio de Janeiro, Brazil.",
+          "DOI": "10.1109/ISCAS.2011.5938145"
+        },
+        {
+          "key": "ref_30",
+          "doi-asserted-by": "crossref",
+          "first-page": "363",
+          "DOI": "10.1007/s11042-011-0835-9",
+          "article-title": "Color laser printer forensic based on noisy feature and support vector machine classifier",
+          "volume": "67",
+          "author": "Choi",
+          "year": "2013",
+          "journal-title": "Multimed. Tools Appl."
+        },
+        {
+          "key": "ref_31",
+          "unstructured": "Kim, D., and Lee, H. (2014, January 1–5). Color Laser Printer Identification Using Photographed Halftone Images. Proceedings of the European Signal Processing Conference (EUSIPCO), Lisbon, Portugal."
+        },
+        {
+          "key": "ref_32",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wu, H., Kong, X., and Shang, S. (2015, January 12–15). A Printer Forensics Method Using Halftone Dot Arrangement Model. Proceedings of the IEEE China Summit and International Conference on Signal and Information Processing (ChinaSIP), Chengdu, China.",
+          "DOI": "10.1109/ChinaSIP.2015.7230527"
+        },
+        {
+          "key": "ref_33",
+          "doi-asserted-by": "crossref",
+          "first-page": "981",
+          "DOI": "10.1049/el.2015.0697",
+          "article-title": "Colour laser printer identification using halftone texture fingerprint",
+          "volume": "51",
+          "author": "Kim",
+          "year": "2015",
+          "journal-title": "Electron. Lett."
+        },
+        {
+          "key": "ref_34",
+          "doi-asserted-by": "crossref",
+          "first-page": "105",
+          "DOI": "10.1016/j.forsciint.2014.11.030",
+          "article-title": "Laser printer attribution: Exploring new features and beyond",
+          "volume": "247",
+          "author": "Ferreira",
+          "year": "2015",
+          "journal-title": "Forensics Sci. Int."
+        },
+        {
+          "key": "ref_35",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tsai, M., Yuadi, M., Tao, Y., and Yin, J. (2017, January 15–17). Source Identification for Printed Documents. Proceedings of the International Conference on Collaboration and Internet Computing (CIC), San Jose, CA, USA.",
+          "DOI": "10.1109/CIC.2017.00019"
+        },
+        {
+          "key": "ref_36",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Bibi, M., Hamid, A., Moetesum, M., and Siddiqi, I. (2019, January 22–25). Document Forgery Detection using Printer Source Identification—A Text-Independent Approach. Proceedings of the International Conference on Document Analysis and Recognition Workshops, Sydney, Australia.",
+          "DOI": "10.1109/ICDARW.2019.70134"
+        },
+        {
+          "key": "ref_37",
+          "unstructured": "James, H., Gupta, O., and Raviv, D. (2020). Printing and Scanning Attack for Image Counter Forensics. arXiv."
+        },
+        {
+          "key": "ref_38",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Marra, F., Gragnaniello, D., Cozzolino, D., and Verdoliva, L. (2018, January 10–12). Detection of GAN-Generated Fake Images over Social Networks. Proceedings of the IEEE Conference on Multimedia Information Processing and Retrieval (MIPR), Miami, FL, USA.",
+          "DOI": "10.1109/MIPR.2018.00084"
+        },
+        {
+          "key": "ref_39",
+          "doi-asserted-by": "crossref",
+          "first-page": "532-1",
+          "DOI": "10.2352/ISSN.2470-1173.2019.5.MWSF-532",
+          "article-title": "Detecting GAN generated Fake Images using Co-occurrence Matrices",
+          "volume": "2019",
+          "author": "Nataraj",
+          "year": "2019",
+          "journal-title": "Electron. Imaging"
+        },
+        {
+          "key": "ref_40",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Barni, M., Kallas, K., Nowroozi, E., and Tondi, B. (2020, January 9–12). CNN Detection of GAN-Generated Face Images based on Cross-Band Co-occurrences Analysis. Proceedings of the IEEE Workshop on Information Forensics and Security (WIFS), Delft, The Netherlands.",
+          "DOI": "10.1109/WIFS49906.2020.9360905"
+        },
+        {
+          "key": "ref_41",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras, T., Laine, S., and Aila, T. (2019, January 15–20). A Style-Based Generator Architecture for Generative Adversarial Networks. Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Long Beach, CA, USA.",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "ref_42",
+          "unstructured": "Karras, T., Aila, T., Laine, S., and Lehtinen, J. (2017). Progressive Growing of GANs for Improved Quality, Stability, and Variation. arXiv."
+        },
+        {
+          "key": "ref_43",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Choi, Y., Choi, M., Kim, M., Ha, J.W., Kim, S., and Choo, J. (2017). StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation. arXiv.",
+          "DOI": "10.1109/CVPR.2018.00916"
+        },
+        {
+          "key": "ref_44",
+          "doi-asserted-by": "crossref",
+          "first-page": "17",
+          "DOI": "10.1016/j.diin.2006.06.014",
+          "article-title": "A survey of forensic characterization methods for physical devices",
+          "volume": "3",
+          "author": "Khanna",
+          "year": "2006",
+          "journal-title": "Digit. Investig."
+        },
+        {
+          "key": "ref_45",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Srihari, S.N., and Franke, K. (2008). Survey of Scanner and Printer Forensics at Purdue University. International Workshop on Computational Forensics, Springer.",
+          "DOI": "10.1007/978-3-540-85303-9"
+        },
+        {
+          "key": "ref_46",
+          "doi-asserted-by": "crossref",
+          "first-page": "72",
+          "DOI": "10.1109/MSP.2008.931082",
+          "article-title": "Printer and Scanner Forensics",
+          "volume": "26",
+          "author": "Chiang",
+          "year": "2009",
+          "journal-title": "IEEE Signal Process. Mag."
+        },
+        {
+          "key": "ref_47",
+          "first-page": "9",
+          "article-title": "A Survey of Image Processing Techniques for Identification of Printing Technology in Document Forensic Perspective",
+          "volume": "1",
+          "author": "Devi",
+          "year": "2010",
+          "journal-title": "Int. J. Comput. Appl."
+        },
+        {
+          "key": "ref_48",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Oliver, J., and Chen, J. (2002). Use of signature analysis to discriminate digital printing technologies. NIP & Digital Fabrication Conference, Society for Imaging Science and Technology.",
+          "DOI": "10.2352/ISSN.2169-4451.2002.18.1.art00055_1"
+        },
+        {
+          "key": "ref_49",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lampert, C.H., Mei, L., and Breuel, T.M. (2006, January 3–6). Printing Technique Classification for Document Counterfeit Detection. Proceedings of the International Conference on Computational Intelligence and Security, Guangzhou, China.",
+          "DOI": "10.1109/ICCIAS.2006.294214"
+        },
+        {
+          "key": "ref_50",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Peterson, G., and Shenoi, S. (2009). Using DCT Features for Printing Technique and Copy Detection. Advances in Digital Forensics V, Springer.",
+          "DOI": "10.1007/978-3-642-04155-6"
+        },
+        {
+          "key": "ref_51",
+          "unstructured": "Schreyer, M., Schulze, C., Stahl, A., and Effelsberg, W. (2009). Intelligent Printing Technique Recognition and Photocopy Detection for Forensic Document Examination. Informatiktage: Fachwissenschaftlicher Informatik-Kongress, Informatiktage."
+        },
+        {
+          "key": "ref_52",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Roy, A., Halder, B., and Garain, U. (2010, January 12–15). Authentication of Currency Notes through Printing Technique Verification. Indian Conference on Computer Vision, Graphics and Image Processing (ICVGIP), Chennai, India.",
+          "DOI": "10.1145/1924559.1924610"
+        },
+        {
+          "key": "ref_53",
+          "doi-asserted-by": "crossref",
+          "first-page": "946",
+          "DOI": "10.1109/TIFS.2011.2156789",
+          "article-title": "Extrinsic Signature Embedding and Detection in Electrophotographic Halftoned Images Through Exposure Modulation",
+          "volume": "6",
+          "author": "Chiang",
+          "year": "2011",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "ref_54",
+          "doi-asserted-by": "crossref",
+          "first-page": "663",
+          "DOI": "10.1007/s10044-012-0287-5",
+          "article-title": "Automatic authentication of color laser print-outs using machine identification codes",
+          "volume": "16",
+          "author": "Beusekom",
+          "year": "2012",
+          "journal-title": "Pattern Anal. Appl."
+        },
+        {
+          "key": "ref_55",
+          "doi-asserted-by": "crossref",
+          "first-page": "102092",
+          "DOI": "10.1016/j.cose.2020.102092",
+          "article-title": "A survey of machine learning techniques in adversarial image forensics",
+          "volume": "100",
+          "author": "Nowroozi",
+          "year": "2021",
+          "journal-title": "Comput. Secur."
+        },
+        {
+          "key": "ref_56",
+          "doi-asserted-by": "crossref",
+          "first-page": "259",
+          "DOI": "10.1109/LSP.2016.2641006",
+          "article-title": "First Steps Toward Camera Model Identification With Convolutional Neural Networks",
+          "volume": "24",
+          "author": "Bondi",
+          "year": "2017",
+          "journal-title": "IEEE Signal Process. Lett."
+        },
+        {
+          "key": "ref_57",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Ferreira, A., Chen, H., Li, B., and Huang, J. (2018, January 11–13). An Inception-Based Data-Driven Ensemble Approach to Camera Model Identification. Proceedings of the IEEE International Workshop on Information Forensics and Security (WIFS), Hong Kong, China.",
+          "DOI": "10.1109/WIFS.2018.8630774"
+        },
+        {
+          "key": "ref_58",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Agarwal, S., Fan, W., and Farid, H. (2018, January 15–20). A Diverse Large-Scale Dataset for Evaluating Rebroadcast Attacks. Proceedings of the International Conference on Acoustics, Speech and Signal Processing (ICASSP), Calgary, AB, Canada.",
+          "DOI": "10.1109/ICASSP.2018.8462205"
+        },
+        {
+          "key": "ref_59",
+          "doi-asserted-by": "crossref",
+          "first-page": "107616",
+          "DOI": "10.1016/j.sigpro.2020.107616",
+          "article-title": "Identification of deep network generated images using disparities in color components",
+          "volume": "174",
+          "author": "Li",
+          "year": "2020",
+          "journal-title": "Signal Process."
+        },
+        {
+          "key": "ref_60",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Hsu, C., Lee, C., and Zhuang, Y. (2018, January 6–8). Learning to Detect Fake Face Images in the Wild. Proceedings of the International Symposium on Computer, Consumer and Control (IS3C), Taichung, Taiwan.",
+          "DOI": "10.1109/IS3C.2018.00104"
+        },
+        {
+          "key": "ref_61",
+          "unstructured": "Bonettini, N., Cannas, E.D., Mandelli, S., Bondi, L., Bestagini, P., and Tubaro, S. (2020). Video Face Manipulation Detection Through Ensemble of CNNs. arXiv."
+        },
+        {
+          "key": "ref_62",
+          "doi-asserted-by": "crossref",
+          "first-page": "600",
+          "DOI": "10.1109/TIP.2003.819861",
+          "article-title": "Image quality assessment: From error visibility to structural similarity",
+          "volume": "13",
+          "author": "Wang",
+          "year": "2004",
+          "journal-title": "IEEE Trans. Image Process."
+        },
+        {
+          "key": "ref_63",
+          "doi-asserted-by": "crossref",
+          "first-page": "1895",
+          "DOI": "10.1162/089976698300017197",
+          "article-title": "Approximate Statistical Test For Comparing Supervised Classification Learning Algorithms",
+          "volume": "10",
+          "author": "Dietterich",
+          "year": "1998",
+          "journal-title": "Neural Comput."
+        },
+        {
+          "key": "ref_64",
+          "doi-asserted-by": "crossref",
+          "first-page": "675",
+          "DOI": "10.1080/01621459.1937.10503522",
+          "article-title": "The Use of Ranks to Avoid the Assumption of Normality Implicit in the Analysis of Variance",
+          "volume": "32",
+          "author": "Friedman",
+          "year": "1937",
+          "journal-title": "J. Am. Stat. Assoc."
+        },
+        {
+          "key": "ref_65",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.2307/2331554",
+          "article-title": "The Probable Error of a Mean",
+          "volume": "6",
+          "author": "Gosset",
+          "year": "1908",
+          "journal-title": "Biometrika"
+        },
+        {
+          "key": "ref_66",
+          "doi-asserted-by": "crossref",
+          "first-page": "1233",
+          "DOI": "10.1016/0031-3203(95)00160-3",
+          "article-title": "Image retrieval using color and shape",
+          "volume": "29",
+          "author": "Jain",
+          "year": "1996",
+          "journal-title": "Pattern Recognit."
+        },
+        {
+          "key": "ref_67",
+          "unstructured": "Dalal, N., and Triggs, B. (2005, January 20–26). Histograms of oriented gradients for human detection. Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR), San Diego, CA, USA."
+        },
+        {
+          "key": "ref_68",
+          "doi-asserted-by": "crossref",
+          "first-page": "51",
+          "DOI": "10.1016/0031-3203(95)00067-4",
+          "article-title": "A comparative study of texture measures with classification based on featured distributions",
+          "volume": "29",
+          "author": "Ojala",
+          "year": "1996",
+          "journal-title": "Pattern Recognit."
+        },
+        {
+          "key": "ref_69",
+          "unstructured": "Simonyan, K., and Zisserman, A. (2015, January 7–9). Very Deep Convolutional Networks for Large-Scale Image Recognition. Proceedings of the International Conference on Learning Representations, San Diego, CA, USA."
+        },
+        {
+          "key": "ref_70",
+          "doi-asserted-by": "crossref",
+          "unstructured": "He, K., Zhang, X., Ren, S., and Sun, J. (2016, January 27–30). Deep Residual Learning for Image Recognition. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA.",
+          "DOI": "10.1109/CVPR.2016.90"
+        },
+        {
+          "key": "ref_71",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Huang, G., Liu, Z., Van Der Maaten, L., and Weinberger, K.Q. (2017, January 21–26). Densely Connected Convolutional Networks. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA.",
+          "DOI": "10.1109/CVPR.2017.243"
+        },
+        {
+          "key": "ref_72",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., and Wojna, Z. (2016, January 27–30). Rethinking the Inception Architecture for Computer Vision. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Las Vegas, NV, USA.",
+          "DOI": "10.1109/CVPR.2016.308"
+        },
+        {
+          "key": "ref_73",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Chollet, F. (2017, January 21–26). Xception: Deep Learning with Depthwise Separable Convolutions. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), Honolulu, HI, USA.",
+          "DOI": "10.1109/CVPR.2017.195"
+        },
+        {
+          "key": "ref_74",
+          "unstructured": "Ferreira, A. (2020, October 05). Printer Forensics Source Code. Available online: https://github.com/anselmoferreira/printer_forensics_source_code."
+        },
+        {
+          "key": "ref_75",
+          "doi-asserted-by": "crossref",
+          "first-page": "307",
+          "DOI": "10.1007/BF00938315",
+          "article-title": "A stochastic steepest-descent algorithm",
+          "volume": "59",
+          "author": "Wardi",
+          "year": "1988",
+          "journal-title": "J. Optim. Theory Appl."
+        }
+      ],
+      "container-title": [
+        "Journal of Imaging"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://www.mdpi.com/2313-433X/7/3/50/pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            10,
+            11
+          ]
+        ],
+        "date-time": "2025-10-11T05:34:52Z",
+        "timestamp": 1760160892000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://www.mdpi.com/2313-433X/7/3/50"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            8
+          ]
+        ]
+      },
+      "references-count": 75,
+      "journal-issue": {
+        "issue": "3",
+        "published-online": {
+          "date-parts": [
+            [
+              2021,
+              3
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "jimaging7030050"
+      ],
+      "URL": "https://doi.org/10.3390/jimaging7030050",
+      "relation": {},
+      "ISSN": [
+        "2313-433X"
+      ],
+      "issn-type": [
+        {
+          "type": "electronic",
+          "value": "2313-433X"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2021,
+            3,
+            8
+          ]
+        ]
+      }
+    }
+  }
+}

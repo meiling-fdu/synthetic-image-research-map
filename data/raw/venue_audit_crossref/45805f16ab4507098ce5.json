@@ -1,0 +1,344 @@
+{
+  "doi": "10.1109/mitp.2025.3561143",
+  "source_url": "https://api.crossref.org/works/10.1109%2Fmitp.2025.3561143",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            29
+          ]
+        ],
+        "date-time": "2026-07-29T14:44:43Z",
+        "timestamp": 1785336283970,
+        "version": "3.55.0"
+      },
+      "reference-count": 20,
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "issue": "3",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                5,
+                1
+              ]
+            ],
+            "date-time": "2025-05-01T00:00:00Z",
+            "timestamp": 1746057600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/IEEE.html"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                5,
+                1
+              ]
+            ],
+            "date-time": "2025-05-01T00:00:00Z",
+            "timestamp": 1746057600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2025,
+                5,
+                1
+              ]
+            ],
+            "date-time": "2025-05-01T00:00:00Z",
+            "timestamp": 1746057600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [
+        "IT Prof."
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2025,
+            5
+          ]
+        ]
+      },
+      "DOI": "10.1109/mitp.2025.3561143",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2025,
+            6,
+            10
+          ]
+        ],
+        "date-time": "2025-06-10T17:52:59Z",
+        "timestamp": 1749577979000
+      },
+      "page": "52-56",
+      "source": "Crossref",
+      "is-referenced-by-count": 2,
+      "title": [
+        "Detecting AI-Generated Images Using Facial Similarity and Feature Extraction for Digital Security"
+      ],
+      "prefix": "10.1109",
+      "volume": "27",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0003-7574-6878",
+          "authenticated-orcid": false,
+          "given": "Man-Ling",
+          "family": "Liao",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "National Taiwan University of Science and Technology, Taipei City, Taiwan"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-0400-5514",
+          "authenticated-orcid": false,
+          "given": "Jiann-Liang",
+          "family": "Chen",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "National Taiwan University of Science and Technology, Taipei City, Taiwan"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-6583-2156",
+          "authenticated-orcid": false,
+          "given": "Candra",
+          "family": "Ahmadi",
+          "sequence": "additional",
+          "affiliation": [
+            {
+              "name": "National Taiwan University of Science and Technology, Taipei City, Taiwan"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "263",
+      "reference": [
+        {
+          "key": "ref1",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/access.2022.3191790"
+        },
+        {
+          "key": "ref2",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.cag.2023.05.010"
+        },
+        {
+          "key": "ref3",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1016/j.ijhcs.2024.103375"
+        },
+        {
+          "key": "ref4",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1145/3491209"
+        },
+        {
+          "key": "ref5",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.3390/info15060299"
+        },
+        {
+          "key": "ref6",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/cvprw63382.2024.00446"
+        },
+        {
+          "key": "ref7",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/icca59364.2023.10401723"
+        },
+        {
+          "key": "ref8",
+          "volume-title": "Stable diffusion: A latent text-to-image diffusion model",
+          "year": "2024"
+        },
+        {
+          "key": "ref9",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/cvpr52688.2022.01042"
+        },
+        {
+          "key": "ref10",
+          "article-title": "RetinaFace: Single-stage dense face localisation in the wild",
+          "author": "Deng",
+          "year": "2019"
+        },
+        {
+          "key": "ref11",
+          "volume-title": "DeepFace: A lightweight face recognition and facial attribute analysis (age, gender, emotion, and race) library for python",
+          "author": "Serengil",
+          "year": "2024"
+        },
+        {
+          "key": "ref12",
+          "article-title": "EfficientNet: Rethinking model scaling for convolutional neural networks",
+          "author": "Tan",
+          "year": "2019"
+        },
+        {
+          "key": "ref13",
+          "volume-title": "Synthetic faces high quality (SFHQ) part 4",
+          "year": "2024"
+        },
+        {
+          "key": "ref14",
+          "doi-asserted-by": "publisher",
+          "DOI": "10.1109/cvpr42600.2020.00813"
+        },
+        {
+          "key": "ref15",
+          "volume-title": "Flickr-faces-HQ dataset (FFHQ)",
+          "year": "2024"
+        },
+        {
+          "key": "ref16",
+          "volume-title": "IMDB-WIKI  500k face images with age and gender labels",
+          "author": "Rothe",
+          "year": "2015"
+        },
+        {
+          "key": "ref17",
+          "volume-title": "Pins face recognition",
+          "year": "2024"
+        },
+        {
+          "key": "ref18",
+          "volume-title": "LFW - People (face recognition)",
+          "year": "2024"
+        },
+        {
+          "key": "ref19",
+          "volume-title": "Biggest gender/face recognition dataset",
+          "year": "2024"
+        },
+        {
+          "key": "ref20",
+          "volume-title": "Spotting diffusion main dataset",
+          "year": "2024"
+        }
+      ],
+      "container-title": [
+        "IT Professional"
+      ],
+      "original-title": [],
+      "link": [
+        {
+          "URL": "http://xplorestaging.ieee.org/ielx8/6294/11029587/11029708.pdf?arnumber=11029708",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2025,
+            6,
+            11
+          ]
+        ],
+        "date-time": "2025-06-11T05:27:45Z",
+        "timestamp": 1749619665000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://ieeexplore.ieee.org/document/11029708/"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2025,
+            5
+          ]
+        ]
+      },
+      "references-count": 20,
+      "journal-issue": {
+        "issue": "3"
+      },
+      "URL": "https://doi.org/10.1109/mitp.2025.3561143",
+      "relation": {},
+      "ISSN": [
+        "1520-9202",
+        "1941-045X"
+      ],
+      "issn-type": [
+        {
+          "value": "1520-9202",
+          "type": "print"
+        },
+        {
+          "value": "1941-045X",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2025,
+            5
+          ]
+        ]
+      }
+    }
+  }
+}

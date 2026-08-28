@@ -1,0 +1,779 @@
+{
+  "doi": "10.1098/rsta.2025.0117",
+  "source_url": "https://api.crossref.org/works/10.1098%2Frsta.2025.0117",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            25
+          ]
+        ],
+        "date-time": "2026-08-25T01:37:31Z",
+        "timestamp": 1787621851107,
+        "version": "build-2736575974"
+      },
+      "reference-count": 75,
+      "publisher": "The Royal Society",
+      "issue": "2324",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                7,
+                16
+              ]
+            ],
+            "date-time": "2026-07-16T00:00:00Z",
+            "timestamp": 1784160000000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "http://creativecommons.org/licenses/by/4.0/"
+        }
+      ],
+      "content-domain": {
+        "domain": [],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ]
+      },
+      "abstract": "<jats:title>Abstract</jats:title>\n                  <jats:p>The current trend of deploying machine learning models as remote services obscures which specific models users are interacting with, exacerbating an accountability gap that becomes ever more pressing as these technologies make their way into safety-critical domains. In this paper, we examine how model attribution, a recently proposed accountability property, can address this gap. We review recent technical approaches to provide model attribution and identify limitations, such as computational costs, latency overheads and insufficient guarantees, that render them inadequate for many safety-critical applications. We conclude that although model attribution is an important step towards accountability, current technical solutions fall short of the requirements of safety-critical domains.</jats:p>\n                  <jats:p>This article is part of the theme issue ‘Safe, secure and robust AI for safety-critical systems’.</jats:p>",
+      "DOI": "10.1098/rsta.2025.0117",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ],
+        "date-time": "2026-07-16T23:39:34Z",
+        "timestamp": 1784245174000
+      },
+      "source": "Crossref",
+      "is-referenced-by-count": 1,
+      "title": [
+        "Can model attribution bridge AI's accountability gap in safety-critical domains?"
+      ],
+      "prefix": "10.1098",
+      "volume": "384",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0001-7657-9934",
+          "authenticated-orcid": false,
+          "given": "Marc",
+          "family": "Juarez",
+          "sequence": "first",
+          "affiliation": [
+            {
+              "name": "School of Informatics, The University of Edinburgh , Edinburgh, UK"
+            }
+          ],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "175",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "2026082410125349600_bib1",
+          "volume-title": "HARMONY: human-assisted real-time monitoring of infrastructure and obstacles from railway vehicles",
+          "author": "Mission Embedded GmbH",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib2",
+          "volume-title": "NGS: next generation safety (NGS)—artificial intelligence for the control of air traffic management systems",
+          "author": "ONDEWO GmbH",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib3",
+          "doi-asserted-by": "crossref",
+          "first-page": "1376",
+          "DOI": "10.1109/COMST.2023.3239220",
+          "article-title": "Understanding O-RAN: architecture, interfaces, algorithms, security, and research challenges",
+          "volume": "25",
+          "author": "Polese",
+          "year": "2023",
+          "journal-title": "IEEE Commun. Surv. Tutor."
+        },
+        {
+          "key": "2026082410125349600_bib4",
+          "doi-asserted-by": "crossref",
+          "first-page": "e53297",
+          "DOI": "10.2196/53297",
+          "article-title": "Triage performance across large language models, ChatGPT, and untrained doctors in emergency medicine: comparative study",
+          "volume": "26",
+          "author": "Masanneck",
+          "year": "2024",
+          "journal-title": "J. Med. Internet Res."
+        },
+        {
+          "key": "2026082410125349600_bib5",
+          "volume-title": "Shake up of tech and AI usage across NHS and other public services to deliver plan for change",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib6",
+          "volume-title": "Advancing safety in transport through automation",
+          "year": "2021"
+        },
+        {
+          "key": "2026082410125349600_bib7",
+          "article-title": "AI system rolled out to boost rail safety and maintenance",
+          "author": "TNN",
+          "year": "2025",
+          "journal-title": "The Times of India"
+        },
+        {
+          "key": "2026082410125349600_bib8",
+          "first-page": "1",
+          "article-title": "Safely entering the deep: a review of verification and validation for machine learning and a challenge elicitation in the automotive industry",
+          "volume": "1",
+          "author": "Borg",
+          "year": "2020",
+          "journal-title": "J. Autom. Softw. Eng."
+        },
+        {
+          "key": "2026082410125349600_bib9",
+          "volume-title": "Software considerations in airborne systems and equipment certification"
+        },
+        {
+          "key": "2026082410125349600_bib10",
+          "first-page": "326",
+          "article-title": "Assuring safety-critical machine learning enabled systems: challenges and promise",
+          "volume-title": "2022 IEEE Int. Symp. on Software Reliability Engineering Workshops (ISSREW)",
+          "author": "Goodloe",
+          "year": "2022"
+        },
+        {
+          "key": "2026082410125349600_bib11",
+          "first-page": "1",
+          "article-title": "Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence (Artificial Intelligence Act) and amending certain union legislative acts",
+          "author": "European Parliament and Council of the European Union",
+          "year": "2023",
+          "journal-title": "Off. J. Eur. Union"
+        },
+        {
+          "key": "2026082410125349600_bib12",
+          "first-page": "4405",
+          "article-title": "zkllm: zero knowledge proofs for large language models",
+          "volume-title": "Proc. 2024 on ACM SIGSAC Conf. on Computer and Communications Security",
+          "author": "Sun",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib13",
+          "doi-asserted-by": "crossref",
+          "first-page": "4254",
+          "DOI": "10.1109/TDSC.2023.3348760",
+          "article-title": "vcnn: verifiable convolutional neural network based onzk-snarks",
+          "volume": "21",
+          "author": "Lee",
+          "year": "2024",
+          "journal-title": "IEEE Trans. Depend. Secur. Comput."
+        },
+        {
+          "key": "2026082410125349600_bib14",
+          "article-title": "Scaling up trustless DNN inference with zero-knowledge proofs",
+          "volume-title": "Advances in neural information processing systems",
+          "author": "Kang",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib15",
+          "article-title": "Efficient functional commitments: how to commit to a private function",
+          "author": "Boneh",
+          "year": "2021",
+          "journal-title": "Cryptology ePrint Archive"
+        },
+        {
+          "key": "2026082410125349600_bib16",
+          "first-page": "506",
+          "article-title": "Do GANs leave artificial fingerprints?",
+          "volume-title": "Proc. 2019 IEEE Conf. on Multimedia Information Processing and Retrieval (MIPR)",
+          "author": "Marra",
+          "year": "2019"
+        },
+        {
+          "key": "2026082410125349600_bib17",
+          "article-title": "AuthPrint: fingerprinting generative models against malicious model providers",
+          "author": "Yao",
+          "year": "2025",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib18",
+          "doi-asserted-by": "crossref",
+          "first-page": "206",
+          "DOI": "10.1038/s42256-019-0048-x",
+          "article-title": "Stop explaining black box machine learning models for high stakes decisions and use interpretable models instead",
+          "volume": "1",
+          "author": "Rudin",
+          "year": "2019",
+          "journal-title": "Nat. Mach. Intell."
+        },
+        {
+          "key": "2026082410125349600_bib19",
+          "doi-asserted-by": "crossref",
+          "first-page": "175",
+          "DOI": "10.1007/s10676-004-3422-1",
+          "article-title": "The responsibility gap: ascribing responsibility for the actions of learning automata",
+          "volume": "6",
+          "author": "Matthias",
+          "year": "2004",
+          "journal-title": "Ethics Inf. Technol."
+        },
+        {
+          "key": "2026082410125349600_bib20",
+          "doi-asserted-by": "crossref",
+          "first-page": "1186",
+          "DOI": "10.1145/3593013.3594073",
+          "article-title": "Understanding accountability in algorithmic supply chains",
+          "volume-title": "Proc. 2023 ACM Conf. on Fairness, Accountability, and Transparency (FAccT) FAccT ’23",
+          "author": "Cobbe",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib21",
+          "volume-title": "Governing the AI business model: platforms all the way down?",
+          "author": "Veale",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib22",
+          "volume-title": "GPT-4 is getting worse over time, not better",
+          "author": "Valdarrama",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib23",
+          "article-title": "A review of formal methods applied to machine learning",
+          "author": "Urban",
+          "year": "2021",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib24",
+          "volume-title": "Viz.ai",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib25",
+          "volume-title": "Paige",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib26",
+          "volume-title": "Tempus",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib27",
+          "volume-title": "Sensity.ai: Forensic Deepfake Detection",
+          "year": "2026"
+        },
+        {
+          "key": "2026082410125349600_bib28",
+          "volume-title": "Volkswagen’s clean diesel strategy unraveled by outside emissions tests",
+          "author": "Lienert",
+          "year": "2015"
+        },
+        {
+          "key": "2026082410125349600_bib29",
+          "first-page": "67",
+          "article-title": "“You can’t fix what you can’t measure”: privately measuring demographic performance disparities in federated learning",
+          "volume-title": "Workshop on Algorithmic Fairness through the Lens of Causality and Privacy",
+          "author": "Juarez",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib30",
+          "article-title": "Moffatt v. air canada. British Columbia Civil Resolution Tribunal. CRT-2023-149",
+          "author": "Rivers",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib31",
+          "article-title": "The right to robot identification: using cryptographic hashes to manage AI black-boxes",
+          "author": "Georgiou",
+          "year": "2020",
+          "journal-title": "SSRN"
+        },
+        {
+          "key": "2026082410125349600_bib32",
+          "doi-asserted-by": "crossref",
+          "first-page": "1",
+          "DOI": "10.1145/3769000",
+          "article-title": "Black-box evasion attacks on data-driven open RAN apps: tailored design and experimental evaluation",
+          "volume": "3",
+          "author": "Gajjar",
+          "year": "2025",
+          "journal-title": "Proc. ACM Netw."
+        },
+        {
+          "key": "2026082410125349600_bib33",
+          "volume-title": "PoisonGPT: how we hid a lobotomized LLM on hugging face to spread fake news",
+          "author": "Hardouin",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib34",
+          "volume-title": "Generative pre-trained transformer 4chan (GPT4-Chan)",
+          "author": "Kilcher",
+          "year": "2022"
+        },
+        {
+          "key": "2026082410125349600_bib35",
+          "doi-asserted-by": "crossref",
+          "first-page": "25",
+          "DOI": "10.1007/BF02639315",
+          "article-title": "Accountability in a computerized society",
+          "volume": "2",
+          "author": "Nissenbaum",
+          "year": "1996",
+          "journal-title": "Sci. Eng. Ethics"
+        },
+        {
+          "key": "2026082410125349600_bib36",
+          "article-title": "WAVES: benchmarking the robustness of image watermarks",
+          "volume-title": "Int. Conf. on Machine Learning (ICML)",
+          "author": "An",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib37",
+          "article-title": "A crack in the bark: leveraging public knowledge to remove tree-ring watermarks",
+          "volume-title": "USENIX Secur. Symp.",
+          "author": "Lin",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib38",
+          "first-page": "2602",
+          "article-title": "UnMarker: a universal attack on defensive image watermarking",
+          "volume-title": "IEEE Symp. on Security and Privacy (SP)",
+          "author": "Kassis",
+          "year": "2025"
+        },
+        {
+          "key": "2026082410125349600_bib39",
+          "article-title": "Safetynets: verifiable execution of deep neural networks on an untrusted cloud",
+          "volume-title": "Adv. Neural Inf. Process. Syst.",
+          "author": "Ghodsi",
+          "year": "2017"
+        },
+        {
+          "key": "2026082410125349600_bib40",
+          "volume-title": "EZKL: easy zero-knowledge inference",
+          "author": "Camuto",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib41",
+          "article-title": "ZKTorch: compiling ML inference to zero-knowledge proofs via parallel proof accumulation",
+          "author": "Chen",
+          "year": "2025",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib42",
+          "first-page": "2025/535",
+          "article-title": "zkPyTorch: a hierarchical optimized compiler for zero-knowledge machine learning",
+          "author": "Xie",
+          "year": "2025",
+          "journal-title": "Cryptology ePrint Archive"
+        },
+        {
+          "key": "2026082410125349600_bib43",
+          "article-title": "Slalom: fast, verifiable and private execution of neural networks in trusted hardware",
+          "author": "Tramer",
+          "year": "2018",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib44",
+          "article-title": "Confidential computing on NVIDIA Hopper GPUs: a performance benchmark study",
+          "volume-title": "arXiv",
+          "author": "Zhu",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib45",
+          "first-page": "7555",
+          "article-title": "Attributing fake images to GANs: learning and analyzing GAN fingerprints",
+          "volume-title": "Proc. IEEE/CVF Int. Conf. on Computer Vision (ICCV)",
+          "author": "Yu",
+          "year": "2019"
+        },
+        {
+          "key": "2026082410125349600_bib46",
+          "first-page": "973",
+          "article-title": "Intriguing properties of synthetic images: from generative adversarial networks to diffusion models",
+          "volume-title": "Proc. IEEE/CVF Conf. on Computer Vision and Pattern Recognition Workshops (CVPRW)",
+          "author": "Corvi",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib47",
+          "first-page": "10971",
+          "article-title": "ManiFPT: Defining and analyzing fingerprints of generative models",
+          "volume-title": "Proc. IEEE/CVF Conf. on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Song",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib48",
+          "first-page": "729663",
+          "article-title": "A systematic review on model watermarking for neural networks",
+          "volume-title": "Front. Big Data",
+          "author": "Boenisch",
+          "year": "2021"
+        },
+        {
+          "key": "2026082410125349600_bib49",
+          "article-title": "SoK: watermarking for AI-generated content",
+          "author": "Zhao",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib50",
+          "first-page": "17061",
+          "article-title": "A watermark for large language models",
+          "volume-title": "Int. Conf. on Machine Learning",
+          "author": "Kirchenbauer",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib51",
+          "first-page": "1125",
+          "article-title": "Undetectable watermarks for language models",
+          "volume-title": "37th Annual Conf. on Learning Theory",
+          "author": "Christ",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib52",
+          "volume-title": "Digital watermarking and steganography",
+          "author": "Cox",
+          "year": "2007"
+        },
+        {
+          "key": "2026082410125349600_bib53",
+          "first-page": "657",
+          "article-title": "Hidden: hiding data with deep networks",
+          "volume-title": "Proc. of the European Conf. on Computer Vision (ECCV)",
+          "author": "Zhu",
+          "year": "2018"
+        },
+        {
+          "key": "2026082410125349600_bib54",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1109/CVPR42600.2020.00219",
+          "article-title": "StegaStamp: invisible hyperlinks in physical photographs",
+          "volume-title": "Proc. IEEE/CVF Conf. on Computer Vision and Pattern Recognition (CVPR)",
+          "author": "Tancik",
+          "year": "2020"
+        },
+        {
+          "key": "2026082410125349600_bib55",
+          "first-page": "14619",
+          "article-title": "Artificial fingerprinting for generative models: rooting deepfake attribution in training data",
+          "volume-title": "Proc. IEEE/CVF Int. Conf. on Computer Vision (ICCV)",
+          "author": "Yu",
+          "year": "2021"
+        },
+        {
+          "key": "2026082410125349600_bib56",
+          "first-page": "2241",
+          "article-title": "{PTW}: pivotal tuning watermarking for {Pre-Trained} image generators",
+          "volume-title": "32nd USENIX Security Symp. (USENIX Security 23)",
+          "author": "Lukas",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib57",
+          "first-page": "22466",
+          "article-title": "The stable signature: rooting watermarks in latent diffusion models",
+          "volume-title": "Proc. IEEE/CVF Int. Conf. on Computer Vision",
+          "author": "Fernandez",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib58",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.52202/075280-2529",
+          "article-title": "Tree-rings watermarks: invisible fingerprints for diffusion images",
+          "volume-title": "37th Conf. on Neural Information Processing Systems (NeurIPS)",
+          "author": "Wen",
+          "year": "2023"
+        },
+        {
+          "key": "2026082410125349600_bib59",
+          "first-page": "12162",
+          "article-title": "Gaussian shading: provable performance-lossless image watermarking for diffusion models",
+          "volume-title": "Proc. IEEE/CVF Conf. on Computer Vision and Pattern Recognition",
+          "author": "Yang",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib60",
+          "article-title": "An undetectable watermark for generative image models",
+          "author": "Gunn",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib61",
+          "first-page": "1",
+          "article-title": "Smudged fingerprints: a systematic evaluation of the robustness of AI image fingerprints",
+          "volume-title": "2026 IEEE Conf. on Secure and Trustworthy Machine Learning (SaTML)",
+          "author": "Yao",
+          "year": "2026"
+        },
+        {
+          "key": "2026082410125349600_bib62",
+          "article-title": "SoK: dataset copyright auditing in machine learning systems",
+          "author": "Du",
+          "year": "2024",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib63",
+          "first-page": "740",
+          "article-title": "Combined DWT-DCT digital image watermarking",
+          "volume-title": "J. Comput. Sci.",
+          "author": "Al-Haj",
+          "year": "2007"
+        },
+        {
+          "key": "2026082410125349600_bib64",
+          "article-title": "Robust invisible video watermarking with attention",
+          "author": "Zhang",
+          "year": "2019",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib65",
+          "article-title": "Securing deep generative models with universal adversarial signature",
+          "author": "Zeng",
+          "year": "2023",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib66",
+          "doi-asserted-by": "crossref",
+          "first-page": "138756",
+          "DOI": "10.52202/079017-4402",
+          "article-title": "No free lunch in LLM watermarking: trade-offs in watermarking design choices",
+          "volume": "37",
+          "author": "Pang",
+          "year": "2024",
+          "journal-title": "Adv. Neural Inf. Process. Syst."
+        },
+        {
+          "key": "2026082410125349600_bib67",
+          "doi-asserted-by": "crossref",
+          "first-page": "325",
+          "DOI": "10.1007/978-3-031-68391-6_10",
+          "article-title": "Pseudorandom error-correcting codes",
+          "volume-title": "Advances in cryptology–CRYPTO 2024",
+          "author": "Christ",
+          "year": "2024"
+        },
+        {
+          "key": "2026082410125349600_bib68",
+          "first-page": "2672",
+          "article-title": "Generative adversarial nets",
+          "author": "Goodfellow",
+          "year": "2014",
+          "journal-title": "Advances in neural information processing systems"
+        },
+        {
+          "key": "2026082410125349600_bib69",
+          "volume-title": "Safety recommendations report: assumptions used in the safety assessment process and the effects of multiple alerts and indications on pilot performance",
+          "author": "National Transportation Safety Board",
+          "year": "2019"
+        },
+        {
+          "key": "2026082410125349600_bib70",
+          "doi-asserted-by": "crossref",
+          "first-page": "86",
+          "DOI": "10.1145/3458723",
+          "article-title": "Datasheets for datasets",
+          "volume": "64",
+          "author": "Gebru",
+          "year": "2021",
+          "journal-title": "Commun. ACM"
+        },
+        {
+          "key": "2026082410125349600_bib71",
+          "first-page": "1885",
+          "article-title": "Understanding black-box predictions via influence functions",
+          "volume-title": "Int. Conf. on Machine Learning",
+          "author": "Koh",
+          "year": "2017"
+        },
+        {
+          "key": "2026082410125349600_bib72",
+          "article-title": "Mitigating downstream model risks via model provenance",
+          "author": "Wang",
+          "year": "2024",
+          "journal-title": "Socially Responsible Language Modelling Research (SoLaR) Workshop at Neural Information Processing Systems (NeurIPS)"
+        },
+        {
+          "key": "2026082410125349600_bib73",
+          "article-title": "Model provenance via model DNA",
+          "author": "Mu",
+          "year": "2023",
+          "journal-title": "arXiv"
+        },
+        {
+          "key": "2026082410125349600_bib74",
+          "doi-asserted-by": "crossref",
+          "first-page": "310",
+          "DOI": "10.1007/978-3-319-63121-9_16",
+          "article-title": "Runtime verification logics a language design perspective",
+          "volume-title": "Models, Algorithms, Logics and Tools: Essays Dedicated to Kim Guldstrand Larsen on the Occasion of His 60th Birthday",
+          "author": "Havelund",
+          "year": "2017"
+        },
+        {
+          "key": "2026082410125349600_bib75",
+          "volume-title": "Sigstore model transparency project",
+          "author": "Sigstore",
+          "year": "2023"
+        }
+      ],
+      "container-title": [
+        "Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://royalsocietypublishing.org/rsta/article-pdf/doi/10.1098/rsta.2025.0117/6161037/rsta.2025.0117.pdf",
+          "content-type": "application/pdf",
+          "content-version": "vor",
+          "intended-application": "syndication"
+        },
+        {
+          "URL": "https://royalsocietypublishing.org/rsta/article-pdf/doi/10.1098/rsta.2025.0117/6161037/rsta.2025.0117.pdf",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            8,
+            24
+          ]
+        ],
+        "date-time": "2026-08-24T14:13:14Z",
+        "timestamp": 1787580794000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://royalsocietypublishing.org/rsta/article/384/2324/20250117/482539/Can-model-attribution-bridge-AI-s-accountability"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ]
+      },
+      "references-count": 75,
+      "journal-issue": {
+        "issue": "2324",
+        "published-online": {
+          "date-parts": [
+            [
+              2026,
+              7,
+              16
+            ]
+          ]
+        },
+        "published-print": {
+          "date-parts": [
+            [
+              2026,
+              7,
+              16
+            ]
+          ]
+        }
+      },
+      "URL": "https://doi.org/10.1098/rsta.2025.0117",
+      "relation": {},
+      "ISSN": [
+        "1364-503X",
+        "1471-2962"
+      ],
+      "issn-type": [
+        {
+          "value": "1364-503X",
+          "type": "print"
+        },
+        {
+          "value": "1471-2962",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ]
+      },
+      "article-number": "20250117"
+    }
+  }
+}

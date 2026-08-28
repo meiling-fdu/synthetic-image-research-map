@@ -69,7 +69,7 @@ class VenueNormalizationTests(unittest.TestCase):
         main = self.resolve("2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)")
         workshops = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops")
         findings = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings")
-        self.assertEqual({main.venue_track, workshops.venue_track, findings.venue_track}, {"main", "workshops", "findings"})
+        self.assertEqual({main.venue_track, workshops.venue_track, findings.venue_track}, {"Main", "Workshop", "Findings"})
         self.assertEqual({main.venue_id, workshops.venue_id, findings.venue_id}, {"venue:cvpr"})
         self.assertEqual(workshops.venue_type, "conference")
 
@@ -78,7 +78,7 @@ class VenueNormalizationTests(unittest.TestCase):
         workshop = self.resolve("2026 IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) Workshop")
         self.assertEqual(main.venue_id, "venue:wacv")
         self.assertEqual(workshop.venue_id, "venue:wacv")
-        self.assertEqual((main.venue_track, workshop.venue_track), ("main", "workshops"))
+        self.assertEqual((main.venue_track, workshop.venue_track), ("Main", "Workshop"))
 
     def test_iccv_workshops_and_icip_editions_reuse_canonical_ids(self):
         iccv_workshop = self.resolve(
@@ -89,7 +89,7 @@ class VenueNormalizationTests(unittest.TestCase):
         )
         self.assertEqual(iccv_workshop.venue_id, "venue:iccv")
         self.assertEqual(iccv_workshop.venue_acronym, "ICCV")
-        self.assertEqual(iccv_workshop.venue_track, "workshops")
+        self.assertEqual(iccv_workshop.venue_track, "Workshop")
         self.assertEqual(
             icip.venue_id,
             "venue:ieee-international-conference-on-image-processing",
@@ -98,7 +98,7 @@ class VenueNormalizationTests(unittest.TestCase):
             icip.venue_name,
             "IEEE International Conference on Image Processing",
         )
-        self.assertEqual(icip.venue_track, "main")
+        self.assertEqual(icip.venue_track, "Main")
 
     def test_ijcnn_variants_resolve_to_one_main_venue(self):
         variants = [
@@ -113,7 +113,7 @@ class VenueNormalizationTests(unittest.TestCase):
         self.assertEqual({venue.venue_id for venue in venues}, {"venue:ijcnn"})
         self.assertEqual({venue.venue_name for venue in venues}, {"International Joint Conference on Neural Networks"})
         self.assertEqual({venue.venue_acronym for venue in venues}, {"IJCNN"})
-        self.assertEqual({venue.venue_track for venue in venues}, {"main"})
+        self.assertEqual({venue.venue_track for venue in venues}, {"Main"})
 
     def test_icmr_uses_correct_acm_full_name_and_acronym(self):
         variants = [
@@ -132,7 +132,7 @@ class VenueNormalizationTests(unittest.TestCase):
 
     def test_wacvw_aliases_resolve_to_wacv_workshops(self):
         variants = [
-            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
+            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshop",
             "IEEE/CVF Winter Conference on Applications of Computer Vision (WACVW) Workshops",
             "IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
             "2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
@@ -141,10 +141,10 @@ class VenueNormalizationTests(unittest.TestCase):
         venues = [self.resolve(value) for value in variants]
         self.assertEqual({venue.venue_id for venue in venues}, {"venue:wacv"})
         self.assertEqual({venue.venue_acronym for venue in venues}, {"WACV"})
-        self.assertEqual({venue.venue_track for venue in venues}, {"workshops"})
+        self.assertEqual({venue.venue_track for venue in venues}, {"Workshop"})
         self.assertEqual(
             display_venue(venues[0].as_record()),
-            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshops",
+            "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshop",
         )
 
     def test_malformed_inter_national_machine_vision_is_reviewed_alias(self):
@@ -163,7 +163,7 @@ class VenueNormalizationTests(unittest.TestCase):
         self.assertEqual(first.venue_id, "venue:ih-mmsec")
         self.assertEqual(second.venue_id, first.venue_id)
         self.assertEqual(first.venue_type, "conference")
-        self.assertEqual(first.venue_track, "workshops")
+        self.assertEqual(first.venue_track, "Main")
 
     def test_journal_is_stable_and_article_reuses_journal_label(self):
         venue = self.resolve("Pattern Recognition", publication_type="article")
@@ -192,13 +192,13 @@ class VenueNormalizationTests(unittest.TestCase):
             "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings",
             publication_type="conference",
         )
-        self.assertEqual(siggraph.venue_id, "venue:siggraph:posters")
-        self.assertEqual(siggraph.venue_track, "posters")
+        self.assertEqual(siggraph.venue_id, "venue:siggraph")
+        self.assertEqual(siggraph.venue_track, "Poster")
         self.assertEqual(cvpr.venue_id, "venue:cvpr")
 
     def test_display_format(self):
         venue = self.resolve("2026 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops")
-        self.assertEqual(display_venue(venue.as_record()), "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshops")
+        self.assertEqual(display_venue(venue.as_record()), "IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) · Workshop")
         self.assertEqual(
             display_venue(self.resolve("CHI Conference on Human Factors in Computing Systems").as_record()),
             "CHI Conference on Human Factors in Computing Systems (CHI)",
@@ -211,7 +211,7 @@ class VenueNormalizationTests(unittest.TestCase):
     def test_conflicting_alias_is_ambiguous_and_not_merged(self):
         base = {
             "alias": "Example Venue", "venue_name": "Example Venue", "venue_acronym": "",
-            "venue_type": "conference", "venue_track": "main", "review_status": "confirmed", "notes": "",
+            "venue_type": "conference", "venue_track": "Main", "review_status": "confirmed", "notes": "",
         }
         venue = resolve_venue("Example Venue", publication_type="conference", aliases=[
             {**base, "venue_id": "venue:one:main"},
@@ -247,7 +247,7 @@ class VenueNormalizationTests(unittest.TestCase):
                 "venue_name": "International Conference on Multimedia Retrieval",
                 "venue_acronym": "ICMR",
                 "venue_type": "conference",
-                "venue_track": "main",
+                "venue_track": "Main",
                 "raw_venue": "Proceedings of the 2026 International Conference on Multimedia Retrieval (ICMR)",
                 "publication_type": "conference",
             },
@@ -260,7 +260,7 @@ class VenueNormalizationTests(unittest.TestCase):
                 "venue_name": "IEEE/CVF Winter Conference on Applications of Computer Vision",
                 "venue_acronym": "WACVW",
                 "venue_type": "conference",
-                "venue_track": "workshops",
+                "venue_track": "Workshop",
                 "raw_venue": "2025 IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
                 "publication_type": "conference",
             },
@@ -273,7 +273,7 @@ class VenueNormalizationTests(unittest.TestCase):
                 "venue_name": "Inter national Conference on Machine Vision",
                 "venue_acronym": "",
                 "venue_type": "conference",
-                "venue_track": "main",
+                "venue_track": "Main",
                 "raw_venue": "17th Inter national Conference on Machine Vision",
                 "publication_type": "conference",
             },
@@ -300,7 +300,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
             "venue_acronym": "CVPR",
             "venue_type": "workshop",
-            "venue_track": "workshops",
+            "venue_track": "Workshop",
             "raw_venue": "2024 CVPR Workshops",
             "publication_type": "conference",
         }]
@@ -308,7 +308,7 @@ class VenueNormalizationTests(unittest.TestCase):
         second, second_report = migrate_rows(migrated)
         self.assertEqual(migrated[0]["venue_id"], "venue:cvpr")
         self.assertEqual(migrated[0]["venue_type"], "conference")
-        self.assertEqual(migrated[0]["venue_track"], "workshops")
+        self.assertEqual(migrated[0]["venue_track"], "Workshop")
         self.assertEqual(report["workshop_records_migrated"], 1)
         self.assertEqual(second_report["workshop_records_migrated"], 0)
         self.assertEqual(second_report["records_changed"], 0)
@@ -426,7 +426,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "venue_name": "IEEE/CVF Conference on Computer Vision and Pattern Recognition",
             "venue_acronym": "CVPR",
             "venue_type": "conference",
-            "venue_track": "workshops",
+            "venue_track": "Workshop",
             "publication_type": "conference",
         }
         result = apply_canonical_venue_selection(
@@ -448,7 +448,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "venue_name": "Old Name",
             "venue_acronym": "OLD",
             "venue_type": "workshop",
-            "venue_track": "workshops",
+            "venue_track": "Workshop",
             "publication_type": "conference",
         })
         self.assertEqual(
@@ -457,7 +457,7 @@ class VenueNormalizationTests(unittest.TestCase):
         )
         self.assertEqual(result["venue_acronym"], "CHI")
         self.assertEqual(result["venue_type"], "conference")
-        self.assertEqual(result["venue_track"], "workshops")
+        self.assertEqual(result["venue_track"], "Workshop")
 
     def test_same_id_materialization_is_idempotent_and_normalizes_tracks(self):
         aliases = read_venue_aliases()
@@ -472,11 +472,11 @@ class VenueNormalizationTests(unittest.TestCase):
         first = materialize_canonical_venue_metadata(stale, aliases)
         second = materialize_canonical_venue_metadata(first, aliases)
         self.assertEqual(second, first)
-        self.assertEqual(first["venue_track"], "main")
+        self.assertEqual(first["venue_track"], "Main")
         self.assertEqual(first["unrelated"], "preserved")
         journal = materialize_canonical_venue_metadata({
             "venue_id": "venue:ieee-transactions-on-multimedia",
-            "venue_track": "main",
+            "venue_track": "Main",
         }, aliases)
         self.assertEqual(journal["venue_track"], "")
 
@@ -492,7 +492,7 @@ class VenueNormalizationTests(unittest.TestCase):
             "venue_name": "CHI Conference on Human Factors in Computing Systems",
             "venue_acronym": "CHI",
             "venue_type": "conference",
-            "venue_track": "main",
+            "venue_track": "Main",
             "publication_type": "journal",
         }
         with self.assertRaisesRegex(CuratedPaperError, "explicit override"):

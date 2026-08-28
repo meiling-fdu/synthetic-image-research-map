@@ -1,0 +1,859 @@
+{
+  "doi": "10.1016/j.ipm.2026.105058",
+  "source_url": "https://api.crossref.org/works/10.1016%2Fj.ipm.2026.105058",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ],
+        "date-time": "2026-07-16T20:08:38Z",
+        "timestamp": 1784232518961,
+        "version": "3.55.0"
+      },
+      "reference-count": 65,
+      "publisher": "Elsevier BV",
+      "issue": "1",
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2027,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2027-01-01T00:00:00Z",
+            "timestamp": 1798761600000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/tdm/userlicense/1.0/"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2027,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2027-01-01T00:00:00Z",
+            "timestamp": 1798761600000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.elsevier.com/legal/tdmrep-license"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2027,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2027-01-01T00:00:00Z",
+            "timestamp": 1798761600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-017"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2027,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2027-01-01T00:00:00Z",
+            "timestamp": 1798761600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-037"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2027,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2027-01-01T00:00:00Z",
+            "timestamp": 1798761600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-012"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2027,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2027-01-01T00:00:00Z",
+            "timestamp": 1798761600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-029"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2027,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2027-01-01T00:00:00Z",
+            "timestamp": 1798761600000
+          },
+          "content-version": "stm-asf",
+          "delay-in-days": 0,
+          "URL": "https://doi.org/10.15223/policy-004"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "elsevier.com",
+          "sciencedirect.com"
+        ],
+        "crossmark-restriction": true
+      },
+      "short-container-title": [
+        "Information Processing &amp; Management"
+      ],
+      "published-print": {
+        "date-parts": [
+          [
+            2027,
+            1
+          ]
+        ]
+      },
+      "DOI": "10.1016/j.ipm.2026.105058",
+      "type": "journal-article",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            15
+          ]
+        ],
+        "date-time": "2026-07-15T19:42:42Z",
+        "timestamp": 1784144562000
+      },
+      "page": "105058",
+      "update-policy": "https://doi.org/10.1016/elsevier_cm_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 0,
+      "special_numbering": "PB",
+      "title": [
+        "All patches are not equal: Focusing on a single exposed patch for AI-generated image detection"
+      ],
+      "prefix": "10.1016",
+      "volume": "64",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0009-0009-4170-5107",
+          "authenticated-orcid": false,
+          "given": "Liwei",
+          "family": "Yao",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-6259-5463",
+          "authenticated-orcid": false,
+          "given": "Sen",
+          "family": "Niu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0001-9038-9205",
+          "authenticated-orcid": false,
+          "given": "Xiaomei",
+          "family": "Feng",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Bofeng",
+          "family": "Zhang",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0009-0008-1808-558X",
+          "authenticated-orcid": false,
+          "given": "Ruiqi",
+          "family": "Liu",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Kefeng",
+          "family": "Li",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "78",
+      "reference": [
+        {
+          "key": "10.1016/j.ipm.2026.105058_b1",
+          "series-title": "Large scale GAN training for high fidelity natural image synthesis",
+          "author": "Brock",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b2",
+          "series-title": "Large scale GAN training for high fidelity natural image synthesis",
+          "author": "Brock",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b3",
+          "series-title": "Real-time deepfake detection in the real-world",
+          "author": "Cavia",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b4",
+          "series-title": "Advances in neural information processing systems",
+          "article-title": "Dual data alignment makes AI-generated image detector easier generalizable",
+          "author": "Chen",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b5",
+          "series-title": "A single simple patch is all you need for AI-generated image detection",
+          "author": "Chen",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b6",
+          "series-title": "Forty-first international conference on machine learning",
+          "article-title": "DRCT: Diffusion reconstruction contrastive training towards universal detection of diffusion generated images",
+          "author": "Chen",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Cherti, M., Beaumont, R., Wightman, R., Wortsman, M., Ilharco, G., Gordon, C., Schuhmann, C., Schmidt, L., & Jitsev, J. (2023). Reproducible Scaling Laws for Contrastive Language-Image Learning. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 2818–2829).",
+          "DOI": "10.1109/CVPR52729.2023.00276"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b8",
+          "series-title": "2018 IEEE/CVF conference on computer vision and pattern recognition",
+          "first-page": "8789",
+          "article-title": "StarGAN: Unified generative adversarial networks for multi-domain image-to-image translation",
+          "author": "Choi",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b9",
+          "series-title": "2009 IEEE conference on computer vision and pattern recognition",
+          "first-page": "248",
+          "article-title": "ImageNet: A large-scale hierarchical image database",
+          "author": "Deng",
+          "year": "2009"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b10",
+          "first-page": "8780",
+          "article-title": "Diffusion models beat GANs on image synthesis",
+          "volume": "Vol. 34",
+          "author": "Dhariwal",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b11",
+          "series-title": "An image is worth 16x16 words: Transformers for image recognition at scale",
+          "author": "Dosovitskiy",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b12",
+          "series-title": "2020 IEEE/CVF conference on computer vision and pattern recognition",
+          "first-page": "7887",
+          "article-title": "Watch your up-convolution: CNN based generative deep neural networks are failing to reproduce spectral distributions",
+          "author": "Durall",
+          "year": "2020"
+        },
+        {
+          "issue": "3",
+          "key": "10.1016/j.ipm.2026.105058_b13",
+          "doi-asserted-by": "crossref",
+          "first-page": "868",
+          "DOI": "10.1109/TIFS.2012.2190402",
+          "article-title": "Rich models for steganalysis of digital images",
+          "volume": "7",
+          "author": "Fridrich",
+          "year": "2012",
+          "journal-title": "IEEE Transactions on Information Forensics and Security"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b14",
+          "series-title": "Generative adversarial networks",
+          "author": "Goodfellow",
+          "year": "2014"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Gu, S., Chen, D., Bao, J., Wen, F., Zhang, B., Chen, D., Yuan, L., & Guo, B. (2022). Vector Quantized Diffusion Model for Text-to-Image Synthesis. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 10696–10706).",
+          "DOI": "10.1109/CVPR52688.2022.01043"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b16",
+          "series-title": "IEEE/CVF winter conference on applications of computer vision",
+          "first-page": "399",
+          "article-title": "Reducing the content bias for AI-generated image detection",
+          "author": "Gye",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b17",
+          "series-title": "2016 IEEE conference on computer vision and pattern recognition",
+          "first-page": "770",
+          "article-title": "Deep residual learning for image recognition",
+          "author": "He",
+          "year": "2016"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b18",
+          "series-title": "Denoising diffusion probabilistic models",
+          "author": "Ho",
+          "year": "2020"
+        },
+        {
+          "issue": "5",
+          "key": "10.1016/j.ipm.2026.105058_b19",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.ipm.2025.104218",
+          "article-title": "Distinguishing AI-generated versus real tourism photos: Visual differences, human judgment, and deep learning detection",
+          "volume": "62",
+          "author": "Hou",
+          "year": "2025",
+          "journal-title": "Information Processing & Management"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b20",
+          "series-title": "Progressive growing of GANs for improved quality, stability, and variation",
+          "author": "Karras",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b21",
+          "series-title": "Progressive growing of GANs for improved quality, stability, and variation",
+          "author": "Karras",
+          "year": "2017"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b22",
+          "series-title": "Progressive growing of GANs for improved quality, stability, and variation",
+          "author": "Karras",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b23",
+          "series-title": "2019 IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "first-page": "4396",
+          "article-title": "A style-based generator architecture for generative adversarial networks",
+          "author": "Karras",
+          "year": "2018"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b24",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras, T., Laine, S., & Aila, T. (2019a). A Style-Based Generator Architecture for Generative Adversarial Networks. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition.",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras, T., Laine, S., & Aila, T. (2019b). A Style-Based Generator Architecture for Generative Adversarial Networks. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition.",
+          "DOI": "10.1109/CVPR.2019.00453"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b26",
+          "series-title": "Proceedings of the 31st ACM SIGKDD conference on knowledge discovery and data mining v.1",
+          "first-page": "2405",
+          "article-title": "Improving synthetic image detection towards generalization: An image transformation perspective",
+          "author": "Li",
+          "year": "2025"
+        },
+        {
+          "issue": "11",
+          "key": "10.1016/j.ipm.2026.105058_b27",
+          "doi-asserted-by": "crossref",
+          "first-page": "16192",
+          "DOI": "10.1109/JIOT.2025.3531053",
+          "article-title": "Optimized frequency collaborative strategy drives AI image detection",
+          "volume": "12",
+          "author": "Li",
+          "year": "2025",
+          "journal-title": "IEEE Internet of Things Journal"
+        },
+        {
+          "issue": "2, Part B",
+          "key": "10.1016/j.ipm.2026.105058_b28",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.ipm.2025.104473",
+          "article-title": "EmoSense: A multimodal sentiment-aware framework for music short video AI-generated content detection",
+          "volume": "63",
+          "author": "Li",
+          "year": "2026",
+          "journal-title": "Information Processing & Management"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b29",
+          "series-title": "2021 IEEE/CVF International Conference on Computer Vision",
+          "first-page": "9992",
+          "article-title": "Swin transformer: Hierarchical vision transformer using shifted windows",
+          "author": "Liu",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b30",
+          "series-title": "2020 IEEE/CVF conference on computer vision and pattern recognition",
+          "first-page": "8057",
+          "article-title": "Global texture enhancement for fake face detection in the wild",
+          "author": "Liu",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b31",
+          "series-title": "2024 IEEE/CVF conference on computer vision and pattern recognition",
+          "first-page": "10770",
+          "article-title": "Forgery-aware adaptive transformer for generalizable synthetic image detection",
+          "author": "Liu",
+          "year": "2024"
+        },
+        {
+          "issue": "5",
+          "key": "10.1016/j.ipm.2026.105058_b32",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.ipm.2024.103789",
+          "article-title": "Enhancing privacy management protection through secure and efficient processing of image information based on the fine-grained thumbnail-preserving encryption",
+          "volume": "61",
+          "author": "Luo",
+          "year": "2024",
+          "journal-title": "Information Processing & Management"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b33",
+          "series-title": "2024 IEEE international conference on image processing",
+          "first-page": "3827",
+          "article-title": "AI-Generated image detection with wasserstein distance compression and dynamic aggregation",
+          "author": "Lyu",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b34",
+          "series-title": "Midjourney",
+          "author": "Midjourney, Inc.",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b35",
+          "series-title": "Wukong",
+          "author": "MindSpore Team",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b36",
+          "series-title": "Proceedings of the 39th international conference on machine learning",
+          "first-page": "16784",
+          "article-title": "GLIDE: Towards photorealistic image generation and editing with text-guided diffusion models",
+          "volume": "Vol. 162",
+          "author": "Nichol",
+          "year": "2022"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b37",
+          "series-title": "Towards universal fake image detectors that generalize across generative models",
+          "author": "Ojha",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b38",
+          "series-title": "2019 IEEE/CVF conference on computer vision and pattern recognition",
+          "first-page": "2332",
+          "article-title": "Semantic image synthesis with spatially-adaptive normalization",
+          "author": "Park",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b39",
+          "series-title": "Thinking in frequency: Face forgery detection by mining frequency-aware clues",
+          "author": "Qian",
+          "year": "2020"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b40",
+          "series-title": "Hierarchical text-conditional image generation with CLIP latents",
+          "author": "Ramesh",
+          "year": "2022"
+        },
+        {
+          "issue": "6",
+          "key": "10.1016/j.ipm.2026.105058_b41",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.ipm.2025.104305",
+          "article-title": "LLM-enhanced multi-task joint learning model for misinformation detection",
+          "volume": "62",
+          "author": "Ren",
+          "year": "2025",
+          "journal-title": "Information Processing & Management"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b42",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rombach, R., Blattmann, A., Lorenz, D., Esser, P., & Ommer, B. (2022a). High-Resolution Image Synthesis With Latent Diffusion Models. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 10684–10695).",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b43",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rombach, R., Blattmann, A., Lorenz, D., Esser, P., & Ommer, B. (2022b). High-Resolution Image Synthesis With Latent Diffusion Models. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 10684–10695).",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b44",
+          "series-title": "Neural information processing systems",
+          "article-title": "Generative modeling by estimating gradients of the data distribution",
+          "author": "Song",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b45",
+          "series-title": "Rethinking the up-sampling operations in CNN-based generative network for generalizable deepfake detection",
+          "author": "Tan",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b46",
+          "series-title": "C2P-CLIP: Injecting category common prompt in CLIP to enhance generalization in deepfake detection",
+          "author": "Tan",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b47",
+          "series-title": "AAAI conference on artificial intelligence",
+          "article-title": "Frequency-aware deepfake detection: Improving generalizability through frequency space domain learning",
+          "author": "Tan",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b48",
+          "series-title": "Training data-efficient image transformers & distillation through attention",
+          "author": "Touvron",
+          "year": "2021"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b49",
+          "series-title": "DIRE for diffusion-generated image detection",
+          "author": "Wang",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b50",
+          "series-title": "2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition",
+          "first-page": "8692",
+          "article-title": "CNN-generated images are surprisingly easy to spot…for now",
+          "author": "Wang",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b51",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wang, S. Y., Wang, O., Zhang, R., Owens, A., & Efros, A. A. (2020). CNN-Generated Images Are Surprisingly Easy to Spot... for Now. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition.",
+          "DOI": "10.1109/CVPR42600.2020.00872"
+        },
+        {
+          "issue": "1",
+          "key": "10.1016/j.ipm.2026.105058_b52",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.ipm.2025.104352",
+          "article-title": "A large language model-based approach for fake review detection: The implicit characteristics perspective",
+          "volume": "63",
+          "author": "Wang",
+          "year": "2026",
+          "journal-title": "Information Processing & Management"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b53",
+          "series-title": "Which face is real?",
+          "author": "West",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b54",
+          "doi-asserted-by": "crossref",
+          "DOI": "10.1016/j.knosys.2025.113806",
+          "article-title": "GCS-Net: A universal AI-generated visual content detection method based on CLIP",
+          "volume": "323",
+          "author": "Xu",
+          "year": "2025",
+          "journal-title": "Knowledge-Based Systems"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b55",
+          "first-page": "70702",
+          "article-title": "A sanity check for AI-generated image detection",
+          "volume": "Vol. 2025",
+          "author": "Yan",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b56",
+          "series-title": "Orthogonal subspace decomposition for generalizable AI-generated image detection",
+          "author": "Yan",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b57",
+          "series-title": "2025 IEEE/CVF conference on computer vision and pattern recognition",
+          "first-page": "23850",
+          "article-title": "D3: Scaling up deepfake detection by learning from discrepancy",
+          "author": "Yang",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b58",
+          "series-title": "2019 IEEE international workshop on information forensics and security",
+          "first-page": "1",
+          "article-title": "Detecting and simulating artifacts in GAN fake images",
+          "author": "Zhang",
+          "year": "2019"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b59",
+          "series-title": "Detecting generated images by fitting natural image distributions",
+          "author": "Zhang",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b60",
+          "first-page": "1",
+          "article-title": "Integrally mixing pyramid representations for anchor-free object detection in aerial imagery",
+          "volume": "21",
+          "author": "Zhang",
+          "year": "2024",
+          "journal-title": "IEEE Geoscience and Remote Sensing Letters"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b61",
+          "series-title": "Proceedings of the 38th international conference on neural information processing systems",
+          "article-title": "Breaking semantic artifacts for generalized AI-generated image detection",
+          "author": "Zheng",
+          "year": "2025"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b62",
+          "series-title": "PatchCraft: Exploring texture patch for efficient AI-generated image detection",
+          "author": "Zhong",
+          "year": "2024"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b63",
+          "series-title": "GenDet: Towards good generalizations for AI-generated image detection",
+          "author": "Zhu",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b64",
+          "series-title": "GenImage: A million-scale benchmark for detecting AI-generated image",
+          "author": "Zhu",
+          "year": "2023"
+        },
+        {
+          "key": "10.1016/j.ipm.2026.105058_b65",
+          "series-title": "2017 IEEE international conference on computer vision",
+          "first-page": "2242",
+          "article-title": "Unpaired image-to-image translation using cycle-consistent adversarial networks",
+          "author": "Zhu",
+          "year": "2017"
+        }
+      ],
+      "container-title": [
+        "Information Processing &amp; Management"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S0306457326004486?httpAccept=text/xml",
+          "content-type": "text/xml",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        },
+        {
+          "URL": "https://api.elsevier.com/content/article/PII:S0306457326004486?httpAccept=text/plain",
+          "content-type": "text/plain",
+          "content-version": "vor",
+          "intended-application": "text-mining"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            16
+          ]
+        ],
+        "date-time": "2026-07-16T19:32:43Z",
+        "timestamp": 1784230363000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://linkinghub.elsevier.com/retrieve/pii/S0306457326004486"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2027,
+            1
+          ]
+        ]
+      },
+      "references-count": 65,
+      "journal-issue": {
+        "issue": "1",
+        "published-print": {
+          "date-parts": [
+            [
+              2027,
+              1
+            ]
+          ]
+        }
+      },
+      "alternative-id": [
+        "S0306457326004486"
+      ],
+      "URL": "https://doi.org/10.1016/j.ipm.2026.105058",
+      "relation": {},
+      "ISSN": [
+        "0306-4573"
+      ],
+      "issn-type": [
+        {
+          "value": "0306-4573",
+          "type": "print"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2027,
+            1
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "Elsevier",
+          "name": "publisher",
+          "label": "This article is maintained by"
+        },
+        {
+          "value": "All patches are not equal: Focusing on a single exposed patch for AI-generated image detection",
+          "name": "articletitle",
+          "label": "Article Title"
+        },
+        {
+          "value": "Information Processing & Management",
+          "name": "journaltitle",
+          "label": "Journal Title"
+        },
+        {
+          "value": "https://doi.org/10.1016/j.ipm.2026.105058",
+          "name": "articlelink",
+          "label": "CrossRef DOI link to publisher maintained version"
+        },
+        {
+          "value": "article",
+          "name": "content_type",
+          "label": "Content Type"
+        },
+        {
+          "value": "© 2026 Elsevier Ltd. All rights are reserved, including those for text and data mining, AI training, and similar technologies.",
+          "name": "copyright",
+          "label": "Copyright"
+        }
+      ],
+      "article-number": "105058"
+    }
+  }
+}

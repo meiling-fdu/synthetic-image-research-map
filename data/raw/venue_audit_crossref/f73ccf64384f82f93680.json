@@ -1,0 +1,613 @@
+{
+  "doi": "10.1007/978-981-95-3551-4_23",
+  "source_url": "https://api.crossref.org/works/10.1007%2F978-981-95-3551-4_23",
+  "retrieved_on": "2026-08-28",
+  "response": {
+    "status": "ok",
+    "message-type": "work",
+    "message-version": "1.0.0",
+    "message": {
+      "indexed": {
+        "date-parts": [
+          [
+            2026,
+            7,
+            2
+          ]
+        ],
+        "date-time": "2026-07-02T13:08:53Z",
+        "timestamp": 1782997733399,
+        "version": "3.54.5"
+      },
+      "publisher-location": "Singapore",
+      "reference-count": 34,
+      "publisher": "Springer Nature Singapore",
+      "isbn-type": [
+        {
+          "value": "9789819535507",
+          "type": "print"
+        },
+        {
+          "value": "9789819535514",
+          "type": "electronic"
+        }
+      ],
+      "license": [
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "tdm",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        },
+        {
+          "start": {
+            "date-parts": [
+              [
+                2026,
+                1,
+                1
+              ]
+            ],
+            "date-time": "2026-01-01T00:00:00Z",
+            "timestamp": 1767225600000
+          },
+          "content-version": "vor",
+          "delay-in-days": 0,
+          "URL": "https://www.springernature.com/gp/researchers/text-and-data-mining"
+        }
+      ],
+      "content-domain": {
+        "domain": [
+          "link.springer.com"
+        ],
+        "crossmark-restriction": false
+      },
+      "short-container-title": [],
+      "published-print": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "DOI": "10.1007/978-981-95-3551-4_23",
+      "type": "book-chapter",
+      "created": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            2
+          ]
+        ],
+        "date-time": "2026-01-02T00:40:07Z",
+        "timestamp": 1767314407000
+      },
+      "page": "332-345",
+      "update-policy": "https://doi.org/10.1007/springer_crossmark_policy",
+      "source": "Crossref",
+      "is-referenced-by-count": 2,
+      "title": [
+        "Robust Fake Image Detection via Incremental Training of Siamese Neural Networks"
+      ],
+      "prefix": "10.1007",
+      "author": [
+        {
+          "ORCID": "https://orcid.org/0000-0003-0571-1074",
+          "authenticated-orcid": false,
+          "given": "Aniello",
+          "family": "Castiglione",
+          "sequence": "first",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0003-4880-4975",
+          "authenticated-orcid": false,
+          "given": "Lucia",
+          "family": "Cimmino",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-2517-2867",
+          "authenticated-orcid": false,
+          "given": "Michele",
+          "family": "Nappi",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "ORCID": "https://orcid.org/0000-0002-4215-2630",
+          "authenticated-orcid": false,
+          "given": "Matteo",
+          "family": "Polsinelli",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        },
+        {
+          "given": "Carlo",
+          "family": "Sorrentino",
+          "sequence": "additional",
+          "affiliation": [],
+          "role": [
+            {
+              "vocabulary": "crossref",
+              "role": "author"
+            }
+          ]
+        }
+      ],
+      "member": "297",
+      "published-online": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            2
+          ]
+        ]
+      },
+      "reference": [
+        {
+          "key": "23_CR1",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Azizpour, A., Nguyen, T.D., Shrestha, M., Xu, K., Kim, E., Stamm, M.C.: E3: Ensemble of expert embedders for adapting synthetic image detectors to new generators using limited data. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 4334–4344 (2024)",
+          "DOI": "10.1109/CVPRW63382.2024.00437"
+        },
+        {
+          "key": "23_CR2",
+          "unstructured": "Bendel, O.: Image synthesis from an ethical perspective. AI & SOCIETY, 1–10 (2023)"
+        },
+        {
+          "key": "23_CR3",
+          "unstructured": "Brock, A., Donahue, J., Simonyan, K.: Large scale GaN training for high fidelity natural image synthesis. In: 7th International Conference on Learning Representations, ICLR 2019 (2019)"
+        },
+        {
+          "key": "23_CR4",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Corvi, R., Cozzolino, D., Zingarini, G., Poggi, G., Nagano, K., Verdoliva, L.: On the detection of synthetic images generated by diffusion models. In: ICASSP 2023-2023 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 1–5. IEEE (2023)",
+          "DOI": "10.1109/ICASSP49357.2023.10095167"
+        },
+        {
+          "key": "23_CR5",
+          "unstructured": "Dong, C., Bhagavatula, V., Zhou, Z., Kumar, A.: Towards more accurate fake detection on images generated from advanced generative and neural rendering models. arXiv preprint arXiv:2411.08642 (2024)"
+        },
+        {
+          "key": "23_CR6",
+          "unstructured": "Dosovitskiy, A., et al.: An Image is Worth 16$$\\,\\times \\,$$16 Words: transformers for Image Recognition at Scale. In: International Conference on Learning Representations (2021)"
+        },
+        {
+          "key": "23_CR7",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Esser, P., Rombach, R., Ommer, B.: Taming transformers for high-resolution image synthesis. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 12873–12883 (2021)",
+          "DOI": "10.1109/CVPR46437.2021.01268"
+        },
+        {
+          "key": "23_CR8",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Fedele, A., Guidotti, R., Pedreschi, D.: Explaining Siamese networks in few-shot learning. Mach. Learn., 1–38 (2024)",
+          "DOI": "10.1007/s10994-024-06529-8"
+        },
+        {
+          "key": "23_CR9",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Fu, H.: Optimizing AIGC image detection: strategies in data augmentation and model architecture. In: Proceedings of the 32nd ACM International Conference on Multimedia, pp. 11472–11474 (2024)",
+          "DOI": "10.1145/3664647.3689002"
+        },
+        {
+          "key": "23_CR10",
+          "series-title": "Lecture Notes in Computer Science",
+          "doi-asserted-by": "publisher",
+          "first-page": "281",
+          "DOI": "10.1007/978-3-030-01689-0_22",
+          "volume-title": "Cyberspace Safety and Security",
+          "author": "SG Govender",
+          "year": "2018",
+          "unstructured": "Govender, S.G., Loock, M., Kritzinger, E.: Enhancing information security culture to reduce information security cost: a proposed framework. In: Castiglione, A., Pop, F., Ficco, M., Palmieri, F. (eds.) CSS 2018. LNCS, vol. 11161, pp. 281–290. Springer, Cham (2018). https://doi.org/10.1007/978-3-030-01689-0_22"
+        },
+        {
+          "issue": "1",
+          "key": "23_CR11",
+          "doi-asserted-by": "publisher",
+          "first-page": "87",
+          "DOI": "10.1109/TPAMI.2022.3152247",
+          "volume": "45",
+          "author": "K Han",
+          "year": "2023",
+          "unstructured": "Han, K., et al.: A survey on vision transformer. IEEE Trans. Pattern Anal. Mach. Intell. 45(1), 87–110 (2023)",
+          "journal-title": "IEEE Trans. Pattern Anal. Mach. Intell."
+        },
+        {
+          "key": "23_CR12",
+          "unstructured": "Huang, Z., et al.: SIDA: social media image deepfake detection, localization and explanation with large multimodal model. In: Proceedings of the CVPR Workshops (2023)"
+        },
+        {
+          "key": "23_CR13",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Kapoor, J., Rahman, N.A.A.: Organizational security improvement in preventing deepfake ransomware. In: Digital Innovation Adoption: Architectural Recommendations and Security Solutions, pp. 58–78. Bentham Science Publishers (2024)",
+          "DOI": "10.2174/9789815079661124010009"
+        },
+        {
+          "key": "23_CR14",
+          "unstructured": "Karras, T., Aila, T., Laine, S., Lehtinen, J.: Progressive growing of GANs for improved quality, stability, and variation. In: 6th International Conference on Learning Representations, ICLR 2018 - Conference Track Proceedings (2018)"
+        },
+        {
+          "key": "23_CR15",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Karras, T., Laine, S., Aittala, M., Hellsten, J., Lehtinen, J., Aila, T.: Analyzing and improving the image quality of StyleGAN. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 8110–8119 (2020)",
+          "DOI": "10.1109/CVPR42600.2020.00813"
+        },
+        {
+          "key": "23_CR16",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Li, Y., et al.: MaskSim: detection of synthetic images by masked spectrum similarity analysis. In: Proceedings of the CVPR Workshop (2024)",
+          "DOI": "10.1109/CVPRW63382.2024.00390"
+        },
+        {
+          "key": "23_CR17",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lokhande, M., Raut, P., Gawali, K., Ahirrao, M., Bhande, A.: Artificial intelligence for detecting cyber attacks in deepfake & identity theft. In: 2024 8th International Conference on Computing, Communication, Control and Automation (ICCUBEA), pp. 1–6 (2024)",
+          "DOI": "10.1109/ICCUBEA61740.2024.10774771"
+        },
+        {
+          "key": "23_CR18",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Lorenz, P., Durall, R.L., Keuper, J.: Detecting images generated by deep diffusion models using their local intrinsic dimensionality. In: Proceedings of the IEEE/CVF International Conference on Computer Vision, pp. 448–459 (2023)",
+          "DOI": "10.1109/ICCVW60793.2023.00051"
+        },
+        {
+          "key": "23_CR19",
+          "unstructured": "Nichol, A.Q., et al.: GLIDE: towards photorealistic image generation and editing with text-guided diffusion models. In: Chaudhuri, K., Jegelka, S., Song, L., Szepesvari, C., Niu, G., Sabato, S. (eds.) Proceedings of the 39th International Conference on Machine Learning. Proceedings of Machine Learning Research, vol. 162, pp. 16784–16804. PMLR (2022)"
+        },
+        {
+          "key": "23_CR20",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rahman, M.A., Paul, B., Sarker, N.H., Hakim, Z.I.A., Fattah, S.A.: Artifact: a large-scale dataset with artificial and factual images for generalizable and robust synthetic image detection. In: 2023 IEEE International Conference on Image Processing (ICIP), pp. 2200–2204. IEEE (2023)",
+          "DOI": "10.1109/ICIP49359.2023.10222083"
+        },
+        {
+          "key": "23_CR21",
+          "doi-asserted-by": "publisher",
+          "first-page": "104",
+          "DOI": "10.1016/j.patrec.2024.04.018",
+          "volume": "182",
+          "author": "S Raj",
+          "year": "2024",
+          "unstructured": "Raj, S., Mathew, J., Mondal, A.: Generalized and robust model for GAN-generated image detection. Pattern Recogn. Lett. 182, 104–110 (2024)",
+          "journal-title": "Pattern Recogn. Lett."
+        },
+        {
+          "issue": "2",
+          "key": "23_CR22",
+          "doi-asserted-by": "publisher",
+          "first-page": "180",
+          "DOI": "10.71364/s3emxx77",
+          "volume": "2",
+          "author": "R Ratnawita",
+          "year": "2025",
+          "unstructured": "Ratnawita, R.: Cybersecurity in the AI era measures deepfake threats and artificial intelligence-based attacks. J. Am. Instit. 2(2), 180–189 (2025)",
+          "journal-title": "J. Am. Instit."
+        },
+        {
+          "key": "23_CR23",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Rombach, R., Blattmann, A., Lorenz, D., Esser, P., Ommer, B.: High-resolution image synthesis with latent diffusion models. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 10684–10695 (2022)",
+          "DOI": "10.1109/CVPR52688.2022.01042"
+        },
+        {
+          "issue": "3",
+          "key": "23_CR24",
+          "doi-asserted-by": "publisher",
+          "first-page": "1",
+          "DOI": "10.1145/3708352",
+          "volume": "21",
+          "author": "K Samrouth",
+          "year": "2025",
+          "unstructured": "Samrouth, K., El Housseini, P., Deforges, O.: Siamese network-based detection of deepfake impersonation attacks with a person of interest approach. ACM Trans. Multimed. Comput. Commun. Appl. 21(3), 1–23 (2025)",
+          "journal-title": "ACM Trans. Multimed. Comput. Commun. Appl."
+        },
+        {
+          "key": "23_CR25",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Schroff, F., Kalenichenko, D., Philbin, J.: FaceNet: a unified embedding for face recognition and clustering. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) (2015)",
+          "DOI": "10.1109/CVPR.2015.7298682"
+        },
+        {
+          "key": "23_CR26",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Sinitsa, S., Fried, O.: Deep image fingerprint: towards low budget synthetic image detection and model lineage analysis. In: Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, pp. 4067–4076 (2024)",
+          "DOI": "10.1109/WACV57701.2024.00402"
+        },
+        {
+          "issue": "1",
+          "key": "23_CR27",
+          "doi-asserted-by": "publisher",
+          "first-page": "89",
+          "DOI": "10.3390/jcp2010007",
+          "volume": "2",
+          "author": "M Taeb",
+          "year": "2022",
+          "unstructured": "Taeb, M., Chi, H.: Comparison of deepfake detection techniques through deep learning. J. Cybersecurity Priv. 2(1), 89–106 (2022)",
+          "journal-title": "J. Cybersecurity Priv."
+        },
+        {
+          "key": "23_CR28",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tan, C., Zhao, Y., Wei, S., Gu, G., Wei, Y.: Learning on gradients: generalized artifacts representation for GAN-generated images detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 12105–12114 (2023)",
+          "DOI": "10.1109/CVPR52729.2023.01165"
+        },
+        {
+          "issue": "16",
+          "key": "23_CR29",
+          "doi-asserted-by": "publisher",
+          "first-page": "3161",
+          "DOI": "10.3390/electronics13163161",
+          "volume": "13",
+          "author": "M Tanfoni",
+          "year": "2024",
+          "unstructured": "Tanfoni, M., Ceroni, E.G., Marziali, S., Pancino, N., Maggini, M., Bianchini, M.: Generated or Not Generated (GNG): the importance of background in the detection of fake images. Electronics 13(16), 3161 (2024)",
+          "journal-title": "Electronics"
+        },
+        {
+          "key": "23_CR30",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Tariang, D., Corvi, R., Cozzolino, D., Poggi, G., Nagano, K., Verdoliva, L.: Synthetic Image Verification in the Era of Generative Artificial Intelligence: What Works and What Isn’t There yet. IEEE Security & Privacy (2024)",
+          "DOI": "10.1109/MSEC.2024.3376637"
+        },
+        {
+          "key": "23_CR31",
+          "doi-asserted-by": "publisher",
+          "first-page": "2425",
+          "DOI": "10.1109/TIFS.2022.3186803",
+          "volume": "17",
+          "author": "J Wang",
+          "year": "2022",
+          "unstructured": "Wang, J., Sun, Y., Tang, J.: LiSiam: localization invariance Siamese network for deepfake detection. IEEE Trans. Inf. Forensics Secur. 17, 2425–2436 (2022). https://doi.org/10.1109/TIFS.2022.3186803",
+          "journal-title": "IEEE Trans. Inf. Forensics Secur."
+        },
+        {
+          "key": "23_CR32",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wong, Y.J., Ng, T.K.: Local statistics for generative image detection. In: ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 1–5. IEEE (2025)",
+          "DOI": "10.1109/ICASSP49660.2025.10890557"
+        },
+        {
+          "key": "23_CR33",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Wu, Q., Cao, C., Mai, J., Tao, F.: Robust GAN based on attention mechanism. In: International Symposium on Cyberspace Safety and Security, pp. 78–86. Springer (2020)",
+          "DOI": "10.1007/978-3-030-73671-2_8"
+        },
+        {
+          "key": "23_CR34",
+          "doi-asserted-by": "crossref",
+          "unstructured": "Yu, N., Davis, L.S., Fritz, M.: Attributing fake images to GANs: learning and analyzing GAN fingerprints. In: Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) (2019)",
+          "DOI": "10.1109/ICCV.2019.00765"
+        }
+      ],
+      "container-title": [
+        "Lecture Notes in Computer Science",
+        "Cyberspace Safety and Security"
+      ],
+      "original-title": [],
+      "language": "en",
+      "link": [
+        {
+          "URL": "https://link.springer.com/content/pdf/10.1007/978-981-95-3551-4_23",
+          "content-type": "unspecified",
+          "content-version": "vor",
+          "intended-application": "similarity-checking"
+        }
+      ],
+      "deposited": {
+        "date-parts": [
+          [
+            2026,
+            1,
+            2
+          ]
+        ],
+        "date-time": "2026-01-02T00:40:10Z",
+        "timestamp": 1767314410000
+      },
+      "score": 1,
+      "resource": {
+        "primary": {
+          "URL": "https://link.springer.com/10.1007/978-981-95-3551-4_23"
+        }
+      },
+      "subtitle": [],
+      "short-title": [],
+      "issued": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "ISBN": [
+        "9789819535507",
+        "9789819535514"
+      ],
+      "references-count": 34,
+      "URL": "https://doi.org/10.1007/978-981-95-3551-4_23",
+      "relation": {},
+      "ISSN": [
+        "0302-9743",
+        "1611-3349"
+      ],
+      "issn-type": [
+        {
+          "value": "0302-9743",
+          "type": "print"
+        },
+        {
+          "value": "1611-3349",
+          "type": "electronic"
+        }
+      ],
+      "subject": [],
+      "published": {
+        "date-parts": [
+          [
+            2026
+          ]
+        ]
+      },
+      "assertion": [
+        {
+          "value": "2 January 2026",
+          "order": 1,
+          "name": "first_online",
+          "label": "First Online",
+          "group": {
+            "name": "ChapterHistory",
+            "label": "Chapter History"
+          }
+        },
+        {
+          "value": "The authors have no competing interests to declare that are relevant to the content of this article.",
+          "order": 1,
+          "name": "Ethics",
+          "group": {
+            "name": "EthicsHeading",
+            "label": "Disclosure of Interests"
+          }
+        },
+        {
+          "value": "CSS",
+          "order": 1,
+          "name": "conference_acronym",
+          "label": "Conference Acronym",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "International Symposium on Cyberspace Safety and Security",
+          "order": 2,
+          "name": "conference_name",
+          "label": "Conference Name",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "Hangzhou",
+          "order": 3,
+          "name": "conference_city",
+          "label": "Conference City",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "China",
+          "order": 4,
+          "name": "conference_country",
+          "label": "Conference Country",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "2025",
+          "order": 5,
+          "name": "conference_year",
+          "label": "Conference Year",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "4 July 2025",
+          "order": 7,
+          "name": "conference_start_date",
+          "label": "Conference Start Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "6 July 2025",
+          "order": 8,
+          "name": "conference_end_date",
+          "label": "Conference End Date",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "15",
+          "order": 9,
+          "name": "conference_number",
+          "label": "Conference Number",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "css2025",
+          "order": 10,
+          "name": "conference_id",
+          "label": "Conference ID",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        },
+        {
+          "value": "https://nsclab.org/css2025/",
+          "order": 11,
+          "name": "conference_url",
+          "label": "Conference URL",
+          "group": {
+            "name": "ConferenceInfo",
+            "label": "Conference Information"
+          }
+        }
+      ]
+    }
+  }
+}
