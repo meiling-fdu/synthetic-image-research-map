@@ -85,7 +85,7 @@ def test_current_repository_has_zero_silent_geographic_relationships():
     report = repository_report()
     assert not [r for r in report if r["classification"] == "ERROR"]
     actionable = [r for r in report if r["classification"] == "ACTIONABLE"]
-    assert len(actionable) == 5
+    assert len(actionable) == 8
     assert all(r["reason"] and not r["latitude"] and not r["longitude"] for r in actionable)
 
 
@@ -105,3 +105,51 @@ def test_reviewed_transition_cannot_remove_old_marker_without_current_target():
     old = {"id": "legacy:1", "doi": "10.1/paper", "institution_id": "institution:1", "institution_authors": ["A. Example"]}
     audit = {"action": "mapping_change_confirmed", "paper_id": "paper:1", "previous_institution_id": "institution:1", "institution_id": "institution:1", "mapping_id": "mapping:missing", "location_id": "location:campus", "previous_authors": "A. Example", "new_authors": "Ada Example", "confirmation_text": "previous_record_id=legacy:1; paper_doi=10.1/paper"}
     assert not ReviewedRelationshipResolver([], [audit]).supersedes(old)
+
+
+@pytest.mark.parametrize('status', ['needs_coordinate_review', 'pending_review', 'ambiguous', 'ignore', 'ignored', 'excluded'])
+def test_candidate_status_suppresses_preserved_marker_without_deleting_coordinates(status):
+    from scripts.curated_export import integrate_curated_records
+    from scripts.export_public_preview import preserve_map_relationships_after_integration
+    from scripts.public_export_guard import analyze_shrinkage
+    papers, markers, mappings, _, locations, _, _ = fixture()
+    papers[0].update(authors='Ada Example', task='detection', scope_status='in_scope', curation_status='confirmed')
+    original = deepcopy(locations)
+    locations[0]['coordinate_status'] = status
+    reviews = [dict(institution_id='institution:1', institution='Example University', related_paper_id='paper:1', review_status='pending_review', coordinate_status='needs_coordinate_review')]
+    _, exported, _, _ = integrate_curated_records(papers, markers, papers, mappings, location_review_rows=reviews, confirmed_location_records=locations)
+    assert not exported
+    assert not preserve_map_relationships_after_integration(markers, exported, exclusion_rows=[], merge_rows=[], review_decisions=[], curated_mappings=mappings, location_rows=locations)
+    report = analyze_shrinkage(papers, papers, markers, [], curated_mappings=mappings, location_rows=locations)
+    assert report.allowed and all(r.explained for r in report.removed_maps)
+    assert locations[0]['lat'] == original[0]['lat'] and locations[0]['lon'] == original[0]['lon']
+    # Current reconfirmation supersedes the rejection; history is not a ban.
+    locations[0]['coordinate_status'] = 'known'
+    assert not ReviewedRelationshipResolver(mappings, locations=locations).supersedes(markers[0])
+    _, exported, _, _ = integrate_curated_records(papers, [], papers, mappings, confirmed_location_records=locations)
+    assert len(exported) == 1
+
+
+def test_coordinate_rejection_is_scoped_to_location_not_other_campus():
+    _, markers, mappings, _, locations, _, _ = fixture()
+    locations[0]['coordinate_status'] = 'needs_coordinate_review'
+    other = {**markers[0], 'location_id': 'location:other'}
+    assert not ReviewedRelationshipResolver([], locations=locations).location_is_rejected(other)
+
+
+def test_invalid_current_coordinates_cannot_preserve_old_valid_marker():
+    _, markers, _, _, locations, _, _ = fixture()
+    locations[0]['lat'] = 'nan'
+    assert ReviewedRelationshipResolver([], locations=locations).location_is_rejected(markers[0])
+
+
+def test_admin_confirmed_choices_exclude_retained_candidates():
+    from scripts.curated_locations import location_review_payload
+    from scripts.curated_mappings import load_mappings
+    from scripts.paper_exclusions import read_exclusion_rows
+    payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
+    assert payload['summary']['confirmed_locations_count'] == len(payload['confirmed_locations']) == 456
+    assert len(payload['candidate_locations']) == 4
+    candidate_ids = {r['location_id'] for r in payload['candidate_locations']}
+    assert not candidate_ids.intersection(r['location_id'] for r in payload['confirmed_locations'])
+    assert all(valid_coordinates(r) and r['coordinate_status'] == 'needs_coordinate_review' for r in payload['candidate_locations'])

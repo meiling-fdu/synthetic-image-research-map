@@ -48,6 +48,16 @@ class VenueNormalizationTests(unittest.TestCase):
     def resolve(self, raw, publication_type="conference"):
         return resolve_venue(raw, publication_type=publication_type, aliases=read_venue_aliases())
 
+    def test_unmapped_venue_does_not_alternate_between_raw_text_and_generated_id(self):
+        raw = "Proceedings of the Fifteenth Unregistered Example Conference"
+        first = canonicalize_record({"venue": raw, "publication_type": "conference"}, [])
+        self.assertNotIn("venue_id", first)
+        self.assertEqual(first["venue"], raw)
+        current = first
+        for _ in range(3):
+            current = canonicalize_record(current, [])
+            self.assertEqual(current, first)
+
     def test_year_proceedings_ordinal_and_acronym_normalize(self):
         venue = self.resolve("2026 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)")
         self.assertEqual(venue.venue_id, "venue:cvpr")

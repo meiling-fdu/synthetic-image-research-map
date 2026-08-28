@@ -40,6 +40,7 @@ try:
     from .name_matching import canonical_name_key, names_match
     from .curated_papers import normalize_author_names
     from .paper_links import resolve_public_links
+    from .public_relationships import ReviewedRelationshipResolver
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -66,6 +67,7 @@ except ImportError:
     from name_matching import canonical_name_key, names_match
     from curated_papers import normalize_author_names
     from paper_links import resolve_public_links
+    from public_relationships import ReviewedRelationshipResolver
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -587,6 +589,14 @@ def _coordinate_signature(record: Mapping[str, Any]) -> Tuple[Any, ...]:
     )
 
 
+def _confirmed_location_is_usable(record: Mapping[str, Any]) -> bool:
+    # Blank status remains compatible with legacy caller-supplied fixtures.
+    # Explicit review/missing states must never be revived by numeric values.
+    return clean(record.get("coordinate_status")).casefold() in {
+        "", "known", "confirmed",
+    } and _valid_coordinates(record)
+
+
 def _candidate_location_is_safe(record: Mapping[str, Any]) -> bool:
     confidence = clean(record.get("resolution_confidence")).casefold()
     needs_review = clean(record.get("needs_review")).casefold()
@@ -744,7 +754,8 @@ def match_institutions_to_known_coordinates(
     processed_cache_records: Sequence[Mapping[str, Any]] = (),
 ) -> Dict[str, CoordinateMatch]:
     confirmed_groups = _location_groups(
-        confirmed_location_records, require_safe_candidate=False
+        (row for row in confirmed_location_records if _confirmed_location_is_usable(row)),
+        require_safe_candidate=False,
     )
     processed_cache_groups = _processed_cache_location_groups(
         processed_cache_records
@@ -1422,7 +1433,7 @@ def build_curated_map_records(
         key
         for row in confirmed_location_records
         for key in _institution_location_keys(row)
-        if _valid_coordinates(row)
+        if _confirmed_location_is_usable(row)
     }
     review_status_by_key = {
         _queue_key(row): clean(row.get("review_status")) or "pending_review"
@@ -1903,7 +1914,11 @@ def integrate_curated_records(
     Dict[str, Any],
 ]:
     papers = [dict(record) for record in paper_records]
-    maps = [dict(record) for record in map_records]
+    location_policy = ReviewedRelationshipResolver([], locations=confirmed_location_records)
+    maps = [dict(record) for record in map_records
+            if not location_policy.location_is_rejected(record)]
+    candidate_map_records = [record for record in candidate_map_records
+                             if not location_policy.location_is_rejected(record)]
     reviews = [dict(row) for row in location_review_rows]
     curated_records, paper_summary = build_curated_paper_preview_records(
         curated_papers, exclusion_rows

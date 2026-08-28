@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import json
+import math
 import re
 import unicodedata
 from collections import defaultdict
@@ -107,7 +109,12 @@ class ReviewedRelationshipResolver:
         self,
         mappings: Sequence[Mapping[str, Any]],
         audits: Sequence[Mapping[str, Any]] = (),
+        locations: Sequence[Mapping[str, Any]] = (),
     ) -> None:
+        self.locations = {
+            (clean(row.get("institution_id")), clean(row.get("location_id"))): row
+            for row in locations if clean(row.get("location_id"))
+        }
         self.targets: dict[
             tuple[tuple[str, ...], tuple[str, ...]],
             set[tuple[str, str]],
@@ -117,6 +124,15 @@ class ReviewedRelationshipResolver:
         ] = defaultdict(set)
         self.mapping_ids: set[str] = set()
         self.audits = tuple(audits)
+        self.formal_proofs = []
+        for audit in audits:
+            if clean(audit.get("action")) == "formal_publication_roster_applied":
+                try:
+                    proof = json.loads(audit.get("confirmation_text", "{}"))
+                    if isinstance(proof, dict):
+                        self.formal_proofs.append((audit, proof))
+                except (ValueError, TypeError):
+                    pass
         self.active_mappings = {
             clean(row.get("mapping_id")): row for row in mappings
             if clean(row.get("mapping_status")) == "active"
@@ -245,7 +261,8 @@ class ReviewedRelationshipResolver:
 
     def superseding_mapping_ids(self, record: Mapping[str, Any]) -> tuple[str, ...]:
         """Return exact curated lineage authorizing a supersession."""
-        audited = self._audited_replacement_mapping_ids(record)
+        audited = (self._formal_replacement_mapping_ids(record)
+                   or self._audited_replacement_mapping_ids(record))
         if audited:
             return audited
         if not self.supersedes(record):
@@ -255,6 +272,81 @@ class ReviewedRelationshipResolver:
             normalized_author_set(record.get("institution_authors")),
         )
         return tuple(sorted(self.mapping_ids_by_scope.get(scope, ())))
+
+    def location_is_rejected(self, record: Mapping[str, Any]) -> bool:
+        """An explicit current review state outranks preserved coordinates.
+
+        Scope to the exact location, not all campuses of an institution. Blank
+        status retains legacy compatibility; current curated locations carry an
+        explicit status. Reconfirmation therefore restores export eligibility.
+        """
+        location = self.locations.get((clean(record.get("institution_id")),
+                                       clean(record.get("location_id"))))
+        if not location:
+            return False
+        if clean(location.get("coordinate_status")).casefold() not in {"", "known", "confirmed"}:
+            return True
+        try:
+            lat, lon = float(location["lat"]), float(location["lon"])
+            return not (math.isfinite(lat) and math.isfinite(lon)
+                        and -90 <= lat <= 90 and -180 <= lon <= 180)
+        except (ValueError, TypeError, KeyError):
+            return True
+
+    def _formal_replacement_mapping_ids(self, record: Mapping[str, Any]) -> tuple[str, ...]:
+        """Validate exact before/after lineage for a formal roster migration.
+
+        All target scopes and indexes must still match the audited final matrix.
+        A changed DOI is allowed only through this paper-specific version audit;
+        neither similar author names nor an unrelated audit authorizes removal.
+        """
+        fields = ("paper_id", "doi", "institution_id", "location_id",
+                  "institution_authors", "author_order", "affiliation_order")
+        for audit, proof in self.formal_proofs:
+            if clean(record.get("paper_id")) != clean(audit.get("paper_id")):
+                continue
+            try:
+                if proof.get("source_kind") != "formal_publication" or not clean(audit.get("evidence_url")).startswith("https://"):
+                    continue
+                previous, final = proof["previous_paper"], proof["final_paper"]
+                if clean(record.get("paper_id")) != clean(audit.get("paper_id")) or previous["paper_id"] != final["paper_id"] or final["paper_id"] != audit["paper_id"]:
+                    continue
+                if normalized_doi(record.get("doi")) not in {normalized_doi(previous.get("doi")), normalized_doi(final.get("doi"))}:
+                    continue
+                before = next((m for m in proof["previous_mappings"]
+                               if m["mapping_id"] == record.get("mapping_id")), None)
+                if not before or any(clean(before.get(k)) != clean(record.get(k))
+                                     for k in ("institution_id", "location_id")):
+                    continue
+                if normalized_author_set(before.get("institution_authors")) != normalized_author_set(record.get("institution_authors")):
+                    continue
+                matrix = proof["matrix"]
+                if [a["index"] for a in matrix] != list(range(1, len(matrix) + 1)) or "; ".join(a["name"] for a in matrix) != final["authors"]:
+                    continue
+                targets = proof["final_mappings"]
+                expected_ids = {mid for a in matrix for mid in a["mapping_ids"]}
+                if {m["mapping_id"] for m in targets} != expected_ids:
+                    continue
+                valid = True
+                for target in targets:
+                    current = self.active_mappings.get(target["mapping_id"])
+                    occurrences = [a for a in matrix if target["mapping_id"] in a["mapping_ids"]]
+                    if (not current or any(clean(current.get(k)) != clean(target.get(k)) for k in fields)
+                            or target["paper_id"] != final["paper_id"]
+                            or normalized_doi(target.get("doi")) != normalized_doi(final.get("doi"))
+                            or target["institution_authors"] != "; ".join(a["name"] for a in occurrences)
+                            or target["author_order"] != "; ".join(str(a["index"]) for a in occurrences)):
+                        valid = False
+                        break
+                if not valid:
+                    continue
+                current = self.active_mappings.get(clean(record.get("mapping_id")))
+                if current and all(clean(current.get(k)) == clean(record.get(k)) for k in ("institution_id", "location_id")) and normalized_author_set(current.get("institution_authors")) == normalized_author_set(record.get("institution_authors")):
+                    continue  # Never retire the correctly regenerated marker.
+                return tuple(sorted(expected_ids))
+            except (ValueError, KeyError, TypeError, AttributeError):
+                continue  # Malformed evidence cannot authorize shrinkage.
+        return ()
 
     def _audited_replacement_mapping_ids(self, record: Mapping[str, Any]) -> tuple[str, ...]:
         """Honor an exact reviewed legacy-marker transition, including initials.
@@ -293,6 +385,8 @@ class ReviewedRelationshipResolver:
 
     def supersedes(self, record: Mapping[str, Any]) -> bool:
         """Return whether explicit current state replaces this older row."""
+        if self.location_is_rejected(record) or self._formal_replacement_mapping_ids(record):
+            return True
         if self._audited_replacement_mapping_ids(record):
             return True
         if self._audit_removes(record):

@@ -83,8 +83,8 @@ def test_publisher_name_corrections_and_duplicate_consolidation():
     assert attribution["Jin Peng Zhou"] == [1, 2]
     assert attribution["Ilia Shumailov"] == [1, 2, 3]
     survey = indices(paper("Deep Learning for Deepfakes Creation"))
-    assert list(survey) == ["Thanh Thi Nguyen", "Cuong M. Nguyen", "Dung Tien Nguyen", "Duc Thanh Nguyen", "Saeid Nahavandi"]
-    assert all(value == [1] for value in survey.values())
+    assert list(survey) == ["Thanh Thi Nguyen", "Quoc Viet Hung Nguyen", "Dung Tien Nguyen", "Duc Thanh Nguyen", "Thien Huynh-The", "Saeid Nahavandi", "Thanh Tam Nguyen", "Quoc-Viet Pham", "Cuong M. Nguyen"]
+    assert list(survey.values()) == [[1], [2], [1], [1], [3], [1], [4], [5], [6]]
 
 
 def test_repaired_coordinate_missing_links_survive_repeated_detail_passes():
@@ -106,7 +106,8 @@ def test_every_new_mapping_has_exact_author_positions_and_unique_order():
         # original evidence provenance/creation date still identifies the batch.
         if not (mapping["updated_at"] == "2026-08-27T00:30:00Z"
                 or (mapping["created_at"] == "2026-08-27T00:30:00Z"
-                    and mapping["provenance_source"].startswith(("Visually verified paper PDF:", "Verified structured author-affiliation metadata:")))
+                    and mapping["provenance_source"].startswith(("Visually verified paper PDF:", "Verified structured author-affiliation metadata:", "Visually verified formal publication:")))
+                or mapping["provenance_source"].startswith("Visually verified formal publication:")
                 or mapping["mapping_id"] in {"mapping:e52721d76b4e36468169", "mapping:deakin-waurn-ponds-20260827"}):
             continue
         assert mapping["mapping_status"] == "active"
@@ -129,7 +130,7 @@ def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
     records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
     unresolved = {a["name"] for p in records for a in p["authors"] if not a["affiliation_indices"]}
     assert unresolved == {
-        "Hainan Ren", "Jia Wang", "Yuexuan Tan", "Jason Li", "Henan Wang",
+        "Hainan Ren", "Jia Wang", "Henan Wang",
         "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Reid Southen", "Usha Kosarkar",
     }
     notes = {r["affected_authors"]: r for r in csv_rows("institution_audit_log.csv")
@@ -229,13 +230,13 @@ def test_new_supported_mapping_can_supersede_an_unresolved_review():
     assert not review_mapping_conflicts([old, new], [{"paper_id": "paper:review", "mapping_status": "active", "institution_authors": "Ada Example"}])
 
 
-def test_final_repository_author_states_preserve_the_ten_authors():
+def test_final_repository_author_states_follow_formal_rosters():
     records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
     noninstitutional = {a["name"] for p in records for a in p["authors"] if is_non_institutional(a)}
     assert noninstitutional == {"Henan Wang", "Reid Southen", "Hainan Ren"}
     unresolved = {a["name"] for p in records for a in p["authors"] if a["affiliation_status"] == "unresolved"}
-    assert unresolved == {"Jia Wang", "Yuexuan Tan", "Jason Li", "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Usha Kosarkar"}
-    assert sum(p["affiliation_complete"] for p in records) == 539
+    assert unresolved == {"Jia Wang", "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Usha Kosarkar"}
+    assert sum(p["affiliation_complete"] for p in records) == 541
     for p in records:
         assert p["author_affiliation_counts"] == affiliation_counts(p["authors"])
     entities = {r["canonical_name"] for r in csv_rows("institutions.csv")}

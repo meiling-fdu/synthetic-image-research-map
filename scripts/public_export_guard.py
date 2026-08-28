@@ -670,13 +670,14 @@ def analyze_shrinkage(
     curated_mappings: Sequence[Mapping[str, Any]] = (),
     institution_audits: Sequence[Mapping[str, Any]] = (),
     institution_rows: Sequence[Mapping[str, Any]] = (),
+    location_rows: Sequence[Mapping[str, Any]] = (),
     orphan_cleanup_audits: Sequence[Mapping[str, Any]] = (),
     institution_redirects: Optional[Mapping[str, str]] = None,
     approved_by_baseline: bool = False,
 ) -> ShrinkageReport:
     exclusion_index = build_active_exclusion_index(exclusion_rows)
     relationship_resolver = ReviewedRelationshipResolver(
-        curated_mappings, institution_audits
+        curated_mappings, institution_audits, location_rows
     )
     new_paper_index = _PaperIdentityIndex(new_papers)
     new_map_index = _PaperIdentityIndex(new_maps)
@@ -748,6 +749,10 @@ def analyze_shrinkage(
                 institution_redirects=institution_redirects,
             )
         )
+        if relationship_resolver.location_is_rejected(old):
+            transition = RelationshipExplanation(
+                "location_review", "explicit current location status requires review; candidate coordinates retained", True,
+            )
         institution_id = clean(
             old.get("institution_id") or old.get("canonical_institution_id")
         )

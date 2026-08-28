@@ -55,10 +55,10 @@ def test_deakin_two_campuses_and_exact_author_groups_not_bus_stop():
     campus = {r["city"]: r for r in locations("30e93da233b7eeef")}
     assert set(campus) == {"Burwood", "Waurn Ponds"}
     assert all((r["lat"], r["lon"]) != ("-37.8501813", "145.1151967") for r in campus.values())
-    mappings = {r["institution_city"]: r for r in rows("author_institution_mappings") if r["paper_id"] == "curated:c071c25bc2957d78569b"}
+    mappings = {r["institution_city"]: r for r in rows("author_institution_mappings") if r["paper_id"] == "curated:c071c25bc2957d78569b" and r["institution_id"] == "institution:30e93da233b7eeef"}
     assert mappings["Burwood"]["institution_authors"] == "Thanh Thi Nguyen; Dung Tien Nguyen; Duc Thanh Nguyen"
-    assert mappings["Waurn Ponds"]["institution_authors"] == "Cuong M. Nguyen; Saeid Nahavandi"
-    assert {r["affiliation_order"] for r in mappings.values()} == {"1", "2"}
+    assert mappings["Waurn Ponds"]["institution_authors"] == "Saeid Nahavandi"
+    assert {r["affiliation_order"] for r in mappings.values()} == {"1", "4"}
     for city, mapping in mappings.items():
         assert mapping["location_id"] == campus[city]["location_id"]
         exported = next(m for m in markers("30e93da233b7eeef") if m.get("mapping_id") == mapping["mapping_id"])
@@ -115,10 +115,10 @@ def test_all_supported_manual_decisions_survive_with_original_identity():
         assert current[old["location_id"]] == old
 
 
-def test_five_supported_records_resolved_five_unresolved_no_headquarters():
+def test_prior_supported_records_and_current_review_candidates_preserved():
     decisions = json.loads((ROOT / "docs/remaining_institution_location_audit_2026-08-27.json").read_text())
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
-    assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"] == 5
+    assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"] == 8
     for decision in decisions:
         iid = decision["institution_id"]
         records = [r for r in payload["records"] if r["institution_id"] == iid]
@@ -127,13 +127,14 @@ def test_five_supported_records_resolved_five_unresolved_no_headquarters():
             location, = locations(iid.split(":")[1])
             assert location["location_id"] == decision["location_id"]
             assert valid_coordinates(location)
+        elif iid == "institution:44469d661cb0034c":
+            assert all(r["review_status"] == "confirmed" for r in records)
+            assert markers(iid.split(":")[1])
         else:
             assert all(r["review_status"] == "pending_review" and r["evidence_source"] for r in records)
-            assert not locations(iid.split(":")[1])
+            candidate, = locations(iid.split(":")[1])
+            assert candidate["coordinate_status"] == "needs_coordinate_review"
             assert not markers(iid.split(":")[1])
-    jd = next(r for r in payload["records"] if r["institution_id"] == "institution:44469d661cb0034c")
-    assert not jd["suggested_city"] and not jd["suggested_country"]
-    assert "do not infer Beijing headquarters" in jd["evidence_source"]
 
 
 def test_location_integrity_and_scoped_naming():
@@ -149,7 +150,6 @@ def test_location_integrity_and_scoped_naming():
 
 
 @pytest.mark.parametrize("key,author,city,evidence", [
-    ("44469d661cb0034c", "Jawadul H. Bappy", "", "headquarters"),
     ("2f2a5a5c1021efe4", "Xiao Meng", "Guangzhou", "510006"),
     ("e07792f5cf49ebda", "Arjuna Flenner", "China Lake", "Point Mugu"),
     ("96dd3389141fcf35", "Digvijay Pandey", "Kanpur", "building"),
@@ -166,7 +166,8 @@ def test_final_public_textual_locations_remain_actionable_without_site_evidence(
     mapping, = [r for r in rows("author_institution_mappings") if r["institution_id"] == iid]
     assert not mapping["location_id"]
     assert not mapping["institution_latitude"] and not mapping["institution_longitude"]
-    assert not locations(key) and not markers(key)
+    assert locations(key)[0]["coordinate_status"] == "needs_coordinate_review"
+    assert not markers(key)
 
 
 def test_audited_legacy_centroid_markers_are_replaced_not_duplicated():

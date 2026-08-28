@@ -12,30 +12,30 @@ CURRENT_REPOSITORY_BASELINE = {
     "public_map_source_papers": 540,
     "public_papers_with_map": 539,
     "public_papers_without_map": 7,
-    "public_map_relationships": 1261,
-    "canonical_institution_rows": 658,
-    "active_canonical_institutions": 646,
+    "public_map_relationships": 1263,
+    "canonical_institution_rows": 662,
+    "active_canonical_institutions": 650,
     "inactive_or_merged_institutions": 12,
-    "author_institution_mappings": 937,
+    "author_institution_mappings": 942,
     "institution_hierarchy_edges": 8,
     "institution_aliases": 80,
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 646,
+    "active": 650,
     "merged": 6,
     "ignored": 6,
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 470,
+    "university": 474,
     "research_unit": 67,
     "company": 72,
     "other": 49,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 464,
+    "university": 468,
     "research_unit": 65,
     "company": 70,
     "other": 47,
@@ -50,8 +50,8 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
 
 PUBLICATION_TYPE_TOTALS = {
     "conference": 314,
-    "journal": 166,
-    "preprint": 65,
+    "journal": 167,
+    "preprint": 64,
     "book": 1,
 }
 

@@ -48,6 +48,12 @@ the raw `research_unit` machine value for reproducibility and backward
 compatibility; the display label is not a serialized enum migration.
 
 `institution_locations.csv` owns location only and references `institution_id`.
+Stored coordinates do not imply public eligibility: `known`/`confirmed` rows
+must also have valid coordinates. A retained manual point with
+`coordinate_status=needs_coordinate_review` is provenance for a review candidate,
+not a confirmed site. The public exporter suppresses its markers, including
+previously exported copies, without deleting the candidate. Admin exposes these
+under `candidate_locations`, separately from `confirmed_locations`.
 Coordinate edits cannot change that ID. A child without a location may inherit
 the nearest confirmed parent location; its own row overrides inheritance.
 

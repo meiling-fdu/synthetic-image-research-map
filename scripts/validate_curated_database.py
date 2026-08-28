@@ -1454,7 +1454,8 @@ def main() -> int:
         confirmed_locations,
         "institution_locations.csv",
         "coordinate_status",
-        {"known"},
+        # Retain rejected manual points as provenance, never as confirmed sites.
+        {"known", "confirmed", "needs_coordinate_review"},
         issues,
     )
     validate_allowed_value(

@@ -2526,6 +2526,7 @@ def preserve_map_relationships_after_integration(
     review_decisions: Sequence[Mapping[str, Any]],
     curated_mappings: Sequence[Mapping[str, Any]] = (),
     institution_audits: Sequence[Mapping[str, Any]] = (),
+    location_rows: Sequence[Mapping[str, Any]] = (),
 ) -> List[Dict[str, Any]]:
     """Retain unexplained published relationships after curated precedence.
 
@@ -2541,7 +2542,7 @@ def preserve_map_relationships_after_integration(
         review_decisions=review_decisions,
     )
     preserved, _removed = ReviewedRelationshipResolver(
-        curated_mappings, institution_audits
+        curated_mappings, institution_audits, location_rows
     ).filter_superseded(preserved)
     return merge_existing_records(preserved, integrated, map_records=True)
 
@@ -3000,6 +3001,7 @@ def exclude_stale_curated_mapping_markers(
     map_records: Sequence[Dict[str, Any]],
     mappings: Sequence[Dict[str, Any]],
     institution_audits: Sequence[Mapping[str, Any]] = (),
+    location_rows: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[List[Dict[str, Any]], int]:
     """Drop preserved markers that contradict an active explicit mapping.
 
@@ -3008,7 +3010,7 @@ def exclude_stale_curated_mapping_markers(
     matching is scoped to the paper and the exact mapped author set.
     """
     return ReviewedRelationshipResolver(
-        mappings, institution_audits
+        mappings, institution_audits, location_rows
     ).filter_superseded(map_records)
 
 
@@ -4197,10 +4199,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         review_decisions = read_csv_rows(args.review_decisions)
         curated_mappings = load_curated_mappings(args.curated_mappings)
         institution_audit_rows = read_csv_rows(args.institution_audit_log)
+        confirmed_location_rows = load_confirmed_locations(args.institution_locations)
         records = read_candidate_records(args.input)
         if args.preserve_existing and previous_maps:
             current_previous_maps, _ = ReviewedRelationshipResolver(
-                curated_mappings, institution_audit_rows
+                curated_mappings, institution_audit_rows, confirmed_location_rows
             ).filter_superseded(previous_maps)
             records = merge_existing_records(
                 filter_preserved_records(
@@ -4270,9 +4273,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         location_review_rows = load_location_review_queue(
             args.location_review
         )
-        confirmed_location_rows = load_confirmed_locations(
-            args.institution_locations
-        )
         institution_alias_rows = load_institution_aliases(
             args.institution_aliases
         )
@@ -4302,7 +4302,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         integrated_maps, stale_mapping_markers_excluded = (
             exclude_stale_curated_mapping_markers(
-                integrated_maps, curated_mappings, institution_audit_rows
+                integrated_maps, curated_mappings, institution_audit_rows, confirmed_location_rows
             )
         )
         (
@@ -4409,6 +4409,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 review_decisions=review_decisions,
                 curated_mappings=curated_mappings,
                 institution_audits=institution_audit_rows,
+                location_rows=confirmed_location_rows,
             )
             (
                 integrated_papers,
@@ -4466,7 +4467,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         # so a reviewed mapping cannot coexist with its automatic predecessor.
         integrated_maps, final_stale_markers_excluded = (
             exclude_stale_curated_mapping_markers(
-                integrated_maps, curated_mappings, institution_audit_rows
+                integrated_maps, curated_mappings, institution_audit_rows, confirmed_location_rows
             )
         )
         stale_mapping_markers_excluded += final_stale_markers_excluded
@@ -4652,6 +4653,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 review_decisions=review_decisions,
                 curated_mappings=curated_mappings,
                 institution_audits=institution_audit_rows,
+                location_rows=confirmed_location_rows,
                 institution_rows=institution_rows,
                 orphan_cleanup_audits=orphan_cleanup_audit_rows,
                 institution_redirects=exported_id_redirects,

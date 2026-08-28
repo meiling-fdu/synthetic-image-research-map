@@ -795,9 +795,16 @@ def canonicalize_record(
     result.pop("aliases", None)
     result["venue"] = venue.venue_name
     result["venue_label"] = display_venue(result)
+    if venue.ambiguity_status == "unmapped" and venue.venue_id:
+        # The existing-ID path retires these unconfirmed placeholders. Apply
+        # that same policy immediately, otherwise repeated exports alternate
+        # between a generated ID and raw source text on every pass.
+        result = materialize_existing_venue_id(
+            result, resolved_aliases, registry=confirmed_registry, catalog=catalog,
+        )
     effective_type, _rule = resolve_publication_type(
         result.get("publication_type"),
-        venue=result.get("venue_name"),
+        venue=result.get("venue_name") or result.get("venue"),
         venue_type=result.get("venue_type"),
         arxiv_id=result.get("arxiv_id"),
         arxiv_url=result.get("arxiv_url"),

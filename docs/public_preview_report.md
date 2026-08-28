@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-08-27T15:08:42Z |
+| public_preview_generated_at | 2026-08-27T22:43:48Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1261 |
+| Map records | 1263 |
 | Unique mapped papers | 540 |
-| Unique institutions | 616 |
+| Unique institutions | 617 |
 | Countries | 53 |
-| arXiv/preprint records | 587 |
-| Records with DOI | 1164 |
-| Records with venue | 1250 |
+| arXiv/preprint records | 589 |
+| Records with DOI | 1166 |
+| Records with venue | 1252 |
 | Records missing venue | 11 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -45,12 +45,12 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Year | Records |
 | --- | ---: |
 | 2026 | 157 |
-| 2025 | 145 |
-| 2024 | 113 |
+| 2025 | 146 |
+| 2024 | 112 |
 | 2023 | 51 |
-| 2022 | 22 |
+| 2022 | 23 |
 | 2021 | 23 |
-| 2020 | 15 |
+| 2020 | 14 |
 | 2019 | 11 |
 | 2018 | 3 |
 
@@ -74,13 +74,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | Country | Records |
 | --- | ---: |
 | China | 565 |
-| United States | 171 |
+| United States | 172 |
 | Italy | 97 |
 | India | 69 |
 | Germany | 42 |
 | South Korea | 38 |
 | United Kingdom | 33 |
-| France | 29 |
+| France | 30 |
 | Singapore | 25 |
 | Australia | 21 |
 
@@ -103,7 +103,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1157 |
+| high | 1159 |
 | medium | 104 |
 
 ## Potential quality issues

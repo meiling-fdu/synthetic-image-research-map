@@ -204,6 +204,17 @@ def load_confirmed_locations(
     return _read_csv(path, INSTITUTION_LOCATION_COLUMNS)
 
 
+def is_confirmed_location(row: Mapping[str, Any]) -> bool:
+    """Candidate coordinates remain stored but are not confirmed choices."""
+    if clean(row.get("coordinate_status")) not in {"known", "confirmed"}:
+        return False
+    try:
+        validate_coordinates(row.get("lat"), row.get("lon"))
+    except CuratedLocationError:
+        return False
+    return True
+
+
 def load_institution_aliases(
     path: Path = DEFAULT_INSTITUTION_ALIASES_PATH,
 ) -> List[Dict[str, str]]:
@@ -877,7 +888,7 @@ def location_review_report(
     locations: Iterable[Mapping[str, Any]],
 ) -> Dict[str, Any]:
     reviews = list(review_rows)
-    confirmed = list(locations)
+    confirmed = [row for row in locations if is_confirmed_location(row)]
     location_counts = Counter(
         normalize_institution_name(
             row.get("normalized_institution") or row.get("institution")
@@ -967,6 +978,8 @@ def location_review_payload(
     by_institution: Dict[str, List[Dict[str, str]]] = defaultdict(list)
     by_institution_id: Dict[str, List[Dict[str, str]]] = defaultdict(list)
     for location in locations:
+        if not is_confirmed_location(location):
+            continue
         by_institution[
             normalize_institution_name(
                 location.get("normalized_institution")
@@ -1207,7 +1220,8 @@ def location_review_payload(
         ),
         "hidden_resolved": sum(suppression_reasons.values()),
         "suppression_reasons": dict(sorted(suppression_reasons.items())),
-        "confirmed_locations": locations,
+        "confirmed_locations": [row for row in locations if is_confirmed_location(row)],
+        "candidate_locations": [row for row in locations if not is_confirmed_location(row)],
         "institution_aliases": aliases,
         "summary": summary,
     }
