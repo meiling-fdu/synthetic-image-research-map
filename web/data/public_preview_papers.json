@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-28T13:57:53Z"
+    "public_preview_generated_at": "2026-08-28T14:22:10Z"
   },
   "records": [
     {
@@ -71865,12 +71865,14 @@
       "url": "https://doi.org/10.1145/3709022.3736541",
       "authors": [
         {
-          "name": "Hyejoo Choi",
-          "affiliation_indices": [],
+          "name": "Hyeongjun Choi",
+          "affiliation_indices": [
+            1
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
-          "affiliation_status": "unresolved"
+          "affiliation_status": "mapped"
         },
         {
           "name": "Inho Jung",
@@ -71932,7 +71934,7 @@
       "paper_id": "curated:cba231098f84685520e8",
       "venue_id": "venue:workshop-on-security-implications-of-deepfakes-and-cheapfakes",
       "venue_acronym": "WDC",
-      "venue_track": "workshops",
+      "venue_track": "main",
       "raw_venue": "Proceedings of the 4th Workshop on Security Implications of Deepfakes and Cheapfakes",
       "metadata_source": "openalex",
       "curation_status": "confirmed",
@@ -71972,6 +71974,15 @@
       ],
       "author_institution_indices": [
         {
+          "author": "Hyeongjun Choi",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ]
+        },
+        {
           "author": "Inho Jung",
           "institution_indices": [
             1
@@ -71998,11 +72009,11 @@
       ],
       "ambiguity_status": "resolved",
       "author_affiliation_counts": {
-        "mapped": 2,
+        "mapped": 3,
         "non_institutional": 0,
-        "unresolved": 1
+        "unresolved": 0
       },
-      "affiliation_complete": false,
+      "affiliation_complete": true,
       "affiliations": [
         {
           "index": 1,
@@ -72019,10 +72030,14 @@
       "current_institution": null,
       "author_affiliation_indices": [
         {
-          "author": "Hyejoo Choi",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
+          "author": "Hyeongjun Choi",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e80b94c605da24ce"
+          ],
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -75801,11 +75816,13 @@
       "authors": [
         {
           "name": "Jiarui Wang",
-          "affiliation_indices": [],
+          "affiliation_indices": [
+            1
+          ],
           "is_current_marker_author": false,
-          "affiliation_source": "unmapped",
+          "affiliation_source": "curated_admin",
           "affiliation_fallback": false,
-          "affiliation_status": "unresolved"
+          "affiliation_status": "mapped"
         },
         {
           "name": "Huiyu Duan",
@@ -75961,7 +75978,7 @@
           "location_id": "location:fccd5d0ac9cc52f960f2",
           "institution": "Shanghai Jiao Tong University",
           "institution_authors": [
-            "Jiarui Wangl",
+            "Jiarui Wang",
             "Huiyu Duan",
             "Juntong Wang",
             "Ziheng Jia",
@@ -75985,7 +76002,7 @@
           "institution": "Shanghai Jiao Tong University",
           "institution_type": "university",
           "authors": [
-            "Jiarui Wangl",
+            "Jiarui Wang",
             "Huiyu Duan",
             "Juntong Wang",
             "Ziheng Jia",
@@ -76002,6 +76019,15 @@
         }
       ],
       "author_institution_indices": [
+        {
+          "author": "Jiarui Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fccd5d0ac9cc52f9"
+          ]
+        },
         {
           "author": "Huiyu Duan",
           "institution_indices": [
@@ -76102,11 +76128,11 @@
       ],
       "ambiguity_status": "resolved",
       "author_affiliation_counts": {
-        "mapped": 10,
+        "mapped": 11,
         "non_institutional": 0,
-        "unresolved": 1
+        "unresolved": 0
       },
-      "affiliation_complete": false,
+      "affiliation_complete": true,
       "affiliations": [
         {
           "index": 1,
@@ -76124,9 +76150,13 @@
       "author_affiliation_indices": [
         {
           "author": "Jiarui Wang",
-          "indices": [],
-          "institution_ids": [],
-          "source": "unmapped",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:fccd5d0ac9cc52f9"
+          ],
+          "source": "curated_admin",
           "fallback": false
         },
         {
@@ -194146,16 +194176,6 @@
         "anhui business college"
       ]
     },
-    "institution:479e5a2ad13993e2": {
-      "canonical_name": "APJ Abdul Kalam Technological University",
-      "institution_type": "university",
-      "names": [
-        "APJ Abdul Kalam Technological University"
-      ],
-      "normalized_names": [
-        "apj abdul kalam technological university"
-      ]
-    },
     "institution:69d7dc38d11d5f80": {
       "canonical_name": "Aristotle University of Thessaloniki",
       "institution_type": "university",
@@ -194942,36 +194962,6 @@
         "mayachitra united states"
       ]
     },
-    "institution:8dd670c7d0f431d4": {
-      "canonical_name": "Mercatorum University",
-      "institution_type": "university",
-      "names": [
-        "Mercatorum University"
-      ],
-      "normalized_names": [
-        "mercatorum university"
-      ]
-    },
-    "institution:9e1ab9137907fdce": {
-      "canonical_name": "Microsoft (United States)",
-      "institution_type": "company",
-      "names": [
-        "Microsoft (United States)"
-      ],
-      "normalized_names": [
-        "microsoft united states"
-      ]
-    },
-    "institution:330ddee32a318616": {
-      "canonical_name": "Microsoft Research (United Kingdom)",
-      "institution_type": "company",
-      "names": [
-        "Microsoft Research (United Kingdom)"
-      ],
-      "normalized_names": [
-        "microsoft research united kingdom"
-      ]
-    },
     "institution:b771bab570cca255": {
       "canonical_name": "Microsoft Research Asia (China)",
       "institution_type": "company",
@@ -195484,16 +195474,6 @@
       ],
       "normalized_names": [
         "tel aviv university"
-      ]
-    },
-    "institution:a992a0408381afc7": {
-      "canonical_name": "Tencent (China)",
-      "institution_type": "company",
-      "names": [
-        "Tencent (China)"
-      ],
-      "normalized_names": [
-        "tencent china"
       ]
     },
     "institution:5c5bb5ad830242f4": {
