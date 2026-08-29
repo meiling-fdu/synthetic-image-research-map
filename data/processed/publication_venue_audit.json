@@ -1,6 +1,6 @@
 {
   "summary": {
-    "total_papers_audited": 551,
+    "total_papers_audited": 579,
     "automatically_corrected": 276,
     "canonical_names_normalized": 57,
     "abbreviations_added": 62,
@@ -10,10 +10,10 @@
     "venue_tracks_corrected": 236,
     "years_corrected": 0,
     "proceedings_series_resolved": 1,
-    "manual_review": 40,
+    "manual_review": 41,
     "duplicate_registry_keys": 0,
-    "public_papers_audited": 546,
-    "non_public_papers_audited": 5
+    "public_papers_audited": 567,
+    "non_public_papers_audited": 12
   },
   "changes": [
     {
@@ -4646,6 +4646,31 @@
       "evidence_url": "https://wifs2024.uniroma3.it/?page_id=12",
       "manual_review": true,
       "source_fingerprint": "528f84de3ba993fb292cbd0548e7e161bbeec72fa198b83ba130aada1a570c9b"
+    },
+    {
+      "paper_id": "curated:24bcb339c197bcb56bb7",
+      "display_id": "doi:10.48550/arxiv.2511.23158",
+      "actionable_id": "venue:9d6d1ccf71f99131e278:curated:24bcb339c197bcb56bb7",
+      "title": "REVEAL: Reasoning-Enhanced Forensic Evidence Analysis for Explainable AI-Generated Image Detection",
+      "year": "2025",
+      "doi": "10.48550/arXiv.2511.23158",
+      "openalex_url": "",
+      "current_type": "preprint",
+      "current_venue": "arXiv",
+      "current_abbreviation": "",
+      "current_track": "",
+      "current_venue_id": "venue:arxiv",
+      "proposed_type": "preprint",
+      "proposed_name": "arXiv",
+      "proposed_abbreviation": "",
+      "proposed_venue_id": "venue:arxiv",
+      "proposed_track": "",
+      "reason": "Expected ECCV 2026 is unverified: current arXiv v2 (2026-04-08), PDF, and exact-title searches contain no acceptance evidence. Preserve first-publication year 2025 and arXiv preprint until reviewed. Evidence: https://arxiv.org/abs/2511.23158, https://arxiv.org/pdf/2511.23158v2",
+      "review_type": "publication_venue",
+      "recommended_action": "Verify source, then Open / Edit and save the confirmed venue/type.",
+      "evidence_url": "",
+      "manual_review": true,
+      "source_fingerprint": "9d6d1ccf71f99131e27806ee82f93767e6ac3582a7b6292bf58f347018e99747"
     },
     {
       "paper_id": "",

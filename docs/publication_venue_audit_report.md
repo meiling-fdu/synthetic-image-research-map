@@ -2,7 +2,7 @@
 
 Generated from current effective state. Baseline correction counts refer to the preserved initial dataset; repeated runs do not count corrections twice.
 
-Audited: 551 papers (546 public; 5 non-public).
+Audited: 579 papers (567 public; 12 non-public).
 
 | Metric | Papers / records |
 | --- | ---: |
@@ -312,6 +312,14 @@ Current: conference · IEEE International Workshop on Information Forensics and 
 This is a standalone scholarly workshop venue. Its name alone does not establish a Workshop subtrack; confirm Main versus an actual nested workshop track from the paper/program, preserving the venue identity.
 
 [Verification evidence](https://wifs2024.uniroma3.it/?page_id=12)
+
+### REVEAL: Reasoning-Enhanced Forensic Evidence Analysis for Explainable AI-Generated Image Detection
+
+DOI: 10.48550/arXiv.2511.23158
+
+Current: preprint · arXiv · no acronym · no track
+
+Expected ECCV 2026 is unverified: current arXiv v2 (2026-04-08), PDF, and exact-title searches contain no acceptance evidence. Preserve first-publication year 2025 and arXiv preprint until reviewed. Evidence: https://arxiv.org/abs/2511.23158, https://arxiv.org/pdf/2511.23158v2
 
 ### Revealing and Classification of Deepfakes Video's Images using a Customize Convolution Neural Network Model
 

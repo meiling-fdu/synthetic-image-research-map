@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <title>CVPR 2026 Open Access Repository</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/conf.css">
+<meta name="citation_title" content="Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training">
+<meta name="citation_author" content="Wu, Haiwei">
+<meta name="citation_author" content="Li, Kemou">
+<meta name="citation_author" content="Li, Yuanman">
+<meta name="citation_author" content="Zhou, Jiantao">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_conference_title" content="Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition">
+<meta name="citation_firstpage" content="35483">
+<meta name="citation_lastpage" content="35493">
+<meta name="citation_pdf_url" content="https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf">
+</head>
+<body>
+<div id="header">
+    <div id="header_left">
+        <a href="https://cvpr.thecvf.com/"><img src="/img/CVPR2026_logo.png" width="175" border="0" alt="CVPR 2026"></a>
+        <a href="https://www.thecvf.com/"><img src="/img/cropped-cvf-s.jpg" width="175" height="112" border="0" alt="CVF"></a>
+    </div>
+    <div id="header_right">
+        <div id="header_title">
+            <a href="https://cvpr.thecvf.com/">CVPR 2026</a> <a href="/menu" class="a_monochrome">open access</a>
+        </div>
+        <div id="help">
+            These CVPR 2026 papers are the Open Access versions, provided by the
+<a href="https://www.thecvf.com/">Computer Vision Foundation.</a><br>
+Except for the watermark, they are identical to the accepted versions;
+the final published version of the proceedings is available on IEEE Xplore.
+        </div>
+        <div id="disclaimer">
+            This material is presented to ensure timely dissemination of scholarly and technical work.
+Copyright and all rights therein are retained by authors or by other copyright holders.
+All persons copying this information are expected to adhere to the terms and constraints invoked 
+by each author's copyright.<br><br>
+            <form action="/CVPR2026" method="post">
+                <input type="text" name="query">
+                <input type="submit" value="Search">
+            </form>
+
+        </div>
+    </div>
+    <div id="header_sponsor">
+        <p style="vertical-align:center; text-align: center"> <strong>Powered by:</strong></p>
+        <img src="/img/ms-azure-logo.png" width="100" alt="Microsoft Azure">
+        <p> </p>
+        <p> </p>
+        <p style="vertical-align:center; text-align: center"> <strong>Sponsored by:</strong></p>
+        <img src="/img/amazon-logo.png" width="100" alt="Amazon">
+        <img src="/img/facebook_logo.jpg" width="100" alt="Facebook">
+        <img src="/img/Google_2015_logo.svg" width="100" alt="Google">
+    </div>
+</div>
+<div class="clear"></div>
+<div id="content">    <dl>
+    <div id="papertitle">
+        Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training
+    <dd>
+    </div>
+    <div id="authors">        <br><b><i>Haiwei Wu, Kemou Li, Yuanman Li, Jiantao Zhou</i></b>; Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), 2026, pp. 35483-35493
+    </div>
+    <font size="5">
+    <br><b>Abstract</b>
+    </font>
+    <br><br>
+    <div id="abstract">
+    Digital image forensics can ensure information credibility in tasks like camera source identification (CSI), synthetic image detection (SID), and social network provenance (SNP). These tasks typically rely on image processing history clues left by in-camera operations, post-capture editing, or synthetic generation. However, most existing forensic methods have obvious limitations: 1) they often only focus on camera-specific traces (e.g., the well-known PRNU), and 2) they demand a substantial amount of annotated training data. To address these constraints, we propose Editprint, a novel general forensic feature that captures highly diverse in- and out-camera processing history clues with minimal unlabeled training data. Ideally, we expect that any images undergoing the same imaging, editing, and transmission processes would yield identical Editprints, and vice versa. To model the in- and out-camera operations, we devise an online editing pool based on self-augmentation strategies. Requiring only minimal (e.g., 10) training data, the editing pool can simulate massive (e.g., 10^\text 7 ) editing chains and traces arising from the in-camera processing and the subsequent out-camera operations. To ensure that Editprint exhibits high discriminative capabilities across various editing chains, we propose using textual descriptions of these chains as labels and supervising their Editprints through language-guided contrastive learning. Extensive experiments show Editprint outperforms existing self-supervised forensics, particularly in non-camera applications such as SNP and SID. We hope that Editprint would inspire the forensic community and serve as a novel benchmark for self-supervised forensics.
+    </div>
+    <font size="5">
+    <br><b>Related Material</b>
+    </font>
+    <br><br>    <dd>
+[<a href="/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf">pdf</a>]
+[<a href="/content/CVPR2026/supplemental/Wu_Editprint_General_Digital_CVPR_2026_supplemental.pdf">supp</a>]
+<div class="link2">[<a class="fakelink" onclick="$(this).siblings('.bibref').slideToggle()">bibtex</a>]
+<div class="bibref pre-white-space">@InProceedings{Wu_2026_CVPR,
+    author    = {Wu, Haiwei and Li, Kemou and Li, Yuanman and Zhou, Jiantao},
+    title     = {Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2026},
+    pages     = {35483-35493}
+}</div>
+</div>        
+</dd></dl></div>
+</body>
+</html>

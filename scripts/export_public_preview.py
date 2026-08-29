@@ -880,7 +880,9 @@ def add_public_detail_fields(
             and isinstance(record.get("curated_mappings"), list)), None)
         authoritative_mappings = (
             [mapping for mapping in authoritative_record["curated_mappings"]
-             if mapping.get("mapping_status") == "active"]
+             if mapping.get("mapping_status") == "active"
+             or (authoritative_record.get("curation_status") == "needs_review"
+                 and mapping.get("mapping_status") == "needs_review")]
             if authoritative_record is not None else None
         )
         allowed_institutions = (
@@ -921,11 +923,23 @@ def add_public_detail_fields(
             current_source = author_mapping_sources.get(author_key, "unmapped")
             current_priority = AUTHOR_MAPPING_SOURCE_PRIORITY[current_source]
             if incoming_priority < current_priority:
-                author_affiliation_identities[author_key] = []
+                # Authoritative curated mappings can intentionally mix active
+                # and sourced needs-review affiliations. Keep every explicit
+                # relationship while retaining the strongest aggregate source.
+                if authoritative_mappings is None:
+                    author_affiliation_identities[author_key] = []
                 author_mapping_sources[author_key] = normalized_source
-                author_mapping_fallbacks[author_key] = bool(fallback)
+                author_mapping_fallbacks[author_key] = (
+                    author_mapping_fallbacks.get(author_key, False)
+                    or bool(fallback)
+                )
             elif incoming_priority > current_priority:
-                return
+                if authoritative_mappings is None:
+                    return
+                author_mapping_fallbacks[author_key] = (
+                    author_mapping_fallbacks.get(author_key, False)
+                    or bool(fallback)
+                )
             else:
                 author_mapping_fallbacks[author_key] = (
                     author_mapping_fallbacks.get(author_key, False)
@@ -1029,7 +1043,8 @@ def add_public_detail_fields(
                     "institution_id": mapping["institution_id"],
                     "name": mapping["institution"],
                     "authors": mapping["institution_authors"],
-                    "mapping_source": "curated_admin",
+                    "mapping_source": "raw_affiliation" if mapping.get("mapping_status") == "needs_review" else "curated_admin",
+                    "mapping_fallback": mapping.get("mapping_status") == "needs_review",
                 })
 
         # Prefer already exported/confirmed lists so their numbering remains

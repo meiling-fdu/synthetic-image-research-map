@@ -26,6 +26,7 @@ TITLE_CASE_STOP_WORDS = frozenset(
         "of",
         "on",
         "or",
+        "over",
         "per",
         "the",
         "to",

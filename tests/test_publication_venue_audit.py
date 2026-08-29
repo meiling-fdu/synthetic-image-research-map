@@ -16,6 +16,23 @@ from tests.test_paper_metadata_editing import chi_venue_fields
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def test_unresolved_venue_keeps_saved_reason_and_verified_preprint_state():
+    source = dict(title="Example preprint", doi="10.48550/arXiv.2608.00001",
+                  publication_type="preprint", venue="arXiv", venue_name="arXiv",
+                  venue_id="venue:arxiv", venue_type="preprint", venue_acronym="",
+                  venue_track="", raw_venue="arXiv", curation_status="needs_review")
+    reason = "Expected conference acceptance is unverified; retain the preprint."
+    decision = dict(review_queue="publication_venues", action="unresolved",
+                    review_note=reason + " [venue-state:" + confirmation_fingerprint(source) + "]")
+    audit = VenueAudit([alias("arXiv", "venue:arxiv", "preprint", "")],
+                       evidence=[], decisions=[decision])
+    row, finding = audit.paper(source)
+    assert finding["reason"] == reason
+    assert row["venue_id"] == "venue:arxiv"
+    assert row["publication_type"] == "preprint"
+    assert row["curation_status"] == "needs_review"
+
+
 def alias(name="Test Journal", identifier="venue:test", kind="journal", acronym="TJ"):
     return dict(alias=name, venue_name=name, venue_id=identifier, venue_type=kind,
                 venue_acronym=acronym, venue_track="", review_status="confirmed", notes="Reviewed")

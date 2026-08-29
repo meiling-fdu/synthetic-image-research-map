@@ -1,0 +1,582 @@
+[
+  {
+    "number": 1,
+    "title": "A Hybrid CLIP-Diffusion Architecture for Transparent Deepfake Detection and Explainability Evaluation",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/html/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "A Hybrid CLIP-Diffusion Architecture for Transparent Deepfake Detection and Explainability Evaluation"
+      ],
+      "citation_author": [
+        "Specker, Andreas",
+        "Veerappa, Manjunatha",
+        "Golda, Thomas",
+        "Burkart, Nadia",
+        "Alveen, Dominik",
+        "Wilhelm, Anna"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "467"
+      ],
+      "citation_lastpage": [
+        "476"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/papers/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/papers/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.pdf",
+        "pdf"
+      ]
+    ],
+    "abstract": "Generative diffusion models can synthesize highly realistic images that are increasingly difficult to distinguish from real content, raising substantial risks through misuse as deepfakes. This paper studies how to build deepfake detectors that both generalize to unseen image generators and provide transparent explanations of their decisions. We first extend the SynRIS benchmark to SynRIS++, adding fakes from five recent diffusion models and carefully matched real counterparts via reverse image search, yielding over 120k images from 18 generators. Guided by recent findings, we propose a hybrid CLIP-Diffusion architecture that combines (i) a frozen CLIP backbone with a classifier operating on intermediate features and (ii) a diffusion-based reconstruction error head, fused by a learnable ensemble. To obtain a conservative estimate of cross-generator generalization, we train exclusively on real images and deepfakes from Stable Diffusion v1, while evaluating on SynRIS++, which spans a broad range of modern generators. Our method achieves state-of-the-art performance on this challenging benchmark, substantially improving AP and AUROC over prior work. Finally, we systematically evaluate five post-hoc XAI methods for deepfake detection along multiple dimensions: explanatory accuracy, stability, robustness to noise and resolution, and scalability. The findings reveal practical trade-offs between interpretability and computational cost. Project Page: https://github.com/speckean/Transparent-Deepfake-Detection",
+    "bibtex": "@InProceedings{Specker_2026_CVPR,\n    author    = {Specker, Andreas and Veerappa, Manjunatha and Golda, Thomas and Burkart, Nadia and Alveen, Dominik and Wilhelm, Anna},\n    title     = {A Hybrid CLIP-Diffusion Architecture for Transparent Deepfake Detection and Explainability Evaluation},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},\n    month     = {June},\n    year      = {2026},\n    pages     = {467-476}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026W/SAFE/papers/Specker_A_Hybrid_CLIP-Diffusion_Architecture_for_Transparent_Deepfake_Detection_and_Explainability_CVPRW_2026_paper.pdf",
+    "pdf_sha256": "04ad8d63a875d1db03040fe37728fc3e5f14144285488e4db35f88c1b348c690"
+  },
+  {
+    "number": 2,
+    "title": "Beyond Backbones: Degradation-Aware Prototype Fusion for Robust Deepfake Detection",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/html/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "Beyond Backbones: Degradation-Aware Prototype Fusion for Robust Deepfake Detection"
+      ],
+      "citation_author": [
+        "Negi, Aashish",
+        "Sharma, Hardik",
+        "Shaily, Prateek",
+        "Kumar, Jayant",
+        "Chaudhary, Sachin",
+        "Dudhane, Akshay",
+        "Hambarde, Praful",
+        "Shukla, Amit"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "2227"
+      ],
+      "citation_lastpage": [
+        "2235"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf",
+        "pdf"
+      ]
+    ],
+    "abstract": "Deepfake detectors that perform well on clean images often fail under real-world degradations such as compression, blur, and noise, exposing critical robustness gaps. We address this challenge with a degradation-aware dual-backbone framework that leverages complementary strengths of semantic (CLIP) and structural (DINOv3) representations. The CLIP branch is adapted with LoRA and enhanced via Generator-Aware Prototype Learning (GAPL), while the DINOv3 branch incorporates anomaly-aware local pooling for fine-grained artifact detection. To enforce robustness, we introduce dual-view consistency training across clean and degraded samples, extending corruption diversity from 12 to 26 types. A lightweight fusion module conditioned on image-level degradation descriptors integrates both streams, with rank-based calibration for stable prediction. Our method trains fewer than 3M parameters on frozen backbones and attains 84.3 AUC on the NTIRE 2026 face forgery benchmark, demonstrating strong performance under realistic degradations.",
+    "bibtex": "@InProceedings{Negi_2026_CVPR,\n    author    = {Negi, Aashish and Sharma, Hardik and Shaily, Prateek and Kumar, Jayant and Chaudhary, Sachin and Dudhane, Akshay and Hambarde, Praful and Shukla, Amit},\n    title     = {Beyond Backbones: Degradation-Aware Prototype Fusion for Robust Deepfake Detection},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Workshops},\n    month     = {June},\n    year      = {2026},\n    pages     = {2227-2235}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026W/NTIRE/papers/Negi_Beyond_Backbones_Degradation-Aware_Prototype_Fusion_for_Robust_Deepfake_Detection_CVPRW_2026_paper.pdf",
+    "pdf_sha256": "f98a3811484c65340d7e2fe76897b331cce90f39521e99ffacb67ebaccbcaf94"
+  },
+  {
+    "number": 3,
+    "title": "Detecting Compressed AI-Generated Images via Phase Spectrum Robustness",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "Detecting Compressed AI-Generated Images via Phase Spectrum Robustness"
+      ],
+      "citation_author": [
+        "Li, Kai",
+        "Ren, Wenqi",
+        "Wang, Wei",
+        "Cao, Xiaochun"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "35427"
+      ],
+      "citation_lastpage": [
+        "35436"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.pdf",
+        "pdf"
+      ]
+    ],
+    "abstract": "This paper aims to present a robust AI-generated image detection framework designed to address performance degradation caused by image compression in online social networks. The key challenges are twofold: 1) compression destroys fragile artifacts that are crucial to existing methods, and 2) it introduces new compression artifacts that interfere with detection. Existing methods typically enhance the compression robustness by collecting original-compression pairs and compression labels. However, the collection and annotation process is highly resource-intensive. To address these issues, we propose a Compression-Robust Phase-Harmonized Transformer, motivated by the observation that phase spectrum remains stable under compression. The framework consists of a phase-harmonized cross-modal interaction module that leverages phase spectrum information for feature fusion, enhancing compression robustness, and a multi-domain modulation adapter that further refines fused features while enabling parameter-efficient fine-tuning. In particular, the framework operates without requiring compression-original data pairs and compression labels. When limited compression labels are available, we introduce a difficulty-aware consistency loss to maximize their utility by prioritizing hard compressed samples during training, further boosting robustness. Extensive experiments demonstrate that our method significantly outperforms state-of-the-art approaches, exhibiting superior robustness against image compression.",
+    "bibtex": "@InProceedings{Li_2026_CVPR,\n    author    = {Li, Kai and Ren, Wenqi and Wang, Wei and Cao, Xiaochun},\n    title     = {Detecting Compressed AI-Generated Images via Phase Spectrum Robustness},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {35427-35436}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Detecting_Compressed_AI-Generated_Images_via_Phase_Spectrum_Robustness_CVPR_2026_paper.pdf",
+    "pdf_sha256": "28108254b3d75838559a3a0283933a7b093e16b9919514e068e7ea8ad4242d0b"
+  },
+  {
+    "number": 4,
+    "title": "Exploiting the Source-Asymmetry Confidence Gap for Generalizable AI-Generated Image Detection",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026F/html/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "Exploiting the Source-Asymmetry Confidence Gap for Generalizable AI-Generated Image Detection"
+      ],
+      "citation_author": [
+        "Zheng, Ziyang",
+        "Chen, Weiyan",
+        "Xiao, Yao",
+        "Cao, Zijie",
+        "Zhang, Dongyu",
+        "Wei, Pengxu"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "8715"
+      ],
+      "citation_lastpage": [
+        "8724"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026F/papers/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026F/papers/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf",
+        "pdf"
+      ]
+    ],
+    "abstract": "Existing AI-generated image (AIGI) detection methods are trained on images synthesized by only a few generators, resulting in poor generalization to the ever-evolving domain of unseen generative models. In response to this limitation, recent work leverages large Vision Foundation Models (VFMs) to obtain more robust representations, yet typically relies on computationally expensive strategies, e.g., introducing additional large-scale synthetic datasets or employing complex training pipelines. In this paper, we devise a lightweight VFM-based strategy for generalized AIGI detection. Our key insight is a source asymmetry phenomenon: during training, models are exposed to diverse real data, while the fake images are synthesized by only a few generators. We verify that this class-diversity asymmetry causes a fine-tuned VFM to learn a more generalizable representation for the real class. This mechanism yields our key finding: the Source-Asymmetry Confidence Gap (SACG), a consistent and exploitable separation in predictive confidence where unseen real images yield systematically higher confidence than unseen fakes. Leveraging this insight, we introduce a lightweight, post-hoc strategy that employs a specialized confidence metric (GEN score) to amplify this gap and applies a conditional decision rule calibrated only on the real images for stable detection. On the Community Forensics benchmark (21 distinct generative models), our method achieves state-of-the-art results, surpassing the next-best baseline by +6.82% in accuracy.",
+    "bibtex": "@InProceedings{Zheng_2026_CVPR,\n    author    = {Zheng, Ziyang and Chen, Weiyan and Xiao, Yao and Cao, Zijie and Zhang, Dongyu and Wei, Pengxu},\n    title     = {Exploiting the Source-Asymmetry Confidence Gap for Generalizable AI-Generated Image Detection},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},\n    month     = {June},\n    year      = {2026},\n    pages     = {8715-8724}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Zheng_Exploiting_the_Source-Asymmetry_Confidence_Gap_for_Generalizable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf",
+    "pdf_sha256": "6584ed1c5fd4ab7a7c2c59d985491417902d62fcf5208418b6e02448470e7cda"
+  },
+  {
+    "number": 6,
+    "title": "UniGenDet: A Unified Generative-Discriminative Framework for Co-Evolutionary Image Generation and Generated Image Detection",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "UniGenDet: A Unified Generative-Discriminative Framework for Co-Evolutionary Image Generation and Generated Image Detection"
+      ],
+      "citation_author": [
+        "Zhang, Yanran",
+        "Zheng, Wenzhao",
+        "Li, Yifei",
+        "Yu, Bingyao",
+        "Zheng, Yu",
+        "Chen, Lei",
+        "Lu, Jiwen",
+        "Zhou, Jie"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "16226"
+      ],
+      "citation_lastpage": [
+        "16236"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.pdf",
+        "pdf"
+      ],
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/supplemental/Zhang_UniGenDet_A_Unified_CVPR_2026_supplemental.pdf",
+        "supp"
+      ],
+      [
+        "https://arxiv.org/abs/2604.21904",
+        "arXiv"
+      ]
+    ],
+    "abstract": "In recent years, significant progress has been made in both image generation and generated image detection. Despite their rapid, yet largely independent, development, these two fields have evolved distinct architectural paradigms: the former predominantly relies on generative networks, while the latter favors discriminative frameworks. A recent trend in both domains is the use of adversarial information to enhance performance, revealing potential for synergy. However, the significant architectural divergence between them presents considerable challenges. Departing from previous approaches, we propose **UniGenDet**: a **Uni**fied generative-discriminative framework for co-evolutionary image **Gen**eration and generated image **Det**ection. To bridge the task gap, we design a symbiotic multimodal self-attention mechanism and a unified fine-tuning algorithm. This synergy allows the generation task to improve the interpretability of authenticity identification, while authenticity criteria guide the creation of higher-fidelity images. Furthermore, we introduce a detector-informed generative alignment mechanism to facilitate seamless information exchange. Extensive experiments on multiple datasets demonstrate that our method achieves state-of-the-art performance. Code: https://github.com/Zhangyr2022/UniGenDet.",
+    "bibtex": "@InProceedings{Zhang_2026_CVPR,\n    author    = {Zhang, Yanran and Zheng, Wenzhao and Li, Yifei and Yu, Bingyao and Zheng, Yu and Chen, Lei and Lu, Jiwen and Zhou, Jie},\n    title     = {UniGenDet: A Unified Generative-Discriminative Framework for Co-Evolutionary Image Generation and Generated Image Detection},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {16226-16236}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Zhang_UniGenDet_A_Unified_Generative-Discriminative_Framework_for_Co-Evolutionary_Image_Generation_and_CVPR_2026_paper.pdf",
+    "pdf_sha256": "cc418ab033ee55da9e4547a8ab5350304bb4e340d2866b9cf560fc8b025f2876"
+  },
+  {
+    "number": 7,
+    "title": "Diversity over Uniformity: Rethinking Representation in Generated Image Detection",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "Diversity over Uniformity: Rethinking Representation in Generated Image Detection"
+      ],
+      "citation_author": [
+        "He, Qinghui",
+        "Zhang, Haifeng",
+        "Qin, Qiao",
+        "Liu, Bo",
+        "Bi, Xiuli",
+        "Xiao, Bin"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "40407"
+      ],
+      "citation_lastpage": [
+        "40417"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf",
+        "pdf"
+      ]
+    ],
+    "abstract": "With the rapid advancement of generative models, generated image detection has become an important task in visual forensics. Although existing methods have achieved remarkable progress, they often rely, after training, on only a small subset of highly salient forgery cues, which limits their ability to generalize to unseen generative mechanisms. We argue that reliably generated image detection should not depend on a single decision path but should preserve multiple judgment perspectives, enabling the model to understand the differences between real and generated images from diverse viewpoints. Based on this idea, we propose an anti-feature-collapse learning framework that filters task-irrelevant components and suppresses excessive overlap among different forgery cues in the representation space, preventing discriminative information from collapsing into a few dominant feature directions. This design maintains diverse and complementary evidence within the model, reduces reliance on a small set of salient cues, and enhances robustness under unseen generative settings. Extensive experiments on multiple public benchmarks demonstrate that the proposed method significantly outperforms the state-of-the-art approaches in cross-model scenarios, achieving an accuracy improvement of 5.02% and exhibiting superior generalization and detection reliability. The source code is available at https://github.com/Yanmou-Hui/DoU.",
+    "bibtex": "@InProceedings{He_2026_CVPR,\n    author    = {He, Qinghui and Zhang, Haifeng and Qin, Qiao and Liu, Bo and Bi, Xiuli and Xiao, Bin},\n    title     = {Diversity over Uniformity: Rethinking Representation in Generated Image Detection},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {40407-40417}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/He_Diversity_over_Uniformity_Rethinking_Representation_in_Generated_Image_Detection_CVPR_2026_paper.pdf",
+    "pdf_sha256": "9a57893d1a02ef033c77c8fe6dbfb1b11bc7e312a8f3d9dc43999a3b0fcb8d50"
+  },
+  {
+    "number": 8,
+    "title": "ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026F/html/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection"
+      ],
+      "citation_author": [
+        "Tan, Chuangchuang",
+        "Wang, Jinglu",
+        "Ming, Xiang",
+        "Tao, Renshuai",
+        "Wei, Yunchao",
+        "Zhao, Yao",
+        "Lu, Yan"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "6592"
+      ],
+      "citation_lastpage": [
+        "6601"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf",
+        "pdf"
+      ]
+    ],
+    "abstract": "Recent advances in generative models have led to AI-generated images that are visually indistinguishable from authentic ones. While numerous methods have been proposed to detect AI-generated images, these techniques often struggle to provide explanations that align with human cognitive forensic analysis. A significant limitation of existing methods is the reliance on generic features that do not fully capture the authenticity cues inherent in image content. We introduce ForenDeX, a novel framework that addresses this gap by extracting forensic information directly from image content, which is then integrated into a large language model (LLM) as an additional input. Unlike traditional detection methods, which primarily rely on artifact-based features, ForenDeX identifies critical authenticity-related cues such as unnatural textures, lighting inconsistencies, and spatial anomalies, which are often overlooked by current LLM-based approaches. By integrating these contentbased forensic insights, ForenDeX improves both the detection accuracy and the explainability of the model's predictions. Additionally, we introduce ForgReason, a dataset containing AI-generated images annotated with descriptions of authenticity-related features. This dataset, curated through collaboration between human annotators and an LLM-based agent, enables ForenDeX to finetune its ability to detect and explain forgeries, significantly improving the model's performance. Our experiments demonstrate that even limited manual annotations can substantially enhance the quality of the explanations generated by the model. We evaluate ForenDeX on two major benchmarks and show that it outperforms existing detection methods in both accuracy and explainability. Comprehensive evaluations confirm that ForenDeX provides human-understandable explanations by integrating forensic information directly into the model's analysis process.",
+    "bibtex": "@InProceedings{Tan_2026_CVPR,\n    author    = {Tan, Chuangchuang and Wang, Jinglu and Ming, Xiang and Tao, Renshuai and Wei, Yunchao and Zhao, Yao and Lu, Yan},\n    title     = {ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},\n    month     = {June},\n    year      = {2026},\n    pages     = {6592-6601}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf",
+    "pdf_sha256": "a3bdbc07a6449303e3a0eb4307f1ded7a3bb14b930dcbafd4ea00efafe630c50"
+  },
+  {
+    "number": 9,
+    "title": "ReAlign: Generalizable Image Forgery Detection via Reasoning-Aligned Representation",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "ReAlign: Generalizable Image Forgery Detection via Reasoning-Aligned Representation"
+      ],
+      "citation_author": [
+        "Huang, Qing",
+        "Xu, Zhipei",
+        "Zhang, Xuanyu",
+        "Yu, Xiangyu",
+        "Zhang, Jian"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "21295"
+      ],
+      "citation_lastpage": [
+        "21305"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf",
+        "pdf"
+      ],
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/supplemental/Huang_ReAlign_Generalizable_Image_CVPR_2026_supplemental.pdf",
+        "supp"
+      ],
+      [
+        "https://arxiv.org/abs/2605.16080",
+        "arXiv"
+      ]
+    ],
+    "abstract": "The rise of AI-generated images (AIGIs) poses growing challenges for digital authenticity, prompting the need for efficient, generalizable image forgery detection systems. Existing methods, whether non-LLM-based or LLM-based, exhibit distinct advantages and limitations. While non-LLM-based models offer efficient low-level artifact detection, they often lack semantic understanding. Conversely, LLM-based methods provide strong semantic reasoning and explainability but are computationally intensive and less sensitive to subtle visual artifacts. Moreover, the true contribution of explanatory reasoning texts to forgery detection performance remains unclear. In this work, we investigate the intrinsic value and potential of LLM-generated reasoning texts, considering it a source of generalization and semantic-error sensitivity. Based on these findings, we propose ReAlign, a novel framework that distills high-quality reasoning texts generated by a GRPO-optimized LLM into a lightweight AIGI detector via contrastive learning. ReAlign effectively inherits the generalization ability and semantic sensitivity capability of reasoning textual representations, while remaining efficient and lightweight for deployment. Moreover, ReAlign adopts a tailored joint optimization strategy that integrates contrastive loss for image-text alignment and classification loss for accurate forgery discrimination. Experimental results on AIGCDetectBenchmark, AIGI-Holmes, and our newly constructed UltraSynth-10k demonstrate that ReAlign consistently outperforms existing state-of-the-art detectors in both accuracy and generalization, particularly when facing complex, high-fidelity forgeries from modern generative models.",
+    "bibtex": "@InProceedings{Huang_2026_CVPR,\n    author    = {Huang, Qing and Xu, Zhipei and Zhang, Xuanyu and Yu, Xiangyu and Zhang, Jian},\n    title     = {ReAlign: Generalizable Image Forgery Detection via Reasoning-Aligned Representation},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {21295-21305}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Huang_ReAlign_Generalizable_Image_Forgery_Detection_via_Reasoning-Aligned_Representation_CVPR_2026_paper.pdf",
+    "pdf_sha256": "cb4e201d0bf950e5b6fcc2d1c92c9cd61d5c5d74b92d2759bf8bcb4acc67e892"
+  },
+  {
+    "number": 10,
+    "title": "SAIDO: Generalizable Detection of AI-Generated Images via Scene-Aware and Importance-Guided Dynamic Optimization in Continual Learning",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "SAIDO: Generalizable Detection of AI-Generated Images via Scene-Aware and Importance-Guided Dynamic Optimization in Continual Learning"
+      ],
+      "citation_author": [
+        "Hu, Yongkang",
+        "Cheng, Yu",
+        "Zhang, Yushuo",
+        "Xie, Yuan",
+        "Yin, Zhaoxia"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "3876"
+      ],
+      "citation_lastpage": [
+        "3886"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.pdf",
+        "pdf"
+      ],
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/supplemental/Hu_SAIDO_Generalizable_Detection_CVPR_2026_supplemental.pdf",
+        "supp"
+      ],
+      [
+        "https://arxiv.org/abs/2512.00539",
+        "arXiv"
+      ]
+    ],
+    "abstract": "The widespread misuse of image generation technologies has raised security concerns, driving the development of AI-generated image detection methods. However, generalization has become a key challenge and open problem: existing approaches struggle to adapt to emerging generative methods and content types in real-world scenarios. To address this issue, we propose a Scene-Aware and Importance-Guided Dynamic Optimization detection framework with continual learning (SAIDO). Specifically, we design Scene-Awareness-Based Expert Module (SAEM) that dynamically identifies and incorporates new scenes using VLLMs. For each scene, independent expert modules are dynamically allocated, enabling the framework to capture scene-specific forgery features better and enhance cross-scene generalization. To achieve an effective balance between model plasticity and stability when learning from multiple image generative methods, we introduce Importance-Guided Dynamic Optimization Mechanism (IDOM), which optimizes each neuron through an importance-guided gradient projection strategy, thereby achieving an effective balance between model plasticity and stability. Extensive experiments on continual learning tasks demonstrate that our method outperforms the current SOTA method in both stability and plasticity, achieving 44.22% and 40.57% relative reductions in average detection error rate and forgetting rate, respectively. On open-world datasets, it improves the average detection accuracy by 9.47% compared to the current SOTA method.",
+    "bibtex": "@InProceedings{Hu_2026_CVPR,\n    author    = {Hu, Yongkang and Cheng, Yu and Zhang, Yushuo and Xie, Yuan and Yin, Zhaoxia},\n    title     = {SAIDO: Generalizable Detection of AI-Generated Images via Scene-Aware and Importance-Guided Dynamic Optimization in Continual Learning},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {3876-3886}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Hu_SAIDO_Generalizable_Detection_of_AI-Generated_Images_via_Scene-Aware_and_Importance-Guided_CVPR_2026_paper.pdf",
+    "pdf_sha256": "f3f13f148f6a249abfaa2a8f705ec367e58aa9784259910a7215ba942e3f6543"
+  },
+  {
+    "number": 11,
+    "title": "Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training"
+      ],
+      "citation_author": [
+        "Wu, Haiwei",
+        "Li, Kemou",
+        "Li, Yuanman",
+        "Zhou, Jiantao"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "35483"
+      ],
+      "citation_lastpage": [
+        "35493"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf",
+        "pdf"
+      ],
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/supplemental/Wu_Editprint_General_Digital_CVPR_2026_supplemental.pdf",
+        "supp"
+      ]
+    ],
+    "abstract": "Digital image forensics can ensure information credibility in tasks like camera source identification (CSI), synthetic image detection (SID), and social network provenance (SNP). These tasks typically rely on image processing history clues left by in-camera operations, post-capture editing, or synthetic generation. However, most existing forensic methods have obvious limitations: 1) they often only focus on camera-specific traces (e.g., the well-known PRNU), and 2) they demand a substantial amount of annotated training data. To address these constraints, we propose Editprint, a novel general forensic feature that captures highly diverse in- and out-camera processing history clues with minimal unlabeled training data. Ideally, we expect that any images undergoing the same imaging, editing, and transmission processes would yield identical Editprints, and vice versa. To model the in- and out-camera operations, we devise an online editing pool based on self-augmentation strategies. Requiring only minimal (e.g., 10) training data, the editing pool can simulate massive (e.g., 10^\\text 7 ) editing chains and traces arising from the in-camera processing and the subsequent out-camera operations. To ensure that Editprint exhibits high discriminative capabilities across various editing chains, we propose using textual descriptions of these chains as labels and supervising their Editprints through language-guided contrastive learning. Extensive experiments show Editprint outperforms existing self-supervised forensics, particularly in non-camera applications such as SNP and SID. We hope that Editprint would inspire the forensic community and serve as a novel benchmark for self-supervised forensics.",
+    "bibtex": "@InProceedings{Wu_2026_CVPR,\n    author    = {Wu, Haiwei and Li, Kemou and Li, Yuanman and Zhou, Jiantao},\n    title     = {Editprint: General Digital Image Forensics via Editing Fingerprint with Self-Augmentation Training},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {35483-35493}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wu_Editprint_General_Digital_Image_Forensics_via_Editing_Fingerprint_with_Self-Augmentation_CVPR_2026_paper.pdf",
+    "pdf_sha256": "102209f78fba120868c5fd15eecd96c0cba3ae77e7769ad46933d2f1c55bcb44"
+  },
+  {
+    "number": 12,
+    "title": "Enabling Supervised Learning of Generative Signatures for Generalized AI-Generated Images Detection",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "Enabling Supervised Learning of Generative Signatures for Generalized AI-Generated Images Detection"
+      ],
+      "citation_author": [
+        "Fei, Jianwei",
+        "Dai, Yunshu",
+        "Zhou, Xiaoyu",
+        "Xia, Zhihua",
+        "Piva, Alessandro"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "14084"
+      ],
+      "citation_lastpage": [
+        "14094"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.pdf",
+        "pdf"
+      ]
+    ],
+    "abstract": "Extracting reliable generative traces in generated images is critical for AI-generated images (AIGIs) detection. However, a fundamental challenge exists: AIGIs inherently contain generative traces with no trace-free counterpart available, making supervised extraction of these artifacts infeasible. In this work, we overcome this through a surrogate supervision framework. We design a dynamic reconstructor that simulates diverse generative traces on real images through stochastically varied architectures and parameters. The reconstruction residuals serve as supervision to train an extractor that learns to isolate traces, i.e., generative signatures (GenSign). A detector then fuses extracted GenSign with RGB features to distinguish real images from AIGIs. Our key insight is that sufficient architectural diversity in simulation enables effective transfer to real-world generators, resolving the absence of ground truth GenSign. Extensive experiments across four benchmarks demonstrate state-of-the-art generalization, confirming that our simulation-based learning paradigm is capable of extracting general and transferable forensic features.",
+    "bibtex": "@InProceedings{Fei_2026_CVPR,\n    author    = {Fei, Jianwei and Dai, Yunshu and Zhou, Xiaoyu and Xia, Zhihua and Piva, Alessandro},\n    title     = {Enabling Supervised Learning of Generative Signatures for Generalized AI-Generated Images Detection},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {14084-14094}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Fei_Enabling_Supervised_Learning_of_Generative_Signatures_for_Generalized_AI-Generated_Images_CVPR_2026_paper.pdf",
+    "pdf_sha256": "d24dfeb7b2e84f7cf96720cadea9c127de3b92ba286a8f4a4ac472251a5e4a75"
+  },
+  {
+    "number": 13,
+    "title": "PPM-CLIP: Probabilistic Prompt Modeling for Generalizable AI-Generated Image Detection",
+    "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.html",
+    "meta": {
+      "viewport": [
+        "width=device-width, initial-scale=1"
+      ],
+      "citation_title": [
+        "PPM-CLIP: Probabilistic Prompt Modeling for Generalizable AI-Generated Image Detection"
+      ],
+      "citation_author": [
+        "Wang, Xinyuan",
+        "Lai, Yingxin",
+        "Luo, Zhiming",
+        "Liu, Zhihui"
+      ],
+      "citation_publication_date": [
+        "2026"
+      ],
+      "citation_conference_title": [
+        "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition"
+      ],
+      "citation_firstpage": [
+        "21316"
+      ],
+      "citation_lastpage": [
+        "21325"
+      ],
+      "citation_pdf_url": [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.pdf"
+      ]
+    },
+    "links": [
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/papers/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.pdf",
+        "pdf"
+      ],
+      [
+        "https://openaccess.thecvf.com/content/CVPR2026/supplemental/Wang_PPM-CLIP_Probabilistic_Prompt_CVPR_2026_supplemental.pdf",
+        "supp"
+      ]
+    ],
+    "abstract": "The rapid rise of highly realistic AI-generated images necessitates reliable and generalizable detection methods. However, existing methods are constrained by their discriminative nature: by learning a single static decision boundary, they tend to memorize generator-specific artifacts and consequently fail to generalize to the unseen distributions of new generative models. To overcome this limitation, we propose PPM-CLIP, a new framework that shifts from static classification to conditional generative modeling based on the CLIP vision-language model. Instead of learning a fixed decision boundary, a Probabilistic Prompt Modeling (PPM) module is used as a generator that produces an adaptive distribution of prompts according to the input image. This allows the model to flexibly capture novel artifacts, rather than matching them against fixed templates. In addition, to enhance the visual encoder's sensitivity to subtle artifacts, a Patch-Wise Contrastive Learning (PWCL) strategy is introduced. Extensive experiments on Ojha, GenImage, and DRCT benchmarks demonstrate that our generative paradigm significantly outperforms state-of-the-art methods, especially in cross-domain detection.",
+    "bibtex": "@InProceedings{Wang_2026_CVPR,\n    author    = {Wang, Xinyuan and Lai, Yingxin and Luo, Zhiming and Liu, Zhihui},\n    title     = {PPM-CLIP: Probabilistic Prompt Modeling for Generalizable AI-Generated Image Detection},\n    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},\n    month     = {June},\n    year      = {2026},\n    pages     = {21316-21325}\n}",
+    "pdf_url": "https://openaccess.thecvf.com/content/CVPR2026/papers/Wang_PPM-CLIP_Probabilistic_Prompt_Modeling_for_Generalizable_AI-Generated_Image_Detection_CVPR_2026_paper.pdf",
+    "pdf_sha256": "a8bfc8dd46aa067e95473916bc7194b124ec04c5605582891a82e835f10f4ad1"
+  }
+]

@@ -57,6 +57,12 @@ class TitleNormalizationTests(unittest.TestCase):
         title = "Diffusion Models for AI-Generated Image Detection"
         self.assertEqual(canonical_paper_title(title), title)
 
+    def test_cvf_diversity_title_preserves_preposition_case(self):
+        title = "Diversity over Uniformity: Rethinking Representation in Generated Image Detection"
+        self.assertEqual(canonical_paper_title(title), title)
+        self.assertEqual(canonical_paper_title(title.replace("over", "Over")), title)
+        self.assertEqual(canonical_paper_title("over the image"), "Over the Image")
+
     def test_punctuation_unicode_and_spacing_are_unchanged(self):
         source = "weakly‐aligned  image–language detection: an overview"
         result = canonical_paper_title(source)

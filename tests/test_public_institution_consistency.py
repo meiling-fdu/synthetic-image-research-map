@@ -121,6 +121,30 @@ def test_active_curation_excludes_pending_history_and_stale_search_ids():
     assert len(paper["affiliations"]) == 2
 
 
+def test_unreviewed_mixed_affiliations_keep_pending_evidence_out_of_markers():
+    paper, mappings, markers = fixture()
+    paper.update(curation_status="needs_review", review_status="pending")
+    pending = {**mappings[0], "mapping_id": "candidate", "mapping_status": "needs_review",
+               "institution_id": "institution:candidate", "institution": "Candidate",
+               "institution_authors": "Ben Author", "raw_affiliation": "Candidate University",
+               "provenance_source": "https://example.org/paper.pdf"}
+    mappings.append(pending)
+    enforce_affiliation_source_precedence([paper], markers, mappings)
+    add_public_detail_fields([paper], markers)
+    apply_ordered_paper_location_summaries([paper], markers)
+    assert {a["institution_id"] for a in paper["affiliations"]} == {
+        "institution:1", "institution:2", "institution:candidate"
+    }
+    assert {m["institution_id"] for m in markers} == {"institution:1", "institution:2"}
+    assert next(a for a in paper["affiliations"] if a["institution_id"] == "institution:candidate")["preliminary"]
+    affiliation_names = {a["index"]: a["name"] for a in paper["affiliations"]}
+    ben = next(author for author in paper["authors"] if author["name"] == "Ben Author")
+    assert [affiliation_names[index] for index in ben["affiliation_indices"]] == [
+        "University 1", "Candidate"
+    ]
+    assert audit_consistency([paper], markers, mappings)["mismatch_count"] == 0
+
+
 @pytest.mark.parametrize("field", ["affiliations", "author_institution_affiliations", "authors", "marker", "aggregated_locations"])
 def test_audit_detects_corruption_in_each_display_source(field):
     paper, mappings, markers = fixture()
@@ -194,7 +218,9 @@ const markers = dataset.mapRecords;
 let checked = 0;
 for (const paper of papers.filter(p => p.affiliation_review_state === 'curated')) {
   const related = markers.filter(m => paper.paper_id ? m.paper_id === paper.paper_id : m.title === paper.title);
-  const expected = [...new Set(paper.curated_mappings.filter(m => m.mapping_status === 'active').map(m => m.institution_id))].sort();
+  const visibleMappings = paper.curated_mappings.filter(m => m.mapping_status === 'active'
+    || (paper.curation_status === 'needs_review' && m.mapping_status === 'needs_review'));
+  const expected = [...new Set(visibleMappings.map(m => m.institution_id))].sort();
   const summaryIds = paper.aggregated_locations.map(a => a.institution_id).sort();
   if (JSON.stringify(expected) !== JSON.stringify(summaryIds)) throw new Error(paper.title + ': summary mismatch');
   for (const source of [paper, ...related]) {
@@ -202,8 +228,8 @@ for (const paper of papers.filter(p => p.affiliation_review_state === 'curated')
     const actual = normalized.affiliations.map(a => a.institutionId).sort();
     if (JSON.stringify(expected) !== JSON.stringify(actual)) throw new Error(paper.title);
     for (const affiliation of normalized.affiliations) {
-      const expectedAuthors = [...new Set(paper.curated_mappings
-        .filter(m => m.mapping_status === 'active' && m.institution_id === affiliation.institutionId)
+      const expectedAuthors = [...new Set(visibleMappings
+        .filter(m => m.institution_id === affiliation.institutionId)
         .flatMap(m => m.institution_authors))].sort();
       if (JSON.stringify(affiliation.authors.slice().sort()) !== JSON.stringify(expectedAuthors)) {
         throw new Error(paper.title + ': affiliation author mismatch');

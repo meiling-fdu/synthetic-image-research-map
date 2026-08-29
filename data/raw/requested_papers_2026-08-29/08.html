@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <title>CVPR 2026 Open Access Repository</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/conf.css">
+<meta name="citation_title" content="ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection">
+<meta name="citation_author" content="Tan, Chuangchuang">
+<meta name="citation_author" content="Wang, Jinglu">
+<meta name="citation_author" content="Ming, Xiang">
+<meta name="citation_author" content="Tao, Renshuai">
+<meta name="citation_author" content="Wei, Yunchao">
+<meta name="citation_author" content="Zhao, Yao">
+<meta name="citation_author" content="Lu, Yan">
+<meta name="citation_publication_date" content="2026">
+<meta name="citation_conference_title" content="Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition">
+<meta name="citation_firstpage" content="6592">
+<meta name="citation_lastpage" content="6601">
+<meta name="citation_pdf_url" content="https://openaccess.thecvf.com/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf">
+</head>
+<body>
+<div id="header">
+    <div id="header_left">
+        <a href="https://cvpr.thecvf.com/"><img src="/img/CVPR2026_logo.png" width="175" border="0" alt="CVPR 2026"></a>
+        <a href="https://www.thecvf.com/"><img src="/img/cropped-cvf-s.jpg" width="175" height="112" border="0" alt="CVF"></a>
+    </div>
+    <div id="header_right">
+        <div id="header_title">
+            <a href="https://cvpr.thecvf.com/">CVPR 2026</a> <a href="/menu" class="a_monochrome">open access</a>
+        </div>
+        <div id="help">
+            These CVPR 2026 findings papers are the Open Access versions, provided by the
+<a href="https://www.thecvf.com/">Computer Vision Foundation.</a><br>
+Except for the watermark, they are identical to the accepted versions;
+the final published version of the proceedings is available on IEEE Xplore.
+        </div>
+        <div id="disclaimer">
+            This material is presented to ensure timely dissemination of scholarly and technical work.
+Copyright and all rights therein are retained by authors or by other copyright holders.
+All persons copying this information are expected to adhere to the terms and constraints invoked 
+by each author's copyright.<br><br>
+            <form action="/CVPR2026_findings" method="post">
+                <input type="text" name="query">
+                <input type="submit" value="Search">
+            </form>
+
+        </div>
+    </div>
+    <div id="header_sponsor">
+        <p style="vertical-align:center; text-align: center"> <strong>Powered by:</strong></p>
+        <img src="/img/ms-azure-logo.png" width="100" alt="Microsoft Azure">
+        <p> </p>
+        <p> </p>
+        <p style="vertical-align:center; text-align: center"> <strong>Sponsored by:</strong></p>
+        <img src="/img/amazon-logo.png" width="100" alt="Amazon">
+        <img src="/img/facebook_logo.jpg" width="100" alt="Facebook">
+        <img src="/img/Google_2015_logo.svg" width="100" alt="Google">
+    </div>
+</div>
+<div class="clear"></div>
+<div id="content">    <dl>
+    <div id="papertitle">
+        ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection
+    <dd>
+    </div>
+    <div id="authors">        <br><b><i>Chuangchuang Tan, Jinglu Wang, Xiang Ming, Renshuai Tao, Yunchao Wei, Yao Zhao, Yan Lu</i></b>; Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings, 2026, pp. 6592-6601
+    </div>
+    <font size="5">
+    <br><b>Abstract</b>
+    </font>
+    <br><br>
+    <div id="abstract">
+    Recent advances in generative models have led to AI-generated images that are visually indistinguishable from authentic ones. While numerous methods have been proposed to detect AI-generated images, these techniques often struggle to provide explanations that align with human cognitive forensic analysis. A significant limitation of existing methods is the reliance on generic features that do not fully capture the authenticity cues inherent in image content. We introduce ForenDeX, a novel framework that addresses this gap by extracting forensic information directly from image content, which is then integrated into a large language model (LLM) as an additional input. Unlike traditional detection methods, which primarily rely on artifact-based features, ForenDeX identifies critical authenticity-related cues such as unnatural textures, lighting inconsistencies, and spatial anomalies, which are often overlooked by current LLM-based approaches. By integrating these contentbased forensic insights, ForenDeX improves both the detection accuracy and the explainability of the model&#x27;s predictions. Additionally, we introduce ForgReason, a dataset containing AI-generated images annotated with descriptions of authenticity-related features. This dataset, curated through collaboration between human annotators and an LLM-based agent, enables ForenDeX to finetune its ability to detect and explain forgeries, significantly improving the model&#x27;s performance. Our experiments demonstrate that even limited manual annotations can substantially enhance the quality of the explanations generated by the model. We evaluate ForenDeX on two major benchmarks and show that it outperforms existing detection methods in both accuracy and explainability. Comprehensive evaluations confirm that ForenDeX provides human-understandable explanations by integrating forensic information directly into the model&#x27;s analysis process.
+    </div>
+    <font size="5">
+    <br><b>Related Material</b>
+    </font>
+    <br><br>    <dd>
+[<a href="/content/CVPR2026F/papers/Tan_ForenDeX_Unlocking_Forensic_Insights_for_Explainable_AI-Generated_Image_Detection_CVPRF_2026_paper.pdf">pdf</a>]
+<div class="link2">[<a class="fakelink" onclick="$(this).siblings('.bibref').slideToggle()">bibtex</a>]
+<div class="bibref pre-white-space">@InProceedings{Tan_2026_CVPR,
+    author    = {Tan, Chuangchuang and Wang, Jinglu and Ming, Xiang and Tao, Renshuai and Wei, Yunchao and Zhao, Yao and Lu, Yan},
+    title     = {ForenDeX: Unlocking Forensic Insights for Explainable AI-Generated Image Detection},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings},
+    month     = {June},
+    year      = {2026},
+    pages     = {6592-6601}
+}</div>
+</div>        
+</dd></dl></div>
+</body>
+</html>

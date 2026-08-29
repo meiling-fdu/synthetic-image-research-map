@@ -12,6 +12,7 @@ try:
     from .curated_export import (
         PaperIdentityCache, PaperIdentityIndex, affiliation_review_state,
         curated_affiliation_removal_reason, load_curated_mappings,
+        _visible_affiliation_mappings,
     )
     from .name_matching import canonical_name_key, unique_matching_name
     from .public_relationships import canonical_author_names
@@ -19,6 +20,7 @@ except ImportError:
     from curated_export import (
         PaperIdentityCache, PaperIdentityIndex, affiliation_review_state,
         curated_affiliation_removal_reason, load_curated_mappings,
+        _visible_affiliation_mappings,
     )
     from name_matching import canonical_name_key, unique_matching_name
     from public_relationships import canonical_author_names
@@ -46,9 +48,10 @@ def audit_consistency(papers, markers, mappings):
         if state == "unreviewed":
             continue
         active = [row for row in matching if row.get("mapping_status") == "active"]
-        expected = {row["institution_id"] for row in active}
+        visible = _visible_affiliation_mappings(paper, matching)
+        expected = {row["institution_id"] for row in visible}
         expected_authors = defaultdict(set)
-        for row in active:
+        for row in visible:
             for author in canonical_author_names(row.get("institution_authors")):
                 expected_authors[canonical_name_key(author)].add(row["institution_id"])
         issues = []
@@ -83,10 +86,14 @@ def audit_consistency(papers, markers, mappings):
         # not raw name spellings, and retain affiliations without coordinates.
         actual_summary = {row.get("institution_id", "")
                           for row in paper.get("aggregated_locations", [])}
-        if actual_summary != expected:
+        # Location summaries are paper-level institution summaries; they may
+        # retain a preliminary affiliation without asserting coordinates or a
+        # marker. Marker membership is checked separately below.
+        expected_summary = expected
+        if actual_summary != expected_summary:
             issues.append({"record": "paper", "field": "aggregated_locations",
-                           "extra": sorted(actual_summary - expected),
-                           "missing": sorted(expected - actual_summary)})
+                           "extra": sorted(actual_summary - expected_summary),
+                           "missing": sorted(expected_summary - actual_summary)})
         if issues:
             mismatches.append({"paper_id": paper.get("paper_id", ""),
                                "title": paper.get("title", ""), "issues": issues})

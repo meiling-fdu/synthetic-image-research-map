@@ -1,0 +1,185 @@
+Anchor-Regularized Adaptation for Generalizable AI-Generated
+Image Detection with DINOv3
+Hyeongjun Choi
+Sungkyunkwan University
+Suwon, Republic of Korea
+junhjun@g.skku.edu
+Juhun Lee
+Sungkyunkwan University
+Suwon, Republic of Korea
+josejhlee@g.skku.edu
+Davide Cozzolino
+University of Naples Federico II
+Naples, Italy
+davide.cozzolino@unina.it
+Luisa Verdoliva
+University of Naples Federico II
+Naples, Italy
+verdoliv@unina.it
+Simon S. Woo∗
+Sungkyunkwan University
+Suwon, Republic of Korea
+swoo@g.skku.edu
+Abstract
+Recent works in AI-generated image detection have shown that
+careful training data alignment can improve generalization by re-
+moving spurious correlations. However, linear probes on frozen
+DINOv3 representations achieve remarkably strong performance
+even when trained on misaligned datasets. Motivated by this result,
+we analyze the underlying rationale and the limits of this gener-
+alization. We find that frozen DINOv3 performs well because its
+decisions rely on features that faithfully represent the space of
+authentic images. At the same time, its final layer is less effective
+at capturing the subtle pixel-artifact cues that can be emphasized
+by aligned training data. We further observe that naively mixing
+aligned and misaligned data during adaptation improves sensitivity
+to such cues but at the cost of distorting the pre-trained represen-
+tation, limiting generalization. To address this issue, we propose
+Anchor-Regularized Adaptation (ARA). We apply Low-Rank Adap-
+tation to capture pixel-level artifacts while leveraging a frozen an-
+chor classifier to avoid deviations from the original representation
+structure. This allows the model to exploit pixel-artifact cues with-
+out sacrificing generalization. Our method achieves state-of-the-art
+performance on nine diverse and challenging benchmarks, indicat-
+ing that ARA enables complementary supervision from misaligned
+and aligned data for more effective detection.
+CCS Concepts
+•Computing methodologies→Computer vision tasks.
+Keywords
+AI-Generated Image Detection; Dataset Alignment; Generalization
+1 Introduction
+The rapid advancement of generative models has made it increas-
+ingly difficult to distinguish real images from synthetic fakes. This
+trend raises serious societal concerns, including misinformation
+and digital fraud [ 3, 4, 12, 21]. Consequently, AI-generated im-
+age (AIGI) detection has emerged as a critical research problem.
+In response, the focus of AIGI detection has increasingly shifted
+beyond controlled benchmarks toward robustness on in-the-wild
+data [5, 9, 14, 19, 40].
+∗Also with Secure Machines Lab Inc.
+Recent research in AIGI detection has advanced along two dis-
+tinct trajectories. The first trajectory addresses the inherent vul-
+nerabilities of training data. Conventional training datasets can
+contain statistical discrepancies between real and fake samples,
+such as content, format, or resolution, leading models to rely on
+spurious shortcuts rather than forensic traces [ 13, 39, 46]. This
+has led to a widespread effort towarddataset alignment, primarily
+through VAE or diffusion-based reconstructions [6, 8, 14, 35]. The
+second trajectory relies on the scale and capacity of modern back-
+bones. While leveraging foundation models, particularly CLIP [31],
+is an established practice in the field [9, 23, 28, 36, 41], the recent
+emergence of DINOv3 [33] marks a notable shift. This refocuses
+attention on inherent backbone capabilities by showing that sim-
+ple linear probing over a frozen DINOv3 achieves state-of-the-art
+results on challenging benchmarks [16, 44]. In particular, Zhou et
+al. [44] achieve their breakthrough using GenImage [46], a dataset
+explicitly identified as misaligned in prior work [ 13]. Frozen DI-
+NOv3 detectors trained on such misaligned data outperform several
+carefully aligned frameworks. This observation calls into question
+the prevailing belief that dataset misalignment is the primary bot-
+tleneck for real-world generalization. It therefore raises a critical
+question: does data alignment still matter in the era of powerful
+vision foundation models?
+To answer this question, we systematically investigate the behav-
+ior of DINOv3-based detectors across misaligned and aligned data.
+Our analysis reveals two critical phenomena. First, we find that the
+remarkable generalization of frozen DINOv3 detectors is closely
+tied to a robustreal-centric manifold. Pre-trained on hundreds of
+millions of natural images, DINOv3 leverages a well-defined rep-
+resentation of real images. Even with only 1% of the fake training
+samples retained, the model remains highly robust by identifying
+deviations from the well-defined real distribution. Second, we iden-
+tify a structural limitation termed thesemantic bottleneck. When
+trained on strictly aligned data containing only subtle pixel-artifacts,
+a linear probe on the final layer features of frozen DINOv3 fails
+to fully capture these cues. Our layer-wise analysis shows that
+intermediate layers more effectively capture these low-level cues,
+but these cues are progressively suppressed during the semantic
+abstraction toward the final layer. This indicates that while DINOv3
+possesses the representational capacity to detect subtle forgeries,
+its semantically oriented architecture reduces the salience of cues
+needed to detect low-level artifacts (Figure 1(a)).
+arXiv:2608.15196v1  [cs.CV]  15 Aug 2026
+Hyeongjun Choi, Juhun Lee, Davide Cozzolino, Luisa Verdoliva, and Simon S. Woo
+R e al - Cen tric M anif o ld
+Sem an tic B o t tlenec k
+(a) F r ozen D IN Ov3
+R e al Aligned F ak e Misaligned F ak e
+Aniso tr o pic Co ll a pse
+Loss of Gener alization
+(b ) S ta nd a r d Lo R A
+P r eser v ed M anif o ld
+Ar tifac t s In t ern alized
+( c) A R A ( Our s )
+Figure 1: Conceptual illustration of the structural trade-off in adapting DINOv3 for AIGI detection. (a) Frozen DINOv3 provides
+a strong authenticity prior but struggles with fakes containing only subtle pixel-artifacts. (b) Naive fine-tuning can absorb such
+cues while distorting the pre-trained feature structure, degrading generalization. (c) ARA incorporates new artifact cues while
+better preserving the pre-trained structure.
+These findings reveal an architectural dilemma for universal de-
+tection across the forgery spectrum, from macroscopic semantic er-
+rors to microscopic pixel-artifacts. A naive attempt to overcome the
+semantic bottleneck involvesdecision fusion, which averages predic-
+tions of intermediate and final layers. While this approach demon-
+strates that intermediate features hold complementary cues, simple
+decision-level integration does not fully incorporate these subtle
+artifacts into the model’s core representation. Conversely, direct
+adaptation of the DINOv3 backbone through Low-Rank Adaptation
+(LoRA) [15] allows the model to capture subtle artifacts. However,
+this often perturbs the pre-trained feature space, weakening the real-
+side structure that supports in-the-wild generalization (Figure 1(b)).
+Thus, the challenge lies in capturing forgery artifacts without dis-
+rupting the feature geometry underlying robust generalization. To
+address this trade-off, we proposeAnchor-Regularized Adap-
+tation (ARA). ARA introduces a frozen linear anchor classifier
+trained on the original DINOv3 representation to regularize back-
+bone adaptation. During fine-tuning, this anchor encourages the
+adapted features to remain compatible with the real-side structure
+learned before adaptation, thereby limiting destructive representa-
+tional drift. As a result, the model can encode subtle pixel-artifacts
+while preserving the feature geometry that underlies robust gen-
+eralization, rather than increasing anisotropy in the feature space
+(Figure 1(c)). Overall, we make the following contributions:
+• We characterize thereal-centric manifoldas an inherent strength
+of DINOv3-based detectors and thesemantic bottleneckas a
+critical structural weakness through a systematic analysis under
+misaligned and aligned data configurations.
+• We identify the structural trade-off between capturing pixel-
+artifacts and preserving the feature space, and provide quanti-
+tative evidence that naive adaptation distorts the pre-trained
+geometry and limits generalization.
+• We proposeARA, a regularization-based framework that achieves
+state-of-the-art performance across four standard benchmarks
+and five challenging in-the-wild datasets.
+2 Related Work
+2.1 AIGI Detection and Dataset Alignment
+AI-generated image (AIGI) detection research has primarily focused
+on achieving robust generalization to unseen generators. Early stud-
+ies rely on conventional benchmark datasets [39, 46] and focus on
+exploiting traces left by the generation process, such as low-level
+artifacts [10, 38] or frequency inconsistencies [ 30, 37]. However,
+Grommelt et al. [ 13] expose a critical flaw in these convention-
+ally used training datasets, revealing that misalignment between
+real and fake data forces models to learn spurious cues, ultimately
+causing generalization failures in the wild. This finding leads to a
+growing line of work on dataset alignment. To compel models to
+learn forensic artifacts rather than dataset biases, subsequent stud-
+ies attempt to perfectly match resolution, semantic content, and
+compression characteristics. Representative works range from VAE
+reconstruction in Aligned [35] to advanced pipelines in DRCT [6],
+B-Free [14], and DDA [8]. Building on these efforts, recent works
+actively integrate aligned data to model real image distributions us-
+ing them as hard samples [25], enhance the perception capabilities
+of MLLMs [20], or construct expert branches for pixel-artifacts [7].
+Consequently, meticulously controlled aligned datasets now play a
+central role in the design of recent detection methodologies.
+2.2 Leveraging Vision Foundation Models
+In parallel with this trend, numerous studies rely on pre-trained
+Vision Foundation Models (VFMs). Ojha et al. [28] pioneer this ap-
+proach by achieving high generalization performance through sim-
+ple linear probing on CLIP [31]. Subsequent research further lever-
+ages CLIP in AIGI detection [9] by adapting it to specific forgery
+cues [23, 41], injecting categorical concepts [ 36], supplementing
+CNN-based models with high-level semantic cues [ 40], or lever-
+aging representations from intermediate encoder blocks [17]. Fur-
+thermore, even dataset alignment studies [8, 14] adopt DINO [29]
+as their backbone, highlighting the growing importance of VFMs

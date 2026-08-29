@@ -14,6 +14,37 @@ from scripts.serve_admin import prepare_mapping_candidates
 
 
 class NewPaperMappingCandidateTests(unittest.TestCase):
+    def test_unreviewed_pdf_links_survive_pending_locations_without_markers(self):
+        from scripts.curated_export import enforce_affiliation_source_precedence
+        for mixed in (False, True):
+            with self.subTest(mixed=mixed):
+                paper = dict(paper_id="curated:new", title="New paper", year=2026,
+                             authors=["Ada", "Ben"] if mixed else ["Ada"],
+                             curation_status="needs_review", review_status="pending")
+                pending = dict(paper_id="curated:new", institution="Example University",
+                               institution_id="institution:example", institution_authors="Ada",
+                               mapping_id="pending", mapping_status="needs_review",
+                               raw_affiliation="Example University", provenance_source="https://example.org/paper.pdf")
+                mappings = [pending]
+                if mixed:
+                    mappings.append(dict(pending, mapping_id="active", institution="Second University",
+                                         institution_id="institution:second", institution_authors="Ben",
+                                         mapping_status="active"))
+                markers = []
+                enforce_affiliation_source_precedence([paper], markers, mappings)
+                self.assertEqual(markers, [])
+                self.assertEqual(paper["curation_status"], "needs_review")
+                self.assertTrue(paper["needs_review"])
+                ada = next(a for a in paper["author_institution_indices"] if a["author"] == "Ada")
+                self.assertEqual(ada["institution_ids"], ["institution:example"])
+                self.assertTrue(ada["fallback"])
+                self.assertEqual(paper["author_institution_affiliations"][0]["mapping_source"], "raw_affiliation")
+                from scripts.export_public_preview import add_public_detail_fields
+                add_public_detail_fields([paper], markers)
+                self.assertTrue(all(author["affiliation_indices"] for author in paper["authors"]))
+                self.assertEqual(paper["curation_status"], "needs_review")
+                self.assertEqual(markers, [])
+
     def setUp(self):
         self.paper = {
             "title": "Mapping candidate test",

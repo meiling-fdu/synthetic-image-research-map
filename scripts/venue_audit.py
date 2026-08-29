@@ -195,6 +195,12 @@ class VenueAudit:
         self.explicit_conflicts = {match.group(1) for d in decisions
                                   if d.get("review_queue") == "publication_venues" and d.get("action") == "unresolved"
                                   for match in re.finditer(r"\[venue-state:([a-f0-9]{64})\]", d.get("review_note", ""))}
+        self.explicit_conflict_notes = {
+            match.group(1): clean_text(re.sub(r"\[venue-state:[a-f0-9]{64}\]", "", d.get("review_note", "")))
+            for d in decisions
+            if d.get("review_queue") == "publication_venues" and d.get("action") == "unresolved"
+            for match in re.finditer(r"\[venue-state:([a-f0-9]{64})\]", d.get("review_note", ""))
+        }
         identities = defaultdict(set)
         for row in aliases:
             if row.get("review_status") == "confirmed":
@@ -230,7 +236,12 @@ class VenueAudit:
         standalone_track_review = False
         abbreviation_review = False
         if {confirmation_fingerprint(paper), confirmation_fingerprint(row)} & self.explicit_conflicts:
-            reasons.append("Explicit Admin publication-type override conflicts with the registry; preserve the manual selection until the venue review is confirmed with source evidence.")
+            # An unresolved venue may concern missing acceptance evidence, not
+            # necessarily a publication-type conflict. Retain the saved reason.
+            note = next((self.explicit_conflict_notes.get(key) for key in
+                         (confirmation_fingerprint(paper), confirmation_fingerprint(row))
+                         if self.explicit_conflict_notes.get(key)), "")
+            reasons.append(note or "Explicit Admin publication-type override conflicts with the registry; preserve the manual selection until the venue review is confirmed with source evidence.")
         arxiv_status = self.arxiv_status.get(arxiv_id, {})
         if current_type == "preprint" and arxiv_status.get("formal_signal") and not fact.get("name"):
             reasons.append("arXiv reports a formal publication/acceptance or forthcoming book chapter: " +

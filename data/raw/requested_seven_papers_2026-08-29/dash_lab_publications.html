@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DASH LAB - Publications</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom Shared Resources -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/common.js"></script>
+    
+    <!-- Publication Data & Logic -->
+    <script src="js/publications_data.js"></script>
+    <script src="js/publications.js" defer></script>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+    <!-- LIGHTBOX MODAL (Hidden by default) -->
+    <div id="lightbox-modal" class="hidden fixed inset-0 z-[100] bg-black bg-opacity-90 flex items-center justify-center p-4" onclick="if(event.target === this) closeModal()">
+        <span class="lightbox-close-btn" onclick="closeModal()">&times;</span>
+        <div class="relative max-w-7xl w-full flex flex-col items-center">
+            <img id="lightbox-img" src="" alt="Full view" class="max-h-[85vh] w-auto max-w-full rounded-md shadow-2xl object-contain">
+            <p id="lightbox-caption" class="text-white mt-4 text-center font-medium text-lg px-4"></p>
+        </div>
+    </div>
+
+    <!-- Navbar is injected here by common.js -->
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 pt-8 pb-12 max-w-6xl flex-grow">
+        
+        <!-- Research Area Links -->
+        <div class="research-grid">
+            <a href="https://github.com/DASH-Lab/deepfakeResearch" target="_blank" class="research-btn group"> 
+                <i class="fas fa-user-secret group-hover:scale-110 transition-transform"></i>
+                <span>Deepfake Research</span>
+            </a>
+            <a href="https://github.com/DASH-Lab/anomaly_detection_research" target="_blank" class="research-btn group"> 
+                <i class="fas fa-chart-line group-hover:scale-110 transition-transform"></i>
+                <span>Anomaly Detection</span>
+            </a>
+            <a href="https://github.com/DASH-Lab/ML_privacy_research" target="_blank" class="research-btn group"> 
+                <i class="fas fa-shield-alt group-hover:scale-110 transition-transform"></i>
+                <span>ML Privacy</span>
+            </a>
+            <a href="https://github.com/DASH-Lab/FaceRecogRecovery" target="_blank" class="research-btn group"> 
+                <i class="fas fa-id-card group-hover:scale-110 transition-transform"></i>
+                <span>Face Recog. Recovery</span>
+            </a>
+        </div>
+
+        <!-- Sticky Controls (Search + Pagination) -->
+        <div class="controls-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Loading data..." disabled>
+            </div>
+            
+            <div class="pagination" id="pagination-buttons">
+                <!-- Buttons will be injected here by JS -->
+            </div>
+        </div>
+
+        <!-- Publications Content Area -->
+        <div id="publications-content" class="space-y-6 min-h-[300px]">
+            <!-- Dynamic content loaded via JS below -->
+        </div>
+
+    </div>
+
+    <!-- Footer is injected here by common.js -->
+
+</body>
+</html>

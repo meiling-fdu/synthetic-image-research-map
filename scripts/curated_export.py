@@ -1261,6 +1261,16 @@ def enforce_affiliation_source_precedence(
             if id(marker) in active_marker_ids
         ]
         if state == "unreviewed":
+            # New unreviewed papers may have explicit PDF affiliation evidence
+            # while locations remain pending. Show preliminary links without
+            # emitting markers or overriding existing automatic marker evidence.
+            if (clean(paper.get("curation_status")) == "needs_review"
+                    and matching_mappings and not matching_markers):
+                _recalculate_paper_details(
+                    paper, map_records, mappings, resolved_mapping_ids,
+                    matching_markers=[],
+                    matching_mappings=_visible_affiliation_mappings(paper, matching_mappings),
+                )
             _mark_preliminary_automatic_evidence(paper)
             for marker in matching_markers:
                 _mark_preliminary_automatic_evidence(marker)
@@ -1285,11 +1295,7 @@ def enforce_affiliation_source_precedence(
             for marker in marker_index.matches(paper)
             if id(marker) in active_marker_ids
         ]
-        visible_mappings = [
-            mapping
-            for mapping in matching_mappings
-            if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
-        ]
+        visible_mappings = _visible_affiliation_mappings(paper, matching_mappings)
         _recalculate_paper_details(
             paper,
             map_records,
@@ -1739,6 +1745,16 @@ def _remove_overridden_markers(
     return removed
 
 
+def _visible_affiliation_mappings(paper, mappings):
+    """Keep sourced pending affiliations reviewable only on unreviewed papers."""
+    unreviewed = clean(paper.get("curation_status")) == "needs_review"
+    return [mapping for mapping in mappings
+            if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+            or (unreviewed and clean(mapping.get("mapping_status")) == "needs_review"
+                and clean(mapping.get("raw_affiliation"))
+                and clean(mapping.get("provenance_source")))]
+
+
 def _recalculate_paper_details(
     paper: MutableMapping[str, Any],
     map_records: Sequence[Mapping[str, Any]],
@@ -1867,7 +1883,7 @@ def _recalculate_paper_details(
                 "institution": institution,
                 "authors": mapping_authors,
                 "mapping_source": mapping_source,
-                "mapping_fallback": False,
+                "mapping_fallback": clean(mapping.get("mapping_status")) == "needs_review",
             }
         )
         for author in mapping_authors:
@@ -1889,7 +1905,7 @@ def _recalculate_paper_details(
                     "institution_indices": [],
                     "institution_ids": [],
                     "source": mapping_source,
-                    "fallback": False,
+                    "fallback": clean(mapping.get("mapping_status")) == "needs_review",
                 },
             )
             values["institution_indices"].append(index)
