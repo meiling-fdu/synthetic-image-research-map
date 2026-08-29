@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-29T10:43:29Z"
+    "public_preview_generated_at": "2026-08-29T17:59:42Z"
   },
   "records": [
     {
@@ -36550,9 +36550,9 @@
           ]
         }
       ],
-      "institution_source": "automatic_fallback",
+      "institution_source": "source_backed_preliminary",
       "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed. | Preliminary source-backed affiliation evidence; paper review pending.",
       "venue_label": "International Conference on Digital Image Processing (ICDIP)",
       "venue_aliases": [
         "International Conference on Digital Image Processing",
@@ -36569,21 +36569,6 @@
         "unresolved": 0
       },
       "affiliation_complete": true,
-      "affiliations": [
-        {
-          "index": 1,
-          "name": "Beijing Institute of Technology",
-          "canonical_name": "Beijing Institute of Technology",
-          "institution_id": "institution:d327df7fd49c7ebb",
-          "institution_type": "university",
-          "country": "",
-          "country_code": "",
-          "region": "",
-          "location_display": "",
-          "preliminary": true
-        }
-      ],
-      "current_institution": null,
       "author_affiliation_indices": [
         {
           "author": "Linfang Shang",
@@ -36621,7 +36606,22 @@
       ],
       "search_institution_ids": [
         "institution:d327df7fd49c7ebb"
-      ]
+      ],
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Beijing Institute of Technology",
+          "canonical_name": "Beijing Institute of Technology",
+          "institution_id": "institution:d327df7fd49c7ebb",
+          "institution_type": "university",
+          "country": "",
+          "country_code": "",
+          "region": "",
+          "location_display": "",
+          "preliminary": true
+        }
+      ],
+      "current_institution": null
     },
     {
       "paper_id": "curated:70f6d63927384365006f",
@@ -51052,9 +51052,9 @@
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
+      "institution_source": "source_backed_preliminary",
       "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed. | Preliminary source-backed affiliation evidence; paper review pending.",
       "venue_label": "European Conference on Computer Vision (ECCV)",
       "venue_aliases": [
         "European Conference on Computer Vision (ECCV)",
@@ -51582,9 +51582,9 @@
       "aggregated_regions": [],
       "aggregated_region_codes": [],
       "affiliation_review_state": "unreviewed",
-      "institution_source": "automatic_fallback",
+      "institution_source": "source_backed_preliminary",
       "preliminary_affiliations": true,
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed. | Preliminary source-backed affiliation evidence; paper review pending.",
       "venue_label": "International Joint Conference on Artificial Intelligence (IJCAI)",
       "venue_aliases": [
         "International Joint Conference on Artificial Intelligence",
@@ -111910,7 +111910,7 @@
       "review_status": "pending",
       "needs_review": true,
       "has_map_location": true,
-      "map_record_count": 2,
+      "map_record_count": 3,
       "missing_affiliation": false,
       "missing_coordinates": false,
       "coverage_status": "map_ready",
@@ -111927,6 +111927,7 @@
       ],
       "aggregated_regions": [
         "Zhejiang",
+        "Guangdong",
         "Jiangsu"
       ],
       "aggregated_region_codes": [],
@@ -112156,12 +112157,12 @@
         {
           "institution_name": "Tencent Inc.",
           "institution_id": "institution:aa542458d996a5d3",
-          "institution_type": "other",
-          "country": "",
-          "country_code": "",
-          "region": "",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "CN",
+          "region": "Guangdong",
           "region_code": "",
-          "location_display": ""
+          "location_display": "Guangdong, China"
         },
         {
           "institution_name": "Nanjing University of Information Science and Technology",
@@ -112340,10 +112341,10 @@
           "canonical_name": "Tencent Inc.",
           "institution_id": "institution:aa542458d996a5d3",
           "institution_type": "company",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
           "preliminary": true
         },
         {

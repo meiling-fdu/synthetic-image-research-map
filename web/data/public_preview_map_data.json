@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-08-29T10:43:29Z"
+    "public_preview_generated_at": "2026-08-29T17:59:42Z"
   },
   "records": [
     {
@@ -355328,7 +355328,7 @@
           ]
         }
       ],
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "resolution_notes": "Preliminary source-backed affiliation evidence; paper review pending.",
       "arxiv_year": 2024,
       "merged_versions": [
         {
@@ -355707,7 +355707,7 @@
           ]
         }
       ],
-      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "resolution_notes": "Preliminary source-backed affiliation evidence; paper review pending.",
       "arxiv_year": 2024,
       "merged_versions": [
         {
@@ -460468,10 +460468,10 @@
           "canonical_name": "Tencent Inc.",
           "institution_id": "institution:aa542458d996a5d3",
           "institution_type": "company",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
           "preliminary": true
         },
         {
@@ -461016,10 +461016,10 @@
           "canonical_name": "Tencent Inc.",
           "institution_id": "institution:aa542458d996a5d3",
           "institution_type": "company",
-          "country": "",
+          "country": "China",
           "country_code": "",
-          "region": "",
-          "location_display": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
           "preliminary": true
         },
         {
@@ -467911,6 +467911,562 @@
         "university"
       ],
       "is_arxiv_preprint": false
+    },
+    {
+      "id": "curated-map:bd0f5358302cc519ce7c",
+      "paper_id": "curated:24bcb339c197bcb56bb7",
+      "title": "REVEAL: Reasoning-Enhanced Forensic Evidence Analysis for Explainable AI-Generated Image Detection",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "task": "detection",
+      "paper_categories": [
+        "method",
+        "benchmark"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publication_type": "preprint",
+      "abstract": "The rapid progress of visual generative models has made AI-generated images increasingly difficult to distinguish from authentic ones, posing growing risks to social trust and information integrity. This motivates detectors that are not only accurate but also forensically explainable. While recent multimodal approaches improve interpretability, many rely on post-hoc rationalizations or coarse visual cues, without constructing verifiable chains of evidence, thus often leading to poor generalization. We introduce REVEAL-Bench, a reasoning-enhanced multimodal benchmark for AI-generated image forensics, structured around explicit chains of forensic evidence derived from lightweight expert models and consolidated into step-by-step chain-of-evidence traces. Based on this benchmark, we propose REVEAL (\\underline{R}easoning-\\underline{e}nhanced Forensic E\\underline{v}id\\underline{e}nce \\underline{A}na\\underline{l}ysis), an explainable forensic framework trained with expert-grounded reinforcement learning. Our reward design jointly promotes detection accuracy, evidence-grounded reasoning stability, and explanation faithfulness. Extensive experiments demonstrate significantly improved cross-domain generalization and more faithful explanations to baseline detectors. All data and codes will be released.",
+      "abstract_source": "arxiv",
+      "doi": "10.48550/arXiv.2511.23158",
+      "arxiv_id": "2511.23158",
+      "arxiv_url": "https://arxiv.org/abs/2511.23158",
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2511.23158",
+      "openalex_url": "",
+      "url": "https://arxiv.org/abs/2511.23158",
+      "authors": [
+        {
+          "name": "Huangsen Cao",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Qin Mei",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zhiheng Li",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yuxi Li",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": true,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zhan Meng",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Ying Zhang",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": true,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Chen Li",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": true,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Zhimeng Zhang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Xin Ding",
+          "affiliation_indices": [
+            3
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Yongwei Wang",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Jing Lyu",
+          "affiliation_indices": [
+            2
+          ],
+          "is_current_marker_author": true,
+          "affiliation_source": "raw_affiliation",
+          "affiliation_fallback": true,
+          "affiliation_status": "mapped"
+        },
+        {
+          "name": "Fei Wu",
+          "affiliation_indices": [
+            1
+          ],
+          "is_current_marker_author": false,
+          "affiliation_source": "curated_admin",
+          "affiliation_fallback": false,
+          "affiliation_status": "mapped"
+        }
+      ],
+      "institution": "Tencent Inc.",
+      "institution_id": "institution:aa542458d996a5d3",
+      "location_id": "location:c015464e768742fe3265",
+      "institution_authors": [
+        "Yuxi Li",
+        "Ying Zhang",
+        "Chen Li",
+        "Jing Lyu"
+      ],
+      "country": "China",
+      "country_code": "CN",
+      "region": "Guangdong",
+      "region_code": "",
+      "raw_country": "",
+      "raw_country_code": "",
+      "city": "Shenzhen",
+      "latitude": 22.5405,
+      "longitude": 113.9344,
+      "lat": 22.5405,
+      "lon": 113.9344,
+      "source_database": "curated",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "mapping_id": "mapping:d328a328f00b1ea19e93",
+      "affiliation_order": 2,
+      "raw_affiliation": "WeChat Vision, Tencent Inc",
+      "resolution_method": "curated_confirmed_location",
+      "resolution_confidence": "high",
+      "needs_review": false,
+      "notes": "Raw affiliation: WeChat Vision, Tencent Inc",
+      "location_display": "Guangdong, China",
+      "mapping_status": "needs_review",
+      "institution_identity_status": "confirmed",
+      "institution_location_status": "confirmed",
+      "preliminary_affiliations": true,
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "source_backed_preliminary",
+      "resolution_notes": "Preliminary source-backed affiliation evidence; paper review pending.",
+      "author_institution_affiliations": [
+        {
+          "index": 1,
+          "institution_id": "institution:e433baf78e80004b",
+          "institution": "Zhejiang University",
+          "institution_type": "university",
+          "authors": [
+            "Huangsen Cao",
+            "Qin Mei",
+            "Zhiheng Li",
+            "Zhan Meng",
+            "Zhimeng Zhang",
+            "Yongwei Wang",
+            "Fei Wu"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        },
+        {
+          "index": 2,
+          "institution_id": "institution:aa542458d996a5d3",
+          "institution": "Tencent Inc.",
+          "institution_type": "company",
+          "authors": [
+            "Yuxi Li",
+            "Ying Zhang",
+            "Chen Li",
+            "Jing Lyu"
+          ],
+          "mapping_source": "raw_affiliation",
+          "mapping_fallback": true,
+          "preliminary": true
+        },
+        {
+          "index": 3,
+          "institution_id": "institution:0af8b0b3be8e7963",
+          "institution": "Nanjing University of Information Science and Technology",
+          "institution_type": "university",
+          "authors": [
+            "Xin Ding"
+          ],
+          "mapping_source": "curated_admin",
+          "mapping_fallback": false
+        }
+      ],
+      "author_institution_indices": [
+        {
+          "author": "Huangsen Cao",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ]
+        },
+        {
+          "author": "Qin Mei",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ]
+        },
+        {
+          "author": "Zhiheng Li",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ]
+        },
+        {
+          "author": "Yuxi Li",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ]
+        },
+        {
+          "author": "Zhan Meng",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ]
+        },
+        {
+          "author": "Ying Zhang",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ]
+        },
+        {
+          "author": "Chen Li",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ]
+        },
+        {
+          "author": "Zhimeng Zhang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ]
+        },
+        {
+          "author": "Xin Ding",
+          "institution_indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:0af8b0b3be8e7963"
+          ]
+        },
+        {
+          "author": "Yongwei Wang",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ]
+        },
+        {
+          "author": "Jing Lyu",
+          "institution_indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ]
+        },
+        {
+          "author": "Fei Wu",
+          "institution_indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ]
+        }
+      ],
+      "venue_review_required": true,
+      "venue_review_reason": "Expected ECCV 2026 is unverified: current arXiv v2 (2026-04-08), PDF, and exact-title searches contain no acceptance evidence. Preserve first-publication year 2025 and arXiv preprint until reviewed. Evidence: https://arxiv.org/abs/2511.23158, https://arxiv.org/pdf/2511.23158v2",
+      "ambiguity_status": "unresolved",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "institution_type": "company",
+      "canonical_name": "Tencent Inc.",
+      "canonical_institution_name": "Tencent Inc.",
+      "mapping_lineage_ids": [
+        "mapping:d328a328f00b1ea19e93"
+      ],
+      "author_affiliation_counts": {
+        "mapped": 12,
+        "non_institutional": 0,
+        "unresolved": 0
+      },
+      "affiliation_complete": true,
+      "affiliations": [
+        {
+          "index": 1,
+          "name": "Zhejiang University",
+          "canonical_name": "Zhejiang University",
+          "institution_id": "institution:e433baf78e80004b",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Zhejiang",
+          "location_display": "Zhejiang, China"
+        },
+        {
+          "index": 2,
+          "name": "Tencent Inc.",
+          "canonical_name": "Tencent Inc.",
+          "institution_id": "institution:aa542458d996a5d3",
+          "institution_type": "company",
+          "country": "China",
+          "country_code": "",
+          "region": "Guangdong",
+          "location_display": "Guangdong, China",
+          "preliminary": true
+        },
+        {
+          "index": 3,
+          "name": "Nanjing University of Information Science and Technology",
+          "canonical_name": "Nanjing University of Information Science and Technology",
+          "institution_id": "institution:0af8b0b3be8e7963",
+          "institution_type": "university",
+          "country": "China",
+          "country_code": "",
+          "region": "Jiangsu",
+          "location_display": "Jiangsu, China"
+        }
+      ],
+      "current_institution": {
+        "index": 2,
+        "name": "Tencent Inc.",
+        "canonical_name": "Tencent Inc.",
+        "institution_id": "institution:aa542458d996a5d3",
+        "institution_type": "company",
+        "country": "China",
+        "country_code": "",
+        "region": "Guangdong",
+        "location_display": "Guangdong, China",
+        "preliminary": true
+      },
+      "author_affiliation_indices": [
+        {
+          "author": "Huangsen Cao",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Qin Mei",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Zhiheng Li",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yuxi Li",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ],
+          "source": "raw_affiliation",
+          "fallback": true
+        },
+        {
+          "author": "Zhan Meng",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Ying Zhang",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ],
+          "source": "raw_affiliation",
+          "fallback": true
+        },
+        {
+          "author": "Chen Li",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ],
+          "source": "raw_affiliation",
+          "fallback": true
+        },
+        {
+          "author": "Zhimeng Zhang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Xin Ding",
+          "indices": [
+            3
+          ],
+          "institution_ids": [
+            "institution:0af8b0b3be8e7963"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Yongwei Wang",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        },
+        {
+          "author": "Jing Lyu",
+          "indices": [
+            2
+          ],
+          "institution_ids": [
+            "institution:aa542458d996a5d3"
+          ],
+          "source": "raw_affiliation",
+          "fallback": true
+        },
+        {
+          "author": "Fei Wu",
+          "indices": [
+            1
+          ],
+          "institution_ids": [
+            "institution:e433baf78e80004b"
+          ],
+          "source": "curated_admin",
+          "fallback": false
+        }
+      ],
+      "aggregated_institution_types": [
+        "university",
+        "company"
+      ],
+      "is_arxiv_preprint": true
     }
   ],
   "institution_aliases": [

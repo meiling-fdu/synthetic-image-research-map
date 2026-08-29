@@ -962,7 +962,16 @@ def exclusion_only_paper_record(row: Mapping[str, str]) -> Dict[str, Any]:
 def marker_for_api(record: Mapping[str, Any]) -> Dict[str, Any]:
     return {
         "id": clean(record.get("id")),
+        "mapping_id": clean(record.get("mapping_id")),
         "institution": clean(record.get("institution")),
+        "institution_id": clean(record.get("institution_id")),
+        "mapping_status": clean(record.get("mapping_status")),
+        "institution_identity_status": clean(
+            record.get("institution_identity_status")
+        ),
+        "institution_location_status": clean(
+            record.get("institution_location_status")
+        ),
         "institution_authors": record.get("institution_authors") or [],
         "city": clean(record.get("city")),
         "country_code": clean(record.get("country_code")),
@@ -1164,6 +1173,12 @@ def load_admin_data(
                 paper, canonical_mapping_index
             )
             if clean(mapping.get("mapping_status")).casefold() == "active"
+            or (
+                clean(mapping.get("mapping_status")).casefold() == "needs_review"
+                and paper.get("curation_status") == "needs_review"
+                and clean(mapping.get("raw_affiliation"))
+                and clean(mapping.get("provenance_source"))
+            )
         ]
         canonical_candidate_markers = strongest_matching_records(
             paper, canonical_candidate_map_index
@@ -1216,6 +1231,19 @@ def load_admin_data(
             if clean(record.get("institution")) or clean(record.get("institution_id"))
         }
         paper["canonical_mapping_count"] = len(canonical_institutions)
+        paper["source_backed_preliminary_mapping_count"] = sum(
+            clean(record.get("mapping_status")).casefold() == "needs_review"
+            for record in canonical_mappings
+        )
+        public_marker_mapping_ids = {
+            clean(record.get("mapping_id")) for record in markers
+            if clean(record.get("mapping_id"))
+        }
+        paper["map_eligible_preliminary_mapping_count"] = sum(
+            clean(record.get("mapping_status")).casefold() == "needs_review"
+            and clean(record.get("mapping_id")) in public_marker_mapping_ids
+            for record in canonical_mappings
+        )
         paper["canonical_map_record_count"] = len(canonical_candidate_markers)
         paper["canonical_has_map_location"] = any(
             record.get("latitude") not in (None, "")

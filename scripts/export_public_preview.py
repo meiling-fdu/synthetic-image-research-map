@@ -4188,6 +4188,19 @@ def print_summary(summary: Dict[str, Any], output: Path, dry_run: bool) -> None:
         f"{summary.get('curated_markers_created', 0)}"
     )
     print(
+        "  Source-backed preliminary markers created: "
+        f"{summary.get('preliminary_markers_created', 0)}"
+    )
+    print(
+        "  Confirmed Institution Records newly map-eligible: "
+        f"{summary.get('confirmed_institution_records_newly_map_eligible', 0)}"
+    )
+    print(
+        "  Preliminary relationships excluded for unresolved identity/location: "
+        f"{summary.get('curated_mappings_unresolved_identity_excluded', 0)}/"
+        f"{summary.get('curated_mappings_unresolved_location_excluded', 0)}"
+    )
+    print(
         "  Existing markers replaced by curated mappings: "
         f"{summary.get('curated_markers_replaced', 0)}"
     )
@@ -4367,6 +4380,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         institution_alias_rows = load_institution_aliases(
             args.institution_aliases
         )
+        institution_rows = load_institutions(args.institutions)
         institution_hierarchy_rows = read_csv_rows(args.institution_hierarchy)
         institution_search_relationship_rows = read_csv_rows(
             args.institution_search_relationships
@@ -4390,6 +4404,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             confirmed_location_rows,
             processed_cache_rows,
             institution_alias_rows,
+            institution_rows,
         )
         integrated_maps, stale_mapping_markers_excluded = (
             exclude_stale_curated_mapping_markers(
@@ -4435,7 +4450,6 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         integrated_maps[:] = canonicalize_records(
             integrated_maps, venue_alias_rows
         )
-        institution_rows = load_institutions(args.institutions)
         orphan_cleanup_audit_rows = read_csv_rows(DEFAULT_ORPHAN_CLEANUP_AUDIT)
         exported_aliases = public_institution_aliases(
             institution_alias_rows,

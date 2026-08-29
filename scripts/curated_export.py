@@ -597,6 +597,30 @@ def _confirmed_location_is_usable(record: Mapping[str, Any]) -> bool:
     } and _valid_coordinates(record)
 
 
+def _confirmed_institution_ids(
+    records: Sequence[Mapping[str, Any]],
+) -> set[str]:
+    """Return canonical identities that are resolved and publicly usable."""
+    return {
+        clean(record.get("institution_id"))
+        for record in records
+        if clean(record.get("institution_status")).casefold() == "active"
+        and clean(record.get("institution_id"))
+    }
+
+
+def _supported_preliminary_mapping(
+    mapping: Mapping[str, Any], paper: Mapping[str, Any]
+) -> bool:
+    """Whether paper metadata supports a still-preliminary affiliation link."""
+    return (
+        clean(mapping.get("mapping_status")) == "needs_review"
+        and clean(paper.get("curation_status")) == "needs_review"
+        and bool(clean(mapping.get("raw_affiliation")))
+        and bool(clean(mapping.get("provenance_source")))
+    )
+
+
 def _candidate_location_is_safe(record: Mapping[str, Any]) -> bool:
     confidence = clean(record.get("resolution_confidence")).casefold()
     needs_review = clean(record.get("needs_review")).casefold()
@@ -1162,11 +1186,19 @@ def affiliation_review_state(
 
 def _mark_preliminary_automatic_evidence(
     record: MutableMapping[str, Any],
+    *,
+    source_backed: bool = False,
 ) -> None:
     record["affiliation_review_state"] = "unreviewed"
-    record["institution_source"] = "automatic_fallback"
+    record["institution_source"] = (
+        "source_backed_preliminary" if source_backed else "automatic_fallback"
+    )
     record["preliminary_affiliations"] = True
-    note = "Preliminary automatic affiliation evidence; not manually reviewed."
+    note = (
+        "Preliminary source-backed affiliation evidence; paper review pending."
+        if source_backed
+        else "Preliminary automatic affiliation evidence; not manually reviewed."
+    )
     existing_note = clean(record.get("resolution_notes"))
     if note not in existing_note:
         record["resolution_notes"] = (
@@ -1200,9 +1232,12 @@ def curated_affiliation_removal_reason(
         return ""
     if state == "reviewed_empty":
         return "reviewed empty affiliations; no active curated mappings"
-    active = [row for row in matching_mappings
-              if clean(row.get("mapping_status")) == ACTIVE_MAPPING_STATUS]
-    for mapping in active:
+    eligible = [
+        row for row in matching_mappings
+        if clean(row.get("mapping_status")) == ACTIVE_MAPPING_STATUS
+        or _supported_preliminary_mapping(row, marker)
+    ]
+    for mapping in eligible:
         institution_id = clean(mapping.get("institution_id")) or stable_institution_id(
             mapping.get("institution")
         )
@@ -1216,7 +1251,7 @@ def curated_affiliation_removal_reason(
         ):
             return ""
     return "outside effective active curated mappings: " + ", ".join(
-        clean(row.get("mapping_id")) for row in active
+        clean(row.get("mapping_id")) for row in eligible
     )
 
 
@@ -1255,6 +1290,15 @@ def enforce_affiliation_source_precedence(
             if clean(mapping.get("mapping_status")) == ACTIVE_MAPPING_STATUS
             and clean(mapping.get("mapping_id"))
         }
+        supported_preliminary_mapping_ids = {
+            clean(mapping.get("mapping_id"))
+            for mapping in matching_mappings
+            if _supported_preliminary_mapping(mapping, paper)
+            and clean(mapping.get("mapping_id"))
+        }
+        eligible_curated_marker_ids = (
+            active_mapping_ids | supported_preliminary_mapping_ids
+        )
         matching_markers = [
             marker
             for marker in marker_index.matches(paper)
@@ -1262,30 +1306,66 @@ def enforce_affiliation_source_precedence(
         ]
         if state == "unreviewed":
             # New unreviewed papers may have explicit PDF affiliation evidence
-            # while locations remain pending. Show preliminary links without
-            # emitting markers or overriding existing automatic marker evidence.
+            # while locations remain pending. Those sourced links control which
+            # institutions may contribute geography, independently of paper
+            # review: only curated markers with confirmed identities and
+            # confirmed locations survive.
+            supported_preliminary = [
+                mapping for mapping in matching_mappings
+                if _supported_preliminary_mapping(mapping, paper)
+            ]
+            if supported_preliminary:
+                supported_mapping_ids = {
+                    clean(mapping.get("mapping_id"))
+                    for mapping in supported_preliminary
+                }
+                for marker in matching_markers:
+                    if not (
+                        clean(marker.get("source_database")).casefold() == "curated"
+                        and clean(marker.get("mapping_id")) in supported_mapping_ids
+                    ):
+                        marker_id = id(marker)
+                        active_marker_ids.discard(marker_id)
+                        removed_marker_ids.add(marker_id)
+                matching_markers = [
+                    marker for marker in matching_markers
+                    if id(marker) in active_marker_ids
+                ]
             if (clean(paper.get("curation_status")) == "needs_review"
-                    and matching_mappings and not matching_markers):
+                    and matching_mappings):
                 _recalculate_paper_details(
                     paper, map_records, mappings, resolved_mapping_ids,
-                    matching_markers=[],
+                    matching_markers=matching_markers,
                     matching_mappings=_visible_affiliation_mappings(paper, matching_mappings),
                 )
-            _mark_preliminary_automatic_evidence(paper)
+            _mark_preliminary_automatic_evidence(
+                paper, source_backed=bool(supported_preliminary)
+            )
             for marker in matching_markers:
-                _mark_preliminary_automatic_evidence(marker)
+                _mark_preliminary_automatic_evidence(
+                    marker,
+                    source_backed=(
+                        clean(marker.get("source_database")).casefold()
+                        == "curated"
+                    ),
+                )
             continue
 
         for marker in matching_markers:
             if (
                 state == "curated"
                 and clean(marker.get("source_database")).casefold() == "curated"
-                and clean(marker.get("mapping_id")) in active_mapping_ids
+                and clean(marker.get("mapping_id")) in eligible_curated_marker_ids
                 and not curated_affiliation_removal_reason(marker, matching_mappings)
             ):
-                marker["affiliation_review_state"] = "curated"
-                marker["institution_source"] = "curated"
-                marker["preliminary_affiliations"] = False
+                if clean(marker.get("mapping_id")) in supported_preliminary_mapping_ids:
+                    _mark_preliminary_automatic_evidence(
+                        marker, source_backed=True
+                    )
+                else:
+                    marker["affiliation_review_state"] = "curated"
+                    marker["institution_source"] = "curated"
+                    marker["preliminary_affiliations"] = False
             else:
                 marker_id = id(marker)
                 active_marker_ids.discard(marker_id)
@@ -1448,6 +1528,7 @@ def build_curated_map_records(
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
     processed_cache_records: Sequence[Mapping[str, Any]] = (),
     institution_aliases: Sequence[Mapping[str, Any]] = (),
+    institution_records: Sequence[Mapping[str, Any]] = (),
     *,
     identity_cache: PaperIdentityCache | None = None,
 ) -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
@@ -1470,6 +1551,10 @@ def build_curated_map_records(
     skipped_status = 0
     skipped_paper = 0
     skipped_task = 0
+    skipped_unresolved_identity = 0
+    skipped_unresolved_location = 0
+    preliminary_markers_created = 0
+    map_eligible_preliminary_institution_ids: set[str] = set()
     resolved_mapping_ids = set()
     matched_paper_mappings = 0
     emitted_marker_keys = set()
@@ -1490,6 +1575,15 @@ def build_curated_map_records(
         for key in _institution_location_keys(row)
         if _confirmed_location_is_usable(row)
     }
+    explicitly_confirmed_location_keys = {
+        key
+        for row in confirmed_location_records
+        if clean(row.get("coordinate_status")).casefold()
+        in {"known", "confirmed"}
+        and _valid_coordinates(row)
+        for key in _institution_location_keys(row)
+    }
+    confirmed_institution_ids = _confirmed_institution_ids(institution_records)
     review_status_by_key = {
         _queue_key(row): clean(row.get("review_status")) or "pending_review"
         for row in review_rows
@@ -1505,7 +1599,8 @@ def build_curated_map_records(
     }
 
     for mapping in mappings:
-        if clean(mapping.get("mapping_status")) != ACTIVE_MAPPING_STATUS:
+        mapping_status = clean(mapping.get("mapping_status"))
+        if mapping_status not in {ACTIVE_MAPPING_STATUS, "needs_review"}:
             skipped_status += 1
             continue
         papers = _matching_papers(mapping, paper_index, cache)
@@ -1526,6 +1621,10 @@ def build_curated_map_records(
             })
             continue
         paper = papers[0]
+        preliminary = _supported_preliminary_mapping(mapping, paper)
+        if mapping_status == "needs_review" and not preliminary:
+            skipped_status += 1
+            continue
         if record_is_excluded(paper, exclusion_index):
             skipped_paper += 1
             active_mapping_marker_diagnostics.append({
@@ -1543,6 +1642,28 @@ def build_curated_map_records(
             })
             continue
         matched_paper_mappings += 1
+        institution_id = clean(mapping.get("institution_id"))
+        if institution_records and institution_id not in confirmed_institution_ids:
+            skipped_unresolved_identity += 1
+            active_mapping_marker_diagnostics.append({
+                "paper_id": clean(mapping.get("paper_id")),
+                "canonical_paper_identity": "; ".join(cache.keys(paper)),
+                "title": clean(mapping.get("title") or paper.get("title")),
+                "mapping_id": clean(mapping.get("mapping_id")),
+                "source_institution_id": institution_id,
+                "canonical_institution_id": institution_id,
+                "author_ids": clean(mapping.get("author_order")),
+                "author_names": clean(mapping.get("institution_authors")),
+                "location_status": "unknown",
+                "coordinates": "",
+                "final_drop_reason": "institution_identity_unresolved",
+            })
+            continue
+        if preliminary and not institution_records:
+            # A populated ID is not itself proof that the canonical registry
+            # record is resolved.
+            skipped_unresolved_identity += 1
+            continue
         raw_institution_key = normalize_institution(mapping.get("institution"))
         canonical_alias = confirmed_aliases.get(raw_institution_key) or {}
         if clean(mapping.get("institution_id")):
@@ -1580,10 +1701,17 @@ def build_curated_map_records(
             })
             continue
         match = _coordinate_match_for_keys(
-            institution_keys, locations, confirmed_location_keys
+            institution_keys,
+            locations,
+            (
+                explicitly_confirmed_location_keys
+                if preliminary
+                else confirmed_location_keys
+            ),
         )
         if queue_status in non_exportable_statuses and match.status != "known":
             skipped_status += 1
+            skipped_unresolved_location += int(preliminary)
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
                 "canonical_paper_identity": "; ".join(cache.keys(paper)),
@@ -1602,16 +1730,21 @@ def build_curated_map_records(
             coordinate_status = (
                 "ambiguous" if match.status == "ambiguous" else "missing"
             )
-            result = _upsert_location_review(
-                review_rows,
-                mapping,
-                coordinate_status=coordinate_status,
-                row_index=review_row_by_key,
+            result = (
+                "unchanged"
+                if preliminary
+                else _upsert_location_review(
+                    review_rows,
+                    mapping,
+                    coordinate_status=coordinate_status,
+                    row_index=review_row_by_key,
+                )
             )
             queue_created += int(result == "created")
             queue_updated += int(result == "updated")
             missing += int(coordinate_status == "missing")
             ambiguous += int(coordinate_status == "ambiguous")
+            skipped_unresolved_location += int(preliminary)
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
                 "canonical_paper_identity": "; ".join(cache.keys(paper)),
@@ -1626,11 +1759,12 @@ def build_curated_map_records(
                 "final_drop_reason": f"{coordinate_status}_coordinates",
             })
             continue
-        queue_known += int(
-            _mark_location_known(
-                review_rows, mapping, row_index=review_row_by_key
+        if not preliminary:
+            queue_known += int(
+                _mark_location_known(
+                    review_rows, mapping, row_index=review_row_by_key
+                )
             )
-        )
         resolved_mapping_ids.add(clean(mapping.get("mapping_id")))
         if clean(paper.get("task")) not in PUBLIC_MAP_TASKS:
             skipped_task += 1
@@ -1678,6 +1812,15 @@ def build_curated_map_records(
             continue
         emitted_marker_keys.add(marker_key)
         markers.append(_curated_marker(paper, export_mapping, match.record))
+        if preliminary:
+            markers[-1]["mapping_status"] = "needs_review"
+            markers[-1]["institution_identity_status"] = "confirmed"
+            markers[-1]["institution_location_status"] = "confirmed"
+            markers[-1]["preliminary_affiliations"] = True
+            preliminary_markers_created += 1
+            map_eligible_preliminary_institution_ids.add(
+                clean(export_mapping.get("institution_id"))
+            )
 
     return markers, {
         "curated_mappings_loaded": len(mappings),
@@ -1687,6 +1830,12 @@ def build_curated_map_records(
         "curated_mappings_skipped_status": skipped_status,
         "curated_mappings_skipped_paper": skipped_paper,
         "curated_mappings_skipped_task": skipped_task,
+        "curated_mappings_unresolved_identity_excluded": skipped_unresolved_identity,
+        "curated_mappings_unresolved_location_excluded": skipped_unresolved_location,
+        "preliminary_markers_created": preliminary_markers_created,
+        "confirmed_institution_records_newly_map_eligible": len(
+            map_eligible_preliminary_institution_ids
+        ),
         "curated_mappings_matched_papers": matched_paper_mappings,
         "location_review_rows_created": queue_created,
         "location_review_rows_updated": queue_updated,
@@ -1976,6 +2125,7 @@ def integrate_curated_records(
     confirmed_location_records: Sequence[Mapping[str, Any]] = (),
     processed_cache_records: Sequence[Mapping[str, Any]] = (),
     institution_aliases: Sequence[Mapping[str, Any]] = (),
+    institution_records: Sequence[Mapping[str, Any]] = (),
 ) -> Tuple[
     List[Dict[str, Any]],
     List[Dict[str, Any]],
@@ -2039,6 +2189,7 @@ def integrate_curated_records(
         confirmed_location_records,
         processed_cache_records,
         institution_aliases,
+        institution_records,
         identity_cache=identity_cache,
     )
     for marker in marker_records:

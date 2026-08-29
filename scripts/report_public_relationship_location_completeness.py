@@ -20,7 +20,8 @@ from pathlib import Path
 try:
     from .curated_export import (
         _coordinate_match_for_keys, _institution_location_keys,
-        _mapping_location_lookup_keys, match_institutions_to_known_coordinates,
+        _mapping_location_lookup_keys, _supported_preliminary_mapping,
+        match_institutions_to_known_coordinates,
     )
     from .paper_exclusions import build_active_exclusion_index, record_is_excluded, records_share_any_identity
     from .public_relationships import canonical_author_names, clean
@@ -28,7 +29,8 @@ try:
 except ImportError:
     from curated_export import (
         _coordinate_match_for_keys, _institution_location_keys,
-        _mapping_location_lookup_keys, match_institutions_to_known_coordinates,
+        _mapping_location_lookup_keys, _supported_preliminary_mapping,
+        match_institutions_to_known_coordinates,
     )
     from paper_exclusions import build_active_exclusion_index, record_is_excluded, records_share_any_identity
     from public_relationships import canonical_author_names, clean
@@ -101,17 +103,22 @@ def build_report(papers, markers, mappings, institutions, locations, reviews, ex
         paper = paper or mapping
         iid = clean(mapping.get("institution_id"))
         covered_affiliations.add((id(paper), canonical_id(iid)))
-        if mapping.get("mapping_status") == "needs_review":
-            # The production exporter explicitly requires mapping_status=active.
-            # Identity-review candidates are not yet public geographic links.
-            add(paper, mapping, {}, "needs_review", "EXCLUDED", "mapping_not_active", "Mapping is awaiting author/institution review; production exporter does not treat it as an active geographic relationship.")
+        preliminary = mapping.get("mapping_status") == "needs_review"
+        if preliminary and not _supported_preliminary_mapping(mapping, paper):
+            add(paper, mapping, {}, "needs_review", "EXCLUDED", "affiliation_evidence_unresolved", "Preliminary mapping lacks explicit source-backed author–institution evidence or belongs to a paper outside the needs-review workflow.")
             continue
         related = [r for r in reviews if r.get("institution_id") == iid and records_share_any_identity({**r, "paper_id": r.get("related_paper_id")}, mapping)]
         review = next((r for r in related if review_is_actionable(r)), next(iter(related), {}))
         reason = clean(review.get("evidence_source"))
-        matching = [(i, m) for i, m in enumerate(markers) if canonical_id(m.get("institution_id")) == canonical_id(iid) and records_share_any_identity(m, paper) and (
-            mapping.get("mapping_id") == m.get("mapping_id") or mapping.get("mapping_id") in m.get("mapping_lineage_ids", [])
-        )]
+        # Public marker aggregation may collapse several author-group mappings
+        # for the same paper, canonical institution, and confirmed site. Match
+        # that aggregate by paper + institution; the site check below still
+        # requires the authoritative coordinates to agree.
+        matching = [
+            (i, m) for i, m in enumerate(markers)
+            if canonical_id(m.get("institution_id")) == canonical_id(iid)
+            and records_share_any_identity(m, paper)
+        ]
         covered_markers.update(i for i, _ in matching)
         match = _coordinate_match_for_keys(_mapping_location_lookup_keys(mapping), lookup, keys)
         location = match.record if match.status == "known" and match.record else {}
@@ -120,7 +127,8 @@ def build_report(papers, markers, mappings, institutions, locations, reviews, ex
         elif entities.get(iid, {}).get("institution_status") != "active":
             add(paper, mapping, {}, review.get("review_status", ""), "ERROR", "curated_mapping", "Active mapping references inactive or missing canonical institution.")
         elif location and any(same_site(m, location) for _, m in matching):
-            add(paper, mapping, location, "confirmed", "COMPLETE", "curated_confirmed_location", "Selected canonical location is valid and represented by the exported mapping lineage.")
+            status = "source_backed_preliminary" if preliminary else "confirmed"
+            add(paper, mapping, location, status, "COMPLETE", "curated_confirmed_location", "Source-backed affiliation, canonical institution identity, and selected location are represented by the exported mapping lineage.")
         elif review_is_actionable(review) and reason and not matching:
             geography = {"city": review.get("suggested_city", ""), "country": review.get("suggested_country", "")}
             for audit in audits:
@@ -135,6 +143,12 @@ def build_report(papers, markers, mappings, institutions, locations, reviews, ex
             add(paper, mapping, geography, review["review_status"] + "/" + clean(review.get("coordinate_status")), "ACTIONABLE", "explicit_location_review", reason)
         elif review.get("review_status") in {"ignore", "excluded"} and reason and not matching:
             add(paper, mapping, {}, review["review_status"], "NON_GEOGRAPHIC", "explicit_location_review", reason)
+        elif (
+            not clean(mapping.get("location_id"))
+            and not location
+            and not matching
+        ):
+            add(paper, mapping, {}, "location_unresolved", "EXCLUDED", "confirmed_location_required", "The affiliation remains visible in paper details, but no marker is eligible until a confirmed location with authoritative coordinates exists.")
         else:
             add(paper, mapping, location, review.get("review_status", ""), "ERROR", "curated_mapping", "Selected location is missing/ambiguous, export differs or is absent, or precise actionable review is missing.")
 
