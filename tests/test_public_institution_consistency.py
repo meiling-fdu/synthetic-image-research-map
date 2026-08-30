@@ -8,7 +8,7 @@ import pytest
 from scripts.audit_public_institution_consistency import audit_consistency
 from scripts.curated_export import (
     PaperIdentityCache, PaperIdentityIndex, enforce_affiliation_source_precedence,
-    load_curated_mappings,
+    curated_affiliation_removal_reason, load_curated_mappings,
 )
 from scripts.export_public_preview import (
     add_paper_institution_search_ids, add_public_detail_fields, apply_ordered_paper_location_summaries,
@@ -52,6 +52,31 @@ def test_active_set_replaces_historical_subsets_but_preserves_multiaffiliations(
     apply_ordered_paper_location_summaries([paper], markers)
     assert [a["affiliation_indices"] for a in paper["authors"]] == [[1, 2], [1]]
     assert audit_consistency([paper], markers, mappings)["mismatch_count"] == 0
+
+
+def test_coalesced_same_site_marker_matches_union_of_active_mapping_authors():
+    paper = {"paper_id": "paper:coalesced", "title": "Example", "year": 2025}
+    mappings = [
+        {
+            **paper,
+            "mapping_id": f"mapping:{index}",
+            "mapping_status": "active",
+            "institution": "Example University",
+            "institution_id": "institution:example",
+            "location_id": "location:example",
+            "institution_authors": author,
+        }
+        for index, author in enumerate(("Ada Author", "Ben Author"), 1)
+    ]
+    marker = {
+        **paper,
+        "mapping_id": "mapping:1",
+        "institution_id": "institution:example",
+        "location_id": "location:example",
+        "institution_authors": ["Ada Author", "Ben Author"],
+    }
+
+    assert curated_affiliation_removal_reason(marker, mappings) == ""
 
 
 @pytest.mark.parametrize("status", ["excluded", "inactive", "superseded"])

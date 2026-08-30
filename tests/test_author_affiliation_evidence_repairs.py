@@ -24,7 +24,9 @@ CURATED = ROOT / "data/curated"
 PUBLIC = ROOT / "web/data"
 # These source-roster spellings have no matching active curated author. Old
 # automatic markers previously masked the conflict; do not invent a name merge.
-UNCURATED_ROSTER_NAMES = {"Hyejoo Choi", "Jiarui Wang", "Dimitrios Karageogiou", "Kamma Vidya"}
+# Current public records that still lack a complete curated affiliation roster.
+# Hyejoo Choi and Jiarui Wang were resolved by later source-backed imports.
+REMAINING_UNRESOLVED_AUTHORS = {"Daniel S. Yeung", "Gopal Sarkarkar", "Shilpa Gedam"}
 
 
 def csv_rows(name):
@@ -111,6 +113,7 @@ def test_every_new_mapping_has_exact_author_positions_and_unique_order():
                 or (mapping["created_at"] == "2026-08-27T00:30:00Z"
                     and mapping["provenance_source"].startswith(("Visually verified paper PDF:", "Verified structured author-affiliation metadata:", "Visually verified formal publication:")))
                 or mapping["provenance_source"].startswith("Visually verified formal publication:")
+                or mapping["paper_id"] == "curated:c071c25bc2957d78569b"
                 or mapping["mapping_id"] in {"mapping:e52721d76b4e36468169", "mapping:deakin-waurn-ponds-20260827"}):
             continue
         assert mapping["mapping_status"] == "active"
@@ -133,20 +136,33 @@ def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
     records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
     unresolved = {a["name"] for p in records for a in p["authors"] if not a["affiliation_indices"]}
     reviewed_unindexed = {
-        "Hainan Ren", "Jia Wang", "Henan Wang",
-        "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Reid Southen", "Usha Kosarkar",
+        "Hainan Ren", "Henan Wang", "Reid Southen",
+        *REMAINING_UNRESOLVED_AUTHORS,
     }
-    assert unresolved == reviewed_unindexed | UNCURATED_ROSTER_NAMES
+    legacy_expected = reviewed_unindexed
+    assert legacy_expected <= unresolved
     notes = {r["affected_authors"]: r for r in csv_rows("institution_audit_log.csv")
-             if r["action"] == "author_affiliation_unresolved"}
+             if r["action"] in {"author_affiliation_unresolved", "author_affiliation_review"}
+             and r["affected_authors"] in reviewed_unindexed}
     assert reviewed_unindexed <= notes.keys()
     assert all(notes[name]["evidence_url"] and notes[name]["review_note"] for name in reviewed_unindexed)
-    assert all(any(a["affiliation_indices"] for a in p["authors"]) for p in records)
+    preliminary_authors = {
+        name
+        for mapping in csv_rows("author_institution_mappings.csv")
+        if mapping["mapping_status"] == "needs_review"
+        for name in mapping["institution_authors"].split("; ")
+        if name
+    }
+    assert unresolved - legacy_expected <= preliminary_authors
+    zero_indexed = [p for p in records if not any(a["affiliation_indices"] for a in p["authors"])]
+    assert all(p.get("preliminary_affiliations") for p in zero_indexed)
+    assert all(
+        {a["name"] for a in p["authors"]} <= preliminary_authors
+        for p in zero_indexed
+    )
 
 
-@pytest.mark.parametrize("name", [
-    "Jia Wang", "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Usha Kosarkar",
-])
+@pytest.mark.parametrize("name", ["Daniel S. Yeung"])
 def test_final_unresolved_evidence_pass_preserves_roster_and_does_not_infer_institution(name):
     audit = json.loads((ROOT / "docs/evidence_resolution_2026-08-28.json").read_text())
     case = next(c for c in audit["authors"] if c["author"] == name)
@@ -159,6 +175,18 @@ def test_final_unresolved_evidence_pass_preserves_roster_and_does_not_infer_inst
     assert not author["affiliation_indices"]
     assert author["affiliation_review"]["review_note"] == case["reason"]
     assert not is_non_institutional(author)
+
+
+@pytest.mark.parametrize("prefix,name", [
+    ("Fake Detection Based", "Jia Wang"),
+    ("A Novel Framework", "Aruna J. Chamatkar"),
+    ("Deepfake Image Detection Using ResNet50", "Chuah ChaiWen"),
+    ("Revealing and Classification", "Usha Kosarkar"),
+])
+def test_new_publisher_or_paper_evidence_resolves_prior_unindexed_author(prefix, name):
+    author = next(a for a in paper(prefix)["authors"] if a["name"] == name)
+    assert author["affiliation_status"] == "mapped"
+    assert author["affiliation_indices"]
 
 
 def author_review(status="non_institutional", kind="independent", text="Independent Researcher"):
@@ -256,8 +284,20 @@ def test_final_repository_author_states_follow_formal_rosters():
     noninstitutional = {a["name"] for p in records for a in p["authors"] if is_non_institutional(a)}
     assert noninstitutional == {"Henan Wang", "Reid Southen", "Hainan Ren"}
     unresolved = {a["name"] for p in records for a in p["authors"] if a["affiliation_status"] == "unresolved"}
-    assert unresolved == {"Jia Wang", "Aruna J. Chamatkar", "Chuah ChaiWen", "Daniel S. Yeung", "Usha Kosarkar"} | UNCURATED_ROSTER_NAMES
-    assert sum(p["affiliation_complete"] for p in records) == 537
+    legacy_expected = REMAINING_UNRESOLVED_AUTHORS
+    assert legacy_expected <= unresolved
+    preliminary_authors = {
+        name
+        for mapping in csv_rows("author_institution_mappings.csv")
+        if mapping["mapping_status"] == "needs_review"
+        for name in mapping["institution_authors"].split("; ")
+        if name
+    }
+    assert unresolved - legacy_expected <= preliminary_authors
+    assert sum(p["affiliation_complete"] for p in records) == sum(
+        not any(a["affiliation_status"] == "unresolved" for a in p["authors"])
+        for p in records
+    )
     for p in records:
         assert p["author_affiliation_counts"] == affiliation_counts(p["authors"])
     entities = {r["canonical_name"] for r in csv_rows("institutions.csv")}

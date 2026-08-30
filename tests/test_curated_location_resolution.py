@@ -134,6 +134,40 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "Rensselaer Polytechnic Institute",
         )
 
+    def test_export_location_review_sync_matches_suggested_location_fields(self):
+        reviews = [
+            {
+                "institution": "Federal Office for Information Security",
+                "canonical_institution_name": "Federal Office for Information Security",
+                "institution_id": "institution:bsi",
+                "related_paper_id": "paper:hybrid",
+                "suggested_city": "Saarbrücken",
+                "suggested_country": "Germany",
+                "institution_authors": "Dominik Alveen",
+                "evidence_source": "Official institution office page",
+            }
+        ]
+        mapping = {
+            "paper_id": "paper:hybrid",
+            "title": "A Hybrid CLIP-Diffusion Architecture",
+            "institution": "Federal Office for Information Security",
+            "institution_id": "institution:bsi",
+            "institution_authors": "Anna Wilhelm",
+        }
+
+        result = _upsert_location_review(
+            reviews, mapping, coordinate_status="missing"
+        )
+
+        self.assertEqual(result, "updated")
+        self.assertEqual(len(reviews), 1)
+        self.assertEqual(
+            reviews[0]["institution_authors"], "Dominik Alveen; Anna Wilhelm"
+        )
+        self.assertEqual(
+            reviews[0]["evidence_source"], "Official institution office page"
+        )
+
     def test_export_location_review_sync_rejects_blank_canonical_id(self):
         with self.assertRaisesRegex(
             CuratedExportError, "requires a canonical institution_id"

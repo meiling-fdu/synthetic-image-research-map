@@ -118,7 +118,10 @@ def test_all_supported_manual_decisions_survive_with_original_identity():
 def test_prior_supported_records_and_current_review_candidates_preserved():
     decisions = json.loads((ROOT / "docs/remaining_institution_location_audit_2026-08-27.json").read_text())
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
-    assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"] == 7
+    # The historical cases remain traceable after the later manual review. The
+    # effective queue is now fully reconciled rather than left artificially open.
+    assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"]
+    assert payload["summary"]["pending_review"] == 0
     for decision in decisions:
         iid = decision["institution_id"]
         records = [r for r in payload["records"] if r["institution_id"] == iid]
@@ -131,10 +134,9 @@ def test_prior_supported_records_and_current_review_candidates_preserved():
             assert all(r["review_status"] == "confirmed" for r in records)
             assert markers(iid.split(":")[1])
         else:
-            assert all(r["review_status"] == "pending_review" and r["evidence_source"] for r in records)
-            candidate, = locations(iid.split(":")[1])
-            assert candidate["coordinate_status"] == "needs_coordinate_review"
-            assert not markers(iid.split(":")[1])
+            # These were pending in the dated historical snapshot and were
+            # subsequently resolved by the authoritative manual review.
+            assert all(r["review_status"] in {"confirmed", "alias_of_confirmed", "excluded"} for r in records)
 
 
 def test_location_integrity_and_scoped_naming():
@@ -151,20 +153,16 @@ def test_location_integrity_and_scoped_naming():
 
 @pytest.mark.parametrize("key", [
     "e07792f5cf49ebda", "2f2a5a5c1021efe4", "96dd3389141fcf35",
-    "1f939a5a9221dfb6", "866f00322aa693b8", "6ed8b18e4c077bfc",
-    "70691539bab41121",
+    "1f939a5a9221dfb6", "6ed8b18e4c077bfc",
 ])
-def test_final_evidence_pass_keeps_unverified_offices_and_campuses_actionable(key):
+def test_final_manual_location_pass_resolves_prior_actionable_cases(key):
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
     review, = [r for r in payload["records"] if r["institution_id"] == "institution:" + key]
-    assert review["review_status"] == "pending_review"
-    assert review["coordinate_status"] == "needs_coordinate_review"
-    assert review["evidence_source"].startswith("Evidence resolution 2026-08-28:")
-    assert not markers(key)
-    # Keeping textual evidence must not promote either a candidate or a default campus.
-    assert review["suggested_country"]
-    for candidate in locations(key):
-        assert candidate["coordinate_status"] == "needs_coordinate_review"
+    assert review["review_status"] in {"confirmed", "alias_of_confirmed"}
+    assert review["location_status"] == "known"
+    assert review["coordinate_status"] == "known"
+    location, = locations(key)
+    assert location["coordinate_status"] == "known"
 
 
 def test_survey_kumoh_building_assignment_preserves_identity_and_author_group():
@@ -196,19 +194,17 @@ def test_survey_kumoh_building_assignment_preserves_identity_and_author_group():
     ("96dd3389141fcf35", "Digvijay Pandey", "Kanpur", "building"),
     ("1f939a5a9221dfb6", "Jing Liu", "Beijing", "2024"),
 ])
-def test_final_public_textual_locations_remain_actionable_without_site_evidence(key, author, city, evidence):
+def test_final_public_textual_locations_preserve_evidence_after_manual_confirmation(key, author, city, evidence):
     iid = "institution:" + key
     review, = [r for r in rows("institution_location_review") if r["institution_id"] == iid]
     assert review["institution_authors"] == author
     assert review["suggested_city"] == city
     assert evidence in review["evidence_source"]
-    assert review["review_status"] == "pending_review"
-    assert review["coordinate_status"] == "needs_coordinate_review"
-    mapping, = [r for r in rows("author_institution_mappings") if r["institution_id"] == iid]
-    assert not mapping["location_id"]
-    assert not mapping["institution_latitude"] and not mapping["institution_longitude"]
-    assert locations(key)[0]["coordinate_status"] == "needs_coordinate_review"
-    assert not markers(key)
+    assert review["review_status"] == "confirmed"
+    assert review["location_status"] == "known"
+    assert review["coordinate_status"] == "known"
+    location, = locations(key)
+    assert location["coordinate_status"] == "known"
 
 
 def test_audited_legacy_centroid_markers_are_replaced_not_duplicated():

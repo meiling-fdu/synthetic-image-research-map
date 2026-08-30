@@ -29,7 +29,9 @@ try:
         canonical_english_location_fields,
         country_code_for_name,
     )
-    from .paper_exclusions import build_active_exclusion_index, record_is_excluded
+    from .paper_exclusions import (
+        all_identity_keys, build_active_exclusion_index, record_is_excluded,
+    )
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -45,7 +47,9 @@ except ImportError:
         canonical_english_location_fields,
         country_code_for_name,
     )
-    from paper_exclusions import build_active_exclusion_index, record_is_excluded
+    from paper_exclusions import (
+        all_identity_keys, build_active_exclusion_index, record_is_excluded,
+    )
 
 
 DEFAULT_LOCATION_REVIEW_PATH = CURATED_DATA_DIR / "institution_location_review.csv"
@@ -1005,26 +1009,23 @@ def location_review_payload(
             normalize_institution_name(mapping.get("institution"))
         ].append(mapping)
     reviewed_mapping_keys = {
-        (
-            clean(row.get("institution_id")),
-            clean(row.get("related_paper_id"))
-            or clean(row.get("doi"))
-            or f"{clean(row.get('title'))}|{clean(row.get('year'))}",
-        )
+        (clean(row.get("institution_id")), identity_key)
         for row in reviews
+        for identity_key in all_identity_keys({
+            **row,
+            "paper_id": clean(row.get("related_paper_id")),
+        })
     }
     for mapping in eligible_mappings:
         institution_id = clean(mapping.get("institution_id"))
         entity = institution_by_id.get(institution_id, {})
         if clean(entity.get("institution_status")) != "active":
             continue
-        mapping_key = (
-            institution_id,
-            clean(mapping.get("paper_id"))
-            or clean(mapping.get("doi"))
-            or f"{clean(mapping.get('title'))}|{clean(mapping.get('year'))}",
-        )
-        if mapping_key in reviewed_mapping_keys:
+        mapping_identity_keys = {
+            (institution_id, identity_key)
+            for identity_key in all_identity_keys(mapping)
+        }
+        if mapping_identity_keys & reviewed_mapping_keys:
             continue
         known = by_institution_id.get(institution_id, [])
         if any(clean(row.get("lat")) and clean(row.get("lon")) for row in known):
@@ -1045,7 +1046,7 @@ def location_review_payload(
             "coordinate_status": "missing",
             "derived_from_active_mapping": "true",
         })
-        reviewed_mapping_keys.add(mapping_key)
+        reviewed_mapping_keys.update(mapping_identity_keys)
     for row in reviews:
         institution_id = clean(row.get("institution_id"))
         entity = institution_by_id.get(institution_id, {})

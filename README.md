@@ -12,15 +12,28 @@ An interactive academic world map for exploring papers, researchers, and institu
 - Make automatic classifications and uncertain records easy to review and correct manually.
 - Exclude adjacent attribution fields and synthetic-data applications that do not detect or source-attribute generated images.
 
-## Roadmap
+## Current capabilities
 
-1. Improve literature search coverage for synthetic image detection and source attribution.
-2. Add bibliographic sources such as Semantic Scholar and Crossref.
-3. Improve institution resolution and confidence scoring.
-4. Establish a manual validation workflow for relevance, labels, affiliations, and coordinates.
-5. Add a year-based timeline visualization.
-6. Add country- and institution-level statistics.
-7. Add citation and data-export support.
+- A maintained curated paper registry alongside separately preserved automatic candidate metadata.
+- An Interactive Curation Console for paper metadata, scope decisions, author–affiliation matrices, institution canonicalization, location review, exclusions, and controlled regeneration.
+- Evidence-preserving author order, multiple affiliations per author, raw affiliation text, canonical institution identities, campus-specific locations, and explicit unresolved states.
+- A static Leaflet map plus searchable paper and institution views, paper details, publication-year range filtering and charts, country filters, institution statistics, canonical venue filters, and deep links.
+- DOI, arXiv, proceedings, and publisher links where verified, plus filtered CSV export.
+- Key-paper coverage, missing-author-mapping, marker-blocker, venue, institution, location, public-preview, shrinkage, and source-completeness audits.
+- A guarded refresh/publish workflow that regenerates public JSON from authoritative data and validates cross-layer consistency before publication.
+
+## Project status
+
+The repository contains automatically collected candidate metadata, evidence-review queues, and a separately maintained curated database. A `confirmed` paper is intended to mean that its bibliographic record has been reviewed against sufficient evidence; unresolved or conflicting records remain explicitly `needs_review`. Paper review status is independent from map eligibility: the bibliography may include a paper without a marker, while a source-backed relationship can appear on the map only when its institution identity and location satisfy the export rules. The bibliography is actively maintained but is not claimed to be exhaustive.
+
+## Remaining roadmap
+
+1. Continue evidence-backed completion of bibliographic metadata and historical author–affiliation matrices.
+2. Expand literature coverage systematically across venues and scholarly sources without treating any single API as ground truth.
+3. Strengthen field-level provenance reporting for papers, institution identities, aliases, and campus coordinates.
+4. Add stricter automated integrity checks for review-state transitions, stale generated relationships, and Admin/public/export agreement.
+5. Develop richer temporal, geographic, venue, dataset, benchmark, and research-theme analytics.
+6. Improve reproducibility documentation, release checkpoints, and contributor review procedures.
 
 ## Repository Structure
 
@@ -34,8 +47,8 @@ An interactive academic world map for exploring papers, researchers, and institu
 |   |-- manual/        # Human-reviewed corrections and overrides
 |   `-- curated/       # Maintainer-confirmed paper and mapping database
 |-- scripts/           # Python collection and preprocessing scripts
-|-- web/               # Static Leaflet.js prototype
-|   |-- index.html     # Prototype page and controls
+|-- web/               # Static Leaflet.js application
+|   |-- index.html     # Public page, filters, statistics, and results
 |   |-- style.css      # Responsive interface styles
 |   |-- app.js         # Map rendering, filters, and summary counts
 |   `-- data/          # Static datasets exported for the website
@@ -64,9 +77,9 @@ Durable maintainer decisions live in `data/curated/*.csv`. Files in `data/manual
 
 Maintainers can also use the local browser's **Delete / Scope Review** workflow to record durable exclusions for out-of-scope papers. Decisions are stored in `data/curated/paper_exclusions.csv`; the public-preview exporter applies active exclusions without modifying OpenAlex-derived processed CSV files. The deployed public site remains read-only.
 
-The public-preview exporter merges eligible curated papers into the searchable paper list and turns active curated mappings into markers only when an exact institution match has one unique valid location. Confirmed records in `data/curated/institution_locations.csv` have location priority; when none exists, trusted active entries in `data/processed/institution_resolution_cache.json` may supply a clearly noted fallback without modifying the curated CSV. Missing or ambiguous locations remain marker-free and enter the curated location-review queue. Header-only curated files leave preview output unchanged.
+The public-preview exporter merges eligible curated papers into the searchable paper list. A map relationship requires source-backed affiliation evidence, an active canonical institution identity, and an explicitly confirmed location with valid coordinates; unresolved identities and locations remain marker-free and reviewable. A paper can remain `needs_review` for an unrelated bibliographic question without losing an otherwise eligible relationship. Generated outputs are never the place to repair a source-of-truth problem.
 
-## Data collection prototype
+## Candidate data collection
 
 The standard-library OpenAlex search script can preview its default candidate-paper queries without making API requests or writing files. The defaults are grouped into detection and source attribution, with explicit generated-image wording in every query:
 

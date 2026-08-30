@@ -15,9 +15,12 @@ from tests.baseline_expectations import (
     INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS,
     PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS,
     PUBLICATION_TYPE_TOTALS,
+    RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS,
     RELEASE_PUBLICATION_TYPE_TOTALS,
+    RELEASE_TASK_TOTALS,
     PUBLIC_PAPERS_WITHOUT_MAP,
     TASK_TOTALS,
+    RELEASE_REPOSITORY_BASELINE,
 )
 
 
@@ -86,19 +89,19 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         )
         self.assertEqual(artifact["checkpoint"], "2026-08-24-stable-release")
         counts = artifact["dataset_counts"]
-        for name, expected in CURRENT_REPOSITORY_BASELINE.items():
+        for name, expected in RELEASE_REPOSITORY_BASELINE.items():
             with self.subTest(name=name):
                 self.assertEqual(counts[name], expected)
         self.assertEqual(
             artifact["distribution_counts"]["institution_status"],
-            CANONICAL_INSTITUTION_STATUS_TOTALS,
+            RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS,
         )
         self.assertEqual(
             artifact["distribution_counts"]["publication_type"],
             RELEASE_PUBLICATION_TYPE_TOTALS,
         )
         self.assertEqual(
-            artifact["distribution_counts"]["task"], TASK_TOTALS
+            artifact["distribution_counts"]["task"], RELEASE_TASK_TOTALS
         )
 
     def test_historical_public_export_baseline_is_an_explicit_reviewed_snapshot(self):

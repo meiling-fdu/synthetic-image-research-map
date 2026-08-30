@@ -7,6 +7,21 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
+    "curated_papers": 373,
+    "public_unique_papers": 574,
+    "public_map_source_papers": 569,
+    "public_papers_with_map": 568,
+    "public_papers_without_map": 6,
+    "public_map_relationships": 1304,
+    "canonical_institution_rows": 679,
+    "active_canonical_institutions": 667,
+    "inactive_or_merged_institutions": 12,
+    "author_institution_mappings": 1026,
+    "institution_hierarchy_edges": 8,
+    "institution_aliases": 85,
+}
+
+RELEASE_REPOSITORY_BASELINE = {
     "curated_papers": 342,
     "public_unique_papers": 546,
     "public_map_source_papers": 540,
@@ -22,31 +37,37 @@ CURRENT_REPOSITORY_BASELINE = {
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
+    "active": 667,
+    "merged": 6,
+    "ignored": 6,
+}
+
+RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
     "active": 650,
     "merged": 6,
     "ignored": 6,
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 474,
-    "research_unit": 67,
-    "company": 72,
-    "other": 49,
+    "university": 482,
+    "research_unit": 69,
+    "company": 73,
+    "other": 55,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 468,
-    "research_unit": 65,
-    "company": 70,
-    "other": 47,
+    "university": 476,
+    "research_unit": 67,
+    "company": 71,
+    "other": 53,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
     # 2026-08-28: active curated affiliations only, including paper-only rows.
-    "university": 513,
-    "research_unit": 103,
-    "company": 91,
-    "other": 54,
+    "university": 539,
+    "research_unit": 106,
+    "company": 98,
+    "other": 55,
 }
 
 # Historical release artifacts are immutable; current effective venues have
@@ -54,13 +75,19 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 326,
-    "journal": 158,
-    "preprint": 61,
+    "conference": 350,
+    "journal": 161,
+    "preprint": 62,
     "book": 1,
 }
 
 TASK_TOTALS = {
+    "detection": 499,
+    "source_attribution": 46,
+    "detection_and_source_attribution": 29,
+}
+
+RELEASE_TASK_TOTALS = {
     "detection": 471,
     "source_attribution": 46,
     "detection_and_source_attribution": 29,
@@ -68,8 +95,6 @@ TASK_TOTALS = {
 
 PUBLIC_PAPERS_WITHOUT_MAP = {
     "Diffusion-Driven Forgery Detection: Distilling Latent Features for Generalized Image Forensics":
-        "missing_affiliation_rows",
-    "Fake Detection Based on Balanced Attention and Information Guidance for Collaborative Image Processing Tasks":
         "missing_affiliation_rows",
     "FALCON-Net: Feature Aggregation of Local Patterns for AI-Generated Image Detection":
         "missing_affiliation_rows",

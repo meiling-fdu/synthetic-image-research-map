@@ -40,7 +40,9 @@ try:
     from .name_matching import canonical_name_key, names_match
     from .curated_papers import normalize_author_names
     from .paper_links import resolve_public_links
-    from .public_relationships import ReviewedRelationshipResolver, normalized_author_set
+    from .public_relationships import (
+        ReviewedRelationshipResolver, canonical_author_names, normalized_author_set,
+    )
 except ImportError:
     from curated_schema import (
         AUTHOR_INSTITUTION_MAPPING_COLUMNS,
@@ -67,7 +69,9 @@ except ImportError:
     from name_matching import canonical_name_key, names_match
     from curated_papers import normalize_author_names
     from paper_links import resolve_public_links
-    from public_relationships import ReviewedRelationshipResolver, normalized_author_set
+    from public_relationships import (
+        ReviewedRelationshipResolver, canonical_author_names, normalized_author_set,
+    )
 
 
 DEFAULT_CURATED_PAPERS_PATH = CURATED_DATA_DIR / "papers.csv"
@@ -637,10 +641,15 @@ def _institution_location_keys(record: Mapping[str, Any]) -> List[str]:
     if location_id:
         keys.append(f"location_id:{location_id.casefold()}")
     institution_id = clean(record.get("institution_id"))
-    city = clean(record.get("city") or record.get("institution_city")).casefold()
+    city = clean(
+        record.get("city")
+        or record.get("institution_city")
+        or record.get("suggested_city")
+    ).casefold()
     country = clean(
         record.get("country")
         or record.get("institution_country")
+        or record.get("suggested_country")
         or record.get("country_code")
     ).casefold()
     if institution_id:
@@ -652,6 +661,7 @@ def _institution_location_keys(record: Mapping[str, Any]) -> List[str]:
     institution = normalize_institution(
         record.get("normalized_institution")
         or record.get("institution")
+        or record.get("canonical_institution_name")
     )
     if institution:
         if city and country:
@@ -1250,6 +1260,33 @@ def curated_affiliation_removal_reason(
                  or clean(marker.get("location_id")) == clean(mapping.get("location_id")))
         ):
             return ""
+    # Public detail enrichment intentionally coalesces authors from separate
+    # affiliation rows when they resolve to the same institution and site.
+    # Accept that aggregate marker when its authors are exactly the union of
+    # the active rows represented at that institution/location.
+    marker_institution_id = clean(marker.get("institution_id"))
+    marker_location_id = clean(marker.get("location_id"))
+    coalesced = [
+        mapping for mapping in eligible
+        if (clean(mapping.get("institution_id")) or stable_institution_id(
+            mapping.get("institution")
+        )) == marker_institution_id
+        and (not clean(mapping.get("location_id"))
+             or clean(mapping.get("location_id")) == marker_location_id)
+    ]
+    coalesced_authors = normalized_author_set([
+        author
+        for mapping in coalesced
+        for author in canonical_author_names(mapping.get("institution_authors"))
+    ])
+    if (
+        coalesced
+        and clean(marker.get("mapping_id")) in {
+            clean(mapping.get("mapping_id")) for mapping in coalesced
+        }
+        and normalized_author_set(marker.get("institution_authors")) == coalesced_authors
+    ):
+        return ""
     return "outside effective active curated mappings: " + ", ".join(
         clean(row.get("mapping_id")) for row in eligible
     )
@@ -1412,6 +1449,23 @@ def _queue_key(record: Mapping[str, Any]) -> Tuple[str, str]:
     return identity, _preferred_institution_location_key(record)
 
 
+def _queue_keys(record: Mapping[str, Any]) -> List[Tuple[str, str]]:
+    """Return specific and fallback keys shared by mapping and review schemas."""
+    identity, _ = _queue_key(record)
+    location_keys = _institution_location_keys(record)
+    return [(identity, key) for key in location_keys] or [(identity, "")]
+
+
+def _indexed_review_row(
+    row_index: Mapping[Tuple[str, str], Dict[str, str]],
+    record: Mapping[str, Any],
+) -> Dict[str, str] | None:
+    return next(
+        (row_index[key] for key in _queue_keys(record) if key in row_index),
+        None,
+    )
+
+
 def _merged_people(left: Any, right: Any) -> str:
     people = []
     seen = set()
@@ -1466,13 +1520,20 @@ def _upsert_location_review(
         "coordinate_status": coordinate_status,
         "updated_at": now,
     }
+    indexed_row = (
+        _indexed_review_row(row_index, mapping)
+        if row_index is not None
+        else None
+    )
     matching_rows = (
-        [row_index[key]]
-        if row_index is not None and key in row_index
-        else [] if row_index is not None else rows
+        [indexed_row]
+        if indexed_row is not None
+        else ([] if row_index is not None else rows)
     )
     for row in matching_rows:
-        if row_index is None and _queue_key(row) != key:
+        if row_index is None and not (
+            set(_queue_keys(row)) & set(_queue_keys(mapping))
+        ):
             continue
         row["institution_authors"] = _merged_people(
             row.get("institution_authors"), values["institution_authors"]
@@ -1488,7 +1549,8 @@ def _upsert_location_review(
     row = {**values, "created_at": now}
     rows.append(row)
     if row_index is not None:
-        row_index.setdefault(key, row)
+        for row_key in _queue_keys(row):
+            row_index.setdefault(row_key, row)
     return "created"
 
 
@@ -1499,13 +1561,20 @@ def _mark_location_known(
     row_index: Dict[Tuple[str, str], Dict[str, str]] | None = None,
 ) -> bool:
     key = _queue_key(mapping)
+    indexed_row = (
+        _indexed_review_row(row_index, mapping)
+        if row_index is not None
+        else None
+    )
     matching_rows = (
-        [row_index[key]]
-        if row_index is not None and key in row_index
-        else [] if row_index is not None else rows
+        [indexed_row]
+        if indexed_row is not None
+        else ([] if row_index is not None else rows)
     )
     for row in matching_rows:
-        if row_index is not None or _queue_key(row) == key:
+        if row_index is not None or (
+            set(_queue_keys(row)) & set(_queue_keys(mapping))
+        ):
             if (
                 clean(row.get("location_status")) == "known"
                 and clean(row.get("coordinate_status")) == "known"
@@ -1585,12 +1654,14 @@ def build_curated_map_records(
     }
     confirmed_institution_ids = _confirmed_institution_ids(institution_records)
     review_status_by_key = {
-        _queue_key(row): clean(row.get("review_status")) or "pending_review"
+        key: clean(row.get("review_status")) or "pending_review"
         for row in review_rows
+        for key in _queue_keys(row)
     }
     review_row_by_key: Dict[Tuple[str, str], Dict[str, str]] = {}
     for row in review_rows:
-        review_row_by_key.setdefault(_queue_key(row), row)
+        for key in _queue_keys(row):
+            review_row_by_key.setdefault(key, row)
     non_exportable_statuses = {
         "pending_review",
         "ambiguous",
@@ -1682,7 +1753,14 @@ def build_curated_map_records(
         queue_status = (
             "alias_of_confirmed"
             if canonical_institution
-            else review_status_by_key.get(_queue_key(mapping))
+            else next(
+                (
+                    review_status_by_key[key]
+                    for key in _queue_keys(mapping)
+                    if key in review_status_by_key
+                ),
+                None,
+            )
         )
         if queue_status in {"excluded", "ignore"}:
             skipped_status += 1

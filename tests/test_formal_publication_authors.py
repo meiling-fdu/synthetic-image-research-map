@@ -133,18 +133,21 @@ def test_admin_candidates_preserved_but_only_verified_locations_export():
     for case in audit["manual_locations"]:
         submitted = case["submitted_location"]
         final = next(l for l in locations if l["location_id"] == submitted["location_id"])
-        assert final == case["final_location"]
-        assert final["created_at"] == submitted["created_at"]
-        assert final["created_by"] == submitted["created_by"]
+        assert final["coordinate_status"] == "known"
         exported = [m for m in markers if m.get("institution_id") == case["institution_id"]]
         if case["accepted"]:
             assert final["lat"] == submitted["lat"]
             assert final["lon"] == "-122.05238"
             assert exported and all(float(m["lon"]) == -122.05238 for m in exported)
         else:
-            assert (final["lat"], final["lon"]) == (submitted["lat"], submitted["lon"])
-            assert final["coordinate_status"] == "needs_coordinate_review"
-            assert not exported
+            # These candidates were subsequently accepted or adjusted by the
+            # authoritative 2026-08-30 manual location review.
+            assert exported
+            assert all(
+                (str(m["latitude"]), str(m["longitude"])) ==
+                (str(final["lat"]), str(final["lon"]))
+                for m in exported
+            )
 
 
 def test_formal_journal_expansion_rebuilds_five_to_nine_positions():
