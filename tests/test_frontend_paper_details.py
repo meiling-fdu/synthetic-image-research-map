@@ -241,6 +241,33 @@ process.stdout.write(JSON.stringify(Object.fromEntries(
             ".paper-details-links {", 1
         )[1].split("}", 1)[0])
 
+    def test_details_vertical_rhythm_is_compact_and_controls_stay_accessible(self):
+        details = self.css.split(".paper-details {", 1)[1].split("}", 1)[0]
+        heading = self.css.split(".paper-details-heading {", 1)[1].split("}", 1)[0]
+        rows = self.css.split(".institution-paper-row {", 1)[1].split("}", 1)[0]
+        affiliations = self.css.split(
+            ".paper-details-affiliations {", 1
+        )[1].split("}", 1)[0]
+        affiliation_items = self.css.split(
+            ".paper-details-affiliations li {", 1
+        )[1].split("}", 1)[0]
+        close = self.css.split(".paper-details-close {", 1)[1].split("}", 1)[0]
+        actions = self.css.split(
+            ".copy-paper-link-button,\n.report-paper-issue-link {", 1
+        )[1].split("}", 1)[0]
+
+        self.assertIn("--details-gap-xs", details)
+        self.assertIn("--details-gap-sm", details)
+        self.assertIn("--details-gap-md", details)
+        self.assertIn("margin: 0 -16px var(--details-gap-sm)", heading)
+        self.assertIn("margin: 0", rows)
+        self.assertNotIn("margin-top: 16px", rows)
+        self.assertIn("gap: var(--details-gap-xs)", affiliations)
+        self.assertIn("min-width: 0", affiliation_items)
+        self.assertIn("width: 32px", close)
+        self.assertIn("height: 32px", close)
+        self.assertIn("min-height: 44px", actions)
+
     def test_external_links_require_valid_urls_and_have_safe_labels(self):
         links = self.app.split(
             "function paperExternalLinks(record) {", 1
