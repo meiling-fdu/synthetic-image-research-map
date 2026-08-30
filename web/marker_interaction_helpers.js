@@ -9,6 +9,37 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, () => {
   const boundMarkers = new WeakSet();
 
+  function createHoverIntentController({ delay = 125, setTimer, clearTimer } = {}) {
+    const scheduleTimer = setTimer || ((callback, timeout) => setTimeout(callback, timeout));
+    const cancelTimer = clearTimer || ((timer) => clearTimeout(timer));
+    let timer = null;
+    let generation = 0;
+
+    function cancel() {
+      generation += 1;
+      if (timer !== null) cancelTimer(timer);
+      timer = null;
+    }
+
+    function schedule(callback) {
+      cancel();
+      const scheduledGeneration = generation;
+      timer = scheduleTimer(() => {
+        timer = null;
+        if (scheduledGeneration !== generation) return;
+        callback();
+      }, delay);
+      return scheduledGeneration;
+    }
+
+    function runNow(callback) {
+      cancel();
+      callback();
+    }
+
+    return { cancel, runNow, schedule };
+  }
+
   function bindMarkerHandlers(marker, handlers) {
     if (boundMarkers.has(marker)) {
       return false;
@@ -44,5 +75,5 @@
     return true;
   }
 
-  return { bindMarkerHandlers };
+  return { bindMarkerHandlers, createHoverIntentController };
 });

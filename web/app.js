@@ -57,7 +57,7 @@ const preservedDatasetParameter = ["preview", "openalex"].includes(requestedData
 const URL_STATE_PARAMETER_ORDER = [
   "keyword", "task", "paper_type", "publication_type", "venue", "country",
   "institution_type", "version", "year_start", "year_end", "institution",
-  "institution_label", "paper", "view", "sort",
+  "institution_label", "marker", "paper", "view", "sort",
 ];
 const PAPER_ISSUE_URL = "https://github.com/meiling-fdu/synthetic-image-research-map/issues/new";
 const TILE_BOUNDS = L.latLngBounds([[-85, -180], [85, 180]]);
@@ -210,6 +210,7 @@ const copyViewLinkStatus = document.querySelector("#copy-view-link-status");
 const exportCsvButton = document.querySelector("#export-csv");
 const resultsViewButtons = document.querySelectorAll("[data-results-view]");
 const paperDetails = document.querySelector("#paper-details");
+const paperDetailsHeading = document.querySelector("#paper-details-heading");
 const paperDetailsContent = document.querySelector("#paper-details-content");
 const closePaperDetailsButton = document.querySelector("#close-paper-details");
 const paperDetailsPinStatus = document.querySelector("#paper-details-pin-status");
@@ -266,13 +267,15 @@ const RESULTS_RESIZE_DEBOUNCE_MS = 100;
 const RESULTS_INITIAL_VIEWPORTS = 2.25;
 const RESULTS_OBSERVER_MARGIN = "125% 0px";
 const interactionState = {
-  hoveredMarkerId: null,
-  selectedMarkerId: null,
-  detailsSource: null,
-  isPointerInsideDetails: false,
-  hovered: null,
-  selected: null,
+  selectedPaperId: null,
+  contextualInstitutionId: null,
+  pinnedMapMarkerId: null,
+  mapParentMarkerId: null,
+  detailMode: "empty",
+  selectionSource: null,
+  transientHover: null,
 };
+const markerHoverIntent = MarkerInteractionHelpers.createHoverIntentController({ delay: 125 });
 let activeInstitutionTooltipMarker = null;
 
 const supportsMarkerHover = window.matchMedia?.(
@@ -599,14 +602,7 @@ function normalizePaperDetailsRecord(record, context = {}) {
         country: record?.country || "",
         region: record?.region || "",
       };
-  const currentIdentity = currentInstitution.name
-    ? affiliationIdentity({
-        institution: currentInstitution.name,
-        institution_id: currentInstitution.institution_id,
-        canonical_institution_name: currentInstitution.canonical_name,
-        abbreviation: currentInstitution.abbreviation,
-      })
-    : "";
+  const currentIdentity = String(context.contextualInstitutionId || "").trim();
   const affiliationsByIdentity = new Map();
   const sourceIndexIdentities = new Map();
 
@@ -980,6 +976,9 @@ function currentViewState() {
     yearMaximum: yearRangeBounds?.maximum ?? null,
     institution: activeInstitutionFilter?.identity || "",
     institutionLabel: activeInstitutionFilter?.label || "",
+    marker: interactionState.detailMode === "institution-papers"
+      ? interactionState.pinnedMapMarkerId || ""
+      : "",
     paper: requestedPaperIdentity,
     view: resultsView,
     sort: sortControl.value,
@@ -987,7 +986,7 @@ function currentViewState() {
 }
 
 function currentFilterConstraintState() {
-  const { view, sort, paper, ...filters } = currentViewState();
+  const { view, sort, marker, paper, ...filters } = currentViewState();
   return filters;
 }
 
@@ -1037,6 +1036,7 @@ function serializeViewState(state, datasetParameter = "") {
       && state.yearEnd !== state.yearMaximum ? String(state.yearEnd) : "",
     institution: state.institution,
     institution_label: state.institution ? state.institutionLabel : "",
+    marker: state.marker,
     paper: state.paper,
     view: state.view !== "institutions" ? state.view : "",
     sort: state.sort !== "year-desc" ? state.sort : "",
@@ -1070,6 +1070,7 @@ function parseViewState(search) {
     yearEnd: yearValue("year_end"),
     institution: params.get("institution") || "",
     institutionLabel: params.get("institution_label") || "",
+    marker: params.get("marker") || "",
     paper: params.get("paper") || "",
     view: params.get("view") || "institutions",
     sort: params.get("sort") || "year-desc",
@@ -1118,6 +1119,14 @@ function setResultsViewState(view) {
 
 function restoreViewState(state) {
   resetFilterValues({ resetSort: true });
+  markerHoverIntent.cancel();
+  interactionState.selectedPaperId = null;
+  interactionState.contextualInstitutionId = null;
+  interactionState.pinnedMapMarkerId = null;
+  interactionState.mapParentMarkerId = null;
+  interactionState.detailMode = "empty";
+  interactionState.selectionSource = null;
+  interactionState.transientHover = null;
   keywordFilter.value = state.keyword;
   setRestoredSelectValue(taskFilter, state.task);
   setRestoredSelectValue(entryTypeFilter, state.paperType);
@@ -1144,6 +1153,11 @@ function restoreViewState(state) {
     };
   }
   requestedPaperIdentity = String(state.paper || "").trim();
+  interactionState.pinnedMapMarkerId = String(state.marker || "").trim() || null;
+  if (interactionState.pinnedMapMarkerId && !requestedPaperIdentity) {
+    interactionState.detailMode = "institution-papers";
+    interactionState.selectionSource = "deep-link";
+  }
   if (selectContainsValue(sortControl, state.sort)) sortControl.value = state.sort;
   setResultsViewState(state.view);
   filterDropdowns.forEach(syncFilterDropdown);
@@ -1345,7 +1359,7 @@ function openInstitutionTooltip(marker, record, paperCount, taskBreakdown) {
 
 function clearActiveInstitutionHover() {
   const marker = activeInstitutionTooltipMarker;
-  if (marker && interactionState.hovered?.marker === marker) {
+  if (marker && interactionState.transientHover?.marker === marker) {
     clearHoverPreview(marker);
     return;
   }
@@ -3524,8 +3538,10 @@ function paperDetailsPublicationHtml(record) {
 }
 
 function paperDetailsHtml(record, relatedEntries) {
+  const contextualInstitutionId = arguments[2] ?? null;
   const normalizedRecord = normalizePaperDetailsRecord(record, {
     relatedRecords: relatedEntries.map(({ record: relatedRecord }) => relatedRecord),
+    contextualInstitutionId,
   });
   const orderedAuthors = recordAuthors(normalizedRecord);
   const affiliations = normalizedRecord.affiliations;
@@ -3630,6 +3646,7 @@ function resultAuthors(authors, label, regionId, visibleLimit = 6) {
 function institutionResultContent(record, relatedEntries = [{ record }], cardId = "institution-result") {
   const normalizedRecord = normalizePaperDetailsRecord(record, {
     relatedRecords: relatedEntries.map(({ record: relatedRecord }) => relatedRecord),
+    contextualInstitutionId: institutionIdentity(record),
   });
   const institution = normalizedRecord.affiliations.find(
     (affiliation) => affiliation.isCurrent,
@@ -3872,6 +3889,27 @@ function interactionResultIndexes(selection, pipeline = resultsPipeline) {
   return indexes;
 }
 
+function persistentResultSelection() {
+  if (interactionState.selectedPaperId) {
+    return {
+      identity: interactionState.selectedPaperId,
+      resultPaperIdentities: [interactionState.selectedPaperId],
+      resultScope: "paper",
+      institutionKey: interactionState.contextualInstitutionId,
+    };
+  }
+  const markerEntry = visibleMarkerEntryByInstitutionKey.get(
+    interactionState.pinnedMapMarkerId,
+  );
+  if (!markerEntry) return null;
+  return {
+    identity: null,
+    resultPaperIdentities: markerPaperIdentities(markerEntry),
+    resultScope: "institution",
+    institutionKey: markerEntry.institutionKey,
+  };
+}
+
 function renderedResultItem(index, generation = resultsRenderGeneration) {
   return resultsList.querySelector(
     `.result-item[data-result-generation="${generation}"][data-result-index="${index}"]`,
@@ -3879,29 +3917,45 @@ function renderedResultItem(index, generation = resultsRenderGeneration) {
 }
 
 function syncResultHighlights() {
-  const selectedIndexes = interactionResultIndexes(interactionState.selected);
-  const hoveredIndexes = interactionResultIndexes(interactionState.hovered);
+  const selectedPaperId = interactionState.selectedPaperId;
+  const selectedIndexes = interactionResultIndexes(persistentResultSelection());
+  const hoveredIndexes = interactionState.detailMode === "empty"
+    ? interactionResultIndexes(interactionState.transientHover)
+    : new Set();
   resultsList.querySelectorAll(
     `.result-item[data-result-generation="${resultsRenderGeneration}"]`,
   ).forEach((item) => {
     const index = Number(item.dataset.resultIndex);
     const isSelected = selectedIndexes.has(index);
     const isHovered = hoveredIndexes.has(index);
+    const isSelectedPaper = Boolean(selectedPaperId
+      && item.dataset.paperIdentity === selectedPaperId);
+    const isPrimary = Boolean(isSelectedPaper
+      && resultsView === "institutions"
+      && interactionState.contextualInstitutionId
+      && item.dataset.institutionIdentity === interactionState.contextualInstitutionId);
+    const isRelated = isSelectedPaper && !isPrimary;
     item.classList.toggle("is-interaction-selected", isSelected);
+    item.classList.toggle("is-marker-related", isSelected && !selectedPaperId);
+    item.classList.toggle("is-selection-primary", isPrimary);
+    item.classList.toggle("is-selection-related", isRelated);
     item.classList.toggle("is-interaction-hovered", isHovered);
-    if (isSelected) item.setAttribute("aria-current", "true");
+    if (isPrimary || (resultsView === "papers" && isSelectedPaper)) {
+      item.setAttribute("aria-current", "true");
+    }
     else item.removeAttribute("aria-current");
   });
 }
 
-function selectionNeedsResultsReveal(selection = interactionState.selected) {
+function selectionNeedsResultsReveal(selection = persistentResultSelection()) {
   const indexes = interactionResultIndexes(selection);
   return indexes.size > 0 && ![...indexes].some((index) => renderedResultItem(index));
 }
 
 function updateShowInResultsAction() {
   paperDetailsContent.querySelector("[data-show-selection-in-results]")?.remove();
-  if (!interactionState.selected || !selectionNeedsResultsReveal()) return;
+  const selection = persistentResultSelection();
+  if (!selection || !selectionNeedsResultsReveal(selection)) return;
   const button = document.createElement("button");
   button.type = "button";
   button.className = "show-in-results-button";
@@ -3940,7 +3994,15 @@ function continuePendingResultReveal() {
 }
 
 function showSelectionInResults() {
-  const indexes = [...interactionResultIndexes(interactionState.selected)].sort((a, b) => a - b);
+  let indexes = [...interactionResultIndexes(persistentResultSelection())].sort((a, b) => a - b);
+  if (resultsView === "institutions" && interactionState.contextualInstitutionId) {
+    const contextual = indexes.filter((index) => (
+      currentDisplayedResults[index]
+      && institutionIdentity(currentDisplayedResults[index])
+        === interactionState.contextualInstitutionId
+    ));
+    indexes = [...contextual, ...indexes.filter((index) => !contextual.includes(index))];
+  }
   if (!indexes.length || !resultsPipeline) return;
   pendingResultReveal = { generation: resultsRenderGeneration, index: indexes[0] };
   continuePendingResultReveal();
@@ -3951,7 +4013,16 @@ function createResultItem(record, index, pipeline) {
   item.className = `result-item result-item-${pipeline.view === "papers" ? "paper" : "institution"} is-masonry-pending`;
   item.dataset.resultIndex = String(index);
   item.dataset.resultGeneration = String(pipeline.generation);
-  item.tabIndex = -1;
+  item.dataset.paperIdentity = paperIdentity(record);
+  if (pipeline.view === "institutions") {
+    item.dataset.institutionIdentity = institutionIdentity(record);
+    item.dataset.markerIdentity = markerInstitutionIdentity(record);
+  }
+  item.tabIndex = 0;
+  item.setAttribute("role", "button");
+  item.setAttribute("aria-label", pipeline.view === "papers"
+    ? `Open Paper Details for ${recordTitle(record)}`
+    : `Open Paper Details for ${recordTitle(record)} with ${recordInstitution(record)} context`);
   const relatedEntries = pipeline.relatedEntriesByIdentity.get(paperIdentity(record)) || [];
   const cardId = `result-card-title-${pipeline.view}-${index}`;
   item.innerHTML = pipeline.view === "papers"
@@ -4210,27 +4281,28 @@ function selectResultsView(view) {
   requestUrlStateSync("push");
   setResultsViewState(view);
   closeActiveInstitutionTooltip();
-  interactionState.hovered = null;
-  interactionState.hoveredMarkerId = null;
+  markerHoverIntent.cancel();
+  interactionState.transientHover = null;
   pendingResultReveal = null;
   renderRecordsForGeneration({ generation });
 }
 
 function baseMapStatusText(visibleRecords) {
-  const recordLabel = datasetConfig.recordLabel;
+  const markerCount = visibleMarkerEntries.length;
   const interactionHint = supportsMarkerHover
-    ? " Hover over a marker to view paper details; click to pin."
-    : " Tap a marker to pin paper details.";
-  return visibleRecords.length
-    ? `Showing ${visibleRecords.length} ${recordLabel}${visibleRecords.length === 1 ? "" : "s"}.${interactionHint}`
+    ? " Hover over an institution for a preview; click to inspect its papers."
+    : " Tap an institution marker to inspect its papers.";
+  return markerCount
+    ? `Showing ${markerCount} institution/location marker${markerCount === 1 ? "" : "s"}.${interactionHint}`
     : "No records match the current filters.";
 }
 
 function resetPaperDetails() {
   window.clearTimeout(copyPaperLinkFeedbackTimer);
+  paperDetailsHeading.textContent = "Paper Details";
   paperDetails.classList.remove("has-content");
   paperDetailsContent.innerHTML =
-    '<p class="paper-details-placeholder">Select or hover over a marker to view paper details.</p>';
+    '<p class="paper-details-placeholder">Select a paper or explore an institution marker to view details.</p>';
   closePaperDetailsButton.disabled = true;
   closePaperDetailsButton.textContent = "×";
   closePaperDetailsButton.setAttribute("aria-label", "Close paper details");
@@ -4238,13 +4310,21 @@ function resetPaperDetails() {
   paperDetails.classList.remove("is-pinned");
 }
 
-function showPaperDetails(record, relatedEntries, source, { filteredOut = false } = {}) {
-  paperDetailsContent.innerHTML = paperDetailsHtml(record, relatedEntries);
+function showPaperDetails(record, relatedEntries, {
+  contextualInstitutionId = null,
+  filteredOut = false,
+  mapParentMarkerId = null,
+  preserveScroll = false,
+} = {}) {
+  const previousScroll = paperDetails.scrollTop;
+  paperDetailsHeading.textContent = "Paper Details";
+  paperDetailsContent.innerHTML = paperDetailsHtml(
+    record, relatedEntries, contextualInstitutionId,
+  );
   paperDetails.classList.add("has-content");
   closePaperDetailsButton.disabled = false;
-  const isPinned = source === "selected";
-  paperDetails.classList.toggle("is-pinned", isPinned);
-  paperDetailsPinStatus.hidden = !isPinned;
+  paperDetails.classList.add("is-pinned");
+  paperDetailsPinStatus.hidden = false;
   closePaperDetailsButton.textContent = "×";
   closePaperDetailsButton.setAttribute(
     "aria-label",
@@ -4257,8 +4337,16 @@ function showPaperDetails(record, relatedEntries, source, { filteredOut = false 
     notice.textContent = "This linked paper does not match the current filters. Your filters were not changed.";
     paperDetailsContent.prepend(notice);
   }
+  if (mapParentMarkerId) {
+    const back = document.createElement("button");
+    back.type = "button";
+    back.className = "back-to-institution-button";
+    back.dataset.backToInstitution = mapParentMarkerId;
+    back.textContent = "← Back to institution";
+    paperDetailsContent.prepend(back);
+  }
   appendCopyPaperLinkAction(record, relatedEntries);
-  paperDetails.scrollTop = 0;
+  paperDetails.scrollTop = preserveScroll ? previousScroll : 0;
   updateShowInResultsAction();
 }
 
@@ -4285,11 +4373,15 @@ function restoreBaseMarkerStyles() {
 
 function clearPaperInteraction(updateStatus = true) {
   closeActiveInstitutionTooltip();
-  interactionState.hovered = null;
-  interactionState.selected = null;
-  interactionState.hoveredMarkerId = null;
-  interactionState.selectedMarkerId = null;
-  interactionState.detailsSource = null;
+  markerHoverIntent.cancel();
+  interactionState.selectedPaperId = null;
+  interactionState.contextualInstitutionId = null;
+  interactionState.pinnedMapMarkerId = null;
+  interactionState.mapParentMarkerId = null;
+  interactionState.detailMode = "empty";
+  interactionState.selectionSource = null;
+  interactionState.transientHover = null;
+  requestedPaperIdentity = "";
   pendingResultReveal = null;
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
@@ -4330,6 +4422,23 @@ function relatedMarkerEntries(selection) {
       return matchingRecord ? { ...entry, record: matchingRecord } : null;
     })
     .filter(Boolean);
+}
+
+function markerPaperIdentities(markerEntry) {
+  return markerEntry
+    ? [...new Set(markerEntry.records.map(paperIdentity))]
+    : [];
+}
+
+function markerPapersInCurrentView(markerEntry) {
+  const papers = new Map();
+  markerEntry?.records.forEach((record) => {
+    const identity = paperIdentity(record);
+    if (!papers.has(identity)) papers.set(identity, canonicalPaperRecord(record));
+  });
+  return [...papers.values()].sort((first, second) => (
+    compareRecordsForSort(first, second, "year-desc")
+  ));
 }
 
 function renderConnectionSelection(selection, mode) {
@@ -4376,48 +4485,77 @@ function renderConnectionSelection(selection, mode) {
   return { lineCount, visibleCount: relatedEntries.length };
 }
 
-function setMarkerSelectionState(selection) {
+function setMarkerSelectionState() {
+  const selectedPaperId = interactionState.selectedPaperId;
+  const contextualMarkerId = interactionState.pinnedMapMarkerId || (
+    selectedPaperId && interactionState.contextualInstitutionId
+      ? visibleMarkerEntries.find((entry) => (
+          institutionIdentity(entry.record) === interactionState.contextualInstitutionId
+          && entry.records.some((record) => paperIdentity(record) === selectedPaperId)
+        ))?.institutionKey
+      : null
+  );
   visibleMarkerEntries.forEach((entry) => {
-    const isSelectedPaper = Boolean(selection && entry.records.some(
-      (record) => paperIdentity(record) === selection.identity,
+    const isSelectedPaper = Boolean(selectedPaperId && entry.records.some(
+      (record) => paperIdentity(record) === selectedPaperId,
     ));
-    const isOrigin = isSelectedPaper && entry.institutionKey === selection.institutionKey;
+    const isOrigin = entry.institutionKey === contextualMarkerId;
     const element = entry.marker.getElement?.();
     element?.classList.toggle("is-paper-pinned", isSelectedPaper);
     element?.classList.toggle("is-paper-selection-origin", isOrigin);
+    element?.classList.toggle("is-institution-pinned", isOrigin);
     element?.setAttribute("aria-pressed", String(isOrigin));
     element?.setAttribute(
       "aria-label",
-      `${isOrigin ? "Clear" : "Select"} paper details for ${recordInstitution(entry.record) || "institution"}`,
+      `${recordInstitution(entry.record) || "Institution"}, ${entry.paperCount} paper${entry.paperCount === 1 ? "" : "s"} in current view. Open institution papers.`,
     );
   });
 }
 
-function renderPaperSelection(selection, source) {
-  if (!selection) {
-    resetPaperDetails();
-    return;
-  }
+function selectedPaperDescriptor() {
+  const identity = interactionState.selectedPaperId;
+  if (!identity) return null;
+  const visibleOrigin = visiblePaperSelectionByIdentity.get(identity);
+  const record = visibleOrigin?.record || canonicalPaperRecordsByIdentity.get(identity);
+  if (!record) return null;
+  const origin = interactionState.pinnedMapMarkerId
+    ? visibleMarkerEntryByInstitutionKey.get(interactionState.pinnedMapMarkerId)
+    : visibleMarkerEntries.find((entry) => (
+        interactionState.contextualInstitutionId
+        && institutionIdentity(entry.record) === interactionState.contextualInstitutionId
+        && entry.records.some((candidate) => paperIdentity(candidate) === identity)
+      ));
+  return {
+    identity,
+    record,
+    institutionKey: origin?.institutionKey || null,
+    filteredOut: !currentFilteredPaperRecords.some((paper) => paperIdentity(paper) === identity),
+  };
+}
+
+function renderPaperSelection(selection, { preserveScroll = false } = {}) {
   const visibleRelatedEntries = relatedMarkerEntries(selection);
   const detailEntries = visibleRelatedEntries.length
     ? visibleRelatedEntries
     : (mapRecordsByPaperIdentity.get(selection.identity) || [])
       .map((record) => ({ record }));
-  showPaperDetails(selection.record, detailEntries, source, {
+  showPaperDetails(selection.record, detailEntries, {
+    contextualInstitutionId: interactionState.contextualInstitutionId,
     filteredOut: selection.filteredOut === true,
+    mapParentMarkerId: interactionState.mapParentMarkerId,
+    preserveScroll,
   });
 }
 
-function showPaperInteraction(detailSelection, connectionSelection) {
-  const isHoverConnection = connectionSelection === interactionState.hovered;
+function showPaperInteraction(selection, { preserveScroll = false } = {}) {
   const { lineCount, visibleCount } = renderConnectionSelection(
-    connectionSelection,
-    isHoverConnection ? "hover" : "pinned",
+    selection,
+    "pinned",
   );
-  renderPaperSelection(detailSelection, interactionState.detailsSource);
+  renderPaperSelection(selection, { preserveScroll });
   mapStatus.classList.toggle("error", false);
   mapStatus.classList.toggle("paper-highlight-active", true);
-  if (detailSelection?.filteredOut) {
+  if (selection?.filteredOut) {
     mapStatus.textContent = "The linked paper does not match the current filters. Filters were not changed.";
     return;
   }
@@ -4426,17 +4564,100 @@ function showPaperInteraction(detailSelection, connectionSelection) {
     `Showing ${visibleCount} visible institution record${visibleCount === 1 ? "" : "s"}${connectionText}`;
 }
 
-function renderActiveSelection() {
-  const detailSelection = interactionState.selected || interactionState.hovered;
-  const connectionSelection = interactionState.hovered || interactionState.selected;
-  interactionState.detailsSource = interactionState.selected
-    ? "selected"
-    : interactionState.hovered ? "hover" : null;
-  setMarkerSelectionState(interactionState.selected);
+function institutionLocationText(markerEntry) {
+  return recordLocation(markerEntry?.record || {});
+}
+
+function institutionPreviewHtml(markerEntry) {
+  const papers = markerPapersInCurrentView(markerEntry).slice(0, 3);
+  return `
+    <section class="institution-preview" aria-label="Institution preview">
+      <h3>${escapeHtml(recordInstitution(markerEntry.record) || "Unknown institution")}</h3>
+      ${institutionLocationText(markerEntry) ? `<p>${escapeHtml(institutionLocationText(markerEntry))}</p>` : ""}
+      <p class="institution-paper-count">${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(markerEntry.paperCount))}</p>
+      ${papers.length ? `<h4>Recent papers</h4><ul>${papers.map((paper) => `<li>${paperTitleHtml(paper)}</li>`).join("")}</ul>` : ""}
+      <p class="institution-preview-hint">Click marker to inspect its papers.</p>
+    </section>`;
+}
+
+function institutionPaperRowHtml(paper, markerEntry) {
+  const publication = PaperDetailsHelpers.publicationMetadata(
+    paper, venueDisplayLabel(paper), publicationYear(paper),
+  );
+  const metadata = [publication.venue, publication.year, formatPublicTask(paper.task)]
+    .filter(Boolean).map(escapeHtml).join(" · ");
+  return `<li><button type="button" class="institution-paper-row" data-marker-paper="${escapeHtml(paperIdentity(paper))}" data-parent-marker="${escapeHtml(markerEntry.institutionKey)}"><span class="institution-paper-title">${paperTitleHtml(paper)}</span>${metadata ? `<span class="institution-paper-metadata">${metadata}</span>` : ""}</button></li>`;
+}
+
+function showInstitutionPapers(markerEntry, { preserveScroll = false } = {}) {
+  const previousScroll = paperDetails.scrollTop;
+  const papers = markerPapersInCurrentView(markerEntry);
+  const visiblePapers = papers.length > 10 ? papers.slice(0, 10) : papers;
+  paperDetailsHeading.textContent = "Institution Papers";
+  paperDetailsContent.innerHTML = `
+    <section class="institution-papers" aria-labelledby="institution-papers-name">
+      <h3 id="institution-papers-name">${escapeHtml(recordInstitution(markerEntry.record) || "Unknown institution")}</h3>
+      ${institutionLocationText(markerEntry) ? `<p>${escapeHtml(institutionLocationText(markerEntry))}</p>` : ""}
+      <p class="institution-paper-count">${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(papers.length))}</p>
+      <h4>Papers</h4>
+      <ol class="institution-paper-list">${visiblePapers.map((paper) => institutionPaperRowHtml(paper, markerEntry)).join("")}</ol>
+      ${papers.length > 10 ? `<button type="button" class="show-all-institution-papers" data-show-all-marker-papers="${escapeHtml(markerEntry.institutionKey)}">Show all ${papers.length} papers</button>` : ""}
+    </section>`;
+  paperDetails.classList.add("has-content", "is-pinned");
+  paperDetailsPinStatus.hidden = false;
+  closePaperDetailsButton.disabled = false;
+  closePaperDetailsButton.setAttribute("aria-label", "Close institution papers");
+  paperDetails.scrollTop = preserveScroll ? previousScroll : 0;
+  updateShowInResultsAction();
+}
+
+function renderMarkerPreview(markerEntry) {
+  paperDetailsHeading.textContent = "Institution Preview";
+  paperDetailsContent.innerHTML = institutionPreviewHtml(markerEntry);
+  paperDetails.classList.add("has-content");
+  paperDetails.classList.remove("is-pinned");
+  paperDetailsPinStatus.hidden = true;
+  closePaperDetailsButton.disabled = false;
+  closePaperDetailsButton.setAttribute("aria-label", "Close institution preview");
+  restoreBaseMarkerStyles();
+  markerEntry.marker.setStyle(markerStyle(markerEntry.taskKey, "related", markerEntry.paperCount));
+}
+
+function renderActiveSelection({ preserveScroll = false } = {}) {
+  setMarkerSelectionState();
   syncResultHighlights();
-  if (detailSelection) {
-    showPaperInteraction(detailSelection, connectionSelection);
+  if (interactionState.detailMode === "paper" && interactionState.selectedPaperId) {
+    const selection = selectedPaperDescriptor();
+    if (selection) showPaperInteraction(selection, { preserveScroll });
     return;
+  }
+  if (interactionState.detailMode === "institution-papers") {
+    const markerEntry = visibleMarkerEntryByInstitutionKey.get(
+      interactionState.pinnedMapMarkerId,
+    );
+    if (markerEntry) {
+      hoverConnectionLayer.clearLayers();
+      selectedConnectionLayer.clearLayers();
+      restoreBaseMarkerStyles();
+      markerEntry.marker.setStyle(markerStyle(markerEntry.taskKey, "current", markerEntry.paperCount));
+      markerEntry.marker.bringToFront();
+      showInstitutionPapers(markerEntry, { preserveScroll });
+      mapStatus.classList.add("paper-highlight-active");
+      mapStatus.textContent = `${markerEntry.paperCount} unique paper${markerEntry.paperCount === 1 ? "" : "s"} at the selected institution/location marker.`;
+      return;
+    }
+  }
+  if (interactionState.detailMode === "empty" && interactionState.transientHover) {
+    const markerEntry = visibleMarkerEntryByInstitutionKey.get(
+      interactionState.transientHover.markerId,
+    );
+    if (markerEntry) {
+      hoverConnectionLayer.clearLayers();
+      selectedConnectionLayer.clearLayers();
+      renderMarkerPreview(markerEntry);
+      mapStatus.textContent = `Previewing ${recordInstitution(markerEntry.record)}.`;
+      return;
+    }
   }
 
   hoverConnectionLayer.clearLayers();
@@ -4454,31 +4675,31 @@ function renderActiveSelection() {
   mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
 }
 
-function setHoveredSelection(selection) {
-  interactionState.hovered = selection;
-  interactionState.hoveredMarkerId = selection?.markerId || null;
-  renderActiveSelection();
-}
-
 function clearHoveredSelection(marker) {
-  // Pinning already clears hover. A later result-button blur must not rebuild
-  // the pinned pane while its next control is receiving focus/click.
-  if (!interactionState.hovered) return;
-  if (marker && interactionState.hovered?.marker !== marker) {
-    return;
-  }
-  interactionState.hovered = null;
-  interactionState.hoveredMarkerId = null;
+  markerHoverIntent.cancel();
+  if (!interactionState.transientHover) return;
+  if (marker && interactionState.transientHover?.marker !== marker) return;
+  interactionState.transientHover = null;
   renderActiveSelection();
 }
 
-function setPersistentSelection(selection, { syncUrl = true } = {}) {
-  interactionState.hovered = null;
-  interactionState.hoveredMarkerId = null;
-  interactionState.selected = selection;
-  interactionState.selectedMarkerId = selection?.markerId || null;
-  requestedPaperIdentity = selection?.identity || "";
-  renderActiveSelection();
+function selectPaper(identity, {
+  contextualInstitutionId = null,
+  mapParentMarkerId = null,
+  source = "unique-paper",
+  syncUrl = true,
+  preserveScroll = false,
+} = {}) {
+  markerHoverIntent.cancel();
+  interactionState.transientHover = null;
+  interactionState.selectedPaperId = identity;
+  interactionState.contextualInstitutionId = contextualInstitutionId;
+  interactionState.mapParentMarkerId = mapParentMarkerId;
+  interactionState.pinnedMapMarkerId = mapParentMarkerId;
+  interactionState.detailMode = "paper";
+  interactionState.selectionSource = source;
+  requestedPaperIdentity = identity;
+  renderActiveSelection({ preserveScroll });
   if (syncUrl) {
     requestUrlStateSync("push");
     syncUrlFromState();
@@ -4486,11 +4707,48 @@ function setPersistentSelection(selection, { syncUrl = true } = {}) {
   scheduleMapResize();
 }
 
-function clearPersistentSelection({ syncUrl = true } = {}) {
-  interactionState.selected = null;
-  interactionState.selectedMarkerId = null;
+function selectMapMarker(markerEntry, { syncUrl = true, preserveScroll = false } = {}) {
+  markerHoverIntent.cancel();
+  closeActiveInstitutionTooltip();
+  interactionState.transientHover = null;
+  interactionState.selectedPaperId = null;
+  interactionState.contextualInstitutionId = institutionIdentity(markerEntry.record);
+  interactionState.pinnedMapMarkerId = markerEntry.institutionKey;
+  interactionState.mapParentMarkerId = null;
+  interactionState.detailMode = "institution-papers";
+  interactionState.selectionSource = "map-institution";
+  requestedPaperIdentity = "";
+  renderActiveSelection({ preserveScroll });
+  if (syncUrl) {
+    requestUrlStateSync("push");
+    syncUrlFromState();
+  }
+  scheduleMapResize();
+}
+
+function setPersistentSelection(selection, { syncUrl = true } = {}) {
+  selectPaper(selection.identity, {
+    contextualInstitutionId: selection.contextualInstitutionId || null,
+    source: selection.source || "institution-record",
+    syncUrl,
+  });
+}
+
+function resetPersistentState() {
+  markerHoverIntent.cancel();
+  interactionState.selectedPaperId = null;
+  interactionState.contextualInstitutionId = null;
+  interactionState.pinnedMapMarkerId = null;
+  interactionState.mapParentMarkerId = null;
+  interactionState.detailMode = "empty";
+  interactionState.selectionSource = null;
+  interactionState.transientHover = null;
   requestedPaperIdentity = "";
   pendingResultReveal = null;
+}
+
+function clearPersistentSelection({ syncUrl = true } = {}) {
+  resetPersistentState();
   renderActiveSelection();
   if (syncUrl) {
     requestUrlStateSync("push");
@@ -4501,77 +4759,73 @@ function clearPersistentSelection({ syncUrl = true } = {}) {
 
 function restoreLinkedPaperSelection(matchingPaperIdentities) {
   if (!requestedPaperIdentity) {
-    interactionState.selected = null;
-    interactionState.selectedMarkerId = null;
     return "closed";
   }
   const paper = canonicalPaperRecordsByIdentity.get(requestedPaperIdentity);
   if (!paper) {
-    interactionState.selected = null;
-    interactionState.selectedMarkerId = null;
+    interactionState.selectedPaperId = null;
+    interactionState.detailMode = "empty";
     return "unavailable";
   }
-  const visibleOrigin = visiblePaperSelectionByIdentity.get(requestedPaperIdentity);
-  interactionState.selected = {
-    identity: requestedPaperIdentity,
-    record: visibleOrigin?.record || paper,
-    markerId: visibleOrigin?.institutionKey || null,
-    marker: visibleOrigin?.marker || null,
-    institutionKey: visibleOrigin?.institutionKey || null,
-    resultPaperIdentities: [requestedPaperIdentity],
-    resultScope: "paper",
-    source: "deep-link",
-    filteredOut: !matchingPaperIdentities.has(requestedPaperIdentity),
-  };
-  interactionState.selectedMarkerId = visibleOrigin?.institutionKey || null;
-  return interactionState.selected.filteredOut ? "filtered-out" : "open";
+  interactionState.selectedPaperId = requestedPaperIdentity;
+  interactionState.detailMode = "paper";
+  if (!interactionState.selectionSource) interactionState.selectionSource = "deep-link";
+  return matchingPaperIdentities.has(requestedPaperIdentity) ? "open" : "filtered-out";
 }
 
-function activateHoverPreview(
-  record, identity, markerId, marker, paperCount, taskBreakdown, resultPaperIdentities,
-) {
-  openInstitutionTooltip(marker, record, paperCount, taskBreakdown);
-  setHoveredSelection({
-    identity,
-    record,
-    markerId,
-    marker,
-    institutionKey: markerId,
-    resultPaperIdentities,
-    resultScope: "institution",
-    source: "marker-hover",
+function reconcilePersistentSelectionAfterFilter(matchingPaperIdentities) {
+  const parentMarker = interactionState.mapParentMarkerId
+    ? visibleMarkerEntryByInstitutionKey.get(interactionState.mapParentMarkerId)
+    : null;
+  if (interactionState.mapParentMarkerId) {
+    if (!parentMarker) {
+      resetPersistentState();
+      return "closed";
+    }
+    if (!interactionState.selectedPaperId
+        || !markerPaperIdentities(parentMarker).includes(interactionState.selectedPaperId)) {
+      interactionState.selectedPaperId = null;
+      interactionState.contextualInstitutionId = institutionIdentity(parentMarker.record);
+      interactionState.pinnedMapMarkerId = parentMarker.institutionKey;
+      interactionState.mapParentMarkerId = null;
+      interactionState.detailMode = "institution-papers";
+      interactionState.selectionSource = "map-institution";
+      requestedPaperIdentity = "";
+      return "institution";
+    }
+  }
+  if (interactionState.detailMode === "institution-papers") {
+    if (!visibleMarkerEntryByInstitutionKey.has(interactionState.pinnedMapMarkerId)) {
+      resetPersistentState();
+      return "closed";
+    }
+    return "institution";
+  }
+  return restoreLinkedPaperSelection(matchingPaperIdentities);
+}
+
+function activateHoverPreview(markerEntry) {
+  if (interactionState.detailMode !== "empty") return;
+  markerHoverIntent.schedule(() => {
+    if (interactionState.detailMode !== "empty") return;
+    openInstitutionTooltip(
+      markerEntry.marker, markerEntry.record, markerEntry.paperCount, markerEntry.taskBreakdown,
+    );
+    interactionState.transientHover = {
+      markerId: markerEntry.institutionKey,
+      marker: markerEntry.marker,
+      resultPaperIdentities: markerPaperIdentities(markerEntry),
+      resultScope: "institution",
+      institutionKey: markerEntry.institutionKey,
+    };
+    renderActiveSelection();
   });
 }
 
 function clearHoverPreview(marker, event = null) {
+  markerHoverIntent.cancel();
   closeActiveInstitutionTooltip(marker);
-  const relatedTarget = event?.originalEvent?.relatedTarget || event?.relatedTarget;
-  if (relatedTarget && paperDetails.contains(relatedTarget)) {
-    interactionState.isPointerInsideDetails = true;
-    return;
-  }
-  if (interactionState.isPointerInsideDetails) {
-    return;
-  }
   clearHoveredSelection(marker);
-}
-
-function pinPaper(record, identity, institutionKey, resultPaperIdentities = [identity]) {
-  closeActiveInstitutionTooltip();
-  if (interactionState.selectedMarkerId === institutionKey &&
-      interactionState.selected?.identity === identity) {
-    clearPersistentSelection();
-    return;
-  }
-  setPersistentSelection({
-    identity,
-    record,
-    markerId: institutionKey,
-    institutionKey,
-    resultPaperIdentities,
-    resultScope: "institution",
-    source: "marker",
-  });
 }
 
 function resultInstitutionSelection(button) {
@@ -4590,19 +4844,15 @@ function resultInstitutionSelection(button) {
   if (!markerRecord) return null;
   return {
     identity: paperIdentity(markerRecord),
-    record: markerRecord,
-    markerId: institutionKey,
-    marker: markerEntry.marker,
-    institutionKey,
-    resultPaperIdentities: [identity],
-    resultScope: "paper",
-    source: "result",
+    contextualInstitutionId: institutionIdentity(markerRecord),
+    source: "institution-record",
   };
 }
 
 function previewInstitutionFromResult(button) {
-  const selection = resultInstitutionSelection(button);
-  if (selection) setHoveredSelection(selection);
+  if (interactionState.detailMode !== "empty") return;
+  const markerEntry = visibleMarkerEntryByInstitutionKey.get(button.dataset.focusInstitution);
+  if (markerEntry) activateHoverPreview(markerEntry);
 }
 
 function selectInstitutionFromResult(button) {
@@ -4612,7 +4862,51 @@ function selectInstitutionFromResult(button) {
     return;
   }
   setPersistentSelection(selection);
-  selection.marker.bringToFront();
+}
+
+function selectResultItem(item) {
+  if (!item || item.dataset.resultGeneration !== String(resultsRenderGeneration)) return;
+  const index = Number(item.dataset.resultIndex);
+  const record = resultsPipeline?.displayedResults[index];
+  if (!record) return;
+  if (resultsView === "papers") {
+    selectPaper(paperIdentity(record), {
+      contextualInstitutionId: null,
+      mapParentMarkerId: null,
+      source: "unique-paper",
+    });
+    return;
+  }
+  selectPaper(paperIdentity(record), {
+    contextualInstitutionId: institutionIdentity(record),
+    mapParentMarkerId: null,
+    source: "institution-record",
+    preserveScroll: interactionState.selectedPaperId === paperIdentity(record),
+  });
+}
+
+function selectPaperFromInstitutionList(button) {
+  const markerEntry = visibleMarkerEntryByInstitutionKey.get(button.dataset.parentMarker);
+  if (!markerEntry || !markerPaperIdentities(markerEntry).includes(button.dataset.markerPaper)) return;
+  selectPaper(button.dataset.markerPaper, {
+    contextualInstitutionId: institutionIdentity(markerEntry.record),
+    mapParentMarkerId: markerEntry.institutionKey,
+    source: "map-paper",
+  });
+}
+
+function returnToInstitution(markerId) {
+  const markerEntry = visibleMarkerEntryByInstitutionKey.get(markerId);
+  if (markerEntry) selectMapMarker(markerEntry, { preserveScroll: true });
+}
+
+function showAllInstitutionPapers(markerId) {
+  const markerEntry = visibleMarkerEntryByInstitutionKey.get(markerId);
+  const list = paperDetailsContent.querySelector(".institution-paper-list");
+  if (!markerEntry || !list) return;
+  list.innerHTML = markerPapersInCurrentView(markerEntry)
+    .map((paper) => institutionPaperRowHtml(paper, markerEntry)).join("");
+  paperDetailsContent.querySelector("[data-show-all-marker-papers]")?.remove();
 }
 
 function renderRecords() {
@@ -4624,7 +4918,8 @@ function renderRecordsForGeneration({ generation = null } = {}) {
   if (activeGeneration !== resultsRenderGeneration) return;
   syncKnownFilterState();
   closeActiveInstitutionTooltip();
-  interactionState.hovered = null;
+  markerHoverIntent.cancel();
+  interactionState.transientHover = null;
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   const normalizedKeyword = normalizedSearchText(keywordFilter.value);
@@ -4703,7 +4998,6 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     venueTypeDimensionSets.filteredPapers,
   );
   renderActiveFilterChips();
-  syncUrlFromState();
   const filteredSets = deriveFilteredRecordSets(
     records,
     paperRecords,
@@ -4748,26 +5042,6 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     )
       .on("remove", () => closeActiveInstitutionTooltip(marker))
       .addTo(markerLayer);
-    MarkerInteractionHelpers.bindMarkerHandlers(marker, {
-      supportsHover: supportsMarkerHover,
-      accessibleLabel: `${recordInstitution(locationRecord) || "Unknown institution"}; ${MarkerSizeHelpers.formatInstitutionPaperCount(group.paperCount)}. Show paper details.`,
-      click: () => pinPaper(
-        record,
-        identity,
-        group.key,
-        [...new Set(group.records.map(paperIdentity))],
-      ),
-      hover: () => activateHoverPreview(
-        record,
-        identity,
-        group.key,
-        marker,
-        group.paperCount,
-        taskBreakdown,
-        [...new Set(group.records.map(paperIdentity))],
-      ),
-      leave: (event) => clearHoverPreview(marker, event),
-    });
     const markerEntry = {
       record,
       records: group.records,
@@ -4779,6 +5053,13 @@ function renderRecordsForGeneration({ generation = null } = {}) {
       taskCounts,
       taskKey,
     };
+    MarkerInteractionHelpers.bindMarkerHandlers(marker, {
+      supportsHover: supportsMarkerHover,
+      accessibleLabel: `${recordInstitution(locationRecord) || "Unknown institution"}, ${group.paperCount} paper${group.paperCount === 1 ? "" : "s"} in current view. Open institution papers.`,
+      click: () => selectMapMarker(markerEntry),
+      hover: () => activateHoverPreview(markerEntry),
+      leave: (event) => clearHoverPreview(marker, event),
+    });
     visibleMarkerEntries.push(markerEntry);
     visibleMarkerEntryByInstitutionKey.set(group.key, markerEntry);
     const canonicalInstitutionKey = institutionIdentity(record);
@@ -4797,15 +5078,17 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     });
   });
 
-  const linkedPaperState = restoreLinkedPaperSelection(
+  const linkedPaperState = reconcilePersistentSelectionAfterFilter(
     filteredSets.matchingPaperIdentities,
   );
+  requestUrlStateSync("replace");
+  syncUrlFromState();
 
   updateDatasetStatistics(visibleRecords, visiblePaperRecords);
   renderHeaderStatistics(visibleRecords, visiblePaperRecords);
   renderResults(visibleRecords, visiblePaperRecords, activeGeneration);
   mapStatus.classList.toggle("error", false);
-  if (interactionState.selected) {
+  if (interactionState.detailMode !== "empty") {
     renderActiveSelection();
   } else if (linkedPaperState === "unavailable") {
     setMarkerSelectionState(null);
@@ -5161,7 +5444,8 @@ function showDatasetMessage(message, isError = false, isLoadFailure = false) {
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
   visibleMarkerEntryByInstitutionKey = new Map();
-  interactionState.hovered = null;
+  markerHoverIntent.cancel();
+  interactionState.transientHover = null;
   updateDatasetStatistics(records, paperRecords);
   renderHeaderStatistics(records, paperRecords);
   renderResults(records, paperRecords);
@@ -5509,9 +5793,9 @@ function focusResultsRecoveryDestination() {
 function undoLastFilterChange() {
   if (!lastFilterChange) return;
   const previousFilters = lastFilterChange.before;
-  const { view, sort, paper } = currentViewState();
+  const { view, sort, marker, paper } = currentViewState();
   lastFilterChange = null;
-  restoreViewState({ ...previousFilters, view, sort, paper });
+  restoreViewState({ ...previousFilters, view, sort, marker, paper });
   lastKnownFilterState = currentFilterConstraintState();
   requestUrlStateSync("push");
   renderRecords();
@@ -5615,6 +5899,21 @@ maxYearFilter.addEventListener("keydown", (event) => {
 });
 [resultsList, paperDetails].forEach((container) => {
   container.addEventListener("click", (event) => {
+    const markerPaper = event.target.closest("[data-marker-paper]");
+    if (markerPaper) {
+      selectPaperFromInstitutionList(markerPaper);
+      return;
+    }
+    const backToInstitution = event.target.closest("[data-back-to-institution]");
+    if (backToInstitution) {
+      returnToInstitution(backToInstitution.dataset.backToInstitution);
+      return;
+    }
+    const showAllMarkerPapers = event.target.closest("[data-show-all-marker-papers]");
+    if (showAllMarkerPapers) {
+      showAllInstitutionPapers(showAllMarkerPapers.dataset.showAllMarkerPapers);
+      return;
+    }
     const copyPaperLink = event.target.closest("[data-copy-paper-link]");
     if (copyPaperLink) {
       copySelectedPaperUrl();
@@ -5654,8 +5953,21 @@ maxYearFilter.addEventListener("keydown", (event) => {
     const button = event.target.closest("[data-institution-filter]");
     if (button) {
       applyInstitutionFilter(button.dataset.institutionFilter, button.dataset.institutionLabel);
+      return;
+    }
+    const resultItem = event.target.closest(".result-item");
+    if (resultItem && !event.target.closest("a, button, input, select, textarea")) {
+      selectResultItem(resultItem);
     }
   });
+});
+resultsList.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") return;
+  if (event.target.closest("a, button, input, select, textarea")) return;
+  const item = event.target.closest(".result-item");
+  if (!item) return;
+  event.preventDefault();
+  selectResultItem(item);
 });
 resultsList.addEventListener("pointerover", (event) => {
   const button = event.target.closest("[data-focus-institution]");
@@ -5727,24 +6039,14 @@ document.fonts?.ready.then(() => {
 });
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
-  const selectionOrigin = interactionState.selected?.marker?.getElement?.()
-    || visibleMarkerEntryByInstitutionKey
-      .get(interactionState.selectedMarkerId)?.marker?.getElement?.();
-  if (interactionState.selected || requestedPaperIdentity) {
+  const selectionOrigin = visibleMarkerEntryByInstitutionKey
+    .get(interactionState.pinnedMapMarkerId)?.marker?.getElement?.();
+  if (interactionState.detailMode !== "empty" || requestedPaperIdentity) {
     clearPersistentSelection();
   } else {
     clearHoveredSelection();
   }
   (selectionOrigin || mapElement).focus({ preventScroll: true });
-});
-paperDetails.addEventListener("pointerenter", () => {
-  interactionState.isPointerInsideDetails = true;
-});
-paperDetails.addEventListener("pointerleave", () => {
-  interactionState.isPointerInsideDetails = false;
-  if (!interactionState.selected && !interactionState.hoveredMarkerId) {
-    clearHoveredSelection();
-  }
 });
 resultsViewButtons.forEach((button) => {
   button.addEventListener("click", () => selectResultsView(button.dataset.resultsView));

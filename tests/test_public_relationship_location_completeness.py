@@ -161,7 +161,10 @@ def test_admin_confirmed_choices_exclude_retained_candidates():
     from scripts.curated_mappings import load_mappings
     from scripts.paper_exclusions import read_exclusion_rows
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
-    assert payload['summary']['confirmed_locations_count'] == len(payload['confirmed_locations']) == 495
+    # Four duplicate institution locations were consolidated by the reviewed
+    # authoritative institution audit; the surviving canonical locations are
+    # still complete and independently selectable.
+    assert payload['summary']['confirmed_locations_count'] == len(payload['confirmed_locations']) == 491
     assert len(payload['candidate_locations']) == 0
     candidate_ids = {r['location_id'] for r in payload['candidate_locations']}
     assert not candidate_ids.intersection(r['location_id'] for r in payload['confirmed_locations'])

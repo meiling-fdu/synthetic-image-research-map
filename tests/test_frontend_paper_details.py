@@ -269,28 +269,21 @@ process.stdout.write(JSON.stringify(Object.fromEntries(
         close_handler = self.app.split(
             'closePaperDetailsButton.addEventListener("click", () => {', 1
         )[1].split("\n});", 1)[0]
-        self.assertIn(
-            "interactionState.selected?.marker?.getElement?.()", close_handler
-        )
-        self.assertIn(
-            ".get(interactionState.selectedMarkerId)?.marker?.getElement?.()",
-            close_handler,
-        )
+        self.assertIn("interactionState.pinnedMapMarkerId", close_handler)
+        self.assertIn("visibleMarkerEntryByInstitutionKey", close_handler)
         self.assertIn("(selectionOrigin || mapElement).focus({ preventScroll: true })", close_handler)
 
     def test_existing_pin_hover_and_filtered_selection_guards_remain(self):
-        self.assertIn(
-            "const detailSelection = interactionState.selected || interactionState.hovered",
-            self.app,
-        )
+        self.assertIn('detailMode: "empty"', self.app)
+        self.assertIn("if (interactionState.detailMode !== \"empty\") return", self.app)
         clear_hover = self.app.split(
             "function clearHoverPreview(marker, event = null) {", 1
-        )[1].split("\nfunction pinPaper", 1)[0]
-        self.assertNotIn("interactionState.selected = null", clear_hover)
+        )[1].split("\nfunction resultInstitutionSelection", 1)[0]
+        self.assertNotIn("selectedPaperId = null", clear_hover)
         render = self.app.split("function renderRecords() {", 1)[1].split(
             "\nfunction configureYearRange()", 1
         )[0]
-        self.assertIn("restoreLinkedPaperSelection(", render)
+        self.assertIn("reconcilePersistentSelectionAfterFilter(", render)
         self.assertIn("filteredSets.matchingPaperIdentities", render)
         self.assertIn("clearPersistentSelection()", self.app)
 
@@ -330,7 +323,7 @@ class AuthorExpansionTests(unittest.TestCase):
         cls.papers = json.loads((REPOSITORY / "web/data/public_preview_papers.json").read_text())["records"]
         cls.delegation = '[resultsList, paperDetails].forEach' + cls.app.split(
             '[resultsList, paperDetails].forEach', 1
-        )[1].split('resultsList.addEventListener("pointerover"', 1)[0]
+        )[1].split('resultsList.addEventListener("keydown"', 1)[0]
 
     def node(self, script, *args):
         result = subprocess.run([str(NODE), "-e", script, self.helper, *args],
@@ -517,24 +510,25 @@ assert.equal(transitions, 3);
     def test_blur_after_pinning_does_not_replace_the_next_click_target(self):
         clear_hover = "function clearHoveredSelection" + self.app.split(
             "function clearHoveredSelection", 1
-        )[1].split("\nfunction setPersistentSelection", 1)[0]
+        )[1].split("\nfunction selectPaper", 1)[0]
         self.node("""
 const assert = require('node:assert/strict');
-const pinned = {identity: 'paper:one'};
-const interactionState = {hovered: null, hoveredMarkerId: null, selected: pinned};
+const marker = {};
+const interactionState = {
+  selectedPaperId: 'paper:one', detailMode: 'paper',
+  transientHover: {marker},
+};
+const markerHoverIntent = {cancel() {}};
 let renders = 0;
 const renderActiveSelection = () => renders++;
 """ + clear_hover + """
-clearHoveredSelection(); // result focusout after pinning
-assert.equal(renders, 0);
-const marker = {};
-interactionState.hovered = {marker};
 clearHoveredSelection({}); // unrelated marker
 assert.equal(renders, 0);
 clearHoveredSelection(marker);
 assert.equal(renders, 1);
-assert.equal(interactionState.hovered, null);
-assert.equal(interactionState.selected, pinned);
+assert.equal(interactionState.transientHover, null);
+assert.equal(interactionState.selectedPaperId, 'paper:one');
+assert.equal(interactionState.detailMode, 'paper');
 process.stdout.write(JSON.stringify(true));
 """)
 

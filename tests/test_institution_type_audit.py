@@ -194,7 +194,7 @@ class InstitutionTypeAuditTests(unittest.TestCase):
                 self.assertIn(institution_id, referenced, f"{name} missing from {filename}")
         self.assertEqual(
             self.by_name["Alibaba Group"]["parent_institution_id"],
-            "institution:6faf58b52bec4e39",
+            "",
         )
 
 

@@ -12,13 +12,13 @@ CURRENT_REPOSITORY_BASELINE = {
     "public_map_source_papers": 569,
     "public_papers_with_map": 568,
     "public_papers_without_map": 6,
-    "public_map_relationships": 1304,
+    "public_map_relationships": 1303,
     "canonical_institution_rows": 679,
-    "active_canonical_institutions": 667,
-    "inactive_or_merged_institutions": 12,
+    "active_canonical_institutions": 649,
+    "inactive_or_merged_institutions": 30,
     "author_institution_mappings": 1026,
-    "institution_hierarchy_edges": 8,
-    "institution_aliases": 85,
+    "institution_hierarchy_edges": 11,
+    "institution_aliases": 114,
 }
 
 RELEASE_REPOSITORY_BASELINE = {
@@ -37,8 +37,8 @@ RELEASE_REPOSITORY_BASELINE = {
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 667,
-    "merged": 6,
+    "active": 649,
+    "merged": 24,
     "ignored": 6,
 }
 
@@ -49,25 +49,25 @@ RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 482,
-    "research_unit": 69,
-    "company": 73,
-    "other": 55,
+    "university": 498,
+    "research_unit": 80,
+    "company": 82,
+    "other": 19,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 476,
-    "research_unit": 67,
-    "company": 71,
-    "other": 53,
+    "university": 487,
+    "research_unit": 74,
+    "company": 75,
+    "other": 13,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
     # 2026-08-28: active curated affiliations only, including paper-only rows.
-    "university": 539,
-    "research_unit": 106,
-    "company": 98,
-    "other": 55,
+    "university": 545,
+    "research_unit": 109,
+    "company": 105,
+    "other": 29,
 }
 
 # Historical release artifacts are immutable; current effective venues have

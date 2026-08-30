@@ -183,10 +183,10 @@ process.stdout.write(JSON.stringify({
             "background: rgb(90 157 166 / 50%)", style_source
         )
         self.assertIn("const interactionState = {", app_source)
-        self.assertIn("hovered: null", app_source)
-        self.assertIn("selected: null", app_source)
-        self.assertIn("const previousSelection =", app_source)
-        self.assertIn("if (interactionState.selected)", app_source)
+        self.assertIn("transientHover: null", app_source)
+        self.assertIn("selectedPaperId: null", app_source)
+        self.assertIn('detailMode: "empty"', app_source)
+        self.assertIn("if (interactionState.detailMode !== \"empty\") return", app_source)
         self.assertIn(
             "closePaperDetailsButton.addEventListener",
             app_source,
@@ -196,8 +196,8 @@ process.stdout.write(JSON.stringify({
         app_source = (REPOSITORY / "web/app.js").read_text()
         style_source = (REPOSITORY / "web/style.css").read_text()
         interaction_body = app_source.split(
-            "function showPaperInteraction(detailSelection, connectionSelection) {", 1
-        )[1].split("\nfunction renderActiveSelection()", 1)[0]
+            "function showPaperInteraction(selection, { preserveScroll = false } = {}) {", 1
+        )[1].split("\nfunction institutionLocationText", 1)[0]
 
         self.assertIn(
             "`Showing ${visibleCount} visible institution record",
@@ -214,47 +214,33 @@ process.stdout.write(JSON.stringify({
     def test_pinned_details_survive_hover_cleanup_and_close_explicitly(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
         restore_body = app_source.split(
-            "function renderActiveSelection() {", 1
+            "function renderActiveSelection({ preserveScroll = false } = {}) {", 1
         )[1].split("\nfunction activateHoverPreview", 1)[0]
         hover_body = app_source.split(
             "function activateHoverPreview(", 1
         )[1].split("\nfunction clearHoverPreview", 1)[0]
 
-        self.assertIn(
-            "const detailSelection = interactionState.selected || interactionState.hovered",
-            restore_body,
-        )
-        self.assertIn(
-            "const connectionSelection = interactionState.hovered || interactionState.selected",
-            restore_body,
-        )
-        self.assertIn(
-            "setHoveredSelection({", hover_body
-        )
+        self.assertIn('interactionState.detailMode === "paper"', restore_body)
+        self.assertIn('interactionState.detailMode === "institution-papers"', restore_body)
+        self.assertIn('if (interactionState.detailMode !== "empty") return', hover_body)
         self.assertIn('closePaperDetailsButton.addEventListener("click", () => {', app_source)
 
         clear_body = app_source.split(
             "function clearHoverPreview(marker, event = null) {", 1
-        )[1].split("\nfunction pinPaper", 1)[0]
-        pin_body = app_source.split(
-            "function pinPaper(", 1
-        )[1].split("\nfunction renderRecords", 1)[0]
+        )[1].split("\nfunction resultInstitutionSelection", 1)[0]
         self.assertIn("clearHoveredSelection(marker)", clear_body)
-        self.assertNotIn("interactionState.selected = null", clear_body)
-        self.assertIn(
-            "setPersistentSelection({",
-            pin_body,
-        )
+        self.assertNotIn("selectedPaperId = null", clear_body)
+        self.assertIn("selectMapMarker(markerEntry)", app_source)
         self.assertNotIn('paperDetails.addEventListener("mouseleave"', app_source)
         self.assertIn("MarkerInteractionHelpers.bindMarkerHandlers", app_source)
 
-    def test_hover_lines_take_precedence_without_replacing_pinned_details(self):
+    def test_persistent_paper_lines_take_precedence_over_hover(self):
         app_source = (REPOSITORY / "web/app.js").read_text()
         active_body = app_source.split(
-            "function renderActiveSelection() {", 1
-        )[1].split("\nfunction setHoveredSelection", 1)[0]
+            "function renderActiveSelection({ preserveScroll = false } = {}) {", 1
+        )[1].split("\nfunction clearHoveredSelection", 1)[0]
         interaction_body = app_source.split(
-            "function showPaperInteraction(detailSelection, connectionSelection) {", 1
+            "function showPaperInteraction(selection, { preserveScroll = false } = {}) {", 1
         )[1].split("\nfunction renderActiveSelection", 1)[0]
         connection_body = app_source.split(
             "function renderConnectionSelection(selection, mode) {", 1
@@ -263,22 +249,16 @@ process.stdout.write(JSON.stringify({
             "function drawConnectionLines(relatedEntries, currentRecord, targetLayer) {", 1
         )[1].split("\nfunction relatedMarkerEntries", 1)[0]
 
-        self.assertIn(
-            "interactionState.selected || interactionState.hovered", active_body
-        )
-        self.assertIn(
-            "interactionState.hovered || interactionState.selected", active_body
-        )
-        self.assertIn(
-            "renderPaperSelection(detailSelection, interactionState.detailsSource)", interaction_body
-        )
+        self.assertIn('interactionState.detailMode === "paper"', active_body)
+        self.assertIn('if (interactionState.detailMode !== "empty") return', app_source)
+        self.assertIn("renderPaperSelection(selection", interaction_body)
         self.assertIn(
             "renderConnectionSelection(", interaction_body
         )
         self.assertIn("hoverConnectionLayer.clearLayers()", connection_body)
         self.assertIn("selectedConnectionLayer.clearLayers()", connection_body)
         self.assertIn("drawConnectionLines(", connection_body)
-        self.assertIn('mode === "hover"', connection_body)
+        self.assertIn('const targetLayer = isHover ? hoverConnectionLayer : selectedConnectionLayer', connection_body)
         self.assertIn("if (locations.length < 2)", draw_body)
         self.assertIn("return 0", draw_body)
 
@@ -290,7 +270,7 @@ process.stdout.write(JSON.stringify({
 
         self.assertIn("visiblePaperSelectionByIdentity = new Map()", render_body)
         self.assertIn("visiblePaperSelectionByIdentity.set", render_body)
-        self.assertIn("restoreLinkedPaperSelection(", render_body)
+        self.assertIn("reconcilePersistentSelectionAfterFilter(", render_body)
         self.assertIn("filteredSets.matchingPaperIdentities", render_body)
 
     def test_marker_handlers_are_rebuilt_once_and_ai_summary_is_absent(self):

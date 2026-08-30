@@ -171,14 +171,15 @@ copySelectedPaperUrl().then(url => console.log(JSON.stringify({{url, copied}})))
             self.app.index("\nfunction renderActiveFilterChips")
         ]
         hover = self.app[
-            self.app.index("function setHoveredSelection"):
-            self.app.index("\nfunction setPersistentSelection")
+            self.app.index("function activateHoverPreview"):
+            self.app.index("\nfunction clearHoverPreview")
         ]
         self.assertIn("restoreViewStateFromLocation()", popstate)
         self.assertIn("parseViewState(window.location.search)", restore_location)
         self.assertEqual(restore_location.count("renderRecords();"), 1)
         self.assertNotIn("requestedPaperIdentity", hover)
         self.assertNotIn("syncUrlFromState", hover)
+        self.assertIn("markerHoverIntent.schedule", hover)
 
     def test_render_reuses_existing_identity_indexes_and_filter_match_set(self):
         pipeline = self.app[
@@ -186,7 +187,7 @@ copySelectedPaperUrl().then(url => console.log(JSON.stringify({{url, copied}})))
             self.app.index("\n// A category is active")
         ]
         restore = self.function_source(
-            "restoreLinkedPaperSelection", "activateHoverPreview"
+            "restoreLinkedPaperSelection", "reconcilePersistentSelectionAfterFilter"
         )
         self.assertIn("visiblePaperSelectionByIdentity.set", pipeline)
         self.assertIn("filteredSets.matchingPaperIdentities", pipeline)

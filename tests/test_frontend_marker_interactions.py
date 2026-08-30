@@ -145,27 +145,57 @@ process.stdout.write(JSON.stringify({attributes, activations, prevented, stopped
         self.assertEqual(values["prevented"], 2)
         self.assertEqual(values["stopped"], 2)
 
-    def test_explicit_pin_state_and_pointer_transition_guards_are_wired(self):
+    def test_explicit_semantic_state_and_institution_modes_are_wired(self):
         app = (REPOSITORY / "web" / "app.js").read_text()
         html = (REPOSITORY / "web" / "index.html").read_text()
         css = (REPOSITORY / "web" / "style.css").read_text()
 
         for field in (
-            "hoveredMarkerId", "selectedMarkerId", "detailsSource",
-            "isPointerInsideDetails",
+            "selectedPaperId", "contextualInstitutionId", "pinnedMapMarkerId",
+            "mapParentMarkerId", "detailMode", "selectionSource", "transientHover",
         ):
             self.assertIn(field, app)
-        self.assertIn("paperDetails.contains(relatedTarget)", app)
-        self.assertIn('paperDetails.addEventListener("pointerenter"', app)
-        self.assertIn('paperDetails.addEventListener("pointerleave"', app)
+        self.assertNotIn("isPointerInsideDetails", app)
+        self.assertIn('paperDetailsHeading.textContent = "Institution Papers"', app)
+        self.assertIn('paperDetailsHeading.textContent = "Paper Details"', app)
+        self.assertIn("markerHoverIntent.cancel()", app)
         self.assertIn('element?.setAttribute("aria-pressed", String(isOrigin))', app)
-        self.assertIn("interactionState.selectedMarkerId === institutionKey", app)
-        self.assertIn("restoreLinkedPaperSelection", app)
+        self.assertIn("reconcilePersistentSelectionAfterFilter", app)
         self.assertIn("visiblePaperSelectionByIdentity", app)
         self.assertIn("paper-details-pin-status", html)
         self.assertIn("Pinned", html)
         self.assertIn(".leaflet-interactive.is-paper-pinned", css)
         self.assertIn("stroke-dasharray", css)
+
+    def test_hover_intent_is_delayed_and_stale_callbacks_are_invalidated(self):
+        helper = REPOSITORY / "web" / "marker_interaction_helpers.js"
+        script = r"""
+const helpers = require(process.argv[1]);
+const pending = [];
+const cancelled = new Set();
+const controller = helpers.createHoverIntentController({
+  delay: 125,
+  setTimer(callback, delay) { pending.push({callback, delay}); return pending.length - 1; },
+  clearTimer(timer) { cancelled.add(timer); },
+});
+const calls = [];
+controller.schedule(() => calls.push('A'));
+controller.schedule(() => calls.push('B'));
+pending[0].callback();
+pending[1].callback();
+controller.schedule(() => calls.push('stale'));
+controller.runNow(() => calls.push('click'));
+pending[2].callback();
+process.stdout.write(JSON.stringify({calls, delays: pending.map(x => x.delay), cancelled: [...cancelled]}));
+"""
+        result = subprocess.run(
+            [str(NODE), "-e", script, str(helper)], check=True,
+            capture_output=True, text=True,
+        )
+        values = json.loads(result.stdout)
+        self.assertEqual(values["calls"], ["B", "click"])
+        self.assertEqual(values["delays"], [125, 125, 125])
+        self.assertEqual(values["cancelled"], [0, 2])
 
 
 if __name__ == "__main__":

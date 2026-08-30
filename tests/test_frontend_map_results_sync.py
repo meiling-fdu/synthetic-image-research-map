@@ -146,14 +146,16 @@ console.log(JSON.stringify(
             self.app.index("const interactionState = {"):
             self.app.index("\nlet activeInstitutionTooltipMarker")
         ]
-        self.assertIn("hovered: null", state)
-        self.assertIn("selected: null", state)
+        self.assertIn("transientHover: null", state)
+        self.assertIn("selectedPaperId: null", state)
+        self.assertIn('detailMode: "empty"', state)
         active = self.app[
             self.app.index("function renderActiveSelection"):
-            self.app.index("\nfunction setHoveredSelection")
+            self.app.index("\nfunction clearHoveredSelection")
         ]
-        self.assertIn("interactionState.selected || interactionState.hovered", active)
-        self.assertIn("interactionState.hovered || interactionState.selected", active)
+        self.assertIn('interactionState.detailMode === "paper"', active)
+        self.assertIn('interactionState.detailMode === "institution-papers"', active)
+        self.assertIn('interactionState.detailMode === "empty"', active)
         self.assertIn("syncResultHighlights()", active)
         self.assertIn(".result-item.is-interaction-hovered", self.css)
         self.assertIn(".result-item.is-interaction-selected", self.css)
@@ -185,14 +187,14 @@ console.log(JSON.stringify(
             self.app.index("function renderRecordsForGeneration"):
             self.app.index("\n// A category is active")
         ]
-        self.assertIn("restoreLinkedPaperSelection(", render)
+        self.assertIn("reconcilePersistentSelectionAfterFilter(", render)
         self.assertIn("filteredSets.matchingPaperIdentities", render)
         self.assertIn('linkedPaperState === "unavailable"', render)
         view = self.app[
             self.app.index("function selectResultsView"):
             self.app.index("\nfunction baseMapStatusText")
         ]
-        self.assertIn("interactionState.hovered = null", view)
+        self.assertIn("interactionState.transientHover = null", view)
         self.assertNotIn("clearPaperInteraction", view)
         results = self.app[
             self.app.index("function renderResults"):

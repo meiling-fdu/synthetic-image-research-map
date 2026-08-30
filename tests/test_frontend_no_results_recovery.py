@@ -120,6 +120,7 @@ const maxYearFilter = {{value: '2026'}};
 const yearRangeBounds = {{minimum: 2018, maximum: 2026}};
 let activeInstitutionFilter = null;
 let requestedPaperIdentity = 'paper:kept';
+const interactionState = {{detailMode: 'empty', pinnedMapMarkerId: null}};
 let resultsView = 'papers';
 const sortControl = {{value: 'title-asc'}};
 let lastKnownFilterState = null;
