@@ -2004,6 +2004,45 @@ input:disabled {
   font-weight: 800;
 }
 
+.institution-hierarchy-context {
+  display: grid;
+  gap: 5px;
+  margin: 7px 0 9px;
+  border-left: 2px solid var(--separator-line);
+  padding-left: 8px;
+}
+
+.institution-hierarchy-context .institution-parent-relationship {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.4;
+}
+
+.institution-hierarchy-link {
+  font-size: inherit;
+  text-align: left;
+}
+
+.institution-hierarchy-type {
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.institution-subunits h4 {
+  margin: 0 0 3px;
+}
+
+.institution-subunits ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.72rem;
+  line-height: 1.35;
+}
+
 .institution-preview-hint {
   margin-top: 12px !important;
   font-weight: 700;

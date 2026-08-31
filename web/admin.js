@@ -3846,14 +3846,20 @@ async function confirmLocation(event) {
   setLocationSaveRunning(true);
   try {
     const canonicalMode = state.locationEditorMode === "canonical";
+    const selectedReview = state.locationReviews.find(
+      (row) => row.queue_id === state.selectedLocationReviewId
+    );
+    const canonicalPersistence = canonicalMode
+      || selectedReview?.review_row_persisted === false;
     const boundInstitutionId = state.selectedInstitutionLocationId;
-    const result = await apiFetch(canonicalMode
+    const result = await apiFetch(canonicalPersistence
       ? `/api/admin/institutions/${encodeURIComponent(boundInstitutionId)}/confirm-location`
       : "/api/location-review/confirm", {
       method: "POST",
-      body: JSON.stringify(canonicalMode ? {
+      body: JSON.stringify(canonicalPersistence ? {
         location_id: elements["confirmed-location-record"].value,
-        create_new_location: !elements["confirmed-location-record"].value,
+        create_new_location: canonicalMode
+          && !elements["confirmed-location-record"].value,
         city: draft.confirmed_city,
         region: draft.confirmed_region,
         country: draft.confirmed_country,
@@ -3864,7 +3870,7 @@ async function confirmLocation(event) {
       } : draft),
     });
     showNotice(result.message);
-    if (canonicalMode) {
+    if (canonicalPersistence) {
       const institution = state.institutions.find(
         (row) => row.institution_id === boundInstitutionId
       );
@@ -3885,6 +3891,7 @@ async function confirmLocation(event) {
         aliases: (institution?.aliases || []).map((alias_name) => ({ alias_name })),
       });
       renderInstitutionManagement();
+      await Promise.all([refreshInstitutions(), loadLocationReviews()]);
     } else {
       patchLocationReviewRecord(result.queue_row, result.location);
     }

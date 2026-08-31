@@ -2361,10 +2361,6 @@ function institutionFilterIndexes() {
 function institutionIdentityWithDescendants(identity, hierarchyIndex) {
   const identities = new Set(identity ? [identity] : []);
   if (!identity) return identities;
-  const isSpecificChild = [...hierarchyIndex.values()].some((children) => (
-    children.has(identity)
-  ));
-  if (isSpecificChild) return identities;
   const pending = [...(hierarchyIndex.get(identity) || [])];
   while (pending.length) {
     const child = pending.pop();
@@ -2431,6 +2427,61 @@ function hierarchyInstitutionLabel(identity, relationships) {
     }
   }
   return "";
+}
+
+function institutionHierarchyContext(identity, relationships) {
+  let parent = null;
+  const children = [];
+  relationships.forEach((relationship) => {
+    if (relationship.review_status !== "confirmed") return;
+    const parentIdentity = institutionIdentity({
+      institution_id: relationship.parent_institution_id,
+    });
+    const childIdentity = institutionIdentity({
+      institution_id: relationship.child_institution_id,
+    });
+    if (childIdentity === identity) {
+      parent = {
+        id: relationship.parent_institution_id,
+        identity: parentIdentity,
+        name: relationship.parent_institution_name,
+        type: relationship.parent_institution_type,
+      };
+    }
+    if (parentIdentity === identity) {
+      children.push({
+        id: relationship.child_institution_id,
+        identity: childIdentity,
+        name: relationship.child_institution_name,
+        type: relationship.child_institution_type,
+      });
+    }
+  });
+  children.sort((first, second) => compareTextValues(first.name, second.name));
+  return { parent, children };
+}
+
+function institutionHierarchyButtonHtml(institution) {
+  if (!institution?.identity || !institution?.name) return "";
+  const typeLabel = institution.type
+    ? ` <span class="institution-hierarchy-type">(${escapeHtml(institutionTypeLabel(institution.type))})</span>`
+    : "";
+  return `<button type="button" class="institution-filter-link institution-hierarchy-link" data-institution-filter="${escapeHtml(institution.identity)}" data-institution-label="${escapeHtml(institution.name)}">${escapeHtml(institution.name)}</button>${typeLabel}`;
+}
+
+function institutionHierarchyContextHtml(record) {
+  const context = institutionHierarchyContext(
+    institutionIdentity(record), institutionHierarchy,
+  );
+  const parent = context.parent
+    ? `<p class="institution-parent-relationship">Part of ${institutionHierarchyButtonHtml(context.parent)}</p>`
+    : "";
+  const children = context.children.length
+    ? `<section class="institution-subunits" aria-label="Direct subunits"><h4>Subunits</h4><ul>${context.children.map((child) => `<li>${institutionHierarchyButtonHtml(child)}</li>`).join("")}</ul></section>`
+    : "";
+  return parent || children
+    ? `<div class="institution-hierarchy-context">${parent}${children}</div>`
+    : "";
 }
 
 function yearFilterValue(input) {
@@ -4623,6 +4674,7 @@ function institutionPreviewHtml(markerEntry) {
     <section class="institution-preview" aria-label="Institution preview">
       <h3>${escapeHtml(recordInstitution(markerEntry.record) || "Unknown institution")}</h3>
       ${institutionLocationText(markerEntry) ? `<p>${escapeHtml(institutionLocationText(markerEntry))}</p>` : ""}
+      ${institutionHierarchyContextHtml(markerEntry.record)}
       <p class="institution-paper-count">${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(markerEntry.paperCount))}</p>
       ${papers.length ? `<h4>Recent papers</h4><ul>${papers.map((paper) => `<li>${paperTitleHtml(paper)}</li>`).join("")}</ul>` : ""}
       <p class="institution-preview-hint">Click marker to inspect its papers.</p>
@@ -4647,6 +4699,7 @@ function showInstitutionPapers(markerEntry, { preserveScroll = false } = {}) {
     <section class="institution-papers" aria-labelledby="institution-papers-name">
       <h3 id="institution-papers-name">${escapeHtml(recordInstitution(markerEntry.record) || "Unknown institution")}</h3>
       ${institutionLocationText(markerEntry) ? `<p>${escapeHtml(institutionLocationText(markerEntry))}</p>` : ""}
+      ${institutionHierarchyContextHtml(markerEntry.record)}
       <p class="institution-paper-count">${escapeHtml(MarkerSizeHelpers.formatInstitutionPaperCount(papers.length))}</p>
       <h4>Papers</h4>
       <ol class="institution-paper-list">${visiblePapers.map((paper) => institutionPaperRowHtml(paper, markerEntry)).join("")}</ol>
