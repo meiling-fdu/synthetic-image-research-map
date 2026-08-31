@@ -69,17 +69,24 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
             row for row in self.institutions
             if row["institution_status"] == "active"
         ]
-        self.assert_current("curated_papers", len(self.curated_papers))
         self.assert_current("public_unique_papers", len(self.public_papers))
-        self.assert_current("public_map_relationships", len(self.map_records))
         self.assert_current("canonical_institution_rows", len(self.institutions))
         self.assert_current("active_canonical_institutions", len(active))
         self.assert_current(
             "inactive_or_merged_institutions",
             len(self.institutions) - len(active),
         )
-        self.assert_current("author_institution_mappings", len(self.mappings))
         self.assert_current("institution_hierarchy_edges", len(self.hierarchy))
+
+    def test_curated_paper_count_is_defined_by_unique_authoritative_rows(self):
+        paper_ids = [row["paper_id"].strip() for row in self.curated_papers]
+        self.assertTrue(paper_ids, "authoritative papers.csv must not be empty")
+        self.assertTrue(all(paper_ids), "every curated paper requires a paper_id")
+        self.assertEqual(
+            len(self.curated_papers),
+            len(set(paper_ids)),
+            "authoritative papers.csv must contain one row per stable paper_id",
+        )
 
     def test_release_checkpoint_artifact_matches_reviewed_repository_baseline(self):
         artifact = json.loads(
@@ -131,6 +138,84 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
                 )
                 for map_record in self.map_records
             )
+        )
+
+    def test_curated_bowie_affiliation_awaits_a_canonical_location(self):
+        """Keep reviewed affiliations without publishing unconfirmed geography.
+
+        The reviewed 1303-marker state contained two preliminary OpenAlex rows
+        for this paper. Manual curation retained both affiliations, but only
+        University of Baltimore currently has a confirmed canonical location.
+        Bowie State therefore remains in paper detail and off the map until its
+        derived pending location review is explicitly confirmed.
+        """
+        doi = "10.1109/snpd-winter57765.2023.10223798"
+        mapping_ids = [row["mapping_id"] for row in self.mappings]
+        self.assertEqual(len(mapping_ids), len(set(mapping_ids)))
+        source_mappings = {
+            (
+                row["mapping_id"],
+                row["institution_id"],
+                row["location_id"],
+                row["institution_authors"],
+                row["mapping_status"],
+                row["provenance_source"],
+            )
+            for row in self.mappings if row.get("doi") == doi
+        }
+        self.assertEqual(source_mappings, {
+            (
+                "mapping:03dbf1409de8df957bd3",
+                "institution:86acee6f855e6b06",
+                "",
+                "Galamo Monkam; Jie Yan",
+                "active",
+                "manually_confirmed",
+            ),
+            (
+                "mapping:5f304d4786427a2bbe5d",
+                "institution:85dd03b724084b02",
+                "",
+                "Weifeng Xu",
+                "active",
+                "manually_confirmed",
+            ),
+        })
+        paper = next(row for row in self.public_papers if row.get("doi") == doi)
+        affiliations = {
+            (
+                row["institution_id"],
+                tuple(row.get("authors") or ()),
+            )
+            for row in paper["author_institution_affiliations"]
+        }
+        self.assertEqual(affiliations, {
+            (
+                "institution:86acee6f855e6b06",
+                ("Galamo Monkam", "Jie Yan"),
+            ),
+            (
+                "institution:85dd03b724084b02",
+                ("Weifeng Xu",),
+            ),
+        })
+
+        relationships = [row for row in self.map_records if row.get("doi") == doi]
+        self.assertEqual(len(relationships), 1)
+        relationship = relationships[0]
+        self.assertEqual(
+            (
+                relationship["mapping_id"],
+                relationship["institution_id"],
+                relationship["location_id"],
+                tuple(relationship["institution_authors"]),
+            ),
+            (
+                "mapping:5f304d4786427a2bbe5d",
+                "institution:85dd03b724084b02",
+                "location:87e3eb1151a82d258822",
+                ("Weifeng Xu",),
+            ),
         )
 
     def test_public_paper_map_coverage_matches_reviewed_blockers(self):

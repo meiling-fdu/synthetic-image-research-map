@@ -11,10 +11,31 @@ from scripts.curated_export import (
     build_curated_map_records,
     integrate_curated_records,
 )
-from scripts.export_public_preview import add_public_detail_fields
+from scripts.export_public_preview import (
+    add_public_detail_fields,
+    existing_location_review_updates,
+)
 
 
 class CuratedLocationResolutionTests(unittest.TestCase):
+    def test_export_updates_real_review_rows_without_persisting_derived_rows(self):
+        original = [{
+            "institution": "Existing University",
+            "institution_id": "institution:existing",
+            "related_paper_id": "paper:existing",
+            "review_status": "pending_review",
+        }]
+        updated = [{**original[0], "review_status": "confirmed"}, {
+            "institution": "Derived University",
+            "institution_id": "institution:derived",
+            "related_paper_id": "paper:derived",
+            "review_status": "pending_review",
+        }]
+        self.assertEqual(
+            existing_location_review_updates(original, updated),
+            [{**original[0], "review_status": "confirmed"}],
+        )
+
     def test_curated_paper_and_marker_preserve_canonical_venue_track(self):
         curated = _curated_paper_record(
             {

@@ -57,6 +57,7 @@ try:
     from .curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
+        queue_row_id,
     )
     from .curated_institutions import (
         DEFAULT_AUDIT_PATH,
@@ -154,6 +155,7 @@ except ImportError:  # Direct execution from the scripts directory.
     from curated_locations import (
         DEFAULT_INSTITUTION_LOCATIONS_PATH,
         load_confirmed_locations,
+        queue_row_id,
     )
     from curated_institutions import (
         DEFAULT_AUDIT_PATH,
@@ -2961,6 +2963,18 @@ def validate_proposed_public_outputs(
         )
 
 
+def existing_location_review_updates(
+    original_rows: Sequence[Mapping[str, Any]],
+    integrated_rows: Sequence[Mapping[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Keep updates to real rows without persisting derived Admin tasks."""
+    persisted_ids = {queue_row_id(row) for row in original_rows}
+    return [
+        dict(row) for row in integrated_rows
+        if queue_row_id(row) in persisted_ids
+    ]
+
+
 def commit_public_outputs(
     output: Path,
     payload: Dict[str, Any],
@@ -3276,6 +3290,7 @@ def public_institution_aliases(
 def public_canonical_institution_search_index(
     institutions: Sequence[Dict[str, Any]],
     aliases: Sequence[Dict[str, str]],
+    hierarchy: Sequence[Dict[str, str]] = (),
 ) -> Dict[str, Dict[str, Any]]:
     """Build an active-only canonical-name index for public institution search.
 
@@ -3306,6 +3321,14 @@ def public_canonical_institution_search_index(
         if institution_id in names_by_id and alias_name:
             names_by_id[institution_id].append(alias_name)
 
+    parent_by_child = {
+        clean_text(row.get("child_institution_id")): row
+        for row in hierarchy
+        if clean_text(row.get("review_status")) == "confirmed"
+        and clean_text(row.get("child_institution_id")) in active
+        and clean_text(row.get("parent_institution_id")) in active
+    }
+
     result: Dict[str, Dict[str, Any]] = {}
     for institution_id, names in names_by_id.items():
         unique_names: Dict[str, str] = {}
@@ -3313,9 +3336,18 @@ def public_canonical_institution_search_index(
             normalized = normalize_institution_lookup(name)
             if normalized:
                 unique_names.setdefault(normalized, name)
+        parent = parent_by_child.get(institution_id, {})
+        parent_id = clean_text(parent.get("parent_institution_id"))
         result[institution_id] = {
             "canonical_name": active[institution_id]["canonical_name"],
             "institution_type": active[institution_id]["institution_type"],
+            "parent_institution_id": parent_id,
+            "parent_institution_name": clean_text(
+                parent.get("parent_institution_name")
+            ),
+            "parent_institution_type": (
+                active[parent_id]["institution_type"] if parent_id else ""
+            ),
             "names": list(unique_names.values()),
             "normalized_names": list(unique_names),
         }
@@ -3339,6 +3371,13 @@ def public_institution_hierarchy(
         if clean_text(row.get("institution_status")) == "active"
         and clean_text(row.get("institution_id"))
         and clean_text(row.get("canonical_name"))
+    }
+    status_by_id = {
+        clean_text(row.get("institution_id")): clean_text(
+            row.get("institution_status")
+        )
+        for row in institutions
+        if clean_text(row.get("institution_id"))
     }
     names_by_id.update({
         institution_id: institution_display_name(row)
@@ -3376,30 +3415,75 @@ def public_institution_hierarchy(
         parent_id = clean_text(row.get("parent_institution_id"))
         child_id = clean_text(row.get("child_institution_id"))
         key = (parent_id, child_id)
-        if (
-            clean_text(row.get("review_status")) != "confirmed"
-            or clean_text(row.get("relationship_type")) != "affiliated_institute"
-            or (
-                bool(active_by_id)
-                and (parent_id not in active_by_id or child_id not in active_by_id)
+        if clean_text(row.get("review_status")) != "confirmed":
+            continue
+        if clean_text(row.get("relationship_type")) != "affiliated_institute":
+            continue
+        if parent_id == child_id:
+            raise PreviewExportError(
+                f"Institution hierarchy contains a self-parent relationship: {parent_id}"
             )
-            or parent_id not in names_by_id
-            or child_id not in names_by_id
-            or parent_id == child_id
-            or key in seen
-        ):
+        if active_by_id:
+            for role, institution_id in (("parent", parent_id), ("child", child_id)):
+                status = status_by_id.get(institution_id)
+                if status is None:
+                    raise PreviewExportError(
+                        f"Institution hierarchy has orphan {role} ID: {institution_id}"
+                    )
+                if status != "active":
+                    raise PreviewExportError(
+                        "Institution hierarchy references an inactive/retired "
+                        f"{role} ID: {institution_id} ({status})"
+                    )
+            registry_parent = clean_text(
+                active_by_id[child_id].get("parent_institution_id")
+            )
+            if registry_parent != parent_id:
+                raise PreviewExportError(
+                    "Institution hierarchy disagrees with the canonical registry: "
+                    f"{parent_id} -> {child_id}"
+                )
+        if parent_id not in names_by_id or child_id not in names_by_id or key in seen:
             continue
         seen.add(key)
         exported.append({
             "parent_institution_id": parent_id,
             "parent_institution_name": names_by_id[parent_id],
+            "parent_institution_type": resolve_public_institution_type(
+                active_by_id.get(parent_id, {}).get("institution_type")
+            ),
             "child_institution_id": child_id,
             "child_institution_name": names_by_id[child_id],
+            "child_institution_type": resolve_public_institution_type(
+                active_by_id.get(child_id, {}).get("institution_type")
+            ),
             "relationship_type": "affiliated_institute",
             "review_status": "confirmed",
             "evidence_source": clean_text(row.get("evidence_source")),
             "evidence_url": clean_text(row.get("evidence_url")),
         })
+    children: Dict[str, set[str]] = defaultdict(set)
+    for row in exported:
+        children[row["parent_institution_id"]].add(row["child_institution_id"])
+    visiting: set[str] = set()
+    visited: set[str] = set()
+
+    def visit(institution_id: str) -> None:
+        if institution_id in visiting:
+            raise PreviewExportError(
+                f"Institution hierarchy contains a cycle involving {institution_id}"
+            )
+        if institution_id in visited:
+            return
+        visiting.add(institution_id)
+        for child_id in children.get(institution_id, set()):
+            visit(child_id)
+        visiting.remove(institution_id)
+        visited.add(institution_id)
+
+    for institution_id in set(children).union(*children.values()):
+        visit(institution_id)
+
     return sorted(exported, key=lambda row: (
         normalize_institution_lookup(row["parent_institution_name"]),
         normalize_institution_lookup(row["child_institution_name"]),
@@ -4473,16 +4557,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             source: target for source, target in exported_id_redirects.items()
             if source not in active_institution_ids
         }
-        canonical_institution_search_index = (
-            public_canonical_institution_search_index(
-                institution_rows,
-                exported_aliases,
-            )
-        )
         exported_hierarchy = public_institution_hierarchy(
             institution_hierarchy_rows,
             confirmed_location_rows,
             institution_rows,
+        )
+        canonical_institution_search_index = (
+            public_canonical_institution_search_index(
+                institution_rows,
+                exported_aliases,
+                exported_hierarchy,
+            )
         )
         exported_search_relationships = public_institution_search_relationships(
             institution_search_relationship_rows,
@@ -4847,9 +4932,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         )
         if not args.dry_run:
             try:
-                if integrated_location_reviews != location_review_rows:
+                persisted_location_reviews = existing_location_review_updates(
+                    location_review_rows, integrated_location_reviews
+                )
+                if persisted_location_reviews != location_review_rows:
                     save_location_review_queue(
-                        integrated_location_reviews,
+                        persisted_location_reviews,
                         args.location_review,
                     )
             except CuratedExportError:

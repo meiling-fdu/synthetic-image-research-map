@@ -77,8 +77,10 @@ try:
         location_review_payload,
         load_confirmed_locations,
         load_institution_aliases,
+        load_location_review_queue,
         normalize_institution_name,
         mark_queue_row,
+        queue_row_id,
     )
     from .curated_institutions import (
         DEFAULT_AUDIT_PATH,
@@ -212,8 +214,10 @@ except ImportError:
         location_review_payload,
         load_confirmed_locations,
         load_institution_aliases,
+        load_location_review_queue,
         normalize_institution_name,
         mark_queue_row,
+        queue_row_id,
     )
     from curated_institutions import (
         DEFAULT_AUDIT_PATH,
@@ -1778,6 +1782,63 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     return parser.parse_args(argv)
 
 
+def confirm_location_review_or_canonical(
+    payload: Mapping[str, Any],
+    *,
+    institution_locations_path: Path,
+    location_review_path: Path,
+    institutions_path: Path,
+    mappings_path: Path,
+    institution_aliases_path: Path,
+    institution_audit_path: Path,
+    institution_location_audit_path: Path,
+) -> Dict[str, Any]:
+    """Persist a real queue decision or its canonical derived equivalent."""
+    queue_id = clean(payload.get("queue_id"))
+    persisted_queue_ids = {
+        queue_row_id(row)
+        for row in load_location_review_queue(location_review_path)
+    }
+    if queue_id in persisted_queue_ids:
+        return create_or_update_confirmed_location(
+            queue_id,
+            payload,
+            locations_path=institution_locations_path,
+            review_path=location_review_path,
+            institutions_path=institutions_path,
+            mappings_path=mappings_path,
+            aliases_path=institution_aliases_path,
+            institution_audit_path=institution_audit_path,
+        )
+    identifier = clean(payload.get("institution_id"))
+    had_canonical_location = any(
+        clean(row.get("institution_id")) == identifier
+        for row in load_confirmed_locations(institution_locations_path)
+    )
+    location = update_institution_location(
+        identifier,
+        {
+            "institution_id": identifier,
+            "city": payload.get("confirmed_city"),
+            "region": payload.get("confirmed_region"),
+            "country": payload.get("confirmed_country"),
+            "country_code": payload.get("confirmed_country_code"),
+            "lat": payload.get("confirmed_lat"),
+            "lon": payload.get("confirmed_lon"),
+            "coordinate_status": "known",
+        },
+        institutions_path=institutions_path,
+        locations_path=institution_locations_path,
+        location_reviews_path=location_review_path,
+        location_audit_path=institution_location_audit_path,
+    )
+    return {
+        "action": "updated" if had_canonical_location else "created",
+        "location": location,
+        "canonical_confirmation": True,
+    }
+
+
 def make_handler(
     token: str,
     exclusions_path: Path = CURATED_EXCLUSIONS_PATH,
@@ -3066,12 +3127,33 @@ def make_handler(
                         "cities": [clean(payload.get("city") or location.get("city")), *[
                             clean(row.get("suggested_city")) for row in reviews
                         ], *[clean(row.get("institution_city")) for row in mappings]],
+                        "authoritative_cities": [
+                            clean(location.get("city")),
+                            *[
+                                clean(row.get("institution_city")) for row in mappings
+                                if clean(row.get("institution_latitude"))
+                                and clean(row.get("institution_longitude"))
+                            ],
+                        ],
                         "countries": [clean(payload.get("country") or location.get("country")), *[
                             clean(row.get("suggested_country")) for row in reviews
                         ], *[clean(row.get("institution_country")) for row in mappings]],
                         "country_codes": [
                             clean(payload.get("country_code") or location.get("country_code")).upper(),
                             *[clean(row.get("source_country_code")).upper() for row in mappings],
+                        ],
+                        "coordinates": [
+                            {"lat": row.get("lat"), "lon": row.get("lon")}
+                            for row in [location]
+                            if clean(row.get("lat")) and clean(row.get("lon"))
+                        ] + [
+                            {
+                                "lat": row.get("institution_latitude"),
+                                "lon": row.get("institution_longitude"),
+                            }
+                            for row in mappings
+                            if clean(row.get("institution_latitude"))
+                            and clean(row.get("institution_longitude"))
                         ],
                         "affiliation_evidence": [
                             clean(row.get("raw_affiliation")) for row in mappings
@@ -3241,15 +3323,15 @@ def make_handler(
                     with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_LOCATION_WRITE_LOCK:
                         action = location_actions[request.path]
                         if action == "confirm":
-                            result = create_or_update_confirmed_location(
-                                payload.get("queue_id"),
+                            result = confirm_location_review_or_canonical(
                                 payload,
-                                locations_path=institution_locations_path,
-                                review_path=location_review_path,
+                                institution_locations_path=institution_locations_path,
+                                location_review_path=location_review_path,
                                 institutions_path=institutions_path,
                                 mappings_path=mappings_path,
-                                aliases_path=institution_aliases_path,
+                                institution_aliases_path=institution_aliases_path,
                                 institution_audit_path=institution_audit_path,
+                                institution_location_audit_path=institution_location_audit_path,
                             )
                             message = (
                                 "Location saved. Run full refresh pipeline "
@@ -3280,7 +3362,7 @@ def make_handler(
                                 "Location review status saved. "
                                 "No coordinates were created."
                             )
-                except (AdminDataError, CuratedLocationError) as error:
+                except (AdminDataError, CuratedLocationError, CuratedInstitutionError) as error:
                     if isinstance(error, CuratedLocationError):
                         self.send_json(
                             HTTPStatus.BAD_REQUEST,
@@ -4140,6 +4222,63 @@ def make_handler(
                     )
                     return
 
+                if request.path == "/api/paper/mappings/reorder":
+                    paper_id = clean(payload.get("id"))
+                    if not paper_id:
+                        raise AdminDataError("paper id is required")
+                    mapping_ids = payload.get("mapping_ids")
+                    if not isinstance(mapping_ids, list):
+                        raise CuratedMappingError(
+                            "mapping_ids must be a JSON array"
+                        )
+                    if not mapping_ids:
+                        raise CuratedMappingError(
+                            "mapping_ids must be a non-empty JSON array"
+                        )
+                    requested_mapping_ids = [
+                        clean(mapping_id) for mapping_id in mapping_ids
+                    ]
+                    if any(not mapping_id for mapping_id in requested_mapping_ids):
+                        raise CuratedMappingError(
+                            "mapping_ids cannot contain blank values"
+                        )
+                    if len(set(requested_mapping_ids)) != len(requested_mapping_ids):
+                        raise CuratedMappingError(
+                            "mapping_ids must not contain duplicates"
+                        )
+                    # Reorder needs only the persisted mappings. Avoid the full
+                    # Admin paper/venue/public-data pipeline on this hot path.
+                    with INSTITUTION_CLEANUP_WRITE_LOCK, CURATED_MAPPING_WRITE_LOCK:
+                        mapping_rows = load_mappings(mappings_path)
+                        paper = next(
+                            (
+                                row for row in mapping_rows
+                                if clean(row.get("mapping_id"))
+                                in requested_mapping_ids
+                                and display_id(row) == paper_id
+                            ),
+                            None,
+                        )
+                        if paper is None:
+                            self.send_json(
+                                HTTPStatus.NOT_FOUND, {"error": "paper not found"}
+                            )
+                            return
+                        result = reorder_mappings(
+                            paper,
+                            requested_mapping_ids,
+                            mappings_path=mappings_path,
+                        )
+                        reconcile_mapping_changes(
+                            load_mappings(mappings_path),
+                            path=institution_review_queue_path,
+                        )
+                    self.send_json(
+                        HTTPStatus.OK,
+                        {**result, "message": "Affiliation order saved."},
+                    )
+                    return
+
                 _papers, data = load_admin_data(
                     exclusions_path,
                     curated_papers_path,
@@ -4204,19 +4343,6 @@ def make_handler(
                                 }
                                 response_status = HTTPStatus.OK
                                 message = "Curated mapping excluded; audit history preserved."
-                            elif request.path == "/api/paper/mappings/reorder":
-                                mapping_ids = payload.get("mapping_ids")
-                                if not isinstance(mapping_ids, list):
-                                    raise CuratedMappingError(
-                                        "mapping_ids must be a JSON array"
-                                    )
-                                result = reorder_mappings(
-                                    paper,
-                                    mapping_ids,
-                                    mappings_path=mappings_path,
-                                )
-                                response_status = HTTPStatus.OK
-                                message = "Affiliation order saved."
                             else:
                                 drafts = payload.get("mappings")
                                 if not isinstance(drafts, list):

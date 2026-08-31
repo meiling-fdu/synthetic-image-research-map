@@ -483,7 +483,7 @@ process.stdout.write(JSON.stringify({{
         self.assertFalse(result["bare"])
         self.assertEqual(result["boston"], "institution:neu-us")
 
-    def test_confirmed_hierarchy_automatically_expands_top_level_parent(self):
+    def test_confirmed_hierarchy_expands_every_parent_without_parent_or_sibling_leakage(self):
         node = shutil.which("node")
         if node is None:
             self.skipTest("Node.js is not on PATH")
@@ -502,12 +502,14 @@ const parent = 'id:institution:parent';
 const child = 'id:institution:child';
 const grandchild = 'id:institution:grandchild';
 const sibling = 'id:institution:sibling';
+const rejected = 'id:institution:rejected';
 const unrelatedParent = 'id:institution:unrelated-parent';
 const unrelatedChild = 'id:institution:unrelated-child';
 const relationships = [
   {parent_institution_id: 'institution:parent', child_institution_id: 'institution:child', review_status: 'confirmed'},
   {parent_institution_id: 'institution:child', child_institution_id: 'institution:grandchild', review_status: 'confirmed'},
-  {parent_institution_id: 'institution:parent', child_institution_id: 'institution:sibling', review_status: 'pending_review'},
+  {parent_institution_id: 'institution:parent', child_institution_id: 'institution:sibling', review_status: 'confirmed'},
+  {parent_institution_id: 'institution:parent', child_institution_id: 'institution:rejected', review_status: 'pending_review'},
   {parent_institution_id: 'institution:unrelated-parent', child_institution_id: 'institution:unrelated-child', review_status: 'confirmed'},
 ];
 const index = buildInstitutionHierarchyIndex(relationships);
@@ -519,8 +521,9 @@ process.stdout.write(JSON.stringify({
   parentMatchesChildExpanded: recordMatchesInstitutionIdentities(
     {institution_id: 'institution:child'}, expanded, true,
   ),
-  rejectedIncluded: expanded.has(sibling),
+  rejectedIncluded: expanded.has(rejected),
   childIncludesParent: childOnly.has(parent),
+  childIncludesSibling: childOnly.has(sibling),
   unrelatedIncluded: expanded.has(unrelatedParent) || expanded.has(unrelatedChild),
 }));
 '''
@@ -532,11 +535,15 @@ process.stdout.write(JSON.stringify({
             "id:institution:child",
             "id:institution:grandchild",
             "id:institution:parent",
+            "id:institution:sibling",
         ])
-        self.assertEqual(result["childOnly"], ["id:institution:child"])
+        self.assertEqual(result["childOnly"], [
+            "id:institution:child", "id:institution:grandchild",
+        ])
         self.assertTrue(result["parentMatchesChildExpanded"])
         self.assertFalse(result["rejectedIncluded"])
         self.assertFalse(result["childIncludesParent"])
+        self.assertFalse(result["childIncludesSibling"])
         self.assertFalse(result["unrelatedIncluded"])
 
     def test_registry_search_expands_roots_descendants_and_directed_related_institutions(self):
@@ -587,9 +594,9 @@ const searchRelationships = [{
   review_status: 'confirmed',
 }];
 const maps = [
-  {id: 'root-paper', institution_id: rootId, institution: canonicalIndex[rootId].canonical_name},
-  {id: 'campus-paper', institution_id: childId, institution: canonicalIndex[childId].canonical_name},
-  {id: 'guangzhou-paper', institution_id: relatedId, institution: canonicalIndex[relatedId].canonical_name},
+  {id: 'root-paper', institution_id: rootId, institution: canonicalIndex[rootId].canonical_name, latitude: 1, longitude: 2},
+  {id: 'campus-paper', institution_id: childId, institution: canonicalIndex[childId].canonical_name, latitude: 3, longitude: 4},
+  {id: 'guangzhou-paper', institution_id: relatedId, institution: canonicalIndex[relatedId].canonical_name, latitude: 5, longitude: 6},
 ];
 const papers = maps.map(record => ({id: record.id, author_institution_affiliations: [record]})).concat([{
   id: 'guangzhou-review-paper',
@@ -605,6 +612,7 @@ function matches(query) {
   return {
     identities: [...expanded].sort(),
     maps: maps.filter(record => recordMatchesInstitutionIdentities(record, expanded, true)).map(record => record.id).sort(),
+    locations: maps.filter(record => recordMatchesInstitutionIdentities(record, expanded, true)).map(record => [record.id, record.latitude, record.longitude]).sort(),
     papers: papers.filter(record => recordMatchesInstitutionIdentities(record, expanded, false)).map(record => record.id).sort(),
   };
 }
@@ -634,6 +642,11 @@ process.stdout.write(JSON.stringify({
             self.assertEqual(result[key]["identities"], family_ids)
             self.assertEqual(result[key]["maps"], family_maps)
             self.assertEqual(result[key]["papers"], family_papers)
+            self.assertEqual(result[key]["locations"], [
+                ["campus-paper", 3, 4],
+                ["guangzhou-paper", 5, 6],
+                ["root-paper", 1, 2],
+            ])
         for key in ("branchName", "branchAcronym"):
             self.assertEqual(
                 result[key]["identities"],
@@ -765,6 +778,74 @@ process.stdout.write(JSON.stringify({
             self.app.index("function selectResultsView")
         ]
         self.assertIn("currentDisplayedResults", results_source)
+
+        deep_link = self.app[
+            self.app.index("function restoreLinkedPaperSelection"):
+            self.app.index("function activateHoverPreview")
+        ]
+        self.assertIn("matchingPaperIdentities.has(requestedPaperIdentity)", deep_link)
+        self.assertIn('? "open" : "filtered-out"', deep_link)
+
+    def test_institution_context_shows_clickable_direct_parent_and_subunits_only(self):
+        start = self.app.index("function institutionHierarchyContext(")
+        end = self.app.index("\nfunction yearFilterValue", start)
+        source = self.app[start:end]
+        self.assertIn("Part of ${institutionHierarchyButtonHtml(context.parent)}", source)
+        self.assertIn('<h4>Subunits</h4>', source)
+        self.assertIn('data-institution-filter=', source)
+        self.assertIn("context.children.length", source)
+        self.assertNotIn("institutionIdentityWithDescendants", source)
+        self.assertIn("institutionHierarchyContextHtml(markerEntry.record)", self.app)
+
+    def test_hierarchy_filtered_deep_links_use_the_same_matching_paper_ids(self):
+        node = shutil.which("node")
+        if node is None:
+            self.skipTest("Node.js is not on PATH")
+        hierarchy_start = self.app.index("function buildInstitutionHierarchyIndex")
+        hierarchy_end = self.app.index("\nfunction yearFilterValue", hierarchy_start)
+        restore_start = self.app.index("function restoreLinkedPaperSelection")
+        restore_end = self.app.index("\nfunction reconcilePersistentSelectionAfterFilter", restore_start)
+        script = r'''
+function institutionIdentity(record) {
+  return record.institution_id ? `id:${record.institution_id.toLowerCase()}` : "";
+}
+function recordInstitutionIdentities(record) {
+  return new Set((record.affiliations || [record]).map(institutionIdentity));
+}
+''' + self.app[hierarchy_start:hierarchy_end] + self.app[restore_start:restore_end] + r'''
+const relationships = [{
+  parent_institution_id: 'institution:parent',
+  child_institution_id: 'institution:child',
+  review_status: 'confirmed',
+}];
+const papers = [
+  {id: 'paper:descendant', affiliations: [{institution_id: 'institution:child'}]},
+  {id: 'paper:unrelated', affiliations: [{institution_id: 'institution:other'}]},
+];
+const expanded = institutionIdentityWithDescendants(
+  'id:institution:parent', buildInstitutionHierarchyIndex(relationships),
+);
+const matching = new Set(papers.filter(
+  paper => recordMatchesInstitutionIdentities(paper, expanded, false),
+).map(paper => paper.id));
+const canonicalPaperRecordsByIdentity = new Map(papers.map(paper => [paper.id, paper]));
+const interactionState = {};
+let requestedPaperIdentity = 'paper:descendant';
+const descendantState = restoreLinkedPaperSelection(matching);
+requestedPaperIdentity = 'paper:unrelated';
+const unrelatedState = restoreLinkedPaperSelection(matching);
+process.stdout.write(JSON.stringify({
+  matching: [...matching], descendantState, unrelatedState,
+}));
+'''
+        completed = subprocess.run(
+            [node, "-e", script], check=True, capture_output=True, text=True,
+        )
+        self.assertEqual(json.loads(completed.stdout), {
+            "matching": ["paper:descendant"],
+            "descendantState": "open",
+            "unrelatedState": "filtered-out",
+        })
 
     def test_default_institution_counts_and_top_chart_keep_ids_separate(self):
         chart = self.app[

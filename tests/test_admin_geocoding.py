@@ -18,6 +18,7 @@ from scripts.admin_geocoding import (
     normalize_nominatim_candidate,
     normalized_query,
     rank_candidates,
+    resolve_candidate_locality,
 )
 from scripts.serve_admin import make_handler
 from scripts.curated_schema import (
@@ -61,6 +62,76 @@ class FakeProvider:
 
 
 class AdminGeocodingTests(unittest.TestCase):
+    def test_nominatim_locality_precedence_and_supported_fallbacks(self):
+        base = {
+            "display_name": "Example University, Example Place",
+            "lat": "40", "lon": "-75",
+        }
+        cases = [
+            ({"city": "City", "town": "Town"}, "City", "nominatim:city"),
+            ({"town": "Town", "municipality": "Municipality"}, "Town", "nominatim:town"),
+            ({"municipality": "Municipality", "village": "Village"}, "Municipality", "nominatim:municipality"),
+            ({"village": "Village", "borough": "Borough"}, "Village", "nominatim:village"),
+            ({"borough": "Borough"}, "Borough", "nominatim:borough"),
+        ]
+        for address, expected, source in cases:
+            with self.subTest(address=address):
+                candidate = normalize_nominatim_candidate({**base, "address": address})
+                self.assertEqual(candidate["city"], expected)
+                self.assertEqual(candidate["locality_source"], source)
+
+    def test_county_is_never_promoted_to_city(self):
+        candidate = normalize_nominatim_candidate({
+            "display_name": "Example University, Example County",
+            "lat": "40", "lon": "-75",
+            "address": {
+                "municipality": "Example County", "county": "Example County",
+                "country": "United States", "country_code": "us",
+            },
+        })
+        self.assertEqual(candidate["city"], "")
+        self.assertNotIn("county", candidate["locality_fields"])
+
+    def test_raw_affiliation_resolves_missing_city_for_matching_candidate(self):
+        candidate = normalize_nominatim_candidate({
+            "name": "Bowie State University",
+            "display_name": "Bowie State University, Patuxent Riding, Maryland, United States",
+            "lat": "39.0183881", "lon": "-76.7609512",
+            "address": {
+                "university": "Bowie State University",
+                "suburb": "Patuxent Riding",
+                "state": "Maryland", "country": "United States", "country_code": "us",
+            },
+        })
+        ranked = rank_candidates([candidate], {
+            "names": ["Bowie State University"],
+            "region": "Maryland", "country": "United States", "country_code": "US",
+            "affiliation_evidence": [
+                "Department of Computer Science, Bowie State University, Bowie, USA"
+            ],
+        })
+        self.assertEqual(ranked[0]["city"], "Bowie")
+        self.assertEqual(ranked[0]["locality_source"], "raw_affiliation:city")
+        self.assertNotEqual(ranked[0]["city"], "Patuxent Riding")
+        self.assertTrue(ranked[0]["selectable"])
+
+    def test_conflicting_locality_evidence_remains_manual(self):
+        candidate = normalize_nominatim_candidate({
+            "name": "Example University",
+            "display_name": "Example University, Alpha, Maryland, United States",
+            "lat": "39", "lon": "-76",
+            "address": {
+                "university": "Example University", "city": "Alpha",
+                "state": "Maryland", "country": "United States", "country_code": "us",
+            },
+        })
+        resolved = resolve_candidate_locality(candidate, {
+            "names": ["Example University"],
+            "affiliation_evidence": ["Example University, Beta, USA"],
+        })
+        self.assertEqual(resolved["locality_resolution_status"], "conflict")
+        self.assertIn("conflicts", resolved["locality_conflicts"][0])
+
     def test_unique_milan_city_resolution_populates_normalized_geography_only(self):
         result = city_resolution_result({"candidates": [{
             "display_name": "Milano, Lombardia, Italia",

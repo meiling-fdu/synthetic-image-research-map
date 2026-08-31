@@ -621,6 +621,27 @@ def update_institution_location(
         for field in ("city", "region", "country", "country_code")
         if field in draft
     }
+    submitted_country = clean(submitted_geography.get("country"))
+    submitted_country_code = clean(
+        submitted_geography.get("country_code")
+    ).upper()
+    inferred_country_code = country_code_for_name(submitted_country)
+    if submitted_country_code and country_code_for_name(submitted_country_code) != submitted_country_code:
+        raise CuratedInstitutionError(
+            "country_code must identify a supported ISO alpha-2 country"
+        )
+    if submitted_country and submitted_country_code and not inferred_country_code:
+        raise CuratedInstitutionError(
+            "country must be a supported name consistent with country_code"
+        )
+    if (
+        submitted_country and submitted_country_code
+        and inferred_country_code
+        and inferred_country_code != submitted_country_code
+    ):
+        raise CuratedInstitutionError(
+            "country and country_code must identify the same country"
+        )
     normalized_geography = canonical_english_location_fields(submitted_geography)
     if "country" not in submitted_geography and "country_code" not in submitted_geography:
         normalized_geography.pop("country", None)
@@ -693,12 +714,22 @@ def update_institution_location(
             row[field] = clean(draft.get(field))
     if not clean(row.get("country_code")) and clean(row.get("country")):
         row["country_code"] = country_code_for_name(row.get("country"))
-    row["updated_at"] = now
+    persisted_fields = (
+        "city", "region", "country", "country_code", "lat", "lon",
+        "coordinate_status",
+    )
+    location_unchanged = bool(matches) and all(
+        clean(previous.get(field)) == clean(row.get(field))
+        for field in persisted_fields
+    )
+    row["updated_at"] = clean(previous.get("updated_at")) if location_unchanged else now
     required_location_fields = (
         "location_id",
         "institution_id",
         "institution",
         "normalized_institution",
+        "city",
+        "country",
         "country_code",
         "lat",
         "lon",
@@ -713,6 +744,10 @@ def update_institution_location(
     if not re.fullmatch(r"[A-Z]{2}", clean(row.get("country_code"))):
         raise CuratedInstitutionError(
             "country_code must be two uppercase letters"
+        )
+    if clean(row.get("coordinate_status")) != "known":
+        raise CuratedInstitutionError(
+            "coordinate_status must be known for a confirmed location"
         )
     try:
         latitude = float(clean(row.get("lat")))
@@ -746,7 +781,7 @@ def update_institution_location(
                     "existing location review row lacks paper provenance"
                 )
         for review in review_matches:
-            review.update({
+            review_values = {
                 "institution_id": identifier,
                 "canonical_institution_name": clean(entity.get("canonical_name")),
                 "suggested_city": clean(row.get("city")),
@@ -754,13 +789,20 @@ def update_institution_location(
                 "review_status": "confirmed",
                 "location_status": "known",
                 "coordinate_status": "known",
-                "updated_at": now,
-            })
+            }
+            review_changed = any(
+                clean(review.get(field)) != clean(value)
+                for field, value in review_values.items()
+            )
+            review.update(review_values)
+            if review_changed:
+                review["updated_at"] = now
     touched_paths = [locations_path]
     if location_reviews_path is not None and review_matches:
         touched_paths.append(location_reviews_path)
     audit_rows = None
     audit = None
+    audit_changed = False
     if location_audit_path is not None:
         if location_audit_path.exists():
             audit_rows = _read(
@@ -807,8 +849,27 @@ def update_institution_location(
             "created_at": now,
             "created_by": clean(draft.get("created_by")) or "local-admin",
         }
-        audit_rows.append(audit)
-        touched_paths.append(location_audit_path)
+        duplicate_audit = next(
+            (
+                existing_audit for existing_audit in reversed(audit_rows)
+                if clean(existing_audit.get("institution_id")) == identifier
+                and all(
+                    clean(existing_audit.get(f"confirmed_{field}"))
+                    == clean(row.get(field))
+                    for field in (
+                        "lat", "lon", "city", "region", "country",
+                        "country_code",
+                    )
+                )
+            ),
+            None,
+        )
+        if duplicate_audit is not None and location_unchanged:
+            audit = duplicate_audit
+        else:
+            audit_rows.append(audit)
+            touched_paths.append(location_audit_path)
+            audit_changed = True
     snapshots = {
         path: path.read_bytes() if path.exists() else None
         for path in touched_paths
@@ -821,7 +882,7 @@ def update_institution_location(
                 INSTITUTION_LOCATION_REVIEW_COLUMNS,
                 reviews,
             )
-        if location_audit_path is not None and audit_rows is not None:
+        if location_audit_path is not None and audit_rows is not None and audit_changed:
             _write(
                 location_audit_path,
                 INSTITUTION_LOCATION_AUDIT_COLUMNS,

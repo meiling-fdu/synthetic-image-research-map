@@ -528,6 +528,31 @@ def _confirmed_location_fields(
     normalized = normalize_institution_name(normalized_institution)
     if not normalized:
         raise CuratedLocationError("confirmed_institution is invalid")
+    submitted_country = clean(
+        draft.get("confirmed_country") or draft.get("country")
+    )
+    submitted_country_code = clean(
+        draft.get("confirmed_country_code") or draft.get("country_code")
+    ).upper()
+    inferred_country_code = country_code_for_name(submitted_country)
+    if (
+        submitted_country_code
+        and country_code_for_name(submitted_country_code) != submitted_country_code
+    ):
+        raise CuratedLocationError(
+            "country_code must identify a supported ISO alpha-2 country"
+        )
+    if submitted_country and submitted_country_code and not inferred_country_code:
+        raise CuratedLocationError(
+            "country must be a supported name consistent with country_code"
+        )
+    if (
+        submitted_country and submitted_country_code and inferred_country_code
+        and inferred_country_code != submitted_country_code
+    ):
+        raise CuratedLocationError(
+            "country and country_code must identify the same country"
+        )
     geographic = canonical_english_location_fields({
         "city": draft.get("confirmed_city") or draft.get("city"),
         "region": draft.get("confirmed_region") or draft.get("region"),
@@ -722,7 +747,14 @@ def create_or_update_confirmed_location(
         values["created_by"] = clean(existing.get("created_by")) or values[
             "created_by"
         ]
-        values["updated_at"] = now
+        location_unchanged = all(
+            clean(existing.get(field)) == clean(values.get(field))
+            for field in INSTITUTION_LOCATION_COLUMNS
+            if field not in {"created_at", "updated_at"}
+        )
+        values["updated_at"] = (
+            clean(existing.get("updated_at")) if location_unchanged else now
+        )
         locations[matches[0]] = values
     else:
         values["created_at"] = now
@@ -731,10 +763,18 @@ def create_or_update_confirmed_location(
 
     # A location action updates location state only. Identity remains owned by
     # institutions.csv and mapping reassignment remains an explicit action.
-    queue_row["review_status"] = "confirmed"
-    queue_row["location_status"] = "known"
-    queue_row["coordinate_status"] = "known"
-    queue_row["updated_at"] = now
+    queue_values = {
+        "review_status": "confirmed",
+        "location_status": "known",
+        "coordinate_status": "known",
+    }
+    queue_changed = any(
+        clean(queue_row.get(field)) != value
+        for field, value in queue_values.items()
+    )
+    queue_row.update(queue_values)
+    if queue_changed:
+        queue_row["updated_at"] = now
     # Historical refreshes may have produced duplicate review rows for the
     # same paper/raw institution under an obsolete ID. They represent the same
     # location decision when the active mapping resolves them to this target.
@@ -746,10 +786,13 @@ def create_or_update_confirmed_location(
             and normalize_institution_name(peer.get("institution"))
             == normalize_institution_name(queue_row.get("institution"))
         ):
-            peer["review_status"] = "confirmed"
-            peer["location_status"] = "known"
-            peer["coordinate_status"] = "known"
-            peer["updated_at"] = now
+            peer_changed = any(
+                clean(peer.get(field)) != value
+                for field, value in queue_values.items()
+            )
+            peer.update(queue_values)
+            if peer_changed:
+                peer["updated_at"] = now
     save_confirmed_locations(locations, locations_path)
     try:
         save_location_review_queue(review_rows, review_path)
@@ -951,6 +994,7 @@ def location_review_payload(
     paper_is_suppressed: Callable[[Mapping[str, Any]], str] | None = None,
 ) -> Dict[str, Any]:
     reviews = load_location_review_queue(review_path)
+    persisted_queue_ids = {queue_row_id(row) for row in reviews}
     locations = load_confirmed_locations(locations_path)
     aliases = load_institution_aliases(aliases_path)
     institutions = load_institutions(institutions_path)
@@ -1175,6 +1219,11 @@ def location_review_payload(
                     if institution_id else aliases_by_canonical.get(canonical_key, [])
                 ),
                 "queue_id": queue_row_id(row),
+                # Some actionable records are derived from active mappings so
+                # canonical institutions without a legacy queue row remain
+                # administratively resolvable.  The client must persist those
+                # through the canonical institution workflow.
+                "review_row_persisted": queue_row_id(row) in persisted_queue_ids,
                 "confirmed_location": matches[0] if len(matches) == 1 else None,
                 "confirmed_locations": [dict(location) for location in matches],
                 "confirmed_location_count": len(matches),

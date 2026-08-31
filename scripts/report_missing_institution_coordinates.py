@@ -81,6 +81,20 @@ def review_is_actionable(row: Mapping[str, str]) -> bool:
     )
 
 
+def mapping_supports_derived_admin_review(row: Mapping[str, str]) -> bool:
+    """Return whether Admin can present a real, evidence-backed location task."""
+    return bool(
+        clean(row.get("institution_id"))
+        and clean(row.get("raw_affiliation"))
+        and (
+            clean(row.get("paper_id"))
+            or clean(row.get("doi"))
+            or clean(row.get("openalex_url"))
+            or (clean(row.get("title")) and clean(row.get("year")))
+        )
+    )
+
+
 def joined(values: Iterable[str]) -> str:
     return " | ".join(dict.fromkeys(value for value in values if value))
 
@@ -158,6 +172,10 @@ def build_audit_rows(
             reviews,
         )
         actionable = [row for row in relevant_reviews if review_is_actionable(row)]
+        derived_admin_review = any(
+            mapping_supports_derived_admin_review(row)
+            for row in public_mappings
+        )
 
         if public_mappings:
             tier = "A_public_referenced"
@@ -165,6 +183,13 @@ def build_audit_rows(
                 actionability = "A_must_be_actionable"
                 export_status = "public_relevant_missing_coordinates"
                 queue_reason = "Actionable location-review row is persisted."
+            elif derived_admin_review:
+                actionability = "A_pending_admin_confirmation"
+                export_status = "pending_manual_location_confirmation"
+                queue_reason = (
+                    "Admin derives an evidence-backed canonical location task; "
+                    "manual confirmation is still required."
+                )
             else:
                 actionability = "C_data_model_inconsistency"
                 export_status = "public_relevant_missing_coordinates_unqueued"

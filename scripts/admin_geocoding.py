@@ -103,12 +103,27 @@ def normalize_nominatim_candidate(row: Mapping[str, Any]) -> Dict[str, Any] | No
     if not display_name:
         return None
     address_data = row.get("address") if isinstance(row.get("address"), Mapping) else {}
-    city = clean(
-        address_data.get("city")
-        or address_data.get("town")
-        or address_data.get("village")
-        or address_data.get("municipality")
+    locality_fields = {
+        field: clean(address_data.get(field))
+        for field in (
+            "city", "town", "municipality", "village", "borough",
+            "suburb", "locality",
+        )
+    }
+    county = clean(address_data.get("county"))
+    county_key = normalized_text(county)
+    for field in locality_fields:
+        locality_key = normalized_text(locality_fields[field])
+        if locality_key and (
+            locality_key == county_key or locality_key.endswith(" county")
+        ):
+            locality_fields[field] = ""
+    city_source = next(
+        (field for field in ("city", "town", "municipality", "village", "borough")
+         if locality_fields[field]),
+        "",
     )
+    city = locality_fields.get(city_source, "")
     region = clean(
         address_data.get("state")
         or address_data.get("region")
@@ -141,6 +156,8 @@ def normalize_nominatim_candidate(row: Mapping[str, Any]) -> Dict[str, Any] | No
         "institution_name": institution,
         "address": display_name,
         "city": city,
+        "locality_source": f"nominatim:{city_source}" if city_source else "",
+        "locality_fields": locality_fields,
         "region": region,
         "country": country,
         "country_code": country_code,
@@ -278,6 +295,174 @@ def _context_values(context: Mapping[str, Any], key: str) -> list[str]:
     return [clean(value)] if clean(value) else []
 
 
+def _unique_text(values: Sequence[Any]) -> list[str]:
+    result = []
+    seen = set()
+    for value in values:
+        cleaned = clean(value)
+        key = normalized_text(cleaned)
+        if cleaned and key and key not in seen:
+            seen.add(key)
+            result.append(cleaned)
+    return result
+
+
+def _context_coordinates(context: Mapping[str, Any]) -> list[tuple[float, float]]:
+    values = context.get("coordinates") or ()
+    if isinstance(values, Mapping):
+        values = [values]
+    result = []
+    for value in values:
+        if isinstance(value, Mapping):
+            latitude, longitude = value.get("lat"), value.get("lon")
+        elif isinstance(value, (list, tuple)) and len(value) == 2:
+            latitude, longitude = value
+        else:
+            continue
+        try:
+            result.append((_coordinate(latitude, -90, 90), _coordinate(longitude, -180, 180)))
+        except ValueError:
+            continue
+    return result
+
+
+def coordinate_distance_km(
+    left: tuple[float, float], right: tuple[float, float]
+) -> float:
+    """Return great-circle distance between two latitude/longitude pairs."""
+    latitude_1, longitude_1 = map(math.radians, left)
+    latitude_2, longitude_2 = map(math.radians, right)
+    delta_latitude = latitude_2 - latitude_1
+    delta_longitude = longitude_2 - longitude_1
+    haversine = (
+        math.sin(delta_latitude / 2) ** 2
+        + math.cos(latitude_1) * math.cos(latitude_2)
+        * math.sin(delta_longitude / 2) ** 2
+    )
+    return 6371.0088 * 2 * math.asin(min(1.0, math.sqrt(haversine)))
+
+
+def affiliation_locality_evidence(
+    affiliations: Sequence[Any], *, excluded_values: Sequence[Any] = ()
+) -> list[str]:
+    """Extract conservative comma-delimited locality evidence from affiliations."""
+    excluded = {normalized_text(value) for value in excluded_values if clean(value)}
+    organization_terms = {
+        "academy", "center", "centre", "college", "department", "faculty",
+        "hospital", "institute", "laboratory", "school", "university",
+    }
+    country_tokens = {
+        "usa", "us", "united states", "united states of america", "uk",
+        "united kingdom",
+    }
+    candidates = []
+    for affiliation in affiliations:
+        for segment in re.split(r"\s*(?:,|;|\|)\s*", clean(affiliation)):
+            value = clean(segment).strip(".()[]")
+            key = normalized_text(value)
+            words = set(key.split())
+            if (
+                not key or key in excluded or key in country_tokens
+                or words & organization_terms or any(character.isdigit() for character in value)
+                or len(words) > 5
+            ):
+                continue
+            candidates.append(value)
+    return _unique_text(candidates)
+
+
+def institution_name_locality_evidence(names: Sequence[Any]) -> list[str]:
+    """Return conservative locality hints encoded in institution names."""
+    hints = []
+    patterns = (
+        r"^University of (.+)$",
+        r"^(.+?) State University$",
+    )
+    for name in names:
+        for pattern in patterns:
+            match = re.fullmatch(pattern, clean(name), flags=re.IGNORECASE)
+            if match:
+                hints.append(clean(match.group(1)))
+                break
+    return _unique_text(hints)
+
+
+def resolve_candidate_locality(
+    candidate: Mapping[str, Any], context: Mapping[str, Any]
+) -> Dict[str, Any]:
+    """Resolve candidate municipality from provider fields and curated evidence."""
+    value = dict(candidate)
+    fields = value.get("locality_fields")
+    fields = dict(fields) if isinstance(fields, Mapping) else {}
+    strong_city = clean(value.get("city"))
+    names = _context_values(context, "names") or _context_values(
+        context, "institution_name"
+    )
+    regions = _context_values(context, "regions") or _context_values(context, "region")
+    countries = _context_values(context, "countries") or _context_values(context, "country")
+    codes = _context_values(context, "country_codes") or _context_values(context, "country_code")
+    curated_cities = _unique_text(
+        _context_values(context, "authoritative_cities")
+        + _context_values(context, "cities")
+        + _context_values(context, "city")
+    )
+    affiliation_cities = affiliation_locality_evidence(
+        _context_values(context, "affiliation_evidence"),
+        excluded_values=(
+            *names, *regions, *countries, *codes,
+            value.get("region"), value.get("country"), value.get("country_code"),
+        ),
+    )
+    name_hints = institution_name_locality_evidence(names)
+    evidence_cities = _unique_text((*curated_cities, *affiliation_cities))
+    weak_localities = _unique_text((fields.get("suburb"), fields.get("locality")))
+
+    locality_conflicts = []
+    if strong_city:
+        conflicting_affiliation = [
+            city for city in affiliation_cities
+            if text_similarity(city, strong_city) < 0.8
+        ]
+        if affiliation_cities and len(conflicting_affiliation) == len(affiliation_cities):
+            locality_conflicts.append(
+                "provider locality conflicts with raw-affiliation locality evidence"
+            )
+    elif len(evidence_cities) == 1:
+        value["city"] = evidence_cities[0]
+        value["locality_source"] = (
+            "curated:city" if curated_cities else "raw_affiliation:city"
+        )
+    elif len(evidence_cities) > 1:
+        mutually_distinct = any(
+            text_similarity(left, right) < 0.8
+            for index, left in enumerate(evidence_cities)
+            for right in evidence_cities[index + 1:]
+        )
+        if mutually_distinct:
+            locality_conflicts.append("multiple plausible locality values remain")
+        else:
+            value["city"] = evidence_cities[0]
+            value["locality_source"] = "curated:city"
+    elif len(weak_localities) == 1 and any(
+        text_similarity(weak_localities[0], hint) >= 0.9 for hint in name_hints
+    ):
+        value["city"] = weak_localities[0]
+        value["locality_source"] = "nominatim:weak-locality-confirmed-by-name"
+
+    value["locality_evidence"] = {
+        "curated": curated_cities,
+        "raw_affiliation": affiliation_cities,
+        "institution_name": name_hints,
+        "weak_provider_localities": weak_localities,
+    }
+    value["locality_conflicts"] = locality_conflicts
+    value["locality_resolution_status"] = (
+        "resolved" if clean(value.get("city")) and not locality_conflicts
+        else "conflict" if locality_conflicts else "manual_review"
+    )
+    return value
+
+
 def rank_candidates(
     candidates: Sequence[Mapping[str, Any]], context: Mapping[str, Any] | None = None
 ) -> list[Dict[str, Any]]:
@@ -291,10 +476,11 @@ def rank_candidates(
         _context_values(evidence, "country_codes") or _context_values(evidence, "country_code")
     )]
     affiliations = _context_values(evidence, "affiliation_evidence")
+    coordinate_evidence = _context_coordinates(evidence)
     unrelated_types = {"house", "road", "residential", "postcode", "neighbourhood"}
     ranked = []
     for raw in candidates:
-        candidate = dict(raw)
+        candidate = resolve_candidate_locality(raw, evidence)
         score = 0.0
         conflicts = []
         factors = []
@@ -334,11 +520,27 @@ def rank_candidates(
             else:
                 score -= 12
                 conflicts.append("region differs from known evidence")
+        if coordinate_evidence:
+            candidate_coordinate = (
+                float(candidate.get("latitude")), float(candidate.get("longitude"))
+            )
+            distance = min(
+                coordinate_distance_km(candidate_coordinate, coordinate)
+                for coordinate in coordinate_evidence
+            )
+            candidate["coordinate_evidence_distance_km"] = round(distance, 3)
+            if distance <= 50:
+                score += 45
+                factors.append("authoritative-coordinate proximity")
+            elif distance > 100:
+                score -= 180
+                conflicts.append("coordinates conflict with authoritative location evidence")
         candidate_name = candidate.get("institution_name") or candidate.get("display_name")
+        name_similarity = 0.0
         if names:
-            similarity = max(text_similarity(candidate_name, value) for value in names)
-            score += similarity * 45
-            if similarity >= 0.75:
+            name_similarity = max(text_similarity(candidate_name, value) for value in names)
+            score += name_similarity * 45
+            if name_similarity >= 0.75:
                 factors.append("institution-name match")
         address_evidence = ", ".join((*cities, *regions, *countries))
         score += text_similarity(candidate.get("address"), address_evidence) * 15
@@ -360,12 +562,28 @@ def rank_candidates(
             )
             if not candidate_code and not candidate_country:
                 conflicts.append("country is unavailable despite confirmed country evidence")
+        locality_conflicts = list(candidate.get("locality_conflicts") or [])
+        if (
+            clean(candidate.get("locality_source")) == "raw_affiliation:city"
+            and names and name_similarity < 0.75
+        ):
+            locality_conflicts.append(
+                "raw-affiliation locality lacks a matching institution candidate"
+            )
+            candidate["city"] = ""
+            candidate["locality_resolution_status"] = "manual_review"
+        conflicts.extend(locality_conflicts)
+        locality_consistent = not locality_conflicts
         candidate.update({
             "score": round(score, 3),
             "ranking_factors": factors,
             "conflicts": conflicts,
             "country_consistent": country_consistent,
-            "selectable": country_consistent,
+            "selectable": (
+                country_consistent and locality_consistent
+                and not any(item.startswith("coordinates conflict") for item in conflicts)
+                and bool(clean(candidate.get("city")))
+            ),
         })
         ranked.append(candidate)
     ranked.sort(key=lambda item: (-float(item.get("score", 0)), clean(item.get("display_name"))))
@@ -396,6 +614,10 @@ def city_resolution_result(
         for candidate in result.get("candidates", ())
         if isinstance(candidate, Mapping)
     ]
+    for candidate in candidates:
+        if typed_city and not clean(candidate.get("city")):
+            candidate["city"] = typed_city
+            candidate["locality_source"] = "admin:typed-city"
     safe = [candidate for candidate in candidates if candidate.get("selectable") is not False]
     groups: OrderedDict[tuple[str, str, str], list[Dict[str, Any]]] = OrderedDict()
     for candidate in safe:

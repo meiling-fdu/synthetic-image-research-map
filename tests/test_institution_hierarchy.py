@@ -1,4 +1,5 @@
 import csv
+import json
 import unittest
 from pathlib import Path
 
@@ -8,10 +9,13 @@ from scripts.export_public_preview import (
     add_public_detail_fields,
     add_paper_institution_search_ids,
     canonicalize_public_institutions,
+    PreviewExportError,
     public_institution_aliases,
+    public_canonical_institution_search_index,
     public_institution_hierarchy,
     public_institution_search_relationships,
 )
+from scripts.curated_export import stable_institution_id
 from scripts.validate_curated_database import (
     validate_institution_hierarchy,
     validate_institution_search_relationships,
@@ -188,6 +192,69 @@ class InstitutionHierarchyTests(unittest.TestCase):
             ],
         )
 
+    def test_every_active_public_institution_exports_direct_parent_metadata(self):
+        institutions = [
+            {"institution_id": "institution:root", "canonical_name": "Root", "institution_type": "university", "institution_status": "active", "parent_institution_id": ""},
+            {"institution_id": "institution:child", "canonical_name": "Child", "institution_type": "research_unit", "institution_status": "active", "parent_institution_id": "institution:root"},
+            {"institution_id": "institution:leaf", "canonical_name": "Leaf", "institution_type": "research_unit", "institution_status": "active", "parent_institution_id": "institution:child"},
+        ]
+        hierarchy = public_institution_hierarchy([], [], institutions)
+        index = public_canonical_institution_search_index(
+            institutions, [], hierarchy
+        )
+
+        self.assertEqual(set(index), {row["institution_id"] for row in institutions})
+        self.assertEqual(index["institution:root"]["parent_institution_id"], "")
+        self.assertEqual(
+            index["institution:child"],
+            {
+                "canonical_name": "Child",
+                "institution_type": "research_unit",
+                "parent_institution_id": "institution:root",
+                "parent_institution_name": "Root",
+                "parent_institution_type": "university",
+                "names": ["Child"],
+                "normalized_names": ["child"],
+            },
+        )
+        self.assertEqual(
+            index["institution:leaf"]["parent_institution_id"],
+            "institution:child",
+        )
+
+    def test_public_hierarchy_export_rejects_structural_invalidity(self):
+        active = lambda institution_id, parent="": {
+            "institution_id": institution_id,
+            "canonical_name": institution_id.split(":", 1)[1],
+            "institution_type": "research_unit",
+            "institution_status": "active",
+            "parent_institution_id": parent,
+        }
+        cases = {
+            "self-parent": [active("institution:self", "institution:self")],
+            "orphan": [active("institution:child", "institution:missing")],
+            "cycle": [
+                active("institution:a", "institution:b"),
+                active("institution:b", "institution:a"),
+            ],
+        }
+        for label, institutions in cases.items():
+            with self.subTest(label=label), self.assertRaises(PreviewExportError):
+                public_institution_hierarchy([], [], institutions)
+
+        institutions = [
+            active("institution:parent"),
+            {**active("institution:retired"), "institution_status": "merged"},
+        ]
+        relationship = [{
+            "parent_institution_id": "institution:parent",
+            "child_institution_id": "institution:retired",
+            "relationship_type": "affiliated_institute",
+            "review_status": "confirmed",
+        }]
+        with self.assertRaises(PreviewExportError):
+            public_institution_hierarchy(relationship, [], institutions)
+
     def test_validator_uses_active_registry_and_rejects_store_disagreement(self):
         institutions = [
             {"institution_id": "institution:certh", "institution_status": "active", "parent_institution_id": ""},
@@ -205,6 +272,33 @@ class InstitutionHierarchyTests(unittest.TestCase):
         institutions[1]["parent_institution_id"] = ""
         validate_institution_hierarchy([relationship], institutions, issues)
         self.assertTrue(any("disagrees with institutions.csv" in issue.message for issue in issues))
+
+    def test_validator_rejects_cycle_orphan_inactive_and_alias_nodes(self):
+        alias_name = "Alias Only Node"
+        alias_id = stable_institution_id(alias_name)
+        institutions = [
+            {"institution_id": "institution:a", "institution_status": "active", "parent_institution_id": "institution:b"},
+            {"institution_id": "institution:b", "institution_status": "active", "parent_institution_id": "institution:a"},
+            {"institution_id": "institution:retired", "institution_status": "merged", "parent_institution_id": ""},
+        ]
+        relationships = [
+            {"parent_institution_id": "institution:a", "child_institution_id": "institution:b", "relationship_type": "affiliated_institute", "review_status": "confirmed"},
+            {"parent_institution_id": "institution:missing", "child_institution_id": "institution:a", "relationship_type": "affiliated_institute", "review_status": "confirmed"},
+            {"parent_institution_id": "institution:a", "child_institution_id": "institution:retired", "relationship_type": "affiliated_institute", "review_status": "confirmed"},
+            {"parent_institution_id": "institution:a", "child_institution_id": alias_id, "relationship_type": "affiliated_institute", "review_status": "confirmed"},
+        ]
+        issues = []
+        validate_institution_hierarchy(
+            relationships,
+            institutions,
+            issues,
+            [{"alias_name": alias_name, "institution_id": "institution:a"}],
+        )
+        messages = [issue.message for issue in issues]
+        self.assertTrue(any("cycle" in message for message in messages))
+        self.assertTrue(any("orphan parent" in message for message in messages))
+        self.assertTrue(any("retired/inactive" in message for message in messages))
+        self.assertTrue(any("aliases cannot be hierarchy nodes" in message for message in messages))
 
     def test_search_relationships_export_separately_from_hierarchy(self):
         institutions = [
@@ -450,8 +544,6 @@ class InstitutionHierarchyTests(unittest.TestCase):
         self.assertNotIn(PARENT_ID, cas_children)
 
     def test_public_preview_uses_parent_for_search_without_duplicate_marker(self):
-        import json
-
         map_payload = json.loads(
             (REPOSITORY / "web/data/public_preview_map_data.json").read_text()
         )
@@ -503,8 +595,6 @@ class InstitutionHierarchyTests(unittest.TestCase):
         self.assertTrue(child_papers.isdisjoint(parent_papers))
 
     def test_information_engineering_public_payload_has_exact_child_papers(self):
-        import json
-
         map_payload = json.loads(
             (REPOSITORY / "web/data/public_preview_map_data.json").read_text()
         )
@@ -548,8 +638,6 @@ class InstitutionHierarchyTests(unittest.TestCase):
             ))
 
     def test_public_affiliations_keep_full_cas_institute_without_parent_split(self):
-        import json
-
         payload = json.loads(
             (REPOSITORY / "web/data/public_preview_papers.json").read_text()
         )
@@ -579,8 +667,6 @@ class InstitutionHierarchyTests(unittest.TestCase):
         self.assertGreater(len(matching_papers), 0)
 
     def test_restored_child_affiliations_do_not_retain_empty_parent_shadow(self):
-        import json
-
         payload = json.loads(
             (REPOSITORY / "web/data/public_preview_papers.json").read_text()
         )
@@ -589,6 +675,55 @@ class InstitutionHierarchyTests(unittest.TestCase):
             names = {row.get("institution") for row in affiliations}
             if CHILD_NAME in names:
                 self.assertNotIn(PARENT_NAME, names)
+
+    def test_committed_public_exports_share_hierarchy_and_direct_parent_metadata(self):
+        map_payload = json.loads(
+            (REPOSITORY / "web/data/public_preview_map_data.json").read_text()
+        )
+        paper_payload = json.loads(
+            (REPOSITORY / "web/data/public_preview_papers.json").read_text()
+        )
+        self.assertEqual(
+            map_payload["institution_hierarchy"],
+            paper_payload["institution_hierarchy"],
+        )
+        self.assertEqual(
+            map_payload["canonical_institution_search_index"],
+            paper_payload["canonical_institution_search_index"],
+        )
+        index = map_payload["canonical_institution_search_index"]
+        for relationship in map_payload["institution_hierarchy"]:
+            child = index[relationship["child_institution_id"]]
+            self.assertEqual(
+                child["parent_institution_id"],
+                relationship["parent_institution_id"],
+            )
+            self.assertEqual(
+                child["parent_institution_name"],
+                relationship["parent_institution_name"],
+            )
+            self.assertEqual(
+                child["parent_institution_type"],
+                relationship["parent_institution_type"],
+            )
+
+    def test_hierarchy_export_does_not_mutate_identity_location_or_curation(self):
+        institutions = self.read_csv("data/curated/institutions.csv")
+        relationships = self.read_csv("data/curated/institution_hierarchy.csv")
+        locations = self.read_csv("data/curated/institution_locations.csv")
+        before = json.dumps(
+            {"institutions": institutions, "relationships": relationships, "locations": locations},
+            sort_keys=True,
+        )
+        exported = public_institution_hierarchy(
+            relationships, locations, institutions
+        )
+        public_canonical_institution_search_index(institutions, [], exported)
+        after = json.dumps(
+            {"institutions": institutions, "relationships": relationships, "locations": locations},
+            sort_keys=True,
+        )
+        self.assertEqual(after, before)
 
 
 if __name__ == "__main__":

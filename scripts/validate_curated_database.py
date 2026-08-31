@@ -786,13 +786,22 @@ def validate_institution_hierarchy(
     relationships: Sequence[Mapping[str, str]],
     institutions: Sequence[Mapping[str, str]],
     issues: List[Issue],
+    aliases: Sequence[Mapping[str, str]] = (),
 ) -> None:
-    known_ids = {
-        clean(row.get("institution_id"))
-        for row in institutions
-        if clean(row.get("institution_status")) == "active"
-        and clean(row.get("institution_id"))
+    status_by_id = {
+        clean(row.get("institution_id")): clean(row.get("institution_status"))
+        for row in institutions if clean(row.get("institution_id"))
     }
+    def alias_node_id(row: Mapping[str, str]) -> str:
+        normalized = normalize_institution(row.get("alias_name"))
+        if not normalized:
+            return ""
+        digest = hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+        return f"institution:{digest}"
+
+    alias_node_ids = {alias_node_id(row) for row in aliases}
+    alias_node_ids.discard("")
+    alias_node_ids.difference_update(status_by_id)
     registry_parents = {
         clean(row.get("institution_id")): clean(row.get("parent_institution_id"))
         for row in institutions
@@ -801,6 +810,46 @@ def validate_institution_hierarchy(
     }
     seen = set()
     children: DefaultDict[str, set[str]] = defaultdict(set)
+
+    def validate_node(
+        institution_id: str, role: str, filename: str, row_number: int | None,
+    ) -> bool:
+        if institution_id in alias_node_ids:
+            add_issue(
+                issues, "ERROR", filename,
+                f"aliases cannot be hierarchy nodes ({role}): {institution_id}",
+                row_number,
+            )
+            return False
+        status = status_by_id.get(institution_id)
+        if status is None:
+            add_issue(
+                issues, "ERROR", filename,
+                f"orphan {role} institution ID: {institution_id}", row_number,
+            )
+            return False
+        if status != "active":
+            add_issue(
+                issues, "ERROR", filename,
+                f"{role} institution ID is retired/inactive: {institution_id} ({status})",
+                row_number,
+            )
+            return False
+        return True
+
+    for row_number, row in enumerate(institutions, start=2):
+        child = clean(row.get("institution_id"))
+        parent = clean(row.get("parent_institution_id"))
+        if not parent or clean(row.get("institution_status")) != "active":
+            continue
+        if parent == child:
+            add_issue(
+                issues, "ERROR", "institutions.csv",
+                "an institution cannot be its own parent", row_number,
+            )
+        if validate_node(parent, "parent", "institutions.csv", row_number):
+            children[parent].add(child)
+
     for row_number, row in enumerate(relationships, start=2):
         parent = clean(row.get("parent_institution_id"))
         child = clean(row.get("child_institution_id"))
@@ -828,13 +877,10 @@ def validate_institution_hierarchy(
                 issues, "ERROR", "institution_hierarchy.csv",
                 "an institution cannot be its own child", row_number,
             )
-        for field, institution_id in (("parent", parent), ("child", child)):
-            if institution_id not in known_ids:
-                add_issue(
-                    issues, "ERROR", "institution_hierarchy.csv",
-                    f"{field} ID is not a confirmed canonical institution: {institution_id}",
-                    row_number,
-                )
+        valid_nodes = all([
+            validate_node(institution_id, field, "institution_hierarchy.csv", row_number)
+            for field, institution_id in (("parent", parent), ("child", child))
+        ])
         if child in registry_parents and registry_parents[child] != parent:
             add_issue(
                 issues, "ERROR", "institution_hierarchy.csv",
@@ -852,7 +898,8 @@ def validate_institution_hierarchy(
                 row_number,
             )
         seen.add(key)
-        children[parent].add(child)
+        if valid_nodes:
+            children[parent].add(child)
 
     def reaches(start: str, target: str, visited: set[str]) -> bool:
         if start == target:
@@ -865,12 +912,15 @@ def validate_institution_hierarchy(
             for child in children.get(start, set())
         )
 
+    reported_cycles = set()
     for parent, direct_children in children.items():
-        if any(reaches(child, parent, set()) for child in direct_children):
+        if (parent not in reported_cycles
+                and any(reaches(child, parent, set()) for child in direct_children)):
             add_issue(
                 issues, "ERROR", "institution_hierarchy.csv",
                 f"confirmed hierarchy contains a cycle involving {parent}",
             )
+            reported_cycles.add(parent)
 
 
 def validate_institution_search_relationships(
@@ -1640,7 +1690,7 @@ def main() -> int:
             row.get("normalized_institution")
         )] = row
     validate_institution_aliases(aliases, confirmed_locations, issues, institutions)
-    validate_institution_hierarchy(hierarchy, institutions, issues)
+    validate_institution_hierarchy(hierarchy, institutions, issues, aliases)
     validate_institution_search_relationships(
         search_relationships, institutions, issues
     )

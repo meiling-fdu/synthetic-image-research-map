@@ -25,7 +25,9 @@ try:
     )
     from .paper_exclusions import build_active_exclusion_index, record_is_excluded, records_share_any_identity
     from .public_relationships import canonical_author_names, clean
-    from .report_missing_institution_coordinates import read_csv, review_is_actionable
+    from .report_missing_institution_coordinates import (
+        mapping_supports_derived_admin_review, read_csv, review_is_actionable,
+    )
 except ImportError:
     from curated_export import (
         _coordinate_match_for_keys, _institution_location_keys,
@@ -34,7 +36,9 @@ except ImportError:
     )
     from paper_exclusions import build_active_exclusion_index, record_is_excluded, records_share_any_identity
     from public_relationships import canonical_author_names, clean
-    from report_missing_institution_coordinates import read_csv, review_is_actionable
+    from report_missing_institution_coordinates import (
+        mapping_supports_derived_admin_review, read_csv, review_is_actionable,
+    )
 
 ROOT = Path(__file__).resolve().parents[1]
 COLUMNS = (
@@ -143,6 +147,16 @@ def build_report(papers, markers, mappings, institutions, locations, reviews, ex
             add(paper, mapping, geography, review["review_status"] + "/" + clean(review.get("coordinate_status")), "ACTIONABLE", "explicit_location_review", reason)
         elif review.get("review_status") in {"ignore", "excluded"} and reason and not matching:
             add(paper, mapping, {}, review["review_status"], "NON_GEOGRAPHIC", "explicit_location_review", reason)
+        elif not location and mapping_supports_derived_admin_review(mapping):
+            geography = {
+                "city": mapping.get("institution_city", ""),
+                "country": mapping.get("institution_country", ""),
+            }
+            add(
+                paper, mapping, geography, "pending_manual_confirmation",
+                "ACTIONABLE", "derived_admin_location_review",
+                "Affiliation evidence makes this canonical institution actionable in Admin; no confirmed location is exported until a maintainer confirms it.",
+            )
         elif (
             not clean(mapping.get("location_id"))
             and not location

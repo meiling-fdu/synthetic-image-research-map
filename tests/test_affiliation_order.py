@@ -2,6 +2,7 @@ import csv
 import json
 import tempfile
 import threading
+import time
 import unittest
 import urllib.parse
 import urllib.request
@@ -27,6 +28,7 @@ from scripts.curated_schema import (
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
     INSTITUTION_REVIEW_QUEUE_COLUMNS,
     PAPER_EXCLUSION_COLUMNS,
+    VENUE_ALIAS_COLUMNS,
 )
 from scripts.export_public_preview import (
     add_public_detail_fields,
@@ -69,6 +71,7 @@ class AffiliationOrderTests(unittest.TestCase):
         self.institutions = root / "institutions.csv"
         self.aliases = root / "aliases.csv"
         self.locations = root / "locations.csv"
+        self.venue_aliases = root / "venue_aliases.csv"
         self.paper = {"paper_id": "paper:1", "title": "Fixture", "year": "2026"}
         write_csv(self.reviews, INSTITUTION_LOCATION_REVIEW_COLUMNS)
         write_csv(self.aliases, INSTITUTION_ALIAS_COLUMNS)
@@ -78,6 +81,7 @@ class AffiliationOrderTests(unittest.TestCase):
                   canonical_name=f"Institution {index}", institution_status="active")
             for index in range(1, 7)
         ])
+        write_csv(self.venue_aliases, VENUE_ALIAS_COLUMNS)
 
     def tearDown(self):
         self.temporary_directory.cleanup()
@@ -153,6 +157,7 @@ class AffiliationOrderTests(unittest.TestCase):
                 "test-token",
                 exclusions_path=exclusions,
                 curated_papers_path=curated_papers,
+                venue_aliases_path=self.venue_aliases,
                 mappings_path=self.mappings,
                 location_review_path=self.reviews,
                 institution_review_queue_path=queue,
@@ -173,8 +178,16 @@ class AffiliationOrderTests(unittest.TestCase):
                         "Content-Type": "application/json",
                     },
                 )
-                with urllib.request.urlopen(request, timeout=3) as response:
-                    saved_response = json.loads(response.read())
+                started = time.monotonic()
+                with patch(
+                    "scripts.serve_admin.load_admin_data",
+                    side_effect=AssertionError(
+                        "reorder must not load the full Admin/public/venue dataset"
+                    ),
+                ):
+                    with urllib.request.urlopen(request, timeout=1) as response:
+                        saved_response = json.loads(response.read())
+                self.assertLess(time.monotonic() - started, 1)
 
                 self.assertEqual(saved_response["mapping_ids"], requested)
                 del saved_response
@@ -185,6 +198,16 @@ class AffiliationOrderTests(unittest.TestCase):
                     [(row["mapping_id"], row["affiliation_order"]) for row in reloaded],
                     [(mapping_id, str(index)) for index, mapping_id in enumerate(requested, 1)],
                 )
+                saved_bytes = self.mappings.read_bytes()
+                with urllib.request.urlopen(request, timeout=1) as response:
+                    repeated_response = json.loads(response.read())
+                self.assertEqual(repeated_response["mapping_ids"], requested)
+                self.assertEqual(self.mappings.read_bytes(), saved_bytes)
+                original_by_id = {row["mapping_id"]: row for row in rows}
+                for row in load_mappings(self.mappings):
+                    expected = dict(original_by_id[row["mapping_id"]])
+                    expected["affiliation_order"] = row["affiliation_order"]
+                    self.assertEqual(row, expected)
                 del reloaded_rows, reloaded
 
                 get_url = (

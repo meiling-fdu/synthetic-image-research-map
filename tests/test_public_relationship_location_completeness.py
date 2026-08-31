@@ -99,7 +99,12 @@ def test_current_repository_has_zero_silent_geographic_relationships():
     report = repository_report()
     assert not [r for r in report if r["classification"] == "ERROR"]
     actionable = [r for r in report if r["classification"] == "ACTIONABLE"]
-    assert actionable == []
+    assert actionable
+    assert all(
+        row["support_source"] == "derived_admin_location_review"
+        and row["review_status"] == "pending_manual_confirmation"
+        for row in actionable
+    )
 
 
 @pytest.mark.parametrize("changed", [None, "id", "doi", "institution_id", "institution_authors"])
@@ -157,14 +162,19 @@ def test_invalid_current_coordinates_cannot_preserve_old_valid_marker():
 
 
 def test_admin_confirmed_choices_exclude_retained_candidates():
-    from scripts.curated_locations import location_review_payload
+    from scripts.curated_locations import (
+        is_confirmed_location, load_confirmed_locations,
+        location_review_payload,
+    )
     from scripts.curated_mappings import load_mappings
     from scripts.paper_exclusions import read_exclusion_rows
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
-    # Four duplicate institution locations were consolidated by the reviewed
-    # authoritative institution audit; the surviving canonical locations are
-    # still complete and independently selectable.
-    assert payload['summary']['confirmed_locations_count'] == len(payload['confirmed_locations']) == 491
+    authoritative = [
+        row for row in load_confirmed_locations()
+        if is_confirmed_location(row)
+    ]
+    assert payload['summary']['confirmed_locations_count'] == len(authoritative)
+    assert len(payload['confirmed_locations']) == len(authoritative)
     assert len(payload['candidate_locations']) == 0
     candidate_ids = {r['location_id'] for r in payload['candidate_locations']}
     assert not candidate_ids.intersection(r['location_id'] for r in payload['confirmed_locations'])

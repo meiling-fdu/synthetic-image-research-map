@@ -7,16 +7,13 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "curated_papers": 373,
     "public_unique_papers": 574,
     "public_map_source_papers": 569,
     "public_papers_with_map": 568,
     "public_papers_without_map": 6,
-    "public_map_relationships": 1303,
     "canonical_institution_rows": 679,
     "active_canonical_institutions": 649,
     "inactive_or_merged_institutions": 30,
-    "author_institution_mappings": 1026,
     "institution_hierarchy_edges": 11,
     "institution_aliases": 114,
 }

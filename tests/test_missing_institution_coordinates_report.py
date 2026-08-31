@@ -69,10 +69,30 @@ class MissingInstitutionCoordinatesReportTests(unittest.TestCase):
         self.assertIn("out_of_scope", rows[0]["queue_reason"])
         self.assertEqual(violations, [])
 
+    def test_affiliation_backed_admin_task_is_legitimate_pending_review(self):
+        pending_mapping = mapping(
+            "institution:pending", "paper:pending", "Pending"
+        )
+        pending_mapping["raw_affiliation"] = (
+            "Department of Examples, Pending University, Example City, USA"
+        )
+        rows, violations = build_audit_rows(
+            [institution("institution:pending", "Pending University")],
+            [], [pending_mapping], [], [],
+        )
+        self.assertEqual(
+            rows[0]["actionability_class"], "A_pending_admin_confirmation"
+        )
+        self.assertEqual(
+            rows[0]["public_export_status"],
+            "pending_manual_location_confirmation",
+        )
+        self.assertEqual(violations, [])
+
     def test_current_repository_has_no_public_queue_invariant_violation(self):
         from scripts.report_missing_institution_coordinates import CURATED, read_csv
 
-        _rows, violations = build_audit_rows(
+        rows, violations = build_audit_rows(
             read_csv(CURATED / "institutions.csv"),
             read_csv(CURATED / "institution_locations.csv"),
             read_csv(CURATED / "author_institution_mappings.csv"),
@@ -80,6 +100,11 @@ class MissingInstitutionCoordinatesReportTests(unittest.TestCase):
             read_csv(CURATED / "paper_exclusions.csv"),
         )
         self.assertEqual(violations, [])
+        pending = [
+            row for row in rows
+            if row["actionability_class"] == "A_pending_admin_confirmation"
+        ]
+        self.assertTrue(all(row["location_evidence"] for row in pending))
 
 
 if __name__ == "__main__":

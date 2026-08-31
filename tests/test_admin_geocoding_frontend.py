@@ -76,6 +76,8 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertIn('elements["confirmed-lon"].value = candidate.longitude', self.source[confirmation:])
         for field in ("city", "region", "country", "country_code"):
             self.assertIn(f'candidate.{field}', self.source[confirmation:])
+        for field in ("city", "region", "country", "latitude", "longitude"):
+            self.assertIn(f"candidate.{field}", self.source[confirmation:])
         self.assertNotIn('elements["coordinate-source"]', self.source[confirmation:])
 
     def test_cancel_preserves_values_and_existing_coordinates_require_confirmation(self):
@@ -90,6 +92,16 @@ class AdminGeocodingFrontendTests(unittest.TestCase):
         self.assertIn('id="confirmed-lon" type="text" inputmode="decimal"', self.html)
         self.assertIn('"/api/location-review/confirm"', self.source)
         self.assertIn('missing.textContent = "Unavailable — manual review required"', self.source)
+
+    def test_derived_location_items_use_canonical_persistence_and_refresh(self):
+        confirmation = self.source[
+            self.source.index("async function confirmLocation"):
+            self.source.index("async function markLocationReview")
+        ]
+        self.assertIn("selectedReview?.review_row_persisted === false", confirmation)
+        self.assertIn("canonicalPersistence", confirmation)
+        self.assertIn("/api/admin/institutions/", confirmation)
+        self.assertIn("Promise.all([refreshInstitutions(), loadLocationReviews()])", confirmation)
 
     def test_canonical_edit_location_loads_exact_id_and_survives_action_close(self):
         action = self.source[self.source.index("function institutionActionButton") : self.source.index("function renderInstitutionManagement")]
