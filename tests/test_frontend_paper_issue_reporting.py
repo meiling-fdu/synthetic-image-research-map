@@ -146,7 +146,7 @@ console.log(JSON.stringify(context));
         self.assertIn("if (requestedPaperIdentity) container.append", action)
         self.assertIn(".paper-details-share-actions", self.css)
         self.assertIn(".report-paper-issue-link", self.css)
-        self.assertIn("min-height: 44px", self.css)
+        self.assertIn("min-height: 38px", self.css)
         self.assertIn("flex-wrap: wrap", self.css)
 
     def test_generic_github_issues_link_remains_available(self):

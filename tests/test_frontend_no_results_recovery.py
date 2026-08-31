@@ -115,6 +115,7 @@ const venueFilter = {{value: 'all'}};
 const countryFilter = {{value: 'all'}};
 const institutionTypeFilter = {{value: 'all'}};
 const preprintFilter = {{value: 'all'}};
+const publishedOnlyFilter = {{checked: false}};
 const minYearFilter = {{value: '2018'}};
 const maxYearFilter = {{value: '2026'}};
 const yearRangeBounds = {{minimum: 2018, maximum: 2026}};

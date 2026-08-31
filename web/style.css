@@ -436,6 +436,29 @@ h2 {
   display: none;
 }
 
+.published-only-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.filter-grid .published-only-filter input {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.published-only-filter:has(input:disabled) {
+  cursor: default;
+  opacity: 0.6;
+}
+
 .filter-dropdown {
   position: relative;
   min-width: 0;
@@ -2298,13 +2321,15 @@ input:disabled {
 
 .show-in-results-button {
   width: auto;
-  margin-top: 8px;
+  min-height: 38px;
+  margin: 8px 0 0;
   border-color: var(--accent-dark);
-  padding: 7px 10px;
+  padding: 7px 12px;
   background: var(--secondary-surface);
   color: var(--accent-dark);
   font-size: 0.76rem;
   font-weight: 800;
+  line-height: 1.2;
 }
 
 .paper-details-filter-notice,
@@ -2340,10 +2365,11 @@ input:disabled {
 .copy-paper-link-button,
 .report-paper-issue-link {
   width: auto;
-  min-height: 44px;
+  min-height: 38px;
   margin: 0;
-  padding: 7px 10px;
+  padding: 7px 12px;
   font-size: 0.74rem;
+  line-height: 1.2;
 }
 
 .report-paper-issue-link {
@@ -2354,7 +2380,6 @@ input:disabled {
   background: var(--secondary-surface);
   color: var(--accent-dark);
   font-weight: 750;
-  line-height: 1.15;
   text-decoration: none;
 }
 

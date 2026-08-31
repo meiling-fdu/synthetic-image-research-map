@@ -113,11 +113,18 @@ const venueFilter = select(['all']);
 const countryFilter = select(['all']);
 const institutionTypeFilter = select(['all']);
 const preprintFilter = select(['all', 'has-arxiv']);
+const publishedOnlyFilter = {{checked: false}};
 const sortControl = select(['year-desc', 'title-asc'], 'year-desc');
 const minYearFilter = {{value: '2017'}};
 const maxYearFilter = {{value: '2026'}};
 const yearRangeBounds = {{minimum: 2017, maximum: 2026}};
 const institutionHierarchy = [];
+const markerHoverIntent = {{cancel() {{}}}};
+const interactionState = {{
+  selectedPaperId: null, contextualInstitutionId: null, pinnedMapMarkerId: null,
+  mapParentMarkerId: null, detailMode: 'empty', selectionSource: null,
+  transientHover: null,
+}};
 const resultsViewButtons = [
   {{dataset: {{resultsView: 'institutions'}}, setAttribute(name, value) {{ this.pressed = value; }}}},
   {{dataset: {{resultsView: 'papers'}}, setAttribute(name, value) {{ this.pressed = value; }}}},
@@ -137,7 +144,7 @@ function syncFilterDropdown() {{ dropdownSyncs += 1; }}
 restoreViewState({{
   keyword: 'needle', task: 'detection', paperType: 'survey',
   publicationType: 'conference', venue: 'CVPR', country: 'Italy',
-  institutionType: 'university', version: 'has-arxiv',
+  institutionType: 'university', version: 'has-arxiv', publishedOnly: true,
   yearStart: 2020, yearEnd: 2024, institution: 'id:test',
   institutionLabel: 'Example University', paper: 'doi:10.1000/example',
   view: 'papers', sort: 'title-asc',
@@ -146,7 +153,8 @@ console.log(JSON.stringify({{
   keyword: keywordFilter.value, task: taskFilter.value, paperType: entryTypeFilter.value,
   publicationType: venueTypeFilter.value, venue: venueFilter.value,
   country: countryFilter.value, institutionType: institutionTypeFilter.value,
-  version: preprintFilter.value, years: [minYearFilter.value, maxYearFilter.value],
+  version: preprintFilter.value, publishedOnly: publishedOnlyFilter.checked,
+  years: [minYearFilter.value, maxYearFilter.value],
   institution: activeInstitutionFilter, resultsView, sort: sortControl.value,
   paper: requestedPaperIdentity,
   pressed: resultsViewButtons.map(button => button.pressed), syncYears, dropdownSyncs,
@@ -157,6 +165,7 @@ console.log(JSON.stringify({{
         self.assertEqual(result["venue"], "CVPR")
         self.assertEqual(result["country"], "Italy")
         self.assertEqual(result["institutionType"], "university")
+        self.assertTrue(result["publishedOnly"])
         self.assertEqual(result["years"], ["2020", "2024"])
         self.assertEqual(result["institution"]["label"], "Example University")
         self.assertEqual(result["paper"], "doi:10.1000/example")

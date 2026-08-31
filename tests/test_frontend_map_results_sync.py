@@ -111,6 +111,88 @@ console.log(JSON.stringify({{
         self.assertEqual(result["marker"], [0, 1, 3, 4])
         self.assertEqual(result["paper"], [0, 3])
 
+    def test_show_in_results_uses_one_paper_rule_for_every_entry_path(self):
+        indexes_start = self.app.index("function interactionResultIndexes")
+        indexes_end = self.app.index("\nfunction persistentResultSelection", indexes_start)
+        indexes = self.app[indexes_start:indexes_end]
+        resolver_start = self.app.index("function resolveShowInResultsTarget")
+        resolver_end = self.app.index("\nfunction updateShowInResultsAction", resolver_start)
+        resolver = self.app[resolver_start:resolver_end]
+        result = self.run_node(f"""
+{indexes}
+{resolver}
+const pipeline = {{
+  view: 'institutions',
+  resultIndexesByPaperIdentity: new Map([['paper:p', new Set([4, 9])]]),
+  resultIndexesByInstitutionKey: new Map(),
+}};
+const states = [
+  {{source: 'unique-paper', contextualInstitutionId: null}},
+  {{source: 'institution-record', contextualInstitutionId: 'institution:a'}},
+  {{source: 'map-paper', contextualInstitutionId: 'institution:a', mapParentMarkerId: 'marker:a'}},
+  {{source: 'deep-link', contextualInstitutionId: null}},
+].map((entry) => resolveShowInResultsTarget({{
+  detailMode: 'paper', selectedPaperId: 'paper:p',
+  selectionSource: entry.source, ...entry,
+}}, pipeline));
+const filteredOut = resolveShowInResultsTarget({{
+  detailMode: 'paper', selectedPaperId: 'paper:missing',
+  selectionSource: 'deep-link', contextualInstitutionId: null,
+}}, pipeline);
+const institutionMode = resolveShowInResultsTarget({{
+  detailMode: 'institution-papers', selectedPaperId: null,
+  contextualInstitutionId: 'institution:a', selectionSource: 'map-institution',
+}}, pipeline);
+console.log(JSON.stringify({{states, filteredOut, institutionMode}}));
+""")
+        self.assertTrue(all(target["actionable"] for target in result["states"]))
+        self.assertTrue(all(target["indexes"] == [4, 9] for target in result["states"]))
+        self.assertTrue(all(
+            target["destinationView"] == "institutions"
+            for target in result["states"]
+        ))
+        self.assertEqual(
+            [target["contextualInstitutionId"] for target in result["states"]],
+            [None, "institution:a", "institution:a", None],
+        )
+        self.assertFalse(result["filteredOut"]["actionable"])
+        self.assertEqual(result["filteredOut"]["unavailableReason"], "filtered-out")
+        self.assertEqual(result["institutionMode"]["targetType"], "institution")
+        self.assertFalse(result["institutionMode"]["actionable"])
+        self.assertEqual(
+            result["institutionMode"]["unavailableReason"], "paper-required"
+        )
+
+    def test_show_in_results_prefers_context_without_inventing_it(self):
+        start = self.app.index("function showSelectionInResults")
+        end = self.app.index("\nfunction createResultItem", start)
+        helper = self.app[start:end]
+        result = self.run_node(f"""
+let pendingResultReveal = null;
+const resultsRenderGeneration = 12;
+const resultsPipeline = {{view: 'institutions'}};
+const currentDisplayedResults = [
+  {{institution: 'institution:b'}}, {{institution: 'institution:a'}},
+];
+let target = {{
+  actionable: true, indexes: [0, 1], destinationView: 'institutions',
+  contextualInstitutionId: 'institution:a',
+}};
+function resolveShowInResultsTarget() {{ return target; }}
+function institutionIdentity(record) {{ return record.institution; }}
+function continuePendingResultReveal() {{}}
+{helper}
+showSelectionInResults();
+const contextualIndex = pendingResultReveal.index;
+target = {{...target, contextualInstitutionId: null}};
+showSelectionInResults();
+console.log(JSON.stringify({{
+  contextualIndex, uncontextualIndex: pendingResultReveal.index,
+}}));
+""")
+        self.assertEqual(result["contextualIndex"], 1)
+        self.assertEqual(result["uncontextualIndex"], 0)
+
     def test_open_details_resolves_every_visible_institution_for_the_paper(self):
         start = self.app.index("function relatedMarkerEntries")
         end = self.app.index("\nfunction renderConnectionSelection", start)
@@ -173,7 +255,7 @@ console.log(JSON.stringify(
             self.assertIn("syncResultHighlights()", source)
             self.assertIn("continuePendingResultReveal()", source)
         reveal = self.app[
-            self.app.index("function selectionNeedsResultsReveal"):
+            self.app.index("function resolveShowInResultsTarget"):
             self.app.index("\nfunction createResultItem")
         ]
         self.assertIn("data-show-selection-in-results", reveal)
@@ -181,6 +263,10 @@ console.log(JSON.stringify(
         self.assertEqual(reveal.count("scrollIntoView("), 1)
         self.assertIn('item.scrollIntoView({ block: "nearest", behavior: "auto" })', reveal)
         self.assertIn("pendingResultReveal.generation !== resultsRenderGeneration", reveal)
+        resolver = reveal.split("\nfunction updateShowInResultsAction", 1)[0]
+        self.assertNotIn("renderedResultItem", resolver)
+        self.assertIn('target.actionable ? "" : "filtered-out"', resolver)
+        self.assertIn('detailMode !== "paper"', resolver)
 
     def test_filter_view_pagination_and_dataset_changes_restore_linked_state(self):
         render = self.app[

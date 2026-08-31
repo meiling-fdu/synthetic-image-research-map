@@ -266,7 +266,7 @@ process.stdout.write(JSON.stringify(Object.fromEntries(
         self.assertIn("min-width: 0", affiliation_items)
         self.assertIn("width: 32px", close)
         self.assertIn("height: 32px", close)
-        self.assertIn("min-height: 44px", actions)
+        self.assertIn("min-height: 38px", actions)
 
     def test_external_links_require_valid_urls_and_have_safe_labels(self):
         links = self.app.split(

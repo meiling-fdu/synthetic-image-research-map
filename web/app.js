@@ -56,7 +56,7 @@ const preservedDatasetParameter = ["preview", "openalex"].includes(requestedData
   : "";
 const URL_STATE_PARAMETER_ORDER = [
   "keyword", "task", "paper_type", "publication_type", "venue", "country",
-  "institution_type", "version", "year_start", "year_end", "institution",
+  "institution_type", "version", "published_only", "year_start", "year_end", "institution",
   "institution_label", "marker", "paper", "view", "sort",
 ];
 const PAPER_ISSUE_URL = "https://github.com/meiling-fdu/synthetic-image-research-map/issues/new";
@@ -168,6 +168,7 @@ const venueTypeFilter = document.querySelector("#venue-type-filter");
 const countryFilter = document.querySelector("#country-filter");
 const institutionTypeFilter = document.querySelector("#institution-type-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
+const publishedOnlyFilter = document.querySelector("#published-only-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
 const yearRangeMinimum = document.querySelector("#year-range-min");
@@ -940,6 +941,9 @@ function activeFilterChipDescriptors() {
       key: "version", category: "Version", value: selectedFilterOptionLabel(preprintFilter),
     });
   }
+  if (publishedOnlyFilter.checked) {
+    descriptors.push({ key: "published-only", category: "Published only", value: "On" });
+  }
   const selection = currentYearSelection();
   if (yearRangeBounds && selection && (
     selection.start !== yearRangeBounds.minimum || selection.end !== yearRangeBounds.maximum
@@ -970,6 +974,7 @@ function currentViewState() {
     country: countryFilter.value,
     institutionType: institutionTypeFilter.value,
     version: preprintFilter.value,
+    publishedOnly: publishedOnlyFilter.checked,
     yearStart: years?.start ?? null,
     yearEnd: years?.end ?? null,
     yearMinimum: yearRangeBounds?.minimum ?? null,
@@ -1030,6 +1035,7 @@ function serializeViewState(state, datasetParameter = "") {
     country: state.country !== "all" ? state.country : "",
     institution_type: state.institutionType !== "all" ? state.institutionType : "",
     version: state.version !== "all" ? state.version : "",
+    published_only: state.publishedOnly ? "1" : "",
     year_start: Number.isInteger(state.yearStart)
       && state.yearStart !== state.yearMinimum ? String(state.yearStart) : "",
     year_end: Number.isInteger(state.yearEnd)
@@ -1066,6 +1072,7 @@ function parseViewState(search) {
     country: params.get("country") || "all",
     institutionType: params.get("institution_type") || "all",
     version: params.get("version") || "all",
+    publishedOnly: params.get("published_only") === "1",
     yearStart: yearValue("year_start"),
     yearEnd: yearValue("year_end"),
     institution: params.get("institution") || "",
@@ -1135,6 +1142,7 @@ function restoreViewState(state) {
   setRestoredSelectValue(countryFilter, state.country, { dynamic: true });
   setRestoredSelectValue(institutionTypeFilter, state.institutionType, { dynamic: true });
   setRestoredSelectValue(preprintFilter, state.version);
+  publishedOnlyFilter.checked = state.publishedOnly === true;
   if (yearRangeBounds) {
     const selection = resolveYearSelection(yearRangeBounds, {
       start: state.yearStart ?? yearRangeBounds.minimum,
@@ -1633,6 +1641,12 @@ function venueDisplayLabel(record) {
 
 function recordVenueType(record) {
   return String(record.publication_type || record.venue_type || "").trim().toLocaleLowerCase();
+}
+
+function isFormallyPublished(paper) {
+  const publicationType = String(paper?.publication_type || "").trim().toLocaleLowerCase();
+  return publicationType === "conference" || publicationType === "journal"
+    || publicationType === "book";
 }
 
 function isBookRecord(record) {
@@ -2453,6 +2467,8 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     selectedVersion === "all" ||
     (selectedVersion === "has-arxiv" && hasArxivVersion(record)) ||
     (selectedVersion === "no-arxiv" && !hasArxivVersion(record));
+  const matchesPublicationStatus = typeof publishedOnlyFilter === "undefined"
+    || !publishedOnlyFilter.checked || isFormallyPublished(record);
   const year = publicationYear(record);
   const minimumYear = yearFilterValue(minYearFilter);
   const maximumYear = yearFilterValue(maxYearFilter);
@@ -2485,6 +2501,7 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     matchesVenue &&
     matchesVenueType &&
     matchesVersion &&
+    matchesPublicationStatus &&
     matchesMinimumYear &&
     matchesMaximumYear &&
     matchesInstitution &&
@@ -3947,21 +3964,52 @@ function syncResultHighlights() {
   });
 }
 
-function selectionNeedsResultsReveal(selection = persistentResultSelection()) {
-  const indexes = interactionResultIndexes(selection);
-  return indexes.size > 0 && ![...indexes].some((index) => renderedResultItem(index));
+function resolveShowInResultsTarget(
+  selectionState = interactionState,
+  pipeline = resultsPipeline,
+) {
+  const target = {
+    targetType: selectionState?.detailMode === "institution-papers"
+      ? "institution" : "paper",
+    paperIdentity: selectionState?.selectedPaperId || null,
+    contextualInstitutionId: selectionState?.contextualInstitutionId || null,
+    destinationView: pipeline?.view || resultsView,
+    selection: null,
+    indexes: [],
+    actionable: false,
+    unavailableReason: "",
+  };
+  if (selectionState?.detailMode !== "paper" || !target.paperIdentity) {
+    target.unavailableReason = "paper-required";
+    return target;
+  }
+  if (!pipeline) {
+    target.unavailableReason = "no-results";
+    return target;
+  }
+  target.selection = {
+    identity: target.paperIdentity,
+    resultPaperIdentities: [target.paperIdentity],
+    resultScope: "paper",
+    institutionKey: target.contextualInstitutionId,
+  };
+  target.indexes = [...interactionResultIndexes(target.selection, pipeline)]
+    .sort((first, second) => first - second);
+  target.actionable = target.indexes.length > 0;
+  target.unavailableReason = target.actionable ? "" : "filtered-out";
+  return target;
 }
 
 function updateShowInResultsAction() {
   paperDetailsContent.querySelector("[data-show-selection-in-results]")?.remove();
-  const selection = persistentResultSelection();
-  if (!selection || !selectionNeedsResultsReveal(selection)) return;
+  const target = resolveShowInResultsTarget();
+  if (!target.actionable) return;
   const button = document.createElement("button");
   button.type = "button";
   button.className = "show-in-results-button";
   button.dataset.showSelectionInResults = "";
   button.textContent = "Show in results";
-  button.setAttribute("aria-label", "Show the selected paper or institution in results");
+  button.setAttribute("aria-label", "Show the selected paper in filtered results");
   paperDetailsContent.append(button);
 }
 
@@ -3994,16 +4042,17 @@ function continuePendingResultReveal() {
 }
 
 function showSelectionInResults() {
-  let indexes = [...interactionResultIndexes(persistentResultSelection())].sort((a, b) => a - b);
-  if (resultsView === "institutions" && interactionState.contextualInstitutionId) {
+  const target = resolveShowInResultsTarget();
+  if (!target.actionable || !resultsPipeline) return;
+  let indexes = target.indexes;
+  if (target.destinationView === "institutions" && target.contextualInstitutionId) {
     const contextual = indexes.filter((index) => (
       currentDisplayedResults[index]
       && institutionIdentity(currentDisplayedResults[index])
-        === interactionState.contextualInstitutionId
+        === target.contextualInstitutionId
     ));
     indexes = [...contextual, ...indexes.filter((index) => !contextual.includes(index))];
   }
-  if (!indexes.length || !resultsPipeline) return;
   pendingResultReveal = { generation: resultsRenderGeneration, index: indexes[0] };
   continuePendingResultReveal();
 }
@@ -5388,6 +5437,7 @@ function enableControls() {
   countryFilter.disabled = false;
   institutionTypeFilter.disabled = false;
   preprintFilter.disabled = false;
+  publishedOnlyFilter.disabled = false;
   filterDropdowns.forEach((dropdown) => {
     dropdown.button.disabled = dropdown.select.disabled;
   });
@@ -5738,6 +5788,7 @@ function resetFilterValues({ resetSort = false } = {}) {
   countryFilter.value = "all";
   institutionTypeFilter.value = "all";
   preprintFilter.value = "all";
+  publishedOnlyFilter.checked = false;
   filterDropdowns.forEach(syncFilterDropdown);
   if (yearRangeBounds) {
     minYearFilter.value = String(yearRangeBounds.minimum);
@@ -5767,6 +5818,8 @@ function clearActiveFilter(key) {
   } else if (key === "institution") {
     activeInstitutionFilter = null;
     displayedInstitutionFilter = null;
+  } else if (key === "published-only") {
+    publishedOnlyFilter.checked = false;
   } else if (controls[key]) {
     controls[key].value = "all";
     syncFilterDropdownForSelect(controls[key]);
@@ -5812,6 +5865,7 @@ function focusFilterControl(key) {
     country: countryFilter,
     "institution-type": institutionTypeFilter,
     version: preprintFilter,
+    "published-only": publishedOnlyFilter,
     year: minYearFilter,
   };
   const control = controls[key];
@@ -5844,6 +5898,7 @@ function handleFilterControlChange(event) {
     [countryFilter, "country"],
     [institutionTypeFilter, "institution-type"],
     [preprintFilter, "version"],
+    [publishedOnlyFilter, "published-only"],
   ]);
   const key = filterKeys.get(event.currentTarget);
   if (key) rememberFilterChange(key);
@@ -5885,6 +5940,7 @@ mobileFiltersMedia.addEventListener("change", handleMobileFiltersMediaChange);
 syncFiltersPanelAccessibility();
 institutionTypeFilter.addEventListener("change", handleFilterControlChange);
 preprintFilter.addEventListener("change", handleFilterControlChange);
+publishedOnlyFilter.addEventListener("change", handleFilterControlChange);
 minYearFilter.addEventListener("input", () => handleYearRangeInput("start"));
 maxYearFilter.addEventListener("input", () => handleYearRangeInput("end"));
 [minYearFilter, maxYearFilter].forEach((input) => {

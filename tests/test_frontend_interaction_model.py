@@ -113,7 +113,7 @@ process.stdout.write(JSON.stringify({
         )
 
     def test_result_primary_and_related_semantics_survive_lazy_rendering(self):
-        sync = self.source("function syncResultHighlights", "\nfunction selectionNeedsResultsReveal")
+        sync = self.source("function syncResultHighlights", "\nfunction resolveShowInResultsTarget")
         self.assertIn("is-selection-primary", sync)
         self.assertIn("is-selection-related", sync)
         self.assertIn("contextualInstitutionId", sync)
