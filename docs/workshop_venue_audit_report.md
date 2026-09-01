@@ -4,15 +4,15 @@ This report compares the preserved pre-workshop-audit effective database with th
 
 ## Summary
 
-- papers_audited: 551
+- papers_audited: 587
 - canonical_venues_before: 193
-- canonical_venues_after: 192
-- affected_papers: 328
+- canonical_venues_after: 196
+- affected_papers: 323
 - track_values_before: {'main': 269, '': 223, 'workshops': 53, 'other': 1, 'findings': 3, 'industry': 1, 'posters': 1}
-- track_values_after: {'Main': 269, '': 223, 'Workshop': 53, 'Other': 1, 'Findings': 3, 'Industry': 1, 'Poster': 1}
+- track_values_after: {'Main': 296, '': 227, 'Workshop': 56, 'Other': 1, 'Findings': 5, 'Industry': 1, 'Poster': 1}
 - workshops_to_workshop: 53
-- manual_review: 40
-- source_files_unchanged: True
+- manual_review: 41
+- source_files_unchanged: False
 - parent_workshop_papers_corrected: 3
 - parent_acronyms_corrected: 3
 - parent_identities_corrected: 1
@@ -22,7 +22,7 @@ This report compares the preserved pre-workshop-audit effective database with th
 - ambiguous_standalone_tracks: 17
 - official_aliases_preserved: 35
 - official_aliases_missing: []
-- raw_venue_changes: 0
+- raw_venue_changes: 1
 - plural_effective_tracks_remaining: 0
 
 ## Field roles and decisions

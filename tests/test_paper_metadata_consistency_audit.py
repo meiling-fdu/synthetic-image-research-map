@@ -73,14 +73,16 @@ class PaperMetadataConsistencyAuditTests(unittest.TestCase):
     def test_full_corpus_has_no_unexplained_metadata_inconsistency(self):
         rows, summary = audit()
 
-        self.assertEqual(summary["papers_audited"], 574)
+        self.assertEqual(summary["papers_audited"], 582)
         self.assertEqual(summary["fields_per_paper"], 18)
-        self.assertEqual(len(rows), 574 * 18)
+        self.assertEqual(len(rows), 582 * 18)
         self.assertEqual(summary["true_inconsistencies"], 0)
         self.assertEqual(summary["legacy_fallback_risks"], 0)
-        self.assertEqual(summary["public_paper_institution_relationships"], 1302)
-        self.assertEqual(summary["map_markers"], 1303)
-        self.assertEqual(summary["published_only_papers"], 512)
+        # Distinct paper–institution pairs; the marker count is one larger
+        # because a reviewed relationship has two location markers.
+        self.assertEqual(summary["public_paper_institution_relationships"], 1320)
+        self.assertEqual(summary["map_markers"], 1321)
+        self.assertEqual(summary["published_only_papers"], 520)
         self.assertEqual(summary["affiliation_audit_mismatches"], 0)
         self.assertEqual(summary["retired_institution_affiliation_leaks"], 0)
 

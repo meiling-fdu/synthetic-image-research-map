@@ -2,7 +2,7 @@
 
 Generated from current effective state. Baseline correction counts refer to the preserved initial dataset; repeated runs do not count corrections twice.
 
-Audited: 579 papers (574 public; 5 non-public).
+Audited: 587 papers (582 public; 5 non-public).
 
 | Metric | Papers / records |
 | --- | ---: |

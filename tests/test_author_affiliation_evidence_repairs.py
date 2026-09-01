@@ -27,6 +27,9 @@ PUBLIC = ROOT / "web/data"
 # Current public records that still lack a complete curated affiliation roster.
 # Hyejoo Choi and Jiarui Wang were resolved by later source-backed imports.
 REMAINING_UNRESOLVED_AUTHORS = {"Daniel S. Yeung", "Gopal Sarkarkar", "Shilpa Gedam"}
+CURRENT_NON_INSTITUTIONAL_AUTHORS = {
+    "Hainan Ren", "Henan Wang", "Reid Southen", "Changtao Miao",
+}
 
 
 def csv_rows(name):
@@ -136,7 +139,7 @@ def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
     records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
     unresolved = {a["name"] for p in records for a in p["authors"] if not a["affiliation_indices"]}
     reviewed_unindexed = {
-        "Hainan Ren", "Henan Wang", "Reid Southen",
+        *CURRENT_NON_INSTITUTIONAL_AUTHORS,
         *REMAINING_UNRESOLVED_AUTHORS,
     }
     legacy_expected = reviewed_unindexed
@@ -282,7 +285,7 @@ def test_new_supported_mapping_can_supersede_an_unresolved_review():
 def test_final_repository_author_states_follow_formal_rosters():
     records = json.loads((PUBLIC / "public_preview_papers.json").read_text())["records"]
     noninstitutional = {a["name"] for p in records for a in p["authors"] if is_non_institutional(a)}
-    assert noninstitutional == {"Henan Wang", "Reid Southen", "Hainan Ren"}
+    assert noninstitutional == CURRENT_NON_INSTITUTIONAL_AUTHORS
     unresolved = {a["name"] for p in records for a in p["authors"] if a["affiliation_status"] == "unresolved"}
     legacy_expected = REMAINING_UNRESOLVED_AUTHORS
     assert legacy_expected <= unresolved

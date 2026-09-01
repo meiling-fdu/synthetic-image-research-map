@@ -7,16 +7,19 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    "public_unique_papers": 574,
-    "public_map_source_papers": 569,
-    "public_papers_with_map": 568,
+    # Canonical public paper records after the 2026-09-01 eight-paper audit.
+    "public_unique_papers": 582,
+    # Distinct paper identities represented by at least one public map marker.
+    "public_map_source_papers": 577,
+    # Canonical public papers that resolve to at least one public map marker.
+    "public_papers_with_map": 576,
     "public_papers_without_map": 6,
     # Registry rows include active identities plus retained merged/ignored history.
-    "total_institution_registry_rows": 663,
-    "active_canonical_institutions": 648,
+    "total_institution_registry_rows": 669,
+    "active_canonical_institutions": 654,
     "non_active_institution_registry_rows": 15,
     # Unique public paper–institution relationships; one relationship has two markers.
-    "public_paper_institution_relationships": 1302,
+    "public_paper_institution_relationships": 1320,
     "institution_hierarchy_edges": 11,
     "institution_aliases": 114,
 }
@@ -37,7 +40,7 @@ RELEASE_REPOSITORY_BASELINE = {
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 648,
+    "active": 654,
     "merged": 9,
     "ignored": 6,
 }
@@ -49,24 +52,25 @@ RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 492,
-    "research_unit": 77,
+    "university": 497,
+    "research_unit": 78,
     "company": 77,
     "other": 17,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 486,
-    "research_unit": 74,
+    "university": 491,
+    "research_unit": 75,
     "company": 75,
     "other": 13,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    # 2026-08-28: active curated affiliations only, including paper-only rows.
-    "university": 545,
-    "research_unit": 109,
-    "company": 105,
+    # Papers associated with each active institution type; one paper may
+    # contribute to multiple types, so these are not paper-record totals.
+    "university": 553,
+    "research_unit": 111,
+    "company": 106,
     "other": 29,
 }
 
@@ -75,14 +79,16 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
 PUBLICATION_TYPE_TOTALS = {
-    "conference": 350,
+    # Eight main-track conference additions; other publication types unchanged.
+    "conference": 358,
     "journal": 161,
     "preprint": 62,
     "book": 1,
 }
 
 TASK_TOTALS = {
-    "detection": 499,
+    # All eight 2026-09-01 additions are detection methods.
+    "detection": 507,
     "source_attribution": 46,
     "detection_and_source_attribution": 29,
 }
@@ -115,5 +121,7 @@ INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {
     "openalex-candidate-919d3c2bcfbdb403",
     "curated-map:44229f2cf573ad44149f",
     "curated-map:92126900d9e371dda577",
+    # Denoising Trajectory Biases, added from accepted-paper affiliation evidence.
+    "curated-map:b2e9ed534727553af0d0",
     "curated-map:ff03ae3f6aab250e53d0",
 }

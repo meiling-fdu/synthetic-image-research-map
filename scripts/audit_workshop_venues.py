@@ -123,7 +123,12 @@ def main():
         "ambiguous_standalone_tracks": len(standalone_reviews),
         "official_aliases_preserved": len(official_before & aliases_after),
         "official_aliases_missing": sorted(official_before - aliases_after),
-        "raw_venue_changes": sum(p.get("raw_venue", "") != prior[identity(p)].get("raw_venue", "") for p in current["papers"]),
+        # The immutable baseline predates later curated additions. Compare raw
+        # venue provenance only for identities present in both snapshots.
+        "raw_venue_changes": sum(
+            p.get("raw_venue", "") != prior[identity(p)].get("raw_venue", "")
+            for p in current["papers"] if identity(p) in prior
+        ),
         "plural_effective_tracks_remaining": sum(p.get("venue_track") in {"workshops", "Workshops"} for p in current["papers"]),
     }, changes=changes,
         parent_workshop_corrections=parent_corrections,

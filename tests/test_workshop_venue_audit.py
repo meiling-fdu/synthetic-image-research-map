@@ -163,7 +163,22 @@ class WorkshopArtifactTests(unittest.TestCase):
             {path: current_hashes.get(path) for path in historical_raw_hashes},
             historical_raw_hashes,
         )
-        self.assertTrue(all(p["raw_venue"] == prior[p["title"]]["raw_venue"] for p in current_prior))
+        cataid_title = (
+            "CatAID: Category-Guided AI-Generated Image Detection via "
+            "Vision-Language Model Adaptation"
+        )
+        unchanged_raw_venue_records = [
+            paper for paper in current_prior if paper["title"] != cataid_title
+        ]
+        self.assertTrue(all(
+            paper["raw_venue"] == prior[paper["title"]]["raw_venue"]
+            for paper in unchanged_raw_venue_records
+        ))
+        cataid = next(paper for paper in records if paper["title"] == cataid_title)
+        self.assertEqual(
+            cataid["raw_venue"],
+            "2025 IEEE/CVF International Conference on Computer Vision Workshops (ICCVW)",
+        )
 
     def test_processed_admin_dashboard_public_and_marker_state_agree(self):
         from scripts.serve_admin import load_admin_data

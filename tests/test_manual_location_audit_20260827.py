@@ -119,9 +119,10 @@ def test_prior_supported_records_and_current_review_candidates_preserved():
     decisions = json.loads((ROOT / "docs/remaining_institution_location_audit_2026-08-27.json").read_text())
     payload = location_review_payload(mappings=load_mappings(), exclusions=read_exclusion_rows())
     # The historical cases remain traceable after the later manual review. The
-    # effective queue is now fully reconciled rather than left artificially open.
+    # eight current pending rows are source-backed affiliations introduced by
+    # the 2026-09-01 paper audit; they intentionally have no guessed coordinates.
     assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"]
-    assert payload["summary"]["pending_review"] == 0
+    assert payload["summary"]["pending_review"] == 8
     for decision in decisions:
         iid = decision["institution_id"]
         records = [r for r in payload["records"] if r["institution_id"] == iid]

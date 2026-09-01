@@ -51,10 +51,15 @@ class FrontendPublishedOnlyFilterTests(unittest.TestCase):
             counts[publication_type] = counts.get(publication_type, 0) + 1
         self.assertEqual(
             counts,
-            {"conference": 350, "journal": 161, "preprint": 62, "book": 1},
+            # Canonical paper records by controlled publication type after the
+            # eight main-track conference additions.
+            {"conference": 358, "journal": 161, "preprint": 62, "book": 1},
         )
         self.assertEqual(counts["preprint"], 62)
-        self.assertEqual(sum(counts[key] for key in ("conference", "journal", "book")), 512)
+        published_only_count = sum(
+            counts[key] for key in ("conference", "journal", "book")
+        )
+        self.assertEqual(published_only_count, 520)
 
     def test_predicate_semantics_and_filter_composition(self):
         helper = self.app[
