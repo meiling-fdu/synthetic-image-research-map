@@ -978,6 +978,21 @@ def _merge_curated_paper(
 ) -> None:
     curation_status = normalize_curation_status(curated.get("curation_status"))
     confirmed = curation_status in CONFIRMED_CURATION_STATUSES
+    if confirmed:
+        curated_year = _parse_year(
+            curated.get("publication_year") or curated.get("year")
+        )
+        candidate_date = clean(existing.get("publication_date"))
+        candidate_date_year = _parse_year(candidate_date[:4])
+        if (
+            curated_year is not None
+            and candidate_date_year is not None
+            and candidate_date_year != curated_year
+        ):
+            # Curated rows currently assert a bibliographic year but not a
+            # formal date. Do not let a superseded preprint/deposit date survive
+            # that correction as though it were the formal publication date.
+            existing["publication_date"] = ""
     for field in CURATED_OVERRIDE_FIELDS:
         if field not in curated:
             continue

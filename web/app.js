@@ -230,6 +230,7 @@ let cachedInstitutionFilterIndexes = null;
 let currentFilteredRecords = [];
 let currentFilteredPaperRecords = [];
 let currentDisplayedResults = [];
+let institutionMatchContextByRecord = new WeakMap();
 let resultsView = "institutions";
 let visibleMarkerEntries = [];
 let visibleMarkerEntryByInstitutionKey = new Map();
@@ -374,6 +375,11 @@ const INSTITUTION_CSV_COLUMNS = [
   ["institution_name", (record) => recordInstitution(record)],
   ["institution_id", (record) => String(record.institution_id || "")],
   ["institution_type", (record) => normalizeInstitutionType(record.institution_type)],
+  ["match_type", (record) => institutionMatchContextByRecord.get(record)?.type || ""],
+  ["matched_parent_institution", (record) => institutionMatchContextByRecord
+    .get(record)?.parents.map((parent) => parent.name).join("; ") || ""],
+  ["matched_descendant_institutions", (record) => institutionMatchContextByRecord
+    .get(record)?.descendants.map((descendant) => descendant.name).join("; ") || ""],
   ["country", (record) => record.country || ""],
   ["country_code", (record) => record.country_code || ""],
   ["region", (record) => record.region || ""],
@@ -403,6 +409,11 @@ const PAPER_CSV_COLUMNS = [
   ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
   ["institution_ids", (record) => canonicalInstitutionIds(record).join("; ")],
   ["institution_types", (record) => institutionTypesForRecord(record).join("; ")],
+  ["match_type", (record) => institutionMatchContextByRecord.get(record)?.type || ""],
+  ["matched_parent_institution", (record) => institutionMatchContextByRecord
+    .get(record)?.parents.map((parent) => parent.name).join("; ") || ""],
+  ["matched_descendant_institutions", (record) => institutionMatchContextByRecord
+    .get(record)?.descendants.map((descendant) => descendant.name).join("; ") || ""],
   ["locations", (record) => (record.aggregated_locations || [])
     .map((location) => location.location_display || "")
     .filter(Boolean).join("; ")],
@@ -2417,6 +2428,141 @@ function recordMatchesInstitutionIdentities(record, identities, institutionRecor
   return [...identities].some((identity) => recordIdentities.has(identity));
 }
 
+function institutionMatchName(identity, sourceRecords = []) {
+  const stableId = identity.startsWith("id:") ? identity.slice(3) : "";
+  const indexed = stableId ? canonicalInstitutionSearchIndex[stableId] : null;
+  if (indexed?.canonical_name) return indexed.canonical_name;
+  const hierarchyLabel = hierarchyInstitutionLabel(identity, institutionHierarchy);
+  if (hierarchyLabel) return hierarchyLabel;
+  for (const record of sourceRecords) {
+    if (institutionIdentity(record) === identity && recordInstitution(record)) {
+      return recordInstitution(record);
+    }
+    const affiliations = [
+      ...(Array.isArray(record.affiliations) ? record.affiliations : []),
+      ...(Array.isArray(record.author_institution_affiliations)
+        ? record.author_institution_affiliations : []),
+    ];
+    for (const affiliation of affiliations) {
+      const raw = typeof affiliation === "string"
+        ? { institution: affiliation }
+        : affiliation || {};
+      const candidate = {
+        institution: raw.name || raw.institution || raw.institution_name,
+        institution_id: raw.institution_id || raw.canonical_institution_id,
+        canonical_institution_name: raw.canonical_name,
+      };
+      if (institutionIdentity(candidate) === identity) {
+        return recordInstitution(candidate);
+      }
+    }
+  }
+  return stableId || identity.replace(/^name:/, "");
+}
+
+function classifyHierarchyInstitutionMatch(sourceRecords, matchedRoots, hierarchyIndex) {
+  if (!matchedRoots?.size) return null;
+  const actualIdentities = new Set();
+  sourceRecords.forEach((record) => {
+    recordInstitutionIdentities(record).forEach((identity) => actualIdentities.add(identity));
+  });
+  const directRoots = [...matchedRoots].filter((identity) => actualIdentities.has(identity));
+  if (directRoots.length) {
+    return {
+      type: "direct",
+      parents: directRoots.map((identity) => ({
+        identity,
+        name: institutionMatchName(identity, sourceRecords),
+      })),
+      descendants: [],
+    };
+  }
+  const parentIdentities = new Set();
+  const descendantIdentities = new Set();
+  matchedRoots.forEach((root) => {
+    const descendants = institutionIdentityWithDescendants(root, hierarchyIndex);
+    actualIdentities.forEach((identity) => {
+      if (identity !== root && descendants.has(identity)) {
+        parentIdentities.add(root);
+        descendantIdentities.add(identity);
+      }
+    });
+  });
+  if (!descendantIdentities.size) return null;
+  const descriptor = (identity) => ({
+    identity,
+    name: institutionMatchName(identity, sourceRecords),
+  });
+  return {
+    type: "descendant",
+    parents: [...parentIdentities].map(descriptor),
+    descendants: [...descendantIdentities].map(descriptor),
+  };
+}
+
+function buildInstitutionMatchContext(
+  record,
+  sourceRecords,
+  keywordTerms,
+  directlyResolvedInstitutionIdentities,
+  activeInstitutionIdentity,
+  hierarchyIndex,
+) {
+  if (activeInstitutionIdentity) {
+    return classifyHierarchyInstitutionMatch(
+      sourceRecords,
+      new Set([activeInstitutionIdentity]),
+      hierarchyIndex,
+    );
+  }
+  if (!directlyResolvedInstitutionIdentities?.size) return null;
+  const classification = classifyHierarchyInstitutionMatch(
+    sourceRecords,
+    directlyResolvedInstitutionIdentities,
+    hierarchyIndex,
+  );
+  if (classification?.type !== "descendant") return classification;
+  return searchTextMatchesTerms(cachedRecordSearchText(record), keywordTerms)
+    ? null
+    : classification;
+}
+
+function refreshInstitutionMatchContexts(
+  visibleRecords,
+  visiblePaperRecords,
+  keywordTerms,
+  directlyResolvedInstitutionIdentities,
+  activeInstitutionIdentity,
+  hierarchyIndex,
+) {
+  institutionMatchContextByRecord = new WeakMap();
+  const recordsByPaper = new Map();
+  records.forEach((record) => {
+    const identity = paperIdentity(record);
+    const related = recordsByPaper.get(identity) || [];
+    related.push(record);
+    recordsByPaper.set(identity, related);
+  });
+  const applyContext = (record) => {
+    const sourceRecords = [
+      record,
+      canonicalPaperRecordsByIdentity.get(paperIdentity(record)),
+      ...(recordsByPaper.get(paperIdentity(record)) || []),
+    ].filter(Boolean);
+    const context = buildInstitutionMatchContext(
+      record,
+      sourceRecords,
+      keywordTerms,
+      directlyResolvedInstitutionIdentities,
+      activeInstitutionIdentity,
+      hierarchyIndex,
+    );
+    if (context) institutionMatchContextByRecord.set(record, context);
+  };
+  visibleRecords.forEach(applyContext);
+  visiblePaperRecords.forEach(applyContext);
+}
+
 function hierarchyInstitutionLabel(identity, relationships) {
   for (const relationship of relationships) {
     if (institutionIdentity({ institution_id: relationship.parent_institution_id }) === identity) {
@@ -3605,6 +3751,29 @@ function paperDetailsPublicationHtml(record) {
     : "";
 }
 
+function paperMetadataStatusHtml(record) {
+  const metadata = PaperDetailsHelpers.metadataStatusView(record);
+  if (!metadata) return "";
+  const statusClass = metadata.status.toLocaleLowerCase().replace(/\s+/g, "-");
+  const rows = metadata.groups.map((group) => `
+    <li${group.status === "Needs review" ? ' class="needs-review"' : ""}>
+      <span class="metadata-status-row-label">${escapeHtml(group.status)}</span>
+      <span>${group.fields.map(escapeHtml).join(", ")}</span>
+      ${group.source ? `<span class="metadata-status-source">Source: ${escapeHtml(group.source)}</span>` : ""}
+    </li>
+  `).join("");
+  return `
+    <section class="paper-details-metadata-status" aria-labelledby="paper-metadata-status-heading">
+      <h4 id="paper-metadata-status-heading" class="paper-details-section-heading">Metadata status</h4>
+      <p class="metadata-status-summary">
+        <span class="metadata-status-pill status-${escapeHtml(statusClass)}">${escapeHtml(metadata.status)}</span>
+        ${metadata.source ? `<span>Primary source: ${escapeHtml(metadata.source)}</span>` : ""}
+      </p>
+      ${rows ? `<ul class="metadata-status-rows">${rows}</ul>` : ""}
+    </section>
+  `;
+}
+
 function paperDetailsHtml(record, relatedEntries) {
   const contextualInstitutionId = arguments[2] ?? null;
   const normalizedRecord = normalizePaperDetailsRecord(record, {
@@ -3623,6 +3792,7 @@ function paperDetailsHtml(record, relatedEntries) {
       )
     : "Unknown";
   const publicationMetadataBlock = paperDetailsPublicationHtml(record);
+  const metadataStatusBlock = paperMetadataStatusHtml(record);
   const entryTypeBadge = getPaperCategories(record)
     .map((category) => `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(category))}</span>`)
     .join("");
@@ -3650,6 +3820,7 @@ function paperDetailsHtml(record, relatedEntries) {
       ${entryTypeBadge}
     </div>
     ${publicationMetadataBlock}
+    ${metadataStatusBlock}
     <section class="paper-details-group paper-details-authors" aria-labelledby="paper-authors-heading">
       <h4 id="paper-authors-heading" class="paper-details-section-heading">Authors</h4>
       <p>${authors}</p>
@@ -3711,6 +3882,16 @@ function resultAuthors(authors, label, regionId, visibleLimit = 6) {
   `;
 }
 
+function institutionMatchExplanationHtml(record) {
+  const context = institutionMatchContextByRecord.get(record);
+  if (context?.type !== "descendant") return "";
+  const descendants = context.descendants.map(({ name }) => name).join("; ");
+  const parents = context.parents.map(({ name }) => name).join("; ");
+  return descendants && parents
+    ? `<p class="result-institution-match-context"><span>Matched via</span> ${escapeHtml(descendants)} <span aria-hidden="true">→</span><span class="visually-hidden"> under </span> ${escapeHtml(parents)}</p>`
+    : "";
+}
+
 function institutionResultContent(record, relatedEntries = [{ record }], cardId = "institution-result") {
   const normalizedRecord = normalizePaperDetailsRecord(record, {
     relatedRecords: relatedEntries.map(({ record: relatedRecord }) => relatedRecord),
@@ -3740,6 +3921,7 @@ function institutionResultContent(record, relatedEntries = [{ record }], cardId 
     <article class="result-card result-card-institution" aria-labelledby="${cardId}">
       <p class="result-entity-kicker">Institution record</p>
       <h3 class="result-title" id="${cardId}">${paperTitleHtml(record)}</h3>
+      ${institutionMatchExplanationHtml(record)}
       <div class="result-card-adaptive">
         <section class="result-institution-primary" aria-label="Institution represented by this record">
           <h4 title="${escapeHtml(institutionName || "Unknown institution")}">${institutionFocusButtonHtml(institution || {
@@ -3806,6 +3988,7 @@ function paperResultContent(record, relatedEntries = [], cardId = "paper-result"
     <article class="result-card result-card-paper" aria-labelledby="${cardId}">
       <p class="result-entity-kicker">Unique paper</p>
       <h3 class="result-title" id="${cardId}">${paperTitleHtml(record)}</h3>
+      ${institutionMatchExplanationHtml(record)}
       <div class="result-card-adaptive">
         ${resultAuthors(normalizedRecord.authors, "Authors", `${cardId}-authors`, 4)}
         ${resultInstitutions(normalizedRecord.affiliations, `${cardId}-institutions`, 3)}
@@ -5110,6 +5293,15 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     .sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
   const visiblePaperRecords = filteredSets.filteredPapers
     .sort((first, second) => compareRecordsForSort(first, second, sortControl.value));
+
+  refreshInstitutionMatchContexts(
+    visibleRecords,
+    visiblePaperRecords,
+    keywordTerms,
+    directlyResolvedInstitutionIdentities,
+    activeInstitutionFilter?.identity || "",
+    hierarchyIndex,
+  );
 
   currentFilteredRecords = visibleRecords;
   currentFilteredPaperRecords = visiblePaperRecords;

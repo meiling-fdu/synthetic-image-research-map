@@ -28,7 +28,7 @@ class InstitutionTypeAuditTests(unittest.TestCase):
         cls.by_name = {row["canonical_name"]: row for row in cls.institutions}
 
     def test_audited_repository_counts_and_unique_ids(self):
-        expected_rows = CURRENT_REPOSITORY_BASELINE["canonical_institution_rows"]
+        expected_rows = CURRENT_REPOSITORY_BASELINE["total_institution_registry_rows"]
         self.assertEqual(len(self.institutions), expected_rows)
         self.assertEqual(
             len({row["institution_id"] for row in self.institutions}),

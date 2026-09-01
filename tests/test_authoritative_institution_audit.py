@@ -25,6 +25,13 @@ class AuthoritativeInstitutionAuditTests(unittest.TestCase):
         cls.by_id = {row["institution_id"]: row for row in cls.institutions}
         cls.aliases = read_csv(CURATED / "institution_aliases.csv")
         cls.mappings = read_csv(CURATED / "author_institution_mappings.csv")
+        cls.audit_log = read_csv(CURATED / "institution_audit_log.csv")
+        cls.orphan_cleanup = read_csv(
+            ROOT / "data/processed/orphan_institution_cleanup_audit.csv"
+        )
+        cls.cleanup_by_id = {
+            row["institution_id"]: row for row in cls.orphan_cleanup
+        }
 
     def test_polytechnic_university_of_turin_is_canonical_and_variants_resolve(self):
         row = self.by_id[TURIN_ID]
@@ -40,7 +47,10 @@ class AuthoritativeInstitutionAuditTests(unittest.TestCase):
             "Politecnico di Torino",
             "PoliTo",
         }.issubset(names))
-        self.assertEqual(self.by_id["institution:35caf31d5104b996"]["institution_status"], "merged")
+        retired_id = "institution:35caf31d5104b996"
+        self.assertNotIn(retired_id, self.by_id)
+        self.assertEqual(self.cleanup_by_id[retired_id]["decision"], "merged_then_deleted")
+        self.assertEqual(self.cleanup_by_id[retired_id]["replacement_target"], TURIN_ID)
 
     def test_mannheim_duplicate_is_consolidated_with_source_names_as_aliases(self):
         row = self.by_id[MANNHEIM_ID]
@@ -62,7 +72,24 @@ class AuthoritativeInstitutionAuditTests(unittest.TestCase):
             "institution:fe8410750f429b37", "institution:cd66beec0fcee918",
             "institution:2592e804f95fa542", "institution:f0501582969408c8",
         }
-        self.assertTrue(all(self.by_id[institution_id]["institution_status"] == "merged" for institution_id in sources))
+        merge_events = {
+            row["previous_institution_id"]: row["institution_id"]
+            for row in self.audit_log if row["action"] == "merge"
+        }
+        for institution_id in sources:
+            with self.subTest(institution_id=institution_id):
+                self.assertIn(institution_id, merge_events)
+                if institution_id in self.by_id:
+                    self.assertEqual(
+                        self.by_id[institution_id]["institution_status"], "merged"
+                    )
+                else:
+                    cleanup = self.cleanup_by_id[institution_id]
+                    self.assertEqual(cleanup["decision"], "merged_then_deleted")
+                    self.assertEqual(cleanup["deleted_from_registry"], "true")
+                    self.assertEqual(
+                        cleanup["replacement_target"], merge_events[institution_id]
+                    )
 
     def test_no_active_mapping_targets_a_retired_institution(self):
         active_ids = {row["institution_id"] for row in self.institutions if row["institution_status"] == "active"}

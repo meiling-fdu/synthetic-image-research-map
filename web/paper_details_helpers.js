@@ -96,6 +96,70 @@
     return { typeLabel, venue, year };
   }
 
+  const PUBLIC_METADATA_STATUSES = new Set([
+    "Verified", "Curated", "Needs review", "Source metadata",
+  ]);
+  const METADATA_FIELD_LABELS = {
+    title: "Title",
+    publication_date: "Publication date",
+    venue: "Venue",
+    publication_type: "Publication type",
+    doi: "DOI",
+    arxiv: "arXiv",
+    task_category: "Task / category",
+    affiliations: "Institution affiliations",
+  };
+
+  function metadataStatusView(record) {
+    const metadata = record?.metadata_status;
+    if (!metadata || typeof metadata !== "object") return null;
+    const status = PUBLIC_METADATA_STATUSES.has(metadata.overall)
+      ? metadata.overall
+      : "Source metadata";
+    const source = String(metadata.source || "").trim();
+    const defaultStatus = PUBLIC_METADATA_STATUSES.has(metadata.default_field_status)
+      ? metadata.default_field_status
+      : status;
+    const presentFields = [
+      ["title", Boolean(String(record?.title || "").trim())],
+      ["publication_date", Boolean(record?.publication_date || record?.publication_year || record?.year)],
+      ["venue", Boolean(String(record?.venue || record?.venue_name || "").trim())],
+      ["publication_type", Boolean(String(record?.publication_type || "").trim())],
+      ["doi", Boolean(String(record?.doi || "").trim())],
+      ["arxiv", Boolean(String(record?.arxiv_id || "").trim())],
+      ["task_category", Boolean(String(record?.task || "").trim())
+        || (Array.isArray(record?.paper_categories) && record.paper_categories.length > 0)],
+      ["affiliations", (Array.isArray(record?.affiliations) && record.affiliations.length > 0)
+        || Object.prototype.hasOwnProperty.call(metadata.field_overrides || {}, "affiliations")],
+    ].filter(([, present]) => present).map(([field]) => field);
+    const groups = [];
+    const groupByKey = new Map();
+    presentFields.forEach((field) => {
+      const value = metadata.field_overrides?.[field] || {};
+      const label = METADATA_FIELD_LABELS[field];
+      if (!label || !value || typeof value !== "object") return;
+      const fieldStatus = PUBLIC_METADATA_STATUSES.has(value.status)
+        ? value.status
+        : defaultStatus;
+      const fieldSource = Object.prototype.hasOwnProperty.call(value, "source")
+        ? String(value.source || "").trim()
+        : source;
+      const key = `${fieldStatus}\u0000${fieldSource}`;
+      let group = groupByKey.get(key);
+      if (!group) {
+        group = {status: fieldStatus, source: fieldSource, fields: []};
+        groupByKey.set(key, group);
+        groups.push(group);
+      }
+      group.fields.push(label);
+    });
+    groups.sort((left, right) => {
+      const priority = {"Needs review": 0, Verified: 1, Curated: 2, "Source metadata": 3};
+      return priority[left.status] - priority[right.status];
+    });
+    return {status, source, groups};
+  }
+
   function renderPaperAuthorItems(
     paper,
     escapeHtml,
@@ -175,6 +239,7 @@
 
   return {
     namesMatch,
+    metadataStatusView,
     publicationMetadata,
     publicationTypeLabel,
     renderPaperAuthorItems,

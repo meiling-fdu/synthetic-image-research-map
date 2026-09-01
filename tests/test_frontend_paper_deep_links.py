@@ -195,6 +195,18 @@ copySelectedPaperUrl().then(url => console.log(JSON.stringify({{url, copied}})))
         self.assertNotIn(".filter(", restore)
         self.assertNotIn("records.forEach", restore)
 
+    def test_deep_linked_details_use_the_same_metadata_status_block(self):
+        details = self.app[
+            self.app.index("function paperDetailsHtml"):
+            self.app.index("\nfunction resultBadges")
+        ]
+        show = self.app[
+            self.app.index("function showPaperDetails"):
+            self.app.index("\nfunction showLinkedPaperUnavailable")
+        ]
+        self.assertIn("paperMetadataStatusHtml(record)", details)
+        self.assertIn("paperDetailsHtml(", show)
+
 
 if __name__ == "__main__":
     unittest.main()

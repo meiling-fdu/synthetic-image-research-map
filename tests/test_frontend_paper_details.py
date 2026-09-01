@@ -139,6 +139,7 @@ process.stdout.write(helpers.renderPaperAuthors({authors}, String));
             "function paperDetailsHtml(record, relatedEntries) {", 1
         )[1].split("\nfunction resultBadges", 1)[0]
         self.assertEqual(details.count('class="paper-details-section-heading"'), 3)
+        self.assertIn("Metadata status", self.app)
         title_css = self.css.split(".paper-details-title {", 1)[1].split("}", 1)[0]
         self.assertIn("text-align: left", title_css)
         self.assertNotIn("text-align: justify", title_css)
@@ -227,6 +228,45 @@ process.stdout.write(JSON.stringify(Object.fromEntries(
         for markup in rendered.values():
             self.assertNotIn("| |", visible_text(markup))
             self.assertNotIn("· ·", visible_text(markup))
+
+    def test_metadata_status_expands_compact_defaults_and_field_overrides(self):
+        helper = REPOSITORY / "web" / "paper_details_helpers.js"
+        script = r"""
+const helpers = require(process.argv[1]);
+const view = helpers.metadataStatusView({
+  title: "Mixed paper", year: 2026, venue: "CVPR", publication_type: "conference",
+  doi: "10.1000/example", arxiv_id: "2601.00001", task: "detection",
+  affiliations: [{name: "Example University"}],
+  metadata_status: {
+    overall: "Verified", default_field_status: "Verified", source: "DOI / Crossref",
+    field_overrides: {
+      arxiv: {source: "arXiv"},
+      affiliations: {status: "Needs review", source: "OpenAlex"}
+    }
+  }
+});
+process.stdout.write(JSON.stringify(view));
+"""
+        result = subprocess.run(
+            [str(NODE), "-e", script, str(helper)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        view = json.loads(result.stdout)
+        self.assertEqual(view["status"], "Verified")
+        grouped = {
+            (row["status"], row["source"]): row["fields"]
+            for row in view["groups"]
+        }
+        self.assertIn("DOI", grouped[("Verified", "DOI / Crossref")])
+        self.assertEqual(grouped[("Verified", "arXiv")], ["arXiv"])
+        self.assertEqual(
+            grouped[("Needs review", "OpenAlex")],
+            ["Institution affiliations"],
+        )
+        self.assertIn("paperMetadataStatusHtml(record)", self.app)
+        self.assertIn('class="paper-details-metadata-status"', self.app)
 
     def test_narrow_panel_content_can_wrap_without_horizontal_overflow(self):
         content_css = self.css.split(".paper-details-content {", 1)[1].split("}", 1)[0]

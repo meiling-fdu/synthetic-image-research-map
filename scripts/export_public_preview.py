@@ -46,7 +46,10 @@ try:
         normalize_publication_type,
     )
     from .paper_categories import categories_from_record
-    from .paper_links import resolve_public_links
+    from .paper_links import (
+        normalize_arxiv_id as normalize_public_arxiv_id,
+        resolve_public_links,
+    )
     from .venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
     from .public_relationships import (
         ReviewedRelationshipResolver,
@@ -92,6 +95,7 @@ try:
         utc_timestamp,
     )
     from .public_record_rules import paper_is_retracted
+    from .public_metadata_status import add_public_metadata_status
     from .name_matching import (
         canonical_name_key,
         names_match,
@@ -144,7 +148,10 @@ except ImportError:  # Direct execution from the scripts directory.
         normalize_publication_type,
     )
     from paper_categories import categories_from_record
-    from paper_links import resolve_public_links
+    from paper_links import (
+        normalize_arxiv_id as normalize_public_arxiv_id,
+        resolve_public_links,
+    )
     from venues import VENUE_TYPE_ORDER, canonicalize_records, read_venue_aliases
     from public_relationships import (
         ReviewedRelationshipResolver,
@@ -190,6 +197,7 @@ except ImportError:  # Direct execution from the scripts directory.
         utc_timestamp,
     )
     from public_record_rules import paper_is_retracted
+    from public_metadata_status import add_public_metadata_status
     from name_matching import (
         canonical_name_key,
         names_match,
@@ -3064,6 +3072,88 @@ def strip_retired_paper_fields(records: Sequence[Dict[str, Any]]) -> int:
     return removed
 
 
+def normalize_exported_paper_identifiers(
+    records: Sequence[Dict[str, Any]],
+) -> None:
+    """Use canonical identifier strings at the final public boundary."""
+    for record in records:
+        if clean_text(record.get("doi")):
+            record["doi"] = normalize_doi(record.get("doi"))
+        if clean_text(record.get("arxiv_id")):
+            record["arxiv_id"] = normalize_public_arxiv_id(record.get("arxiv_id"))
+
+
+def synchronize_public_arxiv_metadata(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    """Promote one unambiguous map arXiv ID and mirror the paper authority."""
+    map_lookup = build_identity_lookup(map_records)
+    conflicts = []
+    for paper in paper_records:
+        matches = matching_records(paper, map_lookup)
+        paper_arxiv = normalize_public_arxiv_id(paper.get("arxiv_id"))
+        map_arxiv_ids = list(dict.fromkeys(
+            normalize_public_arxiv_id(
+                marker.get("arxiv_id") or marker.get("arxiv_url")
+            )
+            for marker in matches
+            if normalize_public_arxiv_id(
+                marker.get("arxiv_id") or marker.get("arxiv_url")
+            )
+        ))
+        if not paper_arxiv and len(map_arxiv_ids) == 1:
+            paper_arxiv = map_arxiv_ids[0]
+            paper["arxiv_id"] = paper_arxiv
+            paper["arxiv_url"] = f"https://arxiv.org/abs/{paper_arxiv}"
+            paper["has_arxiv_version"] = True
+        elif not paper_arxiv and len(map_arxiv_ids) > 1:
+            conflicts.append({
+                "title": clean_text(paper.get("title")),
+                "arxiv_ids": map_arxiv_ids,
+            })
+            continue
+        for marker in matches:
+            if paper_arxiv:
+                marker["arxiv_id"] = paper_arxiv
+                marker["arxiv_url"] = f"https://arxiv.org/abs/{paper_arxiv}"
+                marker["has_arxiv_version"] = True
+            else:
+                marker.pop("arxiv_id", None)
+                marker.pop("arxiv_url", None)
+                marker["has_arxiv_version"] = False
+    return conflicts
+
+
+def synchronize_public_authors(
+    paper_records: Sequence[Dict[str, Any]],
+    map_records: Sequence[Dict[str, Any]],
+) -> None:
+    """Align marker author order without discarding marker-specific flags."""
+    map_lookup = build_identity_lookup(map_records)
+    for paper in paper_records:
+        paper_authors = list(paper.get("authors") or [])
+        paper_keys = [
+            canonical_name_key(
+                author.get("name") if isinstance(author, Mapping) else author
+            )
+            for author in paper_authors
+        ]
+        for marker in matching_records(paper, map_lookup):
+            marker_authors = list(marker.get("authors") or [])
+            keyed_marker_authors = {
+                canonical_name_key(
+                    author.get("name") if isinstance(author, Mapping) else author
+                ): author
+                for author in marker_authors
+            }
+            if (
+                len(keyed_marker_authors) == len(marker_authors)
+                and set(keyed_marker_authors) == set(paper_keys)
+            ):
+                marker["authors"] = [keyed_marker_authors[key] for key in paper_keys]
+
+
 def preserve_existing_curation_status(
     records: Sequence[Dict[str, Any]], previous: Sequence[Mapping[str, Any]]
 ) -> None:
@@ -4716,12 +4806,29 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
                 f"{retired_fields_removed} preserved public records.",
                 flush=True,
             )
+        arxiv_conflicts = synchronize_public_arxiv_metadata(
+            integrated_papers, integrated_maps
+        )
+        if arxiv_conflicts:
+            raise PreviewExportError(
+                "Conflicting map arXiv IDs require review: "
+                + "; ".join(
+                    f"{row['title']!r}: {', '.join(row['arxiv_ids'])}"
+                    for row in arxiv_conflicts
+                )
+            )
+        synchronize_public_authors(integrated_papers, integrated_maps)
+        normalize_exported_paper_identifiers(integrated_papers)
+        normalize_exported_paper_identifiers(integrated_maps)
         reconstruct_publication_links(integrated_papers)
         reconstruct_publication_links(integrated_maps)
         add_paper_institution_search_ids(
             integrated_papers,
             curated_mappings,
             exported_id_redirects,
+        )
+        add_public_metadata_status(
+            integrated_papers, integrated_maps, curated_mappings
         )
         # Validate against the actual curation input (including custom paths),
         # not merely the self-consistency of the two derived public schemas.

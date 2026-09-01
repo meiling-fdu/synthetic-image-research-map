@@ -74,10 +74,14 @@ class InstitutionReviewNavigationFrontendTests(unittest.TestCase):
         self.assertNotIn("refreshInstitutions", identity)
         self.assertNotIn("loadLocationReviews", identity)
         location = self.source[self.source.index("async function confirmLocation(event)") : self.source.index("async function markLocationReview")]
-        self.assertIn("patchLocationReviewRecord", location)
+        normal_review_save = location[
+            location.index("} else {", location.index("if (canonicalPersistence)")):
+            location.index("\n    }\n  } catch")
+        ]
+        self.assertIn("patchLocationReviewRecord", normal_review_save)
         self.assertIn("renderInstitutionManagement", location)
-        self.assertNotIn("loadLocationReviews", location)
-        self.assertNotIn("refreshInstitutions", location)
+        self.assertNotIn("loadLocationReviews", normal_review_save)
+        self.assertNotIn("refreshInstitutions", normal_review_save)
         server = (ROOT / "scripts/serve_admin.py").read_text(encoding="utf-8")
         actions = server[server.index("institution_actions = {") : server.index("location_actions = {")]
         self.assertNotIn("export_preview", actions)
@@ -93,8 +97,17 @@ class InstitutionReviewNavigationFrontendTests(unittest.TestCase):
         self.assertIn("selectLocationReview(next.queue_id)", patching)
         self.assertIn("else clearLocationEditor()", patching)
         self.assertNotIn("loadLocationReviews", patching)
+        confirm = self.source[
+            self.source.index("async function confirmLocation(event)"):
+            self.source.index("async function markLocationReview")
+        ]
+        normal_review_save = confirm[
+            confirm.index("} else {", confirm.index("if (canonicalPersistence)")):
+            confirm.index("\n    }\n  } catch")
+        ]
+        self.assertIn("patchLocationReviewRecord", normal_review_save)
+        self.assertNotIn("loadLocationReviews", normal_review_save)
         for function_name, end_name in (
-            ("async function confirmLocation(event)", "async function markLocationReview"),
             ("async function markLocationReview", "async function confirmLocationAlias"),
             ("async function confirmLocationAlias", "function requestToken"),
         ):

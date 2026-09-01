@@ -70,13 +70,23 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
             if row["institution_status"] == "active"
         ]
         self.assert_current("public_unique_papers", len(self.public_papers))
-        self.assert_current("canonical_institution_rows", len(self.institutions))
+        self.assert_current("total_institution_registry_rows", len(self.institutions))
         self.assert_current("active_canonical_institutions", len(active))
         self.assert_current(
-            "inactive_or_merged_institutions",
+            "non_active_institution_registry_rows",
             len(self.institutions) - len(active),
         )
         self.assert_current("institution_hierarchy_edges", len(self.hierarchy))
+        self.assert_current(
+            "public_paper_institution_relationships",
+            len({
+                (
+                    identity_key(row),
+                    row["institution_id"],
+                )
+                for row in self.map_records
+            }),
+        )
 
     def test_curated_paper_count_is_defined_by_unique_authoritative_rows(self):
         paper_ids = [row["paper_id"].strip() for row in self.curated_papers]
@@ -140,14 +150,11 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
             )
         )
 
-    def test_curated_bowie_affiliation_awaits_a_canonical_location(self):
-        """Keep reviewed affiliations without publishing unconfirmed geography.
+    def test_curated_bowie_affiliations_use_confirmed_canonical_locations(self):
+        """Both reviewed mappings publish after canonical location confirmation.
 
-        The reviewed 1303-marker state contained two preliminary OpenAlex rows
-        for this paper. Manual curation retained both affiliations, but only
-        University of Baltimore currently has a confirmed canonical location.
-        Bowie State therefore remains in paper detail and off the map until its
-        derived pending location review is explicitly confirmed.
+        The obsolete preliminary OpenAlex/ROR relationships are not restored;
+        these are the two independently curated mappings and locations.
         """
         doi = "10.1109/snpd-winter57765.2023.10223798"
         mapping_ids = [row["mapping_id"] for row in self.mappings]
@@ -201,22 +208,33 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
         })
 
         relationships = [row for row in self.map_records if row.get("doi") == doi]
-        self.assertEqual(len(relationships), 1)
-        relationship = relationships[0]
-        self.assertEqual(
+        self.assertEqual(len(relationships), 2)
+        self.assertEqual({
             (
-                relationship["mapping_id"],
-                relationship["institution_id"],
-                relationship["location_id"],
-                tuple(relationship["institution_authors"]),
-            ),
+                relationship["mapping_id"], relationship["institution_id"],
+                relationship["location_id"], tuple(relationship["institution_authors"]),
+                relationship["affiliation_review_state"],
+                relationship["institution_source"],
+            )
+            for relationship in relationships
+        }, {
             (
                 "mapping:5f304d4786427a2bbe5d",
                 "institution:85dd03b724084b02",
                 "location:87e3eb1151a82d258822",
                 ("Weifeng Xu",),
+                "curated",
+                "curated",
             ),
-        )
+            (
+                "mapping:03dbf1409de8df957bd3",
+                "institution:86acee6f855e6b06",
+                "location:207d252de5d9ce283e8f",
+                ("Galamo Monkam", "Jie Yan"),
+                "curated",
+                "curated",
+            ),
+        })
 
     def test_public_paper_map_coverage_matches_reviewed_blockers(self):
         map_source_papers = {identity_key(row) for row in self.map_records}
