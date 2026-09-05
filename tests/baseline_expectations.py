@@ -7,21 +7,21 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
-    # Canonical public paper records after the 2026-09-01 eight-paper audit.
-    "public_unique_papers": 582,
+    # Canonical public paper records after the 2026-09-05 Ant/AI-edit gap-fill.
+    "public_unique_papers": 613,
     # Distinct paper identities represented by at least one public map marker.
-    "public_map_source_papers": 577,
+    "public_map_source_papers": 608,
     # Canonical public papers that resolve to at least one public map marker.
-    "public_papers_with_map": 576,
+    "public_papers_with_map": 607,
     "public_papers_without_map": 6,
     # Registry rows include active identities plus retained merged/ignored history.
-    "total_institution_registry_rows": 669,
-    "active_canonical_institutions": 654,
-    "non_active_institution_registry_rows": 15,
+    "total_institution_registry_rows": 691,
+    "active_canonical_institutions": 675,
+    "non_active_institution_registry_rows": 16,
     # Unique public paper–institution relationships; one relationship has two markers.
-    "public_paper_institution_relationships": 1320,
+    "public_paper_institution_relationships": 1402,
     "institution_hierarchy_edges": 11,
-    "institution_aliases": 114,
+    "institution_aliases": 115,
 }
 
 RELEASE_REPOSITORY_BASELINE = {
@@ -40,8 +40,8 @@ RELEASE_REPOSITORY_BASELINE = {
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 654,
-    "merged": 9,
+    "active": 675,
+    "merged": 10,
     "ignored": 6,
 }
 
@@ -52,26 +52,26 @@ RELEASE_CANONICAL_INSTITUTION_STATUS_TOTALS = {
 }
 
 CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 497,
-    "research_unit": 78,
-    "company": 77,
-    "other": 17,
+    "university": 508,
+    "research_unit": 80,
+    "company": 79,
+    "other": 24,
 }
 
 ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 491,
-    "research_unit": 75,
-    "company": 75,
-    "other": 13,
+    "university": 502,
+    "research_unit": 77,
+    "company": 77,
+    "other": 19,
 }
 
 PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
     # Papers associated with each active institution type; one paper may
     # contribute to multiple types, so these are not paper-record totals.
-    "university": 553,
-    "research_unit": 111,
-    "company": 106,
-    "other": 29,
+    "university": 583,
+    "research_unit": 120,
+    "company": 119,
+    "other": 35,
 }
 
 # Historical release artifacts are immutable; current effective venues have
@@ -79,18 +79,18 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
 PUBLICATION_TYPE_TOTALS = {
-    # Eight main-track conference additions; other publication types unchanged.
-    "conference": 358,
-    "journal": 161,
-    "preprint": 62,
+    # Current public corpus after the 2026-09-05 Ant/AI-edit gap-fill.
+    "conference": 359,
+    "journal": 157,
+    "preprint": 96,
     "book": 1,
 }
 
 TASK_TOTALS = {
-    # All eight 2026-09-01 additions are detection methods.
-    "detection": 507,
-    "source_attribution": 46,
-    "detection_and_source_attribution": 29,
+    # Multi-label public-paper counts after resolving the taxonomy review queue.
+    "detection": 577,
+    "source_attribution": 77,
+    "localization": 18,
 }
 
 RELEASE_TASK_TOTALS = {

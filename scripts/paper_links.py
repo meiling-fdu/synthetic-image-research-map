@@ -101,7 +101,9 @@ def _formal_url(record: Mapping[str, Any], formal_doi: str) -> str:
     ):
         url = safe_http_url(record.get(field))
         target = canonical_url(url)
-        if url and not target.startswith(("arxiv:", "openalex:")):
+        if url and not target.startswith(
+            ("arxiv:", "openalex:", f"doi:{ARXIV_DOI_PREFIX}")
+        ):
             return url
     return ""
 

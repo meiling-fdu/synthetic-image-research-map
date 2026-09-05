@@ -30,7 +30,7 @@ class InstitutionReviewWorkflowTests(unittest.TestCase):
             "paper_id": "curated:test",
             "title": "Institution review test",
             "year": 2026,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "authors": ["Researcher"],
         }
         self.location = {

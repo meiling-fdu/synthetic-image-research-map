@@ -154,7 +154,7 @@ class PublicationVenueAuditTests(unittest.TestCase):
         for container in ["Lecture Notes in Computer Science, vol. 15643", "CCIS", "Computer Vision – ECCV 2024 Workshops"]:
             row = dict(title="Are CLIP Features All You Need for Universal Synthetic Image Origin Attribution?",
                        doi="10.1007/978-3-031-92648-8_22", publication_type="book", venue=container,
-                       year=2025, raw_venue=container, paper_categories=["method"])
+                       year=2025, raw_venue=container, research_types=["method"])
             result, finding = VenueAudit(read_venue_aliases()).paper(row)
             self.assertIsNone(finding)
             self.assertEqual((result["publication_type"], result["venue_id"], result["year"], result["venue_track"]),

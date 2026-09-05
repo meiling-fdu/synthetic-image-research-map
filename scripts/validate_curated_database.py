@@ -18,7 +18,8 @@ try:
     from .curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
-        ALLOWED_ENTRY_TYPES,
+        ALLOWED_IMAGE_SCOPES,
+        ALLOWED_RESEARCH_TYPES,
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
@@ -39,7 +40,14 @@ try:
     )
     from .venues import resolve_venue
     from .publication_types import book_incompatibilities, is_book_publication
-    from .paper_categories import normalize_paper_categories, serialize_paper_categories
+    from .paper_taxonomy import (
+        normalize_image_scopes,
+        normalize_research_types,
+        normalize_tasks,
+        serialize_image_scopes,
+        serialize_research_types,
+        serialize_tasks,
+    )
     from .migrate_institution_english_names import (
         load_overrides as load_english_name_overrides,
         load_tables as load_english_name_tables,
@@ -53,7 +61,8 @@ except ImportError:  # Support direct execution from the repository root.
     from curated_schema import (
         ALLOWED_COORDINATE_STATUSES,
         ALLOWED_CURATION_STATUSES,
-        ALLOWED_ENTRY_TYPES,
+        ALLOWED_IMAGE_SCOPES,
+        ALLOWED_RESEARCH_TYPES,
         ALLOWED_EXCLUSION_REASONS,
         ALLOWED_LOCATION_STATUSES,
         ALLOWED_INSTITUTION_REVIEW_STATUSES,
@@ -74,7 +83,14 @@ except ImportError:  # Support direct execution from the repository root.
     )
     from venues import resolve_venue
     from publication_types import book_incompatibilities, is_book_publication
-    from paper_categories import normalize_paper_categories, serialize_paper_categories
+    from paper_taxonomy import (
+        normalize_image_scopes,
+        normalize_research_types,
+        normalize_tasks,
+        serialize_image_scopes,
+        serialize_research_types,
+        serialize_tasks,
+    )
     from migrate_institution_english_names import (
         load_overrides as load_english_name_overrides,
         load_tables as load_english_name_tables,
@@ -1337,23 +1353,69 @@ def main() -> int:
     venue_aliases = datasets.get("venue_aliases.csv", [])
 
     validate_book_invariant(papers, issues)
-    validate_allowed_value(papers, "papers.csv", "task", ALLOWED_TASKS, issues)
+    taxonomy_normalizers = {
+        "tasks": (normalize_tasks, serialize_tasks),
+        "image_scopes": (normalize_image_scopes, serialize_image_scopes),
+        "research_types": (normalize_research_types, serialize_research_types),
+    }
     for row_number, paper in enumerate(papers, start=2):
-        raw_categories = paper.get("paper_categories", "")
-        try:
-            normalized_categories = normalize_paper_categories(raw_categories, compatibility=True)
-            if serialize_paper_categories(normalized_categories) != raw_categories:
-                raise ValueError("paper_categories must be unique and in canonical order")
-        except ValueError as error:
-            add_issue(issues, "ERROR", "papers.csv", str(error), row_number)
-            normalized_categories = []
-        if not normalized_categories and not is_book_publication(paper.get("publication_type")):
+        for field, (normalizer, serializer) in taxonomy_normalizers.items():
+            raw = paper.get(field, "")
+            try:
+                normalized = normalizer(raw, compatibility=True)
+                if serializer(normalized) != raw:
+                    raise ValueError(f"{field} must be unique and in canonical order")
+            except ValueError as error:
+                add_issue(issues, "ERROR", "papers.csv", str(error), row_number)
+                normalized = []
+    taxonomy_registry = datasets.get("paper_taxonomy.csv", [])
+    papers_by_id = {clean(row.get("paper_id")): row for row in papers}
+    taxonomy_ids = [clean(row.get("taxonomy_id")) for row in taxonomy_registry]
+    # Exact registry/public identity coverage is enforced by the exporter after
+    # active exclusions and version reconciliation. A fixed historical count
+    # would incorrectly reject a valid curated scope removal before export.
+    if not taxonomy_registry:
+        add_issue(
+            issues,
+            "ERROR",
+            "paper_taxonomy.csv",
+            "taxonomy registry must contain the current public corpus",
+        )
+    if any(not value for value in taxonomy_ids) or len(taxonomy_ids) != len(set(taxonomy_ids)):
+        add_issue(issues, "ERROR", "paper_taxonomy.csv", "taxonomy_id values must be non-empty and unique")
+    for row_number, taxonomy in enumerate(taxonomy_registry, start=2):
+        paper_id = clean(taxonomy.get("paper_id"))
+        if paper_id and paper_id not in papers_by_id:
             add_issue(
-                issues,
-                "ERROR",
-                "papers.csv",
-                "paper_categories requires at least one category",
-                row_number,
+                issues, "ERROR", "paper_taxonomy.csv",
+                f"paper_id is not present in papers.csv: {paper_id!r}", row_number,
+            )
+        statuses = []
+        for field, (normalizer, serializer) in taxonomy_normalizers.items():
+            raw = taxonomy.get(field, "")
+            try:
+                normalized = normalizer(raw, compatibility=True)
+                if serializer(normalized) != raw:
+                    raise ValueError(f"{field} must be unique and in canonical order")
+            except ValueError as error:
+                add_issue(
+                    issues,
+                    "ERROR",
+                    "paper_taxonomy.csv",
+                    str(error),
+                    row_number,
+                )
+            status = clean(taxonomy.get(f"{field}_status"))
+            statuses.append(status)
+            if status not in {"reviewed", "needs_review"}:
+                add_issue(issues, "ERROR", "paper_taxonomy.csv", f"invalid {field}_status", row_number)
+            if status == "needs_review" and not clean(taxonomy.get(f"{field}_review_reason")):
+                add_issue(issues, "ERROR", "paper_taxonomy.csv", f"{field}_review_reason is required", row_number)
+        expected_status = "needs_review" if "needs_review" in statuses else "reviewed"
+        if taxonomy.get("taxonomy_status") != expected_status:
+            add_issue(
+                issues, "ERROR", "paper_taxonomy.csv",
+                f"taxonomy_status must be {expected_status!r}", row_number,
             )
     validate_allowed_value(
         papers,

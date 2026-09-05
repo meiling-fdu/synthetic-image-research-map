@@ -183,7 +183,18 @@ class WorkshopArtifactTests(unittest.TestCase):
     def test_processed_admin_dashboard_public_and_marker_state_agree(self):
         from scripts.serve_admin import load_admin_data
         from scripts.export_public_preview import identity_key, paper_identity_keys
+        from scripts.paper_exclusions import (
+            build_active_exclusion_index,
+            read_exclusion_rows,
+            record_is_excluded,
+        )
         records = json.loads((ROOT / "data/processed/venue_normalized_papers.json").read_text())["records"]
+        exclusion_index = build_active_exclusion_index(read_exclusion_rows())
+        records = [
+            record
+            for record in records
+            if not record_is_excluded(record, exclusion_index)
+        ]
         admin, _ = load_admin_data()
         by_id = {p["display_id"]: p for p in admin}
         by_key = {identity_key(p): p for p in admin}

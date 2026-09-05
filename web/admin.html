@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>Local Paper Curator · Synthetic Image Research Map</title>
-    <link rel="stylesheet" href="/admin.css?v=20260828-workshop-fields">
+    <link rel="stylesheet" href="/admin.css?v=20260905-taxonomy-checkboxes">
     <script src="/institution_type_labels.js?v=20260718-research-institute" defer></script>
     <script src="/institution_display.js?v=20260825-institution-abbreviations" defer></script>
     <script src="/title_markup.js?v=20260825-title-superscripts" defer></script>
-    <script src="/admin.js?v=20260828-workshop-fields" defer></script>
+    <script src="/admin.js?v=20260905-taxonomy-checkboxes" defer></script>
   </head>
   <body>
     <header class="masthead">
@@ -263,15 +263,39 @@
               <option value="book">book</option>
             </select>
           </label>
-          <label>Task
-            <select id="paper-task" name="task" required>
-              <option value="">Select task…</option>
-              <option value="detection">detection</option>
-              <option value="detection_and_source_attribution">detection_and_source_attribution</option>
-              <option value="source_attribution">source_attribution</option>
-              <option value="uncertain">uncertain</option>
-            </select>
-          </label>
+          <fieldset id="paper-tasks" class="paper-category-field" aria-required="true">
+            <legend>Forensic Task</legend>
+            <div class="paper-category-options">
+              <label class="paper-category-option" for="paper-task-detection"><input class="paper-category-input" id="paper-task-detection" type="checkbox" name="tasks" value="detection"><span>Detection</span></label>
+              <label class="paper-category-option" for="paper-task-source-attribution"><input class="paper-category-input" id="paper-task-source-attribution" type="checkbox" name="tasks" value="source_attribution"><span>Source attribution</span></label>
+              <label class="paper-category-option" for="paper-task-localization"><input class="paper-category-input" id="paper-task-localization" type="checkbox" name="tasks" value="localization"><span>Localization</span></label>
+            </div>
+          </fieldset>
+          <fieldset id="paper-image-scopes" class="paper-category-field" aria-required="true">
+            <legend>Image Scope</legend>
+            <div class="paper-category-options paper-category-scope-options">
+              <div class="paper-category-scope-group">
+                <span class="paper-category-scope-heading">Core scope</span>
+                <label class="paper-category-option" for="paper-image-scope-fully-generated"><input class="paper-category-input" id="paper-image-scope-fully-generated" type="checkbox" name="image_scopes" value="fully_generated"><span>Fully Generated</span></label>
+                <label class="paper-category-option" for="paper-image-scope-generative-editing"><input class="paper-category-input" id="paper-image-scope-generative-editing" type="checkbox" name="image_scopes" value="generative_editing"><span>Generative Editing</span></label>
+              </div>
+              <div class="paper-category-scope-group is-extended">
+                <span class="paper-category-scope-heading">Extended scope</span>
+                <label class="paper-category-option" for="paper-image-scope-deepfake"><input class="paper-category-input" id="paper-image-scope-deepfake" type="checkbox" name="image_scopes" value="deepfake"><span>Deepfake</span></label>
+                <label class="paper-category-option" for="paper-image-scope-traditional-manipulation"><input class="paper-category-input" id="paper-image-scope-traditional-manipulation" type="checkbox" name="image_scopes" value="traditional_manipulation"><span>Traditional Manipulation</span></label>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset id="paper-research-types" class="paper-category-field" aria-required="true">
+            <legend>Research Type</legend>
+            <div class="paper-category-options">
+              <label class="paper-category-option" for="paper-research-type-method"><input class="paper-category-input" id="paper-research-type-method" type="checkbox" name="research_types" value="method"><span>Method</span></label>
+              <label class="paper-category-option" for="paper-research-type-dataset"><input class="paper-category-input" id="paper-research-type-dataset" type="checkbox" name="research_types" value="dataset"><span>Dataset</span></label>
+              <label class="paper-category-option" for="paper-research-type-benchmark"><input class="paper-category-input" id="paper-research-type-benchmark" type="checkbox" name="research_types" value="benchmark"><span>Benchmark</span></label>
+              <label class="paper-category-option" for="paper-research-type-survey"><input class="paper-category-input" id="paper-research-type-survey" type="checkbox" name="research_types" value="survey"><span>Survey</span></label>
+              <label class="paper-category-option" for="paper-research-type-analysis-study"><input class="paper-category-input" id="paper-research-type-analysis-study" type="checkbox" name="research_types" value="analysis_study"><span>Analysis study</span></label>
+            </div>
+          </fieldset>
           <label>Scope status
             <select id="paper-scope-status" name="scope_status">
               <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>
@@ -568,23 +592,39 @@
                   <option value="conference">conference</option><option value="journal">journal</option>
                   <option value="preprint">preprint</option><option value="book">book</option>
                 </select><button id="metadata-publication-type-override" class="text-button" type="button">Override publication type</button><span id="metadata-publication-type-warning" class="field-warning" hidden></span></label>
-                <fieldset id="metadata-entry-type-field" class="paper-category-field full-width" aria-describedby="metadata-paper-categories-error">
-                  <legend>Paper Categories</legend>
-                  <div id="metadata-paper-categories" class="paper-category-options">
-                    <label class="paper-category-option" for="paper-category-method"><input class="paper-category-input" id="paper-category-method" type="checkbox" name="paper_categories" value="method"><span>Method</span></label>
-                    <label class="paper-category-option" for="paper-category-dataset"><input class="paper-category-input" id="paper-category-dataset" type="checkbox" name="paper_categories" value="dataset"><span>Dataset</span></label>
-                    <label class="paper-category-option" for="paper-category-benchmark"><input class="paper-category-input" id="paper-category-benchmark" type="checkbox" name="paper_categories" value="benchmark"><span>Benchmark</span></label>
-                    <label class="paper-category-option" for="paper-category-survey"><input class="paper-category-input" id="paper-category-survey" type="checkbox" name="paper_categories" value="survey"><span>Survey</span></label>
-                    <label class="paper-category-option" for="paper-category-analysis"><input class="paper-category-input" id="paper-category-analysis" type="checkbox" name="paper_categories" value="analysis"><span>Analysis</span></label>
+                <fieldset id="metadata-tasks" class="paper-category-field" aria-required="true">
+                  <legend>Forensic Task</legend>
+                  <div class="paper-category-options">
+                    <label class="paper-category-option" for="metadata-task-detection"><input class="paper-category-input" id="metadata-task-detection" type="checkbox" name="tasks" value="detection"><span>Detection</span></label>
+                    <label class="paper-category-option" for="metadata-task-source-attribution"><input class="paper-category-input" id="metadata-task-source-attribution" type="checkbox" name="tasks" value="source_attribution"><span>Source attribution</span></label>
+                    <label class="paper-category-option" for="metadata-task-localization"><input class="paper-category-input" id="metadata-task-localization" type="checkbox" name="tasks" value="localization"><span>Localization</span></label>
                   </div>
-                  <p id="metadata-paper-categories-error" class="form-error" role="alert" hidden></p>
                 </fieldset>
-                <label>Task / research direction<select id="metadata-task" required>
-                  <option value="detection">detection</option>
-                  <option value="detection_and_source_attribution">detection_and_source_attribution</option>
-                  <option value="source_attribution">source_attribution</option>
-                  <option value="uncertain">uncertain</option>
-                </select></label>
+                <fieldset id="metadata-image-scopes" class="paper-category-field" aria-required="true">
+                  <legend>Image Scope</legend>
+                  <div class="paper-category-options paper-category-scope-options">
+                    <div class="paper-category-scope-group">
+                      <span class="paper-category-scope-heading">Core scope</span>
+                      <label class="paper-category-option" for="metadata-image-scope-fully-generated"><input class="paper-category-input" id="metadata-image-scope-fully-generated" type="checkbox" name="image_scopes" value="fully_generated"><span>Fully Generated</span></label>
+                      <label class="paper-category-option" for="metadata-image-scope-generative-editing"><input class="paper-category-input" id="metadata-image-scope-generative-editing" type="checkbox" name="image_scopes" value="generative_editing"><span>Generative Editing</span></label>
+                    </div>
+                    <div class="paper-category-scope-group is-extended">
+                      <span class="paper-category-scope-heading">Extended scope</span>
+                      <label class="paper-category-option" for="metadata-image-scope-deepfake"><input class="paper-category-input" id="metadata-image-scope-deepfake" type="checkbox" name="image_scopes" value="deepfake"><span>Deepfake</span></label>
+                      <label class="paper-category-option" for="metadata-image-scope-traditional-manipulation"><input class="paper-category-input" id="metadata-image-scope-traditional-manipulation" type="checkbox" name="image_scopes" value="traditional_manipulation"><span>Traditional Manipulation</span></label>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset id="metadata-research-types" class="paper-category-field" aria-required="true">
+                  <legend>Research Type</legend>
+                  <div class="paper-category-options">
+                    <label class="paper-category-option" for="metadata-research-type-method"><input class="paper-category-input" id="metadata-research-type-method" type="checkbox" name="research_types" value="method"><span>Method</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-dataset"><input class="paper-category-input" id="metadata-research-type-dataset" type="checkbox" name="research_types" value="dataset"><span>Dataset</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-benchmark"><input class="paper-category-input" id="metadata-research-type-benchmark" type="checkbox" name="research_types" value="benchmark"><span>Benchmark</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-survey"><input class="paper-category-input" id="metadata-research-type-survey" type="checkbox" name="research_types" value="survey"><span>Survey</span></label>
+                    <label class="paper-category-option" for="metadata-research-type-analysis-study"><input class="paper-category-input" id="metadata-research-type-analysis-study" type="checkbox" name="research_types" value="analysis_study"><span>Analysis study</span></label>
+                  </div>
+                </fieldset>
                 <label>Scope status<select id="metadata-scope-status">
                   <option value="in_scope">in_scope</option><option value="out_of_scope">out_of_scope</option>
                   <option value="uncertain">uncertain</option><option value="needs_review">needs_review</option>

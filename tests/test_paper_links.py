@@ -22,6 +22,14 @@ class PaperLinkResolverTests(unittest.TestCase):
         self.assertEqual(links["formal_url"], "https://doi.org/10.1000/formal")
         self.assertEqual(links["arxiv_id"], "2401.12345")
 
+    def test_arxiv_doi_url_is_not_a_formal_publication(self):
+        links = resolve_public_links({
+            "doi": "10.48550/arxiv.2401.12345",
+            "paper_url": "https://doi.org/10.48550/arxiv.2401.12345",
+        })
+        self.assertFalse(links["formal_url"])
+        self.assertEqual(links["primary_url"], "https://arxiv.org/abs/2401.12345")
+
     def test_bare_and_url_dois_normalize_without_duplication(self):
         bare = resolve_public_links({"doi": "doi:10.1000/Example"})
         url = resolve_public_links({"doi": "HTTP://DX.DOI.ORG/10.1000/Example/"})

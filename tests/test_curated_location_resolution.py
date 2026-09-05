@@ -85,7 +85,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "venue_track": "Findings",
             "raw_venue": "CVPR Findings",
             "publication_type": "conference",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "scope_status": "in_scope",
             "curation_status": "manually_added",
             "review_status": "reviewed",
@@ -97,7 +97,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "venue_id": "venue:computer-vision-and-pattern-recognition:main",
             "venue_type": "conference",
             "venue_track": "Main",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
         }
 
         papers, _maps, _reviews, _summary = integrate_curated_records(
@@ -112,7 +112,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             {
                 "title": "School affiliation",
                 "year": 2024,
-                "task": "detection",
+                "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             },
             {
                 "mapping_id": "mapping:school",
@@ -258,7 +258,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
         paper = {
             "title": "Supplement test",
             "year": 2026,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "doi": "10.1000/supplement",
             "authors": ["Ada Researcher"],
         }
@@ -361,7 +361,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "title": "Noise-Informed Diffusion-Generated Image Detection With Anomaly Attention",
             "year": 2025,
             "publication_year": 2025,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "doi": "10.1109/tifs.2025.3573161",
             "openalex_url": "https://openalex.org/W4410853187",
             "authors": [
@@ -456,7 +456,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "title": "Published title",
             "year": 2025,
             "doi": "10.1000/published",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "authors": ["Ada Researcher"],
             "merged_versions": [
                 {
@@ -503,7 +503,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             ),
             "year": 2019,
             "publication_year": 2019,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "doi": "10.1109/wifs47025.2019.9035099",
             "openalex_url": "https://openalex.org/W3010699567",
             "authors": [
@@ -632,7 +632,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "title": "Author index test",
             "year": "2026",
             "authors": "Ada Researcher; Ben Researcher",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "scope_status": "in_scope",
             "source_database": "manual",
             "curation_status": "manually_added",
@@ -694,7 +694,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "title": "Cache fallback test",
             "year": 2026,
             "publication_year": 2026,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "doi": "10.1234/cache-test",
             "authors": ["Researcher"],
         }
@@ -740,7 +740,7 @@ class CuratedLocationResolutionTests(unittest.TestCase):
             "paper_id": "curated:test",
             "title": "Curated priority test",
             "year": 2026,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
         }
         mapping = {
             "mapping_id": "mapping:test",

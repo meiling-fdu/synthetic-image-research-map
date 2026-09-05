@@ -106,7 +106,6 @@
     publication_type: "Publication type",
     doi: "DOI",
     arxiv: "arXiv",
-    task_category: "Task / category",
     affiliations: "Institution affiliations",
   };
 
@@ -127,8 +126,6 @@
       ["publication_type", Boolean(String(record?.publication_type || "").trim())],
       ["doi", Boolean(String(record?.doi || "").trim())],
       ["arxiv", Boolean(String(record?.arxiv_id || "").trim())],
-      ["task_category", Boolean(String(record?.task || "").trim())
-        || (Array.isArray(record?.paper_categories) && record.paper_categories.length > 0)],
       ["affiliations", (Array.isArray(record?.affiliations) && record.affiliations.length > 0)
         || Object.prototype.hasOwnProperty.call(metadata.field_overrides || {}, "affiliations")],
     ].filter(([, present]) => present).map(([field]) => field);

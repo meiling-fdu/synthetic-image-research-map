@@ -60,10 +60,10 @@ class FrontendInteractionModelTests(unittest.TestCase):
         script = r"""
 const helpers = require(process.argv[1]);
 const records = [
-  {site: 'A', paper: 'P', task: 'detection'},
-  {site: 'A', paper: 'P', task: 'detection'},
-  {site: 'A', paper: 'Q', task: 'source_attribution'},
-  {site: 'B', paper: 'R', task: 'detection'},
+  {site: 'A', paper: 'P', tasks: ['detection']},
+  {site: 'A', paper: 'P', tasks: ['detection']},
+  {site: 'A', paper: 'Q', tasks: ['source_attribution']},
+  {site: 'B', paper: 'R', tasks: ['detection']},
 ];
 const group = helpers.groupInstitutionRecords(records, r => r.site, r => r.paper)[0];
 const counts = helpers.getInstitutionTaskCounts(group.records, r => r.paper);

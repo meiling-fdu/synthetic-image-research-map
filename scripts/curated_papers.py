@@ -15,7 +15,8 @@ from typing import Any, Dict, Iterable, List, Mapping, Sequence
 try:
     from .curated_schema import (
         ALLOWED_CURATION_STATUSES,
-        ALLOWED_ENTRY_TYPES,
+        ALLOWED_IMAGE_SCOPES,
+        ALLOWED_RESEARCH_TYPES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_SCOPE_STATUSES,
         ALLOWED_TASKS,
@@ -36,7 +37,15 @@ try:
     )
     from .paper_links import resolve_public_links
     from .title_normalization import canonical_paper_title
-    from .paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
+    from .paper_taxonomy import (
+        PaperTaxonomyError,
+        normalize_image_scopes,
+        normalize_research_types,
+        normalize_tasks,
+        serialize_image_scopes,
+        serialize_research_types,
+        serialize_tasks,
+    )
     from .venues import (
         ALLOWED_VENUE_TRACKS,
         normalize_venue_track,
@@ -52,7 +61,8 @@ try:
 except ImportError:
     from curated_schema import (
         ALLOWED_CURATION_STATUSES,
-        ALLOWED_ENTRY_TYPES,
+        ALLOWED_IMAGE_SCOPES,
+        ALLOWED_RESEARCH_TYPES,
         ALLOWED_REVIEW_STATUSES,
         ALLOWED_SCOPE_STATUSES,
         ALLOWED_TASKS,
@@ -69,7 +79,15 @@ except ImportError:
     )
     from paper_links import resolve_public_links
     from title_normalization import canonical_paper_title
-    from paper_categories import categories_from_record, normalize_paper_categories, serialize_paper_categories, PaperCategoriesError
+    from paper_taxonomy import (
+        PaperTaxonomyError,
+        normalize_image_scopes,
+        normalize_research_types,
+        normalize_tasks,
+        serialize_image_scopes,
+        serialize_research_types,
+        serialize_tasks,
+    )
     from venues import (
         ALLOWED_VENUE_TRACKS,
         normalize_venue_track,
@@ -155,16 +173,21 @@ def read_curated_papers(
     try:
         with path.open("r", encoding="utf-8-sig", newline="") as handle:
             reader = csv.DictReader(handle)
-            legacy_columns = tuple("entry_type" if c == "paper_categories" else c for c in PAPERS_COLUMNS)
-            if tuple(reader.fieldnames or ()) not in {PAPERS_COLUMNS, legacy_columns}:
+            if tuple(reader.fieldnames or ()) != PAPERS_COLUMNS:
                 raise CuratedPaperError(
                     f"{path} does not have the exact curated paper header"
                 )
             rows = []
             for row_number, row in enumerate(reader, start=2):
                 record = dict(row)
-                record["paper_categories"] = serialize_paper_categories(categories_from_record(record))
-                record.pop("entry_type", None)
+                try:
+                    record["tasks"] = serialize_tasks(record.get("tasks"))
+                    record["image_scopes"] = serialize_image_scopes(record.get("image_scopes"))
+                    record["research_types"] = serialize_research_types(record.get("research_types"))
+                except PaperTaxonomyError as error:
+                    raise CuratedPaperError(
+                        f"{path}:{row_number}: {error}", field="taxonomy"
+                    ) from error
                 try:
                     record["curation_status"] = normalize_curation_status(
                         record.get("curation_status")
@@ -350,25 +373,21 @@ def apply_canonical_venue_selection(
 
 
 def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
-    if "subtask" in draft:
+    if any(field in draft for field in ("task", "paper_categories", "entry_type", "subtask")):
         raise CuratedPaperError(
-            "subtask was removed; use the authoritative task field",
-            field="subtask",
+            "legacy task/category fields were removed; use tasks, image_scopes, and research_types",
+            field="taxonomy",
             error_code="removed_field",
         )
     title = canonical_paper_title(clean(draft.get("title")))
     year = clean(draft.get("year"))
-    task = clean(draft.get("task"))
     book = is_book_publication(draft.get("publication_type"))
     try:
-        paper_categories = normalize_paper_categories(
-            draft.get("paper_categories", draft.get("entry_type")),
-            compatibility=True,
-        )
-    except PaperCategoriesError as error:
-        raise CuratedPaperError(str(error), field="paper_categories") from error
-    if not paper_categories and not book:
-        paper_categories = ["method"]
+        tasks = normalize_tasks(draft.get("tasks"), compatibility=True)
+        image_scopes = normalize_image_scopes(draft.get("image_scopes"), compatibility=True)
+        research_types = normalize_research_types(draft.get("research_types"), compatibility=True)
+    except PaperTaxonomyError as error:
+        raise CuratedPaperError(str(error), field="taxonomy") from error
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     publication_type = (
         "book"
@@ -385,9 +404,9 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         raise CuratedPaperError(
             "publication_type must be one of " + ", ".join(ALLOWED_PUBLICATION_TYPES)
         )
-    if task not in ALLOWED_TASKS:
+    if not book and (not tasks or not image_scopes or not research_types):
         raise CuratedPaperError(
-            "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
+            "tasks, image_scopes, and research_types each require at least one value"
         )
     if scope_status not in ALLOWED_SCOPE_STATUSES:
         raise CuratedPaperError(
@@ -424,8 +443,9 @@ def normalize_paper_draft(draft: Mapping[str, Any]) -> Dict[str, str]:
         "paper_url": clean(draft.get("paper_url")),
         "publication_type": publication_type,
         "abstract": clean(draft.get("abstract")),
-        "task": task,
-        "paper_categories": serialize_paper_categories(paper_categories),
+        "tasks": serialize_tasks(tasks),
+        "image_scopes": serialize_image_scopes(image_scopes),
+        "research_types": serialize_research_types(research_types),
         "scope_status": scope_status,
         "source_database": source_database,
         "metadata_source": metadata_source,
@@ -550,24 +570,22 @@ def update_curated_paper(
         aliases,
     )
     patched = dict(base)
-    if "subtask" in draft:
+    if any(field in draft for field in ("task", "paper_categories", "entry_type", "subtask")):
         raise CuratedPaperError(
-            "subtask was removed; use the authoritative task field",
-            field="subtask",
+            "legacy task/category fields were removed; use tasks, image_scopes, and research_types",
+            field="taxonomy",
             error_code="removed_field",
         )
     patched.update(draft)
     draft = patched
     title = canonical_paper_title(clean(draft.get("title")))
     year = clean(draft.get("year"))
-    task = clean(draft.get("task"))
     try:
-        paper_categories = normalize_paper_categories(
-            draft.get("paper_categories", draft.get("entry_type")),
-            compatibility=True,
-        )
-    except PaperCategoriesError as error:
-        raise CuratedPaperError(str(error), field="paper_categories") from error
+        tasks = normalize_tasks(draft.get("tasks"), compatibility=True)
+        image_scopes = normalize_image_scopes(draft.get("image_scopes"), compatibility=True)
+        research_types = normalize_research_types(draft.get("research_types"), compatibility=True)
+    except PaperTaxonomyError as error:
+        raise CuratedPaperError(str(error), field="taxonomy") from error
     scope_status = clean(draft.get("scope_status")) or "in_scope"
     publication_type = (
         "book"
@@ -588,12 +606,14 @@ def update_curated_paper(
         raise CuratedPaperError(
             "publication_type must be one of " + ", ".join(ALLOWED_PUBLICATION_TYPES)
         )
-    if task not in ALLOWED_TASKS:
+    if (
+        publication_type != "book"
+        and curation_status == "confirmed"
+        and (not tasks or not image_scopes or not research_types)
+    ):
         raise CuratedPaperError(
-            "task must be one of " + ", ".join(sorted(ALLOWED_TASKS))
+            "confirmed papers require at least one tasks, image_scopes, and research_types value"
         )
-    if not paper_categories and publication_type != "book":
-        raise CuratedPaperError("paper_categories requires at least one category")
     if scope_status not in ALLOWED_SCOPE_STATUSES:
         raise CuratedPaperError(
             "scope_status must be one of "
@@ -650,8 +670,9 @@ def update_curated_paper(
         "paper_url": clean(draft.get("paper_url")),
         "publication_type": publication_type,
         "abstract": clean(draft.get("abstract")),
-        "task": task,
-        "paper_categories": serialize_paper_categories(paper_categories),
+        "tasks": serialize_tasks(tasks),
+        "image_scopes": serialize_image_scopes(image_scopes),
+        "research_types": serialize_research_types(research_types),
         "scope_status": scope_status,
         "source_database": source_database,
         "metadata_source": clean(

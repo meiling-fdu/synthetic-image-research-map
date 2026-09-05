@@ -365,7 +365,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 "year": 2026,
                 "doi": "10.3390/s26041172",
                 "openalex_url": "https://openalex.org/W7128586659",
-                "task": "detection",
+                "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
                 "authors": [
                     "Nimra Nasir",
                     "Syeda Sitara Waseem",
@@ -379,7 +379,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
                 "year": 2025,
                 "doi": "10.1088/1361-6501/ae005c",
                 "openalex_url": "https://openalex.org/W4413783451",
-                "task": "detection",
+                "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
                 "authors": [
                     "Liwei Yao",
                     "Sen Niu",
@@ -437,7 +437,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             "title": "CIFAKE: Image Classification and Explainable Identification of AI-Generated Synthetic Images",
             "year": 2024,
             "publication_year": 2024,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "doi": "10.1109/access.2024.3356122",
             "openalex_url": "https://openalex.org/W4391019749",
             "authors": ["Jordan J. Bird", "Ahmad Lotfi"],
@@ -523,7 +523,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         self.assertEqual(markers, [])
         self.assertEqual(
             summary["active_mapping_marker_diagnostics"][0]["final_drop_reason"],
-            "non_public_task:uncertain",
+            "non_public_tasks",
         )
 
     def test_confirmed_alias_redirects_legacy_name_id_to_canonical_id(self):
@@ -754,7 +754,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
             "paper_id": "curated:northeastern",
             "title": "Northeastern regression",
             "year": "2026",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
         }
         mapping = {
             "mapping_id": "mapping:neu-us",
@@ -1847,7 +1847,7 @@ process.stdout.write(JSON.stringify({
                 "preprintOnly": "",
                 "arxivDoiWithLaterPublication": [
                     {
-                        "label": "Publisher",
+                        "label": "Published",
                         "url": "https://doi.org/10.52202/075280-1105",
                     },
                     {
@@ -1858,7 +1858,7 @@ process.stdout.write(JSON.stringify({
                 "missing": "",
                 "publishedCard": [
                     {
-                        "label": "Publisher",
+                        "label": "Published",
                         "url": "https://doi.org/10.1000/example",
                     },
                     {
@@ -1868,7 +1868,7 @@ process.stdout.write(JSON.stringify({
                 ],
                 "doiCard": [
                     {
-                        "label": "Publisher",
+                        "label": "Published",
                         "url": "https://doi.org/10.1000/example",
                     }
                 ],
@@ -1889,7 +1889,7 @@ process.stdout.write(JSON.stringify({
             "title": "Example Paper",
             "year": 2024,
             "publication_year": 2024,
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "doi": "10.48550/arXiv.2401.12345",
             "arxiv_id": "2401.12345",
             "arxiv_url": "https://arxiv.org/abs/2401.12345",
@@ -1908,7 +1908,7 @@ process.stdout.write(JSON.stringify({
             "arxiv_id": "2401.12345",
             "paper_url": "https://doi.org/10.1000/example.12345",
             "publication_type": "conference",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "scope_status": "in_scope",
             "curation_status": "confirmed",
             "review_status": "reviewed",
@@ -2101,7 +2101,7 @@ class MappingSpecificLocationExportTests(unittest.TestCase):
     def test_same_institution_can_emit_two_mapping_specific_locations(self):
         paper = {
             "paper_id": "curated:multi", "title": "Multi-location paper",
-            "year": 2026, "publication_year": 2026, "task": "detection",
+            "year": 2026, "publication_year": 2026, "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "doi": "10.1000/multi", "authors": ["Ada", "Grace"],
         }
         mappings = [

@@ -9,7 +9,7 @@ ALLOWED_PUBLICATION_TYPES = ("conference", "journal", "preprint", "book")
 
 # This is the authoritative cross-layer list.  Books may retain publisher and
 # other ordinary bibliographic fields, but never venue taxonomy or the
-# project-specific paper category that is defined for paper-like records.
+# project-specific legacy paper category fields.
 BOOK_INCOMPATIBLE_FIELDS = (
     "venue",
     "venue_id",
@@ -24,12 +24,11 @@ BOOK_INCOMPATIBLE_FIELDS = (
     "host_venue",
     "host_venue_name",
     "entry_type",
-    "paper_categories",
     "paper_type",
     "category",
 )
 
-_LIST_FIELDS = {"venue_aliases", "paper_categories"}
+_LIST_FIELDS = {"venue_aliases"}
 
 _ALIASES = {
     "conference": "conference",

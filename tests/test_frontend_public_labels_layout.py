@@ -44,7 +44,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         self.assertNotIn(">Institution records</button>", self.html)
         self.assertNotIn(">Unique papers</button>", self.html)
         self.assertNotRegex(self.html, r">All (?:Tasks|Paper Types|Publication Types|Venues|Countries|Institution Types|Records)<")
-        self.assertEqual(self.html.count('<option value="all">All</option>'), 7)
+        self.assertEqual(self.html.count('<option value="all">All</option>'), 8)
 
     def test_record_version_is_independent_of_publication_type(self):
         self.assertIn('value="has-arxiv"', self.html)
@@ -66,7 +66,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         ]
         ordered_ids = re.findall(r'<(?:input|select)[^>]+id="([^"]+)"', filter_grid)
         self.assertLess(
-            ordered_ids.index("entry-type-filter"),
+            ordered_ids.index("research-type-filter"),
             ordered_ids.index("venue-type-filter"),
         )
         self.assertEqual(
@@ -74,20 +74,20 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             ordered_ids.index("venue-filter"),
         )
         expected = [
-            "keyword-filter", "task-filter", "entry-type-filter", "venue-type-filter",
+            "keyword-filter", "task-filter", "image-scope-filter", "research-type-filter", "venue-type-filter",
             "venue-filter", "country-filter", "institution-type-filter", "preprint-filter",
             "min-year-filter", "max-year-filter",
         ]
         positions = [ordered_ids.index(identifier) for identifier in expected]
         self.assertEqual(positions, sorted(positions))
 
-    def test_all_nine_filter_groups_remain_present(self):
+    def test_all_ten_filter_groups_remain_present(self):
         filter_grid = self.html[
             self.html.index('<div class="filter-grid">'):
             self.html.index('id="active-filter-bar"')
         ]
         groups = (
-            "keyword-filter", "task-filter", "entry-type-filter",
+            "keyword-filter", "task-filter", "image-scope-filter", "research-type-filter",
             "venue-type-filter", "venue-filter", "country-filter",
             "institution-type-filter", "preprint-filter", "year-range",
         )
@@ -98,7 +98,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
     def test_all_select_filters_use_one_custom_dropdown_controller(self):
         dropdown_ids = (
             "sort-control",
-            "task-filter", "entry-type-filter", "venue-type-filter",
+            "task-filter", "image-scope-filter", "research-type-filter", "venue-type-filter",
             "venue-filter", "country-filter", "institution-type-filter",
             "preprint-filter",
         )
@@ -111,7 +111,8 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
             variable = {
                 "sort-control": "sortControl",
                 "task-filter": "taskFilter",
-                "entry-type-filter": "entryTypeFilter",
+                "image-scope-filter": "imageScopeFilter",
+                "research-type-filter": "entryTypeFilter",
                 "venue-type-filter": "venueTypeFilter",
                 "venue-filter": "venueFilter",
                 "country-filter": "countryFilter",
@@ -149,7 +150,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         ]
         for task in (
             '"detection"', '"source_attribution"',
-            '"detection_and_source_attribution"',
+            '"localization"',
         ):
             self.assertIn(task, task_chart)
 
@@ -327,7 +328,7 @@ class FrontendPublicLabelsLayoutTests(unittest.TestCase):
         for label in (
             "Detection",
             "Source Attribution",
-            "Detection + Source Attribution",
+            "Localization",
         ):
             self.assertIn(label, task_filter)
             self.assertIn(f'"{label}"', self.app)

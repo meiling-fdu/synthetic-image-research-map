@@ -29,6 +29,7 @@ PUBLIC = ROOT / "web/data"
 REMAINING_UNRESOLVED_AUTHORS = {"Daniel S. Yeung", "Gopal Sarkarkar", "Shilpa Gedam"}
 CURRENT_NON_INSTITUTIONAL_AUTHORS = {
     "Hainan Ren", "Henan Wang", "Reid Southen", "Changtao Miao",
+    "Chenzhuo Zhao",
 }
 
 

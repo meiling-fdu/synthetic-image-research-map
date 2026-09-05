@@ -55,7 +55,7 @@ const preservedDatasetParameter = ["preview", "openalex"].includes(requestedData
   ? requestedDataset
   : "";
 const URL_STATE_PARAMETER_ORDER = [
-  "keyword", "task", "paper_type", "publication_type", "venue", "country",
+  "keyword", "tasks", "image_scopes", "research_types", "publication_type", "venue", "country",
   "institution_type", "version", "published_only", "year_start", "year_end", "institution",
   "institution_label", "marker", "paper", "view", "sort",
 ];
@@ -68,21 +68,27 @@ const NO_WRAP_HORIZONTAL_BUFFER = 40;
 const TASK_COLORS = {
   detection: "#287d8e",
   source_attribution: "#b66a37",
-  detection_and_source_attribution: "#76589b",
+  localization: "#76589b",
   uncertain: "#68747d",
 };
 const PUBLIC_TASK_LABELS = {
   detection: "Detection",
   source_attribution: "Source Attribution",
-  detection_and_source_attribution: "Detection + Source Attribution",
+  localization: "Localization",
   uncertain: "Unknown",
 };
-const ENTRY_TYPE_LABELS = {
+const RESEARCH_TYPE_LABELS = {
   method: "Method",
   dataset: "Dataset",
   benchmark: "Benchmark",
   survey: "Survey",
-  analysis: "Analysis study",
+  analysis_study: "Analysis Study",
+};
+const IMAGE_SCOPE_LABELS = {
+  fully_generated: "Fully Generated",
+  generative_editing: "Generative Editing",
+  deepfake: "Deepfake",
+  traditional_manipulation: "Traditional Manipulation",
 };
 const INSTITUTION_TYPE_ORDER = InstitutionTypeLabels.values;
 const CHINA_REGION_BY_CODE = {
@@ -161,7 +167,8 @@ const institutionHoverTooltip = L.tooltip({
 });
 const keywordFilter = document.querySelector("#keyword-filter");
 const taskFilter = document.querySelector("#task-filter");
-const entryTypeFilter = document.querySelector("#entry-type-filter");
+const imageScopeFilter = document.querySelector("#image-scope-filter");
+const entryTypeFilter = document.querySelector("#research-type-filter");
 const sortControl = document.querySelector("#sort-control");
 const venueFilter = document.querySelector("#venue-filter");
 const venueTypeFilter = document.querySelector("#venue-type-filter");
@@ -294,7 +301,11 @@ const MARKER_TASK_PALETTES = {
     fill: rootStyles.getPropertyValue("--map-attribution-fill").trim() || "#c58a55",
     stroke: rootStyles.getPropertyValue("--map-attribution-stroke").trim() || "#8b5a32",
   },
-  detection_and_source_attribution: {
+  localization: {
+    fill: rootStyles.getPropertyValue("--map-mixed-fill").trim() || "#8b6fa8",
+    stroke: rootStyles.getPropertyValue("--map-mixed-stroke").trim() || "#604877",
+  },
+  mixed: {
     fill: rootStyles.getPropertyValue("--map-mixed-fill").trim() || "#8b6fa8",
     stroke: rootStyles.getPropertyValue("--map-mixed-stroke").trim() || "#604877",
   },
@@ -370,8 +381,9 @@ const INSTITUTION_CSV_COLUMNS = [
   ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
   ["venue_track", (record) => canonicalVenueTrack(record)],
-  ["paper_categories", (record) => getPaperCategories(record).join(";")],
-  ["task", (record) => record.task || ""],
+  ["tasks", (record) => getTasks(record).join(";")],
+  ["image_scopes", (record) => getImageScopes(record).join(";")],
+  ["research_types", (record) => getPaperCategories(record).join(";")],
   ["institution_name", (record) => recordInstitution(record)],
   ["institution_id", (record) => String(record.institution_id || "")],
   ["institution_type", (record) => normalizeInstitutionType(record.institution_type)],
@@ -404,8 +416,9 @@ const PAPER_CSV_COLUMNS = [
   ["venue_acronym", (record) => isBookRecord(record) ? "" : record.venue_acronym || ""],
   ["venue_type", (record) => recordVenueType(record)],
   ["venue_track", (record) => canonicalVenueTrack(record)],
-  ["paper_categories", (record) => getPaperCategories(record).join(";")],
-  ["task", (record) => record.task || ""],
+  ["tasks", (record) => getTasks(record).join(";")],
+  ["image_scopes", (record) => getImageScopes(record).join(";")],
+  ["research_types", (record) => getPaperCategories(record).join(";")],
   ["institutions", (record) => (record.aggregated_institutions || []).join("; ")],
   ["institution_ids", (record) => canonicalInstitutionIds(record).join("; ")],
   ["institution_types", (record) => institutionTypesForRecord(record).join("; ")],
@@ -447,22 +460,39 @@ function formatPublicTask(task) {
   return PUBLIC_TASK_LABELS[normalized] || PUBLIC_TASK_LABELS.uncertain;
 }
 
+function canonicalMultiValues(record, field, labels) {
+  const raw = record?.[field] ?? [];
+  const values = Array.isArray(raw) ? raw : String(raw).split(";");
+  const selected = new Set(values.map((value) => String(value).trim().toLowerCase()).filter(Boolean));
+  const unknown = [...selected].filter((value) => !Object.hasOwn(labels, value));
+  if (unknown.length) throw new Error(`Unknown ${field}: ${unknown.join(", ")}`);
+  return Object.keys(labels).filter((value) => selected.has(value));
+}
+
+function getTasks(record) {
+  return canonicalMultiValues(record, "tasks", PUBLIC_TASK_LABELS)
+    .filter((value) => value !== "uncertain");
+}
+
+function getImageScopes(record) {
+  return canonicalMultiValues(record, "image_scopes", IMAGE_SCOPE_LABELS);
+}
+
 function canonicalPaperRecord(record) {
   return canonicalPaperRecordsByIdentity.get(paperIdentity(record)) || record;
 }
 
 function getPaperCategories(record) {
-  if (isBookRecord(record)) return [];
-  const raw = record.paper_categories ?? record.entry_type ?? record.material_type ?? "";
-  const values = Array.isArray(raw) ? raw : String(raw).split(";");
-  const selected = new Set(values.map((value) => String(value).trim().toLowerCase()).filter(Boolean));
-  const unknown = [...selected].filter((value) => !Object.hasOwn(ENTRY_TYPE_LABELS, value));
-  if (unknown.length) throw new Error(`Unknown paper categories: ${unknown.join(", ")}`);
-  return Object.keys(ENTRY_TYPE_LABELS).filter((value) => selected.has(value));
+  return canonicalMultiValues(record, "research_types", RESEARCH_TYPE_LABELS);
 }
 
 function getEntryTypeLabel(value) {
-  return ENTRY_TYPE_LABELS[value] || ENTRY_TYPE_LABELS.method;
+  return RESEARCH_TYPE_LABELS[value] || RESEARCH_TYPE_LABELS.method;
+}
+
+function imageScopeBadgeHtml(scope) {
+  const isExtended = ["deepfake", "traditional_manipulation"].includes(scope);
+  return `<span class="popup-badge image-scope-badge scope-${escapeHtml(scope)}${isExtended ? " is-extended-scope" : ""}">${escapeHtml(IMAGE_SCOPE_LABELS[scope])}</span>`;
 }
 
 function recordTitle(record) {
@@ -913,16 +943,53 @@ function selectedFilterOptionLabel(control) {
   return String(label).replace(/\s+\([\d,]+\)$/, "").trim();
 }
 
+function selectedFilterValues(control) {
+  if (!control.multiple) {
+    return control.value && control.value !== "all" ? [control.value] : [];
+  }
+  return [...control.options]
+    .filter((option) => option.selected && option.value !== "all")
+    .map((option) => option.value);
+}
+
+function serializedFilterValues(control) {
+  const values = selectedFilterValues(control);
+  return values.length ? values.join(",") : "all";
+}
+
+function resetMultiSelect(control) {
+  if (!control.multiple) {
+    control.value = "all";
+    return;
+  }
+  [...control.options].forEach((option) => {
+    option.selected = option.value === "all";
+  });
+}
+
 function activeFilterChipDescriptors() {
   const descriptors = [];
   const keyword = keywordFilter.value.trim();
   if (keyword) descriptors.push({ key: "keyword", category: "Keyword", value: keyword });
-  if (taskFilter.value !== "all") {
-    descriptors.push({ key: "task", category: "Task", value: formatPublicTask(taskFilter.value) });
-  }
-  if (entryTypeFilter.value !== "all") {
+  const selectedTasks = selectedFilterValues(taskFilter);
+  if (selectedTasks.length) {
     descriptors.push({
-      key: "entry-type", category: "Research Type", value: getEntryTypeLabel(entryTypeFilter.value),
+      key: "tasks", category: "Forensic Task",
+      value: selectedTasks.map(formatPublicTask).join(", "),
+    });
+  }
+  const selectedImageScopes = selectedFilterValues(imageScopeFilter);
+  if (selectedImageScopes.length) {
+    descriptors.push({
+      key: "image-scopes", category: "Image Scope",
+      value: selectedImageScopes.map((scope) => IMAGE_SCOPE_LABELS[scope]).join(", "),
+    });
+  }
+  const selectedResearchTypes = selectedFilterValues(entryTypeFilter);
+  if (selectedResearchTypes.length) {
+    descriptors.push({
+      key: "research-types", category: "Research Type",
+      value: selectedResearchTypes.map(getEntryTypeLabel).join(", "),
     });
   }
   if (venueTypeFilter.value !== "all") {
@@ -978,8 +1045,9 @@ function currentViewState() {
   const years = currentYearSelection();
   return {
     keyword: keywordFilter.value.trim(),
-    task: taskFilter.value,
-    paperType: entryTypeFilter.value,
+    tasks: serializedFilterValues(taskFilter),
+    imageScopes: serializedFilterValues(imageScopeFilter),
+    researchTypes: serializedFilterValues(entryTypeFilter),
     publicationType: venueTypeFilter.value,
     venue: venueFilter.value,
     country: countryFilter.value,
@@ -1039,8 +1107,9 @@ function serializeViewState(state, datasetParameter = "") {
   }
   const values = {
     keyword: state.keyword,
-    task: state.task !== "all" ? state.task : "",
-    paper_type: state.paperType !== "all" ? state.paperType : "",
+    tasks: state.tasks !== "all" ? state.tasks : "",
+    image_scopes: state.imageScopes !== "all" ? state.imageScopes : "",
+    research_types: state.researchTypes !== "all" ? state.researchTypes : "",
     publication_type: state.publicationType !== "all" ? state.publicationType : "",
     venue: state.venue !== "all" ? state.venue : "",
     country: state.country !== "all" ? state.country : "",
@@ -1076,8 +1145,9 @@ function parseViewState(search) {
   };
   return {
     keyword: params.get("keyword") || "",
-    task: params.get("task") || "all",
-    paperType: params.get("paper_type") || "all",
+    tasks: params.get("tasks") || "all",
+    imageScopes: params.get("image_scopes") || "all",
+    researchTypes: params.get("research_types") || "all",
     publicationType: params.get("publication_type") || "all",
     venue: params.get("venue") || "all",
     country: params.get("country") || "all",
@@ -1108,6 +1178,19 @@ function selectContainsValue(select, value) {
 
 function setRestoredSelectValue(select, value, { dynamic = false } = {}) {
   const normalized = String(value || "").trim();
+  if (select.multiple) {
+    const requested = new Set(
+      normalized.split(",").map((item) => item.trim()).filter((item) => item && item !== "all"),
+    );
+    const available = new Set([...select.options].map((option) => option.value));
+    const selected = [...requested].filter((item) => available.has(item));
+    [...select.options].forEach((option) => {
+      option.selected = selected.length
+        ? selected.includes(option.value)
+        : option.value === "all";
+    });
+    return;
+  }
   if (!normalized || normalized === "all") {
     select.value = "all";
     return;
@@ -1146,8 +1229,9 @@ function restoreViewState(state) {
   interactionState.selectionSource = null;
   interactionState.transientHover = null;
   keywordFilter.value = state.keyword;
-  setRestoredSelectValue(taskFilter, state.task);
-  setRestoredSelectValue(entryTypeFilter, state.paperType);
+  setRestoredSelectValue(taskFilter, state.tasks);
+  setRestoredSelectValue(imageScopeFilter, state.imageScopes);
+  setRestoredSelectValue(entryTypeFilter, state.researchTypes);
   setRestoredSelectValue(venueTypeFilter, state.publicationType, { dynamic: true });
   setRestoredSelectValue(venueFilter, state.venue, { dynamic: true });
   setRestoredSelectValue(countryFilter, state.country, { dynamic: true });
@@ -1336,9 +1420,7 @@ function uniqueMarkerLocations(entries) {
 }
 
 function markerStyle(taskKey, state = "base", paperCount = 1) {
-  const normalizedTask = taskKey === "mixed"
-    ? "detection_and_source_attribution"
-    : MarkerSizeHelpers.normalizeTaskLabel(taskKey);
+  const normalizedTask = taskKey === "mixed" ? "mixed" : MarkerSizeHelpers.normalizeTaskLabel(taskKey);
   const palette = MARKER_TASK_PALETTES[normalizedTask] || MARKER_TASK_PALETTES.unknown;
   const colors = { color: palette.stroke, fillColor: palette.fill };
   const radius = MarkerSizeHelpers.getMarkerRadius(paperCount);
@@ -2231,7 +2313,8 @@ function recordSearchText(record) {
     ...(record.aggregated_region_codes || []),
     ...venueTerms,
     record.coverage_status,
-    record.task,
+    ...getTasks(record).map(formatPublicTask),
+    ...getImageScopes(record).map((scope) => IMAGE_SCOPE_LABELS[scope]),
     ...getPaperCategories(record).map(getEntryTypeLabel),
   ].filter(Boolean).join(" "));
 }
@@ -2649,9 +2732,13 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   const matchesKeyword = keywordTerms.length === 0
     || matchesInstitutionKeyword
     || searchTextMatchesTerms(cachedRecordSearchText(record), keywordTerms);
-  const matchesTask = taskFilter.value === "all" || record.task === taskFilter.value;
-  const selectedEntryTypes = [...entryTypeFilter.selectedOptions]
-    .map((option) => option.value).filter((value) => value !== "all");
+  const selectedTasks = selectedFilterValues(taskFilter);
+  const selectedImageScopes = selectedFilterValues(imageScopeFilter);
+  const selectedEntryTypes = selectedFilterValues(entryTypeFilter);
+  const matchesTask = selectedTasks.length === 0
+    || selectedTasks.some((value) => getTasks(record).includes(value));
+  const matchesImageScope = selectedImageScopes.length === 0
+    || selectedImageScopes.some((value) => getImageScopes(record).includes(value));
   const matchesEntryType = selectedEntryTypes.length === 0
     || selectedEntryTypes.some((value) => getPaperCategories(record).includes(value));
   const matchesVenue =
@@ -2694,6 +2781,7 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
   return (
     matchesKeyword &&
     matchesTask &&
+    matchesImageScope &&
     matchesEntryType &&
     matchesVenue &&
     matchesVenueType &&
@@ -2869,23 +2957,47 @@ function syncFilterDropdown(dropdown) {
     value: option.value,
     label: option.textContent,
     index,
+    group: option.parentElement?.tagName === "OPTGROUP"
+      ? option.parentElement.label
+      : "",
   }));
-  dropdown.options.replaceChildren(...dropdown.optionData.map((option) => {
+  const selectedValues = new Set(selectedFilterValues(dropdown.select));
+  const renderedOptions = dropdown.optionData.flatMap((option, position) => {
+    const previousGroup = dropdown.optionData[position - 1]?.group || "";
+    const groupHeading = option.group && option.group !== previousGroup
+      ? (() => {
+          const heading = document.createElement("li");
+          heading.className = `filter-dropdown-group${option.group === "Extended scopes" ? " is-extended" : ""}`;
+          heading.setAttribute("role", "presentation");
+          heading.textContent = option.group;
+          return heading;
+        })()
+      : null;
     const element = document.createElement("li");
     element.id = `${dropdown.select.id}-dropdown-option-${option.index}`;
-    element.className = "filter-dropdown-option";
+    element.className = `filter-dropdown-option${option.group === "Extended scopes" ? " is-extended-scope" : ""}`;
     element.dataset.filterOptionIndex = String(option.index);
     element.dataset.filterValue = option.value;
     element.setAttribute("role", "option");
-    element.setAttribute("aria-selected", String(option.value === dropdown.select.value));
+    if (dropdown.select.multiple) {
+      element.setAttribute("aria-selected", String(
+        option.value === "all" ? selectedValues.size === 0 : selectedValues.has(option.value),
+      ));
+    } else {
+      element.setAttribute("aria-selected", String(option.value === dropdown.select.value));
+    }
     element.textContent = option.label;
-    return element;
-  }));
-  const selectedOption = dropdown.optionData.find(
-    ({ value }) => value === dropdown.select.value,
-  ) || dropdown.optionData[0];
-  dropdown.value.textContent = selectedOption?.label || "All";
-  dropdown.activeIndex = selectedOption?.index ?? -1;
+    return groupHeading ? [groupHeading, element] : [element];
+  });
+  dropdown.options.replaceChildren(...renderedOptions);
+  const selectedOptions = dropdown.optionData.filter(({ value }) => selectedValues.has(value));
+  const selectedOption = selectedOptions[0];
+  if (dropdown.select.multiple && selectedOptions.length > 1) {
+    dropdown.value.textContent = `${selectedOptions.length} selected`;
+  } else {
+    dropdown.value.textContent = selectedOption?.label || "All";
+  }
+  dropdown.activeIndex = selectedOption?.index ?? 0;
   dropdown.panel.classList.toggle("is-long", dropdown.optionData.length > 8);
   setActiveFilterDropdownOption(dropdown, dropdown.activeIndex);
 }
@@ -2922,14 +3034,32 @@ function openFilterDropdown(dropdown) {
   dropdown.panel.hidden = false;
   dropdown.button.setAttribute("aria-expanded", "true");
   positionFilterDropdownPanel(dropdown);
-  const selectedIndex = dropdown.optionData.findIndex(
-    ({ value }) => value === dropdown.select.value,
-  );
+  const selectedValues = new Set(selectedFilterValues(dropdown.select));
+  const selectedIndex = Math.max(0, dropdown.optionData.findIndex(
+    ({ value }) => selectedValues.has(value),
+  ));
   setActiveFilterDropdownOption(dropdown, selectedIndex, true);
 }
 
 function selectFilterDropdownValue(dropdown, value) {
   if (!dropdown.optionData.some((option) => option.value === value)) return;
+  if (dropdown.select.multiple) {
+    const options = [...dropdown.select.options];
+    if (value === "all") {
+      resetMultiSelect(dropdown.select);
+    } else {
+      const selectedOption = options.find((option) => option.value === value);
+      selectedOption.selected = !selectedOption.selected;
+      const selectedValues = options.filter(
+        (option) => option.selected && option.value !== "all",
+      );
+      options.forEach((option) => {
+        if (option.value === "all") option.selected = selectedValues.length === 0;
+      });
+    }
+    dropdown.select.dispatchEvent(new Event("change", { bubbles: true }));
+    return;
+  }
   dropdown.select.value = value;
   closeFilterDropdown(dropdown, true);
   dropdown.select.dispatchEvent(new Event("change", { bubbles: true }));
@@ -2972,6 +3102,7 @@ function createFilterDropdown(select) {
   options.className = "filter-dropdown-options";
   options.setAttribute("role", "listbox");
   options.setAttribute("aria-labelledby", label.id);
+  if (select.multiple) options.setAttribute("aria-multiselectable", "true");
   button.append(value, chevron);
   panel.append(options);
   dropdownElement.append(button, panel);
@@ -3250,9 +3381,14 @@ function renderChartEmpty(container) {
 }
 
 function activateChartFilter(filter, value, label = "") {
-  if (filter === "task") {
+  if (filter === "tasks") {
     if (!selectContainsValue(taskFilter, value)) return;
-    taskFilter.value = taskFilter.value === value ? "all" : value;
+    const option = [...taskFilter.options].find((candidate) => candidate.value === value);
+    option.selected = !option.selected;
+    const selectedTasks = selectedFilterValues(taskFilter);
+    [...taskFilter.options].forEach((candidate) => {
+      if (candidate.value === "all") candidate.selected = selectedTasks.length === 0;
+    });
     syncFilterDropdownForSelect(taskFilter);
   } else if (filter === "institution") {
     if (!value) return;
@@ -3275,7 +3411,7 @@ function activateChartFilter(filter, value, label = "") {
   } else {
     return;
   }
-  rememberFilterChange(filter === "task" ? "task" : filter);
+  rememberFilterChange(filter);
   hideChartTooltip();
   requestUrlStateSync("push");
   renderRecords();
@@ -3287,32 +3423,26 @@ function activateChartFilter(filter, value, label = "") {
 }
 
 function renderTaskChart(paperCoverageRecords) {
+  const selectedTasks = new Set(selectedFilterValues(taskFilter));
   const tasks = [
     ["detection", "Detection"],
     ["source_attribution", "Source Attribution"],
-    ["detection_and_source_attribution", "Detection + Source Attribution"],
+    ["localization", "Localization"],
   ].map(([task, label]) => ({
     task,
     label,
     color: TASK_COLORS[task],
-    count: paperCoverageRecords.filter((record) => record.task === task).length,
+    count: paperCoverageRecords.filter((record) => getTasks(record).includes(task)).length,
   }));
-  // The chart receives a list deduplicated by paper identity, so Total cannot
-  // double-count a paper even if category behavior changes in the future.
+  // Dimension counts overlap because a paper may carry multiple task labels.
   const total = paperCoverageRecords.length;
-  const segments = tasks
-    .filter((task) => task.count)
-    .map((task) => (
-      `<span class="task-chart-segment" style="width:${(task.count / total) * 100}%;background:${task.color}" title="${escapeHtml(task.label)}: ${task.count} unique paper${task.count === 1 ? "" : "s"}"></span>`
-    ))
-    .join("");
   const items = tasks
     .map((task) => (
-      `<button type="button" class="task-chart-item" data-chart-filter="task" data-chart-value="${task.task}" data-chart-tooltip="${escapeHtml(task.label)} — ${task.count} unique paper${task.count === 1 ? "" : "s"}" aria-pressed="${taskFilter.value === task.task}" aria-label="${taskFilter.value === task.task ? "Clear" : "Filter by"} task ${escapeHtml(task.label)}; ${task.count} unique paper${task.count === 1 ? "" : "s"}"><i style="background:${task.color}"></i><span title="${escapeHtml(task.label)}">${escapeHtml(task.label)}</span><strong>${task.count}</strong></button>`
+      `<button type="button" class="task-chart-item" data-chart-filter="tasks" data-chart-value="${task.task}" data-chart-tooltip="${escapeHtml(task.label)} — ${task.count} unique paper${task.count === 1 ? "" : "s"}" aria-pressed="${selectedTasks.has(task.task)}" aria-label="${selectedTasks.has(task.task) ? "Remove" : "Add"} forensic task ${escapeHtml(task.label)} filter; ${task.count} unique paper${task.count === 1 ? "" : "s"}"><i style="background:${task.color}"></i><span title="${escapeHtml(task.label)}">${escapeHtml(task.label)}</span><strong>${task.count}</strong></button>`
     ))
     .join("");
   taskChartContent.innerHTML = (
-    `<div class="task-chart-bar" aria-label="${total} filtered unique paper${total === 1 ? "" : "s"}">${segments}</div><div class="task-chart-list" aria-label="Unique paper counts by task">${items}</div><div class="task-chart-total" aria-label="Total filtered unique papers"><span>Total Unique Papers</span><strong>${total}</strong></div>`
+    `<div class="task-chart-list" aria-label="Overlapping unique-paper counts by forensic task">${items}</div><div class="task-chart-total" aria-label="Total filtered unique papers"><span>Total Unique Papers</span><strong>${total}</strong></div><p class="task-chart-overlap">Labels overlap; counts do not sum to the total.</p>`
   );
 }
 
@@ -3589,7 +3719,8 @@ function paperIssueReportUrl(context = {}) {
       `- Publication venue: ${publicIssueText(context.venue)}`,
       `- Publication year: ${publicIssueText(context.year)}`,
       `- Research type: ${publicIssueList(context.researchTypes)}`,
-      `- Task: ${publicIssueText(context.task)}`,
+      `- Tasks: ${publicIssueList(context.tasks)}`,
+      `- Image scopes: ${publicIssueList(context.imageScopes)}`,
       `- Institutions: ${publicIssueList(context.institutions)}`,
       `- Locations: ${publicIssueList(context.locations)}`,
       "",
@@ -3639,7 +3770,8 @@ function paperIssueContext(record, relatedEntries, paperId, deepLink) {
     year: publicationYear(sourceRecord),
     researchTypes: record
       ? getPaperCategories(sourceRecord).map(getEntryTypeLabel) : [],
-    task: record ? formatPublicTask(sourceRecord.task) : "",
+    tasks: record ? getTasks(sourceRecord).map(formatPublicTask) : [],
+    imageScopes: record ? getImageScopes(sourceRecord).map((scope) => IMAGE_SCOPE_LABELS[scope]) : [],
     institutions,
     locations,
   };
@@ -3754,21 +3886,35 @@ function paperDetailsPublicationHtml(record) {
 function paperMetadataStatusHtml(record) {
   const metadata = PaperDetailsHelpers.metadataStatusView(record);
   if (!metadata) return "";
-  const statusClass = metadata.status.toLocaleLowerCase().replace(/\s+/g, "-");
-  const rows = metadata.groups.map((group) => `
+  const bibliographicFieldLabels = new Set([
+    "Title", "Publication date", "Venue", "Publication type", "Task / category",
+  ]);
+  const displayRows = metadata.groups.flatMap((group) => {
+    const affiliationFields = group.fields.filter((field) => field === "Institution affiliations");
+    const bibliographicFields = group.fields.filter((field) => bibliographicFieldLabels.has(field));
+    return [
+      bibliographicFields.length
+        ? {...group, label: "Bibliographic metadata", fields: bibliographicFields}
+        : null,
+      affiliationFields.length
+        ? {...group, label: "Institution affiliations", fields: []}
+        : null,
+    ].filter(Boolean);
+  });
+  const rows = displayRows.map((group) => {
+    const statusClass = group.status.toLocaleLowerCase().replace(/\s+/g, "-");
+    return `
     <li${group.status === "Needs review" ? ' class="needs-review"' : ""}>
-      <span class="metadata-status-row-label">${escapeHtml(group.status)}</span>
-      <span>${group.fields.map(escapeHtml).join(", ")}</span>
+      <span class="metadata-status-row-label">${escapeHtml(group.label)}</span>
+      <span class="metadata-status-pill status-${escapeHtml(statusClass)}">${escapeHtml(group.status)}</span>
+      ${group.fields.length ? `<span class="metadata-status-fields">${group.fields.map(escapeHtml).join(", ")}</span>` : ""}
       ${group.source ? `<span class="metadata-status-source">Source: ${escapeHtml(group.source)}</span>` : ""}
     </li>
-  `).join("");
+  `;
+  }).join("");
   return `
     <section class="paper-details-metadata-status" aria-labelledby="paper-metadata-status-heading">
       <h4 id="paper-metadata-status-heading" class="paper-details-section-heading">Metadata status</h4>
-      <p class="metadata-status-summary">
-        <span class="metadata-status-pill status-${escapeHtml(statusClass)}">${escapeHtml(metadata.status)}</span>
-        ${metadata.source ? `<span>Primary source: ${escapeHtml(metadata.source)}</span>` : ""}
-      </p>
       ${rows ? `<ul class="metadata-status-rows">${rows}</ul>` : ""}
     </section>
   `;
@@ -3793,9 +3939,29 @@ function paperDetailsHtml(record, relatedEntries) {
     : "Unknown";
   const publicationMetadataBlock = paperDetailsPublicationHtml(record);
   const metadataStatusBlock = paperMetadataStatusHtml(record);
-  const entryTypeBadge = getPaperCategories(record)
+  const researchTypeBadges = getPaperCategories(record)
     .map((category) => `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(category))}</span>`)
     .join("");
+  const taskBadges = getTasks(record)
+    .map((task) => `<span class="popup-badge popup-task task-${escapeHtml(task)}">${escapeHtml(formatPublicTask(task))}</span>`)
+    .join("");
+  const scopeBadges = getImageScopes(record)
+    .map(imageScopeBadgeHtml)
+    .join("");
+  const unavailableTaxonomyLabel = '<span class="taxonomy-value-unavailable">Not classified</span>';
+  const taxonomyReviewItems = [
+    ["tasks", "Tasks"],
+    ["image_scopes", "Image scopes"],
+    ["research_types", "Research types"],
+  ].flatMap(([dimension, label]) => {
+    const review = record?.taxonomy_review?.[dimension];
+    return review?.status === "needs_review"
+      ? [`<li><strong>${label}:</strong> ${escapeHtml(review.reason || "Needs review")}</li>`]
+      : [];
+  });
+  const taxonomyReviewBlock = taxonomyReviewItems.length
+    ? `<section class="paper-taxonomy-review" aria-label="Taxonomy review status"><h4 class="paper-details-section-heading">Taxonomy review needed</h4><ul>${taxonomyReviewItems.join("")}</ul></section>`
+    : "";
   const detailLinks = paperExternalLinks(record);
   const linksBlock = detailLinks.length
     ? `<nav class="paper-details-links" aria-label="Paper links">${detailLinks.join("")}</nav>`
@@ -3815,10 +3981,12 @@ function paperDetailsHtml(record, relatedEntries) {
 
   return `
     <h3 class="popup-title paper-details-title">${paperTitleHtml(record)}</h3>
-    <div class="popup-badges">
-      <span class="popup-badge popup-task task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel(record.task))}">${escapeHtml(formatPublicTask(record.task))}</span>
-      ${entryTypeBadge}
-    </div>
+    <dl class="paper-taxonomy-rows" aria-label="Paper taxonomy">
+      <div><dt>Forensic Task</dt><dd>${taskBadges || unavailableTaxonomyLabel}</dd></div>
+      <div><dt>Image Scope</dt><dd>${scopeBadges || unavailableTaxonomyLabel}</dd></div>
+      <div><dt>Research Type</dt><dd>${researchTypeBadges || unavailableTaxonomyLabel}</dd></div>
+    </dl>
+    ${taxonomyReviewBlock}
     ${publicationMetadataBlock}
     ${metadataStatusBlock}
     <section class="paper-details-group paper-details-authors" aria-labelledby="paper-authors-heading">
@@ -3833,11 +4001,13 @@ function paperDetailsHtml(record, relatedEntries) {
 
 function resultBadges(record) {
   const canonicalRecord = canonicalPaperRecord(record);
-  const taskClass = MarkerSizeHelpers.normalizeTaskLabel(canonicalRecord.task);
+  const tasks = getTasks(canonicalRecord);
+  const scopes = getImageScopes(canonicalRecord);
   const entryTypes = getPaperCategories(canonicalRecord);
   return `
     <div class="popup-badges result-badges" aria-label="Paper categories">
-      <span class="popup-badge popup-task task-${escapeHtml(taskClass)}">${escapeHtml(formatPublicTask(canonicalRecord.task))}</span>
+      ${tasks.map((task) => `<span class="popup-badge popup-task task-${escapeHtml(task)}">${escapeHtml(formatPublicTask(task))}</span>`).join("")}
+      ${scopes.map(imageScopeBadgeHtml).join("")}
       ${entryTypes.map((category) => `<span class="popup-badge entry-type-badge">${escapeHtml(getEntryTypeLabel(category))}</span>`).join("")}
     </div>
   `;
@@ -4868,7 +5038,7 @@ function institutionPaperRowHtml(paper, markerEntry) {
   const publication = PaperDetailsHelpers.publicationMetadata(
     paper, venueDisplayLabel(paper), publicationYear(paper),
   );
-  const metadata = [publication.venue, publication.year, formatPublicTask(paper.task)]
+  const metadata = [publication.venue, publication.year, getTasks(paper).map(formatPublicTask).join(" + ")]
     .filter(Boolean).map(escapeHtml).join(" · ");
   return `<li><button type="button" class="institution-paper-row" data-marker-paper="${escapeHtml(paperIdentity(paper))}" data-parent-marker="${escapeHtml(markerEntry.institutionKey)}"><span class="institution-paper-title">${paperTitleHtml(paper)}</span>${metadata ? `<span class="institution-paper-metadata">${metadata}</span>` : ""}</button></li>`;
 }
@@ -5675,6 +5845,7 @@ function updateVenueDimensionFilters(venuePapers, venueTypePapers) {
 function enableControls() {
   keywordFilter.disabled = false;
   taskFilter.disabled = false;
+  imageScopeFilter.disabled = false;
   entryTypeFilter.disabled = false;
   sortControl.disabled = false;
   venueFilter.disabled = false;
@@ -5693,10 +5864,21 @@ function enableControls() {
 
 function validateRecord(record) {
   const validTasks = Object.keys(TASK_COLORS);
+  const taxonomyReview = record.taxonomy_review;
+  const validTaxonomyReview = taxonomyReview && typeof taxonomyReview === "object"
+    && ["tasks", "image_scopes", "research_types"].every((dimension) => {
+      const review = taxonomyReview[dimension];
+      return review && ["reviewed", "needs_review"].includes(review.status)
+        && (review.status !== "needs_review" || String(review.reason || "").trim());
+    });
   return (
     typeof recordTitle(record) === "string" &&
     (record.year === null || Number.isInteger(record.year)) &&
-    validTasks.includes(record.task) &&
+    Array.isArray(record.tasks)
+      && record.tasks.every((task) => validTasks.includes(task)) &&
+    Array.isArray(record.image_scopes) && record.image_scopes.every((scope) => scope in IMAGE_SCOPE_LABELS) &&
+    Array.isArray(record.research_types) && record.research_types.every((type) => type in RESEARCH_TYPE_LABELS) &&
+    ["reviewed", "needs_review"].includes(record.taxonomy_status) && validTaxonomyReview &&
     typeof record.institution === "string" &&
     typeof record.country === "string" &&
     Array.isArray(record.authors) &&
@@ -5708,10 +5890,21 @@ function validateRecord(record) {
 function validatePaperRecord(record) {
   const validTasks = Object.keys(TASK_COLORS);
   const mapRecordCount = Number(record.map_record_count);
+  const taxonomyReview = record.taxonomy_review;
+  const validTaxonomyReview = taxonomyReview && typeof taxonomyReview === "object"
+    && ["tasks", "image_scopes", "research_types"].every((dimension) => {
+      const review = taxonomyReview[dimension];
+      return review && ["reviewed", "needs_review"].includes(review.status)
+        && (review.status !== "needs_review" || String(review.reason || "").trim());
+    });
   return (
     typeof recordTitle(record) === "string" &&
     (record.year === null || Number.isInteger(record.year)) &&
-    validTasks.includes(record.task) &&
+    Array.isArray(record.tasks)
+      && record.tasks.every((task) => validTasks.includes(task)) &&
+    Array.isArray(record.image_scopes) && record.image_scopes.every((scope) => scope in IMAGE_SCOPE_LABELS) &&
+    Array.isArray(record.research_types) && record.research_types.every((type) => type in RESEARCH_TYPE_LABELS) &&
+    ["reviewed", "needs_review"].includes(record.taxonomy_status) && validTaxonomyReview &&
     Array.isArray(record.authors) &&
     typeof record.coverage_status === "string" &&
     typeof record.has_map_location === "boolean" &&
@@ -5934,6 +6127,7 @@ async function loadData() {
 filterDropdowns = [
   sortControl,
   taskFilter,
+  imageScopeFilter,
   entryTypeFilter,
   venueTypeFilter,
   venueFilter,
@@ -6025,8 +6219,9 @@ function scheduleKeywordRender() {
 
 function resetFilterValues({ resetSort = false } = {}) {
   keywordFilter.value = "";
-  taskFilter.value = "all";
-  entryTypeFilter.value = "all";
+  resetMultiSelect(taskFilter);
+  resetMultiSelect(imageScopeFilter);
+  resetMultiSelect(entryTypeFilter);
   if (resetSort) sortControl.value = "year-desc";
   venueFilter.value = "all";
   venueTypeFilter.value = "all";
@@ -6047,8 +6242,9 @@ function resetFilterValues({ resetSort = false } = {}) {
 function clearActiveFilter(key) {
   const controls = {
     keyword: keywordFilter,
-    task: taskFilter,
-    "entry-type": entryTypeFilter,
+    tasks: taskFilter,
+    "image-scopes": imageScopeFilter,
+    "research-types": entryTypeFilter,
     "venue-type": venueTypeFilter,
     venue: venueFilter,
     country: countryFilter,
@@ -6066,7 +6262,7 @@ function clearActiveFilter(key) {
   } else if (key === "published-only") {
     publishedOnlyFilter.checked = false;
   } else if (controls[key]) {
-    controls[key].value = "all";
+    resetMultiSelect(controls[key]);
     syncFilterDropdownForSelect(controls[key]);
   } else return;
   rememberFilterChange(key);
@@ -6103,8 +6299,9 @@ function undoLastFilterChange() {
 function focusFilterControl(key) {
   const controls = {
     keyword: keywordFilter,
-    task: taskFilter,
-    "entry-type": entryTypeFilter,
+    tasks: taskFilter,
+    "image-scopes": imageScopeFilter,
+    "research-types": entryTypeFilter,
     "venue-type": venueTypeFilter,
     venue: venueFilter,
     country: countryFilter,
@@ -6136,8 +6333,9 @@ keywordFilter.addEventListener("focus", () => { keywordHistoryStarted = false; }
 keywordFilter.addEventListener("blur", () => { keywordHistoryStarted = false; });
 function handleFilterControlChange(event) {
   const filterKeys = new Map([
-    [taskFilter, "task"],
-    [entryTypeFilter, "entry-type"],
+    [taskFilter, "tasks"],
+    [imageScopeFilter, "image-scopes"],
+    [entryTypeFilter, "research-types"],
     [venueTypeFilter, "venue-type"],
     [venueFilter, "venue"],
     [countryFilter, "country"],
@@ -6151,6 +6349,7 @@ function handleFilterControlChange(event) {
   renderRecords();
 }
 taskFilter.addEventListener("change", handleFilterControlChange);
+imageScopeFilter.addEventListener("change", handleFilterControlChange);
 entryTypeFilter.addEventListener("change", handleFilterControlChange);
 sortControl.addEventListener("change", handleFilterControlChange);
 venueFilter.addEventListener("change", handleFilterControlChange);

@@ -498,16 +498,17 @@ process.stdout.write(JSON.stringify({
             record for record in paper_data["records"] if record["title"] == title
         )
         self.assertEqual(
-            institution_record["paper_categories"], paper_record["paper_categories"]
+            institution_record["research_types"], paper_record["research_types"]
         )
         # Exercise stale metadata explicitly; corrected exports no longer
         # retain an obsolete automatic marker as this test's fixture.
-        institution_record = {**institution_record, "paper_categories": ["benchmark"]}
+        institution_record = {**institution_record, "research_types": ["benchmark"]}
 
         sources = [
-            "const ENTRY_TYPE_LABELS = {method: 'Method', dataset: 'Dataset', "
-            "benchmark: 'Benchmark', survey: 'Survey', analysis: 'Analysis study'};",
+            "const RESEARCH_TYPE_LABELS = {method: 'Method', dataset: 'Dataset', "
+            "benchmark: 'Benchmark', survey: 'Survey', analysis_study: 'Analysis study'};",
             "const PUBLIC_TASK_LABELS = {detection: 'Detection', uncertain: 'Unknown'};",
+            "const IMAGE_SCOPE_LABELS = {fully_generated: 'Fully Generated', deepfake: 'Deepfake'};",
             "const MarkerSizeHelpers = {normalizeTaskLabel: (value) => value || 'uncertain'};",
             "const escapeHtml = (value) => String(value);",
             "const isBookRecord = () => false;",
@@ -519,6 +520,11 @@ process.stdout.write(JSON.stringify({
             "function canonicalPaperRecord" + self.function(
                 "canonicalPaperRecord", "getPaperCategories"
             ),
+            "function canonicalMultiValues" + self.function(
+                "canonicalMultiValues", "getTasks"
+            ),
+            "function getTasks" + self.function("getTasks", "getImageScopes"),
+            "function getImageScopes" + self.function("getImageScopes", "canonicalPaperRecord"),
             "function getPaperCategories" + self.function(
                 "getPaperCategories", "getEntryTypeLabel"
             ),
@@ -546,7 +552,8 @@ process.stdout.write(JSON.stringify({
         rendered = json.loads(result.stdout)
         self.assertEqual(rendered["institution"], rendered["paper"])
         badges = rendered["paper"]
-        self.assertLess(badges.index("Detection"), badges.index("Method"))
+        self.assertLess(badges.index("Detection"), badges.index("Fully Generated"))
+        self.assertLess(badges.index("Deepfake"), badges.index("Method"))
         self.assertLess(badges.index("Method"), badges.index("Dataset"))
         self.assertLess(badges.index("Dataset"), badges.index("Benchmark"))
 

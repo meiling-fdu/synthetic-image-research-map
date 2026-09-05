@@ -17,7 +17,7 @@ SOURCE = "https://example.org/proceedings/final.pdf"
 
 def fixture():
     paper = dict(paper_id="paper:formal-test", title="Formal fixture", year="2026",
-                 authors="Ada; Preprint Only; Bob", task="detection",
+                 authors="Ada; Preprint Only; Bob", tasks="detection", image_scopes="fully_generated", research_types="method",
                  scope_status="in_scope", curation_status="confirmed",
                  publication_type="conference", metadata_source="preprint")
     mappings = [dict(paper_id=paper["paper_id"], title=paper["title"], year="2026",

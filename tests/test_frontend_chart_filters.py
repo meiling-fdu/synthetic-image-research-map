@@ -25,7 +25,7 @@ class FrontendChartAndInstitutionFilterTests(unittest.TestCase):
         self.assertEqual(chart_source.count('<button type="button"'), 3)
         self.assertEqual(chart_source.count('data-chart-filter="'), 3)
         self.assertEqual(chart_source.count('aria-pressed="'), 3)
-        self.assertIn('<span class="task-chart-segment"', chart_source)
+        self.assertIn('class="task-chart-item"', chart_source)
         self.assertIn('<button type="button" class="institution-chart-row"', chart_source)
         self.assertIn('<button type="button" class="year-chart-item"', chart_source)
 
@@ -242,7 +242,7 @@ process.stdout.write(JSON.stringify({{result, csvText}}));
         ]
         for field in (
             "recordTitle(record)", "...authors", "record.venue_name", "record.venue",
-            "record.task", "getEntryTypeLabel",
+            "getTasks(record)", "getImageScopes(record)", "getEntryTypeLabel",
             "publicationYear(record)",
         ):
             self.assertIn(field, search)

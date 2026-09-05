@@ -34,8 +34,9 @@ def paper_row(**overrides):
         "raw_venue": "Proceedings of Stale Conference",
         "doi": "10.1000/book.chapter",
         "publication_type": "book",
-        "paper_categories": "method",
-        "task": "detection",
+        "tasks": "detection",
+        "image_scopes": "fully_generated",
+        "research_types": "method",
         "scope_status": "in_scope",
         "source_database": "openalex",
         "metadata_source": "openalex",
@@ -55,7 +56,7 @@ class BookInvariantTests(unittest.TestCase):
         for field in BOOK_INCOMPATIBLE_FIELDS:
             if field in normalized:
                 self.assertFalse(normalized[field], field)
-        for field in ("paper_id", "title", "authors", "doi", "task"):
+        for field in ("paper_id", "title", "authors", "doi", "tasks", "image_scopes", "research_types"):
             self.assertEqual(normalized[field], source[field])
 
         conference = {**source, "publication_type": "conference"}
@@ -91,7 +92,7 @@ class BookInvariantTests(unittest.TestCase):
             path = Path(directory) / "papers.csv"
             existing = paper_row(
                 publication_type="conference",
-                paper_categories="method",
+                research_types="method",
                 venue="",
                 venue_id="",
                 venue_name="",
@@ -118,7 +119,7 @@ class BookInvariantTests(unittest.TestCase):
         messages = "\n".join(issue.message for issue in issues)
         for expected in (
             "curated:book-test", "A Book Chapter", "venue='Stale Conference'",
-            "paper_categories='method'", "venue_track='main'",
+            "venue_track='main'",
         ):
             self.assertIn(expected, messages)
 
@@ -127,13 +128,12 @@ class BookInvariantTests(unittest.TestCase):
         validate_paper_record(0, paper_row(), issues)
         messages = "\n".join(issue.message for issue in issues)
         self.assertIn("book has incompatible venue='Stale Conference'", messages)
-        self.assertIn("book has incompatible paper_categories='method'", messages)
 
     def test_curated_merge_and_public_synchronization_clean_after_merge(self):
         external = paper_row(paper_id="", publication_type="conference")
         curated = paper_row(
             venue="", venue_id="", venue_name="", venue_acronym="",
-            venue_type="", venue_track="", raw_venue="", paper_categories="",
+            venue_type="", venue_track="", raw_venue="",
         )
         _merge_curated_paper(external, curated)
         self.assertEqual(external["publication_type"], "book")
@@ -187,14 +187,12 @@ class BookFrontendContractTests(unittest.TestCase):
             "Changing this record to book will clear these incompatible values",
             "select.value = previousType",
             "clearBookIncompatibleFormFields()",
-            "paperCategoryCheckboxes().forEach((input) => { input.disabled = isBook; })",
             'state.previousPublicationType = nextType',
         ):
             self.assertIn(text, self.admin)
 
     def test_frontend_venue_search_filter_detail_and_csv_are_defensive(self):
         for text in (
-            "if (isBookRecord(record)) return [];",
             "(record) => isBookRecord(record) ? [] : [venueFilterValue(record)]",
             "const venueTerms = isBookRecord(record) ? []",
             "canonicalVenueTrack(record)",

@@ -33,7 +33,9 @@ PAPERS_COLUMNS = (
     "paper_url",
     "publication_type",
     "abstract",
-    "task",
+    "tasks",
+    "image_scopes",
+    "research_types",
     "scope_status",
     "source_database",
     "metadata_source",
@@ -41,7 +43,36 @@ PAPERS_COLUMNS = (
     "review_status",
     "created_at",
     "updated_at",
-    "paper_categories",
+)
+
+PAPER_TAXONOMY_COLUMNS = (
+    "taxonomy_id",
+    "paper_id",
+    "title",
+    "year",
+    "doi",
+    "arxiv_id",
+    "openalex_url",
+    "tasks",
+    "image_scopes",
+    "research_types",
+    "tasks_status",
+    "tasks_review_reason",
+    "tasks_evidence_tier",
+    "tasks_evidence_source",
+    "tasks_evidence_excerpt",
+    "image_scopes_status",
+    "image_scopes_review_reason",
+    "image_scopes_evidence_tier",
+    "image_scopes_evidence_source",
+    "image_scopes_evidence_excerpt",
+    "research_types_status",
+    "research_types_review_reason",
+    "research_types_evidence_tier",
+    "research_types_evidence_source",
+    "research_types_evidence_excerpt",
+    "taxonomy_status",
+    "audited_at",
 )
 
 VENUE_ALIAS_COLUMNS = (
@@ -334,6 +365,7 @@ CURATED_ARXIV_LINK_COLUMNS = (
 
 EXPECTED_COLUMNS: Dict[str, Tuple[str, ...]] = {
     "papers.csv": PAPERS_COLUMNS,
+    "paper_taxonomy.csv": PAPER_TAXONOMY_COLUMNS,
     "venue_aliases.csv": VENUE_ALIAS_COLUMNS,
     "author_institution_mappings.csv": AUTHOR_INSTITUTION_MAPPING_COLUMNS,
     "paper_exclusions.csv": PAPER_EXCLUSION_COLUMNS,
@@ -358,19 +390,14 @@ try:
 except ImportError:
     from venue_tracks import ALLOWED_VENUE_TRACKS, normalize_venue_track
 
-ALLOWED_TASKS = {
-    "detection",
-    "detection_and_source_attribution",
-    "source_attribution",
-    "uncertain",
-}
-
 try:
-    from .paper_categories import PAPER_CATEGORY_SET
+    from .paper_taxonomy import IMAGE_SCOPE_ORDER, RESEARCH_TYPE_ORDER, TASK_ORDER
 except ImportError:
-    from paper_categories import PAPER_CATEGORY_SET
+    from paper_taxonomy import IMAGE_SCOPE_ORDER, RESEARCH_TYPE_ORDER, TASK_ORDER
 
-ALLOWED_ENTRY_TYPES = PAPER_CATEGORY_SET  # Backward-compatible import alias.
+ALLOWED_TASKS = frozenset(TASK_ORDER)
+ALLOWED_IMAGE_SCOPES = frozenset(IMAGE_SCOPE_ORDER)
+ALLOWED_RESEARCH_TYPES = frozenset(RESEARCH_TYPE_ORDER)
 
 ALLOWED_CURATION_STATUSES = {"confirmed", "needs_review"}
 

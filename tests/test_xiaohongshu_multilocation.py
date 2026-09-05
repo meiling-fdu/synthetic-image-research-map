@@ -84,7 +84,7 @@ class XiaohongshuMultiLocationTests(unittest.TestCase):
     def test_exporter_uses_mapping_specific_city_for_one_canonical_id(self):
         paper = {
             "paper_id": "paper:one", "title": "Paper", "year": "2026",
-            "publication_year": "2026", "task": "detection", "in_scope": True,
+            "publication_year": "2026", "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"], "in_scope": True,
             "authors": "Shanghai Author; Beijing Author",
         }
         mappings = [

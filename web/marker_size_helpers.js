@@ -11,7 +11,7 @@
   const TASK_LABELS = {
     detection: "Detection",
     source_attribution: "Source Attribution",
-    detection_and_source_attribution: "Detection + Source Attribution",
+    localization: "Localization",
     unknown: "Unknown",
   };
 
@@ -29,13 +29,8 @@
     if (["source_attribution", "attribution"].includes(normalized)) {
       return "source_attribution";
     }
-    if ([
-      "detection_and_source_attribution",
-      "detection_source_attribution",
-      "combined",
-      "mixed",
-    ].includes(normalized)) {
-      return "detection_and_source_attribution";
+    if (normalized === "localization") {
+      return "localization";
     }
     return "unknown";
   }
@@ -44,7 +39,7 @@
     const counts = {
       detection: 0,
       source_attribution: 0,
-      detection_and_source_attribution: 0,
+      localization: 0,
       unknown: 0,
     };
     const seenPaperIds = new Set();
@@ -54,7 +49,10 @@
         return;
       }
       seenPaperIds.add(paperId);
-      counts[normalizeTaskLabel(record.task)] += 1;
+      const tasks = Array.isArray(record.tasks) ? record.tasks : [];
+      tasks.forEach((task) => {
+        counts[normalizeTaskLabel(task)] += 1;
+      });
     });
     return counts;
   }

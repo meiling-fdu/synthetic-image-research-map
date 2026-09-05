@@ -15,7 +15,7 @@ class PublicMetadataStatusAuditTests(unittest.TestCase):
             cls.rows = list(csv.DictReader(handle))
 
     def test_full_public_dataset_has_an_explained_classification(self):
-        self.assertEqual(len(self.rows), 574)
+        self.assertEqual(len(self.rows), 613)
         self.assertTrue(all(row["paper_id"] and row["title"] for row in self.rows))
         self.assertTrue(all(row["global_reason"] for row in self.rows))
         self.assertEqual(
@@ -27,7 +27,7 @@ class PublicMetadataStatusAuditTests(unittest.TestCase):
         previous = [
             row for row in self.rows if row["previous_overall"] == "Needs review"
         ]
-        self.assertEqual(len(previous), 212)
+        self.assertEqual(len(previous), 223)
         for row in previous:
             self.assertIn(row["trigger_scope"], {"global", "local"})
             self.assertTrue(row["global_reason"])

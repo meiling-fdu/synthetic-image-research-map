@@ -29,7 +29,7 @@ class FrontendDataUnitSemanticsTests(unittest.TestCase):
             ["Institution Records", "Unique Papers", "Unique Institutions", "Countries"],
         )
         for heading in (
-            "Unique Papers by Task",
+            "Unique Papers by Forensic Task",
             "Top Institutions by Unique Papers",
             "Unique Papers by Year",
         ):

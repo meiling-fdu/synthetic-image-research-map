@@ -77,7 +77,7 @@ class OpenAlexPaperSearchTests(unittest.TestCase):
                 "year": "2025",
                 "arxiv_id": ARXIV_ID,
                 "source_database": "arxiv",
-                "task": "detection",
+                "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             }
         )
 

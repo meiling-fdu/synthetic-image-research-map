@@ -10,21 +10,21 @@ The previous implementation allowed localized field status to set the paper-wide
 
 | Metric | Before | After |
 |---|---:|---:|
-| Overall Verified | 314 | 351 |
-| Overall Curated | 48 | 0 |
-| Overall Needs review | 212 | 18 |
-| Overall Source metadata | 0 | 205 |
-| Papers with at least one Needs-review field | 212 | 212 |
-| Needs-review venue fields | 207 | 58 |
-| Authoritative `venue_review_required=true` | 40 | 40 |
-| Localized venue issues | 40 | 40 |
-| Needs-review affiliation fields | 177 | 181 |
-| Localized affiliation issues | 177 | 181 |
+| Overall Verified | 343 | 397 |
+| Overall Curated | 47 | 0 |
+| Overall Needs review | 223 | 18 |
+| Overall Source metadata | 0 | 198 |
+| Papers with at least one Needs-review field | 223 | 223 |
+| Needs-review venue fields | 218 | 57 |
+| Authoritative `venue_review_required=true` | 39 | 39 |
+| Localized venue issues | 39 | 39 |
+| Needs-review affiliation fields | 173 | 193 |
+| Localized affiliation issues | 173 | 193 |
 | Genuinely globally unresolved papers | 18 | 18 |
 
-- Previous Needs-review papers audited: **212**
-- Previous Needs-review papers corrected to a non-global status: **194**
-- All papers whose overall label changed, including source-only affiliation upgrades: **242**
+- Previous Needs-review papers audited: **223**
+- Previous Needs-review papers corrected to a non-global status: **205**
+- All papers whose overall label changed, including source-only affiliation upgrades: **252**
 - Full per-paper audit: [`public_metadata_status_audit.csv`](public_metadata_status_audit.csv)
 
 ## Exact scope rule

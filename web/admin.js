@@ -120,7 +120,9 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "paper-openalex-url",
     "paper-url",
     "paper-publication-type",
-    "paper-task",
+    "paper-tasks",
+    "paper-image-scopes",
+    "paper-research-types",
     "paper-scope-status",
     "paper-review-status",
     "paper-abstract",
@@ -363,10 +365,9 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
     "metadata-publication-type",
     "metadata-publication-type-override",
     "metadata-publication-type-warning",
-    "metadata-paper-categories",
-    "metadata-paper-categories-error",
-    "metadata-entry-type-field",
-    "metadata-task",
+    "metadata-tasks",
+    "metadata-image-scopes",
+    "metadata-research-types",
     "metadata-scope-status",
     "metadata-curation-status",
     "metadata-review-status",
@@ -490,6 +491,10 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["add-manually-button"].addEventListener("click", () => startPaperDraft({}, "manual"));
   elements["paper-draft-cancel"].addEventListener("click", cancelPaperDraft);
   elements["paper-draft-form"].addEventListener("submit", createPaper);
+  elements["paper-draft-form"].addEventListener("change", (event) => {
+    const group = event.target.closest?.(".paper-category-field");
+    if (group && selectedCheckboxValues(group.id).length) group.removeAttribute("aria-invalid");
+  });
   elements["mapping-add-button"].addEventListener("click", () => {
     if (state.selectedPaper) openMappingDialog("create");
   });
@@ -4586,6 +4591,7 @@ function startPaperDraft(candidate, source) {
     }];
   }
   elements["paper-draft-form"].reset();
+  clearTaxonomyGroupValidation("paper");
   elements["paper-source-database"].value = source;
   elements["paper-draft-origin"].textContent =
     source === "openalex"
@@ -4622,10 +4628,42 @@ function startPaperDraft(candidate, source) {
 function cancelPaperDraft() {
   state.draftMappingCandidates = [];
   elements["paper-draft-form"].reset();
+  clearTaxonomyGroupValidation("paper");
   elements["paper-draft-form"].hidden = true;
   elements["paper-duplicate-warning"].hidden = true;
   elements["paper-mapping-warning"].hidden = true;
   elements["paper-create-error"].hidden = true;
+}
+
+function selectedCheckboxValues(id) {
+  return [...elements[id].querySelectorAll('input[type="checkbox"]')]
+    .filter((input) => input.checked)
+    .map((input) => input.value)
+    .filter(Boolean);
+}
+
+function setCheckedValues(id, values) {
+  const selected = new Set(Array.isArray(values) ? values : String(values || "").split(";"));
+  elements[id].querySelectorAll('input[type="checkbox"]').forEach((input) => {
+    input.checked = selected.has(input.value);
+  });
+}
+
+function clearTaxonomyGroupValidation(prefix) {
+  [`${prefix}-tasks`, `${prefix}-image-scopes`, `${prefix}-research-types`]
+    .forEach((id) => elements[id].removeAttribute("aria-invalid"));
+}
+
+function validateTaxonomyGroups(prefix, { focus = false } = {}) {
+  const groupIds = [`${prefix}-tasks`, `${prefix}-image-scopes`, `${prefix}-research-types`];
+  const invalidGroups = groupIds.filter((id) => !selectedCheckboxValues(id).length);
+  groupIds.forEach((id) => {
+    elements[id].setAttribute("aria-invalid", String(invalidGroups.includes(id)));
+  });
+  if (focus && invalidGroups.length) {
+    elements[invalidGroups[0]].querySelector('input[type="checkbox"]')?.focus();
+  }
+  return invalidGroups.length === 0;
 }
 
 function paperDraftPayload() {
@@ -4651,7 +4689,9 @@ function paperDraftPayload() {
     paper_url: elements["paper-url"].value.trim(),
     publication_type: elements["paper-publication-type"].value.trim(),
     abstract: elements["paper-abstract"].value.trim(),
-    task: elements["paper-task"].value,
+    tasks: selectedCheckboxValues("paper-tasks"),
+    image_scopes: selectedCheckboxValues("paper-image-scopes"),
+    research_types: selectedCheckboxValues("paper-research-types"),
     scope_status: elements["paper-scope-status"].value.trim(),
     review_status: elements["paper-review-status"].value,
     mapping_candidates: [
@@ -4667,6 +4707,12 @@ async function createPaper(event) {
   event.preventDefault();
   elements["paper-create-error"].hidden = true;
   elements["paper-duplicate-warning"].hidden = true;
+  if (!validateTaxonomyGroups("paper", { focus: true })) {
+    elements["paper-create-error"].hidden = false;
+    elements["paper-create-error"].textContent =
+      "Select at least one value in every taxonomy dimension.";
+    return;
+  }
   elements["paper-create-submit"].disabled = true;
   try {
     const draft = paperDraftPayload();
@@ -4725,7 +4771,7 @@ function renderDuplicateWarning(matches) {
 
 function populateFilters() {
   setOptions("filter-year", uniqueValues("year", true));
-  setOptions("filter-task", uniqueValues("task"));
+  setOptions("filter-task", [...new Set(state.papers.flatMap((paper) => paper.tasks || []))].sort());
   setOptions("filter-coverage", uniqueValues("coverage_status"));
   setOptions("filter-source", uniqueValues("source_database"));
 }
@@ -4764,7 +4810,6 @@ function applyFilters() {
   const query = normalize(elements["search-input"].value);
   const filters = {
     year: elements["filter-year"].value,
-    task: elements["filter-task"].value,
     coverage_status: elements["filter-coverage"].value,
     source_database: elements["filter-source"].value,
   };
@@ -4778,6 +4823,8 @@ function applyFilters() {
     if (Object.entries(filters).some(([field, expected]) =>
       expected && text(paper[field]) !== expected
     )) return false;
+    if (elements["filter-task"].value
+        && !(paper.tasks || []).includes(elements["filter-task"].value)) return false;
     if (mapFilter === "missing_affiliations" && !paper.missing_affiliation) return false;
     if (["true", "false"].includes(mapFilter) && String(Boolean(paper.has_map_location)) !== mapFilter) return false;
     if (exclusionFilter && exclusionStatus(paper) !== exclusionFilter) return false;
@@ -4820,7 +4867,7 @@ function renderPaperList() {
     classification.className = "paper-meta";
     classification.textContent = [
       paper.year || paper.publication_year,
-      humanize(paper.task),
+      (paper.tasks || []).map(humanize).join(" + "),
       text(paper.source_database),
       text(paper.metadata_source),
     ].filter(Boolean).join(" · ");
@@ -5252,7 +5299,6 @@ function clearBookIncompatibleFormFields() {
     "metadata-venue-acronym", "metadata-venue-type", "metadata-venue-track",
     "metadata-raw-venue",
   ].forEach((id) => { elements[id].value = ""; });
-  paperCategoryCheckboxes().forEach((input) => { input.checked = false; });
   elements["metadata-venue-value"].textContent = "Unavailable for books";
   elements["metadata-raw-venue-display"].textContent = "Not recorded";
   elements["metadata-replace-raw-venue"].checked = false;
@@ -5262,10 +5308,8 @@ function clearBookIncompatibleFormFields() {
 
 function setBookMetadataAvailability(isBook) {
   elements["metadata-venue-field"].hidden = isBook;
-  elements["metadata-entry-type-field"].hidden = isBook;
   elements["metadata-venue-button"].disabled = isBook;
   elements["metadata-venue-track"].disabled = isBook || state.selectedVenue?.venue_type !== "conference";
-  paperCategoryCheckboxes().forEach((input) => { input.disabled = isBook; });
   const leavingBook = !isBook && state.previousPublicationType === "book";
   elements["metadata-publication-type"].disabled = isBook
     ? false
@@ -5307,7 +5351,6 @@ function handlePublicationTypeChange() {
   const isBook = nextType === "book";
   if (isBook) clearBookIncompatibleFormFields();
   setBookMetadataAvailability(isBook);
-  validatePaperCategories();
   state.previousPublicationType = nextType;
   updatePublicationTypeConflict();
 }
@@ -5404,73 +5447,9 @@ function openMetadataEditor() {
 const METADATA_SNAPSHOT_FIELDS = [
   "title", "year", "authors", "venue", "venue-id", "venue-name", "venue-acronym",
   "venue-type", "venue-track", "raw-venue", "doi", "arxiv-id", "openalex-url",
-  "paper-url", "publication-type", "task", "scope-status",
+  "paper-url", "publication-type", "scope-status",
   "curation-status", "review-status", "abstract", "review-note", "venue-review-note",
 ];
-
-const PAPER_CATEGORY_ORDER = ["method", "dataset", "benchmark", "survey", "analysis"];
-
-function paperCategoryCheckboxes() {
-  return [...elements["metadata-paper-categories"].querySelectorAll(
-    'input.paper-category-input[type="checkbox"][name="paper_categories"]'
-  )];
-}
-
-function normalizePaperCategories(value) {
-  const values = Array.isArray(value) ? value : String(value || "").split(";");
-  const selected = new Set(values.map((item) => String(item).trim().toLowerCase()).filter(Boolean));
-  const unknown = [...selected].filter((item) => !PAPER_CATEGORY_ORDER.includes(item));
-  if (unknown.length) throw new Error(`Unknown paper categories: ${unknown.join(", ")}`);
-  return PAPER_CATEGORY_ORDER.filter((item) => selected.has(item));
-}
-
-function getSelectedPaperCategories() {
-  return normalizePaperCategories(
-    paperCategoryCheckboxes().filter((input) => input.checked).map((input) => input.value)
-  );
-}
-
-function setPaperCategoriesError(message = "") {
-  const fieldset = elements["metadata-entry-type-field"];
-  const error = elements["metadata-paper-categories-error"];
-  error.hidden = !message;
-  error.textContent = message;
-  if (message) fieldset.setAttribute("aria-invalid", "true");
-  else fieldset.removeAttribute("aria-invalid");
-}
-
-function validatePaperCategories({ focus = false } = {}) {
-  let selected;
-  try {
-    selected = getSelectedPaperCategories();
-  } catch (error) {
-    setPaperCategoriesError(error.message);
-    if (focus) paperCategoryCheckboxes()[0]?.focus();
-    return null;
-  }
-  if (elements["metadata-publication-type"].value !== "book" && selected.length === 0) {
-    setPaperCategoriesError("Select at least one paper category.");
-    if (focus) paperCategoryCheckboxes()[0]?.focus();
-    return null;
-  }
-  setPaperCategoriesError();
-  return selected;
-}
-
-function hydratePaperCategories(value) {
-  paperCategoryCheckboxes().forEach((input) => { input.checked = false; });
-  try {
-    const categories = normalizePaperCategories(value);
-    paperCategoryCheckboxes().forEach((input) => {
-      input.checked = categories.includes(input.value);
-    });
-    setPaperCategoriesError();
-    return true;
-  } catch (error) {
-    setPaperCategoriesError(error.message);
-    return false;
-  }
-}
 
 function metadataFormSnapshot() {
   const values = Object.fromEntries(METADATA_SNAPSHOT_FIELDS.map((field) => {
@@ -5479,7 +5458,9 @@ function metadataFormSnapshot() {
   }));
   values.replace_raw_venue = elements["metadata-replace-raw-venue"].checked;
   values.venue_review_confirmed = elements["metadata-venue-review-confirmed"].checked;
-  values.paper_categories = getSelectedPaperCategories();
+  values.tasks = selectedCheckboxValues("metadata-tasks");
+  values.image_scopes = selectedCheckboxValues("metadata-image-scopes");
+  values.research_types = selectedCheckboxValues("metadata-research-types");
   values.publication_type_override = state.publicationTypeOverride;
   values.venue_selection_confirmed = state.venueSelectionConfirmed;
   values.pending_venue_proposal = state.pendingVenueProposal;
@@ -5527,8 +5508,8 @@ function renderMetadataSaveStatus(status, message = "") {
 function handleMetadataFormChange(event) {
   if (state.metadataSave.inFlight) return;
   elements["metadata-edit-error"].hidden = true;
-  if (event?.target?.matches?.(".paper-category-input")) {
-    validatePaperCategories();
+  if (event?.target?.matches?.('.paper-category-input[type="checkbox"]')) {
+    validateTaxonomyGroups("metadata");
   }
   renderMetadataSaveStatus(metadataFormIsDirty() ? "dirty" : "clean");
 }
@@ -5540,7 +5521,7 @@ function populateMetadataForm() {
   state.venueSelectionConfirmed = false;
   const fields = [
     "title", "year", "authors", "venue", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "task", "scope_status",
+    "paper_url", "publication_type", "scope_status",
     "curation_status", "review_status", "abstract",
   ];
   fields.forEach((field) => {
@@ -5553,9 +5534,10 @@ function populateMetadataForm() {
           : metadataValue(record, field);
     }
   });
-  const categoriesHydrated = hydratePaperCategories(
-    record?.paper_categories ?? record?.entry_type
-  );
+  setCheckedValues("metadata-tasks", record?.tasks);
+  setCheckedValues("metadata-image-scopes", record?.image_scopes);
+  setCheckedValues("metadata-research-types", record?.research_types);
+  validateTaxonomyGroups("metadata");
   const venueId = metadataValue(record, "venue_id");
   const venueName = metadataValue(record, "venue_name") || metadataValue(record, "venue");
   state.selectedVenue = venueId ? {
@@ -5629,7 +5611,6 @@ function populateMetadataForm() {
   state.previousPublicationType = elements["metadata-publication-type"].value;
   if (isBook) clearBookIncompatibleFormFields();
   setBookMetadataAvailability(isBook);
-  if (categoriesHydrated) validatePaperCategories();
   elements["metadata-edit-error"].hidden = true;
   state.metadataSave.baseline = metadataFormSnapshot();
   state.metadataSave.inFlight = false;
@@ -5702,7 +5683,7 @@ async function saveMetadata(event) {
   }
   const fields = [
     "year", "authors", "doi", "arxiv_id", "openalex_url",
-    "paper_url", "publication_type", "task", "scope_status",
+    "paper_url", "publication_type", "scope_status",
     "curation_status", "review_status", "abstract",
   ];
   const effective = state.paperMetadata.effective_record || state.selectedPaper;
@@ -5725,9 +5706,14 @@ async function saveMetadata(event) {
   if (submittedTitle !== plainPaperTitle(metadataValue(effective, "title")).trim()) {
     draft.title = submittedTitle;
   }
-  const paperCategories = validatePaperCategories({ focus: true });
-  if (paperCategories === null) return;
-  draft.paper_categories = paperCategories;
+  draft.tasks = selectedCheckboxValues("metadata-tasks");
+  draft.image_scopes = selectedCheckboxValues("metadata-image-scopes");
+  draft.research_types = selectedCheckboxValues("metadata-research-types");
+  if (!validateTaxonomyGroups("metadata", { focus: true })) {
+    elements["metadata-edit-error"].hidden = false;
+    elements["metadata-edit-error"].textContent = "Select at least one value in every taxonomy dimension.";
+    return;
+  }
   // Honor explicit curation state independently of review_status.
   draft.curation_status = elements["metadata-curation-status"].value;
   const publicationType = elements["metadata-publication-type"].value;
@@ -5753,7 +5739,6 @@ async function saveMetadata(event) {
     venue_acronym: isBook ? "" : elements["metadata-venue-acronym"].value,
     venue_type: isBook ? "" : elements["metadata-venue-type"].value,
     venue_track: isBook ? "" : elements["metadata-venue-track"].value,
-    paper_categories: isBook ? [] : (draft.paper_categories || paperCategories),
     raw_venue: isBook ? "" : elements["metadata-replace-raw-venue"].checked
       ? elements["metadata-venue-name"].value
       : elements["metadata-raw-venue"].value,
@@ -5857,8 +5842,9 @@ function renderPaperDetail(paper) {
     ["DOI", linkValue(paper.doi, doiUrl(paper.doi))],
     ["OpenAlex", linkValue(paper.openalex_url, paper.openalex_url)],
     ["Paper URL", linkValue(paper.paper_url, paper.paper_url)],
-    ["Task", humanize(paper.task)],
-    ["Paper categories", normalizePaperCategories(paper.paper_categories ?? paper.entry_type).map(humanize).join(", ")],
+    ["Tasks", (paper.tasks || []).map(humanize).join(", ")],
+    ["Image scopes", (paper.image_scopes || []).map(humanize).join(", ")],
+    ["Research types", (paper.research_types || []).map(humanize).join(", ")],
     ["Coverage", humanize(paper.coverage_status)],
     ["Currently published paper", yesNo(paper.is_currently_published)],
     ["Published on public map", yesNo(paper.has_map_location)],

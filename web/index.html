@@ -33,7 +33,7 @@
 
       <section class="header-statistics" aria-label="Filtered unique-paper statistics">
         <article class="header-chart task-chart">
-          <h2>Unique Papers by Task</h2>
+          <h2>Unique Papers by Forensic Task</h2>
           <div id="task-chart-content" class="header-chart-content" aria-live="polite">
             <p class="chart-empty">Loading…</p>
           </div>
@@ -106,32 +106,47 @@
             </label>
 
             <div class="filter-dropdown-field" data-filter-dropdown>
-              <span id="task-filter-label" class="filter-label">Task</span>
-              <select id="task-filter" disabled>
+              <span id="task-filter-label" class="filter-label">Forensic Task</span>
+              <select id="task-filter" multiple disabled>
                 <option value="all">All</option>
                 <option value="detection">Detection</option>
                 <option value="source_attribution">Source Attribution</option>
-                <option value="detection_and_source_attribution">Detection + Source Attribution</option>
+                <option value="localization">Localization</option>
+              </select>
+            </div>
+
+            <div class="filter-dropdown-field" data-filter-dropdown>
+              <span id="image-scope-filter-label" class="filter-label">Image Scope</span>
+              <select id="image-scope-filter" multiple disabled>
+                <option value="all">All</option>
+                <optgroup label="Core scopes">
+                  <option value="fully_generated">Fully Generated</option>
+                  <option value="generative_editing">Generative Editing</option>
+                </optgroup>
+                <optgroup label="Extended scopes">
+                  <option value="deepfake">Deepfake</option>
+                  <option value="traditional_manipulation">Traditional Manipulation</option>
+                </optgroup>
               </select>
             </div>
 
             <div class="filter-dropdown-field" data-filter-dropdown>
               <span
-                id="entry-type-filter-label"
+                id="research-type-filter-label"
                 class="filter-label"
                 title="Research contribution type: Methods, Datasets, Benchmarks, Surveys, Analysis Studies, and related contributions."
               >Research Type</span>
-              <span id="entry-type-filter-description" class="visually-hidden">
+              <span id="research-type-filter-description" class="visually-hidden">
                 Research contribution type: Methods, Datasets, Benchmarks, Surveys,
                 Analysis Studies, and related contributions.
               </span>
-              <select id="entry-type-filter" aria-describedby="entry-type-filter-description" disabled>
+              <select id="research-type-filter" multiple aria-describedby="research-type-filter-description" disabled>
                 <option value="all">All</option>
                 <option value="method">Methods</option>
                 <option value="dataset">Datasets</option>
                 <option value="benchmark">Benchmarks</option>
                 <option value="survey">Surveys</option>
-                <option value="analysis">Analysis Studies</option>
+                <option value="analysis_study">Analysis Studies</option>
               </select>
             </div>
 

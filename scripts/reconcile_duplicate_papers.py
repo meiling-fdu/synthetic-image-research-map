@@ -12,9 +12,11 @@ from typing import Any, Mapping, Sequence
 try:
     from .curated_papers import read_curated_papers, write_curated_papers
     from .paper_exclusions import clean, normalize_doi, normalized_title_year_key
+    from .paper_taxonomy import serialize_image_scopes, serialize_research_types, serialize_tasks
 except ImportError:  # pragma: no cover - direct script execution
     from curated_papers import read_curated_papers, write_curated_papers
     from paper_exclusions import clean, normalize_doi, normalized_title_year_key
+    from paper_taxonomy import serialize_image_scopes, serialize_research_types, serialize_tasks
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -73,9 +75,13 @@ def merge_paper_rows(
         if set(map(str.casefold, canonical_authors)) < set(map(str.casefold, duplicate_authors))
         else _parts(_union_text(canonical.get("authors"), duplicate.get("authors")))
     )
-    merged["paper_categories"] = _union_text(
-        canonical.get("paper_categories"), duplicate.get("paper_categories")
-    )
+    taxonomy_serializers = {
+        "tasks": serialize_tasks,
+        "image_scopes": serialize_image_scopes,
+        "research_types": serialize_research_types,
+    }
+    for field, serializer in taxonomy_serializers.items():
+        merged[field] = serializer(_union_text(canonical.get(field), duplicate.get(field)))
     merged["paper_id"] = clean(canonical.get("paper_id"))
     merged["created_at"] = clean(canonical.get("created_at"))
     merged["updated_at"] = datetime.now(timezone.utc).replace(

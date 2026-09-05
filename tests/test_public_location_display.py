@@ -53,7 +53,7 @@ class PublicLocationDisplayTests(unittest.TestCase):
             [{
                 "id": "new-import",
                 "title": "Newly imported paper",
-                "task": "detection",
+                "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
                 "institution": "Example Institute",
                 "country": "KR",
                 "country_code": "KR",

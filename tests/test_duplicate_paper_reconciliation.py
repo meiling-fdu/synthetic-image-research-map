@@ -34,20 +34,20 @@ class DuplicatePaperReconciliationTests(unittest.TestCase):
             canonical = row(
                 PAPERS_COLUMNS, paper_id="paper:canonical", title="Exact Paper",
                 year="2025", authors="Ada; Ben", doi="10.1000/exact",
-                publication_type="conference", task="detection",
+                publication_type="conference", tasks="detection", image_scopes="fully_generated",
                 scope_status="in_scope", source_database="manual",
                 metadata_source="manual", curation_status="confirmed",
-                review_status="reviewed", paper_categories="method",
+                review_status="reviewed", research_types="method",
                 created_at="2026-01-02T00:00:00Z",
             )
             duplicate = row(
                 PAPERS_COLUMNS, paper_id="paper:retired", title="Exact Paper",
                 year="2025", authors="Ada, Ben, Cora",
                 doi="https://doi.org/10.1000/EXACT", abstract="Best abstract",
-                publication_type="conference", task="detection",
+                publication_type="conference", tasks="detection", image_scopes="fully_generated",
                 scope_status="in_scope", source_database="openalex",
                 metadata_source="openalex", curation_status="confirmed",
-                review_status="reviewed", paper_categories="dataset",
+                review_status="reviewed", research_types="dataset",
                 created_at="2026-01-01T00:00:00Z",
             )
             write_csv(papers, PAPERS_COLUMNS, [canonical, duplicate])
@@ -87,7 +87,7 @@ class DuplicatePaperReconciliationTests(unittest.TestCase):
             self.assertEqual(saved[0]["paper_id"], "paper:canonical")
             self.assertEqual(saved[0]["authors"], "Ada; Ben; Cora")
             self.assertEqual(saved[0]["abstract"], "Best abstract")
-            self.assertEqual(saved[0]["paper_categories"], "method; dataset")
+            self.assertEqual(saved[0]["research_types"], "method;dataset")
             with (curated / "author_institution_mappings.csv").open(encoding="utf-8", newline="") as handle:
                 self.assertEqual(next(csv.DictReader(handle))["paper_id"], "paper:canonical")
             with (curated / "paper_exclusions.csv").open(encoding="utf-8", newline="") as handle:

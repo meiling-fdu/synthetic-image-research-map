@@ -55,11 +55,13 @@ process.stdout.write(JSON.stringify({html}));
         )[1].split("\nfunction resultContent", 1)[0]
         self.assertLess(
             details.index("paper-details-title"),
-            details.index('class="popup-badges"'),
+            details.index('class="paper-taxonomy-rows"'),
         )
         self.assertIn("${publicationMetadataBlock}", details)
         self.assertIn("paper-details-publication-type", self.app)
-        self.assertIn("task-${escapeHtml(MarkerSizeHelpers.normalizeTaskLabel", details)
+        self.assertIn("getTasks(record)", details)
+        self.assertIn("getImageScopes(record)", details)
+        self.assertIn("getPaperCategories(record)", details)
         self.assertIn("paper-details-affiliations", details)
         self.assertIn("affiliation.authors.map(escapeHtml).join", details)
         self.assertIn("overflow-wrap: anywhere", self.css)
@@ -93,13 +95,13 @@ process.stdout.write(helpers.renderPaperAuthors({authors}, String));
             "function paperDetailsHtml(record, relatedEntries) {", 1
         )[1].split("\nfunction resultBadges", 1)[0]
         title = details.index("paper-details-title")
-        badges = details.index('class="popup-badges"')
+        taxonomy = details.index('class="paper-taxonomy-rows"')
         venue = details.index("${publicationMetadataBlock}")
         authors = details.index('class="paper-details-group paper-details-authors"')
         affiliations = details.index("${affiliationsBlock}")
         links = details.index("${linksBlock}")
-        self.assertLess(title, badges)
-        self.assertLess(badges, venue)
+        self.assertLess(title, taxonomy)
+        self.assertLess(taxonomy, venue)
         self.assertLess(venue, authors)
         self.assertLess(authors, affiliations)
         self.assertLess(affiliations, links)
@@ -113,7 +115,9 @@ process.stdout.write(helpers.renderPaperAuthors({authors}, String));
         )[1].split("\nfunction resultBadges", 1)[0]
         self.assertIn("popup-task", details)
         self.assertNotIn("${publicationTypeBadge}", details)
-        self.assertIn("${entryTypeBadge}", details)
+        self.assertIn("${taskBadges || unavailableTaxonomyLabel}", details)
+        self.assertIn("${researchTypeBadges || unavailableTaxonomyLabel}", details)
+        self.assertIn("${scopeBadges || unavailableTaxonomyLabel}", details)
         self.assertNotIn("arXiv version", details)
         self.assertNotIn("confidenceBadge", details)
         self.assertNotIn("affiliationBadge", details)
@@ -138,7 +142,7 @@ process.stdout.write(helpers.renderPaperAuthors({authors}, String));
         details = self.app.split(
             "function paperDetailsHtml(record, relatedEntries) {", 1
         )[1].split("\nfunction resultBadges", 1)[0]
-        self.assertEqual(details.count('class="paper-details-section-heading"'), 3)
+        self.assertEqual(details.count('class="paper-details-section-heading"'), 4)
         self.assertIn("Metadata status", self.app)
         title_css = self.css.split(".paper-details-title {", 1)[1].split("}", 1)[0]
         self.assertIn("text-align: left", title_css)
@@ -235,7 +239,8 @@ process.stdout.write(JSON.stringify(Object.fromEntries(
 const helpers = require(process.argv[1]);
 const view = helpers.metadataStatusView({
   title: "Mixed paper", year: 2026, venue: "CVPR", publication_type: "conference",
-  doi: "10.1000/example", arxiv_id: "2601.00001", task: "detection",
+  doi: "10.1000/example", arxiv_id: "2601.00001",
+  tasks: ["detection"], image_scopes: ["fully_generated"], research_types: ["method"],
   affiliations: [{name: "Example University"}],
   metadata_status: {
     overall: "Verified", default_field_status: "Verified", source: "DOI / Crossref",
@@ -267,6 +272,28 @@ process.stdout.write(JSON.stringify(view));
         )
         self.assertIn("paperMetadataStatusHtml(record)", self.app)
         self.assertIn('class="paper-details-metadata-status"', self.app)
+
+    def test_metadata_status_uses_field_level_rows_without_duplicate_summary(self):
+        renderer = self.app.split(
+            "function paperMetadataStatusHtml(record) {", 1
+        )[1].split("\nfunction paperDetailsHtml", 1)[0]
+        self.assertIn('label: "Bibliographic metadata"', renderer)
+        self.assertIn('label: "Institution affiliations"', renderer)
+        for field in (
+            "Title", "Publication date", "Venue", "Publication type", "Task / category",
+        ):
+            self.assertIn(f'"{field}"', renderer)
+        self.assertIn("bibliographicFieldLabels.has(field)", renderer)
+        self.assertIn('class="metadata-status-fields"', renderer)
+        self.assertIn('class="metadata-status-pill status-', renderer)
+        self.assertNotIn("metadata-status-summary", renderer)
+        self.assertNotIn("Primary source:", renderer)
+
+        rows_css = self.css.split(".metadata-status-rows li {", 1)[1].split("}", 1)[0]
+        self.assertIn("display: grid", rows_css)
+        self.assertIn("grid-template-columns: minmax(0, 1fr) auto", rows_css)
+        self.assertIn(".metadata-status-pill.status-verified", self.css)
+        self.assertIn(".metadata-status-pill.status-curated", self.css)
 
     def test_narrow_panel_content_can_wrap_without_horizontal_overflow(self):
         content_css = self.css.split(".paper-details-content {", 1)[1].split("}", 1)[0]

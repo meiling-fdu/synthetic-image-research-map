@@ -105,10 +105,17 @@ process.stdout.write(JSON.stringify({{
             self.app.index("function currentViewState"):
             self.app.index("\nfunction serializeViewState")
         ]
+        selected_values_source = self.function(
+            "selectedFilterValues", "serializedFilterValues"
+        )
+        serialized_values_source = self.function(
+            "serializedFilterValues", "resetMultiSelect"
+        )
         undo_source = self.function("undoLastFilterChange", "focusFilterControl")
         script = f"""
 const keywordFilter = {{value: ''}};
 const taskFilter = {{value: 'all'}};
+const imageScopeFilter = {{value: 'all'}};
 const entryTypeFilter = {{value: 'all'}};
 const venueTypeFilter = {{value: 'all'}};
 const venueFilter = {{value: 'all'}};
@@ -135,8 +142,9 @@ function currentYearSelection() {{
 }}
 function restoreViewState(state) {{
   keywordFilter.value = state.keyword;
-  taskFilter.value = state.task;
-  entryTypeFilter.value = state.paperType;
+  taskFilter.value = state.tasks;
+  imageScopeFilter.value = state.imageScopes;
+  entryTypeFilter.value = state.researchTypes;
   venueTypeFilter.value = state.publicationType;
   venueFilter.value = state.venue;
   countryFilter.value = state.country;
@@ -153,6 +161,8 @@ function restoreViewState(state) {{
 function requestUrlStateSync(mode) {{ if (mode === 'push') urlUpdates += 1; }}
 function renderRecords() {{ renders += 1; }}
 function focusResultsRecoveryDestination() {{ focuses += 1; }}
+{selected_values_source}
+{serialized_values_source}
 {state_source}
 {undo_source}
 lastKnownFilterState = currentFilterConstraintState();

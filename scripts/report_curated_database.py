@@ -80,9 +80,11 @@ def main() -> int:
     print(f"Curated mappings: {len(mappings)}")
     print(f"Active exclusions: {active_exclusions}")
     print(f"Institutions pending location review: {len(pending_institutions)}")
-    print_breakdown(
-        "Papers by task", Counter(clean(row.get("task")) for row in papers)
-    )
+    for field in ("tasks", "image_scopes", "research_types"):
+        print_breakdown(
+            f"Papers by {field}",
+            Counter(value for row in papers for value in clean(row.get(field)).split(";") if value),
+        )
     print_breakdown(
         "Papers by curation_status",
         Counter(normalize_curation_status(row.get("curation_status")) for row in papers),

@@ -31,7 +31,7 @@ TOP_LIMIT = 10
 KNOWN_TASKS = {
     "detection",
     "source_attribution",
-    "detection_and_source_attribution",
+    "localization",
 }
 MISSING_INSTITUTION_VALUES = {"", "none", "null", "unknown", "n/a", "na"}
 
@@ -225,6 +225,14 @@ def count_present_values(
     return counts
 
 
+def count_array_values(records: Iterable[Dict[str, Any]], field: str) -> Counter:
+    counts: Counter = Counter()
+    for record in records:
+        for value in record.get(field) or []:
+            counts[clean_text(value)] += 1
+    return counts
+
+
 def markdown_text(value: Any) -> str:
     return clean_text(value).replace("|", "\\|")
 
@@ -298,7 +306,7 @@ def build_report(
     for record in records:
         papers_by_identity.setdefault(paper_identity(record), record)
     paper_records = list(papers_by_identity.values())
-    tasks = count_values(paper_records, lambda record: first_text(record, "task"))
+    tasks = count_array_values(paper_records, "tasks")
     years = count_values(
         paper_records, lambda record: first_text(record, "publication_year", "year")
     )
@@ -330,7 +338,7 @@ def build_report(
     unknown_task = [
         record
         for record in records
-        if clean_text(record.get("task")).casefold() not in KNOWN_TASKS
+        if not record.get("tasks") or any(task not in KNOWN_TASKS for task in record["tasks"])
     ]
     weak_confidence = [
         record
@@ -432,7 +440,7 @@ def build_report(
             *issue_section("Records missing URL", missing_url),
             *issue_section("Records missing institution", missing_institution),
             *issue_section("Records missing coordinates", missing_coordinates),
-            *issue_section("Records with unknown task", unknown_task),
+            *issue_section("Records with missing or unknown tasks", unknown_task),
             *issue_section(
                 "Records with low or unresolved confidence", weak_confidence
             ),

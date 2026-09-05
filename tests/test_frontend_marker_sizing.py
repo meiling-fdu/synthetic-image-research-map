@@ -76,7 +76,7 @@ process.stdout.write(JSON.stringify({
   plural: helpers.formatInstitutionPaperCount(3),
   detectionTask: helpers.normalizeTaskLabel("Detection"),
   attributionTask: helpers.normalizeTaskLabel("source attribution"),
-  combinedTask: helpers.normalizeTaskLabel("Detection + source attribution"),
+  localizationTask: helpers.normalizeTaskLabel("Localization"),
   unknownTask: helpers.normalizeTaskLabel(""),
 }));
 """
@@ -97,9 +97,7 @@ process.stdout.write(JSON.stringify({
         self.assertEqual(values["plural"], "3 unique papers in current view")
         self.assertEqual(values["detectionTask"], "detection")
         self.assertEqual(values["attributionTask"], "source_attribution")
-        self.assertEqual(
-            values["combinedTask"], "detection_and_source_attribution"
-        )
+        self.assertEqual(values["localizationTask"], "localization")
         self.assertEqual(values["unknownTask"], "unknown")
 
     def test_marker_task_composition_uses_unique_visible_papers(self):
@@ -110,19 +108,19 @@ const identity = (record) => record.paper;
 const counts = (records) => helpers.getInstitutionTaskCounts(records, identity);
 const dominant = (records) => helpers.getDominantInstitutionTask(counts(records));
 const duplicateRecords = [
-  {paper: "a", task: "detection"},
-  {paper: "a", task: "detection"},
-  {paper: "b", task: "source_attribution"},
+  {paper: "a", tasks: ["detection"]},
+  {paper: "a", tasks: ["detection"]},
+  {paper: "b", tasks: ["source_attribution"]},
 ];
 process.stdout.write(JSON.stringify({
-  detection: dominant([{paper: "a", task: "detection"}]),
-  attribution: dominant([{paper: "a", task: "source_attribution"}]),
+  detection: dominant([{paper: "a", tasks: ["detection"]}]),
+  attribution: dominant([{paper: "a", tasks: ["source_attribution"]}]),
   combined: dominant([
-    {paper: "a", task: "detection_and_source_attribution"},
+    {paper: "a", tasks: ["detection", "source_attribution"]},
   ]),
   dominantDetection: dominant([
     ...duplicateRecords,
-    {paper: "c", task: "detection"},
+    {paper: "c", tasks: ["detection"]},
   ]),
   tied: dominant(duplicateRecords),
   unknown: dominant([{paper: "a"}]),
@@ -140,9 +138,7 @@ process.stdout.write(JSON.stringify({
 
         self.assertEqual(values["detection"], "detection")
         self.assertEqual(values["attribution"], "source_attribution")
-        self.assertEqual(
-            values["combined"], "detection_and_source_attribution"
-        )
+        self.assertEqual(values["combined"], "mixed")
         self.assertEqual(values["dominantDetection"], "detection")
         self.assertEqual(values["tied"], "mixed")
         self.assertEqual(values["unknown"], "unknown")
@@ -293,7 +289,7 @@ process.stdout.write(JSON.stringify({
 
         for metadata in ("Authors", "Year", "Affiliations", "Abstract"):
             self.assertIn(metadata, details_body)
-        for internal_metadata in ("Resolution", "Needs review", "Current institution"):
+        for internal_metadata in ("Resolution", "Current institution"):
             self.assertNotIn(internal_metadata, details_body)
         self.assertIn("paperExternalLinks(record)", details_body)
 

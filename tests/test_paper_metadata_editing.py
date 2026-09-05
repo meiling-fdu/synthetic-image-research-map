@@ -21,6 +21,9 @@ from scripts.curated_papers import (
 )
 from scripts.curated_schema import (
     AUTHOR_INSTITUTION_MAPPING_COLUMNS,
+    INSTITUTION_ALIAS_COLUMNS,
+    INSTITUTION_COLUMNS,
+    INSTITUTION_LOCATION_COLUMNS,
     INSTITUTION_LOCATION_REVIEW_COLUMNS,
     PAPERS_COLUMNS,
     PAPER_EXCLUSION_COLUMNS,
@@ -30,7 +33,7 @@ from scripts.arxiv_autofill import (
     read_curated_arxiv_links,
     set_curated_arxiv_override,
 )
-from scripts.export_public_preview import normalize_entry_type, strip_retired_paper_fields
+from scripts.export_public_preview import strip_retired_paper_fields
 from scripts.paper_exclusions import (
     build_active_exclusion_index,
     filter_public_output_pair,
@@ -57,7 +60,9 @@ def curated_row(**overrides):
             "doi": "10.1000/survey",
             "paper_url": "https://doi.org/10.1000/survey",
             "publication_type": "preprint",
-            "task": "source_attribution",
+            "tasks": "source_attribution",
+            "image_scopes": "fully_generated",
+            "research_types": "method",
             "scope_status": "in_scope",
             "source_database": "openalex",
             "metadata_source": "openalex",
@@ -65,7 +70,6 @@ def curated_row(**overrides):
             "review_status": "reviewed",
             "created_at": "2026-01-01T00:00:00Z",
             "updated_at": "2026-01-01T00:00:00Z",
-            "paper_categories": "method",
         }
     )
     row.update(overrides)
@@ -113,6 +117,11 @@ def write_exclusions(path, rows=()):
         writer = csv.DictWriter(handle, fieldnames=PAPER_EXCLUSION_COLUMNS)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def write_empty_csv(path, fieldnames):
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        csv.DictWriter(handle, fieldnames=fieldnames).writeheader()
 
 
 class PaperMetadataEditingTests(unittest.TestCase):
@@ -357,6 +366,11 @@ class PaperMetadataEditingTests(unittest.TestCase):
         public_papers = directory / "public_papers.json"
         public_map = directory / "public_map.json"
         venue_aliases = directory / "venue_aliases.csv"
+        mappings_path = directory / "author_institution_mappings.csv"
+        location_review_path = directory / "institution_location_review.csv"
+        institution_locations_path = directory / "institution_locations.csv"
+        institution_aliases_path = directory / "institution_aliases.csv"
+        institutions_path = directory / "institutions.csv"
         shutil.copyfile(
             Path(__file__).resolve().parents[1] / "data" / "curated" / "venue_aliases.csv",
             venue_aliases,
@@ -366,6 +380,11 @@ class PaperMetadataEditingTests(unittest.TestCase):
         )
         write_papers(curated_path, [original])
         write_exclusions(exclusions_path)
+        write_empty_csv(mappings_path, AUTHOR_INSTITUTION_MAPPING_COLUMNS)
+        write_empty_csv(location_review_path, INSTITUTION_LOCATION_REVIEW_COLUMNS)
+        write_empty_csv(institution_locations_path, INSTITUTION_LOCATION_COLUMNS)
+        write_empty_csv(institution_aliases_path, INSTITUTION_ALIAS_COLUMNS)
+        write_empty_csv(institutions_path, INSTITUTION_COLUMNS)
         public_papers.write_text("[]", encoding="utf-8")
         public_map.write_text("[]", encoding="utf-8")
         set_curated_arxiv_override(original, "2501.01234", links_path)
@@ -376,6 +395,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
             _papers, admin_data = load_admin_data(
                 exclusions_path=exclusions_path,
                 curated_papers_path=curated_path,
+                curated_mappings_path=mappings_path,
             )
             display_id = next(iter(admin_data["papers_by_id"]))
             handler = make_handler(
@@ -383,7 +403,13 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 exclusions_path=exclusions_path,
                 curated_papers_path=curated_path,
                 venue_aliases_path=venue_aliases,
+                mappings_path=mappings_path,
+                location_review_path=location_review_path,
+                institution_locations_path=institution_locations_path,
+                institution_aliases_path=institution_aliases_path,
+                institutions_path=institutions_path,
                 review_decisions_path=directory / "review_decisions.csv",
+                author_mapping_report_path=directory / "missing_author_mappings.csv",
                 curated_arxiv_links_path=links_path,
                 public_preview_sync_state_path=directory / "preview_sync.json",
                 metadata_export_runner=(
@@ -415,8 +441,11 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 handler.public_preview_sync.close(timeout=2)
 
     def metadata_request(self, base_url, path, payload=None):
-        if payload is not None and isinstance(payload.get("paper_categories"), str):
-            payload = {**payload, "paper_categories": payload["paper_categories"].split(";")}
+        if payload is not None:
+            payload = dict(payload)
+            for field in ("tasks", "image_scopes", "research_types"):
+                if isinstance(payload.get(field), str):
+                    payload[field] = payload[field].split(";")
         request = urllib.request.Request(
             base_url + path,
             data=(json.dumps(payload).encode("utf-8") if payload is not None else None),
@@ -1349,7 +1378,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
             self.assertTrue(record_is_excluded(preprint, index))
             self.assertFalse(record_is_excluded(published, index))
 
-    def test_admin_update_persists_normalized_paper_categories_to_curated_source(self):
+    def test_admin_update_persists_normalized_taxonomy_to_curated_source(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "papers.csv"
             original = curated_row()
@@ -1357,15 +1386,15 @@ class PaperMetadataEditingTests(unittest.TestCase):
 
             updated = update_curated_paper(
                 original,
-                {**original, "paper_categories": ["survey", "method", "survey"]},
+                {**original, "research_types": ["survey", "method", "survey"]},
                 preview_records=[],
                 path=path,
             )
 
             with path.open(encoding="utf-8", newline="") as handle:
                 saved = next(csv.DictReader(handle))
-            self.assertEqual(updated["paper_categories"], "method;survey")
-            self.assertEqual(saved["paper_categories"], "method;survey")
+            self.assertEqual(updated["research_types"], "method;survey")
+            self.assertEqual(saved["research_types"], "method;survey")
             self.assertEqual(saved["authors"], original["authors"])
             self.assertEqual(saved["paper_url"], original["paper_url"])
 
@@ -1425,18 +1454,18 @@ class PaperMetadataEditingTests(unittest.TestCase):
             self.assertNotIn(field, records[0])
         self.assertNotIn("review_note", records[0]["curated_mappings"][0])
 
-    def test_admin_update_rejects_empty_or_unknown_paper_categories(self):
+    def test_admin_update_rejects_empty_or_unknown_research_types(self):
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "papers.csv"
             original = curated_row()
             write_papers(path, [original])
 
             for invalid in ([], ["tutorial"]):
-                with self.subTest(paper_categories=invalid):
+                with self.subTest(research_types=invalid):
                     with self.assertRaises(CuratedPaperError):
                         update_curated_paper(
                             original,
-                            {**original, "paper_categories": invalid},
+                            {**original, "research_types": invalid},
                             preview_records=[],
                             path=path,
                         )
@@ -1450,7 +1479,9 @@ class PaperMetadataEditingTests(unittest.TestCase):
             "authors": ["Author One", "Author Two"],
             "doi": "10.1000/survey",
             "paper_url": "https://doi.org/10.1000/survey",
-            "task": "source_attribution",
+            "tasks": ["source_attribution"],
+            "image_scopes": ["fully_generated"],
+            "research_types": ["method"],
             "venue": "",
             "venue_id": "",
             "venue_name": "",
@@ -1458,7 +1489,6 @@ class PaperMetadataEditingTests(unittest.TestCase):
             "venue_track": "",
             "raw_venue": "Stale imported journal source",
             "publication_type": "journal",
-            "entry_type": "method",
             "review_status": "reviewed",
         }
         public_marker = {
@@ -1482,7 +1512,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
                 venue_track="Main",
                 raw_venue="ACM International Conference on Multimedia",
                 publication_type="conference",
-                paper_categories="method;dataset",
+                research_types="method;dataset",
             )],
             [],
         )
@@ -1498,7 +1528,7 @@ class PaperMetadataEditingTests(unittest.TestCase):
             self.assertEqual(record["venue_type"], "conference")
             self.assertEqual(record["venue_track"], "Main")
             self.assertEqual(record["publication_type"], "conference")
-            self.assertEqual(record["paper_categories"], ["method", "dataset"])
+            self.assertEqual(record["research_types"], ["method", "dataset"])
             frontend_venue_key = record.get("venue_id") or (
                 record.get("venue_name") or record.get("venue") or "__unknown__"
             )
@@ -1511,7 +1541,6 @@ class PaperMetadataEditingTests(unittest.TestCase):
             markers[0]["institution_authors"],
             ["Author One", "Author Two"],
         )
-        self.assertEqual(normalize_entry_type(papers[0]), "method")
 
 
 if __name__ == "__main__":

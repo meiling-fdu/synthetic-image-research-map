@@ -26,8 +26,7 @@ try:
     )
     from .country_normalization import normalize_country_region, public_location_display
     from .publication_types import normalize_book_record, normalize_publication_type
-    from .paper_categories import categories_from_record
-    from .export_candidate_map_data import normalize_export_task_labels
+    from .paper_taxonomy import taxonomy_from_record
     from .paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
         PAPER_EXCLUSION_COLUMNS,
@@ -55,8 +54,7 @@ except ImportError:
     )
     from country_normalization import normalize_country_region, public_location_display
     from publication_types import normalize_book_record, normalize_publication_type
-    from paper_categories import categories_from_record
-    from export_candidate_map_data import normalize_export_task_labels
+    from paper_taxonomy import taxonomy_from_record
     from paper_exclusions import (
         DEFAULT_EXCLUSIONS_PATH,
         PAPER_EXCLUSION_COLUMNS,
@@ -88,13 +86,8 @@ DEFAULT_INSTITUTION_RESOLUTION_CACHE_PATH = Path(
 DEFAULT_CURATED_EXCLUSIONS_PATH = DEFAULT_EXCLUSIONS_PATH
 ACTIVE_MAPPING_STATUS = "active"
 AFFILIATION_REVIEW_STATES = {"unreviewed", "curated", "reviewed_empty"}
-PUBLIC_PAPER_TASKS = {
-    "detection",
-    "source_attribution",
-    "detection_and_source_attribution",
-    "uncertain",
-}
-PUBLIC_MAP_TASKS = PUBLIC_PAPER_TASKS - {"uncertain"}
+PUBLIC_PAPER_TASKS = {"detection", "source_attribution", "localization"}
+PUBLIC_MAP_TASKS = PUBLIC_PAPER_TASKS
 CONFIRMED_CURATION_STATUSES = {"confirmed"}
 CURATED_OVERRIDE_FIELDS = (
     "paper_id",
@@ -119,8 +112,9 @@ CURATED_OVERRIDE_FIELDS = (
     "openalex_url",
     "publication_type",
     "abstract",
-    "task",
-    "paper_categories",
+    "tasks",
+    "image_scopes",
+    "research_types",
     "source_database",
     "metadata_source",
     "curation_status",
@@ -142,7 +136,9 @@ CURATED_AUTHORITATIVE_PUBLIC_FIELDS = {
     "venue_aliases",
     "venue_label",
     "publication_type",
-    "paper_categories",
+    "tasks",
+    "image_scopes",
+    "research_types",
 }
 
 
@@ -383,13 +379,13 @@ def normalize_regional_location(
     return normalized
 
 
-def normalize_task(record: Mapping[str, Any]) -> str | None:
-    task = normalize_export_task_labels(dict(record))
-    if task is None:
+def normalize_tasks(record: Mapping[str, Any]) -> list[str] | None:
+    tasks = taxonomy_from_record(dict(record))["tasks"]
+    if not tasks:
         return None
-    if task not in PUBLIC_PAPER_TASKS:
+    if any(task not in PUBLIC_PAPER_TASKS for task in tasks):
         return None
-    return task
+    return tasks
 
 
 def _parse_year(value: Any) -> int | None:
@@ -859,7 +855,7 @@ def _matching_papers(
     return []
 
 
-def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
+def _curated_paper_record(row: Mapping[str, Any], tasks: list[str]) -> Dict[str, Any]:
     try:
         from .venue_audit import VenueAudit
         from .venues import read_venue_aliases
@@ -877,16 +873,7 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
     publication_type = row.get("publication_type") or normalize_publication_type(
         row.get("publication_type"), venue=row.get("venue"), venue_type=row.get("venue_type")
     )
-    normalized_type = publication_type.casefold()
-    paper_categories = categories_from_record(dict(row)) or ([
-        "survey"
-        if normalized_type in {"survey", "review", "systematic review"}
-        else "dataset"
-        if normalized_type == "dataset"
-        else "benchmark"
-        if normalized_type == "benchmark"
-        else "method"
-    ] if normalized_type != "book" else [])
+    taxonomy = taxonomy_from_record(dict(row))
     return {
         "paper_id": clean(row.get("paper_id")),
         "title": clean(row.get("title")),
@@ -894,8 +881,9 @@ def _curated_paper_record(row: Mapping[str, Any], task: str) -> Dict[str, Any]:
         "year": year,
         "publication_year": year,
         "publication_date": "",
-        "task": task,
-        "paper_categories": paper_categories,
+        "tasks": tasks,
+        "image_scopes": taxonomy["image_scopes"],
+        "research_types": taxonomy["research_types"],
         "venue": clean(row.get("venue") or row.get("venue_name")),
         "venue_name": clean(row.get("venue_name") or row.get("venue")),
         "venue_id": clean(row.get("venue_id")),
@@ -954,11 +942,11 @@ def build_curated_paper_preview_records(
         if clean(row.get("scope_status")).casefold() == "out_of_scope":
             skipped_scope += 1
             continue
-        task = normalize_task(row)
-        if task is None:
+        tasks = normalize_tasks(row)
+        if tasks is None:
             skipped_task += 1
             continue
-        record = _curated_paper_record(row, task)
+        record = _curated_paper_record(row, tasks)
         if record_is_excluded(record, exclusion_index):
             skipped_exclusion += 1
             continue
@@ -978,7 +966,11 @@ def _merge_curated_paper(
 ) -> None:
     curation_status = normalize_curation_status(curated.get("curation_status"))
     confirmed = curation_status in CONFIRMED_CURATION_STATUSES
-    if confirmed:
+    formal_publication = clean(curated.get("metadata_source")).casefold().startswith(
+        "formal publication"
+    )
+    authoritative = confirmed or formal_publication
+    if authoritative:
         curated_year = _parse_year(
             curated.get("publication_year") or curated.get("year")
         )
@@ -997,10 +989,10 @@ def _merge_curated_paper(
         if field not in curated:
             continue
         value = curated.get(field)
-        if confirmed and field in CURATED_AUTHORITATIVE_PUBLIC_FIELDS:
+        if authoritative and field in CURATED_AUTHORITATIVE_PUBLIC_FIELDS:
             existing[field] = value
         elif value not in (None, "", []) and (
-            confirmed or existing.get(field) in (None, "", [])
+            authoritative or existing.get(field) in (None, "", [])
         ):
             existing[field] = value
     normalized = normalize_book_record(existing)
@@ -1099,8 +1091,7 @@ def _curated_marker(
             paper.get("publication_year") or paper.get("year")
         ),
         "publication_date": clean(paper.get("publication_date")),
-        "task": clean(paper.get("task")),
-        "paper_categories": categories_from_record(dict(paper)) or ["method"],
+        **taxonomy_from_record(dict(paper)),
         "venue": clean(paper.get("venue") or paper.get("venue_name")),
         "venue_name": clean(paper.get("venue_name") or paper.get("venue")),
         "venue_id": clean(paper.get("venue_id")),
@@ -1859,7 +1850,7 @@ def build_curated_map_records(
                 )
             )
         resolved_mapping_ids.add(clean(mapping.get("mapping_id")))
-        if clean(paper.get("task")) not in PUBLIC_MAP_TASKS:
+        if not set(paper.get("tasks") or ()).intersection(PUBLIC_MAP_TASKS):
             skipped_task += 1
             active_mapping_marker_diagnostics.append({
                 "paper_id": clean(mapping.get("paper_id")),
@@ -1872,7 +1863,7 @@ def build_curated_map_records(
                 "author_names": clean(mapping.get("institution_authors")),
                 "location_status": "known",
                 "coordinates": f"{clean(match.record.get('lat') or match.record.get('latitude'))},{clean(match.record.get('lon') or match.record.get('longitude'))}",
-                "final_drop_reason": f"non_public_task:{clean(paper.get('task'))}",
+                "final_drop_reason": "non_public_tasks",
             })
             continue
         export_mapping = dict(mapping)
@@ -2070,7 +2061,7 @@ def _recalculate_paper_details(
         or missing_coordinates
         or unresolved_active
         or needs_review_mapping
-        or clean(paper.get("task")) == "uncertain"
+        or not paper.get("tasks")
         or (
             clean(paper.get("review_status"))
             and clean(paper.get("review_status")) != "reviewed"

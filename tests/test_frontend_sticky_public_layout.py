@@ -21,7 +21,7 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
         ]
         for content in (
             'class="header-brand"',
-            "Unique Papers by Task",
+            "Unique Papers by Forensic Task",
             "Top Institutions by Unique Papers",
             "Unique Papers by Year",
             "GitHub Repository",

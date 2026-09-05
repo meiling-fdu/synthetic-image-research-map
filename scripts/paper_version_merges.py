@@ -313,7 +313,9 @@ def apply_confirmed_version_merges(
                         "paper_url",
                         "primary_url",
                         "publication_type",
-                        "task",
+                        "tasks",
+                        "image_scopes",
+                        "research_types",
                         "authors",
                     )
                     if canonical.get(field) not in (None, "", [])

@@ -118,7 +118,7 @@ class PublicationTypeTests(unittest.TestCase):
     def test_admin_save_rejects_values_outside_vocabulary(self):
         with self.assertRaisesRegex(CuratedPaperError, "publication_type"):
             normalize_paper_draft({
-                "title": "Example", "year": "2026", "task": "detection",
+                "title": "Example", "year": "2026", "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
                 "source_database": "manual", "publication_type": "report",
             })
 
@@ -140,7 +140,7 @@ class PublicationTypeTests(unittest.TestCase):
 
     def test_arxiv_fallback_defaults_to_preprint(self):
         record = normalize_paper_draft({
-            "title": "Example", "year": "2026", "task": "detection",
+            "title": "Example", "year": "2026", "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "source_database": "arxiv", "arxiv_id": "2601.00001",
         })
         self.assertEqual(record["publication_type"], "preprint")

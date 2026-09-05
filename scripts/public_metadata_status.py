@@ -18,7 +18,6 @@ FIELD_ORDER = (
     "publication_type",
     "doi",
     "arxiv",
-    "task_category",
     "affiliations",
 )
 
@@ -92,8 +91,9 @@ def metadata_status(
 ) -> dict[str, Any]:
     """Build the minimal public review/provenance object for one paper.
 
-    Paper-level review/curation determines ``overall``. Venue, task, and
-    affiliation signals can only alter their own field. In this export,
+    Paper-level review/curation determines ``overall``. Venue and affiliation
+    signals can only alter their own field. Taxonomy review is a separate
+    public object and never contributes to bibliographic/affiliation status. In this export,
     ``needs_review`` is a derived aggregate (see ``_recalculate_paper_details``
     in curated_export.py), so it is never treated as an independent global
     paper decision.
@@ -128,14 +128,6 @@ def metadata_status(
         fields["doi"] = _field(global_status, doi_source)
     if clean(record.get("arxiv_id")):
         fields["arxiv"] = _field(global_status, "arXiv")
-    if clean(record.get("task")) or record.get("paper_categories"):
-        task_status = (
-            "Needs review"
-            if clean(record.get("task")).casefold() == "uncertain"
-            else global_status
-        )
-        fields["task_category"] = _field(task_status, base_source)
-
     affiliation_state = clean(record.get("affiliation_review_state")).casefold()
     affiliations = record.get("affiliations")
     has_affiliations = isinstance(affiliations, list) and bool(affiliations)
@@ -150,7 +142,6 @@ def metadata_status(
         _bool(record.get("needs_review"))
         and global_status != "Needs review"
         and not _bool(record.get("venue_review_required"))
-        and clean(record.get("task")).casefold() != "uncertain"
     )
     affiliation_unresolved = affiliation_unresolved or aggregate_affiliation_review
     for evidence in affiliation_evidence:

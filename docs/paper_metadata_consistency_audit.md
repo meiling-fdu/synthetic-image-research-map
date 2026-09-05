@@ -1,46 +1,46 @@
 # Paper Metadata Consistency Audit
 
-This deterministic audit traces 18 canonical metadata fields across all 582 public papers (10476 paper-field rows).
+This deterministic audit traces 18 canonical metadata fields across all 613 public papers (11034 paper-field rows).
 
 ## Result
 
 - TRUE_INCONSISTENCY: 0
 - LEGACY_FALLBACK_RISK: 0
-- INTENTIONAL_TRANSFORMATION: 15
-- DISPLAY_ONLY: 7282
-- MISSING_OPTIONAL: 1634
+- INTENTIONAL_TRANSFORMATION: 10
+- DISPLAY_ONLY: 7085
+- MISSING_OPTIONAL: 2298
 - Authoritative affiliation mismatches: 0
 - Retired institution affiliation leaks: 0
 
 ## Stable corpus invariants
 
-- Public papers: 582
-- Published-only papers: 520
-- Unique public paper–institution relationships: 1320
-- Map markers: 1321 (one valid relationship has two confirmed locations)
+- Public papers: 613
+- Published-only papers: 517
+- Unique public paper–institution relationships: 1402
+- Map markers: 1403 (one valid relationship has two confirmed locations)
 
 ## Findings by field
 
 | Field | True inconsistency | Legacy risk | Intentional | Display only | Missing optional |
 |---|---:|---:|---:|---:|---:|
 | affiliations | 0 | 0 | 0 | 0 | 0 |
-| arxiv_id | 0 | 0 | 0 | 255 | 327 |
-| author_institution_attribution | 0 | 0 | 0 | 582 | 0 |
-| authors | 0 | 0 | 6 | 576 | 0 |
-| curation_status | 0 | 0 | 0 | 381 | 201 |
-| doi | 0 | 0 | 0 | 528 | 54 |
-| location_ids | 0 | 0 | 0 | 412 | 170 |
-| metadata_source | 0 | 0 | 0 | 381 | 201 |
-| paper_categories | 0 | 0 | 0 | 581 | 1 |
-| paper_id | 0 | 0 | 0 | 0 | 201 |
-| publication_date | 0 | 0 | 4 | 301 | 277 |
+| arxiv_id | 0 | 0 | 0 | 290 | 323 |
+| author_institution_attribution | 0 | 0 | 0 | 613 | 0 |
+| authors | 0 | 0 | 6 | 607 | 0 |
+| curation_status | 0 | 0 | 0 | 415 | 198 |
+| doi | 0 | 0 | 0 | 524 | 89 |
+| location_ids | 0 | 0 | 0 | 445 | 168 |
+| metadata_source | 0 | 0 | 0 | 415 | 198 |
+| paper_categories | 0 | 0 | 0 | 0 | 613 |
+| paper_id | 0 | 0 | 0 | 0 | 198 |
+| publication_date | 0 | 0 | 4 | 297 | 312 |
 | publication_type | 0 | 0 | 0 | 0 | 0 |
-| publication_year | 0 | 0 | 0 | 582 | 0 |
-| review_status | 0 | 0 | 0 | 381 | 201 |
-| source_database | 0 | 0 | 0 | 582 | 0 |
-| task | 0 | 0 | 5 | 577 | 0 |
-| title | 0 | 0 | 0 | 582 | 0 |
-| venue | 0 | 0 | 0 | 581 | 1 |
+| publication_year | 0 | 0 | 0 | 613 | 0 |
+| review_status | 0 | 0 | 0 | 415 | 198 |
+| source_database | 0 | 0 | 0 | 613 | 0 |
+| task | 0 | 0 | 0 | 613 | 0 |
+| title | 0 | 0 | 0 | 613 | 0 |
+| venue | 0 | 0 | 0 | 612 | 1 |
 
 ## Frontend and CSV contracts
 

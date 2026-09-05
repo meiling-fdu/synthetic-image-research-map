@@ -227,7 +227,7 @@ class MappingLocationExportTests(unittest.TestCase):
             "title": "Paper",
             "year": "2026",
             "publication_year": "2026",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "in_scope": True,
             "authors": "Ada Example",
         }

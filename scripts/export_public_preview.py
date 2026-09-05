@@ -45,7 +45,17 @@ try:
         normalize_book_record,
         normalize_publication_type,
     )
-    from .paper_categories import categories_from_record
+    from .paper_taxonomy import (
+        normalize_image_scopes,
+        normalize_research_types,
+        normalize_tasks,
+    )
+    from .paper_taxonomy_registry import (
+        DEFAULT_PAPER_TAXONOMY_PATH,
+        PaperTaxonomyRegistryError,
+        apply_paper_taxonomy_registry,
+        read_paper_taxonomy_registry,
+    )
     from .paper_links import (
         normalize_arxiv_id as normalize_public_arxiv_id,
         resolve_public_links,
@@ -147,7 +157,17 @@ except ImportError:  # Direct execution from the scripts directory.
         normalize_book_record,
         normalize_publication_type,
     )
-    from paper_categories import categories_from_record
+    from paper_taxonomy import (
+        normalize_image_scopes,
+        normalize_research_types,
+        normalize_tasks,
+    )
+    from paper_taxonomy_registry import (
+        DEFAULT_PAPER_TAXONOMY_PATH,
+        PaperTaxonomyRegistryError,
+        apply_paper_taxonomy_registry,
+        read_paper_taxonomy_registry,
+    )
     from paper_links import (
         normalize_arxiv_id as normalize_public_arxiv_id,
         resolve_public_links,
@@ -249,11 +269,7 @@ DEFAULT_ORPHAN_CLEANUP_AUDIT = Path(
     "data/processed/orphan_institution_cleanup_audit.csv"
 )
 DEFAULT_MIN_CONFIDENCE = "medium"
-ALLOWED_PUBLIC_TASKS = {
-    "detection",
-    "source_attribution",
-    "detection_and_source_attribution",
-}
+ALLOWED_PUBLIC_TASKS = {"detection", "source_attribution", "localization"}
 
 CONFIDENCE_RANK = {
     "unresolved": 0,
@@ -269,8 +285,9 @@ PUBLIC_FIELDS = (
     "year",
     "publication_year",
     "publication_date",
-    "task",
-    "paper_categories",
+    "tasks",
+    "image_scopes",
+    "research_types",
     "venue",
     "venue_id",
     "venue_name",
@@ -492,6 +509,12 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
         type=Path,
         default=DEFAULT_CURATED_PAPERS_PATH,
         help=f"Curated paper CSV (default: {DEFAULT_CURATED_PAPERS_PATH}).",
+    )
+    parser.add_argument(
+        "--paper-taxonomy",
+        type=Path,
+        default=DEFAULT_PAPER_TAXONOMY_PATH,
+        help=f"Curated paper taxonomy registry (default: {DEFAULT_PAPER_TAXONOMY_PATH}).",
     )
     parser.add_argument(
         "--curated-mappings",
@@ -1374,10 +1397,15 @@ def add_public_detail_fields(
             record["author_institution_indices"] = legacy_indices
 
 
-def normalize_paper_categories(record: Dict[str, Any]) -> List[str]:
-    """Return canonical categories, translating legacy material labels."""
-    if record.get("paper_categories") not in (None, "") or record.get("entry_type") not in (None, ""):
-        return categories_from_record(record)
+def normalize_research_taxonomy(record: Dict[str, Any]) -> List[str]:
+    """Return canonical research types at the legacy candidate boundary."""
+    if record.get("research_types") not in (None, ""):
+        return normalize_research_types(record.get("research_types"), compatibility=True)
+    raw = record.get("paper_categories") or record.get("entry_type")
+    if raw:
+        values = raw if isinstance(raw, list) else str(raw).split(";")
+        mapped = ["analysis_study" if value == "analysis" else value for value in values]
+        return normalize_research_types(mapped, compatibility=True)
     legacy = clean_text(record.get("material_type")).casefold()
     return [{
         "dataset": "dataset",
@@ -1388,8 +1416,32 @@ def normalize_paper_categories(record: Dict[str, Any]) -> List[str]:
 
 def normalize_entry_type(record: Dict[str, Any]) -> str:
     """Deprecated scalar compatibility helper for legacy callers only."""
-    categories = normalize_paper_categories(record)
+    categories = normalize_research_taxonomy(record)
     return categories[0] if categories else ""
+
+
+def normalize_public_tasks(record: Dict[str, Any]) -> List[str]:
+    if record.get("tasks") not in (None, ""):
+        return normalize_tasks(record.get("tasks"), compatibility=True)
+    legacy = normalize_export_task_labels(record)
+    return {
+        "detection": ["detection"],
+        "source_attribution": ["source_attribution"],
+        "detection_and_source_attribution": ["detection", "source_attribution"],
+    }.get(legacy, [])
+
+
+def normalize_public_image_scopes(record: Dict[str, Any]) -> List[str]:
+    if record.get("image_scopes") not in (None, ""):
+        return normalize_image_scopes(record.get("image_scopes"), compatibility=True)
+    scopes = []
+    if parse_bool(record.get("is_image_editing_related")):
+        scopes.append("generative_editing")
+    if parse_bool(record.get("is_deepfake_related")):
+        scopes.append("deepfake")
+    if not scopes:
+        scopes.append("fully_generated")
+    return normalize_image_scopes(scopes)
 
 
 def normalize_identifier_url(value: Any) -> str:
@@ -1638,20 +1690,20 @@ def paper_record_from_candidate(row: Dict[str, str]) -> Dict[str, Any]:
     year = parse_year(row.get("publication_year") or row.get("year"))
     arxiv_id = clean_text(row.get("arxiv_id"))
     arxiv_url = clean_text(row.get("arxiv_url"))
-    task_labels = normalize_export_task_labels(row)
-    if task_labels is None:
+    tasks = normalize_public_tasks(row)
+    if not tasks:
         raise PreviewExportError(
             "generated_video_detection records are not eligible for public preview"
         )
-    task = task_labels
     record = {
         "title": clean_text(row.get("title")),
         "in_scope": True,
         "year": year,
         "publication_year": year,
         "publication_date": clean_text(row.get("publication_date")),
-        "task": task,
-        "paper_categories": normalize_paper_categories(row),
+        "tasks": tasks,
+        "image_scopes": normalize_public_image_scopes(row),
+        "research_types": normalize_research_taxonomy(row),
         "venue": clean_text(row.get("venue")),
         "venue_name": clean_text(row.get("venue_name") or row.get("venue")),
         "venue_type": clean_text(row.get("venue_type")),
@@ -1980,7 +2032,7 @@ def build_paper_preview(
     all_candidate_rows, _ = exclude_preprint_versions(all_candidate_rows)
     selected_by_key: Dict[Tuple[str, Any], Dict[str, str]] = {}
     for row in candidate_rows:
-        if paper_is_retracted(row) or normalize_export_task_labels(row) is None:
+        if paper_is_retracted(row) or not normalize_public_tasks(row):
             continue
         record = paper_record_from_candidate(row)
         if record_is_excluded(record, exclusion_index):
@@ -2004,7 +2056,7 @@ def build_paper_preview(
         if (
             candidate is None
             or paper_is_retracted(candidate)
-            or normalize_export_task_labels(candidate) is None
+            or not normalize_public_tasks(candidate)
         ):
             continue
         record = paper_record_from_candidate(candidate)
@@ -2014,7 +2066,7 @@ def build_paper_preview(
         key_papers_matched += 1
         key = identity_key(record)
         existing = selected_by_key.get(key)
-        if existing is None or normalize_export_task_labels(existing) == ("uncertain", "unknown"):
+        if existing is None or not normalize_public_tasks(existing):
             selected_by_key[key] = candidate
 
     paper_records = [paper_record_from_candidate(row) for row in selected_by_key.values()]
@@ -2754,14 +2806,14 @@ def build_preview(
             excluded_out_of_scope += 1
             continue
 
-        task_labels = normalize_export_task_labels(record)
-        if task_labels is None:
+        tasks = normalize_public_tasks(record)
+        # A reconciled public record may intentionally have no controlled task
+        # or may carry a taxonomy-only pending decision. Candidate rows without
+        # a registry join still require a preliminary task to enter the pipeline.
+        if not tasks and not isinstance(record.get("taxonomy_review"), dict):
             excluded_task += 1
             continue
-        task = task_labels
-        task_is_allowed = task in ALLOWED_PUBLIC_TASKS
-        task_is_debug_uncertain = include_uncertain and task == "uncertain"
-        if not task_is_allowed and not task_is_debug_uncertain:
+        if any(task not in ALLOWED_PUBLIC_TASKS for task in tasks):
             excluded_task += 1
             continue
 
@@ -2790,8 +2842,9 @@ def build_preview(
         public_record = {
             field: record.get(field) for field in PUBLIC_FIELDS if field in record
         }
-        public_record["task"] = task
-        public_record["paper_categories"] = normalize_paper_categories(record)
+        public_record["tasks"] = tasks
+        public_record["image_scopes"] = normalize_public_image_scopes(record)
+        public_record["research_types"] = normalize_research_taxonomy(record)
         public_record["institution"] = institution_name(record)
         public_record.update(
             normalize_country_region(
@@ -4793,11 +4846,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             for record in integrated_maps
         ]
         for record in [*integrated_papers, *integrated_maps]:
-            record["paper_categories"] = (
-                [] if is_book_publication(record.get("publication_type"))
-                else normalize_paper_categories(record)
-            )
-            record.pop("entry_type", None)
+            record["tasks"] = normalize_public_tasks(record)
+            record["image_scopes"] = normalize_public_image_scopes(record)
+            record["research_types"] = normalize_research_taxonomy(record)
+            for retired in ("task", "paper_categories", "entry_type"):
+                record.pop(retired, None)
         retired_fields_removed = strip_retired_paper_fields(integrated_papers)
         retired_fields_removed += strip_retired_paper_fields(integrated_maps)
         if retired_fields_removed:
@@ -4822,6 +4875,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         normalize_exported_paper_identifiers(integrated_maps)
         reconstruct_publication_links(integrated_papers)
         reconstruct_publication_links(integrated_maps)
+        taxonomy_registry_rows = read_paper_taxonomy_registry(args.paper_taxonomy)
+        taxonomy_join_summary = apply_paper_taxonomy_registry(
+            integrated_papers,
+            integrated_maps,
+            taxonomy_registry_rows,
+        )
+        paper_summary.update(taxonomy_join_summary)
         add_paper_institution_search_ids(
             integrated_papers,
             curated_mappings,
@@ -5067,6 +5127,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         PaperExclusionError,
         PaperVersionMergeError,
         CuratedExportError,
+        PaperTaxonomyRegistryError,
     ) as error:
         print(f"Error: {error}", file=sys.stderr)
         return 1

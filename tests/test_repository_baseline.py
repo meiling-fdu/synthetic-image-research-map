@@ -320,15 +320,19 @@ class CurrentRepositoryBaselineTests(unittest.TestCase):
             PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS,
         )
 
-    def test_publication_and_task_totals_use_single_label_paper_semantics(self):
+    def test_publication_totals_and_overlapping_task_totals_match_baseline(self):
         publication_types = Counter(
             row.get("publication_type") for row in self.public_papers
         )
-        tasks = Counter(row.get("task") for row in self.public_papers)
+        tasks = Counter(
+            task for row in self.public_papers for task in row.get("tasks", [])
+        )
         self.assertEqual(publication_types, PUBLICATION_TYPE_TOTALS)
         self.assertEqual(tasks, TASK_TOTALS)
         self.assertEqual(sum(publication_types.values()), len(self.public_papers))
-        self.assertEqual(sum(tasks.values()), len(self.public_papers))
+        self.assertGreaterEqual(sum(tasks.values()), len(self.public_papers))
+        self.assertTrue(all(isinstance(row.get("tasks"), list) for row in self.public_papers))
+        self.assertTrue(all("task" not in row for row in self.public_papers))
 
     def test_hierarchy_edges_reference_active_ids_and_are_acyclic(self):
         active_ids = {

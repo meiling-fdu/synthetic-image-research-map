@@ -28,7 +28,7 @@ class PublicMetadataStatusTests(unittest.TestCase):
             "year": 2025,
             "venue": "CVPR",
             "publication_type": "conference",
-            "task": "detection",
+            "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
             "review_status": "reviewed",
             "curation_status": "confirmed",
             "metadata_source": "openalex",

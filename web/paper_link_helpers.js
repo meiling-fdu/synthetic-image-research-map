@@ -169,7 +169,7 @@
       arxivUrl || record.preprint_url || record.arxiv_url,
     );
     return deduplicatePaperLinks([
-      { label: "Publisher", url: publishedVersionUrl(record) },
+      { label: "Published", url: publishedVersionUrl(record) },
       { label: "Preprint", url: preprintUrl },
     ]);
   }

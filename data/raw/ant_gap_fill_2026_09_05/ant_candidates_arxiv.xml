@@ -1,0 +1,1754 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/FIBbol9XeeA4GiWWANYeHymhulw</id>
+  <title>arXiv Query: search_query=&amp;id_list=2608.20713,2606.31082,2606.17433,2605.08820,2604.25370,2604.28177,2604.08211,2508.21048,2512.06746,2505.18660,2507.14632,2505.12620,2506.00979,2512.23374,2511.12363,2506.23292,2511.19111,2406.13495,2608.20913,2608.18573,2608.16259,2608.12876,2607.27113,2602.21716,2605.14091,2509.14957,2604.02694,2603.23115,2603.21526,2602.10042,2509.25502,2410.02761,2608.28302,2608.20929,2608.17700,2608.09223,2607.14684,2606.08634,2605.26421,2605.21977,2605.14486,2602.01738,2602.02222,2511.08423,2511.12511,2411.19715,2501.04376,2410.21964,2608.18968,2608.12811,2608.16646&amp;start=0&amp;max_results=60</title>
+  <updated>2026-09-04T22:03:38Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=60&amp;id_list=2608.20713,2606.31082,2606.17433,2605.08820,2604.25370,2604.28177,2604.08211,2508.21048,2512.06746,2505.18660,2507.14632,2505.12620,2506.00979,2512.23374,2511.12363,2506.23292,2511.19111,2406.13495,2608.20913,2608.18573,2608.16259,2608.12876,2607.27113,2602.21716,2605.14091,2509.14957,2604.02694,2603.23115,2603.21526,2602.10042,2509.25502,2410.02761,2608.28302,2608.20929,2608.17700,2608.09223,2607.14684,2606.08634,2605.26421,2605.21977,2605.14486,2602.01738,2602.02222,2511.08423,2511.12511,2411.19715,2501.04376,2410.21964,2608.18968,2608.12811,2608.16646" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>51</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2509.25502v1</id>
+    <title>Seeing Before Reasoning: A Unified Framework for Generalizable and Explainable Fake Image Detection</title>
+    <updated>2025-09-29T20:59:19Z</updated>
+    <link href="https://arxiv.org/abs/2509.25502v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.25502v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Detecting AI-generated images with multimodal large language models (MLLMs) has gained increasing attention, due to their rich world knowledge, common-sense reasoning, and potential for explainability. However, naively applying those MLLMs for detection often leads to suboptimal performance. We argue that the root of this failure lies in a fundamental mismatch: MLLMs are asked to reason about fakes before they can truly see them. First, they do not really see: existing MLLMs' vision encoders are primarily optimized for semantic-oriented recognition rather than the perception of low-level signals, leaving them insensitive to subtle forgery traces. Without access to reliable perceptual evidence, the model grounds its judgment on incomplete and limited visual observations. Second, existing finetuning data for detection typically uses narrow, instruction-style formats, which diverge sharply from the diverse, heterogeneous distributions seen in pretraining. In the absence of meaningful visual cues, the model therefore exploits these linguistic shortcuts, resulting in catastrophic forgetting of pretrained knowledge (even the basic dialogue capabilities). In response, we advocate for a new paradigm: seeing before reasoning. We propose that MLLMs should first be trained to perceive artifacts-strengthening their artifact-aware visual perception-so that subsequent reasoning is grounded in actual observations. We therefore propose Forensic-Chat, a generalizable, explainable, and still-conversational (for multi-round dialogue) assistant for fake image detection. We also propose ExplainFake-Bench, a benchmark tailored for the evaluation of the MLLM's explainability for image forensics from five key aspects. Extensive experiments show its superiority of generalization and genuinely reliable explainability.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-29T20:59:19Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kaiqing Lin</name>
+    </author>
+    <author>
+      <name>Zhiyuan Yan</name>
+    </author>
+    <author>
+      <name>Ruoxin Chen</name>
+    </author>
+    <author>
+      <name>Junyan Ye</name>
+    </author>
+    <author>
+      <name>Ke-Yue Zhang</name>
+    </author>
+    <author>
+      <name>Yue Zhou</name>
+    </author>
+    <author>
+      <name>Peng Jin</name>
+    </author>
+    <author>
+      <name>Bin Li</name>
+    </author>
+    <author>
+      <name>Taiping Yao</name>
+    </author>
+    <author>
+      <name>Shouhong Ding</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.12511v2</id>
+    <title>DINO-Detect: A Simple yet Effective Framework for Blur-Robust AI-Generated Image Detection</title>
+    <updated>2025-11-18T06:34:54Z</updated>
+    <link href="https://arxiv.org/abs/2511.12511v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.12511v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With growing concerns over image authenticity and digital safety, the field of AI-generated image (AIGI) detection has progressed rapidly. Yet, most AIGI detectors still struggle under real-world degradations, particularly motion blur, which frequently occurs in handheld photography, fast motion, and compressed video. Such blur distorts fine textures and suppresses high-frequency artifacts, causing severe performance drops in real-world settings. We address this limitation with a blur-robust AIGI detection framework based on teacher-student knowledge distillation. A high-capacity teacher (DINOv3), trained on clean (i.e., sharp) images, provides stable and semantically rich representations that serve as a reference for learning. By freezing the teacher to maintain its generalization ability, we distill its feature and logit responses from sharp images to a student trained on blurred counterparts, enabling the student to produce consistent representations under motion degradation. Extensive experiments benchmarks show that our method achieves state-of-the-art performance under both motion-blurred and clean conditions, demonstrating improved generalization and real-world applicability. Source codes will be released at: https://github.com/JiaLiangShen/Dino-Detect-for-blur-robust-AIGC-Detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-16T08:54:00Z</published>
+    <arxiv:comment>12 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jialiang Shen</name>
+    </author>
+    <author>
+      <name>Jiyang Zheng</name>
+    </author>
+    <author>
+      <name>Yunqi Xue</name>
+    </author>
+    <author>
+      <name>Huajie Chen</name>
+    </author>
+    <author>
+      <name>Yu Yao</name>
+    </author>
+    <author>
+      <name>Hui Kang</name>
+    </author>
+    <author>
+      <name>Ruiqi Liu</name>
+    </author>
+    <author>
+      <name>Helin Gong</name>
+    </author>
+    <author>
+      <name>Yang Yang</name>
+    </author>
+    <author>
+      <name>Dadong Wang</name>
+    </author>
+    <author>
+      <name>Tongliang Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.21716v1</id>
+    <title>TranX-Adapter: Bridging Artifacts and Semantics within MLLMs for Robust AI-generated Image Detection</title>
+    <updated>2026-02-25T09:22:46Z</updated>
+    <link href="https://arxiv.org/abs/2602.21716v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.21716v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Rapid advances in AI-generated image (AIGI) technology enable highly realistic synthesis, threatening public information integrity and security. Recent studies have demonstrated that incorporating texture-level artifact features alongside semantic features into multimodal large language models (MLLMs) can enhance their AIGI detection capability. However, our preliminary analyses reveal that artifact features exhibit high intra-feature similarity, leading to an almost uniform attention map after the softmax operation. This phenomenon causes attention dilution, thereby hindering effective fusion between semantic and artifact features. To overcome this limitation, we propose a lightweight fusion adapter, TranX-Adapter, which integrates a Task-aware Optimal-Transport Fusion that leverages the Jensen-Shannon divergence between artifact and semantic prediction probabilities as a cost matrix to transfer artifact information into semantic features, and an X-Fusion that employs cross-attention to transfer semantic information into artifact features. Experiments on standard AIGI detection benchmarks upon several advanced MLLMs, show that our TranX-Adapter brings consistent and significant improvements (up to +6% accuracy).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-25T09:22:46Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wenbin Wang</name>
+    </author>
+    <author>
+      <name>Yuge Huang</name>
+    </author>
+    <author>
+      <name>Jianqing Xu</name>
+    </author>
+    <author>
+      <name>Yue Yu</name>
+    </author>
+    <author>
+      <name>Jiangtao Yan</name>
+    </author>
+    <author>
+      <name>Shouhong Ding</name>
+    </author>
+    <author>
+      <name>Pan Zhou</name>
+    </author>
+    <author>
+      <name>Yong Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.14957v3</id>
+    <title>DF-LLaVA: Unlocking MLLMs for Synthetic Image Detection via Knowledge Injection and Conflict-Driven Self-Reflection</title>
+    <updated>2026-01-30T03:26:13Z</updated>
+    <link href="https://arxiv.org/abs/2509.14957v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.14957v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the increasing prevalence of synthetic images, evaluating image authenticity and locating forgeries accurately while maintaining human interpretability remains a challenging task. Existing detection models primarily focus on simple authenticity classification, ultimately providing only a forgery probability or binary judgment, which offers limited explanatory insights into image authenticity. Moreover, while MLLM-based detection methods can provide more interpretable results, they still lag behind expert models in terms of pure authenticity classification accuracy. To address this, we propose DF-LLaVA, a novel and effective framework that unlocks the intrinsic discrimination potential of MLLMs. Our approach first mines latent knowledge from the MLLM itself and then injects it into the model via fine-tuning. During inference, conflict signals arising from the model's predictions activate a self-reflection process, leading to the final refined responses. This framework allows LLaVA to achieve outstanding detection accuracy exceeding expert models while still maintaining the interpretability offered by MLLMs. Extensive experiments confirm the superiority of DF-LLaVA, achieving both high accuracy and explainability in synthetic image detection. Code is available online at: https://github.com/Eliot-Shen/DF-LLaVA.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-18T13:43:42Z</published>
+    <arxiv:comment>Under review</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhuokang Shen</name>
+    </author>
+    <author>
+      <name>Kaisen Zhang</name>
+    </author>
+    <author>
+      <name>Bohan Jia</name>
+    </author>
+    <author>
+      <name>Heming Jia</name>
+    </author>
+    <author>
+      <name>Yuan Fang</name>
+    </author>
+    <author>
+      <name>Zhou Yu</name>
+    </author>
+    <author>
+      <name>Shaohui Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.12363v1</id>
+    <title>Explainable AI-Generated Image Detection RewardBench</title>
+    <updated>2025-11-15T21:51:13Z</updated>
+    <link href="https://arxiv.org/abs/2511.12363v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.12363v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conventional, classification-based AI-generated image detection methods cannot explain why an image is considered real or AI-generated in a way a human expert would, which reduces the trustworthiness and persuasiveness of these detection tools for real-world applications. Leveraging Multimodal Large Language Models (MLLMs) has recently become a trending solution to this issue. Further, to evaluate the quality of generated explanations, a common approach is to adopt an "MLLM as a judge" methodology to evaluate explanations generated by other MLLMs. However, how well those MLLMs perform when judging explanations for AI-generated image detection generated by themselves or other MLLMs has not been well studied. We therefore propose \textbf{XAIGID-RewardBench}, the first benchmark designed to evaluate the ability of current MLLMs to judge the quality of explanations about whether an image is real or AI-generated. The benchmark consists of approximately 3,000 annotated triplets sourced from various image generation models and MLLMs as policy models (detectors) to assess the capabilities of current MLLMs as reward models (judges). Our results show that the current best reward model scored 88.76\% on this benchmark (while human inter-annotator agreement reaches 98.30\%), demonstrating that a visible gap remains between the reasoning abilities of today's MLLMs and human-level performance. In addition, we provide an analysis of common pitfalls that these models frequently encounter. Code and benchmark are available at https://github.com/RewardBench/XAIGID-RewardBench.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-15T21:51:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Michael Yang</name>
+    </author>
+    <author>
+      <name>Shijian Deng</name>
+    </author>
+    <author>
+      <name>William T. Doan</name>
+    </author>
+    <author>
+      <name>Kai Wang</name>
+    </author>
+    <author>
+      <name>Tianyu Yang</name>
+    </author>
+    <author>
+      <name>Harsh Singh</name>
+    </author>
+    <author>
+      <name>Yapeng Tian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.12620v8</id>
+    <title>BusterX: MLLM-Powered AI-Generated Video Forgery Detection and Explanation</title>
+    <updated>2026-06-15T21:03:42Z</updated>
+    <link href="https://arxiv.org/abs/2505.12620v8" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.12620v8" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As generative video models become increasingly realistic, detecting AI-generated videos requires systems that offer both accuracy and interpretability. However, applying Multimodal Large Language Models (MLLMs) to video forensics is currently limited by outdated datasets, simplistic evaluation protocols, and a reliance on black-box classification. To address these issues, we introduce a comprehensive dataset, benchmark, and baseline model for video forgery detection. First, we present \textbf{GenBuster-200K}, a fair dataset of over 200,000 high-quality videos sourced from state-of-the-art generators, featuring diverse real-world scenarios. Second, we propose \textbf{GenBuster-Bench}, a diagnostic benchmark spanning three progressive tracks (In-Domain, Out-of-Domain, and In-the-Wild) to evaluate models across \textit{domain shifts} and \textit{generational shifts}. It also introduces an MLLM-as-a-Judge protocol to assess the quality of the generated forensic explanations. Finally, we develop \textbf{BusterX}, an MLLM baseline with RL training. Instead of direct binary classification, BusterX formulates detection as a visual reasoning task, where the generated reasoning chain serves as detector itself. Experimental results demonstrate that BusterX outperforms several leading MLLMs (e.g., Qwen3.5, Claude-Sonnet-4.6) in both detection accuracy and rationale quality.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-19T02:06:43Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haiquan Wen</name>
+    </author>
+    <author>
+      <name>Yiwei He</name>
+    </author>
+    <author>
+      <name>Zhenglin Huang</name>
+    </author>
+    <author>
+      <name>Tianxiao Li</name>
+    </author>
+    <author>
+      <name>Zihan Yu</name>
+    </author>
+    <author>
+      <name>Xingru Huang</name>
+    </author>
+    <author>
+      <name>Lu Qi</name>
+    </author>
+    <author>
+      <name>Baoyuan Wu</name>
+    </author>
+    <author>
+      <name>Xiangtai Li</name>
+    </author>
+    <author>
+      <name>Guangliang Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.02761v4</id>
+    <title>FakeShield: Explainable Image Forgery Detection and Localization via Multi-modal Large Language Models</title>
+    <updated>2025-04-12T08:08:04Z</updated>
+    <link href="https://arxiv.org/abs/2410.02761v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.02761v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid development of generative AI is a double-edged sword, which not only facilitates content creation but also makes image manipulation easier and more difficult to detect. Although current image forgery detection and localization (IFDL) methods are generally effective, they tend to face two challenges: \textbf{1)} black-box nature with unknown detection principle, \textbf{2)} limited generalization across diverse tampering methods (e.g., Photoshop, DeepFake, AIGC-Editing). To address these issues, we propose the explainable IFDL task and design FakeShield, a multi-modal framework capable of evaluating image authenticity, generating tampered region masks, and providing a judgment basis based on pixel-level and image-level tampering clues. Additionally, we leverage GPT-4o to enhance existing IFDL datasets, creating the Multi-Modal Tamper Description dataSet (MMTD-Set) for training FakeShield's tampering analysis capabilities. Meanwhile, we incorporate a Domain Tag-guided Explainable Forgery Detection Module (DTE-FDM) and a Multi-modal Forgery Localization Module (MFLM) to address various types of tamper detection interpretation and achieve forgery localization guided by detailed textual descriptions. Extensive experiments demonstrate that FakeShield effectively detects and localizes various tampering techniques, offering an explainable and superior solution compared to previous IFDL methods. The code is available at https://github.com/zhipeixu/FakeShield.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-03T17:59:34Z</published>
+    <arxiv:comment>Accepted by ICLR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhipei Xu</name>
+    </author>
+    <author>
+      <name>Xuanyu Zhang</name>
+    </author>
+    <author>
+      <name>Runyi Li</name>
+    </author>
+    <author>
+      <name>Zecheng Tang</name>
+    </author>
+    <author>
+      <name>Qing Huang</name>
+    </author>
+    <author>
+      <name>Jian Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.19715v4</id>
+    <title>Forensics Adapter: Unleashing CLIP for Generalizable Face Forgery Detection</title>
+    <updated>2026-07-24T08:17:19Z</updated>
+    <link href="https://arxiv.org/abs/2411.19715v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.19715v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe Forensics Adapter, an adapter network designed to transform CLIP into an effective and generalizable face forgery detector. Although CLIP is highly versatile, adapting it for face forgery detection is non-trivial as forgery-related knowledge is entangled with a wide range of unrelated knowledge. Existing methods treat CLIP merely as a feature extractor, lacking task-specific adaptation, which limits their effectiveness. To address this, we introduce an adapter to learn face forgery traces -- the blending boundaries unique to forged faces, guided by task-specific objectives. Then we enhance the CLIP visual tokens with a dedicated interaction strategy that communicates knowledge across CLIP and the adapter. Since the adapter is alongside CLIP, its versatility is highly retained, naturally ensuring strong generalizability in face forgery detection. {With only $\textbf{5.7M}$ trainable parameters, our method achieves superior performance across six standard datasets.} Additionally, we describe Forensics Adapter++, an extended method that incorporates textual modality via a newly proposed forgery-aware prompt learning strategy. This extension leads to a further $\textbf{1.3\%}$ performance boost over the original Forensics Adapter. We believe the proposed methods can serve as a baseline for future CLIP-based face forgery detection methods. The code has been released at https://github.com/OUC-VAS/ForensicsAdapter.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-29T14:02:11Z</published>
+    <arxiv:comment>TPAMI 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xinjie Cui</name>
+    </author>
+    <author>
+      <name>Yuezun Li</name>
+    </author>
+    <author>
+      <name>Delong Zhu</name>
+    </author>
+    <author>
+      <name>Jiaran Zhou</name>
+    </author>
+    <author>
+      <name>Junyu Dong</name>
+    </author>
+    <author>
+      <name>Siwei Lyu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.27113v1</id>
+    <title>Veritas++: Value-aware On-Policy Distillation for Perception-Enhanced AIGI Detection</title>
+    <updated>2026-07-29T16:43:59Z</updated>
+    <link href="https://arxiv.org/abs/2607.27113v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.27113v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The growing capability of image generation models has made synthetic images a routine presence in open media, making robust and generalizable AI-Generated Image (AIGI) detection increasingly essential. While multi-modal large language models (MLLMs) offer a transparent alternative to black-box binary scoring, we observe that current MLLM-based detectors still exhibit notable perception bottlenecks in capturing fine-grained anomalies. They primarily focus on how visual evidence is organized and synthesized, leaving the intrinsic perception less optimized. To mitigate this gap, we present Veritas++, a perception-enhanced reasoning framework that establishes reliable perception as the foundation of authenticity reasoning. Rather than directly optimizing the model's explanatory ability, we ground AIGI detection on three basic perception abilities, i.e., capturing fine-grained visual details, semantic anomalies and pixel-level differences. Building on this insight, we introduce Perception-oriented Learning (PoRL), which replaces open-ended description supervision with verifiable rewards to explicitly strengthen these capacities. To further integrate enhanced perception with reasoning, we introduce Value-aware On-Policy Distillation (VaOPD), an adaptive distillation mechanism that prioritizes high-value distillation signals over uniform supervision, internalizing perception-aware reasoning through a privileged self-teacher. Extensive experiments across standard, in-the-wild and emerging benchmarks demonstrate that Veritas++ achieves promising generalization. The perception learning effectively bridges the perception gap and yields seamless gains on detection, while VaOPD further enables efficient capability evolvement without sacrificing existing performance. Code and checkpoints are available at https://github.com/EricTan7/VeritasPP.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-29T16:43:59Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hao Tan</name>
+    </author>
+    <author>
+      <name>Jun Lan</name>
+    </author>
+    <author>
+      <name>Zichang Tan</name>
+    </author>
+    <author>
+      <name>Ajian Liu</name>
+    </author>
+    <author>
+      <name>Zijian Yu</name>
+    </author>
+    <author>
+      <name>Chuanbiao Song</name>
+    </author>
+    <author>
+      <name>Huijia Zhu</name>
+    </author>
+    <author>
+      <name>Weiqiang Wang</name>
+    </author>
+    <author>
+      <name>Jun Wan</name>
+    </author>
+    <author>
+      <name>Zhen Lei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.02694v2</id>
+    <title>DocShield: Towards AI Document Safety via Evidence-Grounded Agentic Reasoning</title>
+    <updated>2026-07-22T06:35:55Z</updated>
+    <link href="https://arxiv.org/abs/2604.02694v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.02694v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid progress of generative AI has enabled increasingly realistic text-centric image forgeries, posing major challenges to document safety. Existing forensic methods mainly rely on visual cues and lack evidence-based reasoning to reveal subtle text manipulations. Detection, localization, and explanation are often treated as isolated tasks, limiting reliability and interpretability. To tackle these challenges, we propose DocShield, the first unified framework formulating text-centric forgery analysis as a visual-logical co-reasoning problem. At its core, a novel Cross-Cues-aware Chain of Thought (CCT) mechanism enables implicit agentic reasoning, iteratively cross-validating visual anomalies with textual semantics to produce consistent, evidence-grounded forensic analysis. We further introduce a Weighted Multi-Task Reward for GRPO-based optimization, aligning reasoning structure, spatial evidence, and authenticity prediction. Complementing the framework, we construct RealText-V1, a multilingual dataset of document-like text images with pixel-level manipulation masks and expert-level textual explanations. Extensive experiments show DocShield significantly outperforms existing methods, improving macro-average F1 by 41.4% over specialized frameworks and 23.4% over GPT-4o on T-IC13, with consistent gains on the challenging T-SROIE benchmark. Our dataset, model, and code will be publicly released.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-03T03:38:58Z</published>
+    <arxiv:comment>10 pages, 4 figures, 5 tables. Preprint. arXiv admin note: text overlap with arXiv:2512.21482</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Fanwei Zeng</name>
+    </author>
+    <author>
+      <name>Changtao Miao</name>
+    </author>
+    <author>
+      <name>Jing Huang</name>
+    </author>
+    <author>
+      <name>Zhiya Tan</name>
+    </author>
+    <author>
+      <name>Shutao Gong</name>
+    </author>
+    <author>
+      <name>Xiaoming Yu</name>
+    </author>
+    <author>
+      <name>Yang Wang</name>
+    </author>
+    <author>
+      <name>Weibin Yao</name>
+    </author>
+    <author>
+      <name>Joey Tianyi Zhou</name>
+    </author>
+    <author>
+      <name>Jianshu Li</name>
+    </author>
+    <author>
+      <name>Ying Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.09223v1</id>
+    <title>PatchHead: Learning Spatial Patch Evidence for Generalizable AI-Generated Image Detection</title>
+    <updated>2026-08-10T07:47:22Z</updated>
+    <link href="https://arxiv.org/abs/2608.09223v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.09223v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-generated image detectors generalize poorly when their training and test images originate from different generators or datasets. Despite the rich spatial representations produced by vision foundation models like DINO, existing detectors typically classify images using only the globally aggregated CLS token. We hypothesize that globally aggregating DINO features into a single CLS token obscures spatially distributed generation traces. To test this hypothesis, we introduce PatchHead, a lightweight spatial aggregation head that preserves the two-dimensional organization of DINO patch tokens and integrates evidence across neighboring regions. During training, we freeze the pretrained DINO backbone and optimize only the inserted LoRA adapters, PatchHead, and auxiliary projection head. Across nine cross-dataset benchmarks spanning manually curated and in-the-wild settings, PatchHead ranks first on seven datasets and second on the remaining two. It improves the strongest prior method from 91.6% to 94.6% in average balanced accuracy (+3.0 points) and raises the worst-case accuracy from 82.4% to 89.4% (+6.9 points), while introducing only 8.6% more trainable parameters and 0.08% additional FLOPs. Further qualitative analysis suggests that PatchHead (i) reduces class-conditional domain discrepancy, and (ii) redirects the representation from content-dominated saliency toward spatially distributed authenticity evidence. Together, these observations provide a representation-level account of why spatial patch aggregation transfers more reliably across generators and datasets than a single CLS-based global representation. Our code and models will be made available upon acceptance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-10T07:47:22Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shengbo Qi</name>
+    </author>
+    <author>
+      <name>Hongyi Fang</name>
+    </author>
+    <author>
+      <name>Benjia Zhou</name>
+    </author>
+    <author>
+      <name>Rui Mao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.16259v1</id>
+    <title>Defake-o3: From Speculative Rationales to Verifiable Evidence for Explainable AIGI Detection</title>
+    <updated>2026-08-17T08:30:32Z</updated>
+    <link href="https://arxiv.org/abs/2608.16259v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.16259v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid progress of image generation models calls for AI-generated image (AIGI) detectors that are not only accurate but also explainable and reliable. While MLLM-based detectors can provide natural language explanations, existing methods often generate speculative rationales: they rely on vague or hallucinated artifacts, miss subtle localized flaws from the latest generators, and fail to provide evidence that can be visually verified. We present Defake-o3, an explainable AIGI detector that moves from speculative rationales to verifiable evidence. It combines interactive visual search with verifier-guided evidence alignment: the model iteratively zooms into suspicious regions to inspect fine-grained details, while an Evidence Verifier, trained from human verification annotations, provides reinforcement learning rewards that favor grounded evidence and penalize baseless claims. To support this objective, we construct GroundFake, a dataset designed for grounded explainable detection, with localized bounding-box evidence, human verification based on visual grounding and artifact specificity, corrected reasoning trajectories, and valid/invalid evidence supervision. We further introduce FakeFrontier, an out-of-distribution benchmark built from real images and outputs of 10 recent generators, together with an MLLM-based protocol for evaluating evidence quality and persuasiveness. Experiments on GroundFake, FakeFrontier, and additional out-of-distribution benchmarks show that Defake-o3 improves both detection accuracy and explanation quality, producing more localized, verifiable, and persuasive evidence.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-17T08:30:32Z</published>
+    <arxiv:comment>Accepted by ACMMM 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bowen Deng</name>
+    </author>
+    <author>
+      <name>Jiahui Zhan</name>
+    </author>
+    <author>
+      <name>Yikun Ji</name>
+    </author>
+    <author>
+      <name>Haozhen Yan</name>
+    </author>
+    <author>
+      <name>Jianfu Zhang</name>
+    </author>
+    <arxiv:doi>10.1145/3767308.3835683</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3767308.3835683" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.16646v1</id>
+    <title>Training-Free Reconstruction-Based AI-Generated Image Detectors Are Inherently Vulnerable to Adversarial Examples</title>
+    <updated>2026-08-17T14:45:53Z</updated>
+    <link href="https://arxiv.org/abs/2608.16646v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.16646v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The impressive visual quality and ubiquity of AI-generated images call for reliable and robust detection methods. Reconstruction-based detectors have emerged as a promising direction for transparent and training-free identification of synthetic images. However, due to their fundamentally different mode of operation (compared to standard, classifier-based methods), little is known about their adversarial robustness. In this work, we propose two novel attack methods targeted at detectors that leverage autoencoder reconstruction error. We find that by constructing imperceptible adversarial examples, the distance between original and reconstruction can be artificially increased, causing fake images to be wrongly classified as real. Our evaluation including images from three state-of-the-art generators and three detectors demonstrates that detection performance is significantly decreased, even if attacked images additionally undergo real-world degradations. Critically, our adversarial examples naturally transfer across detectors, as they all share the same principle, pointing towards an inherent vulnerability of reconstruction-based detectors.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-17T14:45:53Z</published>
+    <arxiv:comment>Accepted at AI4MFDD (AI for Multimedia Forensics &amp; Disinformation Detection) Workshop, ECCV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Roman Demchenko</name>
+    </author>
+    <author>
+      <name>Jonas Ricker</name>
+    </author>
+    <author>
+      <name>Asja Fischer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.20929v1</id>
+    <title>GAP-SAM: A Global Artifact Prior for Generalizable AI-Generated Image Manipulation Localization</title>
+    <updated>2026-08-21T09:49:58Z</updated>
+    <link href="https://arxiv.org/abs/2608.20929v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.20929v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-generated image manipulation localization identifies edited pixels, but its OOD performance lags behind image-level detection partly because pixel supervision entangles forensic evidence with dataset-specific mask geometry and semantic boundaries. Extending image-level distribution alignment to localization, we construct COCO-ControlNet with source-image Canny edges and depth maps to align semantics and geometry, improving OOD performance across multiple localizers. Yet tighter Mask-VAE Reconstruction Alignment (Mask-VAE) underperforms COCO-ControlNet, showing that VAE reconstruction artifacts transfer poorly to local diffusion-inpainting artifacts. We also identify \emph{boundary adhesion}, where fine-tuned segmentation models snap predictions to semantic object contours rather than true manipulation boundaries. These findings motivate GAP-SAM, which encodes an image and its frozen VAE reconstruction into a global artifact token and injects it into SAM3's feature pyramid via zero-gated FiLM before pixel decoding. Without prescribing a spatial region, this token modulates dense decoding to preserve localization while suppressing semantic-boundary shortcuts. Across six datasets, GAP-SAM averages 79.8 Pixel-F1, outperforming the strongest prior method by 12.6 points. It also performs best at every tested severity of JPEG compression, Gaussian blur, and resizing.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-21T09:49:58Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haozhen Yan</name>
+    </author>
+    <author>
+      <name>Siyuan Shan</name>
+    </author>
+    <author>
+      <name>Zijian Yu</name>
+    </author>
+    <author>
+      <name>Youqi Wang</name>
+    </author>
+    <author>
+      <name>Yan Hong</name>
+    </author>
+    <author>
+      <name>Jun Lan</name>
+    </author>
+    <author>
+      <name>Jianfu Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.20913v1</id>
+    <title>Explainable Deepfake Detection with Feature-robust Augmentation and Evidence-grounded Explanation Optimization</title>
+    <updated>2026-08-21T09:30:34Z</updated>
+    <link href="https://arxiv.org/abs/2608.20913v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.20913v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Explainable deepfake detection extends binary classification by requiring models to not only predict authenticity but also provide interpretable justifications. This expanded scope is critical in practice, where users like forensic analysts need insight into the rationale behind the detection. Despite advancements, current approaches suffer from two critical deficiencies: (1)vulnerability to image quality degradation: detection accuracy plummets on low-quality samples, while naive augmentation strategies may induce feature drift and impair performance as diversity expands. (2) factually flawed explanations: explanation models may omit manipulation evidence or hallucinate irrelevant details, undermining interpretability. To address it, we propose a framework with two innovations. For robust deepfake detection, we introduce Feature-robust Augmentation, which comprises diversified degradation-aware augmentation strategies, and a supervised contrastive learning pattern paired with a mean-teacher architecture that stabilizes features against augmentations through consistency constraints. For explanation, we devise an evidence-grounded preference optimization process that guides model to prioritize genuine manipulation traces by learning from chosen-rejected explanation pairs, where rejected samples are constructed via evidence omission or irrelevant information injection. The proposed approach wins the first place in ACM Multimedia 2026 Explainable Deepfake Detection Challenge.The code is available at https://github.com/oceanflowlab/EDD.git.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-21T09:30:34Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhu Xu</name>
+    </author>
+    <author>
+      <name>Jiaqi Tang</name>
+    </author>
+    <author>
+      <name>Pokai Chen</name>
+    </author>
+    <author>
+      <name>Yuxin Peng</name>
+    </author>
+    <author>
+      <name>Yang Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.20713v1</id>
+    <title>AGIDefect-4K: A Richly Annotated Dataset for AI-Generated Image Defect Detection, Localization and Explanation</title>
+    <updated>2026-08-21T03:40:20Z</updated>
+    <link href="https://arxiv.org/abs/2608.20713v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.20713v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Generative AI can now produce highly realistic images, yet current models still exhibit subtle but critical defects that undermine their reliability. While existing AI-generated image (AGI) evaluation benchmarks have made notable progress, comprehensive AGI defect diagnosis remains underexplored. To bridge this gap, we introduce AGIDefect-4K, a richly annotated dataset of 4,000 images from 15 state-of-the-art generative models spanning both open-source and closed-source systems. AGIDefect-4K features hierarchical defect annotations: (1) detection labels identifying whether defects exist, (2) pixel-level segmentation masks localizing defective regions, and (3) detailed textual explanations characterizing defect types and their perceptual impact. Each image is further annotated with an overall quality score. Building on this, we present AGIDA (AGI Defect Assistant), a baseline framework leveraging Multimodal Large Language Models (MLLMs) for joint defect detection, localization, explanation, and quality prediction. Comprehensive benchmarking on AGIDefect-4K reveals that AGI defect understanding remains challenging, underscoring the value of this dataset. The dataset is publicly available at https://github.com/sxfly99/AGIDefect-4K.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-21T03:40:20Z</published>
+    <arxiv:comment>8 pages, 6 figures. Accepted by ACM Multimedia 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiangfei Sheng</name>
+    </author>
+    <author>
+      <name>Weidong Zou</name>
+    </author>
+    <author>
+      <name>Tianjiao Gu</name>
+    </author>
+    <author>
+      <name>Zhichao Yang</name>
+    </author>
+    <author>
+      <name>Pengfei Chen</name>
+    </author>
+    <author>
+      <name>Leida Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.04376v1</id>
+    <title>Exploring Unbiased Deepfake Detection via Token-Level Shuffling and Mixing</title>
+    <updated>2025-01-08T09:30:45Z</updated>
+    <link href="https://arxiv.org/abs/2501.04376v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.04376v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The generalization problem is broadly recognized as a critical challenge in detecting deepfakes. Most previous work believes that the generalization gap is caused by the differences among various forgery methods. However, our investigation reveals that the generalization issue can still occur when forgery-irrelevant factors shift. In this work, we identify two biases that detectors may also be prone to overfitting: position bias and content bias, as depicted in Fig. 1. For the position bias, we observe that detectors are prone to lazily depending on the specific positions within an image (e.g., central regions even no forgery). As for content bias, we argue that detectors may potentially and mistakenly utilize forgery-unrelated information for detection (e.g., background, and hair). To intervene these biases, we propose two branches for shuffling and mixing with tokens in the latent space of transformers. For the shuffling branch, we rearrange the tokens and corresponding position embedding for each image while maintaining the local correlation. For the mixing branch, we randomly select and mix the tokens in the latent space between two images with the same label within the mini-batch to recombine the content information. During the learning process, we align the outputs of detectors from different branches in both feature space and logit space. Contrastive losses for features and divergence losses for logits are applied to obtain unbiased feature representation and classifiers. We demonstrate and verify the effectiveness of our method through extensive experiments on widely used evaluation datasets.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-08T09:30:45Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xinghe Fu</name>
+    </author>
+    <author>
+      <name>Zhiyuan Yan</name>
+    </author>
+    <author>
+      <name>Taiping Yao</name>
+    </author>
+    <author>
+      <name>Shen Chen</name>
+    </author>
+    <author>
+      <name>Xi Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.23374v2</id>
+    <title>NeXT-IMDL: Build Benchmark for NeXT-Generation Image Manipulation Detection &amp; Localization</title>
+    <updated>2026-03-25T07:46:48Z</updated>
+    <link href="https://arxiv.org/abs/2512.23374v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.23374v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The accessibility surge and abuse risks of user-friendly image editing models have created an urgent need for generalizable, up-to-date methods for Image Manipulation Detection and Localization (IMDL). Current IMDL research typically uses cross-dataset evaluation, where models trained on one benchmark are tested on others. However, this simplified evaluation approach conceals the fragility of existing methods when handling diverse AI-generated content, leading to misleading impressions of progress. This paper challenges this illusion by proposing NeXT-IMDL, a large-scale diagnostic benchmark designed not just to collect data, but to probe the generalization boundaries of current detectors systematically. Specifically, NeXT-IMDL categorizes AIGC-based manipulations along four fundamental axes: editing models, manipulation types, content semantics, and forgery granularity. Built upon this, NeXT-IMDL implements five rigorous cross-dimension evaluation protocols. Our extensive experiments on 11 representative models reveal a critical insight: while these models perform well in their original settings, they exhibit systemic failures and significant performance degradation when evaluated under our designed protocols that simulate real-world, various generalization scenarios. By providing this diagnostic toolkit and the new findings, we aim to advance the development towards building truly robust, next-generation IMDL models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-29T11:09:35Z</published>
+    <arxiv:comment>Duplicate experiment results in Table 3 (Set-1 &amp; Set-2)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yifei Li</name>
+    </author>
+    <author>
+      <name>Haoyuan He</name>
+    </author>
+    <author>
+      <name>Yu Zheng</name>
+    </author>
+    <author>
+      <name>Bingyao Yu</name>
+    </author>
+    <author>
+      <name>Wenzhao Zheng</name>
+    </author>
+    <author>
+      <name>Lei Chen</name>
+    </author>
+    <author>
+      <name>Jie Zhou</name>
+    </author>
+    <author>
+      <name>Jiwen Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.08820v1</id>
+    <title>FraudBench: A Multimodal Benchmark for Detecting AI-Generated Fraudulent Refund Evidence</title>
+    <updated>2026-05-09T09:11:15Z</updated>
+    <link href="https://arxiv.org/abs/2605.08820v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.08820v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Artificial Intelligence (AI)-generated images have become increasingly realistic and readily adaptable to concrete real-world claims, creating new challenges for verifying visual evidence. A concrete emerging risk is AI-generated refund fraud, in which manipulated or synthetic images are used to support claims about damaged products, poor delivery conditions, or service-related defects. Existing AI-generated image detection benchmarks mainly evaluate standalone authenticity classification, cross-generator transfer, or forensic localization, leaving claim-conditioned fraudulent evidence detection underexplored. To bridge this gap, we introduce FraudBench, a multimodal benchmark for detecting AI-generated fraudulent refund evidence. FraudBench is constructed from real-world user-review evidence across e-commerce, food delivery, and travel-service scenarios. We curate real evidence images together with their associated review and product metadata, identify genuine damaged and undamaged evidence through MLLM-assisted filtering and human annotation, and synthesize fake-damaged evidence from genuine undamaged reference images using six state-of-the-art image editing and generation models. Using FraudBench, we evaluate MLLMs, specialized AI-generated image detectors, and human participants under the same settings. Experiments show that current MLLMs often recognize real-damaged evidence but fail on many fake-damaged subsets, with fake-damage detection rates (TPR) far below the 50% baseline on most generator subsets. Specialized detectors generally perform better but remain inconsistent across generators and can produce false positives on real-damaged samples, revealing a clear gap between generic AI image detection and reliable claim-conditioned refund-evidence verification.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-09T09:11:15Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xinyu Yan</name>
+    </author>
+    <author>
+      <name>Boyang Chen</name>
+    </author>
+    <author>
+      <name>Jiaming Zhang</name>
+    </author>
+    <author>
+      <name>Tiantong Wu</name>
+    </author>
+    <author>
+      <name>Hong Xi Tae</name>
+    </author>
+    <author>
+      <name>Yichen He</name>
+    </author>
+    <author>
+      <name>Tiantong Wang</name>
+    </author>
+    <author>
+      <name>Yachun Mi</name>
+    </author>
+    <author>
+      <name>Yurong Hao</name>
+    </author>
+    <author>
+      <name>Yilei Zhao</name>
+    </author>
+    <author>
+      <name>Lei Xiao</name>
+    </author>
+    <author>
+      <name>Longtao Huang</name>
+    </author>
+    <author>
+      <name>Pengjun Xie</name>
+    </author>
+    <author>
+      <name>Wei Liu</name>
+    </author>
+    <author>
+      <name>Wei Yang Bryan Lim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.23292v2</id>
+    <title>DDL: A Large-Scale Datasets for Deepfake Detection and Localization in Diversified Real-World Scenarios</title>
+    <updated>2025-10-30T15:53:26Z</updated>
+    <link href="https://arxiv.org/abs/2506.23292v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.23292v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in AIGC have exacerbated the misuse of malicious deepfake content, making the development of reliable deepfake detection methods an essential means to address this challenge. Although existing deepfake detection models demonstrate outstanding performance in detection metrics, most methods only provide simple binary classification results, lacking interpretability. Recent studies have attempted to enhance the interpretability of classification results by providing spatial manipulation masks or temporal forgery segments. However, due to the limitations of forgery datasets, the practical effectiveness of these methods remains suboptimal. The primary reason lies in the fact that most existing deepfake datasets contain only binary labels, with limited variety in forgery scenarios, insufficient diversity in deepfake types, and relatively small data scales, making them inadequate for complex real-world scenarios.To address this predicament, we construct a novel large-scale deepfake detection and localization (\textbf{DDL}) dataset containing over $\textbf{1.4M+}$ forged samples and encompassing up to $\textbf{80}$ distinct deepfake methods. The DDL design incorporates four key innovations: (1) \textbf{Comprehensive Deepfake Methods} (covering 7 different generation architectures and a total of 80 methods), (2) \textbf{Varied Manipulation Modes} (incorporating 7 classic and 3 novel forgery modes), (3) \textbf{Diverse Forgery Scenarios and Modalities} (including 3 scenarios and 3 modalities), and (4) \textbf{Fine-grained Forgery Annotations} (providing 1.18M+ precise spatial masks and 0.23M+ precise temporal segments).Through these improvements, our DDL not only provides a more challenging benchmark for complex real-world forgeries but also offers crucial support for building next-generation deepfake detection, localization, and interpretability methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-29T15:29:03Z</published>
+    <arxiv:comment>This paper is a preliminary version, with an extended and comprehensive version currently under development</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Changtao Miao</name>
+    </author>
+    <author>
+      <name>Yi Zhang</name>
+    </author>
+    <author>
+      <name>Weize Gao</name>
+    </author>
+    <author>
+      <name>Zhiya Tan</name>
+    </author>
+    <author>
+      <name>Weiwei Feng</name>
+    </author>
+    <author>
+      <name>Man Luo</name>
+    </author>
+    <author>
+      <name>Jianshu Li</name>
+    </author>
+    <author>
+      <name>Ajian Liu</name>
+    </author>
+    <author>
+      <name>Yunfeng Diao</name>
+    </author>
+    <author>
+      <name>Qi Chu</name>
+    </author>
+    <author>
+      <name>Tao Gong</name>
+    </author>
+    <author>
+      <name>Zhe Li</name>
+    </author>
+    <author>
+      <name>Weibin Yao</name>
+    </author>
+    <author>
+      <name>Joey Tianyi Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.14486v2</id>
+    <title>Reduce the Artifacts Bias for More Generalizable AI-Generated Image Detection</title>
+    <updated>2026-08-23T15:37:42Z</updated>
+    <link href="https://arxiv.org/abs/2605.14486v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.14486v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As the misuse of AI-generated images grows, generalizable image detection techniques are urgently needed. Recent state-of-the-art (SOTA) methods adopt aligned training datasets to reduce content, size, and format biases, empowering models to capture robust forgery cues. A common strategy employs reconstruction techniques, e.g., VAE and DDIM, to construct aligned synthetic negatives. However, relying on a single reconstruction process yields a narrow and homogeneous artifact distribution, leaving forensic traces from other artifact-forming mechanisms underrepresented. To broaden artifact coverage without sacrificing alignment, we construct adversarial restoration-based negatives with SRGAN, whose learned upsampling and texture restoration yield traces complementary to VAE reconstruction while preserving content, size, and format. Directly mixing the two aligned fake domains is nontrivial because their artifact manifolds and optimization directions can conflict. We therefore propose Artifact-Complementary Expert Fusion (ACEF), a two-stage framework for robust AIGC detection. ACEF first constructs two artifact-specific experts via LoRA adaptation on a frozen foundation backbone. It then freezes them and introduces Layer-wise Artifact-Complementary Fusion (LACF) to integrate multi-layer source-specific and cross-artifact evidence through an adaptive gate. Extensive experiments on 13 diverse benchmarks demonstrate the effectiveness of our method.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-14T07:26:36Z</published>
+    <arxiv:comment>preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiheng Li</name>
+    </author>
+    <author>
+      <name>Yang Yang</name>
+    </author>
+    <author>
+      <name>Wenhao Wang</name>
+    </author>
+    <author>
+      <name>Zichang Tan</name>
+    </author>
+    <author>
+      <name>Zecheng Lin</name>
+    </author>
+    <author>
+      <name>Li Gao</name>
+    </author>
+    <author>
+      <name>Zhen Lei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.13495v2</id>
+    <title>DF40: Toward Next-Generation Deepfake Detection</title>
+    <updated>2024-10-31T09:11:37Z</updated>
+    <link href="https://arxiv.org/abs/2406.13495v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.13495v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a new comprehensive benchmark to revolutionize the current deepfake detection field to the next generation. Predominantly, existing works identify top-notch detection algorithms and models by adhering to the common practice: training detectors on one specific dataset (e.g., FF++) and testing them on other prevalent deepfake datasets. This protocol is often regarded as a "golden compass" for navigating SoTA detectors. But can these stand-out "winners" be truly applied to tackle the myriad of realistic and diverse deepfakes lurking in the real world? If not, what underlying factors contribute to this gap? In this work, we found the dataset (both train and test) can be the "primary culprit" due to: (1) forgery diversity: Deepfake techniques are commonly referred to as both face forgery and entire image synthesis. Most existing datasets only contain partial types of them, with limited forgery methods implemented; (2) forgery realism: The dominated training dataset, FF++, contains out-of-date forgery techniques from the past four years. "Honing skills" on these forgeries makes it difficult to guarantee effective detection generalization toward nowadays' SoTA deepfakes; (3) evaluation protocol: Most detection works perform evaluations on one type, which hinders the development of universal deepfake detectors. To address this dilemma, we construct a highly diverse deepfake detection dataset called DF40, which comprises 40 distinct deepfake techniques. We then conduct comprehensive evaluations using 4 standard evaluation protocols and 8 representative detection methods, resulting in over 2,000 evaluations. Through these evaluations, we provide an extensive analysis from various perspectives, leading to 7 new insightful findings. We also open up 4 valuable yet previously underexplored research questions to inspire future works. Our project page is https://github.com/YZY-stack/DF40.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-19T12:35:02Z</published>
+    <arxiv:comment>arXiv admin note: text overlap with arXiv:2108.05080 by other authors</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhiyuan Yan</name>
+    </author>
+    <author>
+      <name>Taiping Yao</name>
+    </author>
+    <author>
+      <name>Shen Chen</name>
+    </author>
+    <author>
+      <name>Yandan Zhao</name>
+    </author>
+    <author>
+      <name>Xinghe Fu</name>
+    </author>
+    <author>
+      <name>Junwei Zhu</name>
+    </author>
+    <author>
+      <name>Donghao Luo</name>
+    </author>
+    <author>
+      <name>Chengjie Wang</name>
+    </author>
+    <author>
+      <name>Shouhong Ding</name>
+    </author>
+    <author>
+      <name>Yunsheng Wu</name>
+    </author>
+    <author>
+      <name>Li Yuan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.21977v1</id>
+    <title>Video as Natural Augmentation: Towards Unified AI-Generated Image and Video Detection</title>
+    <updated>2026-05-21T04:11:32Z</updated>
+    <link href="https://arxiv.org/abs/2605.21977v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.21977v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-generated content (AIGC) is rapidly improving, creating an urgent need for detectors that generalize across data sources, deployment pipelines, and visual modalities. A strongly generalizable detector should remain robust under distributional variations. However, we identify a consistent failure mode: SOTA AI-generated image detectors often collapse when applied to frames extracted from videos. Through systematic analysis, we show that this cross-modal gap arises from both entangled synthesis-agnostic video processing shifts, including color conversion, codec compression, resizing, and blur, and model-specific fingerprints introduced by modern video generators. Motivated by these findings, we propose VINA (Video as Natural Augmentation), a unified AIGC detection framework that jointly trains on image and video data. VINA uses video frames as physically grounded natural augmentations and further introduces a cross-modal supervised contrastive objective to align image and video representations under a shared real/fake decision boundary. Extensive experiments on 14 image, video, and in-the-wild benchmarks show that VINA delivers bidirectional gains, improves robustness and transferability, and achieves state-of-the-art performance across nearly all evaluated settings without complex augmentation or dataset-specific tuning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-21T04:11:32Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhengcen Li</name>
+    </author>
+    <author>
+      <name>Chenyang Jiang</name>
+    </author>
+    <author>
+      <name>Liangxu Su</name>
+    </author>
+    <author>
+      <name>Tong Shao</name>
+    </author>
+    <author>
+      <name>Shiyang Zhou</name>
+    </author>
+    <author>
+      <name>Ming Tao</name>
+    </author>
+    <author>
+      <name>Jingyong Su</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.17433v1</id>
+    <title>LADBench: A Benchmark for Logical Fault Detection in Images</title>
+    <updated>2026-06-16T02:32:38Z</updated>
+    <link href="https://arxiv.org/abs/2606.17433v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.17433v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (VLMs) excel at visual question answering and semantic grounding, but their capacity for autonomous logical reasoning remains underexplored. Existing anomaly benchmarks emphasize visual errors or direct prompting rather than the physical and social common sense needed for open-world deployment. To address this, we introduce LAD-bench, a benchmark of more than 1,000 curated synthetic images with logical anomalies across four domains: Residential, Urban, Collaborative, and Nature. We further propose a Tiered Prompting Protocol based on progressive disclosure, which measures how much explicit assistance a model needs to localize and reason about a logical fault. Evaluating leading foundation models reveals substantial weaknesses: even the best achieves only 70.11% overall accuracy, showing that implicit logical fault detection remains unsolved. Crucially, models often fail to identify anomalies even after receiving explicit hints in deeper tiers. By surfacing these limitations in sequential multimodal reasoning, LAD-Bench offers a rigorous framework for advancing the safety, reliability, and cognitive alignment of autonomous visual systems. Dataset and Code: https://huggingface.co/datasets/SahasraK/LADBench</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-16T02:32:38Z</published>
+    <arxiv:comment>Accepted to the IEEE International Conference on Development and Learning (ICDL 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sahasra Kondapalli</name>
+    </author>
+    <author>
+      <name>Lara Radovanovic</name>
+    </author>
+    <author>
+      <name>Aadi Palnitkar</name>
+    </author>
+    <author>
+      <name>Mingyang Mao</name>
+    </author>
+    <author>
+      <name>Xiaomin Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.25370v2</id>
+    <title>GPT-Image-2 in the Wild: A Twitter Dataset of Self-Reported AI-Generated Images from the First Week of Deployment</title>
+    <updated>2026-05-05T22:21:25Z</updated>
+    <link href="https://arxiv.org/abs/2604.25370v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.25370v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The release of GPT-image-2 by OpenAI marks a watershed moment in AI-generated imagery: the boundary between photographic reality and synthetic content has never been more difficult to discern. We introduce the GPT-Image-2 Twitter Dataset, the first published dataset of GPT-image-2 generated images, sourced from publicly available Twitter/X posts in the immediate aftermath of the model's April 21, 2026 release. Leveraging the Twitter API v2 and a multi-stage curation pipeline spanning multilingual text heuristics (English, Japanese, and Chinese), browser-automated Twitter "Made with AI" badge verification, and model name variant matching, we curate 10,217 confirmed GPT-image-2 images from 27,662 collected records over a six-day window.
+  We characterize the dataset across four analyses: CLIP-based zero-shot subject taxonomy, OCR text legibility (82.0% of images contain detectable text), face detection (59.2% of images, 22,583 total faces), and semantic clustering (137 CLIP ViT-L/14 clusters).
+  A key negative result is that C2PA content credentials are systematically stripped by Twitter's CDN on upload, rendering cryptographic provenance verification infeasible for social-media-sourced AI images. The dataset and all curation code are released publicly.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-28T08:35:51Z</published>
+    <arxiv:comment>11 pages; GPT-image-2 social media dataset; Twitter API collection and multilingual curation; C2PA watermark stripping on platform upload; browser-automated AI badge verification; CLIP semantic clustering; AI-generated image provenance and attribution</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kidus Zewde</name>
+    </author>
+    <author>
+      <name>Simiao Ren</name>
+    </author>
+    <author>
+      <name>Xingyu Shen</name>
+    </author>
+    <author>
+      <name>Jiaqi Wu</name>
+    </author>
+    <author>
+      <name>Yuchen Zhou</name>
+    </author>
+    <author>
+      <name>Tommy Duong</name>
+    </author>
+    <author>
+      <name>Zikang Zhang</name>
+    </author>
+    <author>
+      <name>Ethan Traister</name>
+    </author>
+    <author>
+      <name>Kewen Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.01738v2</id>
+    <title>Simplicity Prevails: The Emergence of Generalizable AIGI Detection in Visual Foundation Models</title>
+    <updated>2026-04-15T07:37:32Z</updated>
+    <link href="https://arxiv.org/abs/2602.01738v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.01738v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While specialized detectors for AI-Generated Images (AIGI) achieve near-perfect accuracy on curated benchmarks, they suffer from a dramatic performance collapse in realistic, in-the-wild scenarios. In this work, we demonstrate that simplicity prevails over complex architectural designs. A simple linear classifier trained on the frozen features of modern Vision Foundation Models , including Perception Encoder, MetaCLIP 2, and DINOv3, establishes a new state-of-the-art. Through a comprehensive evaluation spanning traditional benchmarks, unseen generators, and challenging in-the-wild distributions, we show that this baseline not only matches specialized detectors on standard benchmarks but also decisively outperforms them on in-the-wild datasets, boosting accuracy by striking margins of over 30\%. We posit that this superior capability is an emergent property driven by the massive scale of pre-training data containing synthetic content. We trace the source of this capability to two distinct manifestations of data exposure: Vision-Language Models internalize an explicit semantic concept of forgery, while Self-Supervised Learning models implicitly acquire discriminative forensic features from the pretraining data. However, we also reveal persistent limitations: these models suffer from performance degradation under recapture and transmission, remain blind to VAE reconstruction and localized editing. We conclude by advocating for a paradigm shift in AI forensics, moving from overfitting on static benchmarks to harnessing the evolving world knowledge of foundation models for real-world reliability.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-02T07:20:02Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yue Zhou</name>
+    </author>
+    <author>
+      <name>Xinan He</name>
+    </author>
+    <author>
+      <name>Kaiqing Lin</name>
+    </author>
+    <author>
+      <name>Bing Fan</name>
+    </author>
+    <author>
+      <name>Feng Ding</name>
+    </author>
+    <author>
+      <name>Bin Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.21526v2</id>
+    <title>VIGIL: Part-Grounded Structured Reasoning for Generalizable Deepfake Detection</title>
+    <updated>2026-06-28T13:54:49Z</updated>
+    <link href="https://arxiv.org/abs/2603.21526v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.21526v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) offer a promising path toward interpretable deepfake detection by generating textual explanations. However, the reasoning process of current MLLM-based methods combines evidence generation and manipulation localization into a unified step. This combination blurs the boundary between faithful observations and hallucinated explanations, leading to unreliable conclusions. Building on this, we present VIGIL, a part-centric structured forensic framework inspired by expert forensic practice through a plan-then-examine pipeline: the model first plans which facial parts warrant inspection based on global visual cues, then examines each part with independently sourced forensic evidence. A stage-gated injection mechanism delivers part-level forensic evidence only during examination, ensuring that part selection remains driven by the model's own perception rather than biased by external signals. We further propose a progressive three-stage training paradigm whose reinforcement learning stage employs part-aware rewards to enforce anatomical validity and evidence--conclusion coherence. To enable rigorous generalizability evaluation, we construct OmniFake, a hierarchical 5-Level benchmark where the model, trained on only three foundational generators, is progressively tested up to in-the-wild social-media data. Extensive experiments on OmniFake and cross-dataset evaluations demonstrate that VIGIL consistently outperforms both expert detectors and concurrent MLLM-based methods across all generalizability levels.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-23T03:35:36Z</published>
+    <arxiv:comment>Project Page: https://vigil.best</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xinghan Li</name>
+    </author>
+    <author>
+      <name>Junhao Xu</name>
+    </author>
+    <author>
+      <name>Jingjing Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.08423v4</id>
+    <title>OmniAID: Decoupling Semantics and Artifacts for Universal AI-Generated Image Detection in the Wild</title>
+    <updated>2026-07-20T08:31:09Z</updated>
+    <link href="https://arxiv.org/abs/2511.08423v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.08423v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A truly universal AI-Generated Image (AIGI) detector must simultaneously generalize across diverse generative models and varied semantic content. Current methods learn a single, entangled forgery representation, conflating content-dependent flaws with content-agnostic artifacts, and are further constrained by outdated benchmarks. We propose OmniAID, a novel framework centered on a decoupled Mixture-of-Experts (MoE) architecture that separates: (1) semantic flaws across distinct content domains via Routable Specialized Semantic Experts, and (2) content-agnostic universal artifacts from content-dependent flaws via a Fixed Universal Artifact Expert. A two-stage training strategy first specializes experts independently with domain-specific hard-sampling, then trains a lightweight gating network for effective input routing. By explicitly decoupling "what is generated" (content-specific flaws) from "how it is generated" (universal artifacts), OmniAID achieves robust generalization. We also introduce Mirage, a large-scale, contemporary dataset comprising a modern training set and a challenging test set. Extensive experiments demonstrate that OmniAID surpasses existing detectors, establishing a new standard for AIGI detection against modern, in-the-wild threats. Code is available at https://github.com/yunncheng/OmniAID.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-11T16:33:49Z</published>
+    <arxiv:comment>Accepted by ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuncheng Guo</name>
+    </author>
+    <author>
+      <name>Junyan Ye</name>
+    </author>
+    <author>
+      <name>Chenjue Zhang</name>
+    </author>
+    <author>
+      <name>Hengrui Kang</name>
+    </author>
+    <author>
+      <name>Haohuan Fu</name>
+    </author>
+    <author>
+      <name>Conghui He</name>
+    </author>
+    <author>
+      <name>Weijia Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.12876v1</id>
+    <title>SPARED: Reasoning-Based AI-Generated Image Detection via Adversarially Edited Data</title>
+    <updated>2026-08-13T06:40:20Z</updated>
+    <link href="https://arxiv.org/abs/2608.12876v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.12876v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Detecting AI-generated images is only half the task: a deployed detector must also justify its verdict, yet existing detectors inherit three failure modes from their training data: real and fake images collected from different sources invite provenance shortcuts, supervised explanation corpora teach templated rationales, and a static forgery corpus leaves the decision boundary standing still while generators keep moving. We introduce \methodname{}, an adversarial reinforcement learning framework that pits two heterogeneous models against each other. A diffusion image editor learns to edit real photographs into fake counterparts of those same photographs that fool the current detector, while a reasoning MLLM learns to expose them with a verdict grounded in free-form reasoning. Both rewards are shortcut-proof by design: the attacker is credited only when its edit is faithfully executed, and the defender only when its verdict is correct. As the two models alternate, each round's attacker regenerates a harder training pool aimed at the current detector's blind spots, so the detector must generalize rather than memorize any fixed artifact distribution. Although the explanation is never rewarded, its quality rises round over round as a side effect of accuracy-only training. A detector trained within this loop improves monotonically across rounds on each of three external benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-13T06:40:20Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yicheng Bao</name>
+    </author>
+    <author>
+      <name>Xiahui Guo</name>
+    </author>
+    <author>
+      <name>Xuhong Wang</name>
+    </author>
+    <author>
+      <name>Xin Tan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.12811v1</id>
+    <title>Structured Local Differential Modeling for AI-Generated Image Detection</title>
+    <updated>2026-08-13T04:35:29Z</updated>
+    <link href="https://arxiv.org/abs/2608.12811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.12811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of AI-generated content has made the reliable detection of generated images an increasingly critical challenge. Existing detection methods are often dominated during training by semantically salient components with high signal-to-noise ratios (SNRs), thereby suppressing subtler forensic cues associated with the underlying generation mechanisms and embedded in low-level statistical structures. From an information-theoretic perspective, we present a key insight: effective detection in the low-level statistical space requires mitigating the dominance of semantic components while emphasizing and amplifying responses to low-SNR forgery traces. Building on this insight, we propose RippleNet, an AI-generated image detection framework based on local differential signals. RippleNet adaptively identifies forgery-sensitive regions and constructs multi-directional, multi-scale differential representations within local neighborhoods, explicitly characterizing anomalous patterns in neighborhood statistics. More importantly, we refine the attention mechanism to operate within the local differential representation space, enabling the model to establish explicit dependencies at a finer statistical granularity. This design facilitates the capture of pixel-level forgery traces that are difficult to model using conventional convolutions or image-wide patch-level attention. Extensive experiments on multiple public benchmarks and under cross-generator evaluation settings demonstrate that RippleNet achieves consistently competitive performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-13T04:35:29Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiazhen Yang</name>
+    </author>
+    <author>
+      <name>Ruijin Jin</name>
+    </author>
+    <author>
+      <name>Junjun Zheng</name>
+    </author>
+    <author>
+      <name>Xiangheng Kong</name>
+    </author>
+    <author>
+      <name>Zunlei Feng</name>
+    </author>
+    <author>
+      <name>Jie Lei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.21048v2</id>
+    <title>Veritas: Generalizable Deepfake Detection via Pattern-Aware Reasoning</title>
+    <updated>2026-02-27T07:50:11Z</updated>
+    <link href="https://arxiv.org/abs/2508.21048v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.21048v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deepfake detection remains a formidable challenge due to the complex and evolving nature of fake content in real-world scenarios. However, existing academic benchmarks suffer from severe discrepancies from industrial practice, typically featuring homogeneous training sources and low-quality testing images, which hinder the practical deployments of current detectors. To mitigate this gap, we introduce HydraFake, a dataset that simulates real-world challenges with hierarchical generalization testing. Specifically, HydraFake involves diversified deepfake techniques and in-the-wild forgeries, along with rigorous training and evaluation protocol, covering unseen model architectures, emerging forgery techniques and novel data domains. Building on this resource, we propose Veritas, a multi-modal large language model (MLLM) based deepfake detector. Different from vanilla chain-of-thought (CoT), we introduce pattern-aware reasoning that involves critical reasoning patterns such as "planning" and "self-reflection" to emulate human forensic process. We further propose a two-stage training pipeline to seamlessly internalize such deepfake reasoning capacities into current MLLMs. Experiments on HydraFake dataset reveal that although previous detectors show great generalization on cross-model scenarios, they fall short on unseen forgeries and data domains. Our Veritas achieves significant gains across different OOD scenarios, and is capable of delivering transparent and faithful detection outputs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-28T17:53:05Z</published>
+    <arxiv:comment>ICLR 2026 Oral. Project: https://github.com/EricTan7/Veritas</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hao Tan</name>
+    </author>
+    <author>
+      <name>Jun Lan</name>
+    </author>
+    <author>
+      <name>Zichang Tan</name>
+    </author>
+    <author>
+      <name>Ajian Liu</name>
+    </author>
+    <author>
+      <name>Chuanbiao Song</name>
+    </author>
+    <author>
+      <name>Senyuan Shi</name>
+    </author>
+    <author>
+      <name>Huijia Zhu</name>
+    </author>
+    <author>
+      <name>Weiqiang Wang</name>
+    </author>
+    <author>
+      <name>Jun Wan</name>
+    </author>
+    <author>
+      <name>Zhen Lei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.10042v3</id>
+    <title>Fake-HR1: Rethinking Reasoning of Vision Language Model for Synthetic Image Detection</title>
+    <updated>2026-04-11T16:21:06Z</updated>
+    <link href="https://arxiv.org/abs/2602.10042v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.10042v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent studies have demonstrated that incorporating Chain-of-Thought (CoT) reasoning into the detection process can enhance a model's ability to detect synthetic images. However, excessively lengthy reasoning incurs substantial resource overhead, including token consumption and latency, which is particularly redundant when handling obviously generated forgeries. To address this issue, we propose Fake-HR1, a large-scale hybrid-reasoning model that, to the best of our knowledge, is the first to adaptively determine whether reasoning is necessary based on the characteristics of the generative detection task. To achieve this, we design a two-stage training framework: we first perform Hybrid Fine-Tuning (HFT) for cold-start initialization, followed by online reinforcement learning with Hybrid-Reasoning Grouped Policy Optimization (HGRPO) to implicitly learn when to select an appropriate reasoning mode. Experimental results show that Fake-HR1 adaptively performs reasoning across different types of queries, surpassing existing LLMs in both reasoning ability and generative detection performance, while significantly improving response efficiency.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-10T18:10:08Z</published>
+    <arxiv:comment>Accepted by ICASSP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Changjiang Jiang</name>
+    </author>
+    <author>
+      <name>Xinkuan Sha</name>
+    </author>
+    <author>
+      <name>Fengchang Yu</name>
+    </author>
+    <author>
+      <name>Jingjing Liu</name>
+    </author>
+    <author>
+      <name>Jian Liu</name>
+    </author>
+    <author>
+      <name>Mingqi Fang</name>
+    </author>
+    <author>
+      <name>Chenfeng Zhang</name>
+    </author>
+    <author>
+      <name>Wei Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.08211v1</id>
+    <title>SciFigDetect: A Benchmark for AI-Generated Scientific Figure Detection</title>
+    <updated>2026-04-09T13:11:01Z</updated>
+    <link href="https://arxiv.org/abs/2604.08211v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.08211v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern multimodal generators can now produce scientific figures at near-publishable quality, creating a new challenge for visual forensics and research integrity. Unlike conventional AI-generated natural images, scientific figures are structured, text-dense, and tightly aligned with scholarly semantics, making them a distinct and difficult detection target. However, existing AI-generated image detection benchmarks and methods are almost entirely developed for open-domain imagery, leaving this setting largely unexplored. We present the first benchmark for AI-generated scientific figure detection. To construct it, we develop an agent-based data pipeline that retrieves licensed source papers, performs multimodal understanding of paper text and figures, builds structured prompts, synthesizes candidate figures, and filters them through a review-driven refinement loop. The resulting benchmark covers multiple figure categories, multiple generation sources and aligned real--synthetic pairs. We benchmark representative detectors under zero-shot, cross-generator, and degraded-image settings. Results show that current methods fail dramatically in zero-shot transfer, exhibit strong generator-specific overfitting, and remain fragile under common post-processing corruptions. These findings reveal a substantial gap between existing AIGI detection capabilities and the emerging distribution of high-quality scientific figures. We hope this benchmark can serve as a foundation for future research on robust and generalizable scientific-figure forensics. The dataset is available at https://github.com/Joyce-yoyo/SciFigDetect.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-09T13:11:01Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>You Hu</name>
+    </author>
+    <author>
+      <name>Chenzhuo Zhao</name>
+    </author>
+    <author>
+      <name>Changfa Mo</name>
+    </author>
+    <author>
+      <name>Haotian Liu</name>
+    </author>
+    <author>
+      <name>Xiaobai Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.26421v1</id>
+    <title>HydraPrompt: An Adaptive and Asymmetric Framework of Vision-Language Models for Synthetic Image Detection</title>
+    <updated>2026-05-26T01:20:18Z</updated>
+    <link href="https://arxiv.org/abs/2605.26421v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.26421v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid evolution of generative models has precipitated a proliferation of fabricated content, posing significant challenges to existing Synthetic Image Detection (SID) methods. Capitalizing on advancements in vision-language models (e.g., CLIP), recent attempts have leveraged learnable textual prompts to identify synthetic images. However, they still leverage static prompt as a fixed boundary for real and fake images, failing to adapt to the varying types of forgery that emerge during inference. To overcome this issue, we propose **HydraPrompt**, an asymmetric prompting framework that dynamically adjusts the category centers by aligning with fine-grained image cues. Specifically, we propose an Asymmetric Prompt Adapter (**APA**): (1) for authentic category, we introduce a single set of prompts to capture the consistent representative patterns, which serves as a unified anchor for real content. While (2) for fake category, we construct sample-adaptive prompts that specialize in capturing diverse cues from different samples, enabling adaptive modeling of forgery image variations. To increase pronounced discriminability within different synthetic images, we further introduce a Conditional Supervised Contrastive (**CSC**) objective, which compacts the authentic representations while capturing fine-grained forgery clues. Extensive experiments on popular SID benchmarks demonstrate the state-of-the-art performance of our framework.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T01:20:18Z</published>
+    <arxiv:comment>8 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Senyuan Shi</name>
+    </author>
+    <author>
+      <name>Hao Tan</name>
+    </author>
+    <author>
+      <name>Zichang Tan</name>
+    </author>
+    <author>
+      <name>Shuhan Feng</name>
+    </author>
+    <author>
+      <name>Ajian Liu</name>
+    </author>
+    <author>
+      <name>Sergio Escalera</name>
+    </author>
+    <author>
+      <name>Jun Wan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.08634v1</id>
+    <title>SSAFE: Simple and Strong AI-Generated Image Detection via Frozen Vision Encoders</title>
+    <updated>2026-06-07T13:56:17Z</updated>
+    <link href="https://arxiv.org/abs/2606.08634v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.08634v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of generative models has blurred the boundary between synthetic and real imagery, creating an urgent need for reliable deepfake detection. Yet most existing approaches rely on massive real--fake datasets, which are increasingly difficult to maintain as new generators continue to emerge. In this work, we investigate how much information about image authenticity is already encoded in modern multimodal vision representations. We find that frozen multimodal encoders naturally separate real and synthetic images in their embedding space, enabling a simple linear classifier to achieve strong performance without task-specific fine-tuning. Motivated by this observation, we develop a representation-aware data curation strategy that selects a compact set of representative generators for training. The resulting training set contains only 10K images, compared to 288K in AIGIBench and 4M in OpenFake, while improving robustness to unseen generators and distribution shifts. We additionally introduce RealWorldBench, a benchmark consisting of modern camera photographs, contemporary stock images, and outputs from recent commercial generators. Experiments across multiple benchmarks show that combining frozen multimodal representations with carefully curated training data provides a simple and effective approach to AI-generated image detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-07T13:56:17Z</published>
+    <arxiv:comment>Preprint. 22 pages, 10 figures, supplementary material included</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Seunghyun Lee</name>
+    </author>
+    <author>
+      <name>Byoungkwon Kim</name>
+    </author>
+    <author>
+      <name>Jaehyun Nam</name>
+    </author>
+    <author>
+      <name>Kyungmin Lee</name>
+    </author>
+    <author>
+      <name>Jinwoo Shin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.31082v1</id>
+    <title>Fleet: Few Shots Lead Effective AI-generated Image Detection</title>
+    <updated>2026-06-30T03:15:52Z</updated>
+    <link href="https://arxiv.org/abs/2606.31082v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.31082v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-generated image (AIGI) detection is undergoing a critical transition from laboratory benchmarks to open-world adversarial defense. The prevalent paradigm focuses on finding static feature spaces, assuming that some invariant artifacts learned from historical data can achieve universal zero-shot generalization. While achieving saturation on several AIGI benchmarks, this static hypothesis suffers a severe performance drop against rapidly evolving generators (e.g., SD3, Nano Banana Pro). To address these limitations, we propose that the field should expand beyond "static generalization" to a new paradigm of "dynamic adaptation". We introduce Fleet, a framework that pioneers a dynamic paradigm of continuous few-shot evolution, enabling rapid alignment with emerging generative threats. Fleet improves few-shot adaptation by replacing unconstrained feature updates with constrained routing correction, where avoidance routing redirects novel AI samples away from Non-AI-dominated routes within decoupled subspaces. To validate this, we present Treasure, a benchmark spanning 64 models and 360k images, featuring diverse architectures and 20 closed-source commercial engines. Experiments reveal that while static SOTA methods fail catastrophically on modern generators, Fleet restores performance from 20.4% to 73.1% with only 10-shot adaptation on "Doubao Seedream 4.0". Code and data are available at https://github.com/ICTMCG/Fleet .</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-30T03:15:52Z</published>
+    <arxiv:comment>25 pages, accepted by ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiaan Wang</name>
+    </author>
+    <author>
+      <name>Sirui Liu</name>
+    </author>
+    <author>
+      <name>Yu Li</name>
+    </author>
+    <author>
+      <name>Kaiyuan Yang</name>
+    </author>
+    <author>
+      <name>Juan Cao</name>
+    </author>
+    <author>
+      <name>Sheng Tang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.14684v1</id>
+    <title>GlobalForge: Towards Robust AI-Generated Image Detection</title>
+    <updated>2026-07-16T07:44:43Z</updated>
+    <link href="https://arxiv.org/abs/2607.14684v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.14684v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-generated image (AIGI) detectors achieve strong accuracy on clean benchmarks, but their performance drops sharply after images are propagated through real-world channels. We trace this fragility to what these detectors actually learn: they overfit to local artifacts left by generators in small spatial neighborhoods, which are easily destroyed by common propagation degradations such as JPEG compression and blur. Instead, we shift the discriminative cue from fragile local artifacts to more robust global structure. Building on this, we propose GlobalForge, a framework with two complementary modules. The Local Information Bottleneck (LIB) suppresses local components to block shortcut learning, while the Global Structural Reasoning (GSR) module forces every token to gather evidence from distant regions. Both modules are trained jointly under a contrastive structural loss based on degradation that keeps the resulting features stable under degradation. To support fine-grained robustness evaluation, we further introduce RealDeg-Bench, covering 7 common degradation operators and multi-step compound chains. GlobalForge improves average BAcc on 8 in-the-wild benchmark groups by $\mathbf{5.89\%}$ over the previous state-of-the-art, and is clearly ahead of representative baselines on RealDeg-Bench under both single and compound degradations. Code is available at https://anonymous.4open.science/r/GlobalForge-BE0F/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-16T07:44:43Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Manni Cui</name>
+    </author>
+    <author>
+      <name>Ruiqi Liu</name>
+    </author>
+    <author>
+      <name>Dianyuan Zou</name>
+    </author>
+    <author>
+      <name>Ziheng Qin</name>
+    </author>
+    <author>
+      <name>Jingrui Xu</name>
+    </author>
+    <author>
+      <name>ZiAn Wang</name>
+    </author>
+    <author>
+      <name>Jianglan Wei</name>
+    </author>
+    <author>
+      <name>Han Zhou</name>
+    </author>
+    <author>
+      <name>Yu Liu</name>
+    </author>
+    <author>
+      <name>Yan Wang</name>
+    </author>
+    <author>
+      <name>Shu Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.17700v1</id>
+    <title>Environment-Invariant Subspace Learning for Generalizable Deepfake Detection</title>
+    <updated>2026-08-18T12:22:21Z</updated>
+    <link href="https://arxiv.org/abs/2608.17700v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.17700v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Cross-distribution generalization remains a critical bottleneck in deepfake detection. While recent efforts leverage the semantic priors of large-scale visual foundation models (VFMs), a noteworthy yet underexplored challenge remains: the susceptibility of these semantic priors to environmental interference from factors such as lighting and style. Crucially, this interference establishes spurious correlations between forgery cues and environmental patterns that severely limit generalization. To address this fundamental challenge, we propose an innovative Environment-Invariant Subspace Learning (EISL) framework. The core contribution of EISL is that it aims to disentangle features into orthogonal forgery-relevant invariant factors and environment-related residual factors via a learnable low-rank projection. To facilitate robust feature disentanglement, we also design an Environmental Intervention module that generates diverse and challenging intervention pairs, simulating out-of-distribution environmental shifts to guide the model toward discovering truly invariant forgery representations. Experiments across cross-dataset, cross-generator, whole-face synthesis, and corruption settings show consistent gains and competitive or leading performance against strong detectors, demonstrating improved robustness to unseen forgery types and environmental variations. This work provides a new perspective and a valuable exploration for understanding and tackling the generalization barriers of VFMs in deepfake detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-18T12:22:21Z</published>
+    <arxiv:comment>12 pages, 4 figures, 11 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shenghao Chen</name>
+    </author>
+    <author>
+      <name>Hao Jia</name>
+    </author>
+    <author>
+      <name>Chen Li</name>
+    </author>
+    <author>
+      <name>Chunjie Ma</name>
+    </author>
+    <author>
+      <name>Zan Gao</name>
+    </author>
+    <author>
+      <name>Shengyong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.28302v1</id>
+    <title>FUSED: Forensic-Semantic Mixture-of-Experts for AI Inpainting Detection and Localization</title>
+    <updated>2026-08-28T13:05:43Z</updated>
+    <link href="https://arxiv.org/abs/2608.28302v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.28302v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Diffusion-based inpainting models modify only a localized part of an image, while many AI-image detectors rely on global artifacts and do not localize. These artifacts vary across generators, limiting detector transfer under distribution shifts. Recent work shows that restoring the authentic pixels outside the inpainted region removes these cues and can degrade pretrained detectors. To address this, we present FUSED, a unified framework for the joint detection and localization of AI-generated inpainting. FUSED combines low-level forensic cues with high-level semantic features using a sparsely-gated Mixture-of-Experts architecture, enabling the model to adaptively prioritize the most relevant signal for each token. For each input, FUSED predicts both an image-level manipulation score and a pixel-level mask of the inpainted area. On the OpenSDID cross-generator benchmark, FUSED achieves the best average detection and localization, with the largest gains on unseen generators. The same model transfers directly to the held-out AutoSplice and CocoGlide benchmarks, more than doubling localization performance. Evaluating each held-out benchmark with and without the global generator artifact further shows that all evaluated methods, ours included, partly read the artifact as evidence of manipulation, and FUSED remains the strongest under both conditions. Code and pretrained models are available at https://github.com/AntonNuzhdin/FUSED.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-28T13:05:43Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Anton Nuzhdin</name>
+    </author>
+    <author>
+      <name>Marcel Worring</name>
+    </author>
+    <author>
+      <name>Ivona Najdenkoska</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.19111v2</id>
+    <title>DiffSeg30k: A Multi-Turn Diffusion Editing Benchmark for Localized AIGC Detection</title>
+    <updated>2025-11-26T08:16:05Z</updated>
+    <link href="https://arxiv.org/abs/2511.19111v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.19111v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Diffusion-based editing enables realistic modification of local image regions, making AI-generated content harder to detect. Existing AIGC detection benchmarks focus on classifying entire images, overlooking the localization of diffusion-based edits. We introduce DiffSeg30k, a publicly available dataset of 30k diffusion-edited images with pixel-level annotations, designed to support fine-grained detection. DiffSeg30k features: 1) In-the-wild images--we collect images or image prompts from COCO to reflect real-world content diversity; 2) Diverse diffusion models--local edits using eight SOTA diffusion models; 3) Multi-turn editing--each image undergoes up to three sequential edits to mimic real-world sequential editing; and 4) Realistic editing scenarios--a vision-language model (VLM)-based pipeline automatically identifies meaningful regions and generates context-aware prompts covering additions, removals, and attribute changes. DiffSeg30k shifts AIGC detection from binary classification to semantic segmentation, enabling simultaneous localization of edits and identification of the editing models. We benchmark three baseline segmentation approaches, revealing significant challenges in semantic segmentation tasks, particularly concerning robustness to image distortions. Experiments also reveal that segmentation models, despite being trained for pixel-level localization, emerge as highly reliable whole-image classifiers of diffusion edits, outperforming established forgery classifiers while showing great potential in cross-generator generalization. We believe DiffSeg30k will advance research in fine-grained localization of AI-generated content by demonstrating the promise and limitations of segmentation-based methods. DiffSeg30k is released at: https://huggingface.co/datasets/Chaos2629/Diffseg30k</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T13:43:54Z</published>
+    <arxiv:comment>16 pages, 10 figures; typos corrected, references added</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hai Ci</name>
+    </author>
+    <author>
+      <name>Ziheng Peng</name>
+    </author>
+    <author>
+      <name>Pei Yang</name>
+    </author>
+    <author>
+      <name>Yingxin Xuan</name>
+    </author>
+    <author>
+      <name>Mike Zheng Shou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.21964v2</id>
+    <title>FakeFormer: Efficient Vulnerability-Driven Transformers for Generalisable Deepfake Detection</title>
+    <updated>2024-11-25T13:26:30Z</updated>
+    <link href="https://arxiv.org/abs/2410.21964v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.21964v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Vision Transformers (ViTs) have achieved unprecedented effectiveness in the general domain of image classification. Nonetheless, these models remain underexplored in the field of deepfake detection, given their lower performance as compared to Convolution Neural Networks (CNNs) in that specific context. In this paper, we start by investigating why plain ViT architectures exhibit a suboptimal performance when dealing with the detection of facial forgeries. Our analysis reveals that, as compared to CNNs, ViT struggles to model localized forgery artifacts that typically characterize deepfakes. Based on this observation, we propose a deepfake detection framework called FakeFormer, which extends ViTs to enforce the extraction of subtle inconsistency-prone information. For that purpose, an explicit attention learning guided by artifact-vulnerable patches and tailored to ViTs is introduced. Extensive experiments are conducted on diverse well-known datasets, including FF++, Celeb-DF, WildDeepfake, DFD, DFDCP, and DFDC. The results show that FakeFormer outperforms the state-of-the-art in terms of generalization and computational cost, without the need for large-scale training datasets. The code is available at \url{https://github.com/10Ring/FakeFormer}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-29T11:36:49Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Dat Nguyen</name>
+    </author>
+    <author>
+      <name>Marcella Astrid</name>
+    </author>
+    <author>
+      <name>Enjie Ghorbel</name>
+    </author>
+    <author>
+      <name>Djamila Aouada</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.14632v4</id>
+    <title>BusterX++: Towards Unified Cross-Modal AI-Generated Content Detection and Explanation with MLLM</title>
+    <updated>2026-06-15T21:10:39Z</updated>
+    <link href="https://arxiv.org/abs/2507.14632v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.14632v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of generative AI has substantially improved image and video synthesis, amplifying the risk of multimodal visual misinformation. Recent MLLMs have shown promise for transparent AI-generated content detection through reasoning and explanation, yet existing approaches largely treat image and video forensics as isolated tasks, leaving cross-modal synergies underexplored. To address this, we present \textbf{BusterX++}, a unified MLLM for joint image and video detection with interpretable reasoning. We also introduce \textbf{GenBuster-Bench++}, a meticulously curated, difficulty-aligned benchmark containing balanced image and video samples spanning recent generation models and diverse real-world scenarios. Using this controlled setting, we revisit the widely adopted $SFT \rightarrow RL$ post-training paradigm. Notably, our findings demonstrate that a single-stage, pure RL strategy driven strictly by sparse outcome rewards consistently matches or surpasses a strong SFT+RL baseline across both unified and single-modality settings. Our key insight reveals that SFT imposes lower policy entropy, which restricts the policy search space and dampens exploratory freedom. In contrast, single-stage pure RL maintains higher policy entropy throughout training, effectively unlocking the spontaneous emergence of cross-modal capability transfer between image and video forensics. Extensive experiments demonstrate that BusterX++ achieves state-of-the-art performance, highlighting the powerful potential of RL for unified cross-modal visual reasoning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-19T14:05:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haiquan Wen</name>
+    </author>
+    <author>
+      <name>Tianxiao Li</name>
+    </author>
+    <author>
+      <name>Zhenglin Huang</name>
+    </author>
+    <author>
+      <name>Yiwei He</name>
+    </author>
+    <author>
+      <name>Guangliang Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.23115v2</id>
+    <title>AgentFoX: LLM Agent-Guided Fusion with eXplainability for AI-Generated Image Detection</title>
+    <updated>2026-07-03T11:05:22Z</updated>
+    <link href="https://arxiv.org/abs/2603.23115v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.23115v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The realism of AI-generated images (AIGI) poses increasing challenges for reliable forensic detection, where heterogeneous expert detectors may produce conflicting predictions across diverse generative sources and post-processing conditions. Existing multi-expert fusion methods rely on fixed rules or learned fusion strategies, offering limited ability to assess sample-specific reliability, execute rigorous adjudication of conflicts, and provide evidence-grounded explanations. We propose AgentFoX, an LLM-driven agentic multi-expert framework for AIGI detection that employs a command-and-reasoning core to perform evidence fusion. Following predefined guidelines, the core coordinates designated subtasks to collect semantic and signal-level evidence, reason over structured contexts to determine authenticity, and generate an auditable report for explainability. During this process, Expert Profiles are constructed for model-centric reliability assessment, while Clustering Profiles are built for data-centric contextual analysis, jointly establishing evidence contexts for conflict resolution. Extensive evaluations across diverse benchmarks demonstrate the robustness and generalizability of AgentFoX under complex conditions.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-24T12:10:21Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yangxin Yu</name>
+    </author>
+    <author>
+      <name>Yue Zhou</name>
+    </author>
+    <author>
+      <name>Bin Li</name>
+    </author>
+    <author>
+      <name>Kaiqing Lin</name>
+    </author>
+    <author>
+      <name>Haodong Li</name>
+    </author>
+    <author>
+      <name>Jiangqun Ni</name>
+    </author>
+    <author>
+      <name>Bo Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.28177v2</id>
+    <title>AEGIS: A Holistic Benchmark for Evaluating Forensic Analysis of AI-Generated Academic Images</title>
+    <updated>2026-05-21T14:15:16Z</updated>
+    <link href="https://arxiv.org/abs/2604.28177v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.28177v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce AEGIS, A holistic benchmark for Evaluating forensic analysis of AI-Generated academic ImageS. Compared to existing benchmarks, AEGIS features three key advances: (1) Domain-Specific Complexity: covering seven academic categories with 39 fine-grained subtypes, exposing intrinsic forensic difficulty, where even GPT-5.1 reaches 48.80% overall performance and expert models achieve only limited localization accuracy (IoU 30.09%); (2) Diverse Forgery Simulations: modeling four prevalent academic forgery strategies across 25 generative models, with 11 yielding average forensic accuracy below 50%, showing that forensics lag behind generative advances; and (3) Multi-Dimensional Forensic Evaluation: jointly assessing detection, reasoning, and localization, revealing complementary strengths between model families, with multimodal large language models (MLLMs) at 84.74% accuracy in textual artifact recognition and expert detectors peaking at 79.54% accuracy in binary authenticity detection. By evaluating 25 leading MLLMs, nine expert models, and one unified multimodal understanding and generation model, AEGIS serves as a diagnostic testbed exposing fundamental limitations in academic image forensics.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-30T17:56:58Z</published>
+    <arxiv:comment>Accepted to ACL 2026 Main Conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bo Zhang</name>
+    </author>
+    <author>
+      <name>Tzu-Yen Ma</name>
+    </author>
+    <author>
+      <name>Zichen Tang</name>
+    </author>
+    <author>
+      <name>Junpeng Ding</name>
+    </author>
+    <author>
+      <name>Zirui Wang</name>
+    </author>
+    <author>
+      <name>Yizhuo Zhao</name>
+    </author>
+    <author>
+      <name>Peilin Gao</name>
+    </author>
+    <author>
+      <name>Zijie Xi</name>
+    </author>
+    <author>
+      <name>Zixin Ding</name>
+    </author>
+    <author>
+      <name>Haiyang Sun</name>
+    </author>
+    <author>
+      <name>Haocheng Gao</name>
+    </author>
+    <author>
+      <name>Yuan Liu</name>
+    </author>
+    <author>
+      <name>Liangjia Wang</name>
+    </author>
+    <author>
+      <name>Yiling Huang</name>
+    </author>
+    <author>
+      <name>Yujie Wang</name>
+    </author>
+    <author>
+      <name>Yuyue Zhang</name>
+    </author>
+    <author>
+      <name>Ronghui Xi</name>
+    </author>
+    <author>
+      <name>Yuanze Li</name>
+    </author>
+    <author>
+      <name>Jiacheng Liu</name>
+    </author>
+    <author>
+      <name>Zhongjun Yang</name>
+    </author>
+    <author>
+      <name>Haihong E</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.14091v2</id>
+    <title>Venus-DeFakerOne: Unified Fake Image Detection &amp; Localization</title>
+    <updated>2026-06-03T07:29:59Z</updated>
+    <link href="https://arxiv.org/abs/2605.14091v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.14091v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, the rapid evolution of generative AI has fundamentally reshaped the paradigm of image forgery, breaking the traditional boundaries between document editing, natural image manipulation, DeepFake generation, and full-image AIGC synthesis. Despite this shift toward unified forgery generation, existing research in Fake Image Detection and Localization (FIDL) remains fragmented. This creates a mismatch between increasingly unified forgery generation mechanisms and the domain-specific detection paradigm. Bridging this mismatch poses two key challenges for FIDL: understanding cross-domain artifacts transfer and interference, and building a high-capacity unified foundation model for joint detection and localization. To address these challenges, we propose DeFakerOne, a data-centric, unified FIDL foundation model integrating InternVL2 and SAM2. DeFakerOne enables simultaneous image-level detection and pixel-level forgery localization across diverse scenarios. Extensive experiments demonstrate that DeFakerOne achieves state-of-the-art performance, outperforming baselines on 39 forgery detection benchmarks and 9 localization benchmarks. Furthermore, the model exhibits superior robustness against real-world perturbations and state-of-the-art generators such as GPT-Image-2. Finally, we provide a systematic analysis of data scaling laws, cross-domain artifacts transfer-interference patterns, the necessity of fine-grained supervision, and the original resolution artifacts preservation, highlighting the design principles for scalable, robust, and unified FIDL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-13T20:20:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name> GuangJian Team</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.06746v2</id>
+    <title>AlignGemini: Generalizable AI-Generated Image Detection Through Task-Model Alignment</title>
+    <updated>2026-01-30T08:01:18Z</updated>
+    <link href="https://arxiv.org/abs/2512.06746v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.06746v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision Language Models (VLMs) are increasingly used for detecting AI-generated images (AIGI). However, converting VLMs into reliable detectors is resource-intensive, and the resulting models often suffer from hallucination and poor generalization. To investigate the root cause, we conduct an empirical analysis and identify two consistent behaviors. First, fine-tuning VLMs with semantic supervision improves semantic discrimination and generalizes well to unseen data. Second, fine-tuning VLMs with pixel-artifact supervision leads to weak generalization. These findings reveal a fundamental task-model misalignment. VLMs are optimized for high-level semantic reasoning and lack inductive bias toward low-level pixel artifacts. In contrast, conventional vision models effectively capture pixel-level artifacts but are less sensitive to semantic inconsistencies. This indicates that different models are naturally suited to different subtasks. Based on this insight, we formulate AIGI detection as two orthogonal subtasks: semantic consistency checking and pixel-artifact detection. Neglecting either subtask leads to systematic detection failures. We further propose the Task-Model Alignment principle and instantiate it in a two-branch detector, AlignGemini. The detector combines a VLM trained with pure semantic supervision and a vision model trained with pure pixel-artifact supervision. By enforcing clear specialization, each branch captures complementary cues. Experiments on in-the-wild benchmarks show that AlignGemini improves average accuracy by 9.5 percent using simplified training data. These results demonstrate that task-model alignment is an effective principle for generalizable AIGI detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-07T09:19:00Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ruoxin Chen</name>
+    </author>
+    <author>
+      <name>Jiahui Gao</name>
+    </author>
+    <author>
+      <name>Kaiqing Lin</name>
+    </author>
+    <author>
+      <name>Keyue Zhang</name>
+    </author>
+    <author>
+      <name>Yandan Zhao</name>
+    </author>
+    <author>
+      <name>Isabel Guan</name>
+    </author>
+    <author>
+      <name>Taiping Yao</name>
+    </author>
+    <author>
+      <name>Shouhong Ding</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.02222v1</id>
+    <title>MIRROR: Manifold Ideal Reference ReconstructOR for Generalizable AI-Generated Image Detection</title>
+    <updated>2026-02-02T15:28:17Z</updated>
+    <link href="https://arxiv.org/abs/2602.02222v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.02222v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High-fidelity generative models have narrowed the perceptual gap between synthetic and real images, posing serious threats to media security. Most existing AI-generated image (AIGI) detectors rely on artifact-based classification and struggle to generalize to evolving generative traces. In contrast, human judgment relies on stable real-world regularities, with deviations from the human cognitive manifold serving as a more generalizable signal of forgery. Motivated by this insight, we reformulate AIGI detection as a Reference-Comparison problem that verifies consistency with the real-image manifold rather than fitting specific forgery cues. We propose MIRROR (Manifold Ideal Reference ReconstructOR), a framework that explicitly encodes reality priors using a learnable discrete memory bank. MIRROR projects an input into a manifold-consistent ideal reference via sparse linear combination, and uses the resulting residuals as robust detection signals. To evaluate whether detectors reach the "superhuman crossover" required to replace human experts, we introduce the Human-AIGI benchmark, featuring a psychophysically curated human-imperceptible subset. Across 14 benchmarks, MIRROR consistently outperforms prior methods, achieving gains of 2.1% on six standard benchmarks and 8.1% on seven in-the-wild benchmarks. On Human-AIGI, MIRROR reaches 89.6% accuracy across 27 generators, surpassing both lay users and visual experts, and further approaching the human perceptual limit as pretrained backbones scale. The code is publicly available at: https://github.com/349793927/MIRROR</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-02T15:28:17Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ruiqi Liu</name>
+    </author>
+    <author>
+      <name>Manni Cui</name>
+    </author>
+    <author>
+      <name>Ziheng Qin</name>
+    </author>
+    <author>
+      <name>Zhiyuan Yan</name>
+    </author>
+    <author>
+      <name>Ruoxin Chen</name>
+    </author>
+    <author>
+      <name>Yi Han</name>
+    </author>
+    <author>
+      <name>Zhiheng Li</name>
+    </author>
+    <author>
+      <name>Junkai Chen</name>
+    </author>
+    <author>
+      <name>ZhiJin Chen</name>
+    </author>
+    <author>
+      <name>Kaiqing Lin</name>
+    </author>
+    <author>
+      <name>Jialiang Shen</name>
+    </author>
+    <author>
+      <name>Lubin Weng</name>
+    </author>
+    <author>
+      <name>Jing Dong</name>
+    </author>
+    <author>
+      <name>Yan Wang</name>
+    </author>
+    <author>
+      <name>Shu Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.00979v6</id>
+    <title>Ivy-Fake: A Unified Explainable Framework and Benchmark for Image and Video AIGC Detection</title>
+    <updated>2026-05-05T13:47:19Z</updated>
+    <link href="https://arxiv.org/abs/2506.00979v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.00979v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid development of Artificial Intelligence Generated Content (AIGC) techniques has enabled the creation of high-quality synthetic content, but it also raises significant security concerns. Current detection methods face two major limitations: (1) the lack of multidimensional explainable datasets for generated images and videos. Existing open-source datasets (e.g., WildFake, GenVideo) rely on oversimplified binary annotations, which restrict the explainability and trustworthiness of trained detectors. (2) Prior MLLM-based forgery detectors (e.g., FakeVLM) exhibit insufficiently fine-grained interpretability in their step-by-step reasoning, which hinders reliable localization and explanation. To address these challenges, we introduce Ivy-Fake, the first large-scale multimodal benchmark for explainable AIGC detection. It consists of over 106K richly annotated training samples (images and videos) and 5,000 manually verified evaluation examples, sourced from multiple generative models and real world datasets through a carefully designed pipeline to ensure both diversity and quality. Furthermore, we propose Ivy-xDetector, a reinforcement learning model based on Group Relative Policy Optimization (GRPO), capable of producing explainable reasoning chains and achieving robust performance across multiple synthetic content detection benchmarks. Extensive experiments demonstrate the superiority of our dataset and confirm the effectiveness of our approach. Notably, our method improves performance on GenImage from 86.88% to 96.32%, surpassing prior state-of-the-art methods by a clear margin.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-01T12:20:22Z</published>
+    <arxiv:comment>Accepted by ICMR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Changjiang Jiang</name>
+    </author>
+    <author>
+      <name>Wenhui Dong</name>
+    </author>
+    <author>
+      <name>Zhonghao Zhang</name>
+    </author>
+    <author>
+      <name>Fengchang Yu</name>
+    </author>
+    <author>
+      <name>Wei Peng</name>
+    </author>
+    <author>
+      <name>Xinbin Yuan</name>
+    </author>
+    <author>
+      <name>Yifei Bi</name>
+    </author>
+    <author>
+      <name>Ming Zhao</name>
+    </author>
+    <author>
+      <name>Zian Zhou</name>
+    </author>
+    <author>
+      <name>Chenyang Si</name>
+    </author>
+    <author>
+      <name>Caifeng Shan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.18660v5</id>
+    <title>So-Fake: Benchmarking and Explaining Social Media Image Forgery Detection</title>
+    <updated>2026-07-31T15:32:37Z</updated>
+    <link href="https://arxiv.org/abs/2505.18660v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.18660v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in AI-powered generative models have enabled the creation of increasingly realistic synthetic images, posing significant risks to information integrity and public trust on social media platforms. While robust detection frameworks and diverse, large-scale datasets are essential to mitigate these risks, existing academic efforts remain limited in scope: current datasets lack the diversity, scale, and realism required for social media contexts, while detection methods struggle with generalization to unseen generative technologies. To bridge this gap, we introduce So-Fake-Set, a comprehensive social media-oriented dataset with over 2 million high-quality images, diverse generative sources, and photorealistic imagery synthesized using 35 state-of-the-art generative models. To rigorously evaluate cross-domain robustness, we establish a novel and large-scale (100K) out-of-domain benchmark (So-Fake-OOD) featuring synthetic imagery from commercial models explicitly excluded from the training distribution, creating a realistic testbed for evaluating real-world performance. Leveraging these resources, we present So-Fake-R1, an advanced vision-language framework that employs reinforcement learning for highly accurate forgery detection, precise localization, and explainable inference through interpretable visual rationales. Extensive experiments show that So-Fake-R1 outperforms the second-best method, with a 1.3% gain in detection accuracy and a 4.5% increase in localization IoU. By integrating a scalable dataset, a challenging OOD benchmark, and an advanced detection framework, this work establishes a new foundation for social media-centric forgery detection research. The code, models, and datasets will be released publicly.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-24T11:53:35Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhenglin Huang</name>
+    </author>
+    <author>
+      <name>Xiangtai Li</name>
+    </author>
+    <author>
+      <name>Xi Yang</name>
+    </author>
+    <author>
+      <name>Bei Peng</name>
+    </author>
+    <author>
+      <name>Xiaowei Huang</name>
+    </author>
+    <author>
+      <name>Baoyuan Wu</name>
+    </author>
+    <author>
+      <name>Dacheng Tao</name>
+    </author>
+    <author>
+      <name>Ming-Hsuan Yang</name>
+    </author>
+    <author>
+      <name>Guangliang Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.18573v1</id>
+    <title>PATE-Forensics: Perception-as-Tool for Explainable Deepfake Forensics with General-Purpose MLLMs</title>
+    <updated>2026-08-19T06:10:00Z</updated>
+    <link href="https://arxiv.org/abs/2608.18573v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.18573v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing explainable deepfake forensic methods typically rely on task-adapted MLLM to jointly address detection, localization, and explanation. Inspired by agent-style tool use, we instead introduce a Perception-as-Tool paradigm and instantiate it as PATE-Forensics, which architecturally decouples detection and localization from explanation generation while coupling detection and localization as tightly as possible within a forensic perception tool. The DINOv3-based tool couples a multi-granularity detection module that integrates global, patch-level, and segment-level evidence with a cue-guided localization module by spatializing the patch-level and segment-level evidence into forgery score maps that guide dense mask prediction. The original image and forensic perception outputs produced by the tool form structured forensic context for a general-purpose MLLM, which is guided by prompt constraints to generate explanations without task-specific fine-tuning. On DDL-X Track 3, PATE-Forensics achieves the best official score of 0.89, outperforming the second-ranked team by 0.19 points. Our code is available at https://github.com/yqli00000/PATE-Forensics.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-19T06:10:00Z</published>
+    <arxiv:comment>9 pages, 3 figures, 2 tables; DDL-X Track 3, IJCAI 2026 AI Safety Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yaqi Li</name>
+    </author>
+    <author>
+      <name>Jielun Peng</name>
+    </author>
+    <author>
+      <name>Yabin Wang</name>
+    </author>
+    <author>
+      <name>Jincheng Liu</name>
+    </author>
+    <author>
+      <name>Xiaopeng Hong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.18968v1</id>
+    <title>Frozen DINO Localizes Image Edits Without a Localizer</title>
+    <updated>2026-08-19T14:35:59Z</updated>
+    <link href="https://arxiv.org/abs/2608.18968v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.18968v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Localized image edits can change a photograph's meaning while leaving most of it authentic, so forensic analysis must identify where an edit occurred. We show that patch-level perturbation responses from frozen DINO encoders are themselves localization maps. Training-free Localization of AI-image Edits from patch-token Drift (TRAIL) applies one global Haar perturbation and maps cosine drift between corresponding patch tokens. On 80 source-disjoint CocoGlide test images, TRAIL reaches .903 patch AUROC versus .912 for the mask-supervised Detective SAM; fixed-threshold Dice is .619 versus .709, while an oracle threshold raises TRAIL to .790. Transferred unchanged to Poisson image interpolation, TRAIL reaches .855 AUROC versus .864, showing that the cue persists without a generator. Across sixteen DINO encoders, the best block lies at normalized depth .80-.94. Global context matters: AUROC falls from .903 globally to .857 for local-in-canvas perturbations and .735 for independently encoded crops. Frozen DINO patch tokens therefore contain a strong late-layer localization signal whose visibility depends on the perturbation and preserved context. Code: https://github.com/VishalJ99/trail-image-edit-localization.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-19T14:35:59Z</published>
+    <arxiv:comment>6 pages, 2 figures, 2 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zane Kumar</name>
+    </author>
+    <author>
+      <name>Vishal Jain</name>
+    </author>
+    <author>
+      <name>Bernhard Kainz</name>
+    </author>
+  </entry>
+</feed>

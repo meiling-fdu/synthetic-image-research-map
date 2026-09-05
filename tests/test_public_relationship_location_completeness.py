@@ -131,7 +131,7 @@ def test_candidate_status_suppresses_preserved_marker_without_deleting_coordinat
     from scripts.export_public_preview import preserve_map_relationships_after_integration
     from scripts.public_export_guard import analyze_shrinkage
     papers, markers, mappings, _, locations, _, _ = fixture()
-    papers[0].update(authors='Ada Example', task='detection', scope_status='in_scope', curation_status='confirmed')
+    papers[0].update(authors='Ada Example', tasks='detection', image_scopes='fully_generated', research_types='method', scope_status='in_scope', curation_status='confirmed')
     original = deepcopy(locations)
     locations[0]['coordinate_status'] = status
     reviews = [dict(institution_id='institution:1', institution='Example University', related_paper_id='paper:1', review_status='pending_review', coordinate_status='needs_coordinate_review')]

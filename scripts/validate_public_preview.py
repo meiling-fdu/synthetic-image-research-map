@@ -42,6 +42,11 @@ except ImportError:
     from institution_types import INSTITUTION_TYPE_SET
 
 try:
+    from .paper_taxonomy import IMAGE_SCOPE_ORDER, RESEARCH_TYPE_ORDER, TASK_ORDER
+except ImportError:
+    from paper_taxonomy import IMAGE_SCOPE_ORDER, RESEARCH_TYPE_ORDER, TASK_ORDER
+
+try:
     from .name_matching import canonical_name_key
 except ImportError:
     from name_matching import canonical_name_key
@@ -87,11 +92,7 @@ DEFAULT_PAPER_INPUT = Path("web/data/public_preview_papers.json")
 DEFAULT_ENGLISH_NAME_OVERRIDES = Path(
     "data/manual/institution_english_name_overrides.csv"
 )
-ALLOWED_TASKS = {
-    "detection",
-    "source_attribution",
-    "detection_and_source_attribution",
-}
+ALLOWED_TASKS = set(TASK_ORDER)
 FORBIDDEN_LABELS = {
     "generator_attribution",
     "model_attribution",
@@ -108,6 +109,57 @@ AUTHOR_MAPPING_SOURCES = {
     "unmapped",
 }
 ALLOWED_VENUE_TYPES = {"conference", "journal", "preprint", "book"}
+
+
+def validate_taxonomy_record(
+    record: Mapping[str, Any], issues: List["Issue"], index: int, title: str
+) -> None:
+    dimensions = {
+        "tasks": set(TASK_ORDER),
+        "image_scopes": set(IMAGE_SCOPE_ORDER),
+        "research_types": set(RESEARCH_TYPE_ORDER),
+    }
+    for field, allowed in dimensions.items():
+        values = record.get(field)
+        if not isinstance(values, list):
+            add_issue(issues, "ERROR", index, title, f"{field} must be an array")
+            continue
+        if len(values) != len(set(values)):
+            add_issue(issues, "ERROR", index, title, f"{field} must not contain duplicates")
+        unknown = [value for value in values if value not in allowed]
+        if unknown:
+            add_issue(
+                issues,
+                "ERROR",
+                index,
+                title,
+                f"{field} contains unsupported values: {', '.join(map(str, unknown))}",
+            )
+    taxonomy_status = record.get("taxonomy_status")
+    taxonomy_review = record.get("taxonomy_review")
+    if taxonomy_status not in {"reviewed", "needs_review"}:
+        add_issue(issues, "ERROR", index, title, "taxonomy_status is invalid or missing")
+    if not isinstance(taxonomy_review, dict):
+        add_issue(issues, "ERROR", index, title, "taxonomy_review must be an object")
+    else:
+        statuses = []
+        for field in dimensions:
+            review = taxonomy_review.get(field)
+            if not isinstance(review, dict):
+                add_issue(issues, "ERROR", index, title, f"taxonomy_review.{field} must be an object")
+                continue
+            status = review.get("status")
+            statuses.append(status)
+            if status not in {"reviewed", "needs_review"}:
+                add_issue(issues, "ERROR", index, title, f"taxonomy_review.{field}.status is invalid")
+            if status == "needs_review" and not str(review.get("reason") or "").strip():
+                add_issue(issues, "ERROR", index, title, f"taxonomy_review.{field}.reason is required")
+        expected = "needs_review" if "needs_review" in statuses else "reviewed"
+        if taxonomy_status in {"reviewed", "needs_review"} and taxonomy_status != expected:
+            add_issue(issues, "ERROR", index, title, f"taxonomy_status must be {expected}")
+    for retired in ("task", "paper_categories", "entry_type"):
+        if retired in record:
+            add_issue(issues, "ERROR", index, title, f"retired field is public: {retired}")
 try:
     from .venue_tracks import ALLOWED_VENUE_TRACKS
 except ImportError:
@@ -1139,17 +1191,7 @@ def validate_record(index: int, record: Any, issues: List[Issue]) -> None:
             "retracted paper must not appear in public preview",
         )
 
-    task = clean_text(record.get("task"))
-    if task.casefold() in FORBIDDEN_LABELS:
-        add_issue(issues, "ERROR", index, title, f"forbidden task label: {task}")
-    elif task not in ALLOWED_TASKS:
-        add_issue(
-            issues,
-            "ERROR",
-            index,
-            title,
-            f"task must be one of {', '.join(sorted(ALLOWED_TASKS))}",
-        )
+    validate_taxonomy_record(record, issues, index, title)
 
     for field in ("preliminary_task",):
         value = normalized_text(record.get(field))
@@ -1340,18 +1382,7 @@ def validate_paper_record(index: int, record: Any, issues: List[Issue]) -> None:
             "retracted paper must not appear in public preview",
         )
 
-    task = clean_text(record.get("task"))
-    allowed_paper_tasks = {*ALLOWED_TASKS, "uncertain"}
-    if task.casefold() in FORBIDDEN_LABELS - {"uncertain"}:
-        add_issue(issues, "ERROR", index, title, f"forbidden task label: {task}")
-    elif task not in allowed_paper_tasks:
-        add_issue(
-            issues,
-            "ERROR",
-            index,
-            title,
-            f"task must be one of {', '.join(sorted(allowed_paper_tasks))}",
-        )
+    validate_taxonomy_record(record, issues, index, title)
 
     year_value = record.get("publication_year")
     if is_missing_value(year_value):

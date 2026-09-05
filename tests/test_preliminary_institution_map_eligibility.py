@@ -25,7 +25,7 @@ def fixture():
         "title": "Pending paper with sourced affiliation",
         "year": 2026,
         "publication_year": 2026,
-        "task": "detection",
+        "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
         "authors": ["Ada Example"],
         "curation_status": "needs_review",
         "review_status": "pending",

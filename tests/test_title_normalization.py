@@ -135,8 +135,7 @@ class TitleNormalizationTests(unittest.TestCase):
                 "venue": "Pattern Recognition",
                 "doi": "10.1000/title-case",
                 "publication_type": "journal",
-                "task": "detection",
-                "paper_categories": ["method"],
+                "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
                 "source_database": "manual",
                 "scope_status": "in_scope",
             }
@@ -173,8 +172,7 @@ class TitleNormalizationTests(unittest.TestCase):
                     "venue": "Pattern Recognition",
                     "doi": "10.1000/metadata-update",
                     "publication_type": "journal",
-                    "task": "detection",
-                    "paper_categories": ["method"],
+                    "tasks": ["detection"], "image_scopes": ["fully_generated"], "research_types": ["method"],
                     "source_database": "manual",
                     "scope_status": "in_scope",
                 }
