@@ -71,6 +71,8 @@
         event.stopPropagation();
         handlers.click(event);
       });
+      element.addEventListener("focus", handlers.hover);
+      element.addEventListener("blur", handlers.leave);
     }
     return true;
   }

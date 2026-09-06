@@ -175,12 +175,18 @@ const venueTypeFilter = document.querySelector("#venue-type-filter");
 const countryFilter = document.querySelector("#country-filter");
 const institutionTypeFilter = document.querySelector("#institution-type-filter");
 const preprintFilter = document.querySelector("#preprint-filter");
+const moreFiltersToggle = document.querySelector("#more-filters-toggle");
+const moreFiltersContent = document.querySelector("#more-filters-content");
 const publishedOnlyFilter = document.querySelector("#published-only-filter");
 const minYearFilter = document.querySelector("#min-year-filter");
 const maxYearFilter = document.querySelector("#max-year-filter");
 const yearRangeMinimum = document.querySelector("#year-range-min");
 const yearRangeMaximum = document.querySelector("#year-range-max");
 const yearRangeSlider = document.querySelector(".year-range-slider");
+
+function isPublishedOnlySelected() {
+  return publishedOnlyFilter.value === "published-only";
+}
 const resetButton = document.querySelector("#reset-filters");
 const activeFilterBar = document.querySelector("#active-filter-bar");
 const activeFilterChips = document.querySelector("#active-filter-chips");
@@ -218,6 +224,9 @@ const copyViewLinkStatus = document.querySelector("#copy-view-link-status");
 const exportCsvButton = document.querySelector("#export-csv");
 const resultsViewButtons = document.querySelectorAll("[data-results-view]");
 const paperDetails = document.querySelector("#paper-details");
+const mapWorkspace = document.querySelector(".map-workspace");
+const openPaperDetailsButton = document.querySelector("#open-paper-details");
+const stackedDetailsMedia = window.matchMedia("(max-width: 1250px)");
 const paperDetailsHeading = document.querySelector("#paper-details-heading");
 const paperDetailsContent = document.querySelector("#paper-details-content");
 const closePaperDetailsButton = document.querySelector("#close-paper-details");
@@ -1019,8 +1028,10 @@ function activeFilterChipDescriptors() {
       key: "version", category: "Version", value: selectedFilterOptionLabel(preprintFilter),
     });
   }
-  if (publishedOnlyFilter.checked) {
-    descriptors.push({ key: "published-only", category: "Published only", value: "On" });
+  if (isPublishedOnlySelected()) {
+    descriptors.push({
+      key: "published-only", category: "Publication Status", value: "Published only",
+    });
   }
   const selection = currentYearSelection();
   if (yearRangeBounds && selection && (
@@ -1053,7 +1064,7 @@ function currentViewState() {
     country: countryFilter.value,
     institutionType: institutionTypeFilter.value,
     version: preprintFilter.value,
-    publishedOnly: publishedOnlyFilter.checked,
+    publishedOnly: isPublishedOnlySelected(),
     yearStart: years?.start ?? null,
     yearEnd: years?.end ?? null,
     yearMinimum: yearRangeBounds?.minimum ?? null,
@@ -1237,7 +1248,7 @@ function restoreViewState(state) {
   setRestoredSelectValue(countryFilter, state.country, { dynamic: true });
   setRestoredSelectValue(institutionTypeFilter, state.institutionType, { dynamic: true });
   setRestoredSelectValue(preprintFilter, state.version);
-  publishedOnlyFilter.checked = state.publishedOnly === true;
+  publishedOnlyFilter.value = state.publishedOnly === true ? "published-only" : "all";
   if (yearRangeBounds) {
     const selection = resolveYearSelection(yearRangeBounds, {
       start: state.yearStart ?? yearRangeBounds.minimum,
@@ -1300,6 +1311,28 @@ function restoreViewStateFromLocation() {
   syncUrlFromState();
 }
 
+function setMoreFiltersExpanded(expanded) {
+  if (!expanded) {
+    closeAllFilterDropdowns();
+    if (moreFiltersContent.contains(document.activeElement)) moreFiltersToggle.focus();
+  }
+  moreFiltersContent.hidden = !expanded;
+  moreFiltersToggle.setAttribute("aria-expanded", String(expanded));
+}
+
+function syncMoreFilters({ reset = false } = {}) {
+  const values = [venueTypeFilter, venueFilter, countryFilter, institutionTypeFilter, preprintFilter]
+    .map(control => control.value);
+  const count = values.filter(value => value && value !== "all").length;
+  const signature = JSON.stringify(values);
+  moreFiltersToggle.textContent = count ? `More filters · ${count}` : "More filters";
+  // Keep manual disclosure choices across unrelated renders; react to filter changes.
+  if (reset || moreFiltersToggle.dataset.filterSignature !== signature) {
+    setMoreFiltersExpanded(count > 0);
+  }
+  moreFiltersToggle.dataset.filterSignature = signature;
+}
+
 function renderActiveFilterChips() {
   const descriptors = activeFilterChipDescriptors();
   const signature = JSON.stringify(descriptors);
@@ -1340,6 +1373,7 @@ function clearInstitutionFilter() {
     && displayedInstitutionFilter?.source === "keyword";
   if (!activeInstitutionFilter && displayedInstitutionFilter?.source === "keyword") {
     keywordFilter.value = "";
+    keywordSuggestions.close();
   }
   activeInstitutionFilter = null;
   rememberFilterChange(clearedKeyword ? "keyword" : "institution");
@@ -2752,7 +2786,7 @@ function recordMatchesActiveFilters(record, keywordTerms, options = {}) {
     (selectedVersion === "has-arxiv" && hasArxivVersion(record)) ||
     (selectedVersion === "no-arxiv" && !hasArxivVersion(record));
   const matchesPublicationStatus = typeof publishedOnlyFilter === "undefined"
-    || !publishedOnlyFilter.checked || isFormallyPublished(record);
+    || !isPublishedOnlySelected() || isFormallyPublished(record);
   const year = publicationYear(record);
   const minimumYear = yearFilterValue(minYearFilter);
   const maximumYear = yearFilterValue(maxYearFilter);
@@ -3133,8 +3167,9 @@ function createFilterDropdown(select) {
           selectFilterDropdownValue(dropdown, option.value);
         }
       }
-    } else if (event.key === "Escape") {
+    } else if (event.key === "Escape" && !panel.hidden) {
       event.preventDefault();
+      event.stopPropagation();
       closeFilterDropdown(dropdown, true);
     }
   });
@@ -3419,7 +3454,8 @@ function activateChartFilter(filter, value, label = "") {
     .find((control) => (
       control.dataset.chartFilter === filter && control.dataset.chartValue === value
     ));
-  refreshedControl?.focus({ preventScroll: true });
+  (refreshedControl || (mobileFiltersMedia.matches ? mobileFiltersTrigger : keywordFilter))
+    .focus({ preventScroll: true });
 }
 
 function renderTaskChart(paperCoverageRecords) {
@@ -4341,7 +4377,9 @@ function syncResultHighlights() {
   const selectedPaperId = interactionState.selectedPaperId;
   const selectedIndexes = interactionResultIndexes(persistentResultSelection());
   const hoveredIndexes = interactionState.detailMode === "empty"
-    ? interactionResultIndexes(interactionState.transientHover)
+    ? interactionState.transientHover?.institutionKey
+      ? resultsPipeline?.resultIndexesByInstitutionKey.get(interactionState.transientHover.institutionKey) || new Set()
+      : interactionResultIndexes(interactionState.transientHover)
     : new Set();
   resultsList.querySelectorAll(
     `.result-item[data-result-generation="${resultsRenderGeneration}"]`,
@@ -4607,7 +4645,16 @@ function prepareFirstResultViewport(generation) {
     const preparedCards = [...stagingList.children];
     stagingList.remove();
     if (generation !== resultsRenderGeneration) return;
+    const focusedCard = document.activeElement?.closest?.(".result-item");
+    const restoreCardFocus = focusedCard && resultsList.contains(focusedCard);
     resultsList.replaceChildren(...preparedCards);
+    if (restoreCardFocus) {
+      const replacement = preparedCards.find(card => (
+        card.dataset.paperIdentity === focusedCard.dataset.paperIdentity
+        && card.dataset.markerIdentity === focusedCard.dataset.markerIdentity
+      ));
+      (replacement || resultsCount).focus({ preventScroll: true });
+    }
     resultsList.classList.toggle("is-masonry-ready", masonryReady);
     resultsList.hidden = false;
     pipeline.renderedCount = firstEnd;
@@ -4640,23 +4687,36 @@ function scheduleResultsMasonryLayout(cards = null) {
 function renderNoResultsState(resultNoun) {
   const descriptors = activeFilterChipDescriptors();
   const constraintCount = descriptors.length;
-  resultsEmptyHeading.textContent = `No matching ${resultNoun}s`;
-  resultsEmptySummary.textContent = constraintCount
-    ? `${constraintCount} active filter/search constraint${constraintCount === 1 ? "" : "s"} ${constraintCount === 1 ? "is" : "are"} currently excluding all ${resultNoun}s.`
-    : `No ${resultNoun}s are available in the current dataset view.`;
+  const noun = resultNoun === "unique paper" ? "paper" : resultNoun;
+  const keyword = descriptors.find(({key}) => key === "keyword");
+  resultsEmptyHeading.textContent = keyword
+    ? `No ${noun}s match “${keyword.value}”.`
+    : `No matching ${noun}s`;
+  resultsEmptySummary.hidden = constraintCount > 0;
+  resultsEmptySummary.textContent = constraintCount ? ""
+    : `No ${noun}s are available in the current dataset view.`;
   const fragment = document.createDocumentFragment();
-  descriptors.forEach(({ key, category, value }) => {
+  // A short set of alternatives is useful only when there is more than one constraint.
+  (constraintCount > 1 && constraintCount <= 3 ? descriptors : []).forEach(({ key, category, value }) => {
     const item = document.createElement("li");
     const remove = document.createElement("button");
     remove.type = "button";
     remove.dataset.emptyRemoveFilter = key;
-    remove.textContent = `Remove ${category}: ${value}`;
+    remove.textContent = `${category}: ${value} ×`;
     remove.setAttribute("aria-label", `Remove ${category} filter: ${value}`);
     item.append(remove);
     fragment.append(item);
   });
   resultsEmptyFilterActions.replaceChildren(fragment);
-  undoLastFilterButton.hidden = !lastFilterChange;
+  undoLastFilterButton.hidden = constraintCount < 2 || !lastFilterChange;
+  delete clearEmptyFiltersButton.dataset.emptyRemoveFilter;
+  clearEmptyFiltersButton.textContent = "Clear all filters";
+  if (constraintCount === 1) {
+    const {key, category} = descriptors[0];
+    clearEmptyFiltersButton.dataset.emptyRemoveFilter = key;
+    clearEmptyFiltersButton.textContent = key === "year" ? "Reset year"
+      : `Clear ${key === "venue" ? "venue" : category.toLocaleLowerCase()}`;
+  }
   clearEmptyFiltersButton.hidden = constraintCount === 0;
 }
 
@@ -4695,13 +4755,14 @@ function renderResults(visibleRecords, visiblePaperRecords = [], generation = nu
   const resultNoun = resultsView === "papers" ? "unique paper" : "institution record";
   resultsCount.textContent = count
     ? `${count.toLocaleString("en-US")} ${resultNoun}${count === 1 ? "" : "s"}`
-    : `No matching ${resultNoun}s`;
+    : `0 ${resultsView === "papers" ? "papers" : "institution records"}`;
   exportCsvButton.disabled = count === 0;
   resultsEmpty.hidden = count !== 0;
 
   if (!count) {
     renderNoResultsState(resultNoun);
     resultsPipeline = null;
+    if (resultsList.contains(document.activeElement)) resultsCount.focus({ preventScroll: true });
     resultsList.replaceChildren();
     resultsList.hidden = true;
     resultsList.classList.remove("is-masonry-ready");
@@ -4748,6 +4809,25 @@ function baseMapStatusText(visibleRecords) {
   return markerCount
     ? `Showing ${markerCount} institution/location marker${markerCount === 1 ? "" : "s"}.${interactionHint}`
     : "No records match the current filters.";
+}
+
+// Layout visibility is DOM-only; selection and pinning stay in interactionState.
+function setPaperDetailsExpanded(expanded, { focus = false } = {}) {
+  const hidingFocus = !expanded && !stackedDetailsMedia.matches
+    && paperDetails.contains(document.activeElement);
+  mapWorkspace.classList.toggle("details-collapsed", !expanded);
+  openPaperDetailsButton.setAttribute("aria-expanded", String(expanded));
+  closePaperDetailsButton.disabled = false;
+  scheduleMapResize();
+  if (focus || hidingFocus) {
+    (expanded ? closePaperDetailsButton : openPaperDetailsButton).focus({ preventScroll: true });
+  }
+}
+
+function syncPaperDetailsLayout() {
+  const hasDetails = interactionState.detailMode !== "empty"
+    || Boolean(interactionState.transientHover) || Boolean(requestedPaperIdentity);
+  setPaperDetailsExpanded(hasDetails);
 }
 
 function resetPaperDetails() {
@@ -5079,6 +5159,10 @@ function renderMarkerPreview(markerEntry) {
 }
 
 function renderActiveSelection({ preserveScroll = false } = {}) {
+  const hadDetailsFocus = paperDetailsContent.contains(document.activeElement);
+  try {
+  clearCardMapHighlights();
+  syncPaperDetailsLayout();
   setMarkerSelectionState();
   syncResultHighlights();
   if (interactionState.detailMode === "paper" && interactionState.selectedPaperId) {
@@ -5128,6 +5212,12 @@ function renderActiveSelection({ preserveScroll = false } = {}) {
   resetPaperDetails();
   mapStatus.classList.toggle("paper-highlight-active", false);
   mapStatus.textContent = baseMapStatusText(currentFilteredRecords);
+  } finally {
+    if (hadDetailsFocus && document.activeElement === document.body) {
+      (stackedDetailsMedia.matches || !mapWorkspace.classList.contains("details-collapsed")
+        ? paperDetailsHeading : openPaperDetailsButton).focus({ preventScroll: true });
+    }
+  }
 }
 
 function clearHoveredSelection(marker) {
@@ -5453,6 +5543,7 @@ function renderRecordsForGeneration({ generation = null } = {}) {
     venueTypeDimensionSets.filteredPapers,
   );
   renderActiveFilterChips();
+  syncMoreFilters();
   const filteredSets = deriveFilteredRecordSets(
     records,
     paperRecords,
@@ -5478,6 +5569,7 @@ function renderRecordsForGeneration({ generation = null } = {}) {
 
   closeActiveInstitutionTooltip();
   markerLayer.clearLayers();
+  clearCardMapHighlights();
   hoverConnectionLayer.clearLayers();
   selectedConnectionLayer.clearLayers();
   visibleMarkerEntries = [];
@@ -5552,6 +5644,7 @@ function renderRecordsForGeneration({ generation = null } = {}) {
   renderHeaderStatistics(visibleRecords, visiblePaperRecords);
   renderResults(visibleRecords, visiblePaperRecords, activeGeneration);
   mapStatus.classList.toggle("error", false);
+  syncPaperDetailsLayout();
   if (interactionState.detailMode !== "empty") {
     renderActiveSelection();
   } else if (linkedPaperState === "unavailable") {
@@ -5625,6 +5718,7 @@ function closeFiltersDrawer({ restoreFocus = true } = {}) {
 }
 
 function handleFiltersDrawerKeydown(event) {
+  if (event.defaultPrevented) return;
   if (!mobileFiltersMedia.matches || !filtersDrawerOpen) return;
   if (event.key === "Escape") {
     event.preventDefault();
@@ -6094,6 +6188,18 @@ function displayDataset(normalizedData) {
     ],
   );
   displayPublicPreviewDate(normalizedData.metadata);
+  keywordSuggestions.setEntries([
+    ...[...canonicalPaperRecordsByIdentity].flatMap(([id, record]) => [
+      {type: "Papers", id, label: recordTitle(record)},
+      ...recordAuthors(record).map(label => ({type: "Authors", label})),
+    ]),
+    ...records.map(record => ({
+      type: "Institutions", id: institutionIdentity(record),
+      markerKey: markerInstitutionIdentity(record),
+      label: recordInstitution(record), paper: paperIdentity(record),
+      context: institutionIdentity(record),
+    })),
+  ]);
   configureYearRange();
   configureVenueFilter();
   enableControls();
@@ -6134,6 +6240,7 @@ filterDropdowns = [
   countryFilter,
   institutionTypeFilter,
   preprintFilter,
+  publishedOnlyFilter,
 ].map(createFilterDropdown);
 filterDropdownBySelect = new Map(
   filterDropdowns.map((dropdown) => [dropdown.select, dropdown]),
@@ -6218,6 +6325,7 @@ function scheduleKeywordRender() {
 }
 
 function resetFilterValues({ resetSort = false } = {}) {
+  keywordSuggestions.close();
   keywordFilter.value = "";
   resetMultiSelect(taskFilter);
   resetMultiSelect(imageScopeFilter);
@@ -6228,7 +6336,8 @@ function resetFilterValues({ resetSort = false } = {}) {
   countryFilter.value = "all";
   institutionTypeFilter.value = "all";
   preprintFilter.value = "all";
-  publishedOnlyFilter.checked = false;
+  publishedOnlyFilter.value = "all";
+  syncMoreFilters({ reset: true });
   filterDropdowns.forEach(syncFilterDropdown);
   if (yearRangeBounds) {
     minYearFilter.value = String(yearRangeBounds.minimum);
@@ -6251,7 +6360,10 @@ function clearActiveFilter(key) {
     "institution-type": institutionTypeFilter,
     version: preprintFilter,
   };
-  if (key === "keyword") keywordFilter.value = "";
+  if (key === "keyword") {
+    keywordFilter.value = "";
+    keywordSuggestions.close();
+  }
   else if (key === "year" && yearRangeBounds) {
     minYearFilter.value = String(yearRangeBounds.minimum);
     maxYearFilter.value = String(yearRangeBounds.maximum);
@@ -6260,7 +6372,8 @@ function clearActiveFilter(key) {
     activeInstitutionFilter = null;
     displayedInstitutionFilter = null;
   } else if (key === "published-only") {
-    publishedOnlyFilter.checked = false;
+    publishedOnlyFilter.value = "all";
+    syncFilterDropdownForSelect(publishedOnlyFilter);
   } else if (controls[key]) {
     resetMultiSelect(controls[key]);
     syncFilterDropdownForSelect(controls[key]);
@@ -6311,7 +6424,33 @@ function focusFilterControl(key) {
     year: minYearFilter,
   };
   const control = controls[key];
+  if (control && moreFiltersContent.contains(control)) setMoreFiltersExpanded(true);
   (filterDropdownBySelect.get(control)?.button || control || filtersHeading).focus();
+}
+
+const keywordSuggestions = KeywordSuggestions.mount(
+  keywordFilter, document.querySelector("#keyword-suggestions"), selectKeywordSuggestion,
+);
+moreFiltersToggle.addEventListener("click", () => {
+  setMoreFiltersExpanded(moreFiltersContent.hidden);
+});
+
+function selectKeywordSuggestion(entry) {
+  if (entry.type === "Authors") {
+    keywordFilter.value = entry.label;
+    keywordFilter.dispatchEvent(new Event("input", {bubbles: true}));
+    keywordSuggestions.close();
+  } else {
+    closeFiltersDrawer();
+    if (entry.type === "Papers") selectPaper(entry.id);
+    else {
+      const marker = visibleMarkerEntryByInstitutionKey.get(entry.markerKey || entry.id)
+        || visibleMarkerEntries.find(item => institutionIdentity(item.record) === entry.id);
+      if (marker) selectMapMarker(marker);
+      else selectPaper(entry.paper, {contextualInstitutionId: entry.context, source: "institution-record"});
+    }
+    paperDetailsHeading.focus({ preventScroll: true });
+  }
 }
 
 keywordFilter.addEventListener("compositionstart", () => {
@@ -6469,7 +6608,50 @@ resultsList.addEventListener("keydown", (event) => {
   event.preventDefault();
   selectResultItem(item);
 });
+const cardMapHighlightElements = new Set();
+
+function clearCardMapHighlights() {
+  cardMapHighlightElements.forEach(element => element.classList.remove("is-card-cross-highlighted"));
+  cardMapHighlightElements.clear();
+}
+
+function highlightCardMarkers(item) {
+  clearCardMapHighlights();
+  if (!item || interactionState.detailMode !== "empty" || requestedPaperIdentity
+      || item.dataset.resultGeneration !== String(resultsRenderGeneration)) return;
+  const keys = item.dataset.markerIdentity
+    ? [item.dataset.markerIdentity]
+    : (resultsPipeline?.relatedEntriesByIdentity.get(item.dataset.paperIdentity) || [])
+      .map(({record}) => markerInstitutionIdentity(record));
+  new Set(keys).forEach(key => {
+    const element = visibleMarkerEntryByInstitutionKey.get(key)?.marker.getElement?.();
+    if (!element) return;
+    element.classList.add("is-card-cross-highlighted");
+    cardMapHighlightElements.add(element);
+  });
+}
+
 resultsList.addEventListener("pointerover", (event) => {
+  if (!supportsMarkerHover || event.pointerType === "touch") return;
+  const item = event.target.closest(".result-item");
+  if (item && !item.contains(event.relatedTarget)) highlightCardMarkers(item);
+});
+resultsList.addEventListener("pointerout", (event) => {
+  const item = event.target.closest(".result-item");
+  if (item && !item.contains(event.relatedTarget)) {
+    highlightCardMarkers(resultsList.contains(document.activeElement)
+      ? document.activeElement.closest(".result-item") : null);
+  }
+});
+resultsList.addEventListener("focusin", (event) => {
+  highlightCardMarkers(event.target.closest(".result-item"));
+});
+resultsList.addEventListener("focusout", (event) => {
+  const item = event.target.closest(".result-item");
+  if (item && !item.contains(event.relatedTarget)) clearCardMapHighlights();
+});
+resultsList.addEventListener("pointerover", (event) => {
+  if (!supportsMarkerHover || event.pointerType === "touch") return;
   const button = event.target.closest("[data-focus-institution]");
   if (button && !button.contains(event.relatedTarget)) previewInstitutionFromResult(button);
 });
@@ -6539,6 +6721,10 @@ document.fonts?.ready.then(() => {
 });
 exportCsvButton.addEventListener("click", downloadFilteredCsv);
 closePaperDetailsButton.addEventListener("click", () => {
+  if (!stackedDetailsMedia.matches) {
+    setPaperDetailsExpanded(false, { focus: true });
+    return;
+  }
   const selectionOrigin = visibleMarkerEntryByInstitutionKey
     .get(interactionState.pinnedMapMarkerId)?.marker?.getElement?.();
   if (interactionState.detailMode !== "empty" || requestedPaperIdentity) {
@@ -6547,6 +6733,19 @@ closePaperDetailsButton.addEventListener("click", () => {
     clearHoveredSelection();
   }
   (selectionOrigin || mapElement).focus({ preventScroll: true });
+});
+openPaperDetailsButton.addEventListener("click", () => {
+  setPaperDetailsExpanded(true, { focus: true });
+});
+stackedDetailsMedia.addEventListener("change", () => {
+  if (stackedDetailsMedia.matches && document.activeElement === openPaperDetailsButton) {
+    paperDetailsHeading.focus({ preventScroll: true });
+  } else if (!stackedDetailsMedia.matches
+      && mapWorkspace.classList.contains("details-collapsed")
+      && paperDetails.contains(document.activeElement)) {
+    openPaperDetailsButton.focus({ preventScroll: true });
+  }
+  scheduleMapResize();
 });
 resultsViewButtons.forEach((button) => {
   button.addEventListener("click", () => selectResultsView(button.dataset.resultsView));
@@ -6559,5 +6758,43 @@ resetButton.addEventListener("click", () => {
   scheduleMapResize(true);
 });
 
+// Measure only layout: wrapping and font changes must not obscure the toolbar or revealed cards.
+function observeResultsToolbarLayout() {
+  const header = document.querySelector(".site-header");
+  const toolbar = document.querySelector(".results-heading-row");
+  const panel = document.querySelector(".results-panel");
+  const measure = () => {
+    panel.style.setProperty("--results-header-height", `${Math.ceil(header.getBoundingClientRect().height)}px`);
+    panel.style.setProperty("--results-toolbar-height", `${Math.ceil(toolbar.getBoundingClientRect().height)}px`);
+  };
+  measure();
+  if (typeof ResizeObserver !== "undefined") {
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
+    observer.observe(toolbar);
+  } else {
+    window.addEventListener("resize", measure);
+  }
+}
+
+observeResultsToolbarLayout();
+const mapHelp = document.querySelector("#map-help");
+const mapHelpSummary = mapHelp.querySelector("summary");
+mapHelp.addEventListener("toggle", () => {
+  mapHelpSummary.setAttribute("aria-expanded", String(mapHelp.open));
+});
+mapHelp.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape" || !mapHelp.open) return;
+  event.preventDefault();
+  event.stopPropagation();
+  mapHelp.open = false;
+  mapHelpSummary.focus({ preventScroll: true });
+});
+document.addEventListener("pointerdown", (event) => {
+  if (mapHelp.open && !mapHelp.contains(event.target)) {
+    if (mapHelp.contains(document.activeElement)) mapHelpSummary.focus({ preventScroll: true });
+    mapHelp.open = false;
+  }
+});
 updateDatasetLabels();
 loadData();

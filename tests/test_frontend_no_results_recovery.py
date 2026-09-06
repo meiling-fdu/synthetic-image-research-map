@@ -92,13 +92,60 @@ process.stdout.write(JSON.stringify({{
 }}));
 """
         result = self.node(script)
-        self.assertEqual(result["heading"], "No matching unique papers")
-        self.assertIn("2 active filter/search constraints", result["summary"])
+        self.assertEqual(result["heading"], "No papers match “impossible phrase”.")
+        self.assertEqual(result["summary"], "")
         self.assertFalse(result["undoHidden"])
         self.assertFalse(result["clearHidden"])
         self.assertEqual([action["key"] for action in result["actions"]], ["keyword", "year"])
-        self.assertEqual(result["actions"][0]["text"], "Remove Keyword: impossible phrase")
+        self.assertEqual(result["actions"][0]["text"], "Keyword: impossible phrase ×")
         self.assertIn("Remove Publication Year filter", result["actions"][1]["label"])
+
+    def test_single_constraint_has_one_specific_action_in_both_views(self):
+        source = self.function("renderNoResultsState", "renderResults")
+        result = self.node('''
+function element() { return {dataset:{}, children:[], append(x){this.children.push(x)},
+  replaceChildren(x){this.children=x.children}, setAttribute(){}}; }
+const document={createElement:element,createDocumentFragment:element};
+const resultsEmptyHeading=element(), resultsEmptySummary=element(),
+  resultsEmptyFilterActions=element(), undoLastFilterButton=element(), clearEmptyFiltersButton=element();
+const lastFilterChange={key:'keyword'};
+let descriptors=[];
+function activeFilterChipDescriptors(){return descriptors}
+''' + source + '''
+const cases=[['keyword','Keyword','dasf','institution record'],
+  ['venue','Publication Venue','CVPR','unique paper'],['year','Publication Year','2024','unique paper']];
+const output=cases.map(([key,category,value,noun])=>{
+  descriptors=[{key,category,value}]; renderNoResultsState(noun);
+  return {heading:resultsEmptyHeading.textContent, action:clearEmptyFiltersButton.textContent,
+    key:clearEmptyFiltersButton.dataset.emptyRemoveFilter, hidden:clearEmptyFiltersButton.hidden,
+    undoHidden:undoLastFilterButton.hidden, chips:resultsEmptyFilterActions.children.length,
+    summaryHidden:resultsEmptySummary.hidden};
+});
+descriptors=[{key:'country',category:'Country',value:'Italy'},{key:'venue',category:'Venue',value:'CVPR'}];
+renderNoResultsState('unique paper');
+console.log(JSON.stringify({output,multiKey:clearEmptyFiltersButton.dataset.emptyRemoveFilter || null,
+  multiAction:clearEmptyFiltersButton.textContent}));
+''')
+        for row, action, key in zip(result['output'], ['Clear keyword', 'Clear venue', 'Reset year'], ['keyword', 'venue', 'year']):
+            self.assertEqual(row['action'], action)
+            self.assertEqual(row['key'], key)
+            self.assertTrue(row['undoHidden'])
+            self.assertTrue(row['summaryHidden'])
+            self.assertFalse(row['hidden'])
+            self.assertEqual(row['chips'], 0)
+        self.assertEqual(result['output'][0]['heading'], 'No institution records match “dasf”.')
+        self.assertEqual(result['output'][1]['heading'], 'No matching papers')
+        self.assertIsNone(result['multiKey'])
+        self.assertEqual(result['multiAction'], 'Clear all filters')
+
+    def test_zero_toolbar_count_and_compact_presentation(self):
+        render = self.function('renderResults', 'selectResultsView')
+        self.assertIn('`0 ${resultsView === "papers" ? "papers" : "institution records"}`', render)
+        self.assertIn('exportCsvButton.disabled = count === 0', render)
+        self.assertNotIn('No matching', render)
+        empty = self.css.split('.results-empty {', 1)[1].split('}', 1)[0]
+        self.assertIn('border: 0', empty)
+        self.assertIn('padding: 14px 8px', empty)
 
     def test_undo_coalesces_search_edits_and_preserves_view_and_sort(self):
         state_source = self.app[
@@ -122,7 +169,7 @@ const venueFilter = {{value: 'all'}};
 const countryFilter = {{value: 'all'}};
 const institutionTypeFilter = {{value: 'all'}};
 const preprintFilter = {{value: 'all'}};
-const publishedOnlyFilter = {{checked: false}};
+const publishedOnlyFilter = {{value: 'all'}};
 const minYearFilter = {{value: '2018'}};
 const maxYearFilter = {{value: '2026'}};
 const yearRangeBounds = {{minimum: 2018, maximum: 2026}};
@@ -161,6 +208,7 @@ function restoreViewState(state) {{
 function requestUrlStateSync(mode) {{ if (mode === 'push') urlUpdates += 1; }}
 function renderRecords() {{ renders += 1; }}
 function focusResultsRecoveryDestination() {{ focuses += 1; }}
+function isPublishedOnlySelected() {{ return publishedOnlyFilter.value === 'published-only'; }}
 {selected_values_source}
 {serialized_values_source}
 {state_source}

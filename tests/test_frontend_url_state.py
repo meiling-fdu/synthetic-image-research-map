@@ -39,9 +39,9 @@ class FrontendUrlStateTests(unittest.TestCase):
         result = self.run_node(f"""
 {helpers}
 const state = {{
-  keyword: 'synthetic image', task: 'detection', paperType: 'survey',
+  keyword: 'synthetic image', tasks: 'detection', imageScopes: 'deepfake', researchTypes: 'survey',
   publicationType: 'conference', venue: 'CVPR', country: 'Italy',
-  institutionType: 'university', version: 'has-arxiv',
+  institutionType: 'university', version: 'has-arxiv', publishedOnly: true,
   yearStart: 2020, yearEnd: 2024, yearMinimum: 2017, yearMaximum: 2026,
   institution: 'id:https://example.org/i/1', institutionLabel: 'Example University',
   paper: 'doi:10.1000/example',
@@ -57,14 +57,16 @@ console.log(JSON.stringify({{query, parsed: parseViewState(query)}}));
         self.assertEqual(
             list(params),
             [
-                "dataset", "keyword", "task", "paper_type", "publication_type",
-                "venue", "country", "institution_type", "version", "year_start",
-                "year_end", "institution", "institution_label", "paper", "view", "sort",
+                "dataset", "keyword", "tasks", "image_scopes", "research_types",
+                "publication_type", "venue", "country", "institution_type", "version",
+                "published_only", "year_start", "year_end", "institution",
+                "institution_label", "paper", "view", "sort",
             ],
         )
         parsed = result["parsed"]
         self.assertEqual(parsed["keyword"], "synthetic image")
-        self.assertEqual(parsed["paperType"], "survey")
+        self.assertEqual(parsed["researchTypes"], "survey")
+        self.assertTrue(parsed["publishedOnly"])
         self.assertEqual(parsed["publicationType"], "conference")
         self.assertEqual((parsed["yearStart"], parsed["yearEnd"]), (2020, 2024))
         self.assertEqual(parsed["institutionLabel"], "Example University")
@@ -76,8 +78,8 @@ console.log(JSON.stringify({{query, parsed: parseViewState(query)}}));
         result = self.run_node(f"""
 {helpers}
 const defaults = {{
-  keyword: '', task: 'all', paperType: 'all', publicationType: 'all', venue: 'all',
-  country: 'all', institutionType: 'all', version: 'all',
+  keyword: '', tasks: 'all', imageScopes: 'all', researchTypes: 'all', publicationType: 'all',
+  venue: 'all', country: 'all', institutionType: 'all', version: 'all', publishedOnly: false,
   yearStart: 2017, yearEnd: 2026, yearMinimum: 2017, yearMaximum: 2026,
   institution: '', institutionLabel: '', paper: '', view: 'institutions', sort: 'year-desc',
 }};
@@ -107,13 +109,14 @@ function select(values, value = 'all') {{
 const document = {{createElement: () => option('')}};
 const keywordFilter = {{value: ''}};
 const taskFilter = select(['all', 'detection']);
+const imageScopeFilter = select(['all', 'deepfake']);
 const entryTypeFilter = select(['all', 'survey']);
 const venueTypeFilter = select(['all']);
 const venueFilter = select(['all']);
 const countryFilter = select(['all']);
 const institutionTypeFilter = select(['all']);
 const preprintFilter = select(['all', 'has-arxiv']);
-const publishedOnlyFilter = {{checked: false}};
+const publishedOnlyFilter = select(['all', 'published-only']);
 const sortControl = select(['year-desc', 'title-asc'], 'year-desc');
 const minYearFilter = {{value: '2017'}};
 const maxYearFilter = {{value: '2026'}};
@@ -142,7 +145,7 @@ function hierarchyInstitutionLabel() {{ return ''; }}
 function syncFilterDropdown() {{ dropdownSyncs += 1; }}
 {restoration}
 restoreViewState({{
-  keyword: 'needle', task: 'detection', paperType: 'survey',
+  keyword: 'needle', tasks: 'detection', imageScopes: 'deepfake', researchTypes: 'survey',
   publicationType: 'conference', venue: 'CVPR', country: 'Italy',
   institutionType: 'university', version: 'has-arxiv', publishedOnly: true,
   yearStart: 2020, yearEnd: 2024, institution: 'id:test',
@@ -153,7 +156,7 @@ console.log(JSON.stringify({{
   keyword: keywordFilter.value, task: taskFilter.value, paperType: entryTypeFilter.value,
   publicationType: venueTypeFilter.value, venue: venueFilter.value,
   country: countryFilter.value, institutionType: institutionTypeFilter.value,
-  version: preprintFilter.value, publishedOnly: publishedOnlyFilter.checked,
+  version: preprintFilter.value, publishedOnly: publishedOnlyFilter.value,
   years: [minYearFilter.value, maxYearFilter.value],
   institution: activeInstitutionFilter, resultsView, sort: sortControl.value,
   paper: requestedPaperIdentity,
@@ -165,7 +168,7 @@ console.log(JSON.stringify({{
         self.assertEqual(result["venue"], "CVPR")
         self.assertEqual(result["country"], "Italy")
         self.assertEqual(result["institutionType"], "university")
-        self.assertTrue(result["publishedOnly"])
+        self.assertEqual(result["publishedOnly"], "published-only")
         self.assertEqual(result["years"], ["2020", "2024"])
         self.assertEqual(result["institution"]["label"], "Example University")
         self.assertEqual(result["paper"], "doi:10.1000/example")

@@ -168,7 +168,7 @@ process.stdout.write(JSON.stringify({{
         self.assertNotIn('role="button"', charts)
         self.assertIn('headerStatistics.addEventListener("click"', self.app)
         self.assertIn("event.target.closest(\"button[data-chart-filter]\")", self.app)
-        self.assertIn("refreshedControl?.focus({ preventScroll: true })", self.app)
+        self.assertIn("refreshedControl || (mobileFiltersMedia.matches ? mobileFiltersTrigger : keywordFilter)", self.app)
         self.assertIn("touch-action: manipulation", self.css)
         self.assertIn("min-height: 100%", self.css)
         mobile = self.css.split("@media (max-width: 540px) {", 1)[1]

@@ -45,13 +45,14 @@ function control(value, label = value) {{
 }}
 const keywordFilter = control(' diffusion ');
 const taskFilter = control('detection');
+const imageScopeFilter = control('all');
 const entryTypeFilter = control('survey');
 const venueTypeFilter = control('conference', 'Conference (1,234)');
 const venueFilter = control('cvpr', 'CVPR (42)');
 const countryFilter = control('Italy', 'Italy (8)');
 const institutionTypeFilter = control('university');
 const preprintFilter = control('has-arxiv', 'Records With arXiv Version');
-const publishedOnlyFilter = {{checked: false}};
+const publishedOnlyFilter = control('all');
 const minYearFilter = control('2021');
 const maxYearFilter = control('2024');
 const yearRangeBounds = {{minimum: 2017, maximum: 2026}};
@@ -62,13 +63,14 @@ function institutionTypeLabel() {{ return 'University'; }}
 function currentYearSelection() {{
   return {{start: Number(minYearFilter.value), end: Number(maxYearFilter.value)}};
 }}
+function isPublishedOnlySelected() {{ return publishedOnlyFilter.value === 'published-only'; }}
 {helpers}
 console.log(JSON.stringify(activeFilterChipDescriptors()));
 """)
         self.assertEqual(
             [descriptor["key"] for descriptor in result],
             [
-                "keyword", "task", "entry-type", "venue-type", "venue",
+                "keyword", "tasks", "research-types", "venue-type", "venue",
                 "country", "institution-type", "version", "year", "institution",
             ],
         )
@@ -134,13 +136,14 @@ console.log(JSON.stringify({{first, oneClearHidden: clearActiveFiltersButton.hid
 function control(value) {{ return {{value}}; }}
 const keywordFilter = control('query');
 const taskFilter = control('detection');
+const imageScopeFilter = control('all');
 const entryTypeFilter = control('survey');
 const venueTypeFilter = control('conference');
 const venueFilter = control('cvpr');
 const countryFilter = control('Italy');
 const institutionTypeFilter = control('university');
 const preprintFilter = control('has-arxiv');
-const publishedOnlyFilter = {{checked: false}};
+const publishedOnlyFilter = control('all');
 const minYearFilter = control('2021');
 const maxYearFilter = control('2024');
 const yearRangeBounds = {{minimum: 2017, maximum: 2026}};
@@ -151,11 +154,12 @@ let syncYears = 0;
 let renders = 0;
 function syncFilterDropdownForSelect() {{ syncSelects += 1; }}
 function syncYearRange() {{ syncYears += 1; }}
+function resetMultiSelect(control) {{ control.value = 'all'; }}
 function requestUrlStateSync() {{}}
 function rememberFilterChange() {{}}
 function renderRecords() {{ renders += 1; }}
 {clear_helper}
-clearActiveFilter('task');
+clearActiveFilter('tasks');
 clearActiveFilter('year');
 clearActiveFilter('institution');
 console.log(JSON.stringify({{

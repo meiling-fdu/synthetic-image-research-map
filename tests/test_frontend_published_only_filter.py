@@ -30,19 +30,26 @@ class FrontendPublishedOnlyFilterTests(unittest.TestCase):
         )
         return json.loads(completed.stdout)
 
-    def test_control_is_compact_accessible_off_by_default_and_in_requested_order(self):
+    def test_control_is_a_standard_publication_status_dropdown_in_requested_order(self):
         record_version = self.html.index(">Record Version</span>")
         published_only = self.html.index('id="published-only-filter"')
         publication_year = self.html.index(">Publication Year</legend>")
-        self.assertLess(record_version, published_only)
+        self.assertLess(publication_year, record_version)
         self.assertLess(published_only, publication_year)
         self.assertIn(
-            '<label class="published-only-filter" for="published-only-filter">', self.html
+            '<span id="published-only-filter-label" class="filter-label">Publication Status</span>',
+            self.html,
         )
-        self.assertIn('id="published-only-filter" type="checkbox" disabled', self.html)
-        self.assertNotIn('id="published-only-filter" type="checkbox" checked', self.html)
-        self.assertIn(".published-only-filter {", self.css)
-        self.assertIn("min-height: 24px", self.css)
+        self.assertIn(
+            '<select id="published-only-filter" aria-labelledby="published-only-filter-label" disabled>',
+            self.html,
+        )
+        self.assertIn('<option value="all">All</option>', self.html)
+        self.assertIn('<option value="published-only">Published only</option>', self.html)
+        self.assertNotIn('id="published-only-filter" type="checkbox"', self.html)
+        self.assertNotIn(".published-only-filter {", self.css)
+        self.assertIn(".filter-dropdown-field {", self.css)
+        self.assertIn(".filter-grid select,", self.css)
 
     def test_canonical_dataset_has_only_resolved_publication_types(self):
         counts = {}
@@ -69,15 +76,21 @@ class FrontendPublishedOnlyFilterTests(unittest.TestCase):
             self.app.index("function recordMatchesActiveFilters"):
             self.app.index("\nfunction dimensionPaperCounts")
         ]
+        publication_status = self.app[
+            self.app.index("function isPublishedOnlySelected"):
+            self.app.index("\nconst resetButton")
+        ]
         result = self.run_node(f"""
 {helper}
+{publication_status}
 {predicate}
 const taskFilter = {{value: 'all'}};
+const imageScopeFilter = {{selectedOptions: [{{value: 'all'}}]}};
 const entryTypeFilter = {{selectedOptions: [{{value: 'all'}}]}};
 const venueTypeFilter = {{value: 'all'}};
 const venueFilter = {{value: 'all'}};
 const preprintFilter = {{value: 'all'}};
-const publishedOnlyFilter = {{checked: false}};
+const publishedOnlyFilter = {{value: 'all'}};
 const minYearFilter = {{value: '2023'}};
 const maxYearFilter = {{value: '2025'}};
 const countryFilter = {{value: 'all'}};
@@ -87,6 +100,9 @@ const activeInstitutionFilter = null;
 function recordMatchesInstitutionIdentities() {{ return true; }}
 function searchTextMatchesTerms() {{ return true; }}
 function cachedRecordSearchText() {{ return ''; }}
+function selectedFilterValues() {{ return []; }}
+function getTasks() {{ return []; }}
+function getImageScopes() {{ return []; }}
 function getPaperCategories(record) {{ return record.paper_categories; }}
 function venueFilterValue(record) {{ return record.venue; }}
 function recordVenueType(record) {{ return record.publication_type; }}
@@ -106,7 +122,7 @@ const records = [
 ];
 const ids = () => records.filter(record => recordMatchesActiveFilters(record, [])).map(r => r.id);
 const off = ids();
-publishedOnlyFilter.checked = true;
+publishedOnlyFilter.value = 'published-only';
 const on = ids();
 venueTypeFilter.value = 'conference';
 const conference = ids();
@@ -129,7 +145,7 @@ process.stdout.write(JSON.stringify({{
         self.assertEqual(result["year"], ["conference"])
         self.assertEqual(result["formal"], [False, True, True, True])
 
-    def test_state_reset_and_url_round_trip_are_integrated(self):
+    def test_load_switch_reset_and_url_round_trip_are_integrated(self):
         order = self.app[
             self.app.index("const URL_STATE_PARAMETER_ORDER"):
             self.app.index("\nconst PAPER_ISSUE_URL")
@@ -159,8 +175,28 @@ process.stdout.write(JSON.stringify(parseViewState('').publishedOnly));
             self.app.index("function resetFilterValues"):
             self.app.index("\nfunction clearActiveFilter")
         ]
-        self.assertIn("publishedOnlyFilter.checked = false", reset)
+        self.assertIn('publishedOnlyFilter.value = "all"', reset)
         self.assertIn('[publishedOnlyFilter, "published-only"]', self.app)
+        clear = self.app.split('} else if (key === "published-only") {', 1)[1].split('} else', 1)[0]
+        self.assertIn('syncFilterDropdownForSelect(publishedOnlyFilter)', clear)
+        restore = self.app[
+            self.app.index("function restoreViewState"):
+            self.app.index("\nfunction restoreViewStateFromLocation")
+        ]
+        self.assertIn(
+            'publishedOnlyFilter.value = state.publishedOnly === true ? "published-only" : "all";',
+            restore,
+        )
+
+    def test_responsive_filter_drawer_uses_the_same_control_system(self):
+        self.assertIn(
+            '<div class="filter-dropdown-field" data-filter-dropdown>\n'
+            '              <span id="published-only-filter-label"',
+            self.html,
+        )
+        mobile = self.css.split("@media (max-width: 820px)", 1)[1]
+        self.assertIn(".filters-panel-content {", mobile)
+        self.assertIn(".filters-panel-actions {", mobile)
 
     def test_every_paper_dependent_view_consumes_the_shared_filtered_sets(self):
         render = self.app[

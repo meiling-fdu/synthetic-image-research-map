@@ -68,7 +68,7 @@ class FrontendStickyPublicLayoutTests(unittest.TestCase):
     def test_complete_map_summary_is_wrapped_before_workspace(self):
         summary = self.html[
             self.html.index('<div class="map-summary">'):
-            self.html.index('<div class="map-workspace">')
+            self.html.index('<div class="map-workspace details-collapsed">')
         ]
         self.assertIn('class="dataset-overview"', summary)
         self.assertIn('class="map-status-row"', summary)

@@ -338,7 +338,7 @@ process.stdout.write(JSON.stringify({items, collapsed: items.slice(0, 2), expand
         invalidation_end = self.app.index("\nfunction resultsColumnCount", invalidation_start)
         keyword_start = self.app.index("function scheduleKeywordRender")
         keyword_end = self.app.index(
-            '\nkeywordFilter.addEventListener("compositionstart"', keyword_start
+            '\nfunction resetFilterValues', keyword_start
         )
         script = r'''
 let resultsRenderGeneration = 0;
@@ -417,12 +417,12 @@ process.stdout.write(JSON.stringify({
         )[1].split("}", 1)[0]
         entity = self.css.split(".result-entity-section {", 1)[1].split("}", 1)[0]
         secondary = self.css.split(".result-secondary {", 1)[1].split("}", 1)[0]
-        self.assertIn("padding: 12px", card)
-        self.assertIn("margin: 0 0 6px", title)
+        self.assertIn("padding: 13px 12px 12px", card)
+        self.assertIn("margin: 0 0 7px", title)
         self.assertIn("margin: 0 0 6px", institution_block)
         self.assertIn("padding: 7px 8px", institution_block)
-        self.assertIn("margin-bottom: 6px", entity)
-        self.assertIn("padding-top: 7px", secondary)
+        self.assertIn("margin-bottom: 7px", entity)
+        self.assertIn("padding-top: 8px", secondary)
 
     def test_result_cards_stay_white_and_institution_blocks_use_subtle_surface(self):
         item = self.css.split(".result-item {", 1)[1].split("}", 1)[0]
@@ -595,7 +595,7 @@ process.stdout.write(JSON.stringify({
             render,
         )
         self.assertIn("displayedResults.length", render)
-        self.assertIn("No matching ${resultNoun}s", render)
+        self.assertIn('`0 ${resultsView === "papers" ? "papers" : "institution records"}`', render)
         self.assertIn('<ol id="results-list"', self.html)
         self.assertIn("Data unavailable", self.app)
         self.assertIn("Loading…", self.html)
