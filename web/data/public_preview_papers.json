@@ -1382,7 +1382,7 @@
       "publisher": "",
       "publication_type": "conference",
       "venue_review_required": false,
-      "abstract": "This work proposes a difference-in-difference detector for AI-generated images. Instead of using reconstruction error directly, it computes a second-order difference in reconstruction error to reduce variance and improve detection accuracy as modern synthetic images become increasingly similar to real images.",
+      "abstract": "Diffusion models are able to produce AI-generated images that are almost indistinguishable from real ones, raising concerns about their potential misuse and posing substantial challenges for detecting them. Many existing detectors rely on reconstruction error -- the difference between the input image and its reconstructed version -- as the basis for distinguishing real from fake images. However, these detectors become less effective as modern AI-generated images become increasingly similar to real ones. To address this challenge, we propose a novel difference-in-difference method. Instead of directly using the reconstruction error (a first-order difference), we compute the difference in reconstruction error -- a second-order difference -- for variance reduction and improving detection accuracy. Extensive experiments demonstrate that our method achieves strong generalization performance, enabling reliable detection of AI-generated images in the era of generative AI. Code is available at https://github.com/Qixinyi1122-lucky/DID.",
       "abstract_source": "manual",
       "ai_summary": "",
       "doi": "",
