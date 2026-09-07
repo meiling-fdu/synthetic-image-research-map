@@ -2481,3 +2481,11 @@ tbody tr:last-child td {
     padding-top: 0.1rem;
   }
 }
+
+/* Candidate eligibility is independent of asynchronous workflow busy state. */
+#geocode-confirm:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--muted);
+  border-color: var(--muted);
+}

@@ -43,7 +43,8 @@ class PaperTaxonomyMigrationTests(unittest.TestCase):
             self.registry,
         )
         self.assertEqual(613, summary["public_papers_matched"])
-        self.assertEqual(1403, summary["map_records_matched"])
+        # The reviewed institution cleanup adds 22 located relationships.
+        self.assertEqual(1425, summary["map_records_matched"])
 
     def test_curated_only_exclusions_do_not_enter_registry(self):
         public_ids = {row.get("paper_id") for row in self.public if row.get("paper_id")}

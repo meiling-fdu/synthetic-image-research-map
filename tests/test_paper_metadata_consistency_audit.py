@@ -80,8 +80,8 @@ class PaperMetadataConsistencyAuditTests(unittest.TestCase):
         self.assertEqual(summary["legacy_fallback_risks"], 0)
         # Distinct paper–institution pairs; the marker count is one larger
         # because a reviewed relationship has two location markers.
-        self.assertEqual(summary["public_paper_institution_relationships"], 1402)
-        self.assertEqual(summary["map_markers"], 1403)
+        self.assertEqual(summary["public_paper_institution_relationships"], 1424)
+        self.assertEqual(summary["map_markers"], 1425)
         self.assertEqual(summary["published_only_papers"], 517)
         self.assertEqual(summary["affiliation_audit_mismatches"], 0)
         self.assertEqual(summary["retired_institution_affiliation_leaks"], 0)

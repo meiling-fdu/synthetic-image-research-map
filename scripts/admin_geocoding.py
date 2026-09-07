@@ -158,6 +158,10 @@ def normalize_nominatim_candidate(row: Mapping[str, Any]) -> Dict[str, Any] | No
         "city": city,
         "locality_source": f"nominatim:{city_source}" if city_source else "",
         "locality_fields": locality_fields,
+        "provider_address": dict(address_data),
+        "provider_bounds": row.get("boundingbox"),
+        "osm_type": clean(row.get("osm_type")),
+        "osm_id": row.get("osm_id"),
         "region": region,
         "country": country,
         "country_code": country_code,
@@ -350,6 +354,7 @@ def affiliation_locality_evidence(
     organization_terms = {
         "academy", "center", "centre", "college", "department", "faculty",
         "hospital", "institute", "laboratory", "school", "university",
+        "group", "engineering", "division", "lab",
     }
     country_tokens = {
         "usa", "us", "united states", "united states of america", "uk",
@@ -387,6 +392,49 @@ def institution_name_locality_evidence(names: Sequence[Any]) -> list[str]:
     return _unique_text(hints)
 
 
+def locality_equivalent(left: Any, right: Any, candidate: Mapping[str, Any]) -> bool:
+    """Compare exact locality names, with geographically bounded HK containment.
+
+    Kowloon and New Territories are siblings, never equivalent. Hong Kong is
+    their common parent; only that parent/child comparison is permitted here.
+    Provider fields are retained so normalization cannot erase a district conflict.
+    """
+    first, second = normalized_text(left), normalized_text(right)
+    if first == second and first:
+        return True
+    code = clean(candidate.get("country_code")).upper()
+    # Explicit translations and provider administrative suffixes, not fuzzy
+    # string similarity (which can equate unrelated cities).
+    if code == "IT" and {first, second} == {"sicily", "sicilia"}:
+        return True
+    if code == "CN" and first.removesuffix(" city") == second.removesuffix(" city"):
+        return bool(first and second)
+    try:
+        lat = _coordinate(candidate.get("latitude"), -90, 90)
+        lon = _coordinate(candidate.get("longitude"), -180, 180)
+    except ValueError:
+        return False
+    provider_address = candidate.get("provider_address") or {}
+    # These central London administrative cities are contained in London.
+    # Require the provider's borough identifier and a bounded point so this
+    # spelling reconciliation cannot accept a same-named place elsewhere.
+    london_city_codes = {"city of westminster": "GB-WSM", "city of london": "GB-LND"}
+    london_child = second if first == "london" else first if second == "london" else ""
+    if (code == "GB" and london_child in london_city_codes
+            and provider_address.get("ISO3166-2-lvl8") == london_city_codes[london_child]
+            and 51.45 <= lat <= 51.57 and -0.22 <= lon <= 0.02):
+        return True
+    hk_identity = (code == "HK" or normalized_text(candidate.get("region")) == "hong kong"
+                   or provider_address.get("ISO3166-2-lvl3") == "CN-HK")
+    hk = (hk_identity and 22.15 <= lat <= 22.57 and 113.83 <= lon <= 114.44)
+    descendants = {"kowloon", "kowloon tong", "hong kong island", "new territories",
+                   "sha tin", "sha tin district", "shek mun"}
+    if hk and ((first == "hong kong" and second in descendants) or
+               (second == "hong kong" and first in descendants)):
+        return True
+    return hk and {first, second} == {"kowloon", "kowloon tong"}
+
+
 def resolve_candidate_locality(
     candidate: Mapping[str, Any], context: Mapping[str, Any]
 ) -> Dict[str, Any]:
@@ -397,6 +445,13 @@ def resolve_candidate_locality(
     strong_city = clean(value.get("city"))
     names = _context_values(context, "names") or _context_values(
         context, "institution_name"
+    )
+    # The source paper uses LSE as the organisation segment, not a locality.
+    # Scope this verified short form to its canonical name; do not discard
+    # arbitrary uppercase city abbreviations or change canonical aliases.
+    institution_short_forms = (
+        ["LSE"] if "london school of economics and political science"
+        in {normalized_text(name) for name in names} else []
     )
     regions = _context_values(context, "regions") or _context_values(context, "region")
     countries = _context_values(context, "countries") or _context_values(context, "country")
@@ -409,19 +464,32 @@ def resolve_candidate_locality(
     affiliation_cities = affiliation_locality_evidence(
         _context_values(context, "affiliation_evidence"),
         excluded_values=(
-            *names, *regions, *countries, *codes,
+            *names, *institution_short_forms, *regions, *countries, *codes,
             value.get("region"), value.get("country"), value.get("country_code"),
         ),
+    )
+    # A shared municipal parent does not reconcile contradictory subregions.
+    provider_localities = [value.get("region"), *fields.values()]
+    hk_siblings = {"kowloon", "kowloon tong", "new territories", "sha tin", "sha tin district", "shek mun"}
+    hk_specific = [city for city in (*curated_cities, *affiliation_cities, *regions)
+                   if normalized_text(city) in hk_siblings]
+    district_conflict = any(
+        normalized_text(locality) in hk_siblings and
+        not locality_equivalent(expected, locality, value)
+        for expected in hk_specific for locality in provider_localities
+        if normalized_text(expected) in {"kowloon", "kowloon tong"}
+        or normalized_text(locality) in {"kowloon", "kowloon tong"}
     )
     name_hints = institution_name_locality_evidence(names)
     evidence_cities = _unique_text((*curated_cities, *affiliation_cities))
     weak_localities = _unique_text((fields.get("suburb"), fields.get("locality")))
 
-    locality_conflicts = []
+    locality_conflicts = (["provider district conflicts with campus locality evidence"]
+                          if district_conflict else [])
     if strong_city:
         conflicting_affiliation = [
             city for city in affiliation_cities
-            if text_similarity(city, strong_city) < 0.8
+            if not locality_equivalent(city, strong_city, value)
         ]
         if affiliation_cities and len(conflicting_affiliation) == len(affiliation_cities):
             locality_conflicts.append(
@@ -434,7 +502,7 @@ def resolve_candidate_locality(
         )
     elif len(evidence_cities) > 1:
         mutually_distinct = any(
-            text_similarity(left, right) < 0.8
+            not locality_equivalent(left, right, value)
             for index, left in enumerate(evidence_cities)
             for right in evidence_cities[index + 1:]
         )
@@ -484,6 +552,17 @@ def rank_candidates(
         score = 0.0
         conflicts = []
         factors = []
+        bounds = candidate.get("provider_bounds")
+        if candidate.get("osm_type") == "relation" and isinstance(bounds, (list, tuple)) and len(bounds) == 4:
+            try:
+                extent = coordinate_distance_km(
+                    (_coordinate(bounds[0], -90, 90), _coordinate(bounds[2], -180, 180)),
+                    (_coordinate(bounds[1], -90, 90), _coordinate(bounds[3], -180, 180)),
+                )
+                if extent > 5:
+                    conflicts.append("aggregate or broad institution boundary requires campus-specific evidence")
+            except ValueError:
+                conflicts.append("provider boundary is invalid")
         candidate_code = clean(candidate.get("country_code")).upper()
         candidate_country = clean(candidate.get("country"))
         code_matches = bool(codes and candidate_code and candidate_code in codes)
@@ -506,15 +585,14 @@ def rank_candidates(
                 score -= 220
                 conflicts.append("country conflicts with confirmed evidence")
         if cities and clean(candidate.get("city")):
-            similarity = max(text_similarity(candidate.get("city"), value) for value in cities)
-            if similarity >= 0.85:
+            if any(locality_equivalent(candidate.get("city"), city, candidate) for city in cities):
                 score += 55
                 factors.append("city match")
             else:
-                score -= 15
+                score -= 55
+                conflicts.append("city differs from known evidence")
         if regions and clean(candidate.get("region")):
-            similarity = max(text_similarity(candidate.get("region"), value) for value in regions)
-            if similarity >= 0.68:
+            if any(locality_equivalent(candidate.get("region"), region, candidate) for region in regions):
                 score += 40
                 factors.append("region match")
             else:
@@ -529,10 +607,10 @@ def rank_candidates(
                 for coordinate in coordinate_evidence
             )
             candidate["coordinate_evidence_distance_km"] = round(distance, 3)
-            if distance <= 50:
+            if distance <= 2:
                 score += 45
                 factors.append("authoritative-coordinate proximity")
-            elif distance > 100:
+            else:
                 score -= 180
                 conflicts.append("coordinates conflict with authoritative location evidence")
         candidate_name = candidate.get("institution_name") or candidate.get("display_name")
@@ -580,11 +658,16 @@ def rank_candidates(
             "conflicts": conflicts,
             "country_consistent": country_consistent,
             "selectable": (
-                country_consistent and locality_consistent
-                and not any(item.startswith("coordinates conflict") for item in conflicts)
+                country_consistent and locality_consistent and not conflicts
                 and bool(clean(candidate.get("city")))
             ),
         })
+        if candidate["selectable"]:
+            for field in ("city", "region"):
+                known = clean(evidence.get(field))
+                if known and locality_equivalent(candidate.get(field), known, candidate):
+                    candidate[f"provider_{field}"] = candidate.get(field)
+                    candidate[field] = known
         ranked.append(candidate)
     ranked.sort(key=lambda item: (-float(item.get("score", 0)), clean(item.get("display_name"))))
     return ranked

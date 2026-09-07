@@ -38,6 +38,8 @@ const state = {
   arxivEnrichment: { records: [], summary: {}, discovery: {} },
   draftMappingCandidates: [],
   selectedGeocodeCandidate: null,
+  geocodeCandidates: [],
+  geocodeInstitutionId: "",
   geocodePurpose: "coordinates",
   cityAutofill: { regionSource: "empty", countrySource: "empty", lastLookupKey: "" },
   locationEditorMode: "review",
@@ -606,7 +608,7 @@ if (typeof document !== "undefined") document.addEventListener("DOMContentLoaded
   elements["geocode-cancel"].addEventListener("click", closeGeocodeDialog);
   elements["geocode-confirm"].addEventListener("click", confirmGeocodeCandidate);
   elements["geocode-dialog"].addEventListener("close", () => {
-    state.selectedGeocodeCandidate = null;
+    resetGeocodeSelection();
     state.geocodePurpose = "coordinates";
   });
   document.querySelectorAll("[data-console-target]").forEach((button) => {
@@ -2884,7 +2886,7 @@ async function openCanonicalInstitutionLocation(institution) {
   state.locationEditorMode = "canonical";
   state.selectedInstitutionLocationId = identifier;
   state.selectedLocationReviewId = "";
-  state.selectedGeocodeCandidate = null;
+  resetGeocodeSelection();
   openLocationReview();
   showLocationEditorPlaceholder(
     "Loading institution location…",
@@ -3577,6 +3579,7 @@ function applyResolvedCity(candidate, { explicit = false } = {}) {
 }
 
 async function resolveInstitutionCity() {
+  resetGeocodeSelection();
   cityResolutionTimer = null;
   const institutionId = elements["location-institution-id"].value.trim();
   const loadedInstitutionId = state.selectedInstitutionLocationId;
@@ -3656,7 +3659,7 @@ function clearLocationFields() {
   });
   elements["confirmed-lat"].removeAttribute("aria-invalid");
   elements["confirmed-lon"].removeAttribute("aria-invalid");
-  state.selectedGeocodeCandidate = null;
+  resetGeocodeSelection();
   resetCityAutofillSources();
   setCityResolutionStatus("");
 }
@@ -3693,9 +3696,35 @@ function candidateDetail(label, value) {
   return row;
 }
 
+function eligibleGeocodeCandidate(candidate) {
+  return Boolean(candidate && candidate.selectable === true &&
+    !(candidate.conflicts || []).length);
+}
+
+function syncGeocodeConfirmation() {
+  const candidate = state.selectedGeocodeCandidate;
+  const valid = eligibleGeocodeCandidate(candidate) &&
+    state.geocodeCandidates.includes(candidate) &&
+    state.geocodeInstitutionId === state.selectedInstitutionLocationId &&
+    state.geocodeInstitutionId === elements["location-institution-id"].value &&
+    Boolean(state.geocodeInstitutionId);
+  elements["geocode-confirm"].disabled = !valid;
+  elements["geocode-confirm"].setAttribute("aria-disabled", String(!valid));
+  return valid;
+}
+
+function resetGeocodeSelection() {
+  state.selectedGeocodeCandidate = null;
+  state.geocodeCandidates = [];
+  state.geocodeInstitutionId = "";
+  syncGeocodeConfirmation();
+}
+
 function renderGeocodeCandidates(result, purpose = "coordinates") {
   const candidates = result.candidates || [];
-  state.selectedGeocodeCandidate = null;
+  resetGeocodeSelection();
+  state.geocodeCandidates = candidates;
+  state.geocodeInstitutionId = state.selectedInstitutionLocationId;
   state.geocodePurpose = purpose;
   elements["geocode-dialog-title"].textContent = purpose === "city"
     ? "Select a city candidate" : "Select a location candidate";
@@ -3720,7 +3749,7 @@ function renderGeocodeCandidates(result, purpose = "coordinates") {
     radio.type = "radio";
     radio.name = "geocode-candidate";
     radio.value = String(index);
-    radio.disabled = candidate.selectable === false;
+    radio.disabled = !eligibleGeocodeCandidate(candidate);
     const content = document.createElement("span");
     const title = document.createElement("strong");
     title.textContent = text(candidate.institution_name || candidate.display_name);
@@ -3755,17 +3784,20 @@ function renderGeocodeCandidates(result, purpose = "coordinates") {
       content.append(mapLink);
     }
     radio.addEventListener("change", () => {
+      if (!state.geocodeCandidates.includes(candidate)) return;
       state.selectedGeocodeCandidate = candidate;
-      elements["geocode-confirm"].disabled = false;
+      if (!radio.checked) state.selectedGeocodeCandidate = null;
+      syncGeocodeConfirmation();
     });
     label.append(radio, content);
     elements["geocode-candidates"].append(label);
   });
   elements["geocode-dialog"].showModal();
-  (elements["geocode-candidates"].querySelector("input") || elements["geocode-cancel"]).focus();
+  (elements["geocode-candidates"].querySelector("input:not(:disabled)") || elements["geocode-cancel"]).focus();
 }
 
 async function findInstitutionCoordinates() {
+  resetGeocodeSelection();
   const button = elements["location-geocode"];
   const originalLabel = button.textContent;
   button.disabled = true;
@@ -3809,13 +3841,14 @@ async function findInstitutionCoordinates() {
 }
 
 function closeGeocodeDialog() {
+  resetGeocodeSelection();
   elements["geocode-dialog"].close();
 }
 
 function confirmGeocodeCandidate() {
   const candidate = state.selectedGeocodeCandidate;
   if (
-    !candidate || candidate.selectable === false ||
+    !syncGeocodeConfirmation() || !elements["geocode-dialog"].open ||
     !state.selectedInstitutionLocationId ||
     state.selectedInstitutionLocationId !== elements["location-institution-id"].value
   ) return;

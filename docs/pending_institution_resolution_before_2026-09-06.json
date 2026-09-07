@@ -1,0 +1,345 @@
+{
+  "summary": {
+    "total_queue_rows": 611,
+    "alias_of_confirmed": 79,
+    "ambiguous": 0,
+    "confirmed": 455,
+    "excluded": 13,
+    "ignore": 32,
+    "pending_review": 32,
+    "needs_coordinates": 32,
+    "needs_coordinate_review": 0,
+    "confirmed_locations_count": 494,
+    "institutions_with_multiple_location_candidates": [
+      "deakin university",
+      "northeastern university",
+      "peng cheng laboratory",
+      "sony ai",
+      "tencent wechat ai",
+      "xiaohongshu inc"
+    ],
+    "multiple_location_candidate_count": 6
+  },
+  "pending_rows": [
+    {
+      "queue_id": "location-review:c762ba0546569ab7637a",
+      "institution_id": "institution:17e74be5c06de398",
+      "institution": "Hong Kong Baptist University",
+      "related_paper_id": "curated:1265c95c9cd0ebd1f1f0",
+      "title": "Detecting Generated Images by Fitting Natural Image Distributions",
+      "year": "2025",
+      "raw_affiliation": "TMLR Group, Hong Kong Baptist University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:6587661c0282df632ea4",
+      "institution_id": "institution:221b70d58647b878",
+      "institution": "The University of Melbourne",
+      "related_paper_id": "curated:1265c95c9cd0ebd1f1f0",
+      "title": "Detecting Generated Images by Fitting Natural Image Distributions",
+      "year": "2025",
+      "raw_affiliation": "The University of Melbourne, Australia",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:14f1a8a18f9d03017c72",
+      "institution_id": "institution:d3507cb626f07264",
+      "institution": "Beijing Technology and Business University",
+      "related_paper_id": "curated:74a9814b7acead53f108",
+      "title": "Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection",
+      "year": "2025",
+      "raw_affiliation": "Beijing Technology and Business University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:497db8e5b629563802e3",
+      "institution_id": "institution:918f246246753b6a",
+      "institution": "Institute of Forensic Science, Ministry of Public Security",
+      "related_paper_id": "curated:74a9814b7acead53f108",
+      "title": "Denoising Trajectory Biases for Zero-Shot AI-Generated Image Detection",
+      "year": "2025",
+      "raw_affiliation": "Institute of Forensic Science, Ministry of Public Security",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:429f0858c794a734429c",
+      "institution_id": "institution:17e74be5c06de398",
+      "institution": "Hong Kong Baptist University",
+      "related_paper_id": "curated:f9d9ebc09d8d13fd0e85",
+      "title": "Epistemic Uncertainty for Generated Image Detection",
+      "year": "2025",
+      "raw_affiliation": "Hong Kong Baptist University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:82b1a86a43982962fb00",
+      "institution_id": "institution:045829d79923883d",
+      "institution": "London School of Economics and Political Science",
+      "related_paper_id": "curated:b5094e3d407c63ed6f41",
+      "title": "A Difference-in-Difference Approach to Detecting AI-Generated Images",
+      "year": "2026",
+      "raw_affiliation": "LSE, United Kingdom",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:ac224c0698e1a4ae14d6",
+      "institution_id": "institution:4704f9ebf0e00413",
+      "institution": "University of Birmingham",
+      "related_paper_id": "curated:b5094e3d407c63ed6f41",
+      "title": "A Difference-in-Difference Approach to Detecting AI-Generated Images",
+      "year": "2026",
+      "raw_affiliation": "University of Birmingham, United Kingdom",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:fadbf8311c223e4c07d7",
+      "institution_id": "institution:2e48331de223c439",
+      "institution": "University of California, Merced",
+      "related_paper_id": "curated:fef0cfc6a854787b8f9a",
+      "title": "So-Fake: Benchmarking Social-Media Image Forgery Detection",
+      "year": "2025",
+      "raw_affiliation": "University of California, Merced",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:a801cc756e31c85b4db1",
+      "institution_id": "institution:323e7eabc230aa6a",
+      "institution": "Nanjing University",
+      "related_paper_id": "curated:071cba105b795105a0e6",
+      "title": "Ivy-Fake: A Unified Explainable Framework and Benchmark for Image and Video AIGC Detection",
+      "year": "2025",
+      "raw_affiliation": "Nanjing University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:78f6c86218a41d1d36a8",
+      "institution_id": "institution:53d273918ea2f452",
+      "institution": "Ningxia University",
+      "related_paper_id": "curated:071cba105b795105a0e6",
+      "title": "Ivy-Fake: A Unified Explainable Framework and Benchmark for Image and Video AIGC Detection",
+      "year": "2025",
+      "raw_affiliation": "Ningxia University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:297c9f512e7b7386166e",
+      "institution_id": "institution:42b6283b6bf994bb",
+      "institution": "Jilin University",
+      "related_paper_id": "curated:071cba105b795105a0e6",
+      "title": "Ivy-Fake: A Unified Explainable Framework and Benchmark for Image and Video AIGC Detection",
+      "year": "2025",
+      "raw_affiliation": "Jilin University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:51409c787ea13ae2fa8e",
+      "institution_id": "institution:40d467e43a1c023c",
+      "institution": "Sanming University",
+      "related_paper_id": "curated:4908c98260a56f125178",
+      "title": "DF-LLaVA: Unlocking MLLMs for Synthetic Image Detection via Knowledge Injection and Conflict-Driven Self-Reflection",
+      "year": "2025",
+      "raw_affiliation": "Sanming University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:75574abc794b0cc0e3ab",
+      "institution_id": "institution:9e6d6f80d1bebc7f",
+      "institution": "The 27th Research Institute of China Electronics Technology Group Corporation",
+      "related_paper_id": "curated:4908c98260a56f125178",
+      "title": "DF-LLaVA: Unlocking MLLMs for Synthetic Image Detection via Knowledge Injection and Conflict-Driven Self-Reflection",
+      "year": "2025",
+      "raw_affiliation": "The 27th Research Institute of China Electronics Technology Group Corporation",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:c18d0c54d582418963ba",
+      "institution_id": "institution:854c71a79ec65bd3",
+      "institution": "The University of Texas at Dallas",
+      "related_paper_id": "curated:1012fdcf30878b31225c",
+      "title": "Explainable AI-Generated Image Detection RewardBench",
+      "year": "2025",
+      "raw_affiliation": "The University of Texas at Dallas",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:8e9ba01bd6d6d1e39bc2",
+      "institution_id": "institution:6e3493399ce76a7d",
+      "institution": "University of Notre Dame",
+      "related_paper_id": "curated:1012fdcf30878b31225c",
+      "title": "Explainable AI-Generated Image Detection RewardBench",
+      "year": "2025",
+      "raw_affiliation": "University of Notre Dame",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:3fefda46d1b36f652b6c",
+      "institution_id": "institution:f4f6e3e00ec23f4e",
+      "institution": "Stony Brook University",
+      "related_paper_id": "curated:1012fdcf30878b31225c",
+      "title": "Explainable AI-Generated Image Detection RewardBench",
+      "year": "2025",
+      "raw_affiliation": "Stony Brook University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:f9a995a82a35224532d4",
+      "institution_id": "institution:68dd2453bf814610",
+      "institution": "Sangfor Technologies",
+      "related_paper_id": "curated:685065a3632a185a230d",
+      "title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "Sangfor Technologies",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:cf14a02a73d941904cd4",
+      "institution_id": "institution:389eaebc72eadb77",
+      "institution": "China Mobile Financial Technology Co., Ltd.",
+      "related_paper_id": "curated:685065a3632a185a230d",
+      "title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "China Mobile Financial Technology Co., Ltd.",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:34264d7f300fb0de9a67",
+      "institution_id": "institution:0c92239da7fc047a",
+      "institution": "Hong Kong Institute of Science and Innovation, Chinese Academy of Sciences",
+      "related_paper_id": "curated:685065a3632a185a230d",
+      "title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "Hong Kong Institute of Science and Innovation, Chinese Academy of Sciences",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:d111ad288717e5c8326c",
+      "institution_id": "institution:e85010a013a925f6",
+      "institution": "Shenzhen Loop Area Institute",
+      "related_paper_id": "curated:a5e20fcd5c3a56ca97d5",
+      "title": "Video as Natural Augmentation: Towards Unified AI-Generated Image and Video Detection",
+      "year": "2026",
+      "raw_affiliation": "Shenzhen Loop Area Institute",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:843c4fd29ac4f8478e9b",
+      "institution_id": "institution:2251558d3f3716fa",
+      "institution": "Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences",
+      "related_paper_id": "curated:8fb6db301d8dd737db1b",
+      "title": "HydraPrompt: An Adaptive and Asymmetric Framework of Vision-Language Models for Synthetic Image Detection",
+      "year": "2026",
+      "raw_affiliation": "Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:817ac3aa8c9438dc9726",
+      "institution_id": "institution:8ae1417559ceffc9",
+      "institution": "University of Barcelona",
+      "related_paper_id": "curated:8fb6db301d8dd737db1b",
+      "title": "HydraPrompt: An Adaptive and Asymmetric Framework of Vision-Language Models for Synthetic Image Detection",
+      "year": "2026",
+      "raw_affiliation": "University of Barcelona",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:87acea52960ba06fccfa",
+      "institution_id": "institution:65dbbdeb262c1ec7",
+      "institution": "Google Cloud AI",
+      "related_paper_id": "curated:c7d464b8f5c94ea55ea9",
+      "title": "SSAFE: Simple and Strong AI-Generated Image Detection via Frozen Vision Encoders",
+      "year": "2026",
+      "raw_affiliation": "Google Cloud AI",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:1066917745728bb8988f",
+      "institution_id": "institution:3af74fdb75d74590",
+      "institution": "Hangzhou Institute for Advanced Study, University of Chinese Academy of Sciences",
+      "related_paper_id": "curated:f8bc8386ea043eef0a7c",
+      "title": "Fleet: Few Shots Lead Effective AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "Hangzhou Institute for Advanced Study, University of Chinese Academy of Sciences",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:6b11c217a87a6f64494d",
+      "institution_id": "institution:42b6283b6bf994bb",
+      "institution": "Jilin University",
+      "related_paper_id": "curated:807cbb7fa6b003585c72",
+      "title": "GlobalForge: Towards Robust AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "Jilin University",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:2e509d7c2c1b3add4a14",
+      "institution_id": "institution:68dd2453bf814610",
+      "institution": "Sangfor Technologies",
+      "related_paper_id": "curated:a63eb96d10b885596d73",
+      "title": "Veritas++: Value-Aware On-Policy Distillation for Perception-Enhanced AIGI Detection",
+      "year": "2026",
+      "raw_affiliation": "Sangfor Technologies",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:b7e638f6322b391a3c2c",
+      "institution_id": "institution:b2c25fee5de5d09d",
+      "institution": "Beijing Institute of Technology, Zhuhai",
+      "related_paper_id": "curated:ecd6a0734f20ea9feed0",
+      "title": "PatchHead: Learning Spatial Patch Evidence for Generalizable AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "Beijing Institute of Technology, Zhuhai",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:97546312079d759a8e7d",
+      "institution_id": "institution:6272eff10972e8cc",
+      "institution": "Taobao & Tmall Group",
+      "related_paper_id": "curated:b304da244ad851aa5dd7",
+      "title": "Structured Local Differential Modeling for AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "Taobao & Tmall Group",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:a1e7862ef7f584b20046",
+      "institution_id": "institution:e0d679f0dfc6759b",
+      "institution": "St Paul's School, London",
+      "related_paper_id": "curated:86e3ccb675e46cee7d66",
+      "title": "Frozen DINO Localizes Image Edits Without a Localizer",
+      "year": "2026",
+      "raw_affiliation": "St Paul's School, London",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:b730ba5abcb6c5f81eb5",
+      "institution_id": "institution:98abf3034205f177",
+      "institution": "Friedrich-Alexander-Universitaet Erlangen-Nuernberg",
+      "related_paper_id": "curated:86e3ccb675e46cee7d66",
+      "title": "Frozen DINO Localizes Image Edits Without a Localizer",
+      "year": "2026",
+      "raw_affiliation": "FAU Erlangen-Nuernberg",
+      "review_row_persisted": true
+    },
+    {
+      "queue_id": "location-review:5de1cb229c6f3f741005",
+      "institution_id": "institution:07d62a903f84afcd",
+      "institution": "Hangzhou Dianzi University",
+      "related_paper_id": "curated:2a9c882e8463c9a12285",
+      "title": "Frequency-Aware Correlation Discovering and Spatial Forgery Clue Distilling for Synthetic Image Detection",
+      "year": "2025",
+      "raw_affiliation": "Communication Engineering, Hangzhou Dianzi University, Hangzhou, China",
+      "review_row_persisted": false
+    },
+    {
+      "queue_id": "location-review:d4c1269315a3b6e2fa7f",
+      "institution_id": "institution:f68896817b1b2d6b",
+      "institution": "University of Technology Sydney",
+      "related_paper_id": "curated:685065a3632a185a230d",
+      "title": "Reduce the Artifact Bias for More Generalizable AI-Generated Image Detection",
+      "year": "2026",
+      "raw_affiliation": "University of Technology Sydney",
+      "review_row_persisted": false
+    }
+  ]
+}

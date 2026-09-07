@@ -122,7 +122,7 @@ def test_prior_supported_records_and_current_review_candidates_preserved():
     # Current pending rows are source-backed affiliations retained across the
     # later targeted paper audits; they intentionally have no guessed coordinates.
     assert payload["summary"]["pending_review"] == payload["summary"]["needs_coordinates"]
-    assert payload["summary"]["pending_review"] == 32
+    assert payload["summary"]["pending_review"] == 4  # Evidence-reviewed 2026-09-06 cleanup.
     for decision in decisions:
         iid = decision["institution_id"]
         records = [r for r in payload["records"] if r["institution_id"] == iid]

@@ -3142,11 +3142,8 @@ def make_handler(
                             clean(payload.get("country_code") or location.get("country_code")).upper(),
                             *[clean(row.get("source_country_code")).upper() for row in mappings],
                         ],
-                        "coordinates": [
-                            {"lat": row.get("lat"), "lon": row.get("lon")}
-                            for row in [location]
-                            if clean(row.get("lat")) and clean(row.get("lon"))
-                        ] + [
+                        "coordinates": [{"lat": location.get("lat"), "lon": location.get("lon")}]
+                        if clean(location.get("lat")) and clean(location.get("lon")) else [
                             {
                                 "lat": row.get("institution_latitude"),
                                 "lon": row.get("institution_longitude"),

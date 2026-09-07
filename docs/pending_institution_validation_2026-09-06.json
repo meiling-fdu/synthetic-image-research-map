@@ -1,0 +1,160 @@
+{
+  "runtime": "Bundled Node on PATH; Python 3.9; loopback permitted",
+  "initial_full": {
+    "passed": 1376,
+    "failed": 28
+  },
+  "reproduced_preexisting_failures": [
+    "tests/test_frontend_chart_filters.py::FrontendChartAndInstitutionFilterTests::test_result_count_tracks_active_view_and_empty_state",
+    "tests/test_frontend_chart_quick_filters.py::FrontendChartQuickFilterTests::test_activation_toggles_each_filter_with_one_render_and_url_update",
+    "tests/test_frontend_chart_quick_filters.py::FrontendChartQuickFilterTests::test_rendered_pressed_state_tracks_external_filter_state",
+    "tests/test_frontend_country_institution_type_filters.py::FrontendCountryInstitutionTypeFilterTests::test_dropdowns_are_compact_defaults_near_institution_filters",
+    "tests/test_frontend_data_unit_semantics.py::FrontendDataUnitSemanticsTests::test_filtered_counts_and_charts_update_from_the_same_record_sets",
+    "tests/test_frontend_map_results_sync.py::FrontendMapResultsSyncTests::test_result_institution_controls_select_a_visible_marker_without_filtering",
+    "tests/test_frontend_mobile_summary_charts.py::FrontendMobileSummaryChartTests::test_layout_reuses_existing_accessible_chart_controls_and_pipeline",
+    "tests/test_frontend_paper_deep_links.py::FrontendPaperDeepLinkTests::test_explicit_selection_and_close_push_only_the_paper_url_state",
+    "tests/test_frontend_paper_deep_links.py::FrontendPaperDeepLinkTests::test_restoration_opens_visible_and_filtered_out_papers_without_changing_filters",
+    "tests/test_frontend_paper_deep_links.py::FrontendPaperDeepLinkTests::test_stale_identifier_has_a_closable_non_destructive_state",
+    "tests/test_frontend_paper_details.py::FrontendPaperDetailsTests::test_details_vertical_rhythm_is_compact_and_controls_stay_accessible",
+    "tests/test_frontend_paper_issue_reporting.py::FrontendPaperIssueReportingTests::test_context_uses_only_public_display_metadata",
+    "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_all_select_filters_use_one_custom_dropdown_controller",
+    "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_compact_filter_geometry_and_overview_responsive_grid",
+    "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_filter_order_places_publication_type_immediately_before_venue",
+    "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_public_controls_and_cards_use_consistent_spacing_rhythm",
+    "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_renamed_public_filter_labels_and_title_case",
+    "tests/test_frontend_year_range_slider.py::FrontendYearRangeSliderTests::test_year_combines_with_venue_venue_type_country_and_institution_type",
+    "tests/test_workshop_venue_audit.py::WorkshopArtifactTests::test_full_dataset_before_after_and_source_preservation"
+  ],
+  "focused": {
+    "integration_passed": 130,
+    "integration_seconds": 59.26,
+    "final_geocoding_passed": 55,
+    "final_geocoding_seconds": 7.47,
+    "ledger_validation": "passed",
+    "curated_errors": 0,
+    "curated_warnings": 211,
+    "diff_check": "passed"
+  },
+  "baseline_reproduction": {
+    "passed": 9,
+    "failed": 19,
+    "seconds": 89.56,
+    "log": "/tmp/institution-baseline-results.log",
+    "method": "Temporary pre-change code and curated-data copy, preserving initial user edits; same bundled Node runtime and loopback access."
+  },
+  "browser": {
+    "lse": "Native radio click enables Use this location; apply reaches the expected native replacement prompt. The automation framework cannot retrieve/dismiss it. Final replacement/save/reload is manual-only and is not a commit blocker.",
+    "hkbu": "Final smoke check passed: aggregate-boundary warning visible and Use this location remained disabled after clicking the disabled candidate label. Previously verified Shaw location saved and both rows confirmed after reload; final check made no curated-data changes.",
+    "ordinary": "University of Birmingham Edgbaston Campus passed: expected city/region/country and canonical coordinates, eligible selection enabled Use this location, no conflict warning. Final apply intentionally skipped and modal canceled to avoid unnecessary data changes.",
+    "scoped_style": "Scoped #geocode-confirm:disabled rule and regression check pass; previous screenshot verified muted modal button."
+  },
+  "final_full": {
+    "passed": 1389,
+    "failed": 19,
+    "seconds": 309.02,
+    "log": "/tmp/institution-stable-complete-suite.log",
+    "stable_tree": true,
+    "classification_counts": {
+      "A_regression": 0,
+      "B_preexisting": 19,
+      "C_environment": 0
+    },
+    "failures": [
+      {
+        "test": "tests/test_frontend_chart_filters.py::FrontendChartAndInstitutionFilterTests::test_result_count_tracks_active_view_and_empty_state",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_chart_quick_filters.py::FrontendChartQuickFilterTests::test_activation_toggles_each_filter_with_one_render_and_url_update",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_chart_quick_filters.py::FrontendChartQuickFilterTests::test_rendered_pressed_state_tracks_external_filter_state",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_country_institution_type_filters.py::FrontendCountryInstitutionTypeFilterTests::test_dropdowns_are_compact_defaults_near_institution_filters",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_data_unit_semantics.py::FrontendDataUnitSemanticsTests::test_filtered_counts_and_charts_update_from_the_same_record_sets",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_map_results_sync.py::FrontendMapResultsSyncTests::test_result_institution_controls_select_a_visible_marker_without_filtering",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_mobile_summary_charts.py::FrontendMobileSummaryChartTests::test_layout_reuses_existing_accessible_chart_controls_and_pipeline",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_paper_deep_links.py::FrontendPaperDeepLinkTests::test_explicit_selection_and_close_push_only_the_paper_url_state",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_paper_deep_links.py::FrontendPaperDeepLinkTests::test_restoration_opens_visible_and_filtered_out_papers_without_changing_filters",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_paper_deep_links.py::FrontendPaperDeepLinkTests::test_stale_identifier_has_a_closable_non_destructive_state",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_paper_details.py::FrontendPaperDetailsTests::test_details_vertical_rhythm_is_compact_and_controls_stay_accessible",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_paper_issue_reporting.py::FrontendPaperIssueReportingTests::test_context_uses_only_public_display_metadata",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_all_select_filters_use_one_custom_dropdown_controller",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_compact_filter_geometry_and_overview_responsive_grid",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_filter_order_places_publication_type_immediately_before_venue",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_public_controls_and_cards_use_consistent_spacing_rhythm",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_public_labels_layout.py::FrontendPublicLabelsLayoutTests::test_renamed_public_filter_labels_and_title_case",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_frontend_year_range_slider.py::FrontendYearRangeSliderTests::test_year_combines_with_venue_venue_type_country_and_institution_type",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      },
+      {
+        "test": "tests/test_workshop_venue_audit.py::WorkshopArtifactTests::test_full_dataset_before_after_and_source_preservation",
+        "category": "B",
+        "evidence": "Reproduced in /tmp/institution-baseline-results.log against pre-change code/data with the same supported runtime and loopback access."
+      }
+    ]
+  }
+}

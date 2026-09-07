@@ -7,6 +7,7 @@ data change and the identity and relationship invariants in
 """
 
 CURRENT_REPOSITORY_BASELINE = {
+    # Institution cleanup 2026-09-06: five merges, 20 locations, 22 map relationships.
     # Canonical public paper records after the 2026-09-05 Ant/AI-edit gap-fill.
     "public_unique_papers": 613,
     # Distinct paper identities represented by at least one public map marker.
@@ -16,12 +17,12 @@ CURRENT_REPOSITORY_BASELINE = {
     "public_papers_without_map": 6,
     # Registry rows include active identities plus retained merged/ignored history.
     "total_institution_registry_rows": 691,
-    "active_canonical_institutions": 675,
-    "non_active_institution_registry_rows": 16,
+    "active_canonical_institutions": 670,
+    "non_active_institution_registry_rows": 21,
     # Unique public paper–institution relationships; one relationship has two markers.
-    "public_paper_institution_relationships": 1402,
+    "public_paper_institution_relationships": 1424,
     "institution_hierarchy_edges": 11,
-    "institution_aliases": 115,
+    "institution_aliases": 120,
 }
 
 RELEASE_REPOSITORY_BASELINE = {
@@ -40,8 +41,8 @@ RELEASE_REPOSITORY_BASELINE = {
 }
 
 CANONICAL_INSTITUTION_STATUS_TOTALS = {
-    "active": 675,
-    "merged": 10,
+    "active": 670,
+    "merged": 15,
     "ignored": 6,
 }
 
@@ -58,21 +59,9 @@ CANONICAL_INSTITUTION_TYPE_TOTALS = {
     "other": 24,
 }
 
-ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {
-    "university": 502,
-    "research_unit": 77,
-    "company": 77,
-    "other": 19,
-}
+ACTIVE_CANONICAL_INSTITUTION_TYPE_TOTALS = {'university': 500, 'company': 77, 'research_unit': 76, 'other': 17}
 
-PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {
-    # Papers associated with each active institution type; one paper may
-    # contribute to multiple types, so these are not paper-record totals.
-    "university": 583,
-    "research_unit": 120,
-    "company": 119,
-    "other": 35,
-}
+PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 583, 'research_unit': 120, 'other': 33, 'company': 119}
 
 # Historical release artifacts are immutable; current effective venues have
 # changed since the 2026-08-24 checkpoint.
