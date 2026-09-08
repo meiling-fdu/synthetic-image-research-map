@@ -1614,6 +1614,18 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         merge_rows,
     )
 
+    # Repository artifact checks belong after export/report generation, not in
+    # validate_datasets(), which also validates an export before it is written.
+    root = Path(__file__).resolve().parent.parent
+    if (args.input.resolve() == (root / DEFAULT_INPUT).resolve()
+            and args.paper_input.resolve() == (root / DEFAULT_PAPER_INPUT).resolve()):
+        try:
+            from .audit_key_paper_coverage import validate_artifacts
+        except ImportError:
+            from audit_key_paper_coverage import validate_artifacts
+        for message in validate_artifacts(root):
+            issues.append(Issue("ERROR", -1, "key-paper audit", message))
+
     print_summary(args.input, records, issues)
     print()
     print_summary(args.paper_input, paper_records, paper_issues, paper_level=True)

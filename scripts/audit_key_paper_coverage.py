@@ -1,38 +1,42 @@
+#!/usr/bin/env python3
+"""Deterministic key-paper coverage; bibliography and markers are independent.
+
+The legacy data/manual output is generated, not a manual correction file.
+No source, curation, enrichment, or exclusion decisions are written here.
+"""
+from __future__ import annotations
+
+import argparse
 import csv
+import hashlib
+import io
 import json
 import re
+from collections import Counter, defaultdict
 from difflib import SequenceMatcher
 from pathlib import Path
 
-from paper_exclusions import (
-    active_exclusions,
-    matching_exclusion_rows,
-    read_exclusion_rows,
-)
+try:
+    from .key_paper_reconciliation import apply_decisions, REVIEW_CLASSIFICATIONS
+    from .paper_exclusions import active_exclusions, matching_exclusion_rows, read_exclusion_rows, all_identity_keys
+except ImportError:
+    from key_paper_reconciliation import apply_decisions, REVIEW_CLASSIFICATIONS
+    from paper_exclusions import active_exclusions, matching_exclusion_rows, read_exclusion_rows, all_identity_keys
 
+ROOT = Path(__file__).resolve().parent.parent
 KEY_PATH = Path("data/manual/key_papers.csv")
 OA_PATH = Path("data/processed/openalex_candidate_papers.csv")
 CANDIDATE_JSON = Path("web/data/openalex_candidate_map_data.json")
 PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
 PREVIEW_PAPERS_JSON = Path("web/data/public_preview_papers.json")
+EXCLUSIONS_PATH = Path("data/curated/paper_exclusions.csv")
+RECONCILIATION_PATH = Path("data/manual/key_paper_reconciliation.json")
 OUT_PATH = Path("data/manual/key_paper_coverage_report.csv")
-
+MARKDOWN_PATH = Path("docs/key_paper_coverage_report.md")
+INPUT_PATHS = (KEY_PATH, OA_PATH, CANDIDATE_JSON, PREVIEW_JSON, PREVIEW_PAPERS_JSON, EXCLUSIONS_PATH, RECONCILIATION_PATH)
 ALLOWED_STATUSES = {
-    "covered_as_map_marker",
-    "covered_in_public_preview_paper_list",
-    "missing_affiliation",
-    "missing_coordinates",
-    "missing_from_candidate_pool",
-    "possible_title_match_failure",
-}
-ALLOWED_ACTIONS = {
-    "no_action",
-    "check_public_preview_filter",
-    "check_affiliations_coordinates_or_export_rules",
-    "check_affiliations_or_import_enrichment",
-    "check_coordinates_or_export_rules",
-    "manual_title_match_review",
-    "manual_or_openalex_title_import_review",
+    "covered_as_map_marker", "covered_in_public_preview_paper_list",
+    "candidate_only", "missing_from_candidate_pool", "possible_title_match_failure", "excluded",
 }
 
 def norm_title(s: str) -> str:
@@ -54,7 +58,9 @@ def load_json_records(path):
     data = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(data, list):
         return data
-    return data.get("records", [])
+    if not isinstance(data, dict) or not isinstance(data.get("records"), list):
+        raise ValueError(f"{path} must contain a records array")
+    return data["records"]
 
 def best_match(target_norm, title_map):
     best_title = ""
@@ -96,180 +102,227 @@ def make_title_map(rows):
 def yesno(x):
     return "yes" if x else "no"
 
-all_key_rows = load_csv(KEY_PATH)
-active_exclusion_rows = active_exclusions(read_exclusion_rows())
-excluded_key_rows = [
-    row
-    for row in all_key_rows
-    if matching_exclusion_rows(row, active_exclusion_rows)
-]
-key_rows = [
-    row
-    for row in all_key_rows
-    if not matching_exclusion_rows(row, active_exclusion_rows)
-]
-oa_rows = load_csv(OA_PATH)
-candidate_records = load_json_records(CANDIDATE_JSON)
-preview_records = load_json_records(PREVIEW_JSON)
-preview_paper_records = load_json_records(PREVIEW_PAPERS_JSON)
+def identity_values(row):
+    # Include published/preprint aliases only when explicitly present in metadata.
+    keys = all_identity_keys(dict(row, openalex_url=row.get('openalex_url') or row.get('openalex_id', '')))
+    values = {kind: set() for kind in ('doi', 'arxiv', 'openalex')}
+    for key in keys:
+        kind, value = key.split(':', 1)
+        if kind in values:
+            if kind == 'openalex':
+                value = value.rsplit('/', 1)[-1]
+            if kind == 'arxiv':
+                value = re.sub(r'v\d+$', '', value.removesuffix('.pdf'))
+            if kind == 'doi':
+                value = value.removeprefix('doi:').strip()
+            values[kind].add(value)
+    return values
 
-oa_map = make_title_map(oa_rows)
-candidate_map = make_title_map(candidate_records)
-preview_map = make_title_map(preview_records)
-preview_paper_map = make_title_map(preview_paper_records)
 
-oa_titles = set(oa_map)
-candidate_titles = set(candidate_map)
-preview_titles = set(preview_map)
-preview_paper_titles = set(preview_paper_map)
+class PaperIndex:
+    """Exact matches only. Multiple possible paper rows always require review."""
+    def __init__(self, rows):
+        self.rows = rows
+        self.identities = [identity_values(row) for row in rows]
+        self.indices = {kind: defaultdict(set) for kind in ('doi', 'arxiv', 'openalex', 'title')}
+        for i, row in enumerate(rows):
+            for kind, values in self.identities[i].items():
+                for value in values:
+                    self.indices[kind][value].add(i)
+            title = norm_title(row.get('title', ''))
+            if title:
+                self.indices['title'][title].add(i)
 
-preview_paper_by_title = {
-    norm_title(row.get("title", "")): row
-    for row in preview_paper_records
-    if norm_title(row.get("title", ""))
-}
-preview_marker_count_by_title = {}
-for row in preview_records:
-    nt = norm_title(row.get("title", ""))
-    if nt:
-        preview_marker_count_by_title[nt] = preview_marker_count_by_title.get(nt, 0) + 1
+    def match(self, row):
+        values = identity_values(row)
+        conflicts = []
+        for kind in ('doi', 'arxiv', 'openalex', 'title'):
+            tokens = {norm_title(row.get('title', ''))} if kind == 'title' else values[kind]
+            matches = set().union(*(self.indices[kind].get(token, set()) for token in tokens))
+            if not matches:
+                continue
+            # A weaker key may not override conflicting stronger identifiers.
+            stronger = ('doi', 'arxiv', 'openalex')[:('doi', 'arxiv', 'openalex', 'title').index(kind)]
+            before_conflicts = matches
+            matches = {i for i in matches if not any(
+                values[k] and self.identities[i][k] and values[k].isdisjoint(self.identities[i][k])
+                for k in stronger)}
+            for i in sorted(before_conflicts - matches):
+                conflicts.append('Conflicting identifiers for ' + self.rows[i].get('title', '') + ': checklist=' + json.dumps({k: sorted(v) for k, v in values.items() if v}, sort_keys=True) + '; source=' + json.dumps({k: sorted(v) for k, v in self.identities[i].items() if v}, sort_keys=True))
+            if len(matches) == 1:
+                return next(iter(matches)), kind, ''
+            if matches:
+                return None, kind, 'ambiguous exact ' + kind + ': ' + ' | '.join(self.rows[i].get('title', '') for i in sorted(matches))
+        return None, '', '; '.join(dict.fromkeys(conflicts))
 
-report = []
 
-for r in key_rows:
-    title = r.get("title", "")
-    year = r.get("year", "")
-    expected_task = r.get("expected_task", "")
-    source_doc = r.get("source_doc", "")
-    section = r.get("section", "")
-    notes = r.get("notes", "")
-
-    nt = norm_title(title)
-
-    in_oa = nt in oa_titles
-    in_candidate = nt in candidate_titles
-    in_preview_marker = nt in preview_titles
-    in_preview_paper = nt in preview_paper_titles
-    preview_paper = preview_paper_by_title.get(nt, {})
-    missing_affiliation = preview_paper.get("missing_affiliation") is True
-    missing_coordinates = preview_paper.get("missing_coordinates") is True
-    map_record_count = preview_marker_count_by_title.get(nt, 0)
-
-    best_oa_title, best_oa_score = best_match(nt, oa_map)
-    best_preview_title, best_preview_score = best_match(nt, preview_map)
-    best_preview_paper_title, best_preview_paper_score = best_match(nt, preview_paper_map)
-
-    possible_title_match = (
-        not in_preview_paper
-        and not in_preview_marker
-        and (
-            best_preview_paper_score >= 0.90
-            or best_preview_score >= 0.90
-            or best_oa_score >= 0.90
-        )
-    )
-
-    if in_preview_marker:
-        missing_stage = "covered_as_map_marker"
-        recommended_action = "no_action"
-    elif in_preview_paper:
-        missing_stage = "covered_in_public_preview_paper_list"
-        if missing_affiliation:
-            recommended_action = "check_affiliations_or_import_enrichment"
-        elif missing_coordinates:
-            recommended_action = "check_coordinates_or_export_rules"
+def compute_audit(keys, candidates, candidate_markers, papers, markers, exclusions, decisions=()):
+    effective_keys = apply_decisions(keys, decisions)
+    public = PaperIndex(papers)
+    candidate = PaperIndex(candidates)
+    # Candidate map repeats papers; group identical paper metadata for lookup only.
+    candidate_map_rows = list({json.dumps({k: r.get(k, '') for k in ('title', 'doi', 'arxiv_id', 'arxiv_url', 'openalex_url')}, sort_keys=True): r for r in candidate_markers}.values())
+    candidate_map = PaperIndex(candidate_map_rows)
+    marker_counts = Counter()
+    errors = []
+    for marker in markers:
+        match, _, ambiguity = public.match(marker)
+        if match is None:
+            errors.append('Map record absent or ambiguous in bibliography: ' + marker.get('title', '') + ('; ' + ambiguity if ambiguity else ''))
         else:
-            recommended_action = "check_public_preview_filter"
-    elif in_candidate:
-        missing_stage = "missing_coordinates"
-        recommended_action = "check_public_preview_filter"
-    elif in_oa:
-        missing_stage = "missing_affiliation"
-        recommended_action = "check_affiliations_coordinates_or_export_rules"
-    elif possible_title_match:
-        missing_stage = "possible_title_match_failure"
-        recommended_action = "manual_title_match_review"
-    else:
-        missing_stage = "missing_from_candidate_pool"
-        recommended_action = "manual_or_openalex_title_import_review"
+            marker_counts[match] += 1
+    active = active_exclusions(exclusions)
+    for paper in papers:
+        if matching_exclusion_rows(paper, active):
+            errors.append('Excluded paper remains public: ' + paper.get('title', ''))
+    title_maps = [make_title_map(rows) for rows in (candidates, markers, papers)]
+    report = []
+    for number, key in enumerate(effective_keys, 1):
+        original = keys[number - 1]
+        decision = key.get('_reconciliation', {})
+        pi, method, ambiguity = public.match(key)
+        ci, _, ca = candidate.match(key)
+        mi, _, ma = candidate_map.match(key)
+        excluded = matching_exclusion_rows(key, active)
+        count = marker_counts[pi] if pi is not None else 0
+        paper = papers[pi] if pi is not None else {}
+        fuzzy = [('', 0.0)] * 3
+        if pi is None and not excluded:
+            # Reject only the specifically reviewed distinct title, not future suggestions.
+            rejected = {norm_title(t) for t in decision.get('rejected_titles', [])}
+            fuzzy = [best_match(norm_title(key.get('title', '')), {k: v for k, v in titles.items() if k not in rejected}) for titles in title_maps]
+        review = ambiguity or ca or ma
+        if pi is None and decision.get('classification') in REVIEW_CLASSIFICATIONS:
+            review = decision['reason']
+        if excluded:
+            status = 'excluded'
+        elif pi is not None:
+            status = 'covered_as_map_marker' if count else 'covered_in_public_preview_paper_list'
+        elif review:
+            status = 'possible_title_match_failure'
+        elif ci is not None or mi is not None:
+            status = 'candidate_only'
+        elif max(score for _, score in fuzzy) >= .90:
+            status = 'possible_title_match_failure'
+        else:
+            status = 'missing_from_candidate_pool'
+        if status == 'possible_title_match_failure' and not review:
+            suggestion, score = max(fuzzy, key=lambda item: item[1])
+            review = f'Fuzzy suggestion only ({score:.3f}): {suggestion}'
+        evidence = paper or (candidates[ci] if ci is not None else {})
+        diagnostics = [name for name in ('missing_affiliation', 'missing_coordinates', 'unresolved_institution', 'export_rule_blocker') if evidence.get(name) in (True, 'true', 'yes')]
+        if not count and not excluded and not diagnostics and (pi is not None or ci is not None or mi is not None):
+            diagnostics.append('marker_blocker_unresolved')
+        action = {
+            'covered_as_map_marker': 'no_action', 'excluded': 'no_action',
+            'covered_in_public_preview_paper_list': 'check_affiliations_coordinates_or_export_rules',
+            'candidate_only': 'check_public_preview_filter',
+            'possible_title_match_failure': 'manual_title_match_review',
+            'missing_from_candidate_pool': 'manual_or_openalex_title_import_review',
+        }[status]
+        row = {field: original.get(field, '') for field in ('title', 'year', 'expected_task', 'source_doc', 'section', 'notes')}
+        row.update(checklist_row=str(number), doi=key.get('doi', ''), arxiv_id=key.get('arxiv_id', ''), openalex_url=key.get('openalex_url', ''),
+                   in_openalex_candidate_papers=yesno(ci is not None), in_candidate_map=yesno(mi is not None),
+                   in_public_preview=yesno(pi is not None), in_public_preview_paper_list=yesno(pi is not None),
+                   covered_as_map_marker=yesno(bool(count)), map_record_count=str(count),
+                   missing_affiliation=yesno('missing_affiliation' in diagnostics), missing_coordinates=yesno('missing_coordinates' in diagnostics),
+                   marker_diagnostics='; '.join(diagnostics), missing_stage=status, coverage_status=status,
+                   recommended_action=action, match_method=method, matched_public_title=paper.get('title', ''),
+                   matched_public_paper_id=paper.get('paper_id', ''), manual_review=yesno(status == 'possible_title_match_failure'),
+                   identity_review=review, exclusion_evidence=json.dumps(excluded, sort_keys=True, ensure_ascii=False) if excluded else '')
+        row.update(reconciliation_classification=decision.get('classification', ''),
+                   reconciliation_evidence='; '.join(decision.get('evidence_urls', [])),
+                   reconciliation_reason=decision.get('reason', ''),
+                   resolved_title=key.get('title', ''), resolved_year=key.get('year', ''))
+        for prefix, (title, score) in zip(('openalex', 'public_preview', 'public_preview_paper'), fuzzy):
+            row['best_' + prefix + '_title_match'] = title
+            row['best_' + prefix + '_title_score'] = f'{score:.3f}'
+        report.append(row)
+    counts = Counter(row['coverage_status'] for row in report)
+    summary = {
+        'public_papers': len(papers), 'unique_mapped_papers': len(marker_counts), 'map_records': len(markers),
+        'key_papers': len(keys),
+        'bibliography_covered': counts['covered_as_map_marker'] + counts['covered_in_public_preview_paper_list'],
+        **{status: counts[status] for status in sorted(ALLOWED_STATUSES)},
+    }
+    return report, summary, sorted(set(errors))
 
-    report.append({
-        "title": title,
-        "year": year,
-        "expected_task": expected_task,
-        "source_doc": source_doc,
-        "section": section,
-        "in_openalex_candidate_papers": yesno(in_oa),
-        "in_candidate_map": yesno(in_candidate),
-        "in_public_preview": yesno(in_preview_paper),
-        "in_public_preview_paper_list": yesno(in_preview_paper),
-        "covered_as_map_marker": yesno(in_preview_marker),
-        "map_record_count": map_record_count,
-        "missing_affiliation": yesno(missing_affiliation),
-        "missing_coordinates": yesno(missing_coordinates),
-        "missing_stage": missing_stage,
-        "coverage_status": missing_stage,
-        "recommended_action": recommended_action,
-        "best_openalex_title_match": best_oa_title,
-        "best_openalex_title_score": f"{best_oa_score:.3f}",
-        "best_public_preview_title_match": best_preview_title,
-        "best_public_preview_title_score": f"{best_preview_score:.3f}",
-        "best_public_preview_paper_title_match": best_preview_paper_title,
-        "best_public_preview_paper_title_score": f"{best_preview_paper_score:.3f}",
-        "notes": notes,
-    })
 
-invalid_statuses = sorted(
-    {row["missing_stage"] for row in report} - ALLOWED_STATUSES
-)
-invalid_actions = sorted(
-    {row["recommended_action"] for row in report} - ALLOWED_ACTIONS
-)
-if invalid_statuses or invalid_actions:
-    raise RuntimeError(
-        "Unsupported key-paper audit semantics: "
-        f"statuses={invalid_statuses}, actions={invalid_actions}"
-    )
-
-OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-fields = [
-    "title",
-    "year",
-    "expected_task",
-    "source_doc",
-    "section",
-    "in_openalex_candidate_papers",
-    "in_candidate_map",
-    "in_public_preview",
-    "in_public_preview_paper_list",
-    "covered_as_map_marker",
-    "map_record_count",
-    "missing_affiliation",
-    "missing_coordinates",
-    "missing_stage",
-    "coverage_status",
-    "recommended_action",
-    "best_openalex_title_match",
-    "best_openalex_title_score",
-    "best_public_preview_title_match",
-    "best_public_preview_title_score",
-    "best_public_preview_paper_title_match",
-    "best_public_preview_paper_title_score",
-    "notes",
-]
-
-with OUT_PATH.open("w", newline="", encoding="utf-8") as f:
-    writer = csv.DictWriter(f, fieldnames=fields, lineterminator="\n")
+def render_csv(rows):
+    output = io.StringIO(newline='')
+    writer = csv.DictWriter(output, fieldnames=list(rows[0]) if rows else ['coverage_status'], lineterminator='\n')
     writer.writeheader()
-    writer.writerows(report)
+    writer.writerows(rows)
+    return output.getvalue()
 
-from collections import Counter
-print("Wrote:", OUT_PATH)
-print("key papers:", len(report))
-print("excluded key papers omitted:", len(excluded_key_rows))
-print("by missing_stage:")
-for k, v in Counter(r["missing_stage"] for r in report).most_common():
-    print(f"  {k}: {v}")
-print("by recommended_action:")
-for k, v in Counter(r["recommended_action"] for r in report).most_common():
-    print(f"  {k}: {v}")
+
+def render_markdown(rows, summary, fingerprint, errors):
+    def cell(value):
+        return str(value).replace('|', '\\|').replace('\n', ' ')
+    lines = ['# Key Paper Coverage Report', '',
+             'Generated by `scripts/audit_key_paper_coverage.py`; do not edit either report.', '',
+             'Bibliography coverage means an exact, unambiguous match in `web/data/public_preview_papers.json`. '
+             'Marker coverage counts relationships in `web/data/public_preview_map_data.json`. '
+             'Markerless papers remain covered. Candidate-only records are not public. '
+             'Exclusions follow the active authoritative exclusion registry. Totals count checklist rows; '
+             'multiple checklist variants can refer to one public paper.', '',
+             'Input SHA-256: `' + fingerprint + '`', '', '## Inputs', '']
+    lines += ['- `' + str(path) + '`' for path in INPUT_PATHS]
+    lines += ['', '## Summary', '', '| Metric | Count |', '| --- | ---: |']
+    lines += [f'| {key} | {value} |' for key, value in summary.items()]
+    lines += ['', '## Integrity issues', ''] + (errors or ['None.'])
+    lines += ['', '## Records requiring identity review', '']
+    review_rows = [row for row in rows if row['manual_review'] == 'yes']
+    lines += [f"- Checklist row {row['checklist_row']}: **{cell(row['title'])}** — {cell(row['identity_review'])}" for row in review_rows] or ['None.']
+    lines += ['', '## Per-paper status', '', '| # | Key paper | Status | Bibliography | Marker records | Match | Marker diagnostics | Identity review |', '| ---: | --- | --- | --- | ---: | --- | --- | --- |']
+    lines += ['| ' + ' | '.join(cell(row[key]) for key in ('checklist_row', 'title', 'coverage_status', 'in_public_preview_paper_list', 'map_record_count', 'match_method', 'marker_diagnostics', 'identity_review')) + ' |' for row in rows]
+    return '\n'.join(lines) + '\n'
+
+
+def expected_artifacts(root=ROOT):
+    # Required sources fail closed: a missing input must never resemble zero coverage.
+    digest = hashlib.sha256()
+    for path in INPUT_PATHS:
+        digest.update(str(path).encode())
+        digest.update((root / path).read_bytes())
+    rows, summary, errors = compute_audit(
+        load_csv(root / KEY_PATH), load_csv(root / OA_PATH), load_json_records(root / CANDIDATE_JSON),
+        load_json_records(root / PREVIEW_PAPERS_JSON), load_json_records(root / PREVIEW_JSON),
+        read_exclusion_rows(root / EXCLUSIONS_PATH), load_json_records(root / RECONCILIATION_PATH))
+    return {OUT_PATH: render_csv(rows), MARKDOWN_PATH: render_markdown(rows, summary, digest.hexdigest(), errors)}, summary, errors
+
+
+def validate_artifacts(root=ROOT):
+    try:
+        artifacts, _, errors = expected_artifacts(root)
+        for path, expected in artifacts.items():
+            if not (root / path).exists() or (root / path).read_bytes() != expected.encode('utf-8'):
+                errors.append(f'Stale or inconsistent key-paper audit: {path}; run scripts/audit_key_paper_coverage.py')
+        return errors
+    except (OSError, ValueError, RuntimeError) as error:
+        return [f'Key-paper audit input error: {error}']
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--check', action='store_true', help='Read-only integrity and freshness check.')
+    args = parser.parse_args(argv)
+    if args.check:
+        errors = validate_artifacts()
+    else:
+        artifacts, summary, errors = expected_artifacts()
+        if not errors:
+            for path, content in artifacts.items():
+                target = ROOT / path
+                target.parent.mkdir(parents=True, exist_ok=True)
+                temporary = target.with_suffix(target.suffix + '.tmp')
+                temporary.write_text(content, encoding='utf-8')
+                temporary.replace(target)
+        print(json.dumps(summary, indent=2))
+    for error in errors:
+        print('ERROR: ' + error)
+    return int(bool(errors))
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

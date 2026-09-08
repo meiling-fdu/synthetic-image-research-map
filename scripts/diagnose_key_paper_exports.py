@@ -32,7 +32,7 @@ CANDIDATE_MAP = Path("web/data/openalex_candidate_map_data.json")
 PUBLIC_PREVIEW = Path("web/data/public_preview_map_data.json")
 OUTPUT = Path("data/manual/key_paper_export_diagnostics.csv")
 
-TARGET_STATUS = "in_openalex_candidate_pool_but_not_exported"
+TARGET_STATUS = "candidate_only"
 SEDID_TITLE = "Exposing the Fake: Effective Diffusion-Generated Images Detection"
 
 OUTPUT_COLUMNS = [

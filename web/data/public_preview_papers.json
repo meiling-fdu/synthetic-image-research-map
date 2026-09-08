@@ -9,7 +9,7 @@
       "preprint",
       "book"
     ],
-    "public_preview_generated_at": "2026-09-07T09:18:43Z"
+    "public_preview_generated_at": "2026-09-08T14:39:05Z"
   },
   "records": [
     {
@@ -28118,6 +28118,144 @@
           "status": "reviewed"
         }
       }
+    },
+    {
+      "paper_id": "curated:980afddea0a156b5020b",
+      "title": "Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method",
+        "benchmark"
+      ],
+      "venue": "Computer Vision Winter Workshop",
+      "raw_venue": "29th Computer Vision Winter Workshop (CVWW 2026)",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "An image detector combines pretrained detector scores using weights predicted from CLIP embeddings. Evaluation uses roughly 50,000 real and generated images, including GANs and diffusion models.",
+      "abstract_source": "manual",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://cmp.felk.cvut.cz/cvww2026/assets/pdfs/CVWW2026-31-final.pdf",
+      "formal_url": "https://cmp.felk.cvut.cz/cvww2026/assets/pdfs/CVWW2026-31-final.pdf",
+      "primary_url": "https://cmp.felk.cvut.cz/cvww2026/assets/pdfs/CVWW2026-31-final.pdf",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": false,
+      "url": "https://cmp.felk.cvut.cz/cvww2026/assets/pdfs/CVWW2026-31-final.pdf",
+      "authors": [
+        {
+          "name": "Patricie Petriľáková",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Jan Čech",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "manual",
+      "metadata_source": "manual",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 2
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Patricie Petriľáková",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Jan Čech",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "Manual curation"
+      },
+      "venue_name": "Computer Vision Winter Workshop",
+      "venue_id": "venue:computer-vision-winter-workshop",
+      "venue_acronym": "CVWW",
+      "venue_type": "conference",
+      "venue_track": "Main",
+      "venue_label": "Computer Vision Winter Workshop (CVWW)",
+      "venue_aliases": [
+        "Computer Vision Winter Workshop"
+      ]
     },
     {
       "paper_id": "curated:6a5bef99dcdc1ad4ba28",
@@ -79256,6 +79394,229 @@
       }
     },
     {
+      "paper_id": "curated:f0a62826c32151c731c7",
+      "title": "The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations",
+      "in_scope": true,
+      "year": 2026,
+      "publication_year": 2026,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "generative_editing"
+      ],
+      "research_types": [
+        "benchmark"
+      ],
+      "venue": "IEEE/CVF Winter Conference on Applications of Computer Vision",
+      "venue_name": "IEEE/CVF Winter Conference on Applications of Computer Vision",
+      "venue_id": "venue:wacv",
+      "venue_acronym": "WACV",
+      "venue_type": "conference",
+      "venue_track": "Workshop",
+      "raw_venue": "WACV",
+      "publisher": "",
+      "publication_type": "conference",
+      "venue_review_required": false,
+      "abstract": "Challenge evaluating detection and localization of fully synthetic and partially manipulated images.",
+      "abstract_source": "manual",
+      "ai_summary": "",
+      "doi": "10.1109/wacvw68408.2026.00103",
+      "arxiv_id": "",
+      "arxiv_url": "",
+      "arxiv_year": null,
+      "has_arxiv_version": false,
+      "paper_url": "https://doi.org/10.1109/wacvw68408.2026.00103",
+      "formal_url": "https://doi.org/10.1109/wacvw68408.2026.00103",
+      "primary_url": "https://doi.org/10.1109/wacvw68408.2026.00103",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": false,
+      "url": "https://doi.org/10.1109/wacvw68408.2026.00103",
+      "authors": [
+        {
+          "name": "Tai Nguyen",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Matthew Stamm",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Jill Crisman",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Jesse Hostetler",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Laura Cassano",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Michael Davinroy",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Peter Bautista",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "manual",
+      "metadata_source": "manual",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) · Workshop",
+      "venue_aliases": [
+        "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)",
+        "IEEE/CVF Winter Conference on Applications of Computer Vision",
+        "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) Workshops",
+        "IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) Workshop",
+        "IEEE/CVF Winter Conference on Applications of Computer Vision Workshops (WACVW)",
+        "IEEE/CVF Winter Conference on Applications of Computer Vision Workshop (WACVW)",
+        "IEEE/CVF Winter Conference on Applications of Computer Vision (WACVW) Workshops",
+        "IEEE/CVF Winter Conference on Applications of Computer Vision (WACVW) Workshop",
+        "WACVW",
+        "WACV"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 7
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Tai Nguyen",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Matthew Stamm",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Jill Crisman",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Jesse Hostetler",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Laura Cassano",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Michael Davinroy",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Peter Bautista",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "Manual curation"
+      }
+    },
+    {
       "paper_id": "curated:e9594b5466110ca009aa",
       "title": "Toward Generalizable AI-Generated Image Detection with a New Realistic Dataset: Performance Evaluation and Improvement",
       "in_scope": true,
@@ -101503,6 +101864,313 @@
         "research_types": {
           "status": "reviewed"
         }
+      }
+    },
+    {
+      "paper_id": "curated:4bafe8e39a3e39ed2088",
+      "title": "Can VLMs Detect and Localize Fine-Grained AI-Edited Images?",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "generative_editing"
+      ],
+      "research_types": [
+        "method",
+        "dataset",
+        "benchmark"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "Fine-grained detection and localization of localized image edits is crucial for assessing content authenticity, especially as modern diffusion models and image editors can produce highly realistic manipulations. However, this problem faces three key challenges: (1) most AIGC detectors produce only a global real-or-fake label without indicating where edits occur; (2) traditional computer vision methods for edit localization typically rely on costly pixel-level annotations; and (3) there is no large-scale, modern benchmark specifically targeting edited-image detection. To address these gaps, we develop an automated data-generation pipeline and construct FragFake, a large-scale benchmark of AI-edited images spanning multiple source datasets, diverse editing models, and several common edit types. Building on FragFake, we are the first to systematically study vision language models (VLMs) for edited-image classification and edited-region localization. Our experiments show that pretrained VLMs, including GPT4o, perform poorly on this task, whereas fine-tuned models such as Qwen2.5-VL achieve high accuracy and substantially higher object precision across all settings. We further explore GRPO-based RLVR training, which yields modest metric gains while improving the interpretability of model outputs. Ablation and transfer analyses reveal how data balancing, training size, LoRA rank, and training domain affect performance, and highlight both the potential and the limitations of cross-editor and cross-dataset generalization. We anticipate that this work will establish a solid foundation to facilitate and inspire subsequent research endeavors in the domain of multimodal content authenticity.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2505.15644",
+      "arxiv_url": "https://arxiv.org/abs/2505.15644",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2505.15644",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2505.15644",
+      "authors": [
+        {
+          "name": "Zhen Sun",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Ziyi Zhang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Zeren Luo",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Zhiyuan Zhong",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Zeyang Sha",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Tianshuo Cong",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Zheng Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Shiwen Cui",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Weiqiang Wang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Jiaheng Wei",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Xinlei He",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Qi Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Qian Wang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 13
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Zhen Sun",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Ziyi Zhang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Zeren Luo",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Zhiyuan Zhong",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Zeyang Sha",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Tianshuo Cong",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Zheng Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Shiwen Cui",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Weiqiang Wang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Jiaheng Wei",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Xinlei He",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Qi Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Qian Wang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
       }
     },
     {
@@ -127448,7 +128116,7 @@
     },
     {
       "paper_id": "curated:5fde2c559e029508e0c3",
-      "title": "Human vs. AI: A Novel Benchmark and a Comparative Study on the Detection\\n of Generated Images and the Impact of Prompts",
+      "title": "Human vs. AI: A Novel Benchmark and a Comparative Study on the Detection of Generated Images and the Impact of Prompts",
       "in_scope": true,
       "year": 2025,
       "publication_year": 2025,
@@ -127655,6 +128323,18 @@
         "method",
         "dataset"
       ],
+      "taxonomy_status": "reviewed",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "reviewed"
+        },
+        "image_scopes": {
+          "status": "reviewed"
+        },
+        "research_types": {
+          "status": "reviewed"
+        }
+      },
       "affiliations": [
         {
           "index": 1,
@@ -127668,19 +128348,7 @@
           "location_display": "Baden-Württemberg, Germany"
         }
       ],
-      "current_institution": null,
-      "taxonomy_status": "reviewed",
-      "taxonomy_review": {
-        "tasks": {
-          "status": "reviewed"
-        },
-        "image_scopes": {
-          "status": "reviewed"
-        },
-        "research_types": {
-          "status": "reviewed"
-        }
-      }
+      "current_institution": null
     },
     {
       "title": "Improving Synthetic Image Detection Towards Generalization: An Image Transformation Perspective",
@@ -129376,6 +130044,160 @@
         }
       ],
       "current_institution": null
+    },
+    {
+      "paper_id": "curated:fc87c72c7e8c831652ea",
+      "title": "LADLE-MM: Limited Annotation Based Detector with Learned Ensembles for Multimodal Misinformation",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "deepfake"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "With the rise of easily accessible tools for generating and manipulating multimedia content, realistic synthetic alterations to digital media have become a widespread threat, often involving manipulations across multiple modalities simultaneously. Recently, such techniques have been increasingly employed to distort narratives of important events and to spread misinformation on social media, prompting the development of misinformation detectors. In the context of misinformation conveyed through image-text pairs, several detection methods have been proposed. However, these approaches typically rely on computationally intensive architectures or require large amounts of annotated data. In this work we introduce LADLE-MM: Limited Annotation based Detector with Learned Ensembles for Multimodal Misinformation, a model-soup initialized multimodal misinformation detector designed to operate under a limited annotation setup and constrained training resources. LADLE-MM is composed of two unimodal branches and a third multimodal one that enhances image and text representations with additional multimodal embeddings extracted from BLIP, serving as fixed reference space. Despite using 60.3% fewer trainable parameters than previous state-of-the-art models, LADLE-MM achieves competitive performance on both binary and multi-label classification tasks on the DGM4 benchmark, outperforming existing methods when trained without grounding annotations. Moreover, when evaluated on the VERITE dataset, LADLE-MM outperforms current state-of-the-art approaches that utilize more complex architectures involving Large Vision-Language-Models, demonstrating the effective generalization ability in an open-set setting and strong robustness to unimodal bias.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2512.20257",
+      "arxiv_url": "https://arxiv.org/abs/2512.20257",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2512.20257",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2512.20257",
+      "authors": [
+        {
+          "name": "Daniele Cardullo",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Simone Teglia",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Irene Amerini",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 3
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Daniele Cardullo",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Simone Teglia",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Irene Amerini",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
+      }
     },
     {
       "paper_id": "curated:e688194977fa7bbf7db3",
@@ -138997,6 +139819,235 @@
       }
     },
     {
+      "paper_id": "curated:509324a7a8bc94c3eb78",
+      "title": "Pay Less Attention to Deceptive Artifacts: Robust Detection of Compressed Deepfakes on Online Social Networks",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "With the rapid advancement of deep learning, particularly through generative adversarial networks (GANs) and diffusion models (DMs), AI-generated images, or ``deepfakes\", have become nearly indistinguishable from real ones. These images are widely shared across Online Social Networks (OSNs), raising concerns about their misuse. Existing deepfake detection methods overlook the ``block effects\" introduced by compression in OSNs, which obscure deepfake artifacts, and primarily focus on raw images, rarely encountered in real-world scenarios. To address these challenges, we propose PLADA (Pay Less Attention to Deceptive Artifacts), a novel framework designed to tackle the lack of paired data and the ineffective use of compressed images. PLADA consists of two core modules: Block Effect Eraser (B2E), which uses a dual-stage attention mechanism to handle block effects, and Open Data Aggregation (ODA), which processes both paired and unpaired data to improve detection. Extensive experiments across 26 datasets demonstrate that PLADA achieves a remarkable balance in deepfake detection, outperforming SoTA methods in detecting deepfakes on OSNs, even with limited paired data and compression. More importantly, this work introduces the ``block effect\" as a critical factor in deepfake detection, providing a robust solution for open-world scenarios. Our code is available at https://github.com/ManyiLee/PLADA.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2506.20548",
+      "arxiv_url": "https://arxiv.org/abs/2506.20548",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2506.20548",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2506.20548",
+      "authors": [
+        {
+          "name": "Manyi Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Renshuai Tao",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Yufan Liu",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Chuangchuang Tan",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Haotong Qin",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Bing Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Yunchao Wei",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Yao Zhao",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 8
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Manyi Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Renshuai Tao",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Yufan Liu",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Chuangchuang Tan",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Haotong Qin",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Bing Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Yunchao Wei",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Yao Zhao",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
+      }
+    },
+    {
       "paper_id": "curated:95953a73a0e2e1f14ccb",
       "title": "PiD: Generalized AI-Generated Images Detection with Pixelwise Decomposition Residuals",
       "in_scope": true,
@@ -139435,6 +140486,175 @@
       }
     },
     {
+      "paper_id": "curated:168e13e349336a266783",
+      "title": "Prefill-Guided Thinking for Zero-Shot Detection of AI-Generated Images",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "Traditional supervised methods for detecting AI-generated images depend on large, curated datasets for training and fail to generalize to novel, out-of-domain image generators. As an alternative, we explore pre-trained Vision-Language Models (VLMs) for zero-shot detection of AI-generated images. We evaluate VLM performance on three diverse benchmarks encompassing synthetic images of human faces, objects, and animals produced by 16 different state-of-the-art image generators. While off-the-shelf VLMs perform poorly on these datasets, we find that prefilling responses effectively guides their reasoning -- a method we call Prefill-Guided Thinking (PGT). In particular, prefilling a VLM response with the phrase \"Let's examine the style and the synthesis artifacts\" improves the Macro F1 scores of three widely used open-source VLMs by up to 24%. We analyze this improvement in detection by tracking answer confidence during response generation. For some models, prefills counteract early overconfidence -- akin to mitigating the Dunning-Kruger effect -- leading to better detection performance.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2506.11031",
+      "arxiv_url": "https://arxiv.org/abs/2506.11031",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2506.11031",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2506.11031",
+      "authors": [
+        {
+          "name": "Zoher Kachwala",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Danishjeet Singh",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Danielle Yang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Filippo Menczer",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 4
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Zoher Kachwala",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Danishjeet Singh",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Danielle Yang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Filippo Menczer",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
+      }
+    },
+    {
       "paper_id": "curated:772bb625ccc3e45e8481",
       "title": "Prompt-Engineered Detection of AI-Generated Images",
       "in_scope": true,
@@ -139663,6 +140883,190 @@
         "research_types": {
           "status": "reviewed"
         }
+      }
+    },
+    {
+      "paper_id": "curated:2334b1774b5f65217e7b",
+      "title": "Provenance Detection for AI-Generated Images: Combining Perceptual Hashing, Homomorphic Encryption, and AI Detection Models",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "As AI-generated sensitive images become more prevalent, identifying their source is crucial for distinguishing them from real images. Conventional image watermarking methods are vulnerable to common transformations like filters, lossy compression, and screenshots, often applied during social media sharing. Watermarks can also be faked or removed if models are open-sourced or leaked since images can be rewatermarked. We have developed a three-part framework for secure, transformation-resilient AI content provenance detection, to address these limitations. We develop an adversarially robust state-of-the-art perceptual hashing model, DinoHash, derived from DINOV2, which is robust to common transformations like filters, compression, and crops. Additionally, we integrate a Multi-Party Fully Homomorphic Encryption~(MP-FHE) scheme into our proposed framework to ensure the protection of both user queries and registry privacy. Furthermore, we improve previous work on AI-generated media detection. This approach is useful in cases where the content is absent from our registry. DinoHash significantly improves average bit accuracy by 12% over state-of-the-art watermarking and perceptual hashing methods while maintaining superior true positive rate (TPR) and false positive rate (FPR) tradeoffs across various transformations. Our AI-generated media detection results show a 25% improvement in classification accuracy on commonly used real-world AI image generators over existing algorithms. By combining perceptual hashing, MP-FHE, and an AI content detection model, our proposed framework provides better robustness and privacy compared to previous work.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2503.11195",
+      "arxiv_url": "https://arxiv.org/abs/2503.11195",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2503.11195",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2503.11195",
+      "authors": [
+        {
+          "name": "Shree Singhi",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Aayan Yadav",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Aayush Gupta",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Shariar Ebrahimi",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Parisa Hassanizadeh",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 5
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Shree Singhi",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Aayan Yadav",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Aayush Gupta",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Shariar Ebrahimi",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Parisa Hassanizadeh",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
       }
     },
     {
@@ -141448,6 +142852,175 @@
         "research_types": {
           "status": "reviewed"
         }
+      }
+    },
+    {
+      "paper_id": "curated:40d551857163fa643202",
+      "title": "Redefining Generalization in Visual Domains: A Two-Axis Framework for Fake Image Detection with FusionDetect",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "The rapid development of generative models has made it increasingly crucial to develop detectors that can reliably detect synthetic images. Although most of the work has now focused on cross-generator generalization, we argue that this viewpoint is too limited. Detecting synthetic images involves another equally important challenge: generalization across visual domains. To bridge this gap,we present the OmniGen Benchmark. This comprehensive evaluation dataset incorporates 12 state-of-the-art generators, providing a more realistic way of evaluating detector performance under realistic conditions. In addition, we introduce a new method, FusionDetect, aimed at addressing both vectors of generalization. FusionDetect draws on the benefits of two frozen foundation models: CLIP & Dinov2. By deriving features from both complementary models,we develop a cohesive feature space that naturally adapts to changes in both thecontent and design of the generator. Our extensive experiments demonstrate that FusionDetect delivers not only a new state-of-the-art, which is 3.87% more accurate than its closest competitor and 6.13% more precise on average on established benchmarks, but also achieves a 4.48% increase in accuracy on OmniGen,along with exceptional robustness to common image perturbations. We introduce not only a top-performing detector, but also a new benchmark and framework for furthering universal AI image detection. The code and dataset are available at http://github.com/amir-aman/FusionDetect",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2510.05740",
+      "arxiv_url": "https://arxiv.org/abs/2510.05740",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2510.05740",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2510.05740",
+      "authors": [
+        {
+          "name": "Amirtaha Amanzadi",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Zahra Dehghanian",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Hamid Beigy",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Hamid R. Rabiee",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 4
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Amirtaha Amanzadi",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Zahra Dehghanian",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Hamid Beigy",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Hamid R. Rabiee",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
       }
     },
     {
@@ -156573,6 +158146,148 @@
           }
         },
         "source": "OpenAlex"
+      }
+    },
+    {
+      "paper_id": "curated:0e0f70c0146b624226ca",
+      "title": "UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization",
+      "in_scope": true,
+      "year": 2025,
+      "publication_year": 2025,
+      "publication_date": "",
+      "tasks": [
+        "detection",
+        "localization"
+      ],
+      "image_scopes": [
+        "fully_generated",
+        "generative_editing"
+      ],
+      "research_types": [
+        "dataset",
+        "benchmark"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "With the rapid proliferation of image generative models, the authenticity of digital images has become a significant concern. While existing studies have proposed various methods for detecting AI-generated content, current benchmarks are limited in their coverage of diverse generative models and image categories, often overlooking end-to-end image editing and artistic images. To address these limitations, we introduce UniAIDet, a unified and comprehensive benchmark that includes both photographic and artistic images. UniAIDet covers a wide range of generative models, including text-to-image, image-to-image, image inpainting, image editing, and deepfake models. Using UniAIDet, we conduct a comprehensive evaluation of various detection methods and answer three key research questions regarding generalization capability and the relation between detection and localization. Our benchmark and analysis provide a robust foundation for future research.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2510.23023",
+      "arxiv_url": "https://arxiv.org/abs/2510.23023",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2510.23023",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2510.23023",
+      "authors": [
+        {
+          "name": "Huixuan Zhang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Xiaojun Wan",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 2
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Huixuan Zhang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Xiaojun Wan",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal from targeted reconciliation; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
       }
     },
     {
@@ -204990,6 +206705,220 @@
           }
         },
         "source": "OpenAlex"
+      }
+    },
+    {
+      "paper_id": "curated:8aa00584c346440e0c41",
+      "title": "Detecting Generated Images by Real Images Only",
+      "in_scope": true,
+      "year": 2023,
+      "publication_year": 2023,
+      "publication_date": "",
+      "tasks": [
+        "detection"
+      ],
+      "image_scopes": [
+        "fully_generated"
+      ],
+      "research_types": [
+        "method"
+      ],
+      "venue": "arXiv",
+      "venue_name": "arXiv",
+      "venue_id": "venue:arxiv",
+      "venue_acronym": "",
+      "venue_type": "preprint",
+      "venue_track": "",
+      "raw_venue": "arXiv",
+      "publisher": "",
+      "publication_type": "preprint",
+      "venue_review_required": false,
+      "abstract": "As deep learning technology continues to evolve, the images yielded by generative models are becoming more and more realistic, triggering people to question the authenticity of images. Existing generated image detection methods detect visual artifacts in generated images or learn discriminative features from both real and generated images by massive training. This learning paradigm will result in efficiency and generalization issues, making detection methods always lag behind generation methods. This paper approaches the generated image detection problem from a new perspective: Start from real images. By finding the commonality of real images and mapping them to a dense subspace in feature space, the goal is that generated images, regardless of their generative model, are then projected outside the subspace. As a result, images from different generative models can be detected, solving some long-existing problems in the field. Experimental results show that although our method was trained only by real images and uses 99.9\\% less training data than other deep learning-based methods, it can compete with state-of-the-art methods and shows excellent performance in detecting emerging generative models with high inference efficiency. Moreover, the proposed method shows robustness against various post-processing. These advantages allow the method to be used in real-world scenarios.",
+      "abstract_source": "arxiv",
+      "ai_summary": "",
+      "doi": "",
+      "arxiv_id": "2311.00962",
+      "arxiv_url": "https://arxiv.org/abs/2311.00962",
+      "arxiv_year": null,
+      "has_arxiv_version": true,
+      "paper_url": "",
+      "formal_url": "",
+      "primary_url": "https://arxiv.org/abs/2311.00962",
+      "landing_page_url": "",
+      "openalex_url": "",
+      "is_arxiv_preprint": true,
+      "url": "https://arxiv.org/abs/2311.00962",
+      "authors": [
+        {
+          "name": "Xiuli Bi",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Bo Liu",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Fan Yang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Bin Xiao",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Weisheng Li",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Gao Huang",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        },
+        {
+          "name": "Pamela C. Cosman",
+          "affiliation_indices": [],
+          "is_current_marker_author": false,
+          "affiliation_source": "unmapped",
+          "affiliation_fallback": false,
+          "affiliation_status": "unresolved"
+        }
+      ],
+      "source_database": "arxiv",
+      "metadata_source": "arxiv",
+      "curation_status": "needs_review",
+      "review_status": "pending",
+      "needs_review": true,
+      "has_map_location": false,
+      "map_record_count": 0,
+      "missing_affiliation": true,
+      "missing_coordinates": false,
+      "coverage_status": "missing_affiliation",
+      "aggregated_institutions": [],
+      "aggregated_country_names": [],
+      "aggregated_country_codes": [],
+      "aggregated_regions": [],
+      "aggregated_region_codes": [],
+      "affiliation_review_state": "unreviewed",
+      "institution_source": "automatic_fallback",
+      "preliminary_affiliations": true,
+      "resolution_notes": "Preliminary automatic affiliation evidence; not manually reviewed.",
+      "venue_label": "arXiv",
+      "venue_aliases": [
+        "ArXiv.org",
+        "arXiv (Cornell University)",
+        "arXiv"
+      ],
+      "ambiguity_status": "resolved",
+      "aggregated_locations": [],
+      "aggregated_institution_types": [],
+      "author_affiliation_counts": {
+        "mapped": 0,
+        "non_institutional": 0,
+        "unresolved": 7
+      },
+      "affiliation_complete": false,
+      "affiliations": [],
+      "current_institution": null,
+      "author_institution_affiliations": [],
+      "author_affiliation_indices": [
+        {
+          "author": "Xiuli Bi",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Bo Liu",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Fan Yang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Bin Xiao",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Weisheng Li",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Gao Huang",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        },
+        {
+          "author": "Pamela C. Cosman",
+          "indices": [],
+          "institution_ids": [],
+          "source": "unmapped",
+          "fallback": false
+        }
+      ],
+      "author_institution_indices": [],
+      "taxonomy_status": "needs_review",
+      "taxonomy_review": {
+        "tasks": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal; requires manual Admin curation."
+        },
+        "image_scopes": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal; requires manual Admin curation."
+        },
+        "research_types": {
+          "status": "needs_review",
+          "reason": "Evidence-supported proposal; requires manual Admin curation."
+        }
+      },
+      "metadata_status": {
+        "overall": "Needs review",
+        "default_field_status": "Needs review",
+        "field_overrides": {
+          "affiliations": {
+            "status": "Needs review"
+          }
+        },
+        "source": "arXiv"
       }
     },
     {

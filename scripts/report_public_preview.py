@@ -301,11 +301,25 @@ def build_report(
     input_path: Path,
     metadata: Dict[str, Any],
     records: Sequence[Dict[str, Any]],
+    bibliography: Optional[Sequence[Dict[str, Any]]] = None,
 ) -> str:
     papers_by_identity: Dict[Tuple[str, ...], Dict[str, Any]] = {}
     for record in records:
         papers_by_identity.setdefault(paper_identity(record), record)
     paper_records = list(papers_by_identity.values())
+    if bibliography is not None:
+        try:
+            from .audit_key_paper_coverage import PaperIndex
+        except ImportError:
+            from audit_key_paper_coverage import PaperIndex
+        index = PaperIndex(bibliography)
+        matched = set()
+        for record in records:
+            match, _, ambiguity = index.match(record)
+            if match is None:
+                raise ReportError(f"Map record has no unambiguous bibliography match: {record.get('title')}; {ambiguity}")
+            matched.add(match)
+        paper_records = [bibliography[i] for i in sorted(matched)]
     tasks = count_array_values(paper_records, "tasks")
     years = count_values(
         paper_records, lambda record: first_text(record, "publication_year", "year")
@@ -346,7 +360,6 @@ def build_report(
         if resolution_confidence(record) in {"low", "unresolved"}
     ]
 
-    unique_papers = {paper_identity(record) for record in records}
     unique_institutions = {
         institution_identity(record)
         for record in records
@@ -365,8 +378,10 @@ def build_report(
         "",
         "This report describes map records, not a manually curated bibliography. "
         "One paper may produce multiple records when collaborators have multiple institutions.",
-        "Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or "
-        "normalized title and year when stronger identifiers are unavailable.",
+        ("Unique mapped papers are matched to `web/data/public_preview_papers.json` "
+         "using the key-paper audit's conservative DOI → arXiv → OpenAlex → exact-title matcher."
+         if bibliography is not None else
+         "For this standalone map input, papers are grouped by OpenAlex URL, DOI, arXiv ID, or normalized title/year."),
         "",
         "## Dataset Metadata",
         "",
@@ -388,7 +403,7 @@ def build_report(
             "| Metric | Count |",
             "| --- | ---: |",
             f"| Map records | {len(records)} |",
-            f"| Unique mapped papers | {len(unique_papers)} |",
+            f"| Unique mapped papers | {len(paper_records)} |",
             f"| Unique institutions | {len(unique_institutions)} |",
             f"| Countries | {len(unique_countries)} |",
             f"| arXiv/preprint records | {sum(is_arxiv_record(record) for record in records)} |",
@@ -466,7 +481,11 @@ def run(args: argparse.Namespace) -> int:
         return 1
     try:
         metadata, records = read_dataset(args.input)
-        report = build_report(args.input, metadata, records)
+        root = Path(__file__).resolve().parent.parent
+        bibliography = None
+        if args.input.resolve() == (root / DEFAULT_INPUT).resolve():
+            _, bibliography = read_dataset(root / "web/data/public_preview_papers.json")
+        report = build_report(args.input, metadata, records, bibliography)
         write_report(args.output, report)
     except ReportError as error:
         print(f"Error: {error}", file=sys.stderr)

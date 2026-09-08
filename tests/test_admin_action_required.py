@@ -105,6 +105,12 @@ class ActionRequiredTests(unittest.TestCase):
         # A metadata confirmation does not resolve an unrelated marker.
         self.assertEqual(queues.actionable_payload("high_risk_marker", [self.candidate("high_risk_marker")], self.context())["count"], 1)
 
+    def test_markerless_bibliography_paper_is_not_a_coverage_gap(self):
+        self.paths["public_papers_path"].write_text(json.dumps([self.base]))
+        row = dict(self.base, missing_stage="missing_affiliation")
+        self.assertEqual(queues.actionable_payload("key_paper_coverage", [row], self.context())["count"], 0)
+        self.assertEqual(queues.actionable_payload("marker_blocker", [row], self.context())["count"], 1)
+
     def test_historical_no_action_rows_do_not_enter_action_required(self):
         for name, row in (
             ("marker_blocker", dict(self.base, blocker_type="already_mapped")),

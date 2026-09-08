@@ -8,13 +8,13 @@ data change and the identity and relationship invariants in
 
 CURRENT_REPOSITORY_BASELINE = {
     # Institution cleanup 2026-09-06: five merges, 20 locations, 22 map relationships.
-    # Canonical public paper records after the 2026-09-05 Ant/AI-edit gap-fill.
-    "public_unique_papers": 613,
+    # Canonical public records after ten needs_review reconciliation additions (2026-09-08).
+    "public_unique_papers": 623,
     # Distinct paper identities represented by at least one public map marker.
     "public_map_source_papers": 608,
     # Canonical public papers that resolve to at least one public map marker.
     "public_papers_with_map": 607,
-    "public_papers_without_map": 6,
+    "public_papers_without_map": 16,
     # Registry rows include active identities plus retained merged/ignored history.
     "total_institution_registry_rows": 691,
     "active_canonical_institutions": 670,
@@ -68,18 +68,18 @@ PUBLIC_PAPER_INSTITUTION_TYPE_TOTALS = {'university': 583, 'research_unit': 120,
 RELEASE_PUBLICATION_TYPE_TOTALS = {"conference": 314, "journal": 167, "preprint": 64, "book": 1}
 
 PUBLICATION_TYPE_TOTALS = {
-    # Current public corpus after the 2026-09-05 Ant/AI-edit gap-fill.
-    "conference": 359,
+    # Current corpus after the 2026-09-08 targeted reconciliation.
+    "conference": 361,
     "journal": 157,
-    "preprint": 96,
+    "preprint": 104,
     "book": 1,
 }
 
 TASK_TOTALS = {
     # Multi-label public-paper counts after resolving the taxonomy review queue.
-    "detection": 577,
+    "detection": 587,
     "source_attribution": 77,
-    "localization": 18,
+    "localization": 21,
 }
 
 RELEASE_TASK_TOTALS = {
@@ -113,4 +113,18 @@ INFORMATION_ENGINEERING_PUBLIC_RECORD_IDS = {
     # Denoising Trajectory Biases, added from accepted-paper affiliation evidence.
     "curated-map:b2e9ed534727553af0d0",
     "curated-map:ff03ae3f6aab250e53d0",
+}
+
+# Exactly these additions intentionally await affiliation evidence and Admin review.
+RECONCILIATION_PENDING_PAPERS = {
+    "Detecting Generated Images by Real Images Only",
+    'Provenance Detection for AI-Generated Images: Combining Perceptual Hashing, Homomorphic Encryption, and AI Detection Models',
+    'Prefill-Guided Thinking for Zero-Shot Detection of AI-Generated Images',
+    'Pay Less Attention to Deceptive Artifacts: Robust Detection of Compressed Deepfakes on Online Social Networks',
+    'Redefining Generalization in Visual Domains: A Two-Axis Framework for Fake Image Detection with FusionDetect',
+    'LADLE-MM: Limited Annotation Based Detector with Learned Ensembles for Multimodal Misinformation',
+    'UniAIDet: A Unified and Universal Benchmark for AI-Generated Image Content Detection and Localization',
+    'Can VLMs Detect and Localize Fine-Grained AI-Edited Images?',
+    'The SAFE Image Authenticity Challenge: Detecting and Localizing Partial and Fully Synthetic Manipulations',
+    'Dynamic Ensemble of Deepfake Detectors Conditioned on CLIP Features',
 }

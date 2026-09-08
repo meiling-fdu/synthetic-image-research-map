@@ -22,6 +22,8 @@ PREVIEW_JSON = Path("web/data/public_preview_map_data.json")
 QUALITY_REPORT = Path("docs/public_preview_report.md")
 MAPPING_REPORT = Path("docs/missing_author_mappings_report.md")
 MAPPING_REPORT_CSV = Path("data/manual/missing_author_mappings_report.csv")
+KEY_REPORT = Path("docs/key_paper_coverage_report.md")
+KEY_REPORT_CSV = Path("data/manual/key_paper_coverage_report.csv")
 PAPER_PREVIEW_JSON = Path("web/data/public_preview_papers.json")
 CONFIDENCE_LEVELS = ("unresolved", "low", "medium", "high")
 
@@ -147,6 +149,7 @@ def build_steps(args: argparse.Namespace) -> List[RefreshStep]:
                 "Generate missing author mappings report",
                 script_command("report_missing_author_mappings.py"),
             ),
+            ("Generate key-paper coverage reports", script_command("audit_key_paper_coverage.py")),
             ("Validate public preview", validation_command),
         ]
     )
@@ -158,7 +161,7 @@ def build_steps(args: argparse.Namespace) -> List[RefreshStep]:
 
 def execute_steps(steps: Sequence[RefreshStep]) -> int:
     preview_paths = tuple(
-        REPOSITORY_ROOT / path for path in (PREVIEW_JSON, PAPER_PREVIEW_JSON)
+        REPOSITORY_ROOT / path for path in (PREVIEW_JSON, PAPER_PREVIEW_JSON, QUALITY_REPORT, MAPPING_REPORT, MAPPING_REPORT_CSV, KEY_REPORT, KEY_REPORT_CSV)
     )
     snapshot = {
         path: path.read_bytes() for path in preview_paths if path.exists()
@@ -183,6 +186,7 @@ def execute_steps(steps: Sequence[RefreshStep]) -> int:
                 check=False,
             )
         except OSError as error:
+            restore_preview_snapshot()
             print(
                 f"{prefix} ERROR: could not start {step.name}: {error}",
                 file=sys.stderr,
@@ -201,6 +205,9 @@ def execute_steps(steps: Sequence[RefreshStep]) -> int:
     print("\nPublic preview refresh complete.")
     print("Inspect these files before committing:")
     print(f"  - {PREVIEW_JSON}")
+    print(f"  - {PAPER_PREVIEW_JSON}")
+    print(f"  - {KEY_REPORT}")
+    print(f"  - {KEY_REPORT_CSV}")
     print(f"  - {QUALITY_REPORT}")
     print(f"  - {MAPPING_REPORT}")
     print(f"  - {MAPPING_REPORT_CSV}")

@@ -48,6 +48,7 @@ KNOWN_WORKFLOW_OUTPUTS = (
     Path("web/data/public_preview_papers.json"),
     Path("data/curated/institution_location_review.csv"),
     Path("data/manual/key_paper_coverage_report.csv"),
+    Path("docs/key_paper_coverage_report.md"),
     Path("data/manual/paper_marker_blocker_report.csv"),
     Path("data/manual/high_risk_marker_review.csv"),
     Path("data/manual/missing_author_mappings_report.csv"),
@@ -148,7 +149,11 @@ PUBLISH_CHANGES = (
 
 ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
     "curated_validation": (CURATED_VALIDATION,),
-    "export_preview": (EXPORT_PREVIEW,),
+    # Background preview sync uses this workflow after Admin saves too.
+    "export_preview": (
+        EXPORT_PREVIEW, PUBLIC_PREVIEW_REPORT, AUTHOR_MAPPING_REPORT,
+        KEY_PAPER_AUDIT, PUBLIC_VALIDATION,
+    ),
     "public_validation": (PUBLIC_VALIDATION,),
     "author_mapping_report": (AUTHOR_MAPPING_REPORT,),
     "institution_consistency_audit": (INSTITUTION_CONSISTENCY_REPORT,),
@@ -168,10 +173,10 @@ ALLOWED_WORKFLOWS: Mapping[str, Sequence[Sequence[str]]] = {
         EXPORT_PREVIEW,
         PUBLIC_PREVIEW_REPORT,
         AUTHOR_MAPPING_REPORT,
-        PUBLIC_VALIDATION,
         KEY_PAPER_AUDIT,
         MARKER_BLOCKER_DIAGNOSIS,
         HIGH_RISK_MARKER_REPORT,
+        PUBLIC_VALIDATION,
     ),
     "publish_changes": (PUBLISH_CHANGES,),
 }

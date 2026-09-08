@@ -989,7 +989,7 @@ class PublicPreviewDeduplicationTests(unittest.TestCase):
         steps = build_steps(args)
         commands = [step.command for step in steps]
 
-        self.assertEqual(len(steps), 4)
+        self.assertEqual(len(steps), 5)
         self.assertTrue(
             all("run_pipeline.py" not in " ".join(command) for command in commands)
         )

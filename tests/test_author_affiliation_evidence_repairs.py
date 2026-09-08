@@ -10,6 +10,8 @@ from pathlib import Path
 
 import pytest
 
+from tests.baseline_expectations import RECONCILIATION_PENDING_PAPERS
+
 from scripts.export_public_preview import add_public_detail_fields
 from scripts.public_relationships import ReviewedRelationshipResolver
 from scripts.author_affiliation_reviews import (
@@ -157,11 +159,16 @@ def test_unindexed_roster_remains_visible_and_has_durable_review_notes():
         for name in mapping["institution_authors"].split("; ")
         if name
     }
-    assert unresolved - legacy_expected <= preliminary_authors
+    pending = [p for p in records if p["title"] in RECONCILIATION_PENDING_PAPERS]
+    assert {p["title"] for p in pending} == RECONCILIATION_PENDING_PAPERS
+    assert all(p["curation_status"] == "needs_review" and p["missing_affiliation"] for p in pending)
+    assert all(not p["has_map_location"] for p in pending)
+    pending_authors = {a["name"] for p in pending for a in p["authors"]}
+    assert unresolved - legacy_expected <= preliminary_authors | pending_authors
     zero_indexed = [p for p in records if not any(a["affiliation_indices"] for a in p["authors"])]
     assert all(p.get("preliminary_affiliations") for p in zero_indexed)
     assert all(
-        {a["name"] for a in p["authors"]} <= preliminary_authors
+        {a["name"] for a in p["authors"]} <= preliminary_authors | (pending_authors if p["title"] in RECONCILIATION_PENDING_PAPERS else set())
         for p in zero_indexed
     )
 
@@ -297,7 +304,12 @@ def test_final_repository_author_states_follow_formal_rosters():
         for name in mapping["institution_authors"].split("; ")
         if name
     }
-    assert unresolved - legacy_expected <= preliminary_authors
+    pending = [p for p in records if p["title"] in RECONCILIATION_PENDING_PAPERS]
+    assert {p["title"] for p in pending} == RECONCILIATION_PENDING_PAPERS
+    assert all(p["curation_status"] == "needs_review" and p["missing_affiliation"] for p in pending)
+    assert all(not p["has_map_location"] for p in pending)
+    pending_authors = {a["name"] for p in pending for a in p["authors"]}
+    assert unresolved - legacy_expected <= preliminary_authors | pending_authors
     assert sum(p["affiliation_complete"] for p in records) == sum(
         not any(a["affiliation_status"] == "unresolved" for a in p["authors"])
         for p in records

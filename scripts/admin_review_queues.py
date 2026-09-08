@@ -411,6 +411,10 @@ class ReviewContext:
             return terminal_reason(row)
         if clean(row.get("recommended_action")) == "no_action":
             return "diagnostic_no_action"
+        if name == "key_paper_coverage" and (
+                row.get("coverage_status") in {"excluded", "covered_in_public_preview_paper_list"}
+                or self.matching("public_papers", row)):
+            return "bibliography_covered_or_excluded"
         if row.get("blocker_type") == "already_mapped" or row.get("missing_stage") == "covered_as_map_marker":
             return "diagnostic_already_covered"
         mappings = self.matching("mappings", row)

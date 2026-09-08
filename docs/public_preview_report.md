@@ -3,7 +3,7 @@
 Source: `web/data/public_preview_map_data.json`
 
 This report describes map records, not a manually curated bibliography. One paper may produce multiple records when collaborators have multiple institutions.
-Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or normalized title and year when stronger identifiers are unavailable.
+Unique mapped papers are matched to `web/data/public_preview_papers.json` using the key-paper audit's conservative DOI → arXiv → OpenAlex → exact-title matcher.
 
 ## Dataset Metadata
 
@@ -11,7 +11,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | --- | --- |
 | dataset_type | mixed_candidate_and_curated_public_preview |
 | generated_from | OpenAlex candidate metadata and maintainer-confirmed curated mappings |
-| public_preview_generated_at | 2026-09-05T09:40:18Z |
+| public_preview_generated_at | 2026-09-08T14:39:05Z |
 | venue_type_order | ["conference", "journal", "preprint", "book"] |
 | warning | Contains automatically generated candidate records plus explicitly identified maintainer-confirmed curated markers. |
 
@@ -19,13 +19,13 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Metric | Count |
 | --- | ---: |
-| Map records | 1403 |
-| Unique mapped papers | 608 |
-| Unique institutions | 616 |
+| Map records | 1425 |
+| Unique mapped papers | 607 |
+| Unique institutions | 629 |
 | Countries | 52 |
-| arXiv/preprint records | 708 |
-| Records with DOI | 1179 |
-| Records with venue | 1399 |
+| arXiv/preprint records | 729 |
+| Records with DOI | 1180 |
+| Records with venue | 1421 |
 | Records missing venue | 4 |
 | Records missing paper URL | 0 |
 | Records missing institution | 0 |
@@ -36,8 +36,8 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Task | Records |
 | --- | ---: |
-| detection | 572 |
-| source_attribution | 77 |
+| detection | 571 |
+| source_attribution | 76 |
 | localization | 18 |
 
 ## Records by Year
@@ -49,7 +49,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 | 2024 | 112 |
 | 2023 | 48 |
 | 2022 | 22 |
-| 2021 | 24 |
+| 2021 | 23 |
 | 2020 | 15 |
 | 2019 | 10 |
 | 2018 | 2 |
@@ -73,16 +73,16 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Country | Records |
 | --- | ---: |
-| China | 679 |
-| United States | 176 |
+| China | 693 |
+| United States | 180 |
 | Italy | 98 |
 | India | 67 |
-| Germany | 45 |
+| Germany | 46 |
 | South Korea | 41 |
-| United Kingdom | 34 |
+| United Kingdom | 35 |
 | Singapore | 32 |
+| Australia | 28 |
 | France | 28 |
-| Australia | 27 |
 
 ## Top Institutions
 
@@ -103,7 +103,7 @@ Unique mapped papers are identified by OpenAlex URL, then DOI, arXiv ID, or norm
 
 | Confidence | Records |
 | --- | ---: |
-| high | 1311 |
+| high | 1333 |
 | medium | 92 |
 
 ## Potential quality issues

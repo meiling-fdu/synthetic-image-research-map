@@ -190,7 +190,7 @@ def blocker_rows() -> Iterable[Dict[str, str]]:
 def key_rows() -> Iterable[Dict[str, str]]:
     for source in read_csv(KEY_COVERAGE_PATH):
         stage = clean(source.get("missing_stage"))
-        if stage == "covered_as_map_marker":
+        if stage in {"covered_as_map_marker", "excluded"}:
             continue
         yield {
             **base_row(source),

@@ -674,12 +674,22 @@ def parse_args(argv: Optional[Sequence[str]] = None) -> argparse.Namespace:
 def main(argv: Optional[Sequence[str]] = None) -> int:
     args = parse_args(argv)
     try:
+        key_papers = read_csv_rows(args.key_papers, optional=True)
+        root = Path(__file__).resolve().parent.parent
+        if args.key_papers.resolve() == (root / DEFAULT_KEY_PAPERS).resolve():
+            try:
+                from .audit_key_paper_coverage import RECONCILIATION_PATH, load_json_records
+                from .key_paper_reconciliation import apply_decisions
+            except ImportError:
+                from audit_key_paper_coverage import RECONCILIATION_PATH, load_json_records
+                from key_paper_reconciliation import apply_decisions
+            key_papers = apply_decisions(key_papers, load_json_records(root / RECONCILIATION_PATH))
         rows = build_report_rows(
             read_json_records(args.papers),
             read_json_records(args.map_data),
             read_csv_rows(args.curated_papers),
             read_csv_rows(args.mappings),
-            read_csv_rows(args.key_papers, optional=True),
+            key_papers,
             read_csv_rows(args.exclusions, optional=True),
         )
         write_csv_report(args.csv_output, rows)

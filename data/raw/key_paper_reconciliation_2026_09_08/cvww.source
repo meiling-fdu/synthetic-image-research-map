@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CVWW 2026 — Proceedings and Contributed Papers</title>
+  <meta name="description" content="Proceedings and Contributed papers for CVWW 2026." />
+  <link rel="icon" type="image/svg+xml" href="assets/logos/cvww25-snowflake.svg" />
+  <meta property="og:title" content="CVWW 2026 — Proceedings and Contributed Papers" />
+  <meta property="og:description" content="Proceedings and Contributed papers for CVWW 2026." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.cmp.felk.cvut.cz/cvww2026/proceedings.html" />
+  <meta name="theme-color" content="#0F172A" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="CVWW 2026 home">
+        <img src="assets/logos/cvww25-snowflake.svg" class="brand-mark" alt="" width="28" height="28"
+          decoding="async" fetchpriority="high" />
+        <span class="brand-text">CVWW 2026</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Primary">
+        <ul>
+          <li class="has-dropdown">
+            <a href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
+            <ul class="dropdown-menu">
+              <li><a href="index.html#about">About CVWW</a></li>
+              <li><a href="index.html#venue">Venue</a></li>
+              <li><a href="people.html">People</a></li>
+              <li><a href="previous-editions.html">Previous Editions</a></li>
+            </ul>
+          </li>
+
+          <li><a href="index.html#dates">Dates</a></li>
+
+          <li class="has-dropdown">
+            <a href="#" role="button" aria-haspopup="true" aria-expanded="false">Authors</a>
+            <ul class="dropdown-menu">
+              <li><a href="index.html#cfp">Call for Papers</a></li>
+              <li><a href="submission-guidelines.html">Submission Guidelines</a></li>
+            </ul>
+          </li>
+
+          <li class="has-dropdown">
+            <a href="#" role="button" aria-haspopup="true" aria-expanded="false">Attend</a>
+            <ul class="dropdown-menu">
+              <li><a href="programme.html">Programme</a></li>
+              <li><a href="proceedings.html">Proceedings</a></li>
+              <li><a href="keynote.html">Keynote</a></li>
+              <li><a href="registration.html">Registration</a></li>
+              <li><a href="index.html#venue">Venue</a></li>
+            </ul>
+          </li>
+
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <h1>Published Papers &amp; Proceedings</h1>
+            <p>Contributed papers and proceedings for CVWW 2026.</p>
+            <div class="cta">
+              <a class="btn btn-primary" href="assets/pdfs/CVWW26_proceedings.pdf">Proceedings in PDF</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <section id="published-papers" class="section alt">
+      <div class="container">
+        <h2>Contributed Papers</h2>
+
+        <div class="published-panel">
+          <div class="published-panel-body">
+            <ul class="talk-list">
+              <li class="accepted"><span class="talk-desc"><strong>Instantaneous Monocular
+                Camera Tilt Stabilization for Autonomous Student Formula</strong><br>Erik Doležal, Jan Čech<br>
+                  <span class="talk-links">
+                    <a class="link" href="assets/pdfs/CVWW2026-13-final.pdf" target="_blank" rel="noopener">Paper</a>
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="published-panel">
+          <div class="published-panel-body">
+            <ul class="talk-list">
+              <li class="accepted"><span class="talk-desc"><strong>Pi-GS: Sparse-View
+                Gaussian Splatting with Dense π³ Initialization</strong><br>Manuel Hofer, Markus Steinberger, Thomas
+                Köhler<br>
+                <span class="talk-links">
+                  <a class="link" href="assets/pdfs/CVWW2026-35-final.pdf" target="_blank" rel="noopener">Paper</a>
+                </span>
+              </span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="published-panel">
+          <div class="published-panel-body">
+            <ul class="talk-list">
+              <li class="accepted"><span class="talk-desc"><strong>Multi-Label
+                Cardinality-Incremental Learning</strong><br>Laurenz Farthofer, Marc Masana<br>
+                <span class="talk-links">
+                  <a class="link" href="assets/pdfs/CVWW2026-07-final.pdf" target="_blank" rel="noopener">Paper</a>
+                  <a class="link" href="assets/pdfs/CVWW2026-07-supplementary.pdf" target="_blank" rel="noopener">Suppl.</a>
+                </span>
+              </span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="published-panel award" id="best-paper">
+          <div class="published-panel-body">
+            <ul class="talk-list">
+              <li class="accepted">  
+                <span class="talk-desc">
+                  <span class="accepted-badge"><i class="fa-solid fa-trophy" aria-hidden="true"></i> &nbsp;Best Student Paper Award</span><br>
+                  <strong>SAM-pose2seg: Pose-Guided Human Instance Segmentation in Crowds</strong><br>Constantin
+                  Kolomiiets, Miroslav Purkrabek, Jiri Matas<br>
+                  <span class="talk-links">
+                    <a class="link" href="assets/pdfs/CVWW2026-29-final.pdf" target="_blank" rel="noopener">Paper</a>
+                    <a class="link" href="assets/pdfs/CVWW2026-29-supplementary.pdf" target="_blank" rel="noopener">Suppl.</a>
+                    <a class="link" href="https://arxiv.org/abs/2601.08982" rel="noopener" target="_blank">arXiv</a>
+                    <a class="link" href="https://mirapurkrabek.github.io/BBox-Mask-Pose/" rel="noopener" target="_blank">Website</a>
+                    <a class="link" href="https://github.com/MiraPurkrabek/BBoxMaskPose" rel="noopener" target="_blank">Code</a>
+                  </span>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="published-panel candidate">
+          <div class="published-panel-body">
+            <ul class="talk-list">
+              <li class="accepted"><span class="talk-desc">
+                <span class="accepted-badge">Best Student Paper Candidate</span><br>
+                <strong>Exploring Multimodal Large
+                Language Models for Morphing Attack Detection</strong><br>Nikola Marić, Marija Ivanovska, Vitomir
+                Štruc<br>
+                <span class="talk-links">
+                  <a class="link" href="assets/pdfs/CVWW2026-49-final.pdf" target="_blank" rel="noopener">Paper</a>
+                  <a class="link" href="assets/pdfs/CVWW2026-49-supplementary.pdf" target="_blank" rel="noopener">Suppl.</a>
+                </span>
+              </span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="published-panel candidate">
+          <div class="published-panel-body">
+            <ul class="talk-list">
+              <li class="accepted"><span class="talk-desc">
+                <span class="accepted-badge">Best Student Paper Candidate</span><br>
+                <strong>Dynamic Ensemble of
+                Deepfake Detectors Conditioned on CLIP Features</strong><br>Patricie Petriľáková, Jan Čech<br>
+                <span class="talk-links">
+                  <a class="link" href="assets/pdfs/CVWW2026-31-final.pdf" target="_blank" rel="noopener">Paper</a>
+                </span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="published-panel candidate">
+        <div class="published-panel-body">
+          <ul class="talk-list">
+            <li class="accepted"><span class="talk-desc">
+              <span class="accepted-badge">Best Student Paper Candidate</span><br>
+              <strong>Dense Spatiotemporal
+              Reconstruction of Sea Surface Temperature with Conditional Flow Matching</strong><br>Grega Rovšček,
+              Matjaž Ličer, Matej Kristan<br>
+              <span class="talk-links">
+                <a class="link" href="assets/pdfs/CVWW2026-43-final.pdf" target="_blank" rel="noopener">Paper</a>
+              </span>
+            </span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="published-panel">
+        <div class="published-panel-body">
+          <ul class="talk-list">
+              <li class="accepted"><span class="talk-desc">
+                <strong>Grading Handwritten
+                    Engineering Exams with Multimodal Large Language Models</strong><br>Janez Perš, Jon Muhovič, Andrej
+                  Košir, Boštjan Murovec<br>
+                  <span class="talk-links">
+                    <a class="link" href="assets/pdfs/CVWW2026-45-final.pdf" target="_blank" rel="noopener">Paper</a>
+                  </span>
+                </span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- <section id="published-papers" class="section alt">
+      <div class="container">
+        <h2>Proceedings</h2>
+
+        <p>Proceedings of the conference will be uploaded soon.</p>
+
+      </div>
+    </section> -->
+
+  </main>
+
+  <div class="org-bar">
+    <span class="org-label">Organized by:</span>
+    <a href="https://vrg.fel.cvut.cz" target="_blank" rel="noopener">
+      <img src="assets/logos/vrg_logo.png" alt="Visual Recognition Group (VRG)" />
+    </a>
+    <a href="https://www.ciirc.cvut.cz/" target="_blank" rel="noopener">
+      <img src="assets/logos/czech_institute_of_informatics_robotics_and_cybernetics_crop.svg" alt="CIIRC" />
+    </a>
+    <a href="https://www.fel.cvut.cz/en" target="_blank" rel="noopener">
+      <img src="assets/logos/logo_fee_en_crop.svg" alt="FEE CTU" />
+    </a>
+    <a href="https://www.cski.cz/" target="_blank" rel="noopener">
+      <img src="assets/logos/cski.jpg" alt="CSKI" />
+    </a>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> CVWW Organizing Comitee • Czech Technical University in Prague</p>
+      <a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+
+</html>

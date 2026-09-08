@@ -58,14 +58,14 @@ class FrontendPublishedOnlyFilterTests(unittest.TestCase):
             counts[publication_type] = counts.get(publication_type, 0) + 1
         self.assertEqual(
             counts,
-            # Canonical paper records after the Ant/AI-edit gap-fill.
-            {"conference": 359, "journal": 157, "preprint": 96, "book": 1},
+            # Canonical paper records after the targeted key-paper reconciliation.
+            {"conference": 361, "journal": 157, "preprint": 104, "book": 1},
         )
-        self.assertEqual(counts["preprint"], 96)
+        self.assertEqual(counts["preprint"], 104)
         published_only_count = sum(
             counts[key] for key in ("conference", "journal", "book")
         )
-        self.assertEqual(published_only_count, 517)
+        self.assertEqual(published_only_count, 519)
 
     def test_predicate_semantics_and_filter_composition(self):
         helper = self.app[
